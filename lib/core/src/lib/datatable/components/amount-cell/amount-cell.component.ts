@@ -31,11 +31,11 @@ import { CommonModule } from '@angular/common';
 @Component({
     "standalone": true,
     "imports": [CommonModule],
-    "selector": 'adf-amount-cell',
+    selector: 'adf-amount-cell',
     "templateUrl": './amount-cell.component.html',
-    "host": { "class": 'adf-datatable-content-cell' },
-    "encapsulation": ViewEncapsulation.None,
-    "changeDetection": ChangeDetectionStrategy.OnPush
+    host: { "class": 'adf-datatable-content-cell' },
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AmountCellComponent extends DataTableCellComponent implements OnInit {
 

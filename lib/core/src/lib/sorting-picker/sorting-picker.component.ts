@@ -19,10 +19,10 @@ import { Component, ViewEncapsulation, Input, EventEmitter, Output } from '@angu
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
-    "selector": 'adf-sorting-picker',
+    selector: 'adf-sorting-picker',
     "templateUrl": './sorting-picker.component.html',
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-sorting-picker' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-sorting-picker' }
 })
 export class SortingPickerComponent {
 

@@ -256,8 +256,8 @@ describe('HeaderLayoutComponent', () => {
 
     describe('Template transclusion', () => {
         @Component({
-            "selector": 'adf-test-layout-header',
-            "template": `
+            selector: 'adf-test-layout-header',
+            template: `
             <adf-layout-header title="test" color="primary">
                 <p>Test text</p>
                 <p></p>

@@ -22,10 +22,10 @@ import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 @Component({
-    "selector": 'adf-comment-list',
+    selector: 'adf-comment-list',
     "templateUrl": './comment-list.component.html',
     "styleUrls": ['./comment-list.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class CommentListComponent {
 

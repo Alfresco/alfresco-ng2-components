@@ -20,7 +20,7 @@ import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overla
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TooltipCardComponent } from './tooltip-card.component';
 
-@Directive({ "selector": '[adf-tooltip-card]' })
+@Directive({ selector: '[adf-tooltip-card]' })
 export class TooltipCardDirective implements OnInit, OnDestroy {
 
     @Input('adf-tooltip-card') text = '';

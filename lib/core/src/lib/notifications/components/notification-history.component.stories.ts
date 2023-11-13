@@ -70,7 +70,7 @@ export default {
 
 const template: Story<NotificationHistoryComponent> = (args: NotificationHistoryComponent) => ({
     "props": args,
-    "template": `
+    template: `
     <div style="display:flex;flex-direction:column;align-items:center;">
         <adf-notification-history
             [menuPositionX]=menuPositionX

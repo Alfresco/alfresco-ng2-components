@@ -28,7 +28,7 @@ import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 
 @Component({
-    "template": '',
+    template: '',
     "providers": [NotificationService]
 })
 class ProvidesNotificationServiceComponent {

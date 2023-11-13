@@ -29,7 +29,7 @@ describe('AuthConfigService', () => {
     let appConfigService: AppConfigService;
 
     const mockAuthConfigImplicitFlow: OauthConfigModel = {
-        "host": 'http://localhost:3000/auth/realms/alfresco',
+        host: 'http://localhost:3000/auth/realms/alfresco',
         "clientId": 'fakeClientId',
         "scope": 'openid profile email',
         "secret": '',
@@ -46,7 +46,7 @@ describe('AuthConfigService', () => {
     };
 
     const mockAuthConfigSubfolderRedirectUri: OauthConfigModel = {
-        "host": 'http://localhost:3000/auth/realms/alfresco',
+        host: 'http://localhost:3000/auth/realms/alfresco',
         "clientId": 'fakeClientId',
         "scope": 'openid profile email',
         "secret": '',
@@ -63,7 +63,7 @@ describe('AuthConfigService', () => {
     };
 
     const mockAuthConfigSubfolder2RedirectUri: OauthConfigModel = {
-        "host": 'http://localhost:3000/auth/realms/alfresco',
+        host: 'http://localhost:3000/auth/realms/alfresco',
         "clientId": 'fakeClientId',
         "scope": 'openid profile email',
         "secret": '',
@@ -80,7 +80,7 @@ describe('AuthConfigService', () => {
     };
 
     const mockAuthConfigSlashRedirectUri: OauthConfigModel = {
-        "host": 'http://localhost:3000/auth/realms/alfresco',
+        host: 'http://localhost:3000/auth/realms/alfresco',
         "clientId": 'fakeClientId',
         "scope": 'openid profile email',
         "secret": '',
@@ -97,7 +97,7 @@ describe('AuthConfigService', () => {
     };
 
     const mockAuthConfigCodeFlow: OauthConfigModel = {
-        "host": 'http://localhost:3000/auth/realms/alfresco',
+        host: 'http://localhost:3000/auth/realms/alfresco',
         "clientId": 'fakeClientId',
         "scope": 'openid profile email',
         "secret": '',

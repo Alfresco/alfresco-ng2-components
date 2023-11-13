@@ -26,13 +26,13 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/date-fns-adapter';
 
 @Component({
-    "selector": 'date-widget',
+    selector: 'date-widget',
     "providers": [
         { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
         { "provide": DateAdapter, "useClass": AdfDateFnsAdapter }
     ],
     "templateUrl": './date.widget.html',
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -43,7 +43,7 @@ import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/da
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     DATE_FORMAT = 'dd-MM-yyyy';

@@ -19,10 +19,10 @@ import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core
 import { PackageInfo } from '../interfaces';
 
 @Component({
-  "selector": 'adf-about-package-list',
+  selector: 'adf-about-package-list',
   "templateUrl": './package-list.component.html',
   "styleUrls": ['./package-list.component.scss'],
-  "changeDetection": ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PackageListComponent implements OnInit {
 

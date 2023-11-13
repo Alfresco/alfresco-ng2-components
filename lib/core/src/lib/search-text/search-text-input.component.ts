@@ -24,12 +24,12 @@ import { UserPreferencesService } from '../common/services/user-preferences.serv
 import { SearchTextStateEnum, SearchAnimationState, SearchAnimationDirection } from './models/search-text-input.model';
 
 @Component({
-    "selector": 'adf-search-text-input',
+    selector: 'adf-search-text-input',
     "templateUrl": './search-text-input.component.html',
     "styleUrls": ['./search-text-input.component.scss'],
     "animations": [searchAnimation],
-    "encapsulation": ViewEncapsulation.None,
-    "host": {
+    encapsulation: ViewEncapsulation.None,
+    host: {
         "class": 'adf-search-text-input'
     }
 })

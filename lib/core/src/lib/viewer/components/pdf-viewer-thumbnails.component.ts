@@ -26,11 +26,11 @@ import { PdfThumbComponent } from './pdf-viewer-thumb.component';
 import { delay } from 'rxjs/operators';
 
 @Component({
-    "selector": 'adf-pdf-thumbnails',
+    selector: 'adf-pdf-thumbnails',
     "templateUrl": './pdf-viewer-thumbnails.component.html',
     "styleUrls": ['./pdf-viewer-thumbnails.component.scss'],
-    "host": { "class": 'adf-pdf-thumbnails' },
-    "encapsulation": ViewEncapsulation.None
+    host: { "class": 'adf-pdf-thumbnails' },
+    encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() pdfViewer: any;

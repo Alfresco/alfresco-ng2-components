@@ -21,7 +21,7 @@ import { LicenseData, StatusData } from '../interfaces';
 import { RepositoryInfo } from './repository-info.interface';
 
 @Component({
-    "selector": 'adf-about-repository-info',
+    selector: 'adf-about-repository-info',
     "templateUrl": './about-repository-info.component.html'
 })
 export class AboutRepositoryInfoComponent implements OnInit {

@@ -19,10 +19,10 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 import { ExtensionRef } from '@alfresco/adf-extensions';
 
 @Component({
-  "selector": 'adf-about-extension-list',
+  selector: 'adf-about-extension-list',
   "templateUrl": './about-extension-list.component.html',
-  "encapsulation": ViewEncapsulation.None,
-  "changeDetection": ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutExtensionListComponent {
   columns = [

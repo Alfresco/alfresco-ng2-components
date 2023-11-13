@@ -21,7 +21,7 @@ import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, 
 import { FileInfo, FileUtils } from '../common/utils/file-utils';
 
 @Directive({
-    "selector": '[adf-upload]'
+    selector: '[adf-upload]'
 })
 export class UploadDirective implements OnInit, OnDestroy {
     /** Enables/disables uploading. */

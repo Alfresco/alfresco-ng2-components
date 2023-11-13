@@ -95,7 +95,7 @@ export default {
 
 const template: Story<ToolbarComponent> = (args: ToolbarComponent & { anyContentProjection: boolean } & { toolbarDivider: boolean } & { toolbarTitle: boolean } ) => ({
     "props": args,
-    "template": `
+    template: `
     <adf-toolbar color="${args.color}" title="${args.title}">
         <ng-container *ngIf="${args.toolbarTitle}"><adf-toolbar-title>Projected Title</adf-toolbar-title></ng-container>
         <ng-container *ngIf="${args.anyContentProjection}">

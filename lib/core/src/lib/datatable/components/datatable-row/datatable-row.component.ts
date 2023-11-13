@@ -29,10 +29,10 @@ import { FocusableOption } from '@angular/cdk/a11y';
 import { DataRow } from '../../data/data-row.model';
 
 @Component({
-    "selector": 'adf-datatable-row',
-    "template": `<ng-content></ng-content>`,
-    "encapsulation": ViewEncapsulation.None,
-    "host": {
+    selector: 'adf-datatable-row',
+    template: `<ng-content></ng-content>`,
+    encapsulation: ViewEncapsulation.None,
+    host: {
         "class": 'adf-datatable-row',
         "tabindex": '0',
         "role": 'row'

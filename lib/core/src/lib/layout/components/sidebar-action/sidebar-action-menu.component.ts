@@ -18,12 +18,12 @@
 import { ChangeDetectionStrategy, Component, Directive, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    "selector": 'adf-sidebar-action-menu',
+    selector: 'adf-sidebar-action-menu',
     "templateUrl": './sidebar-action-menu.component.html',
     "styleUrls": ['./sidebar-action-menu.component.scss'],
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-sidebar-action-menu' }
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-sidebar-action-menu' }
 })
 
 export class SidebarActionMenuComponent {
@@ -48,6 +48,6 @@ export class SidebarActionMenuComponent {
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({ "selector": '[adf-sidebar-menu-options], [sidebar-menu-options]' }) export class SidebarMenuDirective {}
-@Directive({ "selector": '[adf-sidebar-menu-title-icon], [sidebar-menu-title-icon]' }) export class SidebarMenuTitleIconDirective {}
-@Directive({ "selector": '[adf-sidebar-menu-expand-icon], [sidebar-menu-expand-icon]' }) export class SidebarMenuExpandIconDirective {}
+@Directive({ selector: '[adf-sidebar-menu-options], [sidebar-menu-options]' }) export class SidebarMenuDirective {}
+@Directive({ selector: '[adf-sidebar-menu-title-icon], [sidebar-menu-title-icon]' }) export class SidebarMenuTitleIconDirective {}
+@Directive({ selector: '[adf-sidebar-menu-expand-icon], [sidebar-menu-expand-icon]' }) export class SidebarMenuExpandIconDirective {}

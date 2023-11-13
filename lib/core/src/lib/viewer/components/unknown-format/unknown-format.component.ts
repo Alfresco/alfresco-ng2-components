@@ -18,10 +18,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    "selector": 'adf-viewer-unknown-format',
+    selector: 'adf-viewer-unknown-format',
     "templateUrl": './unknown-format.component.html',
     "styleUrls": ['./unknown-format.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class UnknownFormatComponent {
 }

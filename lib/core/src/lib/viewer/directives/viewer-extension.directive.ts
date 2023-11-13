@@ -21,7 +21,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-    "selector": 'adf-viewer-extension'
+    selector: 'adf-viewer-extension'
 })
 export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
@@ -45,7 +45,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
     }
 
     ngAfterContentInit () {
-        this.templateModel = { "template": this.template, "isVisible": false };
+        this.templateModel = { template: this.template, "isVisible": false };
 
         this.viewerComponent.extensionTemplates.push(this.templateModel);
 

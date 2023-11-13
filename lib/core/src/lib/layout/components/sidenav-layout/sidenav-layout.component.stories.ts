@@ -134,7 +134,7 @@ export default {
 
 const template: Story<SidenavLayoutModule> = (args: SidenavLayoutComponent) => ({
     "props": args,
-    "template": `
+    template: `
     <adf-sidenav-layout
         [sidenavMin]="sidenavMin"
         [sidenavMax]="sidenavMax"

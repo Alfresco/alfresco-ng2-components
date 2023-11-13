@@ -23,8 +23,8 @@ import {
 } from './edit-json.dialog';
 
 @Component({
-    "selector": 'adf-edit-json-dialog-storybook',
-    "template": `<button mat-raised-button (click)="openDialog()">
+    selector: 'adf-edit-json-dialog-storybook',
+    template: `<button mat-raised-button (click)="openDialog()">
         Open dialog
     </button>`
 })

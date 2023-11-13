@@ -85,7 +85,7 @@ describe('CardViewArrayItemComponent', () => {
 
         it('should call service on edit icon click', async () => {
             const button = await loader.getHarness(
-                MatButtonHarness.with({ "selector": `[data-automation-id="card-array-item-clickable-icon-array"]` })
+                MatButtonHarness.with({ selector: `[data-automation-id="card-array-item-clickable-icon-array"]` })
             );
             await button.click();
 
@@ -164,7 +164,7 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
             const editExists = await loader.hasHarness(
-                MatButtonHarness.with({ "selector": `[data-automation-id="card-array-item-clickable-icon-array"]` })
+                MatButtonHarness.with({ selector: `[data-automation-id="card-array-item-clickable-icon-array"]` })
             );
             expect(editExists).toBe(false);
         });

@@ -20,10 +20,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 @Component({
-    "selector": 'adf-login-dialog',
+    selector: 'adf-login-dialog',
     "templateUrl": './login-dialog.component.html',
     "styleUrls": ['./login-dialog.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogComponent {
 

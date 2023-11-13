@@ -20,11 +20,11 @@ import { Component, Input, OnChanges, ViewEncapsulation, SimpleChanges } from '@
 import { AppConfigService } from '../../app-config/app-config.service';
 
 @Component({
-    "selector": 'adf-txt-viewer',
+    selector: 'adf-txt-viewer',
     "templateUrl": './txt-viewer.component.html',
     "styleUrls": ['./txt-viewer.component.scss'],
-    "host": { "class": 'adf-txt-viewer' },
-    "encapsulation": ViewEncapsulation.None
+    host: { "class": 'adf-txt-viewer' },
+    encapsulation: ViewEncapsulation.None
 })
 export class TxtViewerComponent implements OnChanges {
     @Input()

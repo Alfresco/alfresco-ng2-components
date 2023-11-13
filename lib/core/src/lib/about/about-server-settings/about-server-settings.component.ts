@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 @Component({
-    "selector": 'adf-about-server-settings',
+    selector: 'adf-about-server-settings',
     "templateUrl": './about-server-settings.component.html',
     "styleUrls": ['./about-server-settings.component.scss']
 })

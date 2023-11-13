@@ -22,10 +22,10 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    "selector": 'multiline-text-widget',
+    selector: 'multiline-text-widget',
     "templateUrl": './multiline-text.widget.html',
     "styleUrls": ['./multiline-text.widget.scss'],
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,7 +36,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent  {
 

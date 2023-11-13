@@ -22,7 +22,7 @@ import {  MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
-    "template": `
+    template: `
         <mat-select adf-infinite-select-scroll (scrollEnd)="load()" >
             <mat-option *ngFor="let option of options; let idx=index">
                 {{ option.text }}

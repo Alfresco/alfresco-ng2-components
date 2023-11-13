@@ -18,7 +18,7 @@
 import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
 
 @Directive({
-    "selector": 'adf-about-panel'
+    selector: 'adf-about-panel'
 })
 export class AboutPanelDirective {
     @Input() label!: string;

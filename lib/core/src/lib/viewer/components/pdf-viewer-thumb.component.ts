@@ -20,10 +20,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FocusableOption } from '@angular/cdk/a11y';
 
 @Component({
-    "selector": 'adf-pdf-thumb',
+    selector: 'adf-pdf-thumb',
     "templateUrl": './pdf-viewer-thumb.component.html',
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "tabindex": '0'}
+    encapsulation: ViewEncapsulation.None,
+    host: { "tabindex": '0'}
 })
 export class PdfThumbComponent implements OnInit, FocusableOption {
 

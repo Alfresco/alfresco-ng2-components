@@ -23,17 +23,17 @@ import { BooleanPipe } from '../../../pipes/boolean.pipe';
 @Component({
     "standalone": true,
     "imports": [CommonModule, BooleanPipe],
-    "selector": 'adf-boolean-cell',
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "template": `
+    selector: 'adf-boolean-cell',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
         <ng-container *ngIf="value$ | async | adfBoolean as value">
             <span [title]="value">
                 {{ value }}
             </span>
         </ng-container>
     `,
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-datatable-content-cell' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-datatable-content-cell' }
 })
 export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
 

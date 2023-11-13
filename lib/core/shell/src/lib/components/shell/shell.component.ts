@@ -25,11 +25,11 @@ import { Directionality } from '@angular/cdk/bidi';
 import { SHELL_APP_SERVICE, ShellAppService, SHELL_NAVBAR_MIN_WIDTH, SHELL_NAVBAR_MAX_WIDTH } from '../../services/shell-app.service';
 
 @Component({
-  "selector": 'app-shell',
+  selector: 'app-shell',
   "templateUrl": './shell.component.html',
   "styleUrls": ['./shell.component.scss'],
-  "encapsulation": ViewEncapsulation.None,
-  "host": { "class": 'app-shell' }
+  encapsulation: ViewEncapsulation.None,
+  host: { "class": 'app-shell' }
 })
 export class ShellLayoutComponent implements OnInit, OnDestroy {
   @ViewChild('layout', { "static": true })

@@ -25,8 +25,8 @@ import { contextMenuAnimation } from './animations';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
 
 @Component({
-    "selector": 'adf-context-menu',
-    "template": `
+    selector: 'adf-context-menu',
+    template: `
         <div mat-menu class="mat-menu-panel" @panelAnimation>
             <div id="adf-context-menu-content" class="mat-menu-content">
                 <ng-container *ngFor="let link of links">
@@ -44,11 +44,11 @@ import { CONTEXT_MENU_DATA } from './context-menu.tokens';
             </div>
         </div>
     `,
-    "host": {
+    host: {
         "role": 'menu',
         "class": 'adf-context-menu'
     },
-    "encapsulation": ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None,
     "animations": [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {

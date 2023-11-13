@@ -25,10 +25,10 @@ import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 @Component({
     "standalone": true,
     "imports": [CommonModule, LocalizedDatePipe, TimeAgoPipe],
-    "selector": 'adf-date-cell',
+    selector: 'adf-date-cell',
     "templateUrl": './date-cell.component.html',
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-datatable-content-cell' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-datatable-content-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
 

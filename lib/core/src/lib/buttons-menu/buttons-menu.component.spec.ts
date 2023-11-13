@@ -22,8 +22,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    "selector": 'adf-custom-container',
-    "template": `
+    selector: 'adf-custom-container',
+    template: `
         <adf-buttons-action-menu>
             <button mat-menu-item (click)="assignValue()">
                 <mat-icon>settings</mat-icon><span> Button </span>
@@ -41,8 +41,8 @@ export class CustomContainerComponent {
 }
 
 @Component({
-    "selector": 'adf-custom-empty-container',
-    "template": `
+    selector: 'adf-custom-empty-container',
+    template: `
         <adf-buttons-action-menu>
         </adf-buttons-action-menu>
     `

@@ -22,10 +22,10 @@ import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { DataColumn } from '../../data/data-column.model';
 @Component({
-    "selector": 'adf-datatable-column-selector',
+    selector: 'adf-datatable-column-selector',
     "templateUrl": './columns-selector.component.html',
     "styleUrls": ['./columns-selector.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     @Input()

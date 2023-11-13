@@ -29,12 +29,12 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 
 @Component({
-    "selector": 'adf-error-content',
+    selector: 'adf-error-content',
     "templateUrl": './error-content.component.html',
     "styleUrls": ['./error-content.component.scss'],
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-error-content' }
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-error-content' }
 })
 export class ErrorContentComponent implements OnInit {
 

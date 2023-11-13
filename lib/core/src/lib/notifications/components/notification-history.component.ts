@@ -25,10 +25,10 @@ import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
 
 @Component({
-    "selector": 'adf-notification-history',
+    selector: 'adf-notification-history',
     "templateUrl": 'notification-history.component.html',
     "styleUrls": ['./notification-history.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
 

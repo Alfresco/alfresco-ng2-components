@@ -21,7 +21,7 @@ import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
-    "selector": 'adf-card-view-boolitem',
+    selector: 'adf-card-view-boolitem',
     "templateUrl": './card-view-boolitem.component.html'
 })
 

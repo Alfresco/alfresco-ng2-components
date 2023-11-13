@@ -28,10 +28,10 @@ import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.comp
 
 @Component({
     "standalone": true,
-    "selector": 'adf-breadcrumb',
+    selector: 'adf-breadcrumb',
     "templateUrl": './breadcrumb.component.html',
     "styleUrls": ['./breadcrumb.component.scss'],
-    "changeDetection": ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     "imports": [ CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatTooltipModule ]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {

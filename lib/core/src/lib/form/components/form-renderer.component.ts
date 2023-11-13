@@ -22,7 +22,7 @@ import { ContainerModel, FormFieldModel, TabModel } from './widgets';
 import { FormService } from '../services/form.service';
 
 @Component({
-    "selector": 'adf-form-renderer',
+    selector: 'adf-form-renderer',
     "templateUrl": './form-renderer.component.html',
     "styleUrls": ['./form-renderer.component.scss'],
     "providers": [
@@ -32,7 +32,7 @@ import { FormService } from '../services/form.service';
             "deps": [Injector]
         }
     ],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnChanges, OnDestroy {
     /** Toggle debug options. */

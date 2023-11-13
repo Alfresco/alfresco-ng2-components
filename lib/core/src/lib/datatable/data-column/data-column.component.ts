@@ -22,8 +22,8 @@ import { DataColumnType } from '@alfresco/adf-extensions';
 import { CurrencyConfig, DateConfig, DecimalConfig } from '../data/data-column.model';
 
 @Component({
-    "selector": 'data-column',
-    "template": ''
+    selector: 'data-column',
+    template: ''
 })
 export class DataColumnComponent implements OnInit {
 

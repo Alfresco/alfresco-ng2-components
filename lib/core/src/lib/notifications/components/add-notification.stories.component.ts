@@ -19,8 +19,8 @@ import { Component } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 
 @Component({
-    "selector": 'adf-add-notification-storybook',
-    "template": `<button mat-raised-button (click)="showInfo()">Add Notification</button>`
+    selector: 'adf-add-notification-storybook',
+    template: `<button mat-raised-button (click)="showInfo()">Add Notification</button>`
 })
 export class AddNotificationStorybookComponent {
 

@@ -20,10 +20,10 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
 import { SnackBarData } from './snack-bar-data';
 
 @Component({
-    "selector": 'adf-snackbar-content',
+    selector: 'adf-snackbar-content',
     "templateUrl": './snackbar-content.component.html',
     "styleUrls": ['./snackbar-content.component.scss'],
-    "host": {
+    host: {
         "class": 'mat-simple-snackbar'
     }
 })

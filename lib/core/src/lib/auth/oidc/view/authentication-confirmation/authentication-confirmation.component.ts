@@ -24,8 +24,8 @@ import { AuthService } from '../../auth.service';
 const ROUTE_DEFAULT = '/';
 
 @Component({
-  "template": '<div data-automation-id="auth-confirmation"></div>',
-  "changeDetection": ChangeDetectionStrategy.OnPush
+  template: '<div data-automation-id="auth-confirmation"></div>',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthenticationConfirmationComponent {
   constructor (private auth: AuthService, private _router: Router) {

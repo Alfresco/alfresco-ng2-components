@@ -34,11 +34,11 @@ import { UrlService } from '../../common/services/url.service';
 import Cropper from 'cropperjs';
 
 @Component({
-    "selector": 'adf-img-viewer',
+    selector: 'adf-img-viewer',
     "templateUrl": './img-viewer.component.html',
     "styleUrls": ['./img-viewer.component.scss'],
-    "host": { "class": 'adf-image-viewer' },
-    "encapsulation": ViewEncapsulation.None
+    host: { "class": 'adf-image-viewer' },
+    encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input()

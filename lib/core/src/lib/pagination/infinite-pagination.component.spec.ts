@@ -27,7 +27,7 @@ import { RequestPaginationModel } from '../models/request-pagination.model';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    "template": ``
+    template: ``
 })
 class TestPaginatedComponent implements PaginatedComponent {
 

@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { DownloadPromptActions } from '../../models/download-prompt.actions';
 
 @Component({
-    "selector": 'adf-download-prompt-dialog',
+    selector: 'adf-download-prompt-dialog',
     "templateUrl": './download-prompt-dialog.component.html'
 })
 export class DownloadPromptDialogComponent {

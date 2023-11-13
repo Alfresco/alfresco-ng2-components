@@ -35,7 +35,7 @@ const template: string = `
     <div id="innerDiv21" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
 </div>`;
 
-@Component({ "selector": 'adf-test-component', template })
+@Component({ selector: 'adf-test-component', template })
 class TestComponent {
     @ViewChildren(HighlightDirective) public highlightDirectives;
 }

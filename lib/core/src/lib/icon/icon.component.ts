@@ -24,12 +24,12 @@ import {
 import { ThemePalette } from '@angular/material/core';
 
 @Component({
-    "selector": 'adf-icon',
+    selector: 'adf-icon',
     "templateUrl": './icon.component.html',
     "styleUrls": ['./icon.component.scss'],
-    "encapsulation": ViewEncapsulation.None,
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "host": { "class": 'adf-icon' }
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { "class": 'adf-icon' }
 })
 export class IconComponent {
     private _value = '';

@@ -23,10 +23,10 @@ import { WidgetComponent } from '../widget.component';
 import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
 
 @Component({
-    "selector": 'number-widget',
+    selector: 'number-widget',
     "templateUrl": './number.widget.html',
     "styleUrls": ['./number.widget.scss'],
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -37,7 +37,7 @@ import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
 

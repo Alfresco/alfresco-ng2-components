@@ -20,10 +20,10 @@ import { LoginComponent } from './login.component';
 import { LoginSuccessEvent } from '../models/login-success.event';
 
 @Component({
-    "selector": 'adf-login-dialog-panel',
+    selector: 'adf-login-dialog-panel',
     "templateUrl": './login-dialog-panel.component.html',
     "styleUrls": ['./login-dialog-panel.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogPanelComponent {
     /** Emitted when the login succeeds. */

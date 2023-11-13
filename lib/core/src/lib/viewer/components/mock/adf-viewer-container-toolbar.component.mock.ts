@@ -18,8 +18,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    "selector": 'adf-viewer-container-toolbar',
-    "template": `
+    selector: 'adf-viewer-container-toolbar',
+    template: `
         <adf-viewer>
             <adf-viewer-toolbar>
                 <div class="custom-toolbar-element"></div>

@@ -22,10 +22,10 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    "selector": 'text-widget',
+    selector: 'text-widget',
     "templateUrl": './text.widget.html',
     "styleUrls": ['./text.widget.scss'],
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,7 +36,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
 

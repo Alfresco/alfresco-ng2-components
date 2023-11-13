@@ -31,8 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 
 @Component({
-    "selector": 'adf-double-viewer',
-    "template": `
+    selector: 'adf-double-viewer',
+    template: `
         <adf-viewer-render [urlFile]="urlFileViewer1" #viewer1></adf-viewer-render>
         <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2></adf-viewer-render>
     `

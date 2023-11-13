@@ -76,11 +76,11 @@ export enum ShowHeaderMode {
 }
 
 @Component({
-    "selector": 'adf-datatable',
+    selector: 'adf-datatable',
     "templateUrl": './datatable.component.html',
     "styleUrls": ['./datatable.component.scss'],
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-datatable' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
     private static MINIMUM_COLUMN_SIZE = 100;

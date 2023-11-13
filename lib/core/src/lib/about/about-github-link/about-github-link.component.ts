@@ -18,9 +18,9 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    "selector": 'adf-about-github-link',
+    selector: 'adf-about-github-link',
     "templateUrl": './about-github-link.component.html',
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class AboutGithubLinkComponent {
     /** Commit corresponding to the version of ADF to be used. */

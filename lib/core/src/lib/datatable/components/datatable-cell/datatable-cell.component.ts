@@ -24,9 +24,9 @@ import { takeUntil } from 'rxjs/operators';
 import { DataTableService } from '../../services/datatable.service';
 
 @Component({
-    "selector": 'adf-datatable-cell',
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "template": `
+    selector: 'adf-datatable-cell',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
         <ng-container>
             <span
                 *ngIf="copyContent; else defaultCell"
@@ -42,8 +42,8 @@ import { DataTableService } from '../../services/datatable.service';
             <span [title]="tooltip" class="adf-datatable-cell-value">{{ value$ | async }}</span>
         </ng-template>
     `,
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-datatable-content-cell' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-datatable-content-cell' }
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {
     /** Data table adapter instance. */

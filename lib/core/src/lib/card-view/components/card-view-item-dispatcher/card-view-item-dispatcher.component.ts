@@ -29,8 +29,8 @@ import { CardViewContentProxyDirective } from '../../directives/card-view-conten
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
 @Component({
-    "selector": 'adf-card-view-item-dispatcher',
-    "template": '<ng-template adf-card-view-content-proxy></ng-template>'
+    selector: 'adf-card-view-item-dispatcher',
+    template: '<ng-template adf-card-view-content-proxy></ng-template>'
 })
 export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()

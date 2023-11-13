@@ -27,9 +27,9 @@ import { FormFieldModel } from './core';
  * Base widget component.
  */
 @Component({
-    "selector": 'base-widget',
-    "template": '',
-    "host": {
+    selector: 'base-widget',
+    template: '',
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -40,7 +40,7 @@ import { FormFieldModel } from './core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class WidgetComponent implements AfterViewInit {
     /** Does the widget show a read-only value? (ie, can't be edited) */

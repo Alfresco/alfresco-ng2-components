@@ -28,10 +28,10 @@ export interface AmountWidgetSettings {
 export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf-amount-settings');
 
 @Component({
-    "selector": 'amount-widget',
+    selector: 'amount-widget',
     "templateUrl": './amount.widget.html',
     "styleUrls": ['./amount.widget.scss'],
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -42,7 +42,7 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     static DEFAULT_CURRENCY: string = '$';

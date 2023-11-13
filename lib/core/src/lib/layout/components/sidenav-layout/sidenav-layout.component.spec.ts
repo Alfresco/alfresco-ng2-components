@@ -31,8 +31,8 @@ import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
 
 @Component({
-    "selector": 'adf-layout-container',
-    "template": `
+    selector: 'adf-layout-container',
+    template: `
         <ng-content select="[app-layout-navigation]"></ng-content>
         <ng-content select="[app-layout-content]"></ng-content>`
 })
@@ -48,8 +48,8 @@ export class DummyLayoutContainerComponent {
 }
 
 @Component({
-    "selector": 'adf-test-component-for-sidenav',
-    "template": `
+    selector: 'adf-test-component-for-sidenav',
+    template: `
             <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
 
                 <adf-sidenav-layout-header>

@@ -38,8 +38,8 @@ import { FormFieldModel } from '../widgets/core/form-field.model';
 declare const adf: any;
 
 @Component({
-    "selector": 'adf-form-field',
-    "template": `
+    selector: 'adf-form-field',
+    template: `
         <div
             [id]="'field-' + field?.id + '-container'"
             [style.visibility]="!field?.isVisible ? 'hidden' : 'visible'"
@@ -51,7 +51,7 @@ declare const adf: any;
             <div #container></div>
         </div>
     `,
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
     @ViewChild('container', { "read": ViewContainerRef, "static": true })
@@ -139,7 +139,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         }
 
         const metadata = {
-            "selector": `runtime-component-${type}`,
+            selector: `runtime-component-${type}`,
             template
         };
 

@@ -20,4 +20,4 @@ import { Directive } from '@angular/core';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({ "selector": '[adf-form-custom-button], [form-custom-button]' }) export class StartFormCustomButtonDirective {}
+@Directive({ selector: '[adf-form-custom-button], [form-custom-button]' }) export class StartFormCustomButtonDirective {}

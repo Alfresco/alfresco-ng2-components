@@ -69,7 +69,7 @@ export default {
 
 const template: Story<ErrorContentComponent> = (args: ErrorContentComponent & { errorContentActions: boolean }) => ({
     "props": args,
-    "template": `
+    template: `
     <adf-error-content errorCode="${args.errorCode}">
         <div adf-error-content-actions *ngIf="${args.errorContentActions}">
         <button mat-raised-button type="button">MyAction</button>

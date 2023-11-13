@@ -38,11 +38,11 @@ import { Direction } from '@angular/cdk/bidi';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    "selector": 'adf-sidenav-layout',
+    selector: 'adf-sidenav-layout',
     "templateUrl": './sidenav-layout.component.html',
     "styleUrls": ['./sidenav-layout.component.scss'],
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-sidenav-layout' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-sidenav-layout' }
 })
 export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     static STEP_OVER = 600;

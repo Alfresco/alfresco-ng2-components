@@ -325,11 +325,11 @@ const formatCustomTooltip = (row: DataRow): string =>
 
 const template: Story<DataColumnComponent> = (args: DataColumnComponent & { rows: DataRow[] }) => ({
     "props": args,
-    "template": `
+    template: `
         <adf-datatable [rows]="rows">
             <data-columns>
-                <data-column 
-                    [key]="key" 
+                <data-column
+                    [key]="key"
                     [type]="type"
                     [title]="title"
                     [editable]="editable"

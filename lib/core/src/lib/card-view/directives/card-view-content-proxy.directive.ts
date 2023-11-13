@@ -18,7 +18,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-    "selector": '[adf-card-view-content-proxy]'
+    selector: '[adf-card-view-content-proxy]'
 })
 export class CardViewContentProxyDirective {
     constructor (public viewContainerRef: ViewContainerRef) { }

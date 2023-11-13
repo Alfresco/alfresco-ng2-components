@@ -21,11 +21,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    "selector": 'adf-select-filter-input',
+    selector: 'adf-select-filter-input',
     "templateUrl": './select-filter-input.component.html',
     "styleUrls": ['./select-filter-input.component.scss'],
-    "host": { "class": 'adf-select-filter-input' },
-    "encapsulation": ViewEncapsulation.None
+    host: { "class": 'adf-select-filter-input' },
+    encapsulation: ViewEncapsulation.None
 })
 export class SelectFilterInputComponent implements OnInit, OnDestroy {
     @ViewChild('selectFilterInput', { "read": ElementRef, "static": false }) selectFilterInput: ElementRef;

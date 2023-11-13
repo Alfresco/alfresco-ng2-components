@@ -20,11 +20,11 @@ import { Track } from '../models/viewer.model';
 import { UrlService } from '../../common/services/url.service';
 
 @Component({
-    "selector": 'adf-media-player',
+    selector: 'adf-media-player',
     "templateUrl": './media-player.component.html',
     "styleUrls": ['./media-player.component.scss'],
-    "host": { "class": 'adf-media-player' },
-    "encapsulation": ViewEncapsulation.None
+    host: { "class": 'adf-media-player' },
+    encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {
     @Input()

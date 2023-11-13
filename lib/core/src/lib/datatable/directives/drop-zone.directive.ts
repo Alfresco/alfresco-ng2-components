@@ -20,7 +20,7 @@ import { DataRow } from '../data/data-row.model';
 import { DataColumn } from '../data/data-column.model';
 
 @Directive({
-    "selector": '[adf-drop-zone]'
+    selector: '[adf-drop-zone]'
 })
 export class DropZoneDirective implements OnInit, OnDestroy {
     private element: HTMLElement;

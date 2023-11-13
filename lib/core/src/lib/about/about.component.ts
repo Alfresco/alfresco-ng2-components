@@ -19,10 +19,10 @@ import { Component, ContentChildren, QueryList, ViewEncapsulation } from '@angul
 import { AboutPanelDirective } from './about-panel.directive';
 
 @Component({
-    "selector": 'adf-about',
+    selector: 'adf-about',
     "templateUrl": './about.component.html',
     "styleUrls": ['about.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class AboutComponent {
     @ContentChildren(AboutPanelDirective)

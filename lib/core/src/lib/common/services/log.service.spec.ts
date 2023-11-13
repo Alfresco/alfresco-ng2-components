@@ -24,7 +24,7 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { LogService } from './log.service';
 
 @Component({
-    "template": '',
+    template: '',
     "providers": [LogService]
 })
 class ProvidesLogComponent {

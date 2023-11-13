@@ -65,7 +65,7 @@ export const sixButtons: Story = args => ({
             return args.mobile;
         }
     },
-    "template": `
+    template: `
     <adf-buttons-action-menu>
         <button mat-menu-item>
             <mat-icon>settings</mat-icon><span> Settings </span>
@@ -97,7 +97,7 @@ export const oneButton: Story = args => ({
             return args.mobile;
         }
     },
-    "template": `
+    template: `
     <adf-buttons-action-menu>
         <button mat-menu-item>
             <mat-icon>settings</mat-icon><span> Settings </span>
@@ -114,6 +114,6 @@ export const noButtons: Story = args => ({
             return args.mobile;
         }
     },
-    "template": `
+    template: `
     <adf-buttons-action-menu></adf-buttons-action-menu>`
 });

@@ -202,7 +202,7 @@ export default {
 
 const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
     "props": args,
-    "template":
+    template:
         `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
             <div info-drawer-buttons>
                 <mat-icon>clear</mat-icon>
@@ -225,7 +225,7 @@ const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) =
 
 const singleLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
     "props": args,
-    "template":
+    template:
         `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
             <div info-drawer-title>File info</div>
 

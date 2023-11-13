@@ -32,9 +32,9 @@ interface RepositoryInfo {
 }
 
 @Component({
-    "selector": 'adf-about-platform-version',
+    selector: 'adf-about-platform-version',
     "templateUrl": './about-platform-version.component.html',
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class AboutPlatformVersionComponent {
 

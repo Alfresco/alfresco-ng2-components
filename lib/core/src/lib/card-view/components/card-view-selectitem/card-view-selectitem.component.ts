@@ -25,11 +25,11 @@ import { AppConfigService } from '../../../app-config/app-config.service';
 import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
-    "selector": 'adf-card-view-selectitem',
+    selector: 'adf-card-view-selectitem',
     "templateUrl": './card-view-selectitem.component.html',
     "styleUrls": ['./card-view-selectitem.component.scss'],
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-card-view-selectitem' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-card-view-selectitem' }
 })
 export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges, OnDestroy {
     private appConfig = inject(AppConfigService);

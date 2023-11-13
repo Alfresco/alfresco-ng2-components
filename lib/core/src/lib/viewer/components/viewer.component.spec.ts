@@ -41,8 +41,8 @@ import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 @Component({
-    "selector": 'adf-dialog-dummy',
-    "template": ``
+    selector: 'adf-dialog-dummy',
+    template: ``
 })
 class DummyDialogComponent {
 }

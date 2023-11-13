@@ -18,8 +18,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    "selector": 'adf-viewer-container-sidebar',
-    "template": `
+    selector: 'adf-viewer-container-sidebar',
+    template: `
         <adf-viewer>
             <adf-viewer-sidebar>
                 <div class="custom-sidebar"></div>

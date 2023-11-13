@@ -20,7 +20,7 @@ import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
-    "selector": 'adf-card-view-mapitem',
+    selector: 'adf-card-view-mapitem',
     "templateUrl": './card-view-mapitem.component.html',
     "styleUrls": ['./card-view-mapitem.component.scss']
 })

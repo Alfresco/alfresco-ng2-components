@@ -21,7 +21,7 @@ import { map, take, share, filter, pairwise, mergeMap, takeUntil } from 'rxjs/op
 import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, EventEmitter, Input } from '@angular/core';
 
 @Directive({
-    "selector": '[adf-resizable]',
+    selector: '[adf-resizable]',
     "exportAs": 'adf-resizable'
 })
 export class ResizableDirective implements OnInit, OnDestroy {

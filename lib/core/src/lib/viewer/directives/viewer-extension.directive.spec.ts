@@ -48,7 +48,7 @@ describe('ExtensionViewerDirective', () => {
             ]
         });
         extensionViewerDirective = TestBed.inject(ViewerExtensionDirective);
-        extensionViewerDirective.templateModel = {"template": '', "isVisible": false};
+        extensionViewerDirective.templateModel = {template: '', "isVisible": false};
     });
 
     it('is defined', () => {

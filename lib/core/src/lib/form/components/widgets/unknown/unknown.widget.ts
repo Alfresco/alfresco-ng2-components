@@ -22,8 +22,8 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    "selector": 'unknown-widget',
-    "template": `
+    selector: 'unknown-widget',
+    template: `
             <mat-list class="adf-unknown-widget">
                 <mat-list-item>
                      <mat-icon class="mat-24">error_outline</mat-icon>
@@ -33,7 +33,7 @@ import { WidgetComponent } from '../widget.component';
 
     `,
     "styleUrls": ['./unknown.widget.scss'],
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -44,7 +44,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class UnknownWidgetComponent extends WidgetComponent {
 

@@ -22,8 +22,8 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    "selector": 'adf-test-component',
-    "template": `
+    selector: 'adf-test-component',
+    template: `
         <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div>
     `
 })

@@ -23,8 +23,8 @@ import { of } from 'rxjs';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
 @Component({
-    "selector": 'adf-test-component',
-    "template": `
+    selector: 'adf-test-component',
+    template: `
         <adf-empty-content
             icon="delete"
             [title]="'CUSTOM_TITLE'"

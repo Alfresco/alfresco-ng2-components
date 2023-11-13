@@ -31,14 +31,14 @@ import { TranslateModule } from '@ngx-translate/core';
 declare const pdfjsLib: any;
 
 @Component({
-    "selector": 'adf-test-dialog-component',
-    "template": ''
+    selector: 'adf-test-dialog-component',
+    template: ''
 })
 class TestDialogComponent {
 }
 
 @Component({
-    "template": `
+    template: `
         <adf-pdf-viewer [allowThumbnails]="true"
                         [showToolbar]="true"
                         [urlFile]="urlFile">
@@ -58,7 +58,7 @@ class UrlTestComponent {
 }
 
 @Component({
-    "template": `
+    template: `
         <adf-pdf-viewer [allowThumbnails]="true"
                         [showToolbar]="true"
                         [urlFile]="urlFile">
@@ -78,7 +78,7 @@ class UrlTestPasswordComponent {
 }
 
 @Component({
-    "template": `
+    template: `
         <adf-pdf-viewer [allowThumbnails]="true"
                         [showToolbar]="true"
                         [blobFile]="blobFile">

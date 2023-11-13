@@ -30,10 +30,10 @@ import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 
 @Component({
-    "selector": 'adf-comments',
+    selector: 'adf-comments',
     "templateUrl": './comments.component.html',
     "styleUrls": ['./comments.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class CommentsComponent implements OnChanges {
 

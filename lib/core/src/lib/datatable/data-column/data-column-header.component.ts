@@ -21,8 +21,8 @@ import { AfterContentInit, Component, ContentChild, TemplateRef } from '@angular
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
-    "selector": 'adf-data-column-header',
-    "template": ''
+    selector: 'adf-data-column-header',
+    template: ''
 })
 export class DateColumnHeaderComponent implements AfterContentInit {
 

@@ -18,8 +18,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    "selector": 'adf-viewer-container-more-actions',
-    "template": `
+    selector: 'adf-viewer-container-more-actions',
+    template: `
         <adf-viewer>
             <adf-viewer-more-actions>
                 <button mat-menu-item>

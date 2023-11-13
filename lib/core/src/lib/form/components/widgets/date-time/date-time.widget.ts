@@ -34,10 +34,10 @@ import { isValid } from 'date-fns';
         { "provide": DateAdapter, "useClass": AdfDateFnsAdapter },
         { "provide": DatetimeAdapter, "useClass": AdfDateTimeFnsAdapter }
     ],
-    "selector": 'date-time-widget',
+    selector: 'date-time-widget',
     "templateUrl": './date-time.widget.html',
     "styleUrls": ['./date-time.widget.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
     minDate: Date;

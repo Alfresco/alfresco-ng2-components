@@ -39,12 +39,12 @@ export const DEFAULT_PAGINATION: PaginationModel = {
 };
 
 @Component({
-    "selector": 'adf-pagination',
-    "host": { "class": 'adf-pagination' },
+    selector: 'adf-pagination',
+    host: { "class": 'adf-pagination' },
     "templateUrl": './pagination.component.html',
     "styleUrls": ['./pagination.component.scss'],
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "encapsulation": ViewEncapsulation.None
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
     private _pagination: PaginationModel;

@@ -80,7 +80,7 @@ export default {
 
 const template: Story<EmptyContentComponent> = (args: EmptyContentComponent & { anyContentProjection: boolean }) => ({
     "props": args,
-    "template": `
+    template: `
     <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
         <div *ngIf="${args.anyContentProjection}" style="color:red">
             projected content

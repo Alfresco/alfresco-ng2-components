@@ -397,7 +397,7 @@ const insertContentToTemplate = (content: string): string => (
 
 export const defaultDatatable: Story<DataTableComponent> = (args: DataTableComponent) => ({
     "props": args,
-    "template": insertContentToTemplate('')
+    template: insertContentToTemplate('')
 });
 
 export const emptyWithList: Story<DataTableComponent> = (args: DataTableComponent) => ({
@@ -405,7 +405,7 @@ export const emptyWithList: Story<DataTableComponent> = (args: DataTableComponen
         ...args,
         "rows": []
     },
-    "template": insertContentToTemplate(`
+    template: insertContentToTemplate(`
     <adf-empty-list>
       <div adf-empty-list-header>Empty List Header</div>
       <div adf-empty-list-body>Empty List Body</div>
@@ -419,7 +419,7 @@ export const emptyWithTemplate: Story<DataTableComponent> = (args: DataTableComp
         ...args,
         "rows": []
     },
-    "template": insertContentToTemplate(`
+    template: insertContentToTemplate(`
     <adf-no-content-template>
       <ng-template>Sorry, no content</ng-template>
     </adf-no-content-template>
@@ -431,7 +431,7 @@ export const loadingWithTemplate: Story<DataTableComponent> = (args: DataTableCo
         ...args,
         "loading": true
     },
-    "template": insertContentToTemplate(`
+    template: insertContentToTemplate(`
     <adf-loading-content-template>
       <ng-template>
         <mat-progress-spinner [mode]='indeterminate'>
@@ -446,7 +446,7 @@ export const noPermissionWithTemplate: Story<DataTableComponent> = (args: DataTa
         ...args,
         "noPermission": true
     },
-    "template": insertContentToTemplate(`
+    template: insertContentToTemplate(`
     <adf-no-permission-template>
       <ng-template>
         <div style=color:red;>You don't have permission to this content.</div>
@@ -461,7 +461,7 @@ export const mainMenuWithTemplate: Story<DataTableComponent> = (args: DataTableC
         "mainTableAction": true,
         "showMainDatatableActions": true
     },
-    "template": insertContentToTemplate(`
+    template: insertContentToTemplate(`
     <adf-main-menu-datatable-template>
       <ng-template let-mainMenuTrigger>
         <adf-datatable-column-selector [columns]=columns [mainMenuTrigger]=mainMenuTrigger>
@@ -476,5 +476,5 @@ export const stickyHeader: Story<DataTableComponent> = (args: DataTableComponent
         ...args,
         "stickyHeader": true
     },
-    "template": '<div style="overflow:scroll;display:block;height:230px;">' + insertContentToTemplate(``) + '</div>'
+    template: '<div style="overflow:scroll;display:block;height:230px;">' + insertContentToTemplate(``) + '</div>'
 });

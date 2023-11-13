@@ -19,7 +19,7 @@ import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular
 import { DataTableComponent } from '../components/datatable/datatable.component';
 
 @Directive({
-    "selector": 'adf-main-menu-datatable-template'
+    selector: 'adf-main-menu-datatable-template'
 })
 export class MainMenuDataTableTemplateDirective implements AfterContentInit {
 

@@ -22,10 +22,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
 
 @Component({
-    "template": `
+    template: `
         <button mat-raised-button color="primary" (click)="view()">json</button>
     `,
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,7 +36,7 @@ import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dia
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {
     constructor (public formService: FormService, private dialog: MatDialog) {

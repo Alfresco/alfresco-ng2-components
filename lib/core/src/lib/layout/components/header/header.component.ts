@@ -20,11 +20,11 @@ import { ThemePalette } from '@angular/material/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
 
 @Component({
-    "selector": 'adf-layout-header',
+    selector: 'adf-layout-header',
     "templateUrl": './header.component.html',
     "styleUrls": ['./header.component.scss'],
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-layout-header' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-layout-header' }
 })
 export class HeaderLayoutComponent implements OnInit {
     /** Title of the application. */

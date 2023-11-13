@@ -18,11 +18,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    "selector": 'adf-viewer-toolbar-actions',
-    "encapsulation": ViewEncapsulation.None,
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "host": { "class": 'adf-viewer-toolbar-actions' },
-    "template": `<ng-content></ng-content>`
+    selector: 'adf-viewer-toolbar-actions',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { "class": 'adf-viewer-toolbar-actions' },
+    template: `<ng-content></ng-content>`
 })
 export class ViewerToolbarActionsComponent {
 }

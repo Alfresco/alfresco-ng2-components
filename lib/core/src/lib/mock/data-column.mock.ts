@@ -29,7 +29,7 @@ export const getDataColumnMock = <T = unknown>(
     "title": 'title',
     "srTitle": 'srTitle',
     "cssClass": 'cssClass',
-    "template": undefined,
+    template: undefined,
     "copyContent": false,
     "editable": false,
     "focus": false,

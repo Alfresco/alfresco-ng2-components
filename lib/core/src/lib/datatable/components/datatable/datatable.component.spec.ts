@@ -35,13 +35,13 @@ import { take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
 
-@Component({ "selector": 'adf-custom-column-template-component', "template": ` <ng-template #tmplRef></ng-template> ` })
+@Component({ selector: 'adf-custom-column-template-component', template: ` <ng-template #tmplRef></ng-template> ` })
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { "static": true }) templateRef: TemplateRef<any>;
 }
 @Component({
-    "selector": 'adf-custom-column-header-component',
-    "template": ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
+    selector: 'adf-custom-column-header-component',
+    template: ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
 })
 class CustomColumnHeaderComponent {
     @ViewChild('tmplRef', { "static": true }) templateRef: TemplateRef<any>;
@@ -1414,7 +1414,7 @@ describe('Accesibility', () => {
         dataTable.showHeader = ShowHeaderMode.Never;
         const dataRows = [{ "name": 'name1' }];
 
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ "key": 'name', "template": columnCustomTemplate, "focus": false })]);
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ "key": 'name', template: columnCustomTemplate, "focus": false })]);
 
         dataTable.ngOnChanges({
             "rows": new SimpleChange(null, dataRows, false)
@@ -1431,7 +1431,7 @@ describe('Accesibility', () => {
         dataTable.showHeader = ShowHeaderMode.Never;
         const dataRows = [{ "name": 'name1' }];
 
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ "key": 'name', "template": columnCustomTemplate, "focus": true })]);
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ "key": 'name', template: columnCustomTemplate, "focus": true })]);
 
         dataTable.ngOnChanges({
             "rows": new SimpleChange(null, dataRows, false)

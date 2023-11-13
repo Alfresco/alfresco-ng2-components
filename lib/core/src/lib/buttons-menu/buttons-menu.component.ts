@@ -19,10 +19,10 @@ import { Component, ContentChildren, QueryList, AfterContentInit, ViewEncapsulat
 import { MatMenuItem } from '@angular/material/menu';
 
 @Component({
-    "selector": 'adf-buttons-action-menu',
+    selector: 'adf-buttons-action-menu',
     "templateUrl": './buttons-menu.component.html',
     "styleUrls": ['./buttons-menu.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 
 export class ButtonsMenuComponent implements  AfterContentInit {

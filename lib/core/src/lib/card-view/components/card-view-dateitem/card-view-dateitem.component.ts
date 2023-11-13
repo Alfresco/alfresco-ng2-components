@@ -37,11 +37,11 @@ import { isValid } from 'date-fns';
         { "provide": DateAdapter, "useClass": AdfDateFnsAdapter },
         { "provide": DatetimeAdapter, "useClass": AdfDateTimeFnsAdapter }
     ],
-    "selector": 'adf-card-view-dateitem',
+    selector: 'adf-card-view-dateitem',
     "templateUrl": './card-view-dateitem.component.html',
     "styleUrls": ['./card-view-dateitem.component.scss'],
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-card-view-dateitem' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-card-view-dateitem' }
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
     @Input()

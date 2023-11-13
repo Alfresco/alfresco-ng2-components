@@ -18,11 +18,11 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    "selector": 'adf-viewer-more-actions',
-    "encapsulation": ViewEncapsulation.None,
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "host": { "class": 'adf-viewer-more-actions' },
-    "template": `<ng-content></ng-content>`
+    selector: 'adf-viewer-more-actions',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { "class": 'adf-viewer-more-actions' },
+    template: `<ng-content></ng-content>`
 })
 export class ViewerMoreActionsComponent {
 }

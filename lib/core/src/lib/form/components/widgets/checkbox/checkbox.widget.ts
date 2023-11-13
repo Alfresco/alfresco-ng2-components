@@ -22,9 +22,9 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    "selector": 'checkbox-widget',
+    selector: 'checkbox-widget',
     "templateUrl": './checkbox.widget.html',
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -35,7 +35,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetComponent extends WidgetComponent {
     checkboxValue: boolean;

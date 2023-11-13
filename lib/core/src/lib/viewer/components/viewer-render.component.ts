@@ -27,11 +27,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Track } from '../models/viewer.model';
 
 @Component({
-    "selector": 'adf-viewer-render',
+    selector: 'adf-viewer-render',
     "templateUrl": './viewer-render.component.html',
     "styleUrls": ['./viewer-render.component.scss'],
-    "host": {"class": 'adf-viewer-render'},
-    "encapsulation": ViewEncapsulation.None,
+    host: {"class": 'adf-viewer-render'},
+    encapsulation: ViewEncapsulation.None,
     "providers": [ViewUtilService]
 })
 export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {

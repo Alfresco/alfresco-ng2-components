@@ -21,9 +21,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
 
 @Component({
-    "selector": 'adf-json-cell',
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "template": `
+    selector: 'adf-json-cell',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
         <ng-container *ngIf="value$ | async as value; else editEmpty">
             <button mat-button color="primary" (click)="view()">json</button>
         </ng-container>
@@ -33,8 +33,8 @@ import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialog
         </ng-template>
     `,
     "styleUrls": ['./json-cell.component.scss'],
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-datatable-content-cell' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-datatable-content-cell' }
 })
 export class JsonCellComponent extends DataTableCellComponent implements OnInit {
     /** Editable JSON. */

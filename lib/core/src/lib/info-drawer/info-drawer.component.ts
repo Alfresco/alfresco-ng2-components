@@ -18,9 +18,9 @@
 import { Component, ContentChildren, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 @Component({
-    "selector": 'adf-info-drawer-tab',
-    "template": '<ng-template><ng-content></ng-content></ng-template>',
-    "encapsulation": ViewEncapsulation.None
+    selector: 'adf-info-drawer-tab',
+    template: '<ng-template><ng-content></ng-content></ng-template>',
+    encapsulation: ViewEncapsulation.None
 })
 export class InfoDrawerTabComponent {
     /** The title of the tab (string or translation key). */
@@ -36,11 +36,11 @@ export class InfoDrawerTabComponent {
 }
 
 @Component({
-    "selector": 'adf-info-drawer',
+    selector: 'adf-info-drawer',
     "templateUrl": './info-drawer.component.html',
     "styleUrls": ['./info-drawer.component.scss'],
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-info-drawer' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-info-drawer' }
 })
 export class InfoDrawerComponent {
     /** The title of the info drawer (string or translation key). */

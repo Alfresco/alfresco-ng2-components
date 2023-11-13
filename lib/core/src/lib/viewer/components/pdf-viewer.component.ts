@@ -44,12 +44,12 @@ declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
 
 @Component({
-    "selector": 'adf-pdf-viewer',
+    selector: 'adf-pdf-viewer',
     "templateUrl": './pdf-viewer.component.html',
     "styleUrls": ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
     "providers": [RenderingQueueServices],
-    "host": { "class": 'adf-pdf-viewer' },
-    "encapsulation": ViewEncapsulation.None
+    host: { "class": 'adf-pdf-viewer' },
+    encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()

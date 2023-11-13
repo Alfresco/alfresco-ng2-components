@@ -119,7 +119,7 @@ describe('AuthGuardService ECM', () => {
 
         appConfigService.config.oauth2 = {
             "silentLogin": true,
-            "host": 'http://localhost:6543',
+            host: 'http://localhost:6543',
             "redirectUri": '/',
             "clientId": 'activiti',
             "publicUrl": 'settings',

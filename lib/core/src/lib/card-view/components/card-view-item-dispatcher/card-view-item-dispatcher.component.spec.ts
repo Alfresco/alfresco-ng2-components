@@ -26,8 +26,8 @@ import { CardViewContentProxyDirective } from '../../directives/card-view-conten
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
 
 @Component({
-    "selector": 'whatever-you-want-to-have',
-    "template": '<div data-automation-id="found-me">Hey I am shiny!</div>'
+    selector: 'whatever-you-want-to-have',
+    template: '<div data-automation-id="found-me">Hey I am shiny!</div>'
 })
 export class CardViewShinyCustomElementItemComponent {
     @Input() property: CardViewItem;

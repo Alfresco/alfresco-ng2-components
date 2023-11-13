@@ -21,10 +21,10 @@ import { IdentityUserModel } from '../auth/models/identity-user.model';
 import { Subject } from 'rxjs';
 
 @Component({
-    "selector": 'adf-identity-user-info',
+    selector: 'adf-identity-user-info',
     "templateUrl": './identity-user-info.component.html',
     "styleUrls": ['./identity-user-info.component.scss'],
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class IdentityUserInfoComponent implements OnDestroy {
 

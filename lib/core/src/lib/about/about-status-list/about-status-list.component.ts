@@ -19,10 +19,10 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 import { StatusData } from '../interfaces';
 
 @Component({
-    "selector": 'adf-about-status-list',
+    selector: 'adf-about-status-list',
     "templateUrl": './about-status-list.component.html',
-    "encapsulation": ViewEncapsulation.None,
-    "changeDetection": ChangeDetectionStrategy.OnPush
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutStatusListComponent {
     columns = [

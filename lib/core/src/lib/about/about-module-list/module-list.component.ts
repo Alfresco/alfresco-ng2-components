@@ -23,10 +23,10 @@ interface ModuleInfo {
 }
 
 @Component({
-  "selector": 'adf-about-module-list',
+  selector: 'adf-about-module-list',
   "templateUrl": './module-list.component.html',
-  "encapsulation": ViewEncapsulation.None,
-  "changeDetection": ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModuleListComponent {
   columns = [

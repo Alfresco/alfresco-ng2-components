@@ -32,12 +32,12 @@ import { PaginationModel } from '../models/pagination.model';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    "selector": 'adf-infinite-pagination',
-    "host": { "class": 'infinite-adf-pagination' },
+    selector: 'adf-infinite-pagination',
+    host: { "class": 'infinite-adf-pagination' },
     "templateUrl": './infinite-pagination.component.html',
     "styleUrls": ['./infinite-pagination.component.scss'],
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "encapsulation": ViewEncapsulation.None
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 

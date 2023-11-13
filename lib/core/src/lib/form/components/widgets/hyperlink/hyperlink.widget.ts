@@ -23,10 +23,10 @@ import { WidgetComponent } from '../widget.component';
 import { FormFieldModel } from '../core';
 
 @Component({
-    "selector": 'hyperlink-widget',
+    selector: 'hyperlink-widget',
     "templateUrl": './hyperlink.widget.html',
     "styleUrls": ['./hyperlink.widget.scss'],
-    "host": {
+    host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -37,7 +37,7 @@ import { FormFieldModel } from '../core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    "encapsulation": ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {
 

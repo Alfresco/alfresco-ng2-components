@@ -22,8 +22,8 @@ import { LoginDialogComponent } from './login-dialog.component';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
 
 @Component({
-    "selector": 'adf-login-dialog-storybook',
-    "template": `<button mat-raised-button (click)="openLoginDialog()">
+    selector: 'adf-login-dialog-storybook',
+    template: `<button mat-raised-button (click)="openLoginDialog()">
         Open dialog
     </button>`
 })

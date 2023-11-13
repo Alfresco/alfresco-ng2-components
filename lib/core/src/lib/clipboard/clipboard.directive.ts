@@ -19,7 +19,7 @@ import { Directive, Input, HostListener, Component, ViewContainerRef, ComponentF
 import { ClipboardService } from './clipboard.service';
 
 @Directive({
-    "selector": '[adf-clipboard]',
+    selector: '[adf-clipboard]',
     "exportAs": 'adfClipboard'
 })
 export class ClipboardDirective {
@@ -76,9 +76,9 @@ export class ClipboardDirective {
 }
 
 @Component({
-    "selector": 'adf-copy-content-tooltip',
-    "template": `<span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>`,
-    "encapsulation": ViewEncapsulation.None
+    selector: 'adf-copy-content-tooltip',
+    template: `<span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>`,
+    encapsulation: ViewEncapsulation.None
 })
 export class ClipboardComponent implements OnInit {
     placeholder: string;

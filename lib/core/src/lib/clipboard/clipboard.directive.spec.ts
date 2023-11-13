@@ -23,8 +23,8 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-     "selector": 'adf-test-component',
-     "template": `
+     selector: 'adf-test-component',
+     template: `
         <button
             clipboard-notification="copy success"
             [adf-clipboard] [target]="ref">
@@ -75,8 +75,8 @@ describe('ClipboardDirective', () => {
 describe('CopyClipboardDirective', () => {
 
     @Component({
-        "selector":  'adf-copy-conent-test-component',
-        "template": `<span adf-clipboard="placeholder">{{ mockText }}</span>`
+        selector:  'adf-copy-conent-test-component',
+        template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`
     })
     class TestCopyClipboardComponent {
 

@@ -24,17 +24,17 @@ import { PathInfo } from '@alfresco/js-api';
 @Component({
     "standalone": true,
     "imports": [AsyncPipe, RouterModule],
-    "selector": 'adf-location-cell',
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "template": `
+    selector: 'adf-location-cell',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
         <ng-container>
             <a [title]="tooltip" [routerLink]="link">
                 {{ value$ | async }}
             </a>
         </ng-container>
     `,
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-location-cell adf-datatable-content-cell' }
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-location-cell adf-datatable-content-cell' }
 })
 export class LocationCellComponent extends DataTableCellComponent implements OnInit {
     @Input()

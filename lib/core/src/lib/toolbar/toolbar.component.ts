@@ -19,12 +19,12 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 import { ThemePalette } from '@angular/material/core';
 
 @Component({
-    "selector": 'adf-toolbar',
+    selector: 'adf-toolbar',
     "templateUrl": './toolbar.component.html',
     "styleUrls": ['./toolbar.component.scss'],
-    "changeDetection": ChangeDetectionStrategy.OnPush,
-    "encapsulation": ViewEncapsulation.None,
-    "host": { "class": 'adf-toolbar' }
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    host: { "class": 'adf-toolbar' }
 })
 export class ToolbarComponent {
 
