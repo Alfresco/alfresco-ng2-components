@@ -28,7 +28,7 @@ import { MaterialModule } from '../material.module';
         SearchTextInputComponent,
         SearchTriggerDirective
     ],
-    "imports": [
+    imports: [
         CommonModule,
         TranslateModule,
         MaterialModule,

@@ -36,7 +36,7 @@ describe('UserPreferencesService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]

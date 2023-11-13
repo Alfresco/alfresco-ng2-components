@@ -26,7 +26,7 @@ export default {
     "title": 'Core/Card View/Card View',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, CardViewModule]
+            imports: [CoreStoryModule, CardViewModule]
         })
     ],
     "argTypes": {

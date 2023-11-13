@@ -28,7 +28,7 @@ export default {
     "title": 'Core/Data Column/Data Column',
     "decorators": [
         moduleMetadata({
-            "imports": [
+            imports: [
                 CoreStoryModule,
                 DataTableModule,
                 RouterTestingModule

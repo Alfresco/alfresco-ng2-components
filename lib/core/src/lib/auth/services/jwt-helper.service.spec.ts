@@ -25,7 +25,7 @@ describe('JwtHelperService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "providers": [JwtHelperService]
+            providers: [JwtHelperService]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
     });

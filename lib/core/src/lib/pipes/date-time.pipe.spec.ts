@@ -26,8 +26,8 @@ describe('DateTimePipe', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule],
-            "providers": [DateTimePipe]
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            providers: [DateTimePipe]
         });
 
         pipe = new DateTimePipe();

@@ -30,7 +30,7 @@ describe('LocationCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 LocationCellComponent,
                 CoreTestingModule
             ]

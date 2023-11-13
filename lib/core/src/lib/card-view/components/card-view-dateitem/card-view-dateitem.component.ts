@@ -31,11 +31,11 @@ import { DateFnsUtils } from '../../../common';
 import { isValid } from 'date-fns';
 
 @Component({
-    "providers": [
-        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
-        { "provide": MAT_DATETIME_FORMATS, "useValue": ADF_DATETIME_FORMATS },
-        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter },
-        { "provide": DatetimeAdapter, "useClass": AdfDateTimeFnsAdapter }
+    providers: [
+        { provide: MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
+        { provide: MAT_DATETIME_FORMATS, "useValue": ADF_DATETIME_FORMATS },
+        { provide: DateAdapter, "useClass": AdfDateFnsAdapter },
+        { provide: DatetimeAdapter, "useClass": AdfDateTimeFnsAdapter }
     ],
     selector: 'adf-card-view-dateitem',
     "templateUrl": './card-view-dateitem.component.html',

@@ -30,7 +30,7 @@ describe('SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -90,7 +90,7 @@ describe('Custom SidebarActionMenuComponent', () => {
                 SidebarActionMenuComponent,
                 CustomSidebarActionMenuComponent
             ],
-            "imports": [
+            imports: [
                 MaterialModule,
                 NoopAnimationsModule
             ]

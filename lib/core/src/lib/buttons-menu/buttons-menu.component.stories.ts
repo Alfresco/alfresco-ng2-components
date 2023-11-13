@@ -25,7 +25,7 @@ export default {
     "title": 'Core/Buttons Menu/Buttons Menu',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, ButtonsMenuModule]
+            imports: [CoreStoryModule, ButtonsMenuModule]
         })
     ],
     "argTypes": {

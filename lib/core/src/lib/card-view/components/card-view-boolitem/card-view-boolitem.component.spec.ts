@@ -31,7 +31,7 @@ describe('CardViewBoolItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]

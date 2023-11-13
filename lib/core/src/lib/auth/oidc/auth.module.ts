@@ -42,23 +42,23 @@ export function loginFactory (oAuthService: OAuthService, storage: OAuthStorage,
 
 @NgModule({
     "declarations": [AuthenticationConfirmationComponent],
-    "imports": [AuthRoutingModule, OAuthModule.forRoot()],
-    "providers": [
-        { "provide": OAuthStorage, "useExisting": StorageService },
+    imports: [AuthRoutingModule, OAuthModule.forRoot()],
+    providers: [
+        { provide: OAuthStorage, "useExisting": StorageService },
         // { provide: AuthGuard, useClass: OidcAuthGuard },
         // { provide: AuthGuardEcm, useClass: OidcAuthGuard },
         // { provide: AuthGuardBpm, useClass: OidcAuthGuard },
-        { "provide": AuthenticationService},
-        { "provide": AlfrescoApiService, "useClass": AlfrescoApiNoAuthService },
+        { provide: AuthenticationService},
+        { provide: AlfrescoApiService, "useClass": AlfrescoApiNoAuthService },
         {
-            "provide": AUTH_CONFIG,
+            provide: AUTH_CONFIG,
             "useFactory": authConfigFactory,
             "deps": [AuthConfigService]
         },
         RedirectAuthService,
-        { "provide": AuthService, "useExisting": RedirectAuthService },
+        { provide: AuthService, "useExisting": RedirectAuthService },
         {
-            "provide": APP_INITIALIZER,
+            provide: APP_INITIALIZER,
             "useFactory": loginFactory,
             "deps": [OAuthService, OAuthStorage, AUTH_CONFIG],
             "multi": true
@@ -69,7 +69,7 @@ export class AuthModule {
     static forRoot (config: AuthModuleConfig = { "useHash": false }): ModuleWithProviders<AuthModule> {
         return {
             "ngModule": AuthModule,
-            "providers": [{ "provide": AUTH_MODULE_CONFIG, "useValue": config }]
+            providers: [{ provide: AUTH_MODULE_CONFIG, "useValue": config }]
         };
     }
 }

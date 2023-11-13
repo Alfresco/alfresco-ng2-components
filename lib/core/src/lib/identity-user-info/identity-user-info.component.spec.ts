@@ -40,7 +40,7 @@ describe('IdentityUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 MatMenuModule

@@ -23,7 +23,7 @@ import { PathInfo } from '@alfresco/js-api';
 
 @Component({
     "standalone": true,
-    "imports": [AsyncPipe, RouterModule],
+    imports: [AsyncPipe, RouterModule],
     selector: 'adf-location-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

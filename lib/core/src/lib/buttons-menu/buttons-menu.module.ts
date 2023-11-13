@@ -24,7 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ButtonsMenuComponent } from './buttons-menu.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MatIconModule,
         MatMenuModule,

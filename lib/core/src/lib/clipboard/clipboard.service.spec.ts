@@ -29,7 +29,7 @@ describe('ClipboardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 MatSnackBarModule

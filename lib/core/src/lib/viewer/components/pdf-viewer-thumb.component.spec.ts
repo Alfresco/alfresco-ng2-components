@@ -43,12 +43,12 @@ describe('PdfThumbComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            "providers": [
-                { "provide": DomSanitizer, "useValue": domSanitizer }
+            providers: [
+                { provide: DomSanitizer, "useValue": domSanitizer }
             ]
         });
         fixture = TestBed.createComponent(PdfThumbComponent);

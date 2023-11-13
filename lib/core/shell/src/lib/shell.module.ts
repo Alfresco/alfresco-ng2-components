@@ -29,7 +29,7 @@ export interface AppShellRoutesConfig {
 }
 
 @NgModule({
-  "imports": [SidenavLayoutModule, ExtensionsModule, RouterModule.forChild([]), CommonModule],
+  imports: [SidenavLayoutModule, ExtensionsModule, RouterModule.forChild([]), CommonModule],
   "exports": [ShellLayoutComponent],
   "declarations": [ShellLayoutComponent]
 })
@@ -57,7 +57,7 @@ function getModuleForRoutes (routes: Routes): ModuleWithProviders<ShellModule> {
 
   return {
     "ngModule": ShellModule,
-    "providers": provideRoutes([shellLayoutRoute])
+    providers: provideRoutes([shellLayoutRoute])
   };
 }
 
@@ -86,6 +86,6 @@ function getModuleForRouteConfig (config: AppShellRoutesConfig): ModuleWithProvi
 
   return {
     "ngModule": ShellModule,
-    "providers": provideRoutes([rootRoute])
+    providers: provideRoutes([rootRoute])
   };
 }

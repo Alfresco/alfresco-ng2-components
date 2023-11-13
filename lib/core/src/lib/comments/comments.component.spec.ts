@@ -34,13 +34,13 @@ describe('CommentsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            "providers": [
+            providers: [
                 {
-                    "provide": ADF_COMMENTS_SERVICE,
+                    provide: ADF_COMMENTS_SERVICE,
                     "useClass": CommentsServiceMock
                 }
             ]

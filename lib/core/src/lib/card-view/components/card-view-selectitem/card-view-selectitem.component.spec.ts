@@ -59,7 +59,7 @@ describe('CardViewSelectItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;

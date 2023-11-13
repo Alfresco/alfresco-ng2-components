@@ -35,7 +35,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;

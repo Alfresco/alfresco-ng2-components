@@ -44,7 +44,7 @@ describe('PaginationComponent', () => {
     let component: PaginationComponent;
 
     setupTestBed({
-        "imports": [
+        imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
         ],

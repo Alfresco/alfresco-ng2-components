@@ -44,7 +44,7 @@ const meta: Meta = {
   "title": 'Core/Breadcrumb',
   "decorators": [
     moduleMetadata({
-      "imports": [
+      imports: [
         CoreStoryModule,
         BreadcrumbComponent,
         BreadcrumbItemComponent,

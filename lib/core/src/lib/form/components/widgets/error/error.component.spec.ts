@@ -29,7 +29,7 @@ describe('ErrorWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 CoreTestingModule
             ]
         });

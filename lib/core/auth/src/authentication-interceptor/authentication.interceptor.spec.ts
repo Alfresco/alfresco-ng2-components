@@ -41,7 +41,7 @@ describe('AuthenticationInterceptor', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      "providers": [AuthenticationInterceptor, {"provide": Authentication, "useClass": MockAuthentication}]
+      providers: [AuthenticationInterceptor, {provide: Authentication, "useClass": MockAuthentication}]
     });
     interceptor = TestBed.inject(AuthenticationInterceptor);
     addTokenToHeaderSpy = spyOn(interceptor['authService'], 'addTokenToHeader');

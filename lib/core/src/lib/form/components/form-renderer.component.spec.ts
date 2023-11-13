@@ -87,7 +87,7 @@ describe('Form Renderer Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;

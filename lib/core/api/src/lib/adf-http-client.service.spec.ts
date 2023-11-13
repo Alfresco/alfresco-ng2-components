@@ -58,7 +58,7 @@ describe('AdfHttpClient', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 HttpClientTestingModule
             ]
         });

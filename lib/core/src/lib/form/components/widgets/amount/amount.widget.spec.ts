@@ -37,7 +37,7 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -145,7 +145,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -340,10 +340,10 @@ describe('AmountWidgetComponent settings', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule],
-            "providers": [
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule],
+            providers: [
                 {
-                    "provide": ADF_AMOUNT_SETTINGS,
+                    provide: ADF_AMOUNT_SETTINGS,
                     "useValue": {
                         "showReadonlyPlaceholder": true
                     }

@@ -29,7 +29,7 @@ import { LoginDialogComponent } from './components/login-dialog.component';
 import { LoginDialogPanelComponent } from './components/login-dialog-panel.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         RouterModule,
         MaterialModule,
         FormsModule,

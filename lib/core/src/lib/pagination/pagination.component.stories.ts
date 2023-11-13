@@ -25,7 +25,7 @@ export default {
     "title": 'Core/Pagination/Pagination',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, PaginationModule]
+            imports: [CoreStoryModule, PaginationModule]
         })
     ],
     "argTypes": {

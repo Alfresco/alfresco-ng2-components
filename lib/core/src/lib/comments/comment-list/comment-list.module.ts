@@ -29,7 +29,7 @@ import { PipeModule } from '../../pipes/pipe.module';
 import { CommentListComponent } from './comment-list.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         PipeModule,
         FormsModule,
         CommonModule,

@@ -35,16 +35,16 @@ describe('ExtensionViewerDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            "providers": [
-                { "provide": Location, "useClass": SpyLocation },
+            providers: [
+                { provide: Location, "useClass": SpyLocation },
                 ViewerExtensionDirective,
-                {"provide": ElementRef, "useClass": MockElementRef},
+                {provide: ElementRef, "useClass": MockElementRef},
                 ViewerRenderComponent,
-                { "provide": ChangeDetectorRef, "useValue": { "detectChanges": () => {} } }
+                { provide: ChangeDetectorRef, "useValue": { "detectChanges": () => {} } }
             ]
         });
         extensionViewerDirective = TestBed.inject(ViewerExtensionDirective);

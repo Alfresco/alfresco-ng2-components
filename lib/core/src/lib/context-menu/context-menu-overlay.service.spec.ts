@@ -36,11 +36,11 @@ describe('ContextMenuOverlayService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            "providers": [ Overlay ]
+            providers: [ Overlay ]
         });
         overlay = TestBed.inject(Overlay);
         injector = TestBed.inject(Injector);

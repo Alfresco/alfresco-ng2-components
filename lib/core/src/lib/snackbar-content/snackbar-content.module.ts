@@ -24,7 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MatIconModule,
         MatSnackBarModule,

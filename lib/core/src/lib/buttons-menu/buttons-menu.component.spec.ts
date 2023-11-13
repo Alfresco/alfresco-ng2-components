@@ -60,7 +60,7 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule,
                     MaterialModule
@@ -111,7 +111,7 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule,
                     MaterialModule

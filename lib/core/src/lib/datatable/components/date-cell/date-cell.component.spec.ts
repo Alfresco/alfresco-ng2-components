@@ -62,7 +62,7 @@ const checkDisplayedTooltip = (expectedTooltip: string) => {
 
 const configureTestingModule = (providers: any[]) => {
     TestBed.configureTestingModule({
-        "imports": [
+        imports: [
             DateCellComponent,
             HttpClientTestingModule,
             TranslateModule.forRoot()
@@ -216,7 +216,7 @@ describe('DateCellComponent', () => {
 
 describe('DateCellComponent locale', () => {
     it('should display date and tooltip with custom locale', () => {
-        configureTestingModule([{ "provide": LOCALE_ID, "useValue": 'pl-PL' }]);
+        configureTestingModule([{ provide: LOCALE_ID, "useValue": 'pl-PL' }]);
         registerLocaleData(localePL);
 
         const mockDateConfig: DateConfig = {

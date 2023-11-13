@@ -33,7 +33,7 @@ describe('FormModel', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 CoreTestingModule
             ]
         });

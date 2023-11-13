@@ -52,12 +52,12 @@ describe('AppConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 HttpClientModule,
                 AppConfigModule
             ],
-            "providers": [
-                { "provide": ExtensionService, "useClass": TestExtensionService }
+            providers: [
+                { provide: ExtensionService, "useClass": TestExtensionService }
             ]
         });
     });

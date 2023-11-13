@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     "standalone": true,
-    "imports": [CommonModule],
+    imports: [CommonModule],
     selector: 'adf-amount-cell',
     "templateUrl": './amount-cell.component.html',
     host: { "class": 'adf-datatable-content-cell' },

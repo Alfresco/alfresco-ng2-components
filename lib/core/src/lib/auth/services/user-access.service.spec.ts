@@ -28,8 +28,8 @@ describe('UserAccessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [CoreTestingModule],
-            "providers": [UserAccessService]
+            imports: [CoreTestingModule],
+            providers: [UserAccessService]
         });
         userAccessService = TestBed.inject(UserAccessService);
         jwtHelperService = TestBed.inject(JwtHelperService);

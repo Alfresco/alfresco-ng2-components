@@ -56,7 +56,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     "styleUrls": ['./viewer.component.scss'],
     host: { "class": 'adf-viewer' },
     encapsulation: ViewEncapsulation.None,
-    "providers": [ViewUtilService]
+    providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @ContentChild(ViewerToolbarComponent)

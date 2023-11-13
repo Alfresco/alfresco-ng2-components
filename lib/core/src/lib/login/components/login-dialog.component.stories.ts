@@ -29,9 +29,9 @@ export default {
     "title": 'Core/Login/Login Dialog',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, LoginModule, RouterTestingModule, MatButtonModule],
-            "providers": [
-                { "provide": AuthenticationService, "useClass": AuthenticationMock }
+            imports: [CoreStoryModule, LoginModule, RouterTestingModule, MatButtonModule],
+            providers: [
+                { provide: AuthenticationService, "useClass": AuthenticationMock }
             ]
         })
     ],

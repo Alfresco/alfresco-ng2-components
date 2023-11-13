@@ -25,9 +25,9 @@ import { FormService } from '../services/form.service';
     selector: 'adf-form-renderer',
     "templateUrl": './form-renderer.component.html',
     "styleUrls": ['./form-renderer.component.scss'],
-    "providers": [
+    providers: [
         {
-            "provide": FormRulesManager,
+            provide: FormRulesManager,
             "useFactory": formRulesManagerFactory,
             "deps": [Injector]
         }

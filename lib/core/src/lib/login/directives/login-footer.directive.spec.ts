@@ -29,13 +29,13 @@ describe('LoginFooterDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            "providers": [
+            providers: [
                 {
-                    "provide": OidcAuthenticationService, "useValue": {}
+                    provide: OidcAuthenticationService, "useValue": {}
                 }
             ]
         });

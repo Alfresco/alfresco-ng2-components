@@ -34,7 +34,7 @@ import { AboutPanelDirective } from './about-panel.directive';
 import { AboutRepositoryInfoComponent } from './about-repository-info/about-repository-info.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MaterialModule,
         TranslateModule,

@@ -21,7 +21,7 @@ import { ClipboardDirective, ClipboardComponent } from './clipboard.directive';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         TranslateModule
     ],

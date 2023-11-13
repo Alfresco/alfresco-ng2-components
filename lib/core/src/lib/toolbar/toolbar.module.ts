@@ -25,7 +25,7 @@ import { ToolbarTitleComponent } from './toolbar-title.component';
 import { ToolbarComponent } from './toolbar.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MaterialModule,
         TranslateModule

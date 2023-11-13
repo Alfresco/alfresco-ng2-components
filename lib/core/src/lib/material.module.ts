@@ -46,7 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
-    "imports": [
+    imports: [
         MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
         MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
         MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,

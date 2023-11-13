@@ -25,7 +25,7 @@ import { LogService } from './log.service';
 
 @Component({
     template: '',
-    "providers": [LogService]
+    providers: [LogService]
 })
 class ProvidesLogComponent {
     constructor (public logService: LogService) {}
@@ -61,9 +61,9 @@ describe('LogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [HttpClientModule],
+            imports: [HttpClientModule],
             "declarations": [ProvidesLogComponent],
-            "providers": [LogService, AppConfigService]
+            providers: [LogService, AppConfigService]
         });
         appConfigService = TestBed.inject(AppConfigService);
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);

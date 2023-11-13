@@ -28,10 +28,10 @@ export default {
     "title": 'Core/Comments/Comment',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, CommentsModule],
-            "providers": [
-                { "provide": CommentsServiceStoriesMock, "useValue": { "getUserProfileImage": () => '../assets/images/logo.png' } },
-                { "provide": ADF_COMMENTS_SERVICE, "useClass": CommentsServiceStoriesMock }
+            imports: [CoreStoryModule, CommentsModule],
+            providers: [
+                { provide: CommentsServiceStoriesMock, "useValue": { "getUserProfileImage": () => '../assets/images/logo.png' } },
+                { provide: ADF_COMMENTS_SERVICE, "useClass": CommentsServiceStoriesMock }
             ]
         })
     ],

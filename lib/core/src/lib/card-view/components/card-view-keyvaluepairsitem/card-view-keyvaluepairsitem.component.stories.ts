@@ -25,7 +25,7 @@ export default {
     "title": 'Core/Card View/Card View Key Value Pairs Item',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, CardViewModule]
+            imports: [CoreStoryModule, CardViewModule]
         })
     ],
     "argTypes": {

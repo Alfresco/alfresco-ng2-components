@@ -30,11 +30,11 @@ export default {
     "title": 'Core/About/About',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, AboutModule],
-            "providers": [
-                { "provide": AuthenticationService, "useClass": AuthenticationMock },
-                { "provide": AppExtensionService, "useClass": AppExtensionServiceMock },
-                { "provide": AppConfigService, "useClass": AppConfigServiceMock }
+            imports: [CoreStoryModule, AboutModule],
+            providers: [
+                { provide: AuthenticationService, "useClass": AuthenticationMock },
+                { provide: AppExtensionService, "useClass": AppExtensionServiceMock },
+                { provide: AppConfigService, "useClass": AppConfigServiceMock }
             ]
         })
     ],

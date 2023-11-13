@@ -46,14 +46,14 @@ describe('Form Rules', () => {
     describe('Injection token provided', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule,
                     FormBaseModule
                 ],
-                "providers": [
+                providers: [
                     {
-                        "provide": FORM_RULES_MANAGER,
+                        provide: FORM_RULES_MANAGER,
                         "useValue": customRuleManager
                     }
                 ]
@@ -115,7 +115,7 @@ describe('Form Rules', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule,
                     FormBaseModule

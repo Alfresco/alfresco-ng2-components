@@ -25,7 +25,7 @@ export default {
     "title": 'Core/Layout/Sidebar Action Menu',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, SidenavLayoutModule]
+            imports: [CoreStoryModule, SidenavLayoutModule]
         })
     ],
     "parameters": {

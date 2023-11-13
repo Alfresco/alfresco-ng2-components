@@ -32,7 +32,7 @@ describe('HyperlinkWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 MatTooltipModule

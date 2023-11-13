@@ -26,7 +26,7 @@ export default {
     "title": 'Core/Sorting Picker/Sorting Picker',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, SortingPickerModule]
+            imports: [CoreStoryModule, SortingPickerModule]
         })
     ],
     "parameters": {

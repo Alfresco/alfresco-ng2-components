@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     "standalone": true,
-    "imports": [CommonModule],
+    imports: [CommonModule],
     selector: 'adf-number-cell',
     "templateUrl": './number-cell.component.html',
     host: { "class": 'adf-datatable-content-cell' },

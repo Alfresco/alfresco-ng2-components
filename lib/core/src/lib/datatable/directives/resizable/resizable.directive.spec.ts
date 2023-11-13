@@ -55,9 +55,9 @@ describe('ResizableDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             "declarations": [ResizableDirective],
-            "providers": [
-                { "provide": Renderer2, "useValue": rendererMock },
-                { "provide": ElementRef, "useValue": elementRefMock }
+            providers: [
+                { provide: Renderer2, "useValue": rendererMock },
+                { provide: ElementRef, "useValue": elementRefMock }
             ]
         });
 

@@ -25,7 +25,7 @@ export default {
     "title": 'Core/Toolbar/Toolbar',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, ToolbarModule]
+            imports: [CoreStoryModule, ToolbarModule]
         })
     ],
     "argTypes": {

@@ -38,7 +38,7 @@ describe('IdentityGroupService', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]

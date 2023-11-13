@@ -29,7 +29,7 @@ import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 
 @Component({
     template: '',
-    "providers": [NotificationService]
+    providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
     constructor (public notificationService: NotificationService) {}
@@ -92,7 +92,7 @@ describe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, MatSnackBarModule],
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatSnackBarModule],
             "declarations": [ProvidesNotificationServiceComponent]
         });
         translationService = TestBed.inject(TranslationService);

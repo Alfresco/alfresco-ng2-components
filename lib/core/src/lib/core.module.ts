@@ -68,7 +68,7 @@ import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
 
 @NgModule({
-    "imports": [
+    imports: [
         TranslateModule,
         ExtensionsModule,
         AboutModule,
@@ -144,34 +144,34 @@ export class CoreModule {
     static forRoot (): ModuleWithProviders<CoreModule> {
         return {
             "ngModule": CoreModule,
-            "providers": [
+            providers: [
                 TranslateStore,
                 TranslateService,
-                { "provide": TranslateLoader, "useClass": TranslateLoaderService },
+                { provide: TranslateLoader, "useClass": TranslateLoaderService },
                 AdfDateFnsAdapter,
                 AdfDateTimeFnsAdapter,
                 MomentDateAdapter,
                 {
-                    "provide": APP_INITIALIZER,
+                    provide: APP_INITIALIZER,
                     "useFactory": loadAppConfig,
                     "deps": [ AppConfigService, StorageService, AdfHttpClient ], "multi": true
                 },
                 {
-                    "provide": APP_INITIALIZER,
+                    provide: APP_INITIALIZER,
                     "useFactory": directionalityConfigFactory,
                     "deps": [DirectionalityConfigService],
                     "multi": true
                 },
-                { "provide": HTTP_INTERCEPTORS, "useClass": AuthenticationInterceptor, "multi": true },
-                { "provide": Authentication, "useClass": AuthenticationService },
+                { provide: HTTP_INTERCEPTORS, "useClass": AuthenticationInterceptor, "multi": true },
+                { provide: Authentication, "useClass": AuthenticationService },
                 {
-                    "provide": MAT_SNACK_BAR_DEFAULT_OPTIONS,
+                    provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
                     "useValue": {
                         "duration": 10000
                     }
                 },
                 {
-                    "provide": APP_INITIALIZER,
+                    provide: APP_INITIALIZER,
                     "useFactory": createAlfrescoApiInstance,
                     "deps": [ AlfrescoApiLoaderService ],
                     "multi": true

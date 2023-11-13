@@ -44,7 +44,7 @@ describe('TooltipCardDirective', () => {
 
     beforeEach((() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 CommonModule,
                 OverlayModule,
                 NoopAnimationsModule

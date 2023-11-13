@@ -27,7 +27,7 @@ import { PipeModule } from '../pipes/pipe.module';
 
 @NgModule({
     "declarations": [IdentityUserInfoComponent],
-    "imports": [
+    imports: [
         CommonModule,
         MatButtonModule,
         MatMenuModule,

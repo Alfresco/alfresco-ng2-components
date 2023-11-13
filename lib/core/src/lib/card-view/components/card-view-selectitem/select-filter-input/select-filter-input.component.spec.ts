@@ -28,8 +28,8 @@ describe('SelectFilterInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule],
-            "providers": [MatSelect]
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            providers: [MatSelect]
         });
 
         fixture = TestBed.createComponent(SelectFilterInputComponent);

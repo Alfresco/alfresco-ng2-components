@@ -30,12 +30,12 @@ describe('TranslateLoader', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 AuthModule.forRoot({ "useHash": true }),
                 TranslateModule.forRoot(),
                 CoreModule.forRoot()
             ],
-            "providers": [
+            providers: [
                 TranslationService
             ]
         });

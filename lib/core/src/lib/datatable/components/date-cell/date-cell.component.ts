@@ -24,7 +24,7 @@ import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 
 @Component({
     "standalone": true,
-    "imports": [CommonModule, LocalizedDatePipe, TimeAgoPipe],
+    imports: [CommonModule, LocalizedDatePipe, TimeAgoPipe],
     selector: 'adf-date-cell',
     "templateUrl": './date-cell.component.html',
     encapsulation: ViewEncapsulation.None,

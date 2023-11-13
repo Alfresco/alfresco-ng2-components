@@ -27,9 +27,9 @@ export default {
     "title": 'Core/Comments/Comment List',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, CommentsModule],
-            "providers": [
-                { "provide": CommentListServiceMock, "useValue": { "getUserProfileImage": () => '../assets/images/logo.png' } }
+            imports: [CoreStoryModule, CommentsModule],
+            providers: [
+                { provide: CommentListServiceMock, "useValue": { "getUserProfileImage": () => '../assets/images/logo.png' } }
             ]
         })
     ],

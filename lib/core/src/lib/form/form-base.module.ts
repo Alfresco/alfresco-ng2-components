@@ -39,7 +39,7 @@ import { ViewerModule } from '../viewer/viewer.module';
 import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         A11yModule,
         DataTableModule,

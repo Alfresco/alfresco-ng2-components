@@ -34,7 +34,7 @@ export default {
     "title": 'Core/Dialog/Edit JSON Dialog',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, EditJsonDialogModule, MatButtonModule]
+            imports: [CoreStoryModule, EditJsonDialogModule, MatButtonModule]
         })
     ],
     "argTypes": {

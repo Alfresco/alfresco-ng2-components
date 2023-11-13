@@ -26,7 +26,7 @@ export default {
     "title": 'Core/Info Drawer/Info Drawer',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, InfoDrawerModule]
+            imports: [CoreStoryModule, InfoDrawerModule]
         })
     ],
     "parameters": {

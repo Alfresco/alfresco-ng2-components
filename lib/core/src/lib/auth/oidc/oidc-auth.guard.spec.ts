@@ -30,8 +30,8 @@ const routeSnapshot = new ActivatedRouteSnapshot();
 describe('OidcAuthGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      "imports": [RouterTestingModule],
-      "providers": [OidcAuthGuard]
+      imports: [RouterTestingModule],
+      providers: [OidcAuthGuard]
     });
   });
 

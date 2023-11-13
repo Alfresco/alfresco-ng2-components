@@ -37,12 +37,12 @@ describe('AuthBearerInterceptor', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "providers": [
+            providers: [
                 HttpClient,
                 HttpHandler,
                 AuthBearerInterceptor,
                 AuthenticationService,
-                { "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY } }
+                { provide: RedirectAuthService, "useValue": { "onLogin": EMPTY } }
             ]
         });
 

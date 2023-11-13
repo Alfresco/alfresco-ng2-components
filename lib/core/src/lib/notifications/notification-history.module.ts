@@ -25,7 +25,7 @@ import { PaginationModule } from '../pagination/pagination.module';
 import { AddNotificationStorybookComponent } from './components/add-notification.stories.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MaterialModule,
         TranslateModule,

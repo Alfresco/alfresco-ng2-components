@@ -38,7 +38,7 @@ describe('CardViewComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         }).compileComponents();
 
         fixture = TestBed.createComponent(CardViewComponent);

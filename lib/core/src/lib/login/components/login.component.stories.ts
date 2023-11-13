@@ -28,9 +28,9 @@ export default {
     "title": 'Core/Login/Login',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, LoginModule, RouterModule.forRoot([], { "useHash": true })],
-            "providers": [
-                { "provide": AuthenticationService, "useClass": AuthenticationMock }
+            imports: [CoreStoryModule, LoginModule, RouterModule.forRoot([], { "useHash": true })],
+            providers: [
+                { provide: AuthenticationService, "useClass": AuthenticationMock }
             ]
         })
     ],

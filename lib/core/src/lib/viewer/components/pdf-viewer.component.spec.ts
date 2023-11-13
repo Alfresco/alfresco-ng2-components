@@ -126,7 +126,7 @@ describe('Test PdfViewer component', () => {
 
     beforeEach((done) => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
@@ -136,9 +136,9 @@ describe('Test PdfViewer component', () => {
                 UrlTestPasswordComponent,
                 BlobTestComponent
             ],
-            "providers": [
+            providers: [
                 {
-                    "provide": MatDialog, "useValue": {
+                    provide: MatDialog, "useValue": {
                         "open": () => {
                         }
                     }

@@ -45,7 +45,7 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ],
@@ -126,7 +126,7 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ],
@@ -169,7 +169,7 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ],

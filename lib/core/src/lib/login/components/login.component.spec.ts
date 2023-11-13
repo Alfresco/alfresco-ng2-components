@@ -59,12 +59,12 @@ describe('LoginComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 CoreTestingModule
             ],
-            "providers": [
+            providers: [
                 {
-                    "provide": OidcAuthenticationService, "useValue": {
+                    provide: OidcAuthenticationService, "useValue": {
                         "ssoImplicitLogin": () => { },
                         "isPublicUrl": () => false,
                         "hasValidIdToken": () => false,

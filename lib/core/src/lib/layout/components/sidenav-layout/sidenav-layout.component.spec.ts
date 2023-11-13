@@ -82,7 +82,7 @@ describe('SidenavLayoutComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 CommonModule,
                 PlatformModule,
                 LayoutModule,
@@ -95,9 +95,9 @@ describe('SidenavLayoutComponent', () => {
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
-            "providers": [
+            providers: [
                 MediaMatcher,
-                { "provide": UserPreferencesService, "useValue": { "select": () => of() } }
+                { provide: UserPreferencesService, "useValue": { "select": () => of() } }
             ],
             "schemas": [
                 CUSTOM_ELEMENTS_SCHEMA
@@ -239,7 +239,7 @@ describe('Template transclusion', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 CommonModule,
                 PlatformModule,
                 LayoutModule,
@@ -253,9 +253,9 @@ describe('Template transclusion', () => {
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
-            "providers": [
+            providers: [
                 MediaMatcher,
-                { "provide": UserPreferencesService, "useValue": { "select": () => of() } }
+                { provide: UserPreferencesService, "useValue": { "select": () => of() } }
             ]
         });
         mediaMatcher = TestBed.inject(MediaMatcher);

@@ -50,7 +50,7 @@ describe('CardViewItemDispatcherComponent', () => {
                 CardViewShinyCustomElementItemComponent,
                 CardViewContentProxyDirective
             ],
-            "providers": [ { "provide": CardItemTypeService, "useValue": cardItemTypeService } ]
+            providers: [ { provide: CardItemTypeService, "useValue": cardItemTypeService } ]
         });
 
         TestBed.compileComponents();

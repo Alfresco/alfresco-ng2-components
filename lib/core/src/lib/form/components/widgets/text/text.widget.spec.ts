@@ -42,7 +42,7 @@ describe('TextWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
         });
         fixture = TestBed.createComponent(TextWidgetComponent);
         widget = fixture.componentInstance;

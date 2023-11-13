@@ -32,7 +32,7 @@ import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.comp
     "templateUrl": './breadcrumb.component.html',
     "styleUrls": ['./breadcrumb.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    "imports": [ CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatTooltipModule ]
+    imports: [ CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatTooltipModule ]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];

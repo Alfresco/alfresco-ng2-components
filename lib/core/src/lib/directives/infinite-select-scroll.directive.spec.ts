@@ -50,7 +50,7 @@ describe('InfiniteSelectScrollDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 MatSelectModule,
                 NoopAnimationsModule
             ],

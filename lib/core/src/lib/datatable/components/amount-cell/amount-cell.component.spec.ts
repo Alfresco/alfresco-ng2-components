@@ -40,7 +40,7 @@ describe('AmountCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [AmountCellComponent]
+            imports: [AmountCellComponent]
         });
         fixture = TestBed.createComponent(AmountCellComponent);
         component = fixture.componentInstance;
@@ -76,8 +76,8 @@ describe('AmountCellComponent locale', () => {
 
     it('should render currency value with custom locale', () => {
         TestBed.configureTestingModule({
-            "imports": [AmountCellComponent],
-            "providers": [{ "provide": LOCALE_ID, "useValue": 'pl-PL' }]
+            imports: [AmountCellComponent],
+            providers: [{ provide: LOCALE_ID, "useValue": 'pl-PL' }]
         });
 
         fixture = TestBed.createComponent(AmountCellComponent);

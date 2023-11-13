@@ -27,7 +27,7 @@ import { LanguageMenuComponent } from './language-menu.component';
 import { LanguagePickerComponent } from './language-picker.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MatMenuModule,
         MatIconModule,

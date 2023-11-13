@@ -59,7 +59,7 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
 import { LocalizedDatePipe } from '../pipes';
 
 @NgModule({
-    "imports": [
+    imports: [
         RouterModule,
         MaterialModule,
         CommonModule,

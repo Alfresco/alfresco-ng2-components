@@ -50,7 +50,7 @@ describe('IdentityRoleService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 HttpClientModule
             ]
         });

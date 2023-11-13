@@ -35,7 +35,7 @@ describe('HeaderLayoutComponent', () => {
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ]
@@ -267,7 +267,7 @@ describe('HeaderLayoutComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [TranslateModule.forRoot(), CoreTestingModule, SidenavLayoutModule, MaterialModule],
+                imports: [TranslateModule.forRoot(), CoreTestingModule, SidenavLayoutModule, MaterialModule],
                 "declarations": [HeaderLayoutTesterComponent]
             });
         });

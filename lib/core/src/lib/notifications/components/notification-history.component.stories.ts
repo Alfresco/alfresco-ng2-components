@@ -25,7 +25,7 @@ export default {
     "title": 'Core/Notification History/Notification History',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, NotificationHistoryModule]
+            imports: [CoreStoryModule, NotificationHistoryModule]
         })
     ],
     "parameters": {

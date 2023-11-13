@@ -32,12 +32,12 @@ describe('ErrorContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            "providers": [
-                { "provide": ActivatedRoute, "useValue": { "params": of() } }
+            providers: [
+                { provide: ActivatedRoute, "useValue": { "params": of() } }
             ]
         });
         fixture = TestBed.createComponent(ErrorContentComponent);

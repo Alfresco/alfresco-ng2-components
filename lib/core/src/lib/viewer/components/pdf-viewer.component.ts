@@ -47,7 +47,7 @@ declare const pdfjsViewer: any;
     selector: 'adf-pdf-viewer',
     "templateUrl": './pdf-viewer.component.html',
     "styleUrls": ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
-    "providers": [RenderingQueueServices],
+    providers: [RenderingQueueServices],
     host: { "class": 'adf-pdf-viewer' },
     encapsulation: ViewEncapsulation.None
 })

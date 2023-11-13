@@ -21,7 +21,7 @@ import { Directive, ElementRef, forwardRef, HostListener, Input, OnChanges, Rend
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
-    "provide": NG_VALUE_ACCESSOR,
+    provide: NG_VALUE_ACCESSOR,
     "useExisting": forwardRef(() => InputMaskDirective),
     "multi": true
 };
@@ -31,7 +31,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
  */
 @Directive({
     selector: '[adf-text-mask], [textMask]',
-    "providers": [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     /** Object defining mask and "reversed" status. */

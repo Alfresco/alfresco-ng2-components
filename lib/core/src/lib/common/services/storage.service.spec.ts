@@ -32,7 +32,7 @@ describe('StorageService', () => {
     describe('StorageService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     CoreTestingModule
                 ]
             });
@@ -78,7 +78,7 @@ describe('StorageService', () => {
     describe('StorageService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                "imports": [
+                imports: [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ]

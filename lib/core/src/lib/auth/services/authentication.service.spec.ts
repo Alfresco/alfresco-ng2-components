@@ -35,7 +35,7 @@ describe('AuthenticationService', () => {
     let oidcAuthenticationService: OidcAuthenticationService;
 
     setupTestBed({
-        "imports": [
+        imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
         ]

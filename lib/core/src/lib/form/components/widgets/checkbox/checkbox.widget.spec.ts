@@ -39,8 +39,8 @@ describe('CheckboxWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule, MatCheckboxModule, MatTooltipModule],
-            "providers": [{ "provide": TranslateLoader, "useClass": TranslateLoaderService }]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule, MatCheckboxModule, MatTooltipModule],
+            providers: [{ provide: TranslateLoader, "useClass": TranslateLoaderService }]
         });
         fixture = TestBed.createComponent(CheckboxWidgetComponent);
 

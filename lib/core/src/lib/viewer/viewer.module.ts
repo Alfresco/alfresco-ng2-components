@@ -47,7 +47,7 @@ import { ViewerToolbarCustomActionsComponent } from './components/viewer-toolbar
 import { DownloadPromptDialogComponent } from './components/download-prompt-dialog/download-prompt-dialog.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MaterialModule,
         TranslateModule,

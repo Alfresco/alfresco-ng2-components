@@ -38,7 +38,7 @@ import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-pr
 import { DateTimePipe } from './date-time.pipe';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         TranslateModule,
         LocalizedDatePipe,
@@ -61,7 +61,7 @@ import { DateTimePipe } from './date-time.pipe';
         FilterStringPipe,
         FilterOutArrayObjectsByPropPipe
     ],
-    "providers": [
+    providers: [
         FileSizePipe,
         HighlightPipe,
         TimeAgoPipe,

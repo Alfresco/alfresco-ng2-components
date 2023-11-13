@@ -37,12 +37,12 @@ describe('DownloadPromptDialogComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             "declarations": [DownloadPromptDialogComponent],
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            "providers": [
-                { "provide": MatDialogRef, "useValue": mockDialog }
+            providers: [
+                { provide: MatDialogRef, "useValue": mockDialog }
             ]
         });
         matDialogRef = TestBed.inject(MatDialogRef);

@@ -24,7 +24,7 @@ import { ContextMenuDirective } from './context-menu.directive';
 import { ContextMenuListComponent } from './context-menu-list.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MaterialModule,
         TranslateModule

@@ -29,9 +29,9 @@ export default {
     "title": 'Core/Language Menu/Language Menu',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, LanguageMenuModule],
-            "providers": [
-                { "provide": LanguageService, "useClass": LanguageServiceMock }
+            imports: [CoreStoryModule, LanguageMenuModule],
+            providers: [
+                { provide: LanguageService, "useClass": LanguageServiceMock }
             ]
         })
     ],

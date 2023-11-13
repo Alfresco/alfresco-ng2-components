@@ -23,7 +23,7 @@ import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginationComponent } from './pagination.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MaterialModule,
         TranslateModule

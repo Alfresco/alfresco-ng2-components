@@ -36,7 +36,7 @@ export interface TranslationProvider {
  */
 export function provideTranslations (id: string, path: string) {
     return {
-        "provide": TRANSLATION_PROVIDER,
+        provide: TRANSLATION_PROVIDER,
         "multi": true,
         "useValue": {
             "name": id,

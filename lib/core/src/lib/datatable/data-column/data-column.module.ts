@@ -23,7 +23,7 @@ import { DataColumnComponent } from './data-column.component';
 import { DateColumnHeaderComponent } from './data-column-header.component';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule
     ],
     "declarations": [

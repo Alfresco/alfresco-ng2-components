@@ -40,7 +40,7 @@ describe('NumberCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [NumberCellComponent]
+            imports: [NumberCellComponent]
         });
         fixture = TestBed.createComponent(NumberCellComponent);
         component = fixture.componentInstance;
@@ -66,8 +66,8 @@ describe('NumberCellComponent locale', () => {
 
     it('should render decimal value with custom locale', () => {
         TestBed.configureTestingModule({
-            "imports": [NumberCellComponent],
-            "providers": [{ "provide": LOCALE_ID, "useValue": 'pl-PL' }]
+            imports: [NumberCellComponent],
+            providers: [{ provide: LOCALE_ID, "useValue": 'pl-PL' }]
         });
 
         fixture = TestBed.createComponent(NumberCellComponent);

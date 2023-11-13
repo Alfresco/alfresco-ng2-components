@@ -58,7 +58,7 @@ describe('AppLayoutComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      "imports": [
+      imports: [
         CommonModule,
         NoopAnimationsModule,
         HttpClientModule,
@@ -67,13 +67,13 @@ describe('AppLayoutComponent', () => {
         RouterModule.forChild([]),
         TranslateModule.forRoot()
       ],
-      "providers": [
+      providers: [
         {
-          "provide": Router,
+          provide: Router,
           "useClass": MockRouter
         },
         {
-          "provide": SHELL_APP_SERVICE,
+          provide: SHELL_APP_SERVICE,
           "useValue": shellService
         }
       ],

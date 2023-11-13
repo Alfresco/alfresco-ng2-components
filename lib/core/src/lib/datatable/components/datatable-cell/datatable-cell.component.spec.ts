@@ -52,7 +52,7 @@ describe('DataTableCellComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             "declarations": [DataTableCellComponent],
-            "providers": [DataTableService]
+            providers: [DataTableService]
         });
 
         fixture = TestBed.createComponent(DataTableCellComponent);

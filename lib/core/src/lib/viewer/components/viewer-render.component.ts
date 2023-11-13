@@ -32,7 +32,7 @@ import { Track } from '../models/viewer.model';
     "styleUrls": ['./viewer-render.component.scss'],
     host: {"class": 'adf-viewer-render'},
     encapsulation: ViewEncapsulation.None,
-    "providers": [ViewUtilService]
+    providers: [ViewUtilService]
 })
 export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 

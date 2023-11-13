@@ -58,7 +58,7 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
                 CoreTestingModule,
@@ -72,9 +72,9 @@ describe('ViewerComponent', () => {
                 ViewerWithCustomMoreActionsComponent,
                 ViewerWithCustomToolbarActionsComponent
             ],
-            "providers": [
+            providers: [
                 MatDialog,
-                { "provide": DownloadPromptDialogComponent, "useClass": DummyDialogComponent}
+                { provide: DownloadPromptDialogComponent, "useClass": DummyDialogComponent}
             ]
         });
 

@@ -23,7 +23,7 @@ import { TestBed } from '@angular/core/testing';
 describe('DataColumnListComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]

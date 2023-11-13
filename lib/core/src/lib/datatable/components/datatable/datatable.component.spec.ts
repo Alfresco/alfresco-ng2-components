@@ -140,7 +140,7 @@ describe('DataTable', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             "declarations": [CustomColumnHeaderComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -1250,7 +1250,7 @@ describe('Accesibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             "declarations": [CustomColumnTemplateComponent],
             "schemas": [NO_ERRORS_SCHEMA]
         });
@@ -1453,7 +1453,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             "declarations": [CustomColumnTemplateComponent],
             "schemas": [NO_ERRORS_SCHEMA]
         });
@@ -1564,7 +1564,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             "declarations": [CustomColumnTemplateComponent],
             "schemas": [NO_ERRORS_SCHEMA]
         });
@@ -1662,7 +1662,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             "declarations": [CustomColumnTemplateComponent],
             "schemas": [NO_ERRORS_SCHEMA]
         });

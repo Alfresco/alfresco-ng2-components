@@ -28,7 +28,7 @@ export default {
     "title": 'Core/Layout/Sidenav Layout',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, SidenavLayoutModule, RouterTestingModule, MatIconModule, MatListModule]
+            imports: [CoreStoryModule, SidenavLayoutModule, RouterTestingModule, MatIconModule, MatListModule]
         })
     ],
     "parameters": {

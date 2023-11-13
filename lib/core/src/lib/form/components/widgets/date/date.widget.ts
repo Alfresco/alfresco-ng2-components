@@ -27,9 +27,9 @@ import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/da
 
 @Component({
     selector: 'date-widget',
-    "providers": [
-        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
-        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter }
+    providers: [
+        { provide: MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
+        { provide: DateAdapter, "useClass": AdfDateFnsAdapter }
     ],
     "templateUrl": './date.widget.html',
     host: {

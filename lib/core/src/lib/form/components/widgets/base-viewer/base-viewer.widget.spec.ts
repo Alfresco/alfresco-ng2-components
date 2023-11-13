@@ -46,12 +46,12 @@ describe('BaseViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 CoreTestingModule,
                 TranslateModule.forRoot()
             ],
             "declarations": [ BaseViewerWidgetComponent ],
-            "providers": [ { "provide": FormService, "useValue": formServiceStub } ]
+            providers: [ { provide: FormService, "useValue": formServiceStub } ]
           });
 
         formServiceStub = TestBed.inject(FormService);

@@ -38,7 +38,7 @@ describe('CardViewDateItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {

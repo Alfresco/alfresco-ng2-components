@@ -27,9 +27,9 @@ export default {
     "title": 'Core/Template/Error Content',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, TemplateModule],
-            "providers": [
-                { "provide": ActivatedRoute, "useValue": { "params": of({}) } }
+            imports: [CoreStoryModule, TemplateModule],
+            providers: [
+                { provide: ActivatedRoute, "useValue": { "params": of({}) } }
             ]
         })
     ],

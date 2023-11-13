@@ -38,7 +38,7 @@ describe('BooleanCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [BooleanCellComponent]
+            imports: [BooleanCellComponent]
         });
         fixture = TestBed.createComponent(BooleanCellComponent);
         component = fixture.componentInstance;

@@ -116,9 +116,9 @@ describe('AuthConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [HttpClientTestingModule],
-            "providers": [
-                { "provide": AUTH_MODULE_CONFIG, "useValue": { "useHash": true } }
+            imports: [HttpClientTestingModule],
+            providers: [
+                { provide: AUTH_MODULE_CONFIG, "useValue": { "useHash": true } }
             ]
         });
         service = TestBed.inject(AuthConfigService);

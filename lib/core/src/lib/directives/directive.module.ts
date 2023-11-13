@@ -28,7 +28,7 @@ import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
 
 @NgModule({
-    "imports": [
+    imports: [
         CommonModule,
         MaterialModule,
         OverlayModule

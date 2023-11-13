@@ -26,7 +26,7 @@ export default {
     "title": 'Core/Layout/Header',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, SidenavLayoutModule, RouterTestingModule]
+            imports: [CoreStoryModule, SidenavLayoutModule, RouterTestingModule]
         })
     ],
     "parameters": {

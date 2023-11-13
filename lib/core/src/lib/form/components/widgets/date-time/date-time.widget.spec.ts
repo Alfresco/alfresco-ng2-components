@@ -38,7 +38,7 @@ describe('DateTimeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, MatTooltipModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatTooltipModule]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
 

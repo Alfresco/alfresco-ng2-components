@@ -60,7 +60,7 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
                 CoreTestingModule,
@@ -70,9 +70,9 @@ describe('ViewerComponent', () => {
             "declarations": [
                 DoubleViewerComponent
             ],
-            "providers": [
+            providers: [
                 RenderingQueueServices,
-                {"provide": Location, "useClass": SpyLocation},
+                {provide: Location, "useClass": SpyLocation},
                 MatDialog
             ]
         });

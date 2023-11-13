@@ -35,18 +35,18 @@ describe('TranslationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 HttpClientModule,
                 TranslateModule.forRoot({
                     "loader": {
-                        "provide": TranslateLoader,
+                        provide: TranslateLoader,
                         "useClass": TranslateLoaderService
                     }
                 })
             ],
-            "providers": [
-                { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
-                { "provide": AppConfigService, "useClass": AppConfigServiceMock },
+            providers: [
+                { provide: AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+                { provide: AppConfigService, "useClass": AppConfigServiceMock },
                 provideTranslations('@alfresco/adf-core', 'assets/ng2-alfresco-core')
             ]
         });

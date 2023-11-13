@@ -22,7 +22,7 @@ import { BooleanPipe } from '../../../pipes/boolean.pipe';
 
 @Component({
     "standalone": true,
-    "imports": [CommonModule, BooleanPipe],
+    imports: [CommonModule, BooleanPipe],
     selector: 'adf-boolean-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

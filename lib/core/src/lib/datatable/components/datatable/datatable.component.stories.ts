@@ -29,7 +29,7 @@ export default {
     "title": 'Core/Datatable/Datatable',
     "decorators": [
         moduleMetadata({
-            "imports": [
+            imports: [
                 CoreStoryModule,
                 DataTableModule,
                 MatProgressSpinnerModule,

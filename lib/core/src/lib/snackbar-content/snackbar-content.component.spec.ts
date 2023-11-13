@@ -30,20 +30,20 @@ describe('SnackbarContentComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             "declarations": [SnackbarContentComponent],
-            "imports": [
+            imports: [
                 MatIconModule,
                 MatSnackBarModule,
                 MatButtonModule,
                 TranslateModule.forRoot()
             ],
-            "providers": [{
-                "provide": MatSnackBarRef,
+            providers: [{
+                provide: MatSnackBarRef,
                 "useValue": {
                     dismissWithAction () {
                     }
                 }
             }, {
-                "provide": MAT_SNACK_BAR_DATA,
+                provide: MAT_SNACK_BAR_DATA,
                 "useValue": {}
             }]
         })

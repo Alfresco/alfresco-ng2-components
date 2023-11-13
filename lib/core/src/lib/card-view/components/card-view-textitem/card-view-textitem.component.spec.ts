@@ -99,7 +99,7 @@ describe('CardViewTextItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, MatChipsModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatChipsModule]
         });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;

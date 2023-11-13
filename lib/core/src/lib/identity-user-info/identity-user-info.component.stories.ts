@@ -36,7 +36,7 @@ export default {
     "title": 'Core/Identity User Info/Identity User Info',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, IdentityUserInfoModule]
+            imports: [CoreStoryModule, IdentityUserInfoModule]
         })
     ],
     "argTypes": {

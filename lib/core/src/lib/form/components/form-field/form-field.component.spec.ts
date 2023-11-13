@@ -34,7 +34,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 FormBaseModule

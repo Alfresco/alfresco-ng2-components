@@ -19,7 +19,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
-        & .mat-tab-label {
+        & .mdc-tab__text-label {
             font-weight: bold;
             text-align: left;
             text-transform: uppercase;

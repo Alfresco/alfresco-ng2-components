@@ -35,7 +35,7 @@ describe('JsonCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(JsonCellComponent);
         component = fixture.componentInstance;

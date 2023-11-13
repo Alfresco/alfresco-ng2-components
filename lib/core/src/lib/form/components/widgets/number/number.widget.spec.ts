@@ -36,7 +36,7 @@ describe('NumberWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
         });
         fixture = TestBed.createComponent(NumberWidgetComponent);
         widget = fixture.componentInstance;

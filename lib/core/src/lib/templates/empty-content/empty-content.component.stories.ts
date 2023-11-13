@@ -25,7 +25,7 @@ export default {
     "title": 'Core/Template/Empty Content',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, TemplateModule]
+            imports: [CoreStoryModule, TemplateModule]
         })
     ],
     "parameters": {

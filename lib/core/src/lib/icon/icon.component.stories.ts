@@ -25,7 +25,7 @@ export default {
     "title": 'Core/Icon/Icon',
     "decorators": [
         moduleMetadata({
-            "imports": [CoreStoryModule, IconModule]
+            imports: [CoreStoryModule, IconModule]
         })
     ],
     "parameters": {

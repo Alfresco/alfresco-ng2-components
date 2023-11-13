@@ -26,7 +26,7 @@ describe('DirectionalityConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            "imports": [
+            imports: [
                 TranslateModule.forRoot(),
                 CoreModule.forRoot(),
                 CoreTestingModule
