@@ -48,7 +48,7 @@ export class CustomModelMock extends BaseMock {
                     author: 'Administrator',
                     name: 'testModel',
                     description: 'Test model description',
-                    namespaceUri: 'http://www.alfresco.org/model/testNamespace/1.0',
+                    namespaceUri: 'https://www.alfresco.org/model/testNamespace/1.0',
                     namespacePrefix: 'test',
                     status: 'DRAFT'
                 }
@@ -64,7 +64,7 @@ export class CustomModelMock extends BaseMock {
                     author: 'Administrator',
                     name: 'testModel',
                     description: 'Test model description',
-                    namespaceUri: 'http://www.alfresco.org/model/testNamespace/1.0',
+                    namespaceUri: 'https://www.alfresco.org/model/testNamespace/1.0',
                     namespacePrefix: 'test',
                     status: 'ACTIVE'
                 }
