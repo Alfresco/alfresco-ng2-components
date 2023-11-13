@@ -29,6 +29,7 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * Versions service.
+ *
  * @module VersionsApi
  */
 export class VersionsApi extends BaseApi {

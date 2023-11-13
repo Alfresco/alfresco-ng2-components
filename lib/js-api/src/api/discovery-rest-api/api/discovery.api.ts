@@ -20,6 +20,7 @@ import { BaseApi } from './base.api';
 
 /**
 * Discovery service.
+
 * @module DiscoveryApi
 */
 export class DiscoveryApi extends BaseApi {

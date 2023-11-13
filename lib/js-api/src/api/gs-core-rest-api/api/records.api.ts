@@ -25,6 +25,7 @@ import { RecordsIncludeQuery } from './types';
 
 /**
  * Records service.
+ *
  * @module RecordsApi
  */
 export class RecordsApi extends BaseApi {

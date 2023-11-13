@@ -24,6 +24,7 @@ import { GsPagingQuery } from './types';
 
 /**
  * DeclassificationExemptionsApi service.
+ *
  * @module DeclassificationExemptionsApi
  */
 export class DeclassificationExemptionsApi extends BaseApi {

@@ -24,6 +24,7 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * Transfers service.
+ *
  * @module TransfersApi
  */
 export class TransfersApi extends BaseApi {

@@ -24,6 +24,7 @@ import { GsPagingQuery } from './types';
 
 /**
  * Security Marks API.
+ *
  * @module SecurityMarksApi
  */
 export class SecurityMarksApi extends BaseApi {

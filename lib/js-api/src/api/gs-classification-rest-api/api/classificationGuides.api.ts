@@ -34,6 +34,7 @@ export interface CombinedInstructionsOpts {
 
 /**
  * ClassificationGuidesApi service.
+ *
  * @module ClassificationGuidesApi
  */
 export class ClassificationGuidesApi extends BaseApi {

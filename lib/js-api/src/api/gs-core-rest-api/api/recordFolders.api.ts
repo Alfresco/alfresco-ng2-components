@@ -27,6 +27,7 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * Record Folders service.
+ *
  * @module RecordFoldersApi
  */
 export class RecordFoldersApi extends BaseApi {

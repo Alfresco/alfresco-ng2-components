@@ -25,6 +25,7 @@ import { GsFieldsQuery, GsPagingQuery } from './types';
 
 /**
  * ClassificationReasonsApi service.
+ *
  * @module ClassificationReasonsApi
  */
 export class ClassificationReasonsApi extends BaseApi {

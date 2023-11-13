@@ -21,6 +21,7 @@ import { GsPagingQuery } from './types';
 
 /**
  * AuthorityClearanceApi service.
+ *
  * @module AuthorityClearanceApi
  */
 export class AuthorityClearanceApi extends BaseApi {

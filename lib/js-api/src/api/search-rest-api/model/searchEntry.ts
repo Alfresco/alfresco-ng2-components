@@ -24,7 +24,6 @@ export class SearchEntry {
     score?: number;
     /**
      * Highlight fragments if requested and available. A match can happen in any of the requested field.
-
      */
     highlight?: SearchEntryHighlight[];
 
@@ -36,5 +35,4 @@ export class SearchEntry {
             }
         }
     }
-
 }

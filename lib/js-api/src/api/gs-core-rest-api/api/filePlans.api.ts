@@ -27,6 +27,7 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * FilePlansApi service.
+ *
  * @module FilePlansApi
  */
 export class FilePlansApi extends BaseApi {

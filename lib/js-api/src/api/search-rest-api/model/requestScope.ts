@@ -21,7 +21,6 @@
 export class RequestScope {
     /**
      * The locations to include in the query
-
      */
     locations?: RequestScope.LocationsEnum | string;
 

@@ -23,6 +23,7 @@ import { GsGroupInclude, GsPagingQuery } from './types';
 
 /**
  * SecurityGroupsApi service.
+ *
  * @module SecurityGroupsApi
  */
 export class SecurityGroupsApi extends BaseApi {

@@ -25,6 +25,7 @@ import { RecordsFieldsQuery } from './types';
 
 /**
  * GsSitesApi service.
+ *
  * @module GssitesApi
  */
 export class GsSitesApi extends BaseApi {

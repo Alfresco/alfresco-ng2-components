@@ -23,7 +23,6 @@
  * isLink
  * allowableOperations
  * association
-
  */
 export class RequestInclude extends Array<string> {
 

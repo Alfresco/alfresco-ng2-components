@@ -25,7 +25,6 @@ export class GenericMetric {
     type?: string;
     /**
      * The metric value, e.g. {\"count\": 34}
-
      */
     value?: any;
 

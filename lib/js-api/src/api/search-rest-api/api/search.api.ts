@@ -23,6 +23,7 @@ import { LegacyHttpClient } from '../../../api-clients/http-client.interface';
 
 /**
  * Search service.
+ *
  * @module SearchApi
  */
 export class SearchApi extends ApiClient {

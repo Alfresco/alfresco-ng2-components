@@ -18,8 +18,7 @@
 export class RequestFilterQueriesInner {
     /**
      * The filter query expression.
-For multi-select facets selected facets must be order together
-
+     * For multi-select facets selected facets must be order together
      */
     query?: string;
     /**

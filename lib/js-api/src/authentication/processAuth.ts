@@ -77,6 +77,7 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * login Activiti API
+     *
      * @param username Username to login
      * @param password Password to login
      *

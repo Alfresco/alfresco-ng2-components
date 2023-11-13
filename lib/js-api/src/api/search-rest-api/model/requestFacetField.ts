@@ -46,8 +46,7 @@ export class RequestFacetField {
     facetEnumCacheMinDf?: number;
     /**
      * Filter Queries with tags listed here will not be included in facet counts.
-This is used for multi-select facetting.
-
+     * This is used for multi-select facetting.
      */
     excludeFilters?: string[];
 

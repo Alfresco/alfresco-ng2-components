@@ -19,8 +19,7 @@ import { RequestHighlightFields } from './requestHighlightFields';
 
 /**
  * Request that highlight fragments to be added to result set rows
-The properties reflect SOLR highlighting parameters.
-
+ * The properties reflect SOLR highlighting parameters.
  */
 export class RequestHighlight {
     /**

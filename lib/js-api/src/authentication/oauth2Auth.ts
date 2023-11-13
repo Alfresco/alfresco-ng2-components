@@ -560,6 +560,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * login Alfresco API
+     *
      * @returns {Promise} A promise that returns {new authentication token} if resolved and {error} if rejected.
      * */
     login(username: string, password: string): Promise<any> {

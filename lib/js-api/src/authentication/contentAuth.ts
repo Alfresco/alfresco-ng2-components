@@ -70,6 +70,7 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * login Alfresco API
+     *
      * @param  username Username to login
      * @param  password Password to login
      *

@@ -27,6 +27,7 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * RecordCategoriesApi service.
+ *
  * @module RecordCategoriesApi
  */
 export class RecordCategoriesApi extends BaseApi {

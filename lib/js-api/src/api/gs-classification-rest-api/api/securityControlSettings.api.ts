@@ -22,6 +22,7 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * SecurityControlSettingsApi service.
+ *
  * @module SecurityControlSettingsApi
  */
 export class SecurityControlSettingsApi extends BaseApi {

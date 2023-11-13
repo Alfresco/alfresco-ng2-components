@@ -26,6 +26,7 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * Unfiled containers service.
+ *
  * @module UnfiledContainersApi
  */
 export class UnfiledContainersApi extends BaseApi {

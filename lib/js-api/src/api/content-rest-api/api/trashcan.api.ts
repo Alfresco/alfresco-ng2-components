@@ -28,6 +28,7 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * Trashcan service.
+ *
  * @module TrashcanApi
  */
 export class TrashcanApi extends BaseApi {

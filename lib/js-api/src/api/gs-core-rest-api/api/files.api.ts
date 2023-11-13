@@ -23,6 +23,7 @@ import { RecordsIncludeQuery } from './types';
 
 /**
  * Files service.
+ *
  * @module FilesApi
  */
 export class FilesApi extends BaseApi {

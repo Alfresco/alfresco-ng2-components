@@ -59,6 +59,7 @@ export interface ListTypesOpts {
 
 /**
 * Types service.
+
 * @module TypesApi
 */
 export class TypesApi extends BaseApi {

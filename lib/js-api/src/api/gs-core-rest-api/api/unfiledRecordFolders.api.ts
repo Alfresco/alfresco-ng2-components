@@ -26,6 +26,7 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * UnfiledRecordFoldersApi service.
+ *
  * @module UnfiledRecordFoldersApi
  */
 export class UnfiledRecordFoldersApi extends BaseApi {

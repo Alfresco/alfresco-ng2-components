@@ -22,6 +22,7 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * DefaultClassificationValuesApi service.
+ *
  * @module DefaultClassificationValuesApi
  */
 export class DefaultClassificationValuesApi extends BaseApi {
