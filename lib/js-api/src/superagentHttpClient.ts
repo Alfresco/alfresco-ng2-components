@@ -91,6 +91,7 @@ export class SuperagentHttpClient implements HttpClient {
                         error = error || {};
                         reject(Object.assign(error, { message: response.text }));
                     } else {
+                        // eslint-disable-next-line prefer-promise-reject-errors
                         reject({ error });
                     }
                 } else {

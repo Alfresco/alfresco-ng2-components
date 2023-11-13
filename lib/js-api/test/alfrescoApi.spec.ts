@@ -169,7 +169,7 @@ describe('Basic configuration test', () => {
                 error = e;
             }
 
-            expect(error).equal('missing username or password');
+            expect(error.message).equal('missing username or password');
 
             error = undefined;
 
@@ -179,7 +179,7 @@ describe('Basic configuration test', () => {
                 error = e;
             }
 
-            expect(error).equal('missing username or password');
+            expect(error.message).equal('missing username or password');
 
             error = undefined;
 
@@ -189,7 +189,7 @@ describe('Basic configuration test', () => {
                 error = e;
             }
 
-            expect(error).equal('missing username or password');
+            expect(error.message).equal('missing username or password');
 
             error = undefined;
 
@@ -199,7 +199,7 @@ describe('Basic configuration test', () => {
                 error = e;
             }
 
-            expect(error).equal('missing username or password');
+            expect(error.message).equal('missing username or password');
 
             error = undefined;
 
@@ -209,7 +209,7 @@ describe('Basic configuration test', () => {
                 error = e;
             }
 
-            expect(error).equal('missing username or password');
+            expect(error.message).equal('missing username or password');
 
             error = undefined;
 
@@ -219,7 +219,7 @@ describe('Basic configuration test', () => {
                 error = e;
             }
 
-            expect(error).equal('missing username or password');
+            expect(error.message).equal('missing username or password');
         });
 
         it('Should logged-in be emitted when log in ECM', (done) => {

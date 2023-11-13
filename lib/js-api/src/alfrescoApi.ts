@@ -248,7 +248,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
      * */
     login(username: string, password: string): Promise<any> {
         if (!this.isCredentialValid(username) || !this.isCredentialValid(password)) {
-            return Promise.reject('missing username or password');
+            return Promise.reject(new Error('missing username or password'));
         }
 
         if (username) {
@@ -287,7 +287,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
                 return contentProcessPromise;
             } else {
-                return Promise.reject('Unknown configuration');
+                return Promise.reject(new Error('Unknown configuration'));
             }
         }
     }
@@ -298,7 +298,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     implicitLogin(): Promise<any> {
         if (!this.isOauthConfiguration()) {
-            return Promise.reject('Missing the required oauth2 configuration');
+            return Promise.reject(new Error('Missing the required oauth2 configuration'));
         }
 
         return new Promise(() => {
@@ -469,11 +469,11 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
      * */
     refreshToken(): Promise<any> {
         if (!this.isOauthConfiguration()) {
-            return Promise.reject('Missing the required oauth2 configuration');
+            return Promise.reject(new Error('Missing the required oauth2 configuration'));
         }
 
         if (this.config.oauth2.implicitFlow) {
-            return Promise.reject('Manual refresh token not possible in implicit flow');
+            return Promise.reject(new Error('Manual refresh token not possible in implicit flow'));
         }
 
         return this.oauth2Auth.refreshToken();
