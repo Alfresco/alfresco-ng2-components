@@ -25,92 +25,92 @@ import { IdentityUserInfoComponent } from './identity-user-info.component';
 import { IdentityUserInfoModule } from './identity-user-info.module';
 
 const fakeIdentityUser = {
-    familyName: 'Identity',
-    givenName: 'John',
-    email: 'john.identity@gmail.com',
-    username: 'johnyIdentity99'
+    "familyName": 'Identity',
+    "givenName": 'John',
+    "email": 'john.identity@gmail.com',
+    "username": 'johnyIdentity99'
 };
 
 export default {
-    component: IdentityUserInfoComponent,
-    title: 'Core/Identity User Info/Identity User Info',
-    decorators: [
+    "component": IdentityUserInfoComponent,
+    "title": 'Core/Identity User Info/Identity User Info',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, IdentityUserInfoModule]
+            "imports": [CoreStoryModule, IdentityUserInfoModule]
         })
     ],
-    argTypes: {
-        isLoggedIn: {
-            description:
+    "argTypes": {
+        "isLoggedIn": {
+            "description":
                 'Determines if user is logged in',
-            control: 'boolean',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+            "control": 'boolean',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": true }
             }
         },
-        identityUser: {
-            description:
+        "identityUser": {
+            "description":
                 'Identity User Info',
-            control: 'object',
-            table: {
-                type: { summary: 'IdentityUserModel' }
+            "control": 'object',
+            "table": {
+                "type": { "summary": 'IdentityUserModel' }
             }
         },
-        menuPositionX: {
-            description:
+        "menuPositionX": {
+            "description":
                 'Material Angular menu horizontal position in regard to User Info',
-            control: 'radio',
-            options: ['before', 'after'],
-            defaultValue: 'after',
-            table: {
-                type: { summary: 'MenuPositionX' },
-                defaultValue: { summary: 'after' }
+            "control": 'radio',
+            "options": ['before', 'after'],
+            "defaultValue": 'after',
+            "table": {
+                "type": { "summary": 'MenuPositionX' },
+                "defaultValue": { "summary": 'after' }
             }
         },
-        menuPositionY: {
-            description:
+        "menuPositionY": {
+            "description":
                 'Material Angular menu vertical position in regard to User Info',
-            control: 'radio',
-            options: ['above', 'below'],
-            defaultValue: 'below',
-            table: {
-                type: { summary: 'MenuPositionY' },
-                defaultValue: { summary: 'below' }
+            "control": 'radio',
+            "options": ['above', 'below'],
+            "defaultValue": 'below',
+            "table": {
+                "type": { "summary": 'MenuPositionY' },
+                "defaultValue": { "summary": 'below' }
             }
         },
-        showName: {
-            description:
+        "showName": {
+            "description":
                 'Determines if name should be shown next to user avatar',
-            control: 'boolean',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+            "control": 'boolean',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": true }
             }
         },
-        namePosition: {
-            description: 'User name position in regard to avatar',
-            control: 'radio',
-            options: ['left', 'right'],
-            defaultValue: 'right',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'right' }
+        "namePosition": {
+            "description": 'User name position in regard to avatar',
+            "control": 'radio',
+            "options": ['left', 'right'],
+            "defaultValue": 'right',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'right' }
             }
         },
-        bpmBackgroundImage: {
-            description: 'Menu background banner image for APS users',
-            control: {
-                disable: true
+        "bpmBackgroundImage": {
+            "description": 'Menu background banner image for APS users',
+            "control": {
+                "disable": true
             },
-            table: {
-                type: {
-                    summary: 'string'
+            "table": {
+                "type": {
+                    "summary": 'string'
                 },
-                defaultValue: {
-                    summary: './assets/images/bpm-background.png'
+                "defaultValue": {
+                    "summary": './assets/images/bpm-background.png'
                 }
             }
         }
@@ -118,11 +118,11 @@ export default {
 } as Meta;
 
 const template: Story<IdentityUserInfoComponent> = (args: IdentityUserInfoComponent) => ({
-    props: args
+    "props": args
 });
 
 export const loginWithSSO = template.bind({});
 loginWithSSO.args = {
-    identityUser: fakeIdentityUser
+    "identityUser": fakeIdentityUser
 };
-loginWithSSO.parameters = { layout: 'centered' };
+loginWithSSO.parameters = { "layout": 'centered' };

@@ -24,9 +24,9 @@ import { takeUntil } from 'rxjs/operators';
 import { DataTableService } from '../../services/datatable.service';
 
 @Component({
-    selector: 'adf-datatable-cell',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+    "selector": 'adf-datatable-cell',
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "template": `
         <ng-container>
             <span
                 *ngIf="copyContent; else defaultCell"
@@ -42,8 +42,8 @@ import { DataTableService } from '../../services/datatable.service';
             <span [title]="tooltip" class="adf-datatable-cell-value">{{ value$ | async }}</span>
         </ng-template>
     `,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' }
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-datatable-content-cell' }
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {
     /** Data table adapter instance. */
@@ -71,16 +71,16 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     resolverFn: (row: DataRow, col: DataColumn) => any = null;
 
     protected onDestroy$ = new Subject<boolean>();
-    protected dataTableService = inject(DataTableService, { optional: true });
+    protected dataTableService = inject(DataTableService, { "optional": true });
 
     value$ = new BehaviorSubject<any>('');
 
-    ngOnInit() {
+    ngOnInit () {
         this.updateValue();
         this.subscribeToRowUpdates();
     }
 
-    protected updateValue() {
+    protected updateValue () {
         if (this.column?.key && this.row && this.data) {
             const value = this.data.getValue(this.row, this.column, this.resolverFn);
 
@@ -92,7 +92,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
         }
     }
 
-    private subscribeToRowUpdates() {
+    private subscribeToRowUpdates () {
         if (!this.dataTableService || !this.row.obj) {
             return;
         }
@@ -107,11 +107,11 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
         });
     }
 
-    private getNestedPropertyValue(obj: any, path: string) {
+    private getNestedPropertyValue (obj: any, path: string) {
         return path.split('.').reduce((source, key) => (source ? source[key] : ''), obj);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

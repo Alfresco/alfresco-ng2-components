@@ -29,8 +29,8 @@ import { CardViewContentProxyDirective } from '../../directives/card-view-conten
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
 @Component({
-    selector: 'adf-card-view-item-dispatcher',
-    template: '<ng-template adf-card-view-content-proxy></ng-template>'
+    "selector": 'adf-card-view-item-dispatcher',
+    "template": '<ng-template adf-card-view-content-proxy></ng-template>'
 })
 export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
@@ -60,7 +60,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
     displayLabelForChips: boolean = false;
 
-    @ViewChild(CardViewContentProxyDirective, { static: true })
+    @ViewChild(CardViewContentProxyDirective, { "static": true })
     private content: CardViewContentProxyDirective;
 
     private loaded: boolean = false;
@@ -69,7 +69,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     public ngOnInit;
     public ngDoCheck;
 
-    constructor(private cardItemTypeService: CardItemTypeService) {
+    constructor (private cardItemTypeService: CardItemTypeService) {
         const dynamicLifeCycleMethods = [
             'ngOnInit',
             'ngDoCheck',
@@ -85,7 +85,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (!this.loaded) {
             this.loadComponent();
             this.loaded = true;
@@ -100,7 +100,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.proxy('ngOnChanges', changes);
     }
 
-    private loadComponent() {
+    private loadComponent () {
         const factoryClass = this.cardItemTypeService.resolveComponentType(this.property);
 
         this.componentReference = this.content.viewContainerRef.createComponent(factoryClass);
@@ -116,7 +116,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.displayLabelForChips = this.displayLabelForChips;
     }
 
-    private proxy(methodName, ...args) {
+    private proxy (methodName, ...args) {
         if (this.componentReference.instance[methodName]) {
             // eslint-disable-next-line prefer-spread
             this.componentReference.instance[methodName].apply(this.componentReference.instance, args);

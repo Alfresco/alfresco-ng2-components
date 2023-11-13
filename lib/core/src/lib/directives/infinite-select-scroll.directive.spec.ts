@@ -22,7 +22,7 @@ import {  MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
-    template: `
+    "template": `
         <mat-select adf-infinite-select-scroll (scrollEnd)="load()" >
             <mat-option *ngFor="let option of options; let idx=index">
                 {{ option.text }}
@@ -30,17 +30,17 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
         </mat-select>`
 })
 class TestComponent {
-    options = new Array(50).fill({text: 'dummy'});
+    options = new Array(50).fill({"text": 'dummy'});
 
-    @ViewChild(MatSelect, { static: true })
+    @ViewChild(MatSelect, { "static": true })
     matSelect: MatSelect;
 
-    open() {
+    open () {
         this.matSelect.open();
     }
 
-    load() {
-        this.options.push(...new Array(10).fill({text: 'dummy'}));
+    load () {
+        this.options.push(...new Array(10).fill({"text": 'dummy'}));
     }
 }
 
@@ -50,11 +50,11 @@ describe('InfiniteSelectScrollDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 MatSelectModule,
                 NoopAnimationsModule
             ],
-            declarations: [
+            "declarations": [
                 TestComponent,
                 InfiniteSelectScrollDirective
             ]

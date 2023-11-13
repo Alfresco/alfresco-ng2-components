@@ -19,13 +19,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslationService } from '../translation/translation.service';
 
 @Pipe({
-    name: 'adfLocalizedRole'
+    "name": 'adfLocalizedRole'
 })
 export class LocalizedRolePipe implements PipeTransform {
-    constructor(private translationService: TranslationService) {
+    constructor (private translationService: TranslationService) {
     }
 
-    transform(value: string): any {
+    transform (value: string): any {
         if (value) {
             const key = `ADF.ROLES.${value.toUpperCase()}`;
             const translation = this.translationService.instant(key);

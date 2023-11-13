@@ -19,49 +19,49 @@ import { User } from '../../../../..';
 import { CommentModel } from '../../../models/comment.model';
 
 export const testUser = new User({
-    id: '1',
-    firstName: 'Test',
-    lastName: 'User',
-    email: 'tu@domain.com'
+    "id": '1',
+    "firstName": 'Test',
+    "lastName": 'User',
+    "email": 'tu@domain.com'
 });
 
 export const mockCommentOne = new CommentModel({
-    id: 1,
-    message: 'Test Comment',
-    created: new Date(),
-    createdBy: testUser
+    "id": 1,
+    "message": 'Test Comment',
+    "created": new Date(),
+    "createdBy": testUser
 });
 
 export const mockCommentTwo = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: testUser
+    "id": 2,
+    "message": '2nd Test Comment',
+    "created": new Date(),
+    "createdBy": testUser
 });
 
 export const commentUserPictureDefined = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: new User({
-        enabled: true,
-        firstName: 'some',
-        lastName: 'one',
-        email: 'some-one@somegroup.com',
-        id: 'fake-email@dom.com',
-        avatarId: '001-001-001'
+    "id": 2,
+    "message": '2nd Test Comment',
+    "created": new Date(),
+    "createdBy": new User({
+        "enabled": true,
+        "firstName": 'some',
+        "lastName": 'one',
+        "email": 'some-one@somegroup.com',
+        "id": 'fake-email@dom.com',
+        "avatarId": '001-001-001'
     })
 });
 
 export const commentUserNoPictureDefined = new CommentModel({
-    id: 2,
-    message: '2nd Test Comment',
-    created: new Date(),
-    createdBy: new User({
-        enabled: true,
-        firstName: 'some',
-        lastName: 'one',
-        email: 'some-one@somegroup.com',
-        id: 'fake-email@dom.com'
+    "id": 2,
+    "message": '2nd Test Comment',
+    "created": new Date(),
+    "createdBy": new User({
+        "enabled": true,
+        "firstName": 'some',
+        "lastName": 'one',
+        "email": 'some-one@somegroup.com',
+        "id": 'fake-email@dom.com'
     })
 });

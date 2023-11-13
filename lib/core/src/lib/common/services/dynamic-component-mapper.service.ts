@@ -25,7 +25,7 @@ export interface DynamicComponentModel {
 
 export type DynamicComponentResolveFunction = (model: DynamicComponentModel) => Type<any>;
 export class DynamicComponentResolver {
-    static fromType(type: Type<any>): DynamicComponentResolveFunction {
+    static fromType (type: Type<any>): DynamicComponentResolveFunction {
         return getType(type);
     }
 }
@@ -37,12 +37,11 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Gets the currently active DynamicComponentResolveFunction for a field type.
-     *
      * @param type The type whose resolver you want
      * @param defaultValue Default type returned for types that are not yet mapped
      * @returns Resolver function
      */
-    getComponentTypeResolver(type: string, defaultValue: Type<any> = this.defaultValue): DynamicComponentResolveFunction {
+    getComponentTypeResolver (type: string, defaultValue: Type<any> = this.defaultValue): DynamicComponentResolveFunction {
         if (type) {
             return this.types[type] || DynamicComponentResolver.fromType(defaultValue);
         }
@@ -51,12 +50,11 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Sets or optionally replaces a DynamicComponentResolveFunction for a field type.
-     *
      * @param type The type whose resolver you want to set
      * @param resolver The new resolver function
      * @param override The new resolver will only replace an existing one if this parameter is true
      */
-    setComponentTypeResolver(type: string, resolver: DynamicComponentResolveFunction, override: boolean = true) {
+    setComponentTypeResolver (type: string, resolver: DynamicComponentResolveFunction, override: boolean = true) {
         if (!type) {
             throw new Error(`type is null or not defined`);
         }
@@ -75,11 +73,10 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Register multiple components
-     *
      * @param components map of components to register
      * @param override replace existing components
      */
-    register(components: { [key: string]: DynamicComponentResolveFunction }, override: boolean = false) {
+    register (components: { [key: string]: DynamicComponentResolveFunction }, override: boolean = false) {
         if (components) {
             for (const type of Object.keys(components)) {
                 this.setComponentTypeResolver(type, components[type], override);
@@ -89,12 +86,11 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Finds the component type that is needed to render a form field.
-     *
      * @param model Form field model for the field to render
      * @param defaultValue Default type returned for field types that are not yet mapped.
      * @returns Component type
      */
-    resolveComponentType(model: DynamicComponentModel, defaultValue: Type<any> = this.defaultValue): Type<any> {
+    resolveComponentType (model: DynamicComponentModel, defaultValue: Type<any> = this.defaultValue): Type<any> {
         if (model) {
             const resolver = this.getComponentTypeResolver(model.type, defaultValue);
             return resolver(model);

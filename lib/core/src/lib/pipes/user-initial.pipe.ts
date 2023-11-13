@@ -20,14 +20,14 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserLike } from './user-like.interface';
 
 @Pipe({
-    name: 'usernameInitials'
+    "name": 'usernameInitials'
 })
 export class InitialUsernamePipe implements PipeTransform {
 
-    constructor(private sanitized: DomSanitizer) {
+    constructor (private sanitized: DomSanitizer) {
     }
 
-    transform(user: UserLike & { displayName?: string }, className: string = '', delimiter: string = ''): SafeHtml {
+    transform (user: UserLike & { displayName?: string }, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';
         if (user) {
             const initialResult = this.getInitialUserName(user.firstName || user.displayName || user.username, user.lastName, delimiter);
@@ -41,7 +41,7 @@ export class InitialUsernamePipe implements PipeTransform {
         return safeHtml;
     }
 
-    getInitialUserName(firstName: string, lastName: string, delimiter: string): string {
+    getInitialUserName (firstName: string, lastName: string, delimiter: string): string {
         firstName = (firstName ? firstName[0] : '');
         lastName = (lastName ? lastName[0] : '');
         return firstName + delimiter + lastName;

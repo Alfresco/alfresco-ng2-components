@@ -24,117 +24,117 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
 
 export default {
-    component: SidenavLayoutComponent,
-    title: 'Core/Layout/Sidenav Layout',
-    decorators: [
+    "component": SidenavLayoutComponent,
+    "title": 'Core/Layout/Sidenav Layout',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, SidenavLayoutModule, RouterTestingModule, MatIconModule, MatListModule]
+            "imports": [CoreStoryModule, SidenavLayoutModule, RouterTestingModule, MatIconModule, MatListModule]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Displays the standard three-region ADF application layout.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Displays the standard three-region ADF application layout.`
             }
         }
     },
-    argTypes: {
-        expandedSidenav: {
-            control: 'boolean',
-            description: 'Toggles the expand of navigation region',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' },
-                category: 'Navigation'
+    "argTypes": {
+        "expandedSidenav": {
+            "control": 'boolean',
+            "description": 'Toggles the expand of navigation region',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' },
+                "category": 'Navigation'
             }
         },
-        hideSidenav: {
-            control: 'boolean',
-            description: 'Toggles showing/hiding the navigation region',
-            defaultValue: false,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' },
-                category: 'Navigation'
+        "hideSidenav": {
+            "control": 'boolean',
+            "description": 'Toggles showing/hiding the navigation region',
+            "defaultValue": false,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'false' },
+                "category": 'Navigation'
             }
         },
-        position: {
-            control: 'radio',
-            options: ['start', 'end'],
-            description: `The side of the page that the drawer is attached to (can be 'start' or 'end')`,
-            defaultValue: 'start',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'start' },
-                category: 'Navigation'
+        "position": {
+            "control": 'radio',
+            "options": ['start', 'end'],
+            "description": `The side of the page that the drawer is attached to (can be 'start' or 'end')`,
+            "defaultValue": 'start',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'start' },
+                "category": 'Navigation'
             }
         },
-        sidenavMax: {
-            control: 'number',
-            description: 'Maximum size of the navigation region',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Navigation'
+        "sidenavMax": {
+            "control": 'number',
+            "description": 'Maximum size of the navigation region',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'number' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Navigation'
             }
         },
-        sidenavMin: {
-            control: 'number',
-            description: 'Minimum size of the navigation region',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Navigation'
+        "sidenavMin": {
+            "control": 'number',
+            "description": 'Minimum size of the navigation region',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'number' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Navigation'
             }
         },
-        stepOver: {
-            control: 'number',
-            description: 'Screen size at which display switches from small screen to large screen configuration',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: 'undefined' }
+        "stepOver": {
+            "control": 'number',
+            "description": 'Screen size at which display switches from small screen to large screen configuration',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'number' },
+                "defaultValue": { "summary": 'undefined' }
             }
         },
-        title: {
-            control: 'text',
-            description: 'Title of the application',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Header'
+        "title": {
+            "control": 'text',
+            "description": 'Title of the application',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Header'
             }
         },
-        color: {
-            control: 'radio',
-            options: ['primary', 'accent', 'warn', undefined],
-            defaultValue: undefined,
-            description: `Background color for the header.
+        "color": {
+            "control": 'radio',
+            "options": ['primary', 'accent', 'warn', undefined],
+            "defaultValue": undefined,
+            "description": `Background color for the header.
                 It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'`,
-            table: {
-                type: { summary: 'ThemePalette' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Header'
+            "table": {
+                "type": { "summary": 'ThemePalette' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Header'
             }
         },
-        clicked: {
-            action: 'expanded',
-            description: 'Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes',
-            table: {
-                type: { summary: 'EventEmitter <boolean>' },
-                category: 'Actions'
+        "clicked": {
+            "action": 'expanded',
+            "description": 'Emitted when the menu toggle and the collapsed/expanded state of the sideNav changes',
+            "table": {
+                "type": { "summary": 'EventEmitter <boolean>' },
+                "category": 'Actions'
             }
         }
     }
 } as Meta;
 
 const template: Story<SidenavLayoutModule> = (args: SidenavLayoutComponent) => ({
-    props: args,
-    template: `
+    "props": args,
+    "template": `
     <adf-sidenav-layout
         [sidenavMin]="sidenavMin"
         [sidenavMax]="sidenavMax"
@@ -222,9 +222,9 @@ const template: Story<SidenavLayoutModule> = (args: SidenavLayoutComponent) => (
 
 export const sidenavLayout = template.bind({});
 sidenavLayout.args = {
-    sidenavMin: 85,
-    sidenavMax: 250,
-    stepOver: 600,
-    position: 'start',
-    title: 'Hello from Sidenav Layout!'
+    "sidenavMin": 85,
+    "sidenavMax": 250,
+    "stepOver": 600,
+    "position": 'start',
+    "title": 'Hello from Sidenav Layout!'
 };

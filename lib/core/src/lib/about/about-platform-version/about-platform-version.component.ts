@@ -32,9 +32,9 @@ interface RepositoryInfo {
 }
 
 @Component({
-    selector: 'adf-about-platform-version',
-    templateUrl: './about-platform-version.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-about-platform-version',
+    "templateUrl": './about-platform-version.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class AboutPlatformVersionComponent {
 
@@ -51,7 +51,7 @@ export class AboutPlatformVersionComponent {
     rb$: Observable<ActivitiDependencyInfo>;
     query$: Observable<ActivitiDependencyInfo>;
 
-    constructor(
+    constructor (
         private aaeInfoService: AaeInfoService,
         private appConfigService: AppConfigService
     ) {
@@ -60,19 +60,19 @@ export class AboutPlatformVersionComponent {
         this.rbInfo();
     }
 
-    modelingInfo() {
+    modelingInfo () {
         this.modeling$ = this.aaeInfoService.getServiceVersion('modeling-service');
     }
 
-    deploymentInfo() {
+    deploymentInfo () {
         this.deployment$ = this.aaeInfoService.getServiceVersion('deployment-service');
     }
 
-    rbInfo() {
+    rbInfo () {
         this.rb$ = this.aaeInfoService.getServiceVersion(`${this.appConfigService.get('oauth2.clientId')}/rb`);
     }
 
-    queryInfo() {
+    queryInfo () {
         this.query$ = this.aaeInfoService.getServiceVersion(`${this.appConfigService.get('oauth2.clientId')}/query`);
     }
 }

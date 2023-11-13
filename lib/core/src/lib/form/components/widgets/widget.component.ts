@@ -27,9 +27,9 @@ import { FormFieldModel } from './core';
  * Base widget component.
  */
 @Component({
-    selector: 'base-widget',
-    template: '',
-    host: {
+    "selector": 'base-widget',
+    "template": '',
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -40,7 +40,7 @@ import { FormFieldModel } from './core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class WidgetComponent implements AfterViewInit {
     /** Does the widget show a read-only value? (ie, can't be edited) */
@@ -59,56 +59,56 @@ export class WidgetComponent implements AfterViewInit {
 
     touched: boolean = false;
 
-    constructor(public formService?: FormService) {}
+    constructor (public formService?: FormService) {}
 
-    hasField(): boolean {
+    hasField (): boolean {
         return !!this.field;
     }
 
     // Note for developers:
     // returns <any> object to be able binding it to the <element required="required"> attribute
-    isRequired(): any {
+    isRequired (): any {
         if (this.field?.required) {
             return true;
         }
         return null;
     }
 
-    isValid(): boolean {
+    isValid (): boolean {
         return !!this.field.validationSummary;
     }
 
-    isTouched(): boolean {
+    isTouched (): boolean {
         return this.touched;
     }
 
-    hasValue(): boolean {
+    hasValue (): boolean {
         return this.field?.value !== null && this.field?.value !== undefined;
     }
 
-    isInvalidFieldRequired() {
+    isInvalidFieldRequired () {
         return !this.field.isValid && (!this.field.validationSummary || !this.field.value) && this.isRequired();
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit () {
         this.fieldChanged.emit(this.field);
     }
 
-    checkVisibility(field: FormFieldModel) {
+    checkVisibility (field: FormFieldModel) {
         this.fieldChanged.emit(field);
     }
 
-    onFieldChanged(field: FormFieldModel) {
+    onFieldChanged (field: FormFieldModel) {
         this.fieldChanged.emit(field);
         this.formService.formRulesEvent.next(new FormRulesEvent('fieldValueChanged', new FormFieldEvent(this.field?.form, this.field), null));
     }
 
-    event(event: Event): void {
+    event (event: Event): void {
         this.formService.formEvents.next(event);
         this.formService.formRulesEvent.next(new FormRulesEvent(event?.type, new FormFieldEvent(this.field?.form, this.field), event));
     }
 
-    markAsTouched() {
+    markAsTouched () {
         this.touched = true;
     }
 }

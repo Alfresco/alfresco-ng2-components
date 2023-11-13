@@ -20,7 +20,7 @@ import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overla
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TooltipCardComponent } from './tooltip-card.component';
 
-@Directive({ selector: '[adf-tooltip-card]' })
+@Directive({ "selector": '[adf-tooltip-card]' })
 export class TooltipCardDirective implements OnInit, OnDestroy {
 
     @Input('adf-tooltip-card') text = '';
@@ -36,33 +36,33 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
 
     private overlayRef: OverlayRef;
 
-    constructor(
+    constructor (
         private overlay: Overlay,
         private overlayPositionBuilder: OverlayPositionBuilder,
         private elementRef: ElementRef) {
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.hide();
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         const positionStrategy = this.overlayPositionBuilder
             .flexibleConnectedTo(this.elementRef)
             .withPositions([{
-                originX: this.originX,
-                originY: this.originY,
-                overlayX: this.overlayX,
-                overlayY: this.overlayY,
-                offsetY: this.offsetY,
-                offsetX: this.offsetX
+                "originX": this.originX,
+                "originY": this.originY,
+                "overlayX": this.overlayX,
+                "overlayY": this.overlayY,
+                "offsetY": this.offsetY,
+                "offsetX": this.offsetX
             }]);
 
         this.overlayRef = this.overlay.create({ positionStrategy });
     }
 
     @HostListener('mouseenter')
-    show() {
+    show () {
         const tooltipRef: ComponentRef<TooltipCardComponent>
             = this.overlayRef.attach(new ComponentPortal(TooltipCardComponent));
         tooltipRef.instance.text = this.text;
@@ -72,7 +72,7 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
     }
 
     @HostListener('mouseleave')
-    hide() {
+    hide () {
         this.overlayRef.detach();
     }
 }

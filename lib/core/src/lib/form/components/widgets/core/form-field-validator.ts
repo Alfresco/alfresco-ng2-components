@@ -51,13 +51,13 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.ATTACH_FOLDER
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
             field.required;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.isVisible) {
 
             if (field.type === FormFieldTypes.DROPDOWN) {
@@ -109,15 +109,15 @@ export class NumberFieldValidator implements FormFieldValidator {
         FormFieldTypes.AMOUNT
     ];
 
-    static isNumber(value: any): boolean {
+    static isNumber (value: any): boolean {
         return isNumberValue(value);
     }
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.isVisible) {
             if (field.value === null ||
                 field.value === undefined ||
@@ -146,15 +146,15 @@ export class DateFieldValidator implements FormFieldValidator {
     ];
 
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
-    static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
+    static isValidDate (inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
         return DateFnsUtils.isValidDate(inputDate, dateFormat);
     }
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
             if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
@@ -172,16 +172,16 @@ export class DateTimeFieldValidator implements FormFieldValidator {
         FormFieldTypes.DATETIME
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
     }
 
-    static isValidDateTime(input: string): boolean {
+    static isValidDateTime (input: string): boolean {
         const date = new Date(input);
         return isDateValid(date);
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
             if (DateTimeFieldValidator.isValidDateTime(field.value)) {
                 return true;
@@ -202,7 +202,7 @@ export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
         FormFieldTypes.DATE
     ];
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         let isValid = true;
         if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
@@ -217,7 +217,7 @@ export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
         return isValid;
     }
 
-    extractDateFormat(date: string): string {
+    extractDateFormat (date: string): string {
         const brokenDownDate = date.split('-');
         return brokenDownDate[0].length === 4 ? this.DATE_FORMAT_CLOUD : this.DATE_FORMAT;
     }
@@ -229,9 +229,9 @@ export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
 
 export class MinDateFieldValidator extends BoundaryDateFieldValidator {
 
-    checkDate(field: FormFieldModel, dateFormat: string): boolean {
+    checkDate (field: FormFieldModel, dateFormat: string): boolean {
         let isValid = true;
-        const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
+        const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { "dateOnly": true });
         const minValueDateFormat = this.extractDateFormat(field.minValue);
         const min = DateFnsUtils.parseDate(field.minValue, minValueDateFormat);
 
@@ -246,7 +246,7 @@ export class MinDateFieldValidator extends BoundaryDateFieldValidator {
         return isValid;
     }
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
     }
@@ -254,9 +254,9 @@ export class MinDateFieldValidator extends BoundaryDateFieldValidator {
 
 export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
 
-    checkDate(field: FormFieldModel, dateFormat: string): boolean {
+    checkDate (field: FormFieldModel, dateFormat: string): boolean {
         let isValid = true;
-        const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
+        const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { "dateOnly": true });
         const maxValueDateFormat = this.extractDateFormat(field.maxValue);
         const max = DateFnsUtils.parseDate(field.maxValue, maxValueDateFormat);
 
@@ -271,7 +271,7 @@ export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
         return isValid;
     }
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
     }
@@ -291,12 +291,12 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         FormFieldTypes.DATETIME
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         let isValid = true;
         if (this.isSupported(field) && field.value && field.isVisible) {
             if (!DateTimeFieldValidator.isValidDateTime(field.value)) {
@@ -309,7 +309,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         return isValid;
     }
 
-    private checkDateTime(field: FormFieldModel): boolean {
+    private checkDateTime (field: FormFieldModel): boolean {
         let isValid = true;
         const fieldValueDate = new Date(field.value);
         const min = new Date(field.minValue);
@@ -340,12 +340,12 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
         FormFieldTypes.DATETIME
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         let isValid = true;
         if (this.isSupported(field) && field.value && field.isVisible) {
             if (!DateTimeFieldValidator.isValidDateTime(field.value)) {
@@ -358,7 +358,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
         return isValid;
     }
 
-    private checkDateTime(field: FormFieldModel): boolean {
+    private checkDateTime (field: FormFieldModel): boolean {
         let isValid = true;
         const fieldValueDate = new Date(field.value);
         const max = new Date(field.maxValue);
@@ -382,13 +382,13 @@ export class MinLengthFieldValidator implements FormFieldValidator {
         FormFieldTypes.MULTILINE_TEXT
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
             field.minLength > 0;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
             if (field.value.length >= field.minLength) {
                 return true;
@@ -408,13 +408,13 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
         FormFieldTypes.MULTILINE_TEXT
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
             field.maxLength > 0;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
             if (field.value.length <= field.maxLength) {
                 return true;
@@ -434,13 +434,13 @@ export class MinValueFieldValidator implements FormFieldValidator {
         FormFieldTypes.AMOUNT
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
             NumberFieldValidator.isNumber(field.minValue);
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
             const value: number = +field.value;
             const minValue: number = +field.minValue;
@@ -464,13 +464,13 @@ export class MaxValueFieldValidator implements FormFieldValidator {
         FormFieldTypes.AMOUNT
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 &&
             NumberFieldValidator.isNumber(field.maxValue);
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
             const value: number = +field.value;
             const maxValue: number = +field.maxValue;
@@ -494,12 +494,12 @@ export class RegExFieldValidator implements FormFieldValidator {
         FormFieldTypes.MULTILINE_TEXT
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field &&
             this.supportedTypes.indexOf(field.type) > -1 && !!field.regexPattern;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
             if (field.value.length > 0 && field.value.match(new RegExp('^' + field.regexPattern + '$'))) {
                 return true;
@@ -518,31 +518,31 @@ export class FixedValueFieldValidator implements FormFieldValidator {
         FormFieldTypes.TYPEAHEAD
     ];
 
-    isSupported(field: FormFieldModel): boolean {
+    isSupported (field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
     }
 
-    hasValidNameOrValidId(field: FormFieldModel): boolean {
+    hasValidNameOrValidId (field: FormFieldModel): boolean {
         return this.hasValidName(field) || this.hasValidId(field);
     }
 
-    hasValidName(field: FormFieldModel) {
+    hasValidName (field: FormFieldModel) {
         return field.options.find((item) => item.name && item.name.toLocaleLowerCase() === field.value.toLocaleLowerCase()) ? true : false;
     }
 
-    hasValidId(field: FormFieldModel): boolean {
+    hasValidId (field: FormFieldModel): boolean {
         return field.options.find((item) => item.id === field.value) ? true : false;
     }
 
-    hasStringValue(field: FormFieldModel) {
+    hasStringValue (field: FormFieldModel) {
         return field.value && typeof field.value === 'string';
     }
 
-    hasOptions(field: FormFieldModel) {
+    hasOptions (field: FormFieldModel) {
         return field.options && field.options.length > 0;
     }
 
-    validate(field: FormFieldModel): boolean {
+    validate (field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.isVisible) {
             if (this.hasStringValue(field) && this.hasOptions(field) && !this.hasValidNameOrValidId(field)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';

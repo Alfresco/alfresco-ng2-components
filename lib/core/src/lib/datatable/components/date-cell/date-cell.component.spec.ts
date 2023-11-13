@@ -33,9 +33,9 @@ let fixture: ComponentFixture<DateCellComponent>;
 const mockDate = new Date('2023-10-25');
 const mockTooltip = mockDate.toISOString();
 const mockColumn: DataColumn = {
-    key: 'mock-date',
-    type: 'date',
-    format: 'full'
+    "key": 'mock-date',
+    "type": 'date',
+    "format": 'full'
 };
 
 const renderDateCell = (dateConfig: DateConfig, value: number | string | Date, tooltip: string) => {
@@ -62,7 +62,7 @@ const checkDisplayedTooltip = (expectedTooltip: string) => {
 
 const configureTestingModule = (providers: any[]) => {
     TestBed.configureTestingModule({
-        imports: [
+        "imports": [
             DateCellComponent,
             HttpClientTestingModule,
             TranslateModule.forRoot()
@@ -75,10 +75,10 @@ const configureTestingModule = (providers: any[]) => {
     appConfigService = TestBed.inject(AppConfigService);
 
     appConfigService.config = {
-        dateValues: {
-            defaultDateFormat: 'mediumDate',
-            defaultTooltipDateFormat: 'long',
-            defaultLocale: 'en-US'
+        "dateValues": {
+            "defaultDateFormat": 'mediumDate',
+            "defaultTooltipDateFormat": 'long',
+            "defaultLocale": 'en-US'
         }
     };
 };
@@ -96,8 +96,8 @@ describe('DateCellComponent', () => {
 
     it('should display date and tooltip with provided config', () => {
         const mockDateConfig: DateConfig = {
-            format: 'short',
-            tooltipFormat: 'shortDate'
+            "format": 'short',
+            "tooltipFormat": 'shortDate'
         };
 
         const expectedDate = '10/25/23, 12:00 AM';
@@ -125,7 +125,7 @@ describe('DateCellComponent', () => {
 
     it('should display date and tooltip with defaules values if NO dateConfig or appConfig is provided', () => {
         appConfigService.config = {
-            dateValues: {}
+            "dateValues": {}
         };
         const mockDateConfig: DateConfig = {};
 
@@ -139,7 +139,7 @@ describe('DateCellComponent', () => {
 
     it('should display date with timeAgo format', () => {
         const mockDateConfig: DateConfig = {
-            format: 'timeAgo'
+            "format": 'timeAgo'
         };
         const today = new Date();
         const yesterday = new Date(today);
@@ -152,7 +152,7 @@ describe('DateCellComponent', () => {
     });
 
     it('should display date with timeAgo format if NO dateConfig and column format provided', () => {
-        component.column = { ...mockColumn, format: 'timeAgo' };
+        component.column = { ...mockColumn, "format": 'timeAgo' };
         const mockDateConfig = undefined as any;
         const today = new Date();
         const yesterday = new Date(today);
@@ -166,7 +166,7 @@ describe('DateCellComponent', () => {
     it('should display date with column format if dateConfig format is not provided', () => {
         component.column = mockColumn;
         const mockDateConfig: DateConfig = {
-            tooltipFormat: 'short'
+            "tooltipFormat": 'short'
         };
 
         const expectedDate = 'Wednesday, October 25, 2023 at 12:00:00 AM GMT+00:00';
@@ -178,7 +178,7 @@ describe('DateCellComponent', () => {
     it('should display date and override dateConfig by column format if is provided', () => {
         component.column = mockColumn;
         const mockDateConfig: DateConfig = {
-            format: 'short'
+            "format": 'short'
         };
 
         const expectedDate = 'Wednesday, October 25, 2023 at 12:00:00 AM GMT+00:00';
@@ -189,8 +189,8 @@ describe('DateCellComponent', () => {
 
     it('should display date based on string', () => {
         const mockDateConfig: DateConfig = {
-            format: 'short',
-            tooltipFormat: 'short'
+            "format": 'short',
+            "tooltipFormat": 'short'
         };
         const mockStringDate = 'Oct 25, 2023';
 
@@ -202,8 +202,8 @@ describe('DateCellComponent', () => {
 
     it('should display date based on timestamp', () => {
         const mockDateConfig: DateConfig = {
-            format: 'short',
-            tooltipFormat: 'short'
+            "format": 'short',
+            "tooltipFormat": 'short'
         };
         const mockTimestamp = Date.parse('Oct 25, 2023');
 
@@ -216,13 +216,13 @@ describe('DateCellComponent', () => {
 
 describe('DateCellComponent locale', () => {
     it('should display date and tooltip with custom locale', () => {
-        configureTestingModule([{ provide: LOCALE_ID, useValue: 'pl-PL' }]);
+        configureTestingModule([{ "provide": LOCALE_ID, "useValue": 'pl-PL' }]);
         registerLocaleData(localePL);
 
         const mockDateConfig: DateConfig = {
-            format: 'short',
-            tooltipFormat: 'medium',
-            locale: 'pl-PL'
+            "format": 'short',
+            "tooltipFormat": 'medium',
+            "locale": 'pl-PL'
         };
 
         const expectedDate = '25.10.2023, 00:00';

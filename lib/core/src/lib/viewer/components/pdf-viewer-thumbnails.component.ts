@@ -26,11 +26,11 @@ import { PdfThumbComponent } from './pdf-viewer-thumb.component';
 import { delay } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-pdf-thumbnails',
-    templateUrl: './pdf-viewer-thumbnails.component.html',
-    styleUrls: ['./pdf-viewer-thumbnails.component.scss'],
-    host: { class: 'adf-pdf-thumbnails' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-pdf-thumbnails',
+    "templateUrl": './pdf-viewer-thumbnails.component.html',
+    "styleUrls": ['./pdf-viewer-thumbnails.component.scss'],
+    "host": { "class": 'adf-pdf-thumbnails' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() pdfViewer: any;
@@ -57,7 +57,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     thumbsList: QueryList<PdfThumbComponent>;
 
     @HostListener('keydown', ['$event'])
-    onKeydown(event: KeyboardEvent): void {
+    onKeydown (event: KeyboardEvent): void {
         const keyCode = event.keyCode;
 
         if (keyCode === UP_ARROW && this.canSelectPreviousItem()) {
@@ -85,16 +85,16 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     @HostListener('window:resize')
-    onResize() {
+    onResize () {
         this.calculateItems();
     }
 
-    constructor(private element: ElementRef, @Inject(DOCUMENT) private document: any) {
+    constructor (private element: ElementRef, @Inject(DOCUMENT) private document: any) {
         this.calculateItems = this.calculateItems.bind(this);
         this.onPageChange = this.onPageChange.bind(this);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         /* cspell:disable-next-line */
         this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
         this.element.nativeElement.addEventListener('scroll', this.calculateItems, true);
@@ -106,7 +106,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.previouslyFocusedElement = this.document.activeElement as HTMLElement;
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit () {
         this.keyManager = new FocusKeyManager(this.thumbsList);
 
         this.thumbsList.changes
@@ -119,7 +119,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 0);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.element.nativeElement.removeEventListener('scroll', this.calculateItems, true);
         /* cspell:disable-next-line */
         this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
@@ -130,19 +130,19 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    trackByFn(_: number, item: any): number {
+    trackByFn (_: number, item: any): number {
         return item.id;
     }
 
-    isSelected(pageNumber: number) {
+    isSelected (pageNumber: number) {
         return this.pdfViewer.currentPageNumber === pageNumber;
     }
 
-    goTo(pageNumber: number) {
+    goTo (pageNumber: number) {
         this.pdfViewer.currentPageNumber = pageNumber;
     }
 
-    scrollInto(pageNumber: number) {
+    scrollInto (pageNumber: number) {
         if (this.items.length) {
             const index: number = this.items.findIndex((element) => element.id === pageNumber);
 
@@ -156,23 +156,23 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    getPages() {
+    getPages () {
         // eslint-disable-next-line no-underscore-dangle
         return this.pdfViewer._pages.map((page) => ({
-            id: page.id,
-            getWidth: () => this.width,
-            getHeight: () => this.currentHeight,
-            getPage: () => this.pdfViewer.pdfDocument.getPage(page.id)
+            "id": page.id,
+            "getWidth": () => this.width,
+            "getHeight": () => this.currentHeight,
+            "getPage": () => this.pdfViewer.pdfDocument.getPage(page.id)
         }));
     }
 
-    private setHeight(id): number {
+    private setHeight (id): number {
         const height = this.pdfViewer.pdfDocument.getPage(id).then((page) => this.calculateHeight(page));
         return height;
     }
 
-    private calculateHeight(page) {
-        const viewport = page.getViewport({ scale: 1 });
+    private calculateHeight (page) {
+        const viewport = page.getViewport({ "scale": 1 });
         const pageRatio = viewport.width / viewport.height;
         const height = Math.floor(this.width / pageRatio);
 
@@ -180,7 +180,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.itemHeight = height + this.margin;
     }
 
-    private calculateItems() {
+    private calculateItems () {
         const { element, viewPort, itemsInView } = this.getContainerSetup();
 
         const indexByScrollTop = element.scrollTop / viewPort * this.items.length / itemsInView;
@@ -194,7 +194,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.renderItems = this.items.slice(start, end);
     }
 
-    private getContainerSetup() {
+    private getContainerSetup () {
         const element = this.element.nativeElement;
         const elementRec = element.getBoundingClientRect();
         const itemsInView = Math.ceil(elementRec.height / this.itemHeight);
@@ -207,7 +207,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         };
     }
 
-    private onPageChange(event) {
+    private onPageChange (event) {
         const index = this.renderItems.findIndex((element) => element.id === event.pageNumber);
 
         if (index < 0) {
@@ -221,16 +221,16 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.keyManager.setActiveItem(this.getPageIndex(event.pageNumber));
     }
 
-    private getPageIndex(pageNumber: number): number {
+    private getPageIndex (pageNumber: number): number {
         const thumbsListArray = this.thumbsList.toArray();
         return thumbsListArray.findIndex(el => el.page.id === pageNumber);
     }
 
-    private canSelectNextItem(): boolean {
+    private canSelectNextItem (): boolean {
         return this.pdfViewer.currentPageNumber !== this.pdfViewer.pagesCount;
     }
 
-    private canSelectPreviousItem(): boolean {
+    private canSelectPreviousItem (): boolean {
         return this.pdfViewer.currentPageNumber !== 1;
     }
 }

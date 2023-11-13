@@ -37,17 +37,17 @@ describe('AuthGuardService ECM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            providers: [
+            "providers": [
                 {
-                    provide: OidcAuthenticationService, useValue: {
-                        ssoImplicitLogin: () => { },
-                        isPublicUrl: () => false,
-                        hasValidIdToken: () => false,
-                        isLoggedIn: () => false
+                    "provide": OidcAuthenticationService, "useValue": {
+                        "ssoImplicitLogin": () => { },
+                        "isPublicUrl": () => false,
+                        "hasValidIdToken": () => false,
+                        "isLoggedIn": () => false
                     }
                 }
             ]
@@ -67,7 +67,7 @@ describe('AuthGuardService ECM', () => {
 
     it('if the alfresco js api is logged in should canActivate be true', async () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = {"url" : 'some-url'} as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeTruthy();
     });
@@ -76,7 +76,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
 
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = {"url" : 'some-url'} as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeTruthy();
     });
@@ -84,7 +84,7 @@ describe('AuthGuardService ECM', () => {
     it('if the alfresco js api is NOT logged in should canActivate be false', async () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(router, 'navigateByUrl').and.stub();
-        const route = { url: 'some-url' } as RouterStateSnapshot;
+        const route = { "url": 'some-url' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
     });
@@ -94,7 +94,7 @@ describe('AuthGuardService ECM', () => {
 
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = {"url" : 'some-url'} as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
@@ -105,7 +105,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = {"url" : 'some-url'} as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
@@ -118,15 +118,15 @@ describe('AuthGuardService ECM', () => {
         spyOn(oidcAuthenticationService, 'ssoImplicitLogin').and.stub();
 
         appConfigService.config.oauth2 = {
-            silentLogin: true,
-            host: 'http://localhost:6543',
-            redirectUri: '/',
-            clientId: 'activiti',
-            publicUrl: 'settings',
-            scope: 'openid'
+            "silentLogin": true,
+            "host": 'http://localhost:6543',
+            "redirectUri": '/',
+            "clientId": 'activiti',
+            "publicUrl": 'settings',
+            "scope": 'openid'
         };
 
-        const route = {url : 'abc'} as RouterStateSnapshot;
+        const route = {"url" : 'abc'} as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(oidcAuthenticationService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
@@ -137,7 +137,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = undefined;
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = {"url" : 'some-url'} as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
@@ -146,12 +146,12 @@ describe('AuthGuardService ECM', () => {
     it('should set redirect navigation commands', () => {
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
-        const route = { url: 'some-url' } as RouterStateSnapshot;
+        const route = { "url": 'some-url' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url'
+            "provider": 'ECM', "url": 'some-url'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
     });
@@ -159,12 +159,12 @@ describe('AuthGuardService ECM', () => {
     it('should set redirect navigation commands with query params', () => {
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
-        const route = { url: 'some-url;q=123' } as RouterStateSnapshot;
+        const route = { "url": 'some-url;q=123' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url;q=123'
+            "provider": 'ECM', "url": 'some-url;q=123'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url;q=123');
     });
@@ -172,12 +172,12 @@ describe('AuthGuardService ECM', () => {
     it('should set redirect navigation commands with query params', () => {
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
-        const route = { url: '/' } as RouterStateSnapshot;
+        const route = { "url": '/' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: '/'
+            "provider": 'ECM', "url": '/'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('/');
     });
@@ -186,12 +186,12 @@ describe('AuthGuardService ECM', () => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
-        const route = { url: 'some-url' } as RouterStateSnapshot;
+        const route = { "url": 'some-url' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url'
+            "provider": 'ECM', "url": 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     });
@@ -203,12 +203,12 @@ describe('AuthGuardService ECM', () => {
 
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
-        const route = { url: 'some-url' } as RouterStateSnapshot;
+        const route = { "url": 'some-url' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url'
+            "provider": 'ECM', "url": 'some-url'
         });
 
         expect(materialDialog.closeAll).toHaveBeenCalled();

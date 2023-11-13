@@ -20,11 +20,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
 
 const routes: Routes = [
-  { path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent }
+  { "path": 'view/authentication-confirmation', "component": AuthenticationConfirmationComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  "imports": [RouterModule.forChild(routes)],
+  "exports": [RouterModule]
 })
 export class AuthRoutingModule {}

@@ -32,20 +32,20 @@ const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     protected redirectUrl: RedirectionModel = null;
 
     authentications: Authentication = {
-        basicAuth: {
-            ticket: ''
+        "basicAuth": {
+            "ticket": ''
         },
-        type: 'basic'
+        "type": 'basic'
     };
 
-    constructor(
+    constructor (
         logService: LogService,
         appConfig: AppConfigService,
         cookie: CookieService,
@@ -83,20 +83,19 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Logs the user in.
-     *
      * @param username Username for the login
      * @param password Password for the login
      * @param rememberMe Stores the user's login details if true
      * @returns Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
      */
-    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any }> {
+    login (username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any }> {
         return from(this.executeLogin(username, password)).pipe(
             map((response: any) => {
                 this.saveRememberMeCookie(rememberMe);
                 this.onLogin.next(response);
                 return {
-                    type: this.appConfig.get(AppConfigValues.PROVIDERS),
-                    ticket: response
+                    "type": this.appConfig.get(AppConfigValues.PROVIDERS),
+                    "ticket": response
                 };
             }),
             catchError((err) => this.handleError(err))
@@ -105,12 +104,11 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * login Alfresco API
-     *
      * @param username username to login
      * @param password password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      */
-    async executeLogin(username: string, password: string): Promise<any> {
+    async executeLogin (username: string, password: string): Promise<any> {
         if (!this.isCredentialValid(username) || !this.isCredentialValid(password)) {
             return Promise.reject(new Error('missing username or password'));
         }
@@ -141,7 +139,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     }
 
-    private loginBPMECM(username: string, password: string): Promise<any> {
+    private loginBPMECM (username: string, password: string): Promise<any> {
         const contentPromise = this.contentAuth.login(username, password);
         const processPromise = this.processAuth.login(username, password);
 
@@ -166,19 +164,17 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Checks whether the "remember me" cookie was set or not.
-     *
      * @returns True if set, false otherwise
      */
-    isRememberMeSet(): boolean {
+    isRememberMeSet (): boolean {
         return this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) !== null;
     }
 
     /**
      * Saves the "remember me" cookie as either a long-life cookie or a session cookie.
-     *
      * @param rememberMe Enables a long-life cookie
      */
-    saveRememberMeCookie(rememberMe: boolean): void {
+    saveRememberMeCookie (rememberMe: boolean): void {
         let expiration = null;
 
         if (rememberMe) {
@@ -190,11 +186,11 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         this.cookie.setItem(REMEMBER_ME_COOKIE_KEY, '1', expiration, null);
     }
 
-    isCredentialValid(credential: string): boolean {
+    isCredentialValid (credential: string): boolean {
         return credential !== undefined && credential !== null && credential !== '';
     }
 
-    getToken(): string {
+    getToken (): string {
         if (this.isBPMProvider()) {
             return this.processAuth.getToken();
         } else if (this.isECMProvider()) {
@@ -210,7 +206,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
      * @deprecated
      * @returns content auth token
      */
-    getTicketEcm(): string {
+    getTicketEcm (): string {
         return this.contentAuth.getToken();
     }
 
@@ -218,19 +214,19 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
      * @deprecated
      * @returns process auth token
      */
-    getTicketBpm(): string {
+    getTicketBpm (): string {
         return this.processAuth.getToken();
     }
 
-    isBpmLoggedIn(): boolean {
+    isBpmLoggedIn (): boolean {
         return this.processAuth.isLoggedIn();
     }
 
-    isEcmLoggedIn(): boolean {
+    isEcmLoggedIn (): boolean {
         return this.contentAuth.isLoggedIn();
     }
 
-    isLoggedIn(): boolean {
+    isLoggedIn (): boolean {
         const authWithCredentials = this.isKerberosEnabled();
 
         if (this.isBPMProvider()) {
@@ -247,7 +243,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     /**
      * logout Alfresco API
      */
-    async logout(): Promise<any> {
+    async logout (): Promise<any> {
         if (this.isBPMProvider()) {
             return this.processAuth.logout();
         } else if (this.isECMProvider()) {
@@ -258,7 +254,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         return Promise.resolve();
     }
 
-    private logoutBPMECM(): Promise<any> {
+    private logoutBPMECM (): Promise<any> {
         const contentPromise = this.contentAuth.logout();
         const processPromise = this.processAuth.logout();
 
@@ -281,40 +277,39 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     }
 
-    reset(): void {
+    reset (): void {
     }
 
     /**
      * Gets the URL to redirect to after login.
-     *
      * @returns The redirect URL
      */
-    getRedirect(): string {
+    getRedirect (): string {
         const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 
-    setRedirect(url?: RedirectionModel) {
+    setRedirect (url?: RedirectionModel) {
         this.redirectUrl = url;
     }
 
-    private hasValidRedirection(provider: string): boolean {
+    private hasValidRedirection (provider: string): boolean {
         return this.redirectUrl && (this.redirectUrl.provider === provider || this.hasSelectedProviderAll(provider));
     }
 
-    private hasSelectedProviderAll(provider: string): boolean {
+    private hasSelectedProviderAll (provider: string): boolean {
         return this.redirectUrl && (this.redirectUrl.provider === 'ALL' || provider === 'ALL');
     }
 
-    getBpmUsername(): string {
+    getBpmUsername (): string {
         return this.processAuth.getUsername();
     }
 
-    getEcmUsername(): string {
+    getEcmUsername (): string {
         return this.contentAuth.getUsername();
     }
 
-    getUsername(): string {
+    getUsername (): string {
         if (this.isBPMProvider()) {
             return this.processAuth.getUsername();
         } else if (this.isECMProvider()) {
@@ -326,18 +321,17 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Does kerberos enabled?
-     *
      * @returns True if enabled, false otherwise
      */
-    isKerberosEnabled(): boolean {
+    isKerberosEnabled (): boolean {
         return this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false);
     }
 
-    getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders {
+    getAuthHeaders (requestUrl: string, header: HttpHeaders): HttpHeaders {
         return this.addBasicAuth(requestUrl, header);
     }
 
-    private addBasicAuth(requestUrl: string, header: HttpHeaders): HttpHeaders {
+    private addBasicAuth (requestUrl: string, header: HttpHeaders): HttpHeaders {
         const ticket = this.getTicketEcmBase64(requestUrl);
 
         if (!ticket) {
@@ -347,17 +341,16 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         return header.set('Authorization', ticket);
     }
 
-    async requireAlfTicket(): Promise<void> {
+    async requireAlfTicket (): Promise<void> {
         return this.contentAuth.requireAlfTicket();
     }
 
     /**
      * Gets the BPM ticket from the Storage in Base 64 format.
-     *
      * @param requestUrl the request url
      * @returns The ticket or `null` if none was found
      */
-    private getTicketEcmBase64(requestUrl: string): string | null {
+    private getTicketEcmBase64 (requestUrl: string): string | null {
         let ticket = null;
 
         const contextRootBpm = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app';

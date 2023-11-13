@@ -21,8 +21,8 @@ import { Observable } from 'rxjs';
 import { LanguageItem } from '../common/services/language-item.interface';
 
 @Component({
-    selector: 'adf-language-menu',
-    template: `
+    "selector": 'adf-language-menu',
+    "template": `
         <button
             mat-menu-item
             *ngFor="let language of languages$ | async"
@@ -38,11 +38,11 @@ export class LanguageMenuComponent {
 
     languages$: Observable<LanguageItem[]>;
 
-    constructor(private languageService: LanguageService) {
+    constructor (private languageService: LanguageService) {
         this.languages$ = languageService.languages$;
     }
 
-    changeLanguage(language: LanguageItem) {
+    changeLanguage (language: LanguageItem) {
         this.changedLanguage.emit(language);
         this.languageService.changeLanguage(language);
     }

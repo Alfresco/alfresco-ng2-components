@@ -24,22 +24,22 @@ import { CONTEXT_MENU_DATA } from './context-menu.tokens';
 import { ContextMenuListComponent } from './context-menu-list.component';
 
 const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
-    panelClass: 'cdk-overlay-pane',
-    backdropClass: 'cdk-overlay-transparent-backdrop',
-    hasBackdrop: true
+    "panelClass": 'cdk-overlay-pane',
+    "backdropClass": 'cdk-overlay-transparent-backdrop',
+    "hasBackdrop": true
 };
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContextMenuOverlayService {
 
-    constructor(
+    constructor (
         private injector: Injector,
         private overlay: Overlay
     ) {}
 
-    open(config: ContextMenuOverlayConfig): ContextMenuOverlayRef {
+    open (config: ContextMenuOverlayConfig): ContextMenuOverlayRef {
         const overlayConfig = { ...DEFAULT_CONFIG, ...config };
 
         const overlay = this.createOverlay(overlayConfig);
@@ -64,12 +64,12 @@ export class ContextMenuOverlayService {
         return overlayRef;
     }
 
-    private createOverlay(config: ContextMenuOverlayConfig): OverlayRef {
+    private createOverlay (config: ContextMenuOverlayConfig): OverlayRef {
         const overlayConfig = this.getOverlayConfig(config);
         return this.overlay.create(overlayConfig);
     }
 
-    private attachDialogContainer(overlay: OverlayRef, config: ContextMenuOverlayConfig, contextMenuOverlayRef: ContextMenuOverlayRef) {
+    private attachDialogContainer (overlay: OverlayRef, config: ContextMenuOverlayConfig, contextMenuOverlayRef: ContextMenuOverlayRef) {
         const injector = this.createInjector(config, contextMenuOverlayRef);
 
         const containerPortal = new ComponentPortal(ContextMenuListComponent, null, injector);
@@ -78,7 +78,7 @@ export class ContextMenuOverlayService {
         return containerRef.instance;
     }
 
-    private createInjector(config: ContextMenuOverlayConfig, contextMenuOverlayRef: ContextMenuOverlayRef): PortalInjector {
+    private createInjector (config: ContextMenuOverlayConfig, contextMenuOverlayRef: ContextMenuOverlayRef): PortalInjector {
         const injectionTokens = new WeakMap();
 
         injectionTokens.set(ContextMenuOverlayRef, contextMenuOverlayRef);
@@ -87,17 +87,17 @@ export class ContextMenuOverlayService {
         return new PortalInjector(this.injector, injectionTokens);
     }
 
-    private getOverlayConfig(config: ContextMenuOverlayConfig): OverlayConfig {
+    private getOverlayConfig (config: ContextMenuOverlayConfig): OverlayConfig {
         const { clientY, clientX  } = config.source;
 
         const fakeElement: any = {
-            getBoundingClientRect: (): ClientRect => ({
-                bottom: clientY,
-                height: 0,
-                left: clientX,
-                right: clientX,
-                top: clientY,
-                width: 0
+            "getBoundingClientRect": (): ClientRect => ({
+                "bottom": clientY,
+                "height": 0,
+                "left": clientX,
+                "right": clientX,
+                "top": clientY,
+                "width": 0
             } as any)
         };
 
@@ -105,17 +105,17 @@ export class ContextMenuOverlayService {
             .position()
             .flexibleConnectedTo(new ElementRef(fakeElement))
             .withPositions([{
-                originX: 'start',
-                originY: 'bottom',
-                overlayX: 'start',
-                overlayY: 'top'
+                "originX": 'start',
+                "originY": 'bottom',
+                "overlayX": 'start',
+                "overlayY": 'top'
             }]);
 
         const overlayConfig = new OverlayConfig({
-            hasBackdrop: config.hasBackdrop,
-            backdropClass: config.backdropClass,
-            panelClass: config.panelClass,
-            scrollStrategy: this.overlay.scrollStrategies.close(),
+            "hasBackdrop": config.hasBackdrop,
+            "backdropClass": config.backdropClass,
+            "panelClass": config.panelClass,
+            "scrollStrategy": this.overlay.scrollStrategies.close(),
             positionStrategy
         });
 

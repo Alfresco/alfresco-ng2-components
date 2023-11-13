@@ -21,56 +21,56 @@ import { SidenavLayoutModule } from '../../layout.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 
 export default {
-    component: SidebarActionMenuComponent,
-    title: 'Core/Layout/Sidebar Action Menu',
-    decorators: [
+    "component": SidebarActionMenuComponent,
+    "title": 'Core/Layout/Sidebar Action Menu',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, SidenavLayoutModule]
+            "imports": [CoreStoryModule, SidenavLayoutModule]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Displays a sidebar-action menu information panel.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Displays a sidebar-action menu information panel.`
             }
         }
     },
-    argTypes: {
-        expanded: {
-            control: 'boolean',
-            description: 'Toggle the sidebar action menu on expand',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+    "argTypes": {
+        "expanded": {
+            "control": 'boolean',
+            "description": 'Toggle the sidebar action menu on expand',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        title: {
-            control: 'text',
-            description: 'The title of the sidebar action',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+        "title": {
+            "control": 'text',
+            "description": 'The title of the sidebar action',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' }
             }
         },
-        width: {
-            control: 'number',
-            description: 'Width in pixels for sidebar action menu options',
-            defaultValue: 272,
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: '272' }
+        "width": {
+            "control": 'number',
+            "description": 'Width in pixels for sidebar action menu options',
+            "defaultValue": 272,
+            "table": {
+                "type": { "summary": 'number' },
+                "defaultValue": { "summary": '272' }
             }
         }
     }
 } as Meta;
 
 const template: Story<SidenavLayoutModule> = (args: SidebarActionMenuComponent) => ({
-    props: args
+    "props": args
 });
 
 export const sidebarActionMenu = template.bind({});
 sidebarActionMenu.args = {
-    title: 'Hello from Sidebar Action Menu!'
+    "title": 'Hello from Sidebar Action Menu!'
 };

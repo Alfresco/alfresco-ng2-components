@@ -1,16 +1,17 @@
 $adf-inplace-input-padding: 7px;
 
 .adf-inplace-input-container {
-    .mat-form-field-underline {
+
+    .mat-mdc-form-field-underline {
         display: none;
     }
 
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
         display: flex;
         border-top: 0;
     }
 
-    .mat-form-field-label {
+    .mat-mdc-form-field-label {
         padding: $adf-inplace-input-padding;
     }
 

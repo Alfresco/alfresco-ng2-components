@@ -22,17 +22,17 @@ import { ContainerModel, FormFieldModel, TabModel } from './widgets';
 import { FormService } from '../services/form.service';
 
 @Component({
-    selector: 'adf-form-renderer',
-    templateUrl: './form-renderer.component.html',
-    styleUrls: ['./form-renderer.component.scss'],
-    providers: [
+    "selector": 'adf-form-renderer',
+    "templateUrl": './form-renderer.component.html',
+    "styleUrls": ['./form-renderer.component.scss'],
+    "providers": [
         {
-            provide: FormRulesManager,
-            useFactory: formRulesManagerFactory,
-            deps: [Injector]
+            "provide": FormRulesManager,
+            "useFactory": formRulesManagerFactory,
+            "deps": [Injector]
         }
     ],
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnChanges, OnDestroy {
     /** Toggle debug options. */
@@ -46,31 +46,31 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     fields: FormFieldModel[];
 
-    constructor(public formService: FormService, private formRulesManager: FormRulesManager<T>) {}
+    constructor (public formService: FormService, private formRulesManager: FormRulesManager<T>) {}
 
-    ngOnChanges(): void {
+    ngOnChanges (): void {
         this.formRulesManager.initialize(this.formDefinition);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.formRulesManager.destroy();
     }
 
-    hasTabs(): boolean {
+    hasTabs (): boolean {
         return this.formDefinition.tabs && this.formDefinition.tabs.length > 0;
     }
 
-    visibleTabs(): TabModel[] {
+    visibleTabs (): TabModel[] {
         return this.formDefinition.tabs.filter((tab) => tab.isVisible);
     }
 
-    onExpanderClicked(content: ContainerModel) {
+    onExpanderClicked (content: ContainerModel) {
         if (content?.isCollapsible()) {
             content.isExpanded = !content.isExpanded;
         }
     }
 
-    getNumberOfColumns(content: ContainerModel): number {
+    getNumberOfColumns (content: ContainerModel): number {
         return (content.json?.numberOfColumns || 1) > (content.columns?.length || 1)
             ? content.json?.numberOfColumns || 1
             : content.columns?.length || 1;
@@ -78,11 +78,10 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     /**
      * Serializes column fields
-     *
      * @param content container model
      * @returns a list of form field models
      */
-    getContainerFields(content: ContainerModel): FormFieldModel[] {
+    getContainerFields (content: ContainerModel): FormFieldModel[] {
         const serialisedFormFields: FormFieldModel[] = [];
         const maxColumnFieldsSize = this.getMaxColumnFieldSize(content);
         for (let rowIndex = 0; rowIndex < maxColumnFieldsSize; rowIndex++) {
@@ -103,7 +102,7 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
         return serialisedFormFields;
     }
 
-    private getMaxColumnFieldSize(content: ContainerModel): number {
+    private getMaxColumnFieldSize (content: ContainerModel): number {
         let maxFieldSize = 0;
         if (content?.columns?.length > 0) {
             maxFieldSize = content?.columns?.reduce((prevColumn, currentColumn) =>
@@ -115,11 +114,10 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     /**
      * Calculate the column width based on the numberOfColumns and current field's colspan property
-     *
      * @param container container model
      * @returns the column width for the given model
      */
-    getColumnWith(container: ContainerModel): string {
+    getColumnWith (container: ContainerModel): string {
         const colspan = container ? container.field.colspan : 1;
         return (100 / container.field.numberOfColumns) * colspan + '';
     }

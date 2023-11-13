@@ -20,19 +20,19 @@ export class LoginSubmitEvent {
     private readonly _values: any;
     private _defaultPrevented: boolean = false;
 
-    get values(): any {
+    get values (): any {
         return this._values;
     }
 
-    get defaultPrevented() {
+    get defaultPrevented () {
         return this._defaultPrevented;
     }
 
-    constructor(_values: any) {
+    constructor (_values: any) {
         this._values = _values;
     }
 
-    preventDefault() {
+    preventDefault () {
         this._defaultPrevented = true;
     }
 

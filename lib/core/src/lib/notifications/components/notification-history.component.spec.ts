@@ -43,7 +43,7 @@ describe('Notification History Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -59,20 +59,20 @@ describe('Notification History Component', () => {
 
         testNotifications = [
             {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Moved 1 item.'],
-                read: false
+                "type": NOTIFICATION_TYPE.INFO,
+                "icon": 'info',
+                "datetime": new Date(),
+                "initiator": { "key": '*', "displayName": 'SYSTEM' },
+                "messages": ['Moved 1 item.'],
+                "read": false
             },
             {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Copied 1 item.'],
-                read: false
+                "type": NOTIFICATION_TYPE.INFO,
+                "icon": 'info',
+                "datetime": new Date(),
+                "initiator": { "key": '*', "displayName": 'SYSTEM' },
+                "messages": ['Copied 1 item.'],
+                "read": false
             }
         ];
     });
@@ -131,10 +131,10 @@ describe('Notification History Component', () => {
             fixture.detectChanges();
             notificationService.pushToNotificationHistory(
                 {
-                    clickCallBack: callBackSpy,
-                    messages: ['My new message'],
-                    datetime: new Date(),
-                    type: NOTIFICATION_TYPE.RECURSIVE
+                    "clickCallBack": callBackSpy,
+                    "messages": ['My new message'],
+                    "datetime": new Date(),
+                    "type": NOTIFICATION_TYPE.RECURSIVE
 
                 } as NotificationModel
             );
@@ -169,9 +169,9 @@ describe('Notification History Component', () => {
 
         it('should read notifications from local storage', (done) => {
             storage.setItem(NOTIFICATION_STORAGE, JSON.stringify([{
-                messages: ['My new message'],
-                datetime: new Date(),
-                type: NOTIFICATION_TYPE.RECURSIVE
+                "messages": ['My new message'],
+                "datetime": new Date(),
+                "type": NOTIFICATION_TYPE.RECURSIVE
 
             } as NotificationModel]));
             fixture.detectChanges();

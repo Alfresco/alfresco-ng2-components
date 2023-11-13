@@ -22,10 +22,10 @@ import { WidgetComponent } from '../widget.component';
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
-    selector: 'base-viewer-widget',
-    templateUrl: './base-viewer.widget.html',
-    styleUrls: ['./base-viewer.widget.scss'],
-    host: {
+    "selector": 'base-viewer-widget',
+    "templateUrl": './base-viewer.widget.html',
+    "styleUrls": ['./base-viewer.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,14 +36,14 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit {
-    constructor(formService: FormService) {
+    constructor (formService: FormService) {
         super(formService);
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         if (this.field?.value) {
             if (Array.isArray(this.field.value) && this.field.value.length > 0) {
                 const file = this.field.value[0];

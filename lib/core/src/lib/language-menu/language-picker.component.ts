@@ -19,8 +19,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { LanguageItem } from '../common/services/language-item.interface';
 
 @Component({
-    selector: 'adf-picker-button',
-    template: `
+    "selector": 'adf-picker-button',
+    "template": `
         <button mat-menu-item [matMenuTriggerFor]="langMenu">
             <mat-icon>language</mat-icon>
             {{ 'ADF.LANGUAGE' | translate }}

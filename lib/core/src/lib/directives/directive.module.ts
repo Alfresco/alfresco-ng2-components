@@ -28,12 +28,12 @@ import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MaterialModule,
         OverlayModule
     ],
-    declarations: [
+    "declarations": [
         HighlightDirective,
         LogoutDirective,
         UploadDirective,
@@ -41,7 +41,7 @@ import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directiv
         TooltipCardComponent,
         InfiniteSelectScrollDirective
     ],
-    exports: [
+    "exports": [
         HighlightDirective,
         LogoutDirective,
         UploadDirective,

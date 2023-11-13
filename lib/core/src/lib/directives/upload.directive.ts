@@ -21,7 +21,7 @@ import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, 
 import { FileInfo, FileUtils } from '../common/utils/file-utils';
 
 @Directive({
-    selector: '[adf-upload]'
+    "selector": '[adf-upload]'
 })
 export class UploadDirective implements OnInit, OnDestroy {
     /** Enables/disables uploading. */
@@ -57,11 +57,11 @@ export class UploadDirective implements OnInit, OnDestroy {
     private upload: HTMLInputElement;
     private element: HTMLElement;
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone) {
+    constructor (private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone) {
         this.element = el.nativeElement;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.isClickMode() && this.renderer) {
             const inputUpload = this.renderer.createElement('input');
             this.upload = this.el.nativeElement.parentElement.appendChild(inputUpload);
@@ -93,7 +93,7 @@ export class UploadDirective implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.element.removeEventListener('dragenter', this.onDragEnter);
         this.element.removeEventListener('dragover', this.onDragOver);
         this.element.removeEventListener('dragleave', this.onDragLeave);
@@ -101,14 +101,14 @@ export class UploadDirective implements OnInit, OnDestroy {
     }
 
     @HostListener('click', ['$event'])
-    onClick(event: Event) {
+    onClick (event: Event) {
         if (this.isClickMode() && this.upload) {
             event.preventDefault();
             this.upload.click();
         }
     }
 
-    onDragEnter(event: DragEvent) {
+    onDragEnter (event: DragEvent) {
         if (this.isDropMode()) {
             event.dataTransfer.dropEffect = 'copy';
             this.element.classList.add(this.cssClassName);
@@ -116,7 +116,7 @@ export class UploadDirective implements OnInit, OnDestroy {
         }
     }
 
-    onDragOver(event: DragEvent) {
+    onDragOver (event: DragEvent) {
         event.preventDefault();
         if (this.isDropMode()) {
             event.dataTransfer.dropEffect = 'copy';
@@ -126,14 +126,14 @@ export class UploadDirective implements OnInit, OnDestroy {
         return false;
     }
 
-    onDragLeave() {
+    onDragLeave () {
         if (this.isDropMode()) {
             this.element.classList.remove(this.cssClassName);
             this.isDragging = false;
         }
     }
 
-    onDrop(event: Event) {
+    onDrop (event: Event) {
         if (this.isDropMode()) {
             event.stopPropagation();
             event.preventDefault();
@@ -151,34 +151,34 @@ export class UploadDirective implements OnInit, OnDestroy {
         return false;
     }
 
-    onUploadFiles(files: FileInfo[]) {
+    onUploadFiles (files: FileInfo[]) {
         if (this.enabled && files.length > 0) {
             const customEvent = new CustomEvent('upload-files', {
-                detail: {
-                    sender: this,
-                    data: this.data,
+                "detail": {
+                    "sender": this,
+                    "data": this.data,
                     files
                 },
-                bubbles: true
+                "bubbles": true
             });
 
             this.el.nativeElement.dispatchEvent(customEvent);
         }
     }
 
-    protected hasMode(mode: string): boolean {
+    protected hasMode (mode: string): boolean {
         return this.enabled && mode && this.mode && this.mode.indexOf(mode) > -1;
     }
 
-    protected isDropMode(): boolean {
+    protected isDropMode (): boolean {
         return this.hasMode('drop');
     }
 
-    protected isClickMode(): boolean {
+    protected isClickMode (): boolean {
         return this.hasMode('click');
     }
 
-    getDataTransfer(event: Event | any): DataTransfer {
+    getDataTransfer (event: Event | any): DataTransfer {
         if (event?.dataTransfer) {
             return event.dataTransfer;
         }
@@ -190,11 +190,10 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     /**
      * Extract files from the DataTransfer object used to hold the data that is being dragged during a drag and drop operation.
-     *
      * @param dataTransfer DataTransfer object
      * @returns a list of file info objects
      */
-    getFilesDropped(dataTransfer: DataTransfer): Promise<FileInfo[]> {
+    getFilesDropped (dataTransfer: DataTransfer): Promise<FileInfo[]> {
         return new Promise((resolve) => {
             const iterations = [];
 
@@ -208,9 +207,9 @@ export class UploadDirective implements OnInit, OnDestroy {
                                 if (item.isFile) {
                                     iterations.push(
                                         Promise.resolve({
-                                            entry: item,
-                                            file: items[i].getAsFile(),
-                                            relativeFolder: '/'
+                                            "entry": item,
+                                            "file": items[i].getAsFile(),
+                                            "relativeFolder": '/'
                                         })
                                     );
                                 } else if (item.isDirectory) {
@@ -224,9 +223,9 @@ export class UploadDirective implements OnInit, OnDestroy {
                         } else {
                             iterations.push(
                                 Promise.resolve({
-                                    entry: null,
-                                    file: items[i].getAsFile(),
-                                    relativeFolder: '/'
+                                    "entry": null,
+                                    "file": items[i].getAsFile(),
+                                    "relativeFolder": '/'
                                 })
                             );
                         }
@@ -234,9 +233,9 @@ export class UploadDirective implements OnInit, OnDestroy {
                 } else {
                     // safari or FF
                     const files = FileUtils.toFileArray(dataTransfer.files).map((file) => ({
-                        entry: null,
+                        "entry": null,
                         file,
-                        relativeFolder: '/'
+                        "relativeFolder": '/'
                     }));
 
                     iterations.push(Promise.resolve(files));
@@ -251,18 +250,17 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     /**
      * Invoked when user selects files or folders by means of File Dialog
-     *
      * @param event DOM event
      */
-    onSelectFiles(event: any): void {
+    onSelectFiles (event: any): void {
         if (this.isClickMode()) {
             const input = event.currentTarget;
             const files = FileUtils.toFileArray(input.files);
             this.onUploadFiles(
                 files.map((file) => ({
-                    entry: null,
+                    "entry": null,
                     file,
-                    relativeFolder: '/'
+                    "relativeFolder": '/'
                 }))
             );
             event.target.value = '';

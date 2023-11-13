@@ -32,7 +32,7 @@ describe('HyperlinkWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 MatTooltipModule
@@ -47,7 +47,7 @@ describe('HyperlinkWidgetComponent', () => {
         const text = 'hello world';
 
         widget.field = new FormFieldModel(new FormModel(), {
-            displayText: text
+            "displayText": text
         });
         widget.ngOnInit();
 
@@ -58,8 +58,8 @@ describe('HyperlinkWidgetComponent', () => {
         const url = 'http://<address>';
 
         widget.field = new FormFieldModel(new FormModel(), {
-            displayText: null,
-            hyperlinkUrl: url
+            "displayText": null,
+            "hyperlinkUrl": url
         });
         widget.ngOnInit();
 
@@ -75,8 +75,8 @@ describe('HyperlinkWidgetComponent', () => {
 
     it('should not return link text', () => {
         widget.field = new FormFieldModel(new FormModel(), {
-            displayText: null,
-            hyperlinkUrl: null
+            "displayText": null,
+            "hyperlinkUrl": null
         });
         widget.ngOnInit();
 
@@ -92,7 +92,7 @@ describe('HyperlinkWidgetComponent', () => {
 
     it('should return default url for missing field property', () => {
         widget.field = new FormFieldModel(new FormModel(), {
-            hyperlinkUrl: null
+            "hyperlinkUrl": null
         });
         widget.ngOnInit();
 
@@ -102,7 +102,7 @@ describe('HyperlinkWidgetComponent', () => {
     it('should prepend url with scheme', () => {
         const url = 'www.alfresco.com';
         widget.field = new FormFieldModel(new FormModel(), {
-            hyperlinkUrl: url
+            "hyperlinkUrl": url
         });
         widget.ngOnInit();
 
@@ -112,7 +112,7 @@ describe('HyperlinkWidgetComponent', () => {
     it('should not prepend url with scheme', () => {
         const url = 'https://<secure/address>';
         widget.field = new FormFieldModel(new FormModel(), {
-            hyperlinkUrl: url
+            "hyperlinkUrl": url
         });
         widget.ngOnInit();
 
@@ -123,7 +123,7 @@ describe('HyperlinkWidgetComponent', () => {
         const url = 'www.alfresco.com';
 
         widget.field = new FormFieldModel(new FormModel(), {
-            value: url
+            "value": url
         });
         widget.ngOnInit();
 
@@ -134,8 +134,8 @@ describe('HyperlinkWidgetComponent', () => {
         const url = 'www.alfresco.com';
 
         widget.field = new FormFieldModel(new FormModel(), {
-            value:  url,
-            hyperlinkUrl:  'www.alfresco-test.com'
+            "value":  url,
+            "hyperlinkUrl":  'www.alfresco-test.com'
         });
         widget.ngOnInit();
 
@@ -146,7 +146,7 @@ describe('HyperlinkWidgetComponent', () => {
         const url = 'www.alfresco.com';
 
         widget.field = new FormFieldModel(new FormModel(), {
-            displayText:  url
+            "displayText":  url
         });
         widget.ngOnInit();
 
@@ -158,8 +158,8 @@ describe('HyperlinkWidgetComponent', () => {
     it('should be able to set label property', () => {
         const label = 'Label';
         widget.field = new FormFieldModel(new FormModel(), {
-            name: label,
-            type: FormFieldTypes.HYPERLINK
+            "name": label,
+            "type": FormFieldTypes.HYPERLINK
         });
 
         fixture.detectChanges();
@@ -170,8 +170,8 @@ describe('HyperlinkWidgetComponent', () => {
     it('should be able to set URL', () => {
         const url = 'https://www.alfresco.com/';
         widget.field = new FormFieldModel(new FormModel(), {
-            hyperlinkUrl: url,
-            type: FormFieldTypes.HYPERLINK
+            "hyperlinkUrl": url,
+            "type": FormFieldTypes.HYPERLINK
         });
 
         fixture.detectChanges();
@@ -183,9 +183,9 @@ describe('HyperlinkWidgetComponent', () => {
         const displayText = 'displayText';
         const url = 'https://www.alfresco.com/';
         widget.field = new FormFieldModel(new FormModel(), {
-            hyperlinkUrl: url,
+            "hyperlinkUrl": url,
             displayText,
-            type: FormFieldTypes.HYPERLINK
+            "type": FormFieldTypes.HYPERLINK
         });
 
         fixture.detectChanges();
@@ -198,11 +198,11 @@ describe('HyperlinkWidgetComponent', () => {
         const displayText = 'displayText';
         const url = 'https://www.alfresco.com/';
         widget.field = new FormFieldModel(new FormModel(), {
-            id: 'hyperlink',
-            hyperlinkUrl: url,
+            "id": 'hyperlink',
+            "hyperlinkUrl": url,
             displayText,
-            type: FormFieldTypes.HYPERLINK,
-            tooltip: 'hyperlink widget'
+            "type": FormFieldTypes.HYPERLINK,
+            "tooltip": 'hyperlink widget'
         });
 
         fixture.detectChanges();

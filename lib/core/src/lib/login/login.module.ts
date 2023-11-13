@@ -29,7 +29,7 @@ import { LoginDialogComponent } from './components/login-dialog.component';
 import { LoginDialogPanelComponent } from './components/login-dialog-panel.component';
 
 @NgModule({
-    imports: [
+    "imports": [
         RouterModule,
         MaterialModule,
         FormsModule,
@@ -37,14 +37,14 @@ import { LoginDialogPanelComponent } from './components/login-dialog-panel.compo
         CommonModule,
         TranslateModule
     ],
-    declarations: [
+    "declarations": [
         LoginComponent,
         LoginFooterDirective,
         LoginHeaderDirective,
         LoginDialogComponent,
         LoginDialogPanelComponent
     ],
-    exports: [
+    "exports": [
         LoginComponent,
         LoginFooterDirective,
         LoginHeaderDirective,

@@ -29,7 +29,7 @@ describe('HeaderFilterTemplateDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]

@@ -6,13 +6,15 @@
         max-height: 180px;
         padding: 5px 0;
         overflow-y: auto;
-
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-label {
             text-overflow: ellipsis;
             overflow: hidden;
             width: 100%;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-layout {
             width: 100%;
         }
@@ -23,9 +25,10 @@
             white-space: nowrap;
         }
 
-        .mat-checkbox {
+        .mat-mdc-checkbox {
             margin: 5px;
-
+            /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+            /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
             &.mat-checkbox-checked .mat-checkbox-label {
                 font-weight: bold;
             }
@@ -58,11 +61,10 @@
                 line-height: 24px;
                 letter-spacing: 0.25px;
 
-                .mat-form-field-underline {
+                .mat-mdc-form-field-underline {
                     display: none;
                 }
-
-                .mat-form-field-suffix {
+                .mat-mdc-form-field-suffix {
                     padding-right: 1px;
                 }
             }
@@ -72,7 +74,7 @@
     .adf-facet-buttons {
         text-align: right;
 
-        .mat-button {
+        .mat-mdc-button {
             text-transform: uppercase;
         }
 
@@ -80,7 +82,8 @@
             padding-top: 15px;
         }
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+    /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
     .mat-checkbox-label,
     .mat-radio-label {
         color: var(--adf-theme-foreground-text-color-054);

@@ -29,35 +29,35 @@ describe('ResizableDirective', () => {
     const scrollLeft = 0;
 
     const boundingClientRectMock = {
-        top: 0,
-        left: 0,
-        right: 0,
-        width: 150,
-        height: 0,
-        bottom: 0,
+        "top": 0,
+        "left": 0,
+        "right": 0,
+        "width": 150,
+        "height": 0,
+        "bottom": 0,
         scrollTop,
         scrollLeft
     };
 
     const rendererMock = {
-        listen: jasmine.createSpy('listen'),
-        setStyle: jasmine.createSpy('setStyle')
+        "listen": jasmine.createSpy('listen'),
+        "setStyle": jasmine.createSpy('setStyle')
     };
 
     const elementRefMock = {
-        nativeElement: {
+        "nativeElement": {
             scrollTop,
             scrollLeft,
-            getBoundingClientRect: () => boundingClientRectMock
+            "getBoundingClientRect": () => boundingClientRectMock
         }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ResizableDirective],
-            providers: [
-                { provide: Renderer2, useValue: rendererMock },
-                { provide: ElementRef, useValue: elementRefMock }
+            "declarations": [ResizableDirective],
+            "providers": [
+                { "provide": Renderer2, "useValue": rendererMock },
+                { "provide": ElementRef, "useValue": elementRefMock }
             ]
         });
 
@@ -78,7 +78,7 @@ describe('ResizableDirective', () => {
     it('should attach mousemove event to document', () => {
         const mouseDownEvent = new MouseEvent('mousedown');
 
-        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mousedown.next({ ...mouseDownEvent, "resize": true });
 
         expect(renderer.listen).toHaveBeenCalledWith('document', 'mousemove', jasmine.any(Function));
     });
@@ -91,7 +91,7 @@ describe('ResizableDirective', () => {
         spyOn(directive.resizeStart, 'emit');
         const mouseDownEvent = new MouseEvent('mousedown');
 
-        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mousedown.next({ ...mouseDownEvent, "resize": true });
 
         expect(renderer.setStyle).toHaveBeenCalledWith(document.body, 'cursor', 'col-resize');
     });
@@ -101,16 +101,16 @@ describe('ResizableDirective', () => {
         directive.resizeStart.subscribe();
         const mouseDownEvent = new MouseEvent('mousedown');
 
-        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mousedown.next({ ...mouseDownEvent, "resize": true });
 
-        expect(directive.resizeStart.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 0, width: 0 } });
+        expect(directive.resizeStart.emit).toHaveBeenCalledWith({ "rectangle": { "top": 0, "left": 0, "bottom": 0, "right": 0, "width": 0 } });
     });
 
     it('should unset cursor on mouseup', () => {
         const mouseDownEvent = new MouseEvent('mousedown');
         const mouseUpEvent = new MouseEvent('mouseup');
 
-        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mousedown.next({ ...mouseDownEvent, "resize": true });
         directive.mouseup.next(mouseUpEvent);
 
         expect(renderer.setStyle).toHaveBeenCalledWith(document.body, 'cursor', '');
@@ -122,22 +122,22 @@ describe('ResizableDirective', () => {
         const mouseDownEvent = new MouseEvent('mousedown');
         const mouseUpEvent = new MouseEvent('mouseup');
 
-        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mousedown.next({ ...mouseDownEvent, "resize": true });
         directive.mouseup.next(mouseUpEvent);
 
-        expect(directive.resizeEnd.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, right: 0, width: 150, height: 0, bottom: 0, scrollTop: 0, scrollLeft: 0 } });
+        expect(directive.resizeEnd.emit).toHaveBeenCalledWith({ "rectangle": { "top": 0, "left": 0, "right": 0, "width": 150, "height": 0, "bottom": 0, "scrollTop": 0, "scrollLeft": 0 } });
     });
 
     it('should emit resizing on mousemove', () => {
         spyOn(directive.resizing, 'emit');
         directive.resizing.subscribe();
         const mouseDownEvent = new MouseEvent('mousedown');
-        const mouseMoveEvent = new MouseEvent('mousemove', { clientX: 120 });
+        const mouseMoveEvent = new MouseEvent('mousemove', { "clientX": 120 });
 
-        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mousedown.next({ ...mouseDownEvent, "resize": true });
         directive.mousemove.next(mouseMoveEvent);
 
-        expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 120, width: 120 } });
+        expect(directive.resizing.emit).toHaveBeenCalledWith({ "rectangle": { "top": 0, "left": 0, "bottom": 0, "right": 120, "width": 120 } });
     });
 
     it('should emit resizing on mousemove considering cover padding', () => {
@@ -146,11 +146,11 @@ describe('ResizableDirective', () => {
         directive.resizing.subscribe();
 
         const mouseDownEvent = new MouseEvent('mousedown');
-        const mouseMoveEvent = new MouseEvent('mousemove', { clientX: 120 });
+        const mouseMoveEvent = new MouseEvent('mousemove', { "clientX": 120 });
 
-        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mousedown.next({ ...mouseDownEvent, "resize": true });
         directive.mousemove.next(mouseMoveEvent);
 
-        expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 130, width: 130 } });
+        expect(directive.resizing.emit).toHaveBeenCalledWith({ "rectangle": { "top": 0, "left": 0, "bottom": 0, "right": 130, "width": 130 } });
     });
 });

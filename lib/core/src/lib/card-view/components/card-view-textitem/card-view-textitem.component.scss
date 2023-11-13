@@ -6,7 +6,7 @@
         color: var(--adf-theme-foreground-text-color-025);
     }
 
-    &-textitem-action.mat-icon-button {
+    &-textitem-action.mat-mdc-icon-button {
         width: 20px;
         height: 20px;
         line-height: 20px;
@@ -35,7 +35,7 @@
         margin-bottom: 25px !important;
         margin-top: 6px;
 
-        .mat-form-field-label {
+        .mat-mdc-form-field-label {
             margin-top: 6px;
         }
     }
@@ -99,46 +99,46 @@
         color: var(--adf-theme-foreground-text-color-054);
     }
 
-    &-textitem-editable .mat-form-field-wrapper {
+    &-textitem-editable .mat-mdc-form-field-wrapper {
         margin: 0;
         padding-bottom: 0;
     }
 
-    &-textitem-editable .mat-form-field-underline {
+    &-textitem-editable .mat-mdc-form-field-underline {
         display: none;
     }
 
-    &-textitem-editable .mat-form-field-infix {
+    &-textitem-editable .mat-mdc-form-field-infix {
         padding: 0;
         border-top: none;
     }
 
-    &-textitem-editable .mat-form-field-label-wrapper {
+    &-textitem-editable .mat-mdc-form-field-label-wrapper {
         padding-top: 2em;
         position: static;
     }
 
-    &-textitem-editable .mat-form-field-label {
+    &-textitem-editable .mat-mdc-form-field-label {
         top: 4px;
     }
 
-    &-textitem-editable .mat-input-element {
+    &-textitem-editable .mat-mdc-input-element {
         font-family: inherit;
         position: relative;
         padding-top: 6px;
     }
 
-    &-textitem-editable .mat-input-element:focus {
+    &-textitem-editable .mat-mdc-input-element:focus {
         padding: 5px;
         left: -6px;
         top: 0;
     }
 
-    &-textitem-editable input.mat-input-element {
+    &-textitem-editable input.mat-mdc-input-element {
         margin-bottom: 2px;
     }
 
-    &-textitem-editable input.mat-input-element:focus {
+    &-textitem-editable input.mat-mdc-input-element:focus {
         margin-bottom: -8px;
     }
 
@@ -171,8 +171,9 @@
     }
 }
 
-.mat-form-field:not(.adf-textitem-chip-list-input) {
-    .mat-form-field-suffix {
+.mat-mdc-form-field:not(.adf-textitem-chip-list-input) {
+
+    .mat-mdc-form-field-suffix {
         .adf-textitem-edit-icon {
             display: block;
         }

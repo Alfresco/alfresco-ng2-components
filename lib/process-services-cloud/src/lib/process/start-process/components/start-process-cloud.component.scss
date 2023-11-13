@@ -1,6 +1,7 @@
 .adf {
     &-start-process {
-        .mat-form-field-label {
+
+        .mat-mdc-form-field-label {
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
@@ -35,7 +36,7 @@
     }
 
     &-form-container {
-        .mat-card {
+        .mat-mdc-card {
             box-shadow: none !important;
             padding: 0 !important;
         }

@@ -29,12 +29,12 @@ export interface AppShellRoutesConfig {
 }
 
 @NgModule({
-  imports: [SidenavLayoutModule, ExtensionsModule, RouterModule.forChild([]), CommonModule],
-  exports: [ShellLayoutComponent],
-  declarations: [ShellLayoutComponent]
+  "imports": [SidenavLayoutModule, ExtensionsModule, RouterModule.forChild([]), CommonModule],
+  "exports": [ShellLayoutComponent],
+  "declarations": [ShellLayoutComponent]
 })
 export class ShellModule {
-  static withRoutes(routes: Routes | AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
+  static withRoutes (routes: Routes | AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
     if (Array.isArray(routes)) {
       return getModuleForRoutes(routes);
     }
@@ -45,11 +45,10 @@ export class ShellModule {
 
 /**
  * Resolve module for routes
- *
  * @param routes route configuration
  * @returns module with providers
  */
-function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
+function getModuleForRoutes (routes: Routes): ModuleWithProviders<ShellModule> {
   const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
 
   routes.forEach((childRoute) => {
@@ -57,18 +56,17 @@ function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
   });
 
   return {
-    ngModule: ShellModule,
-    providers: provideRoutes([shellLayoutRoute])
+    "ngModule": ShellModule,
+    "providers": provideRoutes([shellLayoutRoute])
   };
 }
 
 /**
  * Resolve a module for the route configuration
- *
  * @param config route configuration
  * @returns module with providers
  */
-function getModuleForRouteConfig(config: AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
+function getModuleForRouteConfig (config: AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
   const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
 
   const shellParentRoute = config.shellParentRoute;
@@ -87,7 +85,7 @@ function getModuleForRouteConfig(config: AppShellRoutesConfig): ModuleWithProvid
   }
 
   return {
-    ngModule: ShellModule,
-    providers: provideRoutes([rootRoute])
+    "ngModule": ShellModule,
+    "providers": provideRoutes([rootRoute])
   };
 }

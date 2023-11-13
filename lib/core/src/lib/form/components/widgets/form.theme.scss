@@ -34,15 +34,16 @@ ul > li > form-field > .adf-focus {
     }
 
     &-invalid {
-        .mat-checkbox-layout {
+
+        .mat-mdc-checkbox-layout {
             padding-bottom: 12px;
         }
 
-        .mat-form-field-underline {
+        .mat-mdc-form-field-underline {
             background-color: var(--theme-warn-color) !important;
         }
 
-        .mat-select {
+        .mat-mdc-select {
             &-arrow {
                 color: var(--adf-theme-foreground-secondary-text-color) !important;
             }
@@ -52,7 +53,7 @@ ul > li > form-field > .adf-focus {
             border-color: var(--theme-warn-color);
         }
 
-        .mat-form-field-prefix {
+        .mat-mdc-form-field-prefix {
             color: var(--adf-theme-foreground-secondary-text-color);
         }
 
@@ -69,9 +70,9 @@ ul > li > form-field > .adf-focus {
 /* query for Microsoft IE 11 */
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
     adf-form-field {
-        .mat-input-element,
-        .mat-select,
-        .mat-form-field {
+        .mat-mdc-input-element,
+        .mat-mdc-select,
+        .mat-mdc-form-field {
             display: block !important;
         }
     }

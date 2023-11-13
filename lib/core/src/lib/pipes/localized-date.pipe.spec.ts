@@ -33,7 +33,7 @@ describe('LocalizedDatePipe', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]

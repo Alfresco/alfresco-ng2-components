@@ -24,8 +24,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Pipe({
-    name: 'adfDecimalNumber',
-    pure: false
+    "name": 'adfDecimalNumber',
+    "pure": false
 })
 export class DecimalNumberPipe implements PipeTransform, OnDestroy {
     static DEFAULT_LOCALE = 'en-US';
@@ -40,7 +40,7 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
 
     onDestroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
+    constructor (public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
         if (this.userPreferenceService) {
             this.userPreferenceService
                 .select(UserPreferenceValues.Locale)
@@ -65,7 +65,7 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
         }
     }
 
-    transform(value: any, digitsInfo?: DecimalNumberModel, locale?: string): any {
+    transform (value: any, digitsInfo?: DecimalNumberModel, locale?: string): any {
         const actualMinIntegerDigits: number = digitsInfo?.minIntegerDigits ? digitsInfo.minIntegerDigits : this.defaultMinIntegerDigits;
         const actualMinFractionDigits: number = digitsInfo?.minFractionDigits ? digitsInfo.minFractionDigits : this.defaultMinFractionDigits;
         const actualMaxFractionDigits: number = digitsInfo?.maxFractionDigits ? digitsInfo.maxFractionDigits : this.defaultMaxFractionDigits;
@@ -77,7 +77,7 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
         return decimalPipe.transform(value, actualDigitsInfo);
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

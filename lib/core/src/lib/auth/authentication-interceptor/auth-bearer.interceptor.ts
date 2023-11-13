@@ -30,14 +30,14 @@ export class AuthBearerInterceptor implements HttpInterceptor {
 
     private excludedUrlsRegex: RegExp[];
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor (private authenticationService: AuthenticationService) { }
 
-  private loadExcludedUrlsRegex() {
+  private loadExcludedUrlsRegex () {
     const excludedUrls = this.bearerExcludedUrls;
     this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(`^https?://[^/]+/${urlPattern}`, 'i')) || [];
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler):
+  intercept (req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
 
@@ -58,7 +58,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
       .pipe(
         mergeMap((headersWithBearer) => {
           const headerWithContentType = this.appendJsonContentType(headersWithBearer, req.body);
-          const kcReq = req.clone({ headers: headerWithContentType});
+          const kcReq = req.clone({ "headers": headerWithContentType});
           return next.handle(kcReq)
             .pipe(
               catchError((error) => observableThrowError(error))
@@ -67,7 +67,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
       );
   }
 
-  private appendJsonContentType(headers: HttpHeaders, reqBody: any): HttpHeaders {
+  private appendJsonContentType (headers: HttpHeaders, reqBody: any): HttpHeaders {
 
     // prevent adding any content type, to properly handle formData with boundary browser generated value,
     // as adding any Content-Type its going to break the upload functionality
@@ -83,7 +83,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     return headers;
   }
 
-    protected get bearerExcludedUrls(): readonly string[] {
+    protected get bearerExcludedUrls (): readonly string[] {
         return this._bearerExcludedUrls;
     }
 

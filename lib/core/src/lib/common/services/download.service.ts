@@ -18,12 +18,12 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class DownloadService {
     private readonly saveData: any;
 
-    constructor() {
+    constructor () {
         this.saveData = (() => {
             const a = document.createElement('a');
             document.body.appendChild(a);
@@ -33,17 +33,16 @@ export class DownloadService {
                 let blob = null;
 
                 if (format === 'blob' || format === 'data') {
-                    blob = new Blob([fileData], { type: 'octet/stream' });
+                    blob = new Blob([fileData], { "type": 'octet/stream' });
                 }
 
                 if (format === 'object' || format === 'json') {
                     const json = JSON.stringify(fileData);
-                    blob = new Blob([json], { type: 'octet/stream' });
+                    blob = new Blob([json], { "type": 'octet/stream' });
                 }
 
                 if (blob) {
-                    if (typeof window.navigator !== 'undefined' &&
-                        window.navigator['msSaveOrOpenBlob']) {
+                    if (window.navigator?.['msSaveOrOpenBlob']) {
                         window.navigator['msSaveOrOpenBlob'](blob, fileName);
                     } else {
                         const url = window.URL.createObjectURL(blob);
@@ -60,41 +59,37 @@ export class DownloadService {
 
     /**
      * Invokes content download for a Blob with a file name.
-     *
      * @param blob Content to download.
      * @param fileName Name of the resulting file.
      */
-    downloadBlob(blob: Blob, fileName: string): void {
+    downloadBlob (blob: Blob, fileName: string): void {
         this.saveData(blob, 'blob', fileName);
     }
 
     /**
      * Invokes content download for a data array with a file name.
-     *
      * @param data Data to download.
      * @param fileName Name of the resulting file.
      */
-    downloadData(data: any, fileName: string): void {
+    downloadData (data: any, fileName: string): void {
         this.saveData(data, 'data', fileName);
     }
 
     /**
      * Invokes content download for a JSON object with a file name.
-     *
      * @param json JSON object to download.
      * @param fileName Name of the resulting file.
      */
-    downloadJSON(json: any, fileName: string): void {
+    downloadJSON (json: any, fileName: string): void {
         this.saveData(json, 'json', fileName);
     }
 
     /**
      * Invokes the download of the file by its URL address.
-     *
      * @param url Url address pointing to the file.
      * @param fileName Name of the file download.
      */
-    downloadUrl(url: string, fileName: string): void {
+    downloadUrl (url: string, fileName: string): void {
         if (url && fileName) {
             const link = document.createElement('a');
 

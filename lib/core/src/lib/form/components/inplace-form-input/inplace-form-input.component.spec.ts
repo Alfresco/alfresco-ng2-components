@@ -28,11 +28,11 @@ describe('InplaceFormInputComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            declarations: [InplaceFormInputComponent]
+            "declarations": [InplaceFormInputComponent]
         }).compileComponents();
     });
 
@@ -56,7 +56,7 @@ describe('InplaceFormInputComponent', () => {
     });
 
     it('should show error', () => {
-        formControl.setValidators(() => ({ error: 'error' }));
+        formControl.setValidators(() => ({ "error": 'error' }));
         formControl.setValue('value');
         formControl.markAsTouched();
         formControl.updateValueAndValidity();

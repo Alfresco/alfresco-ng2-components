@@ -19,7 +19,7 @@ export class AlfrescoApiResponseError extends Error {
 
     public name = 'AlfrescoApiResponseError';
 
-    constructor(msg: string, public status: number, public response: Record<string, any> ) {
+    constructor (msg: string, public status: number, public response: Record<string, any> ) {
         super(msg);
     }
 }

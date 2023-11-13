@@ -27,11 +27,11 @@ export class CardViewItemMinMaxValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.MINMAX_VALIDATION_ERROR';
     private intValidator: CardViewItemIntValidator;
 
-    constructor(private minValue: number, private maxValue: number) {
+    constructor (private minValue: number, private maxValue: number) {
         this.intValidator = new CardViewItemIntValidator();
     }
 
-    isValid(value: number): boolean {
+    isValid (value: number): boolean {
         return this.intValidator.isValid(value) && (value >= this.minValue && value <= this.maxValue);
     }
 }

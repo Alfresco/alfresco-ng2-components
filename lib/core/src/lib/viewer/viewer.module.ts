@@ -47,7 +47,7 @@ import { ViewerToolbarCustomActionsComponent } from './components/viewer-toolbar
 import { DownloadPromptDialogComponent } from './components/download-prompt-dialog/download-prompt-dialog.component';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MaterialModule,
         TranslateModule,
@@ -59,7 +59,7 @@ import { DownloadPromptDialogComponent } from './components/download-prompt-dial
         A11yModule,
         ExtensionsModule
     ],
-    declarations: [
+    "declarations": [
         PdfPasswordDialogComponent,
         ViewerRenderComponent,
         ImgViewerComponent,
@@ -79,7 +79,7 @@ import { DownloadPromptDialogComponent } from './components/download-prompt-dial
         ViewerToolbarCustomActionsComponent,
         DownloadPromptDialogComponent
     ],
-    exports: [
+    "exports": [
         ViewerRenderComponent,
         ImgViewerComponent,
         TxtViewerComponent,

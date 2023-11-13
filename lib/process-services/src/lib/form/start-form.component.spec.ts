@@ -300,7 +300,7 @@ describe('StartFormComponent', () => {
 
             const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
             const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
-            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix > .adf-label');
+            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-mdc-form-field-infix > .adf-label');
             const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
             const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#billdate-label');
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');

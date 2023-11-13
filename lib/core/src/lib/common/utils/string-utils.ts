@@ -19,11 +19,11 @@ import { ObjectUtils } from './object-utils';
 
 export class StringUtils {
 
-    static capitalize(target: string): string {
+    static capitalize (target: string): string {
         return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
     }
 
-    static replaceAll(target: string, delimiters: any): string {
+    static replaceAll (target: string, delimiters: any): string {
         if (!ObjectUtils.isObject(delimiters)) {
             return target;
         }
@@ -35,7 +35,7 @@ export class StringUtils {
         return target;
     }
 
-    static removeAll(target: string, ...delimiters: string[]): string {
+    static removeAll (target: string, ...delimiters: string[]): string {
         const delimiterObj = {};
         delimiters.forEach(delimiter => {
             delimiterObj[delimiter] = '';
@@ -44,7 +44,7 @@ export class StringUtils {
         return StringUtils.replaceAll(target, delimiterObj);
     }
 
-    static prettifyBooleanEnabled(target: string): string {
+    static prettifyBooleanEnabled (target: string): string {
         const redactedTarget = StringUtils.removeAll(target.toLowerCase(), 'is', 'enabled');
         const bagOfWords = redactedTarget.split(' ');
         const capitalizedBagOfWords = bagOfWords.map((word) => StringUtils.capitalize(word));

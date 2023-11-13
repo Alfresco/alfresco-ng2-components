@@ -21,15 +21,15 @@ import { ClipboardDirective, ClipboardComponent } from './clipboard.directive';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         TranslateModule
     ],
-    declarations: [
+    "declarations": [
         ClipboardDirective,
         ClipboardComponent
     ],
-    exports: [
+    "exports": [
         ClipboardDirective
     ]
 })

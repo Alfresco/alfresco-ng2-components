@@ -22,15 +22,15 @@ import { of } from 'rxjs';
 
 describe('CardViewSelectItemModel', () => {
     let properties: CardViewSelectItemProperties<string>;
-    const mockData = [{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }, { key: 'three', label: 'Three' }];
+    const mockData = [{ "key": 'one', "label": 'One' }, { "key": 'two', "label": 'Two' }, { "key": 'three', "label": 'Three' }];
 
     beforeEach(() => {
         properties = {
-            label: 'Select box label',
-            value: 'two',
-            options$: of(mockData),
-            key: 'key',
-            editable: true
+            "label": 'Select box label',
+            "value": 'two',
+            "options$": of(mockData),
+            "key": 'key',
+            "editable": true
         };
     });
 

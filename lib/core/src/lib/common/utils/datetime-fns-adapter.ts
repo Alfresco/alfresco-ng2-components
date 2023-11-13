@@ -25,21 +25,21 @@ import { Locale, addHours, addMinutes } from 'date-fns';
  * Material date/time formats for Date-fns (mat-datetimepicker)
  */
 export const ADF_DATETIME_FORMATS: MatDatetimeFormats = {
-    parse: {
-        dateInput: 'P', // L
-        monthInput: 'LLLL', // MMMM
-        timeInput: 'p', // LT
-        datetimeInput: 'Pp' // L LT
+    "parse": {
+        "dateInput": 'P', // L
+        "monthInput": 'LLLL', // MMMM
+        "timeInput": 'p', // LT
+        "datetimeInput": 'Pp' // L LT
     },
-    display: {
-        dateInput: 'P', // L
-        monthInput: 'LLLL', // MMMM
-        datetimeInput: 'Pp', // L LT
-        timeInput: 'p', // LT
-        monthYearLabel: 'LLL uuuu', // MMM YYYY
-        dateA11yLabel: 'PP', // LL
-        monthYearA11yLabel: 'LLLL uuuu', // MMMM YYYY
-        popupHeaderDateLabel: 'ccc, dd MMM' // ddd, DD MMM
+    "display": {
+        "dateInput": 'P', // L
+        "monthInput": 'LLLL', // MMMM
+        "datetimeInput": 'Pp', // L LT
+        "timeInput": 'p', // LT
+        "monthYearLabel": 'LLL uuuu', // MMM YYYY
+        "dateA11yLabel": 'PP', // LL
+        "monthYearA11yLabel": 'LLLL uuuu', // MMMM YYYY
+        "popupHeaderDateLabel": 'ccc, dd MMM' // ddd, DD MMM
     }
 };
 
@@ -50,7 +50,7 @@ const DEFAULT_HOUR_NAMES = range(24, (i) => String(i));
 const DEFAULT_MINUTE_NAMES = range(60, (i) => String(i));
 
 // eslint-disable-next-line jsdoc/require-jsdoc
-function range<T>(length: number, valueFunction: (index: number) => T): T[] {
+function range<T> (length: number, valueFunction: (index: number) => T): T[] {
     const valuesArray = Array(length);
     for (let i = 0; i < length; i++) {
         valuesArray[i] = valueFunction(i);
@@ -62,15 +62,15 @@ function range<T>(length: number, valueFunction: (index: number) => T): T[] {
 export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
     private _displayFormat?: string = null;
 
-    get displayFormat(): string | null {
+    get displayFormat (): string | null {
         return this._displayFormat;
     }
 
-    set displayFormat(value: string | null) {
+    set displayFormat (value: string | null) {
         this._displayFormat = value ? DateFnsUtils.convertMomentToDateFnsFormat(value) : null;
     }
 
-    constructor(
+    constructor (
         @Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: Locale,
         @Optional() @Inject(MAT_DATETIME_FORMATS) private formats: MatDatetimeFormats,
         dateAdapter: DateAdapter<Date, Locale>
@@ -79,57 +79,57 @@ export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
         this.setLocale(matDateLocale);
     }
 
-    getHour(date: Date): number {
+    getHour (date: Date): number {
         return date.getHours();
     }
 
-    getMinute(date: Date): number {
+    getMinute (date: Date): number {
         return date.getMinutes();
     }
 
-    getFirstDateOfMonth(date: Date): Date {
+    getFirstDateOfMonth (date: Date): Date {
         const result = new Date();
         result.setFullYear(date.getFullYear(), date.getMonth(), 1);
         return result;
     }
 
-    isInNextMonth(startDate: Date, endDate: Date): boolean {
+    isInNextMonth (startDate: Date, endDate: Date): boolean {
         const nextMonth = this.getDateInNextMonth(startDate);
         return this.sameMonthAndYear(nextMonth, endDate);
     }
 
-    getHourNames(): string[] {
+    getHourNames (): string[] {
         return DEFAULT_HOUR_NAMES;
     }
 
-    getMinuteNames(): string[] {
+    getMinuteNames (): string[] {
         return DEFAULT_MINUTE_NAMES;
     }
 
-    addCalendarHours(date: Date, hours: number): Date {
+    addCalendarHours (date: Date, hours: number): Date {
         return addHours(date, hours);
     }
 
-    addCalendarMinutes(date: Date, minutes: number): Date {
+    addCalendarMinutes (date: Date, minutes: number): Date {
         return addMinutes(date, minutes);
     }
 
-    createDatetime(year: number, month: number, date: number, hour: number, minute: number): Date {
+    createDatetime (year: number, month: number, date: number, hour: number, minute: number): Date {
         const result = new Date();
         result.setFullYear(year, month, date);
         result.setHours(hour, minute, 0, 0);
         return result;
     }
 
-    private getDateInNextMonth(date: Date) {
+    private getDateInNextMonth (date: Date) {
         return new Date(date.getFullYear(), date.getMonth() + 1, 1, date.getHours(), date.getMinutes());
     }
 
-    override parse(value: any, parseFormat: any): Date {
+    override parse (value: any, parseFormat: any): Date {
         return this._delegate.parse(value, parseFormat);
     }
 
-    override format(date: Date, displayFormat: any): string {
+    override format (date: Date, displayFormat: any): string {
         displayFormat = DateFnsUtils.convertMomentToDateFnsFormat(displayFormat);
 
         if (this.displayFormat && displayFormat === this.formats?.display?.datetimeInput) {

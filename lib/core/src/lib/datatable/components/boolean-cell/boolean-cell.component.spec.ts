@@ -38,7 +38,7 @@ describe('BooleanCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [BooleanCellComponent]
+            "imports": [BooleanCellComponent]
         });
         fixture = TestBed.createComponent(BooleanCellComponent);
         component = fixture.componentInstance;
@@ -52,10 +52,10 @@ describe('BooleanCellComponent', () => {
 
         beforeEach(() => {
             rowData = {
-                id: '1',
-                value: false
+                "id": '1',
+                "value": false
             };
-            columnData = { type: 'boolean', key: 'value' };
+            columnData = { "type": 'boolean', "key": 'value' };
             dataTableAdapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
             nextSpy = spyOn(component.value$, 'next');
         });

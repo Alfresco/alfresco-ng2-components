@@ -29,16 +29,16 @@ describe('AuthConfigService', () => {
     let appConfigService: AppConfigService;
 
     const mockAuthConfigImplicitFlow: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-        redirectUri: '/',
-        redirectUriLogout: '#/logout',
-        publicUrls: [
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/assets/silent-refresh.html',
+        "redirectUri": '/',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": [
             '**/preview/s/*',
             '**/settings',
             '**/logout'
@@ -46,16 +46,16 @@ describe('AuthConfigService', () => {
     };
 
     const mockAuthConfigSubfolderRedirectUri: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/subfolder/assets/silent-refresh.html',
-        redirectUri: '/subfolder',
-        redirectUriLogout: '#/logout',
-        publicUrls: [
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/subfolder/assets/silent-refresh.html',
+        "redirectUri": '/subfolder',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": [
             '**/preview/s/*',
             '**/settings',
             '**/logout'
@@ -63,16 +63,16 @@ describe('AuthConfigService', () => {
     };
 
     const mockAuthConfigSubfolder2RedirectUri: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
-        redirectUri: '/subfolder2',
-        redirectUriLogout: '#/logout',
-        publicUrls: [
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
+        "redirectUri": '/subfolder2',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": [
             '**/preview/s/*',
             '**/settings',
             '**/logout'
@@ -80,16 +80,16 @@ describe('AuthConfigService', () => {
     };
 
     const mockAuthConfigSlashRedirectUri: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-        redirectUri: '/',
-        redirectUriLogout: '#/logout',
-        publicUrls: [
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/assets/silent-refresh.html',
+        "redirectUri": '/',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": [
             '**/preview/s/*',
             '**/settings',
             '**/logout'
@@ -97,17 +97,17 @@ describe('AuthConfigService', () => {
     };
 
     const mockAuthConfigCodeFlow: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: false,
-        codeFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-        redirectUri: '/',
-        redirectUriLogout: '#/logout',
-        publicUrls: [
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": false,
+        "codeFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/assets/silent-refresh.html',
+        "redirectUri": '/',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": [
             '**/preview/s/*',
             '**/settings',
             '**/logout'
@@ -116,9 +116,9 @@ describe('AuthConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                { provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }
+            "imports": [HttpClientTestingModule],
+            "providers": [
+                { "provide": AUTH_MODULE_CONFIG, "useValue": { "useHash": true } }
             ]
         });
         service = TestBed.inject(AuthConfigService);
@@ -132,14 +132,14 @@ describe('AuthConfigService', () => {
         it('should load configuration if implicit flow is true ', async () => {
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigImplicitFlow);
             const expectedConfig: AuthConfig = {
-                oidc: true,
-                issuer: 'http://localhost:3000/auth/realms/alfresco',
-                redirectUri: 'http://localhost:3000/#/view/authentication-confirmation/?',
-                silentRefreshRedirectUri: 'http://localhost:3000/assets/silent-refresh.html',
-                postLogoutRedirectUri: 'http://localhost:3000/#/logout',
-                clientId: 'fakeClientId',
-                scope: 'openid profile email',
-                dummyClientSecret: ''
+                "oidc": true,
+                "issuer": 'http://localhost:3000/auth/realms/alfresco',
+                "redirectUri": 'http://localhost:3000/#/view/authentication-confirmation/?',
+                "silentRefreshRedirectUri": 'http://localhost:3000/assets/silent-refresh.html',
+                "postLogoutRedirectUri": 'http://localhost:3000/#/logout',
+                "clientId": 'fakeClientId',
+                "scope": 'openid profile email',
+                "dummyClientSecret": ''
             };
 
             expect(await service.loadConfig()).toEqual(expectedConfig);
@@ -148,15 +148,15 @@ describe('AuthConfigService', () => {
         it('should load configuration if code flow is true ', async () => {
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigCodeFlow);
             const expectedConfig = {
-                oidc: true,
-                issuer: 'http://localhost:3000/auth/realms/alfresco',
-                redirectUri: 'http://localhost:3000/#/view/authentication-confirmation',
-                silentRefreshRedirectUri: 'http://localhost:3000/assets/silent-refresh.html',
-                postLogoutRedirectUri: 'http://localhost:3000/#/logout',
-                clientId: 'fakeClientId',
-                scope: 'openid profile email',
-                responseType: 'code',
-                dummyClientSecret: ''
+                "oidc": true,
+                "issuer": 'http://localhost:3000/auth/realms/alfresco',
+                "redirectUri": 'http://localhost:3000/#/view/authentication-confirmation',
+                "silentRefreshRedirectUri": 'http://localhost:3000/assets/silent-refresh.html',
+                "postLogoutRedirectUri": 'http://localhost:3000/#/logout',
+                "clientId": 'fakeClientId',
+                "scope": 'openid profile email',
+                "responseType": 'code',
+                "dummyClientSecret": ''
             };
 
             expect(await service.loadConfig()).toEqual(expectedConfig);

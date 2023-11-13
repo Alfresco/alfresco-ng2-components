@@ -33,7 +33,7 @@ describe('InfoDrawerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -53,7 +53,7 @@ describe('InfoDrawerComponent', () => {
 
     it('should emit when tab is changed', () => {
         const tabEmitSpy = spyOn(component.currentTab, 'emit');
-        const event = {index: 1, tab: {textLabel: 'DETAILS'}} as MatTabChangeEvent;
+        const event = {"index": 1, "tab": {"textLabel": 'DETAILS'}} as MatTabChangeEvent;
         component.onTabChange(event);
         expect(tabEmitSpy).toHaveBeenCalledWith(1);
     });
@@ -67,7 +67,7 @@ describe('InfoDrawerComponent', () => {
     });
 
     it('should stop propagation on keydown event', () => {
-        const escapeKeyboardEvent = new KeyboardEvent('keydown', { key: ESCAPE.toString() });
+        const escapeKeyboardEvent = new KeyboardEvent('keydown', { "key": ESCAPE.toString() });
         const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
 
         fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
@@ -76,7 +76,7 @@ describe('InfoDrawerComponent', () => {
     });
 
     it('should stop propagation on keyup event', () => {
-        const escapeKeyboardEvent = new KeyboardEvent('keyup', { key: ESCAPE.toString() });
+        const escapeKeyboardEvent = new KeyboardEvent('keyup', { "key": ESCAPE.toString() });
         const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
 
         fixture.debugElement.triggerEventHandler('keyup', escapeKeyboardEvent);
@@ -86,7 +86,7 @@ describe('InfoDrawerComponent', () => {
 });
 
 @Component({
-    template: `
+    "template": `
     <adf-info-drawer [selectedIndex]="tabIndex" title="Fake Title Custom">
         <adf-info-drawer-tab label="Tab1">
         </adf-info-drawer-tab>
@@ -108,11 +108,11 @@ describe('Custom InfoDrawer', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            declarations: [
+            "declarations": [
                 CustomInfoDrawerComponent
             ]
         });
@@ -160,7 +160,7 @@ describe('Custom InfoDrawer', () => {
 });
 
 @Component({
-    template: `
+    "template": `
     <adf-info-drawer [showHeader]="showHeader" title="Fake Visibility Info Drawer Title">
     </adf-info-drawer>
        `
@@ -175,11 +175,11 @@ describe('Header visibility InfoDrawer', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            declarations: [
+            "declarations": [
                 VisibilityInfoDrawerComponent
             ]
         });

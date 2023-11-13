@@ -24,17 +24,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MatButtonModule,
         MatIconModule,
         MatSelectModule,
         TranslateModule
     ],
-    declarations: [
+    "declarations": [
         SortingPickerComponent
     ],
-    exports: [
+    "exports": [
         SortingPickerComponent
     ]
 })

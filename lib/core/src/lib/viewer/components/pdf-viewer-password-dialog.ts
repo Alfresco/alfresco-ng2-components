@@ -22,32 +22,32 @@ import { UntypedFormControl, Validators } from '@angular/forms';
 declare const pdfjsLib: any;
 
 @Component({
-    selector: 'adf-pdf-viewer-password-dialog',
-    templateUrl: './pdf-viewer-password-dialog.html',
-    styleUrls: ['./pdf-viewer-password-dialog.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-pdf-viewer-password-dialog',
+    "templateUrl": './pdf-viewer-password-dialog.html',
+    "styleUrls": ['./pdf-viewer-password-dialog.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class PdfPasswordDialogComponent implements OnInit {
     passwordFormControl: UntypedFormControl;
 
-    constructor(
+    constructor (
         private dialogRef: MatDialogRef<PdfPasswordDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.passwordFormControl = new UntypedFormControl('', [Validators.required]);
     }
 
-    isError(): boolean {
+    isError (): boolean {
         return this.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD;
     }
 
-    isValid(): boolean {
+    isValid (): boolean {
         return !this.passwordFormControl.hasError('required');
     }
 
-    submit(): void {
+    submit (): void {
         this.dialogRef.close(this.passwordFormControl.value);
     }
 }

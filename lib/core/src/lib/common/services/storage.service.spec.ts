@@ -32,14 +32,14 @@ describe('StorageService', () => {
     describe('StorageService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
+                "imports": [
                     CoreTestingModule
                 ]
             });
             appConfig = TestBed.inject(AppConfigService);
             appConfig.config = {
-                application: {
-                    storagePrefix: 'ADF_APP'
+                "application": {
+                    "storagePrefix": 'ADF_APP'
                 }
             };
             storage = TestBed.inject(StorageService);
@@ -78,7 +78,7 @@ describe('StorageService', () => {
     describe('StorageService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
+                "imports": [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ]
@@ -86,8 +86,8 @@ describe('StorageService', () => {
             appConfig = TestBed.inject(AppConfigService);
 
             appConfig.config = {
-                application: {
-                    storagePrefix: ''
+                "application": {
+                    "storagePrefix": ''
                 }
             };
             storage = TestBed.inject(StorageService);

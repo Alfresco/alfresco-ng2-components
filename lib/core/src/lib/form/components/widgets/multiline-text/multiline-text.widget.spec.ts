@@ -35,7 +35,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;
@@ -45,9 +45,9 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     describe('when tooltip is set', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.MULTILINE_TEXT,
-                tooltip: 'my custom tooltip'
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.MULTILINE_TEXT,
+                "tooltip": 'my custom tooltip'
             });
             fixture.detectChanges();
         });
@@ -72,9 +72,9 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.MULTILINE_TEXT,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.MULTILINE_TEXT,
+                "required": true
             });
             fixture.detectChanges();
         });

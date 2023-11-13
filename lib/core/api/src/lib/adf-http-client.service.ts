@@ -50,7 +50,7 @@ export interface Emitters {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
 
@@ -61,30 +61,30 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
 
     emit: (type: string, ...args: any[]) => void;
 
-    get disableCsrf(): boolean {
+    get disableCsrf (): boolean {
         return this._disableCsrf;
     }
 
-    set disableCsrf(disableCsrf: boolean) {
+    set disableCsrf (disableCsrf: boolean) {
         this._disableCsrf = disableCsrf;
     }
 
     private defaultSecurityOptions = {
-        withCredentials: true,
-        isBpmRequest: false,
-        authentications: {},
-        defaultHeaders: {}
+        "withCredentials": true,
+        "isBpmRequest": false,
+        "authentications": {},
+        "defaultHeaders": {}
     };
 
-    constructor(private httpClient: HttpClient) {
+    constructor (private httpClient: HttpClient) {
         ee(this);
     }
 
-    setDefaultSecurityOption(options: any) {
+    setDefaultSecurityOption (options: any) {
         this.defaultSecurityOptions = this.merge(this.defaultSecurityOptions, options);
     }
 
-    merge(...objects): any {
+    merge (...objects): any {
         const result = {};
 
         objects.forEach((source) => {
@@ -102,7 +102,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         return result;
     }
 
-    request<T = any>(url: string, options?: RequestOptions, sc: SecurityOptions = this.defaultSecurityOptions, emitters?: JsApiEmitters): Promise<T> {
+    request<T = any> (url: string, options?: RequestOptions, sc: SecurityOptions = this.defaultSecurityOptions, emitters?: JsApiEmitters): Promise<T> {
         const body = AdfHttpClient.getBody(options);
         const params = getQueryParamsWithCustomEncoder(options.queryParams, new AlfrescoApiParamEncoder());
         const responseType = AdfHttpClient.getResponseType(options);
@@ -123,48 +123,48 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
                 ...security,
                 ...(params && {params}),
                 headers,
-                observe: 'events',
-                reportProgress: true
+                "observe": 'events',
+                "reportProgress": true
             }
         );
 
         return this.requestWithLegacyEventEmitters<T>(request, emitters, options.returnType);
     }
 
-    post<T = any>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        return this.request<T>(url, {...options, httpMethod: 'POST'}, sc, emitters);
+    post<T = any> (url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
+        return this.request<T>(url, {...options, "httpMethod": 'POST'}, sc, emitters);
     }
 
-    put<T = any>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        return this.request<T>(url, {...options, httpMethod: 'PUT'}, sc, emitters);
+    put<T = any> (url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
+        return this.request<T>(url, {...options, "httpMethod": 'PUT'}, sc, emitters);
     }
 
-    get<T = any>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        return this.request<T>(url, {...options, httpMethod: 'GET'}, sc, emitters);
+    get<T = any> (url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
+        return this.request<T>(url, {...options, "httpMethod": 'GET'}, sc, emitters);
     }
 
-    delete<T = void>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        return this.request<T>(url, {...options, httpMethod: 'DELETE'}, sc, emitters);
+    delete<T = void> (url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
+        return this.request<T>(url, {...options, "httpMethod": 'DELETE'}, sc, emitters);
     }
 
-    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any)  {
+    private addPromiseListeners<T = any> (promise: Promise<T>, eventEmitter: any)  {
         const eventPromise = Object.assign(promise, {
-            on() {
+            on () {
                 // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.on.apply(eventEmitter, arguments);
                 return this;
             },
-            once() {
+            once () {
                 // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.once.apply(eventEmitter, arguments);
                 return this;
             },
-            emit() {
+            emit () {
                 // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.emit.apply(eventEmitter, arguments);
                 return this;
             },
-            off() {
+            off () {
                 // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.off.apply(eventEmitter, arguments);
                 return this;
@@ -174,21 +174,21 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         return eventPromise;
     }
 
-    private getEventEmitters(): Emitters {
+    private getEventEmitters (): Emitters {
         const apiClientEmitter = {
-            on: this.on.bind(this),
-            off: this.off.bind(this),
-            once: this.once.bind(this),
-            emit: this.emit.bind(this)
+            "on": this.on.bind(this),
+            "off": this.off.bind(this),
+            "once": this.once.bind(this),
+            "emit": this.emit.bind(this)
         };
 
         return {
             apiClientEmitter,
-            eventEmitter: ee({})
+            "eventEmitter": ee({})
         };
     }
 
-    private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitters: JsApiEmitters, returnType: any): Promise<T> {
+    private requestWithLegacyEventEmitters<T = any> (request$: Observable<HttpEvent<T>>, emitters: JsApiEmitters, returnType: any): Promise<T> {
 
         const abort$ = new Subject<void>();
         const {eventEmitter, apiClientEmitter} = emitters;
@@ -197,7 +197,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             map((res) => {
                 if (isHttpUploadProgressEvent(res)) {
                     const percent = Math.round((res.loaded / res.total) * 100);
-                    eventEmitter.emit('progress', {loaded: res.loaded, total: res.total, percent});
+                    eventEmitter.emit('progress', {"loaded": res.loaded, "total": res.total, percent});
                 }
 
                 if (isHttpResponseEvent(res)) {
@@ -216,7 +216,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
                 }
 
                 eventEmitter.emit('error', err);
-                apiClientEmitter.emit('error', { ...err, response: { req: err } });
+                apiClientEmitter.emit('error', { ...err, "response": { "req": err } });
 
                 if (err.status === 401) {
                     eventEmitter.emit('unauthorized');
@@ -231,7 +231,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
                 // for backwards compatibility to handle cases in code where we try read response.error.response.body;
 
                 const error = {
-                    ...err, body: err.error
+                    ...err, "body": err.error
                 };
 
                 const alfrescoApiError = new AlfrescoApiResponseError(msg, err.status, error);
@@ -240,7 +240,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             takeUntil(abort$)
         ).toPromise();
 
-        (promise as any).abort = function() {
+        (promise as any).abort = function () {
             eventEmitter.emit('abort');
             abort$.next();
             abort$.complete();
@@ -250,7 +250,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         return this.addPromiseListeners(promise, eventEmitter);
     }
 
-    private static getBody(options: RequestOptions): any {
+    private static getBody (options: RequestOptions): any {
         const contentType = options.contentType ? options.contentType : AdfHttpClient.jsonPreferredMime(options.contentTypes);
         const isFormData = contentType === 'multipart/form-data';
         const isFormUrlEncoded = contentType === 'application/x-www-form-urlencoded';
@@ -261,19 +261,19 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         }
 
         if (isFormUrlEncoded) {
-            return new HttpParams({fromObject: removeNilValues(options.formParams)});
+            return new HttpParams({"fromObject": removeNilValues(options.formParams)});
         }
 
         return body;
     }
 
-    private getHeaders(options: RequestOptions): HttpHeaders {
+    private getHeaders (options: RequestOptions): HttpHeaders {
         const contentType = options.contentType || AdfHttpClient.jsonPreferredMime(options.contentTypes);
         const accept = options.accept || AdfHttpClient.jsonPreferredMime(options.accepts);
 
         const optionsHeaders = {
             ...options.headerParams,
-            ...(accept && {Accept: accept}),
+            ...(accept && {"Accept": accept}),
             ...((contentType) && {'Content-Type': contentType})
         };
 
@@ -286,11 +286,10 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
 
     /**
      * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
-     *
      * @param contentTypes a contentType array
      * @returns  The chosen content type, preferring JSON.
      */
-    private static jsonPreferredMime(contentTypes: readonly string[]): string {
+    private static jsonPreferredMime (contentTypes: readonly string[]): string {
         if (!contentTypes?.length) {
             return 'application/json';
         }
@@ -311,16 +310,15 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
      * <li>application/json; charset=UTF8</li>
      * <li>APPLICATION/JSON</li>
      * </ul>
-     *
      * @param contentType The MIME content type to check.
      * @returns <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
      */
-    private static isJsonMime(contentType: string): boolean {
+    private static isJsonMime (contentType: string): boolean {
         return Boolean(contentType?.match(/^application\/json(;.*)?$/i));
     }
 
 
-    private setCsrfToken(optionsHeaders: any) {
+    private setCsrfToken (optionsHeaders: any) {
         const token = this.createCSRFToken();
         optionsHeaders['X-CSRF-TOKEN'] = token;
 
@@ -331,12 +329,12 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         }
     }
 
-    private createCSRFToken(a?: any): string {
+    private createCSRFToken (a?: any): string {
         const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
         return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
     }
 
-    private static getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
+    private static getResponseType (options: RequestOptions): 'blob' | 'json' | 'text' {
 
         const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
 
@@ -353,12 +351,11 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
 
     /**
      * Deserialize an HTTP response body into a value of the specified type.
-     *
      * @param response response object
      * @param returnType return type
      * @returns deserialized object
      */
-    private static deserialize<T>(response: HttpResponse<T>, returnType?: Constructor<unknown> | 'blob'): any {
+    private static deserialize<T> (response: HttpResponse<T>, returnType?: Constructor<unknown> | 'blob'): any {
 
         if (response === null) {
             return null;
@@ -391,8 +388,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
 
-    private static deserializeBlobResponse(response: HttpResponse<Blob>) {
-        return new Blob([response.body], {type: response.headers.get('Content-Type')});
+    private static deserializeBlobResponse (response: HttpResponse<Blob>) {
+        return new Blob([response.body], {"type": response.headers.get('Content-Type')});
     }
 }
 

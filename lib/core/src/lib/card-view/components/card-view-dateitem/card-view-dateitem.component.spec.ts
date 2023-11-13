@@ -38,24 +38,24 @@ describe('CardViewDateItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {
-            defaultDateFormat: 'shortDate',
-            defaultDateTimeFormat: 'M/d/yy, h:mm a',
-            defaultLocale: 'uk'
+            "defaultDateFormat": 'shortDate',
+            "defaultDateTimeFormat": 'M/d/yy, h:mm a',
+            "defaultLocale": 'uk'
         };
 
         fixture = TestBed.createComponent(CardViewDateItemComponent);
         component = fixture.componentInstance;
         component.property = new CardViewDateItemModel({
-            label: 'Date label',
-            value: new Date('07/10/2017'),
-            key: 'dateKey',
-            default: '',
-            format: '',
-            editable: false
+            "label": 'Date label',
+            "value": new Date('07/10/2017'),
+            "key": 'dateKey',
+            "default": '',
+            "format": '',
+            "editable": false
         });
 
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -77,12 +77,12 @@ describe('CardViewDateItemComponent', () => {
 
     it('should NOT render the default as value if the value is empty, editable:false and displayEmpty is false', () => {
         component.property = new CardViewDateItemModel({
-            label: 'Date label',
-            value: '',
-            key: 'dateKey',
-            default: 'FAKE-DEFAULT-KEY',
-            format: '',
-            editable: false
+            "label": 'Date label',
+            "value": '',
+            "key": 'dateKey',
+            "default": 'FAKE-DEFAULT-KEY',
+            "format": '',
+            "editable": false
         });
         component.editable = true;
         component.displayEmpty = false;
@@ -95,12 +95,12 @@ describe('CardViewDateItemComponent', () => {
 
     it('should render the default as value if the value is empty, editable:false and displayEmpty is true', () => {
         component.property = new CardViewDateItemModel({
-            label: 'Date label',
-            value: '',
-            key: 'dateKey',
-            default: 'FAKE-DEFAULT-KEY',
-            format: '',
-            editable: false
+            "label": 'Date label',
+            "value": '',
+            "key": 'dateKey',
+            "default": 'FAKE-DEFAULT-KEY',
+            "format": '',
+            "editable": false
         });
         component.editable = true;
         component.displayEmpty = true;
@@ -113,12 +113,12 @@ describe('CardViewDateItemComponent', () => {
 
     it('should render the default as value if the value is empty and editable:true', () => {
         component.property = new CardViewDateItemModel({
-            label: 'Date label',
-            value: '',
-            key: 'dateKey',
-            default: 'FAKE-DEFAULT-KEY',
-            format: '',
-            editable: true
+            "label": 'Date label',
+            "value": '',
+            "key": 'dateKey',
+            "default": 'FAKE-DEFAULT-KEY',
+            "format": '',
+            "editable": true
         });
         component.displayClearAction = false;
         component.editable = true;
@@ -194,11 +194,11 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
         const property = { ...component.property };
 
-        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
+        component.onDateChanged({ "value": expectedDate } as MatDatetimepickerInputEvent<Date>);
         expect(itemUpdatedSpy).toHaveBeenCalledWith({
-            target: property,
-            changed: {
-                dateKey: expectedDate
+            "target": property,
+            "changed": {
+                "dateKey": expectedDate
             }
         });
     });
@@ -210,7 +210,7 @@ describe('CardViewDateItemComponent', () => {
         const expectedDate = new Date('Jul 10 2017');
         fixture.detectChanges();
 
-        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
+        component.onDateChanged({ "value": expectedDate } as MatDatetimepickerInputEvent<Date>);
 
         await fixture.whenStable();
         expect(component.property.value).toEqual(expectedDate);
@@ -305,9 +305,9 @@ describe('CardViewDateItemComponent', () => {
             component.onDateClear();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: property,
-                changed: {
-                    dateKey: null
+                "target": property,
+                "changed": {
+                    "dateKey": null
                 }
             });
 
@@ -332,7 +332,7 @@ describe('CardViewDateItemComponent', () => {
         const element = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="card-date-value-fake-key"]');
         expect(element).toBeDefined();
         expect(element.innerText).toEqual('Jul 10, 2017');
-        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
+        component.onDateChanged({ "value": expectedDate } as MatDatetimepickerInputEvent<Date>);
 
         fixture.detectChanges();
         expect(component.property.value).toEqual(expectedDate);
@@ -340,11 +340,11 @@ describe('CardViewDateItemComponent', () => {
 
     it('should render chips for multivalue dates when chips are enabled', async () => {
         component.property = new CardViewDateItemModel({
-            label: 'Text label',
-            value: ['Jul 10 2017 00:01:00', 'Jul 11 2017 00:01:00', 'Jul 12 2017 00:01:00'],
-            key: 'textkey',
-            editable: true,
-            multivalued: true
+            "label": 'Text label',
+            "value": ['Jul 10 2017 00:01:00', 'Jul 11 2017 00:01:00', 'Jul 12 2017 00:01:00'],
+            "key": 'textkey',
+            "editable": true,
+            "multivalued": true
         });
 
         fixture.detectChanges();
@@ -359,11 +359,11 @@ describe('CardViewDateItemComponent', () => {
 
     it('should render chips for multivalue datetimes when chips are enabled', async () => {
         component.property = new CardViewDatetimeItemModel({
-            label: 'Text label',
-            value: ['Jul 10 2017 00:01:00', 'Jul 11 2017 00:01:00', 'Jul 12 2017 00:01:00'],
-            key: 'textkey',
-            editable: true,
-            multivalued: true
+            "label": 'Text label',
+            "value": ['Jul 10 2017 00:01:00', 'Jul 11 2017 00:01:00', 'Jul 12 2017 00:01:00'],
+            "key": 'textkey',
+            "editable": true,
+            "multivalued": true
         });
 
         fixture.detectChanges();

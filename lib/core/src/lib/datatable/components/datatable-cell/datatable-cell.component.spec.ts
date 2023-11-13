@@ -51,8 +51,8 @@ describe('DataTableCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [DataTableCellComponent],
-            providers: [DataTableService]
+            "declarations": [DataTableCellComponent],
+            "providers": [DataTableService]
         });
 
         fixture = TestBed.createComponent(DataTableCellComponent);
@@ -62,12 +62,12 @@ describe('DataTableCellComponent', () => {
 
     it('should display text and tooltip', () => {
         const row: DataRow = {
-            id: '1',
-            isSelected: false,
-            hasValue: () => true,
-            getValue: () => 'hello world',
-            obj: 'Initial Value',
-            cache: []
+            "id": '1',
+            "isSelected": false,
+            "hasValue": () => true,
+            "getValue": () => 'hello world',
+            "obj": 'Initial Value',
+            "cache": []
         };
 
         component.row = row;
@@ -80,20 +80,20 @@ describe('DataTableCellComponent', () => {
 
     it('should update row obj value on data changes', () => {
         const row: DataRow = {
-            id: '1',
-            isSelected: false,
-            hasValue: () => true,
-            getValue: () => 'hello world',
-            obj: 'Initial Value',
-            cache: []
+            "id": '1',
+            "isSelected": false,
+            "hasValue": () => true,
+            "getValue": () => 'hello world',
+            "obj": 'Initial Value',
+            "cache": []
         };
 
         component.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
-        component.column = { key: 'car_name', type: 'text' };
+        component.column = { "key": 'car_name', "type": 'text' };
         component.row = row;
 
         fixture.detectChanges();
-        dataTableService.rowUpdate.next({ id: '1', obj: 'New Value' });
+        dataTableService.rowUpdate.next({ "id": '1', "obj": 'New Value' });
 
         expect(component.row.obj).toBe('New Value');
     });

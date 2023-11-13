@@ -22,62 +22,62 @@ import { CardViewModule } from '../../public-api';
 import { cardViewDataSource, cardViewUndefinedValues } from '../../mock/card-view-content.mock';
 
 export default {
-    component: CardViewComponent,
-    title: 'Core/Card View/Card View',
-    decorators: [
+    "component": CardViewComponent,
+    "title": 'Core/Card View/Card View',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            "imports": [CoreStoryModule, CardViewModule]
         })
     ],
-    argTypes: {
-        editable: {
-            control: 'boolean',
-            defaultValue: true
+    "argTypes": {
+        "editable": {
+            "control": 'boolean',
+            "defaultValue": true
         },
-        displayEmpty: {
-            control: 'boolean',
-            defaultValue: true
+        "displayEmpty": {
+            "control": 'boolean',
+            "defaultValue": true
         },
-        displayNoneOption: {
-            control: 'boolean',
-            defaultValue: true
+        "displayNoneOption": {
+            "control": 'boolean',
+            "defaultValue": true
         },
-        displayClearAction: {
-            control: 'boolean',
-            defaultValue: true
+        "displayClearAction": {
+            "control": 'boolean',
+            "defaultValue": true
         },
-        copyToClipboardAction: {
-            control: 'boolean',
-            defaultValue: true
+        "copyToClipboardAction": {
+            "control": 'boolean',
+            "defaultValue": true
         },
-        useChipsForMultiValueProperty: {
-            control: 'boolean',
-            defaultValue: true
+        "useChipsForMultiValueProperty": {
+            "control": 'boolean',
+            "defaultValue": true
         },
-        multiValueSeparator: {
-            control: 'text',
-            defaultValue: ', '
+        "multiValueSeparator": {
+            "control": 'text',
+            "defaultValue": ', '
         },
-        displayLabelForChips: {
-            control: 'boolean',
-            defaultValue: false
+        "displayLabelForChips": {
+            "control": 'boolean',
+            "defaultValue": false
         }
     }
 } as Meta;
 
 const template: Story<CardViewComponent> = (args: CardViewComponent) => ({
-    props: args
+    "props": args
 });
 
 export const defaultCardView = template.bind({});
 defaultCardView.args = {
-    properties: cardViewDataSource
+    "properties": cardViewDataSource
 };
-defaultCardView.parameters = { layout: 'centered' };
+defaultCardView.parameters = { "layout": 'centered' };
 
 export const emptyCardView = template.bind({});
 emptyCardView.args = {
-    properties: cardViewUndefinedValues,
-    editable: false
+    "properties": cardViewUndefinedValues,
+    "editable": false
 };
-emptyCardView.parameters = { layout: 'centered' };
+emptyCardView.parameters = { "layout": 'centered' };

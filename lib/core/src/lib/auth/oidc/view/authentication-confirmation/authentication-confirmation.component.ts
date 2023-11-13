@@ -24,18 +24,18 @@ import { AuthService } from '../../auth.service';
 const ROUTE_DEFAULT = '/';
 
 @Component({
-  template: '<div data-automation-id="auth-confirmation"></div>',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  "template": '<div data-automation-id="auth-confirmation"></div>',
+  "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class AuthenticationConfirmationComponent {
-  constructor(private auth: AuthService, private _router: Router) {
+  constructor (private auth: AuthService, private _router: Router) {
     const routeStored$ = from(this.auth.loginCallback()).pipe(
       map((route) => route || ROUTE_DEFAULT),
       catchError(() => of(ROUTE_DEFAULT))
     );
 
     routeStored$.pipe(first()).subscribe((route) => {
-      this._router.navigateByUrl(route, { replaceUrl: true });
+      this._router.navigateByUrl(route, { "replaceUrl": true });
     });
   }
 }

@@ -25,8 +25,8 @@ import { differenceInDays, formatDistance } from 'date-fns';
 import * as Locales from 'date-fns/locale';
 
 @Pipe({
-    standalone: true,
-    name: 'adfTimeAgo'
+    "standalone": true,
+    "name": 'adfTimeAgo'
 })
 export class TimeAgoPipe implements PipeTransform, OnDestroy {
 
@@ -38,7 +38,7 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public userPreferenceService: UserPreferencesService,
+    constructor (public userPreferenceService: UserPreferencesService,
                 public appConfig: AppConfigService) {
         this.userPreferenceService
             .select(UserPreferenceValues.Locale)
@@ -49,7 +49,7 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
         this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
     }
 
-    transform(value: Date, locale?: string) {
+    transform (value: Date, locale?: string) {
         if (value !== null && value !== undefined ) {
             const actualLocale = locale || this.defaultLocale;
             const diff = differenceInDays(new Date(), new Date(value));
@@ -57,13 +57,13 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
                 const datePipe: DatePipe = new DatePipe(actualLocale);
                 return datePipe.transform(value, this.defaultDateTimeFormat);
             } else {
-                return formatDistance(new Date(value) , new Date(), { addSuffix: true , locale: Locales[actualLocale] });
+                return formatDistance(new Date(value) , new Date(), { "addSuffix": true , "locale": Locales[actualLocale] });
             }
         }
         return '';
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

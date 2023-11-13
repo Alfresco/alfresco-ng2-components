@@ -20,7 +20,7 @@ import { DataRow } from '../data/data-row.model';
 import { DataColumn } from '../data/data-column.model';
 
 @Directive({
-    selector: '[adf-drop-zone]'
+    "selector": '[adf-drop-zone]'
 })
 export class DropZoneDirective implements OnInit, OnDestroy {
     private element: HTMLElement;
@@ -34,11 +34,11 @@ export class DropZoneDirective implements OnInit, OnDestroy {
     @Input()
     dropColumn: DataColumn;
 
-    constructor(elementRef: ElementRef, private ngZone: NgZone) {
+    constructor (elementRef: ElementRef, private ngZone: NgZone) {
         this.element = elementRef.nativeElement;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.ngZone.runOutsideAngular(() => {
             this.element.addEventListener('dragenter', this.onDragEnter.bind(this));
             this.element.addEventListener('dragover', this.onDragOver.bind(this));
@@ -46,13 +46,13 @@ export class DropZoneDirective implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.element.removeEventListener('dragenter', this.onDragEnter);
         this.element.removeEventListener('dragover', this.onDragOver);
         this.element.removeEventListener('drop', this.onDrop);
     }
 
-    onDragEnter(event: DragEvent) {
+    onDragEnter (event: DragEvent) {
         const domEvent = this.dispatchDomEvent(event, 'dragenter');
 
         if (domEvent.defaultPrevented) {
@@ -62,7 +62,7 @@ export class DropZoneDirective implements OnInit, OnDestroy {
         }
     }
 
-    onDragOver(event: DragEvent) {
+    onDragOver (event: DragEvent) {
         const domEvent = this.dispatchDomEvent(event, 'dragover');
 
         if (domEvent.defaultPrevented) {
@@ -72,7 +72,7 @@ export class DropZoneDirective implements OnInit, OnDestroy {
         }
     }
 
-    onDrop(event: Event) {
+    onDrop (event: Event) {
         const domEvent = this.dispatchDomEvent(event, 'drop');
 
         if (domEvent.defaultPrevented) {
@@ -81,15 +81,15 @@ export class DropZoneDirective implements OnInit, OnDestroy {
         }
     }
 
-    private dispatchDomEvent(originalEvent: Event, eventName: string): CustomEvent {
+    private dispatchDomEvent (originalEvent: Event, eventName: string): CustomEvent {
         const domEvent = new CustomEvent(`${this.dropTarget}-${eventName}`, {
-            detail: {
-                target: this.dropTarget,
-                event: originalEvent,
-                column: this.dropColumn,
-                row: this.dropRow
+            "detail": {
+                "target": this.dropTarget,
+                "event": originalEvent,
+                "column": this.dropColumn,
+                "row": this.dropRow
             },
-            bubbles: true
+            "bubbles": true
         });
 
         this.element.dispatchEvent(domEvent);

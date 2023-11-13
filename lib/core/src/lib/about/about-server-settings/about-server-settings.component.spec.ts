@@ -29,7 +29,7 @@ describe('AboutServerSettingsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -38,8 +38,8 @@ describe('AboutServerSettingsComponent', () => {
         component = fixture.componentInstance;
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = Object.assign(appConfigService.config, {
-            ecmHost: aboutGithubDetails.ecmHost,
-            bpmHost: aboutGithubDetails.bpmHost
+            "ecmHost": aboutGithubDetails.ecmHost,
+            "bpmHost": aboutGithubDetails.bpmHost
         });
         fixture.detectChanges();
     });

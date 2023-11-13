@@ -25,14 +25,14 @@ import ee from 'event-emitter';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
 
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
 
-    constructor(
+    constructor (
         private injector: Injector,
         private redirectAuthService: RedirectAuthService
     ) {
@@ -55,51 +55,51 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    get on(): ee.EmitterMethod {
+    get on (): ee.EmitterMethod {
         return this.isOauth() ? this.oidcAuthenticationService.on : this.basicAlfrescoAuthService.on;
     }
 
-    get off(): ee.EmitterMethod {
+    get off (): ee.EmitterMethod {
         return this.isOauth() ? this.oidcAuthenticationService.off : this.basicAlfrescoAuthService.off;
     }
 
-    get once(): ee.EmitterMethod {
+    get once (): ee.EmitterMethod {
         return this.isOauth() ? this.oidcAuthenticationService.once : this.basicAlfrescoAuthService.once;
     }
 
-    get emit(): (type: string, ...args: any[]) => void {
+    get emit (): (type: string, ...args: any[]) => void {
         return this.isOauth() ? this.oidcAuthenticationService.emit : this.basicAlfrescoAuthService.emit;
     }
 
-    get onError(): Observable<any> {
+    get onError (): Observable<any> {
         return this.isOauth() ? this.oidcAuthenticationService.onError : this.basicAlfrescoAuthService.onError;
     }
 
-    addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
+    addTokenToHeader (requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
         return this.isOauth() ? this.oidcAuthenticationService.addTokenToHeader(requestUrl, headersArg) : this.basicAlfrescoAuthService.addTokenToHeader(requestUrl, headersArg);
     }
 
-    isECMProvider(): boolean {
+    isECMProvider (): boolean {
         return this.isOauth() ? this.oidcAuthenticationService.isECMProvider() : this.basicAlfrescoAuthService.isECMProvider();
     }
 
-    isBPMProvider(): boolean {
+    isBPMProvider (): boolean {
         return this.isOauth() ? this.oidcAuthenticationService.isBPMProvider() : this.basicAlfrescoAuthService.isBPMProvider();
     }
 
-    isALLProvider(): boolean {
+    isALLProvider (): boolean {
         return this.isOauth() ? this.oidcAuthenticationService.isALLProvider() : this.basicAlfrescoAuthService.isALLProvider();
     }
 
-    private get oidcAuthenticationService(): OidcAuthenticationService {
+    private get oidcAuthenticationService (): OidcAuthenticationService {
         return this.injector.get(OidcAuthenticationService);
     }
 
-    private get basicAlfrescoAuthService(): BasicAlfrescoAuthService {
+    private get basicAlfrescoAuthService (): BasicAlfrescoAuthService {
         return this.injector.get(BasicAlfrescoAuthService);
     }
 
-    getToken(): string {
+    getToken (): string {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getToken();
         } else {
@@ -107,7 +107,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    isLoggedIn(): boolean {
+    isLoggedIn (): boolean {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.isLoggedIn();
         } else {
@@ -115,7 +115,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    logout(): Observable<any> {
+    logout (): Observable<any> {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.logout();
         } else {
@@ -123,7 +123,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    isEcmLoggedIn(): boolean {
+    isEcmLoggedIn (): boolean {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.isEcmLoggedIn();
         } else {
@@ -131,7 +131,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    isBpmLoggedIn(): boolean {
+    isBpmLoggedIn (): boolean {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.isBpmLoggedIn();
         } else {
@@ -139,7 +139,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    reset(): void {
+    reset (): void {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.reset();
         } else {
@@ -147,7 +147,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    login(username: string, password: string, rememberMe?: boolean): Observable<{ type: string; ticket: any }> {
+    login (username: string, password: string, rememberMe?: boolean): Observable<{ type: string; ticket: any }> {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.loginWithPassword(username, password);
         } else {
@@ -158,7 +158,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     /**
      * @returns the username of the authenticated user
      */
-    getUsername(): string {
+    getUsername (): string {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getUsername();
         } else {
@@ -170,7 +170,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
      * @deprecated
      * @returns the logged username
      */
-    getEcmUsername(): string {
+    getEcmUsername (): string {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getUsername();
         } else {
@@ -182,7 +182,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
      * @deprecated
      * @returns the logged username
      */
-    getBpmUsername(): string {
+    getBpmUsername (): string {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getUsername();
         } else {
@@ -190,7 +190,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    getAuthHeaders(requestUrl: string, headers: HttpHeaders): HttpHeaders {
+    getAuthHeaders (requestUrl: string, headers: HttpHeaders): HttpHeaders {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getAuthHeaders(requestUrl, headers);
         } else {
@@ -198,11 +198,11 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
-    isOauth(): boolean {
+    isOauth (): boolean {
         return this.basicAlfrescoAuthService.isOauth();
     }
 
-    isKerberosEnabled(): boolean {
+    isKerberosEnabled (): boolean {
         return !this.isOauth() ? this.basicAlfrescoAuthService.isKerberosEnabled() : false;
     }
 

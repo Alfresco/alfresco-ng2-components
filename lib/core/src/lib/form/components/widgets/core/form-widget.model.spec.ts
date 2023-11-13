@@ -21,7 +21,7 @@ import { FormModel } from './form.model';
 describe('FormWidgetModel', () => {
 
     class FormWidgetModelMock extends FormWidgetModel {
-        constructor(form: FormModel, json: any) {
+        constructor (form: FormModel, json: any) {
             super(form, json);
         }
     }

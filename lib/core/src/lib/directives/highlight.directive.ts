@@ -21,7 +21,7 @@ import { Directive, ElementRef, Input, Renderer2, AfterViewChecked } from '@angu
 import { HighlightTransformService, HighlightTransformResult } from '../common/services/highlight-transform.service';
 
 @Directive({
-    selector: '[adf-highlight]'
+    "selector": '[adf-highlight]'
 })
 export class HighlightDirective implements AfterViewChecked {
 
@@ -37,17 +37,17 @@ export class HighlightDirective implements AfterViewChecked {
     @Input('adf-highlight-class')
     classToApply: string = 'adf-highlight';
 
-    constructor(
+    constructor (
         private el: ElementRef,
         private renderer: Renderer2,
         private highlightTransformService: HighlightTransformService) {
     }
 
-    ngAfterViewChecked() {
+    ngAfterViewChecked () {
         this.highlight();
     }
 
-    public highlight(search = this.search, selector = this.selector, classToApply = this.classToApply) {
+    public highlight (search = this.search, selector = this.selector, classToApply = this.classToApply) {
         if (search && selector) {
             const elements = this.el.nativeElement.querySelectorAll(selector);
 

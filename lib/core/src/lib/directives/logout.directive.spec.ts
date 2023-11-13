@@ -30,8 +30,8 @@ describe('LogoutDirective', () => {
     describe('No input', () => {
 
         @Component({
-            selector: 'adf-test-component',
-            template: '<button adf-logout></button>'
+            "selector": 'adf-test-component',
+            "template": '<button adf-logout></button>'
         })
         class TestComponent {
             @ContentChildren(LogoutDirective)
@@ -45,11 +45,11 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
+                "imports": [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ],
-                declarations: [
+                "declarations": [
                     TestComponent
                 ]
             });
@@ -112,8 +112,8 @@ describe('LogoutDirective', () => {
     describe('redirectUri', () => {
 
         @Component({
-            selector: 'adf-test-component',
-            template: '<button adf-logout redirectUri="/myCustomUri"></button>'
+            "selector": 'adf-test-component',
+            "template": '<button adf-logout redirectUri="/myCustomUri"></button>'
         })
         class TestComponent {
             @ContentChildren(LogoutDirective)
@@ -126,11 +126,11 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
+                "imports": [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ],
-                declarations: [
+                "declarations": [
                     TestComponent
                 ]
             });
@@ -155,8 +155,8 @@ describe('LogoutDirective', () => {
     describe('enableRedirect', () => {
 
         @Component({
-            selector: 'adf-test-component',
-            template: '<button adf-logout [enableRedirect]="false"></button>'
+            "selector": 'adf-test-component',
+            "template": '<button adf-logout [enableRedirect]="false"></button>'
         })
         class TestComponent {
             @ContentChildren(LogoutDirective)
@@ -169,11 +169,11 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
+                "imports": [
                     TranslateModule.forRoot(),
                     CoreTestingModule
                 ],
-                declarations: [
+                "declarations": [
                     TestComponent
                 ]
             });

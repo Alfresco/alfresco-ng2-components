@@ -29,12 +29,12 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-error-content',
-    templateUrl: './error-content.component.html',
-    styleUrls: ['./error-content.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-error-content' }
+    "selector": 'adf-error-content',
+    "templateUrl": './error-content.component.html',
+    "styleUrls": ['./error-content.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-error-content' }
 })
 export class ErrorContentComponent implements OnInit {
 
@@ -47,13 +47,13 @@ export class ErrorContentComponent implements OnInit {
     errorCodeTranslated: string;
     isSmallScreen$: Observable<boolean>;
 
-    constructor(private route: ActivatedRoute,
+    constructor (private route: ActivatedRoute,
                 private translateService: TranslationService,
                 private breakpointObserver: BreakpointObserver
                 ) {
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.route) {
             this.route.params.subscribe(params => {
                 const code = params['id'] || this.errorCode;
@@ -65,7 +65,7 @@ export class ErrorContentComponent implements OnInit {
         this.isSmallScreen$ = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
     }
 
-    checkErrorExists(errorCode: string ) {
+    checkErrorExists (errorCode: string ) {
         const errorMessage = this.translateService.instant('ERROR_CONTENT.' + errorCode);
         return errorMessage !== ('ERROR_CONTENT.' + errorCode);
     }

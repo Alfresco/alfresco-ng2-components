@@ -29,11 +29,11 @@ import { OidcAuthenticationService } from '../services/oidc-authentication.servi
 
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AuthGuardEcm extends AuthGuardBase {
 
-    constructor(authenticationService: AuthenticationService,
+    constructor (authenticationService: AuthenticationService,
                 basicAlfrescoAuthService: BasicAlfrescoAuthService,
                 oidcAuthenticationService: OidcAuthenticationService,
                 router: Router,
@@ -43,7 +43,7 @@ export class AuthGuardEcm extends AuthGuardBase {
         super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
     }
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
+    async checkLogin (_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;
         }

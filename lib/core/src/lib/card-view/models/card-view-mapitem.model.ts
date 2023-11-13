@@ -23,7 +23,7 @@ export class CardViewMapItemModel extends CardViewBaseItemModel implements CardV
     type: string = 'map';
     value: Map<string, string>;
 
-    get displayValue() {
+    get displayValue () {
         if (this.value && this.value.size > 0) {
             return this.value.values().next().value;
         } else {

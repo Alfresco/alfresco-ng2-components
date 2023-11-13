@@ -22,13 +22,13 @@ import { Authentication } from '../authentication';
 import { AuthenticationInterceptor, SHOULD_ADD_AUTH_TOKEN } from './authentication.interceptor';
 
 class MockAuthentication extends Authentication {
-  addTokenToHeader(_: string, httpHeaders: HttpHeaders): Observable<HttpHeaders> {
+  addTokenToHeader (_: string, httpHeaders: HttpHeaders): Observable<HttpHeaders> {
     return of(httpHeaders);
   }
 }
 
 const mockNext: HttpHandler = {
-  handle: () => new Observable(subscriber => {
+  "handle": () => new Observable(subscriber => {
     subscriber.complete();
   })
 };
@@ -41,7 +41,7 @@ describe('AuthenticationInterceptor', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthenticationInterceptor, {provide: Authentication, useClass: MockAuthentication}]
+      "providers": [AuthenticationInterceptor, {"provide": Authentication, "useClass": MockAuthentication}]
     });
     interceptor = TestBed.inject(AuthenticationInterceptor);
     addTokenToHeaderSpy = spyOn(interceptor['authService'], 'addTokenToHeader');

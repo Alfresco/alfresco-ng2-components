@@ -68,7 +68,7 @@ import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
 
 @NgModule({
-    imports: [
+    "imports": [
         TranslateModule,
         ExtensionsModule,
         AboutModule,
@@ -102,11 +102,11 @@ import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
         BlankPageModule,
         HttpClientModule,
         HttpClientXsrfModule.withOptions({
-            cookieName: 'CSRF-TOKEN',
-            headerName: 'X-CSRF-TOKEN'
+            "cookieName": 'CSRF-TOKEN',
+            "headerName": 'X-CSRF-TOKEN'
         })
     ],
-    exports: [
+    "exports": [
         AboutModule,
         ViewerModule,
         SidenavLayoutModule,
@@ -141,52 +141,52 @@ import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders<CoreModule> {
+    static forRoot (): ModuleWithProviders<CoreModule> {
         return {
-            ngModule: CoreModule,
-            providers: [
+            "ngModule": CoreModule,
+            "providers": [
                 TranslateStore,
                 TranslateService,
-                { provide: TranslateLoader, useClass: TranslateLoaderService },
+                { "provide": TranslateLoader, "useClass": TranslateLoaderService },
                 AdfDateFnsAdapter,
                 AdfDateTimeFnsAdapter,
                 MomentDateAdapter,
                 {
-                    provide: APP_INITIALIZER,
-                    useFactory: loadAppConfig,
-                    deps: [ AppConfigService, StorageService, AdfHttpClient ], multi: true
+                    "provide": APP_INITIALIZER,
+                    "useFactory": loadAppConfig,
+                    "deps": [ AppConfigService, StorageService, AdfHttpClient ], "multi": true
                 },
                 {
-                    provide: APP_INITIALIZER,
-                    useFactory: directionalityConfigFactory,
-                    deps: [DirectionalityConfigService],
-                    multi: true
+                    "provide": APP_INITIALIZER,
+                    "useFactory": directionalityConfigFactory,
+                    "deps": [DirectionalityConfigService],
+                    "multi": true
                 },
-                { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-                { provide: Authentication, useClass: AuthenticationService },
+                { "provide": HTTP_INTERCEPTORS, "useClass": AuthenticationInterceptor, "multi": true },
+                { "provide": Authentication, "useClass": AuthenticationService },
                 {
-                    provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-                    useValue: {
-                        duration: 10000
+                    "provide": MAT_SNACK_BAR_DEFAULT_OPTIONS,
+                    "useValue": {
+                        "duration": 10000
                     }
                 },
                 {
-                    provide: APP_INITIALIZER,
-                    useFactory: createAlfrescoApiInstance,
-                    deps: [ AlfrescoApiLoaderService ],
-                    multi: true
+                    "provide": APP_INITIALIZER,
+                    "useFactory": createAlfrescoApiInstance,
+                    "deps": [ AlfrescoApiLoaderService ],
+                    "multi": true
                 }
             ]
         };
     }
 
-    static forChild(): ModuleWithProviders<CoreModule> {
+    static forChild (): ModuleWithProviders<CoreModule> {
         return {
-            ngModule: CoreModule
+            "ngModule": CoreModule
         };
     }
 
-    constructor(translation: TranslationService) {
+    constructor (translation: TranslationService) {
         translation.addTranslationFolder('adf-core', 'assets/adf-core');
     }
 }

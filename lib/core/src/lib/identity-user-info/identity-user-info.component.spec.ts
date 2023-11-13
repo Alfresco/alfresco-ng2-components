@@ -28,9 +28,9 @@ describe('IdentityUserInfoComponent', () => {
     let fixture: ComponentFixture<IdentityUserInfoComponent>;
     let element: HTMLElement;
 
-    const identityUserMock = { firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
-    const identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
-    const identityUserWithOutLastNameMock = { firstName: 'fake-identity-first-name', lastName: null, email: 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
+    const identityUserMock = { "firstName": 'fake-identity-first-name', "lastName": 'fake-identity-last-name', "email": 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
+    const identityUserWithOutFirstNameMock = { "firstName": null, "lastName": 'fake-identity-last-name', "email": 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
+    const identityUserWithOutLastNameMock = { "firstName": 'fake-identity-first-name', "lastName": null, "email": 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
 
     const whenFixtureReady = async () => {
         fixture.detectChanges();
@@ -40,7 +40,7 @@ describe('IdentityUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 MatMenuModule

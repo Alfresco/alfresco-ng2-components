@@ -28,10 +28,10 @@ export interface AmountWidgetSettings {
 export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf-amount-settings');
 
 @Component({
-    selector: 'amount-widget',
-    templateUrl: './amount.widget.html',
-    styleUrls: ['./amount.widget.scss'],
-    host: {
+    "selector": 'amount-widget',
+    "templateUrl": './amount.widget.html',
+    "styleUrls": ['./amount.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -42,7 +42,7 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
     static DEFAULT_CURRENCY: string = '$';
@@ -50,11 +50,11 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
 
     currency: string = AmountWidgetComponent.DEFAULT_CURRENCY;
 
-    get placeholder(): string {
+    get placeholder (): string {
         return this.showPlaceholder ? this.field.placeholder : '';
     }
 
-    constructor(
+    constructor (
         public formService: FormService,
         @Inject(ADF_AMOUNT_SETTINGS)
         @Optional()
@@ -63,7 +63,7 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field) {
             if (this.field.currency) {
                 this.currency = this.field.currency;

@@ -17,9 +17,9 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'filterOutEvery' })
+@Pipe({ "name": 'filterOutEvery' })
 export class FilterOutArrayObjectsByPropPipe<T> implements PipeTransform {
-    transform(values: T[], filterKey: string, filterValue: any): T[] {
+    transform (values: T[], filterKey: string, filterValue: any): T[] {
         return (values ?? []).filter(value => value[filterKey] !== filterValue);
     }
 }

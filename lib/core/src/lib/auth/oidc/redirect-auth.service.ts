@@ -39,16 +39,15 @@ export class RedirectAuthService extends AuthService {
 
   /**
    * Get whether the user has valid Id/Access tokens.
-   *
    * @returns `true` if the user is authenticated, otherwise `false`
    */
-  get authenticated(): boolean {
+  get authenticated (): boolean {
     return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
   }
 
   private authConfig!: AuthConfig | Promise<AuthConfig>;
 
-  constructor(
+  constructor (
     private oauthService: OAuthService,
     private _oauthStorage: OAuthStorage,
     @Inject(AUTH_CONFIG) authConfig: AuthConfig
@@ -75,7 +74,7 @@ export class RedirectAuthService extends AuthService {
     );
   }
 
-  init() {
+  init () {
     if (isPromise(this.authConfig)) {
         return this.authConfig.then((config) => this.configureAuth(config));
     }
@@ -83,11 +82,11 @@ export class RedirectAuthService extends AuthService {
     return this.configureAuth(this.authConfig);
   }
 
-  logout() {
+  logout () {
     this.oauthService.logOut();
   }
 
-  ensureDiscoveryDocument(): Promise<boolean> {
+  ensureDiscoveryDocument (): Promise<boolean> {
     this._loadDiscoveryDocumentPromise = this._loadDiscoveryDocumentPromise
       .catch(() => false)
       .then((loaded) => {
@@ -100,7 +99,7 @@ export class RedirectAuthService extends AuthService {
   }
 
 
-  login(currentUrl?: string): void {
+  login (currentUrl?: string): void {
     let stateKey: string | undefined;
 
     if (currentUrl) {
@@ -113,7 +112,7 @@ export class RedirectAuthService extends AuthService {
     this.ensureDiscoveryDocument().then(() => void this.oauthService.initLoginFlow(stateKey));
   }
 
-  baseAuthLogin(username: string, password: string): Observable<TokenResponse> {
+  baseAuthLogin (username: string, password: string): Observable<TokenResponse> {
     this.oauthService.useHttpBasicAuth = true;
 
     return from(this.oauthService.fetchTokenUsingPasswordFlow(username, password)).pipe(
@@ -127,13 +126,13 @@ export class RedirectAuthService extends AuthService {
     );
   }
 
-  async loginCallback(): Promise<string | undefined> {
+  async loginCallback (): Promise<string | undefined> {
     return this.ensureDiscoveryDocument()
-      .then(() => this.oauthService.tryLogin({ preventClearHashAfterLogin: false }))
+      .then(() => this.oauthService.tryLogin({ "preventClearHashAfterLogin": false }))
       .then(() => this._getRedirectUrl());
   }
 
-  private _getRedirectUrl() {
+  private _getRedirectUrl () {
     const DEFAULT_REDIRECT = '/';
     const stateKey = this.oauthService.state;
 
@@ -149,7 +148,7 @@ export class RedirectAuthService extends AuthService {
     return DEFAULT_REDIRECT;
   }
 
-  private configureAuth(config: AuthConfig) {
+  private configureAuth (config: AuthConfig) {
     this.oauthService.configure(config);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
@@ -166,7 +165,7 @@ export class RedirectAuthService extends AuthService {
     });
   }
 
-  updateIDPConfiguration(config: AuthConfig) {
+  updateIDPConfiguration (config: AuthConfig) {
     this.oauthService.configure(config);
   }
 }

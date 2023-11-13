@@ -24,12 +24,12 @@ import {
 import { ThemePalette } from '@angular/material/core';
 
 @Component({
-    selector: 'adf-icon',
-    templateUrl: './icon.component.html',
-    styleUrls: ['./icon.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { class: 'adf-icon' }
+    "selector": 'adf-icon',
+    "templateUrl": './icon.component.html',
+    "styleUrls": ['./icon.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "host": { "class": 'adf-icon' }
 })
 export class IconComponent {
     private _value = '';
@@ -43,18 +43,18 @@ export class IconComponent {
     @Input()
     fontSet: string;
 
-    get value(): string {
+    get value (): string {
         return this._value;
     }
 
     /** Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. */
     @Input()
-    set value(value: string) {
+    set value (value: string) {
         this._value = value || 'settings';
         this._isCustom = this._value.includes(':');
     }
 
-    get isCustom(): boolean {
+    get isCustom (): boolean {
         return this._isCustom;
     }
 }

@@ -22,22 +22,22 @@ import { AuthService } from './auth.service';
 import { OidcAuthGuard } from './oidc-auth.guard';
 
 const state: RouterStateSnapshot = {
-  root: new ActivatedRouteSnapshot(),
-  url: 'http://example.com'
+  "root": new ActivatedRouteSnapshot(),
+  "url": 'http://example.com'
 };
 const routeSnapshot = new ActivatedRouteSnapshot();
 
 describe('OidcAuthGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      providers: [OidcAuthGuard]
+      "imports": [RouterTestingModule],
+      "providers": [OidcAuthGuard]
     });
   });
 
   describe('#canActivate', () => {
     it('should return false if the user is not authenticated, and call login method', () => {
-      const authService = { authenticated: false, login: jasmine.createSpy() } as unknown as AuthService;
+      const authService = { "authenticated": false, "login": jasmine.createSpy() } as unknown as AuthService;
       const authGuard = new OidcAuthGuard(authService);
 
       expect(authGuard.canActivate(routeSnapshot, state)).toEqual(false);
@@ -45,7 +45,7 @@ describe('OidcAuthGuard', () => {
     });
 
     it('should return true if the user is authenticated', () => {
-      const authService = { authenticated: true } as unknown as AuthService;
+      const authService = { "authenticated": true } as unknown as AuthService;
       const authGuard = new OidcAuthGuard(authService);
 
       expect(authGuard.canActivate(routeSnapshot, state)).toEqual(true);
@@ -54,7 +54,7 @@ describe('OidcAuthGuard', () => {
 
   describe('#canActivateChild', () => {
     it('should return false if the user is not authenticated, and call login method', () => {
-      const authService = { authenticated: false, login: jasmine.createSpy() } as unknown as AuthService;
+      const authService = { "authenticated": false, "login": jasmine.createSpy() } as unknown as AuthService;
       const authGuard = new OidcAuthGuard(authService);
 
       expect(authGuard.canActivateChild(routeSnapshot, state)).toEqual(false);
@@ -62,7 +62,7 @@ describe('OidcAuthGuard', () => {
     });
 
     it('should return true if the user is authenticated', () => {
-      const authService = { authenticated: true } as unknown as AuthService;
+      const authService = { "authenticated": true } as unknown as AuthService;
       const authGuard = new OidcAuthGuard(authService);
 
       expect(authGuard.canActivateChild(routeSnapshot, state)).toEqual(true);

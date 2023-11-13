@@ -26,13 +26,13 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/date-fns-adapter';
 
 @Component({
-    selector: 'date-widget',
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
+    "selector": 'date-widget',
+    "providers": [
+        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
+        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter }
     ],
-    templateUrl: './date.widget.html',
-    host: {
+    "templateUrl": './date.widget.html',
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -43,7 +43,7 @@ import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/da
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     DATE_FORMAT = 'dd-MM-yyyy';
@@ -57,11 +57,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>) {
+    constructor (public formService: FormService, private dateAdapter: DateAdapter<Date>) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field.dateDisplayFormat) {
             const adapter = this.dateAdapter as AdfDateFnsAdapter;
             adapter.displayFormat = this.field.dateDisplayFormat;
@@ -83,12 +83,12 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    onDateChange(event: MatDatepickerInputEvent<Date>) {
+    onDateChange (event: MatDatepickerInputEvent<Date>) {
         const value = event.value;
         const input = event.targetElement as HTMLInputElement;
 

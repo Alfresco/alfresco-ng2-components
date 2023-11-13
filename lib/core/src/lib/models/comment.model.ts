@@ -24,11 +24,11 @@ export class CommentModel {
     createdBy: User;
     isSelected: boolean;
 
-    get hasAvatarPicture(): boolean {
+    get hasAvatarPicture (): boolean {
         return !!this.createdBy && !!(this.createdBy['pictureId'] || this.createdBy['avatarId']);
     }
 
-    get userDisplayName(): string {
+    get userDisplayName (): string {
         let result = '';
 
         if (this.createdBy) {
@@ -38,7 +38,7 @@ export class CommentModel {
         return result.trim();
     }
 
-    get userInitials(): string {
+    get userInitials (): string {
         let result = '';
         if (this.createdBy) {
             if (this.createdBy.firstName) {
@@ -51,7 +51,7 @@ export class CommentModel {
         return result.toUpperCase();
     }
 
-    constructor(obj?: Partial<CommentModel>) {
+    constructor (obj?: Partial<CommentModel>) {
         if (obj) {
             this.id = obj.id;
             this.message = obj.message;

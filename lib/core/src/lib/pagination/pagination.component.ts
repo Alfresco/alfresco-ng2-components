@@ -31,20 +31,20 @@ export type PaginationAction =
     | 'CHANGE_PAGE_NUMBER';
 
 export const DEFAULT_PAGINATION: PaginationModel = {
-    skipCount: 0,
-    maxItems: 25,
-    totalItems: 0,
-    count: 0,
-    hasMoreItems: false
+    "skipCount": 0,
+    "maxItems": 25,
+    "totalItems": 0,
+    "count": 0,
+    "hasMoreItems": false
 };
 
 @Component({
-    selector: 'adf-pagination',
-    host: { class: 'adf-pagination' },
-    templateUrl: './pagination.component.html',
-    styleUrls: ['./pagination.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-pagination',
+    "host": { "class": 'adf-pagination' },
+    "templateUrl": './pagination.component.html',
+    "styleUrls": ['./pagination.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None
 })
 export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
     private _pagination: PaginationModel;
@@ -59,13 +59,13 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     @Input()
     supportedPageSizes: number[];
 
-    get pagination(): PaginationModel {
+    get pagination (): PaginationModel {
         return this._pagination;
     }
 
     /** Pagination object. */
     @Input()
-    set pagination(value: PaginationModel) {
+    set pagination (value: PaginationModel) {
         value = value || DEFAULT_PAGINATION;
 
         this._pagination = value;
@@ -105,7 +105,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private elementRef: ElementRef,
         private renderer: Renderer2,
         private cdr: ChangeDetectorRef,
@@ -113,7 +113,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         private translate: TranslateService) {
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
@@ -150,7 +150,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         }
     }
 
-    get lastPage(): number {
+    get lastPage (): number {
         const { maxItems, totalItems } = this.pagination;
 
         return (totalItems && maxItems)
@@ -158,7 +158,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
             : 1;
     }
 
-    get current(): number {
+    get current (): number {
         const { maxItems, skipCount } = this.pagination;
 
         return (skipCount && maxItems)
@@ -166,36 +166,36 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
             : 1;
     }
 
-    get isLastPage(): boolean {
+    get isLastPage (): boolean {
         if (!this.pagination.totalItems && this.pagination.hasMoreItems) {
             return false;
         }
         return this.current === this.lastPage;
     }
 
-    get isFirstPage(): boolean {
+    get isFirstPage (): boolean {
         return this.current === 1;
     }
 
-    get next(): number {
+    get next (): number {
         return this.isLastPage ? this.current : this.current + 1;
     }
 
-    get previous(): number {
+    get previous (): number {
         return this.isFirstPage ? 1 : this.current - 1;
     }
 
-    get hasItems(): boolean {
+    get hasItems (): boolean {
         return this._hasItems;
     }
 
     // TODO: not working correctly in Angular 10
     // @HostBinding('class.adf-pagination__empty')
-    get isEmpty(): boolean {
+    get isEmpty (): boolean {
         return this._isEmpty;
     }
 
-    get range(): number[] {
+    get range (): number[] {
         const { skipCount, maxItems, totalItems } = this.pagination;
 
         let start = 0;
@@ -208,13 +208,13 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         return [start, end];
     }
 
-    get pages(): number[] {
+    get pages (): number[] {
         return Array(this.lastPage)
             .fill('n')
             .map((_, index) => (index + 1));
     }
 
-    get limitedPages(): number[] {
+    get limitedPages (): number[] {
         if (this.lastPage <= 100) {
             return this.pages;
         }
@@ -228,12 +228,12 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         ].filter((value: number, index: number, array: number[]) => value > 0 && value <= this.lastPage && !array.slice(0, index).includes(value));
     }
 
-    get itemRangeText(): string {
+    get itemRangeText (): string {
         const rangeString = this.range.join('-');
 
         let translation = this.translate.instant('CORE.PAGINATION.ITEMS_RANGE', {
-            range: rangeString,
-            total: this.pagination.totalItems
+            "range": rangeString,
+            "total": this.pagination.totalItems
         });
 
         if (!this.pagination.totalItems) {
@@ -243,7 +243,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         return translation;
     }
 
-    goNext() {
+    goNext () {
         if (this.hasItems) {
             const maxItems = this.pagination.maxItems;
             const skipCount = (this.next - 1) * maxItems;
@@ -257,7 +257,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         }
     }
 
-    goPrevious() {
+    goPrevious () {
         if (this.hasItems) {
             const maxItems = this.pagination.maxItems;
             const skipCount = (this.previous - 1) * maxItems;
@@ -271,7 +271,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         }
     }
 
-    onChangePageNumber(pageNumber: number) {
+    onChangePageNumber (pageNumber: number) {
         if (this.hasItems) {
             const maxItems = this.pagination.maxItems;
             const skipCount = (pageNumber - 1) * maxItems;
@@ -285,10 +285,10 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         }
     }
 
-    onChangePageSize(maxItems: number) {
+    onChangePageSize (maxItems: number) {
         this.pagination = {
             ...this.pagination,
-            skipCount: 0,
+            "skipCount": 0,
             maxItems
         };
 
@@ -296,12 +296,12 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         this.handlePaginationEvent('CHANGE_PAGE_SIZE');
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    handlePaginationEvent(action: PaginationAction) {
+    handlePaginationEvent (action: PaginationAction) {
         const paginationModel = { ...this.pagination };
 
         if (action === 'NEXT_PAGE') {

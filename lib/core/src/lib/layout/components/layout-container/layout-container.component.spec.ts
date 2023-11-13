@@ -26,9 +26,9 @@ describe('LayoutContainerComponent', () => {
         layoutContainerComponent.sidenavMin = 70;
         layoutContainerComponent.sidenavMax = 200;
         layoutContainerComponent.mediaQueryList = {
-            matches: false,
-            addListener: () => {},
-            removeListener: () => {}
+            "matches": false,
+            "addListener": () => {},
+            "removeListener": () => {}
         };
     });
 
@@ -48,7 +48,7 @@ describe('LayoutContainerComponent', () => {
                     layoutContainerComponent.ngOnInit();
 
                     expect(layoutContainerComponent.contentAnimationState).toEqual({
-                        value: 'compact', params: { 'margin-left': layoutContainerComponent.sidenavMax}
+                        "value": 'compact', "params": { 'margin-left': layoutContainerComponent.sidenavMax}
                     });
                 });
 
@@ -57,7 +57,7 @@ describe('LayoutContainerComponent', () => {
                     layoutContainerComponent.ngOnInit();
 
                     expect(layoutContainerComponent.contentAnimationState).toEqual({
-                        value: 'compact', params: { 'margin-right': layoutContainerComponent.sidenavMax}
+                        "value": 'compact', "params": { 'margin-right': layoutContainerComponent.sidenavMax}
                     });
                 });
             });
@@ -72,7 +72,7 @@ describe('LayoutContainerComponent', () => {
                     layoutContainerComponent.ngOnInit();
 
                     expect(layoutContainerComponent.contentAnimationState).toEqual({
-                        value: 'compact', params: { 'margin-right': layoutContainerComponent.sidenavMax}
+                        "value": 'compact', "params": { 'margin-right': layoutContainerComponent.sidenavMax}
                     });
                 });
 
@@ -81,7 +81,7 @@ describe('LayoutContainerComponent', () => {
                     layoutContainerComponent.ngOnInit();
 
                     expect(layoutContainerComponent.contentAnimationState).toEqual({
-                        value: 'compact', params: { 'margin-left': layoutContainerComponent.sidenavMax}
+                        "value": 'compact', "params": { 'margin-left': layoutContainerComponent.sidenavMax}
                     });
                 });
             });
@@ -102,7 +102,7 @@ describe('LayoutContainerComponent', () => {
                     layoutContainerComponent.ngOnInit();
 
                     expect(layoutContainerComponent.contentAnimationState).toEqual({
-                        value: 'expanded', params: { 'margin-left': layoutContainerComponent.sidenavMin}
+                        "value": 'expanded', "params": { 'margin-left': layoutContainerComponent.sidenavMin}
                     });
                 });
 
@@ -111,7 +111,7 @@ describe('LayoutContainerComponent', () => {
                     layoutContainerComponent.ngOnInit();
 
                     expect(layoutContainerComponent.contentAnimationState).toEqual({
-                        value: 'expanded', params: { 'margin-right': layoutContainerComponent.sidenavMin}
+                        "value": 'expanded', "params": { 'margin-right': layoutContainerComponent.sidenavMin}
                     });
                 });
             });
@@ -126,7 +126,7 @@ describe('LayoutContainerComponent', () => {
                     layoutContainerComponent.ngOnInit();
 
                     expect(layoutContainerComponent.contentAnimationState).toEqual({
-                        value: 'expanded', params: { 'margin-right': layoutContainerComponent.sidenavMin}
+                        "value": 'expanded', "params": { 'margin-right': layoutContainerComponent.sidenavMin}
                     });
                 });
 
@@ -135,7 +135,7 @@ describe('LayoutContainerComponent', () => {
                     layoutContainerComponent.ngOnInit();
 
                     expect(layoutContainerComponent.contentAnimationState).toEqual({
-                        value: 'expanded', params: { 'margin-left': layoutContainerComponent.sidenavMin}
+                        "value": 'expanded', "params": { 'margin-left': layoutContainerComponent.sidenavMin}
                     });
                 });
             });
@@ -150,14 +150,14 @@ describe('LayoutContainerComponent', () => {
 
             it('should set `margin-left` when current direction is `ltr`', () => {
                 layoutContainerComponent.direction = 'ltr';
-                layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
+                layoutContainerComponent.ngOnChanges({ "direction": new SimpleChange('', '', false) });
 
                 expect(layoutContainerComponent.contentAnimationState.params['margin-left']).not.toBeNull();
             });
 
             it('should set `margin-right` when current direction is `rtl`', () => {
                 layoutContainerComponent.direction = 'rtl';
-                layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
+                layoutContainerComponent.ngOnChanges({ "direction": new SimpleChange('', '', false) });
 
                 expect(layoutContainerComponent.contentAnimationState.params['margin-right']).not.toBeNull();
             });
@@ -170,14 +170,14 @@ describe('LayoutContainerComponent', () => {
 
             it('should set `margin-right` when current direction is `ltr`', () => {
                 layoutContainerComponent.direction = 'ltr';
-                layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
+                layoutContainerComponent.ngOnChanges({ "direction": new SimpleChange('', '', false) });
 
                 expect(layoutContainerComponent.contentAnimationState.params['margin-right']).not.toBeNull();
             });
 
             it('should set `margin-left` when current direction is `rtl`', () => {
                 layoutContainerComponent.direction = 'rtl';
-                layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
+                layoutContainerComponent.ngOnChanges({ "direction": new SimpleChange('', '', false) });
 
                 expect(layoutContainerComponent.contentAnimationState.params['margin-left']).not.toBeNull();
             });
@@ -192,7 +192,7 @@ describe('LayoutContainerComponent', () => {
             layoutContainerComponent.toggleMenu();
 
             expect(layoutContainerComponent.sidenavAnimationState).toEqual({
-                value: 'compact', params: { width: layoutContainerComponent.sidenavMin }
+                "value": 'compact', "params": { "width": layoutContainerComponent.sidenavMin }
             });
         });
 
@@ -203,7 +203,7 @@ describe('LayoutContainerComponent', () => {
             layoutContainerComponent.toggleMenu();
 
             expect(layoutContainerComponent.sidenavAnimationState).toEqual({
-                value: 'expanded', params: { width: layoutContainerComponent.sidenavMax }
+                "value": 'expanded', "params": { "width": layoutContainerComponent.sidenavMax }
             });
         });
     });

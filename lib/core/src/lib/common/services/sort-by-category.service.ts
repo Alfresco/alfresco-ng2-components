@@ -28,13 +28,13 @@ export interface ItemsByCategory<T> {
 }
 
 @Injectable({
-  providedIn: 'root'
+  "providedIn": 'root'
 })
 export class SortByCategoryMapperService<T extends SortableByCategoryItem = SortableByCategoryItem> {
 
   private defaultCategories: string[] = [];
 
-  mapItems(items: T[], defaultCategories: string[]): ItemsByCategory<T>[] {
+  mapItems (items: T[], defaultCategories: string[]): ItemsByCategory<T>[] {
     this.defaultCategories = defaultCategories;
 
     const sortedItems = this.sortItems(items);
@@ -44,7 +44,7 @@ export class SortByCategoryMapperService<T extends SortableByCategoryItem = Sort
     return itemsSortedByCategory;
   }
 
-  private mapItemsByCategory(items: T[]): ItemsByCategory<T>[] {
+  private mapItemsByCategory (items: T[]): ItemsByCategory<T>[] {
     const itemsByCategoryObject: { [category: string]: T[] } = {};
 
     items.forEach((item) => {
@@ -58,17 +58,17 @@ export class SortByCategoryMapperService<T extends SortableByCategoryItem = Sort
 
     const itemsByCategory: ItemsByCategory<T>[] = Object.keys(itemsByCategoryObject).map((key) => {
       const category = key;
-      return { category, items: itemsByCategoryObject[category] };
+      return { category, "items": itemsByCategoryObject[category] };
     });
 
     return itemsByCategory;
   }
 
-  private sortItems(items: T[]): T[] {
+  private sortItems (items: T[]): T[] {
     return items.sort((itemA, itemB) => itemA.name.localeCompare(itemB.name));
   }
 
-  private sortCategories(itemsByCategory: ItemsByCategory<T>[]): ItemsByCategory<T>[] {
+  private sortCategories (itemsByCategory: ItemsByCategory<T>[]): ItemsByCategory<T>[] {
     return itemsByCategory.sort((itemA, itemB) => {
       if (itemB.category === '' && itemA.category === '') {
         return 0;
@@ -87,7 +87,7 @@ export class SortByCategoryMapperService<T extends SortableByCategoryItem = Sort
     );
   }
 
-  private mapItemDefaultCategory(listItem: SortableByCategoryItem): string {
+  private mapItemDefaultCategory (listItem: SortableByCategoryItem): string {
     const itemCategory = listItem.category;
 
     if (!this.isDefaultCategory(itemCategory)) {
@@ -97,7 +97,7 @@ export class SortByCategoryMapperService<T extends SortableByCategoryItem = Sort
     return '';
   }
 
-  private isDefaultCategory(category?: string): boolean {
+  private isDefaultCategory (category?: string): boolean {
     return category ? this.defaultCategories.includes(category) : false;
   }
 }

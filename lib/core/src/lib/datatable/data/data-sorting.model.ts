@@ -16,7 +16,7 @@
  */
 
 export class DataSorting {
-    constructor(
+    constructor (
         public key?: string,
         public direction?: string) {
     }

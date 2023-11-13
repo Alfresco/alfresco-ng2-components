@@ -23,10 +23,10 @@ import { WidgetComponent } from '../widget.component';
 import { FormFieldModel } from '../core';
 
 @Component({
-    selector: 'hyperlink-widget',
-    templateUrl: './hyperlink.widget.html',
-    styleUrls: ['./hyperlink.widget.scss'],
-    host: {
+    "selector": 'hyperlink-widget',
+    "templateUrl": './hyperlink.widget.html',
+    "styleUrls": ['./hyperlink.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -37,7 +37,7 @@ import { FormFieldModel } from '../core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {
 
@@ -47,18 +47,18 @@ export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit 
     linkUrl: string = '#';
     linkText: string = null;
 
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field) {
             this.linkUrl = this.getHyperlinkUrl(this.field);
             this.linkText = this.getHyperlinkText(this.field);
         }
     }
 
-    protected getHyperlinkUrl(field: FormFieldModel) {
+    protected getHyperlinkUrl (field: FormFieldModel) {
         let value = field.value || field.hyperlinkUrl;
 
         if (value && !/^https?:\/\//i.test(value)) {
@@ -68,7 +68,7 @@ export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit 
         return value || HyperlinkWidgetComponent.DEFAULT_HYPERLINK_URL;
     }
 
-    protected getHyperlinkText(field: FormFieldModel) {
+    protected getHyperlinkText (field: FormFieldModel) {
         if (field) {
             return field.displayText || field.hyperlinkUrl || field.value;
         }

@@ -33,23 +33,23 @@ describe('LanguageMenuComponent', () => {
 
     const languages = [
         {
-            key: 'fake-key-1',
-            label: 'fake-label-1'
+            "key": 'fake-key-1',
+            "label": 'fake-label-1'
         },
         {
-            key: 'fake-key-2',
-            label: 'fake-label-2'
+            "key": 'fake-key-2',
+            "label": 'fake-label-2'
         },
         {
-            key: 'fake-key-3',
-            label: 'fake-label-3',
-            direction: 'rtl'
+            "key": 'fake-key-3',
+            "label": 'fake-label-3',
+            "direction": 'rtl'
         }
     ] as any[];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]

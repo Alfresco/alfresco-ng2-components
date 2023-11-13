@@ -17,21 +17,21 @@
 
 export class EventMock {
 
-    static keyDown(key: any) {
+    static keyDown (key: any) {
         const event: any = document.createEvent('Event');
         event.keyCode = key;
         event.initEvent('keydown');
         document.dispatchEvent(event);
     }
 
-    static keyUp(key: any) {
+    static keyUp (key: any) {
         const event: any = document.createEvent('Event');
         event.keyCode = key;
         event.initEvent('keyup');
         document.dispatchEvent(event);
     }
 
-    static resizeMobileView() {
+    static resizeMobileView () {
         // todo: no longer compiles with TS 2.0.2 as innerWidth/innerHeight are readonly fields
         /*
         window.innerWidth = 320;

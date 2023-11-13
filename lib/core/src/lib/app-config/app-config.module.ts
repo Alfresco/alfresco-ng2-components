@@ -20,13 +20,13 @@ import { NgModule } from '@angular/core';
 import { AppConfigPipe } from './app-config.pipe';
 
 @NgModule({
-    imports: [
+    "imports": [
         HttpClientModule
     ],
-    declarations: [
+    "declarations": [
         AppConfigPipe
     ],
-    exports: [
+    "exports": [
         AppConfigPipe
     ]
 })

@@ -27,13 +27,13 @@ import { TooltipCardComponent } from './tooltip-card.component';
 const IMAGE_URL = 'alfresco-logo.svg';
 
 @Component({
-    template: `<span #span [adf-tooltip-card]="'Sample text'" [image]="'${IMAGE_URL}'" [width]="'400'" [htmlContent]="'this is the <b>html</b> raw code'" class="test-component"></span>`
+    "template": `<span #span [adf-tooltip-card]="'Sample text'" [image]="'${IMAGE_URL}'" [width]="'400'" [htmlContent]="'this is the <b>html</b> raw code'" class="test-component"></span>`
 })
 class TestComponent {
-    @ViewChild(TooltipCardDirective, { static: true })
+    @ViewChild(TooltipCardDirective, { "static": true })
     directive: TooltipCardDirective;
 
-    @ViewChild('span', { static: true })
+    @ViewChild('span', { "static": true })
     span: ElementRef;
 }
 
@@ -44,12 +44,12 @@ describe('TooltipCardDirective', () => {
 
     beforeEach((() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 CommonModule,
                 OverlayModule,
                 NoopAnimationsModule
             ],
-            declarations: [
+            "declarations": [
                 TooltipCardDirective,
                 TooltipCardComponent,
                 TestComponent

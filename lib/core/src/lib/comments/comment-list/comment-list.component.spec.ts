@@ -38,14 +38,14 @@ describe('CommentListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            providers: [
+            "providers": [
                 {
-                    provide: ADF_COMMENTS_SERVICE,
-                    useClass: CommentListServiceMock
+                    "provide": ADF_COMMENTS_SERVICE,
+                    "useClass": CommentListServiceMock
                 }
             ]
         });

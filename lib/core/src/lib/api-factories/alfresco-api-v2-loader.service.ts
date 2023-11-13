@@ -24,26 +24,25 @@ import { AuthenticationService, BasicAlfrescoAuthService } from '../auth';
 
 /**
  * Create a factory to resolve an api service instance
- *
  * @param angularAlfrescoApiService loader service
  * @returns factory function
  */
-export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApiLoaderService) {
+export function createAlfrescoApiInstance (angularAlfrescoApiService: AlfrescoApiLoaderService) {
     return () => angularAlfrescoApiService.init();
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AlfrescoApiLoaderService {
-    constructor(private readonly appConfig: AppConfigService,
+    constructor (private readonly appConfig: AppConfigService,
                 private readonly apiService: AlfrescoApiService,
                 private readonly basicAlfrescoAuthService: BasicAlfrescoAuthService,
                 private readonly authService: AuthenticationService,
                 private storageService: StorageService) {
     }
 
-    async init(): Promise<any> {
+    async init (): Promise<any> {
         await this.appConfig.load();
 
         this.authService.onLogin.subscribe(async () => {
@@ -55,7 +54,7 @@ export class AlfrescoApiLoaderService {
         return this.initAngularAlfrescoApi();
     }
 
-    private async initAngularAlfrescoApi() {
+    private async initAngularAlfrescoApi () {
         const oauth = this.appConfig.oauth2;
 
         if (oauth) {
@@ -64,18 +63,18 @@ export class AlfrescoApiLoaderService {
         }
 
         const config = new AlfrescoApiConfig({
-            provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
-            hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
-            hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
-            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
-            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
-            contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
-            disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
-            withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
-            domainPrefix: this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX),
-            ticketEcm: this.storageService.getItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL),
-            ticketBpm: this.storageService.getItem(AppConfigValues.PROCESS_TICKET_STORAGE_LABEL),
-            oauth2: oauth
+            "provider": this.appConfig.get<string>(AppConfigValues.PROVIDERS),
+            "hostEcm": this.appConfig.get<string>(AppConfigValues.ECMHOST),
+            "hostBpm": this.appConfig.get<string>(AppConfigValues.BPMHOST),
+            "authType": this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
+            "contextRootBpm": this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
+            "contextRoot": this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
+            "disableCsrf": this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
+            "withCredentials": this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
+            "domainPrefix": this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX),
+            "ticketEcm": this.storageService.getItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL),
+            "ticketBpm": this.storageService.getItem(AppConfigValues.PROCESS_TICKET_STORAGE_LABEL),
+            "oauth2": oauth
         });
 
         await this.apiService.load(config);

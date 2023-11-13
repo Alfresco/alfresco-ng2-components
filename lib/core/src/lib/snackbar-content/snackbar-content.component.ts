@@ -20,24 +20,24 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
 import { SnackBarData } from './snack-bar-data';
 
 @Component({
-    selector: 'adf-snackbar-content',
-    templateUrl: './snackbar-content.component.html',
-    styleUrls: ['./snackbar-content.component.scss'],
-    host: {
-        class: 'mat-simple-snackbar'
+    "selector": 'adf-snackbar-content',
+    "templateUrl": './snackbar-content.component.html',
+    "styleUrls": ['./snackbar-content.component.scss'],
+    "host": {
+        "class": 'mat-simple-snackbar'
     }
 })
 export class SnackbarContentComponent {
-    constructor(
+    constructor (
         public snackBarRef: MatSnackBarRef<SnackbarContentComponent>,
         @Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData
     ) {
         if (!data) {
-            this.data = {message: ''};
+            this.data = {"message": ''};
         }
     }
 
-    onIconClicked(): void {
+    onIconClicked (): void {
         this.data.callActionOnIconClick ? this.snackBarRef.dismissWithAction() : this.snackBarRef.dismiss();
     }
 }

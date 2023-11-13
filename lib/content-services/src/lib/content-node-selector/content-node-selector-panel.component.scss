@@ -48,13 +48,13 @@ h2.adf-search-results-label {
             }
         }
 
-        .mat-form-field-underline .mat-form-field-ripple {
+        .mat-mdc-form-field-underline .mat-mdc-form--field-ripple {
             height: 1px;
             transition: none;
         }
 
         .adf-site-dropdown-container {
-            .mat-form-field {
+            .mat-mdc-form-field {
                 display: block;
                 margin-bottom: 15px;
             }
@@ -64,7 +64,7 @@ h2.adf-search-results-label {
             width: 100%;
             margin-bottom: 0;
 
-            .mat-select-trigger {
+            .mat--mdc-select-trigger {
                 font-size: var(--theme-body-1-font-size);
             }
         }

@@ -35,7 +35,7 @@ const template: string = `
     <div id="innerDiv21" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
 </div>`;
 
-@Component({ selector: 'adf-test-component', template })
+@Component({ "selector": 'adf-test-component', template })
 class TestComponent {
     @ViewChildren(HighlightDirective) public highlightDirectives;
 }
@@ -47,11 +47,11 @@ describe('HighlightDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            declarations: [
+            "declarations": [
                 TestComponent
             ]
         });
@@ -92,7 +92,7 @@ describe('HighlightDirective', () => {
 
     it('should NOT reinsert the same text to the innerText if there was no change at all (search string is not found)', () => {
         const highlighter = TestBed.inject(HighlightTransformService);
-        spyOn(highlighter, 'highlight').and.returnValue({ changed: false, text: 'Modified text' });
+        spyOn(highlighter, 'highlight').and.returnValue({ "changed": false, "text": 'Modified text' });
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 

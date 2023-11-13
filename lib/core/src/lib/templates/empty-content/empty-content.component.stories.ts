@@ -21,66 +21,66 @@ import { CoreStoryModule } from '../../testing/core.story.module';
 import { TemplateModule } from '../template.module';
 
 export default {
-    component: EmptyContentComponent,
-    title: 'Core/Template/Empty Content',
-    decorators: [
+    "component": EmptyContentComponent,
+    "title": 'Core/Template/Empty Content',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, TemplateModule]
+            "imports": [CoreStoryModule, TemplateModule]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Provides a generic "Empty Content" placeholder for components.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Provides a generic "Empty Content" placeholder for components.`
             }
         }
     },
-    argTypes: {
-        icon: {
-            control: 'text',
-            description: 'Material Icon to use.',
-            defaultValue: 'cake',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'cake' }
+    "argTypes": {
+        "icon": {
+            "control": 'text',
+            "description": 'Material Icon to use.',
+            "defaultValue": 'cake',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'cake' }
             }
         },
-        title: {
-            control: 'text',
-            description: 'String or Resource Key for the title.',
-            defaultValue: 'title',
-            table: {
-                type: { summary: 'string' }
+        "title": {
+            "control": 'text',
+            "description": 'String or Resource Key for the title.',
+            "defaultValue": 'title',
+            "table": {
+                "type": { "summary": 'string' }
             }
         },
-        subtitle: {
-            control: 'text',
-            description: 'String or Resource Key for the subtitle.',
-            defaultValue: 'subtitle',
-            table: {
-                type: { summary: 'string' }
+        "subtitle": {
+            "control": 'text',
+            "description": 'String or Resource Key for the subtitle.',
+            "defaultValue": 'subtitle',
+            "table": {
+                "type": { "summary": 'string' }
             }
         },
-        anyContentProjection: {
-            name: 'with any component / selector',
-            control: 'boolean',
-            description: 'Showcase content projection with any component / selector',
-            defaultValue: false,
-            table: {
-                category: 'Content Projection',
-                type: {
-                    summary: 'code',
-                    detail: '<div style="color:red">\n  projected content\n</div>'
+        "anyContentProjection": {
+            "name": 'with any component / selector',
+            "control": 'boolean',
+            "description": 'Showcase content projection with any component / selector',
+            "defaultValue": false,
+            "table": {
+                "category": 'Content Projection',
+                "type": {
+                    "summary": 'code',
+                    "detail": '<div style="color:red">\n  projected content\n</div>'
                 },
-                defaultValue: { summary: false }
+                "defaultValue": { "summary": false }
             }
         }
     }
 } as Meta;
 
 const template: Story<EmptyContentComponent> = (args: EmptyContentComponent & { anyContentProjection: boolean }) => ({
-    props: args,
-    template: `
+    "props": args,
+    "template": `
     <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
         <div *ngIf="${args.anyContentProjection}" style="color:red">
             projected content
@@ -89,4 +89,4 @@ const template: Story<EmptyContentComponent> = (args: EmptyContentComponent & { 
 });
 
 export const emptyContent = template.bind({});
-emptyContent.parameters = { layout: 'centered' };
+emptyContent.parameters = { "layout": 'centered' };

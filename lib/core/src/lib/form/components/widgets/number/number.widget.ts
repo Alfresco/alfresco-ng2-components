@@ -23,10 +23,10 @@ import { WidgetComponent } from '../widget.component';
 import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
 
 @Component({
-    selector: 'number-widget',
-    templateUrl: './number.widget.html',
-    styleUrls: ['./number.widget.scss'],
-    host: {
+    "selector": 'number-widget',
+    "templateUrl": './number.widget.html',
+    "styleUrls": ['./number.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -37,18 +37,18 @@ import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
 
     displayValue: number;
 
-    constructor(public formService: FormService,
+    constructor (public formService: FormService,
                 private decimalNumberPipe: DecimalNumberPipe) {
          super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field.readOnly) {
             this.displayValue = this.decimalNumberPipe.transform(this.field.value);
         } else {

@@ -36,16 +36,16 @@ describe('UserPreferencesService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
         });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config = {
-            pagination: {
-                size: 10,
-                supportedPageSizes: [5, 10, 15, 20]
+            "pagination": {
+                "size": 10,
+                "supportedPageSizes": [5, 10, 15, 20]
             }
         };
 
@@ -168,7 +168,7 @@ describe('UserPreferencesService', () => {
         it('should store default textOrientation based on language', () => {
             appConfig.config.languages = [
                 {
-                    key: 'fake-locale-config'
+                    "key": 'fake-locale-config'
                 }
             ];
             appConfig.config.locale = 'fake-locale-config';
@@ -180,8 +180,8 @@ describe('UserPreferencesService', () => {
         it('should store textOrientation based on language config direction', () => {
             appConfig.config.languages = [
                 {
-                    key: 'fake-locale-config',
-                    direction: 'rtl'
+                    "key": 'fake-locale-config',
+                    "direction": 'rtl'
                 }
             ];
             appConfig.config.locale = 'fake-locale-config';
@@ -193,7 +193,7 @@ describe('UserPreferencesService', () => {
         it('should not store textOrientation based on language ', () => {
             appConfig.config.languages = [
                 {
-                    key: 'fake-locale-browser'
+                    "key": 'fake-locale-browser'
                 }
             ];
             alfrescoApiService.initialize();
@@ -205,8 +205,8 @@ describe('UserPreferencesService', () => {
         it('should default to browser locale for textOrientation when locale is not defined in configuration', () => {
             appConfig.config.languages = [
                 {
-                    key: 'fake-locale-browser',
-                    direction: 'rtl'
+                    "key": 'fake-locale-browser',
+                    "direction": 'rtl'
                 }
             ];
             spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locale-browser');

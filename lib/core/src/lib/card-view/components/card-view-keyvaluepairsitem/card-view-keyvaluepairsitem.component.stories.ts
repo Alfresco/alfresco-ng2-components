@@ -21,27 +21,27 @@ import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewModule, CardViewKeyValuePairsItemModel } from '../../public-api';
 
 export default {
-    component: CardViewKeyValuePairsItemComponent,
-    title: 'Core/Card View/Card View Key Value Pairs Item',
-    decorators: [
+    "component": CardViewKeyValuePairsItemComponent,
+    "title": 'Core/Card View/Card View Key Value Pairs Item',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            "imports": [CoreStoryModule, CardViewModule]
         })
     ],
-    argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            defaultValue: false,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+    "argTypes": {
+        "editable": {
+            "control": 'boolean',
+            "description": 'Defines if CardView item is editable',
+            "defaultValue": false,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": false }
             }
         },
-        property: {
-            description: 'Card View Item Model with data',
-            table: {
-                type: { summary: 'CardViewKeyValuePairsItemModel' }
+        "property": {
+            "description": 'Card View Item Model with data',
+            "table": {
+                "type": { "summary": 'CardViewKeyValuePairsItemModel' }
             }
         }
     }
@@ -49,16 +49,16 @@ export default {
 
 export const cardViewKeyValuePairsItem: Story<CardViewKeyValuePairsItemComponent> =
     (args: CardViewKeyValuePairsItemComponent) => ({
-        props: args
+        "props": args
     });
 cardViewKeyValuePairsItem.args = {
-    property: new CardViewKeyValuePairsItemModel({
-        label: 'CardView Key-Value Pairs Item',
-        value: [
-            { name: 'hey', value: 'you' },
-            { name: 'hey', value: 'you' }
+    "property": new CardViewKeyValuePairsItemModel({
+        "label": 'CardView Key-Value Pairs Item',
+        "value": [
+            { "name": 'hey', "value": 'you' },
+            { "name": 'hey', "value": 'you' }
         ],
-        key: 'key-value-pairs',
-        editable: true
+        "key": 'key-value-pairs',
+        "editable": true
     })
 };

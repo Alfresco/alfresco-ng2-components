@@ -22,56 +22,56 @@ import { CardViewSelectItemModel, CardViewModule } from '../../public-api';
 import { of } from 'rxjs';
 
 export default {
-    component: CardViewSelectItemComponent,
-    title: 'Core/Card View/Card View Select Item',
-    decorators: [
+    "component": CardViewSelectItemComponent,
+    "title": 'Core/Card View/Card View Select Item',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            "imports": [CoreStoryModule, CardViewModule]
         })
     ],
-    argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            defaultValue: false,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+    "argTypes": {
+        "editable": {
+            "control": 'boolean',
+            "description": 'Defines if CardView item is editable',
+            "defaultValue": false,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": false }
             }
         },
-        displayNoneOption: {
-            control: 'boolean',
-            description: 'Shows None option inside select element',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+        "displayNoneOption": {
+            "control": 'boolean',
+            "description": 'Shows None option inside select element',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": true }
             }
         },
-        displayEmpty: {
-            control: 'boolean',
-            description:
+        "displayEmpty": {
+            "control": 'boolean',
+            "description":
                 'Defines if it should display CardView item when data is empty',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": true }
             }
         },
-        options$: {
-            control: { disable: true },
-            description: 'Data displayed in select element',
-            table: {
-                type: {
-                    summary:
+        "options$": {
+            "control": { "disable": true },
+            "description": 'Data displayed in select element',
+            "table": {
+                "type": {
+                    "summary":
                         'Observable<CardViewSelectItemOption<string | number>[]>'
                 }
             }
         },
-        property: {
-            description: 'Card View Item Model with data',
-            table: {
-                type: { summary: 'CardViewSelectItemModel' }
+        "property": {
+            "description": 'Card View Item Model with data',
+            "table": {
+                "type": { "summary": 'CardViewSelectItemModel' }
             }
         }
     }
@@ -80,20 +80,20 @@ export default {
 const template: Story<CardViewSelectItemComponent> = (
     args: CardViewSelectItemComponent
 ) => ({
-    props: args
+    "props": args
 });
 
 export const cardViewSelectItem = template.bind({});
 cardViewSelectItem.args = {
-    property: new CardViewSelectItemModel({
-        label: 'CardView Select Item',
-        value: 'one',
-        options$: of([
-            { key: 'one', label: 'One' },
-            { key: 'two', label: 'Two' }
+    "property": new CardViewSelectItemModel({
+        "label": 'CardView Select Item',
+        "value": 'one',
+        "options$": of([
+            { "key": 'one', "label": 'One' },
+            { "key": 'two', "label": 'Two' }
         ]),
-        key: 'select',
-        editable: true
+        "key": 'select',
+        "editable": true
     })
 };
-cardViewSelectItem.parameters = { layout: 'centered' };
+cardViewSelectItem.parameters = { "layout": 'centered' };

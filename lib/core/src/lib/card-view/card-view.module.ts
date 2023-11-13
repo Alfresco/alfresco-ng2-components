@@ -47,7 +47,7 @@ import { CardViewArrayItemComponent } from './components/card-view-arrayitem/car
 import { SelectFilterInputComponent } from './components/card-view-selectitem/select-filter-input/select-filter-input.component';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -68,7 +68,7 @@ import { SelectFilterInputComponent } from './components/card-view-selectitem/se
         MatSlideToggleModule,
         MatTooltipModule
     ],
-    declarations: [
+    "declarations": [
         CardViewComponent,
         CardViewBoolItemComponent,
         CardViewDateItemComponent,
@@ -81,7 +81,7 @@ import { SelectFilterInputComponent } from './components/card-view-selectitem/se
         CardViewArrayItemComponent,
         SelectFilterInputComponent
     ],
-    exports: [
+    "exports": [
         CardViewComponent,
         CardViewBoolItemComponent,
         CardViewDateItemComponent,

@@ -25,34 +25,34 @@ import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
 
 export default {
-    component: LanguagePickerComponent,
-    title: 'Core/Language Menu/Language Picker',
-    decorators: [
+    "component": LanguagePickerComponent,
+    "title": 'Core/Language Menu/Language Picker',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, LanguageMenuModule],
-            providers: [
-                { provide: LanguageService, useClass: LanguageServiceMock }
+            "imports": [CoreStoryModule, LanguageMenuModule],
+            "providers": [
+                { "provide": LanguageService, "useClass": LanguageServiceMock }
             ]
         })
     ],
-    argTypes: {
-        changedLanguage: {
-            action: 'changedLanguage',
-            description: 'Emitted when the user clicks on one of the language buttons.',
-            table: {
-                category: 'Actions',
-                type: { summary: 'EventEmitter <LanguageItem>' }
+    "argTypes": {
+        "changedLanguage": {
+            "action": 'changedLanguage',
+            "description": 'Emitted when the user clicks on one of the language buttons.',
+            "table": {
+                "category": 'Actions',
+                "type": { "summary": 'EventEmitter <LanguageItem>' }
             }
         }
     }
 } as Meta;
 
 const languagePickerComponentTemplate: Story<LanguagePickerComponent> = (args: LanguagePickerComponent) => ({
-    props: args
+    "props": args
 });
 
 export const primary = languagePickerComponentTemplate.bind({});
-primary.parameters = { layout: 'centered' };
+primary.parameters = { "layout": 'centered' };
 
 export const asNestedMenu = languagePickerComponentTemplate.bind({});
 asNestedMenu.decorators = [
@@ -65,4 +65,4 @@ asNestedMenu.decorators = [
       </mat-menu>
     `)
 ];
-asNestedMenu.parameters = { layout: 'centered' };
+asNestedMenu.parameters = { "layout": 'centered' };

@@ -26,7 +26,7 @@ import { FormFieldTypes } from '../components/widgets';
 
 /* eslint-disable id-blacklist */
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class FormRenderingService extends DynamicComponentMapper {
 

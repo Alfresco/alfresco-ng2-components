@@ -23,52 +23,52 @@ import { commentsTaskData, commentsNodeData } from '../mocks/comments.stories.mo
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 
 export default {
-    component: CommentListComponent,
-    title: 'Core/Comments/Comment List',
-    decorators: [
+    "component": CommentListComponent,
+    "title": 'Core/Comments/Comment List',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, CommentsModule],
-            providers: [
-                { provide: CommentListServiceMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } }
+            "imports": [CoreStoryModule, CommentsModule],
+            "providers": [
+                { "provide": CommentListServiceMock, "useValue": { "getUserProfileImage": () => '../assets/images/logo.png' } }
             ]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: 'Displays a list of comments from users involved in a specified task or node'
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": 'Displays a list of comments from users involved in a specified task or node'
             }
         }
     },
-    argTypes: {
-        comments: {
-            control: 'object',
-            description: 'CommentModel array',
-            table: {
-                type: { summary: 'CommentModel[]' }
+    "argTypes": {
+        "comments": {
+            "control": 'object',
+            "description": 'CommentModel array',
+            "table": {
+                "type": { "summary": 'CommentModel[]' }
             }
         },
-        clickRow: {
-            action: 'clickRow',
-            description: 'Emitted when the user clicks on one of the comment rows',
-            table: {
-                category: 'Actions',
-                type: { summary: 'EventEmitter <CommentModel>' }
+        "clickRow": {
+            "action": 'clickRow',
+            "description": 'Emitted when the user clicks on one of the comment rows',
+            "table": {
+                "category": 'Actions',
+                "type": { "summary": 'EventEmitter <CommentModel>' }
              }
         }
     }
 } as Meta;
 
 const template: Story<CommentListComponent> = (args: CommentListComponent) => ({
-    props: args
+    "props": args
 });
 
 export const taskBased = template.bind({});
 taskBased.args = {
-    comments: commentsTaskData
+    "comments": commentsTaskData
 };
 
 export const nodeBased = template.bind({});
 nodeBased.args = {
-    comments: commentsNodeData
+    "comments": commentsNodeData
 };

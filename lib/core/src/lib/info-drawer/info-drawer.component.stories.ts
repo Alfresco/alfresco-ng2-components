@@ -22,187 +22,187 @@ import { InfoDrawerModule } from './info-drawer.module';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
 
 export default {
-    component: InfoDrawerComponent,
-    title: 'Core/Info Drawer/Info Drawer',
-    decorators: [
+    "component": InfoDrawerComponent,
+    "title": 'Core/Info Drawer/Info Drawer',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, InfoDrawerModule]
+            "imports": [CoreStoryModule, InfoDrawerModule]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Displays a sidebar-style information panel in single layout or using tabs.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Displays a sidebar-style information panel in single layout or using tabs.`
             }
         }
     },
-    argTypes: {
-        selectedIndex: {
-            control: 'select',
-            options: [0, 1, 2],
-            defaultValue: 0,
-            description: 'The selected index tab (Tab Layout only)',
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: '0' }
+    "argTypes": {
+        "selectedIndex": {
+            "control": 'select',
+            "options": [0, 1, 2],
+            "defaultValue": 0,
+            "description": 'The selected index tab (Tab Layout only)',
+            "table": {
+                "type": { "summary": 'number' },
+                "defaultValue": { "summary": '0' }
             }
         },
-        title: {
-            control: 'text',
-            description: 'The title of the info drawer',
-            defaultValue: null,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'null' }
+        "title": {
+            "control": 'text',
+            "description": 'The title of the info drawer',
+            "defaultValue": null,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'null' }
             },
-            if: { arg: 'showHeader', truthy: true }
+            "if": { "arg": 'showHeader', "truthy": true }
         },
-        showHeader: {
-            control: 'boolean',
-            description: 'Visibility of the header',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "showHeader": {
+            "control": 'boolean',
+            "description": 'Visibility of the header',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        showSecondTab: {
-            control: 'boolean',
-            description: 'Visibility of the second tab (Tab Layout only)',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "showSecondTab": {
+            "control": 'boolean',
+            "description": 'Visibility of the second tab (Tab Layout only)',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        showThirdTab: {
-            control: 'boolean',
-            description: 'Visibility of the third tab (Tab Layout only)',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "showThirdTab": {
+            "control": 'boolean',
+            "description": 'Visibility of the third tab (Tab Layout only)',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        label1: {
-            control: 'text',
-            description: 'Label of the first tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Labels'
+        "label1": {
+            "control": 'text',
+            "description": 'Label of the first tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Labels'
             }
         },
-        label2: {
-            control: 'text',
-            description: 'Label of the second tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Labels'
+        "label2": {
+            "control": 'text',
+            "description": 'Label of the second tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Labels'
             },
-            if: { arg: 'showSecondTab', truthy: true }
+            "if": { "arg": 'showSecondTab', "truthy": true }
         },
-        label3: {
-            control: 'text',
-            description: 'Label of the third tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Labels'
+        "label3": {
+            "control": 'text',
+            "description": 'Label of the third tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Labels'
             },
-            if: { arg: 'showThirdTab', truthy: true }
+            "if": { "arg": 'showThirdTab', "truthy": true }
         },
-        icon1: {
-            control: 'text',
-            description: 'Icon of the first tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Icons'
+        "icon1": {
+            "control": 'text',
+            "description": 'Icon of the first tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Icons'
             }
         },
-        icon2: {
-            control: 'text',
-            description: 'Icon of the second tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Icons'
+        "icon2": {
+            "control": 'text',
+            "description": 'Icon of the second tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Icons'
             },
-            if: { arg: 'showSecondTab', truthy: true }
+            "if": { "arg": 'showSecondTab', "truthy": true }
         },
-        icon3: {
-            control: 'text',
-            description: 'Icon of the third tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Icons'
+        "icon3": {
+            "control": 'text',
+            "description": 'Icon of the third tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Icons'
             },
-            if: { arg: 'showThirdTab', truthy: true }
+            "if": { "arg": 'showThirdTab', "truthy": true }
         },
-        tab1Text: {
-            control: 'text',
-            description: 'Text content of the first tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Tab Content'
+        "tab1Text": {
+            "control": 'text',
+            "description": 'Text content of the first tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Tab Content'
             }
         },
-        tab2Text: {
-            control: 'text',
-            description: 'Text content of the second tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Tab Content'
+        "tab2Text": {
+            "control": 'text',
+            "description": 'Text content of the second tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Tab Content'
             },
-            if: { arg: 'showSecondTab', truthy: true }
+            "if": { "arg": 'showSecondTab', "truthy": true }
         },
-        tab3Text: {
-            control: 'text',
-            description: 'Text content of the third tab (Tab Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' },
-                category: 'Tab Content'
+        "tab3Text": {
+            "control": 'text',
+            "description": 'Text content of the third tab (Tab Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' },
+                "category": 'Tab Content'
             },
-            if: { arg: 'showThirdTab', truthy: true }
+            "if": { "arg": 'showThirdTab', "truthy": true }
         },
-        cardText: {
-            control: 'text',
-            description: 'The content of the single card (Single Layout only)',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+        "cardText": {
+            "control": 'text',
+            "description": 'The content of the single card (Single Layout only)',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' }
             }
         },
-        currentTab: {
-            action: 'currentTab',
-            description: 'Emitted when the currently active tab changes',
-            table: {
-                type: { summary: 'EventEmitter <number>' },
-                category: 'Actions'
+        "currentTab": {
+            "action": 'currentTab',
+            "description": 'Emitted when the currently active tab changes',
+            "table": {
+                "type": { "summary": 'EventEmitter <number>' },
+                "category": 'Actions'
             }
         }
     }
 } as Meta;
 
 const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
-    props: args,
-    template:
+    "props": args,
+    "template":
         `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
             <div info-drawer-buttons>
                 <mat-icon>clear</mat-icon>
@@ -224,8 +224,8 @@ const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) =
 });
 
 const singleLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
-    props: args,
-    template:
+    "props": args,
+    "template":
         `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
             <div info-drawer-title>File info</div>
 
@@ -243,39 +243,39 @@ const singleLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent
 
 export const tabLayoutWithTextLabels = tabLayoutTemplate.bind({});
 tabLayoutWithTextLabels.args = {
-    title: 'Activities',
-    label1: 'Activity',
-    label2: 'Details',
-    label3: 'More Info',
-    tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
-    tab2Text: mockTabText,
-    tab3Text: mockTabText
+    "title": 'Activities',
+    "label1": 'Activity',
+    "label2": 'Details',
+    "label3": 'More Info',
+    "tab1Text": `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
+    "tab2Text": mockTabText,
+    "tab3Text": mockTabText
 };
 
 tabLayoutWithTextLabels.parameters = {
-    controls: { exclude: ['cardText'] }
+    "controls": { "exclude": ['cardText'] }
 };
 
 export const tabLayoutWithIconLabels = tabLayoutTemplate.bind({});
 tabLayoutWithIconLabels.args = {
-    title: 'Activities',
-    icon1: 'people',
-    icon2: 'android',
-    icon3: 'comment',
-    tab1Text: `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
-    tab2Text: mockTabText,
-    tab3Text: mockTabText
+    "title": 'Activities',
+    "icon1": 'people',
+    "icon2": 'android',
+    "icon3": 'comment',
+    "tab1Text": `This is a variant of the Info Drawer Layout component that displays information in tabs. ${mockTabText}`,
+    "tab2Text": mockTabText,
+    "tab3Text": mockTabText
 };
 
 tabLayoutWithIconLabels.parameters = {
-    controls: { exclude: ['cardText'] }
+    "controls": { "exclude": ['cardText'] }
 };
 
 export const singleLayout = singleLayoutTemplate.bind({});
 singleLayout.args = {
-    title: 'Single Activities',
-    cardText: mockCardText,
-    showHeader: true,
-    showSecondTab: false,
-    showThirdTab: false
+    "title": 'Single Activities',
+    "cardText": mockCardText,
+    "showHeader": true,
+    "showSecondTab": false,
+    "showThirdTab": false
 };

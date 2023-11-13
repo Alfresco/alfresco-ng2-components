@@ -20,7 +20,7 @@ export class ComponentTranslationModel {
     path: string;
     json: string[];
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         this.name = obj?.name;
         this.path = obj?.path;
         this.json = obj?.json || [];

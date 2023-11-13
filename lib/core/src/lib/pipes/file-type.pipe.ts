@@ -18,12 +18,12 @@
 import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({
-    name: 'fileType',
-    pure: true
+    "name": 'fileType',
+    "pure": true
 })
 export class FileTypePipe implements PipeTransform {
 
-    transform(value: string) {
+    transform (value: string) {
 
         if ( value == null ) {
             return '';

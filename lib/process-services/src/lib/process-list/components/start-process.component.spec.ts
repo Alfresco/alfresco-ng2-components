@@ -576,7 +576,7 @@ describe('StartProcessComponent', () => {
             fixture.detectChanges();
 
             const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
-            const labelElement = fixture.nativeElement.querySelector('.adf-start-process-app-list .mat-form-field-label');
+            const labelElement = fixture.nativeElement.querySelector('.adf-start-process-app-list .mat-mdc-form-field-label');
 
             expect(appsSelector).not.toBeNull();
             expect(labelElement.innerText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION');

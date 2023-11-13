@@ -32,7 +32,7 @@ describe('SortingPickerComponent', () => {
             expect(key).toBe('key2');
             done();
         });
-        component.onOptionChanged({ value: 'key2' } as any);
+        component.onOptionChanged({ "value": 'key2' } as any);
     });
 
     it('should raise changed event on changing direction', (done) => {

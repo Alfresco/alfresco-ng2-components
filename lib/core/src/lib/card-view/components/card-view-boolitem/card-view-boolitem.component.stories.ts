@@ -21,26 +21,26 @@ import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewBoolItemModel, CardViewModule } from '../../public-api';
 
 export default {
-    component: CardViewBoolItemComponent,
-    title: 'Core/Card View/Card View Bool Item',
-    decorators: [
+    "component": CardViewBoolItemComponent,
+    "title": 'Core/Card View/Card View Bool Item',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            "imports": [CoreStoryModule, CardViewModule]
         })
     ],
-    argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' }
+    "argTypes": {
+        "editable": {
+            "control": 'boolean',
+            "description": 'Defines if CardView item is editable',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' }
             }
         },
-        property: {
-            description: 'Card View Item Model with data',
-            table: {
-                type: { summary: 'CardViewBoolItemModel' }
+        "property": {
+            "description": 'Card View Item Model with data',
+            "table": {
+                "type": { "summary": 'CardViewBoolItemModel' }
             }
         }
     }
@@ -49,15 +49,15 @@ export default {
 export const cardViewBoolItem: Story<CardViewBoolItemComponent> = (
     args: CardViewBoolItemComponent
 ) => ({
-    props: args
+    "props": args
 });
 cardViewBoolItem.args = {
-    property: new CardViewBoolItemModel({
-        label: 'Agree to all terms and conditions',
-        value: true,
-        key: 'boolean',
-        default: false,
-        editable: true
+    "property": new CardViewBoolItemModel({
+        "label": 'Agree to all terms and conditions',
+        "value": true,
+        "key": 'boolean',
+        "default": false,
+        "editable": true
     })
 };
-cardViewBoolItem.parameters = { layout: 'centered' };
+cardViewBoolItem.parameters = { "layout": 'centered' };

@@ -25,18 +25,18 @@ import { PaginationModule } from '../pagination/pagination.module';
 import { AddNotificationStorybookComponent } from './components/add-notification.stories.component';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MaterialModule,
         TranslateModule,
         PipeModule,
         PaginationModule
     ],
-    declarations: [
+    "declarations": [
         NotificationHistoryComponent,
         AddNotificationStorybookComponent
     ],
-    exports: [
+    "exports": [
         NotificationHistoryComponent,
         AddNotificationStorybookComponent
     ]

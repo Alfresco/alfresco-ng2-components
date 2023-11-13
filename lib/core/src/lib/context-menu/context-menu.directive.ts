@@ -21,7 +21,7 @@ import { Directive, HostListener, Input } from '@angular/core';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 
 @Directive({
-    selector: '[adf-context-menu]'
+    "selector": '[adf-context-menu]'
 })
 export class ContextMenuDirective {
     /** Items for the menu. */
@@ -32,10 +32,10 @@ export class ContextMenuDirective {
     @Input('adf-context-menu-enabled')
     enabled: boolean = false;
 
-    constructor(private contextMenuService: ContextMenuOverlayService) {}
+    constructor (private contextMenuService: ContextMenuOverlayService) {}
 
     @HostListener('contextmenu', ['$event'])
-    onShowContextMenu(event?: MouseEvent) {
+    onShowContextMenu (event?: MouseEvent) {
         if (this.enabled) {
             if (event) {
                 event.preventDefault();
@@ -43,8 +43,8 @@ export class ContextMenuDirective {
 
             if (this.links && this.links.length > 0) {
                 this.contextMenuService.open({
-                    source: event,
-                    data: this.links
+                    "source": event,
+                    "data": this.links
                 });
             }
         }

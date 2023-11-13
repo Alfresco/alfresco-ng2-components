@@ -23,11 +23,11 @@ import { CardViewKeyValuePairsItemProperties } from '../interfaces/card-view.int
 export class CardViewKeyValuePairsItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'keyvaluepairs';
 
-    constructor(cardViewKeyValuePairsItemProperties: CardViewKeyValuePairsItemProperties) {
+    constructor (cardViewKeyValuePairsItemProperties: CardViewKeyValuePairsItemProperties) {
         super(cardViewKeyValuePairsItemProperties);
     }
 
-    get displayValue() {
+    get displayValue () {
         return this.value;
     }
 }

@@ -22,10 +22,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
 
 @Component({
-    template: `
+    "template": `
         <button mat-raised-button color="primary" (click)="view()">json</button>
     `,
-    host: {
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,14 +36,14 @@ import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dia
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService, private dialog: MatDialog) {
+    constructor (public formService: FormService, private dialog: MatDialog) {
         super(formService);
     }
 
-    view() {
+    view () {
         const rawValue = this.field.value;
         const value =
             typeof rawValue === 'object'
@@ -51,16 +51,16 @@ export class JsonWidgetComponent extends WidgetComponent {
                 : rawValue;
 
         const settings: EditJsonDialogSettings = {
-            title: this.field.name,
-            editable: false,
+            "title": this.field.name,
+            "editable": false,
             value
         };
 
         this.dialog
             .open(EditJsonDialogComponent, {
-                data: settings,
-                minWidth: '50%',
-                minHeight: '50%'
+                "data": settings,
+                "minWidth": '50%',
+                "minHeight": '50%'
             });
     }
 }

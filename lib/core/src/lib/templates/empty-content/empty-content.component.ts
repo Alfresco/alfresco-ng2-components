@@ -18,12 +18,12 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
-    selector: 'adf-empty-content',
-    templateUrl: './empty-content.component.html',
-    styleUrls: ['./empty-content.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-empty-content' }
+    "selector": 'adf-empty-content',
+    "templateUrl": './empty-content.component.html',
+    "styleUrls": ['./empty-content.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-empty-content' }
 })
 export class EmptyContentComponent {
 

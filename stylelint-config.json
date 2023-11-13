@@ -4,7 +4,6 @@
     "indentation": 4,
     "color-function-notation": "legacy",
     "alpha-value-notation": "number",
-    "color-hex-case": "lower",
     "color-no-invalid-hex": true,
     "function-calc-no-unspaced-operator": true,
     "function-comma-space-after": "always-single-line",
@@ -63,15 +62,6 @@
         "message": "The `initial` value is not supported in IE."
       }
     ],
-    "block-closing-brace-newline-after": [
-      "always",
-      {
-        "ignoreAtRules": ["if", "else"]
-      }
-    ],
-    "block-closing-brace-newline-before": "always-multi-line",
-    "block-opening-brace-newline-after": "always-multi-line",
-    "block-opening-brace-space-before": "always-multi-line",
     "selector-attribute-brackets-space-inside": "never",
     "selector-attribute-operator-space-after": "never",
     "selector-attribute-operator-space-before": "never",

@@ -16,13 +16,13 @@
  */
 
 export class AlfrescoApiMock {
-    login() {
+    login () {
         return Promise.resolve('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
     }
 
-    logout() {
+    logout () {
         return Promise.resolve('logout');
     }
 
-    changeConfig() {}
+    changeConfig () {}
 }

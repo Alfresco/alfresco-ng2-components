@@ -22,18 +22,18 @@ import { CardViewArrayItemModel, CardViewModule } from '../../public-api';
 import { of } from 'rxjs';
 
 export default {
-    component: CardViewArrayItemComponent,
-    title: 'Core/Card View/Card View Array Item',
-    decorators: [
+    "component": CardViewArrayItemComponent,
+    "title": 'Core/Card View/Card View Array Item',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            "imports": [CoreStoryModule, CardViewModule]
         })
     ],
-    argTypes: {
-        property: {
-            description: 'Card View Item Model with data',
-            table: {
-                type: { summary: 'CardViewArrayItemModel' }
+    "argTypes": {
+        "property": {
+            "description": 'Card View Item Model with data',
+            "table": {
+                "type": { "summary": 'CardViewArrayItemModel' }
             }
         }
     }
@@ -42,21 +42,21 @@ export default {
 export const cardViewArrayItem: Story<CardViewArrayItemComponent> = (
     args: CardViewArrayItemComponent
 ) => ({
-    props: args
+    "props": args
 });
 cardViewArrayItem.args = {
-    property: new CardViewArrayItemModel({
-        label: 'CardView Array of items',
-        value: of([
-            { icon: 'directions_bike', value: 'Zlatan' },
-            { icon: 'directions_bike', value: 'Lionel Messi' },
-            { value: 'Mohamed', directions_bike: 'save' },
-            { value: 'Ronaldo' }
+    "property": new CardViewArrayItemModel({
+        "label": 'CardView Array of items',
+        "value": of([
+            { "icon": 'directions_bike', "value": 'Zlatan' },
+            { "icon": 'directions_bike', "value": 'Lionel Messi' },
+            { "value": 'Mohamed', "directions_bike": 'save' },
+            { "value": 'Ronaldo' }
         ]),
-        key: 'array',
-        icon: 'edit',
-        default: 'Empty',
-        noOfItemsToDisplay: 2
+        "key": 'array',
+        "icon": 'edit',
+        "default": 'Empty',
+        "noOfItemsToDisplay": 2
     })
 };
-cardViewArrayItem.parameters = { layout: 'centered' };
+cardViewArrayItem.parameters = { "layout": 'centered' };

@@ -21,27 +21,27 @@ import { of, throwError } from 'rxjs';
 import { IdentityRoleResponseModel, IdentityRoleService } from './identity-role.service';
 
 export const mockIdentityRole1 = {
-    id: 'mock-id-1', name: 'Mock_Role_1', description: 'Mock desc1',  clientRole: true, composite: false
+    "id": 'mock-id-1', "name": 'Mock_Role_1', "description": 'Mock desc1',  "clientRole": true, "composite": false
 };
 
 export const mockIdentityRole2 = {
-    id: 'mock-id-2', name: 'Mock_Role_2', description: 'Mock desc2', clientRole: false, composite: true
+    "id": 'mock-id-2', "name": 'Mock_Role_2', "description": 'Mock desc2', "clientRole": false, "composite": true
 };
 
 export const mockIdentityRole3 = {
-    id: 'mock-id-3', name: 'Mock_Role_3', description: 'Mock desc3', clientRole: false, composite: false
+    "id": 'mock-id-3', "name": 'Mock_Role_3', "description": 'Mock desc3', "clientRole": false, "composite": false
 };
 
 export const mockIdentityRoles = {
-    entries: [
+    "entries": [
       mockIdentityRole1,  mockIdentityRole2, mockIdentityRole3
     ],
-    pagination: {
-        skipCount: 1,
-        maxItems: 5,
-        count: 100,
-        hasMoreItems: false,
-        totalItems: 100
+    "pagination": {
+        "skipCount": 1,
+        "maxItems": 5,
+        "count": 100,
+        "hasMoreItems": false,
+        "totalItems": 100
     }
 };
 
@@ -50,7 +50,7 @@ describe('IdentityRoleService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 HttpClientModule
             ]
         });
@@ -70,9 +70,9 @@ describe('IdentityRoleService', () => {
 
     it('should be able to add role', (done) => {
         const response = new HttpResponse({
-            body: [],
-            status: 201,
-            statusText: 'Created'
+            "body": [],
+            "status": 201,
+            "statusText": 'Created'
         });
         spyOn(service, 'addRole').and.returnValue(of(response));
         service.addRole(mockIdentityRole1).subscribe(
@@ -87,8 +87,8 @@ describe('IdentityRoleService', () => {
 
     it('Should not add role if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
-            error: 'test 404 error',
-            status: 404, statusText: 'Not Found'
+            "error": 'test 404 error',
+            "status": 404, "statusText": 'Not Found'
         });
         spyOn(service, 'addRole').and.returnValue(throwError(errorResponse));
         service.addRole(mockIdentityRole1)
@@ -104,9 +104,9 @@ describe('IdentityRoleService', () => {
 
     it('should be able to delete role', (done) => {
         const response = new HttpResponse({
-            body: [],
-            status: 204,
-            statusText: 'No Content'
+            "body": [],
+            "status": 204,
+            "statusText": 'No Content'
         });
         spyOn(service, 'deleteRole').and.returnValue(of(response));
         service.deleteRole(mockIdentityRole1).subscribe(
@@ -121,8 +121,8 @@ describe('IdentityRoleService', () => {
 
     it('Should not delete role if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
-            error: 'test 404 error',
-            status: 404, statusText: 'Not Found'
+            "error": 'test 404 error',
+            "status": 404, "statusText": 'Not Found'
         });
         spyOn(service, 'deleteRole').and.returnValue(throwError(errorResponse));
         service.deleteRole(mockIdentityRole1)

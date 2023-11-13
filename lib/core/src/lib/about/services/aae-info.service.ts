@@ -28,16 +28,16 @@ export interface ActivitiDependencyInfo {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AaeInfoService {
     contextRoot = '';
 
-    constructor(protected httpClient: HttpClient, protected appConfigService: AppConfigService) {
+    constructor (protected httpClient: HttpClient, protected appConfigService: AppConfigService) {
         this.contextRoot = appConfigService.get('bpmHost', '');
     }
 
-    getServiceVersion(serviceName: string): Observable<ActivitiDependencyInfo> {
+    getServiceVersion (serviceName: string): Observable<ActivitiDependencyInfo> {
         return this.httpClient.get<any>(`${this.contextRoot}/${serviceName}/actuator/info`).pipe(
             map((response: any) => {
                 let activitiVersion = 'N/A';
@@ -45,9 +45,9 @@ export class AaeInfoService {
                     activitiVersion = response.build.activiti.version;
                 }
                 return {
-                    artifact: response.build.artifact,
-                    version: response.build.version,
-                    activiti: activitiVersion
+                    "artifact": response.build.artifact,
+                    "version": response.build.version,
+                    "activiti": activitiVersion
                 };
             })
         );

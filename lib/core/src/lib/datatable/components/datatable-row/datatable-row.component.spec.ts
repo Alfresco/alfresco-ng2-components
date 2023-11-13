@@ -24,14 +24,14 @@ describe('DataTableRowComponent', () => {
     let component: DataTableRowComponent;
 
     const row: DataRow = {
-        isSelected: false,
-        hasValue: jasmine.createSpy('hasValue'),
-        getValue: () => {}
+        "isSelected": false,
+        "hasValue": jasmine.createSpy('hasValue'),
+        "getValue": () => {}
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [DataTableRowComponent]
+            "declarations": [DataTableRowComponent]
         });
 
         fixture = TestBed.createComponent(DataTableRowComponent);
@@ -113,8 +113,8 @@ describe('DataTableRowComponent', () => {
     it('should emit keyboard space event', () => {
         spyOn(component.select, 'emit');
         const event = new KeyboardEvent('keydown', {
-            key: ' ',
-            code: 'Space'
+            "key": ' ',
+            "code": 'Space'
         });
 
         fixture.debugElement.nativeElement.dispatchEvent(event);

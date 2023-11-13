@@ -30,47 +30,46 @@ import { AuthenticationConfirmationComponent } from './view/authentication-confi
 
 /**
  * Create a Login Factory function
- *
  * @param oAuthService auth service
  * @param storage storage service
  * @param config auth configuration
  * @returns a factory function
  */
-export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, config: AuthConfig) {
+export function loginFactory (oAuthService: OAuthService, storage: OAuthStorage, config: AuthConfig) {
     const service = new RedirectAuthService(oAuthService, storage, config);
     return () => service.init();
 }
 
 @NgModule({
-    declarations: [AuthenticationConfirmationComponent],
-    imports: [AuthRoutingModule, OAuthModule.forRoot()],
-    providers: [
-        { provide: OAuthStorage, useExisting: StorageService },
+    "declarations": [AuthenticationConfirmationComponent],
+    "imports": [AuthRoutingModule, OAuthModule.forRoot()],
+    "providers": [
+        { "provide": OAuthStorage, "useExisting": StorageService },
         // { provide: AuthGuard, useClass: OidcAuthGuard },
         // { provide: AuthGuardEcm, useClass: OidcAuthGuard },
         // { provide: AuthGuardBpm, useClass: OidcAuthGuard },
-        { provide: AuthenticationService},
-        { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
+        { "provide": AuthenticationService},
+        { "provide": AlfrescoApiService, "useClass": AlfrescoApiNoAuthService },
         {
-            provide: AUTH_CONFIG,
-            useFactory: authConfigFactory,
-            deps: [AuthConfigService]
+            "provide": AUTH_CONFIG,
+            "useFactory": authConfigFactory,
+            "deps": [AuthConfigService]
         },
         RedirectAuthService,
-        { provide: AuthService, useExisting: RedirectAuthService },
+        { "provide": AuthService, "useExisting": RedirectAuthService },
         {
-            provide: APP_INITIALIZER,
-            useFactory: loginFactory,
-            deps: [OAuthService, OAuthStorage, AUTH_CONFIG],
-            multi: true
+            "provide": APP_INITIALIZER,
+            "useFactory": loginFactory,
+            "deps": [OAuthService, OAuthStorage, AUTH_CONFIG],
+            "multi": true
         }
     ]
 })
 export class AuthModule {
-    static forRoot(config: AuthModuleConfig = { useHash: false }): ModuleWithProviders<AuthModule> {
+    static forRoot (config: AuthModuleConfig = { "useHash": false }): ModuleWithProviders<AuthModule> {
         return {
-            ngModule: AuthModule,
-            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: config }]
+            "ngModule": AuthModule,
+            "providers": [{ "provide": AUTH_MODULE_CONFIG, "useValue": config }]
         };
     }
 }

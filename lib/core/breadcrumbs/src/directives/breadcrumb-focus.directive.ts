@@ -19,20 +19,20 @@ import { Directive, ElementRef } from '@angular/core';
 
 /** @internal */
 @Directive({
-    standalone: true,
-    selector: '[adf-breadcrumb-focus]',
-    host: {
-        class: 'adf-breadcrumb-focus'
+    "standalone": true,
+    "selector": '[adf-breadcrumb-focus]',
+    "host": {
+        "class": 'adf-breadcrumb-focus'
     }
 })
 export class BreadcrumbFocusDirective {
-    constructor(private elementRef: ElementRef) {}
+    constructor (private elementRef: ElementRef) {}
 
-    focusOnFirstFocusableElement() {
+    focusOnFirstFocusableElement () {
         this.getFocusableElements(this.elementRef.nativeElement)[0].focus();
     }
 
-    private getFocusableElements(root: HTMLElement): HTMLElement[] {
+    private getFocusableElements (root: HTMLElement): HTMLElement[] {
         const allFocusableElements = `button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])`;
         return Array.from(
             root.querySelectorAll(

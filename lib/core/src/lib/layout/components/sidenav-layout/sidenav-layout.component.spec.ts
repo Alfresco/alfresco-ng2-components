@@ -31,8 +31,8 @@ import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
 
 @Component({
-    selector: 'adf-layout-container',
-    template: `
+    "selector": 'adf-layout-container',
+    "template": `
         <ng-content select="[app-layout-navigation]"></ng-content>
         <ng-content select="[app-layout-content]"></ng-content>`
 })
@@ -44,12 +44,12 @@ export class DummyLayoutContainerComponent {
     @Input() mediaQueryList: MediaQueryList;
     @Input() hideSidenav: boolean;
     @Input() expandedSidenav: boolean;
-    toggleMenu() {}
+    toggleMenu () {}
 }
 
 @Component({
-    selector: 'adf-test-component-for-sidenav',
-    template: `
+    "selector": 'adf-test-component-for-sidenav',
+    "template": `
             <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
 
                 <adf-sidenav-layout-header>
@@ -82,34 +82,34 @@ describe('SidenavLayoutComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 CommonModule,
                 PlatformModule,
                 LayoutModule,
                 MaterialModule
             ],
-            declarations: [
+            "declarations": [
                 DummyLayoutContainerComponent,
                 SidenavLayoutComponent,
                 SidenavLayoutContentDirective,
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
-            providers: [
+            "providers": [
                 MediaMatcher,
-                { provide: UserPreferencesService, useValue: { select: () => of() } }
+                { "provide": UserPreferencesService, "useValue": { "select": () => of() } }
             ],
-            schemas: [
+            "schemas": [
                 CUSTOM_ELEMENTS_SCHEMA
             ]
         });
         mediaQueryList = {
-            mediaFn: null,
-            matches: false,
-            addListener(mediaFn) {
+            "mediaFn": null,
+            "matches": false,
+            addListener (mediaFn) {
                 this.mediaFn = mediaFn;
             },
-            removeListener: () => {}
+            "removeListener": () => {}
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);
@@ -232,20 +232,20 @@ describe('Template transclusion', () => {
     let fixture: ComponentFixture<any>;
     let mediaMatcher: MediaMatcher;
     const mediaQueryList: any = {
-            matches: false,
-            addListener: () => {},
-            removeListener: () => {}
+            "matches": false,
+            "addListener": () => {},
+            "removeListener": () => {}
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 CommonModule,
                 PlatformModule,
                 LayoutModule,
                 MaterialModule
             ],
-            declarations: [
+            "declarations": [
                 DummyLayoutContainerComponent,
                 SidenavLayoutTesterComponent,
                 SidenavLayoutComponent,
@@ -253,9 +253,9 @@ describe('Template transclusion', () => {
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
-            providers: [
+            "providers": [
                 MediaMatcher,
-                { provide: UserPreferencesService, useValue: { select: () => of() } }
+                { "provide": UserPreferencesService, "useValue": { "select": () => of() } }
             ]
         });
         mediaMatcher = TestBed.inject(MediaMatcher);

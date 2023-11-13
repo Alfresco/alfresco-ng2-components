@@ -19,22 +19,22 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 import { ExtensionRef } from '@alfresco/adf-extensions';
 
 @Component({
-  selector: 'adf-about-extension-list',
-  templateUrl: './about-extension-list.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  "selector": 'adf-about-extension-list',
+  "templateUrl": './about-extension-list.component.html',
+  "encapsulation": ViewEncapsulation.None,
+  "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class AboutExtensionListComponent {
   columns = [
     {
-      columnDef: 'name',
-      header: 'ABOUT.PLUGINS.NAME',
-      cell: (row: ExtensionRef) => `${row.$name}`
+      "columnDef": 'name',
+      "header": 'ABOUT.PLUGINS.NAME',
+      "cell": (row: ExtensionRef) => `${row.$name}`
     },
     {
-      columnDef: 'version',
-      header: 'ABOUT.PLUGINS.VERSION',
-      cell: (row: ExtensionRef) => `${row.$version}`
+      "columnDef": 'version',
+      "header": 'ABOUT.PLUGINS.VERSION',
+      "cell": (row: ExtensionRef) => `${row.$version}`
     }
   ];
 

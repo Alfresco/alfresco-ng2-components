@@ -24,17 +24,17 @@ import { SearchTriggerDirective } from './search-trigger.directive';
 import { MaterialModule } from '../material.module';
 
 @NgModule({
-    declarations: [
+    "declarations": [
         SearchTextInputComponent,
         SearchTriggerDirective
     ],
-    imports: [
+    "imports": [
         CommonModule,
         TranslateModule,
         MaterialModule,
         FormsModule
     ],
-    exports: [
+    "exports": [
         SearchTextInputComponent,
         SearchTriggerDirective
     ]

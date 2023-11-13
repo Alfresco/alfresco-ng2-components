@@ -38,11 +38,11 @@ import { Direction } from '@angular/cdk/bidi';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-sidenav-layout',
-    templateUrl: './sidenav-layout.component.html',
-    styleUrls: ['./sidenav-layout.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-sidenav-layout' }
+    "selector": 'adf-sidenav-layout',
+    "templateUrl": './sidenav-layout.component.html',
+    "styleUrls": ['./sidenav-layout.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-sidenav-layout' }
 })
 export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     static STEP_OVER = 600;
@@ -83,24 +83,24 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     private menuOpenStateSubject: BehaviorSubject<boolean>;
     public menuOpenState$: Observable<boolean>;
 
-    @ViewChild('container', { static: true }) container: any;
-    @ViewChild('emptyTemplate', { static: true }) emptyTemplate: any;
+    @ViewChild('container', { "static": true }) container: any;
+    @ViewChild('emptyTemplate', { "static": true }) emptyTemplate: any;
 
     mediaQueryList: MediaQueryList;
     _isMenuMinimized;
 
     templateContext = {
-        toggleMenu: () => {},
-        isMenuMinimized: () => this.isMenuMinimized
+        "toggleMenu": () => {},
+        "isMenuMinimized": () => this.isMenuMinimized
     };
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService ) {
+    constructor (private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService ) {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         const initialMenuState = !this.expandedSidenav;
 
         this.menuOpenStateSubject = new BehaviorSubject<boolean>(initialMenuState);
@@ -120,17 +120,17 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
             });
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit () {
         this.templateContext.toggleMenu = this.toggleMenu.bind(this);
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.mediaQueryList.removeListener(this.onMediaQueryChange);
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    toggleMenu() {
+    toggleMenu () {
         if (!this.mediaQueryList.matches) {
             this.isMenuMinimized = !this.isMenuMinimized;
         } else {
@@ -141,32 +141,32 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         this.expanded.emit(!this.isMenuMinimized);
     }
 
-    get isMenuMinimized() {
+    get isMenuMinimized () {
         return this._isMenuMinimized;
     }
 
-    set isMenuMinimized(menuState: boolean) {
+    set isMenuMinimized (menuState: boolean) {
         this._isMenuMinimized = menuState;
         this.menuOpenStateSubject.next(!menuState);
     }
 
-    get isHeaderInside() {
+    get isHeaderInside () {
         return this.mediaQueryList.matches;
     }
 
-    get headerTemplate(): TemplateRef<any> {
+    get headerTemplate (): TemplateRef<any> {
         return this?.headerDirective?.template || this.emptyTemplate;
     }
 
-    get navigationTemplate(): TemplateRef<any> {
+    get navigationTemplate (): TemplateRef<any> {
         return this?.navigationDirective?.template || this.emptyTemplate;
     }
 
-    get contentTemplate(): TemplateRef<any> {
+    get contentTemplate (): TemplateRef<any> {
         return this?.contentDirective?.template || this.emptyTemplate;
     }
 
-    onMediaQueryChange() {
+    onMediaQueryChange () {
         this.isMenuMinimized = false;
         this.expanded.emit(!this.isMenuMinimized);
     }

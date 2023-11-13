@@ -31,37 +31,37 @@ describe('PdfThumbListComponent', () => {
 
     const page = (id) => ({
         id,
-        getPage: Promise.resolve()
+        "getPage": Promise.resolve()
     });
 
     const viewerMock = {
-        _currentPageNumber: null,
-        set currentPageNumber(pageNum) {
+        "_currentPageNumber": null,
+        set "currentPageNumber" (pageNum) {
             this._currentPageNumber = pageNum;
             /* cspell:disable-next-line */
-            this.eventBus.dispatch('pagechanging', { pageNumber: pageNum });
+            this.eventBus.dispatch('pagechanging', { "pageNumber": pageNum });
         },
-        get currentPageNumber() {
+        get "currentPageNumber" () {
             return this._currentPageNumber;
         },
-        pdfDocument: {
-            getPage: () => Promise.resolve({
-                getViewport: () => ({ height: 421, width: 335 }),
-                render: jasmine.createSpy('render').and.returnValue({ promise: Promise.resolve() })
+        "pdfDocument": {
+            "getPage": () => Promise.resolve({
+                "getViewport": () => ({ "height": 421, "width": 335 }),
+                "render": jasmine.createSpy('render').and.returnValue({ "promise": Promise.resolve() })
             })
         },
-        _pages: [
+        "_pages": [
             page(1), page(2), page(3), page(4),
             page(5), page(6), page(7), page(8),
             page(9), page(10), page(11), page(12),
             page(13), page(14), page(15), page(16)
         ],
-        eventBus: new pdfjsViewer.EventBus()
+        "eventBus": new pdfjsViewer.EventBus()
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -127,7 +127,7 @@ describe('PdfThumbListComponent', () => {
         expect(renderedIds).toContain(12);
 
         /* cspell:disable-next-line */
-        viewerMock.eventBus.dispatch('pagechanging', { pageNumber: 12 });
+        viewerMock.eventBus.dispatch('pagechanging', { "pageNumber": 12 });
 
         const newRenderedIds = component.renderItems.map((item) => item.id);
 
@@ -141,7 +141,7 @@ describe('PdfThumbListComponent', () => {
         expect(component.renderItems[component.renderItems.length - 1].id).toBe(6);
         expect(fixture.debugElement.nativeElement.scrollTop).toBe(0);
 
-        component.pdfViewer.eventBus.dispatch('pagechanging', { pageNumber: 6 });
+        component.pdfViewer.eventBus.dispatch('pagechanging', { "pageNumber": 6 });
 
         expect(component.scrollInto).not.toHaveBeenCalled();
         expect(fixture.debugElement.nativeElement.scrollTop).toBe(0);
@@ -149,7 +149,7 @@ describe('PdfThumbListComponent', () => {
 
     it('should set active current page on onPageChange event', () => {
         fixture.detectChanges();
-        component.pdfViewer.eventBus.dispatch('pagechanging', { pageNumber: 6 });
+        component.pdfViewer.eventBus.dispatch('pagechanging', { "pageNumber": 6 });
 
         expect(document.activeElement.id).toBe('6');
     });
@@ -173,7 +173,7 @@ describe('PdfThumbListComponent', () => {
 
     describe('Keyboard events', () => {
         it('should select next page in the list on DOWN_ARROW event', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: DOWN_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {"keyCode": DOWN_ARROW} as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(1);
             expect(document.activeElement.id).toBe('1');
@@ -183,7 +183,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should select previous page in the list on UP_ARROW event', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: UP_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {"keyCode": UP_ARROW} as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(2);
             expect(document.activeElement.id).toBe('2');
@@ -193,7 +193,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should not select previous page if it is the first page', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: UP_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {"keyCode": UP_ARROW} as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(1);
             expect(document.activeElement.id).toBe('1');
@@ -203,12 +203,12 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should not select next item if it is the last page', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: DOWN_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {"keyCode": DOWN_ARROW} as KeyboardEventInit);
             fixture.detectChanges();
             component.scrollInto(16);
             fixture.detectChanges();
 
-            component.pdfViewer.eventBus.dispatch('pagechanging', { pageNumber: 16 });
+            component.pdfViewer.eventBus.dispatch('pagechanging', { "pageNumber": 16 });
             expect(document.activeElement.id).toBe('16');
 
             fixture.debugElement.nativeElement.dispatchEvent(event);
@@ -216,7 +216,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should emit on ESCAPE event', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: ESCAPE} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', {"keyCode": ESCAPE} as KeyboardEventInit);
             spyOn(component.close, 'emit');
             fixture.detectChanges();
 

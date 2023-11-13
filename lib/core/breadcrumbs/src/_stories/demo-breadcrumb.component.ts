@@ -18,8 +18,8 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'adf-demo-breadcrumb',
-  template: `
+  "selector": 'adf-demo-breadcrumb',
+  "template": `
   <adf-breadcrumb [compact]="compact">
     <adf-breadcrumb-item>
         <a href="/">Home</a>

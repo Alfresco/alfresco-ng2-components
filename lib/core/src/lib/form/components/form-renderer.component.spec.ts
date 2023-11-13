@@ -87,7 +87,7 @@ describe('Form Renderer Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;
@@ -653,7 +653,7 @@ describe('Form Renderer Component', () => {
 
     describe('Custom Widget', () => {
         it('Should be able to correctly display a custom process cloud widget', async () => {
-            formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
+            formRenderingService.register({ "bananaforevah": () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -664,7 +664,7 @@ describe('Form Renderer Component', () => {
         });
 
         it('Should be able to correctly use visibility in a custom process cloud widget ', async () => {
-            formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
+            formRenderingService.register({ "bananaforevah": () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();

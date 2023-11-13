@@ -29,7 +29,7 @@ describe('ErrorWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 CoreTestingModule
             ]
         });
@@ -38,9 +38,9 @@ describe('ErrorWidgetComponent', () => {
         element = fixture.nativeElement;
     });
     const errorMessage: string = 'fake-error';
-    const errorMessageModel: ErrorMessageModel = new ErrorMessageModel({message: errorMessage});
+    const errorMessageModel: ErrorMessageModel = new ErrorMessageModel({"message": errorMessage});
     const errorChanges: SimpleChanges = {
-        error: new SimpleChange(errorMessageModel, errorMessageModel, false)
+        "error": new SimpleChange(errorMessageModel, errorMessageModel, false)
     };
 
     it('should display proper error icon', async () => {

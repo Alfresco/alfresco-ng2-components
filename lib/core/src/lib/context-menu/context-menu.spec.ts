@@ -22,8 +22,8 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-test-component',
-    template: `
+    "selector": 'adf-test-component',
+    "template": `
         <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div>
     `
 })
@@ -35,57 +35,57 @@ describe('ContextMenuDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     const actions = [
         {
-            model: {
-                visible: false,
-                title: 'Action 1'
+            "model": {
+                "visible": false,
+                "title": 'Action 1'
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         },
         {
-            model: {
-                visible: true,
-                disabled: true,
-                title: 'Action 2',
-                icon: null
+            "model": {
+                "visible": true,
+                "disabled": true,
+                "title": 'Action 2',
+                "icon": null
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         },
         {
-            model: {
-                visible: true,
-                disabled: false,
-                title: 'Action 3',
-                icon: 'action-icon-3'
+            "model": {
+                "visible": true,
+                "disabled": false,
+                "title": 'Action 3',
+                "icon": 'action-icon-3'
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         },
         {
-            model: {
-                visible: true,
-                disabled: false,
-                title: 'Action 4',
-                icon: 'action-icon-4'
+            "model": {
+                "visible": true,
+                "disabled": false,
+                "title": 'Action 4',
+                "icon": 'action-icon-4'
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         }
     ];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 ContextMenuModule
             ],
-            declarations: [
+            "declarations": [
                 TestComponent
             ]
         });
@@ -115,7 +115,7 @@ describe('ContextMenuDirective', () => {
 
         it('should reset DOM element reference on Escape event', () => {
             const event = new KeyboardEvent('keydown', {
-                bubbles : true, cancelable : true, key : 'Escape'
+                "bubbles" : true, "cancelable" : true, "key" : 'Escape'
             });
 
             document.querySelector('.cdk-overlay-backdrop').dispatchEvent(event);

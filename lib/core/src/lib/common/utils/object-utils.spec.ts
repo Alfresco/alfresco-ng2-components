@@ -21,7 +21,7 @@ describe('ObjectUtils', () => {
 
     it('should get top level property value', () => {
         const obj = {
-            id: 1
+            "id": 1
         };
         expect(ObjectUtils.getValue(obj, 'id')).toBe(1);
     });
@@ -33,9 +33,9 @@ describe('ObjectUtils', () => {
 
     it('should get nested property value', () => {
         const obj = {
-            name: {
-                firstName: 'John',
-                lastName: 'Doe'
+            "name": {
+                "firstName": 'John',
+                "lastName": 'Doe'
             }
         };
 
@@ -54,78 +54,78 @@ describe('ObjectUtils', () => {
     describe('merge', () => {
         it('should merge top level properties', () => {
             const obj1 = {
-                prop1: 'value1'
+                "prop1": 'value1'
             };
 
             const obj2 = {
-                prop2: 'value2'
+                "prop2": 'value2'
             };
 
             const result = ObjectUtils.merge(obj1, obj2);
             expect(result).toEqual({
-                prop1: 'value1',
-                prop2: 'value2'
+                "prop1": 'value1',
+                "prop2": 'value2'
             });
         });
 
         it('should merge object properties', () => {
             const obj1 = {
-                child: {
-                    prop1: 1
+                "child": {
+                    "prop1": 1
                 },
-                prop: 1
+                "prop": 1
             };
             const obj2 = {
-                child: {
-                    prop1: 2,
-                    prop2: 3
+                "child": {
+                    "prop1": 2,
+                    "prop2": 3
                 }
             };
 
             const result = ObjectUtils.merge(obj1, obj2);
             expect(result).toEqual({
-                child: {
-                    prop1: 2,
-                    prop2: 3
+                "child": {
+                    "prop1": 2,
+                    "prop2": 3
                 },
-                prop: 1
+                "prop": 1
             });
         });
 
         it('should merge arrays', () => {
             const obj1 = {
-                arr: [1, 2, 3]
+                "arr": [1, 2, 3]
             };
             const obj2 = {
-                arr: [4, 5, 6]
+                "arr": [4, 5, 6]
             };
 
             const result = ObjectUtils.merge(obj1, obj2);
             expect(result).toEqual({
-                arr: [1, 2, 3, 4, 5, 6]
+                "arr": [1, 2, 3, 4, 5, 6]
             });
         });
 
         it('should overwrite only single property in the object', () => {
             const obj1 = {
-                child: {
-                    prop1: 1,
-                    prop2: 2,
-                    prop3: 3
+                "child": {
+                    "prop1": 1,
+                    "prop2": 2,
+                    "prop3": 3
                 }
             };
             const obj2 = {
-                child: {
-                    prop3: 0
+                "child": {
+                    "prop3": 0
                 }
             };
 
             const result = ObjectUtils.merge(obj1, obj2);
             expect(result).toEqual({
-                child: {
-                    prop1: 1,
-                    prop2: 2,
-                    prop3: 0
+                "child": {
+                    "prop1": 1,
+                    "prop2": 2,
+                    "prop3": 0
                 }
             });
         });
@@ -146,7 +146,7 @@ describe('ObjectUtils', () => {
 
         it('should return true for object types', () => {
             const obj = {
-                id: 1
+                "id": 1
             };
             const date = new Date();
             expect(ObjectUtils.isObject(obj)).toBe(true);
@@ -162,7 +162,7 @@ describe('ObjectUtils', () => {
 
         it('should return false for non empty objects', () => {
             const obj = {
-                id: 1
+                "id": 1
             };
             const date = new Date();
             expect(ObjectUtils.isEmpty(obj)).toBe(false);
@@ -173,20 +173,20 @@ describe('ObjectUtils', () => {
     describe('isBooleanObject', () => {
         it('should return true for objects with all bollean values', () => {
             const obj = {
-                testOne: true,
-                testTwo: false
+                "testOne": true,
+                "testTwo": false
             };
             expect(ObjectUtils.isBooleanObject(obj)).toBe(true);
         });
 
         it('should return false for objects with at least one non boolean value', () => {
             const objOne = {
-                testOne: true,
-                testTwo: 1
+                "testOne": true,
+                "testTwo": 1
             };
             const objTwo = {
-                testOne: 1,
-                testTwo: 2
+                "testOne": 1,
+                "testTwo": 2
             };
             expect(ObjectUtils.isBooleanObject(objOne)).toBe(false);
             expect(ObjectUtils.isBooleanObject(objTwo)).toBe(false);
@@ -216,12 +216,12 @@ describe('ObjectUtils', () => {
 
         it('should return empty string for objects containing non boolean values', () => {
             const nonBooleanObjOne = {
-                testOne: 1,
-                testTwo: 2
+                "testOne": 1,
+                "testTwo": 2
             };
             const nonBooleanObjTwo = {
-                testOne: 1,
-                testTwo: false
+                "testOne": 1,
+                "testTwo": false
             };
             expect(ObjectUtils.booleanPrettify(nonBooleanObjOne)).toBe('');
             expect(ObjectUtils.booleanPrettify(nonBooleanObjTwo)).toBe('');
@@ -229,16 +229,16 @@ describe('ObjectUtils', () => {
 
         it('should return string with either &#9989 or &#10060 symbols if object with boolean values', () => {
             const obj = {
-                testOne: true,
-                testTwo: false
+                "testOne": true,
+                "testTwo": false
             };
             expect(ObjectUtils.booleanPrettify(obj)).toBe('&#9989 testOne\n&#10060 testTwo');
         });
 
         it('should return enhanced string with either &#9989 or &#10060 symbols if object with boolean values', () => {
             const obj = {
-                testOne: true,
-                testTwo: false
+                "testOne": true,
+                "testTwo": false
             };
 
             const enhancer = (e: string) => e + 'test';

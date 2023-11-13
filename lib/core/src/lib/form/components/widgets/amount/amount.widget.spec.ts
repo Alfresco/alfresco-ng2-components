@@ -37,7 +37,7 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -63,8 +63,8 @@ describe('AmountWidgetComponent', () => {
 
     it('should setup empty placeholder in readOnly mode', () => {
         widget.field = new FormFieldModel(null, {
-            readOnly: true,
-            placeholder: '1234'
+            "readOnly": true,
+            "placeholder": '1234'
         });
 
         widget.ngOnInit();
@@ -73,8 +73,8 @@ describe('AmountWidgetComponent', () => {
 
     it('should setup placeholder when readOnly is false', () => {
         widget.field = new FormFieldModel(null, {
-            readOnly: false,
-            placeholder: '1234'
+            "readOnly": false,
+            "placeholder": '1234'
         });
 
         widget.ngOnInit();
@@ -83,9 +83,9 @@ describe('AmountWidgetComponent', () => {
 
     describe('when tooltip is set', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.AMOUNT,
-                tooltip: 'my custom tooltip'
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.AMOUNT,
+                "tooltip": 'my custom tooltip'
             });
             fixture.detectChanges();
         });
@@ -110,9 +110,9 @@ describe('AmountWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.AMOUNT,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.AMOUNT,
+                "required": true
             });
         });
 
@@ -145,7 +145,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -155,10 +155,10 @@ describe('AmountWidgetComponent - rendering', () => {
 
     it('[C289915] - Should be able to display different currency icons', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
-            id: 'TestAmount1',
-            name: 'Test Amount',
-            type: 'amount',
-            currency: '$'
+            "id": 'TestAmount1',
+            "name": 'Test Amount',
+            "type": 'amount',
+            "currency": '$'
         });
         fixture.detectChanges();
 
@@ -180,21 +180,21 @@ describe('AmountWidgetComponent - rendering', () => {
 
     it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
-            id: 'TestAmount1',
-            name: 'Test Amount',
-            type: 'amount',
-            required: true,
-            colspan: 2,
-            placeholder: 'Check Placeholder Text',
-            minValue: null,
-            maxValue: null,
-            visibilityCondition: null,
-            params: {
-                existingColspan: 1,
-                maxColspan: 2
+            "id": 'TestAmount1',
+            "name": 'Test Amount',
+            "type": 'amount',
+            "required": true,
+            "colspan": 2,
+            "placeholder": 'Check Placeholder Text',
+            "minValue": null,
+            "maxValue": null,
+            "visibilityCondition": null,
+            "params": {
+                "existingColspan": 1,
+                "maxColspan": 2
             },
-            enableFractions: false,
-            currency: '$'
+            "enableFractions": false,
+            "currency": '$'
         });
         fixture.detectChanges();
         await fixture.whenStable();
@@ -220,21 +220,21 @@ describe('AmountWidgetComponent - rendering', () => {
 
     it('[C309693] - Should be possible to set the Advanced Properties for Amount Widget', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
-            id: 'TestAmount1',
-            name: 'Test Amount',
-            type: 'amount',
-            required: true,
-            colspan: 2,
-            placeholder: 'Check Placeholder Text',
-            minValue: 10,
-            maxValue: 90,
-            visibilityCondition: null,
-            params: {
-                existingColspan: 1,
-                maxColspan: 2
+            "id": 'TestAmount1',
+            "name": 'Test Amount',
+            "type": 'amount',
+            "required": true,
+            "colspan": 2,
+            "placeholder": 'Check Placeholder Text',
+            "minValue": 10,
+            "maxValue": 90,
+            "visibilityCondition": null,
+            "params": {
+                "existingColspan": 1,
+                "maxColspan": 2
             },
-            enableFractions: true,
-            currency: '£'
+            "enableFractions": true,
+            "currency": '£'
         });
         fixture.detectChanges();
         await fixture.whenStable();
@@ -273,13 +273,13 @@ describe('AmountWidgetComponent - rendering', () => {
 
     describe('when form model has left labels', () => {
         it('should have left labels classes on leftLabels true', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                id: 'amount-id',
-                name: 'amount-name',
-                value: '',
-                type: FormFieldTypes.AMOUNT,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": true }), {
+                "id": 'amount-id',
+                "name": 'amount-name',
+                "value": '',
+                "type": FormFieldTypes.AMOUNT,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -293,13 +293,13 @@ describe('AmountWidgetComponent - rendering', () => {
         });
 
         it('should not have left labels classes on leftLabels false', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                id: 'amount-id',
-                name: 'amount-name',
-                value: '',
-                type: FormFieldTypes.AMOUNT,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": false }), {
+                "id": 'amount-id',
+                "name": 'amount-name',
+                "value": '',
+                "type": FormFieldTypes.AMOUNT,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -313,13 +313,13 @@ describe('AmountWidgetComponent - rendering', () => {
         });
 
         it('should not have left labels classes on leftLabels not present', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'amount-id',
-                name: 'amount-name',
-                value: '',
-                type: FormFieldTypes.AMOUNT,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'amount-id',
+                "name": 'amount-name',
+                "value": '',
+                "type": FormFieldTypes.AMOUNT,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -340,12 +340,12 @@ describe('AmountWidgetComponent settings', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule],
-            providers: [
+            "imports": [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule],
+            "providers": [
                 {
-                    provide: ADF_AMOUNT_SETTINGS,
-                    useValue: {
-                        showReadonlyPlaceholder: true
+                    "provide": ADF_AMOUNT_SETTINGS,
+                    "useValue": {
+                        "showReadonlyPlaceholder": true
                     }
                 }
             ]
@@ -357,8 +357,8 @@ describe('AmountWidgetComponent settings', () => {
 
     it('should display placeholder via injected settings', () => {
         const field: any = {
-            readOnly: true,
-            placeholder: 'some placeholder'
+            "readOnly": true,
+            "placeholder": 'some placeholder'
         };
         widget.field = field;
         expect(widget.placeholder).toBe('some placeholder');

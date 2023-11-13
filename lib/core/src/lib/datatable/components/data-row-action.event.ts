@@ -23,7 +23,7 @@ export class DataRowActionModel {
     row: DataRow;
     action: any;
 
-    constructor(row: DataRow, action: any) {
+    constructor (row: DataRow, action: any) {
         this.row = row;
         this.action = action;
     }
@@ -32,11 +32,11 @@ export class DataRowActionModel {
 export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {
 
     // backwards compatibility with 1.2.0 and earlier
-    get args(): DataRowActionModel {
+    get args (): DataRowActionModel {
         return this.value;
     }
 
-    constructor(row: DataRow, action: any) {
+    constructor (row: DataRow, action: any) {
         super();
         this.value = new DataRowActionModel(row, action);
     }

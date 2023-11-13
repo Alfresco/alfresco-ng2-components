@@ -22,10 +22,10 @@ import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 @Component({
-    selector: 'adf-comment-list',
-    templateUrl: './comment-list.component.html',
-    styleUrls: ['./comment-list.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-comment-list',
+    "templateUrl": './comment-list.component.html',
+    "styleUrls": ['./comment-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class CommentListComponent {
 
@@ -39,11 +39,11 @@ export class CommentListComponent {
 
     private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
-    selectComment(comment: CommentModel): void {
+    selectComment (comment: CommentModel): void {
         this.clickRow.emit(comment);
     }
 
-    getUserImage(user: User): string {
+    getUserImage (user: User): string {
         return this.commentsService.getUserImage(user);
     }
 }

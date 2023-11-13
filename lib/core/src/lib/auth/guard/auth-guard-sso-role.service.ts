@@ -21,15 +21,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserAccessService } from '../services/user-access.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AuthGuardSsoRoleService implements CanActivate {
-    constructor(private userAccessService: UserAccessService,
+    constructor (private userAccessService: UserAccessService,
                 private router: Router,
                 private dialog: MatDialog) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot): boolean {
+    canActivate (route: ActivatedRouteSnapshot): boolean {
         this.userAccessService.fetchUserAccess();
         let hasRealmRole = false;
         let hasClientRole = true;
@@ -52,7 +52,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
         }
         const hasRole = hasRealmRole && hasClientRole;
 
-        if (!hasRole && route?.data && route.data['redirectUrl']) {
+        if (!hasRole && route?.data?.['redirectUrl']) {
             this.router.navigate(['/' + route.data['redirectUrl']]);
         }
 
@@ -63,14 +63,14 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return hasRole;
     }
 
-    private validateRoles(rolesToCheck: string[], excludedRoles?: string[]): boolean {
+    private validateRoles (rolesToCheck: string[], excludedRoles?: string[]): boolean {
         if (excludedRoles?.length > 0) {
             return this.hasRoles(rolesToCheck) && !this.hasRoles(excludedRoles);
         }
         return this.hasRoles(rolesToCheck);
     }
 
-    private hasRoles(roles: string[] = []): boolean {
+    private hasRoles (roles: string[] = []): boolean {
         return this.userAccessService.hasGlobalAccess(roles);
     }
 

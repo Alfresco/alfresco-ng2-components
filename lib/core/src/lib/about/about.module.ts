@@ -34,13 +34,13 @@ import { AboutPanelDirective } from './about-panel.directive';
 import { AboutRepositoryInfoComponent } from './about-repository-info/about-repository-info.component';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MaterialModule,
         TranslateModule,
         MatExpansionModule
     ],
-    declarations: [
+    "declarations": [
         AboutComponent,
         AboutPanelDirective,
         AboutRepositoryInfoComponent,
@@ -53,7 +53,7 @@ import { AboutRepositoryInfoComponent } from './about-repository-info/about-repo
         AboutStatusListComponent,
         ModuleListComponent
     ],
-    exports: [
+    "exports": [
         AboutComponent,
         AboutPanelDirective,
         AboutRepositoryInfoComponent,

@@ -23,10 +23,10 @@ import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 class TestExtensionService extends ExtensionService {
 
-    onSetup(config: ExtensionConfig) {
+    onSetup (config: ExtensionConfig) {
         this.onSetup$.next(config);
     }
 }
@@ -38,26 +38,26 @@ describe('AppConfigService', () => {
     let httpClient: HttpClient;
 
     const mockResponse = {
-        ecmHost: 'http://localhost:4000/ecm',
-        bpmHost: 'http://localhost:4000/ecm',
-        application: {
-            name: 'Custom Name'
+        "ecmHost": 'http://localhost:4000/ecm',
+        "bpmHost": 'http://localhost:4000/ecm',
+        "application": {
+            "name": 'Custom Name'
         },
-        files: {
-            excluded: ['excluded']
+        "files": {
+            "excluded": ['excluded']
         },
-        logLevel: 'silent',
-        alfrescoRepositoryName: 'alfresco-1'
+        "logLevel": 'silent',
+        "alfrescoRepositoryName": 'alfresco-1'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 HttpClientModule,
                 AppConfigModule
             ],
-            providers: [
-                { provide: ExtensionService, useClass: TestExtensionService }
+            "providers": [
+                { "provide": ExtensionService, "useClass": TestExtensionService }
             ]
         });
     });
@@ -72,15 +72,15 @@ describe('AppConfigService', () => {
 
     it('should merge the configs from extensions', () => {
         appConfigService.config = {
-            application: {
-                name: 'application name'
+            "application": {
+                "name": 'application name'
             }
         };
 
         (extensionService as TestExtensionService).onSetup({
-            appConfig: {
-                application: {
-                    name: 'custom name'
+            "appConfig": {
+                "application": {
+                    "name": 'custom name'
                 }
             }
         } as any);
@@ -90,15 +90,15 @@ describe('AppConfigService', () => {
 
     it('should merge the configs upon new data loaded', async () => {
         appConfigService.config = {
-            application: {
-                name: 'application name'
+            "application": {
+                "name": 'application name'
             }
         };
 
         (extensionService as TestExtensionService).onSetup({
-            appConfig: {
-                application: {
-                    name: 'custom name'
+            "appConfig": {
+                "application": {
+                    "name": 'custom name'
                 }
             }
         } as any);

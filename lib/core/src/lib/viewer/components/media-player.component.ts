@@ -20,11 +20,11 @@ import { Track } from '../models/viewer.model';
 import { UrlService } from '../../common/services/url.service';
 
 @Component({
-    selector: 'adf-media-player',
-    templateUrl: './media-player.component.html',
-    styleUrls: ['./media-player.component.scss'],
-    host: { class: 'adf-media-player' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-media-player',
+    "templateUrl": './media-player.component.html',
+    "styleUrls": ['./media-player.component.scss'],
+    "host": { "class": 'adf-media-player' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {
     @Input()
@@ -46,9 +46,9 @@ export class MediaPlayerComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private urlService: UrlService) {}
+    constructor (private urlService: UrlService) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
 
         if (blobFile?.currentValue) {
@@ -61,7 +61,7 @@ export class MediaPlayerComponent implements OnChanges {
         }
     }
 
-    onMediaPlayerError(event: any) {
+    onMediaPlayerError (event: any) {
         this.error.emit(event);
     }
 }

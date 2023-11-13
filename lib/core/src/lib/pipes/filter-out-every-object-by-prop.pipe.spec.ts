@@ -26,11 +26,11 @@ describe('FilterOutArrayObjectsByPropPipe', () => {
 
     it('should filter out object', () => {
         const testArray = [{
-            id: 1
+            "id": 1
         }, {
-            id: 2
+            "id": 2
         }, {
-            id: 3
+            "id": 3
         }];
 
         const result = pipe.transform(testArray, 'id', 3);
@@ -42,13 +42,13 @@ describe('FilterOutArrayObjectsByPropPipe', () => {
 
     it('should filter out multiple objects', () => {
         const testArray = [{
-            isHidden: true
+            "isHidden": true
         }, {
-            isHidden: true
+            "isHidden": true
         }, {
-            isHidden: true
+            "isHidden": true
         }, {
-            isHidden: false
+            "isHidden": false
         }];
 
         const result = pipe.transform(testArray, 'isHidden', true);
@@ -66,7 +66,7 @@ describe('FilterOutArrayObjectsByPropPipe', () => {
     });
 
     it('should work with non existing prop', () => {
-        const testArray = [{ prop: 1 }];
+        const testArray = [{ "prop": 1 }];
 
         const result = pipe.transform(testArray, 'nonExistionProp', 1);
 

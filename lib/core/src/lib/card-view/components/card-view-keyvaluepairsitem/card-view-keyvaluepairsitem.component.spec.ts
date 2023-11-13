@@ -28,12 +28,12 @@ describe('CardViewKeyValuePairsItemComponent', () => {
     let fixture: ComponentFixture<CardViewKeyValuePairsItemComponent>;
     let component: CardViewKeyValuePairsItemComponent;
     let cardViewUpdateService: CardViewUpdateService;
-    const mockEmptyData = [{ name: '', value: '' }];
-    const mockData = [{ name: 'test-name', value: 'test-value' }];
+    const mockEmptyData = [{ "name": '', "value": '' }];
+    const mockData = [{ "name": 'test-name', "value": 'test-value' }];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -42,10 +42,10 @@ describe('CardViewKeyValuePairsItemComponent', () => {
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;
         component.property = new CardViewKeyValuePairsItemModel({
-            label: 'Key Value Pairs',
-            value: [],
-            key: 'key-value-pairs',
-            editable: true
+            "label": 'Key Value Pairs',
+            "value": [],
+            "key": 'key-value-pairs',
+            "editable": true
         });
         component.editable = true;
     });
@@ -66,10 +66,10 @@ describe('CardViewKeyValuePairsItemComponent', () => {
 
         it('should render readOnly table is editable property is FALSE', () => {
             component.property = new CardViewKeyValuePairsItemModel({
-                label: 'Key Value Pairs',
-                value: mockData,
-                key: 'key-value-pairs',
-                editable: false
+                "label": 'Key Value Pairs',
+                "value": mockData,
+                "key": 'key-value-pairs',
+                "editable": false
             });
 
             component.ngOnChanges();

@@ -27,7 +27,6 @@ import { Locale } from 'date-fns';
  *
  * Automatically switches locales based on user preferences.
  * Supports custom display format.
- *
  * @example
  *
  * Add the following to the component `providers` section
@@ -51,15 +50,15 @@ import { Locale } from 'date-fns';
  * Material date formats for Date-fns
  */
 export const ADF_DATE_FORMATS: MatDateFormats = {
-    parse: {
-        dateInput: 'dd-MM-yyyy'
+    "parse": {
+        "dateInput": 'dd-MM-yyyy'
     },
-    display: {
-        dateInput: 'dd-MM-yyyy',
-        monthLabel: 'LLL',
-        monthYearLabel: 'LLL uuuu',
-        dateA11yLabel: 'PP',
-        monthYearA11yLabel: 'LLLL uuuu'
+    "display": {
+        "dateInput": 'dd-MM-yyyy',
+        "monthLabel": 'LLL',
+        "monthYearLabel": 'LLL uuuu',
+        "dateA11yLabel": 'PP',
+        "monthYearA11yLabel": 'LLLL uuuu'
     }
 };
 
@@ -67,15 +66,15 @@ export const ADF_DATE_FORMATS: MatDateFormats = {
 export class AdfDateFnsAdapter extends DateFnsAdapter {
     private _displayFormat?: string = null;
 
-    get displayFormat(): string | null {
+    get displayFormat (): string | null {
         return this._displayFormat;
     }
 
-    set displayFormat(value: string | null) {
+    set displayFormat (value: string | null) {
         this._displayFormat = value ? DateFnsUtils.convertMomentToDateFnsFormat(value) : null;
     }
 
-    constructor(
+    constructor (
         @Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: Locale,
         @Optional() @Inject(MAT_DATE_FORMATS) private formats: MatDateFormats,
         preferences: UserPreferencesService
@@ -87,14 +86,14 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
         });
     }
 
-    override parse(value: any, parseFormat: string | string[]): Date {
+    override parse (value: any, parseFormat: string | string[]): Date {
         const format = Array.isArray(parseFormat)
             ? parseFormat.map(DateFnsUtils.convertMomentToDateFnsFormat)
             : DateFnsUtils.convertMomentToDateFnsFormat(parseFormat);
         return super.parse(value, format);
     }
 
-    override format(date: Date, displayFormat: string): string {
+    override format (date: Date, displayFormat: string): string {
         displayFormat = DateFnsUtils.convertMomentToDateFnsFormat(displayFormat);
 
         if (this.displayFormat && displayFormat === this.formats?.display?.dateInput) {

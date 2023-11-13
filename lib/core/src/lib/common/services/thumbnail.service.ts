@@ -23,7 +23,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 const DEFAULT_ICON = './assets/images/ft_ic_miscellaneous.svg';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ThumbnailService {
     mimeTypeIcons: any = {
@@ -147,21 +147,21 @@ export class ThumbnailService {
         'application/vnd.visio': './assets/images/ft_ic_document.svg',
         'application/wordperfect': './assets/images/ft_ic_document.svg',
         'application/x-cpio': './assets/images/ft_ic_document.svg',
-        folder: './assets/images/ft_ic_folder.svg',
-        smartFolder: './assets/images/ft_ic_smart_folder.svg',
-        ruleFolder: './assets/images/ft_ic_folder_rule.svg',
-        linkFolder: './assets/images/ft_ic_folder_shortcut_link.svg',
+        "folder": './assets/images/ft_ic_folder.svg',
+        "smartFolder": './assets/images/ft_ic_smart_folder.svg',
+        "ruleFolder": './assets/images/ft_ic_folder_rule.svg',
+        "linkFolder": './assets/images/ft_ic_folder_shortcut_link.svg',
         'disable/folder': './assets/images/ft_ic_folder_disable.svg',
-        selected: './assets/images/ft_ic_selected.svg',
+        "selected": './assets/images/ft_ic_selected.svg',
         'dynamic-feed': './assets/images/dynamic_feed-24px.svg',
         'ic-process': './assets/images/ic-process.svg',
         'save-as': './assets/images/save-as.svg',
-        save: './assets/images/save.svg',
-        task: './assets/images/task.svg',
+        "save": './assets/images/save.svg',
+        "task": './assets/images/task.svg',
         'multipart/related': './assets/images/ft_ic_website.svg'
     };
 
-    constructor(matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    constructor (matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
         Object.keys(this.mimeTypeIcons).forEach((key) => {
             const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
 
@@ -172,21 +172,19 @@ export class ThumbnailService {
 
     /**
      * Gets a thumbnail URL for a MIME type.
-     *
      * @param mimeType MIME type for the thumbnail
      * @returns URL string
      */
-    public getMimeTypeIcon(mimeType: string): string {
+    public getMimeTypeIcon (mimeType: string): string {
         const icon = this.mimeTypeIcons[mimeType];
         return (icon || DEFAULT_ICON);
     }
 
     /**
      * Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
-     *
      * @returns URL string
      */
-    public getDefaultMimeTypeIcon(): string {
+    public getDefaultMimeTypeIcon (): string {
         return DEFAULT_ICON;
     }
 }

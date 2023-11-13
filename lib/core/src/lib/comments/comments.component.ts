@@ -30,10 +30,10 @@ import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 
 @Component({
-    selector: 'adf-comments',
-    templateUrl: './comments.component.html',
-    styleUrls: ['./comments.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-comments',
+    "templateUrl": './comments.component.html',
+    "styleUrls": ['./comments.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class CommentsComponent implements OnChanges {
 
@@ -55,7 +55,7 @@ export class CommentsComponent implements OnChanges {
 
     private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges (changes: SimpleChanges): void {
         this.id = null;
 
         this.id = changes['id'] ? changes['id'].currentValue : null;
@@ -67,7 +67,7 @@ export class CommentsComponent implements OnChanges {
         }
     }
 
-    loadComments() {
+    loadComments () {
         this.resetComments();
 
         if (!this.hasId()) {
@@ -89,7 +89,7 @@ export class CommentsComponent implements OnChanges {
         );
     }
 
-    addComment() {
+    addComment () {
         if (!this.canAddComment()) {
             return;
         }
@@ -111,32 +111,32 @@ export class CommentsComponent implements OnChanges {
             );
     }
 
-    clearMessage(event: Event): void {
+    clearMessage (event: Event): void {
         event.stopPropagation();
         this.resetMessage();
     }
 
-    private addToComments(comment: CommentModel): void {
+    private addToComments (comment: CommentModel): void {
         this.comments.unshift(comment);
     }
 
-    private resetMessage(): void {
+    private resetMessage (): void {
         this.message = '';
     }
 
-    private canAddComment(): boolean {
+    private canAddComment (): boolean {
         return this.hasId() && this.message && this.message.trim() && !this.beingAdded;
     }
 
-    private hasId(): boolean {
+    private hasId (): boolean {
         return !!this.id;
     }
 
-    private isArrayInstance(entity: any): boolean {
+    private isArrayInstance (entity: any): boolean {
         return entity && entity instanceof Array;
     }
 
-    private sortedComments(comments: CommentModel[]): CommentModel[] {
+    private sortedComments (comments: CommentModel[]): CommentModel[] {
         return comments.sort((comment1: CommentModel, comment2: CommentModel) => {
             const date1 = new Date(comment1.created);
             const date2 = new Date(comment2.created);
@@ -145,7 +145,7 @@ export class CommentsComponent implements OnChanges {
         });
     }
 
-    private resetComments(): void {
+    private resetComments (): void {
         this.comments = [];
     }
 }

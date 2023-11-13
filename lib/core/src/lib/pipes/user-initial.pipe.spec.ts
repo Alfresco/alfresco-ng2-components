@@ -21,31 +21,31 @@ import { InitialUsernamePipe } from './user-initial.pipe';
 
 class FakeSanitizer extends DomSanitizer {
 
-    constructor() {
+    constructor () {
         super();
     }
 
-    sanitize(html) {
+    sanitize (html) {
         return html;
     }
 
-    bypassSecurityTrustHtml(value: string): any {
+    bypassSecurityTrustHtml (value: string): any {
         return value;
     }
 
-    bypassSecurityTrustStyle(): any {
+    bypassSecurityTrustStyle (): any {
         return null;
     }
 
-    bypassSecurityTrustScript(): any {
+    bypassSecurityTrustScript (): any {
         return null;
     }
 
-    bypassSecurityTrustUrl(): any {
+    bypassSecurityTrustUrl (): any {
         return null;
     }
 
-    bypassSecurityTrustResourceUrl(): any {
+    bypassSecurityTrustResourceUrl (): any {
         return null;
     }
 }
@@ -57,7 +57,7 @@ describe('UserInitialPipe', () => {
 
     beforeEach(() => {
         pipe = new InitialUsernamePipe(new FakeSanitizer());
-        fakeUser = { username: '' } as User;
+        fakeUser = { "username": '' } as User;
     });
 
     it('should return a div with the user initials', () => {

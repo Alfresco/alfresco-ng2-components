@@ -24,17 +24,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MatIconModule,
         MatSnackBarModule,
         MatButtonModule,
         TranslateModule
     ],
-    declarations: [
+    "declarations": [
         SnackbarContentComponent
     ],
-    exports: [
+    "exports": [
         SnackbarContentComponent
     ]
 })

@@ -45,9 +45,9 @@ export abstract class DataTableSchema<T = unknown> {
     private columnsSchemaSubject$ = new ReplaySubject<boolean>();
     isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable();
 
-    constructor(private appConfigService: AppConfigService, protected presetKey: string, protected presetsModel: any) {}
+    constructor (private appConfigService: AppConfigService, protected presetKey: string, protected presetsModel: any) {}
 
-    public createDatatableSchema(): void {
+    public createDatatableSchema (): void {
         this.loadLayoutPresets();
         if (!this.columns || this.columns.length === 0) {
             this.createColumns();
@@ -57,14 +57,14 @@ export abstract class DataTableSchema<T = unknown> {
         }
     }
 
-    public createColumns(): void {
+    public createColumns (): void {
         const allColumns = this.mergeJsonAndHtmlSchema();
         const allColumnsWithWidth = this.setColumnsWidth(allColumns);
         const columns = this.setHiddenColumns(allColumnsWithWidth);
         this.columns = this.sortColumnsByKey(columns);
     }
 
-    public loadLayoutPresets(): void {
+    public loadLayoutPresets (): void {
         const externalSettings = this.appConfigService.get(this.presetKey, null);
         if (externalSettings) {
             this.layoutPresets = Object.assign({}, this.presetsModel, externalSettings);
@@ -73,7 +73,7 @@ export abstract class DataTableSchema<T = unknown> {
         }
     }
 
-    public mergeJsonAndHtmlSchema(): any {
+    public mergeJsonAndHtmlSchema (): any {
         const configSchemaColumns = this.getSchemaFromConfig(this.presetColumn);
         const htmlSchemaColumns = this.getSchemaFromHtml(this.columnList);
 
@@ -88,7 +88,7 @@ export abstract class DataTableSchema<T = unknown> {
         return customSchemaColumns;
     }
 
-    public getSchemaFromHtml(columnList: DataColumnListComponent): DataColumn[] {
+    public getSchemaFromHtml (columnList: DataColumnListComponent): DataColumn[] {
         let schema = [];
         if (columnList?.columns?.length > 0) {
             schema = columnList.columns.map((c) => c as DataColumn);
@@ -96,23 +96,23 @@ export abstract class DataTableSchema<T = unknown> {
         return schema;
     }
 
-    public getSchemaFromConfig(presetColumn: string): DataColumn[] {
+    public getSchemaFromConfig (presetColumn: string): DataColumn[] {
         return presetColumn && this.layoutPresets[presetColumn] ? this.layoutPresets[presetColumn].map((col) => new ObjectDataColumn(col)) : [];
     }
 
-    private getDefaultLayoutPreset(): DataColumn[] {
+    private getDefaultLayoutPreset (): DataColumn[] {
         return this.layoutPresets['default'].map((col) => new ObjectDataColumn(col));
     }
 
-    public setPresetKey(presetKey: string) {
+    public setPresetKey (presetKey: string) {
         this.presetKey = presetKey;
     }
 
-    public setPresetsModel(presetsModel: any) {
+    public setPresetsModel (presetsModel: any) {
         this.presetsModel = presetsModel;
     }
 
-    private sortColumnsByKey(columns: any[]): any[] {
+    private sortColumnsByKey (columns: any[]): any[] {
         const defaultColumns = [...columns];
         const columnsWithProperOrder = [];
 
@@ -128,23 +128,23 @@ export abstract class DataTableSchema<T = unknown> {
         return [...columnsWithProperOrder, ...defaultColumns];
     }
 
-    private setHiddenColumns(columns: DataColumn[]): DataColumn[] {
+    private setHiddenColumns (columns: DataColumn[]): DataColumn[] {
         if (this.columnsVisibility) {
             return columns.map((column) => {
                 const isColumnVisible = this.columnsVisibility[column.id];
 
-                return isColumnVisible === undefined ? column : { ...column, isHidden: !isColumnVisible };
+                return isColumnVisible === undefined ? column : { ...column, "isHidden": !isColumnVisible };
             });
         }
 
         return columns;
     }
 
-    private setColumnsWidth(columns: DataColumn[]): DataColumn[] {
+    private setColumnsWidth (columns: DataColumn[]): DataColumn[] {
         if (this.columnsWidths) {
             return columns.map((column) => {
                 const columnWidth = this.columnsWidths[column.id];
-                return columnWidth === undefined ? column : { ...column, width: columnWidth };
+                return columnWidth === undefined ? column : { ...column, "width": columnWidth };
             });
         }
         return columns;

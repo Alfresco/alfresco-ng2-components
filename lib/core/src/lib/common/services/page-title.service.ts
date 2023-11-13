@@ -21,14 +21,14 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { TranslationService } from '../../translation/translation.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class PageTitleService {
 
     private originalTitle: string = '';
     private translatedTitle: string = '';
 
-    constructor(
+    constructor (
         private titleService: Title,
         private appConfig: AppConfigService,
         private translationService: TranslationService) {
@@ -38,22 +38,21 @@ export class PageTitleService {
 
     /**
      * Sets the page title.
-     *
      * @param value The new title
      */
-    setTitle(value: string = '') {
+    setTitle (value: string = '') {
         this.originalTitle = value;
         this.translatedTitle = this.translationService.instant(value);
 
         this.updateTitle();
     }
 
-    private onLanguageChanged() {
+    private onLanguageChanged () {
         this.translatedTitle = this.translationService.instant(this.originalTitle);
         this.updateTitle();
     }
 
-    private updateTitle() {
+    private updateTitle () {
         const name = this.appConfig.get('application.name') || 'Alfresco ADF Application';
 
         const title = this.translatedTitle ? `${this.translatedTitle} - ${name}` : `${name}`;

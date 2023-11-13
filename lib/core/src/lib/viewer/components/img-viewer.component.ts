@@ -34,11 +34,11 @@ import { UrlService } from '../../common/services/url.service';
 import Cropper from 'cropperjs';
 
 @Component({
-    selector: 'adf-img-viewer',
-    templateUrl: './img-viewer.component.html',
-    styleUrls: ['./img-viewer.component.scss'],
-    host: { class: 'adf-image-viewer' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-img-viewer',
+    "templateUrl": './img-viewer.component.html',
+    "styleUrls": ['./img-viewer.component.scss'],
+    "host": { "class": 'adf-image-viewer' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input()
@@ -67,50 +67,50 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Output()
     isSaving = new EventEmitter<boolean>();
 
-    @ViewChild('image', { static: false })
+    @ViewChild('image', { "static": false })
     public imageElement: ElementRef;
 
     public scale: number = 1.0;
     public cropper: Cropper;
     public isEditing: boolean = false;
 
-    get currentScaleText(): string {
+    get currentScaleText (): string {
         return Math.round(this.scale * 100) + '%';
     }
 
-    constructor(private appConfigService: AppConfigService, private urlService: UrlService) {
+    constructor (private appConfigService: AppConfigService, private urlService: UrlService) {
         this.initializeScaling();
     }
 
-    initializeScaling() {
+    initializeScaling () {
         const scaling = this.appConfigService.get<number>('adf-viewer-render.image-viewer-scaling', undefined) / 100;
         if (scaling) {
             this.scale = scaling;
         }
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit () {
         this.cropper = new Cropper(this.imageElement.nativeElement, {
-            autoCrop: false,
-            dragMode: 'move',
-            background: false,
-            scalable: true,
-            zoomOnWheel: false,
-            toggleDragModeOnDblclick: false,
-            viewMode: 1,
-            checkCrossOrigin: false,
-            ready: () => {
+            "autoCrop": false,
+            "dragMode": 'move',
+            "background": false,
+            "scalable": true,
+            "zoomOnWheel": false,
+            "toggleDragModeOnDblclick": false,
+            "viewMode": 1,
+            "checkCrossOrigin": false,
+            "ready": () => {
                 this.updateCanvasContainer();
             }
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.cropper.destroy();
     }
 
     @HostListener('document:keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
+    onKeyDown (event: KeyboardEvent) {
         switch (event.key) {
             case 'ArrowLeft':
                 event.preventDefault();
@@ -142,13 +142,13 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     @HostListener('document:fullscreenchange')
-    fullScreenChangeHandler() {
+    fullScreenChangeHandler () {
         if (document.fullscreenElement) {
             this.reset();
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
         if (blobFile?.currentValue) {
             this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
@@ -166,30 +166,30 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
-    zoomIn() {
+    zoomIn () {
         this.cropper.zoom(0.2);
         this.scale = +(this.scale + 0.2).toFixed(1);
     }
 
-    zoomOut() {
+    zoomOut () {
         if (this.scale > 0.2) {
             this.cropper.zoom(-0.2);
             this.scale = +(this.scale - 0.2).toFixed(1);
         }
     }
 
-    rotateImage() {
+    rotateImage () {
         this.isEditing = true;
         this.cropper.rotate(-90);
     }
 
-    cropImage() {
+    cropImage () {
         this.isEditing = true;
         this.cropper.setDragMode('crop');
         this.cropper.crop();
     }
 
-    save() {
+    save () {
         this.isSaving.emit(true);
         this.isEditing = false;
         this.cropper.setDragMode('move');
@@ -201,7 +201,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         });
     }
 
-    reset() {
+    reset () {
         this.isEditing = false;
         this.cropper.clear();
         this.cropper.reset();
@@ -210,7 +210,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.updateCanvasContainer();
     }
 
-    updateCanvasContainer() {
+    updateCanvasContainer () {
         if (this.imageElement.nativeElement.width < this.cropper.getContainerData().width) {
             const width = this.imageElement.nativeElement.width;
             const height = this.imageElement.nativeElement.height;
@@ -226,7 +226,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
-    onImageError() {
+    onImageError () {
         this.error.emit();
     }
 }

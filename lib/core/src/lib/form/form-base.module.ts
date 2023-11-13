@@ -39,7 +39,7 @@ import { ViewerModule } from '../viewer/viewer.module';
 import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         A11yModule,
         DataTableModule,
@@ -54,7 +54,7 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         EditJsonDialogModule,
         ViewerModule
     ],
-    declarations: [
+    "declarations": [
         FormFieldComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,
@@ -63,7 +63,7 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         WidgetComponent,
         InplaceFormInputComponent
     ],
-    exports: [
+    "exports": [
         FormFieldComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,

@@ -26,9 +26,9 @@ import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { SearchComponentInterface } from '../common/interface/search-component.interface';
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SearchTriggerDirective),
-    multi: true
+    "provide": NG_VALUE_ACCESSOR,
+    "useExisting": forwardRef(() => SearchTriggerDirective),
+    "multi": true
 };
 
 /**
@@ -36,9 +36,9 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
  */
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
-    host: {
-        role: 'combobox',
+    "selector": `input[searchAutocomplete], textarea[searchAutocomplete]`,
+    "host": {
+        "role": 'combobox',
         '[attr.autocomplete]': 'autocomplete',
         'aria-autocomplete': 'list',
         '[attr.aria-expanded]': 'panelOpen.toString()',
@@ -46,7 +46,7 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
         '(input)': 'handleInput($event)',
         '(keydown)': 'handleKeydown($event)'
     },
-    providers: [SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR]
+    "providers": [SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR]
 })
 export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private onDestroy$: Subject<boolean> = new Subject<boolean>();
@@ -65,14 +65,14 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     onTouched = () => {};
 
-    constructor(
+    constructor (
         private element: ElementRef,
         private ngZone: NgZone,
         private changeDetectorRef: ChangeDetectorRef,
         @Optional() @Inject(DOCUMENT) private document: any
     ) {}
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
 
@@ -84,16 +84,16 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         }
     }
 
-    get panelOpen(): boolean {
+    get panelOpen (): boolean {
         return this._panelOpen && this.searchPanel.showPanel;
     }
 
-    openPanel(): void {
+    openPanel (): void {
         this.searchPanel.isOpen = this._panelOpen = true;
         this.closingActionsSubscription = this.subscribeToClosingActions();
     }
 
-    closePanel(): void {
+    closePanel (): void {
         if (this._panelOpen) {
             this.closingActionsSubscription.unsubscribe();
             this._panelOpen = false;
@@ -103,11 +103,11 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         }
     }
 
-    get panelClosingActions(): Observable<any> {
+    get panelClosingActions (): Observable<any> {
         return merge(this.escapeEventStream, this.outsideClickStream);
     }
 
-    private get outsideClickStream(): Observable<any> {
+    private get outsideClickStream (): Observable<any> {
         if (!this.document) {
             return of(null);
         }
@@ -121,19 +121,19 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         );
     }
 
-    writeValue(value: any): void {
+    writeValue (value: any): void {
         Promise.resolve(null).then(() => this.setTriggerValue(value));
     }
 
-    registerOnChange(fn: (value: any) => any): void {
+    registerOnChange (fn: (value: any) => any): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => any) {
+    registerOnTouched (fn: () => any) {
         this.onTouched = fn;
     }
 
-    handleKeydown(event: KeyboardEvent): void {
+    handleKeydown (event: KeyboardEvent): void {
         const keyCode = event.keyCode;
 
         if (keyCode === ESCAPE && this.panelOpen) {
@@ -145,7 +145,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         }
     }
 
-    handleInput(event: KeyboardEvent): void {
+    handleInput (event: KeyboardEvent): void {
         if (document.activeElement === event.target) {
             const inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);
@@ -159,7 +159,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         }
     }
 
-    private isPanelOptionClicked(event: MouseEvent) {
+    private isPanelOptionClicked (event: MouseEvent) {
         let isPanelOption: boolean = false;
         if (event && this.searchPanel) {
             const clickTarget = event.target as HTMLElement;
@@ -168,11 +168,11 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         return isPanelOption;
     }
 
-    private isNoResultOption(): boolean {
+    private isNoResultOption (): boolean {
         return this.searchPanel?.results?.list ? this.searchPanel.results.list.entries.length === 0 : true;
     }
 
-    private subscribeToClosingActions(): Subscription {
+    private subscribeToClosingActions (): Subscription {
         const firstStable = this.ngZone.onStable.asObservable();
         const optionChanges = this.searchPanel.keyPressedStream.asObservable();
 
@@ -187,13 +187,13 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
             .subscribe((event) => this.setValueAndClose(event));
     }
 
-    private setTriggerValue(value: any): void {
+    private setTriggerValue (value: any): void {
         const toDisplay = this.searchPanel?.displayWith ? this.searchPanel.displayWith(value) : value;
         const inputValue = toDisplay != null ? toDisplay : '';
         this.element.nativeElement.value = inputValue;
     }
 
-    private setValueAndClose(event: any | null): void {
+    private setValueAndClose (event: any | null): void {
         if (this.isPanelOptionClicked(event) && !event.defaultPrevented) {
             this.setTriggerValue(event.target.textContent.trim());
             this.onChange(event.target.textContent.trim());

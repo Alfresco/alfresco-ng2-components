@@ -28,8 +28,8 @@ describe('SelectFilterInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
-            providers: [MatSelect]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule],
+            "providers": [MatSelect]
         });
 
         fixture = TestBed.createComponent(SelectFilterInputComponent);
@@ -78,7 +78,7 @@ describe('SelectFilterInputComponent', () => {
         component.onModelChange('some-search-term');
         expect(component.term).toBe('some-search-term');
 
-        component.selectFilterInput.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' } as any));
+        component.selectFilterInput.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { "code": 'Escape' } as any));
         fixture.detectChanges();
         expect(component.term).toBe('');
     });

@@ -26,11 +26,11 @@ import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.serv
 import { OidcAuthenticationService } from '../services/oidc-authentication.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AuthGuardBpm extends AuthGuardBase {
 
-    constructor(authenticationService: AuthenticationService,
+    constructor (authenticationService: AuthenticationService,
                 basicAlfrescoAuthService: BasicAlfrescoAuthService,
                 oidcAuthenticationService: OidcAuthenticationService,
                 router: Router,
@@ -40,7 +40,7 @@ export class AuthGuardBpm extends AuthGuardBase {
         super(authenticationService,basicAlfrescoAuthService, oidcAuthenticationService,router, appConfigService, dialog, storageService);
     }
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
+    async checkLogin (_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isBpmLoggedIn() || this.withCredentials) {
             return true;
         }

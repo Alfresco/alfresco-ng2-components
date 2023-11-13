@@ -26,8 +26,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '../pipes/pipe.module';
 
 @NgModule({
-    declarations: [IdentityUserInfoComponent],
-    imports: [
+    "declarations": [IdentityUserInfoComponent],
+    "imports": [
         CommonModule,
         MatButtonModule,
         MatMenuModule,
@@ -36,6 +36,6 @@ import { PipeModule } from '../pipes/pipe.module';
         TranslateModule,
         PipeModule
     ],
-    exports: [IdentityUserInfoComponent]
+    "exports": [IdentityUserInfoComponent]
 })
 export class IdentityUserInfoModule {}

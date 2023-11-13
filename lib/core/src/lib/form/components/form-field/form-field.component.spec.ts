@@ -34,7 +34,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 FormBaseModule
@@ -52,8 +52,8 @@ describe('FormFieldComponent', () => {
 
     it('should create default component instance', (done) => {
         const field = new FormFieldModel(form, {
-            type: FormFieldTypes.TEXT,
-            id: 'FAKE-TXT-WIDGET'
+            "type": FormFieldTypes.TEXT,
+            "id": 'FAKE-TXT-WIDGET'
         });
 
         component.field = field;
@@ -70,8 +70,8 @@ describe('FormFieldComponent', () => {
         formRenderingService.setComponentTypeResolver(FormFieldTypes.AMOUNT, () => CheckboxWidgetComponent, true);
 
         const field = new FormFieldModel(form, {
-            type: FormFieldTypes.AMOUNT,
-            id: 'FAKE-TXT-WIDGET'
+            "type": FormFieldTypes.AMOUNT,
+            "id": 'FAKE-TXT-WIDGET'
         });
 
         component.field = field;
@@ -86,8 +86,8 @@ describe('FormFieldComponent', () => {
 
     it('should require component type to be resolved', (done) => {
         const field = new FormFieldModel(form, {
-            type: FormFieldTypes.TEXT,
-            id: 'FAKE-TXT-WIDGET'
+            "type": FormFieldTypes.TEXT,
+            "id": 'FAKE-TXT-WIDGET'
         });
 
         spyOn(formRenderingService, 'resolveComponentType').and.returnValue(null);
@@ -103,8 +103,8 @@ describe('FormFieldComponent', () => {
 
     it('should hide the field when it is not visible', (done) => {
         const field = new FormFieldModel(form, {
-            type: FormFieldTypes.TEXT,
-            id: 'FAKE-TXT-WIDGET'
+            "type": FormFieldTypes.TEXT,
+            "id": 'FAKE-TXT-WIDGET'
         });
 
         component.field = field;
@@ -120,8 +120,8 @@ describe('FormFieldComponent', () => {
 
     it('should show the field when it is visible', (done) => {
         const field = new FormFieldModel(form, {
-            type: FormFieldTypes.TEXT,
-            id: 'FAKE-TXT-WIDGET'
+            "type": FormFieldTypes.TEXT,
+            "id": 'FAKE-TXT-WIDGET'
         });
 
         component.field = field;
@@ -136,8 +136,8 @@ describe('FormFieldComponent', () => {
 
     it('should hide a visible element', () => {
         const field = new FormFieldModel(form, {
-            type: FormFieldTypes.TEXT,
-            id: 'FAKE-TXT-WIDGET'
+            "type": FormFieldTypes.TEXT,
+            "id": 'FAKE-TXT-WIDGET'
         });
 
         component.field = field;
@@ -152,47 +152,47 @@ describe('FormFieldComponent', () => {
 
     it('[C213878] - Should fields be correctly rendered when filled with process variables', async () => {
         const field = new FormFieldModel(form, {
-            fieldType: 'HyperlinkRepresentation',
-            id: 'label2',
-            name: 'Label2',
-            type: 'hyperlink',
-            value: null,
-            required: false,
-            readOnly: false,
-            overrideId: false,
-            colspan: 1,
-            placeholder: null,
-            minLength: 0,
-            maxLength: 0,
-            minValue: null,
-            maxValue: null,
-            regexPattern: null,
-            optionType: null,
-            hasEmptyValue: null,
-            options: null,
-            restUrl: null,
-            restResponsePath: null,
-            restIdProperty: null,
-            restLabelProperty: null,
-            tab: null,
-            className: null,
-            params: {
-                existingColspan: 1,
-                maxColspan: 2
+            "fieldType": 'HyperlinkRepresentation',
+            "id": 'label2',
+            "name": 'Label2',
+            "type": 'hyperlink',
+            "value": null,
+            "required": false,
+            "readOnly": false,
+            "overrideId": false,
+            "colspan": 1,
+            "placeholder": null,
+            "minLength": 0,
+            "maxLength": 0,
+            "minValue": null,
+            "maxValue": null,
+            "regexPattern": null,
+            "optionType": null,
+            "hasEmptyValue": null,
+            "options": null,
+            "restUrl": null,
+            "restResponsePath": null,
+            "restIdProperty": null,
+            "restLabelProperty": null,
+            "tab": null,
+            "className": null,
+            "params": {
+                "existingColspan": 1,
+                "maxColspan": 2
             },
-            dateDisplayFormat: null,
-            layout: {
-                row: -1,
-                column: -1,
-                colspan: 1
+            "dateDisplayFormat": null,
+            "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
             },
-            sizeX: 1,
-            sizeY: 1,
-            row: -1,
-            col: -1,
-            visibilityCondition: null,
-            hyperlinkUrl: 'testtest',
-            displayText: null
+            "sizeX": 1,
+            "sizeY": 1,
+            "row": -1,
+            "col": -1,
+            "visibilityCondition": null,
+            "hyperlinkUrl": 'testtest',
+            "displayText": null
         });
 
         component.field = field;

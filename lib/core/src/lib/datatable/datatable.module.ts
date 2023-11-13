@@ -59,7 +59,7 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
 import { LocalizedDatePipe } from '../pipes';
 
 @NgModule({
-    imports: [
+    "imports": [
         RouterModule,
         MaterialModule,
         CommonModule,
@@ -81,7 +81,7 @@ import { LocalizedDatePipe } from '../pipes';
         DateCellComponent,
         LocalizedDatePipe
     ],
-    declarations: [
+    "declarations": [
         DataTableComponent,
         EmptyListComponent,
         EmptyListHeaderDirective,
@@ -102,7 +102,7 @@ import { LocalizedDatePipe } from '../pipes';
         MainMenuDataTableTemplateDirective,
         DropZoneDirective
     ],
-    exports: [
+    "exports": [
         DataTableComponent,
         EmptyListComponent,
         EmptyListHeaderDirective,

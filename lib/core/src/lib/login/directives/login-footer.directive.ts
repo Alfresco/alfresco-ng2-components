@@ -27,18 +27,18 @@ import { LoginComponent } from '../components/login.component';
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: 'adf-login-footer, login-footer'
+    "selector": 'adf-login-footer, login-footer'
 })
 export class LoginFooterDirective implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(
+    constructor (
         private alfrescoLoginComponent: LoginComponent) {
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.alfrescoLoginComponent.footerTemplate = this.template;
     }
 }

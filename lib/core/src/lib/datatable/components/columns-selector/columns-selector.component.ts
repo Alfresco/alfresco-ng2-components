@@ -22,10 +22,10 @@ import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { DataColumn } from '../../data/data-column.model';
 @Component({
-    selector: 'adf-datatable-column-selector',
-    templateUrl: './columns-selector.component.html',
-    styleUrls: ['./columns-selector.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-datatable-column-selector',
+    "templateUrl": './columns-selector.component.html',
+    "styleUrls": ['./columns-selector.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     @Input()
@@ -48,7 +48,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     searchInputControl = new UntypedFormControl('');
     searchQuery = '';
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.mainMenuTrigger.menuOpened.pipe(
             takeUntil(this.onDestroy$)
         ).subscribe(() => {
@@ -70,29 +70,29 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    closeMenu(): void {
+    closeMenu (): void {
         this.mainMenuTrigger.closeMenu();
     }
 
-    changeColumnVisibility(column: DataColumn): void {
+    changeColumnVisibility (column: DataColumn): void {
         column.isHidden = !column.isHidden;
     }
 
-    apply(): void {
+    apply (): void {
         this.submitColumnsVisibility.emit(this.columnItems);
         this.closeMenu();
     }
 
-    isCheckboxDisabled(column: DataColumn): boolean {
+    isCheckboxDisabled (column: DataColumn): boolean {
         return this.maxColumnsVisible && column.isHidden && this.maxColumnsVisible === this.columnItems.filter(dataColumn => !dataColumn.isHidden).length;
     }
 
-    private sortColumns(columns: DataColumn[]): DataColumn[] {
+    private sortColumns (columns: DataColumn[]): DataColumn[] {
         const shownColumns = columns.filter(column => !column.isHidden);
         const hiddenColumns = columns.filter(column => column.isHidden);
 

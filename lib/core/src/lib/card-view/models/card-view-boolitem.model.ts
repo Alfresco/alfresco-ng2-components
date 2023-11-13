@@ -25,7 +25,7 @@ export class CardViewBoolItemModel extends CardViewBaseItemModel implements Card
     value: boolean = false;
     default: boolean;
 
-    constructor(cardViewBoolItemProperties: CardViewBoolItemProperties) {
+    constructor (cardViewBoolItemProperties: CardViewBoolItemProperties) {
         super(cardViewBoolItemProperties);
 
         if (cardViewBoolItemProperties.value !== undefined) {
@@ -33,7 +33,7 @@ export class CardViewBoolItemModel extends CardViewBaseItemModel implements Card
         }
     }
 
-    get displayValue() {
+    get displayValue () {
         if (this.isEmpty()) {
             return this.default;
         } else {

@@ -60,28 +60,28 @@ export enum Status {
 /* spellchecker: enable */
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AppConfigService {
 
     config: any = {
-        application: {
-            name: 'Alfresco ADF Application'
+        "application": {
+            "name": 'Alfresco ADF Application'
         },
-        ecmHost: 'http://{hostname}{:port}/ecm',
-        bpmHost: 'http://{hostname}{:port}/bpm',
-        logLevel: 'silent'
+        "ecmHost": 'http://{hostname}{:port}/ecm',
+        "bpmHost": 'http://{hostname}{:port}/bpm',
+        "logLevel": 'silent'
     };
 
     status: Status = Status.INIT;
     protected onLoadSubject: ReplaySubject<any>;
     onLoad: Observable<any>;
 
-    get isLoaded() {
+    get isLoaded () {
         return this.status === Status.LOADED;
     }
 
-    constructor(protected http: HttpClient, protected extensionService: ExtensionService) {
+    constructor (protected http: HttpClient, protected extensionService: ExtensionService) {
         this.onLoadSubject = new ReplaySubject();
         this.onLoad = this.onLoadSubject.asObservable();
 
@@ -92,11 +92,10 @@ export class AppConfigService {
 
     /**
      * Requests notification of a property value when it is loaded.
-     *
      * @param property The desired property value
      * @returns Property value, when loaded
      */
-    select(property: string): Observable<any> {
+    select (property: string): Observable<any> {
         return this.onLoadSubject
             .pipe(
                 map((config) => ObjectUtils.getValue(config, property)),
@@ -106,12 +105,11 @@ export class AppConfigService {
 
     /**
      * Gets the value of a named property.
-     *
      * @param key Name of the property
      * @param defaultValue Value to return if the key is not found
      * @returns Value of the property
      */
-    get<T>(key: string, defaultValue?: T): T {
+    get<T> (key: string, defaultValue?: T): T {
         let result: any = ObjectUtils.getValue(this.config, key);
         if (typeof result === 'string') {
             const keywords = new Map<string, string>();
@@ -137,37 +135,34 @@ export class AppConfigService {
 
     /**
      * Gets the location.protocol value.
-     *
      * @returns The location.protocol string
      */
-    getLocationProtocol(): string {
+    getLocationProtocol (): string {
         return location.protocol;
     }
 
     /**
      * Gets the location.hostname property.
-     *
      * @returns Value of the property
      */
-    getLocationHostname(): string {
+    getLocationHostname (): string {
         return location.hostname;
     }
 
     /**
      * Gets the location.port property.
-     *
      * @param prefix Text added before port value
      * @returns Port with prefix
      */
-    getLocationPort(prefix: string = ''): string {
+    getLocationPort (prefix: string = ''): string {
         return location.port ? prefix + location.port : '';
     }
 
-    protected onLoaded() {
+    protected onLoaded () {
         this.onLoadSubject.next(this.config);
     }
 
-    protected onDataLoaded() {
+    protected onDataLoaded () {
         this.onLoadSubject.next(this.config);
 
         this.extensionService.setup$
@@ -175,7 +170,7 @@ export class AppConfigService {
             .subscribe((config) => this.onExtensionsLoaded(config));
     }
 
-    protected onExtensionsLoaded(config: ExtensionConfig) {
+    protected onExtensionsLoaded (config: ExtensionConfig) {
         if (config) {
             const customConfig = config.appConfig;
 
@@ -187,11 +182,10 @@ export class AppConfigService {
 
     /**
      * Loads the config file.
-     *
      * @param callback an optional callback to execute when configuration is loaded
      * @returns Notification when loading is complete
      */
-    load(callback?: (...args: any[]) => any): Promise<any> {
+    load (callback?: (...args: any[]) => any): Promise<any> {
         return new Promise((resolve) => {
             const configUrl = `app.config.json?v=${Date.now()}`;
 
@@ -223,19 +217,18 @@ export class AppConfigService {
 
     /**
      * Call the discovery API to fetch configuration
-     *
      * @param hostIdp host address
      * @returns Discovery configuration
      */
-     loadWellKnown(hostIdp: string): Promise<OpenidConfiguration> {
+     loadWellKnown (hostIdp: string): Promise<OpenidConfiguration> {
         return new Promise((resolve, reject) => {
             this.http
                 .get<OpenidConfiguration>(`${hostIdp}/.well-known/openid-configuration`)
                 .subscribe({
-                    next: (res: OpenidConfiguration) => {
+                    "next": (res: OpenidConfiguration) => {
                         resolve(res);
                     },
-                    error: (err: any) => {
+                    "error": (err: any) => {
                         // eslint-disable-next-line no-console
                         console.error('hostIdp not correctly configured or unreachable');
                         reject(err);
@@ -246,10 +239,9 @@ export class AppConfigService {
 
     /**
      * OAuth2 configuration
-     *
      * @returns auth config model
      */
-    get oauth2(): OauthConfigModel {
+    get oauth2 (): OauthConfigModel {
         const config = this.get(AppConfigValues.OAUTHCONFIG, {});
         const implicitFlow = config['implicitFlow'] === true || config['implicitFlow'] === 'true';
         const silentLogin = config['silentLogin'] === true || config['silentLogin'] === 'true';
@@ -263,7 +255,7 @@ export class AppConfigService {
         };
     }
 
-    private formatString(str: string, keywords: Map<string, string>): string {
+    private formatString (str: string, keywords: Map<string, string>): string {
         let result = str;
 
         keywords.forEach((value, key) => {

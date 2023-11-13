@@ -20,31 +20,31 @@ import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
-  selector: 'adf-card-view-arrayitem',
-  templateUrl: './card-view-arrayitem.component.html',
-  styleUrls: ['./card-view-arrayitem.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  "selector": 'adf-card-view-arrayitem',
+  "templateUrl": './card-view-arrayitem.component.html',
+  "styleUrls": ['./card-view-arrayitem.component.scss'],
+  "encapsulation": ViewEncapsulation.None
 })
 export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {
-    clicked(): void {
+    clicked (): void {
         if (this.isClickable()) {
             this.cardViewUpdateService.clicked(this.property);
         }
     }
 
-    showClickableIcon(): boolean {
+    showClickableIcon (): boolean {
         return this.hasIcon() && this.isClickable();
     }
 
-    hasIcon(): boolean {
+    hasIcon (): boolean {
         return !!this.property.icon;
     }
 
-    displayCount(): number {
+    displayCount (): number {
         return this.property.noOfItemsToDisplay ? this.property.noOfItemsToDisplay : 0;
     }
 
-    isClickable(): boolean {
+    isClickable (): boolean {
         return !!this.property.clickable;
     }
 }

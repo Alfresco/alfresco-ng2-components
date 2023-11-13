@@ -41,8 +41,8 @@ describe('StringUtils', () => {
         it('should replace all instances provided in the delimiters obj', () => {
             const test = 'isClusterEnabled';
             const delimiters = {
-                is: 'are',
-                Enabled: 'Disabled'
+                "is": 'are',
+                "Enabled": 'Disabled'
             };
 
             expect(StringUtils.replaceAll(test, delimiters)).toBe('areClusterDisabled');

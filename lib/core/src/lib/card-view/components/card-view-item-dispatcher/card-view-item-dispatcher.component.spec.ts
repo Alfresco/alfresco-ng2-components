@@ -26,8 +26,8 @@ import { CardViewContentProxyDirective } from '../../directives/card-view-conten
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
 
 @Component({
-    selector: 'whatever-you-want-to-have',
-    template: '<div data-automation-id="found-me">Hey I am shiny!</div>'
+    "selector": 'whatever-you-want-to-have',
+    "template": '<div data-automation-id="found-me">Hey I am shiny!</div>'
 })
 export class CardViewShinyCustomElementItemComponent {
     @Input() property: CardViewItem;
@@ -45,12 +45,12 @@ describe('CardViewItemDispatcherComponent', () => {
         cardItemTypeService.setComponentTypeResolver('shiny-custom-element', () => CardViewShinyCustomElementItemComponent);
 
         TestBed.configureTestingModule({
-            declarations: [
+            "declarations": [
                 CardViewItemDispatcherComponent,
                 CardViewShinyCustomElementItemComponent,
                 CardViewContentProxyDirective
             ],
-            providers: [ { provide: CardItemTypeService, useValue: cardItemTypeService } ]
+            "providers": [ { "provide": CardItemTypeService, "useValue": cardItemTypeService } ]
         });
 
         TestBed.compileComponents();
@@ -60,13 +60,13 @@ describe('CardViewItemDispatcherComponent', () => {
         fixture = TestBed.createComponent(CardViewItemDispatcherComponent);
         component = fixture.componentInstance;
         component.property = {
-            type: 'shiny-custom-element',
-            label: 'Shiny custom element',
-            value: null,
-            key: 'customkey',
-            default: '',
-            editable: false,
-            get displayValue(): string {
+            "type": 'shiny-custom-element',
+            "label": 'Shiny custom element',
+            "value": null,
+            "key": 'customkey',
+            "default": '',
+            "editable": false,
+            get "displayValue" (): string {
                 return 'custom value displayed';
             }
         };
@@ -118,13 +118,13 @@ describe('CardViewItemDispatcherComponent', () => {
             const expectedDisplayLabel = true;
 
             component.ngOnChanges({
-                editable: new SimpleChange(true, expectedEditable, false),
-                displayEmpty: new SimpleChange(false, expectedDisplayEmpty, false),
-                property: new SimpleChange(null, expectedProperty, false),
-                customInput: new SimpleChange(0, expectedCustomInput, false),
-                displayNoneOption: new SimpleChange(true, expectedDisplayNoneOption, false),
-                displayClearAction: new SimpleChange(true, expectedDisplayClearAction, false),
-                displayLabelForChips: new SimpleChange(false, expectedDisplayLabel, false)
+                "editable": new SimpleChange(true, expectedEditable, false),
+                "displayEmpty": new SimpleChange(false, expectedDisplayEmpty, false),
+                "property": new SimpleChange(null, expectedProperty, false),
+                "customInput": new SimpleChange(0, expectedCustomInput, false),
+                "displayNoneOption": new SimpleChange(true, expectedDisplayNoneOption, false),
+                "displayClearAction": new SimpleChange(true, expectedDisplayClearAction, false),
+                "displayLabelForChips": new SimpleChange(false, expectedDisplayLabel, false)
             });
 
             const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;

@@ -24,33 +24,33 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { LogService } from './log.service';
 
 @Component({
-    template: '',
-    providers: [LogService]
+    "template": '',
+    "providers": [LogService]
 })
 class ProvidesLogComponent {
-    constructor(public logService: LogService) {}
+    constructor (public logService: LogService) {}
 
-    error() {
+    error () {
         this.logService.error('Test message');
     }
 
-    info() {
+    info () {
         this.logService.info('Test message');
     }
 
-    warn() {
+    warn () {
         this.logService.warn('Test message');
     }
 
-    log() {
+    log () {
         this.logService.log('Test message');
     }
 
-    debug() {
+    debug () {
         this.logService.debug('Test message');
     }
 
-    trace() {
+    trace () {
         this.logService.trace('Test message');
     }
 }
@@ -61,9 +61,9 @@ describe('LogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule],
-            declarations: [ProvidesLogComponent],
-            providers: [LogService, AppConfigService]
+            "imports": [HttpClientModule],
+            "declarations": [ProvidesLogComponent],
+            "providers": [LogService, AppConfigService]
         });
         appConfigService = TestBed.inject(AppConfigService);
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
@@ -168,7 +168,7 @@ describe('LogService', () => {
 
         providesLogComponent.componentInstance.logService.onMessage.subscribe(
             (message) => {
-                expect(message).toEqual({ text: 'Test message', type: 'LOG' });
+                expect(message).toEqual({ "text": 'Test message', "type": 'LOG' });
             }
         );
 

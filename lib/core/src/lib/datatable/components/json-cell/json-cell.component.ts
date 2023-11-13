@@ -21,9 +21,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
 
 @Component({
-    selector: 'adf-json-cell',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+    "selector": 'adf-json-cell',
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "template": `
         <ng-container *ngIf="value$ | async as value; else editEmpty">
             <button mat-button color="primary" (click)="view()">json</button>
         </ng-container>
@@ -32,38 +32,38 @@ import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialog
             <button *ngIf="editable" mat-button color="primary" (click)="view()">json</button>
         </ng-template>
     `,
-    styleUrls: ['./json-cell.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' }
+    "styleUrls": ['./json-cell.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-datatable-content-cell' }
 })
 export class JsonCellComponent extends DataTableCellComponent implements OnInit {
     /** Editable JSON. */
     @Input()
     editable: boolean = false;
 
-    constructor(private dialog: MatDialog) {
+    constructor (private dialog: MatDialog) {
         super();
     }
 
-    ngOnInit() {
+    ngOnInit () {
         super.ngOnInit();
     }
 
-    view() {
+    view () {
         const rawValue: string | any = this.data.getValue(this.row, this.column, this.resolverFn);
         const value = typeof rawValue === 'object' ? JSON.stringify(rawValue || {}, null, 2) : rawValue;
 
         const settings: EditJsonDialogSettings = {
-            title: this.column.title,
-            editable: this.editable,
+            "title": this.column.title,
+            "editable": this.editable,
             value
         };
 
         this.dialog
             .open(EditJsonDialogComponent, {
-                data: settings,
-                minWidth: '50%',
-                minHeight: '50%'
+                "data": settings,
+                "minWidth": '50%',
+                "minHeight": '50%'
             })
             .afterClosed()
             .subscribe((/*result: string*/) => {

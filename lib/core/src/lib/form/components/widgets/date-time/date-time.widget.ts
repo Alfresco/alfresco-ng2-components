@@ -28,16 +28,16 @@ import { DateFnsUtils } from '../../../../common';
 import { isValid } from 'date-fns';
 
 @Component({
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
-        { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
+    "providers": [
+        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
+        { "provide": MAT_DATETIME_FORMATS, "useValue": ADF_DATETIME_FORMATS },
+        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter },
+        { "provide": DatetimeAdapter, "useClass": AdfDateTimeFnsAdapter }
     ],
-    selector: 'date-time-widget',
-    templateUrl: './date-time.widget.html',
-    styleUrls: ['./date-time.widget.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'date-time-widget',
+    "templateUrl": './date-time.widget.html',
+    "styleUrls": ['./date-time.widget.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
     minDate: Date;
@@ -46,13 +46,13 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
     @Input()
     value: any = null;
 
-    constructor(public formService: FormService,
+    constructor (public formService: FormService,
                 private dateAdapter: DateAdapter<Date>,
                 private dateTimeAdapter: DatetimeAdapter<Date>) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field.dateDisplayFormat) {
             const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;
             dateAdapter.displayFormat = this.field.dateDisplayFormat;
@@ -76,7 +76,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    onValueChanged(event: Event) {
+    onValueChanged (event: Event) {
         const input = event.target as HTMLInputElement;
         const newValue = this.dateTimeAdapter.parse(input.value, this.field.dateDisplayFormat);
 
@@ -89,7 +89,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         this.onFieldChanged(this.field);
     }
 
-    onDateChanged(event: MatDatetimepickerInputEvent<Date>) {
+    onDateChanged (event: MatDatetimepickerInputEvent<Date>) {
         const newValue = event.value;
         const input = event.targetElement as HTMLInputElement;
 

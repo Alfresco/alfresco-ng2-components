@@ -20,7 +20,7 @@ import { CardViewTextItemModel } from './card-view-textitem.model';
 import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
 class TestPipe implements PipeTransform {
-    transform(value: string, pipeParam: string): string {
+    transform (value: string, pipeParam: string): string {
         const paramPostFix = pipeParam ? `-${pipeParam}` : '';
         return `testpiped-${value}${paramPostFix}`;
     }
@@ -32,9 +32,9 @@ describe('CardViewTextItemModel', () => {
 
     beforeEach(() => {
         properties = {
-            label: 'Tribe',
-            value: 'Banuk',
-            key: 'tribe'
+            "label": 'Tribe',
+            "value": 'Banuk',
+            "key": 'tribe'
         };
     });
 
@@ -57,7 +57,7 @@ describe('CardViewTextItemModel', () => {
 
         it('should apply a pipe on the value if it is present', () => {
             properties.pipes = [
-                { pipe: new TestPipe() }
+                { "pipe": new TestPipe() }
             ];
             const itemModel = new CardViewTextItemModel(properties);
 
@@ -66,7 +66,7 @@ describe('CardViewTextItemModel', () => {
 
         it('should apply a pipe on the value with parameters if those are present', () => {
             properties.pipes = [
-                { pipe: new TestPipe(), params: ['withParams'] }
+                { "pipe": new TestPipe(), "params": ['withParams'] }
             ];
             const itemModel = new CardViewTextItemModel(properties);
 
@@ -76,9 +76,9 @@ describe('CardViewTextItemModel', () => {
         it('should apply more pipes on the value with parameters if those are present', () => {
             const pipe: PipeTransform = new TestPipe();
             properties.pipes = [
-                { pipe, params: ['1'] },
-                { pipe, params: ['2'] },
-                { pipe, params: ['3'] }
+                { pipe, "params": ['1'] },
+                { pipe, "params": ['2'] },
+                { pipe, "params": ['3'] }
             ];
             const itemModel = new CardViewTextItemModel(properties);
 
@@ -88,14 +88,14 @@ describe('CardViewTextItemModel', () => {
 
     it('should validate based on defined constraints', () => {
         const constrainedProperties = {
-            label: 'Tribe',
-            value: 'test',
-            key: 'tribe',
-            dataType: 'd:text',
-            constraints: [{
-                id: 'constraint-id',
-                type: 'REGEX',
-                parameters: { expression: '^(?=.*test).*' }
+            "label": 'Tribe',
+            "value": 'test',
+            "key": 'tribe',
+            "dataType": 'd:text',
+            "constraints": [{
+                "id": 'constraint-id',
+                "type": 'REGEX',
+                "parameters": { "expression": '^(?=.*test).*' }
             }]
         };
 

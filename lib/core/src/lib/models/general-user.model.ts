@@ -29,7 +29,7 @@ export class User {
     pictureId?: number;
     avatarId: string;
 
-    constructor(user?: Partial<User>) {
+    constructor (user?: Partial<User>) {
         if (user) {
             Object.assign(this, user);
         }

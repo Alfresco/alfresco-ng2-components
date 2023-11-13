@@ -31,14 +31,14 @@ import { TranslateModule } from '@ngx-translate/core';
 declare const pdfjsLib: any;
 
 @Component({
-    selector: 'adf-test-dialog-component',
-    template: ''
+    "selector": 'adf-test-dialog-component',
+    "template": ''
 })
 class TestDialogComponent {
 }
 
 @Component({
-    template: `
+    "template": `
         <adf-pdf-viewer [allowThumbnails]="true"
                         [showToolbar]="true"
                         [urlFile]="urlFile">
@@ -47,18 +47,18 @@ class TestDialogComponent {
 })
 class UrlTestComponent {
 
-    @ViewChild(PdfViewerComponent, { static: true })
+    @ViewChild(PdfViewerComponent, { "static": true })
     pdfViewerComponent: PdfViewerComponent;
 
     urlFile: any;
 
-    constructor() {
+    constructor () {
         this.urlFile = './fake-test-file.pdf';
     }
 }
 
 @Component({
-    template: `
+    "template": `
         <adf-pdf-viewer [allowThumbnails]="true"
                         [showToolbar]="true"
                         [urlFile]="urlFile">
@@ -67,18 +67,18 @@ class UrlTestComponent {
 })
 class UrlTestPasswordComponent {
 
-    @ViewChild(PdfViewerComponent, { static: true })
+    @ViewChild(PdfViewerComponent, { "static": true })
     pdfViewerComponent: PdfViewerComponent;
 
     urlFile: any;
 
-    constructor() {
+    constructor () {
         this.urlFile = './fake-test-password-file.pdf';
     }
 }
 
 @Component({
-    template: `
+    "template": `
         <adf-pdf-viewer [allowThumbnails]="true"
                         [showToolbar]="true"
                         [blobFile]="blobFile">
@@ -87,16 +87,16 @@ class UrlTestPasswordComponent {
 })
 class BlobTestComponent {
 
-    @ViewChild(PdfViewerComponent, { static: true })
+    @ViewChild(PdfViewerComponent, { "static": true })
     pdfViewerComponent: PdfViewerComponent;
 
     blobFile: any;
 
-    constructor() {
+    constructor () {
         this.blobFile = this.createFakeBlob();
     }
 
-    createFakeBlob(): Blob {
+    createFakeBlob (): Blob {
         const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
             'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
@@ -111,7 +111,7 @@ class BlobTestComponent {
             'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
             'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-        return new Blob([pdfData], { type: 'application/pdf' });
+        return new Blob([pdfData], { "type": 'application/pdf' });
     }
 
 }
@@ -126,20 +126,20 @@ describe('Test PdfViewer component', () => {
 
     beforeEach((done) => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            declarations: [
+            "declarations": [
                 TestDialogComponent,
                 UrlTestComponent,
                 UrlTestPasswordComponent,
                 BlobTestComponent
             ],
-            providers: [
+            "providers": [
                 {
-                    provide: MatDialog, useValue: {
-                        open: () => {
+                    "provide": MatDialog, "useValue": {
+                        "open": () => {
                         }
                     }
                 },
@@ -362,9 +362,9 @@ describe('Test PdfViewer component', () => {
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
                     const args = {
-                        pageNumber: 6,
-                        source: {
-                            container: document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
+                        "pageNumber": 6,
+                        "source": {
+                            "container": document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
                         }
                     };
 
@@ -386,9 +386,9 @@ describe('Test PdfViewer component', () => {
                     expect(componentUrlTestComponent.pdfViewerComponent.isPanelDisabled).toBeFalsy();
 
                     const args = {
-                        pagesCount: 10,
-                        source: {
-                            container: document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
+                        "pagesCount": 10,
+                        "source": {
+                            "container": document.getElementById(`${componentUrlTestComponent.pdfViewerComponent.randomPdfId}-viewer-pdf-viewer`)
                         }
                     };
 
@@ -559,7 +559,7 @@ describe('Test PdfViewer component', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {
-                component.ngOnChanges({ urlFile: change });
+                component.ngOnChanges({ "urlFile": change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
@@ -567,7 +567,7 @@ describe('Test PdfViewer component', () => {
             change = new SimpleChange(null, null, true);
 
             expect(() => {
-                component.ngOnChanges({ blobFile: change });
+                component.ngOnChanges({ "blobFile": change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
     });
@@ -709,13 +709,13 @@ describe('Test PdfViewer component', () => {
                 spyOn(dialog, 'open').and.callFake((_: any, context: any) => {
                     if (context.data.reason === pdfjsLib.PasswordResponses.NEED_PASSWORD) {
                         return {
-                            afterClosed: () => of('wrong_password')
+                            "afterClosed": () => of('wrong_password')
                         } as any;
                     }
 
                     if (context.data.reason === pdfjsLib.PasswordResponses.INCORRECT_PASSWORD) {
                         return {
-                            afterClosed: () => of('password')
+                            "afterClosed": () => of('password')
                         } as any;
                     }
 
@@ -747,7 +747,7 @@ describe('Test PdfViewer component', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
-                        reason: pdfjsLib.PasswordResponses.NEED_PASSWORD
+                        "reason": pdfjsLib.PasswordResponses.NEED_PASSWORD
                     });
                     done();
                 });
@@ -759,7 +759,7 @@ describe('Test PdfViewer component', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
-                        reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
+                        "reason": pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
                     });
                     done();
                 });
@@ -772,7 +772,7 @@ describe('Test PdfViewer component', () => {
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
                 spyOn(dialog, 'open').and.callFake(() => ({
-                    afterClosed: () => of('')
+                    "afterClosed": () => of('')
                 } as any));
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');

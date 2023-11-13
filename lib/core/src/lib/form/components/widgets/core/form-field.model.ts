@@ -95,49 +95,49 @@ export class FormFieldModel extends FormWidgetModel {
     emptyOption: FormFieldOption;
     validationSummary: ErrorMessageModel;
 
-    get value(): any {
+    get value (): any {
         return this._value;
     }
 
-    set value(v: any) {
+    set value (v: any) {
         this._value = v;
         this.updateForm();
     }
 
-    get readOnly(): boolean {
+    get readOnly (): boolean {
         if (this.form?.readOnly) {
             return true;
         }
         return this._readOnly;
     }
 
-    set readOnly(readOnly: boolean) {
+    set readOnly (readOnly: boolean) {
         this._readOnly = readOnly;
         this.updateForm();
     }
 
-    get required(): boolean {
+    get required (): boolean {
         return this._required;
     }
 
-    set required(value: boolean) {
+    set required (value: boolean) {
         this._required = value;
         this.updateForm();
     }
 
-    get isValid(): boolean {
+    get isValid (): boolean {
         return this._isValid;
     }
 
-    get hasMultipleValues() {
+    get hasMultipleValues () {
         return this.selectionType === 'multiple';
     }
 
-    markAsInvalid() {
+    markAsInvalid () {
         this._isValid = false;
     }
 
-    validate(): boolean {
+    validate (): boolean {
         this.validationSummary = new ErrorMessageModel();
 
         if (!this.readOnly) {
@@ -153,7 +153,7 @@ export class FormFieldModel extends FormWidgetModel {
         return this._isValid;
     }
 
-    constructor(form: any, json?: any) {
+    constructor (form: any, json?: any) {
         super(form, json);
         if (json) {
             this.fieldType = json.fieldType;
@@ -232,30 +232,30 @@ export class FormFieldModel extends FormWidgetModel {
         this.updateForm();
     }
 
-    private setValueForReadonlyType(form: any) {
+    private setValueForReadonlyType (form: any) {
         const value = this.getProcessVariableValue(this.params.field, form);
         if (value) {
             this.value = value;
         }
     }
 
-    private getDefaultDateFormat(jsonField: any): string {
+    private getDefaultDateFormat (jsonField: any): string {
         let originalType = jsonField.type;
-        if (FormFieldTypes.isReadOnlyType(jsonField.type) && jsonField.params && jsonField.params.field) {
+        if (FormFieldTypes.isReadOnlyType(jsonField.type) && jsonField.params?.field) {
             originalType = jsonField.params.field.type;
         }
         return originalType === FormFieldTypes.DATETIME ? this.defaultDateTimeFormat : this.defaultDateFormat;
     }
 
-    private isTypeaheadFieldType(type: string): boolean {
+    private isTypeaheadFieldType (type: string): boolean {
         return type === 'typeahead';
     }
 
-    private getFieldNameWithLabel(name: string): string {
+    private getFieldNameWithLabel (name: string): string {
         return name + '_LABEL';
     }
 
-    private getProcessVariableValue(field: any, form: ProcessFormModel): any {
+    private getProcessVariableValue (field: any, form: ProcessFormModel): any {
         let fieldName = field.name;
         if (this.isTypeaheadFieldType(field.type)) {
             fieldName = this.getFieldNameWithLabel(field.id);
@@ -263,7 +263,7 @@ export class FormFieldModel extends FormWidgetModel {
         return form.getProcessVariableValue(fieldName);
     }
 
-    private containerFactory(json: any, form: any): void {
+    private containerFactory (json: any, form: any): void {
         this.numberOfColumns = json.numberOfColumns || 1;
 
         this.fields = json.fields;
@@ -290,7 +290,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
     }
 
-    parseValue(json: any): any {
+    parseValue (json: any): any {
         let value = Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null;
 
         /*
@@ -361,7 +361,7 @@ export class FormFieldModel extends FormWidgetModel {
         return value;
     }
 
-    updateForm() {
+    updateForm () {
         if (!this.form) {
             return;
         }
@@ -482,32 +482,31 @@ export class FormFieldModel extends FormWidgetModel {
 
     /**
      * Check if the field type is invalid, requires a type to be a `container`
-     *
      * @param type field type
      * @returns `true` if type is a `container`, otherwise `false`
      */
-    isInvalidFieldType(type: string): boolean {
+    isInvalidFieldType (type: string): boolean {
         return type === 'container';
     }
 
-    getOptionName(): string {
+    getOptionName (): string {
         const option: FormFieldOption = this.options.find((opt) => opt.id === this.value);
         return option ? option.name : null;
     }
 
-    hasOptions() {
+    hasOptions () {
         return this.options?.length > 0;
     }
 
-    private isDateField(json: any) {
+    private isDateField (json: any) {
         return json.params?.field?.type === FormFieldTypes.DATE || json.type === FormFieldTypes.DATE;
     }
 
-    private isDateTimeField(json: any): boolean {
+    private isDateTimeField (json: any): boolean {
         return json.params?.field?.type === FormFieldTypes.DATETIME || json.type === FormFieldTypes.DATETIME;
     }
 
-    private isCheckboxField(json: any): boolean {
+    private isCheckboxField (json: any): boolean {
         return json.params?.field?.type === FormFieldTypes.BOOLEAN || json.type === FormFieldTypes.BOOLEAN;
     }
 }

@@ -31,11 +31,11 @@ import { OidcAuthenticationService } from '../services/oidc-authentication.servi
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
-    protected get withCredentials(): boolean {
+    protected get withCredentials (): boolean {
         return this.appConfigService.get<boolean>('auth.withCredentials', false);
     }
 
-    constructor(
+    constructor (
         protected authenticationService: AuthenticationService,
         protected basicAlfrescoAuthService: BasicAlfrescoAuthService,
         protected oidcAuthenticationService: OidcAuthenticationService,
@@ -51,7 +51,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         redirectUrl: string
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
 
-    canActivate(
+    canActivate (
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -62,14 +62,14 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return this.checkLogin(route, state.url);
     }
 
-    canActivateChild(
+    canActivateChild (
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.canActivate(route, state);
     }
 
-    protected async redirectSSOSuccessURL(): Promise<boolean | UrlTree> {
+    protected async redirectSSOSuccessURL (): Promise<boolean | UrlTree> {
         const redirectFragment = this.storageService.getItem('loginFragment');
 
         if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
@@ -81,16 +81,16 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return true;
     }
 
-    protected isLoginFragmentPresent(): boolean {
+    protected isLoginFragmentPresent (): boolean {
         return !!this.storageService.getItem('loginFragment');
     }
 
-    protected async redirectToUrl(url: string): Promise<boolean | UrlTree> {
+    protected async redirectToUrl (url: string): Promise<boolean | UrlTree> {
         let urlToRedirect = `/${this.getLoginRoute()}`;
 
         if (!this.authenticationService.isOauth()) {
             this.basicAlfrescoAuthService.setRedirect({
-                provider: this.getProvider(),
+                "provider": this.getProvider(),
                 url
             });
 
@@ -107,13 +107,13 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return false;
     }
 
-    protected async navigate(url: string): Promise<boolean> {
+    protected async navigate (url: string): Promise<boolean> {
         this.dialog.closeAll();
         await this.router.navigateByUrl(this.router.parseUrl(url));
         return false;
     }
 
-    protected getOauthConfig(): OauthConfigModel {
+    protected getOauthConfig (): OauthConfigModel {
         return (
             this.appConfigService &&
             this.appConfigService.get<OauthConfigModel>(
@@ -123,15 +123,15 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         );
     }
 
-    protected getLoginRoute(): string {
+    protected getLoginRoute (): string {
         return this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE, 'login');
     }
 
-    protected getProvider(): string {
+    protected getProvider (): string {
         return this.appConfigService.get<string>(AppConfigValues.PROVIDERS, 'ALL');
     }
 
-    protected isOAuthWithoutSilentLogin(): boolean {
+    protected isOAuthWithoutSilentLogin (): boolean {
         const oauth = this.appConfigService.get<OauthConfigModel>(
             AppConfigValues.OAUTHCONFIG,
             null
@@ -141,7 +141,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         );
     }
 
-    protected isSilentLogin(): boolean {
+    protected isSilentLogin (): boolean {
         const oauth = this.appConfigService.get<OauthConfigModel>(
             AppConfigValues.OAUTHCONFIG,
             null

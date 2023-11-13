@@ -33,12 +33,12 @@ describe('Test Img viewer component ', () => {
 
     const createFakeBlob = () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-        return new Blob([data], { type: 'image/png' });
+        return new Blob([data], { "type": 'image/png' });
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -128,7 +128,7 @@ describe('Test Img viewer component ', () => {
         it('If no url or blob are passed should thrown an error', () => {
             const change = new SimpleChange(null, null, true);
             expect(() => {
-                component.ngOnChanges({ blobFile: change, urlFile: change });
+                component.ngOnChanges({ "blobFile": change, "urlFile": change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
@@ -164,7 +164,7 @@ describe('Test Img viewer component ', () => {
             spyOn(urlService, 'createTrustedUrl').and.returnValue('fake-blob-url');
             const change = new SimpleChange(null, blob, true);
             expect(() => {
-                component.ngOnChanges({ blobFile: change });
+                component.ngOnChanges({ "blobFile": change });
             }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
             expect(component.urlFile).toEqual('fake-blob-url');
         });
@@ -178,7 +178,7 @@ describe('Test Img viewer component ', () => {
             component = fixture.componentInstance;
             component.blobFile = createFakeBlob();
             const change = new SimpleChange(null, component.blobFile, true);
-            component.ngOnChanges({ blobFile: change });
+            component.ngOnChanges({ "blobFile": change });
             fixture.detectChanges();
         });
 
@@ -374,7 +374,7 @@ describe('Test Img viewer component ', () => {
 
         it('should reset the viewer after going to full screen mode', () => {
             Object.defineProperty(document, 'fullscreenElement', {
-                value: true
+                "value": true
             });
             spyOn(component, 'reset');
 

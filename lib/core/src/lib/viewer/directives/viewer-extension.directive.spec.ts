@@ -28,27 +28,27 @@ describe('ExtensionViewerDirective', () => {
     let extensionViewerDirective: ViewerExtensionDirective;
 
     class MockElementRef extends ElementRef {
-        constructor() {
+        constructor () {
             super(null);
         }
     }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            providers: [
-                { provide: Location, useClass: SpyLocation },
+            "providers": [
+                { "provide": Location, "useClass": SpyLocation },
                 ViewerExtensionDirective,
-                {provide: ElementRef, useClass: MockElementRef},
+                {"provide": ElementRef, "useClass": MockElementRef},
                 ViewerRenderComponent,
-                { provide: ChangeDetectorRef, useValue: { detectChanges: () => {} } }
+                { "provide": ChangeDetectorRef, "useValue": { "detectChanges": () => {} } }
             ]
         });
         extensionViewerDirective = TestBed.inject(ViewerExtensionDirective);
-        extensionViewerDirective.templateModel = {template: '', isVisible: false};
+        extensionViewerDirective.templateModel = {"template": '', "isVisible": false};
     });
 
     it('is defined', () => {

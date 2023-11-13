@@ -30,7 +30,7 @@ describe('SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -55,7 +55,7 @@ describe('SidebarActionMenuComponent', () => {
 });
 
 @Component({
-    template: `
+    "template": `
         <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
             <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
             <div adf-sidebar-menu-expand-icon>
@@ -86,11 +86,11 @@ describe('Custom SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
+            "declarations": [
                 SidebarActionMenuComponent,
                 CustomSidebarActionMenuComponent
             ],
-            imports: [
+            "imports": [
                 MaterialModule,
                 NoopAnimationsModule
             ]

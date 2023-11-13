@@ -40,7 +40,7 @@ describe('NumberCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NumberCellComponent]
+            "imports": [NumberCellComponent]
         });
         fixture = TestBed.createComponent(NumberCellComponent);
         component = fixture.componentInstance;
@@ -56,7 +56,7 @@ describe('NumberCellComponent', () => {
     });
 
     it('should render decimal value with custom digitsInfo', () => {
-        renderAndCheckNumberValue({ digitsInfo: '1.2-2' }, 123.456789, '123.46');
+        renderAndCheckNumberValue({ "digitsInfo": '1.2-2' }, 123.456789, '123.46');
     });
 });
 
@@ -66,8 +66,8 @@ describe('NumberCellComponent locale', () => {
 
     it('should render decimal value with custom locale', () => {
         TestBed.configureTestingModule({
-            imports: [NumberCellComponent],
-            providers: [{ provide: LOCALE_ID, useValue: 'pl-PL' }]
+            "imports": [NumberCellComponent],
+            "providers": [{ "provide": LOCALE_ID, "useValue": 'pl-PL' }]
         });
 
         fixture = TestBed.createComponent(NumberCellComponent);
@@ -75,7 +75,7 @@ describe('NumberCellComponent locale', () => {
         registerLocaleData(localePL);
 
         component.value$ = new BehaviorSubject<number>(123.45);
-        component.decimalConfig = { locale: 'pl-PL' };
+        component.decimalConfig = { "locale": 'pl-PL' };
 
         fixture.detectChanges();
         const displayedNumber = fixture.nativeElement.querySelector('span');

@@ -20,10 +20,9 @@ import { DirectionalityConfigService } from './directionality-config.service';
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 /**
  * Creates a factory for Angular modules
- *
  * @param directionalityConfigService service dependency
  * @returns a factory function
  */
-export function directionalityConfigFactory(directionalityConfigService: DirectionalityConfigService) {
+export function directionalityConfigFactory (directionalityConfigService: DirectionalityConfigService) {
     return () => directionalityConfigService;
 }

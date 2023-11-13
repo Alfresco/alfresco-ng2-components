@@ -22,20 +22,20 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class OidcAuthGuard implements CanActivate {
-  constructor(private auth: AuthService) {}
+  constructor (private auth: AuthService) {}
 
-  canActivate(
+  canActivate (
     _route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this._isAuthenticated(state);
   }
 
-  canActivateChild(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivateChild (_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this._isAuthenticated(state);
   }
 
-  private _isAuthenticated(state: RouterStateSnapshot) {
+  private _isAuthenticated (state: RouterStateSnapshot) {
     if (this.auth.authenticated) {
       return true;
     }

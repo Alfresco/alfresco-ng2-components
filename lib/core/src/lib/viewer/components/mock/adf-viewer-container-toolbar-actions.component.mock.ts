@@ -18,8 +18,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'adf-viewer-container-toolbar-actions',
-    template: `
+    "selector": 'adf-viewer-container-toolbar-actions',
+    "template": `
         <adf-viewer>
             <adf-viewer-toolbar-actions>
                 <button mat-icon-button id="custom-button">

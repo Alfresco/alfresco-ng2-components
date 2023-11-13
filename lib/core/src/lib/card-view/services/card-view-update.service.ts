@@ -29,7 +29,7 @@ export const transformKeyToObject = (key: string, value): any => {
 };
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class CardViewUpdateService implements BaseCardViewUpdate {
 
@@ -37,25 +37,24 @@ export class CardViewUpdateService implements BaseCardViewUpdate {
     itemClicked$ = new Subject<ClickNotification>();
     updateItem$ = new Subject<CardViewBaseItemModel>();
 
-    update(property: CardViewBaseItemModel, newValue: any) {
+    update (property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdated$.next({
-            target: property,
-            changed: transformKeyToObject(property.key, newValue)
+            "target": property,
+            "changed": transformKeyToObject(property.key, newValue)
         });
     }
 
-    clicked(property: CardViewBaseItemModel) {
+    clicked (property: CardViewBaseItemModel) {
         this.itemClicked$.next({
-            target: property
+            "target": property
         });
     }
 
     /**
      * Updates the cardview items property
-     *
      * @param notification notification value
      */
-    updateElement(notification: CardViewBaseItemModel) {
+    updateElement (notification: CardViewBaseItemModel) {
         this.updateItem$.next(notification);
     }
 

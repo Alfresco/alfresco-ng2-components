@@ -55,11 +55,11 @@ export class FormFieldTypes {
         FormFieldTypes.GROUP
     ];
 
-    static isReadOnlyType(type: string) {
+    static isReadOnlyType (type: string) {
         return FormFieldTypes.READONLY_TYPES.includes(type);
     }
 
-    static isContainerType(type: string) {
+    static isContainerType (type: string) {
         return type === FormFieldTypes.CONTAINER || type === FormFieldTypes.GROUP;
     }
 }

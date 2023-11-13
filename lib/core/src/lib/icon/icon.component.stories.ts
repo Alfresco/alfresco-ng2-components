@@ -21,53 +21,53 @@ import { IconComponent } from './icon.component';
 import { IconModule } from './icon.module';
 
 export default {
-    component: IconComponent,
-    title: 'Core/Icon/Icon',
-    decorators: [
+    "component": IconComponent,
+    "title": 'Core/Icon/Icon',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, IconModule]
+            "imports": [CoreStoryModule, IconModule]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Provides a universal way of rendering registered and named icons.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Provides a universal way of rendering registered and named icons.`
             }
         }
     },
-    argTypes: {
-        color: {
-            control: 'radio',
-            options: ['primary', 'accent', 'warn', undefined],
-            description: 'icon color',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'ThemePalette' },
-                defaultValue: { summary: 'undefined' }
+    "argTypes": {
+        "color": {
+            "control": 'radio',
+            "options": ['primary', 'accent', 'warn', undefined],
+            "description": 'icon color',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'ThemePalette' },
+                "defaultValue": { "summary": 'undefined' }
             }
         },
-        value: {
-            description: 'icon name',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'settings' }
+        "value": {
+            "description": 'icon name',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'settings' }
             }
         }
     }
 } as Meta;
 
 const template: Story<IconComponent> = (args: IconComponent) => ({
-    props: args
+    "props": args
 });
 
 export const defaultIcon = template.bind({});
 defaultIcon.args = {
-    value: ''
+    "value": ''
 };
-defaultIcon.parameters = { layout: 'centered' };
+defaultIcon.parameters = { "layout": 'centered' };
 
 export const customIcon = template.bind({});
 customIcon.args = {
-    value: 'cloud_download'
+    "value": 'cloud_download'
 };
-customIcon.parameters = { layout: 'centered' };
+customIcon.parameters = { "layout": 'centered' };

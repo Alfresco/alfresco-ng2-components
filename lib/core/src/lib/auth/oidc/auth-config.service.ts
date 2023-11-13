@@ -23,53 +23,52 @@ import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 
 /**
  * Create auth configuration factory
- *
  * @param authConfigService auth config service
  * @returns factory function
  */
-export function authConfigFactory(authConfigService: AuthConfigService): Promise<AuthConfig> {
+export function authConfigFactory (authConfigService: AuthConfigService): Promise<AuthConfig> {
     return authConfigService.loadConfig();
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AuthConfigService {
-    constructor(
+    constructor (
         private appConfigService: AppConfigService,
         @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig
     ) {}
 
     private _authConfig!: AuthConfig;
-    get authConfig(): AuthConfig {
+    get authConfig (): AuthConfig {
         return this._authConfig;
     }
 
-    loadConfig(): Promise<AuthConfig> {
+    loadConfig (): Promise<AuthConfig> {
         return this.appConfigService.onLoad.pipe(take(1)).toPromise().then(this.loadAppConfig.bind(this));
     }
 
-    loadAppConfig(): AuthConfig {
+    loadAppConfig (): AuthConfig {
         const oauth2 = this.appConfigService.oauth2;
         const origin = this.getLocationOrigin();
         const redirectUri = this.getRedirectUri();
 
         const authConfig: AuthConfig = {
-            oidc: oauth2.implicitFlow || oauth2.codeFlow || false,
-            issuer: oauth2.host,
+            "oidc": oauth2.implicitFlow || oauth2.codeFlow || false,
+            "issuer": oauth2.host,
             redirectUri,
-            silentRefreshRedirectUri: oauth2.redirectSilentIframeUri,
-            postLogoutRedirectUri: `${origin}/${oauth2.redirectUriLogout}`,
-            clientId: oauth2.clientId,
-            scope: oauth2.scope,
-            dummyClientSecret: oauth2.secret || '',
-            ...(oauth2.codeFlow && { responseType: 'code' })
+            "silentRefreshRedirectUri": oauth2.redirectSilentIframeUri,
+            "postLogoutRedirectUri": `${origin}/${oauth2.redirectUriLogout}`,
+            "clientId": oauth2.clientId,
+            "scope": oauth2.scope,
+            "dummyClientSecret": oauth2.secret || '',
+            ...(oauth2.codeFlow && { "responseType": 'code' })
         };
 
         return authConfig;
     }
 
-    getRedirectUri(): string {
+    getRedirectUri (): string {
         // required for this package as we handle the returned token on this view, with is provided by the AuthModule
         const viewUrl = `view/authentication-confirmation`;
         const useHash = this.authModuleConfig.useHash;
@@ -88,7 +87,7 @@ export class AuthConfigService {
         return oauth2.implicitFlow && useHash ? `${redirectUri}/?` : redirectUri;
     }
 
-    private getLocationOrigin() {
+    private getLocationOrigin () {
         return window.location.origin;
     }
 }

@@ -24,13 +24,13 @@ import { UserPreferencesService } from '../common/services/user-preferences.serv
 import { SearchTextStateEnum, SearchAnimationState, SearchAnimationDirection } from './models/search-text-input.model';
 
 @Component({
-    selector: 'adf-search-text-input',
-    templateUrl: './search-text-input.component.html',
-    styleUrls: ['./search-text-input.component.scss'],
-    animations: [searchAnimation],
-    encapsulation: ViewEncapsulation.None,
-    host: {
-        class: 'adf-search-text-input'
+    "selector": 'adf-search-text-input',
+    "templateUrl": './search-text-input.component.html',
+    "styleUrls": ['./search-text-input.component.scss'],
+    "animations": [searchAnimation],
+    "encapsulation": ViewEncapsulation.None,
+    "host": {
+        "class": 'adf-search-text-input'
     }
 })
 export class SearchTextInputComponent implements OnInit, OnDestroy {
@@ -122,19 +122,19 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Output()
     searchVisibility: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild('searchInput', { static: true })
+    @ViewChild('searchInput', { "static": true })
     searchInput: ElementRef;
 
     subscriptAnimationState: any;
 
     animationStates: SearchAnimationDirection = {
-        ltr : {
-            active: { value: 'active', params: { 'margin-left': 13 } },
-            inactive: { value: 'inactive', params: { transform: 'translateX(82%)' } }
+        "ltr" : {
+            "active": { "value": 'active', "params": { 'margin-left': 13 } },
+            "inactive": { "value": 'inactive', "params": { "transform": 'translateX(82%)' } }
         },
-        rtl: {
-            active:  { value: 'active', params: { 'margin-right': 13 } },
-            inactive: { value: 'inactive', params: { transform: 'translateX(-82%)' } }
+        "rtl": {
+            "active":  { "value": 'active', "params": { 'margin-right': 13 } },
+            "inactive": { "value": 'inactive', "params": { "transform": 'translateX(-82%)' } }
         }
     };
 
@@ -144,7 +144,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private focusSubscription: Subscription;
     private valueChange = new Subject<string>();
 
-    constructor(
+    constructor (
         private userPreferencesService: UserPreferencesService
     ) {
         this.toggleSearch
@@ -167,7 +167,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
             });
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.userPreferencesService
             .select('textOrientation')
             .pipe(takeUntil(this.onDestroy$))
@@ -181,46 +181,46 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         this.setupFocusEventHandlers();
     }
 
-    applySearchFocus(animationDoneEvent) {
+    applySearchFocus (animationDoneEvent) {
         if (animationDoneEvent.toState === 'active' && this.isDefaultStateCollapsed()) {
             this.searchInput.nativeElement.focus();
         }
     }
 
-    getAutoComplete(): string {
+    getAutoComplete (): string {
         return this.autocomplete ? 'on' : 'off';
     }
 
-    private toggleAnimation() {
+    private toggleAnimation () {
         if (this.dir === 'ltr') {
             return this.subscriptAnimationState.value === 'inactive' ?
-                { value: 'active', params: { 'margin-left': 13 } } :
-                { value: 'inactive', params: { transform: 'translateX(82%)' } };
+                { "value": 'active', "params": { 'margin-left': 13 } } :
+                { "value": 'inactive', "params": { "transform": 'translateX(82%)' } };
         } else {
             return this.subscriptAnimationState.value === 'inactive' ?
-                { value: 'active', params: { 'margin-right': 13 } } :
-                { value: 'inactive', params: { transform: 'translateX(-82%)' } };
+                { "value": 'active', "params": { 'margin-right': 13 } } :
+                { "value": 'inactive', "params": { "transform": 'translateX(-82%)' } };
         }
     }
 
-    private getDefaultState(dir: string): SearchAnimationState {
+    private getDefaultState (dir: string): SearchAnimationState {
         if (this.dir) {
             return this.getAnimationState(dir);
         }
         return this.animationStates.ltr.inactive;
     }
 
-    private getAnimationState(dir: string): SearchAnimationState {
+    private getAnimationState (dir: string): SearchAnimationState {
         if (this.expandable && this.isDefaultStateExpanded()) {
             return this.animationStates[dir].active;
         } else if ( this.expandable ) {
             return this.animationStates[dir].inactive;
         } else {
-            return { value: 'no-animation' };
+            return { "value": 'no-animation' };
         }
     }
 
-    private setupFocusEventHandlers() {
+    private setupFocusEventHandlers () {
         if ( this.focusListener ) {
             const focusEvents: Observable<FocusEvent> = this.focusListener
             .pipe(
@@ -239,7 +239,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         }
     }
 
-    private setValueChangeHandler() {
+    private setValueChangeHandler () {
         this.valueChange.pipe(
             debounceTime(this.debounceTime),
             takeUntil(this.onDestroy$)
@@ -248,45 +248,45 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         });
     }
 
-    selectFirstResult($event) {
+    selectFirstResult ($event) {
         this.selectResult.emit($event);
     }
 
-    onBlur($event) {
+    onBlur ($event) {
         if (this.collapseOnBlur && !$event.relatedTarget) {
             this.resetSearch();
         }
     }
 
-    inputChange($event: any) {
+    inputChange ($event: any) {
         this.valueChange.next($event);
     }
 
-    toggleSearchBar() {
+    toggleSearchBar () {
         if (this.toggleSearch) {
             this.toggleSearch.next({});
         }
     }
 
-    searchSubmit(event: any) {
+    searchSubmit (event: any) {
         this.submit.emit(event);
         if (this.collapseOnSubmit) {
             this.toggleSearchBar();
         }
     }
 
-    activateToolbar(): boolean {
+    activateToolbar (): boolean {
         if (!this.isSearchBarActive()) {
             this.toggleSearchBar();
         }
         return false;
     }
 
-    isSearchBarActive(): boolean {
+    isSearchBarActive (): boolean {
         return this.subscriptAnimationState.value === 'active';
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         if (this.toggleSearch) {
             this.toggleSearch.complete();
             this.toggleSearch = null;
@@ -302,25 +302,25 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    canShowClearSearch(): boolean {
+    canShowClearSearch (): boolean {
         return this.showClearButton && this.isSearchBarActive();
     }
 
-    resetSearch() {
+    resetSearch () {
         if (this.isSearchBarActive()) {
             this.toggleSearchBar();
         }
     }
 
-    private isDefaultStateCollapsed(): boolean {
+    private isDefaultStateCollapsed (): boolean {
         return this.defaultState === SearchTextStateEnum.collapsed;
     }
 
-    private isDefaultStateExpanded(): boolean {
+    private isDefaultStateExpanded (): boolean {
         return this.defaultState === SearchTextStateEnum.expanded;
     }
 
-    private emitVisibilitySearch() {
+    private emitVisibilitySearch () {
         this.searchVisibility.emit(this.isSearchBarActive());
     }
 }

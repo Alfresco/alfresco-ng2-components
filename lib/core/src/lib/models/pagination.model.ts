@@ -24,7 +24,7 @@ export class PaginationModel {
     skipCount?: number;
     maxItems?: number;
 
-    constructor(input?: any) {
+    constructor (input?: any) {
         if (input) {
             this.count = input.count;
             this.hasMoreItems = input.hasMoreItems ? input.hasMoreItems : false;

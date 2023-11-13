@@ -21,14 +21,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MatIconModule
     ],
-    declarations: [
+    "declarations": [
         IconComponent
     ],
-    exports: [
+    "exports": [
         IconComponent
     ]
 })

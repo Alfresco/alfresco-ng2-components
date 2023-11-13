@@ -19,13 +19,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ThumbnailService } from '../common/services/thumbnail.service';
 
 @Pipe({
-    name: 'adfMimeTypeIcon'
+    "name": 'adfMimeTypeIcon'
 })
 export class MimeTypeIconPipe implements PipeTransform {
 
-    constructor(private thumbnailService: ThumbnailService) { }
+    constructor (private thumbnailService: ThumbnailService) { }
 
-    transform(text: string): string {
+    transform (text: string): string {
         return this.thumbnailService.getMimeTypeIcon(text);
     }
 }

@@ -22,10 +22,10 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    selector: 'display-text-widget',
-    templateUrl: './display-text.widget.html',
-    styleUrls: ['./display-text.widget.scss'],
-    host: {
+    "selector": 'display-text-widget',
+    "templateUrl": './display-text.widget.html',
+    "styleUrls": ['./display-text.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,11 +36,11 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class DisplayTextWidgetComponent extends WidgetComponent {
 
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
          super(formService);
     }
 

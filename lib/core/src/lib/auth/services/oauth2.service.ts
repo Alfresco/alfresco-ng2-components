@@ -29,11 +29,11 @@ export interface OAuth2RequestParams {
     bodyParam?: any;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class OAuth2Service {
-    constructor(private adfHttpClient: AdfHttpClient) {}
+    constructor (private adfHttpClient: AdfHttpClient) {}
 
-    request<T>(opts: OAuth2RequestParams): Observable<T> {
+    request<T> (opts: OAuth2RequestParams): Observable<T> {
         const { httpMethod, url, bodyParam, queryParams } = opts;
         return from(
             this.adfHttpClient.request(
@@ -41,40 +41,40 @@ export class OAuth2Service {
                 {
                     httpMethod,
                     queryParams,
-                    headerParams: {},
-                    formParams: {},
+                    "headerParams": {},
+                    "formParams": {},
                     bodyParam,
-                    returnType: Object
+                    "returnType": Object
                 }
             )
         );
     }
 
-    get<T>(opts: OAuth2RequestParams): Observable<T> {
+    get<T> (opts: OAuth2RequestParams): Observable<T> {
         return this.request({
             ...opts,
-            httpMethod: 'GET'
+            "httpMethod": 'GET'
         });
     }
 
-    put<T>(opts: OAuth2RequestParams): Observable<T> {
+    put<T> (opts: OAuth2RequestParams): Observable<T> {
         return this.request({
             ...opts,
-            httpMethod: 'PUT'
+            "httpMethod": 'PUT'
         });
     }
 
-    post<T>(opts: OAuth2RequestParams): Observable<T> {
+    post<T> (opts: OAuth2RequestParams): Observable<T> {
         return this.request({
             ...opts,
-            httpMethod: 'POST'
+            "httpMethod": 'POST'
         });
     }
 
-    delete<T>(opts: OAuth2RequestParams): Observable<T> {
+    delete<T> (opts: OAuth2RequestParams): Observable<T> {
         return this.request({
             ...opts,
-            httpMethod: 'DELETE'
+            "httpMethod": 'DELETE'
         });
     }
 }

@@ -24,7 +24,7 @@ import { ReplaySubject, Subject } from 'rxjs';
 
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ProcessAuth {
 
@@ -34,19 +34,19 @@ export class ProcessAuth {
 
     ticket: string;
     config = {
-        ticketBpm: null
+        "ticketBpm": null
     };
 
     authentications: Authentication = {
-        basicAuth: {ticket: ''}, type: 'activiti'
+        "basicAuth": {"ticket": ''}, "type": 'activiti'
     };
 
-    get basePath(): string {
+    get basePath (): string {
         const contextRootBpm = this.appConfigService.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app';
         return this.appConfigService.get<string>(AppConfigValues.BPMHOST) + '/' + contextRootBpm;
     }
 
-    constructor(private appConfigService: AppConfigService,
+    constructor (private appConfigService: AppConfigService,
                 private adfHttpClient: AdfHttpClient,
                 private storageService: StorageService) {
         this.appConfigService.onLoad.subscribe(() => {
@@ -54,44 +54,43 @@ export class ProcessAuth {
         });
     }
 
-    private setConfig() {
+    private setConfig () {
         this.ticket = undefined;
 
         this.setTicket(this.storageService.getItem(AppConfigValues.PROCESS_TICKET_STORAGE_LABEL));
     }
 
-    saveUsername(username: string) {
+    saveUsername (username: string) {
         this.storageService.setItem('APS_USERNAME', username);
     }
 
-    getUsername() {
+    getUsername () {
         return this.storageService.getItem('APS_USERNAME');
     }
 
     /**
      * login Activiti API
-     *
      * @param username Username to login
      * @param password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      */
-    login(username: string, password: string): Promise<any> {
+    login (username: string, password: string): Promise<any> {
         this.authentications.basicAuth.username = username;
         this.authentications.basicAuth.password = password;
 
         const options = {
-            headerParams: {
+            "headerParams": {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Cache-Control': 'no-cache'
             },
-            formParams: {
-                j_username: this.authentications.basicAuth.username,
-                j_password: this.authentications.basicAuth.password,
-                _spring_security_remember_me: true,
-                submit: 'Login'
+            "formParams": {
+                "j_username": this.authentications.basicAuth.username,
+                "j_password": this.authentications.basicAuth.password,
+                "_spring_security_remember_me": true,
+                "submit": 'Login'
             },
-            contentType: 'application/x-www-form-urlencoded',
-            accept: 'application/json'
+            "contentType": 'application/x-www-form-urlencoded',
+            "accept": 'application/json'
         };
 
         const promise: any = new Promise((resolve, reject) => {
@@ -126,10 +125,9 @@ export class ProcessAuth {
 
     /**
      * logout Alfresco API
-     *
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      */
-    async logout(): Promise<any> {
+    async logout (): Promise<any> {
         this.saveUsername('');
         return new Promise((resolve, reject) => {
             this.adfHttpClient.get(this.basePath + `/app/logout`, {}).then(
@@ -151,7 +149,7 @@ export class ProcessAuth {
         });
     }
 
-    basicAuth(username: string, password: string): string {
+    basicAuth (username: string, password: string): string {
         const str: any = username + ':' + password;
 
         let base64;
@@ -167,10 +165,9 @@ export class ProcessAuth {
 
     /**
      * Set the current Ticket
-     *
      * @param ticket a string representing the ticket
      */
-    setTicket(ticket: string) {
+    setTicket (ticket: string) {
         if (ticket && ticket !== 'null') {
             this.authentications.basicAuth.ticket = ticket;
             this.authentications.basicAuth.password = null;
@@ -180,7 +177,7 @@ export class ProcessAuth {
         }
     }
 
-    invalidateSession() {
+    invalidateSession () {
         this.storageService.removeItem(AppConfigValues.PROCESS_TICKET_STORAGE_LABEL);
         this.authentications.basicAuth.ticket = null;
         this.authentications.basicAuth.password = null;
@@ -192,7 +189,7 @@ export class ProcessAuth {
     /**
      * @returns the current Ticket
      */
-    getToken(): string {
+    getToken (): string {
         if (!this.ticket) {
             this.onError.next('error');
             return null;
@@ -204,7 +201,7 @@ export class ProcessAuth {
     /**
      * @returns If the client is logged in return true
      */
-    isLoggedIn(): boolean {
+    isLoggedIn (): boolean {
         return !!this.ticket;
     }
 }

@@ -35,28 +35,28 @@ import { DirectionalityConfigService } from '../common/services/directionality-c
 import { AuthModule } from '../auth';
 
 @NgModule({
-    imports: [
-        AuthModule.forRoot({ useHash: true }),
+    "imports": [
+        AuthModule.forRoot({ "useHash": true }),
         NoopAnimationsModule,
         RouterTestingModule,
         HttpClientModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot()
     ],
-    providers: [
+    "providers": [
         DatePipe,
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock },
-        { provide: CookieService, useClass: CookieServiceMock },
+        { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+        { "provide": AppConfigService, "useClass": AppConfigServiceMock },
+        { "provide": TranslationService, "useClass": TranslationMock },
+        { "provide": CookieService, "useClass": CookieServiceMock },
         {
-            provide: APP_INITIALIZER,
-            useFactory: directionalityConfigFactory,
-            deps: [ DirectionalityConfigService ],
-            multi: true
+            "provide": APP_INITIALIZER,
+            "useFactory": directionalityConfigFactory,
+            "deps": [ DirectionalityConfigService ],
+            "multi": true
         }
     ],
-    exports: [
+    "exports": [
         NoopAnimationsModule,
         CoreModule,
         TranslateModule,

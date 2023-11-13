@@ -32,19 +32,19 @@ import { PaginationModel } from '../models/pagination.model';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-infinite-pagination',
-    host: { class: 'infinite-adf-pagination' },
-    templateUrl: './infinite-pagination.component.html',
-    styleUrls: ['./infinite-pagination.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-infinite-pagination',
+    "host": { "class": 'infinite-adf-pagination' },
+    "templateUrl": './infinite-pagination.component.html',
+    "styleUrls": ['./infinite-pagination.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
     static DEFAULT_PAGINATION: PaginationModel = new PaginationModel({
-        skipCount: 0,
-        maxItems: 25,
-        totalItems: 0
+        "skipCount": 0,
+        "maxItems": 25,
+        "totalItems": 0
     });
 
     _target: PaginatedComponent;
@@ -52,7 +52,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     /** Component that provides custom pagination support. */
     @Input()
-    set target(target: PaginatedComponent) {
+    set target (target: PaginatedComponent) {
         if (target) {
             this._target = target;
             target.pagination
@@ -70,7 +70,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         }
     }
 
-    get target() {
+    get target () {
         return this._target;
     }
 
@@ -89,15 +89,15 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     pagination: PaginationModel = InfinitePaginationComponent.DEFAULT_PAGINATION;
 
     requestPaginationModel: RequestPaginationModel = {
-        skipCount: 0,
-        merge: true
+        "skipCount": 0,
+        "merge": true
     };
 
-    constructor(private cdr: ChangeDetectorRef,
+    constructor (private cdr: ChangeDetectorRef,
                 private userPreferencesService: UserPreferencesService) {
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
@@ -107,7 +107,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
             });
     }
 
-    onLoadMore() {
+    onLoadMore () {
         this.requestPaginationModel.skipCount = 0;
         this.requestPaginationModel.merge = true;
 
@@ -121,7 +121,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         }
     }
 
-    reset() {
+    reset () {
         this.pagination.skipCount = 0;
         this.pagination.maxItems = this.pageSize;
 
@@ -130,7 +130,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

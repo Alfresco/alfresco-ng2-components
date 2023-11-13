@@ -20,7 +20,7 @@ import { ResizableDirective } from './resizable.directive';
 import { Input, OnInit, Directive, Renderer2, ElementRef, OnDestroy, NgZone } from '@angular/core';
 
 @Directive({
-    selector: '[adf-resize-handle]'
+    "selector": '[adf-resize-handle]'
 })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
     /**
@@ -34,9 +34,9 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
     private destroy$ = new Subject<void>();
 
-    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) {}
+    constructor (private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.zone.runOutsideAngular(() => {
             this.unlistenMouseDown = this.renderer.listen(this.element.nativeElement, 'mousedown', (mouseDownEvent: MouseEvent) => {
                 this.onMousedown(mouseDownEvent);
@@ -44,14 +44,14 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.unlistenMouseDown?.();
         this.unlistenMouseMove?.();
         this.unlistenMouseUp?.();
         this.destroy$.next();
     }
 
-    private onMousedown(event: MouseEvent): void {
+    private onMousedown (event: MouseEvent): void {
         if (event.cancelable) {
             event.preventDefault();
         }
@@ -66,16 +66,16 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
             this.onMouseup(mouseUpEvent);
         });
 
-        this.resizableContainer.mousedown.next({ ...event, resize: true });
+        this.resizableContainer.mousedown.next({ ...event, "resize": true });
     }
 
-    private onMouseup(event: MouseEvent): void {
+    private onMouseup (event: MouseEvent): void {
         this.unlistenMouseMove?.();
         this.unlistenMouseUp();
         this.resizableContainer.mouseup.next(event);
     }
 
-    private onMousemove(event: MouseEvent): void {
+    private onMousemove (event: MouseEvent): void {
         this.resizableContainer.mousemove.next(event);
     }
 }

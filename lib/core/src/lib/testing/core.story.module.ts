@@ -23,13 +23,13 @@ import { provideTranslations } from '../translation/translation.service';
 import { AuthModule } from '../../../src/lib/auth/oidc/auth.module';
 
 @NgModule({
-    imports: [
+    "imports": [
         AuthModule.forRoot(),
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         BrowserAnimationsModule
     ],
-    providers: [
+    "providers": [
         provideTranslations('adf-core', 'assets/adf-core')
     ]
 })

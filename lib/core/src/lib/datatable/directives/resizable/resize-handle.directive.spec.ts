@@ -26,19 +26,19 @@ describe('ResizeHandleDirective', () => {
     let directive: ResizeHandleDirective;
 
     const rendererMock = {
-        listen: jasmine.createSpy('listen')
+        "listen": jasmine.createSpy('listen')
     };
 
     const elementRefMock = {
-        nativeElement: { dispatchEvent: () => { } }
+        "nativeElement": { "dispatchEvent": () => { } }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ResizeHandleDirective],
-            providers: [
-                { provide: Renderer2, useValue: rendererMock },
-                { provide: ElementRef, useValue: elementRefMock }
+            "declarations": [ResizeHandleDirective],
+            "providers": [
+                { "provide": Renderer2, "useValue": rendererMock },
+                { "provide": ElementRef, "useValue": elementRefMock }
             ]
         });
 

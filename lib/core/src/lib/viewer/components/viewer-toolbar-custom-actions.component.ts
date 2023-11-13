@@ -22,11 +22,11 @@ import {
 } from '@angular/core';
 
 @Component({
-    selector: 'adf-viewer-toolbar-custom-actions',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { class: 'adf-viewer-toolbar-custom-actions' },
-    template: `<ng-content></ng-content>`
+    "selector": 'adf-viewer-toolbar-custom-actions',
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "host": { "class": 'adf-viewer-toolbar-custom-actions' },
+    "template": `<ng-content></ng-content>`
 })
 export class ViewerToolbarCustomActionsComponent{
 }

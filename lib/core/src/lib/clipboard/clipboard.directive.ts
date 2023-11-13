@@ -19,8 +19,8 @@ import { Directive, Input, HostListener, Component, ViewContainerRef, ComponentF
 import { ClipboardService } from './clipboard.service';
 
 @Directive({
-    selector: '[adf-clipboard]',
-    exportAs: 'adfClipboard'
+    "selector": '[adf-clipboard]',
+    "exportAs": 'adfClipboard'
 })
 export class ClipboardDirective {
     /** Translation key or message for the tooltip. */
@@ -36,13 +36,13 @@ export class ClipboardDirective {
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('clipboard-notification') message: string;
 
-    constructor(private clipboardService: ClipboardService,
+    constructor (private clipboardService: ClipboardService,
                 public viewContainerRef: ViewContainerRef,
                 private resolver: ComponentFactoryResolver) {}
 
 
     @HostListener('mouseenter')
-    showTooltip() {
+    showTooltip () {
         if (this.placeholder) {
             const componentFactory = this.resolver.resolveComponentFactory(ClipboardComponent);
             const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
@@ -51,13 +51,13 @@ export class ClipboardDirective {
     }
 
     @HostListener('mouseleave')
-    closeTooltip() {
+    closeTooltip () {
         this.viewContainerRef.remove();
     }
 
     @HostListener('keydown.enter', ['$event'])
     @HostListener('click', ['$event'])
-    copyToClipboard(event: KeyboardEvent | MouseEvent): void {
+    copyToClipboard (event: KeyboardEvent | MouseEvent): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -70,20 +70,20 @@ export class ClipboardDirective {
         }
     }
 
-    private copyContentToClipboard(content) {
+    private copyContentToClipboard (content) {
         this.clipboardService.copyContentToClipboard(content, this.message);
     }
 }
 
 @Component({
-    selector: 'adf-copy-content-tooltip',
-    template: `<span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>`,
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-copy-content-tooltip',
+    "template": `<span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>`,
+    "encapsulation": ViewEncapsulation.None
 })
 export class ClipboardComponent implements OnInit {
     placeholder: string;
 
-    ngOnInit() {
+    ngOnInit () {
         this.placeholder = this.placeholder || 'CLIPBOARD.CLICK_TO_COPY';
     }
 }

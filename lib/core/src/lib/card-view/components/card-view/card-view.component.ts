@@ -20,10 +20,10 @@ import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
 @Component({
-    selector: 'adf-card-view',
-    templateUrl: './card-view.component.html',
-    styleUrls: ['./card-view.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-card-view',
+    "templateUrl": './card-view.component.html',
+    "styleUrls": ['./card-view.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class CardViewComponent {
     /** (**required**) Items to show in the card view. */

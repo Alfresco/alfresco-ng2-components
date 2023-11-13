@@ -32,22 +32,22 @@ export class TranslationMock implements TranslationService {
     customLoader: any;
 
     translate: any = {
-        onLangChange: new EventEmitter<LangChangeEvent>()
+        "onLangChange": new EventEmitter<LangChangeEvent>()
     };
 
-    addTranslationFolder() {}
+    addTranslationFolder () {}
 
-    onTranslationChanged() {}
+    onTranslationChanged () {}
 
-    use(): any {}
+    use (): any {}
 
-    loadTranslation() {}
+    loadTranslation () {}
 
-    get(key: string | Array<string>): Observable<string | any> {
+    get (key: string | Array<string>): Observable<string | any> {
         return of(key);
     }
 
-    instant(key: string | Array<string>): string | any {
+    instant (key: string | Array<string>): string | any {
         return key;
     }
 

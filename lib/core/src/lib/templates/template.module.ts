@@ -24,8 +24,8 @@ import { IconModule } from '../icon/icon.module';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-    imports: [CommonModule, TranslateModule, IconModule],
-    declarations: [ErrorContentComponent, EmptyContentComponent],
-    exports: [ErrorContentComponent, EmptyContentComponent, MatButtonModule]
+    "imports": [CommonModule, TranslateModule, IconModule],
+    "declarations": [ErrorContentComponent, EmptyContentComponent],
+    "exports": [ErrorContentComponent, EmptyContentComponent, MatButtonModule]
 })
 export class TemplateModule {}

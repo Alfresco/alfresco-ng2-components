@@ -90,7 +90,7 @@ export class FormModel implements ProcessFormModel {
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
 
-    constructor(
+    constructor (
         json?: any,
         formValues?: FormValues,
         readOnly: boolean = false,
@@ -129,7 +129,7 @@ export class FormModel implements ProcessFormModel {
         this.validateForm();
     }
 
-    onFormFieldChanged(field: FormFieldModel) {
+    onFormFieldChanged (field: FormFieldModel) {
         this.validateField(field);
 
         if (this.formService) {
@@ -139,10 +139,8 @@ export class FormModel implements ProcessFormModel {
 
     /**
      * Validates entire form and all form fields.
-     *
-     * @memberof FormModel
      */
-    validateForm(): void {
+    validateForm (): void {
         const validateFormEvent: any = new ValidateFormEvent(this);
 
         const errorsField: FormFieldModel[] = [];
@@ -164,11 +162,9 @@ export class FormModel implements ProcessFormModel {
 
     /**
      * Validates a specific form field, triggers form validation.
-     *
      * @param field Form field to validate.
-     * @memberof FormModel
      */
-    validateField(field: FormFieldModel): void {
+    validateField (field: FormFieldModel): void {
         if (!field) {
             return;
         }
@@ -196,7 +192,7 @@ export class FormModel implements ProcessFormModel {
     }
 
     // Activiti supports 3 types of root fields: container|group|dynamic-table
-    private parseRootFields(json: any): (ContainerModel | FormFieldModel)[] {
+    private parseRootFields (json: any): (ContainerModel | FormFieldModel)[] {
         let fields = [];
 
         if (json.fields) {
@@ -229,7 +225,7 @@ export class FormModel implements ProcessFormModel {
 
     // Loads external data and overrides field values
     // Typically used when form definition and form data coming from different sources
-    private loadData(formValues: FormValues) {
+    private loadData (formValues: FormValues) {
         for (const field of this.fieldsCache) {
             const variableId = `variables.${field.name}`;
 
@@ -240,17 +236,16 @@ export class FormModel implements ProcessFormModel {
         }
     }
 
-    private isDefined(value: string): boolean {
+    private isDefined (value: string): boolean {
         return value !== undefined && value !== null;
     }
 
     /**
      * Returns a form variable that matches the identifier.
-     *
      * @param identifier The `name` or `id` value.
      * @returns form variable model
      */
-    getFormVariable(identifier: string): FormVariableModel {
+    getFormVariable (identifier: string): FormVariableModel {
         if (identifier) {
             return this.variables.find((variable) => variable.name === identifier || variable.id === identifier);
         }
@@ -260,11 +255,10 @@ export class FormModel implements ProcessFormModel {
     /**
      * Returns a value of the form variable that matches the identifier.
      * Provides additional conversion of types (date, boolean).
-     *
      * @param identifier The `name` or `id` value
      * @returns form variable value
      */
-    getDefaultFormVariableValue(identifier: string): any {
+    getDefaultFormVariableValue (identifier: string): any {
         const variable = this.getFormVariable(identifier);
 
         if (variable && Object.prototype.hasOwnProperty.call(variable, 'value')) {
@@ -278,11 +272,10 @@ export class FormModel implements ProcessFormModel {
      * Returns a process variable value.
      * When mapping a process variable with a form variable the mapping
      * is already resolved by the rest API with the name of variables.formVariableName
-     *
      * @param name Variable name
      * @returns process variable value
      */
-    getProcessVariableValue(name: string): any {
+    getProcessVariableValue (name: string): any {
         let value;
         if (this.processVariables?.length) {
             const names = [`variables.${name}`, name];
@@ -301,7 +294,7 @@ export class FormModel implements ProcessFormModel {
         return value;
     }
 
-    protected parseValue(type: string, value: any): any {
+    protected parseValue (type: string, value: any): any {
         if (type && value) {
             switch (type) {
                 case 'date':
@@ -316,23 +309,23 @@ export class FormModel implements ProcessFormModel {
         return value;
     }
 
-    hasTabs(): boolean {
+    hasTabs (): boolean {
         return this.tabs && this.tabs.length > 0;
     }
 
-    hasFields(): boolean {
+    hasFields (): boolean {
         return this.fields && this.fields.length > 0;
     }
 
-    hasOutcomes(): boolean {
+    hasOutcomes (): boolean {
         return this.outcomes && this.outcomes.length > 0;
     }
 
-    getFieldById(fieldId: string): FormFieldModel {
+    getFieldById (fieldId: string): FormFieldModel {
         return this.fieldsCache.find((field) => field.id === fieldId);
     }
 
-    getFormFields(): FormFieldModel[] {
+    getFormFields (): FormFieldModel[] {
         if (this.fieldsCache.length > 0) {
             return this.fieldsCache;
         } else {
@@ -356,26 +349,26 @@ export class FormModel implements ProcessFormModel {
         }
     }
 
-    markAsInvalid(): void {
+    markAsInvalid (): void {
         this.isValid = false;
     }
 
-    protected parseOutcomes() {
+    protected parseOutcomes () {
         if (this.json.fields) {
             const saveOutcome = new FormOutcomeModel(this, {
-                id: FormModel.SAVE_OUTCOME,
-                name: 'SAVE',
-                isSystem: true
+                "id": FormModel.SAVE_OUTCOME,
+                "name": 'SAVE',
+                "isSystem": true
             });
             const completeOutcome = new FormOutcomeModel(this, {
-                id: FormModel.COMPLETE_OUTCOME,
-                name: 'COMPLETE',
-                isSystem: true
+                "id": FormModel.COMPLETE_OUTCOME,
+                "name": 'COMPLETE',
+                "isSystem": true
             });
             const startProcessOutcome = new FormOutcomeModel(this, {
-                id: FormModel.START_PROCESS_OUTCOME,
-                name: 'START PROCESS',
-                isSystem: true
+                "id": FormModel.START_PROCESS_OUTCOME,
+                "name": 'START PROCESS',
+                "isSystem": true
             });
 
             const customOutcomes = (this.json.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
@@ -384,7 +377,7 @@ export class FormModel implements ProcessFormModel {
         }
     }
 
-    addValuesNotPresent(valuesToSetIfNotPresent: FormValues) {
+    addValuesNotPresent (valuesToSetIfNotPresent: FormValues) {
         this.fieldsCache.forEach((field) => {
             if (valuesToSetIfNotPresent[field.id] && (!this.values[field.id] || this.isValidDropDown(field.id))) {
                 this.values[field.id] = valuesToSetIfNotPresent[field.id];
@@ -394,7 +387,7 @@ export class FormModel implements ProcessFormModel {
         });
     }
 
-    private isValidDropDown(key: string): boolean {
+    private isValidDropDown (key: string): boolean {
         const field = this.getFieldById(key);
         if (field.type === FormFieldTypes.DROPDOWN) {
             if (field.hasMultipleValues) {
@@ -405,7 +398,7 @@ export class FormModel implements ProcessFormModel {
         return false;
     }
 
-    setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel) {
+    setNodeIdValueForViewersLinkedToUploadWidget (linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel) {
         const linkedWidgetType = linkedUploadWidgetContentSelected?.options?.linkedWidgetType ?? 'uploadWidget';
 
         const subscribedViewers = this.fieldsCache.filter(
@@ -419,7 +412,7 @@ export class FormModel implements ProcessFormModel {
         });
     }
 
-    changeFieldVisibility(fieldId: string, visibility: boolean): void {
+    changeFieldVisibility (fieldId: string, visibility: boolean): void {
         const visibilityRule: WidgetVisibilityModel = new WidgetVisibilityModel();
 
         const field = this.getFieldById(fieldId);
@@ -431,28 +424,28 @@ export class FormModel implements ProcessFormModel {
         }
     }
 
-    changeFieldDisabled(fieldId: string, disabled: boolean): void {
+    changeFieldDisabled (fieldId: string, disabled: boolean): void {
         const field = this.getFieldById(fieldId);
         if (field) {
             field.readOnly = this.readOnly || disabled;
         }
     }
 
-    changeFieldRequired(fieldId: string, required: boolean): void {
+    changeFieldRequired (fieldId: string, required: boolean): void {
         const field = this.getFieldById(fieldId);
         if (field) {
             field.required = required;
         }
     }
 
-    changeFieldValue(fieldId: string, value: any): void {
+    changeFieldValue (fieldId: string, value: any): void {
         const field = this.getFieldById(fieldId);
         if (field) {
             field.value = value;
         }
     }
 
-    changeVariableValue(variableId: string, value: any): void {
+    changeVariableValue (variableId: string, value: any): void {
         const variable = this.getFormVariable(variableId);
         if (variable) {
             variable.value = value;

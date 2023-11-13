@@ -21,8 +21,8 @@ import { map, take, share, filter, pairwise, mergeMap, takeUntil } from 'rxjs/op
 import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, EventEmitter, Input } from '@angular/core';
 
 @Directive({
-    selector: '[adf-resizable]',
-    exportAs: 'adf-resizable'
+    "selector": '[adf-resizable]',
+    "exportAs": 'adf-resizable'
 })
 export class ResizableDirective implements OnInit, OnDestroy {
     /**
@@ -65,7 +65,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     private destroy$ = new Subject<void>();
 
-    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef<HTMLElement>, private readonly zone: NgZone) {
+    constructor (private readonly renderer: Renderer2, private readonly element: ElementRef<HTMLElement>, private readonly zone: NgZone) {
         this.pointerDown = new Observable((observer: Observer<IResizeMouseEvent>) => {
             zone.runOutsideAngular(() => {
                 this.unsubscribeMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
@@ -91,7 +91,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
         }).pipe(share());
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         const mousedown$ = merge(this.pointerDown, this.mousedown);
         const mousemove$ = merge(this.pointerMove, this.mousemove);
         const mouseup$ = merge(this.pointerUp, this.mouseup);
@@ -102,14 +102,14 @@ export class ResizableDirective implements OnInit, OnDestroy {
                     merge(mousemove$.pipe(take(1)).pipe(map((coords) => [undefined, coords])), mousemove$.pipe(pairwise()))
                         .pipe(
                             map(([previousCoords = {}, newCoords = {}]) => [
-                                { clientX: previousCoords.clientX - clientX },
-                                { clientX: newCoords.clientX - clientX }
+                                { "clientX": previousCoords.clientX - clientX },
+                                { "clientX": newCoords.clientX - clientX }
                             ])
                         )
                         .pipe(filter(([previousCoords = {}, newCoords = {}]) => Math.ceil(previousCoords.clientX) !== Math.ceil(newCoords.clientX)))
                         .pipe(
                             map(([, newCoords]) => ({
-                                clientX: Math.round(newCoords.clientX)
+                                "clientX": Math.round(newCoords.clientX)
                             }))
                         )
                         .pipe(takeUntil(merge(mouseup$, mousedown$)))
@@ -144,7 +144,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
                 if (this.resizeStart.observers.length > 0) {
                     this.zone.run(() => {
                         this.resizeStart.emit({
-                            rectangle: this.getNewBoundingRectangle(this.startingRect, 0)
+                            "rectangle": this.getNewBoundingRectangle(this.startingRect, 0)
                         });
                     });
                 }
@@ -155,7 +155,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
                 this.renderer.setStyle(document.body, 'cursor', '');
                 if (this.resizeEnd.observers.length > 0) {
                     this.zone.run(() => {
-                        this.resizeEnd.emit({ rectangle: this.currentRect });
+                        this.resizeEnd.emit({ "rectangle": this.currentRect });
                     });
                 }
                 this.startingRect = null;
@@ -164,7 +164,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.mousedown.complete();
         this.mousemove.complete();
         this.mouseup.complete();
@@ -174,19 +174,19 @@ export class ResizableDirective implements OnInit, OnDestroy {
         this.destroy$.next();
     }
 
-    private getNewBoundingRectangle({ top, bottom, left, right }: BoundingRectangle, clientX: number): BoundingRectangle {
+    private getNewBoundingRectangle ({ top, bottom, left, right }: BoundingRectangle, clientX: number): BoundingRectangle {
         const updatedRight = Math.round(right + clientX);
 
         return {
             top,
             left,
             bottom,
-            right: updatedRight,
-            width: updatedRight - left
+            "right": updatedRight,
+            "width": updatedRight - left
         };
     }
 
-    private getElementRect({ nativeElement }: ElementRef): BoundingRectangle {
+    private getElementRect ({ nativeElement }: ElementRef): BoundingRectangle {
         const { height = 0, width = 0, top = 0, bottom = 0, right = 0, left = 0 }: BoundingRectangle = nativeElement.getBoundingClientRect();
 
         return {
@@ -196,8 +196,8 @@ export class ResizableDirective implements OnInit, OnDestroy {
             width,
             height,
             bottom,
-            scrollTop: nativeElement.scrollTop,
-            scrollLeft: nativeElement.scrollLeft
+            "scrollTop": nativeElement.scrollTop,
+            "scrollLeft": nativeElement.scrollLeft
         };
     }
 }

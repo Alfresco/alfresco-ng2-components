@@ -38,7 +38,7 @@ describe('CardViewComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule]
         }).compileComponents();
 
         fixture = TestBed.createComponent(CardViewComponent);
@@ -51,7 +51,7 @@ describe('CardViewComponent', () => {
     });
 
     it('should render the label and value', async () => {
-        component.properties = [new CardViewTextItemModel({ label: 'My label', value: 'My value', key: 'some key' })];
+        component.properties = [new CardViewTextItemModel({ "label": 'My label', "value": 'My value', "key": 'some key' })];
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -69,10 +69,10 @@ describe('CardViewComponent', () => {
         component.editable = true;
         component.properties = [
             new CardViewDateItemModel({
-                label: 'My date label',
-                value: '2017-06-14',
-                key: 'some-key',
-                editable: true
+                "label": 'My date label',
+                "value": '2017-06-14',
+                "key": 'some-key',
+                "editable": true
             })
         ];
 
@@ -85,10 +85,10 @@ describe('CardViewComponent', () => {
     it('should render the date in the correct format', async () => {
         component.properties = [
             new CardViewDateItemModel({
-                label: 'My date label',
-                value: '2017-06-14',
-                key: 'some key',
-                format: 'short'
+                "label": 'My date label',
+                "value": '2017-06-14',
+                "key": 'some key',
+                "format": 'short'
             })
         ];
 
@@ -107,11 +107,11 @@ describe('CardViewComponent', () => {
     it('should render the default value if the value is empty, not editable and displayEmpty is true', async () => {
         component.properties = [
             new CardViewTextItemModel({
-                label: 'My default label',
-                value: null,
-                default: 'default value',
-                key: 'some-key',
-                editable: false
+                "label": 'My default label',
+                "value": null,
+                "default": 'default value',
+                "key": 'some-key',
+                "editable": false
             })
         ];
         component.editable = true;
@@ -132,11 +132,11 @@ describe('CardViewComponent', () => {
     it('should render the default value if the value is empty and is editable', async () => {
         component.properties = [
             new CardViewTextItemModel({
-                label: 'My default label',
-                value: null,
-                default: 'default value',
-                key: 'some-key',
-                editable: true
+                "label": 'My default label',
+                "value": null,
+                "default": 'default value',
+                "key": 'some-key',
+                "editable": true
             })
         ];
         component.editable = true;
@@ -156,17 +156,17 @@ describe('CardViewComponent', () => {
 
     it('should render the select element with the None option when not set in the properties', async () => {
         const options: CardViewSelectItemOption<string>[] = [
-            { label: 'Option 1', key: '1' },
-            { label: 'Option 2', key: '2' }
+            { "label": 'Option 1', "key": '1' },
+            { "label": 'Option 2', "key": '2' }
         ];
         component.properties = [
             new CardViewSelectItemModel({
-                label: 'My default label',
-                value: '1',
-                default: 'default value',
-                key: 'some-key',
-                editable: true,
-                options$: of(options)
+                "label": 'My default label',
+                "value": '1',
+                "default": 'default value',
+                "key": 'some-key',
+                "editable": true,
+                "options$": of(options)
             })
         ];
         component.editable = true;
@@ -187,18 +187,18 @@ describe('CardViewComponent', () => {
 
     it('should render the select element with the None option when set true in the properties', async () => {
         const options: CardViewSelectItemOption<string>[] = [
-            { label: 'Option 1', key: '1' },
-            { label: 'Option 2', key: '2' }
+            { "label": 'Option 1', "key": '1' },
+            { "label": 'Option 2', "key": '2' }
         ];
         component.properties = [
             new CardViewSelectItemModel({
-                label: 'My default label',
-                value: '1',
-                default: 'default value',
-                key: 'some-key',
-                editable: true,
-                displayNoneOption: true,
-                options$: of(options)
+                "label": 'My default label',
+                "value": '1',
+                "default": 'default value',
+                "key": 'some-key',
+                "editable": true,
+                "displayNoneOption": true,
+                "options$": of(options)
             })
         ];
         component.editable = true;
@@ -219,18 +219,18 @@ describe('CardViewComponent', () => {
 
     it('should not render the select element with the None option when set false in the properties', async () => {
         const options: CardViewSelectItemOption<string>[] = [
-            { label: 'Option 1', key: '1' },
-            { label: 'Option 2', key: '2' }
+            { "label": 'Option 1', "key": '1' },
+            { "label": 'Option 2', "key": '2' }
         ];
         component.properties = [
             new CardViewSelectItemModel({
-                label: 'My default label',
-                value: '1',
-                default: 'default value',
-                key: 'some-key',
-                editable: true,
-                displayNoneOption: false,
-                options$: of(options)
+                "label": 'My default label',
+                "value": '1',
+                "default": 'default value',
+                "key": 'some-key',
+                "editable": true,
+                "displayNoneOption": false,
+                "options$": of(options)
             })
         ];
         component.editable = true;
@@ -250,9 +250,9 @@ describe('CardViewComponent', () => {
 
     it('should show/hide the label for multivalued chip property based on displayLabelForChips input', () => {
         const multiValueProperty: CardViewItem = new CardViewTextItemModel({
-            label: 'My Multivalue Label',
-            value: ['Value 1', 'Value 2', 'Value 3'],
-            key: 'multi-key'
+            "label": 'My Multivalue Label',
+            "value": ['Value 1', 'Value 2', 'Value 3'],
+            "key": 'multi-key'
         });
 
         component.properties = [multiValueProperty];
@@ -270,10 +270,9 @@ describe('CardViewComponent', () => {
 
     /**
      * Return the card view item dispatcher component
-     *
      * @returns the dispatcher component instance
      */
-    function getCardViewItemDispatcherComponent(): CardViewItemDispatcherComponent {
+    function getCardViewItemDispatcherComponent (): CardViewItemDispatcherComponent {
         const cardViewItemDispatcherDebugElement = fixture.debugElement.query(By.directive(CardViewItemDispatcherComponent));
         return cardViewItemDispatcherDebugElement.componentInstance as CardViewItemDispatcherComponent;
     }

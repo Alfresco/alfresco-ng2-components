@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { StorageService } from '../../common/services/storage.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class JwtHelperService {
 
@@ -34,16 +34,15 @@ export class JwtHelperService {
     static USER_PREFERRED_USERNAME = 'preferred_username';
     static HXP_AUTHORIZATION = 'hxp_authorization';
 
-    constructor(private storageService: StorageService) {
+    constructor (private storageService: StorageService) {
     }
 
     /**
      * Decodes a JSON web token into a JS object.
-     *
      * @param token Token in encoded form
      * @returns Decoded token data object
      */
-    decodeToken(token): any {
+    decodeToken (token): any {
         const parts = token.split('.');
 
         if (parts.length !== 3) {
@@ -58,7 +57,7 @@ export class JwtHelperService {
         return JSON.parse(decoded);
     }
 
-    private urlBase64Decode(token): string {
+    private urlBase64Decode (token): string {
         let output = token.replace(/-/g, '+').replace(/_/g, '/');
         switch (output.length % 4) {
             case 0: {
@@ -81,60 +80,54 @@ export class JwtHelperService {
 
     /**
      * Gets a named value from the user access or id token.
-     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
-     getValueFromLocalToken<T>(key: string): T {
+     getValueFromLocalToken<T> (key: string): T {
         return this.getValueFromToken(this.getAccessToken(), key) || this.getValueFromToken(this.getIdToken(), key);
     }
 
     /**
      * Gets a named value from the user access token.
-     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
-    getValueFromLocalAccessToken<T>(key: string): T {
+    getValueFromLocalAccessToken<T> (key: string): T {
         return this.getValueFromToken(this.getAccessToken(), key);
     }
 
     /**
      * Gets access token
-     *
      * @returns access token
      */
-    getAccessToken(): string {
+    getAccessToken (): string {
         return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
     /**
      * Gets a named value from the user id token.
-     *
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
-     getValueFromLocalIdToken<T>(key: string): T {
+     getValueFromLocalIdToken<T> (key: string): T {
         return this.getValueFromToken(this.getIdToken(), key);
     }
 
     /**
      * Gets id token
-     *
      * @returns id token
      */
-     getIdToken(): string {
+     getIdToken (): string {
         return this.storageService.getItem(JwtHelperService.USER_ID_TOKEN);
     }
 
     /**
      * Gets a named value from the user access token.
-     *
      * @param token your SSO access token where the value is encode
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
-    getValueFromToken<T>(token: string, key: string): T {
+    getValueFromToken<T> (token: string, key: string): T {
         let value: T;
 
         if (token) {
@@ -146,32 +139,29 @@ export class JwtHelperService {
 
     /**
      * Gets realm roles.
-     *
      * @returns Array of realm roles
      */
-    getRealmRoles(): string[] {
+    getRealmRoles (): string[] {
         const access = this.getValueFromLocalAccessToken<any>(JwtHelperService.REALM_ACCESS);
         return access ? access['roles'] : [];
     }
 
     /**
      * Gets Client roles.
-     *
      * @param clientName client name
      * @returns Array of client roles
      */
-    getClientRoles(clientName: string): string[] {
+    getClientRoles (clientName: string): string[] {
         const clientRole = this.getValueFromLocalAccessToken<any>(JwtHelperService.RESOURCE_ACCESS)[clientName];
         return clientRole ? clientRole['roles'] : [];
     }
 
     /**
      * Checks for single realm role.
-     *
      * @param role Role name to check
      * @returns True if it contains given role, false otherwise
      */
-    hasRealmRole(role: string): boolean {
+    hasRealmRole (role: string): boolean {
         let hasRole = false;
         if (this.getAccessToken()) {
             const realmRoles = this.getRealmRoles();
@@ -182,33 +172,30 @@ export class JwtHelperService {
 
     /**
      * Checks for realm roles.
-     *
      * @param rolesToCheck List of role names to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
-    hasRealmRoles(rolesToCheck: string []): boolean {
+    hasRealmRoles (rolesToCheck: string []): boolean {
         return rolesToCheck.some((currentRole) => this.hasRealmRole(currentRole));
     }
 
     /**
      * Checks for client roles.
-     *
      * @param clientName Targeted client name
      * @param rolesToCheck List of role names to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
-    hasRealmRolesForClientRole(clientName: string, rolesToCheck: string []): boolean {
+    hasRealmRolesForClientRole (clientName: string, rolesToCheck: string []): boolean {
         return rolesToCheck.some((currentRole) => this.hasClientRole(clientName, currentRole));
     }
 
     /**
      * Checks for client role.
-     *
      * @param clientName Targeted client name
      * @param role Role name to check
      * @returns True if it contains given role, false otherwise
      */
-    hasClientRole(clientName: string, role: string): boolean {
+    hasClientRole (clientName: string, role: string): boolean {
         let hasRole = false;
         if (this.getAccessToken()) {
             const clientRoles = this.getClientRoles(clientName);

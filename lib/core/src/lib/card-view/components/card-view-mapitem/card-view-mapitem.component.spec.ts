@@ -34,7 +34,7 @@ describe('CardViewMapItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -52,11 +52,11 @@ describe('CardViewMapItemComponent', () => {
 
     it('should render the default if the value is empty and displayEmpty is true', () => {
         component.property = new CardViewMapItemModel({
-            label: 'Map label',
-            value: null,
-            key: 'mapkey',
-            default: 'Fake default',
-            clickable: false
+            "label": 'Map label',
+            "value": null,
+            "key": 'mapkey',
+            "default": 'Fake default',
+            "clickable": false
         });
         component.displayEmpty = true;
         fixture.detectChanges();
@@ -72,11 +72,11 @@ describe('CardViewMapItemComponent', () => {
 
     it('should NOT render the default if the value is empty and displayEmpty is false', () => {
         component.property = new CardViewMapItemModel({
-            label: 'Map label',
-            value: null,
-            key: 'mapkey',
-            default: 'Fake default',
-            clickable: false
+            "label": 'Map label',
+            "value": null,
+            "key": 'mapkey',
+            "default": 'Fake default',
+            "clickable": false
         });
         component.displayEmpty = false;
         fixture.detectChanges();
@@ -91,10 +91,10 @@ describe('CardViewMapItemComponent', () => {
 
     it('should render the label and value', () => {
         component.property = new CardViewMapItemModel({
-            label: 'Map label',
-            value: new Map([['999', 'fakeProcessName']]),
-            key: 'mapkey',
-            default: ''
+            "label": 'Map label',
+            "value": new Map([['999', 'fakeProcessName']]),
+            "key": 'mapkey',
+            "default": ''
         });
 
         fixture.detectChanges();
@@ -110,11 +110,11 @@ describe('CardViewMapItemComponent', () => {
 
     it('should render a clickable value', (done) => {
         component.property = new CardViewMapItemModel({
-            label: 'Map label',
-            value: new Map([['999', 'fakeProcessName']]),
-            key: 'mapkey',
-            default: 'Fake default',
-            clickable: true
+            "label": 'Map label',
+            "value": new Map([['999', 'fakeProcessName']]),
+            "key": 'mapkey',
+            "default": 'Fake default',
+            "clickable": true
         });
 
         fixture.detectChanges();

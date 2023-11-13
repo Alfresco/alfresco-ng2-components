@@ -30,7 +30,7 @@ describe('DecimalNumberPipe', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -46,9 +46,9 @@ describe('DecimalNumberPipe', () => {
 
     it('should return number with at least the minimum of digints in the integer part', () => {
         const decimalValues = {
-            minIntegerDigits: 6,
-            minFractionDigits: undefined,
-            maxFractionDigits: undefined
+            "minIntegerDigits": 6,
+            "minFractionDigits": undefined,
+            "maxFractionDigits": undefined
         };
 
         expect(pipe.transform(1234.567, decimalValues)).toBe('001,234.57');
@@ -56,9 +56,9 @@ describe('DecimalNumberPipe', () => {
 
     it('should return number with at least the minimum of digints in the integer part', () => {
         const decimalValues = {
-            minIntegerDigits: undefined,
-            minFractionDigits: 4,
-            maxFractionDigits: 10
+            "minIntegerDigits": undefined,
+            "minFractionDigits": 4,
+            "maxFractionDigits": 10
         };
 
         expect(pipe.transform(1234.567, decimalValues)).toBe('1,234.5670');
@@ -66,9 +66,9 @@ describe('DecimalNumberPipe', () => {
 
     it('should return number with at least the minimum of digints in the integer part', () => {
         const decimalValues = {
-            minIntegerDigits: undefined,
-            minFractionDigits: 0,
-            maxFractionDigits: 1
+            "minIntegerDigits": undefined,
+            "minFractionDigits": 0,
+            "maxFractionDigits": 1
         };
 
         expect(pipe.transform(1234.567, decimalValues)).toBe('1,234.6');

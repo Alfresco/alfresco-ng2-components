@@ -41,11 +41,11 @@ describe('ColumnsSelectorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            declarations: [ColumnsSelectorComponent]
+            "declarations": [ColumnsSelectorComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(ColumnsSelectorComponent);
@@ -53,35 +53,35 @@ describe('ColumnsSelectorComponent', () => {
 
         component = fixture.componentInstance;
         inputColumns = [{
-            id: 'id0',
-            key: 'key0',
-            title: 'title0',
-            type: 'text'
+            "id": 'id0',
+            "key": 'key0',
+            "title": 'title0',
+            "type": 'text'
         }, {
-            id: 'id1',
-            key: 'key1',
-            title: 'title1',
-            type: 'text'
+            "id": 'id1',
+            "key": 'key1',
+            "title": 'title1',
+            "type": 'text'
         }, {
-            id: 'id2',
-            key: 'key2',
-            title: 'title2',
-            type: 'text'
+            "id": 'id2',
+            "key": 'key2',
+            "title": 'title2',
+            "type": 'text'
         }, {
-            id: 'id3',
-            key: 'NoTitle',
-            type: 'text'
+            "id": 'id3',
+            "key": 'NoTitle',
+            "type": 'text'
         }, {
-            id: 'id4',
-            key: 'IsHidden',
-            type: 'text',
-            title: 'title4',
-            isHidden: true
+            "id": 'id4',
+            "key": 'IsHidden',
+            "type": 'text',
+            "title": 'title4',
+            "isHidden": true
         }];
 
         mainMenuTrigger = {
-            menuOpened: menuOpenedTrigger.asObservable(),
-            menuClosed: menuClosedTrigger.asObservable()
+            "menuOpened": menuOpenedTrigger.asObservable(),
+            "menuClosed": menuClosedTrigger.asObservable()
         };
 
         component.columns = inputColumns;
@@ -186,18 +186,18 @@ describe('ColumnsSelectorComponent', () => {
 
     describe('sorting', () => {
         const hiddenDataColumn: DataColumn = {
-            id: 'hiddenDataColumn',
-            title: 'hiddenDataColumn',
-            key: 'hiddenDataColumn',
-            type: 'text',
-            isHidden: true
+            "id": 'hiddenDataColumn',
+            "title": 'hiddenDataColumn',
+            "key": 'hiddenDataColumn',
+            "type": 'text',
+            "isHidden": true
         };
 
         const shownDataColumn: DataColumn = {
-            id: 'shownDataColumn',
-            title: 'shownDataColumn',
-            key: 'shownDataColumn',
-            type: 'text'
+            "id": 'shownDataColumn',
+            "title": 'shownDataColumn',
+            "key": 'shownDataColumn',
+            "type": 'text'
         };
         it('should show hidden columns at the end of the list by default', async () => {
             component.columns = [hiddenDataColumn, shownDataColumn];

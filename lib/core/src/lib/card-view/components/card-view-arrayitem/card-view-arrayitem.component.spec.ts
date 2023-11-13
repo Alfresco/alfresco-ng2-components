@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatChipHarness, MatChipListboxHarness } from '@angular/material/chips/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 
@@ -37,22 +37,22 @@ describe('CardViewArrayItemComponent', () => {
     let serviceSpy: jasmine.Spy;
 
     const mockData = [
-        { icon: 'person', value: 'Zlatan' },
-        { icon: 'group', value: 'Lionel Messi' },
-        { icon: 'person', value: 'Mohamed' },
-        { icon: 'person', value: 'Ronaldo' }
+        { "icon": 'person', "value": 'Zlatan' },
+        { "icon": 'group', "value": 'Lionel Messi' },
+        { "icon": 'person', "value": 'Mohamed' },
+        { "icon": 'person', "value": 'Ronaldo' }
     ] as CardViewArrayItem[];
 
     const mockDefaultProps = {
-        label: 'Array of items',
-        value: of(mockData),
-        key: 'array',
-        icon: 'edit'
+        "label": 'Array of items',
+        "value": of(mockData),
+        "key": 'array',
+        "icon": 'edit'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(CardViewArrayItemComponent);
         service = TestBed.inject(CardViewUpdateService);
@@ -70,7 +70,7 @@ describe('CardViewArrayItemComponent', () => {
             serviceSpy = spyOn(service, 'clicked');
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
-                clickable: true
+                "clickable": true
             });
 
             fixture.detectChanges();
@@ -85,7 +85,7 @@ describe('CardViewArrayItemComponent', () => {
 
         it('should call service on edit icon click', async () => {
             const button = await loader.getHarness(
-                MatButtonHarness.with({ selector: `[data-automation-id="card-array-item-clickable-icon-array"]` })
+                MatButtonHarness.with({ "selector": `[data-automation-id="card-array-item-clickable-icon-array"]` })
             );
             await button.click();
 
@@ -93,7 +93,7 @@ describe('CardViewArrayItemComponent', () => {
         });
 
         it('should NOT call service on chip list container click', async () => {
-            const chipList = await loader.getHarness(MatChipListHarness);
+            const chipList = await loader.getHarness(MatChipListboxHarness);
             await (await chipList.host()).click();
 
             expect(serviceSpy).not.toHaveBeenCalled();
@@ -112,7 +112,7 @@ describe('CardViewArrayItemComponent', () => {
         it('should render chip list', () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
-                editable: true
+                "editable": true
             });
             fixture.detectChanges();
 
@@ -128,16 +128,16 @@ describe('CardViewArrayItemComponent', () => {
         it('should render chip with defined icon', async () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
-                editable: true
+                "editable": true
             });
             fixture.detectChanges();
 
             const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
             const chip1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] span');
-            const chip1Icon = await loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="card-arrayitem-chip-Zlatan"]` }));
+            const chip1Icon = await loader.getHarness(MatIconHarness.with({ "ancestor": `[data-automation-id="card-arrayitem-chip-Zlatan"]` }));
 
             const chip2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] span');
-            const chip2Icon = await loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="card-arrayitem-chip-Lionel Messi"]` }));
+            const chip2Icon = await loader.getHarness(MatIconHarness.with({ "ancestor": `[data-automation-id="card-arrayitem-chip-Lionel Messi"]` }));
 
             expect(chipListContainer).not.toBeNull();
             expect(chip1.innerText).toEqual('Zlatan');
@@ -149,7 +149,7 @@ describe('CardViewArrayItemComponent', () => {
         it('should render defined icon if clickable set to true', () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
-                clickable: true
+                "clickable": true
             });
             fixture.detectChanges();
             const editIcon = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
@@ -160,11 +160,11 @@ describe('CardViewArrayItemComponent', () => {
         it('should not render defined icon if clickable set to false', async () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
-                clickable: false
+                "clickable": false
             });
             fixture.detectChanges();
             const editExists = await loader.hasHarness(
-                MatButtonHarness.with({ selector: `[data-automation-id="card-array-item-clickable-icon-array"]` })
+                MatButtonHarness.with({ "selector": `[data-automation-id="card-array-item-clickable-icon-array"]` })
             );
             expect(editExists).toBe(false);
         });
@@ -172,7 +172,7 @@ describe('CardViewArrayItemComponent', () => {
         it('should render all values if noOfItemsToDisplay is not defined', async () => {
             fixture.detectChanges();
 
-            const chipList = await loader.getHarness(MatChipListHarness);
+            const chipList = await loader.getHarness(MatChipListboxHarness);
             const chips = await chipList.getChips();
 
             const moreElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-more-chip"]'));
@@ -183,11 +183,11 @@ describe('CardViewArrayItemComponent', () => {
         it('should render only two values along with more item chip if noOfItemsToDisplay is set to 2', async () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
-                noOfItemsToDisplay: 2
+                "noOfItemsToDisplay": 2
             });
             fixture.detectChanges();
 
-            const chipList = await loader.getHarness(MatChipListHarness);
+            const chipList = await loader.getHarness(MatChipListboxHarness);
             const chips = await chipList.getChips();
 
             expect(chips.length).toBe(3);

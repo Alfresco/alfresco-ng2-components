@@ -20,9 +20,9 @@ import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
-    selector: 'adf-card-view-mapitem',
-    templateUrl: './card-view-mapitem.component.html',
-    styleUrls: ['./card-view-mapitem.component.scss']
+    "selector": 'adf-card-view-mapitem',
+    "templateUrl": './card-view-mapitem.component.html',
+    "styleUrls": ['./card-view-mapitem.component.scss']
 })
 
 export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel> {
@@ -32,15 +32,15 @@ export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel>
     @Input()
     displayEmpty: boolean = true;
 
-    showProperty() {
+    showProperty () {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    isClickable() {
+    isClickable () {
         return this.property.clickable;
     }
 
-    clicked(): void {
+    clicked (): void {
         this.cardViewUpdateService.clicked(this.property);
     }
 }

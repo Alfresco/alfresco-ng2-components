@@ -29,54 +29,54 @@ import {
 } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 
-Injectable({ providedIn: 'root' });
+Injectable({ "providedIn": 'root' });
 export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
 
-    getGroups(): Observable<IdentityGroupModel[]> {
+    getGroups (): Observable<IdentityGroupModel[]> {
         return of(mockIdentityGroups);
     }
 
-    getAvailableRoles(_groupId: string): Observable<IdentityRoleModel[]> {
+    getAvailableRoles (_groupId: string): Observable<IdentityRoleModel[]> {
         return of(mockIdentityRoles);
     }
 
-    getAssignedRoles(_groupId: string): Observable<IdentityRoleModel[]> {
+    getAssignedRoles (_groupId: string): Observable<IdentityRoleModel[]> {
         return of(mockIdentityRoles);
     }
 
-    assignRoles(_groupId: string, _roles: IdentityRoleModel[]): Observable<any> {
+    assignRoles (_groupId: string, _roles: IdentityRoleModel[]): Observable<any> {
         return of();
     }
 
-    removeRoles(_groupId: string, _roles: IdentityRoleModel[]): Observable<any> {
+    removeRoles (_groupId: string, _roles: IdentityRoleModel[]): Observable<any> {
         return of();
     }
 
-    getEffectiveRoles(_groupId: string): Observable<IdentityRoleModel[]> {
+    getEffectiveRoles (_groupId: string): Observable<IdentityRoleModel[]> {
         return of(mockIdentityRoles);
     }
 
-    queryGroups(_requestQuery: IdentityGroupQueryCloudRequestModel): Observable<IdentityGroupQueryResponse> {
+    queryGroups (_requestQuery: IdentityGroupQueryCloudRequestModel): Observable<IdentityGroupQueryResponse> {
         return of();
     }
 
-    getTotalGroupsCount(): Observable<IdentityGroupCountModel> {
+    getTotalGroupsCount (): Observable<IdentityGroupCountModel> {
         return of(mockIdentityGroupsCount);
     }
 
-    createGroup(_newGroup: IdentityGroupModel): Observable<any> {
+    createGroup (_newGroup: IdentityGroupModel): Observable<any> {
         return of();
     }
 
-    updateGroup(_groupId: string, _updatedGroup: IdentityGroupModel): Observable<any> {
+    updateGroup (_groupId: string, _updatedGroup: IdentityGroupModel): Observable<any> {
         return of();
     }
 
-    deleteGroup(_groupId: string): Observable<any> {
+    deleteGroup (_groupId: string): Observable<any> {
         return of();
     }
 
-    findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
+    findGroupsByName (searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
         if (searchParams.name === '') {
             return of([]);
         }
@@ -86,11 +86,11 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
         ));
     }
 
-    getGroupRoles(_groupId: string): Observable<IdentityRoleModel[]> {
+    getGroupRoles (_groupId: string): Observable<IdentityRoleModel[]> {
         return of(mockIdentityRoles);
     }
 
-    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean> {
+    checkGroupHasRole (groupId: string, roleNames: string[]): Observable<boolean> {
         return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
             let hasRole = false;
             if (groupRoles?.length > 0) {
@@ -106,25 +106,25 @@ export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
         }));
     }
 
-    getClientIdByApplicationName(_applicationName: string): Observable<string> {
+    getClientIdByApplicationName (_applicationName: string): Observable<string> {
         return of('fake-client-id');
     }
 
-    getClientRoles(groupId: string, _clientId: string): Observable<IdentityRoleModel[]> {
+    getClientRoles (groupId: string, _clientId: string): Observable<IdentityRoleModel[]> {
         if (['mock-group-id-1', 'mock-group-id-2'].includes(groupId)) {
-            return of([{ id: 'mock-role-id', name: 'MOCK-ADMIN-ROLE' }]);
+            return of([{ "id": 'mock-role-id', "name": 'MOCK-ADMIN-ROLE' }]);
         }
 
-        return of([{ id: 'mock-role-id', name: 'MOCK-USER-ROLE' }]);
+        return of([{ "id": 'mock-role-id', "name": 'MOCK-USER-ROLE' }]);
     }
 
-    checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
+    checkGroupHasClientApp (groupId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(
             map((response) => response && response.length > 0)
         );
     }
 
-    checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+    checkGroupHasAnyClientAppRole (groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(
             map((clientRoles: any[]) => {
                 let hasRole = false;

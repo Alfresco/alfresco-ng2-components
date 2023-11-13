@@ -19,22 +19,22 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 import { StatusData } from '../interfaces';
 
 @Component({
-    selector: 'adf-about-status-list',
-    templateUrl: './about-status-list.component.html',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    "selector": 'adf-about-status-list',
+    "templateUrl": './about-status-list.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class AboutStatusListComponent {
     columns = [
         {
-            columnDef: 'property',
-            header: 'ABOUT.STATUS.PROPERTY',
-            cell: (row: StatusData) => `${row.property}`
+            "columnDef": 'property',
+            "header": 'ABOUT.STATUS.PROPERTY',
+            "cell": (row: StatusData) => `${row.property}`
         },
         {
-            columnDef: 'value',
-            header: 'ABOUT.STATUS.VALUE',
-            cell: (row: StatusData) => `${row.value}`
+            "columnDef": 'value',
+            "header": 'ABOUT.STATUS.VALUE',
+            "cell": (row: StatusData) => `${row.value}`
         }
     ];
 

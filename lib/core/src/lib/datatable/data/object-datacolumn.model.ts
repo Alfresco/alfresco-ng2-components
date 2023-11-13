@@ -43,7 +43,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     decimalConfig?: DecimalConfig;
     dateConfig?: DateConfig;
 
-    constructor(input: any) {
+    constructor (input: any) {
         this.id = input.id ?? '';
         this.key = input.key;
         this.type = input.type || 'text';

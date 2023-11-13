@@ -18,13 +18,13 @@
 import { Component, Directive, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'adf-empty-list',
-    styleUrls: ['./empty-list.component.scss'],
-    templateUrl: './empty-list.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-empty-list',
+    "styleUrls": ['./empty-list.component.scss'],
+    "templateUrl": './empty-list.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class EmptyListComponent {}
 
-@Directive({ selector: '[adf-empty-list-header]' }) export class EmptyListHeaderDirective {}
-@Directive({ selector: '[adf-empty-list-body]' }) export class EmptyListBodyDirective {}
-@Directive({ selector: '[adf-empty-list-footer]' }) export class EmptyListFooterDirective {}
+@Directive({ "selector": '[adf-empty-list-header]' }) export class EmptyListHeaderDirective {}
+@Directive({ "selector": '[adf-empty-list-body]' }) export class EmptyListBodyDirective {}
+@Directive({ "selector": '[adf-empty-list-footer]' }) export class EmptyListFooterDirective {}

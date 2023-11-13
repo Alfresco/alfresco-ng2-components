@@ -30,21 +30,21 @@ describe('PdfPasswordDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            providers: [
+            "providers": [
                 {
-                    provide: MAT_DIALOG_DATA,
-                    useValue: {
-                        reason: null
+                    "provide": MAT_DIALOG_DATA,
+                    "useValue": {
+                        "reason": null
                     }
                 },
                 {
-                    provide: MatDialogRef,
-                    useValue: {
-                        close: jasmine.createSpy('open')
+                    "provide": MatDialogRef,
+                    "useValue": {
+                        "close": jasmine.createSpy('open')
                     }
                 }
             ]

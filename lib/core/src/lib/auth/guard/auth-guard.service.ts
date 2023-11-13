@@ -28,13 +28,13 @@ import { OidcAuthenticationService } from '../services/oidc-authentication.servi
 
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AuthGuard extends AuthGuardBase {
 
     ticketChangeBind: any;
 
-    constructor(private jwtHelperService: JwtHelperService,
+    constructor (private jwtHelperService: JwtHelperService,
                 authenticationService: AuthenticationService,
                 basicAlfrescoAuthService: BasicAlfrescoAuthService,
                 oidcAuthenticationService: OidcAuthenticationService,
@@ -48,7 +48,7 @@ export class AuthGuard extends AuthGuardBase {
         window.addEventListener('storage', this.ticketChangeBind);
     }
 
-    ticketChange(event: StorageEvent) {
+    ticketChange (event: StorageEvent) {
         if (event.key.includes('ticket-ECM') && event.newValue !== event.oldValue) {
             this.ticketChangeRedirect(event);
         }
@@ -64,7 +64,7 @@ export class AuthGuard extends AuthGuardBase {
         }
     }
 
-    private ticketChangeRedirect(event: StorageEvent) {
+    private ticketChangeRedirect (event: StorageEvent) {
         if (event.newValue) {
             this.navigate(this.router.url);
         } else {
@@ -72,7 +72,7 @@ export class AuthGuard extends AuthGuardBase {
         }
     }
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
+    async checkLogin (_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isLoggedIn() || this.withCredentials) {
             return true;
         }

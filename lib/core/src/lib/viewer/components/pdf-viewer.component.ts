@@ -44,12 +44,12 @@ declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
 
 @Component({
-    selector: 'adf-pdf-viewer',
-    templateUrl: './pdf-viewer.component.html',
-    styleUrls: ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
-    providers: [RenderingQueueServices],
-    host: { class: 'adf-pdf-viewer' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-pdf-viewer',
+    "templateUrl": './pdf-viewer.component.html',
+    "styleUrls": ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
+    "providers": [RenderingQueueServices],
+    "host": { "class": 'adf-pdf-viewer' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()
@@ -97,25 +97,25 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     loadingTask: any;
     isPanelDisabled = true;
     showThumbnails: boolean = false;
-    pdfThumbnailsContext: { viewer: any } = { viewer: null };
+    pdfThumbnailsContext: { viewer: any } = { "viewer": null };
     randomPdfId: string;
     documentOverflow = false;
 
-    get currentScaleText(): string {
+    get currentScaleText (): string {
         return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
     }
 
     private eventBus = new pdfjsViewer.EventBus();
     private pdfjsDefaultOptions = {
-        disableAutoFetch: true,
-        disableStream: true,
-        cMapUrl: './cmaps/',
-        cMapPacked: true
+        "disableAutoFetch": true,
+        "disableStream": true,
+        "cMapUrl": './cmaps/',
+        "cMapPacked": true
     };
     private pdfjsWorkerDestroy$ = new Subject<boolean>();
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private dialog: MatDialog,
         private renderingQueueServices: RenderingQueueServices,
         private logService: LogService,
@@ -134,7 +134,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             .subscribe(() => this.destroyPdJsWorker());
     }
 
-    getUserScaling(): number {
+    getUserScaling (): number {
         let scaleConfig = this.appConfigService.get<number>('adf-viewer.pdf-viewer-scaling', undefined);
 
         if (scaleConfig) {
@@ -145,7 +145,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return scaleConfig;
     }
 
-    checkLimits(scaleConfig: number): number {
+    checkLimits (scaleConfig: number): number {
         if (scaleConfig > this.MAX_SCALE) {
             return this.MAX_SCALE;
         } else if (scaleConfig < this.MIN_SCALE) {
@@ -155,7 +155,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
 
         if (blobFile?.currentValue) {
@@ -163,8 +163,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             reader.onload = async () => {
                 const pdfOptions = {
                     ...this.pdfjsDefaultOptions,
-                    data: reader.result,
-                    withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
+                    "data": reader.result,
+                    "withCredentials": this.appConfigService.get<boolean>('auth.withCredentials', undefined)
                 };
                 this.executePdf(pdfOptions);
             };
@@ -175,8 +175,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (urlFile?.currentValue) {
             const pdfOptions: any = {
                 ...this.pdfjsDefaultOptions,
-                url: urlFile.currentValue,
-                withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
+                "url": urlFile.currentValue,
+                "withCredentials": this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
             if (this.cacheType) {
                 pdfOptions.httpHeaders = {
@@ -191,7 +191,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    executePdf(pdfOptions: any) {
+    executePdf (pdfOptions: any) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
         this.loadingTask = pdfjsLib.getDocument(pdfOptions);
@@ -218,7 +218,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             .catch(() => this.error.emit());
     }
 
-    initPDFViewer(pdfDocument: PDFDocumentProxy) {
+    initPDFViewer (pdfDocument: PDFDocumentProxy) {
         const viewer: any = this.getViewer();
         const container = this.getDocumentContainer();
 
@@ -226,8 +226,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.pdfViewer = new pdfjsViewer.PDFViewer({
                 container,
                 viewer,
-                renderingQueue: this.renderingQueueServices,
-                eventBus: this.eventBus
+                "renderingQueue": this.renderingQueueServices,
+                "eventBus": this.eventBus
             });
 
             // cspell: disable-next
@@ -243,7 +243,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         if (this.pdfViewer) {
             // cspell: disable-next
             this.eventBus.off('pagechanging');
@@ -261,21 +261,20 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    private destroyPdJsWorker() {
+    private destroyPdJsWorker () {
         this.loadingTask.destroy();
         this.loadingTask = null;
     }
 
-    toggleThumbnails() {
+    toggleThumbnails () {
         this.showThumbnails = !this.showThumbnails;
     }
 
     /**
      * Method to scale the page current support implementation
-     *
      * @param scaleMode - new scale mode
      */
-    scalePage(scaleMode) {
+    scalePage (scaleMode) {
         this.currentScaleMode = scaleMode;
 
         const viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
@@ -335,7 +334,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    private autoScaling(pageHeightScale: number, pageWidthScale: number) {
+    private autoScaling (pageHeightScale: number, pageWidthScale: number) {
         let horizontalScale: number;
         if (this.isLandscape) {
             horizontalScale = Math.min(pageHeightScale, pageWidthScale);
@@ -347,15 +346,15 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return this.checkPageFitInContainer(scale);
     }
 
-    private getDocumentContainer() {
+    private getDocumentContainer () {
         return document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
     }
 
-    private getViewer() {
+    private getViewer () {
         return document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`);
     }
 
-    checkPageFitInContainer(scale: number): number {
+    checkPageFitInContainer (scale: number): number {
         const documentContainerSize = this.getDocumentContainer();
         const page = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
 
@@ -369,7 +368,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return scale;
     }
 
-    setDocumentOverflow() {
+    setDocumentOverflow () {
         const documentContainerSize = this.getDocumentContainer();
         const page = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
 
@@ -378,10 +377,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Update all the pages with the newScale scale
-     *
      * @param newScale - new scale page
      */
-    setScaleUpdatePages(newScale: number) {
+    setScaleUpdatePages (newScale: number) {
         if (this.pdfViewer) {
             if (!this.isSameScale(this.pdfViewer.currentScaleValue, newScale)) {
                 this.pdfViewer.currentScaleValue = newScale;
@@ -394,37 +392,35 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Check if the request scale of the page is the same for avoid useless re-rendering
-     *
      * @param oldScale - old scale page
      * @param newScale - new scale page
      * @returns `true` if the scale is the same, otherwise `false`
      */
-    isSameScale(oldScale: number, newScale: number): boolean {
+    isSameScale (oldScale: number, newScale: number): boolean {
         return newScale === oldScale;
     }
 
     /**
      * Check if is a land scape view
-     *
      * @param width target width
      * @param height target height
      * @returns `true` if the target is in the landscape mode, otherwise `false`
      */
-    isLandscape(width: number, height: number): boolean {
+    isLandscape (width: number, height: number): boolean {
         return width > height;
     }
 
     /**
      * Method triggered when the page is resized
      */
-    onResize() {
+    onResize () {
         this.scalePage(this.currentScaleMode);
     }
 
     /**
      * toggle the fit page pdf
      */
-    pageFit() {
+    pageFit () {
         if (this.currentScaleMode !== 'page-fit') {
             this.scalePage('page-fit');
         } else {
@@ -434,10 +430,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * zoom in page pdf
-     *
      * @param ticks number of ticks to zoom
      */
-    zoomIn(ticks?: number): void {
+    zoomIn (ticks?: number): void {
         let newScale: any = this.pdfViewer.currentScaleValue;
         do {
             newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
@@ -450,10 +445,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * zoom out page pdf
-     *
      * @param ticks number of ticks to scale
      */
-    zoomOut(ticks?: number): void {
+    zoomOut (ticks?: number): void {
         let newScale: any = this.pdfViewer.currentScaleValue;
         do {
             newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
@@ -467,7 +461,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * load the previous page
      */
-    previousPage() {
+    previousPage () {
         if (this.pdfViewer && this.page > 1) {
             this.page--;
             this.displayPage = this.page;
@@ -479,7 +473,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * load the next page
      */
-    nextPage() {
+    nextPage () {
         if (this.pdfViewer && this.page < this.totalPages) {
             this.page++;
             this.displayPage = this.page;
@@ -490,10 +484,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * load the page in input
-     *
      * @param page to load
      */
-    inputPage(page: string) {
+    inputPage (page: string) {
         const pageInput = parseInt(page, 10);
 
         if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
@@ -507,21 +500,20 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Page Change Event
-     *
      * @param event event
      */
-    onPageChange(event: any) {
+    onPageChange (event: any) {
         if (event.source && event.source.container.id === `${this.randomPdfId}-viewer-pdf-viewer`) {
             this.page = event.pageNumber;
             this.displayPage = event.pageNumber;
         }
     }
 
-    onPdfPassword(callback, reason) {
+    onPdfPassword (callback, reason) {
         this.dialog
             .open(PdfPasswordDialogComponent, {
-                width: '400px',
-                data: { reason }
+                "width": '400px',
+                "data": { reason }
             })
             .afterClosed()
             .subscribe((password) => {
@@ -536,7 +528,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Page Rendered Event
      */
-    onPageRendered() {
+    onPageRendered () {
         this.rendered.emit();
     }
 
@@ -544,17 +536,16 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      * Pages Loaded Event
      *
      */
-    onPagesLoaded() {
+    onPagesLoaded () {
         this.isPanelDisabled = false;
     }
 
     /**
      * Keyboard Event Listener
-     *
      * @param event KeyboardEvent
      */
     @HostListener('document:keydown', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) {
+    handleKeyboardEvent (event: KeyboardEvent) {
         const key = event.keyCode;
         if (key === 39) {
             // right arrow

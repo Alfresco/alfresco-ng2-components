@@ -23,12 +23,12 @@ import { CommonModule } from '@angular/common';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, LocalizedDatePipe, TimeAgoPipe],
-    selector: 'adf-date-cell',
-    templateUrl: './date-cell.component.html',
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' }
+    "standalone": true,
+    "imports": [CommonModule, LocalizedDatePipe, TimeAgoPipe],
+    "selector": 'adf-date-cell',
+    "templateUrl": './date-cell.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-datatable-content-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
 
@@ -40,27 +40,27 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     private readonly appConfig: AppConfigService = inject(AppConfigService);
 
     readonly defaultDateConfig: DateConfig = {
-        format: 'medium',
-        tooltipFormat: 'medium',
-        locale: undefined
+        "format": 'medium',
+        "tooltipFormat": 'medium',
+        "locale": undefined
     };
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         super.ngOnInit();
         this.setConfig();
     }
 
-    get format(): string {
+    get format (): string {
         return this.column?.format ?? this.config.format;
     }
 
-    private setConfig(): void {
+    private setConfig (): void {
         this.config.format = this.dateConfig?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format);
         this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getAppConfigPropertyValue('dateValues.defaultTooltipDateFormat', this.defaultDateConfig.tooltipFormat);
         this.config.locale = this.dateConfig?.locale || this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
     }
 
-    private getAppConfigPropertyValue(key: string, defaultValue: string): string {
+    private getAppConfigPropertyValue (key: string, defaultValue: string): string {
         return this.appConfig.get(key, defaultValue);
     }
 }

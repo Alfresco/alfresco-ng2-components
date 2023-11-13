@@ -20,10 +20,11 @@
     }
 
     &-input-form-field-divider {
-        .mat-form-field-underline {
+
+        .mat-mdc-form-field-underline {
             background-color: var(--adf-theme-primary-50);
 
-            .mat-form-field-ripple {
+            .mat-mdc-form-field-ripple {
                 background-color: var(--adf-theme-primary-50);
             }
         }

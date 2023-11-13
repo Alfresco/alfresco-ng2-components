@@ -18,7 +18,7 @@
 import { CommentsService } from '../../interfaces/comments-service.interface';
 
 export class CommentListServiceMock implements Partial<CommentsService> {
-    getUserImage(_user: any): string {
+    getUserImage (_user: any): string {
         return 'mock-user-image-path';
     }
 }

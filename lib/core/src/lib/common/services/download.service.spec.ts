@@ -33,7 +33,7 @@ describe('DownloadService', () => {
                 expect(result).toBeUndefined();
             });
 
-            const blob = new Blob([''], { type: 'text/html' });
+            const blob = new Blob([''], { "type": 'text/html' });
             service.downloadBlob(blob, 'test_ie');
         });
     });

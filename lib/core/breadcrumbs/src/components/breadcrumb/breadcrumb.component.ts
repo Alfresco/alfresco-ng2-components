@@ -27,12 +27,12 @@ import { BreadcrumbFocusDirective } from '../../directives/breadcrumb-focus.dire
 import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.component';
 
 @Component({
-    standalone: true,
-    selector: 'adf-breadcrumb',
-    templateUrl: './breadcrumb.component.html',
-    styleUrls: ['./breadcrumb.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatTooltipModule ]
+    "standalone": true,
+    "selector": 'adf-breadcrumb',
+    "templateUrl": './breadcrumb.component.html',
+    "styleUrls": ['./breadcrumb.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "imports": [ CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatTooltipModule ]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];
@@ -51,9 +51,9 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
 
     selectedBreadcrumbs: Array<TemplateRef<unknown>> = [];
 
-    constructor(private cdr: ChangeDetectorRef) {}
+    constructor (private cdr: ChangeDetectorRef) {}
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.breadcrumbItems.changes
             .pipe(
                 startWith(this.breadcrumbItems),
@@ -67,13 +67,13 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
             });
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges (changes: SimpleChanges): void {
         if (changes.compact) {
             this.setBreadcrumbs(this._breadcrumbTemplateRefs);
         }
     }
 
-    toggleCompact(compact = false) {
+    toggleCompact (compact = false) {
         this.compact = compact;
         this.setBreadcrumbs(this._breadcrumbTemplateRefs);
         this.compactChange.emit(this.compact);
@@ -82,7 +82,7 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    private setBreadcrumbs(breadcrumbs: Array<TemplateRef<unknown>>) {
+    private setBreadcrumbs (breadcrumbs: Array<TemplateRef<unknown>>) {
         this.selectedBreadcrumbs =
             this.compact && breadcrumbs.length > 2
                 ? [breadcrumbs[0], breadcrumbs[breadcrumbs.length - 1]]
@@ -90,7 +90,7 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
         this.cdr.detectChanges();
     }
 
-    private mapToTemplateRefs( breadcrumbItems: QueryList<BreadcrumbItemComponent> ) {
+    private mapToTemplateRefs ( breadcrumbItems: QueryList<BreadcrumbItemComponent> ) {
         return breadcrumbItems
             .toArray()
             .map((breadcrumbItem) => breadcrumbItem.templateRef);

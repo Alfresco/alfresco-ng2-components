@@ -24,7 +24,7 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Injectable()
 export class AlfrescoApiNoAuthService extends AlfrescoApiService {
-    constructor(
+    constructor (
         storage: StorageService,
         appConfig: AppConfigService,
         private readonly adfHttpClient: AdfHttpClient
@@ -32,10 +32,10 @@ export class AlfrescoApiNoAuthService extends AlfrescoApiService {
         super(appConfig, storage);
     }
 
-    override createInstance(config: AlfrescoApiConfig) {
+    override createInstance (config: AlfrescoApiConfig) {
         return new AlfrescoApi({
             ...config,
-            oauthInit: false
+            "oauthInit": false
         }, this.adfHttpClient);
     }
 }

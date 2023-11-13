@@ -20,8 +20,8 @@ import { CardViewItemMinMaxValidator, MinMaxValidatorParams } from './card-view-
 import { CardViewItemLengthValidator, LengthValidatorParams } from './card-view-item-length.valiator';
 
 const validators = {
-    minmax: (parameters: MinMaxValidatorParams) => new CardViewItemMinMaxValidator(parameters.minValue, parameters.maxValue),
-    regex: (parameters: MatchValidatorParams) => new CardViewItemMatchValidator(parameters.expression),
-    length: (parameters: LengthValidatorParams) => new CardViewItemLengthValidator(parameters.minLength, parameters.maxLength)
+    "minmax": (parameters: MinMaxValidatorParams) => new CardViewItemMinMaxValidator(parameters.minValue, parameters.maxValue),
+    "regex": (parameters: MatchValidatorParams) => new CardViewItemMatchValidator(parameters.expression),
+    "length": (parameters: LengthValidatorParams) => new CardViewItemLengthValidator(parameters.minLength, parameters.maxLength)
 };
 export default validators;

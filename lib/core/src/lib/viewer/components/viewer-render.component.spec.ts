@@ -31,8 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 
 @Component({
-    selector: 'adf-double-viewer',
-    template: `
+    "selector": 'adf-double-viewer',
+    "template": `
         <adf-viewer-render [urlFile]="urlFileViewer1" #viewer1></adf-viewer-render>
         <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2></adf-viewer-render>
     `
@@ -60,19 +60,19 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 MatButtonModule,
                 MatIconModule
             ],
-            declarations: [
+            "declarations": [
                 DoubleViewerComponent
             ],
-            providers: [
+            "providers": [
                 RenderingQueueServices,
-                {provide: Location, useClass: SpyLocation},
+                {"provide": Location, "useClass": SpyLocation},
                 MatDialog
             ]
         });
@@ -124,9 +124,9 @@ describe('ViewerComponent', () => {
     describe('Extension Type Test', () => {
         it('should display pdf external viewer via wildcard notation', async () => {
             const extension: ViewerExtensionRef = {
-                component: 'custom.component',
-                id: 'custom.component.id',
-                fileExtension: '*'
+                "component": 'custom.component',
+                "id": 'custom.component.id',
+                "fileExtension": '*'
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
@@ -149,14 +149,14 @@ describe('ViewerComponent', () => {
         it('should display pdf with the first external viewer provided', async () => {
             const extensions: ViewerExtensionRef[] = [
                 {
-                    component: 'custom.component.1',
-                    id: 'custom.component.id',
-                    fileExtension: '*'
+                    "component": 'custom.component.1',
+                    "id": 'custom.component.id',
+                    "fileExtension": '*'
                 },
                 {
-                    component: 'custom.component.2',
-                    id: 'custom.component.id',
-                    fileExtension: '*'
+                    "component": 'custom.component.2',
+                    "id": 'custom.component.id',
+                    "fileExtension": '*'
                 }
             ];
             spyOn(extensionService, 'getViewerExtensions').and.returnValue(extensions);
@@ -177,9 +177,9 @@ describe('ViewerComponent', () => {
 
         it('should display url with the external viewer provided', async () => {
             const extension: ViewerExtensionRef = {
-                component: 'custom.component',
-                id: 'custom.component.id',
-                fileExtension: '*'
+                "component": 'custom.component',
+                "id": 'custom.component.id',
+                "fileExtension": '*'
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
@@ -443,7 +443,7 @@ describe('ViewerComponent', () => {
 
             it('should fileName override the name if is present and blobFile is set', () => {
                 component.fileName = 'blob file display name';
-                component.blobFile = new Blob(['This is my blob content'], {type: 'text/plain'});
+                component.blobFile = new Blob(['This is my blob content'], {"type": 'text/plain'});
                 fixture.detectChanges();
                 component.ngOnChanges();
 

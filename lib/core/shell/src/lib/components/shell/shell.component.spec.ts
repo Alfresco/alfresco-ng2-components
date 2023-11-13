@@ -32,9 +32,9 @@ class MockRouter {
   private url = 'some-url';
   private subject = new Subject();
   events = this.subject.asObservable();
-  routerState = { snapshot: { url: this.url } };
+  routerState = { "snapshot": { "url": this.url } };
 
-  navigateByUrl(url: string) {
+  navigateByUrl (url: string) {
     const navigationStart = new NavigationStart(0, url);
     this.subject.next(navigationStart);
   }
@@ -48,17 +48,17 @@ describe('AppLayoutComponent', () => {
 
   beforeEach(() => {
     const shellService: ShellAppService = {
-      pageHeading$: of('Title'),
-      hideSidenavConditions: [],
-      minimizeSidenavConditions: [],
-      preferencesService: {
-        get: () => 'true',
-        set: () => {}
+      "pageHeading$": of('Title'),
+      "hideSidenavConditions": [],
+      "minimizeSidenavConditions": [],
+      "preferencesService": {
+        "get": () => 'true',
+        "set": () => {}
       }
     };
 
     TestBed.configureTestingModule({
-      imports: [
+      "imports": [
         CommonModule,
         NoopAnimationsModule,
         HttpClientModule,
@@ -67,18 +67,18 @@ describe('AppLayoutComponent', () => {
         RouterModule.forChild([]),
         TranslateModule.forRoot()
       ],
-      providers: [
+      "providers": [
         {
-          provide: Router,
-          useClass: MockRouter
+          "provide": Router,
+          "useClass": MockRouter
         },
         {
-          provide: SHELL_APP_SERVICE,
-          useValue: shellService
+          "provide": SHELL_APP_SERVICE,
+          "useValue": shellService
         }
       ],
-      declarations: [ShellLayoutComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+      "declarations": [ShellLayoutComponent],
+      "schemas": [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(ShellLayoutComponent);
@@ -95,8 +95,8 @@ describe('AppLayoutComponent', () => {
   describe('sidenav state', () => {
     it('should get state from configuration', () => {
       appConfig.config.sideNav = {
-        expandedSidenav: false,
-        preserveState: false
+        "expandedSidenav": false,
+        "preserveState": false
       };
 
       fixture.detectChanges();
@@ -114,8 +114,8 @@ describe('AppLayoutComponent', () => {
 
     it('should get state from user settings as true', () => {
       appConfig.config.sideNav = {
-        expandedSidenav: false,
-        preserveState: true
+        "expandedSidenav": false,
+        "preserveState": true
       };
 
       spyOn(shellAppService.preferencesService, 'get').and.callFake((key) => {
@@ -132,8 +132,8 @@ describe('AppLayoutComponent', () => {
 
     it('should get state from user settings as false', () => {
       appConfig.config.sidenav = {
-        expandedSidenav: false,
-        preserveState: true
+        "expandedSidenav": false,
+        "preserveState": true
       };
 
       spyOn(shellAppService.preferencesService, 'get').and.callFake((key) => {
@@ -152,14 +152,14 @@ describe('AppLayoutComponent', () => {
   it('should close menu on mobile screen size', () => {
     component.minimizeSidenav = false;
     component.layout.container = {
-      isMobileScreenSize: true,
-      toggleMenu: () => {}
+      "isMobileScreenSize": true,
+      "toggleMenu": () => {}
     };
 
     spyOn(component.layout.container, 'toggleMenu');
     fixture.detectChanges();
 
-    component.hideMenu({ preventDefault: () => {} } as any);
+    component.hideMenu({ "preventDefault": () => {} } as any);
 
     expect(component.layout.container.toggleMenu).toHaveBeenCalled();
   });
@@ -168,14 +168,14 @@ describe('AppLayoutComponent', () => {
     fixture.detectChanges();
     component.minimizeSidenav = true;
     component.layout.container = {
-      isMobileScreenSize: true,
-      toggleMenu: () => {}
+      "isMobileScreenSize": true,
+      "toggleMenu": () => {}
     };
 
     spyOn(component.layout.container, 'toggleMenu');
     fixture.detectChanges();
 
-    component.hideMenu({ preventDefault: () => {} } as any);
+    component.hideMenu({ "preventDefault": () => {} } as any);
 
     expect(component.layout.container.toggleMenu).toHaveBeenCalled();
   });

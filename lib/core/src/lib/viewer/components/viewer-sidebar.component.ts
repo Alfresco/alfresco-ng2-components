@@ -18,20 +18,20 @@
 import { ChangeDetectionStrategy, Component, HostListener, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'adf-viewer-sidebar',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { class: 'adf-viewer-sidebar' },
-    template: `<ng-content></ng-content>`
+    "selector": 'adf-viewer-sidebar',
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "host": { "class": 'adf-viewer-sidebar' },
+    "template": `<ng-content></ng-content>`
 })
 export class ViewerSidebarComponent {
     @HostListener('keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent): void {
+    onKeyDown (event: KeyboardEvent): void {
         event.stopPropagation();
     }
 
     @HostListener('keyup', ['$event'])
-    onKeyUp(event: KeyboardEvent): void {
+    onKeyUp (event: KeyboardEvent): void {
         event.stopPropagation();
     }
 }

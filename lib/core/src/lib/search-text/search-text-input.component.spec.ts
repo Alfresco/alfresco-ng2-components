@@ -34,7 +34,7 @@ describe('SearchTextInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -214,7 +214,7 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
             tick(100);
 
-            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(82%)' });
+            expect(component.subscriptAnimationState.params).toEqual({ "transform": 'translateX(82%)' });
             discardPeriodicTasks();
         }));
 
@@ -245,7 +245,7 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
             tick(100);
 
-            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(-82%)' });
+            expect(component.subscriptAnimationState.params).toEqual({ "transform": 'translateX(-82%)' });
             discardPeriodicTasks();
         }));
 
@@ -360,7 +360,7 @@ describe('SearchTextInputComponent', () => {
                 const resetEmitSpy = spyOn(component.reset, 'emit');
                 component.collapseOnBlur = true;
                 component.searchTerm = 'fake-search-term';
-                component.onBlur({ relatedTarget: null });
+                component.onBlur({ "relatedTarget": null });
                 tick(200);
 
                 expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
@@ -373,7 +373,7 @@ describe('SearchTextInputComponent', () => {
                 const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
                 component.searchTerm = 'fake-search-term';
                 component.collapseOnBlur = false;
-                component.onBlur({ relatedTarget: null });
+                component.onBlur({ "relatedTarget": null });
 
                 expect(searchVisibilityChangeSpy).not.toHaveBeenCalled();
                 expect(component.subscriptAnimationState.value).toEqual('active');

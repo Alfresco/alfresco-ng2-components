@@ -25,39 +25,39 @@ import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
 
 export default {
-    component: LanguageMenuComponent,
-    title: 'Core/Language Menu/Language Menu',
-    decorators: [
+    "component": LanguageMenuComponent,
+    "title": 'Core/Language Menu/Language Menu',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, LanguageMenuModule],
-            providers: [
-                { provide: LanguageService, useClass: LanguageServiceMock }
+            "imports": [CoreStoryModule, LanguageMenuModule],
+            "providers": [
+                { "provide": LanguageService, "useClass": LanguageServiceMock }
             ]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Displays all the languages that are present in "app.config.json" and the default (EN).`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Displays all the languages that are present in "app.config.json" and the default (EN).`
             }
         }
     },
-    argTypes: {
-        changedLanguage: {
-            action: 'changedLanguage',
-            description: 'Emitted when the user clicks on one of the language buttons.',
-            table: {
-                category: 'Actions',
-                type: { summary: 'EventEmitter <LanguageItem>' }
+    "argTypes": {
+        "changedLanguage": {
+            "action": 'changedLanguage',
+            "description": 'Emitted when the user clicks on one of the language buttons.',
+            "table": {
+                "category": 'Actions',
+                "type": { "summary": 'EventEmitter <LanguageItem>' }
             }
         }
     }
 } as Meta;
 
 const languageMenuComponentTemplate: Story<LanguageMenuComponent> = (args: LanguageMenuComponent) => ({
-    props: args
+    "props": args
 });
-languageMenuComponentTemplate.parameters = { layout: 'centered' };
+languageMenuComponentTemplate.parameters = { "layout": 'centered' };
 
 export const asMainMenu = languageMenuComponentTemplate.bind({});
 asMainMenu.decorators = [
@@ -72,7 +72,7 @@ asMainMenu.decorators = [
       </mat-menu>
     `)
 ];
-asMainMenu.parameters = { layout: 'centered' };
+asMainMenu.parameters = { "layout": 'centered' };
 
 export const asNestedMenu = languageMenuComponentTemplate.bind({});
 asNestedMenu.decorators = [
@@ -95,4 +95,4 @@ asNestedMenu.decorators = [
       </mat-menu>
     `)
 ];
-asNestedMenu.parameters = { layout: 'centered' };
+asNestedMenu.parameters = { "layout": 'centered' };

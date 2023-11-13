@@ -21,16 +21,16 @@ export class ErrorMessageModel {
     message: string = '';
     attributes: Map<string, string> = null;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         this.message = obj?.message || '';
         this.attributes = new Map();
     }
 
-    isActive(): boolean {
+    isActive (): boolean {
         return !!this.message;
     }
 
-    getAttributesAsJsonObj() {
+    getAttributesAsJsonObj () {
         let result = {};
         if (this.attributes.size > 0) {
             const obj = Object.create(null);

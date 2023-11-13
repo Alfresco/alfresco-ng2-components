@@ -41,8 +41,8 @@ import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 @Component({
-    selector: 'adf-dialog-dummy',
-    template: ``
+    "selector": 'adf-dialog-dummy',
+    "template": ``
 })
 class DummyDialogComponent {
 }
@@ -58,23 +58,23 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
                 CoreTestingModule,
                 MatButtonModule,
                 MatIconModule
             ],
-            declarations: [
+            "declarations": [
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
                 ViewerWithCustomMoreActionsComponent,
                 ViewerWithCustomToolbarActionsComponent
             ],
-            providers: [
+            "providers": [
                 MatDialog,
-                { provide: DownloadPromptDialogComponent, useClass: DummyDialogComponent}
+                { "provide": DownloadPromptDialogComponent, "useClass": DummyDialogComponent}
             ]
         });
 
@@ -89,11 +89,11 @@ describe('ViewerComponent', () => {
 
         appConfigService.config = {
             ...appConfigService.config,
-            viewer: {
-                enableDownloadPrompt:  false,
-                enableDownloadPromptReminder: false,
-                downloadPromptDelay: 3,
-                downloadPromptReminderDelay: 2
+            "viewer": {
+                "enableDownloadPrompt":  false,
+                "enableDownloadPromptReminder": false,
+                "downloadPromptDelay": 3,
+                "downloadPromptReminderDelay": 2
             }
         };
     });
@@ -106,7 +106,7 @@ describe('ViewerComponent', () => {
     describe('Mime Type Test', () => {
 
         it('should mimeType change when blobFile changes', () => {
-            const mockSimpleChanges: any = {  blobFile: {currentValue: { type: 'image/png'}}};
+            const mockSimpleChanges: any = {  "blobFile": {"currentValue": { "type": 'image/png'}}};
 
             component.ngOnChanges(mockSimpleChanges);
 
@@ -120,7 +120,7 @@ describe('ViewerComponent', () => {
         it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
             component.fileName = '';
             spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-            const mockSimpleChanges: any = {  urlFile: {currentValue: 'https://fakefile.url/fakeFileName.jpeg'}};
+            const mockSimpleChanges: any = {  "urlFile": {"currentValue": 'https://fakefile.url/fakeFileName.jpeg'}};
 
             component.ngOnChanges(mockSimpleChanges);
             fixture.detectChanges();
@@ -131,7 +131,7 @@ describe('ViewerComponent', () => {
         it('should set fileName providing fileName input', () => {
             component.fileName = 'testFileName.jpg';
             spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-            const mockSimpleChanges: any = {  urlFile: {currentValue: 'https://fakefile.url/fakeFileName.jpeg'}};
+            const mockSimpleChanges: any = {  "urlFile": {"currentValue": 'https://fakefile.url/fakeFileName.jpeg'}};
 
             component.ngOnChanges(mockSimpleChanges);
             fixture.detectChanges();fixture.detectChanges();
@@ -405,7 +405,7 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should file name be present if is overlay mode ', async () => {
-                    const mockSimpleChanges: any = { blobFile: {currentValue: { type: 'image/png'}}};
+                    const mockSimpleChanges: any = { "blobFile": {"currentValue": { "type": 'image/png'}}};
                     component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
                     await fixture.whenStable();
@@ -438,8 +438,8 @@ describe('ViewerComponent', () => {
 
                 it('should not close the viewer on Escape event if dialog was opened', (done) => {
                     const event = new KeyboardEvent('keydown', {
-                        bubbles: true,
-                        keyCode: 27
+                        "bubbles": true,
+                        "keyCode": 27
                     } as KeyboardEventInit);
 
                     const dialogRef = dialog.open(DummyDialogComponent);
@@ -556,14 +556,14 @@ describe('ViewerComponent', () => {
         beforeEach(() => {
             appConfigService.config = {
                 ...appConfigService.config,
-                viewer: {
-                    enableDownloadPrompt:  true,
-                    enableDownloadPromptReminder: true,
-                    downloadPromptDelay: 3,
-                    downloadPromptReminderDelay: 2
+                "viewer": {
+                    "enableDownloadPrompt":  true,
+                    "enableDownloadPromptReminder": true,
+                    "downloadPromptDelay": 3,
+                    "downloadPromptReminderDelay": 2
                 }
             };
-            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({afterClosed: () => of(null)} as any);
+            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({"afterClosed": () => of(null)} as any);
             component.urlFile = undefined;
             component.clearDownloadPromptTimeouts();
         });
@@ -574,11 +574,11 @@ describe('ViewerComponent', () => {
         }));
 
         it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync( () => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            dialogOpenSpy.and.returnValue({ "afterClosed": () => of(DownloadPromptActions.WAIT) } as any);
             fixture.detectChanges();
             tick(3000);
             expect(component.downloadPromptReminderTimer).toBeDefined();
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            dialogOpenSpy.and.returnValue({ "afterClosed": () => of(null) } as any);
             flush();
             discardPeriodicTasks();
         }));
@@ -591,12 +591,12 @@ describe('ViewerComponent', () => {
         }));
 
         it('should show reminder non responsive dialog after initial dialog', fakeAsync( () => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            dialogOpenSpy.and.returnValue({ "afterClosed": () => of(DownloadPromptActions.WAIT) } as any);
             fixture.detectChanges();
             tick(3000);
             expect(dialogOpenSpy).toHaveBeenCalled();
 
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            dialogOpenSpy.and.returnValue({ "afterClosed": () => of(null) } as any);
             tick(2000);
             expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
 
@@ -605,7 +605,7 @@ describe('ViewerComponent', () => {
         }));
 
         it('should emit downloadFileEvent when DownloadPromptDialog return DownloadPromptActions.DOWNLOAD on close', fakeAsync( () => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as any);
+            dialogOpenSpy.and.returnValue({ "afterClosed": () => of(DownloadPromptActions.DOWNLOAD) } as any);
             spyOn(component.downloadFile, 'emit');
             fixture.detectChanges();
             tick(3000);

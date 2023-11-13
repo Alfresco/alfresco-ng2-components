@@ -23,10 +23,10 @@ import {
 import { UntypedFormControl } from '@angular/forms';
 
 @Component({
-    selector: 'adf-inplace-form-input',
-    templateUrl: './inplace-form-input.component.html',
-    styleUrls: ['./inplace-form-input.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-inplace-form-input',
+    "templateUrl": './inplace-form-input.component.html',
+    "styleUrls": ['./inplace-form-input.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class InplaceFormInputComponent {
     @Input()

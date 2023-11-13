@@ -22,19 +22,19 @@ import { HttpParameterCodec } from '@angular/common/http';
 
 export class AlfrescoApiParamEncoder implements HttpParameterCodec {
 
-    encodeKey(key: string): string {
+    encodeKey (key: string): string {
         return encodeURIComponent(key);
     }
 
-    encodeValue(value: string): string {
+    encodeValue (value: string): string {
         return encodeURIComponent(value);
     }
 
-    decodeKey(key: string): string {
+    decodeKey (key: string): string {
         return decodeURIComponent(key);
     }
 
-    decodeValue(value: string): string {
+    decodeValue (value: string): string {
         return decodeURIComponent(value);
     }
 }

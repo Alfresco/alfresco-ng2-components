@@ -22,7 +22,7 @@ export class ValidateFormFieldEvent extends FormFieldEvent {
 
     isValid = true;
 
-    constructor(form: any, field: FormFieldModel) {
+    constructor (form: any, field: FormFieldModel) {
         super(form, field);
     }
 

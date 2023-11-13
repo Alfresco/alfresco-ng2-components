@@ -16,27 +16,27 @@
  */
 
 export const userAccessMock = {
-    globalAccess: {
-        roles: [
+    "globalAccess": {
+        "roles": [
             'MOCK_GLOBAL_USER_ROLE'
         ]
     },
-    applicationAccess: [
+    "applicationAccess": [
         {
-            name: 'mockApp1',
-            roles: [
+            "name": 'mockApp1',
+            "roles": [
                 'MOCK_USER_ROLE_APP_1'
             ]
         },
         {
-            name: 'mockApp2',
-            roles: [
+            "name": 'mockApp2',
+            "roles": [
                 'MOCK_USER_ROLE_APP_2'
             ]
         },
         {
-            name: 'mockApp3',
-            roles: [
+            "name": 'mockApp3',
+            "roles": [
                 'MOCK_USER_ROLE_APP_3',
                 'MOCK_ADMIN_ROLE_APP_3'
             ]

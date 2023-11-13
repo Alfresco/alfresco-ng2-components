@@ -31,11 +31,11 @@ import { Minimatch } from 'minimatch';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class OidcAuthenticationService extends BaseAuthenticationService {
 
-    constructor(
+    constructor (
         appConfig: AppConfigService,
         cookie: CookieService,
         logService: LogService,
@@ -48,7 +48,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         super(appConfig, cookie, logService);
     }
 
-    isEcmLoggedIn(): boolean {
+    isEcmLoggedIn (): boolean {
         if (this.isECMProvider() || this.isALLProvider()) {
             return this.isLoggedIn();
         }
@@ -56,49 +56,49 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
 
     }
 
-    isBpmLoggedIn(): boolean {
+    isBpmLoggedIn (): boolean {
         if (this.isBPMProvider() || this.isALLProvider()) {
             return this.isLoggedIn();
         }
         return false;
     }
 
-    isLoggedIn(): boolean {
+    isLoggedIn (): boolean {
         return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken();
     }
 
-    hasValidAccessToken(): boolean {
+    hasValidAccessToken (): boolean {
         return this.oauthService.hasValidAccessToken();
     }
 
-    hasValidIdToken(): boolean {
+    hasValidIdToken (): boolean {
         return this.oauthService.hasValidIdToken();
     }
 
-    isImplicitFlow() {
+    isImplicitFlow () {
         const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
         return !!oauth2?.implicitFlow;
     }
 
-    isAuthCodeFlow() {
+    isAuthCodeFlow () {
         const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
         return !!oauth2?.codeFlow;
     }
 
-    login(username: string, password: string): Observable<{ type: string; ticket: any }> {
+    login (username: string, password: string): Observable<{ type: string; ticket: any }> {
         return this.auth.baseAuthLogin(username, password).pipe(
             map((response) => {
                 this.onLogin.next(response);
                 return {
-                    type: this.appConfig.get(AppConfigValues.PROVIDERS),
-                    ticket: response
+                    "type": this.appConfig.get(AppConfigValues.PROVIDERS),
+                    "ticket": response
                 };
             }),
             catchError((err) => this.handleError(err))
         );
     }
 
-    loginWithPassword(username: string, password: string): Observable<{ type: string; ticket: any }> {
+    loginWithPassword (username: string, password: string): Observable<{ type: string; ticket: any }> {
         return defer(async () => {
             try {
                 await this.authConfig.loadConfig();
@@ -109,8 +109,8 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
                 this.onLogin.next(accessToken);
 
                 return {
-                    type: this.appConfig.get(AppConfigValues.PROVIDERS) as string,
-                    ticket: accessToken
+                    "type": this.appConfig.get(AppConfigValues.PROVIDERS) as string,
+                    "ticket": accessToken
                 };
             } catch (err) {
                 throw this.handleError(err);
@@ -118,7 +118,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         });
     }
 
-    getUsername(){
+    getUsername (){
         return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
@@ -126,7 +126,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
      * @deprecated
      * @returns the logged username
      */
-    getEcmUsername(): string {
+    getEcmUsername (): string {
         return this.getUsername();
     }
 
@@ -134,37 +134,37 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
      * @deprecated
      * @returns the logged username
      */
-    getBpmUsername(): string {
+    getBpmUsername (): string {
         return this.getUsername();
     }
 
-    ssoImplicitLogin() {
+    ssoImplicitLogin () {
         this.auth.login();
     }
 
-    ssoCodeFlowLogin() {
+    ssoCodeFlowLogin () {
         this.oauthService.initCodeFlow();
     }
 
-    isRememberMeSet(): boolean {
+    isRememberMeSet (): boolean {
         return true;
     }
 
-    logout() {
+    logout () {
         this.oauthService.logOut();
         return EMPTY;
     }
 
-    getToken(): string {
+    getToken (): string {
         return this.authStorage.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
-    reset(): void {
+    reset (): void {
         const config = this.authConfig.loadAppConfig();
         this.auth.updateIDPConfiguration(config);
     }
 
-    isPublicUrl(): boolean {
+    isPublicUrl (): boolean {
         const oauth2 = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
 
         if (Array.isArray(oauth2.publicUrls)) {
@@ -177,11 +177,11 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return false;
     }
 
-    getAuthHeaders(_requestUrl: string, header: HttpHeaders): HttpHeaders {
+    getAuthHeaders (_requestUrl: string, header: HttpHeaders): HttpHeaders {
         return this.addBearerToken(header);
     }
 
-    private addBearerToken(header: HttpHeaders): HttpHeaders {
+    private addBearerToken (header: HttpHeaders): HttpHeaders {
         const token: string = this.getToken();
 
         if (!token) {

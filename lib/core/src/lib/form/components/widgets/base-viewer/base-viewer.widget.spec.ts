@@ -30,28 +30,28 @@ describe('BaseViewerWidgetComponent', () => {
     let fixture: ComponentFixture<BaseViewerWidgetComponent>;
 
     const fakePngAnswer: any = {
-        id: '1933',
-        link: false,
-        isExternal: false,
-        relatedContent: false,
-        contentAvailable: true,
-        name: 'a_png_file.png',
-        simpleType: 'image',
-        mimeType: 'image/png',
-        previewStatus: 'queued',
-        thumbnailStatus: 'queued',
-        created: '2022-10-14T17:17:37.099Z',
-        createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin@example.com' }
+        "id": '1933',
+        "link": false,
+        "isExternal": false,
+        "relatedContent": false,
+        "contentAvailable": true,
+        "name": 'a_png_file.png',
+        "simpleType": 'image',
+        "mimeType": 'image/png',
+        "previewStatus": 'queued',
+        "thumbnailStatus": 'queued',
+        "created": '2022-10-14T17:17:37.099Z',
+        "createdBy": { "id": 1001, "firstName": 'Admin', "lastName": 'admin', "email": 'admin@example.com' }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 CoreTestingModule,
                 TranslateModule.forRoot()
             ],
-            declarations: [ BaseViewerWidgetComponent ],
-            providers: [ { provide: FormService, useValue: formServiceStub } ]
+            "declarations": [ BaseViewerWidgetComponent ],
+            "providers": [ { "provide": FormService, "useValue": formServiceStub } ]
           });
 
         formServiceStub = TestBed.inject(FormService);
@@ -74,7 +74,6 @@ describe('BaseViewerWidgetComponent', () => {
 
 /**
  * Assert the field value
- *
  * @param value field value
  * @param expectedFileId field id
  * @param fakeForm form model
@@ -82,8 +81,8 @@ describe('BaseViewerWidgetComponent', () => {
  * @param fixture test fixture
  * @param done callback
  */
-function assertFileId(value: any, expectedFileId: string, fakeForm: FormModel, widget: BaseViewerWidgetComponent, fixture: ComponentFixture<BaseViewerWidgetComponent>, done: DoneFn) {
-    const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value });
+function assertFileId (value: any, expectedFileId: string, fakeForm: FormModel, widget: BaseViewerWidgetComponent, fixture: ComponentFixture<BaseViewerWidgetComponent>, done: DoneFn) {
+    const fakeField = new FormFieldModel(fakeForm, { "id": 'fakeField', value });
     widget.field = fakeField;
 
     fixture.detectChanges();

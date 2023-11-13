@@ -18,10 +18,10 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-    selector: 'adf-toolbar-divider',
-    template: '<div></div>',
-    host: { class: 'adf-toolbar-divider' },
-    styles: [`
+    "selector": 'adf-toolbar-divider',
+    "template": '<div></div>',
+    "host": { "class": 'adf-toolbar-divider' },
+    "styles": [`
         .adf-toolbar-divider > div {
             height: 24px;
             width: 1px;
@@ -30,7 +30,7 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
             margin-right: 5px;
         }
     `],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class ToolbarDividerComponent {}

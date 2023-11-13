@@ -11,6 +11,7 @@ $theme: mat.define-light-theme(
         color: (
             primary: $primary,
             accent: $accent,
+            warn: $warn
         ),
         typography: $alfresco-typography
     )

@@ -25,14 +25,14 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MatTabsModule,
         MatIconModule,
         MatCardModule,
         TranslateModule
     ],
-    declarations: [
+    "declarations": [
         InfoDrawerLayoutComponent,
         InfoDrawerTabComponent,
         InfoDrawerComponent,
@@ -40,7 +40,7 @@ import { MatCardModule } from '@angular/material/card';
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective
     ],
-    exports: [
+    "exports": [
         InfoDrawerLayoutComponent,
         InfoDrawerTabComponent,
         InfoDrawerComponent,

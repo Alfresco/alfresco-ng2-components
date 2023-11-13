@@ -22,75 +22,75 @@ import { SortingPickerComponent } from './sorting-picker.component';
 import { initialOptionKeys, initialSortingTypes } from './mock/sorting-picker.mock';
 
 export default {
-    component: SortingPickerComponent,
-    title: 'Core/Sorting Picker/Sorting Picker',
-    decorators: [
+    "component": SortingPickerComponent,
+    "title": 'Core/Sorting Picker/Sorting Picker',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, SortingPickerModule]
+            "imports": [CoreStoryModule, SortingPickerModule]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `The picker shows the user a menu of sorting options (which could be data columns to sort on alphabetical vs numerical search, etc)
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `The picker shows the user a menu of sorting options (which could be data columns to sort on alphabetical vs numerical search, etc)
                     and the choice of ascending vs descending sort order.
                     Note that picker only implements the menu, so you are responsible for implementing the sorting options yourself.`
             }
         }
     },
-    argTypes: {
-        selected: {
-            control: 'select',
-            options: initialOptionKeys,
-            description: 'Currently selected option key',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+    "argTypes": {
+        "selected": {
+            "control": 'select',
+            "options": initialOptionKeys,
+            "description": 'Currently selected option key',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' }
             }
         },
-        ascending: {
-            control: 'boolean',
-            description: 'Current sorting direction',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "ascending": {
+            "control": 'boolean',
+            "description": 'Current sorting direction',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        options: {
-            description: 'Available sorting options',
-            defaultValue: [],
-            table: {
-                type: { summary: 'Array<{key: string; label: string}>' },
-                defaultValue: { summary: '[]' }
+        "options": {
+            "description": 'Available sorting options',
+            "defaultValue": [],
+            "table": {
+                "type": { "summary": 'Array<{key: string; label: string}>' },
+                "defaultValue": { "summary": '[]' }
             }
         },
-        valueChange: {
-            action: 'valueChange',
-            description: 'Raised each time sorting key gets changed',
-            table: {
-                type: { summary: 'EventEmitter <string>' },
-                category: 'Actions'
+        "valueChange": {
+            "action": 'valueChange',
+            "description": 'Raised each time sorting key gets changed',
+            "table": {
+                "type": { "summary": 'EventEmitter <string>' },
+                "category": 'Actions'
             }
         },
-        sortingChange: {
-            action: 'sortingChange',
-            description: 'Raised each time direction gets changed',
-            table: {
-                type: { summary: 'EventEmitter <boolean>' },
-                category: 'Actions'
+        "sortingChange": {
+            "action": 'sortingChange',
+            "description": 'Raised each time direction gets changed',
+            "table": {
+                "type": { "summary": 'EventEmitter <boolean>' },
+                "category": 'Actions'
             }
         }
     }
 } as Meta;
 
 const template: Story<SortingPickerModule> = (args: SortingPickerComponent) => ({
-    props: args
+    "props": args
 });
 
 export const sortingPicker = template.bind({});
 sortingPicker.args = {
-    options: initialSortingTypes
+    "options": initialSortingTypes
 };
-sortingPicker.parameters = { layout: 'centered' };
+sortingPicker.parameters = { "layout": 'centered' };

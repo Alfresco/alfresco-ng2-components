@@ -19,12 +19,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from './app-config.service';
 
 @Pipe({
-    name: 'adfAppConfig'
+    "name": 'adfAppConfig'
 })
 export class AppConfigPipe implements PipeTransform {
-    constructor(private config: AppConfigService) {}
+    constructor (private config: AppConfigService) {}
 
-    transform(value: string, fallback?: any): any {
+    transform (value: string, fallback?: any): any {
         return this.config.get(value, fallback);
     }
 }

@@ -23,8 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 @NgModule({
-    declarations: [EditJsonDialogComponent],
-    imports: [
+    "declarations": [EditJsonDialogComponent],
+    "imports": [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -32,6 +32,6 @@ import { MatButtonModule } from '@angular/material/button';
         MatDialogModule,
         MatButtonModule
     ],
-    exports: [EditJsonDialogComponent]
+    "exports": [EditJsonDialogComponent]
 })
 export class EditJsonDialogModule {}

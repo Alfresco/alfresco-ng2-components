@@ -20,7 +20,7 @@ export class DecimalNumberModel {
     minFractionDigits: number;
     maxFractionDigits: number;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         if (obj) {
             this.minIntegerDigits = obj.minIntegerDigits;
             this.minFractionDigits = obj.minFractionDigits;

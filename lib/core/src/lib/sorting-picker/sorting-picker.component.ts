@@ -19,10 +19,10 @@ import { Component, ViewEncapsulation, Input, EventEmitter, Output } from '@angu
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
-    selector: 'adf-sorting-picker',
-    templateUrl: './sorting-picker.component.html',
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-sorting-picker' }
+    "selector": 'adf-sorting-picker',
+    "templateUrl": './sorting-picker.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-sorting-picker' }
 })
 export class SortingPickerComponent {
 
@@ -46,12 +46,12 @@ export class SortingPickerComponent {
     @Output()
     sortingChange = new EventEmitter<boolean>();
 
-    onOptionChanged(event: MatSelectChange) {
+    onOptionChanged (event: MatSelectChange) {
         this.selected = event.value;
         this.valueChange.emit(this.selected);
     }
 
-    toggleSortDirection() {
+    toggleSortDirection () {
         this.ascending = !this.ascending;
         this.sortingChange.emit(this.ascending);
     }

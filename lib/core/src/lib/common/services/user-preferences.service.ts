@@ -33,22 +33,22 @@ export enum UserPreferenceValues {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class UserPreferencesService {
 
     defaults = {
-        paginationSize: 25,
-        supportedPageSizes: [5, 10, 15, 20],
-        locale: 'en',
-        expandedSidenav: true
+        "paginationSize": 25,
+        "supportedPageSizes": [5, 10, 15, 20],
+        "locale": 'en',
+        "expandedSidenav": true
     };
 
     private userPreferenceStatus: any = this.defaults;
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
-    constructor(public translate: TranslateService,
+    constructor (public translate: TranslateService,
         private appConfig: AppConfigService,
         private storage: StorageService,
         private alfrescoApiService: AlfrescoApiService) {
@@ -57,13 +57,13 @@ export class UserPreferencesService {
         this.onChange = this.onChangeSubject.asObservable();
     }
 
-    private initUserPreferenceStatus() {
+    private initUserPreferenceStatus () {
         this.initUserLanguage();
         this.set(UserPreferenceValues.PaginationSize, this.paginationSize);
         this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(this.supportedPageSizes));
     }
 
-    private initUserLanguage() {
+    private initUserLanguage () {
         if (this.locale || this.appConfig.get<string>(UserPreferenceValues.Locale)) {
             const locale = this.locale || this.getDefaultLocale();
 
@@ -79,11 +79,10 @@ export class UserPreferencesService {
 
     /**
      * Sets up a callback to notify when a property has changed.
-     *
      * @param property The property to watch
      * @returns Notification callback
      */
-    select<T = any>(property: string): Observable<T> {
+    select<T = any> (property: string): Observable<T> {
         return this.onChange
             .pipe(
                 map((userPreferenceStatus) => userPreferenceStatus[property]),
@@ -93,12 +92,11 @@ export class UserPreferencesService {
 
     /**
      * Gets a preference property.
-     *
      * @param property Name of the property
      * @param defaultValue Default to return if the property is not found
      * @returns Preference property
      */
-    get(property: string, defaultValue?: string): string {
+    get (property: string, defaultValue?: string): string {
         const key = this.getPropertyKey(property);
         const value = this.storage.getItem(key);
         if (value === undefined || value === null) {
@@ -109,11 +107,10 @@ export class UserPreferencesService {
 
     /**
      * Sets a preference property.
-     *
      * @param property Name of the property
      * @param value New value for the property
      */
-    set(property: string, value: any) {
+    set (property: string, value: any) {
         if (!property) {
             return;
         }
@@ -127,11 +124,10 @@ export class UserPreferencesService {
 
     /**
      * Sets a preference property.
-     *
      * @param property Name of the property
      * @param value New value for the property
      */
-    setWithoutStore(property: string, value: any) {
+    setWithoutStore (property: string, value: any) {
         if (!property) {
             return;
         }
@@ -141,11 +137,10 @@ export class UserPreferencesService {
 
     /**
      * Check if an item is present in the storage
-     *
      * @param property Name of the property
      * @returns True if the item is present, false otherwise
      */
-    hasItem(property: string): boolean {
+    hasItem (property: string): boolean {
         if (!property) {
             return false;
         }
@@ -156,39 +151,35 @@ export class UserPreferencesService {
 
     /**
      * Gets the active storage prefix for preferences.
-     *
      * @returns Storage prefix
      */
-    getStoragePrefix(): string {
+    getStoragePrefix (): string {
         return this.storage.getItem('USER_PROFILE') || 'GUEST';
     }
 
     /**
      * Sets the active storage prefix for preferences.
-     *
      * @param value Name of the prefix
      */
-    setStoragePrefix(value: string) {
+    setStoragePrefix (value: string) {
         this.storage.setItem('USER_PROFILE', value || 'GUEST');
         this.initUserPreferenceStatus();
     }
 
     /**
      * Gets the full property key with prefix.
-     *
      * @param property The property name
      * @returns Property key
      */
-    getPropertyKey(property: string): string {
+    getPropertyKey (property: string): string {
         return `${this.getStoragePrefix()}__${property}`;
     }
 
     /**
      * Gets an array containing the available page sizes.
-     *
      * @returns Array of page size values
      */
-    get supportedPageSizes(): number[] {
+    get supportedPageSizes (): number[] {
         const supportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
 
         if (supportedPageSizes) {
@@ -198,16 +189,16 @@ export class UserPreferencesService {
         }
     }
 
-    set supportedPageSizes(value: number[]) {
+    set supportedPageSizes (value: number[]) {
         this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(value));
     }
 
     /** Pagination size. */
-    set paginationSize(value: number) {
+    set paginationSize (value: number) {
         this.set(UserPreferenceValues.PaginationSize, value);
     }
 
-    get paginationSize(): number {
+    get paginationSize (): number {
         const paginationSize = this.get(UserPreferenceValues.PaginationSize);
 
         if (paginationSize) {
@@ -219,31 +210,29 @@ export class UserPreferencesService {
 
     /**
      * Current locale setting.
-     *
      * @returns locale name
      */
-    get locale(): string {
+    get locale (): string {
         return this.get(UserPreferenceValues.Locale);
     }
 
-    set locale(value: string) {
+    set locale (value: string) {
         this.set(UserPreferenceValues.Locale, value);
     }
 
     /**
      * Gets the default locale.
-     *
      * @returns Default locale language code
      */
-    getDefaultLocale(): string {
+    getDefaultLocale (): string {
         return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
     }
 
-    private getLanguageByKey(key: string): LanguageItem {
+    private getLanguageByKey (key: string): LanguageItem {
         return (
             this.appConfig
-                .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY, [{ key: 'en' } as LanguageItem])
-                .find((language) => key.includes(language.key)) || { key: 'en' } as LanguageItem
+                .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY, [{ "key": 'en' } as LanguageItem])
+                .find((language) => key.includes(language.key)) || { "key": 'en' } as LanguageItem
         );
     }
 }

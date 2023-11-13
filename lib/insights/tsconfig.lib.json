@@ -9,6 +9,8 @@
       "@alfresco/adf-extensions/*": ["../../../dist/libs/extensions/*"],
       "@alfresco/adf-core": ["../../../dist/libs/core"],
       "@alfresco/adf-core/*": ["../../../dist/libs/core/*"]
-    }
+    },
+    "target": "ES2022",
+    "useDefineForClassFields": false
   }
 }

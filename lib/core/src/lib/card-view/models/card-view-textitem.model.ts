@@ -27,7 +27,7 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
     pipes?: CardViewTextItemPipeProperty[];
     clickCallBack?: any;
 
-    constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
+    constructor (cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);
         this.multiline = !!cardViewTextItemProperties.multiline;
         this.pipes = cardViewTextItemProperties.pipes || [];
@@ -38,11 +38,11 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
         }
     }
 
-    get displayValue(): string {
+    get displayValue (): string {
         return this.applyPipes(this.value);
     }
 
-    applyPipes(displayValue) {
+    applyPipes (displayValue) {
         if (this.pipes.length) {
             displayValue = this.pipes.reduce((accumulator, { pipe, params = [] }) => pipe.transform(accumulator, ...params), displayValue);
         }

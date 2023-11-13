@@ -26,22 +26,22 @@ import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicCompone
 import { CardViewArrayItemComponent } from '../components/card-view-arrayitem/card-view-arrayitem.component';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class CardItemTypeService extends DynamicComponentMapper {
 
     protected defaultValue: Type<any> = CardViewTextItemComponent;
 
     protected types: { [key: string]: DynamicComponentResolveFunction } = {
-        text: DynamicComponentResolver.fromType(CardViewTextItemComponent),
-        select: DynamicComponentResolver.fromType(CardViewSelectItemComponent),
-        int: DynamicComponentResolver.fromType(CardViewTextItemComponent),
-        float: DynamicComponentResolver.fromType(CardViewTextItemComponent),
-        date: DynamicComponentResolver.fromType(CardViewDateItemComponent),
-        datetime: DynamicComponentResolver.fromType(CardViewDateItemComponent),
-        bool: DynamicComponentResolver.fromType(CardViewBoolItemComponent),
-        map: DynamicComponentResolver.fromType(CardViewMapItemComponent),
-        keyvaluepairs: DynamicComponentResolver.fromType(CardViewKeyValuePairsItemComponent),
-        array: DynamicComponentResolver.fromType(CardViewArrayItemComponent)
+        "text": DynamicComponentResolver.fromType(CardViewTextItemComponent),
+        "select": DynamicComponentResolver.fromType(CardViewSelectItemComponent),
+        "int": DynamicComponentResolver.fromType(CardViewTextItemComponent),
+        "float": DynamicComponentResolver.fromType(CardViewTextItemComponent),
+        "date": DynamicComponentResolver.fromType(CardViewDateItemComponent),
+        "datetime": DynamicComponentResolver.fromType(CardViewDateItemComponent),
+        "bool": DynamicComponentResolver.fromType(CardViewBoolItemComponent),
+        "map": DynamicComponentResolver.fromType(CardViewMapItemComponent),
+        "keyvaluepairs": DynamicComponentResolver.fromType(CardViewKeyValuePairsItemComponent),
+        "array": DynamicComponentResolver.fromType(CardViewArrayItemComponent)
     };
 }

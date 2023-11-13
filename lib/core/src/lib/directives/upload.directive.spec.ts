@@ -26,8 +26,8 @@ describe('UploadDirective', () => {
 
     beforeEach(() => {
         nativeElement = {
-            classList: jasmine.createSpyObj('classList', ['add', 'remove']),
-            dispatchEvent: () => {}
+            "classList": jasmine.createSpyObj('classList', ['add', 'remove']),
+            "dispatchEvent": () => {}
         };
         directive = new UploadDirective(new ElementRef(nativeElement), null, null);
     });
@@ -39,7 +39,7 @@ describe('UploadDirective', () => {
     it('should update drag status on dragenter', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragEnter(new DragEvent('dragenter', { dataTransfer: new DataTransfer() }));
+        directive.onDragEnter(new DragEvent('dragenter', { "dataTransfer": new DataTransfer() }));
         expect(directive.isDragging).toBeTruthy();
     });
 
@@ -53,12 +53,12 @@ describe('UploadDirective', () => {
     it('should update drag status on dragover', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragOver(new DragEvent('dragover', { dataTransfer: new DataTransfer() }));
+        directive.onDragOver(new DragEvent('dragover', { "dataTransfer": new DataTransfer() }));
         expect(directive.isDragging).toBeTruthy();
     });
 
     it('should prevent default event on dragover', () => {
-        const event = new DragEvent('dragover', { dataTransfer: new DataTransfer() });
+        const event = new DragEvent('dragover', { "dataTransfer": new DataTransfer() });
         spyOn(event, 'preventDefault').and.stub();
         directive.enabled = true;
         directive.onDragOver(event);
@@ -139,7 +139,7 @@ describe('UploadDirective', () => {
         directive.enabled = true;
         directive.mode = ['click'];
         const files = [{}];
-        const event = {currentTarget: {files}, target: {value: '/testpath/document.pdf'}};
+        const event = {"currentTarget": {files}, "target": {"value": '/testpath/document.pdf'}};
 
         directive.onSelectFiles(event);
         expect(event.target.value).toBe('');

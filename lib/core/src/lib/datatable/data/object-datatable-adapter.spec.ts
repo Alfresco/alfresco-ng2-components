@@ -149,7 +149,7 @@ describe('ObjectDataTableAdapter', () => {
         row.getValue.and.returnValue(value);
 
         const adapter = new ObjectDataTableAdapter([], []);
-        const result = adapter.getValue(row, { key: 'col1' } as DataColumn);
+        const result = adapter.getValue(row, { "key": 'col1' } as DataColumn);
 
         expect(row.getValue).toHaveBeenCalledWith('col1');
         expect(result).toBe(value);
@@ -185,11 +185,11 @@ describe('ObjectDataTableAdapter', () => {
     it('should sort by first column by default', () => {
         const adapter = new ObjectDataTableAdapter(
             [
-                { id: 2, name: 'abs' },
-                { id: 1, name: 'xyz' }
+                { "id": 2, "name": 'abs' },
+                { "id": 1, "name": 'xyz' }
             ],
             [
-                new ObjectDataColumn({ key: 'id', sortable: true })
+                new ObjectDataColumn({ "key": 'id', "sortable": true })
             ]
         );
 
@@ -200,14 +200,14 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should take first sortable column by default', () => {
         const adapter = new ObjectDataTableAdapter([], [
-            { key: 'icon' } as DataColumn,
-            new ObjectDataColumn({ key: 'id', sortable: true })
+            { "key": 'icon' } as DataColumn,
+            new ObjectDataColumn({ "key": 'id', "sortable": true })
         ]);
 
         expect(adapter.getSorting()).toEqual(
             jasmine.objectContaining({
-                key: 'id',
-                direction: 'asc'
+                "key": 'id',
+                "direction": 'asc'
             })
         );
     });
@@ -215,12 +215,12 @@ describe('ObjectDataTableAdapter', () => {
     it('should sort by dates', () => {
         const adapter = new ObjectDataTableAdapter(
             [
-                { id: 1, created: new Date(2016, 7, 6, 15, 7, 2) },
-                { id: 2, created: new Date(2016, 7, 6, 15, 7, 1) }
+                { "id": 1, "created": new Date(2016, 7, 6, 15, 7, 2) },
+                { "id": 2, "created": new Date(2016, 7, 6, 15, 7, 1) }
             ],
             [
-                { key: 'id' } as DataColumn,
-                { key: 'created' } as DataColumn
+                { "key": 'id' } as DataColumn,
+                { "key": 'created' } as DataColumn
             ]
         );
 
@@ -233,10 +233,10 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should sort by numbers', () => {
         const adapter = new ObjectDataTableAdapter([
-            { id: 123 },
-            { id: 38 },
-            { id: 50 }
-        ],[{key: 'id'} as DataColumn]);
+            { "id": 123 },
+            { "id": 38 },
+            { "id": 50 }
+        ],[{"key": 'id'} as DataColumn]);
 
         adapter.setSorting(new DataSorting('id', 'asc'));
 
@@ -249,12 +249,12 @@ describe('ObjectDataTableAdapter', () => {
     it('should be sorting undefined if no sortable found', () => {
         const adapter = new ObjectDataTableAdapter(
             [
-                { id: 2, name: 'abs' },
-                { id: 1, name: 'xyz' }
+                { "id": 2, "name": 'abs' },
+                { "id": 1, "name": 'xyz' }
             ],
             [
-                new ObjectDataColumn({ key: 'id' }),
-                new ObjectDataColumn({ key: 'name' })
+                new ObjectDataColumn({ "key": 'id' }),
+                new ObjectDataColumn({ "key": 'name' })
             ]
         );
 
@@ -264,11 +264,11 @@ describe('ObjectDataTableAdapter', () => {
     it('should sort asc and desc', () => {
         const adapter = new ObjectDataTableAdapter(
             [
-                { id: 2, name: 'abs' },
-                { id: 1, name: 'xyz' }
+                { "id": 2, "name": 'abs' },
+                { "id": 1, "name": 'xyz' }
             ],
             [
-                new ObjectDataColumn({ key: 'id', sortable: true })
+                new ObjectDataColumn({ "key": 'id', "sortable": true })
             ]
         );
 
@@ -289,8 +289,8 @@ describe('ObjectDataTableAdapter', () => {
         adapter.sort('id', null);
         expect(adapter.getSorting()).toEqual(
             jasmine.objectContaining({
-                key: 'id',
-                direction: 'asc'
+                "key": 'id',
+                "direction": 'asc'
             })
         );
     });
@@ -303,8 +303,8 @@ describe('ObjectDataTableAdapter', () => {
         adapter.sort('id', 'desc');
         expect(adapter.getSorting()).toEqual(
             jasmine.objectContaining({
-                key: 'id',
-                direction: 'desc'
+                "key": 'id',
+                "direction": 'desc'
             })
         );
     });
@@ -318,7 +318,7 @@ describe('ObjectDataRow', () => {
 
     it('should get top level property value', () => {
         const row = new ObjectDataRow({
-            id: 1
+            "id": 1
         });
         expect(row.getValue('id')).toBe(1);
     });
@@ -330,9 +330,9 @@ describe('ObjectDataRow', () => {
 
     it('should get nested property value', () => {
         const row = new ObjectDataRow({
-           name: {
-               firstName: 'John',
-               lastName: 'Doe'
+           "name": {
+               "firstName": 'John',
+               "lastName": 'Doe'
            }
         });
 
@@ -345,7 +345,7 @@ describe('ObjectDataRow', () => {
     });
 
     it('should check top level value exists', () => {
-        const row = new ObjectDataRow({ id: 1 });
+        const row = new ObjectDataRow({ "id": 1 });
 
         expect(row.hasValue('id')).toBeTruthy();
         expect(row.hasValue('other')).toBeFalsy();
@@ -353,9 +353,9 @@ describe('ObjectDataRow', () => {
 
     it('should check nested value exists', () => {
         const row = new ObjectDataRow({
-            name: {
-                firstName: 'John',
-                lastName: 'Doe'
+            "name": {
+                "firstName": 'John',
+                "lastName": 'Doe'
             }
         });
 
@@ -366,8 +366,8 @@ describe('ObjectDataRow', () => {
 
     it('should generateSchema generate a schema from data', () => {
         const data =  [
-            { id: 2, name: 'abs' },
-            { id: 1, name: 'xyz' }
+            { "id": 2, "name": 'abs' },
+            { "id": 1, "name": 'xyz' }
         ];
 
         const schema = ObjectDataTableAdapter.generateSchema(data);

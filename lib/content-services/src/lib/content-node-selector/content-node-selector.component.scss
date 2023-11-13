@@ -1,6 +1,6 @@
 adf-content-node-selector {
     .adf-content-node-selector-headless-tabs {
-        .mat-tab-header {
+        .mat-mdc-tab-header {
             display: none;
         }
     }
@@ -51,7 +51,7 @@ adf-content-node-selector {
         padding-right: 24px;
     }
 
-    .mat-dialog-title {
+    .mat-mdc-dialog-title {
         margin-left: 24px;
         margin-right: 24px;
         font-size: var(--theme-title-font-size);
@@ -68,17 +68,17 @@ adf-content-node-selector {
         }
     }
 
-    .mat-dialog-container {
+    .mat-mdc-dialog-container {
         padding-left: 0;
         padding-right: 0;
     }
 
-    .mat-dialog-content {
+    .mat-mdc-dialog-content {
         margin: 0;
         overflow: hidden;
     }
 
-    .mat-dialog-actions {
+    .mat-mdc-dialog-actions {
         padding: 8px;
         height: 61px;
         background-color: var(--theme-background-color);
@@ -104,7 +104,7 @@ adf-content-node-selector {
     }
 
     @media screen and (max-width: 768px) {
-        .mat-dialog-container {
+        .mat-mdc-dialog-container {
             height: 100vh;
         }
     }

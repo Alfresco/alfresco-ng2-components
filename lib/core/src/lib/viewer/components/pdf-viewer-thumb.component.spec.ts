@@ -26,29 +26,29 @@ describe('PdfThumbComponent', () => {
     let fixture: ComponentFixture<PdfThumbComponent>;
     let component: PdfThumbComponent;
     const domSanitizer = {
-        bypassSecurityTrustUrl: () => 'image-data'
+        "bypassSecurityTrustUrl": () => 'image-data'
     };
     const width = 91;
     const height = 119;
     const page = {
-        id: 'pageId',
-        getPage: jasmine.createSpy('getPage').and.returnValue(Promise.resolve({
-            getViewport: () => ({ height: width, width: height }),
-            render: jasmine.createSpy('render').and.returnValue({ promise: Promise.resolve() })
+        "id": 'pageId',
+        "getPage": jasmine.createSpy('getPage').and.returnValue(Promise.resolve({
+            "getViewport": () => ({ "height": width, "width": height }),
+            "render": jasmine.createSpy('render').and.returnValue({ "promise": Promise.resolve() })
         })),
 
-        getWidth: jasmine.createSpy('getWidth').and.returnValue(width),
-        getHeight: jasmine.createSpy('getHeight').and.returnValue(height)
+        "getWidth": jasmine.createSpy('getWidth').and.returnValue(width),
+        "getHeight": jasmine.createSpy('getHeight').and.returnValue(height)
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            providers: [
-                { provide: DomSanitizer, useValue: domSanitizer }
+            "providers": [
+                { "provide": DomSanitizer, "useValue": domSanitizer }
             ]
         });
         fixture = TestBed.createComponent(PdfThumbComponent);

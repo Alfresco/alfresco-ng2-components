@@ -38,7 +38,7 @@ describe('DateTimeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatTooltipModule]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule, MatTooltipModule]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
 
@@ -58,9 +58,9 @@ describe('DateTimeWidgetComponent', () => {
     it('should setup min value for date picker', async () => {
         const minValue = '1982-03-13T10:00:00Z';
         widget.field = new FormFieldModel(form, {
-            id: 'date-id',
-            name: 'date-name',
-            type: 'datetime',
+            "id": 'date-id',
+            "name": 'date-name',
+            "type": 'datetime',
             minValue
         });
 
@@ -72,9 +72,9 @@ describe('DateTimeWidgetComponent', () => {
 
     it('should date field be present', () => {
         widget.field = new FormFieldModel(form, {
-            id: 'date-id',
-            name: 'date-name',
-            type: 'datetime'
+            "id": 'date-id',
+            "name": 'date-name',
+            "type": 'datetime'
         });
         fixture.detectChanges();
 
@@ -97,24 +97,24 @@ describe('DateTimeWidgetComponent', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9999-09-12T09:00:00.000Z',
+            "type": 'datetime'
         });
 
         widget.field = field;
-        widget.onDateChanged({ value: new Date('1982-03-13T10:00:00.000Z') } as any);
+        widget.onDateChanged({ "value": new Date('1982-03-13T10:00:00.000Z') } as any);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
 
     it('should validate the initial datetime value', async () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9999-09-12T09:00:00.000Z',
+            "type": 'datetime'
         });
 
         widget.field = field;
@@ -127,10 +127,10 @@ describe('DateTimeWidgetComponent', () => {
 
     it('should validate the updated datetime value', async () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9999-09-12T09:00:00.000Z',
+            "type": 'datetime'
         });
 
         widget.field = field;
@@ -138,7 +138,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.whenStable();
         await fixture.whenStable();
 
-        widget.onDateChanged({ value: new Date('9999-09-12T09:10:00.000Z') } as any);
+        widget.onDateChanged({ "value": new Date('9999-09-12T09:10:00.000Z') } as any);
 
         expect(field.value).toBe('9999-09-12T09:10:00.000Z');
         expect(field.isValid).toBeTrue();
@@ -146,10 +146,10 @@ describe('DateTimeWidgetComponent', () => {
 
     it('should forwad the incorrect datetime input for further validation', async () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9999-09-12T09:00:00.000Z',
+            "type": 'datetime'
         });
 
         widget.field = field;
@@ -158,9 +158,9 @@ describe('DateTimeWidgetComponent', () => {
         await fixture.whenStable();
 
         widget.onDateChanged({
-            value: null,
-            targetElement: {
-                value: '123abc'
+            "value": null,
+            "targetElement": {
+                "value": '123abc'
             }
         } as any);
 
@@ -174,10 +174,10 @@ describe('DateTimeWidgetComponent', () => {
 
     it('should process direct keyboard input', async () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9999-09-12T09:00:00.000Z',
+            "type": 'datetime'
         });
 
         widget.field = field;
@@ -185,7 +185,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.whenStable();
         await fixture.whenStable();
 
-        widget.onValueChanged({ target: { value: '9999-09-12T09:10:00.000Z' } } as any);
+        widget.onValueChanged({ "target": { "value": '9999-09-12T09:10:00.000Z' } } as any);
 
         expect(field.value).toBe('9999-09-12T09:10:00.000Z');
         expect(field.isValid).toBeTrue();
@@ -193,10 +193,10 @@ describe('DateTimeWidgetComponent', () => {
 
     it('should fail validating incorrect keyboard input', async () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9999-09-12T09:00:00.000Z',
+            "type": 'datetime'
         });
 
         widget.field = field;
@@ -205,8 +205,8 @@ describe('DateTimeWidgetComponent', () => {
         await fixture.whenStable();
 
         widget.onValueChanged({
-            target: {
-                value: '123abc'
+            "target": {
+                "value": '123abc'
             }
         } as any);
 
@@ -220,10 +220,10 @@ describe('DateTimeWidgetComponent', () => {
 
     it('should allow empty dates when not required', async () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9999-09-12T09:00:00.000Z',
+            "type": 'datetime'
         });
 
         widget.field = field;
@@ -231,7 +231,7 @@ describe('DateTimeWidgetComponent', () => {
         fixture.whenStable();
         await fixture.whenStable();
 
-        widget.onDateChanged({ value: null, targetElement: { value: '' } } as any);
+        widget.onDateChanged({ "value": null, "targetElement": { "value": '' } } as any);
 
         expect(field.value).toBe('');
         expect(field.isValid).toBeTrue();
@@ -239,9 +239,9 @@ describe('DateTimeWidgetComponent', () => {
 
     describe('when tooltip is set', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DATETIME,
-                tooltip: 'my custom tooltip'
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DATETIME,
+                "tooltip": 'my custom tooltip'
             });
             fixture.detectChanges();
         });
@@ -266,9 +266,9 @@ describe('DateTimeWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DATETIME,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DATETIME,
+                "required": true
             });
         });
 
@@ -296,10 +296,10 @@ describe('DateTimeWidgetComponent', () => {
     describe('template check', () => {
         it('should show visible date widget', async () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '9999-11-30T10:30:00.000Z',
-                type: 'datetime'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": '9999-11-30T10:30:00.000Z',
+                "type": 'datetime'
             });
 
             fixture.detectChanges();
@@ -311,11 +311,11 @@ describe('DateTimeWidgetComponent', () => {
 
         it('should show the correct format type', async () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '9999-12-30T10:30:00.000Z',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": '9999-12-30T10:30:00.000Z',
+                "dateDisplayFormat": 'MM-DD-YYYY HH:mm A',
+                "type": 'datetime'
             });
 
             fixture.detectChanges();
@@ -327,11 +327,11 @@ describe('DateTimeWidgetComponent', () => {
 
         it('should disable date button when is readonly', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '9999-12-30T10:30:00.000Z',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": '9999-12-30T10:30:00.000Z',
+                "dateDisplayFormat": 'MM-DD-YYYY HH:mm A',
+                "type": 'datetime'
             });
             fixture.detectChanges();
 
@@ -350,11 +350,11 @@ describe('DateTimeWidgetComponent', () => {
 
     it('should display always the json value', async () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'datetime-field-name',
-            value: '9999-12-30T10:30:00.000Z',
-            type: 'datetime',
-            dateDisplayFormat: 'MM-DD-YYYY HH:mm A'
+            "id": 'date-field-id',
+            "name": 'datetime-field-name',
+            "value": '9999-12-30T10:30:00.000Z',
+            "type": 'datetime',
+            "dateDisplayFormat": 'MM-DD-YYYY HH:mm A'
         });
         widget.field = field;
 
@@ -375,13 +375,13 @@ describe('DateTimeWidgetComponent', () => {
 
     describe('when form model has left labels', () => {
         it('should have left labels classes on leftLabels true', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                id: 'datetime-id',
-                name: 'datetime-name',
-                value: '',
-                type: FormFieldTypes.DATETIME,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": true }), {
+                "id": 'datetime-id',
+                "name": 'datetime-name',
+                "value": '',
+                "type": FormFieldTypes.DATETIME,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -397,13 +397,13 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels false', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                id: 'datetime-id',
-                name: 'datetime-name',
-                value: '',
-                type: FormFieldTypes.DATETIME,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": false }), {
+                "id": 'datetime-id',
+                "name": 'datetime-name',
+                "value": '',
+                "type": FormFieldTypes.DATETIME,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -419,13 +419,13 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels not present', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'datetime-id',
-                name: 'datetime-name',
-                value: '',
-                type: FormFieldTypes.DATETIME,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'datetime-id',
+                "name": 'datetime-name',
+                "value": '',
+                "type": FormFieldTypes.DATETIME,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();

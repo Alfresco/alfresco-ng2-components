@@ -24,13 +24,13 @@ import { DemoForm } from '../mock/form/demo-form.mock';
 import { AuthenticationService } from '../auth/services/authentication.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class CoreAutomationService {
 
     public forms = new DemoForm();
 
-    constructor(
+    constructor (
         private appConfigService: AppConfigService,
         private alfrescoApiService: AlfrescoApiService,
         private userPreferencesService: UserPreferencesService,
@@ -39,7 +39,7 @@ export class CoreAutomationService {
     ) {
     }
 
-    setup() {
+    setup () {
         const adfProxy = window['adf'] || {};
 
         adfProxy.getConfigField = (field: string): any => this.appConfigService.get(field);

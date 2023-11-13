@@ -21,27 +21,27 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-select-filter-input',
-    templateUrl: './select-filter-input.component.html',
-    styleUrls: ['./select-filter-input.component.scss'],
-    host: { class: 'adf-select-filter-input' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-select-filter-input',
+    "templateUrl": './select-filter-input.component.html',
+    "styleUrls": ['./select-filter-input.component.scss'],
+    "host": { "class": 'adf-select-filter-input' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class SelectFilterInputComponent implements OnInit, OnDestroy {
-    @ViewChild('selectFilterInput', { read: ElementRef, static: false }) selectFilterInput: ElementRef;
+    @ViewChild('selectFilterInput', { "read": ElementRef, "static": false }) selectFilterInput: ElementRef;
     @Output() change = new EventEmitter<string>();
 
     term = '';
     previousSelected: any[];
     private onDestroy$ = new Subject<void>();
 
-    constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
+    constructor (@Inject(MatSelect) private matSelect: MatSelect) {}
 
-    onModelChange(value: string) {
+    onModelChange (value: string) {
         this.change.next(value);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.change.pipe(takeUntil(this.onDestroy$)).subscribe((val: string) => (this.term = val));
 
         this.matSelect.openedChange.pipe(takeUntil(this.onDestroy$)).subscribe((isOpened: boolean) => {
@@ -79,7 +79,7 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
         }
     }
 
-    reset(event?: Event) {
+    reset (event?: Event) {
         if (event) {
             event.stopPropagation();
         }
@@ -88,7 +88,7 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
         this.selectFilterInput.nativeElement.focus();
     }
 
-    handleKeydown($event: KeyboardEvent) {
+    handleKeydown ($event: KeyboardEvent) {
         if (this.term) {
             if ($event.code === 'Escape') {
                 $event.stopPropagation();
@@ -101,7 +101,7 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

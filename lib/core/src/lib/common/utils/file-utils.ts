@@ -23,13 +23,13 @@ export interface FileInfo {
 
 export class FileUtils {
 
-    static flatten(folder: any): Promise<FileInfo[]> {
+    static flatten (folder: any): Promise<FileInfo[]> {
         const reader = folder.createReader();
         const files: FileInfo[] = [];
         return new Promise((resolve) => {
             const iterations = [];
             // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-            (function traverse() {
+            (function traverse () {
                 reader.readEntries((entries) => {
                     if (!entries.length) {
                         Promise.all(iterations).then(() => resolve(files));
@@ -41,7 +41,7 @@ export class FileUtils {
                                         files.push({
                                             entry,
                                             file,
-                                            relativeFolder: entry.fullPath.replace(/\/[^/]*$/, '')
+                                            "relativeFolder": entry.fullPath.replace(/\/[^/]*$/, '')
                                         });
                                         resolveFile();
                                     });
@@ -60,7 +60,7 @@ export class FileUtils {
         });
     }
 
-    static toFileArray(fileList: FileList): File[] {
+    static toFileArray (fileList: FileList): File[] {
         const result = [];
 
         if (fileList && fileList.length > 0) {

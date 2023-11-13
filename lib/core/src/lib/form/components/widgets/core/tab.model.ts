@@ -28,11 +28,11 @@ export class TabModel extends FormWidgetModel {
 
     fields: FormWidgetModel[] = [];
 
-    hasContent(): boolean {
+    hasContent (): boolean {
         return this.fields && this.fields.length > 0;
     }
 
-    constructor(form: any, json?: any) {
+    constructor (form: any, json?: any) {
         super(form, json);
 
         if (json) {

@@ -3,15 +3,15 @@ adf-search-chip-autocomplete-input {
         width: 100%;
     }
 
-    .mat-form-field-appearance-outline .mat-form-field-outline {
+    .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline {
         top: 0;
     }
 
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
         border: none;
     }
 
-    .mat-chip.adf-option-chips {
+    .mat-mdc-chip.adf-option-chips {
         border: 1px solid var(--theme-text-color);
         border-radius: 10px;
         background-color: var(--theme-primary-color-default-contrast);
@@ -19,7 +19,7 @@ adf-search-chip-autocomplete-input {
         word-break: break-word;
     }
 
-    .mat-chip-remove.adf-option-chips-delete-button {
+    .mat-mdc-chip-remove.adf-option-chips-delete-button {
         font-size: 13px;
         height: 13px;
         width: 13px;
@@ -31,20 +31,19 @@ adf-search-chip-autocomplete-input {
         }
     }
 
-    .mat-chip-list-wrapper {
+    .mat-mdc-chip-list-wrapper {
         min-height: 40px;
     }
 
-    .mat-form-field-wrapper {
+    .mat-mdc-form-field-wrapper {
         padding: 0;
     }
 }
-
-.mat-tooltip-hide {
+.mat-mdc-tooltip-hide {
     display: none;
 }
 
-.mat-option.adf-autocomplete-added-option {
+.mat-mdc-option.adf-autocomplete-added-option {
     background: var(--adf-theme-mat-grey-color-a200);
     color: var(--adf-theme-primary-300);
 }

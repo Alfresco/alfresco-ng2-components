@@ -28,58 +28,58 @@ import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 
 @Component({
-    template: '',
-    providers: [NotificationService]
+    "template": '',
+    "providers": [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
-    constructor(public notificationService: NotificationService) {}
+    constructor (public notificationService: NotificationService) {}
 
-    sendMessageWithoutConfig() {
+    sendMessageWithoutConfig () {
         return this.notificationService.openSnackMessage('Test notification', 1000);
     }
 
-    sendMessage() {
+    sendMessage () {
         return this.notificationService.openSnackMessage('Test notification', 1000);
     }
 
-    sendMessageWithArgs() {
-        return this.notificationService.openSnackMessage('Test notification {{ arg }}', 1000, { arg: 'arg' });
+    sendMessageWithArgs () {
+        return this.notificationService.openSnackMessage('Test notification {{ arg }}', 1000, { "arg": 'arg' });
     }
 
-    sendCustomMessage() {
+    sendCustomMessage () {
         const matSnackBarConfig = new MatSnackBarConfig();
         matSnackBarConfig.duration = 1000;
 
         return this.notificationService.openSnackMessage('Test notification', matSnackBarConfig);
     }
 
-    sendMessageActionWithoutConfig() {
+    sendMessageActionWithoutConfig () {
         return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
     }
 
-    sendMessageAction() {
+    sendMessageAction () {
         return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 1000);
     }
 
-    sendCustomMessageAction() {
+    sendCustomMessageAction () {
         const matSnackBarConfig = new MatSnackBarConfig();
         matSnackBarConfig.duration = 1000;
 
         return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', matSnackBarConfig);
     }
 
-    sendMessageWithDecorativeIcon() {
+    sendMessageWithDecorativeIcon () {
         const notificationConfig = new MatSnackBarConfig();
         notificationConfig.duration = 1000;
-        notificationConfig.data = { decorativeIcon: 'info' };
+        notificationConfig.data = { "decorativeIcon": 'info' };
 
         return this.notificationService.openSnackMessage('with decorative icon', notificationConfig);
     }
 
-    sendMessageWithDecorativeIconAndAction() {
+    sendMessageWithDecorativeIconAndAction () {
         const notificationConfig = new MatSnackBarConfig();
         notificationConfig.duration = 1000;
-        notificationConfig.data = { decorativeIcon: 'folder' };
+        notificationConfig.data = { "decorativeIcon": 'folder' };
 
         return this.notificationService.openSnackMessageAction('with decorative icon', 'TestWarn', notificationConfig);
     }
@@ -92,8 +92,8 @@ describe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatSnackBarModule],
-            declarations: [ProvidesNotificationServiceComponent]
+            "imports": [TranslateModule.forRoot(), CoreTestingModule, MatSnackBarModule],
+            "declarations": [ProvidesNotificationServiceComponent]
         });
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
@@ -116,7 +116,7 @@ describe('NotificationService', () => {
         fixture.componentInstance.sendMessageWithArgs();
         fixture.detectChanges();
 
-        expect(translationService.instant).toHaveBeenCalledWith('Test notification {{ arg }}', { arg: 'arg' });
+        expect(translationService.instant).toHaveBeenCalledWith('Test notification {{ arg }}', { "arg": 'arg' });
     });
 
     it('should translate the action', () => {
@@ -169,11 +169,11 @@ describe('NotificationService', () => {
 
     it('should open a message notification bar with a decorative icon', async () => {
         fixture.componentInstance.sendMessageWithDecorativeIcon();
-        expect(await loader.hasHarness(MatIconHarness.with({ ancestor: `[data-automation-id="adf-snackbar-message-content"]` }))).toBe(true);
+        expect(await loader.hasHarness(MatIconHarness.with({ "ancestor": `[data-automation-id="adf-snackbar-message-content"]` }))).toBe(true);
     });
 
     it('should open a message notification bar with action and a decorative icon', async () => {
         fixture.componentInstance.sendMessageWithDecorativeIconAndAction();
-        expect(await loader.hasHarness(MatIconHarness.with({ ancestor: `[data-automation-id="adf-snackbar-message-content"]` }))).toBe(true);
+        expect(await loader.hasHarness(MatIconHarness.with({ "ancestor": `[data-automation-id="adf-snackbar-message-content"]` }))).toBe(true);
     });
 });

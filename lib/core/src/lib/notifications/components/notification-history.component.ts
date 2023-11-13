@@ -25,16 +25,16 @@ import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
 
 @Component({
-    selector: 'adf-notification-history',
-    templateUrl: 'notification-history.component.html',
-    styleUrls: ['./notification-history.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-notification-history',
+    "templateUrl": 'notification-history.component.html',
+    "styleUrls": ['./notification-history.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
 
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
 
-    @ViewChild(MatMenuTrigger, { static: true })
+    @ViewChild(MatMenuTrigger, { "static": true })
     trigger: MatMenuTrigger;
 
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
@@ -55,9 +55,9 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     unreadNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
-    constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
+    constructor (private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.notifications = JSON.parse(this.storageService.getItem(NOTIFICATION_STORAGE)) || [];
         this.unreadNotifications =
             JSON.parse(this.storageService.getItem(NOTIFICATION_STORAGE))?.filter(
@@ -65,7 +65,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             ) || [];
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit (): void {
         this.notificationService.notifications$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((notification: NotificationModel) => {
@@ -74,12 +74,12 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    addNewNotification(notification: NotificationModel) {
+    addNewNotification (notification: NotificationModel) {
         this.unreadNotifications.unshift(notification);
 
         if (this.unreadNotifications.length > NotificationHistoryComponent.MAX_NOTIFICATION_STACK_LENGTH) {
@@ -90,7 +90,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.createPagination();
     }
 
-    saveNotifications() {
+    saveNotifications () {
         this.unreadNotifications.forEach((notification: NotificationModel) => {
             this.notifications.push(notification);
         });
@@ -98,21 +98,21 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.storageService.setItem(NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
     }
 
-    onMenuOpened() {
+    onMenuOpened () {
         this.createPagination();
     }
 
-    onKeyPress(event: KeyboardEvent) {
+    onKeyPress (event: KeyboardEvent) {
         this.closeUserModal(event);
     }
 
-    private closeUserModal($event: KeyboardEvent) {
+    private closeUserModal ($event: KeyboardEvent) {
         if ($event.keyCode === 27) {
             this.trigger.closeMenu();
         }
     }
 
-    markAsRead() {
+    markAsRead () {
         this.unreadNotifications = [];
         this.notifications.forEach((notification: NotificationModel) => {
             notification.read = true;
@@ -124,27 +124,27 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.trigger.closeMenu();
     }
 
-    createPagination() {
+    createPagination () {
         this.pagination = {
-            skipCount: this.maxNotifications,
-            maxItems: this.maxNotifications,
-            totalItems: this.unreadNotifications.length,
-            hasMoreItems: this.unreadNotifications.length > this.maxNotifications
+            "skipCount": this.maxNotifications,
+            "maxItems": this.maxNotifications,
+            "totalItems": this.unreadNotifications.length,
+            "hasMoreItems": this.unreadNotifications.length > this.maxNotifications
         };
         this.paginatedNotifications = this.unreadNotifications.slice(0, this.pagination.skipCount);
     }
 
-    loadMore() {
+    loadMore () {
         this.pagination.skipCount = this.pagination.maxItems + this.pagination.skipCount;
         this.pagination.hasMoreItems = this.unreadNotifications.length > this.pagination.skipCount;
         this.paginatedNotifications = this.unreadNotifications.slice(0, this.pagination.skipCount);
     }
 
-    hasMoreNotifications(): boolean {
+    hasMoreNotifications (): boolean {
         return this.pagination?.hasMoreItems;
     }
 
-    onNotificationClick(notification: NotificationModel) {
+    onNotificationClick (notification: NotificationModel) {
         if (notification.clickCallBack) {
             notification.clickCallBack(notification.args);
             this.trigger.closeMenu();

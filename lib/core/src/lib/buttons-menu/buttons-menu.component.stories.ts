@@ -21,36 +21,36 @@ import { ButtonsMenuComponent } from './buttons-menu.component';
 import { ButtonsMenuModule } from './buttons-menu.module';
 
 export default {
-    component: ButtonsMenuComponent,
-    title: 'Core/Buttons Menu/Buttons Menu',
-    decorators: [
+    "component": ButtonsMenuComponent,
+    "title": 'Core/Buttons Menu/Buttons Menu',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, ButtonsMenuModule]
+            "imports": [CoreStoryModule, ButtonsMenuModule]
         })
     ],
-    argTypes: {
-        mobile: {
-            type: { name: 'boolean' },
-            name: 'isMobile',
-            description:
+    "argTypes": {
+        "mobile": {
+            "type": { "name": 'boolean' },
+            "name": 'isMobile',
+            "description":
                 'Determines whether it is displayed on a mobile device',
-            defaultValue: true,
-            control: {
-                disable: false
+            "defaultValue": true,
+            "control": {
+                "disable": false
             },
-            table: {
-                category: 'Component methods',
-                type: {
-                    summary: '() => boolean'
+            "table": {
+                "category": 'Component methods',
+                "type": {
+                    "summary": '() => boolean'
                 }
             }
         },
-        isMenuEmpty: {
-            description: 'Determines whether it has anything to display',
-            table: {
-                category: 'Component properties',
-                type: {
-                    summary: 'boolean'
+        "isMenuEmpty": {
+            "description": 'Determines whether it has anything to display',
+            "table": {
+                "category": 'Component properties',
+                "type": {
+                    "summary": 'boolean'
                 }
             }
         }
@@ -58,14 +58,14 @@ export default {
 } as Meta;
 
 export const sixButtons: Story = args => ({
-    props: {
+    "props": {
         ...args,
-        isMenuEmpty: false,
-        isMobile() {
+        "isMenuEmpty": false,
+        isMobile () {
             return args.mobile;
         }
     },
-    template: `
+    "template": `
     <adf-buttons-action-menu>
         <button mat-menu-item>
             <mat-icon>settings</mat-icon><span> Settings </span>
@@ -90,14 +90,14 @@ export const sixButtons: Story = args => ({
 });
 
 export const oneButton: Story = args => ({
-    props: {
+    "props": {
         ...args,
-        isMenuEmpty: false,
-        isMobile() {
+        "isMenuEmpty": false,
+        isMobile () {
             return args.mobile;
         }
     },
-    template: `
+    "template": `
     <adf-buttons-action-menu>
         <button mat-menu-item>
             <mat-icon>settings</mat-icon><span> Settings </span>
@@ -107,13 +107,13 @@ export const oneButton: Story = args => ({
 });
 
 export const noButtons: Story = args => ({
-    props: {
+    "props": {
         ...args,
-        isMenuEmpty: true,
-        isMobile() {
+        "isMenuEmpty": true,
+        isMobile () {
             return args.mobile;
         }
     },
-    template: `
+    "template": `
     <adf-buttons-action-menu></adf-buttons-action-menu>`
 });

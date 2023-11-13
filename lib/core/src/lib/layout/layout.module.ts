@@ -29,13 +29,13 @@ import { SidebarActionMenuComponent, SidebarMenuDirective,
 import { HeaderLayoutComponent } from './components/header/header.component';
 import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MaterialModule,
         RouterModule,
         TranslateModule
     ],
-    exports: [
+    "exports": [
         SidenavLayoutHeaderDirective,
         SidenavLayoutContentDirective,
         SidenavLayoutNavigationDirective,
@@ -47,7 +47,7 @@ import { TranslateModule } from '@ngx-translate/core';
         SidebarMenuTitleIconDirective,
         HeaderLayoutComponent
     ],
-    declarations: [
+    "declarations": [
         SidenavLayoutHeaderDirective,
         SidenavLayoutContentDirective,
         SidenavLayoutNavigationDirective,

@@ -34,7 +34,7 @@ describe('DateWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ]
@@ -52,9 +52,9 @@ describe('DateWidgetComponent', () => {
 
     it('[C310333] - should be able to set a placeholder', () => {
         widget.field = new FormFieldModel(form, {
-            id: 'date-id',
-            name: 'date-name',
-            placeholder: 'My Placeholder'
+            "id": 'date-id',
+            "name": 'date-name',
+            "placeholder": 'My Placeholder'
         });
 
         expect(widget.field.placeholder).toBe('My Placeholder');
@@ -63,8 +63,8 @@ describe('DateWidgetComponent', () => {
     it('should setup min value for date picker', () => {
         const minValue = '13-03-1982';
         widget.field = new FormFieldModel(form, {
-            id: 'date-id',
-            name: 'date-name',
+            "id": 'date-id',
+            "name": 'date-name',
             minValue
         });
 
@@ -78,10 +78,10 @@ describe('DateWidgetComponent', () => {
         const minValue = '13-03-1982';
 
         const field = new FormFieldModel(form, {
-            id: 'date-id',
-            type: 'date',
-            name: 'date-name',
-            dateDisplayFormat: 'DD-MM-YYYY',
+            "id": 'date-id',
+            "type": 'date',
+            "name": 'date-name',
+            "dateDisplayFormat": 'DD-MM-YYYY',
             minValue
         });
 
@@ -89,7 +89,7 @@ describe('DateWidgetComponent', () => {
         widget.ngOnInit();
 
         widget.onDateChange({
-            value: new Date('1982/03/12')
+            "value": new Date('1982/03/12')
         } as any);
 
         fixture.detectChanges();
@@ -104,10 +104,10 @@ describe('DateWidgetComponent', () => {
         const maxValue = '13-03-1982';
 
         const field = new FormFieldModel(form, {
-            id: 'date-id',
-            type: 'date',
-            name: 'date-name',
-            dateDisplayFormat: 'DD-MM-YYYY',
+            "id": 'date-id',
+            "type": 'date',
+            "name": 'date-name',
+            "dateDisplayFormat": 'DD-MM-YYYY',
             maxValue
         });
 
@@ -115,7 +115,7 @@ describe('DateWidgetComponent', () => {
         widget.ngOnInit();
 
         widget.onDateChange({
-            value: new Date('2023/03/13')
+            "value": new Date('2023/03/13')
         } as any);
 
         fixture.detectChanges();
@@ -153,15 +153,15 @@ describe('DateWidgetComponent', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9-9-9999',
-            type: 'date'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9-9-9999',
+            "type": 'date'
         });
 
         widget.field = field;
         widget.onDateChange({
-            value: new Date('12/12/2012')
+            "value": new Date('12/12/2012')
         } as any);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
@@ -170,9 +170,9 @@ describe('DateWidgetComponent', () => {
     describe('when is required', () => {
 
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DATE,
-                required: true
+            widget.field = new FormFieldModel( new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DATE,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -198,10 +198,10 @@ describe('DateWidgetComponent', () => {
 
         it('should show visible date widget', async () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '9-9-9999',
-                type: 'date'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": '9-9-9999',
+                "type": 'date'
             });
 
             fixture.detectChanges();
@@ -215,11 +215,11 @@ describe('DateWidgetComponent', () => {
 
         it('[C310335] - Should be able to change display format for Date widget', async () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value:  '30-12-9999',
-                type: 'date',
-                dateDisplayFormat: 'MM-DD-YYYY'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value":  '30-12-9999',
+                "type": 'date',
+                "dateDisplayFormat": 'MM-DD-YYYY'
             });
 
             fixture.detectChanges();
@@ -241,10 +241,10 @@ describe('DateWidgetComponent', () => {
 
         it('should disable date button when is readonly', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '9-9-9999',
-                type: 'date'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": '9-9-9999',
+                "type": 'date'
             });
 
             fixture.detectChanges();
@@ -263,11 +263,11 @@ describe('DateWidgetComponent', () => {
 
         it('should set isValid to false when the value is not a correct date value', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: 'aa',
-                type: 'date',
-                readOnly: 'false'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": 'aa',
+                "type": 'date',
+                "readOnly": 'false'
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
@@ -279,11 +279,11 @@ describe('DateWidgetComponent', () => {
 
     it('should display always the json value', async () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '30-12-9999',
-            type: 'date',
-            dateDisplayFormat: 'MM-DD-YYYY'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '30-12-9999',
+            "type": 'date',
+            "dateDisplayFormat": 'MM-DD-YYYY'
         });
 
         widget.field = field;

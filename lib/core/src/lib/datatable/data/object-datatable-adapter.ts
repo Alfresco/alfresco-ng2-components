@@ -32,7 +32,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     selectedRow: DataRow;
     rowsChanged: Subject<Array<DataRow>>;
 
-    static generateSchema(data: any[]) {
+    static generateSchema (data: any[]) {
         const schema = [];
 
         if (data?.length) {
@@ -42,10 +42,10 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                 for (const key in rowToExamine) {
                     if (Object.prototype.hasOwnProperty.call(rowToExamine, key)) {
                         schema.push({
-                            type: 'text',
+                            "type": 'text',
                             key,
-                            title: key,
-                            sortable: false
+                            "title": key,
+                            "sortable": false
                         });
                     }
                 }
@@ -54,7 +54,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return schema;
     }
 
-    constructor(data: any[] = [], schema: DataColumn[] = []) {
+    constructor (data: any[] = [], schema: DataColumn[] = []) {
         this._rows = [];
         this._columns = [];
 
@@ -75,29 +75,29 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this.rowsChanged = new Subject<Array<DataRow>>();
     }
 
-    getColumnType(_row: DataRow, col: DataColumn): string {
+    getColumnType (_row: DataRow, col: DataColumn): string {
         return col.type;
     }
 
-    getRows(): Array<DataRow> {
+    getRows (): Array<DataRow> {
         return this._rows;
     }
 
-    setRows(rows: Array<DataRow>) {
+    setRows (rows: Array<DataRow>) {
         this._rows = rows || [];
         this.sort();
         this.rowsChanged.next(this._rows);
     }
 
-    getColumns(): Array<DataColumn> {
+    getColumns (): Array<DataColumn> {
         return this._columns;
     }
 
-    setColumns(columns: Array<DataColumn>) {
+    setColumns (columns: Array<DataColumn>) {
         this._columns = columns || [];
     }
 
-    getValue(row: DataRow, col: DataColumn, resolver?: (_row: DataRow, _col: DataColumn) => any): any {
+    getValue (row: DataRow, col: DataColumn, resolver?: (_row: DataRow, _col: DataColumn) => any): any {
         if (!row) {
             throw new Error('Row not found');
         }
@@ -112,11 +112,11 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return row.getValue(col.key);
     }
 
-    getSorting(): DataSorting {
+    getSorting (): DataSorting {
         return this._sorting;
     }
 
-    setSorting(sorting: DataSorting): void {
+    setSorting (sorting: DataSorting): void {
         this._sorting = sorting;
 
         if (sorting?.key) {
@@ -145,7 +145,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    sort(key?: string, direction?: string): void {
+    sort (key?: string, direction?: string): void {
         const sorting = this._sorting || new DataSorting();
         if (key) {
             sorting.key = key;

@@ -21,8 +21,8 @@ import { Component, ContentChildren, QueryList } from '@angular/core';
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
-    selector: 'data-columns',
-    template: ''
+    "selector": 'data-columns',
+    "template": ''
 })
 export class DataColumnListComponent {
 

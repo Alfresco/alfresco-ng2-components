@@ -24,9 +24,9 @@ describe('TabModel', () => {
 
     it('should setup with json config', () => {
         const json = {
-            id: '<id>',
-            title: '<title>',
-            visibilityCondition: '<condition>'
+            "id": '<id>',
+            "title": '<title>',
+            "visibilityCondition": '<condition>'
         };
 
         const model = new TabModel(null, json);

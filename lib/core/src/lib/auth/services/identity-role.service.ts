@@ -30,13 +30,13 @@ export interface IdentityRoleResponseModel {
   }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class IdentityRoleService {
     contextRoot = '';
     identityHost = '';
 
-    constructor(
+    constructor (
         protected http: HttpClient,
         protected appConfig: AppConfigService,
         protected logService: LogService
@@ -47,12 +47,11 @@ export class IdentityRoleService {
 
     /**
      * Ret all roles
-     *
      * @param skipCount skip count
      * @param size page size
      * @returns List of roles
      */
-    getRoles(
+    getRoles (
         skipCount: number = 0,
         size: number = 5
     ): Observable<IdentityRoleResponseModel> {
@@ -62,30 +61,29 @@ export class IdentityRoleService {
         );
     }
 
-    private preparePaginationWithRoles(
+    private preparePaginationWithRoles (
         roles: IdentityRoleModel[],
         skipCount: number = 0,
         size: number = 5
     ): IdentityRoleResponseModel {
         return {
-            entries: roles.slice(skipCount, skipCount + size),
-            pagination: {
+            "entries": roles.slice(skipCount, skipCount + size),
+            "pagination": {
                 skipCount,
-                maxItems: size,
-                count: roles.length,
-                hasMoreItems: false,
-                totalItems: roles.length
+                "maxItems": size,
+                "count": roles.length,
+                "hasMoreItems": false,
+                "totalItems": roles.length
             }
         };
     }
 
     /**
      * Add new role
-     *
      * @param newRole Role model
      * @returns Server result payload
      */
-    addRole(newRole: IdentityRoleModel): Observable<any> {
+    addRole (newRole: IdentityRoleModel): Observable<any> {
         if (newRole) {
             const request = newRole;
             return this.http
@@ -97,11 +95,10 @@ export class IdentityRoleService {
 
     /**
      * Delete existing role
-     *
      * @param deletedRole Role model
      * @returns Server result payload
      */
-    deleteRole(deletedRole: IdentityRoleModel): Observable<any> {
+    deleteRole (deletedRole: IdentityRoleModel): Observable<any> {
         return this.http
             .delete(`${this.identityHost}/roles-by-id/${deletedRole.id}`)
             .pipe(catchError(error => this.handleError(error)));
@@ -109,12 +106,11 @@ export class IdentityRoleService {
 
     /**
      * Update existing role
-     *
      * @param updatedRole Role model
      * @param roleId Role id
      * @returns Server result payload
      */
-    updateRole(
+    updateRole (
         updatedRole: IdentityRoleModel,
         roleId: string
     ): Observable<any> {
@@ -127,7 +123,7 @@ export class IdentityRoleService {
         return of();
     }
 
-    private handleError(error: any) {
+    private handleError (error: any) {
         this.logService.error(error);
         return observableThrowError(error || 'Server error');
     }

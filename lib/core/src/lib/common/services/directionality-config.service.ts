@@ -21,10 +21,10 @@ import { UserPreferencesService } from './user-preferences.service';
 import { DOCUMENT } from '@angular/common';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class DirectionalityConfigService {
-    constructor(
+    constructor (
         @Inject(DOCUMENT) private document: any,
         private rendererFactory: RendererFactory2,
         private userPreferencesService: UserPreferencesService,

@@ -24,19 +24,19 @@ export class FormOutcomeEvent {
     private readonly _outcome: FormOutcomeModel;
     private _defaultPrevented: boolean = false;
 
-    get outcome(): FormOutcomeModel {
+    get outcome (): FormOutcomeModel {
         return this._outcome;
     }
 
-    get defaultPrevented() {
+    get defaultPrevented () {
         return this._defaultPrevented;
     }
 
-    constructor(outcome: FormOutcomeModel) {
+    constructor (outcome: FormOutcomeModel) {
         this._outcome = outcome;
     }
 
-    preventDefault() {
+    preventDefault () {
         this._defaultPrevented = true;
     }
 

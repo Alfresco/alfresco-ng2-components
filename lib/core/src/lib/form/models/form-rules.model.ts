@@ -26,11 +26,10 @@ export const FORM_RULES_MANAGER = new InjectionToken<FormRulesManager<any>>('for
 
 /**
  * A factory for forms rule manager
- *
  * @param injector Angular injector
  * @returns FormsRuleManager instance
  */
-export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager<T> {
+export function formRulesManagerFactory<T> (injector: Injector): FormRulesManager<T> {
     try {
         return injector.get(FORM_RULES_MANAGER);
     } catch {
@@ -39,13 +38,13 @@ export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager
 }
 
 export abstract class FormRulesManager<T> {
-    constructor(private formService: FormService) {}
+    constructor (private formService: FormService) {}
 
     protected formModel: FormModel;
     private onDestroy$ = new Subject<boolean>();
     private initialized = false;
 
-    initialize(formModel: FormModel) {
+    initialize (formModel: FormModel) {
         if (this.initialized) {
             this.destroy();
             this.onDestroy$ = new Subject<boolean>();
@@ -76,18 +75,18 @@ export abstract class FormRulesManager<T> {
     protected abstract getRules(): T;
     protected abstract handleRuleEvent(event: FormRulesEvent, rules: T): void;
 
-    destroy() {
+    destroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 }
 
 export class ByPassFormRuleManager<T> extends FormRulesManager<T> {
-    protected getRules(): T {
+    protected getRules (): T {
         return null;
     }
 
-    protected handleRuleEvent(): void {
+    protected handleRuleEvent (): void {
         return;
     }
 }

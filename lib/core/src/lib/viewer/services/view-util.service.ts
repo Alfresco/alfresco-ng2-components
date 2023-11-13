@@ -19,52 +19,49 @@ import { Injectable } from '@angular/core';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ViewUtilService {
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
-        image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
-        media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
-        text: ['txt', 'xml', 'html', 'json', 'ts', 'css', 'md'],
-        pdf: ['pdf']
+        "image": ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
+        "media": ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
+        "text": ['txt', 'xml', 'html', 'json', 'ts', 'css', 'md'],
+        "pdf": ['pdf']
     };
 
     // Mime types that are supported by the Viewer without conversion
     private mimeTypes = {
-        text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
-        pdf: ['application/pdf'],
-        image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
-        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav']
+        "text": ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
+        "pdf": ['application/pdf'],
+        "image": ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
+        "media": ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav']
     };
 
     /**
      * Returns a list of the active Viewer content extensions.
-     *
      * @returns list of extension references
      */
-    get viewerExtensions(): ViewerExtensionRef[] {
+    get viewerExtensions (): ViewerExtensionRef[] {
         return this.extensionService.getViewerExtensions();
     }
 
     /**
      * Provides a list of file extensions supported by external plugins.
-     *
      * @returns list of extensions
      */
-    get externalExtensions(): string[] {
+    get externalExtensions (): string[] {
         return this.viewerExtensions.map((ext) => ext.fileExtension);
     }
 
-    constructor(private extensionService: AppExtensionService) {}
+    constructor (private extensionService: AppExtensionService) {}
 
     /**
      * get File name from url
-     *
      * @param  url - url file
      * @returns file name portion of the url
      */
-    getFilenameFromUrl(url: string): string {
+    getFilenameFromUrl (url: string): string {
         const anchor = url.indexOf('#');
         const query = url.indexOf('?');
         const end = Math.min(anchor > 0 ? anchor : url.length, query > 0 ? query : url.length);
@@ -76,11 +73,10 @@ export class ViewUtilService {
      * Supports the URL formats like:
      * http://localhost/test.jpg?cache=1000
      * http://localhost/test.jpg#cache=1000
-     *
      * @param fileName - file name
      * @returns file extension
      */
-    getFileExtension(fileName: string): string {
+    getFileExtension (fileName: string): string {
         if (fileName) {
             const match = fileName.match(/\.([^./?#]+)($|\?|#)/);
             return match ? match[1] : null;
@@ -88,7 +84,7 @@ export class ViewUtilService {
         return null;
     }
 
-    getViewerType(extension: string, mimeType: string): string {
+    getViewerType (extension: string, mimeType: string): string {
         let viewerType = this.getViewerTypeByExtension(extension);
 
         if (viewerType === 'unknown') {
@@ -98,7 +94,7 @@ export class ViewUtilService {
         return viewerType;
     }
 
-    getViewerTypeByMimeType(mimeType: string) {
+    getViewerTypeByMimeType (mimeType: string) {
         if (mimeType) {
             mimeType = mimeType.toLowerCase();
 
@@ -112,7 +108,7 @@ export class ViewUtilService {
         return 'unknown';
     }
 
-    private getViewerTypeByExtension(extension: string): string {
+    private getViewerTypeByExtension (extension: string): string {
         if (extension) {
             extension = extension.toLowerCase();
         }
@@ -144,11 +140,11 @@ export class ViewUtilService {
         return 'unknown';
     }
 
-    private isExternalViewer(): boolean {
+    private isExternalViewer (): boolean {
         return !!this.viewerExtensions.find((ext) => ext.fileExtension === '*');
     }
 
-    isCustomViewerExtension(extension: string): boolean {
+    isCustomViewerExtension (extension: string): boolean {
         const extensions = this.externalExtensions || [];
 
         if (extension && extensions.length > 0) {

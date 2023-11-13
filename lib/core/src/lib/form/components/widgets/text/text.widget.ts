@@ -22,10 +22,10 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    selector: 'text-widget',
-    templateUrl: './text.widget.html',
-    styleUrls: ['./text.widget.scss'],
-    host: {
+    "selector": 'text-widget',
+    "templateUrl": './text.widget.html',
+    "styleUrls": ['./text.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,7 +36,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
 
@@ -44,11 +44,11 @@ export class TextWidgetComponent extends WidgetComponent implements OnInit {
     placeholder: string;
     isMaskReversed: boolean;
 
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field.params) {
             this.mask = this.field.params['inputMask'];
             this.placeholder = this.field.params['inputMask'] && this.field.params['inputMaskPlaceholder'] ? this.field.params['inputMaskPlaceholder'] : this.field.placeholder;

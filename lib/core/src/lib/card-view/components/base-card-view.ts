@@ -31,7 +31,7 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
 
     protected destroy$ = new Subject<boolean>();
 
-    constructor() {
+    constructor () {
         this.cardViewUpdateService.updateItem$.pipe(takeUntil(this.destroy$)).subscribe((itemModel) => {
             if (this.property.key === itemModel.key) {
                 this.property.value = itemModel.value;
@@ -39,7 +39,7 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
         });
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.destroy$.next(true);
         this.destroy$.complete();
     }

@@ -21,68 +21,68 @@ import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewModule, CardViewTextItemModel } from '../../public-api';
 
 export default {
-    component: CardViewTextItemComponent,
-    title: 'Core/Card View/Card View Text Item',
-    decorators: [
+    "component": CardViewTextItemComponent,
+    "title": 'Core/Card View/Card View Text Item',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            "imports": [CoreStoryModule, CardViewModule]
         })
     ],
-    argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            defaultValue: false,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+    "argTypes": {
+        "editable": {
+            "control": 'boolean',
+            "description": 'Defines if CardView item is editable',
+            "defaultValue": false,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": false }
             }
         },
-        displayEmpty: {
-            control: 'boolean',
-            description:
+        "displayEmpty": {
+            "control": 'boolean',
+            "description":
                 'Defines if it should display CardView item when data is empty',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": true }
             }
         },
-        copyToClipboardAction: {
-            control: 'boolean',
-            description:
+        "copyToClipboardAction": {
+            "control": 'boolean',
+            "description":
                 'Copy to clipboard action - default template in editable mode',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": true }
             }
         },
-        useChipsForMultiValueProperty: {
-            control: 'boolean',
-            description: 'Split text for chips using defined separator',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+        "useChipsForMultiValueProperty": {
+            "control": 'boolean',
+            "description": 'Split text for chips using defined separator',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": true }
             }
         },
-        multiValueSeparator: {
-            control: 'text',
-            description: 'Separator used for text splitting',
-            defaultValue: ', ',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: ', ' }
+        "multiValueSeparator": {
+            "control": 'text',
+            "description": 'Separator used for text splitting',
+            "defaultValue": ', ',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": ', ' }
             }
         },
-        displayLabelForChips: {
-            control: 'boolean',
-            description: 'Display label for chips property',
-            defaultValue: false,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+        "displayLabelForChips": {
+            "control": 'boolean',
+            "description": 'Display label for chips property',
+            "defaultValue": false,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": false }
             }
         }
     }
@@ -91,81 +91,81 @@ export default {
 const template: Story<CardViewTextItemComponent> = (
     args: CardViewTextItemComponent
 ) => ({
-    props: args
+    "props": args
 });
 
 export const clickableCardViewTextItem = template.bind({});
 clickableCardViewTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Clickable template',
-        value: 'click here',
-        key: 'click',
-        default: 'click here',
-        editable: true,
-        clickable: true,
-        icon: 'close'
+    "property": new CardViewTextItemModel({
+        "label": 'CardView Text Item - Clickable template',
+        "value": 'click here',
+        "key": 'click',
+        "default": 'click here',
+        "editable": true,
+        "clickable": true,
+        "icon": 'close'
     })
 };
-clickableCardViewTextItem.parameters = { layout: 'centered' };
+clickableCardViewTextItem.parameters = { "layout": 'centered' };
 
 export const chipsCardViewTextItem = template.bind({});
 chipsCardViewTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Chips template',
-        value: [1, 2, 3, 4],
-        key: 'name',
-        default: 'default bar',
-        multiline: true,
-        multivalued: true,
-        icon: 'icon',
-        editable: true
+    "property": new CardViewTextItemModel({
+        "label": 'CardView Text Item - Chips template',
+        "value": [1, 2, 3, 4],
+        "key": 'name',
+        "default": 'default bar',
+        "multiline": true,
+        "multivalued": true,
+        "icon": 'icon',
+        "editable": true
     }),
-    displayLabelForChips: false
+    "displayLabelForChips": false
 };
-chipsCardViewTextItem.parameters = { layout: 'centered' };
+chipsCardViewTextItem.parameters = { "layout": 'centered' };
 
 export const emptyCardViewTextItem = template.bind({});
 emptyCardViewTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Empty template',
-        value: undefined,
-        key: 'empty',
-        default: '',
-        icon: 'icon',
-        editable: false
+    "property": new CardViewTextItemModel({
+        "label": 'CardView Text Item - Empty template',
+        "value": undefined,
+        "key": 'empty',
+        "default": '',
+        "icon": 'icon',
+        "editable": false
     }),
-    editable: false,
-    displayEmpty: false
+    "editable": false,
+    "displayEmpty": false
 };
-emptyCardViewTextItem.parameters = { layout: 'centered' };
+emptyCardViewTextItem.parameters = { "layout": 'centered' };
 
 export const defaultCardViewTextItem = template.bind({});
 defaultCardViewTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Default template',
-        value: 'input here',
-        key: 'default',
-        default: 'input here',
-        editable: true,
-        clickable: false,
-        icon: 'close',
-        multiline: false
+    "property": new CardViewTextItemModel({
+        "label": 'CardView Text Item - Default template',
+        "value": 'input here',
+        "key": 'default',
+        "default": 'input here',
+        "editable": true,
+        "clickable": false,
+        "icon": 'close',
+        "multiline": false
     })
 };
-defaultCardViewTextItem.parameters = { layout: 'centered' };
+defaultCardViewTextItem.parameters = { "layout": 'centered' };
 
 export const displayLabelForChipsCardTextItem = template.bind({});
 displayLabelForChipsCardTextItem.args = {
-    property: new CardViewTextItemModel({
-        label: 'CardView Text Item - Multi-Valued Chips template',
-        value: ['Chip 1', 'Chip 2', 'Chip 3'],
-        key: 'multivalued',
-        default: 'default value',
-        multiline: true,
-        multivalued: true,
-        icon: 'icon',
-        editable: true
+    "property": new CardViewTextItemModel({
+        "label": 'CardView Text Item - Multi-Valued Chips template',
+        "value": ['Chip 1', 'Chip 2', 'Chip 3'],
+        "key": 'multivalued',
+        "default": 'default value',
+        "multiline": true,
+        "multivalued": true,
+        "icon": 'icon',
+        "editable": true
     }),
-    displayLabelForChips: false
+    "displayLabelForChips": false
 };
-displayLabelForChipsCardTextItem.parameters = { layout: 'centered' };
+displayLabelForChipsCardTextItem.parameters = { "layout": 'centered' };

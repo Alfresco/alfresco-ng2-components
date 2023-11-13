@@ -31,21 +31,20 @@ type StoryWithoutFunction<T> = NonFunctionProperties<Story<T>>;
 
 /**
  * Copy storybook story
- *
  * @param story story
  * @param annotations annotations
  * @returns a copy of the story
  */
-function storybookCopyStory<T>( story: Story<T>, annotations?: StoryWithoutFunction<T> ): Story<T> {
+function storybookCopyStory<T> ( story: Story<T>, annotations?: StoryWithoutFunction<T> ): Story<T> {
   const cloned = story.bind({});
   return Object.assign(cloned, annotations);
 }
 
 const meta: Meta = {
-  title: 'Core/Breadcrumb',
-  decorators: [
+  "title": 'Core/Breadcrumb',
+  "decorators": [
     moduleMetadata({
-      imports: [
+      "imports": [
         CoreStoryModule,
         BreadcrumbComponent,
         BreadcrumbItemComponent,
@@ -55,28 +54,28 @@ const meta: Meta = {
       ]
     })
   ],
-  args: {
-    compact: false,
-    showBreadcrumbItemWithMenu: false
+  "args": {
+    "compact": false,
+    "showBreadcrumbItemWithMenu": false
   },
-  argTypes: {
-    compact: {control: 'boolean'},
-    showBreadcrumbItemWithMenu: {control: 'boolean'}
+  "argTypes": {
+    "compact": {"control": 'boolean'},
+    "showBreadcrumbItemWithMenu": {"control": 'boolean'}
   }
 };
 export default meta;
 
 export const breadcrumb: Story = args => ({
-  component: DemoBreadcrumbComponent,
-  props: args
+  "component": DemoBreadcrumbComponent,
+  "props": args
 });
 
 export const compact = storybookCopyStory(breadcrumb);
 compact.args = {
-  compact: true
+  "compact": true
 };
 
 export const withMenu = storybookCopyStory(breadcrumb);
 withMenu.args = {
-  showBreadcrumbItemWithMenu: true
+  "showBreadcrumbItemWithMenu": true
 };

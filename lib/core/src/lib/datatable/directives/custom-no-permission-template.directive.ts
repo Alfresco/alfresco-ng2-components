@@ -23,6 +23,6 @@ import { Directive } from '@angular/core';
  * adf-custom-no-permission-template.
  */
 @Directive({
-    selector: 'adf-custom-no-permission-template, no-permission-content'
+    "selector": 'adf-custom-no-permission-template, no-permission-content'
 })
 export class CustomNoPermissionTemplateDirective {}

@@ -21,17 +21,17 @@ import { Directive, ElementRef, forwardRef, HostListener, Input, OnChanges, Rend
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => InputMaskDirective),
-    multi: true
+    "provide": NG_VALUE_ACCESSOR,
+    "useExisting": forwardRef(() => InputMaskDirective),
+    "multi": true
 };
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: '[adf-text-mask], [textMask]',
-    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+    "selector": '[adf-text-mask], [textMask]',
+    "providers": [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     /** Object defining mask and "reversed" status. */
@@ -41,18 +41,18 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     };
 
     private translationMask = {
-        0: { pattern: /\d/ },
-        9: { pattern: /\d/, optional: true },
-        '#': { pattern: /\d/, recursive: true },
-        A: { pattern: /[a-zA-Z0-9]/ },
-        S: { pattern: /[a-zA-Z]/ }
+        "0": { "pattern": /\d/ },
+        "9": { "pattern": /\d/, "optional": true },
+        '#': { "pattern": /\d/, "recursive": true },
+        "A": { "pattern": /[a-zA-Z0-9]/ },
+        "S": { "pattern": /[a-zA-Z]/ }
     };
 
     private byPassKeys = [9, 16, 17, 18, 36, 37, 38, 39, 40, 91];
     private value;
     private invalidCharacters = [];
 
-    constructor(private el: ElementRef, private render: Renderer2) {}
+    constructor (private el: ElementRef, private render: Renderer2) {}
 
     _onChange = (_: any) => {};
 
@@ -60,7 +60,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
     @HostListener('input', ['$event'])
     @HostListener('keyup', ['$event'])
-    onTextInput(event: KeyboardEvent) {
+    onTextInput (event: KeyboardEvent) {
         if (this.inputMask?.mask) {
             this.maskValue(
                 this.el.nativeElement.value,
@@ -74,25 +74,25 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['inputMask']?.currentValue['mask']) {
             this.inputMask = changes['inputMask'].currentValue;
         }
     }
 
-    writeValue(value: any) {
+    writeValue (value: any) {
         this.el.nativeElement.value = value;
     }
 
-    registerOnChange(fn: any) {
+    registerOnChange (fn: any) {
         this._onChange = fn;
     }
 
-    registerOnTouched(fn: () => any): void {
+    registerOnTouched (fn: () => any): void {
         this._onTouched = fn;
     }
 
-    private maskValue(actualValue: string, startCaret: number, maskToApply: string, isMaskReversed: boolean, keyCode: number) {
+    private maskValue (actualValue: string, startCaret: number, maskToApply: string, isMaskReversed: boolean, keyCode: number) {
         if (this.byPassKeys.indexOf(keyCode) === -1) {
             const value = this.getMasked(false, actualValue, maskToApply, isMaskReversed);
             const calculatedCaret = this.calculateCaretPosition(startCaret, actualValue, keyCode);
@@ -104,12 +104,12 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         }
     }
 
-    private setCaretPosition(caretPosition: number) {
+    private setCaretPosition (caretPosition: number) {
         this.el.nativeElement.moveStart = caretPosition;
         this.el.nativeElement.moveEnd = caretPosition;
     }
 
-    calculateCaretPosition(caretPosition: number, newValue: string, keyCode: number): number {
+    calculateCaretPosition (caretPosition: number, newValue: string, keyCode: number): number {
         const newValueLength = newValue.length;
         const oldValue = this.getValue() || '';
         const oldValueLength = oldValue.length;
@@ -126,7 +126,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         return caretPosition;
     }
 
-    getMasked(skipMaskChars: boolean, val: string, mask: string, isReversed = false) {
+    getMasked (skipMaskChars: boolean, val: string, mask: string, isReversed = false) {
         const buf = [];
         const value = val;
         let maskIndex = 0;
@@ -176,9 +176,9 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
                     valueIndex -= offset;
                 } else {
                     this.invalidCharacters.push({
-                        index: valueIndex,
-                        digit: valDigit,
-                        translated: translation.pattern
+                        "index": valueIndex,
+                        "digit": valDigit,
+                        "translated": translation.pattern
                     });
                 }
                 valueIndex += offset;
@@ -204,7 +204,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         return buf.join('');
     }
 
-    private isToCheck(isReversed: boolean, maskIndex: number, maskLen: number, valueIndex: number, valueLength: number): boolean {
+    private isToCheck (isReversed: boolean, maskIndex: number, maskLen: number, valueIndex: number, valueLength: number): boolean {
         let check = false;
         if (isReversed) {
             check = maskIndex > -1 && valueIndex > -1;
@@ -214,11 +214,11 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         return check;
     }
 
-    private setValue(value) {
+    private setValue (value) {
         this.value = value;
     }
 
-    private getValue() {
+    private getValue () {
         return this.value;
     }
 }
