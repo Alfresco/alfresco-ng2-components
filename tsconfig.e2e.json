@@ -12,7 +12,8 @@
       "node"
     ],
     "paths": {
-      "@alfresco/js-api": ["../node_modules/@alfresco/js-api"],
+      "@alfresco/js-api": ["../lib/js-api/src"],
+      "@alfresco/js-api/*": ["../lib/js-api/src/*"],
       "@alfresco/adf-extensions": ["../lib/extensions"],
       "@alfresco/adf-extensions/*": ["../lib/extensions/*"],
       "@alfresco/adf-content-services": ["../lib/content-services"],
