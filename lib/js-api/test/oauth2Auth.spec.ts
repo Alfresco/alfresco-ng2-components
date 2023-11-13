@@ -32,7 +32,7 @@ describe('Oauth2  test', () => {
     let authResponseMock: EcmAuthMock;
 
     beforeEach(() => {
-        const hostOauth2 = 'http://myOauthUrl:30081';
+        const hostOauth2 = 'https://myOauthUrl:30081';
         const mockStorage = { getItem: () => {}, setItem: () => {} };
 
         oauth2Mock = new OAuthMock(hostOauth2);
@@ -47,7 +47,7 @@ describe('Oauth2  test', () => {
 
     describe('Discovery urls', () => {
         const authType = 'OAUTH';
-        const host = 'http://dummy/auth';
+        const host = 'https://dummy/auth';
         const clientId = 'dummy';
         const scope = 'openid';
         const redirectUri = '/';
@@ -102,7 +102,7 @@ describe('Oauth2  test', () => {
             const oauth2AuthInstanceOne = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -117,7 +117,7 @@ describe('Oauth2  test', () => {
             const oauth2AuthInstanceTwo = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -129,7 +129,7 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            const oauth2Mock = new OAuthMock('http://myOauthUrl:30081');
+            const oauth2Mock = new OAuthMock('https://myOauthUrl:30081');
             oauth2Mock.get200Response('superman-token');
             const loginInstanceOne = await oauth2AuthInstanceOne.login('superman', 'crypto');
 
@@ -149,7 +149,7 @@ describe('Oauth2  test', () => {
             const oauth2Auth = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -175,7 +175,7 @@ describe('Oauth2  test', () => {
             const oauth2Auth = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -207,7 +207,7 @@ describe('Oauth2  test', () => {
             const oauth2Auth = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -237,7 +237,7 @@ describe('Oauth2  test', () => {
             const oauth2Auth = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -263,7 +263,7 @@ describe('Oauth2  test', () => {
             const oauth2Auth = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -297,7 +297,7 @@ describe('Oauth2  test', () => {
                 {
                     provider: 'ECM',
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -324,7 +324,7 @@ describe('Oauth2  test', () => {
                 {
                     provider: 'ALL',
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -349,9 +349,9 @@ describe('Oauth2  test', () => {
             authResponseMock.get200ValidTicket();
 
             const alfrescoApi = new AlfrescoApi({
-                hostEcm: 'http://myOauthUrl:30081',
+                hostEcm: 'https://myOauthUrl:30081',
                 oauth2: {
-                    host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
                     secret: '',
@@ -368,7 +368,7 @@ describe('Oauth2  test', () => {
                 const content = new ContentApi(alfrescoApi);
                 const URL = content.getContentUrl('FAKE-NODE-ID');
                 expect(URL).to.be.equal(
-                    'http://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
+                    'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
                 );
 
                 alfrescoApi.oauth2Auth.logOut();
@@ -383,9 +383,9 @@ describe('Oauth2  test', () => {
             authResponseMock.get200ValidTicket();
 
             const alfrescoApi = new AlfrescoApi({
-                hostEcm: 'http://myOauthUrl:30081',
+                hostEcm: 'https://myOauthUrl:30081',
                 oauth2: {
-                    host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
                     secret: '',
@@ -403,7 +403,7 @@ describe('Oauth2  test', () => {
 
                 const URL = contentApi.getContentUrl('FAKE-NODE-ID');
                 expect(URL).to.be.equal(
-                    'http://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
+                    'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
                 );
                 alfrescoApi.oauth2Auth.logOut();
 
@@ -422,9 +422,9 @@ describe('Oauth2  test', () => {
             authResponseMock.get200ValidTicket();
 
             const alfrescoApi = new AlfrescoApi({
-                hostEcm: 'http://myOauthUrl:30081',
+                hostEcm: 'https://myOauthUrl:30081',
                 oauth2: {
-                    host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
                     secret: '',
@@ -442,7 +442,7 @@ describe('Oauth2  test', () => {
                 const content = new ContentApi(alfrescoApi);
                 const URL = content.getContentUrl('FAKE-NODE-ID');
                 expect(URL).to.be.equal(
-                    'http://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
+                    'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
                 );
 
                 counterCallEvent++;
@@ -463,7 +463,7 @@ describe('Oauth2  test', () => {
             const oauth2Auth = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -488,7 +488,7 @@ describe('Oauth2  test', () => {
             const oauth2Auth = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         scope: 'openid',
                         secret: '',
@@ -509,7 +509,7 @@ describe('Oauth2  test', () => {
 
         describe('With mocked DOM', () => {
             beforeEach(() => {
-                const dom = new JSDOM('', { url: 'http://localhost' });
+                const dom = new JSDOM('', { url: 'https://localhost' });
                 globalAny.window = dom.window;
                 globalAny.document = dom.window.document;
             });
@@ -518,7 +518,7 @@ describe('Oauth2  test', () => {
                 const oauth2Auth = new Oauth2Auth(
                     {
                         oauth2: {
-                            host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                            host: 'https://myOauthUrl:30081/auth/realms/springboot',
                             clientId: 'activiti',
                             scope: 'openid',
                             secret: '',
@@ -557,7 +557,7 @@ describe('Oauth2  test', () => {
                 oauth2Auth = new Oauth2Auth(
                     {
                         oauth2: {
-                            host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                            host: 'https://myOauthUrl:30081/auth/realms/springboot',
                             clientId: 'activiti',
                             scope: 'openid',
                             secret: '',

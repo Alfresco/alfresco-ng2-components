@@ -27,7 +27,7 @@ describe('Activiti Profile Api', () => {
     let authResponseBpmMock: BpmAuthMock;
 
     beforeEach(async () => {
-        const BPM_HOST = 'http://127.0.0.1:9999';
+        const BPM_HOST = 'https://127.0.0.1:9999';
 
         authResponseBpmMock = new BpmAuthMock(BPM_HOST);
         profileMock = new ProfileMock(BPM_HOST);
@@ -50,7 +50,7 @@ describe('Activiti Profile Api', () => {
     });
 
     it('get Profile url Picture', () => {
-        expect(profileApi.getProfilePictureUrl()).equal('http://127.0.0.1:9999/activiti-app/app/rest/admin/profile-picture');
+        expect(profileApi.getProfilePictureUrl()).equal('https://127.0.0.1:9999/activiti-app/app/rest/admin/profile-picture');
     });
 
     it('get Profile', async () => {

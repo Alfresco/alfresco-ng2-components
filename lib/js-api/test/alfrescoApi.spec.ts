@@ -29,14 +29,14 @@ describe('Basic configuration test', () => {
 
         it('should be reflected in the client', () => {
             const config = {
-                hostEcm: 'http://testServer.com:1616',
+                hostEcm: 'https://testServer.com:1616',
                 contextRoot: 'strangeContextRoot'
             };
 
             const alfrescoJsApi = new AlfrescoApi(config);
 
             expect(alfrescoJsApi.contentClient.basePath).equal(
-                'http://testServer.com:1616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
+                'https://testServer.com:1616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
             );
         });
     });
@@ -44,25 +44,25 @@ describe('Basic configuration test', () => {
     describe('setconfig parameter ', () => {
         it('should be possible change the host in the client', () => {
             const config = {
-                hostEcm: 'http://testServer.com:1616',
+                hostEcm: 'https://testServer.com:1616',
                 contextRoot: 'strangeContextRoot'
             };
 
             const alfrescoJsApi = new AlfrescoApi(config);
 
             expect(alfrescoJsApi.contentClient.basePath).equal(
-                'http://testServer.com:1616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
+                'https://testServer.com:1616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
             );
 
             const newConfig = {
-                hostEcm: 'http://testServer.com:2616',
+                hostEcm: 'https://testServer.com:2616',
                 contextRoot: 'strangeContextRoot'
             };
 
             alfrescoJsApi.setConfig(newConfig);
 
             expect(alfrescoJsApi.contentClient.basePath).equal(
-                'http://testServer.com:2616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
+                'https://testServer.com:2616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
             );
         });
     });
@@ -70,7 +70,7 @@ describe('Basic configuration test', () => {
     describe('CSRF', () => {
         it('should disableCsrf true parameter should be reflected in the clients', () => {
             const config = {
-                hostEcm: 'http://testServer.com:1616',
+                hostEcm: 'https://testServer.com:1616',
                 contextRoot: 'strangeContextRoot',
                 disableCsrf: true
             };
@@ -83,7 +83,7 @@ describe('Basic configuration test', () => {
 
         it('should disableCsrf false parameter should be reflected in the clients', () => {
             const config = {
-                hostEcm: 'http://testServer.com:1616',
+                hostEcm: 'https://testServer.com:1616',
                 contextRoot: 'strangeContextRoot',
                 disableCsrf: false
             };
@@ -98,7 +98,7 @@ describe('Basic configuration test', () => {
     describe('WithCredentials', () => {
         it('should withCredentials true parameter should be reflected in the clients', () => {
             const config = {
-                hostEcm: 'http://testServer.com:1616',
+                hostEcm: 'https://testServer.com:1616',
                 contextRoot: 'strangeContextRoot',
                 withCredentials: true
             };
@@ -108,7 +108,7 @@ describe('Basic configuration test', () => {
         });
 
         it('should withCredentials true parameter with hostEcm should be reflected in isEcmLoggedIn', () => {
-            const hostEcm = 'http://127.0.0.1:8080';
+            const hostEcm = 'https://127.0.0.1:8080';
             const alfrescoJsApi = new AlfrescoApi({
                 hostEcm,
                 provider: 'ECM',
@@ -119,7 +119,7 @@ describe('Basic configuration test', () => {
         });
 
         it('should withCredentials true parameter with hostEcm should be reflected in isLoggedIn', () => {
-            const hostEcm = 'http://127.0.0.1:8080';
+            const hostEcm = 'https://127.0.0.1:8080';
             const alfrescoJsApi = new AlfrescoApi({
                 hostEcm,
                 provider: 'ECM',
@@ -130,7 +130,7 @@ describe('Basic configuration test', () => {
         });
 
         it('should withCredentials true parameter with ALL provider should be reflected in isLoggedIn', () => {
-            const hostEcm = 'http://127.0.0.1:8080';
+            const hostEcm = 'https://127.0.0.1:8080';
             const alfrescoJsApi = new AlfrescoApi({
                 hostEcm,
                 provider: 'ALL',
@@ -142,7 +142,7 @@ describe('Basic configuration test', () => {
 
         it('should withCredentials false parameter should be reflected in the clients', () => {
             const config = {
-                hostEcm: 'http://testServer.com:1616',
+                hostEcm: 'https://testServer.com:1616',
                 contextRoot: 'strangeContextRoot',
                 withCredentials: false
             };
@@ -155,7 +155,7 @@ describe('Basic configuration test', () => {
     describe('login', () => {
         it('Should login be rejected if username or password are not provided', async () => {
             const config = {
-                hostEcm: 'http://testServer.com:1616',
+                hostEcm: 'https://testServer.com:1616',
                 contextRoot: 'strangeContextRoot',
                 withCredentials: true
             };
@@ -223,7 +223,7 @@ describe('Basic configuration test', () => {
         });
 
         it('Should logged-in be emitted when log in ECM', (done) => {
-            const hostEcm = 'http://127.0.0.1:8080';
+            const hostEcm = 'https://127.0.0.1:8080';
 
             const authEcmMock = new EcmAuthMock(hostEcm);
 
@@ -242,7 +242,7 @@ describe('Basic configuration test', () => {
         });
 
         it('Should logged-in be emitted when log in BPM', (done) => {
-            const hostBpm = 'http://127.0.0.1:9999';
+            const hostBpm = 'https://127.0.0.1:9999';
             const authBpmMock = new BpmAuthMock(hostBpm);
 
             authBpmMock.get200Response();
@@ -261,13 +261,13 @@ describe('Basic configuration test', () => {
         });
 
         it('Should logged-in be emitted when log in OAUTH', (done) => {
-            const oauth2Mock = new OAuthMock('http://myOauthUrl:30081');
+            const oauth2Mock = new OAuthMock('https://myOauthUrl:30081');
 
             oauth2Mock.get200Response();
 
             const alfrescoJsApi = new AlfrescoApi({
                 oauth2: {
-                    host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     scope: 'openid',
                     secret: '',
@@ -285,7 +285,7 @@ describe('Basic configuration test', () => {
         });
 
         it('Should logged-in be emitted when the ticket is in the store', (done) => {
-            const hostBpm = 'http://127.0.0.1:9999';
+            const hostBpm = 'https://127.0.0.1:9999';
             const authBpmMock = new BpmAuthMock(hostBpm);
 
             authBpmMock.get200Response();

@@ -26,7 +26,7 @@ describe('Activiti Task Api', () => {
     let taskFormsApi: TaskFormsApi;
 
     beforeEach(async () => {
-        const BPM_HOST = 'http://127.0.0.1:9999';
+        const BPM_HOST = 'https://127.0.0.1:9999';
 
         authResponseBpmMock = new BpmAuthMock(BPM_HOST);
         taskFormMock = new TaskFormMock(BPM_HOST);

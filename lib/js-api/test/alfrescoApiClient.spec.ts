@@ -22,12 +22,12 @@ import { expect } from 'chai';
 describe('Alfresco Core API Client', () => {
     describe('type conversion', () => {
         it('should return the username after login', (done) => {
-            const authResponseEcmMock = new EcmAuthMock('http://127.0.0.1:8080');
+            const authResponseEcmMock = new EcmAuthMock('https://127.0.0.1:8080');
 
             authResponseEcmMock.get201Response();
 
             const alfrescoJsApi = new AlfrescoApi({
-                hostEcm: 'http://127.0.0.1:8080'
+                hostEcm: 'https://127.0.0.1:8080'
             });
 
             alfrescoJsApi.login('admin', 'admin').then(() => {

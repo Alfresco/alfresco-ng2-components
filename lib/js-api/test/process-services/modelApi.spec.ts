@@ -26,7 +26,7 @@ describe('Activiti Models Api', () => {
     let modelsApi: ModelsApi;
 
     beforeEach(async () => {
-        const hostBpm = 'http://127.0.0.1:9999';
+        const hostBpm = 'https://127.0.0.1:9999';
 
         authResponseBpmMock = new BpmAuthMock(hostBpm);
         authResponseBpmMock.get200Response();

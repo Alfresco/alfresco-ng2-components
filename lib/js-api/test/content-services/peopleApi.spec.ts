@@ -26,7 +26,7 @@ describe('PeopleApi', () => {
     let peopleApi: PeopleApi;
 
     beforeEach((done) => {
-        const hostEcm = 'http://adfdev.lab.alfresco.me';
+        const hostEcm = 'http://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
         peopleMock = new PeopleMock(hostEcm);

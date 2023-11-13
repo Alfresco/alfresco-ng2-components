@@ -46,7 +46,7 @@ describe('Oauth2 Implicit flow test', () => {
             oauth2Auth = new Oauth2Auth(
                 {
                     oauth2: {
-                        host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                        host: 'https://myOauthUrl:30081/auth/realms/springboot',
                         clientId: 'activiti',
                         secret: '',
                         scope: 'openid',
@@ -73,7 +73,7 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth = new Oauth2Auth(
             {
                 oauth2: {
-                    host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     secret: '',
                     scope: 'openid',
@@ -85,7 +85,7 @@ describe('Oauth2 Implicit flow test', () => {
         );
 
         oauth2Auth.on('implicit_redirect', () => {
-            expect(window.location.href).contain('http://myOauthUrl:30081/auth/realms/springboot/protocol/' + 'openid-connect/auth?');
+            expect(window.location.href).contain('https://myOauthUrl:30081/auth/realms/springboot/protocol/' + 'openid-connect/auth?');
             done();
         });
 
@@ -102,7 +102,7 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth = new Oauth2Auth(
             {
                 oauth2: {
-                    host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     secret: '',
                     scope: 'openid',
@@ -114,7 +114,7 @@ describe('Oauth2 Implicit flow test', () => {
         );
 
         oauth2Auth.on('implicit_redirect', () => {
-            expect(window.location.href).contain('http://myOauthUrl:30081/auth/realms/springboot/protocol/' + 'openid-connect/auth?');
+            expect(window.location.href).contain('https://myOauthUrl:30081/auth/realms/springboot/protocol/' + 'openid-connect/auth?');
             expect(setItemSpy).to.have.been.called();
             done();
         });
@@ -132,7 +132,7 @@ describe('Oauth2 Implicit flow test', () => {
         oauth2Auth = new Oauth2Auth(
             {
                 oauth2: {
-                    host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     secret: '',
                     scope: 'openid',
@@ -176,13 +176,13 @@ describe('Oauth2 Implicit flow test', () => {
 
         Object.defineProperty(window.location, 'href', {
             writable: true,
-            value: 'http://stoca/#/redirect-path&session_state=eqfqwfqwf'
+            value: 'https://stoca/#/redirect-path&session_state=eqfqwfqwf'
         });
 
         oauth2Auth = new Oauth2Auth(
             {
                 oauth2: {
-                    host: 'http://myOauthUrl:30081/auth/realms/springboot',
+                    host: 'https://myOauthUrl:30081/auth/realms/springboot',
                     clientId: 'activiti',
                     secret: '',
                     scope: 'openid',
@@ -194,7 +194,7 @@ describe('Oauth2 Implicit flow test', () => {
         );
 
         oauth2Auth.on('implicit_redirect', () => {
-            expect(window.location.href).contain('http://myOauthUrl:30081/auth/realms/springboot/protocol/' + 'openid-connect/auth?');
+            expect(window.location.href).contain('https://myOauthUrl:30081/auth/realms/springboot/protocol/' + 'openid-connect/auth?');
             expect(setItemSpy).to.have.been.called.with('loginFragment', '/redirect-path&session_state=eqfqwfqwf');
             done();
         });

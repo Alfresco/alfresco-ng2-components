@@ -25,7 +25,7 @@ describe('Custom Model Api', () => {
     let customModelApi: CustomModelApi;
 
     beforeEach((done) => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
         customModelMock = new CustomModelMock(hostEcm);
@@ -65,7 +65,7 @@ describe('Custom Model Api', () => {
             const status = 'DRAFT';
             const description = 'Test model description';
             const name = 'testModel';
-            const namespaceUri = 'http://www.alfresco.org/model/testNamespace/1.0';
+            const namespaceUri = 'https://www.alfresco.org/model/testNamespace/1.0';
             const namespacePrefix = 'test';
 
             customModelApi.createCustomModel(status, description, name, namespaceUri, namespacePrefix).then(() => {

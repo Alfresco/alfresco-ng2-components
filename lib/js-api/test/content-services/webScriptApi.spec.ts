@@ -21,7 +21,7 @@ import { WebscriptApi } from '../../src/api/content-custom-api';
 import { EcmAuthMock, WebScriptMock } from '../../test/mockObjects';
 
 describe('WebScript', () => {
-    const hostEcm = 'http://127.0.0.1:8080';
+    const hostEcm = 'https://127.0.0.1:8080';
     const contextRoot = 'script';
     const servicePath = 'alfresco';
     const scriptPath = 'testWebScript';

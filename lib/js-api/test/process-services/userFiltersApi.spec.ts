@@ -21,7 +21,7 @@ import { UserFiltersApi } from '../../src/api/activiti-rest-api';
 import { BpmAuthMock, UserFiltersMock } from '../mockObjects';
 
 describe('Activiti User Filter Api', () => {
-    const hostBpm = 'http://127.0.0.1:9999';
+    const hostBpm = 'https://127.0.0.1:9999';
     let authResponseBpmMock: BpmAuthMock;
     let filtersMock: UserFiltersMock;
     let userFiltersApi: UserFiltersApi;

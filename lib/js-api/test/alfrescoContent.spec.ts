@@ -21,7 +21,7 @@ import { ContentApi } from '../src/api/content-custom-api/api/content.api';
 import { EcmAuthMock } from '../test/mockObjects';
 
 describe('AlfrescoContent', () => {
-    const hostEcm = 'http://127.0.0.1:8080';
+    const hostEcm = 'https://127.0.0.1:8080';
     const nodesUrl = hostEcm + '/alfresco/api/-default-/public/alfresco/versions/1/nodes/';
     const sharedLinksUrl = hostEcm + '/alfresco/api/-default-/public/alfresco/versions/1/shared-links/';
     const nodeId = '1a0b110f-1e09-4ca2-b367-fe25e4964a4';

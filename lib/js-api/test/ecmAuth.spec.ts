@@ -21,7 +21,7 @@ import { ContentAuth } from '../src/authentication/contentAuth';
 import { EcmAuthMock as AuthEcmMock } from '../test/mockObjects';
 
 describe('Ecm Auth test', () => {
-    const hostEcm = 'http://127.0.0.1:8080';
+    const hostEcm = 'https://127.0.0.1:8080';
 
     let alfrescoJsApi: AlfrescoApi;
     let authEcmMock: AuthEcmMock;

@@ -22,8 +22,8 @@ import { NodesApi, UserProfileApi, AlfrescoApi } from '../src';
 const NOOP = () => {
     /* empty */
 };
-const ECM_HOST = 'http://127.0.0.1:8080';
-const BPM_HOST = 'http://127.0.0.1:9999';
+const ECM_HOST = 'https://127.0.0.1:8080';
+const BPM_HOST = 'https://127.0.0.1:9999';
 
 interface ErrorResponse {
     status: number;
