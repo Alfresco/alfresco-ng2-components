@@ -21,10 +21,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class CommentMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     post201Response(): void {
         nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/74cd8a96-8a21-47e5-9b3b-a1b3e296787d/comments', {

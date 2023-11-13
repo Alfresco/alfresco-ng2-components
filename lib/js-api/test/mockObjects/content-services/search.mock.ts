@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class SearchMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200Response(): void {
         nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/search/versions/1/search', {

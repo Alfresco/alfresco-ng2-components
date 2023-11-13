@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class VersionMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     post201Response(nodeId: string, versionId: string): void {
         nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/' + nodeId + '/versions/' + versionId + '/revert')

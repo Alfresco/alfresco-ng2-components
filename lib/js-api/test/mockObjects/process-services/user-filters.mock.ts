@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class UserFiltersMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200getUserTaskFilters(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/filters/tasks')

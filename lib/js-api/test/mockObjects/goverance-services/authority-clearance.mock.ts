@@ -19,10 +19,6 @@ import { BaseMock } from '../base.mock';
 import nock from 'nock';
 
 export class AuthorityClearanceMock extends BaseMock {
-    constructor(host: string) {
-        super(host);
-    }
-
     get200AuthorityClearanceForAuthority(authorityId: string): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/gs/versions/1/cleared-authorities/' + authorityId + '/clearing-marks?skipCount=0&maxItems=100')

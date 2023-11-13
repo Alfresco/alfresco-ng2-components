@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class ModelsMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200getModels(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/models')

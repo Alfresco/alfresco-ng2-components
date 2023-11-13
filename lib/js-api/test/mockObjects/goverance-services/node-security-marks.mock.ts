@@ -19,9 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class NodeSecurityMarksApiMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
     post200manageSecurityMarkOnNode(nodeId: string): void {
         nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/gs/versions/1/secured-nodes/' + nodeId + '/securing-marks')

@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class GsSitesApiMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200Response(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/gs/versions/1/gs-sites/rm')

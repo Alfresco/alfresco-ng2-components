@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class SecurityGroupApiMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     createSecurityGroup200Response(): void {
         nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/gs/versions/1/security-groups')

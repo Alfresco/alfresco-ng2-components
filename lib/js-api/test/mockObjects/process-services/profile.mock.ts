@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class ProfileMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200getProfile(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/profile')

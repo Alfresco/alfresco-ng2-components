@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class ModelJsonBpmMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200EditorDisplayJsonClient(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/app/rest/models/1/model-json')

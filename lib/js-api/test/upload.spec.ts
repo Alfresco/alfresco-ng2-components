@@ -320,14 +320,10 @@ xdescribe('Upload', () => {
 
             uploadPromise
                 .once('error', () => {
-                    promiseProgressOne = new Promise((resolve) => {
-                        resolve('Resolving');
-                    });
+                    promiseProgressOne = Promise.resolve('Resolving');
                 })
                 .once('unauthorized', () => {
-                    promiseProgressTwo = new Promise((resolve) => {
-                        resolve('Resolving');
-                    });
+                    promiseProgressTwo = Promise.resolve('Resolving');
                 });
 
             Promise.all([promiseProgressOne, promiseProgressTwo]).then(() => {

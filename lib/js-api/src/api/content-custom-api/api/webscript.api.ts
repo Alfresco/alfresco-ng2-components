@@ -54,11 +54,11 @@ export class WebscriptApi extends BaseApi {
         postBody = postBody || null;
 
         if (!httpMethod || this.allowedMethod.indexOf(httpMethod) === -1) {
-            throw 'method allowed value  GET, POST, PUT and DELETE';
+            throw new Error('method allowed value  GET, POST, PUT and DELETE');
         }
 
         if (!scriptPath) {
-            throw 'Missing param scriptPath in executeWebScript';
+            throw new Error('Missing param scriptPath in executeWebScript');
         }
 
         const contentTypes = ['application/json'];

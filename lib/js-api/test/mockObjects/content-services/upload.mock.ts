@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class UploadMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get201CreationFile(): void {
         nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children')

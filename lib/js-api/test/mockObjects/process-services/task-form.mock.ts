@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class TaskFormMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200getTaskFormVariables(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/task-forms/5028/variables')

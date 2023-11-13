@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class NodeMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200ResponseChildren(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/b4cff62a-664d-4d45-9302-98723eac1319/children')

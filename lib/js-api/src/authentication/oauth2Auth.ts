@@ -87,15 +87,15 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
         if (this.config.oauth2) {
             if (this.config.oauth2.host === undefined || this.config.oauth2.host === null) {
-                throw 'Missing the required oauth2 host parameter';
+                throw new Error('Missing the required oauth2 host parameter');
             }
 
             if (this.config.oauth2.clientId === undefined || this.config.oauth2.clientId === null) {
-                throw 'Missing the required oauth2 clientId parameter';
+                throw new Error('Missing the required oauth2 clientId parameter');
             }
 
             if (this.config.oauth2.scope === undefined || this.config.oauth2.scope === null) {
-                throw 'Missing the required oauth2 scope parameter';
+                throw new Error('Missing the required oauth2 scope parameter');
             }
 
             if (this.config.oauth2.secret === undefined || this.config.oauth2.secret === null) {
@@ -103,7 +103,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
             }
 
             if ((this.config.oauth2.redirectUri === undefined || this.config.oauth2.redirectUri === null) && this.config.oauth2.implicitFlow) {
-                throw 'Missing redirectUri required parameter';
+                throw new Error('Missing redirectUri required parameter');
             }
 
             if (!this.config.oauth2.refreshTokenTimeout) {
@@ -211,7 +211,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
         const expiresIn = this.hashFragmentParams.expires_in;
 
         if (!sessionState) {
-            throw 'session state not present';
+            throw new Error('session state not present');
         }
 
         try {
@@ -225,7 +225,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
                 return accessToken;
             }
         } catch (error) {
-            throw 'Validation JWT error' + error;
+            throw new Error('Validation JWT error' + error);
         }
     }
 
@@ -259,7 +259,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
             const savedNonce = this.storage.getItem(nonceKey);
 
             if (!payload.sub) {
-                throw 'Missing sub in JWT';
+                throw new Error('Missing sub in JWT');
             }
 
             if (payload.nonce !== savedNonce) {
@@ -494,7 +494,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
                 key = decodeURIComponent(escapedKey);
                 value = decodeURIComponent(escapedValue);
 
-                if (key.substring(0, 1) === '/') {
+                if (key.startsWith('/')) {
                     key = key.substring(1);
                 }
 
@@ -526,7 +526,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     removeHashFromSilentIframe() {
         const iframe = document.getElementById('silent_refresh_token_iframe') as HTMLIFrameElement;
-        if (iframe && iframe.contentWindow.location.hash) {
+        if (iframe?.contentWindow.location.hash) {
             iframe.contentWindow.location.hash = '';
         }
     }

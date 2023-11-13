@@ -57,7 +57,7 @@ describe('Oauth2 Implicit flow test', () => {
                 alfrescoJsApi
             );
         } catch (error) {
-            expect(error).to.be.equal('Missing redirectUri required parameter');
+            expect(error.message).to.be.equal('Missing redirectUri required parameter');
             done();
         }
     });

@@ -25,7 +25,7 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * TaskFormsApi service.
- * @module TaskformsApi
+ * @module TaskFormsApi
  */
 export class TaskFormsApi extends BaseApi {
     /**
@@ -80,17 +80,17 @@ export class TaskFormsApi extends BaseApi {
     getRestFieldColumnValues(taskId: string, field: string, column: string) {
         // verify the required parameter 'taskId' is set
         if (taskId === undefined || taskId === null) {
-            throw 'Missing param \'taskId\' in getRestFieldValues';
+            throw new Error('Missing param \'taskId\' in getRestFieldValues');
         }
 
         // verify the required parameter 'field' is set
         if (field === undefined || field === null) {
-            throw 'Missing param \'field\' in getRestFieldValues';
+            throw new Error('Missing param \'field\' in getRestFieldValues');
         }
 
         // verify the required parameter 'column' is set
         if (column === undefined || column === null) {
-            throw 'Missing param \'column\' in getRestFieldValues';
+            throw new Error('Missing param \'column\' in getRestFieldValues');
         }
 
         const pathParams = {
@@ -179,7 +179,7 @@ export class TaskFormsApi extends BaseApi {
     getTaskFormVariables(taskId: string) {
         // verify the required parameter 'taskId' is set
         if (taskId === undefined || taskId === null) {
-            throw 'Missing param \'taskId\' in getTaskFormVariables';
+            throw new Error('Missing param \'taskId\' in getTaskFormVariables');
         }
 
         const pathParams = {

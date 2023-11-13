@@ -31,12 +31,12 @@ export class TemporaryApi extends BaseApi {
     completeTasks(userId: number, processDefinitionKey: string) {
         // verify the required parameter 'userId' is set
         if (userId === undefined || userId === null) {
-            throw 'Missing param \'userId\' in completeTasks';
+            throw new Error('Missing param \'userId\' in completeTasks');
         }
 
         // verify the required parameter 'processDefinitionKey' is set
         if (processDefinitionKey === undefined || processDefinitionKey === null) {
-            throw 'Missing param \'processDefinitionKey\' in completeTasks';
+            throw new Error('Missing param \'processDefinitionKey\' in completeTasks');
         }
 
         const queryParams = {
@@ -58,12 +58,12 @@ export class TemporaryApi extends BaseApi {
     generateData(userId: number, processDefinitionKey: string) {
         // verify the required parameter 'userId' is set
         if (userId === undefined || userId === null) {
-            throw 'Missing param \'userId\' in generateData';
+            throw new Error('Missing param \'userId\' in generateData');
         }
 
         // verify the required parameter 'processDefinitionKey' is set
         if (processDefinitionKey === undefined || processDefinitionKey === null) {
-            throw 'Missing param \'processDefinitionKey\' in generateData';
+            throw new Error('Missing param \'processDefinitionKey\' in generateData');
         }
 
         const queryParams = {

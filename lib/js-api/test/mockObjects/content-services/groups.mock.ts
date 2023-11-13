@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class GroupsMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200GetGroups(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/groups')

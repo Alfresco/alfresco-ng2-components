@@ -35,7 +35,7 @@ export class ClassesApi extends BaseApi {
     getClass(className: string): Promise<ClassDescription> {
         // verify the required parameter 'className' is set
         if (className === undefined || className === null) {
-            throw 'Missing param \'className\' in getClass';
+            throw new Error('Missing param \'className\' in getClass');
         }
 
         return this.get<ClassDescription>({
@@ -49,7 +49,7 @@ export class ClassesApi extends BaseApi {
     getSubclasses(className: string): Promise<ClassDescription[]> {
         // verify the required parameter 'className' is set
         if (className === undefined || className === null) {
-            throw 'Missing param \'className\'';
+            throw new Error('Missing param \'className\'');
         }
 
         return this.get({

@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class RenditionMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200RenditionResponse(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/public/alfresco/versions/1/nodes/97a29e9c-1e4f-4d9d-bb02-1ec920dda045/renditions/pdf')

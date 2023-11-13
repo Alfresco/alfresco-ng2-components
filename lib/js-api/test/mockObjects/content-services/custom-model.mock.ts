@@ -19,10 +19,6 @@ import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
 export class CustomModelMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200AllCustomModel(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/private/alfresco/versions/1/cmm')

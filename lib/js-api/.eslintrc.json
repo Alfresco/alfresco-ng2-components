@@ -55,7 +55,6 @@
         "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/consistent-type-definitions": "off",
-        "no-throw-literal": "off",
         "no-redeclare": "off",
         "prefer-promise-reject-errors": "off"
       }

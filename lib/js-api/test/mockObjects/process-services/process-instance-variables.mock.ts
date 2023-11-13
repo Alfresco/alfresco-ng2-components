@@ -33,10 +33,6 @@ const fakeVariable2 = {
 const fakeVariablesList = [fakeVariable1, fakeVariable2];
 
 export class ProcessInstanceVariablesMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     addListProcessInstanceVariables200Response(processInstanceId: string): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/activiti-app/api/enterprise/process-instances/' + processInstanceId + '/variables')

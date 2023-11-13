@@ -16,7 +16,7 @@
  */
 
 import { expect } from 'chai';
-import { AlfrescoApi, TagBody, TagEntry, TagPaging, TagsApi } from '../../src';
+import { AlfrescoApi, TagBody, TagEntry, TagsApi } from '../../src';
 import { EcmAuthMock, TagMock } from '../mockObjects';
 
 describe('Tags', () => {
@@ -127,8 +127,7 @@ describe('Tags', () => {
             const tags = [tag1, tag2];
             tagMock.get201ResponseForAssigningTagsToNode(tags);
 
-            tagsApi.assignTagsToNode('someNodeId', tags).then((data) => {
-                const tagPaging = data as TagPaging;
+            tagsApi.assignTagsToNode('someNodeId', tags).then((tagPaging) => {
                 expect(tagPaging.list.pagination.count).equal(2);
                 expect(tagPaging.list.entries[0].entry.tag).equal(tag1.tag);
                 expect(tagPaging.list.entries[1].entry.tag).equal(tag2.tag);
