@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @import '../../lib/core/src/lib/styles/index';
 @import '../../lib/core/src/lib/styles/typography';
+
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
 //  The following line adds:
 //    1. Default typography styles for all components
@@ -9,8 +10,9 @@
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+
 @include mat.all-component-typographies;
-@include mat.core();
+@include mat.core;
 
 $primary: mat.define-palette($alfresco-accent-orange);
 $accent: mat.define-palette($alfresco-accent-purple);
@@ -28,19 +30,3 @@ $theme: mat.define-light-theme(
 
 @include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);
-
-$typography: map-get($theme, typography);
-
-body,
-html {
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
-    font-size: mat.font-size($typography, body-1);
-    font-family: mat.font-family($typography);
-    line-height: mat.line-height($typography, body-1);
-}
-
-body {
-    overflow: auto;
-}
