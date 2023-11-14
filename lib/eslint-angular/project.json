@@ -1,0 +1,63 @@
+{
+  "name": "eslint-angular",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/eslint-angular/src",
+  "projectType": "library",
+  "prefix": "adf",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "options": {
+        "projectRoot": "lib/eslint-angular",
+        "outputPath": "dist/libs/eslint-plugin-eslint-angular",
+        "main": "lib/eslint-angular/index.ts",
+        "generatePackageJson": true,
+        "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json",
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        },
+        "target": "node",
+        "compiler": "tsc"
+      },
+      "configurations": {
+        "production": {
+          "projectRoot": "lib/eslint-angular",
+          "outputPath": "dist/libs/eslint-plugin-eslint-angular",
+          "main": "lib/eslint-angular/index.ts",
+          "generatePackageJson": true,
+          "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["lib/eslint-angular/**/*.ts"]
+      }
+    },
+    "bundle": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "echo testing bundle created"
+          }
+        ]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/libs/eslint-plugin-eslint-angular",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    }
+  }
+}
