@@ -25,8 +25,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatLegacyChipHarness as MatChipHarness, MatLegacyChipListHarness as MatChipListHarness } from '@angular/material/legacy-chips/testing';
+import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('CardViewArrayItemComponent', () => {
