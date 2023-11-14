@@ -17,7 +17,7 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
 import { NodeDownloadDirective } from './node-download.directive';

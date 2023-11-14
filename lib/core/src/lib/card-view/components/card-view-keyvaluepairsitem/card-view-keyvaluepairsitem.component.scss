@@ -26,21 +26,21 @@
                 justify-content: center;
             }
 
-            &__add-btn.mat-button {
+
+            &__add-btn.mat-mdc-button {
                 margin-bottom: 20px;
             }
 
             &__read-only {
                 padding-bottom: 20px;
 
-                .mat-table {
-                    box-shadow: none;
-                }
+            .mat-mdc-table {
+                box-shadow: none;
+            }
 
-                .mat-header-row,
-                .mat-row {
-                    padding: 0;
-                }
+            .mat-mdc-header-row,
+            .mat-mdc-row {
+                padding: 0;
             }
         }
     }

@@ -19,7 +19,7 @@ import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-servic
 import { PeopleProcessService } from '@alfresco/adf-process-services';
 import { AuthenticationService, BasicAlfrescoAuthService, IdentityUserModel, IdentityUserService, UserInfoMode } from '@alfresco/adf-core';
 import { Component, OnInit, Input } from '@angular/core';
-import { LegacyMenuPositionX as MenuPositionX, LegacyMenuPositionY as MenuPositionY } from '@angular/material/legacy-menu';
+import { MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Observable, of } from 'rxjs';
 import { UserRepresentation } from '@alfresco/js-api';
 
