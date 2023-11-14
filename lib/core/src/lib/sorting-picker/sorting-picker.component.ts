@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, Input, EventEmitter, Output } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 
 @Component({
     selector: 'adf-sorting-picker',
