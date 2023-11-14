@@ -1,0 +1,70 @@
+{
+  "name": "cli",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/cli",
+  "projectType": "library",
+  "prefix": "adf",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd lib/cli && npm i && npm run dist",
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "lib/cli/tsconfig.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "bundle": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "echo cli bundle created"
+          }
+        ]
+      },
+      "dependsOn": ["copyToNodeModules"]
+    },
+    "copyToNodeModules": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "rm -rf ./node_modules/@alfresco/adf-cli/ && mkdir -p ./node_modules/@alfresco/adf-cli/ && cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/"
+          }
+        ]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["lib/cli/**/*.ts", "lib/cli/**/*.html"]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/libs/cli",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    }
+  }
+}
