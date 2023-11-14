@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { Subject, of } from 'rxjs';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';

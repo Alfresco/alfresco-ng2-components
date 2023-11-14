@@ -17,7 +17,7 @@
 
 import { CoreTestingModule, IdentityUserModel, InitialUsernamePipe, UserInfoMode } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { By, DomSanitizer } from '@angular/platform-browser';
 import { fakeEcmUser, ContentTestingModule } from '@alfresco/adf-content-services';
 import { ContentUserInfoComponent } from './content-user-info.component';

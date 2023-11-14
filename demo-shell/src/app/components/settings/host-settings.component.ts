@@ -19,7 +19,7 @@ import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } fro
 import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
-import { MAT_LEGACY_FORM_FIELD_DEFAULT_OPTIONS as MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/legacy-form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 export const HOST_REGEX = '^(http|https)://.*[^/]$';
 

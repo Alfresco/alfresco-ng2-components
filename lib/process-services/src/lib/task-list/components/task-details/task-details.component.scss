@@ -75,7 +75,7 @@ adf-task-details {
                     flex-direction: column;
                     padding: 20px 0;
 
-                    .mat-slide-toggle {
+                    .mat-mdc-slide-toggle {
                         margin-left: auto;
 
                         & + div {
@@ -87,7 +87,7 @@ adf-task-details {
                         }
                     }
                 }
-
+                /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
                 & .mat-tab-label {
                     flex-grow: 1;
                 }
