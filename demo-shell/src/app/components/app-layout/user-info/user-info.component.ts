@@ -25,7 +25,7 @@ import {
     UserInfoMode
 } from '@alfresco/adf-core';
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { LegacyMenuPositionX as MenuPositionX, LegacyMenuPositionY as MenuPositionY } from '@angular/material/legacy-menu';
 import { Observable, of } from 'rxjs';
 
 @Component({

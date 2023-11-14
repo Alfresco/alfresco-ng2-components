@@ -60,10 +60,14 @@ import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
 import { DocumentListModule } from '../document-list.module';
 import { ContentActionModel } from '../models/content-action.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { CustomResourcesService } from '../services/custom-resources.service';
-import { DocumentListService } from '../services/document-list.service';
-import { DocumentListComponent } from './document-list.component';
+import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
+import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
+import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
 
 const mockDialog = {
     open: jasmine.createSpy('open')

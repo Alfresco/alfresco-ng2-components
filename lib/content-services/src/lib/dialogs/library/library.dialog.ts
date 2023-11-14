@@ -31,7 +31,7 @@ import {
     UntypedFormControl,
     AbstractControl
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
