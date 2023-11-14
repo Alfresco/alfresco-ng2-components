@@ -21,7 +21,7 @@ import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { of, throwError } from 'rxjs';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { delay } from 'rxjs/operators';
 
