@@ -98,7 +98,7 @@ export class CustomResourcesService {
     getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[]): Observable<ResultSetPaging> {
         const defaultFilter = [
             'TYPE:"content"',
-            '-PNAME:"0/wiki"',
+            '-PATH:"//cm:wiki/*"',
             '-TYPE:"app:filelink"',
             '-TYPE:"cm:thumbnail"',
             '-TYPE:"cm:failedThumbnail"',

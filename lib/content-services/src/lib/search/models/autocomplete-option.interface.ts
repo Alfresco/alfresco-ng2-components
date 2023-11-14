@@ -19,6 +19,7 @@ export interface AutocompleteOption {
     value: string;
     id?: string;
     fullPath?: string;
+    query?: string;
 }
 
 export enum AutocompleteField {
