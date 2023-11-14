@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { SelectFilterInputComponent } from './select-filter-input.component';
-import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
+import { MatSelect } from '@angular/material/select';
 
 describe('SelectFilterInputComponent', () => {
     let fixture: ComponentFixture<SelectFilterInputComponent>;

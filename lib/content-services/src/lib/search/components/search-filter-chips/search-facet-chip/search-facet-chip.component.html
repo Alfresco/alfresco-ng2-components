@@ -1,5 +1,5 @@
-<mat-chip [attr.data-automation-id]="'search-filter-chip-' + field.label"
-          [disableRipple]="true"
+<mat-chip-option [attr.data-automation-id]="'search-filter-chip-' + field.label"
+          disableRipple
           class="adf-search-filter-chip adf-search-filter-facet-chip"
           [class.adf-search-toggle-chip]="(facetField.displayValue$ | async) || menuTrigger.menuOpen"
           [disabled]="!isPopulated()"
@@ -24,7 +24,7 @@
     <ng-template #disabledIcon>
         <mat-icon>remove</mat-icon>
     </ng-template>
-</mat-chip>
+</mat-chip-option>
 
 <mat-menu #menu="matMenu" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
     <div #menuContainer [attr.data-automation-id]="'search-field-' + field.label">
