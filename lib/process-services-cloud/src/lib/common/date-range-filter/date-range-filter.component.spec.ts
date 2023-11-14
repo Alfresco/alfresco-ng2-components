@@ -18,7 +18,7 @@
 import { DateRangeFilterComponent } from './date-range-filter.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
