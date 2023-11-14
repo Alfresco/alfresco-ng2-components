@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MatLegacySnackBar as MatSnackBar, MatLegacySnackBarRef as MatSnackBarRef, MatLegacySnackBarConfig as MatSnackBarConfig } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslationService } from '../../translation/translation.service';
 import { Subject } from 'rxjs';
 import { NotificationModel } from '../models/notification.model';
