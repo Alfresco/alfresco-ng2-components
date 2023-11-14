@@ -20,7 +20,7 @@ import { Observable, of } from 'rxjs';
 import { FormService, ContainerModel, FormFieldTypes, FormFieldOption, FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
