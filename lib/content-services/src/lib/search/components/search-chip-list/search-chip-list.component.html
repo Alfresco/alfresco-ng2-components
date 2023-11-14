@@ -1,6 +1,6 @@
-<mat-chip-list>
+<mat-chip-listbox>
     <ng-container *ngIf="facetFiltersService.selectedBuckets.length">
-        <mat-chip *ngIf="clearAll && facetFiltersService.selectedBuckets.length > 1"
+        <mat-chip-option *ngIf="clearAll && facetFiltersService.selectedBuckets.length > 1"
             data-automation-id="reset-filter"
             color="primary"
             selected
@@ -9,9 +9,9 @@
             matTooltipPosition="right"
             (click)="facetFiltersService.resetAllSelectedBuckets()">
             {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
-        </mat-chip>
+        </mat-chip-option>
 
-        <mat-chip
+        <mat-chip-option
             data-automation-id="chip-list-entry"
             class="adf-search-chip-list-item"
             *ngFor="let selection of facetFiltersService.selectedBuckets"
@@ -19,6 +19,6 @@
             (removed)="facetFiltersService.unselectFacetBucket(selection.field, selection.bucket)">
             {{ (selection.bucket.display || selection.bucket.label) | translate }}
             <mat-icon class="adf-search-chip-list-item-remove" matChipRemove>cancel</mat-icon>
-        </mat-chip>
+        </mat-chip-option>
     </ng-container>
-</mat-chip-list>
+</mat-chip-listbox>

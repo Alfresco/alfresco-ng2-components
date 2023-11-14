@@ -8,9 +8,9 @@
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies;
-@include mat.legacy-core();
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+@include mat.all-component-typographies;
+@include mat.core();
 
 $primary: mat.define-palette($alfresco-accent-orange);
 $accent: mat.define-palette($alfresco-accent-purple);
@@ -26,7 +26,7 @@ $theme: mat.define-light-theme(
     )
 );
 
-@include mat.all-legacy-component-themes($theme);
+@include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);
 
 $typography: map-get($theme, typography);
