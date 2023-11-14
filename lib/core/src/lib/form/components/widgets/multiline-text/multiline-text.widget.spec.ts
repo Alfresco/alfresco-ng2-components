@@ -23,8 +23,8 @@ import { FormModel } from '../core/form.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
+import { MatLegacyTooltipHarness as MatTooltipHarness } from '@angular/material/legacy-tooltip/testing';
 
 describe('MultilineTextWidgetComponentComponent', () => {
     let loader: HarnessLoader;

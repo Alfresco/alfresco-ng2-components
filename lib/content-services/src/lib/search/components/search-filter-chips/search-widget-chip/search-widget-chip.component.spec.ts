@@ -19,12 +19,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchWidgetChipComponent } from './search-widget-chip.component';
 import { simpleCategories } from '../../../../mock';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import { By } from '@angular/platform-browser';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatLegacyChipHarness as MatChipHarness } from '@angular/material/legacy-chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('SearchWidgetChipComponent', () => {
