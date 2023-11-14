@@ -25,9 +25,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatLegacyTooltipHarness as MatTooltipHarness } from '@angular/material/legacy-tooltip/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
+import { MatLegacyFormFieldHarness as MatFormFieldHarness } from '@angular/material/legacy-form-field/testing';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
