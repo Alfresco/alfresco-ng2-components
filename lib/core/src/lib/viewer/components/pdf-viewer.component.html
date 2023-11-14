@@ -16,10 +16,8 @@
                 <ng-container *ngIf="thumbnailsTemplate">
                     <ng-container *ngTemplateOutlet="thumbnailsTemplate;context:pdfThumbnailsContext"></ng-container>
                 </ng-container>
-
-                <ng-container *ngIf="!thumbnailsTemplate">
-                    <adf-pdf-thumbnails (close)="toggleThumbnails()" [pdfViewer]="pdfViewer"></adf-pdf-thumbnails>
-                </ng-container>
+                <adf-pdf-thumbnails *ngIf="!thumbnailsTemplate && !isPanelDisabled" (close)="toggleThumbnails()" [pdfViewer]="pdfViewer">
+                </adf-pdf-thumbnails>
             </div>
         </div>
     </ng-container>

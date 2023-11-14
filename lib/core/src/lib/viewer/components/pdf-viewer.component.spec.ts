@@ -27,6 +27,8 @@ import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PdfThumbListComponent } from '@alfresco/adf-core';
+import { By } from '@angular/platform-browser';
 
 declare const pdfjsLib: any;
 
@@ -354,6 +356,13 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             }, 55000);
+
+            it('should not render PdfThumbListComponent during initialization of new pdfViewer', () => {
+                componentUrlTestComponent.pdfViewerComponent.toggleThumbnails();
+                componentUrlTestComponent.urlFile = 'file.pdf';
+                fixtureUrlTestComponent.detectChanges();
+                expect(fixtureUrlTestComponent.debugElement.query(By.directive(PdfThumbListComponent))).toBeNull();
+            });
         });
 
         describe('Viewer events', () => {
