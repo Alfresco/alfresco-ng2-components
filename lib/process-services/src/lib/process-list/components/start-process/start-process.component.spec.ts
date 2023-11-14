@@ -38,7 +38,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
-import { RestVariable } from '@alfresco/js-api';
+import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 
 describe('StartProcessComponent', () => {
     let appConfig: AppConfigService;

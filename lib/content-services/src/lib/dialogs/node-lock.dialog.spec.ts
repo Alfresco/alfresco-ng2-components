@@ -16,7 +16,7 @@
  */
 
 import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { addMinutes } from 'date-fns';

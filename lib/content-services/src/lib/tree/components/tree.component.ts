@@ -34,7 +34,7 @@ import { TreeService } from '../services/tree.service';
 import { PaginationModel, UserPreferencesService } from '@alfresco/adf-core';
 import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { TreeResponse } from '../models/tree-response.interface';
-import { MatCheckbox } from '@angular/material/checkbox';
+import { MatLegacyCheckbox as MatCheckbox } from '@angular/material/legacy-checkbox';
 import { TreeContextMenuResult } from '../models/tree-context-menu-result.interface';
 import { takeUntil } from 'rxjs/operators';
 

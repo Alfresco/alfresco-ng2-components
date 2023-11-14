@@ -28,8 +28,8 @@ import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.t
 import { mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding, mockPreselectedFoodUsers } from '../mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
-import { MatInputHarness } from '@angular/material/input/testing';
+import { MatLegacyChipHarness as MatChipHarness, MatLegacyChipListHarness as MatChipListHarness } from '@angular/material/legacy-chips/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
 
 describe('PeopleCloudComponent', () => {
     let loader: HarnessLoader;
