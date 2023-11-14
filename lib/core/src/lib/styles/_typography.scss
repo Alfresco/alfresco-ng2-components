@@ -15,6 +15,4 @@ $alfresco-typography: mat.define-typography-config(
     $caption:       mat.define-typography-level(12px, 20px, 400),
     $button:        mat.define-typography-level(14px, 14px, 500),
     // Line-height must be unit-less fraction of the font-size.
-    $in/* TODO(mdc-migration): No longer supported. Use `body-1` instead. put:         mat.define-typography-level(16px, 1.25, 400)
 );
- */
