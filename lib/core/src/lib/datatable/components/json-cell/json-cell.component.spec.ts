@@ -23,7 +23,7 @@ import { JsonCellComponent } from './json-cell.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
 
 describe('JsonCellComponent', () => {
     let loader: HarnessLoader;
