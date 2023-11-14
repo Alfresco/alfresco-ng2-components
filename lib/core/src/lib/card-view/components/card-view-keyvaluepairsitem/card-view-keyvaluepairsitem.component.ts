@@ -18,7 +18,7 @@
 import { Component, OnChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource } from '@angular/material/table';
 import { BaseCardView } from '../base-card-view';
 
 @Component({

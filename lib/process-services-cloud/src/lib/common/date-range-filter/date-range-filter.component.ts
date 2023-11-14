@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';

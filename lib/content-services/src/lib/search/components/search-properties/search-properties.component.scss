@@ -19,6 +19,7 @@ adf-search-properties {
 
     .adf-search-properties-file-size-operator,
     .adf-search-properties-file-size-unit {
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-infix {
             border: 1px solid var(--adf-theme-mat-grey-color-a400);
             border-radius: 5px;
@@ -26,12 +27,13 @@ adf-search-properties {
         }
 
         &.mat-focused {
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-infix {
                 outline: 2px auto -webkit-focus-ring-color;
             }
         }
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-underline {
         display: none;
     }
@@ -42,8 +44,10 @@ adf-search-properties {
 
     adf-search-chip-autocomplete-input {
         display: block;
-
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-outline {
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-outline {
                 &-start,
                 &-end {
@@ -62,13 +66,17 @@ adf-search-properties {
         }
 
         .mat-focused {
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-outline {
                 outline: 2px auto -webkit-focus-ring-color;
             }
         }
 
         .mat-form-field-appearance-outline {
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-outline-thick {
+                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
                 .mat-form-field-outline {
                     &-start,
                     &-end {
