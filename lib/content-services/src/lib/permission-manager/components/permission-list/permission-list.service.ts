@@ -18,7 +18,7 @@
 import { NotificationService } from '@alfresco/adf-core';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { EventEmitter, Injectable } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatLegacySlideToggleChange as MatSlideToggleChange } from '@angular/material/legacy-slide-toggle';
 import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import { finalize, map, switchMap } from 'rxjs/operators';
 import { RoleModel } from '../../models/role.model';
