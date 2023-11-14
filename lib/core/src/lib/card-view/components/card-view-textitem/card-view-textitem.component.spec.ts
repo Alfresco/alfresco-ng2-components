@@ -25,7 +25,7 @@ import { CardViewItemFloatValidator } from '../../validators/card-view-item-floa
 import { CardViewItemIntValidator } from '../../validators/card-view-item-int.validator';
 import { CardViewIntItemModel } from '../../models/card-view-intitem.model';
 import { CardViewFloatItemModel } from '../../models/card-view-floatitem.model';
-import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
+import { MatChipsModule } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';

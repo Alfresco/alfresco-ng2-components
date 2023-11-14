@@ -4,7 +4,7 @@
         box-sizing: border-box;
         margin: 16px auto;
 
-        .mat-card-actions {
+        .mat-mdc-card-actions {
             border-top: solid 1px var(--adf-theme-background-status-bar-color);
         }
     }
@@ -38,15 +38,15 @@
         width: fit-content !important;
     }
 
-    &-no-form-mat-card-actions.mat-card-actions {
+    &-no-form-mat-card-actions.mat-mdc-card-actions {
         display: flex;
         justify-content: space-between;
 
-        & .mat-button {
+        & .mat-mdc-button {
             text-transform: uppercase;
             border-radius: 5px;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
         & .mat-button-wrapper {
             opacity: 0.54;
             font-size: var(--theme-button-font-size);
