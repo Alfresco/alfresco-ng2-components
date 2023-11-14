@@ -22,9 +22,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatMenuHarness } from '@angular/material/menu/testing';
+import { MatLegacyMenuHarness as MatMenuHarness } from '@angular/material/legacy-menu/testing';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('SearchFacetChipComponent', () => {
