@@ -16,7 +16,7 @@
             padding: 6px;
         }
 
-        tr.mat-header-row {
+        tr.mat-mdc-header-row {
             height: 32px;
         }
 
@@ -33,8 +33,8 @@
             padding-right: 0 !important;
         }
 
-        td.mat-cell:first-of-type,
-        td.mat-footer-cell:first-of-type,
+        td.mat-mdc-cell:first-of-type,
+        td.mat-mdc-footer-cell:first-of-type,
         td.mat-cell:last-of-type,
         td.mat-footer-cell:last-of-type {
             width: 18% !important;

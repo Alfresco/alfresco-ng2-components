@@ -1,13 +1,13 @@
 @use '@angular/material' as mat;
 
 .adf-search-form {
-    &.mat-button {
+    &.mat-mdc-button {
         height: 35px;
         max-width: 190px;
         min-width: 190px;
         align-content: center;
         overflow: hidden;
-
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
         .mat-button-wrapper {
             display: flex;
             align-items: center;
@@ -36,12 +36,12 @@
         border-color: var(--theme-accent-color);
     }
 
-    &-menu + * .mat-menu-panel {
+    &-menu + * .mat-mdc-menu-panel {
         @include mat.elevation(2);
 
         border-radius: 6px;
 
-        .mat-menu-content {
+        .mat-mdc-menu-content {
             padding: 0;
         }
     }

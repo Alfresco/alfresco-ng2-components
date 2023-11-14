@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, NotificationService } from '@alfresco/adf-core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import {
     ContentNodeSelectorComponent,
     ContentNodeSelectorComponentData,

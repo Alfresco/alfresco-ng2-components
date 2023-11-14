@@ -35,7 +35,7 @@ import { TagService } from './services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MatLegacyChip as MatChip } from '@angular/material/legacy-chips';
+import { MatChip } from '@angular/material/chips';
 
 /**
  *

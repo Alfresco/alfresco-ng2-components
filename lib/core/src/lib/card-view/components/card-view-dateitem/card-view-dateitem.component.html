@@ -63,15 +63,16 @@
 
     <div *ngIf="property.multivalued"
          class="adf-property-field adf-dateitem-chip-list-container adf-dateitem-editable">
-        <mat-chip-list #chipList class="adf-textitem-chip-list">
-            <mat-chip
-                *ngFor="let propertyValue of property.displayValue; let idx = index"
-                [removable]="isEditable"
-                (removed)="removeValueFromList(idx)">
+        <mat-chip-listbox #chipList
+                       class="adf-textitem-chip-list">
+            <mat-chip-option *ngFor="let propertyValue of property.displayValue; let idx = index"
+                      [removable]="isEditable()"
+                      (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
-                <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
-            </mat-chip>
-        </mat-chip-list>
+                <mat-icon *ngIf="isEditable()"
+                          matChipRemove>cancel</mat-icon>
+            </mat-chip-option>
+        </mat-chip-listbox>
 
         <div *ngIf="isEditable" class="adf-property-field adf-dateitem-editable-controls" (click)="showDatePicker()">
             <input

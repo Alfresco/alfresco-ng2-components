@@ -1,15 +1,15 @@
 .adf-library-dialog {
-    .mat-radio-group {
+    .mat-mdc-radio-group {
         display: flex;
         flex-direction: column;
         margin: 0 0 20px;
     }
 
-    .mat-radio-group .mat-radio-button {
+    .mat-mdc-radio-group .mat-mdc-radio-button {
         margin: 10px 0;
     }
 
-    .mat-form-field {
+    .mat-mdc-form-field {
         width: 100%;
     }
 
@@ -22,7 +22,7 @@
         flex-direction: row;
         justify-content: flex-end;
 
-        .mat-button {
+        .mat-mdc-button {
             text-transform: uppercase;
         }
     }
