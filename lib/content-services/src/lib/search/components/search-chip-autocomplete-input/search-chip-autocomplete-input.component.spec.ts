@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatChip, MatChipRemove } from '@angular/material/chips';
+import { MatLegacyChip as MatChip, MatLegacyChipRemove as MatChipRemove } from '@angular/material/legacy-chips';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';

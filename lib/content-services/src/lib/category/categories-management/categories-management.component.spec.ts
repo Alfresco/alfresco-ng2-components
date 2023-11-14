@@ -18,8 +18,8 @@
 import { Category, CategoryPaging, ResultNode, ResultSetPaging } from '@alfresco/js-api';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
-import { MatError } from '@angular/material/form-field';
-import { MatListOption, MatSelectionList } from '@angular/material/list';
+import { MatLegacyError as MatError } from '@angular/material/legacy-form-field';
+import { MatLegacyListOption as MatListOption, MatLegacySelectionList as MatSelectionList } from '@angular/material/legacy-list';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
@@ -29,7 +29,7 @@ import { CategoryService } from '../services/category.service';
 import { CategoriesManagementComponent } from './categories-management.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
 
 describe('CategoriesManagementComponent', () => {
     let loader: HarnessLoader;

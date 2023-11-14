@@ -25,14 +25,14 @@ import { CardViewItemFloatValidator } from '../../validators/card-view-item-floa
 import { CardViewItemIntValidator } from '../../validators/card-view-item-int.validator';
 import { CardViewIntItemModel } from '../../models/card-view-intitem.model';
 import { CardViewFloatItemModel } from '../../models/card-view-floatitem.model';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatLegacyChipHarness as MatChipHarness, MatLegacyChipListHarness as MatChipListHarness } from '@angular/material/legacy-chips/testing';
 
 describe('CardViewTextItemComponent', () => {
     let loader: HarnessLoader;
