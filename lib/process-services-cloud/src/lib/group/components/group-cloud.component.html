@@ -1,9 +1,9 @@
 <form>
-    <mat-form-field floatLabel="auto" class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
-        <mat-label *ngIf="!isReadonly()" id="adf-group-cloud-title-id" class="adf-cloud-group-title"
-            [ngClass]="{'adf-cloud-group-title--focus': isFocused}">{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}</mat-label>
-        <mat-chip-list #groupChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-group-chip-list">
-            <mat-chip
+    <mat-form-field class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
+        <mat-label *ngIf="!isReadonly()"
+            id="adf-group-cloud-title-id">{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}</mat-label>
+        <mat-chip-grid #groupChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-group-chip-list">
+            <mat-chip-row
                 *ngFor="let group of selectedGroups"
                 [removable]="!(group.readonly)"
                 [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
@@ -15,7 +15,7 @@
                     matChipRemove [attr.data-automation-id]="'adf-cloud-group-chip-remove-icon-' + group.name">
                     cancel
                 </mat-icon>
-            </mat-chip>
+            </mat-chip-row>
             <input *ngIf="!isReadonly()" matInput
                    [formControl]="searchGroupsControl"
                    [matAutocomplete]="auto"
@@ -25,7 +25,7 @@
                    (blur)="setFocus(false); markAsTouched()"
                    class="adf-group-input"
                    data-automation-id="adf-cloud-group-search-input" #groupInput>
-        </mat-chip-list>
+        </mat-chip-grid>
 
         <mat-autocomplete
             autoActiveFirstOption
