@@ -21,7 +21,7 @@ import { ProcessServiceCloudTestingModule } from '../../../../testing/process-se
 import { TranslateModule } from '@ngx-translate/core';
 import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud.component';
 import { By } from '@angular/platform-browser';
-import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
+import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 
 describe('FilePropertiesTableCloudComponent', () => {

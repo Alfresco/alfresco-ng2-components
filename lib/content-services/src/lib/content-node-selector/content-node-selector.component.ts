@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslationService, NotificationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';

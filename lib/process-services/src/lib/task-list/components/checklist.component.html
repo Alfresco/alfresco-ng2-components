@@ -1,8 +1,8 @@
 <div class="adf-checklist-control">
-    <mat-chip-list data-automation-id="checklist-label">
+    <mat-chip-listbox data-automation-id="checklist-label">
         <span class="adf-activiti-label">{{ 'ADF_TASK_LIST.DETAILS.LABELS.CHECKLIST' | translate }}</span>
-        <mat-chip class="adf-process-badge" color="accent" selected="true">{{checklist?.length}}</mat-chip>
-    </mat-chip-list>
+        <mat-chip-option class="adf-process-badge" color="accent" selected="true">{{checklist?.length}}</mat-chip-option>
+    </mat-chip-listbox>
 
 
     <button mat-icon-button *ngIf="!readOnly" matTooltip="Add a checklist" [matTooltipPosition]="'before'"
@@ -12,14 +12,14 @@
 </div>
 
 <div class="adf-checklist-menu-container" *ngIf="checklist?.length > 0">
-    <mat-chip-list class="mat-chip-list-stacked">
-        <mat-chip id="check-{{check.id}}" class="adf-checklist-chip" *ngFor="let check of checklist"
+    <mat-chip-listbox class="mat-chip-list-stacked">
+        <mat-chip-option id="check-{{check.id}}" class="adf-checklist-chip" *ngFor="let check of checklist"
                   (removed)="delete(check.id)">
             <span>{{check.name}}</span>
             <mat-icon *ngIf="!readOnly && !check.endDate" id="remove-{{check.id}}" matChipRemove>cancel
             </mat-icon>
-        </mat-chip>
-    </mat-chip-list>
+        </mat-chip-option>
+    </mat-chip-listbox>
 
 </div>
 <div *ngIf="checklist?.length === 0" id="checklist-none-message" class="adf-checklist-none-message">
