@@ -16,7 +16,7 @@
  */
 
 import { Component, ContentChildren, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/legacy-tabs';
 @Component({
     selector: 'adf-info-drawer-tab',
     template: '<ng-template><ng-content></ng-content></ng-template>',

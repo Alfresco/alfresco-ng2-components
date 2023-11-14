@@ -27,9 +27,9 @@ import { IdentityGroupService } from '../services/identity-group.service';
 import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatLegacyChipHarness as MatChipHarness, MatLegacyChipListHarness as MatChipListHarness } from '@angular/material/legacy-chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
-import { MatInputHarness } from '@angular/material/input/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
 
 describe('GroupCloudComponent', () => {
     let loader: HarnessLoader;
