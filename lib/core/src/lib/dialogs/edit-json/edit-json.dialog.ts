@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 
 export interface EditJsonDialogSettings {
     title?: string;

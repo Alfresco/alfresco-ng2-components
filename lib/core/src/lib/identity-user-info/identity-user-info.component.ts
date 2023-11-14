@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { MatLegacyMenuTrigger as MatMenuTrigger, LegacyMenuPositionX as MenuPositionX, LegacyMenuPositionY as MenuPositionY } from '@angular/material/legacy-menu';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
 import { Subject } from 'rxjs';
 

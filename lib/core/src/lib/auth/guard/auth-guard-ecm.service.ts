@@ -20,7 +20,7 @@ import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
