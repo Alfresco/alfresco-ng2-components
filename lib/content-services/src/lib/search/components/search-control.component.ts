@@ -32,7 +32,7 @@ import {
 import { NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
-import { MatListItem } from '@angular/material/list';
+import { MatLegacyListItem as MatListItem } from '@angular/material/legacy-list';
 import { EmptySearchResultComponent } from './empty-search-result.component';
 
 @Component({
