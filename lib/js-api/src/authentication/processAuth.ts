@@ -81,7 +81,7 @@ export class ProcessAuth extends AlfrescoApiClient {
      * @param username Username to login
      * @param password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
-     * */
+     */
     login(username: string, password: string): AlfrescoApiClientPromise<string> {
         this.authentications.basicAuth.username = username;
         this.authentications.basicAuth.password = password;
@@ -132,7 +132,7 @@ export class ProcessAuth extends AlfrescoApiClient {
      * logout Alfresco API
      *
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
-     * */
+     */
     logout(): AlfrescoApiClientPromise<void> {
         this.saveUsername('');
 
@@ -164,7 +164,7 @@ export class ProcessAuth extends AlfrescoApiClient {
      * Set the current Ticket
      *
      * @param ticket Ticket value
-     * */
+     */
     setTicket(ticket: string) {
         this.authentications.basicAuth.ticket = ticket;
         this.authentications.basicAuth.password = null;

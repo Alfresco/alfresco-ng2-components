@@ -34,8 +34,8 @@ export class ProbesApi extends BaseApi {
      * **Note:** No authentication is required to call this endpoint.
      *
      * @param probeId The name of the probe:
-     * * -ready-
-     * * -live-
+     * - -ready-
+     * - -live-
      * @returns Promise<ProbeEntry>
      */
     getProbe(probeId: string): Promise<ProbeEntry> {

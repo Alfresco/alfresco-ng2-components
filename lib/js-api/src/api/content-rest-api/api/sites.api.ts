@@ -845,7 +845,7 @@ export class SitesApi extends BaseApi {
     /**
      * Create a site membership for group
      *
-     **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
+     * **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
      * You can set the **role** to one of four types:
      * - SiteConsumer
      * - SiteCollaborator
@@ -914,7 +914,7 @@ export class SitesApi extends BaseApi {
 
     /**
      * Get information about site membership of group
-     * *Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
+     * **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
      * Gets site membership information for group **groupId** on site **siteId**.
      *
      * @param siteId The identifier of a site.

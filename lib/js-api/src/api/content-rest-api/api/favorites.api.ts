@@ -43,8 +43,8 @@ export class FavoritesApi extends BaseApi {
      * The content of that object is the guid of the target entity.
      * @param opts Optional parameters
      * @param opts.include Returns additional information about favorites, the following optional fields can be requested:
-     * * path (note, this only applies to files and folders)
-     * * properties
+     * - path (note, this only applies to files and folders)
+     * - properties
      * @param opts.fields A list of field names. You can use this parameter to restrict the fields
      * returned within a response if, for example, you want to save on overall bandwidth.
      * The list applies to a returned individual entity or entries within a collection.

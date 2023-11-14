@@ -248,8 +248,8 @@ export class GroupsApi extends BaseApi {
      *
      * The default sort order for the returned list is for group members to be sorted by ascending displayName.
      * You can override the default by using the **orderBy** parameter. You can specify one of the following fields in the **orderBy** parameter:
-     * * id
-     * * displayName
+     * - id
+     * - displayName
      *
      * @param groupId The identifier of a group.
      * @param opts Optional parameters

@@ -143,7 +143,7 @@ export class ContentAuth extends AlfrescoApiClient {
      * logout Alfresco API
      *
      * @returns A promise that returns { authentication ticket} if resolved and {error} if rejected.
-     * */
+     */
     logout(): Promise<void> {
         this.saveUsername('');
         const promise: any = new Promise<void>((resolve, reject) => {

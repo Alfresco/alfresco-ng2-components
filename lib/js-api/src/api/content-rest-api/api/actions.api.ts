@@ -117,8 +117,8 @@ export class ActionsApi extends BaseApi {
      * The default sort order for the returned list is for actions to be sorted by ascending name.
      * You can override the default by using the **orderBy** parameter.
      * You can use any of the following fields to order the results:
-     * * name
-     * * title
+     * - name
+     * - title
      *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters

@@ -242,7 +242,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
      * @param  username Username to login
      * @param  password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
-     * */
+     */
     login(username: string, password: string): Promise<any> {
         if (!this.isCredentialValid(username) || !this.isCredentialValid(password)) {
             return Promise.reject(new Error('missing username or password'));
@@ -319,7 +319,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
      *
      * @param ticketEcm alfresco ticket
      * @param ticketBpm alfresco ticket
-     * */
+     */
     loginTicket(ticketEcm: string, ticketBpm: string): Promise<string> {
         this.config.ticketEcm = ticketEcm;
         this.config.ticketBpm = ticketBpm;
@@ -356,7 +356,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**
      * logout Alfresco API
-     * */
+     */
     logout(): Promise<void> {
         this.username = null;
 
@@ -463,7 +463,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**
      * refresh token
-     * */
+     */
     refreshToken(): Promise<any> {
         if (!this.isOauthConfiguration()) {
             return Promise.reject(new Error('Missing the required oauth2 configuration'));
@@ -485,7 +485,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
      *
      * @param ticketEcm ecm ticket
      * @param ticketBpm bpm ticket
-     * */
+     */
     setTicket(ticketEcm: string, ticketBpm: string) {
         if (this.contentAuth) {
             this.contentAuth.setTicket(ticketEcm);
@@ -509,21 +509,21 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**
      * Get the current Ticket for the Bpm
-     * */
+     */
     getTicketBpm(): string {
         return this.processAuth?.getTicket();
     }
 
     /**
      * Get the current Ticket for the Ecm
-     * */
+     */
     getTicketEcm(): string {
         return this.contentAuth?.getTicket();
     }
 
     /**
      * Get the current Ticket for the Ecm and BPM
-     * */
+     */
     getTicket(): [string, string] {
         return [this.contentAuth.getTicket(), this.processAuth.getTicket()];
     }

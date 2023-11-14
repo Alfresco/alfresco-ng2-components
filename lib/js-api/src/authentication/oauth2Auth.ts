@@ -562,7 +562,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
      * login Alfresco API
      *
      * @returns A promise that returns {new authentication token} if resolved and {error} if rejected.
-     * */
+     */
     login(username: string, password: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.grantPasswordLogin(username, password, resolve, reject);
@@ -696,14 +696,14 @@ export class Oauth2Auth extends AlfrescoApiClient {
      * return the Authentication
      *
      * @returns authentications
-     * */
+     */
     getAuthentication(): Authentication {
         return this.authentications;
     }
 
     /**
      * Change the Host
-     * */
+     */
     changeHost(host: string) {
         this.config.hostOauth2 = host;
     }
@@ -719,7 +719,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * Logout
-     **/
+     */
     async logOut() {
         this.checkAccessToken = true;
 

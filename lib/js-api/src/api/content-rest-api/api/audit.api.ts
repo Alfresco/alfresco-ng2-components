@@ -38,14 +38,14 @@ export class AuditApi extends BaseApi {
      * The **where** clause must be specified, either with an inclusive time period or for
      * an inclusive range of ids. The delete is within the context of the given audit application.
      * For example:
-     * *   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-     * *   where=(id BETWEEN ('1234', '4321')
+     * - where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * - where=(id BETWEEN ('1234', '4321')
      * You must have admin rights to delete audit information.
      *
      * @param auditApplicationId The identifier of an audit application.
      * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids. For example:
-     * *   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-     * *   where=(id BETWEEN ('1234', '4321')
+     * - where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * - where=(id BETWEEN ('1234', '4321')
      * @return Promise<{}>
      */
     deleteAuditEntriesForAuditApp(auditApplicationId: string, where: string): Promise<void> {
@@ -195,11 +195,11 @@ export class AuditApi extends BaseApi {
      * Gets a list of audit entries for audit application **auditApplicationId**.
      * You can use the **include** parameter to return additional **values** information.
      * The list can be filtered by one or more of:
-     * * **createdByUser** person id
-     * * **createdAt** inclusive time period
-     * * **id** inclusive range of ids
-     * * **valuesKey** audit entry values contains the exact matching key
-     * * **valuesValue** audit entry values contains the exact matching value
+     * - **createdByUser** person id
+     * - **createdAt** inclusive time period
+     * - **id** inclusive range of ids
+     * - **valuesKey** audit entry values contains the exact matching key
+     * - **valuesValue** audit entry values contains the exact matching value
      *
      * The default sort order is **createdAt** ascending, but you can use an optional **ASC** or **DESC**
      * modifier to specify an ascending or descending sort order.
@@ -215,12 +215,12 @@ export class AuditApi extends BaseApi {
      * above to check if any fields used in this method have a descending default search order.
      * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
      * @param opts.where Optionally filter the list. Here are some examples:
-     * *   where=(createdByUser='jbloggs')
-     * *   where=(id BETWEEN ('1234', '4321')
-     * *   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-     * *   where=(createdByUser='jbloggs' and createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-     * *   where=(valuesKey='/alfresco-access/login/user')
-     * *   where=(valuesKey='/alfresco-access/transaction/action' and valuesValue='DELETE')
+     * - where=(createdByUser='jbloggs')
+     * - where=(id BETWEEN ('1234', '4321')
+     * - where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * - where=(createdByUser='jbloggs' and createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * - where=(valuesKey='/alfresco-access/login/user')
+     * - where=(valuesKey='/alfresco-access/transaction/action' and valuesValue='DELETE')
      * @returns Promise<AuditEntryPaging>
      */
     listAuditEntriesForAuditApp(
@@ -276,9 +276,9 @@ export class AuditApi extends BaseApi {
      * above to check if any fields used in this method have a descending default search order.
      * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
      * @param opts.where Optionally filter the list. Here are some examples:
-     * *   where=(createdByUser='-me-')
-     * *   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-     * *   where=(createdByUser='jbloggs' and createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * - where=(createdByUser='-me-')
+     * - where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * - where=(createdByUser='jbloggs' and createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
      * @returns Promise<AuditEntryPaging>
      */
     listAuditEntriesForNode(

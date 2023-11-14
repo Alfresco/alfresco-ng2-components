@@ -304,7 +304,7 @@ export class SharedlinksApi extends BaseApi {
      * Get a list of links that the current user has read permission on source node.
      * The list is ordered in descending modified order.
      *
-     **Note:** The list of links is eventually consistent so newly created shared links may not appear immediately.
+     * **Note:** The list of links is eventually consistent so newly created shared links may not appear immediately.
      *
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list by \"sharedByUser\" `userId` of person who shared the link (can also use -me-)
