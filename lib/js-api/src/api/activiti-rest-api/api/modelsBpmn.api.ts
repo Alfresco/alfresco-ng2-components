@@ -20,7 +20,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
 * ModelsBpmnApi service.
-* @module ModelsBpmnApi
 */
 export class ModelsBpmnApi extends BaseApi {
     /**

@@ -28,7 +28,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * Tasks service.
- * @module TasksApi
  */
 export class TasksApi extends BaseApi {
     /**
@@ -229,6 +228,7 @@ export class TasksApi extends BaseApi {
 
     /**
      * Get the audit log for a task
+     *
      * @param taskId taskId
      * @return Promise<Blob> task audit in blob
      */

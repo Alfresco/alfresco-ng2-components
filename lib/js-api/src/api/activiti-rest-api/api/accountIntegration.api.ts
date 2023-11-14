@@ -20,7 +20,6 @@ import { BaseApi } from './base.api';
 
 /**
 * AccountIntegrationApi service.
-* @module AccountIntegrationApi
 */
 export class AccountIntegrationApi extends BaseApi {
     /**

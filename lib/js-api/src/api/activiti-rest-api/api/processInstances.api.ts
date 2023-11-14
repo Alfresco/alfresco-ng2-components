@@ -32,7 +32,6 @@ import { ResultListDataRepresentationDecisionTaskRepresentation } from '../model
 
 /**
  * Process Instances service.
- * @module ProcessInstancesApi
  */
 export class ProcessInstancesApi extends BaseApi {
     /**

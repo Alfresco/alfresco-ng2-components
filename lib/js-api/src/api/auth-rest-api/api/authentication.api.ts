@@ -23,7 +23,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
 * Authentication service.
-* @module AuthenticationApi
 */
 export class AuthenticationApi extends BaseApi {
     /**

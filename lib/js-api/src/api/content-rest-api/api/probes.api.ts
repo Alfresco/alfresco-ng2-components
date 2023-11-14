@@ -21,7 +21,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
 * Probes service.
-* @module ProbesApi
 */
 export class ProbesApi extends BaseApi {
     /**

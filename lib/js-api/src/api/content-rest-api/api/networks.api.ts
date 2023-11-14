@@ -24,7 +24,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 
 /**
 * Networks service.
-* @module NetworksApi
 */
 export class NetworksApi extends BaseApi {
     /**

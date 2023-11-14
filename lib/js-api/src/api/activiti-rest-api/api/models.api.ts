@@ -31,7 +31,6 @@ export interface GetModelsQuery {
 
 /**
  * Models service.
- * @module ModelsApi
  */
 export class ModelsApi extends BaseApi {
     /**

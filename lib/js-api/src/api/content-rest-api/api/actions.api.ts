@@ -26,7 +26,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 
 /**
  * Actions service.
- * @module ActionsApi
  */
 export class ActionsApi extends BaseApi {
     /**

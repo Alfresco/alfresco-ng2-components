@@ -24,7 +24,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * Renditions service.
- * @module RenditionsApi
  */
 export class RenditionsApi extends BaseApi {
     /**

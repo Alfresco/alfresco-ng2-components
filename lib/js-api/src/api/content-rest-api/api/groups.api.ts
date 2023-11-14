@@ -61,7 +61,6 @@ export interface GroupPagingOpts {
 
 /**
  * Groups service.
- * @module GroupsApi
  */
 export class GroupsApi extends BaseApi {
     /**

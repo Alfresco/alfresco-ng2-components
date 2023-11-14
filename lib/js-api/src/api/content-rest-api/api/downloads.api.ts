@@ -23,7 +23,6 @@ import { buildCollectionParam } from '../../../alfrescoApiClient';
 
 /**
 * Downloads service.
-* @module DownloadsApi
 */
 export class DownloadsApi extends BaseApi {
     /**

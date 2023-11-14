@@ -34,7 +34,6 @@ export interface GetDecisionTablesOpts {
 
 /**
 * DecisionTablesApi service.
-* @module DecisionTablesApi
 */
 export class DecisionTablesApi extends BaseApi {
     /**

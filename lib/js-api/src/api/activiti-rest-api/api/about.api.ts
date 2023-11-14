@@ -19,7 +19,6 @@ import { BaseApi } from './base.api';
 
 /**
  * About service.
- * @module AboutApi
  */
 export class AboutApi extends BaseApi {
     /**

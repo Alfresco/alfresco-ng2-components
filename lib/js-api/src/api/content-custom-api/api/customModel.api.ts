@@ -68,17 +68,7 @@ export interface CustomModelPropertyConstraint {
 }
 
 /**
- * Comments service.
- * @module api/CustomModelApi
- * @version 0.1.0
- */
-
-/**
  * Constructs a new CustomModelApi.
- * @alias module:api/CustomModelApi
- * @class
- * @param {module:ApiClient} apiClient Optional API client implementation to use, default to {@link module:ApiClient#instance}
- * if unspecified.
  */
 export class CustomModelApi extends BaseApi {
     private = true;

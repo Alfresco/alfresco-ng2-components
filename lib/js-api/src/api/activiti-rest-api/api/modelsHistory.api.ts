@@ -22,7 +22,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
 * ModelsHistoryApi service.
-* @module ModelsHistoryApi
 */
 export class ModelsHistoryApi extends BaseApi {
     /**

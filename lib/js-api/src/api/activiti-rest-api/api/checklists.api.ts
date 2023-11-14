@@ -23,7 +23,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
 * Checklists service.
-* @module ChecklistsApi
 */
 export class ChecklistsApi extends BaseApi {
     /**

@@ -25,7 +25,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 
 /**
  * Comments service.
- * @module CommentsApi
  */
 export class CommentsApi extends BaseApi {
     /**

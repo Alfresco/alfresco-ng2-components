@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import {} from '../model/';
 import { RestVariable } from '../model/restVariable';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
  * TaskVariablesApi service.
- * @module TaskVariablesApi
  */
 export class TaskVariablesApi extends BaseApi {
     /**

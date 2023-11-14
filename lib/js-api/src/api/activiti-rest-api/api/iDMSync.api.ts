@@ -21,7 +21,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * IDMSyncApi service.
- * @module IDMSyncApi
  */
 export class IDMSyncApi extends BaseApi {
     /**

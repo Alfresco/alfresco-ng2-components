@@ -22,7 +22,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
 * Comments service.
-* @module CommentsApi
 */
 export class ActivitiCommentsApi extends BaseApi {
     /**

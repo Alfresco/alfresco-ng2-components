@@ -75,7 +75,6 @@ export interface CreateNodeOpts extends NodesIncludeQuery {
 
 /**
  * Nodes service.
- * @module NodesApi
  */
 export class NodesApi extends BaseApi {
     /**

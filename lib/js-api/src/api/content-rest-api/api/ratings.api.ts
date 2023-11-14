@@ -25,7 +25,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 
 /**
  * Ratings service.
- * @module RatingsApi
  */
 export class RatingsApi extends BaseApi {
     /**

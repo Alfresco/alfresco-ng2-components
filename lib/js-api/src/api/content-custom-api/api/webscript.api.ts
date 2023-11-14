@@ -18,16 +18,7 @@
 import { BaseApi } from './base.api';
 
 /**
- * Tags service.
- * @module api/WebscriptApi
- * @version 0.1.0
- */
-
-/**
  * Constructs a new WebscriptApi.
- * @alias module:api/WebscriptApi
- * @class
- * @param apiClient Optional API client implementation to use, default to ApiClient instance if unspecified.
  */
 export class WebscriptApi extends BaseApi {
     allowedMethod: string[] = ['GET', 'POST', 'PUT', 'DELETE'];

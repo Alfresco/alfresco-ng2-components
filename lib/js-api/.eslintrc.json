@@ -38,7 +38,6 @@
         "jsdoc/require-jsdoc": "off",
         "jsdoc/check-alignment": "off",
         "jsdoc/tag-lines": "off",
-        "jsdoc/newline-after-description": "off",
         "jsdoc/no-multi-asterisks": "off",
         "jsdoc/check-types": "off",
         "jsdoc/check-param-names": "off",

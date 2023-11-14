@@ -29,7 +29,6 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * Favorites service.
- * @module FavoritesApi
  */
 export class FavoritesApi extends BaseApi {
     /**

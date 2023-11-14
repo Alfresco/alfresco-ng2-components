@@ -23,7 +23,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * SystemPropertiesApi service.
- * @module SystemPropertiesApi
  */
 export class SystemPropertiesApi extends BaseApi {
     /**

@@ -23,7 +23,6 @@ import { ResultListDataRepresentationRelatedProcessTask } from '../model/resultL
 
 /**
  * Content service.
- * @module ContentApi
  */
 export class ContentApi extends BaseApi {
     /**
@@ -194,6 +193,7 @@ export class ContentApi extends BaseApi {
 
     /**
      * Get content Raw URL for the given contentId
+     *
      * @param contentId contentId
      */
     getRawContentUrl(contentId: number): string {

@@ -41,7 +41,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 
 /**
  * Sites service.
- * @module SitesApi
  */
 export class SitesApi extends BaseApi {
     /**

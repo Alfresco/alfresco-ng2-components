@@ -19,12 +19,11 @@ import { BaseApi } from './base.api';
 
 /**
  * Temporary service.
- * @module api/TemporaryApi
- * @version 1.4.0
  */
 export class TemporaryApi extends BaseApi {
     /**
      * completeTasks
+     *
      * @param userId userId
      * @param processDefinitionKey processDefinitionKey
      */
@@ -52,6 +51,7 @@ export class TemporaryApi extends BaseApi {
 
     /**
      * generateData
+     *
      * @param userId userId
      * @param processDefinitionKey processDefinitionKey
      */

@@ -35,6 +35,7 @@ export type AlfrescoApiClientPromise<T = any> = Promise<T> & {
 
 /**
  * Builds a string representation of an array-type actual parameter, according to the given collection format.
+ *
  * @param param An array parameter.
  * @param collectionFormat The array element separator strategy.
  * @returns A string representation of the supplied collection, using the specified delimiter. Returns
@@ -334,6 +335,7 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
 
     /**
      * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
+     *
      * @param contentTypes
      * @returns  The chosen content type, preferring JSON.
      */
@@ -352,12 +354,14 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
 
     /**
      * Checks whether the given content type represents JSON.<br>
+     *
      * JSON content type examples:<br>
      * <ul>
      * <li>application/json</li>
      * <li>application/json; charset=UTF8</li>
      * <li>APPLICATION/JSON</li>
      * </ul>
+     *
      * @param contentType The MIME content type to check.
      * @returns <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
      */

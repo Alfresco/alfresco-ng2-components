@@ -23,7 +23,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * IntegrationAlfrescoCloudApi service.
- * @module IntegrationAlfrescoCloudApi
  */
 export class IntegrationAlfrescoCloudApi extends BaseApi {
     /**
@@ -49,6 +48,7 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
 
     /**
      * List Alfresco networks
+     *
      * @return Promise<ResultListDataRepresentationAlfrescoNetworkRepresenation>
      */
     getAllNetworks(): Promise<ResultListDataRepresentationAlfrescoNetworkRepresenation> {

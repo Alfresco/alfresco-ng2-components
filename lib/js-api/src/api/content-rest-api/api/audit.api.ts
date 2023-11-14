@@ -27,7 +27,6 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * Audit service.
- * @module AuditApi
  */
 export class AuditApi extends BaseApi {
     /**

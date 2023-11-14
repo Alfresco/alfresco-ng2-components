@@ -23,7 +23,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * IntegrationAlfrescoOnPremiseApi service.
- * @module IntegrationAlfrescoOnPremiseApi
  */
 export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
     /**

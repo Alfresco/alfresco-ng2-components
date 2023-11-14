@@ -25,7 +25,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * AdminGroupsApi service.
- * @module AdminGroupsApi
  */
 export class AdminGroupsApi extends BaseApi {
     /**

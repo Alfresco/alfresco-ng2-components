@@ -22,7 +22,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * ProcessInstanceVariablesApi service.
- * @module ProcessInstanceVariablesApi
  */
 export class ProcessInstanceVariablesApi extends BaseApi {
     /**

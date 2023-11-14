@@ -22,7 +22,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * SubmittedFormsApi service.
- * @module SubmittedFormsApi
  */
 export class SubmittedFormsApi extends BaseApi {
     /**

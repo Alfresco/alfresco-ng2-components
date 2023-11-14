@@ -20,7 +20,6 @@ import { BaseApi } from './base.api';
 
 /**
 * DataSourcesApi service.
-* @module DataSourcesApi
 */
 export class DataSourcesApi extends BaseApi {
     /**

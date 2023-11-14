@@ -22,12 +22,12 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * IntegrationBoxApi service.
- * @module IntegrationBoxApi
  */
 export class IntegrationBoxApi extends BaseApi {
     /**
      * Box Authorization
      * Returns Box OAuth HTML Page
+     *
      * @return Promise<{}>
      */
     confirmAuthorisation(): Promise<any> {

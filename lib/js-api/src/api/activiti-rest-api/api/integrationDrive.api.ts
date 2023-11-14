@@ -20,12 +20,12 @@ import { BaseApi } from './base.api';
 
 /**
 * IntegrationDriveApi service.
-* @module IntegrationDriveApi
 */
 export class IntegrationDriveApi extends BaseApi {
     /**
     * Drive Authorization
     * Returns Drive OAuth HTML Page
+    *
     * @return Promise<{}>
     */
     confirmAuthorisation(): Promise<any> {

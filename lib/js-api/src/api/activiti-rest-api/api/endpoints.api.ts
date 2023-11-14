@@ -21,7 +21,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
 * Endpoints service.
-* @module EndpointsApi
 */
 export class EndpointsApi extends BaseApi {
     /**

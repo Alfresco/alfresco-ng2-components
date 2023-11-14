@@ -25,24 +25,12 @@ import { RecordsFieldsQuery } from './types';
 
 /**
  * GsSitesApi service.
- *
- * @module GssitesApi
  */
 export class GsSitesApi extends BaseApi {
     /**
      * Create the Records Management (RM) site
      *
-     * **Note:** The default site id is rm and the default site name is Records Management. The id of a site cannot be updated once the site has been created.
-     *
-     * For example, to create an RM site named \"Records Management\" with \"Records Management Description\" as description, the following body could be used:
-     * JSON
-     * {
-     *   \"title\": \"Records Management\",
-     *   \"description\": \"Records Management Description\"
-     * }
-     *
      * The creator will be added as a member with Site Manager role.
-     *
      * When you create the RM site, the **filePlan** structure is also created including special containers, such as containers for transfers, holds and, unfiled records.
      *
      * @param siteBodyCreate The site details
@@ -64,7 +52,7 @@ export class GsSitesApi extends BaseApi {
     /**
      * Delete the Records Management (RM) site
      *
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteRMSite(): Promise<void> {
         return this.delete({
@@ -76,7 +64,7 @@ export class GsSitesApi extends BaseApi {
      * Get the Records Management (RM) site
      *
      * @param opts Optional parameters
-     * @return Promise<RMSiteEntry>
+     * @returns Promise<RMSiteEntry>
      */
     getRMSite(opts?: RecordsFieldsQuery): Promise<RMSiteEntry> {
         const queryParams = {

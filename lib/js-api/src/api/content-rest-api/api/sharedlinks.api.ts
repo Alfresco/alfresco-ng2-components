@@ -28,7 +28,6 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * Sharedlinks service.
- * @module SharedlinksApi
  */
 export class SharedlinksApi extends BaseApi {
     /**

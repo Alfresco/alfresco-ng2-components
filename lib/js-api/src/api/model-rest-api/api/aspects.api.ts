@@ -62,6 +62,7 @@ export class ListAspectsOpts {
 
 /**
  * Aspects service.
+ *
  * @module AspectsApi
  */
 export class AspectsApi extends BaseApi {
@@ -69,10 +70,8 @@ export class AspectsApi extends BaseApi {
     * Get an aspect
     *
     * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-Get information for aspect **aspectId**.
-
     *
-    * @param aspectId The Qname of an aspect(prefix:name) e.g 'cm:title'
+    * @param aspectId The `Qname` of an aspect(prefix:name) e.g 'cm:title'
     * @return Promise<AspectEntry>
     */
     getAspect(aspectId: string): Promise<AspectEntry> {
@@ -93,65 +92,6 @@ Get information for aspect **aspectId**.
     * List aspects
     *
     * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-
-Gets a list of aspects from the data dictionary. The System aspects will be ignored by default.
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 0,
-      \"hasMoreItems\": true,
-      \"totalItems\": 0,
-      \"skipCount\": 0,
-      \"maxItems\": 0
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          \"associations\": [],
-          \"mandatoryAspects\": [],
-          \"includedInSupertypeQuery\": true,
-          \"description\": \"Titled\",
-          \"isContainer\": false,
-          \"model\": {
-              \"id\": \"cm:contentmodel\",
-              \"author\": \"Alfresco\",
-              \"description\": \"Alfresco Content Domain Model\",
-              \"namespaceUri\": \"http://www.alfresco.org/model/content/1.0\",
-              \"namespacePrefix\": \"cm\"
-          },
-          \"id\": \"cm:titled\",
-          \"title\": \"Titled\",
-          \"properties\": [
-            {
-              \"id\": \"cm:title\",
-              \"title\": \"Title\",
-              \"description\": \"Content Title\",
-              \"dataType\": \"d:mltext\",
-              \"isMultiValued\": false,
-              \"isMandatory\": false,
-              \"isMandatoryEnforced\": false,
-              \"isProtected\": false
-            },
-            {
-              ...
-            }
-          ]
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      },
-    ]
-  }
-}
     *
     * @param opts Optional parameters
     * @return Promise<AspectPaging>

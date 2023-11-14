@@ -23,7 +23,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 
 /**
  * Activities service.
- * @module ActivitiesApi
  */
 export class ActivitiesApi extends BaseApi {
     /**

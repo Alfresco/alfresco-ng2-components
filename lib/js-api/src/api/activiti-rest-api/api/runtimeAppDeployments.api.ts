@@ -22,7 +22,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
 * RuntimeAppDeploymentsApi service.
-* @module RuntimeAppDeploymentsApi
 */
 export class RuntimeAppDeploymentsApi extends BaseApi {
     /**

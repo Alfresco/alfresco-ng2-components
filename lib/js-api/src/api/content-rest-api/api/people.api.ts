@@ -28,7 +28,6 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * People service.
- * @module PeopleApi
  */
 export class PeopleApi extends BaseApi {
     /**

@@ -25,7 +25,6 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * Tags service.
- * @module TagsApi
  */
 export class TagsApi extends BaseApi {
     /**

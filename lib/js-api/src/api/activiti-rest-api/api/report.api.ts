@@ -105,6 +105,7 @@ export class ReportApi extends BaseApi {
 
     /**
      * Export a report
+     *
      * @param reportId
      * @param bodyParam
      */
@@ -126,6 +127,7 @@ export class ReportApi extends BaseApi {
 
     /**
      * Save a report
+     *
      * @param reportId
      * @param opts
      */

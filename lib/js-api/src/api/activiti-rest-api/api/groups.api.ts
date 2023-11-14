@@ -30,7 +30,6 @@ export interface GetGroupsOpts {
 
 /**
 * Groups service.
-* @module ActivitiGroupsApi
 */
 export class ActivitiGroupsApi extends BaseApi {
     /**

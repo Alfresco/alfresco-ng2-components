@@ -28,7 +28,6 @@ export type CategoryQuery = ContentFieldsQuery & ContentIncludeQuery;
 
 /**
  * Categories service.
- * @module CategoriesApi
  */
 export class CategoriesApi extends BaseApi {
     /**

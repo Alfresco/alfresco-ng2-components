@@ -24,7 +24,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * TaskActionsApi service.
- * @module TaskactionsApi
  */
 export class TaskActionsApi extends BaseApi {
     /**

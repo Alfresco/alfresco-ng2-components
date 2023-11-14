@@ -54,7 +54,6 @@ export type FindNodesQuery = {
 
 /**
 * Queries service.
-* @module QueriesApi
 */
 export class QueriesApi extends BaseApi {
     /**

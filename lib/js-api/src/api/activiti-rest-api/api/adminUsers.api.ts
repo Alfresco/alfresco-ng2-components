@@ -38,7 +38,6 @@ export interface GetUsersOpts {
 
 /**
 * AdminUsersApi service.
-* @module AdminUsersApi
 */
 export class AdminUsersApi extends BaseApi {
     /**

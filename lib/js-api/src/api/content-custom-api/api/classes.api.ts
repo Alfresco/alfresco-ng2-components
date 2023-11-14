@@ -24,6 +24,7 @@ import { BaseApi } from './base.api';
 export class ClassesApi extends BaseApi {
     /**
      * Gets the class information for the specified className.
+     *
      * @param className The identifier of the class.
      * @returns a Promise, with data of type ClassDescription
      */

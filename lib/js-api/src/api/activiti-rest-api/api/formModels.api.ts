@@ -37,7 +37,6 @@ export interface GetFormsOpts {
 
 /**
  * FormModelsApi service.
- * @module FormModelsApi
  */
 export class FormModelsApi extends BaseApi {
     /**

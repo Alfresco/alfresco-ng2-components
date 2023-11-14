@@ -25,7 +25,6 @@ import { throwIfNotDefined } from '../../../assert';
 
 /**
  * TaskFormsApi service.
- * @module TaskFormsApi
  */
 export class TaskFormsApi extends BaseApi {
     /**
@@ -73,6 +72,7 @@ export class TaskFormsApi extends BaseApi {
     /**
      * Retrieve Column Field Values
      * Specific case to retrieve information on a specific column
+     *
      * @param taskId taskId
      * @param field field
      * @param column column

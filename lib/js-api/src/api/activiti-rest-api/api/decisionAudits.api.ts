@@ -21,8 +21,7 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* Decisionaudits service.
-* @module DecisionauditsApi
+* DecisionAuditsApi service.
 */
 export class DecisionAuditsApi extends BaseApi {
     /**
