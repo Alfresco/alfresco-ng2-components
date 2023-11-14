@@ -17,7 +17,7 @@
 
 import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
 import { FacetField } from '../../models/facet-field.interface';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';

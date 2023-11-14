@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, ViewChild, ElementRef, OnDestroy, Inject, Output, EventEmitter, OnInit } from '@angular/core';
-import { MatSelect } from '@angular/material/select';
+import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
