@@ -18,7 +18,7 @@
 import { LibraryDialogComponent } from './library.dialog';
 import { TestBed, fakeAsync, tick, flush, ComponentFixture, flushMicrotasks } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
