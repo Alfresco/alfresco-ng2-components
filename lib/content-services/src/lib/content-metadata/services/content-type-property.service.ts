@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { CardViewItem, CardViewSelectItemModel, CardViewSelectItemOption, CardViewTextItemModel } from '@alfresco/adf-core';
 import { Observable, of, Subject, zip } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
