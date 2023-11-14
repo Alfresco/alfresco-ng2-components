@@ -17,14 +17,14 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatLegacySnackBarConfig as MatSnackBarConfig, MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatIconHarness } from '@angular/material/icon/testing';
-import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
+import { MatLegacySnackBarHarness as MatSnackBarHarness } from '@angular/material/legacy-snack-bar/testing';
 
 @Component({
     template: '',

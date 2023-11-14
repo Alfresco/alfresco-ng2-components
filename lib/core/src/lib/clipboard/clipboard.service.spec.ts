@@ -18,7 +18,7 @@
 import { NotificationService } from '../notifications/services/notification.service';
 import { TestBed } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { CoreTestingModule } from '../testing';
 
 describe('ClipboardService', () => {

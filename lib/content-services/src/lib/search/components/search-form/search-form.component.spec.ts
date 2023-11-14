@@ -23,8 +23,8 @@ import { SearchForm } from '../../models/search-form.interface';
 import { By } from '@angular/platform-browser';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatMenuHarness } from '@angular/material/menu/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatLegacyMenuHarness as MatMenuHarness } from '@angular/material/legacy-menu/testing';
+import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
 
 describe('SearchFormComponent', () => {
     let loader: HarnessLoader;
