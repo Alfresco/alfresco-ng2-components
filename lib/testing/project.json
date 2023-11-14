@@ -13,12 +13,6 @@
         "main": "lib/testing/index.ts",
         "generatePackageJson": true,
         "tsConfig": "lib/testing/tsconfig.lib.prod.json",
-        "additionalEntryPoints": [
-          {
-            "entryName": "shared",
-            "entryPath": "/lib/testing/src/lib/shared/index.ts"
-          }
-        ],
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         },
