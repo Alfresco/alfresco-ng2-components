@@ -42,7 +42,7 @@
                        class="adf-userinfo-tab adf-hide-tab">
             <mat-tab label="{{ 'USER_PROFILE.TAB.CS' | translate }}" role="dialog"
                      *ngIf="mode === userInfoMode.CONTENT">
-                <mat-card class="adf-userinfo-card">
+                <mat-card appearance="outlined" class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + ecmBackgroundImage + ')'">
                         <div *ngIf="ecmUser.avatarId; else initialTemplate"
@@ -55,7 +55,7 @@
                                 [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
                         </ng-template>
 
-                        <div class="mat-title" id="ecm-username">{{ecmUser | fullName}}</div>
+                        <div class="mat-headline-6" id="ecm-username">{{ecmUser | fullName}}</div>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="adf-userinfo-supporting-text">
@@ -77,7 +77,7 @@
                 </mat-card>
             </mat-tab>
             <mat-tab id="identity-panel" role="dialog" *ngIf="mode === userInfoMode.CONTENT_SSO">
-                <mat-card class="adf-userinfo-card">
+                <mat-card appearance="outlined" class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
                         <div *ngIf="ecmUser.avatarId; else initialTemplate"
@@ -89,7 +89,7 @@
                             <div
                                 [outerHTML]="identityUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
                         </ng-template>
-                        <div class="mat-title" id="identity-username">{{identityUser | fullName}}</div>
+                        <div class="mat-headline-6" id="identity-username">{{identityUser | fullName}}</div>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="adf-userinfo-supporting-text">

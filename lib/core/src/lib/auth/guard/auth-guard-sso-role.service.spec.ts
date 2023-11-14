@@ -20,7 +20,7 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('Auth Guard SSO role service', () => {
