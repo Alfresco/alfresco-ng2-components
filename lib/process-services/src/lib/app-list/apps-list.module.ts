@@ -22,7 +22,7 @@ import { CoreModule } from '@alfresco/adf-core';
 
 import { AppsListComponent } from './apps-list.component';
 import { SelectAppsDialogComponent } from './select-apps-dialog.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 
 @NgModule({
     imports: [CommonModule, MaterialModule, CoreModule, MatProgressSpinnerModule],

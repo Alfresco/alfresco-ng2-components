@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, AlfrescoApiServiceMock, NotificationService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { of, Subject } from 'rxjs';
 import { ContentCloudNodeSelectorService } from './content-cloud-node-selector.service';
 
