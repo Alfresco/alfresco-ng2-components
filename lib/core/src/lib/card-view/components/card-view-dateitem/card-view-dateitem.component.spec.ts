@@ -28,7 +28,7 @@ import { AppConfigService } from '../../../app-config/app-config.service';
 import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatLegacyChipHarness as MatChipHarness } from '@angular/material/legacy-chips/testing';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
