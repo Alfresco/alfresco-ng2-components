@@ -31,7 +31,7 @@ import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/
 import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters-cloud.component';
 import { TaskAssignmentFilterCloudComponent } from './components/task-assignment-filter/task-assignment-filter.component';
 import { GroupCloudModule } from '../../group/group-cloud.module';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 
 @NgModule({
     imports: [

@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Node } from '@alfresco/js-api';
 import { PreviewService } from '../../services/preview.service';
 import { NotificationService } from '@alfresco/adf-core';
