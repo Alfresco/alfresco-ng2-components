@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, HostListener, AfterViewInit, Optional, In
 import { trigger } from '@angular/animations';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { MatLegacyMenuItem as MatMenuItem } from '@angular/material/legacy-menu';
+import { MatMenuItem } from '@angular/material/menu';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { contextMenuAnimation } from './animations';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';

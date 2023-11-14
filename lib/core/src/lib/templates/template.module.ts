@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ErrorContentComponent } from './error-content/error-content.component';
 import { EmptyContentComponent } from './empty-content/empty-content.component';
 import { IconModule } from '../icon/icon.module';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     imports: [CommonModule, TranslateModule, IconModule],
