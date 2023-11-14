@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud.component';
 import { By } from '@angular/platform-browser';
-import { MatTableModule } from '@angular/material/table';
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 import { MatIconModule } from '@angular/material/icon';
 
 describe('FilePropertiesTableCloudComponent', () => {
