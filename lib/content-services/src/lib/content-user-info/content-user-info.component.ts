@@ -17,7 +17,7 @@
 
 import { IdentityUserModel, UserInfoMode } from '@alfresco/adf-core';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatLegacyMenuTrigger as MatMenuTrigger, LegacyMenuPositionX as MenuPositionX, LegacyMenuPositionY as MenuPositionY } from '@angular/material/legacy-menu';
+import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { EcmUserModel } from '../common/models/ecm-user.model';
 import { PeopleContentService } from '../common/services/people-content.service';
