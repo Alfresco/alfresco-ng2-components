@@ -48,7 +48,7 @@ $tile-themes: (
     flex-direction: column;
     height: 85vh;
 
-    .mat-spinner {
+    .mat-mdc-progress-spinner {
         margin: 0 auto;
     }
 }
@@ -61,7 +61,7 @@ $tile-themes: (
         flex-flow: row wrap;
         display: flex;
 
-        .adf-app-listgrid-item {
+        &-item {
             outline: none;
             padding: 8px;
             box-sizing: border-box;
@@ -107,21 +107,21 @@ $tile-themes: (
                     transform: scale(1.015);
                 }
 
-                .adf-app-listgrid-item-card-logo {
+                &-logo {
                     position: absolute;
                     right: 20px;
                     top: 20px;
                     padding: 16px;
                     z-index: 9;
 
-                    .adf-app-listgrid-item-card-logo-icon {
+                    &-icon {
                         font-size: 70px;
                         width: 1em;
                         height: 1em;
                     }
                 }
 
-                .adf-app-listgrid-item-card-title {
+                &-title {
                     padding: 16px;
                     margin-bottom: 0;
                     z-index: 9999;
@@ -138,7 +138,7 @@ $tile-themes: (
                     }
                 }
 
-                .adf-app-listgrid-item-card-subtitle {
+                &-subtitle {
                     color: white;
                     z-index: 9999;
                     padding: 16px;

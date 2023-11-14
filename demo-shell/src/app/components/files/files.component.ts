@@ -28,7 +28,7 @@ import {
     Output,
     ViewEncapsulation
 } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NodeEntry, NodePaging, Pagination, Node, SearchEntry } from '@alfresco/js-api';
 import { NotificationService, UserPreferencesService, PaginationComponent, ShowHeaderMode, FormRenderingService } from '@alfresco/adf-core';

@@ -14,7 +14,7 @@
         </mat-list-item>
     </mat-nav-list>
     <div class="adf-report-card-grids" *ngIf="isGrid()">
-        <mat-card (click)="selectReport(report)" class="adf-report-card" *ngFor="let report of reports">
+        <mat-card appearance="outlined" (click)="selectReport(report)" class="adf-report-card" *ngFor="let report of reports">
             <div class="adf-report-card-logo logo">
                 <mat-icon class="adf-report-card-logo-icon">equalizer</mat-icon>
             </div>

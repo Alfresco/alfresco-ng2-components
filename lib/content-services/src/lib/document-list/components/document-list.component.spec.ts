@@ -62,7 +62,7 @@ import { ContentActionModel } from '../models/content-action.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
 import { HarnessLoader } from '@angular/cdk/testing';
