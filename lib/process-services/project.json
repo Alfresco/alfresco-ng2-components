@@ -1,0 +1,65 @@
+{
+  "name": "process-services",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/process-services",
+  "projectType": "library",
+  "prefix": "adf",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "lib/process-services/tsconfig.lib.json",
+        "project": "lib/process-services/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "project": "lib/process-services/ng-package.json",
+          "tsConfig": "lib/process-services/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "lib/process-services/src/test.ts",
+        "tsConfig": "lib/process-services/tsconfig.spec.json",
+        "karmaConfig": "lib/process-services/karma.conf.js",
+        "sourceMap": true,
+        "codeCoverage": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["lib/process-services/**/*.ts", "lib/process-services/**/*.html"]
+      }
+    },
+    "stylelint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+          }
+        ]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/libs/process-services",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    }
+  }
+}
