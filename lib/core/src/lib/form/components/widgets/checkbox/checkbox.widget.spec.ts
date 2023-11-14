@@ -23,13 +23,13 @@ import { CheckboxWidgetComponent } from './checkbox.widget';
 import { FormBaseModule } from '../../../form-base.module';
 import { TranslateLoader } from '@ngx-translate/core';
 import { TranslateLoaderService } from '../../../../translation/translate-loader.service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { CoreTestingModule } from '../../../../testing';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
+import { MatLegacyTooltipHarness as MatTooltipHarness } from '@angular/material/legacy-tooltip/testing';
 
 describe('CheckboxWidgetComponent', () => {
     let loader: HarnessLoader;

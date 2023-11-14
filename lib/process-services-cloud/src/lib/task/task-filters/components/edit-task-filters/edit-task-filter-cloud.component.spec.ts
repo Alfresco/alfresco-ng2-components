@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { of, Subject } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
@@ -54,9 +54,9 @@ import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filte
 import { set } from 'date-fns';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
 
 describe('EditTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;

@@ -16,7 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { of } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
 import { NodesApiService, RenditionService } from '../common';
@@ -28,7 +28,7 @@ import { By } from '@angular/platform-browser';
 import { NodeEntry } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSlideToggleHarness } from '@angular/material/slide-toggle/testing';
+import { MatLegacySlideToggleHarness as MatSlideToggleHarness } from '@angular/material/legacy-slide-toggle/testing';
 
 describe('ShareDialogComponent', () => {
     let loader: HarnessLoader;
