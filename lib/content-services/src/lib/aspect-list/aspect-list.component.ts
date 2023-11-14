@@ -20,7 +20,7 @@ import { NodesApiService } from '../common/services/nodes-api.service';
 import { Observable, Subject, zip } from 'rxjs';
 import { concatMap, map, takeUntil, tap } from 'rxjs/operators';
 import { AspectListService } from './services/aspect-list.service';
-import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { AspectEntry } from '@alfresco/js-api';
 @Component({
     selector: 'adf-aspect-list',
