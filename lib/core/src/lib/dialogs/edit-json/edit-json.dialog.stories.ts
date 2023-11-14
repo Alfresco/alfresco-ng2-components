@@ -19,7 +19,7 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { EditJsonDialogModule } from './edit-json.dialog.module';
 import { EditJsonDialogStorybookComponent } from './edit-json.dialog.stories.component';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 
 const jsonData = {
     maxValue: 50,
