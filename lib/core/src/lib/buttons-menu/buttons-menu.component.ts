@@ -16,7 +16,7 @@
  */
 
 import { Component, ContentChildren, QueryList, AfterContentInit, ViewEncapsulation } from '@angular/core';
-import { MatMenuItem } from '@angular/material/menu';
+import { MatLegacyMenuItem as MatMenuItem } from '@angular/material/legacy-menu';
 
 @Component({
     selector: 'adf-buttons-action-menu',
