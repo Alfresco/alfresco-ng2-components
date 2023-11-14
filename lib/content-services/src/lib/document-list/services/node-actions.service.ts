@@ -19,7 +19,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { AlfrescoApiService, DownloadService } from '@alfresco/adf-core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ContentService } from '../../common/services/content.service';
 import { NodeDownloadDirective } from '../../directives/node-download.directive';
 

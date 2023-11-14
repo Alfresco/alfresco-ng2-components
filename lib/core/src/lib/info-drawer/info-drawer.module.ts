@@ -21,8 +21,8 @@ import { InfoDrawerLayoutComponent, InfoDrawerTitleDirective, InfoDrawerButtonsD
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     imports: [

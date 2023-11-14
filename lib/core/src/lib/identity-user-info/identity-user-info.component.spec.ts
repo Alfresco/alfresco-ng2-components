@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
 

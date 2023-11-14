@@ -16,13 +16,13 @@ $select-filter-height: 4em !default;
         background: var(--adf-theme-background-card-color);
     }
 
-    .mat-form-field {
+    .mat-mdc-form-field {
         width: 100%;
     }
 }
 
-.mat-select-panel.adf-select-filter {
-    transform: none;
-    overflow-x: hidden;
+.mat-mdc-select-panel.adf-select-filter {
+    transform: none !important;
+    overflow-x: hidden !important;
     max-height: calc(256px + #{$select-filter-height});
 }
