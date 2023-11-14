@@ -28,7 +28,7 @@ import { CategoryService } from '../services/category.service';
 import { CategoriesManagementComponent } from './categories-management.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
 
 describe('CategoriesManagementComponent', () => {
     let loader: HarnessLoader;
