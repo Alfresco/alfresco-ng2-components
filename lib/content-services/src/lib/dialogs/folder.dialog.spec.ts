@@ -16,7 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { NodesApiService } from '../common/services/nodes-api.service';
 
 import { FolderDialogComponent } from './folder.dialog';

@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { NodeEntry, PermissionElement } from '@alfresco/js-api';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { MemberModel } from '../../models/member.model';

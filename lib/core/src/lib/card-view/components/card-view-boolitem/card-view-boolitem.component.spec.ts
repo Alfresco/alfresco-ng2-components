@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { MatLegacyCheckbox as MatCheckbox, MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
