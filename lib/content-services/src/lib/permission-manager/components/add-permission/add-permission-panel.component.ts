@@ -23,7 +23,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { SearchPermissionConfigurationService } from './search-config-permission.service';
 import { SearchComponent } from '../../../search/components/search.component';
-import { MatLegacySelectionList as MatSelectionList } from '@angular/material/legacy-list';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
     selector: 'adf-add-permission-panel',

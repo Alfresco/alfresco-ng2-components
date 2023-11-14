@@ -19,7 +19,7 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, inject, ViewEncapsulati
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { takeUntil, map } from 'rxjs/operators';

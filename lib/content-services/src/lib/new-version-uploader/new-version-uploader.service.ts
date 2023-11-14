@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
