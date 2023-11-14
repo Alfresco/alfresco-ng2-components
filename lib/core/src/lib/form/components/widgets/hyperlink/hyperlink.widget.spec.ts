@@ -22,7 +22,7 @@ import { FormModel } from '../core/form.model';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 
 describe('HyperlinkWidgetComponent', () => {
 

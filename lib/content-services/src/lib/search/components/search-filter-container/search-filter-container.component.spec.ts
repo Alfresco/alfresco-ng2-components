@@ -25,9 +25,9 @@ import { SearchFilterContainerComponent } from './search-filter-container.compon
 import { SearchCategory } from '../../models/search-category.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { MatMenuHarness } from '@angular/material/menu/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
+import { MatLegacyMenuHarness as MatMenuHarness } from '@angular/material/legacy-menu/testing';
+import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
 import { MatBadgeHarness } from '@angular/material/badge/testing';
 
 const mockCategory: SearchCategory = {

@@ -22,8 +22,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sizeOptions, stepOne, stepThree } from '../../../mock';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
+import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
 
 describe('SearchCheckListComponent', () => {
     let loader: HarnessLoader;
