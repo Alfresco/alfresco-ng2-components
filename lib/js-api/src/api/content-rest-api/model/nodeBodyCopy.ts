@@ -19,8 +19,7 @@ export class NodeBodyCopy {
     targetParentId: string;
     /**
      * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
-The character . must not be used at the end of the name.
-
+     * The character . must not be used at the end of the name.
      */
     name?: string;
 
@@ -29,5 +28,4 @@ The character . must not be used at the end of the name.
             Object.assign(this, input);
         }
     }
-
 }

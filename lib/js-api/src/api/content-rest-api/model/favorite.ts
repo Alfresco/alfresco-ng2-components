@@ -19,8 +19,7 @@ import { DateAlfresco } from '../../content-custom-api';
 
 /**
  * A favorite describes an Alfresco entity that a person has marked as a favorite.
-The target can be a site, file or folder.
-
+ * The target can be a site, file or folder.
  */
 export class Favorite {
     /**
@@ -43,5 +42,4 @@ export class Favorite {
             this.createdAt = input.createdAt ? DateAlfresco.parseDate(input.createdAt) : undefined;
         }
     }
-
 }

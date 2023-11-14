@@ -19,15 +19,15 @@ import { ResultListDataRepresentationDataSourceRepresentation } from '../model/r
 import { BaseApi } from './base.api';
 
 /**
-* DataSourcesApi service.
-*/
+ * DataSourcesApi service.
+ */
 export class DataSourcesApi extends BaseApi {
     /**
-    * Get data sources
-    *
-    * @param opts Optional parameters
-    * @return Promise<ResultListDataRepresentationDataSourceRepresentation>
-    */
+     * Get data sources
+     *
+     * @param opts Optional parameters
+     * @return Promise<ResultListDataRepresentationDataSourceRepresentation>
+     */
     getDataSources(opts?: { tenantId?: number }): Promise<ResultListDataRepresentationDataSourceRepresentation> {
         return this.get({
             path: '/api/enterprise/editor/data-sources',

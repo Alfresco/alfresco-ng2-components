@@ -29,15 +29,15 @@ export interface GetGroupsOpts {
 }
 
 /**
-* Groups service.
-*/
+ * Groups service.
+ */
 export class ActivitiGroupsApi extends BaseApi {
     /**
-    * Query groups
-    *
-    * @param opts Optional parameters
-    * @return Promise<ResultListDataRepresentationLightGroupRepresentation>
-    */
+     * Query groups
+     *
+     * @param opts Optional parameters
+     * @return Promise<ResultListDataRepresentationLightGroupRepresentation>
+     */
     getGroups(opts?: GetGroupsOpts): Promise<ResultListDataRepresentationLightGroupRepresentation> {
         return this.get({
             path: '/api/enterprise/groups',
@@ -47,11 +47,11 @@ export class ActivitiGroupsApi extends BaseApi {
     }
 
     /**
-    * List members of a group
-    *
-    * @param groupId groupId
-    * @return Promise<ResultListDataRepresentationLightUserRepresentation>
-    */
+     * List members of a group
+     *
+     * @param groupId groupId
+     * @return Promise<ResultListDataRepresentationLightUserRepresentation>
+     */
     getUsersForGroup(groupId: number): Promise<ResultListDataRepresentationLightUserRepresentation> {
         throwIfNotDefined(groupId, 'formId');
 

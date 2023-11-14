@@ -25,8 +25,7 @@ export class SharedLink {
     nodeId?: string;
     /**
      * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
-The character . must not be used at the end of the name.
-
+     * The character . must not be used at the end of the name.
      */
     name?: string;
     title?: string;
@@ -37,19 +36,16 @@ The character . must not be used at the end of the name.
     content?: ContentInfo;
     /**
      * The allowable operations for the Quickshare link itself. See allowableOperationsOnTarget for the
-allowable operations pertaining to the linked content node.
-
+     * allowable operations pertaining to the linked content node.
      */
     allowableOperations?: string[];
     /**
      * The allowable operations for the content node being shared.
-
      */
     allowableOperationsOnTarget?: string[];
     isFavorite?: boolean;
     /**
      * A subset of the target node's properties, system properties and properties already available in the SharedLink are excluded.
-
      */
     properties?: any;
     aspectNames?: string[];
@@ -64,5 +60,4 @@ allowable operations pertaining to the linked content node.
             this.content = input.content ? new ContentInfo(input.content) : undefined;
         }
     }
-
 }

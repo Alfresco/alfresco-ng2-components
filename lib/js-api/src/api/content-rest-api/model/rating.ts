@@ -20,9 +20,8 @@ import { RatingAggregate } from './ratingAggregate';
 
 /**
  * A person can rate an item of content by liking it. They can also remove
-their like of an item of content. API methods exist to get a list of
-ratings and to add a new rating.
-
+ * their like of an item of content. API methods exist to get a list of
+ * ratings and to add a new rating.
  */
 export class Rating {
     id: string;
@@ -40,5 +39,4 @@ export class Rating {
             this.ratedAt = input.ratedAt ? DateAlfresco.parseDate(input.ratedAt) : undefined;
         }
     }
-
 }

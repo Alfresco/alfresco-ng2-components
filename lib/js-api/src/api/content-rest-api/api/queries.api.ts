@@ -38,7 +38,8 @@ export type FindQuery = {
      * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
      */
     orderBy?: string[];
-} & ContentPagingQuery & ContentFieldsQuery;
+} & ContentPagingQuery &
+    ContentFieldsQuery;
 
 export type FindNodesQuery = {
     /**
@@ -53,36 +54,36 @@ export type FindNodesQuery = {
 } & FindQuery;
 
 /**
-* Queries service.
-*/
+ * Queries service.
+ */
 export class QueriesApi extends BaseApi {
     /**
-    * Find nodes
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * Gets a list of nodes that match the given search criteria.
-    *
-    * The search term is used to look for nodes that match against name, title, description, full text content or tags.
-    *
-    * The search term:
-    * - must contain a minimum of 3 alphanumeric characters
-    * - allows \"quoted term\"
-    * - can optionally use '*' for wildcard matching
-    *
-    * By default, file and folder types will be searched unless a specific type is provided as a query parameter.
-    *
-    * By default, the search will be across the repository unless a specific root node id is provided to start the search from.
-    *
-    * You can sort the result list using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
-    * - name
-    * - modifiedAt
-    * - createdAt
-    *
-    * @param term The term to search for.
-    * @param opts Optional parameters
-    * @returns Promise<NodePaging>
-    */
+     * Find nodes
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Gets a list of nodes that match the given search criteria.
+     *
+     * The search term is used to look for nodes that match against name, title, description, full text content or tags.
+     *
+     * The search term:
+     * - must contain a minimum of 3 alphanumeric characters
+     * - allows \"quoted term\"
+     * - can optionally use '*' for wildcard matching
+     *
+     * By default, file and folder types will be searched unless a specific type is provided as a query parameter.
+     *
+     * By default, the search will be across the repository unless a specific root node id is provided to start the search from.
+     *
+     * You can sort the result list using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
+     * - name
+     * - modifiedAt
+     * - createdAt
+     *
+     * @param term The term to search for.
+     * @param opts Optional parameters
+     * @returns Promise<NodePaging>
+     */
     findNodes(term: string, opts?: FindNodesQuery & ContentPagingQuery & ContentIncludeQuery & ContentFieldsQuery): Promise<NodePaging> {
         throwIfNotDefined(term, 'term');
 
@@ -105,27 +106,27 @@ export class QueriesApi extends BaseApi {
     }
 
     /**
-    * Find people
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * Gets a list of people that match the given search criteria.
-    *
-    * The search term is used to look for matches against person id, firstname and lastname.
-    *
-    * The search term:
-    * - must contain a minimum of 2 alphanumeric characters
-    * - can optionally use '*' for wildcard matching within the term
-    *
-    * You can sort the result list using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
-    * - id
-    * - firstName
-    * - lastName
-    *
-    * @param term The term to search for.
-    * @param opts Optional parameters
-    * @returns Promise<PersonPaging>
-    */
+     * Find people
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Gets a list of people that match the given search criteria.
+     *
+     * The search term is used to look for matches against person id, firstname and lastname.
+     *
+     * The search term:
+     * - must contain a minimum of 2 alphanumeric characters
+     * - can optionally use '*' for wildcard matching within the term
+     *
+     * You can sort the result list using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
+     * - id
+     * - firstName
+     * - lastName
+     *
+     * @param term The term to search for.
+     * @param opts Optional parameters
+     * @returns Promise<PersonPaging>
+     */
     findPeople(term: string, opts?: FindQuery): Promise<PersonPaging> {
         throwIfNotDefined(term, 'term');
         opts = opts || {};
@@ -146,28 +147,28 @@ export class QueriesApi extends BaseApi {
     }
 
     /**
-    * Find sites
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * Gets a list of sites that match the given search criteria.
-    *
-    * The search term is used to look for sites that match against site id, title or description.
-    *
-    * The search term:
-    * - must contain a minimum of 2 alphanumeric characters
-    * - can optionally use '*' for wildcard matching within the term
-    *
-    * The default sort order for the returned list is for sites to be sorted by ascending id.
-    * You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
-    * - id
-    * - title
-    * - description
-    *
-    * @param term The term to search for.
-    * @param opts Optional parameters
-    * @returns Promise<SitePaging>
-    */
+     * Find sites
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Gets a list of sites that match the given search criteria.
+     *
+     * The search term is used to look for sites that match against site id, title or description.
+     *
+     * The search term:
+     * - must contain a minimum of 2 alphanumeric characters
+     * - can optionally use '*' for wildcard matching within the term
+     *
+     * The default sort order for the returned list is for sites to be sorted by ascending id.
+     * You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
+     * - id
+     * - title
+     * - description
+     *
+     * @param term The term to search for.
+     * @param opts Optional parameters
+     * @returns Promise<SitePaging>
+     */
     findSites(term: string, opts?: FindQuery): Promise<SitePaging> {
         throwIfNotDefined(term, 'term');
 

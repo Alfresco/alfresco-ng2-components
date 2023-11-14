@@ -59,8 +59,8 @@ export class TransferContainersApi extends BaseApi {
 
     /**
      * List transfer container's children
-     * Minimal information for each child is returned by default.
      *
+     * Minimal information for each child is returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
      *
      * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
@@ -95,13 +95,13 @@ export class TransferContainersApi extends BaseApi {
     }
 
     /**
-    * Update transfer container
-    *
-    * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
-    * @param nodeBodyUpdate The node information to update.
-    * @param opts Optional parameters
-    * @returns Promise<TransferContainerEntry>
-    */
+     * Update transfer container
+     *
+     * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
+     * @param nodeBodyUpdate The node information to update.
+     * @param opts Optional parameters
+     * @returns Promise<TransferContainerEntry>
+     */
     updateTransferContainer(
         transferContainerId: string,
         nodeBodyUpdate: TransferContainerBodyUpdate,

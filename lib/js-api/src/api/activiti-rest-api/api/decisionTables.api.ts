@@ -33,15 +33,15 @@ export interface GetDecisionTablesOpts {
 }
 
 /**
-* DecisionTablesApi service.
-*/
+ * DecisionTablesApi service.
+ */
 export class DecisionTablesApi extends BaseApi {
     /**
-    * Get definition for a decision table
-    *
-    * @param decisionTableId decisionTableId
-    * @return Promise<JsonNode>
-    */
+     * Get definition for a decision table
+     *
+     * @param decisionTableId decisionTableId
+     * @return Promise<JsonNode>
+     */
     getDecisionTableEditorJson(decisionTableId: number): Promise<JsonNode> {
         throwIfNotDefined(decisionTableId, 'decisionTableId');
 
@@ -57,11 +57,11 @@ export class DecisionTablesApi extends BaseApi {
     }
 
     /**
-    * Get a decision table
-    *
-    * @param decisionTableId decisionTableId
-    * @return Promise<RuntimeDecisionTableRepresentation>
-    */
+     * Get a decision table
+     *
+     * @param decisionTableId decisionTableId
+     * @return Promise<RuntimeDecisionTableRepresentation>
+     */
     getDecisionTable(decisionTableId: number): Promise<RuntimeDecisionTableRepresentation> {
         throwIfNotDefined(decisionTableId, 'decisionTableId');
 
@@ -77,11 +77,11 @@ export class DecisionTablesApi extends BaseApi {
     }
 
     /**
-    * Query decision tables
-    *
-    * @param opts Optional parameters
-    * @return Promise<ResultListDataRepresentationRuntimeDecisionTableRepresentation>
-    */
+     * Query decision tables
+     *
+     * @param opts Optional parameters
+     * @return Promise<ResultListDataRepresentationRuntimeDecisionTableRepresentation>
+     */
     getDecisionTables(opts?: GetDecisionTablesOpts): Promise<ResultListDataRepresentationRuntimeDecisionTableRepresentation> {
         return this.get({
             path: '/api/enterprise/decisions/decision-tables',

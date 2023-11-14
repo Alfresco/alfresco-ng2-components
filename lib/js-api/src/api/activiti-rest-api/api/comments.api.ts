@@ -21,16 +21,16 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* Comments service.
-*/
+ * Comments service.
+ */
 export class ActivitiCommentsApi extends BaseApi {
     /**
-    * Add a comment to a process instance
-    *
-    * @param commentRequest commentRequest
-    * @param processInstanceId processInstanceId
-    * @return Promise<CommentRepresentation>
-    */
+     * Add a comment to a process instance
+     *
+     * @param commentRequest commentRequest
+     * @param processInstanceId processInstanceId
+     * @return Promise<CommentRepresentation>
+     */
     addProcessInstanceComment(commentRequest: CommentRepresentation, processInstanceId: string): Promise<CommentRepresentation> {
         throwIfNotDefined(commentRequest, 'commentRequest');
         throwIfNotDefined(processInstanceId, 'processInstanceId');
@@ -48,12 +48,12 @@ export class ActivitiCommentsApi extends BaseApi {
     }
 
     /**
-    * Add a comment to a task
-    *
-    * @param commentRequest commentRequest
-    * @param taskId taskId
-    * @return Promise<CommentRepresentation>
-    */
+     * Add a comment to a task
+     *
+     * @param commentRequest commentRequest
+     * @param taskId taskId
+     * @return Promise<CommentRepresentation>
+     */
     addTaskComment(commentRequest: CommentRepresentation, taskId: string): Promise<CommentRepresentation> {
         throwIfNotDefined(commentRequest, 'commentRequest');
         throwIfNotDefined(taskId, 'taskId');
@@ -71,13 +71,16 @@ export class ActivitiCommentsApi extends BaseApi {
     }
 
     /**
-    * Get comments for a process
-    *
-    * @param processInstanceId processInstanceId
-    * @param opts Optional parameters
-    * @return Promise<ResultListDataRepresentationCommentRepresentation>
-    */
-    getProcessInstanceComments(processInstanceId: string, opts?: { latestFirst?: boolean }): Promise<ResultListDataRepresentationCommentRepresentation> {
+     * Get comments for a process
+     *
+     * @param processInstanceId processInstanceId
+     * @param opts Optional parameters
+     * @return Promise<ResultListDataRepresentationCommentRepresentation>
+     */
+    getProcessInstanceComments(
+        processInstanceId: string,
+        opts?: { latestFirst?: boolean }
+    ): Promise<ResultListDataRepresentationCommentRepresentation> {
         throwIfNotDefined(processInstanceId, 'processInstanceId');
 
         const pathParams = {
@@ -93,12 +96,12 @@ export class ActivitiCommentsApi extends BaseApi {
     }
 
     /**
-    * Get comments for a task
-    *
-    * @param taskId taskId
-    * @param opts Optional parameters
-    * @return Promise<ResultListDataRepresentationCommentRepresentation>
-    */
+     * Get comments for a task
+     *
+     * @param taskId taskId
+     * @param opts Optional parameters
+     * @return Promise<ResultListDataRepresentationCommentRepresentation>
+     */
     getTaskComments(taskId: string, opts?: { latestFirst?: boolean }): Promise<ResultListDataRepresentationCommentRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
 
@@ -113,5 +116,4 @@ export class ActivitiCommentsApi extends BaseApi {
             returnType: ResultListDataRepresentationCommentRepresentation
         });
     }
-
 }

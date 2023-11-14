@@ -208,7 +208,7 @@ export class ContentAuth extends AlfrescoApiClient {
      * return the Authentication
      *
      * @returns authentication object
-    */
+     */
     getAuthentication(): Authentication {
         return this.authentications;
     }

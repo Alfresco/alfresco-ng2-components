@@ -62,18 +62,16 @@ export class ListAspectsOpts {
 
 /**
  * Aspects service.
- *
- * @module AspectsApi
  */
 export class AspectsApi extends BaseApi {
     /**
-    * Get an aspect
-    *
-    * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-    *
-    * @param aspectId The `Qname` of an aspect(prefix:name) e.g 'cm:title'
-    * @returns Promise<AspectEntry>
-    */
+     * Get an aspect
+     *
+     * **Note:** This is available in Alfresco 7.0.0 and newer versions.
+     *
+     * @param aspectId The `Qname` of an aspect(prefix:name) e.g 'cm:title'
+     * @returns Promise<AspectEntry>
+     */
     getAspect(aspectId: string): Promise<AspectEntry> {
         throwIfNotDefined(aspectId, 'aspectId');
 
@@ -89,13 +87,13 @@ export class AspectsApi extends BaseApi {
     }
 
     /**
-    * List aspects
-    *
-    * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-    *
-    * @param opts Optional parameters
-    * @returns Promise<AspectPaging>
-    */
+     * List aspects
+     *
+     * **Note:** This is available in Alfresco 7.0.0 and newer versions.
+     *
+     * @param opts Optional parameters
+     * @returns Promise<AspectPaging>
+     */
     listAspects(opts?: ListAspectsOpts): Promise<AspectPaging> {
         const queryParams = {
             where: opts?.where,

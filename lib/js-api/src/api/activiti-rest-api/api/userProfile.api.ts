@@ -22,15 +22,15 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* Userprofile service.
-*/
+ * Userprofile service.
+ */
 export class UserProfileApi extends BaseApi {
     /**
-    * Change user password
-    *
-    * @param changePasswordRepresentation changePasswordRepresentation
-    * @return Promise<{}>
-    */
+     * Change user password
+     *
+     * @param changePasswordRepresentation changePasswordRepresentation
+     * @return Promise<{}>
+     */
     changePassword(changePasswordRepresentation: ChangePasswordRepresentation): Promise<any> {
         throwIfNotDefined(changePasswordRepresentation, 'changePasswordRepresentation');
 
@@ -41,14 +41,14 @@ export class UserProfileApi extends BaseApi {
     }
 
     /**
-    * Retrieve user profile picture
-    * Generally returns an image file
-    *
-    * @return Promise<Blob>
-    */
+     * Retrieve user profile picture
+     * Generally returns an image file
+     *
+     * @return Promise<Blob>
+     */
     getProfilePicture(): Promise<any> {
         return this.get({
-            path:  '/api/enterprise/profile-picture',
+            path: '/api/enterprise/profile-picture',
             accepts: ['application/json', '*/*']
         });
     }
@@ -62,11 +62,12 @@ export class UserProfileApi extends BaseApi {
     }
 
     /**
-    * Get user profile
-    * This operation returns account information for the current user. This is useful to get the name, email, the groups that the user is part of, the user picture, etc.
-    *
-    * @return Promise<UserRepresentation>
-    */
+     * Get user profile
+     * This operation returns account information for the current user.
+     * This is useful to get the name, email, the groups that the user is part of, the user picture, etc.
+     *
+     * @return Promise<UserRepresentation>
+     */
     getProfile(): Promise<UserRepresentation> {
         return this.get({
             path: '/api/enterprise/profile',
@@ -75,12 +76,12 @@ export class UserProfileApi extends BaseApi {
     }
 
     /**
-    * Update user profile.
-    * Only a first name, last name, email and company can be updated
-    *
-    * @param userRepresentation userRepresentation
-    * @return Promise<UserRepresentation>
-    */
+     * Update user profile.
+     * Only a first name, last name, email and company can be updated
+     *
+     * @param userRepresentation userRepresentation
+     * @return Promise<UserRepresentation>
+     */
     updateProfile(userRepresentation: UserRepresentation): Promise<UserRepresentation> {
         throwIfNotDefined(userRepresentation, 'userRepresentation');
 
@@ -92,11 +93,11 @@ export class UserProfileApi extends BaseApi {
     }
 
     /**
-    * Change user profile picture
-    *
-    * @param file file
-    * @return Promise<ImageUploadRepresentation>
-    */
+     * Change user profile picture
+     *
+     * @param file file
+     * @return Promise<ImageUploadRepresentation>
+     */
     uploadProfilePicture(file: any): Promise<ImageUploadRepresentation> {
         throwIfNotDefined(file, 'file');
 
@@ -107,8 +108,7 @@ export class UserProfileApi extends BaseApi {
         return this.post({
             path: '/api/enterprise/profile-picture',
             formParams,
-            returnType:ImageUploadRepresentation
+            returnType: ImageUploadRepresentation
         });
     }
-
 }

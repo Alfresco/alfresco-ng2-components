@@ -19,9 +19,8 @@ import { DateAlfresco } from '../../content-custom-api';
 
 /**
  * Activities describe any past activity in a site,
-for example creating an item of content, commenting on a node,
-liking an item of content.
-
+ * for example creating an item of content, commenting on a node,
+ * liking an item of content.
  */
 export class Activity {
     /**

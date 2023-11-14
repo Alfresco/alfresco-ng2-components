@@ -28,13 +28,13 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
  */
 export class TagsApi extends BaseApi {
     /**
-    * Create a tag for a node
-    *
-    * @param nodeId The identifier of a node.
-    * @param tagBodyCreate The new tag
-    * @param opts Optional parameters
-    * @returns Promise<TagEntry>
-    */
+     * Create a tag for a node
+     *
+     * @param nodeId The identifier of a node.
+     * @param tagBodyCreate The new tag
+     * @param opts Optional parameters
+     * @returns Promise<TagEntry>
+     */
     createTagForNode(nodeId: string, tagBodyCreate: TagBody[], opts?: ContentFieldsQuery): Promise<TagEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(tagBodyCreate, 'tagBodyCreate');

@@ -31,15 +31,15 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
  */
 export class PeopleApi extends BaseApi {
     /**
-    * Create person
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    * **Note:** setting properties of type d:content and d:category are not supported.
-    *
-    * @param personBodyCreate The person details.
-    * @param opts Optional parameters
-    * @returns Promise<PersonEntry>
-    */
+     * Create person
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     * **Note:** setting properties of type d:content and d:category are not supported.
+     *
+     * @param personBodyCreate The person details.
+     * @param opts Optional parameters
+     * @returns Promise<PersonEntry>
+     */
     createPerson(personBodyCreate: PersonBodyCreate, opts?: ContentFieldsQuery): Promise<PersonEntry> {
         throwIfNotDefined(personBodyCreate, 'personBodyCreate');
 
@@ -54,6 +54,7 @@ export class PeopleApi extends BaseApi {
             returnType: PersonEntry
         });
     }
+
     /**
      * Delete avatar image
      *
@@ -80,29 +81,29 @@ export class PeopleApi extends BaseApi {
     }
 
     /**
-    * Get avatar image
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
-    *
-    * Gets the avatar image related to the person **personId**. If the person has no related avatar then
-    * the **placeholder** query parameter can be optionally used to request a placeholder image to be returned.
-    *
-    * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-    *
-    * @param personId The identifier of a person.
-    * @param opts Optional parameters
-    * @param opts.attachment **true** enables a web browser to download the file as an attachment.
-    * **false** means a web browser may preview the file in a new tab or window, but not download the file.
-    * You can only set this parameter to **false** if the content type of the file is in the supported list;
-    * for example, certain image files and PDF files.
-    * If the content type is not supported for preview, then a value of **false**  is ignored, and
-    * the attachment will be returned in the response. (default to true)
-    * @param opts.ifModifiedSince Only returns the content if it has been modified since the date provided.
-    * Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
-    * @param opts.placeholder If **true** and there is no avatar for this **personId**
-    * then the placeholder image is returned, rather than a 404 response. (default to true)
-    * @returns Promise<Blob>
-    */
+     * Get avatar image
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
+     *
+     * Gets the avatar image related to the person **personId**. If the person has no related avatar then
+     * the **placeholder** query parameter can be optionally used to request a placeholder image to be returned.
+     *
+     * You can use the -me- string in place of <personId> to specify the currently authenticated user.
+     *
+     * @param personId The identifier of a person.
+     * @param opts Optional parameters
+     * @param opts.attachment **true** enables a web browser to download the file as an attachment.
+     * **false** means a web browser may preview the file in a new tab or window, but not download the file.
+     * You can only set this parameter to **false** if the content type of the file is in the supported list;
+     * for example, certain image files and PDF files.
+     * If the content type is not supported for preview, then a value of **false**  is ignored, and
+     * the attachment will be returned in the response. (default to true)
+     * @param opts.ifModifiedSince Only returns the content if it has been modified since the date provided.
+     * Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
+     * @param opts.placeholder If **true** and there is no avatar for this **personId**
+     * then the placeholder image is returned, rather than a 404 response. (default to true)
+     * @returns Promise<Blob>
+     */
     getAvatarImage(personId: string, opts?: { attachment?: boolean; placeholder?: boolean; ifModifiedSince?: string }): Promise<Blob> {
         throwIfNotDefined(personId, 'personId');
 
@@ -209,15 +210,15 @@ export class PeopleApi extends BaseApi {
     }
 
     /**
-    * Request password reset
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-    * **Note:** No authentication is required to call this endpoint.
-    *
-    * @param personId The identifier of a person.
-    * @param clientBody The client name to send email with app-specific url.
-    * @returns Promise<{}>
-    */
+     * Request password reset
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
+     * **Note:** No authentication is required to call this endpoint.
+     *
+     * @param personId The identifier of a person.
+     * @param clientBody The client name to send email with app-specific url.
+     * @returns Promise<{}>
+     */
     requestPasswordReset(personId: string, clientBody: ClientBody): Promise<any> {
         throwIfNotDefined(personId, 'personId');
         throwIfNotDefined(clientBody, 'clientBody');
@@ -232,16 +233,17 @@ export class PeopleApi extends BaseApi {
             bodyParam: clientBody
         });
     }
+
     /**
-    * Reset password
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-    * **Note:** No authentication is required to call this endpoint.
-    *
-    * @param personId The identifier of a person.
-    * @param passwordResetBody The reset password details
-    * @returns Promise<{}>
-    */
+     * Reset password
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
+     * **Note:** No authentication is required to call this endpoint.
+     *
+     * @param personId The identifier of a person.
+     * @param passwordResetBody The reset password details
+     * @returns Promise<{}>
+     */
     resetPassword(personId: string, passwordResetBody: PasswordResetBody): Promise<any> {
         throwIfNotDefined(personId, 'personId');
         throwIfNotDefined(passwordResetBody, 'passwordResetBody');
@@ -294,25 +296,25 @@ export class PeopleApi extends BaseApi {
     }
 
     /**
-    * Update person
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * You can use the `-me-` string in place of <personId> to specify the currently authenticated user.
-    * If applicable, the given person's login access can also be optionally disabled or re-enabled.
-    * You must have admin rights to update a person — unless updating your own details.
-    * If you are changing your password, as a non-admin user, then the existing password must also
-    * be supplied (using the oldPassword field in addition to the new password value).
-    *
-    * Admin users cannot be disabled by setting enabled to false.
-    * Non-admin users may not disable themselves.
-    * **Note:** setting properties of type d:content and d:category are not supported.
-    *
-    * @param personId The identifier of a person.
-    * @param personBodyUpdate The person details.
-    * @param opts Optional parameters
-    * @returns Promise<PersonEntry>
-    */
+     * Update person
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * You can use the `-me-` string in place of <personId> to specify the currently authenticated user.
+     * If applicable, the given person's login access can also be optionally disabled or re-enabled.
+     * You must have admin rights to update a person — unless updating your own details.
+     * If you are changing your password, as a non-admin user, then the existing password must also
+     * be supplied (using the oldPassword field in addition to the new password value).
+     *
+     * Admin users cannot be disabled by setting enabled to false.
+     * Non-admin users may not disable themselves.
+     * **Note:** setting properties of type d:content and d:category are not supported.
+     *
+     * @param personId The identifier of a person.
+     * @param personBodyUpdate The person details.
+     * @param opts Optional parameters
+     * @returns Promise<PersonEntry>
+     */
     updatePerson(personId: string, personBodyUpdate: PersonBodyUpdate, opts?: ContentFieldsQuery): Promise<PersonEntry> {
         throwIfNotDefined(personId, 'personId');
         throwIfNotDefined(personBodyUpdate, 'personBodyUpdate');

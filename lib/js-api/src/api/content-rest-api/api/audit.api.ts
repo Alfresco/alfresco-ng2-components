@@ -315,21 +315,21 @@ export class AuditApi extends BaseApi {
     }
 
     /**
-    * Update audit application info
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
-    *
-    * New audit entries will not be created for a disabled audit application until
-    * it is re-enabled (and system-wide auditing is also enabled).
-    * Note, it is still possible to query &/or delete any existing audit entries even
-    * if auditing is disabled for the audit application.
-    * You must have admin rights to update audit application.
-    *
-    * @param auditApplicationId The identifier of an audit application.
-    * @param auditAppBodyUpdate The audit application to update.
-    * @param opts Optional parameters
-    * @returns Promise<AuditApp>
-    */
+     * Update audit application info
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
+     *
+     * New audit entries will not be created for a disabled audit application until
+     * it is re-enabled (and system-wide auditing is also enabled).
+     * Note, it is still possible to query &/or delete any existing audit entries even
+     * if auditing is disabled for the audit application.
+     * You must have admin rights to update audit application.
+     *
+     * @param auditApplicationId The identifier of an audit application.
+     * @param auditAppBodyUpdate The audit application to update.
+     * @param opts Optional parameters
+     * @returns Promise<AuditApp>
+     */
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: AuditBodyUpdate, opts?: ContentFieldsQuery): Promise<AuditApp> {
         throwIfNotDefined(auditApplicationId, 'auditApplicationId');
         throwIfNotDefined(auditAppBodyUpdate, 'auditAppBodyUpdate');

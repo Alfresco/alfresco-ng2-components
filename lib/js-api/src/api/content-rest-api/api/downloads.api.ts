@@ -26,24 +26,21 @@ import { buildCollectionParam } from '../../../alfrescoApiClient';
  */
 export class DownloadsApi extends BaseApi {
     /**
-    * Cancel a download
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-
-Cancels the creation of a download request.
-
-**Note:** The download node can be deleted using the **DELETE /nodes/{downloadId}** endpoint
-
-By default, if the download node is not deleted it will be picked up by a cleaner job which removes download nodes older than a configurable amount of time (default is 1 hour)
-
-Information about the existing progress at the time of cancelling can be retrieved by calling the **GET /downloads/{downloadId}** endpoint
-
-The cancel operation is done asynchronously.
-
-    *
-    * @param downloadId The identifier of a download node.
-    * @returns Promise<{}>
-    */
+     * Cancel a download
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
+     *
+     * Cancels the creation of a download request.
+     *
+     * **Note:** The download node can be deleted using the **DELETE /nodes/{downloadId}** endpoint
+     *
+     * By default, if the download node is not deleted it will be picked up by a cleaner job which removes download nodes older than a configurable amount of time (default is 1 hour)
+     * Information about the existing progress at the time of cancelling can be retrieved by calling the **GET /downloads/{downloadId}** endpoint
+     * The cancel operation is done asynchronously.
+     *
+     * @param downloadId The identifier of a download node.
+     * @returns Promise<{}>
+     */
     cancelDownload(downloadId: string): Promise<any> {
         throwIfNotDefined(downloadId, 'downloadId');
 
@@ -88,19 +85,19 @@ The cancel operation is done asynchronously.
     }
 
     /**
-    * Get a download
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-    *
-    * @param downloadId The identifier of a download node.
-    * @param opts Optional parameters
-    * @param opts.fields A list of field names. You can use this parameter to restrict the fields
-    * returned within a response if, for example, you want to save on overall bandwidth.
-    * The list applies to a returned individual entity or entries within a collection.
-    * If the API method also supports the **include** parameter, then the fields specified in the **include**
-    * parameter are returned in addition to those specified in the **fields** parameter.
-    * @returns Promise<DownloadEntry>
-    */
+     * Get a download
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
+     *
+     * @param downloadId The identifier of a download node.
+     * @param opts Optional parameters
+     * @param opts.fields A list of field names. You can use this parameter to restrict the fields
+     * returned within a response if, for example, you want to save on overall bandwidth.
+     * The list applies to a returned individual entity or entries within a collection.
+     * If the API method also supports the **include** parameter, then the fields specified in the **include**
+     * parameter are returned in addition to those specified in the **fields** parameter.
+     * @returns Promise<DownloadEntry>
+     */
     getDownload(downloadId: string, opts?: { fields?: string[] }): Promise<DownloadEntry> {
         throwIfNotDefined(downloadId, 'downloadId');
 

@@ -21,15 +21,15 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* DecisionAuditsApi service.
-*/
+ * DecisionAuditsApi service.
+ */
 export class DecisionAuditsApi extends BaseApi {
     /**
-    * Get an audit trail
-    *
-    * @param auditTrailId auditTrailId
-    * @return Promise<DecisionAuditRepresentation>
-    */
+     * Get an audit trail
+     *
+     * @param auditTrailId auditTrailId
+     * @return Promise<DecisionAuditRepresentation>
+     */
     getAuditTrail(auditTrailId: number): Promise<DecisionAuditRepresentation> {
         throwIfNotDefined(auditTrailId, 'taskId');
 
@@ -45,12 +45,12 @@ export class DecisionAuditsApi extends BaseApi {
     }
 
     /**
-    * Query decision table audit trails
-    *
-    * @param decisionKey decisionKey
-    * @param dmnDeploymentId dmnDeploymentId
-    * @return Promise<ResultListDataRepresentationDecisionAuditRepresentation>
-    */
+     * Query decision table audit trails
+     *
+     * @param decisionKey decisionKey
+     * @param dmnDeploymentId dmnDeploymentId
+     * @return Promise<ResultListDataRepresentationDecisionAuditRepresentation>
+     */
     getAuditTrails(decisionKey: string, dmnDeploymentId: number): Promise<ResultListDataRepresentationDecisionAuditRepresentation> {
         throwIfNotDefined(decisionKey, 'decisionKey');
         throwIfNotDefined(dmnDeploymentId, 'dmnDeploymentId');

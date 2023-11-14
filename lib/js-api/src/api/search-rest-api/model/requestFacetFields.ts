@@ -25,7 +25,6 @@ import { RequestFacetField } from './requestFacetField';
 export class RequestFacetFields {
     /**
      * Define specific fields on which to facet (adds SOLR facet.field and f.<field>.facet.* options)
-
      */
     facets?: RequestFacetField[];
 

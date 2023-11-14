@@ -22,16 +22,16 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* Checklists service.
-*/
+ * Checklists service.
+ */
 export class ChecklistsApi extends BaseApi {
     /**
-    * Create a task checklist
-    *
-    * @param taskId taskId
-    * @param taskRepresentation taskRepresentation
-    * @return Promise<TaskRepresentation>
-    */
+     * Create a task checklist
+     *
+     * @param taskId taskId
+     * @param taskRepresentation taskRepresentation
+     * @return Promise<TaskRepresentation>
+     */
     addSubtask(taskId: string, taskRepresentation: TaskRepresentation): Promise<TaskRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
         throwIfNotDefined(taskRepresentation, 'taskRepresentation');
@@ -49,11 +49,11 @@ export class ChecklistsApi extends BaseApi {
     }
 
     /**
-    * Get checklist for a task
-    *
-    * @param taskId taskId
-    * @return Promise<ResultListDataRepresentationTaskRepresentation>
-    */
+     * Get checklist for a task
+     *
+     * @param taskId taskId
+     * @return Promise<ResultListDataRepresentationTaskRepresentation>
+     */
     getChecklist(taskId: string): Promise<ResultListDataRepresentationTaskRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
 
@@ -69,12 +69,12 @@ export class ChecklistsApi extends BaseApi {
     }
 
     /**
-    * Change the order of items on a checklist
-    *
-    * @param taskId taskId
-    * @param orderRepresentation orderRepresentation
-    * @return Promise<{}>
-    */
+     * Change the order of items on a checklist
+     *
+     * @param taskId taskId
+     * @param orderRepresentation orderRepresentation
+     * @return Promise<{}>
+     */
     orderChecklist(taskId: string, orderRepresentation: ChecklistOrderRepresentation): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
         throwIfNotDefined(orderRepresentation, 'orderRepresentation');
@@ -89,5 +89,4 @@ export class ChecklistsApi extends BaseApi {
             pathParams
         });
     }
-
 }

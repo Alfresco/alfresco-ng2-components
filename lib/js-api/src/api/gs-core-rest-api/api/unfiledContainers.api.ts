@@ -31,14 +31,14 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
  */
 export class UnfiledContainersApi extends BaseApi {
     /**
-    * Creates a record or an unfiled record folder as a primary child of **unfiledContainerId**.
-    *
-    * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
-    * @param nodeBodyCreate The node information to create.
-    * @param opts Optional parameters
-    * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
-    * @returns Promise<UnfiledContainerAssociationPaging>
-    */
+     * Creates a record or an unfiled record folder as a primary child of **unfiledContainerId**.
+     *
+     * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
+     * @param nodeBodyCreate The node information to create.
+     * @param opts Optional parameters
+     * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
+     * @returns Promise<UnfiledContainerAssociationPaging>
+     */
     createUnfiledContainerChildren(
         unfiledContainerId: string,
         nodeBodyCreate: RMNodeBodyCreate,
@@ -70,18 +70,19 @@ export class UnfiledContainersApi extends BaseApi {
             returnType: UnfiledContainerAssociationPaging
         });
     }
+
     /**
-    * Get the unfiled records container
-    *
-    * Gets information for unfiled records container **unfiledContainerId**
-    * Mandatory fields and the unfiled records container's aspects and properties are returned by default.
-    *
-    * You can use the **include** parameter (include=allowableOperations) to return additional information.
-    *
-    * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
-    * @param opts Optional parameters
-    * @returns Promise<UnfiledContainerEntry>
-    */
+     * Get the unfiled records container
+     *
+     * Gets information for unfiled records container **unfiledContainerId**
+     * Mandatory fields and the unfiled records container's aspects and properties are returned by default.
+     *
+     * You can use the **include** parameter (include=allowableOperations) to return additional information.
+     *
+     * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
+     * @param opts Optional parameters
+     * @returns Promise<UnfiledContainerEntry>
+     */
     getUnfiledContainer(unfiledContainerId: string, opts?: RecordsIncludeQuery): Promise<UnfiledContainerEntry> {
         throwIfNotDefined(unfiledContainerId, 'unfiledContainerId');
 
@@ -101,23 +102,24 @@ export class UnfiledContainersApi extends BaseApi {
             returnType: UnfiledContainerEntry
         });
     }
+
     /**
-    * List unfiled record container's children
-    *
-    * Returns a list of records or unfiled record folders.
-    *
-    * Minimal information for each child is returned by default.
-    * You can use the **include** parameter (include=allowableOperations) to return additional information.
-    *
-    * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
-    * @param opts Optional parameters
-    * @param opts.where Optionally filter the list. Here are some examples:
-    *   - where=(isRecord=true)
-    *   - where=(isUnfiledRecordFolder=false)
-    *   - where=(nodeType='cm:content INCLUDESUBTYPES')
-    * @param opts.includeSource Also include **source** (in addition to **entries**) with folder information on the parent node – the specified parent **unfiledContainerId**
-    * @returns Promise<UnfiledContainerAssociationPaging>
-    */
+     * List unfiled record container's children
+     *
+     * Returns a list of records or unfiled record folders.
+     *
+     * Minimal information for each child is returned by default.
+     * You can use the **include** parameter (include=allowableOperations) to return additional information.
+     *
+     * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
+     * @param opts Optional parameters
+     * @param opts.where Optionally filter the list. Here are some examples:
+     *   - where=(isRecord=true)
+     *   - where=(isUnfiledRecordFolder=false)
+     *   - where=(nodeType='cm:content INCLUDESUBTYPES')
+     * @param opts.includeSource Also include **source** (in addition to **entries**) with folder information on the parent node – the specified parent **unfiledContainerId**
+     * @returns Promise<UnfiledContainerAssociationPaging>
+     */
     listUnfiledContainerChildren(
         unfiledContainerId: string,
         opts?: {
@@ -148,16 +150,17 @@ export class UnfiledContainersApi extends BaseApi {
             returnType: UnfiledContainerAssociationPaging
         });
     }
+
     /**
-    * Update an unfiled record container
-    *
-    * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-    *
-    * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
-    * @param unfiledContainerBodyUpdate The unfiled record container information to update.
-    * @param opts Optional parameters
-    * @returns Promise<UnfiledContainerEntry>
-    */
+     * Update an unfiled record container
+     *
+     * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
+     *
+     * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
+     * @param unfiledContainerBodyUpdate The unfiled record container information to update.
+     * @param opts Optional parameters
+     * @returns Promise<UnfiledContainerEntry>
+     */
     updateUnfiledContainer(
         unfiledContainerId: string,
         unfiledContainerBodyUpdate: UnfiledRecordContainerBodyUpdate,

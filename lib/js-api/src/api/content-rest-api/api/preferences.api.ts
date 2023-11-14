@@ -27,16 +27,16 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
  */
 export class PreferencesApi extends BaseApi {
     /**
-    * Get a preference
-    *
-    * Gets a specific preference for person **personId**.
-    * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-    *
-    * @param personId The identifier of a person.
-    * @param preferenceName The name of the preference.
-    * @param opts Optional parameters
-    * @returns Promise<PreferenceEntry>
-    */
+     * Get a preference
+     *
+     * Gets a specific preference for person **personId**.
+     * You can use the -me- string in place of <personId> to specify the currently authenticated user.
+     *
+     * @param personId The identifier of a person.
+     * @param preferenceName The name of the preference.
+     * @param opts Optional parameters
+     * @returns Promise<PreferenceEntry>
+     */
     getPreference(personId: string, preferenceName: string, opts?: ContentFieldsQuery): Promise<PreferenceEntry> {
         throwIfNotDefined(personId, 'personId');
         throwIfNotDefined(preferenceName, 'preferenceName');

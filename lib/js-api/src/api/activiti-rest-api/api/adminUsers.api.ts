@@ -37,15 +37,15 @@ export interface GetUsersOpts {
 }
 
 /**
-* AdminUsersApi service.
-*/
+ * AdminUsersApi service.
+ */
 export class AdminUsersApi extends BaseApi {
     /**
-    * Bulk update a list of users
-    *
-    * @param update update
-    * @return Promise<{}>
-    */
+     * Bulk update a list of users
+     *
+     * @param update update
+     * @return Promise<{}>
+     */
     bulkUpdateUsers(update: BulkUserUpdateRepresentation): Promise<any> {
         throwIfNotDefined(update, 'update');
 
@@ -56,11 +56,11 @@ export class AdminUsersApi extends BaseApi {
     }
 
     /**
-    * Create a user
-    *
-    * @param userRepresentation userRepresentation
-    * @return Promise<UserRepresentation>
-    */
+     * Create a user
+     *
+     * @param userRepresentation userRepresentation
+     * @return Promise<UserRepresentation>
+     */
     createNewUser(userRepresentation: UserRepresentation): Promise<UserRepresentation> {
         throwIfNotDefined(userRepresentation, 'userRepresentation');
 
@@ -72,12 +72,12 @@ export class AdminUsersApi extends BaseApi {
     }
 
     /**
-    * Get a user
-    *
-    * @param userId userId
-    * @param opts Optional parameters
-    * @return Promise<AbstractUserRepresentation>
-    */
+     * Get a user
+     *
+     * @param userId userId
+     * @param opts Optional parameters
+     * @return Promise<AbstractUserRepresentation>
+     */
     getUser(userId: number, opts?: { summary?: boolean }): Promise<AbstractUserRepresentation> {
         throwIfNotDefined(userId, 'userId');
 
@@ -94,11 +94,11 @@ export class AdminUsersApi extends BaseApi {
     }
 
     /**
-    * Query users
-    *
-    * @param opts Optional parameters
-    * @return Promise<ResultListDataRepresentationAbstractUserRepresentation>
-    */
+     * Query users
+     *
+     * @param opts Optional parameters
+     * @return Promise<ResultListDataRepresentationAbstractUserRepresentation>
+     */
     getUsers(opts?: GetUsersOpts): Promise<ResultListDataRepresentationAbstractUserRepresentation> {
         return this.get({
             path: '/api/enterprise/admin/users',
@@ -108,12 +108,12 @@ export class AdminUsersApi extends BaseApi {
     }
 
     /**
-    * Update a user
-    *
-    * @param userId userId
-    * @param userRepresentation userRepresentation
-    * @return Promise<{}>
-    */
+     * Update a user
+     *
+     * @param userId userId
+     * @param userRepresentation userRepresentation
+     * @return Promise<{}>
+     */
     updateUserDetails(userId: number, userRepresentation: UserRepresentation): Promise<any> {
         throwIfNotDefined(userId, 'userId');
         throwIfNotDefined(userRepresentation, 'userRepresentation');

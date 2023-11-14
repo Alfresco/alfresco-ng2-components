@@ -31,14 +31,14 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
  */
 export class UnfiledRecordFoldersApi extends BaseApi {
     /**
-    * Create a record or an unfiled record folder
-    *
-    * @param unfiledRecordFolderId The identifier of an unfiled record folder.
-    * @param nodeBodyCreate The node information to create.
-    * @param opts Optional parameters
-    * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
-    * @returns Promise<UnfiledRecordFolderAssociationPaging>
-    */
+     * Create a record or an unfiled record folder
+     *
+     * @param unfiledRecordFolderId The identifier of an unfiled record folder.
+     * @param nodeBodyCreate The node information to create.
+     * @param opts Optional parameters
+     * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
+     * @returns Promise<UnfiledRecordFolderAssociationPaging>
+     */
     createUnfiledRecordFolderChildren(
         unfiledRecordFolderId: string,
         nodeBodyCreate: RMNodeBodyCreateWithRelativePath,
@@ -175,13 +175,14 @@ export class UnfiledRecordFoldersApi extends BaseApi {
     }
 
     /**
-    * Updates unfiled record folder **unfiledRecordFolderId**. For example, you can rename a record folder:
-    *
-    * @param unfiledRecordFolderId The identifier of an unfiled record folder.
-    * @param unfiledRecordFolderBodyUpdate The record folder information to update.
-    * @param opts Optional parameters
-    * @returns Promise<UnfiledRecordFolderEntry>
-    */
+     * Updates unfiled record folder **unfiledRecordFolderId**.
+     * For example, you can rename a record folder:
+     *
+     * @param unfiledRecordFolderId The identifier of an unfiled record folder.
+     * @param unfiledRecordFolderBodyUpdate The record folder information to update.
+     * @param opts Optional parameters
+     * @returns Promise<UnfiledRecordFolderEntry>
+     */
     updateUnfiledRecordFolder(
         unfiledRecordFolderId: string,
         unfiledRecordFolderBodyUpdate: UnfiledRecordFolderBodyUpdate,

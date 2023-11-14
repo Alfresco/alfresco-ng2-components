@@ -28,61 +28,13 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
  */
 export class CommentsApi extends BaseApi {
     /**
-    * Create a comment
-    *
-    * Creates a comment on node **nodeId**. You specify the comment in a JSON body like this:
-
-JSON
-{
-  \"content\": \"This is a comment\"
-}
-
-**Note:** You can create more than one comment by
-specifying a list of comments in the JSON body like this:
-
-JSON
-[
-  {
-    \"content\": \"This is a comment\"
-  },
-  {
-    \"content\": \"This is another comment\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
-    *
-    * @param nodeId The identifier of a node.
-    * @param commentBodyCreate The comment text. Note that you can also provide a list of comments.
-    * @param opts Optional parameters
-    * @returns Promise<CommentEntry>
-    */
+     * Create a comment
+     *
+     * @param nodeId The identifier of a node.
+     * @param commentBodyCreate The comment text. Note that you can also provide a list of comments.
+     * @param opts Optional parameters
+     * @returns Promise<CommentEntry>
+     */
     createComment(nodeId: string, commentBodyCreate: CommentBody, opts?: ContentFieldsQuery): Promise<CommentEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(commentBodyCreate, 'commentBodyCreate');

@@ -30,14 +30,14 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
  */
 export class FilePlansApi extends BaseApi {
     /**
-    * Create record categories for a file plan
-    *
-    * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-    * @param nodeBodyCreate The node information to create.
-    * @param opts Optional parameters
-    * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
-    * @returns Promise<RecordCategoryEntry>
-    */
+     * Create record categories for a file plan
+     *
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param nodeBodyCreate The node information to create.
+     * @param opts Optional parameters
+     * @param opts.autoRename If `true`, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
+     * @returns Promise<RecordCategoryEntry>
+     */
     createFilePlanCategories(
         filePlanId: string,
         nodeBodyCreate: RootCategoryBodyCreate,
@@ -69,16 +69,15 @@ export class FilePlansApi extends BaseApi {
     }
 
     /**
-    * Get a file plan
-    *
-    * Gets information for file plan **filePlanId**
-    * Mandatory fields and the file plan's aspects and properties are returned by default.
-    * You can use the **include** parameter (include=allowableOperations) to return additional information.
-    *
-    * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-    * @param opts Optional parameters
-    * @returns Promise<FilePlanEntry>
-    */
+     * Get a file plan
+     *
+     * Mandatory fields and the file plan's aspects and properties are returned by default.
+     * You can use the **include** parameter (include=allowableOperations) to return additional information.
+     *
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param opts Optional parameters
+     * @returns Promise<FilePlanEntry>
+     */
     getFilePlan(filePlanId: string, opts?: RecordsIncludeQuery): Promise<FilePlanEntry> {
         throwIfNotDefined(filePlanId, 'filePlanId');
 

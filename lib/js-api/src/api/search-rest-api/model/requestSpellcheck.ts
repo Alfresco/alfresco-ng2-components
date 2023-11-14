@@ -17,8 +17,7 @@
 
 /**
  * Request that spellcheck fragments to be added to result set rows
-The properties reflect SOLR spellcheck parameters.
-
+ * The properties reflect SOLR spellcheck parameters.
  */
 export class RequestSpellcheck {
     query?: string;

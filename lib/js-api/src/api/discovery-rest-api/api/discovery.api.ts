@@ -19,17 +19,16 @@ import { DiscoveryEntry } from '../model/discoveryEntry';
 import { BaseApi } from './base.api';
 
 /**
-* Discovery service.
-*/
+ * Discovery service.
+ */
 export class DiscoveryApi extends BaseApi {
     /**
-    * Get repository information
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    * Retrieves the capabilities and detailed version information from the repository.
-    *
-    * @returns Promise<DiscoveryEntry>
-    */
+     * Get repository information
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @returns Promise<DiscoveryEntry>
+     */
     getRepositoryInformation(): Promise<DiscoveryEntry> {
         return this.get({
             path: '/discovery',

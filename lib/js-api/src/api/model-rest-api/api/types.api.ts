@@ -58,19 +58,17 @@ export interface ListTypesOpts {
 }
 
 /**
-* Types service.
-
-* @module TypesApi
-*/
+ * Types service.
+ */
 export class TypesApi extends BaseApi {
     /**
-    * Get a type
-    *
-    * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-    *
-    * @param typeId The Qname of a type(prefix:name) e.g 'cm:content'
-    * @returns Promise<TypeEntry>
-    */
+     * Get a type
+     *
+     * **Note:** This is available in Alfresco 7.0.0 and newer versions.
+     *
+     * @param typeId The Qname of a type(prefix:name) e.g 'cm:content'
+     * @returns Promise<TypeEntry>
+     */
     getType(typeId: string): Promise<TypeEntry> {
         throwIfNotDefined(typeId, 'typeId');
 
@@ -86,13 +84,13 @@ export class TypesApi extends BaseApi {
     }
 
     /**
-    * List types
-    *
-    * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-    *
-    * @param opts Optional parameters
-    * @returns Promise<TypePaging>
-    */
+     * List types
+     *
+     * **Note:** This is available in Alfresco 7.0.0 and newer versions.
+     *
+     * @param opts Optional parameters
+     * @returns Promise<TypePaging>
+     */
     listTypes(opts?: ListTypesOpts): Promise<TypePaging> {
         const queryParams = {
             where: opts?.where,

@@ -21,15 +21,15 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* ProcessScopesApi service.
-*/
+ * ProcessScopesApi service.
+ */
 export class ProcessScopesApi extends BaseApi {
     /**
-    * List runtime process scopes
-    *
-    * @param processScopesRequest processScopesRequest
-    * @return Promise<ProcessScopeRepresentation>
-    */
+     * List runtime process scopes
+     *
+     * @param processScopesRequest processScopesRequest
+     * @return Promise<ProcessScopeRepresentation>
+     */
     getRuntimeProcessScopes(processScopesRequest: ProcessScopesRequestRepresentation): Promise<ProcessScopeRepresentation> {
         throwIfNotDefined(processScopesRequest, 'processScopesRequest');
 

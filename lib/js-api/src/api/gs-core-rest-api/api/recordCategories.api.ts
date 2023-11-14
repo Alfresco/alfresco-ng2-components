@@ -27,19 +27,17 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * RecordCategoriesApi service.
- *
- * @module RecordCategoriesApi
  */
 export class RecordCategoriesApi extends BaseApi {
     /**
-    * Create a record category or a record folder
-    *
-    * @param recordCategoryId The identifier of a record category.
-    * @param nodeBodyCreate The node information to create.
-    * @param opts Optional parameters
-    * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
-    * @returns Promise<RecordCategoryChildEntry>
-    */
+     * Create a record category or a record folder
+     *
+     * @param recordCategoryId The identifier of a record category.
+     * @param nodeBodyCreate The node information to create.
+     * @param opts Optional parameters
+     * @param opts.autoRename If `true`, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
+     * @returns Promise<RecordCategoryChildEntry>
+     */
     createRecordCategoryChild(
         recordCategoryId: string,
         nodeBodyCreate: RMNodeBodyCreateWithRelativePath,
@@ -176,17 +174,21 @@ export class RecordCategoriesApi extends BaseApi {
     }
 
     /**
-    * Update a record category
-    *
-    * **Note:** If you want to add or remove aspects, then you must use **GET /record-categories/{recordCategoryId}** first to get the complete set of *aspectNames*.
-    * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-    *
-    * @param recordCategoryId The identifier of a record category.
-    * @param recordCategoryBodyUpdate The record category information to update.
-    * @param opts Optional parameters
-    * @returns Promise<RecordCategoryEntry>
-    */
-    updateRecordCategory(recordCategoryId: string, recordCategoryBodyUpdate: FilePlanComponentBodyUpdate, opts?: RecordsIncludeQuery): Promise<RecordCategoryEntry> {
+     * Update a record category
+     *
+     * **Note:** If you want to add or remove aspects, then you must use **GET /record-categories/{recordCategoryId}** first to get the complete set of *aspectNames*.
+     * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
+     *
+     * @param recordCategoryId The identifier of a record category.
+     * @param recordCategoryBodyUpdate The record category information to update.
+     * @param opts Optional parameters
+     * @returns Promise<RecordCategoryEntry>
+     */
+    updateRecordCategory(
+        recordCategoryId: string,
+        recordCategoryBodyUpdate: FilePlanComponentBodyUpdate,
+        opts?: RecordsIncludeQuery
+    ): Promise<RecordCategoryEntry> {
         throwIfNotDefined(recordCategoryId, 'recordCategoryId');
         throwIfNotDefined(recordCategoryBodyUpdate, 'recordCategoryBodyUpdate');
 

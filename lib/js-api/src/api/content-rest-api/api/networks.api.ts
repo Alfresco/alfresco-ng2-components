@@ -82,16 +82,17 @@ export class NetworksApi extends BaseApi {
             returnType: PersonNetworkEntry
         });
     }
+
     /**
-    * List network membership
-    *
-    * Gets a list of network memberships for person **personId**.
-    * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-    *
-    * @param personId The identifier of a person.
-    * @param opts Optional parameters
-    * @returns Promise<PersonNetworkPaging>
-    */
+     * List network membership
+     *
+     * Gets a list of network memberships for person **personId**.
+     * You can use the -me- string in place of <personId> to specify the currently authenticated user.
+     *
+     * @param personId The identifier of a person.
+     * @param opts Optional parameters
+     * @returns Promise<PersonNetworkPaging>
+     */
     listNetworksForPerson(personId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<PersonNetworkPaging> {
         throwIfNotDefined(personId, 'personId');
 

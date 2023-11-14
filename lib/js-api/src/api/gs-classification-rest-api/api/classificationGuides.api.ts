@@ -164,17 +164,17 @@ export class ClassificationGuidesApi extends BaseApi {
     }
 
     /**
-    * List all classification guides
-    *
-    * @param opts Optional parameters
-    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.
-    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-    * above to check if any fields used in this method have a descending default search order.
-    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-    * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR. Fields to filter on:
-    * enabled - e.g. (enabled = true OR enabled = false)
-    * @returns Promise<ClassificationGuidePaging>
-    */
+     * List all classification guides
+     *
+     * @param opts Optional parameters
+     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.
+     * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+     * above to check if any fields used in this method have a descending default search order.
+     * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+     * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR. Fields to filter on:
+     * enabled - e.g. (enabled = true OR enabled = false)
+     * @returns Promise<ClassificationGuidePaging>
+     */
     listClassificationGuides(opts?: { orderBy?: string[]; where?: string } & GsPagingQuery & GsIncludeQuery): Promise<ClassificationGuidePaging> {
         opts = opts || {};
 
@@ -194,21 +194,21 @@ export class ClassificationGuidesApi extends BaseApi {
     }
 
     /**
-    * List all subtopics
-    *
-    * @param topicId The identifier for the topic
-    * @param opts Optional parameters
-    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-    * sort the list by one or more fields.
-    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-    * above to check if any fields used in this method have a descending default search order.
-    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-    * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR. Fields to filter on:
-    * - hasInstruction
-    * - hasSubtopics
-    * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent guide/topic
-    * @returns Promise<SubtopicPaging>
-    */
+     * List all subtopics
+     *
+     * @param topicId The identifier for the topic
+     * @param opts Optional parameters
+     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
+     * sort the list by one or more fields.
+     * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+     * above to check if any fields used in this method have a descending default search order.
+     * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+     * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR. Fields to filter on:
+     * - hasInstruction
+     * - hasSubtopics
+     * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent guide/topic
+     * @returns Promise<SubtopicPaging>
+     */
     listSubtopics(
         topicId: string,
         opts?: {
@@ -243,21 +243,21 @@ export class ClassificationGuidesApi extends BaseApi {
     }
 
     /**
-    * List all topics
-    *
-    * @param classificationGuideId The identifier for the classification guide
-    * @param opts Optional parameters
-    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-    * sort the list by one or more fields.
-    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-    * above to check if any fields used in this method have a descending default search order.
-    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-    * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR e.g. (instruction=true and hasSubtopics=false). Fields to filter on:
-    * - hasInstruction
-    * - hasSubtopics
-    * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent guide/topic
-    * @returns Promise<TopicPaging>
-    */
+     * List all topics
+     *
+     * @param classificationGuideId The identifier for the classification guide
+     * @param opts Optional parameters
+     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
+     * sort the list by one or more fields.
+     * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+     * above to check if any fields used in this method have a descending default search order.
+     * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+     * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR e.g. (instruction=true and hasSubtopics=false). Fields to filter on:
+     * - hasInstruction
+     * - hasSubtopics
+     * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent guide/topic
+     * @returns Promise<TopicPaging>
+     */
     listTopics(
         classificationGuideId: string,
         opts?: {

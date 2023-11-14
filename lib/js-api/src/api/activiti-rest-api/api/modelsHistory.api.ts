@@ -21,17 +21,17 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* ModelsHistoryApi service.
-*/
+ * ModelsHistoryApi service.
+ */
 export class ModelsHistoryApi extends BaseApi {
     /**
-    * List a model's historic versions
-    *
-    * @param modelId modelId
-    * @param opts Optional parameters
-    * @param opts.includeLatestVersion includeLatestVersion
-    * @return Promise<ResultListDataRepresentationModelRepresentation>
-    */
+     * List a model's historic versions
+     *
+     * @param modelId modelId
+     * @param opts Optional parameters
+     * @param opts.includeLatestVersion includeLatestVersion
+     * @return Promise<ResultListDataRepresentationModelRepresentation>
+     */
     getModelHistoryCollection(modelId: number, opts?: { includeLatestVersion?: boolean }): Promise<ResultListDataRepresentationModelRepresentation> {
         throwIfNotDefined(modelId, 'modelId');
 
@@ -52,12 +52,12 @@ export class ModelsHistoryApi extends BaseApi {
     }
 
     /**
-    * Get a historic version of a model
-    *
-    * @param modelId modelId
-    * @param modelHistoryId modelHistoryId
-    * @return Promise<ModelRepresentation>
-    */
+     * Get a historic version of a model
+     *
+     * @param modelId modelId
+     * @param modelHistoryId modelHistoryId
+     * @return Promise<ModelRepresentation>
+     */
     getProcessModelHistory(modelId: number, modelHistoryId: number): Promise<ModelRepresentation> {
         throwIfNotDefined(modelId, 'modelId');
         throwIfNotDefined(modelHistoryId, 'modelHistoryId');

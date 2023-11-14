@@ -71,22 +71,25 @@ export class SitesApi extends BaseApi {
     }
 
     /**
-    * Create a site
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * @param siteBodyCreate The site details
-    * @param opts Optional parameters
-    * @param opts.skipConfiguration Flag to indicate whether the Share-specific (surf) configuration files for the site should not be created. (default to false)
-    * @param opts.skipAddToFavorites Flag to indicate whether the site should not be added to the user's site favorites. (default to false)
-    * @param opts.fields A list of field names. You can use this parameter to restrict the fields
-    * returned within a response if, for example, you want to save on overall bandwidth.
-    * The list applies to a returned individual entity or entries within a collection.
-    * If the API method also supports the **include** parameter, then the fields specified in the **include**
-    * parameter are returned in addition to those specified in the **fields** parameter.
-    * @returns Promise<SiteEntry>
-    */
-    createSite(siteBodyCreate: SiteBodyCreate, opts?: { skipConfiguration?: boolean; skipAddToFavorites?: boolean; fields?: string[] }): Promise<SiteEntry> {
+     * Create a site
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param siteBodyCreate The site details
+     * @param opts Optional parameters
+     * @param opts.skipConfiguration Flag to indicate whether the Share-specific (surf) configuration files for the site should not be created. (default to false)
+     * @param opts.skipAddToFavorites Flag to indicate whether the site should not be added to the user's site favorites. (default to false)
+     * @param opts.fields A list of field names. You can use this parameter to restrict the fields
+     * returned within a response if, for example, you want to save on overall bandwidth.
+     * The list applies to a returned individual entity or entries within a collection.
+     * If the API method also supports the **include** parameter, then the fields specified in the **include**
+     * parameter are returned in addition to those specified in the **fields** parameter.
+     * @returns Promise<SiteEntry>
+     */
+    createSite(
+        siteBodyCreate: SiteBodyCreate,
+        opts?: { skipConfiguration?: boolean; skipAddToFavorites?: boolean; fields?: string[] }
+    ): Promise<SiteEntry> {
         throwIfNotDefined(siteBodyCreate, 'siteBodyCreate');
         opts = opts || {};
 
@@ -105,17 +108,17 @@ export class SitesApi extends BaseApi {
     }
 
     /**
-    * Create a site membership
-    *
-    * @param siteId The identifier of a site.
-    * @param siteMembershipBodyCreate The person to add and their role
-    * @param opts Optional parameters
-    * @param opts.fields A list of field names. You can use this parameter to restrict the fields
-    * returned within a response if, for example, you want to save on overall bandwidth. The list applies to a returned individual
-    * entity or entries within a collection. If the API method also supports the **include** parameter, then the fields specified in the **include**
-    * parameter are returned in addition to those specified in the **fields** parameter.
-    * @returns Promise<SiteMemberEntry>
-    */
+     * Create a site membership
+     *
+     * @param siteId The identifier of a site.
+     * @param siteMembershipBodyCreate The person to add and their role
+     * @param opts Optional parameters
+     * @param opts.fields A list of field names. You can use this parameter to restrict the fields
+     * returned within a response if, for example, you want to save on overall bandwidth. The list applies to a returned individual
+     * entity or entries within a collection. If the API method also supports the **include** parameter, then the fields specified in the **include**
+     * parameter are returned in addition to those specified in the **fields** parameter.
+     * @returns Promise<SiteMemberEntry>
+     */
     createSiteMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: { fields?: string[] }): Promise<SiteMemberEntry> {
         throwIfNotDefined(siteId, 'siteId');
         throwIfNotDefined(siteMembershipBodyCreate, 'siteMembershipBodyCreate');
@@ -138,13 +141,13 @@ export class SitesApi extends BaseApi {
     }
 
     /**
-    * Create a site membership request
-    *
-    * @param personId The identifier of a person.
-    * @param siteMembershipRequestBodyCreate Site membership request details
-    * @param opts Optional parameters
-    * @returns Promise<SiteMembershipRequestEntry>
-    */
+     * Create a site membership request
+     *
+     * @param personId The identifier of a person.
+     * @param siteMembershipRequestBodyCreate Site membership request details
+     * @param opts Optional parameters
+     * @returns Promise<SiteMembershipRequestEntry>
+     */
     createSiteMembershipRequestForPerson(
         personId: string,
         siteMembershipRequestBodyCreate: SiteMembershipRequestBodyCreate,
@@ -560,39 +563,39 @@ export class SitesApi extends BaseApi {
     }
 
     /**
-    * List site memberships
-    *
-    * Gets a list of site membership information for person **personId**.
-    * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-    *
-    * You can use the **where** parameter to filter the returned sites by **visibility** or site **preset**.
-    *
-    * Example to filter by **visibility**, use any one of:
-    * - (visibility='PRIVATE')
-    * - (visibility='PUBLIC')
-    * - (visibility='MODERATED')
-    *
-    * Example to filter by site **preset**:
-    *
-    * (preset='site-dashboard')
-    *
-    * The default sort order for the returned list is for sites to be sorted by ascending title.
-    * You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
-    * - id
-    * - title
-    * - role
-    *
-    * @param personId The identifier of a person.
-    * @param opts Optional parameters
-    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-    * sort the list by one or more fields.
-    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-    * above to check if any fields used in this method have a descending default search order.
-    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-    * @param opts.relations Use the relations parameter to include one or more related entities in a single response.
-    * @param opts.where A string to restrict the returned objects by using a predicate.
-    * @returns Promise<SiteRolePaging>
-    */
+     * List site memberships
+     *
+     * Gets a list of site membership information for person **personId**.
+     * You can use the -me- string in place of <personId> to specify the currently authenticated user.
+     *
+     * You can use the **where** parameter to filter the returned sites by **visibility** or site **preset**.
+     *
+     * Example to filter by **visibility**, use any one of:
+     * - (visibility='PRIVATE')
+     * - (visibility='PUBLIC')
+     * - (visibility='MODERATED')
+     *
+     * Example to filter by site **preset**:
+     *
+     * (preset='site-dashboard')
+     *
+     * The default sort order for the returned list is for sites to be sorted by ascending title.
+     * You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
+     * - id
+     * - title
+     * - role
+     *
+     * @param personId The identifier of a person.
+     * @param opts Optional parameters
+     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
+     * sort the list by one or more fields.
+     * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+     * above to check if any fields used in this method have a descending default search order.
+     * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+     * @param opts.relations Use the relations parameter to include one or more related entities in a single response.
+     * @param opts.where A string to restrict the returned objects by using a predicate.
+     * @returns Promise<SiteRolePaging>
+     */
     listSiteMembershipsForPerson(
         personId: string,
         opts?: { where?: string; orderBy?: string[]; relations?: string[] } & ContentPagingQuery & ContentFieldsQuery
@@ -622,49 +625,49 @@ export class SitesApi extends BaseApi {
     }
 
     /**
-    * List sites
-    *
-    * Gets a list of sites in this repository.
-    *
-    * You can use the **where** parameter to filter the returned sites by **visibility** or site **preset**.
-    *
-    * Example to filter by **visibility**, use any one of:
-    *
-    * (visibility='PRIVATE')
-    * (visibility='PUBLIC')
-    * (visibility='MODERATED')
-    *
-    * Example to filter by site **preset**:
-    *
-    * (preset='site-dashboard')
-    *
-    * The default sort order for the returned list is for sites to be sorted by ascending title.
-    * You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
-    * id
-    * title
-    * description
-    *
-    * You can use the **relations** parameter to include one or more related
-    * entities in a single response and so reduce network traffic.
-    *
-    * The entity types in Alfresco are organized in a tree structure.
-    * The **sites** entity has two children, **containers** and **members**.
-    * The following relations parameter returns all the container and member
-    * objects related to each site:
-    *
-    * containers,members
-    *
-    *
-    * @param opts Optional parameters
-    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-    * sort the list by one or more fields.
-    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-    * above to check if any fields used in this method have a descending default search order.
-    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-    * @param opts.relations Use the relations parameter to include one or more related entities in a single response.
-    * @param opts.where A string to restrict the returned objects by using a predicate.
-    * @returns Promise<SitePaging>
-    */
+     * List sites
+     *
+     * Gets a list of sites in this repository.
+     *
+     * You can use the **where** parameter to filter the returned sites by **visibility** or site **preset**.
+     *
+     * Example to filter by **visibility**, use any one of:
+     *
+     * (visibility='PRIVATE')
+     * (visibility='PUBLIC')
+     * (visibility='MODERATED')
+     *
+     * Example to filter by site **preset**:
+     *
+     * (preset='site-dashboard')
+     *
+     * The default sort order for the returned list is for sites to be sorted by ascending title.
+     * You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
+     * id
+     * title
+     * description
+     *
+     * You can use the **relations** parameter to include one or more related
+     * entities in a single response and so reduce network traffic.
+     *
+     * The entity types in Alfresco are organized in a tree structure.
+     * The **sites** entity has two children, **containers** and **members**.
+     * The following relations parameter returns all the container and member
+     * objects related to each site:
+     *
+     * containers,members
+     *
+     *
+     * @param opts Optional parameters
+     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
+     * sort the list by one or more fields.
+     * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+     * above to check if any fields used in this method have a descending default search order.
+     * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+     * @param opts.relations Use the relations parameter to include one or more related entities in a single response.
+     * @param opts.where A string to restrict the returned objects by using a predicate.
+     * @returns Promise<SitePaging>
+     */
     listSites(
         opts?: {
             orderBy?: string[];
@@ -771,7 +774,12 @@ export class SitesApi extends BaseApi {
      * @param opts Optional parameters
      * @returns Promise<SiteMemberEntry>
      */
-    updateSiteMembership(siteId: string, personId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, opts?: ContentFieldsQuery): Promise<SiteMemberEntry> {
+    updateSiteMembership(
+        siteId: string,
+        personId: string,
+        siteMembershipBodyUpdate: SiteMembershipBodyUpdate,
+        opts?: ContentFieldsQuery
+    ): Promise<SiteMemberEntry> {
         throwIfNotDefined(siteId, 'siteId');
         throwIfNotDefined(personId, 'personId');
         throwIfNotDefined(siteMembershipBodyUpdate, 'siteMembershipBodyUpdate');
@@ -849,7 +857,11 @@ export class SitesApi extends BaseApi {
      * @param opts Optional parameters
      * @returns Promise<SiteGroupEntry>
      */
-    createSiteGroupMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: ContentFieldsQuery): Promise<SiteGroupEntry> {
+    createSiteGroupMembership(
+        siteId: string,
+        siteMembershipBodyCreate: SiteMembershipBodyCreate,
+        opts?: ContentFieldsQuery
+    ): Promise<SiteGroupEntry> {
         throwIfNotDefined(siteId, 'siteId');
         throwIfNotDefined(siteMembershipBodyCreate, 'siteMembershipBodyCreate');
 
@@ -948,7 +960,12 @@ export class SitesApi extends BaseApi {
      * @param opts Optional parameters
      * @returns Promise<SiteGroupEntry>
      */
-    updateSiteGroupMembership(siteId: string, groupId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, opts?: ContentFieldsQuery): Promise<SiteGroupEntry> {
+    updateSiteGroupMembership(
+        siteId: string,
+        groupId: string,
+        siteMembershipBodyUpdate: SiteMembershipBodyUpdate,
+        opts?: ContentFieldsQuery
+    ): Promise<SiteGroupEntry> {
         throwIfNotDefined(siteId, 'siteId');
         throwIfNotDefined(groupId, 'groupId');
         throwIfNotDefined(siteMembershipBodyUpdate, 'siteMembershipBodyUpdate');

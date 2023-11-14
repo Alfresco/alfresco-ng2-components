@@ -18,14 +18,14 @@
 import { BaseApi } from './base.api';
 
 /**
-* ScriptFilesApi service.
-*/
+ * ScriptFilesApi service.
+ */
 export class ScriptFilesApi extends BaseApi {
     /**
-    * getControllers
-    *
-    * @returns Promise<string>
-    */
+     * getControllers
+     *
+     * @returns Promise<string>
+     */
     getControllers(): Promise<string> {
         const accepts = ['text/html'];
 
@@ -33,14 +33,13 @@ export class ScriptFilesApi extends BaseApi {
             path: '/api/enterprise/script-files/controllers',
             accepts
         });
-
     }
 
     /**
-    * getLibraries
-    *
-    * @returns Promise<string>
-    */
+     * getLibraries
+     *
+     * @returns Promise<string>
+     */
     getLibraries(): Promise<string> {
         const accepts = ['text/html'];
 

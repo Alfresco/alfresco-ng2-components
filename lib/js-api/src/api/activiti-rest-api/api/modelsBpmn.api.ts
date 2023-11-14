@@ -19,16 +19,16 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* ModelsBpmnApi service.
-*/
+ * ModelsBpmnApi service.
+ */
 export class ModelsBpmnApi extends BaseApi {
     /**
-    * Export a historic version of a process definition as BPMN 2.0 XML
-    *
-    * @param processModelId processModelId
-    * @param processModelHistoryId processModelHistoryId
-    * @return Promise<{}>
-    */
+     * Export a historic version of a process definition as BPMN 2.0 XML
+     *
+     * @param processModelId processModelId
+     * @param processModelHistoryId processModelHistoryId
+     * @return Promise<{}>
+     */
     getHistoricProcessModelBpmn20Xml(processModelId: number, processModelHistoryId: number): Promise<any> {
         throwIfNotDefined(processModelId, 'processModelId');
         throwIfNotDefined(processModelHistoryId, 'processModelHistoryId');
@@ -48,11 +48,11 @@ export class ModelsBpmnApi extends BaseApi {
     }
 
     /**
-    * Export a process definition as BPMN 2.0 XML
-    *
-    * @param processModelId processModelId
-    * @return Promise<{}>
-    */
+     * Export a process definition as BPMN 2.0 XML
+     *
+     * @param processModelId processModelId
+     * @return Promise<{}>
+     */
     getProcessModelBpmn20Xml(processModelId: number): Promise<any> {
         throwIfNotDefined(processModelId, 'processModelId');
 

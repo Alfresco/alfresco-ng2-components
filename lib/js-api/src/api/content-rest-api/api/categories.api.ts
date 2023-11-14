@@ -201,17 +201,17 @@ export class CategoriesApi extends BaseApi {
     }
 
     /**
-    * Create new categories
-    *
-    * Creates new categories within the category **categoryId**.
-    * The parameter categoryId can be set to the alias -root- to create a new top level category.
-    * You must have admin rights to create a category.
-    *
-    * @param categoryId The identifier of a category.
-    * @param categoryBodyCreate List of categories to create.
-    * @param opts Optional parameters.
-    * @returns Promise<CategoryPaging | CategoryEntry>
-    */
+     * Create new categories
+     *
+     * Creates new categories within the category **categoryId**.
+     * The parameter categoryId can be set to the alias -root- to create a new top level category.
+     * You must have admin rights to create a category.
+     *
+     * @param categoryId The identifier of a category.
+     * @param categoryBodyCreate List of categories to create.
+     * @param opts Optional parameters.
+     * @returns Promise<CategoryPaging | CategoryEntry>
+     */
     createSubcategories(categoryId: string, categoryBodyCreate: CategoryBody[], opts?: CategoryQuery): Promise<CategoryPaging | CategoryEntry> {
         throwIfNotDefined(categoryId, 'categoryId');
         throwIfNotDefined(categoryBodyCreate, 'categoryBodyCreate');
@@ -235,13 +235,13 @@ export class CategoriesApi extends BaseApi {
     }
 
     /**
-    * Assign a node to a category
-    *
-    * @param nodeId The identifier of a node.
-    * @param categoryLinkBodyCreate The new category link
-    * @param opts Optional parameters
-    * @returns Promise<CategoryPaging | CategoryEntry>
-    */
+     * Assign a node to a category
+     *
+     * @param nodeId The identifier of a node.
+     * @param categoryLinkBodyCreate The new category link
+     * @param opts Optional parameters
+     * @returns Promise<CategoryPaging | CategoryEntry>
+     */
     linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[], opts?: CategoryQuery): Promise<CategoryPaging | CategoryEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(categoryLinkBodyCreate, 'categoryLinkBodyCreate');

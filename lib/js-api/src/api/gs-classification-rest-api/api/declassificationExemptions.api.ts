@@ -24,16 +24,14 @@ import { GsPagingQuery } from './types';
 
 /**
  * DeclassificationExemptionsApi service.
- *
- * @module DeclassificationExemptionsApi
  */
 export class DeclassificationExemptionsApi extends BaseApi {
     /**
-    * Create a declassification exemption
-    *
-    * @param declassificationExemption Declassification exemption
-    * @returns Promise<DeclassificationExemptionEntry>
-    */
+     * Create a declassification exemption
+     *
+     * @param declassificationExemption Declassification exemption
+     * @returns Promise<DeclassificationExemptionEntry>
+     */
     createDeclassificationExemption(declassificationExemption: DeclassificationExemptionBody): Promise<DeclassificationExemptionEntry> {
         throwIfNotDefined(declassificationExemption, 'declassificationExemption');
 
@@ -105,7 +103,10 @@ export class DeclassificationExemptionsApi extends BaseApi {
      * @param declassificationExemption Declassification exemption
      * @returns Promise<DeclassificationExemptionEntry>
      */
-    updateDeclassificationExemption(declassificationExemptionId: string, declassificationExemption: DeclassificationExemptionBody): Promise<DeclassificationExemptionEntry> {
+    updateDeclassificationExemption(
+        declassificationExemptionId: string,
+        declassificationExemption: DeclassificationExemptionBody
+    ): Promise<DeclassificationExemptionEntry> {
         throwIfNotDefined(declassificationExemptionId, 'declassificationExemptionId');
         throwIfNotDefined(declassificationExemption, 'declassificationExemption');
 

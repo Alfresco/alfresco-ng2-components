@@ -19,15 +19,15 @@ import { ResultListDataRepresentationGoogleDriveContent } from '../model/resultL
 import { BaseApi } from './base.api';
 
 /**
-* IntegrationDriveApi service.
-*/
+ * IntegrationDriveApi service.
+ */
 export class IntegrationDriveApi extends BaseApi {
     /**
-    * Drive Authorization
-    * Returns Drive OAuth HTML Page
-    *
-    * @return Promise<{}>
-    */
+     * Drive Authorization
+     * Returns Drive OAuth HTML Page
+     *
+     * @return Promise<{}>
+     */
     confirmAuthorisation(): Promise<any> {
         return this.get({
             path: '/api/enterprise/integration/google-drive/confirm-auth-request',
@@ -36,14 +36,14 @@ export class IntegrationDriveApi extends BaseApi {
     }
 
     /**
-    * List files and folders
-    *
-    * @param opts Optional parameters
-    * @param opts.filter {string} filter
-    * @param opts.parent {string} parent
-    * @param opts.currentFolderOnly {boolean} currentFolderOnly
-    * @return Promise<ResultListDataRepresentationGoogleDriveContent>
-    */
+     * List files and folders
+     *
+     * @param opts Optional parameters
+     * @param opts.filter {string} filter
+     * @param opts.parent {string} parent
+     * @param opts.currentFolderOnly {boolean} currentFolderOnly
+     * @return Promise<ResultListDataRepresentationGoogleDriveContent>
+     */
     getFiles(opts?: { filter?: string; parent?: string; currentFolderOnly?: boolean }): Promise<ResultListDataRepresentationGoogleDriveContent> {
         return this.get({
             path: '/api/enterprise/integration/google-drive/files',

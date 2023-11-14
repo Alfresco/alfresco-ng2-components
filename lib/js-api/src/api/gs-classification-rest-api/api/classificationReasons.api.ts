@@ -28,13 +28,13 @@ import { GsFieldsQuery, GsPagingQuery } from './types';
  */
 export class ClassificationReasonsApi extends BaseApi {
     /**
-    * Creates a new classification reason.
-    *
-    * **Note:** You can create more than one reason by specifying a list of reasons in the JSON body.
-    *
-    * @param classificationReason Classification reason
-    * @returns Promise<ClassificationReasonEntry>
-    */
+     * Creates a new classification reason.
+     *
+     * **Note:** You can create more than one reason by specifying a list of reasons in the JSON body.
+     *
+     * @param classificationReason Classification reason
+     * @returns Promise<ClassificationReasonEntry>
+     */
     createClassificationReason(classificationReason: ClassificationReasonBody): Promise<ClassificationReasonEntry> {
         throwIfNotDefined(classificationReason, 'classificationReason');
 
@@ -47,7 +47,9 @@ export class ClassificationReasonsApi extends BaseApi {
 
     /**
      * Deletes the classification reason  **classificationReasonId**.
-     * You can't delete a classification reason that is being used to classify content. There must be at least one classification reason.
+     *
+     * You can't delete a classification reason that is being used to classify content.
+     * There must be at least one classification reason.
      *
      * @param classificationReasonId The identifier for the classification reason
      * @returns Promise<{}>

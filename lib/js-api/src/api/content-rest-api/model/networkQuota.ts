@@ -17,9 +17,8 @@
 
 /**
  * Limits and usage of each quota. A network will have quotas for File space,
-the number of sites in the network, the number of people in the network,
-and the number of network administrators
-
+ * the number of sites in the network, the number of people in the network,
+ * and the number of network administrators
  */
 export class NetworkQuota {
     id: string;
@@ -31,5 +30,4 @@ export class NetworkQuota {
             Object.assign(this, input);
         }
     }
-
 }

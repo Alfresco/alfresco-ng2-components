@@ -26,28 +26,13 @@ import { throwIfNotDefined } from '../../../assert';
  */
 export class AuthenticationApi extends BaseApi {
     /**
-    * Create ticket (login)
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Logs in and returns the new authentication ticket.
-
-The userId and password properties are mandatory in the request body. For example:
-JSON
-{
-    \"userId\": \"jbloggs\",
-    \"password\": \"password\"
-}
-
-To use the ticket in future requests you should pass it in the request header.
-For example using Javascript:
-  Javascript
-    request.setRequestHeader (\"Authorization\", \"Basic \" + btoa(ticket));
-
-    *
-    * @param ticketBodyCreate The user credential.
-    * @returns Promise<TicketEntry>
-    */
+     * Create ticket (login)
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param ticketBodyCreate The user credential.
+     * @returns Promise<TicketEntry>
+     */
     createTicket(ticketBodyCreate: TicketBody): Promise<TicketEntry> {
         throwIfNotDefined(ticketBodyCreate, 'ticketBodyCreate');
 
@@ -60,9 +45,6 @@ For example using Javascript:
 
     /**
      * Get ticket (login)
-     *
-
-     Logs in and returns the new authentication ticket.
      *
      * @returns Promise<TicketEntry>
      */
@@ -77,7 +59,6 @@ For example using Javascript:
      * Delete ticket (logout)
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     * Deletes logged in ticket (logout).
      *
      * @returns Promise<{}>
      */

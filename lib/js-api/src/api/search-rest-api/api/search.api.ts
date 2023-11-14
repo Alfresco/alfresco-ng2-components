@@ -32,13 +32,13 @@ export class SearchApi extends ApiClient {
     }
 
     /**
-    * Searches Alfresco
-    *
-    * **Note**: this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * @param queryBody Generic query API
-    * @returns Promise<ResultSetPaging>
-    */
+     * Searches Alfresco
+     *
+     * **Note**: this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param queryBody Generic query API
+     * @returns Promise<ResultSetPaging>
+     */
     search(queryBody: SearchRequest): Promise<ResultSetPaging> {
         throwIfNotDefined(queryBody, 'queryBody');
 

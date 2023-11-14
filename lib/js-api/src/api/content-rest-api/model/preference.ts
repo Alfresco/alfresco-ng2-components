@@ -17,7 +17,6 @@
 
 /**
  * A specific preference.
-
  */
 export class Preference {
     /**
@@ -34,5 +33,4 @@ export class Preference {
             Object.assign(this, input);
         }
     }
-
 }

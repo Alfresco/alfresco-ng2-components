@@ -20,9 +20,8 @@ import { NetworkQuota } from './networkQuota';
 
 /**
  * A network is the group of users and sites that belong to an organization.
-Networks are organized by email domain. When a user signs up for an
-Alfresco account , their email domain becomes their Home Network.
-
+ * Networks are organized by email domain. When a user signs up for an
+ * Alfresco account , their email domain becomes their Home Network.
  */
 export class PersonNetwork {
     /**
@@ -48,7 +47,6 @@ export class PersonNetwork {
             }
         }
     }
-
 }
 export namespace PersonNetwork {
     export type SubscriptionLevelEnum = 'Free' | 'Standard' | 'Enterprise';

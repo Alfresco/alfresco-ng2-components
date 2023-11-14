@@ -30,16 +30,16 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
  */
 export class RecordFoldersApi extends BaseApi {
     /**
-    * Create a record
-    *
-    * Create a record as a primary child of **recordFolderId**.
-    * This endpoint supports both JSON and multipart/form-data (file upload).
-    *
-    * @param recordFolderId The identifier of a record folder.
-    * @param recordBodyCreate The record information to create. This field is ignored for multipart/form-data content uploads.
-    * @param opts Optional parameters
-    * @returns Promise<RecordEntry>
-    */
+     * Create a record
+     *
+     * Create a record as a primary child of **recordFolderId**.
+     * This endpoint supports both JSON and multipart/form-data (file upload).
+     *
+     * @param recordFolderId The identifier of a record folder.
+     * @param recordBodyCreate The record information to create. This field is ignored for multipart/form-data content uploads.
+     * @param opts Optional parameters
+     * @returns Promise<RecordEntry>
+     */
     createRecordFolderChild(recordFolderId: string, recordBodyCreate: RMNodeBodyCreate, opts?: RecordsIncludeQuery): Promise<RecordEntry> {
         throwIfNotDefined(recordFolderId, 'recordFolderId');
         throwIfNotDefined(recordBodyCreate, 'recordBodyCreate');
@@ -63,11 +63,12 @@ export class RecordFoldersApi extends BaseApi {
     }
 
     /**
-    * Deletes record folder **recordFolderId**. Deleted file plan components cannot be recovered, they are deleted permanently.
-    *
-    * @param recordFolderId The identifier of a record folder.
-    * @returns Promise<{}>
-    */
+     * Deletes record folder **recordFolderId**.
+     * Deleted file plan components cannot be recovered, they are deleted permanently.
+     *
+     * @param recordFolderId The identifier of a record folder.
+     * @returns Promise<{}>
+     */
     deleteRecordFolder(recordFolderId: string): Promise<void> {
         throwIfNotDefined(recordFolderId, 'recordFolderId');
 
@@ -114,8 +115,6 @@ export class RecordFoldersApi extends BaseApi {
     /**
      * List records
      *
-     * Gets a list of records.
-     *
      * Minimal information for each record is returned by default.
      * The list of records includes primary children and secondary children, if there are any.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
@@ -160,17 +159,21 @@ export class RecordFoldersApi extends BaseApi {
     }
 
     /**
-    * Updates record folder **recordFolderId**. For example, you can rename a record folder:
-    *
-    * **Note:** if you want to add or remove aspects, then you must use **GET /record-folders/{recordFolderId}** first to get the complete set of *aspectNames*.
-    * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-    *
-    * @param recordFolderId The identifier of a record folder.
-    * @param recordFolderBodyUpdate The record folder information to update.
-    * @param opts Optional parameters
-    * @returns Promise<RecordFolderEntry>
-    */
-    updateRecordFolder(recordFolderId: string, recordFolderBodyUpdate: FilePlanComponentBodyUpdate, opts?: RecordsIncludeQuery): Promise<RecordFolderEntry> {
+     * Updates record folder **recordFolderId**. For example, you can rename a record folder:
+     *
+     * **Note:** if you want to add or remove aspects, then you must use **GET /record-folders/{recordFolderId}** first to get the complete set of *aspectNames*.
+     * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
+     *
+     * @param recordFolderId The identifier of a record folder.
+     * @param recordFolderBodyUpdate The record folder information to update.
+     * @param opts Optional parameters
+     * @returns Promise<RecordFolderEntry>
+     */
+    updateRecordFolder(
+        recordFolderId: string,
+        recordFolderBodyUpdate: FilePlanComponentBodyUpdate,
+        opts?: RecordsIncludeQuery
+    ): Promise<RecordFolderEntry> {
         throwIfNotDefined(recordFolderId, 'recordFolderId');
         throwIfNotDefined(recordFolderBodyUpdate, 'recordFolderBodyUpdate');
 

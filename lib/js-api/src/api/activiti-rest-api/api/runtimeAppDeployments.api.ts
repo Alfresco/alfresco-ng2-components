@@ -21,15 +21,15 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* RuntimeAppDeploymentsApi service.
-*/
+ * RuntimeAppDeploymentsApi service.
+ */
 export class RuntimeAppDeploymentsApi extends BaseApi {
     /**
-    * Remove an app deployment
-    *
-    * @param appDeploymentId appDeploymentId
-    * @return Promise<{}>
-    */
+     * Remove an app deployment
+     *
+     * @param appDeploymentId appDeploymentId
+     * @return Promise<{}>
+     */
     deleteAppDeployment(appDeploymentId: number): Promise<any> {
         throwIfNotDefined(appDeploymentId, 'appDeploymentId');
 
@@ -44,11 +44,11 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
     }
 
     /**
-    * Export the app archive for a deployment
-    *
-    * @param deploymentId deploymentId
-    * @return Promise<{}>
-    */
+     * Export the app archive for a deployment
+     *
+     * @param deploymentId deploymentId
+     * @return Promise<{}>
+     */
     exportAppDefinition(deploymentId: string): Promise<any> {
         throwIfNotDefined(deploymentId, 'deploymentId');
 
@@ -59,18 +59,18 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
         const accepts = ['application/zip'];
 
         return this.get({
-            path:  '/api/enterprise/export-app-deployment/{deploymentId}',
+            path: '/api/enterprise/export-app-deployment/{deploymentId}',
             pathParams,
             accepts
         });
     }
 
     /**
-    * Query app deployments
-    *
-    * @param opts Optional parameters
-    * @return Promise<ResultListDataRepresentationAppDeploymentRepresentation>
-    */
+     * Query app deployments
+     *
+     * @param opts Optional parameters
+     * @return Promise<ResultListDataRepresentationAppDeploymentRepresentation>
+     */
     getAppDefinitions(opts?: {
         nameLike?: string;
         tenantId?: number;
@@ -88,11 +88,11 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
     }
 
     /**
-    * Get an app deployment
-    *
-    * @param appDeploymentId appDeploymentId
-    * @return Promise<AppDeploymentRepresentation>
-    */
+     * Get an app deployment
+     *
+     * @param appDeploymentId appDeploymentId
+     * @return Promise<AppDeploymentRepresentation>
+     */
     getAppDeployment(appDeploymentId: number): Promise<AppDeploymentRepresentation> {
         throwIfNotDefined(appDeploymentId, 'appDeploymentId');
 
@@ -108,12 +108,12 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
     }
 
     /**
-    * Get an app by deployment ID or DMN deployment ID
-    * Either a deploymentId or a dmnDeploymentId must be provided
-    *
-    * @param opts Optional parameters
-    * @return Promise<AppDeploymentRepresentation>
-    */
+     * Get an app by deployment ID or DMN deployment ID
+     * Either a deploymentId or a dmnDeploymentId must be provided
+     *
+     * @param opts Optional parameters
+     * @return Promise<AppDeploymentRepresentation>
+     */
     getRuntimeAppDeploymentByDeployment(opts?: { deploymentId?: string; dmnDeploymentId?: number }): Promise<AppDeploymentRepresentation> {
         return this.get({
             path: '/api/enterprise/runtime-app-deployment',
@@ -121,5 +121,4 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
             returnType: AppDeploymentRepresentation
         });
     }
-
 }

@@ -20,15 +20,15 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* Endpoints service.
-*/
+ * Endpoints service.
+ */
 export class EndpointsApi extends BaseApi {
     /**
-    * Get an endpoint configuration
-    *
-    * @param endpointConfigurationId endpointConfigurationId
-    * @return Promise<EndpointConfigurationRepresentation>
-    */
+     * Get an endpoint configuration
+     *
+     * @param endpointConfigurationId endpointConfigurationId
+     * @return Promise<EndpointConfigurationRepresentation>
+     */
     getEndpointConfiguration(endpointConfigurationId: number): Promise<EndpointConfigurationRepresentation> {
         throwIfNotDefined(endpointConfigurationId, 'endpointConfigurationId');
 
@@ -44,10 +44,10 @@ export class EndpointsApi extends BaseApi {
     }
 
     /**
-    * List endpoint configurations
-    *
-    * @return Promise<EndpointConfigurationRepresentation>
-    */
+     * List endpoint configurations
+     *
+     * @return Promise<EndpointConfigurationRepresentation>
+     */
     getEndpointConfigurations(): Promise<EndpointConfigurationRepresentation> {
         return this.get({
             path: '/api/enterprise/editor/endpoints',
