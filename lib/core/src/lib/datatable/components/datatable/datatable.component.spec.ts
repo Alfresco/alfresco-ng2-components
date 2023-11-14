@@ -17,7 +17,7 @@
 
 import { Component, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';

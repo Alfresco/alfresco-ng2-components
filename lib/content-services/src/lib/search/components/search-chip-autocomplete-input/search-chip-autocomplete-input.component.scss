@@ -2,23 +2,23 @@ adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-appearance-outline .mat-form-field-outline {
         top: 0;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-infix {
         border: none;
     }
 
-    .mat-chip.adf-option-chips {
+    .mat-mdc-chip.adf-option-chips {
         border: 1px solid var(--theme-text-color);
         border-radius: 10px;
         background-color: var(--theme-primary-color-default-contrast);
         height: auto;
         word-break: break-word;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
     .mat-chip-remove.adf-option-chips-delete-button {
         font-size: 13px;
         height: 13px;
@@ -30,21 +30,22 @@ adf-search-chip-autocomplete-input {
             width: 13px;
         }
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
     .mat-chip-list-wrapper {
         min-height: 40px;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-wrapper {
         padding: 0;
     }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of tooltip that may no longer apply for the MDC version. */
 .mat-tooltip-hide {
     display: none;
 }
 
-.mat-option.adf-autocomplete-added-option {
+.mat-mdc-option.adf-autocomplete-added-option {
     background: var(--adf-theme-mat-grey-color-a200);
     color: var(--adf-theme-primary-300);
 }

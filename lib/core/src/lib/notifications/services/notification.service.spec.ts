@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatLegacySnackBarConfig as MatSnackBarConfig, MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
+import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
