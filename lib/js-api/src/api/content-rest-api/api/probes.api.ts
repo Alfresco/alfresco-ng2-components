@@ -41,7 +41,7 @@ The liveness probe should then be used to check the repository is still respondi
 * -ready-
 * -live-
 
-    * @return Promise<ProbeEntry>
+    * @returns Promise<ProbeEntry>
     */
     getProbe(probeId: string): Promise<ProbeEntry> {
         throwIfNotDefined(probeId, 'probeId');

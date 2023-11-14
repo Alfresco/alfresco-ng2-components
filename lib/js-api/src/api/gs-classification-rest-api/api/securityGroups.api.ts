@@ -31,7 +31,7 @@ export class SecurityGroupsApi extends BaseApi {
      * Get All security groups
      *
      * @param opts Optional parameters
-     * @return Promise<SecurityGroupPaging>
+     * @returns Promise<SecurityGroupPaging>
      */
     getSecurityGroups(opts?: GsPagingQuery & GsGroupInclude): Promise<SecurityGroupPaging> {
         return this.get({
@@ -46,7 +46,7 @@ export class SecurityGroupsApi extends BaseApi {
      *
      * @param securityGroupBody securityGroupBody.
      * @param opts Optional parameters
-     * @return Promise<SecurityGroupEntry>
+     * @returns Promise<SecurityGroupEntry>
      */
     createSecurityGroup(securityGroupBody: SecurityGroupBody, opts?: GsGroupInclude): Promise<SecurityGroupEntry> {
         return this.post({
@@ -62,7 +62,7 @@ export class SecurityGroupsApi extends BaseApi {
      *
      * @param securityGroupId The Key of Security Group id for which info is required
      * @param opts Optional parameters
-     * @return Promise<SecurityGroupEntry>
+     * @returns Promise<SecurityGroupEntry>
      */
     getSecurityGroupInfo(securityGroupId: string, opts?: GsGroupInclude): Promise<SecurityGroupEntry> {
         const pathParams = {
@@ -83,7 +83,7 @@ export class SecurityGroupsApi extends BaseApi {
      * @param securityGroupId The Key of Security Group id for which info is required
      * @param securityGroupBody SecurityGroupBody
      * @param opts Optional parameters
-     * @return Promise<SecurityGroupEntry>
+     * @returns Promise<SecurityGroupEntry>
      */
     updateSecurityGroup(securityGroupId: string, securityGroupBody: SecurityGroupBody, opts?: GsGroupInclude): Promise<SecurityGroupEntry> {
         const pathParams = {
@@ -103,7 +103,7 @@ export class SecurityGroupsApi extends BaseApi {
      * Delete security group
      *
      * @param securityGroupId The key for the security group id.
-     * @return Promise<SecurityMarkEntry>
+     * @returns Promise<SecurityMarkEntry>
      */
     deleteSecurityGroup(securityGroupId: string): Promise<void> {
         const pathParams = { securityGroupId };

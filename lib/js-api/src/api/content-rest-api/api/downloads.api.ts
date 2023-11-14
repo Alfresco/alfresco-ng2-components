@@ -42,7 +42,7 @@ The cancel operation is done asynchronously.
 
     *
     * @param downloadId The identifier of a download node.
-    * @return Promise<{}>
+    * @returns Promise<{}>
     */
     cancelDownload(downloadId: string): Promise<any> {
         throwIfNotDefined(downloadId, 'downloadId');
@@ -89,7 +89,7 @@ If the API method also supports the **include**
 parameter, then the fields specified in the **include**
 parameter are returned in addition to those specified in the **fields** parameter.
 
-    * @return Promise<DownloadEntry>
+    * @returns Promise<DownloadEntry>
     */
     createDownload(downloadBodyCreate: DownloadBodyCreate, opts?: { fields?: string[] }): Promise<DownloadEntry> {
         throwIfNotDefined(downloadBodyCreate, 'downloadBodyCreate');
@@ -127,7 +127,7 @@ If the API method also supports the **include**
 parameter, then the fields specified in the **include**
 parameter are returned in addition to those specified in the **fields** parameter.
 
-    * @return Promise<DownloadEntry>
+    * @returns Promise<DownloadEntry>
     */
     getDownload(downloadId: string, opts?: { fields?: string[] }): Promise<DownloadEntry> {
         throwIfNotDefined(downloadId, 'downloadId');

@@ -36,7 +36,7 @@ export class GsSitesApi extends BaseApi {
      * @param siteBodyCreate The site details
      * @param opts Optional parameters
      * @param opts.skipAddToFavorites Flag to indicate whether the RM site should not be added to the user's site favorites. (default to false)
-     * @return Promise<RMSiteEntry>
+     * @returns Promise<RMSiteEntry>
      */
     createRMSite(siteBodyCreate: RMSiteBodyCreate, opts?: { skipAddToFavorites?: boolean }): Promise<RMSiteEntry> {
         throwIfNotDefined(siteBodyCreate, 'siteBodyCreate');
@@ -86,7 +86,7 @@ export class GsSitesApi extends BaseApi {
      *
      * @param siteBodyUpdate The RM site information to update.
      * @param opts Optional parameters
-     * @return Promise<RMSiteEntry>
+     * @returns Promise<RMSiteEntry>
      */
     updateRMSite(siteBodyUpdate: RMSiteBodyUpdate, opts?: RecordsFieldsQuery): Promise<RMSiteEntry> {
         throwIfNotDefined(siteBodyUpdate, 'siteBodyUpdate');

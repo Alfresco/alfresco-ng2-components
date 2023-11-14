@@ -40,7 +40,7 @@ export class RatingsApi extends BaseApi {
      * \"myRating\": true
      * }
      * @param opts Optional parameters
-     * @return Promise<RatingEntry>
+     * @returns Promise<RatingEntry>
      */
     createRating(nodeId: string, ratingBodyCreate: RatingBody, opts?: ContentFieldsQuery): Promise<RatingEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -70,7 +70,7 @@ export class RatingsApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param ratingId The identifier of a rating.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteRating(nodeId: string, ratingId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -95,7 +95,7 @@ export class RatingsApi extends BaseApi {
      * @param nodeId The identifier of a node.
      * @param ratingId The identifier of a rating.
      * @param opts Optional parameters
-     * @return Promise<RatingEntry>
+     * @returns Promise<RatingEntry>
      */
     getRating(nodeId: string, ratingId: string, opts?: ContentFieldsQuery): Promise<RatingEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -125,7 +125,7 @@ export class RatingsApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
-     * @return Promise<RatingPaging>
+     * @returns Promise<RatingPaging>
      */
     listRatings(nodeId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<RatingPaging> {
         throwIfNotDefined(nodeId, 'nodeId');

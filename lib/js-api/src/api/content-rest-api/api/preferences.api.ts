@@ -35,7 +35,7 @@ export class PreferencesApi extends BaseApi {
     * @param personId The identifier of a person.
     * @param preferenceName The name of the preference.
     * @param opts Optional parameters
-    * @return Promise<PreferenceEntry>
+    * @returns Promise<PreferenceEntry>
     */
     getPreference(personId: string, preferenceName: string, opts?: ContentFieldsQuery): Promise<PreferenceEntry> {
         throwIfNotDefined(personId, 'personId');
@@ -68,7 +68,7 @@ export class PreferencesApi extends BaseApi {
      *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
-     * @return Promise<PreferencePaging>
+     * @returns Promise<PreferencePaging>
      */
     listPreferences(personId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<PreferencePaging> {
         throwIfNotDefined(personId, 'personId');

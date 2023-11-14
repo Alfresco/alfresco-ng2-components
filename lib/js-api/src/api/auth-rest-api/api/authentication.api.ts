@@ -22,8 +22,8 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
 /**
-* Authentication service.
-*/
+ * Authentication service.
+ */
 export class AuthenticationApi extends BaseApi {
     /**
     * Create ticket (login)
@@ -46,7 +46,7 @@ For example using Javascript:
 
     *
     * @param ticketBodyCreate The user credential.
-    * @return Promise<TicketEntry>
+    * @returns Promise<TicketEntry>
     */
     createTicket(ticketBodyCreate: TicketBody): Promise<TicketEntry> {
         throwIfNotDefined(ticketBodyCreate, 'ticketBodyCreate');
@@ -64,7 +64,7 @@ For example using Javascript:
 
      Logs in and returns the new authentication ticket.
      *
-     * @return Promise<TicketEntry>
+     * @returns Promise<TicketEntry>
      */
     getTicket(): Promise<TicketEntry> {
         return this.get({
@@ -74,34 +74,31 @@ For example using Javascript:
     }
 
     /**
-        * Delete ticket (logout)
-        *
-        * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-    Deletes logged in ticket (logout).
-
-        *
-        * @return Promise<{}>
-        */
+     * Delete ticket (logout)
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     * Deletes logged in ticket (logout).
+     *
+     * @returns Promise<{}>
+     */
     deleteTicket(): Promise<void> {
         return this.delete({
             path: '/tickets/-me-'
         });
     }
+
     /**
-        * Validate ticket
-        *
-        * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-    Validates the specified ticket (derived from Authorization header) is still valid.
-
-    For example, you can pass the Authorization request header using Javascript:
-      Javascript
-        request.setRequestHeader (\"Authorization\", \"Basic \" + btoa(ticket));
-
-        *
-        * @return Promise<ValidTicketEntry>
-        */
+     * Validate ticket
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Validates the specified ticket (derived from Authorization header) is still valid.
+     * For example, you can pass the Authorization request header using Javascript:
+     * Javascript
+     * request.setRequestHeader (\"Authorization\", \"Basic \" + btoa(ticket));
+     *
+     * @returns Promise<ValidTicketEntry>
+     */
     validateTicket(): Promise<ValidTicketEntry> {
         return this.get({
             path: '/tickets/-me-',

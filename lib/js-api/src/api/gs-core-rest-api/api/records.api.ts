@@ -34,7 +34,7 @@ export class RecordsApi extends BaseApi {
      *
      * @param recordId The identifier of a record.
      * @param opts Optional parameters
-     * @return Promise<RecordEntry>
+     * @returns Promise<RecordEntry>
      */
     completeRecord(recordId: string, opts?: RecordsIncludeQuery): Promise<RecordEntry> {
         throwIfNotDefined(recordId, 'recordId');
@@ -60,7 +60,7 @@ export class RecordsApi extends BaseApi {
      * Delete a record. Deleted file plan components cannot be recovered, they are deleted permanently.
      *
      * @param recordId The identifier of a record.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteRecord(recordId: string): Promise<void> {
         throwIfNotDefined(recordId, 'recordId');
@@ -85,7 +85,7 @@ export class RecordsApi extends BaseApi {
      * @param recordId The identifier of a record.
      * @param nodeBodyFile The target record folder id
      * @param opts Optional parameters
-     * @return Promise<RecordEntry>
+     * @returns Promise<RecordEntry>
      */
     fileRecord(recordId: string, nodeBodyFile: RequestBodyFile, opts?: RecordsIncludeQuery): Promise<RecordEntry> {
         throwIfNotDefined(recordId, 'recordId');
@@ -117,7 +117,7 @@ export class RecordsApi extends BaseApi {
      *
      * @param recordId The identifier of a record.
      * @param opts Optional parameters
-     * @return Promise<RecordEntry>
+     * @returns Promise<RecordEntry>
      */
     getRecord(recordId: string, opts?: RecordsIncludeQuery): Promise<RecordEntry> {
         throwIfNotDefined(recordId, 'recordId');
@@ -154,7 +154,7 @@ export class RecordsApi extends BaseApi {
      * the attachment will be returned in the response. (default to true)
      * @param opts.ifModifiedSince Only returns the content if it has been modified since the date provided.
      * Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     getRecordContent(
         recordId: string,
@@ -210,7 +210,7 @@ export class RecordsApi extends BaseApi {
      * @param recordId The identifier of a record.
      * @param recordBodyUpdate The record information to update.
      * @param opts Optional parameters
-     * @return Promise<RecordEntry>
+     * @returns Promise<RecordEntry>
      */
     updateRecord(recordId: string, recordBodyUpdate: FilePlanComponentBodyUpdate, opts?: RecordsIncludeQuery): Promise<RecordEntry> {
         throwIfNotDefined(recordId, 'recordId');

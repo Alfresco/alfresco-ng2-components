@@ -31,7 +31,7 @@ export class UserFiltersApi extends BaseApi {
      * Create a process instance filter
      *
      * @param userProcessInstanceFilterRepresentation userProcessInstanceFilterRepresentation
-     * @return Promise<UserProcessInstanceFilterRepresentation>
+     * @returns Promise<UserProcessInstanceFilterRepresentation>
      */
     createUserProcessInstanceFilter(userProcessInstanceFilterRepresentation: UserProcessInstanceFilterRepresentation): Promise<UserProcessInstanceFilterRepresentation> {
         throwIfNotDefined(userProcessInstanceFilterRepresentation, 'userProcessInstanceFilterRepresentation');
@@ -47,7 +47,7 @@ export class UserFiltersApi extends BaseApi {
      * Create a task filter
      *
      * @param userTaskFilterRepresentation userTaskFilterRepresentation
-     * @return Promise<UserTaskFilterRepresentation>
+     * @returns Promise<UserTaskFilterRepresentation>
      */
     createUserTaskFilter(userTaskFilterRepresentation: UserTaskFilterRepresentation): Promise<UserTaskFilterRepresentation> {
         throwIfNotDefined(userTaskFilterRepresentation, 'userTaskFilterRepresentation');
@@ -63,7 +63,7 @@ export class UserFiltersApi extends BaseApi {
      * Delete a process instance filter
      *
      * @param userFilterId userFilterId
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteUserProcessInstanceFilter(userFilterId: number): Promise<void> {
         throwIfNotDefined(userFilterId, 'userFilterId');
@@ -82,7 +82,7 @@ export class UserFiltersApi extends BaseApi {
      * Delete a task filter
      *
      * @param userFilterId userFilterId
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteUserTaskFilter(userFilterId: number): Promise<void> {
         throwIfNotDefined(userFilterId, 'userFilterId');
@@ -101,7 +101,7 @@ export class UserFiltersApi extends BaseApi {
      * Get a process instance filter
      *
      * @param userFilterId userFilterId
-     * @return Promise<UserProcessInstanceFilterRepresentation>
+     * @returns Promise<UserProcessInstanceFilterRepresentation>
      */
     getUserProcessInstanceFilter(userFilterId: number): Promise<UserProcessInstanceFilterRepresentation> {
         throwIfNotDefined(userFilterId, 'userFilterId');
@@ -123,7 +123,7 @@ export class UserFiltersApi extends BaseApi {
      * Returns filters for the current user, optionally filtered by *appId*.
      *
      * @param opts Optional parameters
-     * @return Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation>
+     * @returns Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation>
      */
     getUserProcessInstanceFilters(opts?: { appId?: number }): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
         return this.get({
@@ -137,7 +137,7 @@ export class UserFiltersApi extends BaseApi {
      * Get a task filter
      *
      * @param userFilterId userFilterId
-     * @return Promise<UserTaskFilterRepresentation>
+     * @returns Promise<UserTaskFilterRepresentation>
      */
     getUserTaskFilter(userFilterId: number): Promise<UserTaskFilterRepresentation> {
         throwIfNotDefined(userFilterId, 'userFilterId');
@@ -159,7 +159,7 @@ export class UserFiltersApi extends BaseApi {
      * Returns filters for the current user, optionally filtered by *appId*.
      *
      * @param opts Optional parameters
-     * @return Promise<ResultListDataRepresentationUserTaskFilterRepresentation>
+     * @returns Promise<ResultListDataRepresentationUserTaskFilterRepresentation>
      */
     getUserTaskFilters(opts?: { appId?: number }): Promise<ResultListDataRepresentationUserTaskFilterRepresentation> {
         return this.get({
@@ -173,7 +173,7 @@ export class UserFiltersApi extends BaseApi {
      * Re-order the list of user process instance filters
      *
      * @param filterOrderRepresentation filterOrderRepresentation
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     orderUserProcessInstanceFilters(filterOrderRepresentation: UserFilterOrderRepresentation): Promise<any> {
         throwIfNotDefined(filterOrderRepresentation, 'filterOrderRepresentation');
@@ -188,7 +188,7 @@ export class UserFiltersApi extends BaseApi {
      * Re-order the list of user task filters
      *
      * @param filterOrderRepresentation filterOrderRepresentation
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     orderUserTaskFilters(filterOrderRepresentation: UserFilterOrderRepresentation): Promise<any> {
         throwIfNotDefined(filterOrderRepresentation, 'filterOrderRepresentation');
@@ -204,7 +204,7 @@ export class UserFiltersApi extends BaseApi {
      *
      * @param userFilterId userFilterId
      * @param userProcessInstanceFilterRepresentation userProcessInstanceFilterRepresentation
-     * @return Promise<UserProcessInstanceFilterRepresentation>
+     * @returns Promise<UserProcessInstanceFilterRepresentation>
      */
     updateUserProcessInstanceFilter(
         userFilterId: number,
@@ -230,7 +230,7 @@ export class UserFiltersApi extends BaseApi {
      *
      * @param userFilterId userFilterId
      * @param userTaskFilterRepresentation userTaskFilterRepresentation
-     * @return Promise<UserTaskFilterRepresentation>
+     * @returns Promise<UserTaskFilterRepresentation>
      */
     updateUserTaskFilter(userFilterId: number, userTaskFilterRepresentation: UserTaskFilterRepresentation): Promise<UserTaskFilterRepresentation> {
         throwIfNotDefined(userFilterId, 'userFilterId');

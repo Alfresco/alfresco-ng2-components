@@ -67,11 +67,9 @@ export class TypesApi extends BaseApi {
     * Get a type
     *
     * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-Get information for type **typeId**.
-
     *
     * @param typeId The Qname of a type(prefix:name) e.g 'cm:content'
-    * @return Promise<TypeEntry>
+    * @returns Promise<TypeEntry>
     */
     getType(typeId: string): Promise<TypeEntry> {
         throwIfNotDefined(typeId, 'typeId');
@@ -91,75 +89,9 @@ Get information for type **typeId**.
     * List types
     *
     * **Note:** This is available in Alfresco 7.0.0 and newer versions.
-
-Gets a list of types from the data dictionary. The System types will be ignored by default.
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 0,
-      \"hasMoreItems\": true,
-      \"totalItems\": 0,
-      \"skipCount\": 0,
-      \"maxItems\": 0
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          \"associations\": [],
-          \"isArchive\": true,
-          \"mandatoryAspects\": [
-              \"cm:auditable\",
-              \"sys:referenceable\",
-              \"sys:localized\"
-          ],
-          \"includedInSupertypeQuery\": true,
-          \"description\": \"Base Content Object\",
-          \"isContainer\": false,
-          \"model\": {
-              \"id\": \"cm:contentmodel\",
-              \"author\": \"Alfresco\",
-              \"description\": \"Alfresco Content Domain Model\",
-              \"namespaceUri\": \"http://www.alfresco.org/model/content/1.0\",
-              \"namespacePrefix\": \"cm\"
-          },
-          \"id\": \"cm:content\",
-          \"title\": \"Content\",
-          \"parentId\": \"cm:cmobject\"
-          \"properties\": [
-            {
-              \"id\": \"cm:name\",
-              \"title\": \"Name\",
-              \"description\": \"Name\",
-              \"dataType\": \"d:text\",
-              \"isMultiValued\": false,
-              \"isMandatory\": true,
-              \"isMandatoryEnforced\": true
-              \"isProtected\": false
-              ...
-            },
-            {
-              ...
-            }
-          ]
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      },
-    ]
-  }
-}
     *
     * @param opts Optional parameters
-    * @return Promise<TypePaging>
+    * @returns Promise<TypePaging>
     */
     listTypes(opts?: ListTypesOpts): Promise<TypePaging> {
         const queryParams = {

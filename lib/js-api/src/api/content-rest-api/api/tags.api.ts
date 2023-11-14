@@ -30,58 +30,10 @@ export class TagsApi extends BaseApi {
     /**
     * Create a tag for a node
     *
-    * Creates a tag on the node **nodeId**. You specify the tag in a JSON body like this:
-
-JSON
-{
-  \"tag\":\"test-tag-1\"
-}
-
-**Note:** You can create more than one tag by
-specifying a list of tags in the JSON body like this:
-
-JSON
-[
-  {
-    \"tag\":\"test-tag-1\"
-  },
-  {
-    \"tag\":\"test-tag-2\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-         ...
-        }
-      }
-    ]
-  }
-}
-
-    *
     * @param nodeId The identifier of a node.
     * @param tagBodyCreate The new tag
     * @param opts Optional parameters
-    * @return Promise<TagEntry>
+    * @returns Promise<TagEntry>
     */
     createTagForNode(nodeId: string, tagBodyCreate: TagBody[], opts?: ContentFieldsQuery): Promise<TagEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -109,7 +61,7 @@ JSON
      *
      * @param nodeId The identifier of a node.
      * @param tagId The identifier of a tag.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteTagFromNode(nodeId: string, tagId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -131,7 +83,7 @@ JSON
      *
      * @param tagId The identifier of a tag.
      * @param opts Optional parameters
-     * @return Promise<TagEntry>
+     * @returns Promise<TagEntry>
      */
     getTag(tagId: string, opts?: ContentFieldsQuery): Promise<TagEntry> {
         throwIfNotDefined(tagId, 'tagId');
@@ -155,12 +107,10 @@ JSON
     /**
      * List tags
      *
-     * Gets a list of tags in this repository.
-     *
      * @param opts Optional parameters
      * @param opts.tag Name or pattern for which tag is returned. Example of pattern: *test* which returns tags like 'my test 1'
      * @param opts.matching Switches filtering to pattern mode instead of exact mode.
-     * @return Promise<TagPaging>
+     * @returns Promise<TagPaging>
      */
     listTags(opts?: { tag?: string; matching?: boolean } & ContentPagingQuery & ContentIncludeQuery & ContentFieldsQuery): Promise<TagPaging> {
         opts = opts || {};
@@ -192,7 +142,7 @@ JSON
      *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
-     * @return Promise<TagPaging>
+     * @returns Promise<TagPaging>
      */
     listTagsForNode(nodeId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<TagPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -221,7 +171,7 @@ JSON
      * @param tagId The identifier of a tag.
      * @param tagBodyUpdate The updated tag
      * @param opts Optional parameters
-     * @return Promise<TagEntry>
+     * @returns Promise<TagEntry>
      */
     updateTag(tagId: string, tagBodyUpdate: TagBody, opts?: ContentFieldsQuery): Promise<TagEntry> {
         throwIfNotDefined(tagId, 'tagId');
@@ -245,12 +195,10 @@ JSON
     }
 
     /**
-     * Delete a tag
-     *
      * Deletes a tag by **tagId**. This will cause the tag to be removed from all nodes.
      *
      * @param tagId The identifier of a tag.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteTag(tagId: string): Promise<void> {
         throwIfNotDefined(tagId, 'tagId');
@@ -266,12 +214,10 @@ JSON
     }
 
     /**
-     * Create tags
-     *
      * Create specified by **tags** list of tags.
      *
      * @param tags List of tags to create.
-     * @return Promise<TagEntry[]>
+     * @returns Promise<TagEntry[]>
      */
     createTags(tags: TagBody[]): Promise<TagEntry[]> {
         throwIfNotDefined(tags, 'tags');
@@ -287,8 +233,7 @@ JSON
      *
      * @param nodeId Id of node to which tags should be assigned.
      * @param tags List of tags to create and assign or just assign if they already exist.
-     *
-     * @return Promise<TagPaging>
+     * @returns Promise<TagPaging>
      */
     assignTagsToNode(nodeId: string, tags: TagBody[]): Promise<TagPaging> {
         return this.post({
@@ -304,8 +249,7 @@ JSON
      *
      * @param nodeId Id of node to which tags should be assigned.
      * @param tag List of tags to create and assign or just assign if they already exist.
-     *
-     * @return Promise<TagEntry>
+     * @returns Promise<TagEntry>
      */
     assignTagToNode(nodeId: string, tag: TagBody): Promise<TagEntry> {
         return this.post({

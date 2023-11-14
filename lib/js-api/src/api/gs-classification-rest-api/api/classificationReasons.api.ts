@@ -25,57 +25,15 @@ import { GsFieldsQuery, GsPagingQuery } from './types';
 
 /**
  * ClassificationReasonsApi service.
- *
- * @module ClassificationReasonsApi
  */
 export class ClassificationReasonsApi extends BaseApi {
     /**
     * Creates a new classification reason.
-
-**Note:** You can create more than one reason by specifying a list of reasons in the JSON body.
-For example, the following JSON body creates two classification reasons:
-JSON
-[
-  {
-    \"code\":\"My Code1\",
-    \"description\":\"My Description1\"
-  },
-  {
-    \"code\":\"My Code2\",
-    \"description\":\"My Description2\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
+    *
+    * **Note:** You can create more than one reason by specifying a list of reasons in the JSON body.
     *
     * @param classificationReason Classification reason
-    * @return Promise<ClassificationReasonEntry>
+    * @returns Promise<ClassificationReasonEntry>
     */
     createClassificationReason(classificationReason: ClassificationReasonBody): Promise<ClassificationReasonEntry> {
         throwIfNotDefined(classificationReason, 'classificationReason');
@@ -88,10 +46,11 @@ JSON
     }
 
     /**
-     * Deletes the classification reason  **classificationReasonId**. You can't delete a classification reason that is being used to classify content. There must be at least one classification reason.
+     * Deletes the classification reason  **classificationReasonId**.
+     * You can't delete a classification reason that is being used to classify content. There must be at least one classification reason.
      *
      * @param classificationReasonId The identifier for the classification reason
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteClassificationReason(classificationReasonId: string): Promise<void> {
         throwIfNotDefined(classificationReasonId, 'classificationReasonId');
@@ -110,7 +69,7 @@ JSON
      * List all classification reasons
      *
      * @param opts Optional parameters
-     * @return Promise<ClassificationReasonsPaging>
+     * @returns Promise<ClassificationReasonsPaging>
      */
     listClassificationReasons(opts?: GsPagingQuery & GsFieldsQuery): Promise<ClassificationReasonsPaging> {
         const queryParams = {
@@ -130,7 +89,7 @@ JSON
      * Get classification reason information
      *
      * @param classificationReasonId The identifier for the classification reason
-     * @return Promise<ClassificationReasonEntry>
+     * @returns Promise<ClassificationReasonEntry>
      */
     showClassificationReasonById(classificationReasonId: string): Promise<ClassificationReasonEntry> {
         throwIfNotDefined(classificationReasonId, 'classificationReasonId');
@@ -151,7 +110,7 @@ JSON
      *
      * @param classificationReasonId The identifier for the classification reason
      * @param classificationReason Classification reason
-     * @return Promise<ClassificationReasonEntry>
+     * @returns Promise<ClassificationReasonEntry>
      */
     updateClassificationReason(classificationReasonId: string, classificationReason: ClassificationReasonBody): Promise<ClassificationReasonEntry> {
         throwIfNotDefined(classificationReasonId, 'classificationReasonId');

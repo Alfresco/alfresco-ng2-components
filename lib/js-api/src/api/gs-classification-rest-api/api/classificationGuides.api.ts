@@ -34,8 +34,6 @@ export interface CombinedInstructionsOpts {
 
 /**
  * ClassificationGuidesApi service.
- *
- * @module ClassificationGuidesApi
  */
 export class ClassificationGuidesApi extends BaseApi {
     /**
@@ -43,7 +41,7 @@ export class ClassificationGuidesApi extends BaseApi {
      *
      * @param opts Optional parameters
      * @param opts.instructions Instructions
-     * @return Promise<InstructionEntry>
+     * @returns Promise<InstructionEntry>
      */
     combinedInstructions(opts?: CombinedInstructionsOpts): Promise<InstructionEntry> {
         return this.post({
@@ -57,7 +55,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * Create a classification guide
      *
      * @param classificationGuide Classification guide
-     * @return Promise<ClassificationGuideEntry>
+     * @returns Promise<ClassificationGuideEntry>
      */
     createClassificationGuide(classificationGuide: ClassificationGuideBody): Promise<ClassificationGuideEntry> {
         throwIfNotDefined(classificationGuide, 'classificationGuide');
@@ -75,7 +73,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * @param topicId The identifier for the topic
      * @param topic Subtopic
      * @param opts Optional parameters
-     * @return Promise<TopicEntry>
+     * @returns Promise<TopicEntry>
      */
     createSubtopic(topicId: string, topic: TopicBody, opts?: GsIncludeQuery): Promise<TopicEntry> {
         throwIfNotDefined(topicId, 'topicId');
@@ -104,7 +102,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * @param classificationGuideId The identifier for the classification guide
      * @param topic Topic
      * @param opts Optional parameters
-     * @return Promise<TopicEntry>
+     * @returns Promise<TopicEntry>
      */
     createTopic(classificationGuideId: string, topic: TopicBody, opts?: GsIncludeQuery): Promise<TopicEntry> {
         throwIfNotDefined(classificationGuideId, 'classificationGuideId');
@@ -131,7 +129,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * Delete a classification guide
      *
      * @param classificationGuideId The identifier for the classification guide
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteClassificationGuide(classificationGuideId: string): Promise<void> {
         throwIfNotDefined(classificationGuideId, 'classificationGuideId');
@@ -150,7 +148,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * Delete a topic
      *
      * @param topicId The identifier for the topic
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteTopic(topicId: string): Promise<void> {
         throwIfNotDefined(topicId, 'topicId');
@@ -166,22 +164,17 @@ export class ClassificationGuidesApi extends BaseApi {
     }
 
     /**
-        * List all classification guides
-        *
-        * @param opts Optional parameters
-        * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-    sort the list by one or more fields.
-
-    Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-    above to check if any fields used in this method have a descending default search order.
-
-    To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
-        * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR. Fields to filter on:
+    * List all classification guides
+    *
+    * @param opts Optional parameters
+    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.
+    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+    * above to check if any fields used in this method have a descending default search order.
+    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+    * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR. Fields to filter on:
     * enabled - e.g. (enabled = true OR enabled = false)
-
-        * @return Promise<ClassificationGuidePaging>
-        */
+    * @returns Promise<ClassificationGuidePaging>
+    */
     listClassificationGuides(opts?: { orderBy?: string[]; where?: string } & GsPagingQuery & GsIncludeQuery): Promise<ClassificationGuidePaging> {
         opts = opts || {};
 
@@ -203,25 +196,19 @@ export class ClassificationGuidesApi extends BaseApi {
     /**
     * List all subtopics
     *
-    * Gets all subtopics of a topic.
-    *
     * @param topicId The identifier for the topic
     * @param opts Optional parameters
     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
     * sort the list by one or more fields.
-
-    Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-    above to check if any fields used in this method have a descending default search order.
-
-    To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
-        * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR. Fields to filter on:
-    * hasInstruction
-    * hasSubtopics
-
-        * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent guide/topic
-        * @return Promise<SubtopicPaging>
-        */
+    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+    * above to check if any fields used in this method have a descending default search order.
+    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+    * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR. Fields to filter on:
+    * - hasInstruction
+    * - hasSubtopics
+    * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent guide/topic
+    * @returns Promise<SubtopicPaging>
+    */
     listSubtopics(
         topicId: string,
         opts?: {
@@ -258,25 +245,19 @@ export class ClassificationGuidesApi extends BaseApi {
     /**
     * List all topics
     *
-    * Gets all topics.
-    *
     * @param classificationGuideId The identifier for the classification guide
     * @param opts Optional parameters
-        * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-    sort the list by one or more fields.
-
-    Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-    above to check if any fields used in this method have a descending default search order.
-
-    To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
-        * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR e.g. (instruction=true and hasSubtopics=false). Fields to filter on:
-    * hasInstruction
-    * hasSubtopics
-
-        * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent guide/topic
-        * @return Promise<TopicPaging>
-        */
+    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
+    * sort the list by one or more fields.
+    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+    * above to check if any fields used in this method have a descending default search order.
+    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+    * @param opts.where A string to restrict the returned objects by using a predicate. Supported operations are AND, NOT, and OR e.g. (instruction=true and hasSubtopics=false). Fields to filter on:
+    * - hasInstruction
+    * - hasSubtopics
+    * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent guide/topic
+    * @returns Promise<TopicPaging>
+    */
     listTopics(
         classificationGuideId: string,
         opts?: {
@@ -314,7 +295,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * Get classification guide information
      *
      * @param classificationGuideId The identifier for the classification guide
-     * @return Promise<ClassificationGuideEntry>
+     * @returns Promise<ClassificationGuideEntry>
      */
     showClassificationGuideById(classificationGuideId: string): Promise<ClassificationGuideEntry> {
         throwIfNotDefined(classificationGuideId, 'classificationGuideId');
@@ -335,7 +316,7 @@ export class ClassificationGuidesApi extends BaseApi {
      *
      * @param topicId The identifier for the topic
      * @param opts Optional parameters
-     * @return Promise<TopicEntry>
+     * @returns Promise<TopicEntry>
      */
     showTopicById(topicId: string, opts?: GsIncludeQuery): Promise<TopicEntry> {
         throwIfNotDefined(topicId, 'topicId');
@@ -363,7 +344,7 @@ export class ClassificationGuidesApi extends BaseApi {
      *
      * @param classificationGuideId The identifier for the classification guide
      * @param classificationGuide Classification guide
-     * @return Promise<ClassificationGuideEntry>
+     * @returns Promise<ClassificationGuideEntry>
      */
     updateClassificationGuide(classificationGuideId: string, classificationGuide: ClassificationGuideBody): Promise<ClassificationGuideEntry> {
         throwIfNotDefined(classificationGuideId, 'classificationGuideId');
@@ -390,7 +371,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * @param topicId The identifier for the topic
      * @param topic Topic
      * @param opts Optional parameters
-     * @return Promise<TopicEntry>
+     * @returns Promise<TopicEntry>
      */
     updateTopic(topicId: string, topic: TopicBody, opts?: GsIncludeQuery): Promise<TopicEntry> {
         throwIfNotDefined(topicId, 'topicId');

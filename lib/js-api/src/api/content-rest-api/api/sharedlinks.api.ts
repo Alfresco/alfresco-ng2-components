@@ -34,60 +34,10 @@ export class SharedlinksApi extends BaseApi {
     * Create a shared link to a file
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Create a shared link to the file **nodeId** in the request body. Also, an optional expiry date could be set,
-so the shared link would become invalid when the expiry date is reached. For example:
-
-JSON
-  {
-    \"nodeId\": \"1ff9da1a-ee2f-4b9c-8c34-3333333333\",
-    \"expiresAt\": \"2017-03-23T23:00:00.000+0000\"
-  }
-
-**Note:** You can create shared links to more than one file
-specifying a list of **nodeId**s in the JSON body like this:
-
-JSON
-[
-  {
-    \"nodeId\": \"1ff9da1a-ee2f-4b9c-8c34-4444444444\"
-  },
-  {
-    \"nodeId\": \"1ff9da1a-ee2f-4b9c-8c34-5555555555\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
     *
     * @param sharedLinkBodyCreate The nodeId to create a shared link for.
     * @param opts Optional parameters
-    * @return Promise<SharedLinkEntry>
+    * @returns Promise<SharedLinkEntry>
     */
     createSharedLink(sharedLinkBodyCreate: SharedLinkBodyCreate, opts?: ContentIncludeQuery & ContentFieldsQuery): Promise<SharedLinkEntry> {
         throwIfNotDefined(sharedLinkBodyCreate, 'sharedLinkBodyCreate');
@@ -111,7 +61,7 @@ JSON
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
      * @param sharedId The identifier of a shared link to a file.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteSharedLink(sharedId: string): Promise<void> {
         throwIfNotDefined(sharedId, 'sharedId');
@@ -162,7 +112,7 @@ JSON
     *
     * @param sharedId The identifier of a shared link to a file.
     * @param sharedLinkBodyEmail The shared link email to send.
-    * @return Promise<{}>
+    * @returns Promise<{}>
     */
     emailSharedLink(sharedId: string, sharedLinkBodyEmail: SharedLinkBodyEmail): Promise<any> {
         throwIfNotDefined(sharedId, 'sharedId');
@@ -187,7 +137,7 @@ JSON
      *
      * @param sharedId The identifier of a shared link to a file.
      * @param opts Optional parameters
-     * @return Promise<SharedLinkEntry>
+     * @returns Promise<SharedLinkEntry>
      */
     getSharedLink(sharedId: string, opts?: ContentFieldsQuery): Promise<SharedLinkEntry> {
         throwIfNotDefined(sharedId, 'sharedId');
@@ -232,7 +182,7 @@ Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
     * @param opts.range The Range header indicates the part of a document that the server should return.
 Single part request supported, for example: bytes=1-10.
 
-    * @return Promise<Blob>
+    * @returns Promise<Blob>
     */
     getSharedLinkContent(
         sharedId: string,
@@ -279,7 +229,7 @@ Single part request supported, for example: bytes=1-10.
      *
      * @param sharedId The identifier of a shared link to a file.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
-     * @return Promise<RenditionEntry>
+     * @returns Promise<RenditionEntry>
      */
     getSharedLinkRendition(sharedId: string, renditionId: string): Promise<RenditionEntry> {
         throwIfNotDefined(sharedId, 'sharedId');
@@ -325,7 +275,7 @@ Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
     * @param opts.range The Range header indicates the part of a document that the server should return.
 Single part request supported, for example: bytes=1-10.
 
-    * @return Promise<Blob>
+    * @returns Promise<Blob>
     */
     getSharedLinkRenditionContent(
         sharedId: string,
@@ -376,7 +326,7 @@ where the rendition status is CREATED, which means the rendition is available to
 
     *
     * @param sharedId The identifier of a shared link to a file.
-    * @return Promise<RenditionPaging>
+    * @returns Promise<RenditionPaging>
     */
     listSharedLinkRenditions(sharedId: string): Promise<RenditionPaging> {
         throwIfNotDefined(sharedId, 'sharedId');
@@ -408,7 +358,7 @@ The list is ordered in descending modified order.
     * @param opts.where Optionally filter the list by \"sharedByUser\" userid of person who shared the link (can also use -me-)
 *   where=(sharedByUser='jbloggs')
 *   where=(sharedByUser='-me-')
-    * @return Promise<SharedLinkPaging>
+    * @returns Promise<SharedLinkPaging>
     */
     listSharedLinks(
         opts?: {

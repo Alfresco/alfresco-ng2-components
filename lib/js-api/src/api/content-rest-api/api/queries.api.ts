@@ -81,7 +81,7 @@ export class QueriesApi extends BaseApi {
     *
     * @param term The term to search for.
     * @param opts Optional parameters
-    * @return Promise<NodePaging>
+    * @returns Promise<NodePaging>
     */
     findNodes(term: string, opts?: FindNodesQuery & ContentPagingQuery & ContentIncludeQuery & ContentFieldsQuery): Promise<NodePaging> {
         throwIfNotDefined(term, 'term');
@@ -124,7 +124,7 @@ export class QueriesApi extends BaseApi {
     *
     * @param term The term to search for.
     * @param opts Optional parameters
-    * @return Promise<PersonPaging>
+    * @returns Promise<PersonPaging>
     */
     findPeople(term: string, opts?: FindQuery): Promise<PersonPaging> {
         throwIfNotDefined(term, 'term');
@@ -166,7 +166,7 @@ export class QueriesApi extends BaseApi {
     *
     * @param term The term to search for.
     * @param opts Optional parameters
-    * @return Promise<SitePaging>
+    * @returns Promise<SitePaging>
     */
     findSites(term: string, opts?: FindQuery): Promise<SitePaging> {
         throwIfNotDefined(term, 'term');

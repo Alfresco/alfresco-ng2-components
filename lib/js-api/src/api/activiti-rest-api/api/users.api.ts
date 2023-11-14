@@ -33,7 +33,7 @@ export class UsersApi extends BaseApi {
      *
      * @param userId userId
      * @param actionRequest actionRequest
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     executeAction(userId: number, actionRequest: UserActionRepresentation): Promise<any> {
         throwIfNotDefined(userId, 'userId');
@@ -54,7 +54,7 @@ export class UsersApi extends BaseApi {
      * Stream user profile picture
      *
      * @param userId userId
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     getUserProfilePictureUrl(userId: string): string {
         return this.apiClient.basePath + '/app/rest/users/' + userId + '/picture';
@@ -64,7 +64,7 @@ export class UsersApi extends BaseApi {
      * Get a user
      *
      * @param userId userId
-     * @return Promise<UserRepresentation>
+     * @returns Promise<UserRepresentation>
      */
     getUser(userId: number): Promise<UserRepresentation> {
         throwIfNotDefined(userId, 'userId');
@@ -86,7 +86,7 @@ export class UsersApi extends BaseApi {
      * A common use case is that a user wants to select another user (eg. when assigning a task) or group.
      *
      * @param opts Optional parameters
-     * @return Promise<ResultListDataRepresentationLightUserRepresentation>
+     * @returns Promise<ResultListDataRepresentationLightUserRepresentation>
      */
     getUsers(opts?: {
         filter?: string;
@@ -122,7 +122,7 @@ export class UsersApi extends BaseApi {
      * Request a password reset
      *
      * @param resetPassword resetPassword
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     requestPasswordReset(resetPassword: ResetPasswordRepresentation): Promise<any> {
         throwIfNotDefined(resetPassword, 'resetPassword');
@@ -138,7 +138,7 @@ export class UsersApi extends BaseApi {
      *
      * @param userId userId
      * @param userRequest userRequest
-     * @return Promise<UserRepresentation>
+     * @returns Promise<UserRepresentation>
      */
     updateUser(userId: number, userRequest: UserRepresentation): Promise<UserRepresentation> {
         throwIfNotDefined(userId, 'userId');

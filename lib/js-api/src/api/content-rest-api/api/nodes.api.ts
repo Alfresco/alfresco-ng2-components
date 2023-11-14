@@ -93,7 +93,7 @@ export class NodesApi extends BaseApi {
      * @param nodeId The identifier of a node.
      * @param nodeBodyCopy The targetParentId and, optionally, a new name which should include the file extension.
      * @param opts Optional parameters
-     * @return Promise<NodeEntry>
+     * @returns Promise<NodeEntry>
      */
     copyNode(nodeId: string, nodeBodyCopy: NodeBodyCopy, opts?: NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -121,51 +121,6 @@ export class NodesApi extends BaseApi {
     * Create node association
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Create an association, with the given association type, between the source **nodeId** and a target node.
-
-**Note:** You can create more than one association by
-specifying a list of associations in the JSON body like this:
-
-JSON
-[
-  {
-     \"targetId\": \"string\",
-     \"assocType\": \"string\"
-  },
-  {
-    \"targetId\": \"string\",
-    \"assocType\": \"string\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
     *
     * @param nodeId The identifier of a source node.
     * @param associationBodyCreate The target node id and assoc type.
@@ -182,7 +137,7 @@ If the API method also supports the **include**
 parameter, then the fields specified in the **include**
 parameter are returned in addition to those specified in the **fields** parameter.
 
-    * @return Promise<AssociationEntry>
+    * @returns Promise<AssociationEntry>
     */
     createAssociation(nodeId: string, associationBodyCreate: AssociationBody, opts?: { fields?: string[] }): Promise<AssociationEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -204,237 +159,36 @@ parameter are returned in addition to those specified in the **fields** paramete
             returnType: AssociationEntry
         });
     }
+
     /**
- * Create a node
- *
- * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
- Create a node and add it as a primary child of node **nodeId**.
-
- This endpoint supports both JSON and multipart/form-data (file upload).
-
- **Using multipart/form-data**
-
- Use the **filedata** field to represent the content to upload, for example, the following curl command will
- create a node with the contents of test.txt in the test user's home folder.
-
- curl -utest:test -X POST host:port/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children -F filedata=@test.txt
-
- You can use the **name** field to give an alternative name for the new file.
-
- You can use the **nodeType** field to create a specific type. The default is cm:content.
-
- You can use the **renditions** field to create renditions (e.g. doclib) asynchronously upon upload.
- Also, as requesting rendition is a background process,
- any rendition failure (e.g. No transformer is currently available) will not fail the whole upload and has the potential to silently fail.
-
- Use **overwrite** to overwrite an existing file, matched by name. If the file is versionable,
- the existing content is replaced.
-
- When you overwrite existing content, you can set the **majorVersion** boolean field to **true** to indicate a major version
- should be created. The default for **majorVersion** is **false**.
- Setting  **majorVersion** enables versioning of the node, if it is not already versioned.
-
- When you overwrite existing content, you can use the **comment** field to add a version comment that appears in the
- version history. This also enables versioning of this node, if it is not already versioned.
-
- You can set the **autoRename** boolean field to automatically resolve name clashes. If there is a name clash, then
- the API method tries to create a unique name using an integer suffix.
-
- You can use the **relativePath** field to specify the folder structure to create relative to the node **nodeId**.
- Folders in the **relativePath** that do not exist are created before the node is created.
-
- Any other field provided will be treated as a property to set on the newly created node.
-
- **Note:** setting properties of type d:content and d:category are not supported.
-
- **Using JSON**
-
- You must specify at least a **name** and **nodeType**. For example, to create a folder:
- JSON
- {
- \"name\":\"My Folder\",
- \"nodeType\":\"cm:folder\"
- }
-
- You can create an empty file like this:
- JSON
- {
- \"name\":\"My text file.txt\",
- \"nodeType\":\"cm:content\"
- }
-
- You can update binary content using the PUT /nodes/{nodeId} API method.
-
- You can create a folder, or other node, inside a folder hierarchy:
- JSON
- {
- \"name\":\"My Special Folder\",
- \"nodeType\":\"cm:folder\",
- \"relativePath\":\"X/Y/Z\"
- }
-
- The **relativePath** specifies the folder structure to create relative to the node **nodeId**. Folders in the
- **relativePath** that do not exist are created before the node is created.
-
- You can set properties when you create a new node:
- JSON
- {
- \"name\":\"My Other Folder\",
- \"nodeType\":\"cm:folder\",
- \"properties\":
- {
- \"cm:title\":\"Folder title\",
- \"cm:description\":\"This is an important folder\"
- }
- }
-
- You can set multi-value properties when you create a new node which supports properties of type multiple.
- JSON
- {
- \"name\":\"My Other Folder\",
- \"nodeType\":\"custom:destination\",
- \"properties\":
- {
- \"cm:title\":\"Folder title\",
- \"cm:description\":\"This is an important folder\",
- \"custom:locations\": [
- \"location X\",
- \"location Y\"
- ]
- }
- }
-
- Any missing aspects are applied automatically. For example, **cm:titled** in the JSON shown above. You can set aspects
- explicitly, if needed, using an **aspectNames** field.
-
- **Note:** setting properties of type d:content and d:category are not supported.
-
- You can also optionally disable (or enable) inherited permissions via *isInheritanceEnabled* flag:
- JSON
- {
- \"permissions\":
- {
- \"isInheritanceEnabled\": false,
- \"locallySet\":
- [
- {\"authorityId\": \"GROUP_special\", \"name\": \"Read\", \"accessStatus\":\"DENIED\"},
- {\"authorityId\": \"testuser\", \"name\": \"Contributor\", \"accessStatus\":\"ALLOWED\"}
- ]
- }
- }
-
- Typically, for files and folders, the primary children are created within the parent folder using the default \"cm:contains\" assocType.
- If the content model allows then it is also possible to create primary children with a different assoc type. For example:
- JSON
- {
- \"name\":\"My Node\",
- \"nodeType\":\"my:specialNodeType\",
- \"association\":
- {
- \"assocType\":\"my:specialAssocType\"
- }
- }
-
- Additional associations can be added after creating a node. You can also add associations at the time the node is created. This is
- required, for example, if the content model specifies that a node has mandatory associations to one or more existing nodes. You can optionally
- specify an array of **secondaryChildren** to create one or more secondary child associations, such that the newly created node acts as a parent node.
- You can optionally specify an array of **targets** to create one or more peer associations such that the newly created node acts as a source node.
- For example, to associate one or more secondary children at time of creation:
- JSON
- {
- \"name\":\"My Folder\",
- \"nodeType\":\"cm:folder\",
- \"secondaryChildren\":
- [ {\"childId\":\"abcde-01234-...\", \"assocType\":\"my:specialChildAssocType\"} ]
- }
-
- For example, to associate one or more targets at time of creation:
- JSON
- {
- \"name\":\"My Folder\",
- \"nodeType\":\"cm:folder\",
- \"targets\":
- [ {\"targetId\":\"abcde-01234-...\", \"assocType\":\"my:specialPeerAssocType\"} ]
- }
-
- **Note:** You can create more than one child by
- specifying a list of nodes in the JSON body. For example, the following JSON
- body creates two folders inside the specified **nodeId**, if the **nodeId** identifies
- a folder:
-
- JSON
- [
- {
- \"name\":\"My Folder 1\",
- \"nodeType\":\"cm:folder\"
- },
- {
- \"name\":\"My Folder 2\",
- \"nodeType\":\"cm:folder\"
- }
- ]
-
- If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
- JSON
- {
- \"list\": {
- \"pagination\": {
- \"count\": 2,
- \"hasMoreItems\": false,
- \"totalItems\": 2,
- \"skipCount\": 0,
- \"maxItems\": 100
- },
- \"entries\": [
- {
- \"entry\": {
- ...
- }
- },
- {
- \"entry\": {
- ...
- }
- }
- ]
- }
- }
-
- *
- * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
- * -my-
- * -shared-
- * -root-
-
- * @param nodeBodyCreate The node information to create.
- * @param opts Optional parameters
- * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
- * @param opts.include Returns additional information about the node. The following optional fields can be requested:
- * allowableOperations
- * association
- * isLink
- * isFavorite
- * isLocked
- * path
- * permissions
- * definition
-
- * @param opts.fields A list of field names.
-
- You can use this parameter to restrict the fields
- returned within a response if, for example, you want to save on overall bandwidth.
-
- The list applies to a returned individual
- entity or entries within a collection.
-
- If the API method also supports the **include**
- parameter, then the fields specified in the **include**
- parameter are returned in addition to those specified in the **fields** parameter.
- * @param formParams
- * @return Promise<NodeEntry>
- */
+     * Create a node
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
+     * -my-
+     * -shared-
+     * -root-
+     * @param nodeBodyCreate The node information to create.
+     * @param opts Optional parameters
+     * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
+     * @param opts.include Returns additional information about the node. The following optional fields can be requested:
+     * - allowableOperations
+     * - association
+     * - isLink
+     * - isFavorite
+     * - isLocked
+     * - path
+     * - permissions
+     * - definition
+     * @param opts.fields A list of field names. You can use this parameter to restrict the fields
+     * returned within a response if, for example, you want to save on overall bandwidth.
+     * The list applies to a returned individual entity or entries within a collection.
+     * If the API method also supports the **include** parameter, then the fields specified in the **include**
+     * parameter are returned in addition to those specified in the **fields** parameter.
+     * @param formParams
+     * @returns Promise<NodeEntry>
+     */
     createNode(nodeId: string, nodeBodyCreate: NodeBodyCreate, opts?: CreateNodeOpts, formParams?: any): Promise<NodeEntry | any> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(nodeBodyCreate, 'nodeBodyCreate');
@@ -476,10 +230,9 @@ parameter are returned in addition to those specified in the **fields** paramete
      * Create a folder
      *
      * @param name - folder name
-     * @param  relativePath - The relativePath specifies the folder structure to create relative to the node identified by nodeId.
-     * @param  nodeId default value root.The identifier of a node where add the folder. You can also use one of these well-known aliases: -my- | -shared- | -root-
+     * @param relativePath - The relativePath specifies the folder structure to create relative to the node identified by nodeId.
+     * @param nodeId default value root.The identifier of a node where add the folder. You can also use one of these well-known aliases: -my- | -shared- | -root-
      * @param opts Optional parameters
-     *
      * @returns  A promise that is resolved if the folder is created and {error} if rejected.
      */
     createFolder(name: string, relativePath: string, nodeId: string, opts?: CreateNodeOpts): Promise<NodeEntry> {
@@ -498,51 +251,6 @@ parameter are returned in addition to those specified in the **fields** paramete
     * Create secondary child
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Create a secondary child association, with the given association type, between the parent **nodeId** and a child node.
-
-**Note:** You can create more than one secondary child association by
-specifying a list of associations in the JSON body like this:
-
-JSON
-[
-  {
-    \"childId\": \"string\",
-    \"assocType\": \"string\"
-  },
-  {
-    \"childId\": \"string\",
-    \"assocType\": \"string\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
     *
     * @param nodeId The identifier of a parent node.
     * @param secondaryChildAssociationBodyCreate The child node id and assoc type.
@@ -559,7 +267,7 @@ If the API method also supports the **include**
 parameter, then the fields specified in the **include**
 parameter are returned in addition to those specified in the **fields** parameter.
 
-    * @return Promise<ChildAssociationEntry>
+    * @returns Promise<ChildAssociationEntry>
     */
     createSecondaryChildAssociation(
         nodeId: string,
@@ -605,7 +313,7 @@ in the other direction.
     * @param targetId The identifier of a target node.
     * @param opts Optional parameters
     * @param opts.assocType Only delete associations of this type.
-    * @return Promise<{}>
+    * @returns Promise<{}>
     */
     deleteAssociation(nodeId: string, targetId: string, opts?: { assocType?: string }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -651,7 +359,7 @@ associations were to nodes inside or outside the restored hierarchy.
     * @param opts.permanent If **true** then the node is deleted permanently, without moving to the trashcan.
 Only the owner of the node or an admin can permanently delete the node.
  (default to false)
-    * @return Promise<{}>
+    * @returns Promise<{}>
     */
     deleteNode(nodeId: string, opts?: { permanent?: boolean }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -681,12 +389,12 @@ Only the owner of the node or an admin can permanently delete the node.
      * @param opts.permanent If **true** then nodes are deleted permanently, without moving to the trashcan.
      Only the owner of the node or an admin can permanently delete the node.
      (default to false)
-     * @return Promise<[]>
+     * @returns Promise<[]>
      */
     deleteNodes(nodeIds: string[], opts?: { permanent?: boolean }): Promise<void[]> {
         throwIfNotDefined(nodeIds, 'nodeIds');
 
-        return Promise.all(nodeIds.map(id => this.deleteNode(id, opts)));
+        return Promise.all(nodeIds.map((id) => this.deleteNode(id, opts)));
     }
     /**
     * Delete secondary child or children
@@ -704,7 +412,7 @@ associated as a secondary child with other secondary parents.
     * @param childId The identifier of a child node.
     * @param opts Optional parameters
     * @param opts.assocType Only delete associations of this type.
-    * @return Promise<{}>
+    * @returns Promise<{}>
     */
     deleteSecondaryChildAssociation(nodeId: string, childId: string, opts?: { assocType?: string }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -721,24 +429,21 @@ associated as a secondary child with other secondary parents.
             queryParams: opts
         });
     }
+
     /**
     * Get a node
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Get information for node **nodeId**.
-
-You can use the **include** parameter to return additional information.
-
+    *
+    * You can use the **include** parameter to return additional information.
     *
     * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
-* -my-
-* -shared-
-* -root-
-
+    * - -my-
+    * - -shared-
+    * - -root-
     * @param opts Optional parameters
     * @param opts.relativePath A path relative to the **nodeId**. If you set this, information is returned on the node resolved by this path.
-    * @return Promise<NodeEntry>
+    * @returns Promise<NodeEntry>
     */
     getNode(nodeId: string, opts?: { relativePath?: string } & NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -765,9 +470,6 @@ You can use the **include** parameter to return additional information.
     * Get node content
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Gets the content of the node with identifier **nodeId**.
-
     *
     * @param nodeId The identifier of a node.
     * @param opts Optional parameters
@@ -787,7 +489,7 @@ Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
     * @param opts.range The Range header indicates the part of a document that the server should return.
 Single part request supported, for example: bytes=1-10.
 
-    * @return Promise<Blob>
+    * @returns Promise<Blob>
     */
     getNodeContent(
         nodeId: string,
@@ -825,6 +527,7 @@ Single part request supported, for example: bytes=1-10.
             returnType: 'blob'
         });
     }
+
     /**
     * List node children
     *
@@ -884,7 +587,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
     *   where=(isPrimary=false and assocType='my:specialAssocType')
     * @param opts.relativePath Return information on children in the folder resolved by this path. The path is relative to **nodeId**.
     * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent node – either the specified parent **nodeId**, or as resolved by **relativePath**.
-    * @return Promise<NodeChildAssociationPaging>
+    * @returns Promise<NodeChildAssociationPaging>
     */
     listNodeChildren(
         nodeId: string,
@@ -941,7 +644,7 @@ The list includes both the primary parent and any secondary parents.
 *   where=(isPrimary=true)
 *   where=(isPrimary=false and assocType='my:specialAssocType')
     * @param opts.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
-    * @return Promise<NodeAssociationPaging>
+    * @returns Promise<NodeAssociationPaging>
     */
     listParents(
         nodeId: string,
@@ -993,7 +696,7 @@ Gets a list of secondary child nodes that are associated with the current parent
     *   where=(assocType='my:specialAssocType')
     *
     * @param opts.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
-    * @return Promise<NodeChildAssociationPaging>
+    * @returns Promise<NodeChildAssociationPaging>
     */
     listSecondaryChildren(
         nodeId: string,
@@ -1026,19 +729,17 @@ Gets a list of secondary child nodes that are associated with the current parent
             returnType: NodeChildAssociationPaging
         });
     }
+
     /**
     * List source associations
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Gets a list of source nodes that are associated with the current target **nodeId**.
-
     *
     * @param nodeId The identifier of a target node.
     * @param opts Optional parameters
     * @param opts.where Optionally filter the list by **assocType**. Here's an example:
     *   where=(assocType='my:specialAssocType')
-    * @return Promise<NodeAssociationPaging>
+    * @returns Promise<NodeAssociationPaging>
     */
     listSourceAssociations(
         nodeId: string,
@@ -1078,7 +779,7 @@ Gets a list of source nodes that are associated with the current target **nodeId
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list by **assocType**. Here's an example:
      *   where=(assocType='my:specialAssocType')
-     * @return Promise<NodeAssociationPaging>
+     * @returns Promise<NodeAssociationPaging>
      */
     listTargetAssociations(
         nodeId: string,
@@ -1146,7 +847,7 @@ If a lock on the node cannot be taken, then an error is returned.
     * @param nodeId The identifier of a node.
     * @param nodeBodyLock Lock details.
     * @param opts Optional parameters
-    * @return Promise<NodeEntry>
+    * @returns Promise<NodeEntry>
     */
     lockNode(nodeId: string, nodeBodyLock: NodeBodyLock, opts?: NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -1188,7 +889,7 @@ If a lock on the node cannot be taken, then an error is returned.
      * @param nodeId The identifier of a node.
      * @param nodeBodyMove The targetParentId and, optionally, a new name which should include the file extension.
      * @param opts Optional parameters
-     * @return Promise<NodeEntry>
+     * @returns Promise<NodeEntry>
      */
     moveNode(nodeId: string, nodeBodyMove: NodeBodyMove, opts?: NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -1222,7 +923,7 @@ If a lock on the node cannot be taken, then an error is returned.
      *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
-     * @return Promise<NodeEntry>
+     * @returns Promise<NodeEntry>
      */
     unlockNode(nodeId: string, opts?: NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -1248,66 +949,11 @@ If a lock on the node cannot be taken, then an error is returned.
     * Update a node
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Updates the node **nodeId**. For example, you can rename a file or folder:
-JSON
-{
-  \"name\":\"My new name\"
-}
-
-You can also set or update one or more properties:
-JSON
-{
-  \"properties\":
-  {
-    \"cm:title\":\"Folder title\"
-  }
-}
-
-You can update multi-value properties of a node which supports properties of type multiple.
- JSON
-{
-  \"name\":\"My Other Folder\",
-  \"nodeType\":\"custom:destination\",
-  \"properties\":
-  {
-    \"cm:title\":\"Folder title\",
-    \"cm:description\":\"This is an important folder\",
-    \"custom:locations\": [
-                         \"location NewX\",
-                         \"location NewY\"
-                        ]
-  }
-}
-
-**Note:** setting properties of type d:content and d:category are not supported.
-
-**Note:** if you want to add or remove aspects, then you must use **GET /nodes/{nodeId}** first to get the complete set of *aspectNames*.
-
-You can add (or remove) *locallySet* permissions, if any, in addition to any inherited permissions.
-You can also optionally disable (or re-enable) inherited permissions via *isInheritanceEnabled* flag:
-JSON
-{
-  \"permissions\":
-    {
-      \"isInheritanceEnabled\": false,
-      \"locallySet\":
-        [
-          {\"authorityId\": \"GROUP_special\", \"name\": \"Read\", \"accessStatus\":\"DENIED\"},
-          {\"authorityId\": \"testuser\", \"name\": \"Contributor\", \"accessStatus\":\"ALLOWED\"}
-        ]
-    }
-}
-
-**Note:** if you want to add or remove locally set permissions then you must use **GET /nodes/{nodeId}** first to get the complete set of *locallySet* permissions.
-
-**Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-
     *
     * @param nodeId The identifier of a node.
     * @param nodeBodyUpdate The node information to update.
     * @param opts Optional parameters
-    * @return Promise<NodeEntry>
+    * @returns Promise<NodeEntry>
     */
     updateNode(nodeId: string, nodeBodyUpdate: NodeBodyUpdate, opts?: NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -1362,7 +1008,7 @@ Setting this parameter also enables versioning of this node, if it is not alread
     * @param opts.name Optional new name. This should include the file extension.
 The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
 The character . must not be used at the end of the name.
-    * @return Promise<NodeEntry>
+    * @returns Promise<NodeEntry>
     */
     updateNodeContent(
         nodeId: string,
@@ -1405,7 +1051,7 @@ The character . must not be used at the end of the name.
      * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
      *
      * @param nodeId The identifier of a node.
-     * @return Promise<DirectAccessUrlEntry>
+     * @returns Promise<DirectAccessUrlEntry>
      */
     requestDirectAccessUrl(nodeId: string): Promise<DirectAccessUrlEntry> {
         throwIfNotDefined(nodeId, 'nodeId');

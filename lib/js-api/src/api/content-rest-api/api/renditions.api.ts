@@ -53,7 +53,7 @@ JSON
     *
     * @param nodeId The identifier of a node.
     * @param renditionBodyCreate The rendition \"id\".
-    * @return Promise<{}>
+    * @returns Promise<{}>
     */
     createRendition(nodeId: string, renditionBodyCreate: RenditionBodyCreate): Promise<any> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -77,7 +77,7 @@ JSON
      *
      * @param nodeId The identifier of a node.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
-     * @return Promise<RenditionEntry>
+     * @returns Promise<RenditionEntry>
      */
     getRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -123,7 +123,7 @@ Single part request supported, for example: bytes=1-10.
 then the placeholder image for the mime type of this rendition is returned, rather
 than a 404 response.
  (default to false)
-    * @return Promise<Blob>
+    * @returns Promise<Blob>
     */
     getRenditionContent(
         nodeId: string,
@@ -182,7 +182,7 @@ clause will return just the CREATED renditions:
     * @param nodeId The identifier of a node.
     * @param opts Optional parameters
     * @param opts.where A string to restrict the returned objects by using a predicate.
-    * @return Promise<RenditionPaging>
+    * @returns Promise<RenditionPaging>
     */
     listRenditions(nodeId: string, opts?: { where?: string }): Promise<RenditionPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -206,7 +206,7 @@ clause will return just the CREATED renditions:
      *
      * @param nodeId The identifier of a node.
      * @param renditionId The identifier of a version
-     * @return Promise<DirectAccessUrlEntry>
+     * @returns Promise<DirectAccessUrlEntry>
      */
     requestDirectAccessUrl(nodeId: string, renditionId: string): Promise<DirectAccessUrlEntry> {
         throwIfNotDefined(nodeId, 'nodeId');

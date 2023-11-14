@@ -25,8 +25,6 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * TransferContainersApi service.
- *
- * @module TransferContainersApi
  */
 export class TransferContainersApi extends BaseApi {
     /**
@@ -37,7 +35,7 @@ export class TransferContainersApi extends BaseApi {
      *
      * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
      * @param opts Optional parameters
-     * @return Promise<TransferContainerEntry>
+     * @returns Promise<TransferContainerEntry>
      */
     getTransferContainer(transferContainerId: string, opts?: RecordsIncludeQuery): Promise<TransferContainerEntry> {
         throwIfNotDefined(transferContainerId, 'transferContainerId');
@@ -58,6 +56,7 @@ export class TransferContainersApi extends BaseApi {
             returnType: TransferContainerEntry
         });
     }
+
     /**
      * List transfer container's children
      * Minimal information for each child is returned by default.
@@ -66,7 +65,7 @@ export class TransferContainersApi extends BaseApi {
      *
      * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
      * @param opts Optional parameters
-     * @return Promise<TransferContainerAssociationPaging>
+     * @returns Promise<TransferContainerAssociationPaging>
      */
     listTransfers(
         transferContainerId: string,
@@ -94,33 +93,15 @@ export class TransferContainersApi extends BaseApi {
             returnType: TransferContainerAssociationPaging
         });
     }
+
     /**
-        * Update transfer container
-        *
-        * Updates the transfer container **transferContainerId**. For example, you can rename transfer container:
-    JSON
-    {
-      \"name\":\"My new name\"
-    }
-
-    You can also set or update description and title properties:
-    JSON
-    {
-      \"properties\":
-        {
-           \"cm:description\": \"New Description\",
-           \"cm:title\":\"New Title\"
-        }
-    }
-
-    **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-
-        *
-        * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
-        * @param nodeBodyUpdate The node information to update.
-        * @param opts Optional parameters
-        * @return Promise<TransferContainerEntry>
-        */
+    * Update transfer container
+    *
+    * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
+    * @param nodeBodyUpdate The node information to update.
+    * @param opts Optional parameters
+    * @returns Promise<TransferContainerEntry>
+    */
     updateTransferContainer(
         transferContainerId: string,
         nodeBodyUpdate: TransferContainerBodyUpdate,

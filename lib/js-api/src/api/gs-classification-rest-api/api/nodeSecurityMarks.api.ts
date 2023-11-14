@@ -22,7 +22,7 @@ import { SecurityMarkPaging } from '../model/securityMarkPaging';
 import { GsPagingQuery } from './types';
 
 /**
- * @module NodeSecurityMarksApi
+ * NodeSecurityMarksApi
  */
 export class NodeSecurityMarksApi extends BaseApi {
     /**
@@ -30,7 +30,7 @@ export class NodeSecurityMarksApi extends BaseApi {
      *
      * @param nodeId The key for the node id.
      * @param dataBody Array of NodeSecurityMarkBody.
-     * @return Promise<SecurityMarkPaging>
+     * @returns Promise<SecurityMarkPaging>
      */
     manageSecurityMarksOnNode(nodeId: string, dataBody: Array<NodeSecurityMarkBody>): Promise<SecurityMarkPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -53,7 +53,7 @@ export class NodeSecurityMarksApi extends BaseApi {
      *
      * @param nodeId The key for the node id.
      * @param opts Optional parameters
-     * @return Promise<SecurityMarkPaging>
+     * @returns Promise<SecurityMarkPaging>
      */
     getSecurityMarksOnNode(nodeId: string, opts?: GsPagingQuery): Promise<SecurityMarkPaging> {
         throwIfNotDefined(nodeId, 'nodeId');

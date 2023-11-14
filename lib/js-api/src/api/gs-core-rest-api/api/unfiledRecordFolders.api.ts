@@ -73,7 +73,7 @@ export class UnfiledRecordFoldersApi extends BaseApi {
      * Delete an unfiled record folder. Deleted file plan components cannot be recovered, they are deleted permanently.
      *
      * @param unfiledRecordFolderId The identifier of an unfiled record folder.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteUnfiledRecordFolder(unfiledRecordFolderId: string): Promise<void> {
         throwIfNotDefined(unfiledRecordFolderId, 'unfiledRecordFolderId');
@@ -138,7 +138,7 @@ export class UnfiledRecordFoldersApi extends BaseApi {
      *  - where=(isUnfiledRecordFolder=false)
      *  - where=(nodeType='cm:content INCLUDESUBTYPES')
      * @param opts.relativePath Return information on children in the unfiled records container resolved by this path. The path is relative to **unfiledRecordFolderId**.
-     * @return Promise<UnfiledRecordFolderAssociationPaging>
+     * @returns Promise<UnfiledRecordFolderAssociationPaging>
      */
     listUnfiledRecordFolderChildren(
         unfiledRecordFolderId: string,
@@ -180,7 +180,7 @@ export class UnfiledRecordFoldersApi extends BaseApi {
     * @param unfiledRecordFolderId The identifier of an unfiled record folder.
     * @param unfiledRecordFolderBodyUpdate The record folder information to update.
     * @param opts Optional parameters
-    * @return Promise<UnfiledRecordFolderEntry>
+    * @returns Promise<UnfiledRecordFolderEntry>
     */
     updateUnfiledRecordFolder(
         unfiledRecordFolderId: string,

@@ -86,7 +86,7 @@ You must have admin rights to create a group.
     *
     * @param groupBodyCreate The group to create.
     * @param opts Optional parameters
-    * @return Promise<GroupEntry>
+    * @returns Promise<GroupEntry>
     */
     createGroup(groupBodyCreate: GroupBodyCreate, opts?: ContentIncludeQuery & ContentFieldsQuery): Promise<GroupEntry> {
         throwIfNotDefined(groupBodyCreate, 'groupBodyCreate');
@@ -121,7 +121,7 @@ You must have admin rights to create a group membership.
     * @param groupId The identifier of a group.
     * @param groupMembershipBodyCreate The group membership to add (person or sub-group).
     * @param opts Optional parameters
-    * @return Promise<GroupMemberEntry>
+    * @returns Promise<GroupMemberEntry>
     */
     createGroupMembership(
         groupId: string,
@@ -158,7 +158,7 @@ You must have admin rights to delete a group.
     *
     * @param groupId The identifier of a group.
     * @param opts Optional parameters
-    * @return Promise
+    * @returns Promise
     */
     deleteGroup(groupId: string, opts?: { cascade?: boolean }): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');
@@ -196,7 +196,7 @@ You must have admin rights to delete a group membership.
     *
     * @param groupId The identifier of a group.
     * @param groupMemberId The identifier of a person or group.
-    * @return Promise<{}>
+    * @returns Promise<{}>
     */
     deleteGroupMembership(groupId: string, groupMemberId: string): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');
@@ -217,15 +217,13 @@ You must have admin rights to delete a group membership.
     * Get group details
     *
     * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-
-Get details for group **groupId**.
-
-You can use the **include** parameter to return additional information.
-
+    *
+    * Get details for group **groupId**.
+    * You can use the **include** parameter to return additional information.
     *
     * @param groupId The identifier of a group.
     * @param opts Optional parameters
-    * @return Promise<GroupEntry>
+    * @returns Promise<GroupEntry>
     */
     getGroup(groupId: string, opts?: ContentIncludeQuery & ContentFieldsQuery): Promise<GroupEntry> {
         throwIfNotDefined(groupId, 'groupId');
@@ -246,6 +244,7 @@ You can use the **include** parameter to return additional information.
             returnType: GroupEntry
         });
     }
+
     /**
     * List memberships of a group
     *
@@ -268,7 +267,7 @@ You can override the default by using the **orderBy** parameter. You can specify
     *
     * @param groupId The identifier of a group.
     * @param opts Optional parameters
-    * @return Promise<GroupMemberPaging>
+    * @returns Promise<GroupMemberPaging>
     */
     listGroupMemberships(groupId: string, opts?: ListGroupMembershipsOpts & ContentPagingQuery & ContentFieldsQuery): Promise<GroupMemberPaging> {
         throwIfNotDefined(groupId, 'groupId');
@@ -292,6 +291,7 @@ You can override the default by using the **orderBy** parameter. You can specify
             returnType: GroupMemberPaging
         });
     }
+
     /**
     * List group memberships
     *
@@ -362,7 +362,7 @@ If the API method also supports the **include**
 parameter, then the fields specified in the **include**
 parameter are returned in addition to those specified in the **fields** parameter.
 
-    * @return Promise<GroupPaging>
+    * @returns Promise<GroupPaging>
     */
     listGroupMembershipsForPerson(
         personId: string,
@@ -390,6 +390,7 @@ parameter are returned in addition to those specified in the **fields** paramete
             returnType: GroupPaging
         });
     }
+
     /**
     * List groups
     *
@@ -426,7 +427,7 @@ You can override the default by using the **orderBy** parameter. You can specify
 
     *
     * @param opts Optional parameters
-    * @return Promise<GroupPaging>
+    * @returns Promise<GroupPaging>
     */
     listGroups(opts?: GroupPagingOpts & ContentPagingQuery & ContentIncludeQuery & ContentFieldsQuery): Promise<GroupPaging> {
         const queryParams = {
@@ -457,7 +458,7 @@ You must have admin rights to update a group.
     * @param groupId The identifier of a group.
     * @param groupBodyUpdate The group information to update.
     * @param opts Optional parameters
-    * @return Promise<GroupEntry>
+    * @returns Promise<GroupEntry>
     */
     updateGroup(groupId: string, groupBodyUpdate: GroupBodyUpdate, opts?: ContentIncludeQuery & ContentFieldsQuery): Promise<GroupEntry> {
         throwIfNotDefined(groupId, 'groupId');

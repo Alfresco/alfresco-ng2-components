@@ -23,16 +23,16 @@ import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { ContentFieldsQuery, ContentPagingQuery } from './types';
 
 /**
-* Networks service.
-*/
+ * Networks service.
+ */
 export class NetworksApi extends BaseApi {
     /**
-    * Get a network
-    *
-    * @param networkId The identifier of a network.
-    * @param opts Optional parameters
-    * @return Promise<PersonNetworkEntry>
-    */
+     * Get a network
+     *
+     * @param networkId The identifier of a network.
+     * @param opts Optional parameters
+     * @returns Promise<PersonNetworkEntry>
+     */
     getNetwork(networkId: string, opts?: ContentFieldsQuery): Promise<PersonNetworkEntry> {
         throwIfNotDefined(networkId, 'networkId');
 
@@ -51,16 +51,17 @@ export class NetworksApi extends BaseApi {
             returnType: PersonNetworkEntry
         });
     }
-/**
-    * Get network information
-    *
-    * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-    *
-    * @param personId The identifier of a person.
-    * @param networkId The identifier of a network.
-    * @param opts Optional parameters
-    * @return Promise<PersonNetworkEntry>
-    */
+
+    /**
+     * Get network information
+     *
+     * You can use the -me- string in place of <personId> to specify the currently authenticated user.
+     *
+     * @param personId The identifier of a person.
+     * @param networkId The identifier of a network.
+     * @param opts Optional parameters
+     * @returns Promise<PersonNetworkEntry>
+     */
     getNetworkForPerson(personId: string, networkId: string, opts?: ContentFieldsQuery): Promise<PersonNetworkEntry> {
         throwIfNotDefined(personId, 'personId');
         throwIfNotDefined(networkId, 'networkId');
@@ -81,17 +82,15 @@ export class NetworksApi extends BaseApi {
             returnType: PersonNetworkEntry
         });
     }
-/**
+    /**
     * List network membership
     *
     * Gets a list of network memberships for person **personId**.
-
-You can use the -me- string in place of <personId> to specify the currently authenticated user.
-
+    * You can use the -me- string in place of <personId> to specify the currently authenticated user.
     *
     * @param personId The identifier of a person.
     * @param opts Optional parameters
-    * @return Promise<PersonNetworkPaging>
+    * @returns Promise<PersonNetworkPaging>
     */
     listNetworksForPerson(personId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<PersonNetworkPaging> {
         throwIfNotDefined(personId, 'personId');

@@ -185,13 +185,17 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * Get the current Ticket
-     * */
+     *
+     * @returns ticket
+     */
     getTicket(): string {
         return this.ticket;
     }
 
     /**
      * If the client is logged in return true
+     *
+     * @returns `true` if logged in, otherwise `false`
      */
     isLoggedIn(): boolean {
         return !!this.ticket;
@@ -199,7 +203,9 @@ export class ProcessAuth extends AlfrescoApiClient {
 
     /**
      * return the Authentication
-     * */
+     *
+     * @returns authentication object
+     */
     getAuthentication(): Authentication {
         return this.authentications;
     }

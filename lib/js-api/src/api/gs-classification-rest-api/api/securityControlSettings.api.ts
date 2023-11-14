@@ -31,7 +31,7 @@ export class SecurityControlSettingsApi extends BaseApi {
      *
      * @param securityControlSettingKey The key for the security control setting. You can use one of the following settings:
      * -declassificationTimeFrame- for the declassification time frame value set in alfresco-global.properties file
-     * @return Promise<SecurityControlSettingEntry>
+     * @returns Promise<SecurityControlSettingEntry>
      */
     getSecurityControlSetting(securityControlSettingKey: string): Promise<SecurityControlSettingEntry> {
         throwIfNotDefined(securityControlSettingKey, 'securityControlSettingKey');
@@ -53,7 +53,7 @@ export class SecurityControlSettingsApi extends BaseApi {
      * @param securityControlSettingKey The key for the security control setting. You can use one of the following settings:
      * -declassificationTimeFrame- for the declassification time frame value set in alfresco-global.properties file
      * @param securityControlSettingValue The new value for the security control setting. This can be a string or number, depending on the setting key.
-     * @return Promise<SecurityControlSettingEntry>
+     * @returns Promise<SecurityControlSettingEntry>
      */
     updateSecurityControlSetting(securityControlSettingKey: string, securityControlSettingValue: SecurityControlSettingBody): Promise<SecurityControlSettingEntry> {
         throwIfNotDefined(securityControlSettingKey, 'securityControlSettingKey');

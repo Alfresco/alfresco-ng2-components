@@ -621,6 +621,8 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * Refresh the Token
+     *
+     * @returns promise of void
      */
     refreshToken(): Promise<any> {
         const auth = 'Basic ' + this.universalBtoa(this.config.oauth2.clientId + ':' + this.config.oauth2.secret);
@@ -668,7 +670,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * Set the current Token
-     * */
+     */
     setToken(token: string, refreshToken: string) {
         this.authentications.oauth2.accessToken = token;
         this.authentications.oauth2.refreshToken = refreshToken;
@@ -684,7 +686,8 @@ export class Oauth2Auth extends AlfrescoApiClient {
     /**
      * Get the current Token
      *
-     * */
+     * @returns token value
+     */
     getToken(): string {
         return this.token;
     }

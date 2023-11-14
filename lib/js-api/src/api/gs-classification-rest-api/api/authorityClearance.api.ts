@@ -21,8 +21,6 @@ import { GsPagingQuery } from './types';
 
 /**
  * AuthorityClearanceApi service.
- *
- * @module AuthorityClearanceApi
  */
 export class AuthorityClearanceApi extends BaseApi {
     /**
@@ -30,7 +28,7 @@ export class AuthorityClearanceApi extends BaseApi {
      *
      * @param authorityId The name for the authority for which the clearance is to be fetched. Can be left blank in which case it will fetch it for all users with pagination
      * @param opts
-     * @return Promise<AuthorityClearanceGroupPaging>
+     * @returns Promise<AuthorityClearanceGroupPaging>
      */
     getAuthorityClearanceForAuthority(authorityId: string, opts?: GsPagingQuery): Promise<AuthorityClearanceGroupPaging> {
         const pathParams = {
@@ -50,7 +48,7 @@ export class AuthorityClearanceApi extends BaseApi {
      *
      * @param authorityId The name for the authority for which the clearance is to be updated
      * @param authorityClearance AuthorityClearanceBody
-     * @return Promise<SecurityMarkEntry | SecurityMarkPaging>
+     * @returns Promise<SecurityMarkEntry | SecurityMarkPaging>
      */
     updateAuthorityClearance(authorityId: string, authorityClearance: NodeSecurityMarkBody[]): Promise<SecurityMarkEntry | SecurityMarkPaging> {
         const pathParams = {

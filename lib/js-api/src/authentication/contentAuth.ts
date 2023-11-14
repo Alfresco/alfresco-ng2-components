@@ -73,7 +73,7 @@ export class ContentAuth extends AlfrescoApiClient {
      * @param  password Password to login
      *
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
-     * */
+     */
     login(username: string, password: string): Promise<string> {
         this.authentications.basicAuth.username = username;
         this.authentications.basicAuth.password = password;
@@ -114,7 +114,7 @@ export class ContentAuth extends AlfrescoApiClient {
      * validate the ticket present in this.config.ticket against the server
      *
      * @returns A promise that returns  if resolved and {error} if rejected.
-     * */
+     */
     validateTicket(): Promise<string> {
         this.setTicket(this.config.ticketEcm);
 
@@ -170,7 +170,7 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * Set the current Ticket
-     * */
+     */
     setTicket(ticket: string) {
         this.authentications.basicAuth.username = 'ROLE_TICKET';
         this.authentications.basicAuth.password = ticket;
@@ -181,7 +181,9 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * Get the current Ticket
-     * */
+     *
+     * @returns ticket value
+     */
     getTicket(): string {
         return this.ticket;
     }
@@ -196,6 +198,8 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * If the client is logged in return true
+     *
+     * @returns `true` if client is logged in, otherwise `false`
      */
     isLoggedIn(): boolean {
         return !!this.ticket;
@@ -203,7 +207,9 @@ export class ContentAuth extends AlfrescoApiClient {
 
     /**
      * return the Authentication
-     * */
+     *
+     * @returns authentication object
+    */
     getAuthentication(): Authentication {
         return this.authentications;
     }

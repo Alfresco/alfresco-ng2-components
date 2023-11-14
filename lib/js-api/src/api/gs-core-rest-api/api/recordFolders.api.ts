@@ -27,102 +27,18 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * Record Folders service.
- *
- * @module RecordFoldersApi
  */
 export class RecordFoldersApi extends BaseApi {
     /**
     * Create a record
     *
     * Create a record as a primary child of **recordFolderId**.
-
-This endpoint supports both JSON and multipart/form-data (file upload).
-
-**Using multipart/form-data**
-
-Use the **filedata** field to represent the content to upload, for example, the following curl command will
-create a node with the contents of test.txt in the test user's home folder.
-
-curl -utest:test -X POST host:port/alfresco/api/-default-/public/gs/versions/1/record-folders/{recordFolderId}/records -F filedata=@test.txt
-
-This API method also supports record creation using application/json.
-
-You must specify at least a **name** and **nodeType**.
-
-You can create a non-electronic record like this:
-JSON
-{
-  \"name\":\"My Non-electronic Record\",
-  \"nodeType\":\"rma:nonElectronicDocument\",
-  \"properties\":
-    {
-      \"cm:description\":\"My Non-electronic Record Description\",
-      \"cm:title\":\"My Non-electronic Record Title\",
-      \"rma:box\":\"My Non-electronic Record Box\",
-      \"rma:file\":\"My Non-electronic Record File\",
-      \"rma:numberOfCopies\":1,
-      \"rma:physicalSize\":30,
-      \"rma:shelf\":\"My Non-electronic Record Shelf\",
-      \"rma:storageLocation\":\"My Non-electronic Record Location\"
-    }
-}
-
-You can create an empty electronic record:
-JSON
-{
-  \"name\":\"My Electronic Record\",
-  \"nodeType\":\"cm:content\"
-}
-
-Any missing aspects are applied automatically. You can set aspects explicitly, if needed, using an **aspectNames** field.
-
-**Note:** You can create more than one child by
-specifying a list of nodes in the JSON body. For example, the following JSON
-body creates a record category and a record folder inside the specified **categoryId**:
-JSON
-[
-  {
-    \"name\":\"Record 1\",
-    \"nodeType\":\"cm:content\"
-  },
-  {
-    \"name\":\"Record 2\",
-    \"nodeType\":\"cm:content\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
+    * This endpoint supports both JSON and multipart/form-data (file upload).
     *
     * @param recordFolderId The identifier of a record folder.
     * @param recordBodyCreate The record information to create. This field is ignored for multipart/form-data content uploads.
     * @param opts Optional parameters
-    * @return Promise<RecordEntry>
+    * @returns Promise<RecordEntry>
     */
     createRecordFolderChild(recordFolderId: string, recordBodyCreate: RMNodeBodyCreate, opts?: RecordsIncludeQuery): Promise<RecordEntry> {
         throwIfNotDefined(recordFolderId, 'recordFolderId');
@@ -145,15 +61,13 @@ JSON
             returnType: RecordEntry
         });
     }
-    /**
-        * Delete a record folder
-        *
-        * Deletes record folder **recordFolderId**. Deleted file plan components cannot be recovered, they are deleted permanently.
 
-        *
-        * @param recordFolderId The identifier of a record folder.
-        * @return Promise<{}>
-        */
+    /**
+    * Deletes record folder **recordFolderId**. Deleted file plan components cannot be recovered, they are deleted permanently.
+    *
+    * @param recordFolderId The identifier of a record folder.
+    * @returns Promise<{}>
+    */
     deleteRecordFolder(recordFolderId: string): Promise<void> {
         throwIfNotDefined(recordFolderId, 'recordFolderId');
 
@@ -175,7 +89,7 @@ JSON
      *
      * @param recordFolderId The identifier of a record folder.
      * @param opts Optional parameters
-     * @return Promise<RecordFolderEntry>
+     * @returns Promise<RecordFolderEntry>
      */
     getRecordFolder(recordFolderId: string, opts?: RecordsIncludeQuery): Promise<RecordFolderEntry> {
         throwIfNotDefined(recordFolderId, 'recordFolderId');
@@ -203,18 +117,16 @@ JSON
      * Gets a list of records.
      *
      * Minimal information for each record is returned by default.
-     *
      * The list of records includes primary children and secondary children, if there are any.
-     *
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
      *
      * @param recordFolderId The identifier of a record folder.
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list. Here are some examples:
-     *   where=(nodeType='my:specialNodeType')
-     *   where=(nodeType='my:specialNodeType INCLUDESUBTYPES')
-     *   where=(isPrimary=true)
-     * @return Promise<RecordFolderAssociationPaging>
+     *   - where=(nodeType='my:specialNodeType')
+     *   - where=(nodeType='my:specialNodeType INCLUDESUBTYPES')
+     *   - where=(isPrimary=true)
+     * @returns Promise<RecordFolderAssociationPaging>
      */
     listRecordFolderChildren(
         recordFolderId: string,
@@ -246,35 +158,18 @@ JSON
             returnType: RecordFolderAssociationPaging
         });
     }
+
     /**
-        * Update a record folder
-        *
-        * Updates record folder **recordFolderId**. For example, you can rename a record folder:
-    JSON
-    {
-      \"name\":\"My new name\"
-    }
-
-    You can also set or update one or more properties:
-    JSON
-    {
-      \"properties\":
-        {
-           \"rma:vitalRecordIndicator\": true,
-           \"rma:reviewPeriod\":\"month|6\"
-        }
-    }
-
-    **Note:** if you want to add or remove aspects, then you must use **GET /record-folders/{recordFolderId}** first to get the complete set of *aspectNames*.
-
-    **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-
-        *
-        * @param recordFolderId The identifier of a record folder.
-        * @param recordFolderBodyUpdate The record folder information to update.
-        * @param opts Optional parameters
-        * @return Promise<RecordFolderEntry>
-        */
+    * Updates record folder **recordFolderId**. For example, you can rename a record folder:
+    *
+    * **Note:** if you want to add or remove aspects, then you must use **GET /record-folders/{recordFolderId}** first to get the complete set of *aspectNames*.
+    * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
+    *
+    * @param recordFolderId The identifier of a record folder.
+    * @param recordFolderBodyUpdate The record folder information to update.
+    * @param opts Optional parameters
+    * @returns Promise<RecordFolderEntry>
+    */
     updateRecordFolder(recordFolderId: string, recordFolderBodyUpdate: FilePlanComponentBodyUpdate, opts?: RecordsIncludeQuery): Promise<RecordFolderEntry> {
         throwIfNotDefined(recordFolderId, 'recordFolderId');
         throwIfNotDefined(recordFolderBodyUpdate, 'recordFolderBodyUpdate');

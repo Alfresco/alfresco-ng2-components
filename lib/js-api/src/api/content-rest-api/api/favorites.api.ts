@@ -35,57 +35,7 @@ export class FavoritesApi extends BaseApi {
     * Create a favorite
     *
     * Favorite a **site**, **file**, or **folder** in the repository.
-
-You can use the -me- string in place of <personId> to specify the currently authenticated user.
-
-**Note:** You can favorite more than one entity by
-specifying a list of objects in the JSON body like this:
-
-JSON
-[
-  {
-       \"target\": {
-          \"file\": {
-             \"guid\": \"abcde-01234-....\"
-          }
-       }
-   },
-   {
-       \"target\": {
-          \"file\": {
-             \"guid\": \"abcde-09863-....\"
-          }
-       }
-   },
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
+    * You can use the -me- string in place of <personId> to specify the currently authenticated user.
     *
     * @param personId The identifier of a person.
     * @param favoriteBodyCreate An object identifying the entity to be favorited.
@@ -121,7 +71,7 @@ If the API method also supports the **include**
 parameter, then the fields specified in the **include**
 parameter are returned in addition to those specified in the **fields** parameter.
 
-    * @return Promise<FavoriteEntry>
+    * @returns Promise<FavoriteEntry>
     */
     createFavorite(personId: string, favoriteBodyCreate: FavoriteBodyCreate, opts?: { include?: string[]; fields?: string[] }): Promise<FavoriteEntry> {
         throwIfNotDefined(personId, 'personId');
@@ -147,58 +97,12 @@ parameter are returned in addition to those specified in the **fields** paramete
     /**
     * Create a site favorite
     *
-    * **Note:** this endpoint is deprecated as of Alfresco 4.2, and will be removed in the future.
-Use /people/{personId}/favorites instead.
-
-Create a site favorite for person **personId**.
-
-You can use the -me- string in place of <personId> to specify the currently authenticated user.
-
- **Note:** You can favorite more than one site by
-specifying a list of sites in the JSON body like this:
-
-JSON
-[
-  {
-    \"id\": \"test-site-1\"
-  },
-  {
-    \"id\": \"test-site-2\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
+    * **Note:** this endpoint is deprecated as of Alfresco 4.2, and will be removed in the future. Use /people/{personId}/favorites instead.
     *
     * @param personId The identifier of a person.
     * @param favoriteSiteBodyCreate The id of the site to favorite.
     * @param opts Optional parameters
-    * @return Promise<FavoriteSiteEntry>
+    * @returns Promise<FavoriteSiteEntry>
     */
     createSiteFavorite(personId: string, favoriteSiteBodyCreate: FavoriteSiteBodyCreate, opts?: ContentFieldsQuery): Promise<FavoriteSiteEntry> {
         throwIfNotDefined(personId, 'personId');
@@ -230,7 +134,7 @@ JSON
      *
      * @param personId The identifier of a person.
      * @param favoriteId The identifier of a favorite.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteFavorite(personId: string, favoriteId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -259,7 +163,7 @@ JSON
      *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteSiteFavorite(personId: string, siteId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -275,13 +179,12 @@ JSON
             pathParams
         });
     }
+
     /**
     * Get a favorite
     *
     * Gets favorite **favoriteId** for person **personId**.
-
-You can use the -me- string in place of <personId> to specify the currently authenticated user.
-
+    * You can use the -me- string in place of <personId> to specify the currently authenticated user.
     *
     * @param personId The identifier of a person.
     * @param favoriteId The identifier of a favorite.
@@ -302,7 +205,7 @@ If the API method also supports the **include**
 parameter, then the fields specified in the **include**
 parameter are returned in addition to those specified in the **fields** parameter.
 
-    * @return Promise<FavoriteEntry>
+    * @returns Promise<FavoriteEntry>
     */
     getFavorite(personId: string, favoriteId: string, opts?: { include?: string[]; fields?: string[] }): Promise<FavoriteEntry> {
         throwIfNotDefined(personId, 'personId');
@@ -325,6 +228,7 @@ parameter are returned in addition to those specified in the **fields** paramete
             returnType: FavoriteEntry
         });
     }
+
     /**
     * Get a favorite site
     *
@@ -351,7 +255,7 @@ If the API method also supports the **include**
 parameter, then the fields specified in the **include**
 parameter are returned in addition to those specified in the **fields** parameter.
 
-    * @return Promise<SiteEntry>
+    * @returns Promise<SiteEntry>
     */
     getFavoriteSite(personId: string, siteId: string, opts?: { fields?: string[] }): Promise<SiteEntry> {
         throwIfNotDefined(personId, 'personId');
@@ -386,7 +290,7 @@ You can use the -me- string in place of <personId> to specify the currently auth
     *
     * @param personId The identifier of a person.
     * @param opts Optional parameters
-    * @return Promise<SitePaging>
+    * @returns Promise<SitePaging>
     */
     listFavoriteSitesForPerson(personId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<SitePaging> {
         throwIfNotDefined(personId, 'personId');
@@ -457,7 +361,7 @@ above to check if any fields used in this method have a descending default searc
 To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
 
     * @param opts.where A string to restrict the returned objects by using a predicate.
-    * @return Promise<FavoritePaging>
+    * @returns Promise<FavoritePaging>
     */
     listFavorites(
         personId: string,

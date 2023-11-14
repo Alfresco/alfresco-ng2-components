@@ -34,105 +34,11 @@ export class RecordCategoriesApi extends BaseApi {
     /**
     * Create a record category or a record folder
     *
-    * Create a record category or a record folder as a primary child of **recordCategoryId**.
-
-You can set the **autoRename** boolean field to automatically resolve name clashes. If there is a name clash, then
-the API method tries to create
-a unique name using an integer suffix.
-
-This API method also supports record category or record folder creation using application/json.
-
-You must specify at least a **name** and **nodeType**.
-
-You can create a category like this:
-JSON
-{
-  \"name\":\"My Record Category\",
-  \"nodeType\":\"rma:recordCategory\"
-}
-
-You can create a record folder like this:
-JSON
-{
-  \"name\":\"My Record Folder\",
-  \"nodeType\":\"rma:recordFolder\"
-}
-
-You can create a record folder inside a container hierarchy (applies to record categories as well):
-JSON
-{
-  \"name\":\"My Fileplan Component\",
-  \"nodeType\":\"rma:recordFolder\",
-  \"relativePath\":\"X/Y/Z\"
-}
-
-The **relativePath** specifies the container structure to create relative to the node (record category or record folder). Containers in the
-**relativePath** that do not exist are created before the node is created. The container type is decided considering
-the type of the parent container and the type of the node to be created.
-
-You can set properties when creating a record category (applies to record folders as well):
-JSON
-{
-  \"name\":\"My Record Category\",
-  \"nodeType\":\"rma:recordCategory\",
-  \"properties\":
-  {
-    \"rma:vitalRecordIndicator\":\"true\",
-    \"rma:reviewPeriod\":\"month|1\"
-  }
-}
-
-Any missing aspects are applied automatically. You can set aspects explicitly, if needed, using an **aspectNames** field.
-
-**Note:** You can create more than one child by
-specifying a list of nodes in the JSON body. For example, the following JSON
-body creates a record category and a record folder inside the specified **categoryId**:
-JSON
-[
-  {
-    \"name\":\"My Record Category\",
-    \"nodeType\":\"rma:recordCategory\"
-  },
-  {
-    \"name\":\"My Record Folder\",
-    \"nodeType\":\"rma:recordFolder\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
-    *
     * @param recordCategoryId The identifier of a record category.
     * @param nodeBodyCreate The node information to create.
-
     * @param opts Optional parameters
     * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
-    * @return Promise<RecordCategoryChildEntry>
+    * @returns Promise<RecordCategoryChildEntry>
     */
     createRecordCategoryChild(
         recordCategoryId: string,
@@ -167,7 +73,7 @@ JSON
      * Delete a record category
      *
      * @param recordCategoryId The identifier of a record category.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteRecordCategory(recordCategoryId: string): Promise<void> {
         throwIfNotDefined(recordCategoryId, 'recordCategoryId');
@@ -191,7 +97,7 @@ JSON
      * @param recordCategoryId The identifier of a record category.
      * @param opts Optional parameters
      * @param opts.relativePath Return information on children in the record category resolved by this path. The path is relative to **recordCategoryId**.
-     * @return Promise<RecordCategoryEntry>
+     * @returns Promise<RecordCategoryEntry>
      */
     getRecordCategory(
         recordCategoryId: string,
@@ -234,7 +140,7 @@ JSON
      *   where=(nodeType='rma:recordCategory')
      *   where=(isRecordFolder=true AND isClosed=false)
      * @param opts.relativePath Return information on children in the record category resolved by this path. The path is relative to **recordCategoryId**.
-     * @return Promise<RecordCategoryChildPaging>
+     * @returns Promise<RecordCategoryChildPaging>
      */
     listRecordCategoryChildren(
         recordCategoryId: string,
@@ -268,35 +174,18 @@ JSON
             returnType: RecordCategoryChildPaging
         });
     }
+
     /**
-        * Update a record category
-        *
-        * Updates record category **recordCategoryId**. For example, you can rename a record category:
-    JSON
-    {
-      \"name\":\"My new name\"
-    }
-
-    You can also set or update one or more properties:
-    JSON
-    {
-      \"properties\":
-        {
-           \"rma:vitalRecordIndicator\": true,
-           \"rma:reviewPeriod\":\"month|6\"
-        }
-    }
-
-    **Note:** If you want to add or remove aspects, then you must use **GET /record-categories/{recordCategoryId}** first to get the complete set of *aspectNames*.
-
-    **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-
-        *
-        * @param recordCategoryId The identifier of a record category.
-        * @param recordCategoryBodyUpdate The record category information to update.
-        * @param opts Optional parameters
-        * @return Promise<RecordCategoryEntry>
-        */
+    * Update a record category
+    *
+    * **Note:** If you want to add or remove aspects, then you must use **GET /record-categories/{recordCategoryId}** first to get the complete set of *aspectNames*.
+    * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
+    *
+    * @param recordCategoryId The identifier of a record category.
+    * @param recordCategoryBodyUpdate The record category information to update.
+    * @param opts Optional parameters
+    * @returns Promise<RecordCategoryEntry>
+    */
     updateRecordCategory(recordCategoryId: string, recordCategoryBodyUpdate: FilePlanComponentBodyUpdate, opts?: RecordsIncludeQuery): Promise<RecordCategoryEntry> {
         throwIfNotDefined(recordCategoryId, 'recordCategoryId');
         throwIfNotDefined(recordCategoryBodyUpdate, 'recordCategoryBodyUpdate');

@@ -35,7 +35,7 @@ export class TasksApi extends BaseApi {
      *
      * @param taskId taskId
      * @param identityLinkRepresentation identityLinkRepresentation
-     * @return Promise<IdentityLinkRepresentation>
+     * @returns Promise<IdentityLinkRepresentation>
      */
     createIdentityLink(taskId: string, identityLinkRepresentation: IdentityLinkRepresentation): Promise<IdentityLinkRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
@@ -59,7 +59,7 @@ export class TasksApi extends BaseApi {
      * A standalone task is one which is not associated with any process instance.
      *
      * @param taskRepresentation taskRepresentation
-     * @return Promise<TaskRepresentation>
+     * @returns Promise<TaskRepresentation>
      */
     createNewTask(taskRepresentation: TaskRepresentation): Promise<TaskRepresentation> {
         throwIfNotDefined(taskRepresentation, 'taskRepresentation');
@@ -78,7 +78,7 @@ export class TasksApi extends BaseApi {
      * @param family family
      * @param identityId identityId
      * @param type type
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteIdentityLink(taskId: string, family: string, identityId: string, type: string): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -103,7 +103,7 @@ export class TasksApi extends BaseApi {
      * Delete a task
      *
      * @param taskId taskId
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteTask(taskId: string): Promise<void> {
         throwIfNotDefined(taskId, 'taskId');
@@ -122,7 +122,7 @@ export class TasksApi extends BaseApi {
      * Filter a list of tasks
      *
      * @param tasksFilter tasksFilter
-     * @return Promise<ResultListDataRepresentationTaskRepresentation>
+     * @returns Promise<ResultListDataRepresentationTaskRepresentation>
      */
     filterTasks(tasksFilter: TaskFilterRequestRepresentation): Promise<ResultListDataRepresentationTaskRepresentation> {
         throwIfNotDefined(tasksFilter, 'tasksFilter');
@@ -141,7 +141,7 @@ export class TasksApi extends BaseApi {
      * @param family family
      * @param identityId identityId
      * @param type type
-     * @return Promise<IdentityLinkRepresentation>
+     * @returns Promise<IdentityLinkRepresentation>
      */
     getIdentityLinkType(taskId: string, family: string, identityId: string, type: string): Promise<IdentityLinkRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
@@ -168,7 +168,7 @@ export class TasksApi extends BaseApi {
      *
      * @param taskId taskId
      * @param family family
-     * @return Promise<IdentityLinkRepresentation>
+     * @returns Promise<IdentityLinkRepresentation>
      */
     getIdentityLinksForFamily(taskId: string, family: string): Promise<IdentityLinkRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
@@ -190,7 +190,7 @@ export class TasksApi extends BaseApi {
      * getIdentityLinks
      *
      * @param taskId taskId
-     * @return Promise<IdentityLinkRepresentation>
+     * @returns Promise<IdentityLinkRepresentation>
      */
     getIdentityLinks(taskId: string): Promise<IdentityLinkRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
@@ -210,7 +210,7 @@ export class TasksApi extends BaseApi {
      * Get the audit log for a task
      *
      * @param taskId taskId
-     * @return Promise<TaskAuditInfoRepresentation>
+     * @returns Promise<TaskAuditInfoRepresentation>
      */
     getTaskAuditLog(taskId: string): Promise<TaskAuditInfoRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
@@ -230,7 +230,7 @@ export class TasksApi extends BaseApi {
      * Get the audit log for a task
      *
      * @param taskId taskId
-     * @return Promise<Blob> task audit in blob
+     * @returns Promise<Blob> task audit in blob
      */
     getTaskAuditPdf(taskId: string): Promise<Blob> {
         throwIfNotDefined(taskId, 'taskId');
@@ -251,7 +251,7 @@ export class TasksApi extends BaseApi {
      * Get a task
      *
      * @param taskId taskId
-     * @return Promise<TaskRepresentation>
+     * @returns Promise<TaskRepresentation>
      */
     getTask(taskId: string): Promise<TaskRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
@@ -271,7 +271,7 @@ export class TasksApi extends BaseApi {
      * Query historic tasks
      *
      * @param queryRequest queryRequest
-     * @return Promise<ResultListDataRepresentationTaskRepresentation>
+     * @returns Promise<ResultListDataRepresentationTaskRepresentation>
      */
     listHistoricTasks(queryRequest: HistoricTaskInstanceQueryRepresentation): Promise<ResultListDataRepresentationTaskRepresentation> {
         throwIfNotDefined(queryRequest, 'queryRequest');
@@ -287,7 +287,7 @@ export class TasksApi extends BaseApi {
      * List tasks
      *
      * @param tasksQuery tasksQuery
-     * @return Promise<ResultListDataRepresentationTaskRepresentation>
+     * @returns Promise<ResultListDataRepresentationTaskRepresentation>
      */
     listTasks(tasksQuery: TaskQueryRepresentation): Promise<ResultListDataRepresentationTaskRepresentation> {
         throwIfNotDefined(tasksQuery, 'tasksQuery');
@@ -306,7 +306,7 @@ export class TasksApi extends BaseApi {
      *
      * @param taskId taskId
      * @param updated updated
-     * @return Promise<TaskRepresentation>
+     * @returns Promise<TaskRepresentation>
      */
     updateTask(taskId: string, updated: TaskUpdateRepresentation): Promise<TaskRepresentation> {
         throwIfNotDefined(taskId, 'taskId');

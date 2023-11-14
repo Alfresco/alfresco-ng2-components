@@ -35,7 +35,7 @@ export class FilesApi extends BaseApi {
      * @param fileId The identifier of a non-record file.
      * @param opts Optional parameters
      * @param opts.hideRecord Flag to indicate whether the record should be hidden from the current parent folder. (default to false)
-     * @return Promise<RecordEntry>
+     * @returns Promise<RecordEntry>
      */
     declareRecord(
         fileId: string,

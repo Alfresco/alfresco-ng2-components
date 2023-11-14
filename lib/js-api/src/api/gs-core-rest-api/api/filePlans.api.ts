@@ -27,75 +27,16 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * FilePlansApi service.
- *
- * @module FilePlansApi
  */
 export class FilePlansApi extends BaseApi {
     /**
     * Create record categories for a file plan
     *
-    * Creates a record category as a primary child of **filePlanId**.
-
-You can set the **autoRename** boolean field to automatically resolve name clashes. If there is a name clash, then
-the API method tries to create
-a unique name using an integer suffix.
-
-This API method also supports record category creation using application/json.
-
-You must specify at least a **name**.
-
-You can create a category like this:
-JSON
-{
-  \"name\":\"My Record Category\"
-}
-
-You can set properties when creating a record category:
-JSON
-{
-  \"name\":\"My Record Category\",
-  \"properties\":
-  {
-    \"rma:vitalRecordIndicator\":\"true\",
-    \"rma:reviewPeriod\":\"month|1\"
-  }
-}
-
-Any missing aspects are applied automatically. You can set aspects explicitly, if needed, using an **aspectNames** field.
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
-    *
     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
     * @param nodeBodyCreate The node information to create.
     * @param opts Optional parameters
     * @param opts.autoRename If true, then  a name clash will cause an attempt to auto rename by finding a unique name using an integer suffix.
-    * @return Promise<RecordCategoryEntry>
+    * @returns Promise<RecordCategoryEntry>
     */
     createFilePlanCategories(
         filePlanId: string,
@@ -126,20 +67,18 @@ JSON
             returnType: RecordCategoryEntry
         });
     }
+
     /**
-        * Get a file plan
-        *
-        * Gets information for file plan **filePlanId**
-
-    Mandatory fields and the file plan's aspects and properties are returned by default.
-
-    You can use the **include** parameter (include=allowableOperations) to return additional information.
-
-        *
-        * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-        * @param opts Optional parameters
-        * @return Promise<FilePlanEntry>
-        */
+    * Get a file plan
+    *
+    * Gets information for file plan **filePlanId**
+    * Mandatory fields and the file plan's aspects and properties are returned by default.
+    * You can use the **include** parameter (include=allowableOperations) to return additional information.
+    *
+    * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+    * @param opts Optional parameters
+    * @returns Promise<FilePlanEntry>
+    */
     getFilePlan(filePlanId: string, opts?: RecordsIncludeQuery): Promise<FilePlanEntry> {
         throwIfNotDefined(filePlanId, 'filePlanId');
 
@@ -168,7 +107,7 @@ JSON
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param opts Optional parameters
-     * @return Promise<RecordCategoryPaging>
+     * @returns Promise<RecordCategoryPaging>
      */
     getFilePlanCategories(filePlanId: string, opts?: RecordsIncludeQuery & RecordsPagingQuery & RecordsSourceQuery): Promise<RecordCategoryPaging> {
         throwIfNotDefined(filePlanId, 'filePlanId');
@@ -196,23 +135,12 @@ JSON
     /**
      * Update a file plan
      *
-     * Updates file plan **filePlanId**.
-     * You can only set or update description and title properties:
-     * JSON
-     * {
-     * \"properties\":
-     * {
-     *    \"cm:description\": \"New Description\",
-     *    \"cm:title\":\"New Title\"
-     * }
-     *}
-     *
      * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param filePlanBodyUpdate The file plan information to update.
      * @param opts Optional parameters
-     * @return Promise<FilePlanEntry>
+     * @returns Promise<FilePlanEntry>
      */
     updateFilePlan(filePlanId: string, filePlanBodyUpdate: FilePlanBodyUpdate, opts?: RecordsIncludeQuery): Promise<FilePlanEntry> {
         throwIfNotDefined(filePlanId, 'filePlanId');

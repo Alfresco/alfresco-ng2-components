@@ -35,7 +35,7 @@ export class ActivitiesApi extends BaseApi {
      * @param opts Optional parameters
      * @param opts.who A filter to include the user's activities only me, other user's activities only others'
      * @param opts.siteId Include only activity feed entries relating to this site.
-     * @return Promise<ActivityPaging>
+     * @returns Promise<ActivityPaging>
      */
     listActivitiesForPerson(
         personId: string,

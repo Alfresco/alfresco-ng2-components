@@ -40,7 +40,7 @@ export class CategoriesApi extends BaseApi {
      *
      * @param categoryId The identifier of a category.
      * @param opts Optional parameters
-     * @return Promise<CategoryPaging>
+     * @returns Promise<CategoryPaging>
      */
     getSubcategories(categoryId: string, opts?: ContentPagingQuery & CategoryQuery): Promise<CategoryPaging> {
         throwIfNotDefined(categoryId, 'categoryId');
@@ -72,7 +72,7 @@ export class CategoriesApi extends BaseApi {
      *
      * @param categoryId The identifier of a category.
      * @param opts Optional parameters
-     * @return Promise<CategoryEntry>
+     * @returns Promise<CategoryEntry>
      */
     getCategory(categoryId: string, opts?: CategoryQuery): Promise<CategoryEntry> {
         throwIfNotDefined(categoryId, 'categoryId');
@@ -99,7 +99,7 @@ export class CategoriesApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
-     * @return Promise<CategoryPaging>
+     * @returns Promise<CategoryPaging>
      */
     getCategoryLinksForNode(nodeId: string, opts?: ContentPagingQuery & CategoryQuery): Promise<CategoryPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -130,7 +130,7 @@ export class CategoriesApi extends BaseApi {
      * You must have admin rights to delete a category.
      *
      * @param categoryId The identifier of a category.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteCategory(categoryId: string): Promise<void> {
         throwIfNotDefined(categoryId, 'categoryId');
@@ -150,7 +150,7 @@ export class CategoriesApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param categoryId The identifier of a category.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     unlinkNodeFromCategory(nodeId: string, categoryId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -176,7 +176,7 @@ export class CategoriesApi extends BaseApi {
      * @param categoryId The identifier of a category.
      * @param categoryBodyUpdate The updated category
      * @param opts Optional parameters
-     * @return Promise<CategoryEntry>
+     * @returns Promise<CategoryEntry>
      */
     updateCategory(categoryId: string, categoryBodyUpdate: CategoryBody, opts?: CategoryQuery): Promise<CategoryEntry> {
         throwIfNotDefined(categoryId, 'categoryId');
@@ -206,57 +206,11 @@ export class CategoriesApi extends BaseApi {
     * Creates new categories within the category **categoryId**.
     * The parameter categoryId can be set to the alias -root- to create a new top level category.
     * You must have admin rights to create a category.
-    * You specify the category in a JSON body like this:
-
-    JSON
-    {
-    \"name\":\"test category 1\"
-    }
-
-    **Note:** You can create more than one category by specifying a list of categories in the JSON body like this:
-
-    JSON
-    [
-    {
-        \"name\":\"test category 1\"
-    },
-    {
-        \"name\":\"test category 2\"
-    }
-    ]
-
-    If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-    JSON
-    {
-    \"list\": {
-        \"pagination\": {
-        \"count\": 2,
-        \"hasMoreItems\": false,
-        \"totalItems\": 2,
-        \"skipCount\": 0,
-        \"maxItems\": 100
-        },
-        \"entries\": [
-        {
-            \"entry\": {
-            ...
-            }
-        },
-        {
-            \"entry\": {
-            ...
-            }
-        }
-        ]
-    }
-    }
-
     *
     * @param categoryId The identifier of a category.
     * @param categoryBodyCreate List of categories to create.
     * @param opts Optional parameters.
-    * @return Promise<CategoryPaging | CategoryEntry>
+    * @returns Promise<CategoryPaging | CategoryEntry>
     */
     createSubcategories(categoryId: string, categoryBodyCreate: CategoryBody[], opts?: CategoryQuery): Promise<CategoryPaging | CategoryEntry> {
         throwIfNotDefined(categoryId, 'categoryId');
@@ -283,58 +237,10 @@ export class CategoriesApi extends BaseApi {
     /**
     * Assign a node to a category
     *
-    * Assign the node **nodeId** to a category.
-    * You specify the category in a JSON body like this:
-
-    JSON
-    {
-    \"categoryId\":\"01234567-89ab-cdef-0123-456789abcdef\"
-    }
-
-    **Note:** You can assign the node to more than one category by specifying a list of categories in the JSON body like this:
-
-    JSON
-    [
-    {
-        \"categoryId\":\"01234567-89ab-cdef-0123-456789abcdef\"
-    },
-    {
-        \"categoryId\":\"89abcdef-0123-4567-89ab-cdef01234567\"
-    }
-    ]
-
-    If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-    JSON
-    {
-    \"list\": {
-        \"pagination\": {
-        \"count\": 2,
-        \"hasMoreItems\": false,
-        \"totalItems\": 2,
-        \"skipCount\": 0,
-        \"maxItems\": 100
-        },
-        \"entries\": [
-        {
-            \"entry\": {
-            ...
-            }
-        },
-        {
-            \"entry\": {
-            ...
-            }
-        }
-        ]
-    }
-    }
-
-    *
     * @param nodeId The identifier of a node.
     * @param categoryLinkBodyCreate The new category link
     * @param opts Optional parameters
-    * @return Promise<CategoryPaging | CategoryEntry>
+    * @returns Promise<CategoryPaging | CategoryEntry>
     */
     linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[], opts?: CategoryQuery): Promise<CategoryPaging | CategoryEntry> {
         throwIfNotDefined(nodeId, 'nodeId');

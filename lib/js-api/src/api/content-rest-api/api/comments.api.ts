@@ -81,7 +81,7 @@ JSON
     * @param nodeId The identifier of a node.
     * @param commentBodyCreate The comment text. Note that you can also provide a list of comments.
     * @param opts Optional parameters
-    * @return Promise<CommentEntry>
+    * @returns Promise<CommentEntry>
     */
     createComment(nodeId: string, commentBodyCreate: CommentBody, opts?: ContentFieldsQuery): Promise<CommentEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -109,7 +109,7 @@ JSON
      *
      * @param nodeId The identifier of a node.
      * @param commentId The identifier of a comment.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteComment(nodeId: string, commentId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -133,7 +133,7 @@ JSON
      *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
-     * @return Promise<CommentPaging>
+     * @returns Promise<CommentPaging>
      */
     listComments(nodeId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<CommentPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -163,7 +163,7 @@ JSON
      * @param commentId The identifier of a comment.
      * @param commentBodyUpdate The JSON representing the comment to be updated.
      * @param opts Optional parameters
-     * @return Promise<CommentEntry>
+     * @returns Promise<CommentEntry>
      */
     updateComment(nodeId: string, commentId: string, commentBodyUpdate: CommentBody, opts?: ContentFieldsQuery): Promise<CommentEntry> {
         throwIfNotDefined(nodeId, 'nodeId');

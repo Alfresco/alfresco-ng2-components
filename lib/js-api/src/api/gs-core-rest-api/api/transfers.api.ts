@@ -36,7 +36,7 @@ export class TransfersApi extends BaseApi {
      *
      * @param transferId The identifier of a transfer.
      * @param opts Optional parameters
-     * @return Promise<TransferEntry>
+     * @returns Promise<TransferEntry>
      */
     getTransfer(transferId: string, opts?: RecordsIncludeQuery): Promise<TransferEntry> {
         throwIfNotDefined(transferId, 'transferId');
@@ -66,7 +66,7 @@ export class TransfersApi extends BaseApi {
      *
      * @param transferId The identifier of a transfer.
      * @param opts Optional parameters
-     * @return Promise<TransferAssociationPaging>
+     * @returns Promise<TransferAssociationPaging>
      */
     listTransfersChildren(
         transferId: string,

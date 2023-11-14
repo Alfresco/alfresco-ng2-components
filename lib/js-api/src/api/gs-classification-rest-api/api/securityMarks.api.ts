@@ -33,7 +33,7 @@ export class SecurityMarksApi extends BaseApi {
      *
      * @param securityGroupId The key for the security group id.
      * @param opts Options
-     * @return Promise<SecurityMarkPaging>
+     * @returns Promise<SecurityMarkPaging>
      */
     getSecurityMarks(securityGroupId: string, opts?: GsPagingQuery): Promise<SecurityMarkPaging> {
         throwIfNotDefined(securityGroupId, 'securityGroupId');
@@ -55,7 +55,7 @@ export class SecurityMarksApi extends BaseApi {
      *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkBody securityMarkBody[].
-     * @return Promise<SecurityMarkEntry|SecurityMarkPaging>
+     * @returns Promise<SecurityMarkEntry|SecurityMarkPaging>
      */
     createSecurityMarks(securityGroupId: string, securityMarkBody: SecurityMarkBody[]): Promise<SecurityMarkPaging | SecurityMarkEntry> {
         throwIfNotDefined(securityGroupId, 'securityGroupId');
@@ -77,7 +77,7 @@ export class SecurityMarksApi extends BaseApi {
      *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark id
-     * @return Promise<SecurityMarkEntry>
+     * @returns Promise<SecurityMarkEntry>
      */
     getSecurityMark(securityGroupId: string, securityMarkId: string): Promise<SecurityMarkEntry> {
         throwIfNotDefined(securityGroupId, 'securityGroupId');
@@ -101,7 +101,7 @@ export class SecurityMarksApi extends BaseApi {
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark is in use or not.
      * @param securityMarkBody securityMarkBody.
-     * @return Promise<SecurityMarkEntry>
+     * @returns Promise<SecurityMarkEntry>
      */
     updateSecurityMark(securityGroupId: string, securityMarkId: string, securityMarkBody: SecurityMarkBody): Promise<SecurityMarkEntry> {
         throwIfNotDefined(securityGroupId, 'securityGroupId');
@@ -126,7 +126,7 @@ export class SecurityMarksApi extends BaseApi {
      *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark id.
-     * @return Promise<any>
+     * @returns Promise<any>
      */
     deleteSecurityMark(securityGroupId: string, securityMarkId: string): Promise<SecurityMarkEntry> {
         throwIfNotDefined(securityGroupId, 'securityGroupId');

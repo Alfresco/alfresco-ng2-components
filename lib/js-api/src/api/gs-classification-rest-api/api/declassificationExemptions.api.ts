@@ -31,52 +31,8 @@ export class DeclassificationExemptionsApi extends BaseApi {
     /**
     * Create a declassification exemption
     *
-    * Creates a new declassification exemption.
-
-**Note:** You can create more than one exemption by specifying a list of exemptions in the JSON body.
-For example, the following JSON body creates two declassification exemptions:
-JSON
-[
-  {
-    \"code\":\"My Code1\",
-    \"description\":\"My Description1\"
-  },
-  {
-    \"code\":\"My Code2\",
-    \"description\":\"My Description2\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
-    *
     * @param declassificationExemption Declassification exemption
-    * @return Promise<DeclassificationExemptionEntry>
+    * @returns Promise<DeclassificationExemptionEntry>
     */
     createDeclassificationExemption(declassificationExemption: DeclassificationExemptionBody): Promise<DeclassificationExemptionEntry> {
         throwIfNotDefined(declassificationExemption, 'declassificationExemption');
@@ -93,7 +49,7 @@ JSON
      * You can't delete a classification exemption that is being used to classify content.
      *
      * @param declassificationExemptionId The identifier for the declassification exemption
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteDeclassificationExemption(declassificationExemptionId: string): Promise<void> {
         throwIfNotDefined(declassificationExemptionId, 'declassificationExemptionId');
@@ -112,7 +68,7 @@ JSON
      * List all declassification exemptions
      *
      * @param opts Optional parameters
-     * @return Promise<DeclassificationExemptionsPaging>
+     * @returns Promise<DeclassificationExemptionsPaging>
      */
     listDeclassificationExemptions(opts?: GsPagingQuery): Promise<DeclassificationExemptionsPaging> {
         return this.get({
@@ -126,7 +82,7 @@ JSON
      * Get declassification exemption information
      *
      * @param declassificationExemptionId The identifier for the declassification exemption
-     * @return Promise<DeclassificationExemptionEntry>
+     * @returns Promise<DeclassificationExemptionEntry>
      */
     showDeclassificationExemptionById(declassificationExemptionId: string): Promise<DeclassificationExemptionEntry> {
         throwIfNotDefined(declassificationExemptionId, 'declassificationExemptionId');
@@ -147,7 +103,7 @@ JSON
      *
      * @param declassificationExemptionId The identifier for the declassification exemption
      * @param declassificationExemption Declassification exemption
-     * @return Promise<DeclassificationExemptionEntry>
+     * @returns Promise<DeclassificationExemptionEntry>
      */
     updateDeclassificationExemption(declassificationExemptionId: string, declassificationExemption: DeclassificationExemptionBody): Promise<DeclassificationExemptionEntry> {
         throwIfNotDefined(declassificationExemptionId, 'declassificationExemptionId');

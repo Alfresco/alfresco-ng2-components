@@ -50,7 +50,7 @@ export class SitesApi extends BaseApi {
      * @param inviteeId The invitee username.
      * @param opts Optional parameters
      * @param opts.siteMembershipApprovalBody Accepting a request to join, optionally, allows assignment of a role to the user.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     approveSiteMembershipRequest(siteId: string, inviteeId: string, opts?: { siteMembershipApprovalBody?: any }): Promise<any> {
         throwIfNotDefined(siteId, 'siteId');
@@ -69,52 +69,22 @@ export class SitesApi extends BaseApi {
             bodyParam: postBody
         });
     }
+
     /**
     * Create a site
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Creates a default site with the given details.  Unless explicitly specified, the site id will be generated
-from the site title. The site id must be unique and only contain alphanumeric and/or dash characters.
-
-Note: the id of a site cannot be updated once the site has been created.
-
-For example, to create a public site called \"Marketing\" the following body could be used:
-JSON
-{
-  \"title\": \"Marketing\",
-  \"visibility\": \"PUBLIC\"
-}
-
-The creation of the (surf) configuration files required by Share can be skipped via the **skipConfiguration** query parameter.
-
-**Note:** if skipped then such a site will **not** work within Share.
-
-The addition of the site to the user's site favorites can be skipped via the **skipAddToFavorites** query parameter.
-
-The creator will be added as a member with Site Manager role.
-
-When you create a site, a container called **documentLibrary** is created for you in the new site.
-This container is the root folder for content stored in the site.
-
     *
     * @param siteBodyCreate The site details
     * @param opts Optional parameters
     * @param opts.skipConfiguration Flag to indicate whether the Share-specific (surf) configuration files for the site should not be created. (default to false)
     * @param opts.skipAddToFavorites Flag to indicate whether the site should not be added to the user's site favorites. (default to false)
-    * @param opts.fields A list of field names.
-
-You can use this parameter to restrict the fields
-returned within a response if, for example, you want to save on overall bandwidth.
-
-The list applies to a returned individual
-entity or entries within a collection.
-
-If the API method also supports the **include**
-parameter, then the fields specified in the **include**
-parameter are returned in addition to those specified in the **fields** parameter.
-
-    * @return Promise<SiteEntry>
+    * @param opts.fields A list of field names. You can use this parameter to restrict the fields
+    * returned within a response if, for example, you want to save on overall bandwidth.
+    * The list applies to a returned individual entity or entries within a collection.
+    * If the API method also supports the **include** parameter, then the fields specified in the **include**
+    * parameter are returned in addition to those specified in the **fields** parameter.
+    * @returns Promise<SiteEntry>
     */
     createSite(siteBodyCreate: SiteBodyCreate, opts?: { skipConfiguration?: boolean; skipAddToFavorites?: boolean; fields?: string[] }): Promise<SiteEntry> {
         throwIfNotDefined(siteBodyCreate, 'siteBodyCreate');
@@ -137,74 +107,14 @@ parameter are returned in addition to those specified in the **fields** paramete
     /**
     * Create a site membership
     *
-    * Creates a site membership for person **personId** on site **siteId**.
-
-You can set the **role** to one of four types:
-
-* SiteConsumer
-* SiteCollaborator
-* SiteContributor
-* SiteManager
-
-**Note:** You can create more than one site membership by
-specifying a list of people in the JSON body like this:
-
-JSON
-[
-  {
-    \"role\": \"SiteConsumer\",
-    \"id\": \"joe\"
-  },
-  {
-    \"role\": \"SiteConsumer\",
-    \"id\": \"fred\"
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
-    *
     * @param siteId The identifier of a site.
     * @param siteMembershipBodyCreate The person to add and their role
     * @param opts Optional parameters
-    * @param opts.fields A list of field names.
-
-You can use this parameter to restrict the fields
-returned within a response if, for example, you want to save on overall bandwidth.
-
-The list applies to a returned individual
-entity or entries within a collection.
-
-If the API method also supports the **include**
-parameter, then the fields specified in the **include**
-parameter are returned in addition to those specified in the **fields** parameter.
-
-    * @return Promise<SiteMemberEntry>
+    * @param opts.fields A list of field names. You can use this parameter to restrict the fields
+    * returned within a response if, for example, you want to save on overall bandwidth. The list applies to a returned individual
+    * entity or entries within a collection. If the API method also supports the **include** parameter, then the fields specified in the **include**
+    * parameter are returned in addition to those specified in the **fields** parameter.
+    * @returns Promise<SiteMemberEntry>
     */
     createSiteMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: { fields?: string[] }): Promise<SiteMemberEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -230,64 +140,10 @@ parameter are returned in addition to those specified in the **fields** paramete
     /**
     * Create a site membership request
     *
-    * Create a site membership request for yourself on the site with the identifier of **id**, specified in the JSON body.
-The result of the request differs depending on the type of site.
-
-* For a **public** site, you join the site immediately as a SiteConsumer.
-* For a **moderated** site, your request is added to the site membership request list. The request waits for approval from the Site Manager.
-* You cannot request membership of a **private** site. Members are invited by the site administrator.
-
-You can use the -me- string in place of <personId> to specify the currently authenticated user.
-
- **Note:** You can create site membership requests for more than one site by
-specifying a list of sites in the JSON body like this:
-
-JSON
-[
-  {
-    \"message\": \"Please can you add me\",
-    \"id\": \"test-site-1\",
-    \"title\": \"Request for test site 1\",
-  },
-  {
-    \"message\": \"Please can you add me\",
-    \"id\": \"test-site-2\",
-    \"title\": \"Request for test site 2\",
-  }
-]
-
-If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-
-JSON
-{
-  \"list\": {
-    \"pagination\": {
-      \"count\": 2,
-      \"hasMoreItems\": false,
-      \"totalItems\": 2,
-      \"skipCount\": 0,
-      \"maxItems\": 100
-    },
-    \"entries\": [
-      {
-        \"entry\": {
-          ...
-        }
-      },
-      {
-        \"entry\": {
-          ...
-        }
-      }
-    ]
-  }
-}
-
-    *
     * @param personId The identifier of a person.
     * @param siteMembershipRequestBodyCreate Site membership request details
     * @param opts Optional parameters
-    * @return Promise<SiteMembershipRequestEntry>
+    * @returns Promise<SiteMembershipRequestEntry>
     */
     createSiteMembershipRequestForPerson(
         personId: string,
@@ -321,7 +177,7 @@ JSON
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
      * @param opts.permanent Flag to indicate whether the site should be permanently deleted i.e. bypass the trashcan. (default to false)
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteSite(siteId: string, opts?: { permanent?: boolean }): Promise<void> {
         throwIfNotDefined(siteId, 'siteId');
@@ -347,7 +203,7 @@ JSON
      *
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteSiteMembership(siteId: string, personId: string): Promise<void> {
         throwIfNotDefined(siteId, 'siteId');
@@ -372,7 +228,7 @@ JSON
      *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteSiteMembershipForPerson(personId: string, siteId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -397,7 +253,7 @@ JSON
      *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteSiteMembershipRequestForPerson(personId: string, siteId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -432,7 +288,7 @@ JSON
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
      * @param opts.relations Use the relations parameter to include one or more related entities in a single response.
-     * @return Promise<SiteEntry>
+     * @returns Promise<SiteEntry>
      */
     getSite(siteId: string, opts?: { relations?: string[] } & ContentFieldsQuery): Promise<SiteEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -462,7 +318,7 @@ JSON
      * @param siteId The identifier of a site.
      * @param containerId The unique identifier of a site container.
      * @param opts Optional parameters
-     * @return Promise<SiteContainerEntry>
+     * @returns Promise<SiteContainerEntry>
      */
     getSiteContainer(siteId: string, containerId: string, opts?: ContentFieldsQuery): Promise<SiteContainerEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -494,7 +350,7 @@ JSON
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
      * @param opts Optional parameters
-     * @return Promise<SiteMemberEntry>
+     * @returns Promise<SiteMemberEntry>
      */
     getSiteMembership(siteId: string, personId: string, opts?: ContentFieldsQuery): Promise<SiteMemberEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -525,7 +381,7 @@ JSON
      *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
-     * @return Promise<SiteRoleEntry>
+     * @returns Promise<SiteRoleEntry>
      */
     getSiteMembershipForPerson(personId: string, siteId: string): Promise<SiteRoleEntry> {
         throwIfNotDefined(personId, 'personId');
@@ -552,7 +408,7 @@ JSON
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
-     * @return Promise<SiteMembershipRequestEntry>
+     * @returns Promise<SiteMembershipRequestEntry>
      */
     getSiteMembershipRequestForPerson(personId: string, siteId: string, opts?: ContentFieldsQuery): Promise<SiteMembershipRequestEntry> {
         throwIfNotDefined(personId, 'personId');
@@ -592,7 +448,7 @@ JSON
      *
      * @param opts Optional parameters
      * @param opts.where A string to restrict the returned objects by using a predicate.
-     * @return Promise<SiteMembershipRequestWithPersonPaging>
+     * @returns Promise<SiteMembershipRequestWithPersonPaging>
      */
     getSiteMembershipRequests(opts?: { where?: string } & ContentPagingQuery & ContentFieldsQuery): Promise<SiteMembershipRequestWithPersonPaging> {
         const queryParams = {
@@ -616,7 +472,7 @@ JSON
      *
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
-     * @return Promise<SiteContainerPaging>
+     * @returns Promise<SiteContainerPaging>
      */
     listSiteContainers(siteId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<SiteContainerPaging> {
         throwIfNotDefined(siteId, 'siteId');
@@ -647,7 +503,7 @@ JSON
      *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
-     * @return Promise<SiteMembershipRequestPaging>
+     * @returns Promise<SiteMembershipRequestPaging>
      */
     listSiteMembershipRequestsForPerson(personId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<SiteMembershipRequestPaging> {
         throwIfNotDefined(personId, 'personId');
@@ -677,7 +533,7 @@ JSON
      *
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
-     * @return Promise<SiteMemberPaging>
+     * @returns Promise<SiteMemberPaging>
      */
     listSiteMemberships(siteId: string, opts?: { where?: string } & ContentPagingQuery & ContentFieldsQuery): Promise<SiteMemberPaging> {
         throwIfNotDefined(siteId, 'siteId');
@@ -729,16 +585,13 @@ JSON
     * @param personId The identifier of a person.
     * @param opts Optional parameters
     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-sort the list by one or more fields.
-
-Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-above to check if any fields used in this method have a descending default search order.
-
-To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
+    * sort the list by one or more fields.
+    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+    * above to check if any fields used in this method have a descending default search order.
+    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
     * @param opts.relations Use the relations parameter to include one or more related entities in a single response.
     * @param opts.where A string to restrict the returned objects by using a predicate.
-    * @return Promise<SiteRolePaging>
+    * @returns Promise<SiteRolePaging>
     */
     listSiteMembershipsForPerson(
         personId: string,
@@ -804,16 +657,13 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
     *
     * @param opts Optional parameters
     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-sort the list by one or more fields.
-
-Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-above to check if any fields used in this method have a descending default search order.
-
-To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
+    * sort the list by one or more fields.
+    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+    * above to check if any fields used in this method have a descending default search order.
+    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
     * @param opts.relations Use the relations parameter to include one or more related entities in a single response.
     * @param opts.where A string to restrict the returned objects by using a predicate.
-    * @return Promise<SitePaging>
+    * @returns Promise<SitePaging>
     */
     listSites(
         opts?: {
@@ -846,7 +696,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      * @param inviteeId The invitee username.
      * @param opts Optional parameters
      * @param opts.siteMembershipRejectionBody Rejecting a request to join, optionally, allows the inclusion of comment.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     rejectSiteMembershipRequest(siteId: string, inviteeId: string, opts?: { siteMembershipRejectionBody?: any }): Promise<any> {
         throwIfNotDefined(siteId, 'siteId');
@@ -879,7 +729,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      * @param siteId The identifier of a site.
      * @param siteBodyUpdate The site information to update.
      * @param opts Optional parameters
-     * @return Promise<SiteEntry>
+     * @returns Promise<SiteEntry>
      */
     updateSite(siteId: string, siteBodyUpdate: SiteBodyUpdate, opts?: ContentFieldsQuery): Promise<SiteEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -919,7 +769,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      * @param personId The identifier of a person.
      * @param siteMembershipBodyUpdate The persons new role
      * @param opts Optional parameters
-     * @return Promise<SiteMemberEntry>
+     * @returns Promise<SiteMemberEntry>
      */
     updateSiteMembership(siteId: string, personId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, opts?: ContentFieldsQuery): Promise<SiteMemberEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -954,7 +804,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      * @param siteId The identifier of a site.
      * @param siteMembershipRequestBodyUpdate The new message to display
      * @param opts Optional parameters
-     * @return Promise<SiteMembershipRequestEntry>
+     * @returns Promise<SiteMembershipRequestEntry>
      */
     updateSiteMembershipRequestForPerson(
         personId: string,
@@ -986,7 +836,6 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
 
     /**
      * Create a site membership for group
-     * Creates a site membership for group **groupId** on site **siteId**.
      *
      **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
      * You can set the **role** to one of four types:
@@ -995,51 +844,10 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      * - SiteContributor
      * - SiteManager
      *
-     **Note:** You can create more than one site membership by
-     specifying a list of group in the JSON body like this:
-
-     ```JSON
-     [
-     {
-             "role": "SiteConsumer",
-             "id": "authorityId"
-           },
-     {
-             "role": "SiteConsumer",
-             "id": "authorityId"
-           }
-     ]
-     ```
-     If you specify a list as input, then a paginated list rather than an entry is returned in the response body. For example:
-     ```JSON
-     {
-            "list": {
-              "pagination": {
-                "count": 2,
-                "hasMoreItems": false,
-                "totalItems": 2,
-                "skipCount": 0,
-                "maxItems": 100
-              },
-              "entries": [
-                {
-                  "entry": {
-                    ...
-                  }
-                },
-                {
-                  "entry": {
-                    ...
-                  }
-                }
-              ]
-            }
-     }
-     *
      * @param siteId The identifier of a site.
      * @param siteMembershipBodyCreate The group to add and it role
      * @param opts Optional parameters
-     * @return Promise<SiteGroupEntry>
+     * @returns Promise<SiteGroupEntry>
      */
     createSiteGroupMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: ContentFieldsQuery): Promise<SiteGroupEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -1069,7 +877,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      *
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
-     * @return Promise<SiteGroupPaging>
+     * @returns Promise<SiteGroupPaging>
      */
     listSiteGroups(siteId: string, opts?: ContentPagingQuery & ContentFieldsQuery): Promise<SiteGroupPaging> {
         throwIfNotDefined(siteId, 'siteId');
@@ -1100,7 +908,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
      * @param opts Optional parameters
-     * @return Promise<SiteGroupEntry>
+     * @returns Promise<SiteGroupEntry>
      */
     getSiteGroupMembership(siteId: string, groupId: string, opts?: ContentFieldsQuery): Promise<SiteGroupEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -1138,7 +946,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      * @param groupId The authorityId of a group.
      * @param siteMembershipBodyUpdate The group new role
      * @param opts Optional parameters
-     * @return Promise<SiteGroupEntry>
+     * @returns Promise<SiteGroupEntry>
      */
     updateSiteGroupMembership(siteId: string, groupId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, opts?: ContentFieldsQuery): Promise<SiteGroupEntry> {
         throwIfNotDefined(siteId, 'siteId');
@@ -1168,7 +976,7 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
      *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
-     * @return Promise<{}>
+     * @returns Promise<{}>
      */
     deleteSiteGroupMembership(siteId: string, groupId: string): Promise<void> {
         throwIfNotDefined(siteId, 'siteId');
