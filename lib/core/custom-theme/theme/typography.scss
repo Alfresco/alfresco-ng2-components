@@ -4,7 +4,7 @@
 
 @function get-mat-typography($base-font-size, $font-family) {
     $custom-typography: mat.define-legacy-typography-configmat.define-typography-config(
-        $font-family: $default-font-family,
+        $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',
         $headline-1: mat.define-typography-level(112px, 112px, 300),
         $headline-2: mat.define-typography-level(56px, 56px, 400),
         $headline-3: mat.define-typography-level(45px, 48px, 400),
@@ -18,8 +18,7 @@
         $caption: mat.define-typography-level(12px, 20px, 400),
         $button: mat.define-typography-level(14px, 14px, 500),
         // Line-height must be unit-less fraction of the font-size.
-        $in/* TODO(mdc-migration): No longer supported. Use `body-1` instead. put: mat.define-typography-level(16px, 1.25, 400),
-    */ );
+    );
 
     @if $base-font-size {
         $custom-typography: mat.define-legacy-typography-configmat.define-typography-config(
@@ -36,8 +35,7 @@
             $caption: mat.define-typography-level(0.86rem, 1.42rem, 400),
             $button: mat.define-typography-level(1rem, 1rem, 500),
             $font-family: $default-font-family,
-            $in/* TODO(mdc-migration): No longer supported. Use `body-1` instead. put: mat.define-typography-level(1.14em, 1.25, 400),
-    */     );
+        );
     }
 
     @if $font-family {
