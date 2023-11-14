@@ -16,7 +16,7 @@
  */
 
 import { Node, PermissionElement } from '@alfresco/js-api';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
