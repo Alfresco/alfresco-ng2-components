@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "target": "ES2022",
+    "useDefineForClassFields": false
   }
 }
