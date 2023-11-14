@@ -80,35 +80,6 @@ export class SharedlinksApi extends BaseApi {
     * Email shared link
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Sends email with app-specific url including identifier **sharedId**.
-
-The client and recipientEmails properties are mandatory in the request body. For example, to email a shared link with minimum info:
-JSON
-{
-    \"client\": \"myClient\",
-    \"recipientEmails\": [\"john.doe@acme.com\", \"joe.bloggs@acme.com\"]
-}
-
-A plain text message property can be optionally provided in the request body to customise the sent email.
-Also, a locale property can be optionally provided in the request body to send the emails in a particular language (if the locale is supported by Alfresco).
-For example, to email a shared link with a messages and a locale:
-JSON
-{
-    \"client\": \"myClient\",
-    \"recipientEmails\": [\"john.doe@acme.com\", \"joe.bloggs@acme.com\"],
-    \"message\": \"myMessage\",
-    \"locale\":\"en-GB\"
-}
-
-**Note:** The client must be registered before you can send a shared link email. See [server documentation]. However, out-of-the-box
- share is registered as a default client, so you could pass **share** as the client name:
-JSON
-{
-    \"client\": \"share\",
-    \"recipientEmails\": [\"john.doe@acme.com\"]
-}
-
     *
     * @param sharedId The identifier of a shared link to a file.
     * @param sharedLinkBodyEmail The shared link email to send.
@@ -167,21 +138,14 @@ JSON
     * @param sharedId The identifier of a shared link to a file.
     * @param opts Optional parameters
     * @param opts.attachment **true** enables a web browser to download the file as an attachment.
-**false** means a web browser may preview the file in a new tab or window, but not
-download the file.
-
-You can only set this parameter to **false** if the content type of the file is in the supported list;
-for example, certain image files and PDF files.
-
-If the content type is not supported for preview, then a value of **false**  is ignored, and
-the attachment will be returned in the response.
- (default to true)
+    * **false** means a web browser may preview the file in a new tab or window, but not download the file.
+    * You can only set this parameter to **false** if the content type of the file is in the supported list; for example, certain image files and PDF files.
+    * If the content type is not supported for preview, then a value of **false**  is ignored, and the attachment will be returned in the response.
+    * (default to true)
     * @param opts.ifModifiedSince Only returns the content if it has been modified since the date provided.
-Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
-
+    * Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
     * @param opts.range The Range header indicates the part of a document that the server should return.
-Single part request supported, for example: bytes=1-10.
-
+    * Single part request supported, for example: bytes=1-10.
     * @returns Promise<Blob>
     */
     getSharedLinkContent(
@@ -246,35 +210,26 @@ Single part request supported, for example: bytes=1-10.
             returnType: RenditionEntry
         });
     }
+
     /**
     * Get shared link rendition content
     *
     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Gets the rendition content for file with shared link identifier **sharedId**.
-
-**Note:** No authentication is required to call this endpoint.
-
+    * **Note:** No authentication is required to call this endpoint.
     *
     * @param sharedId The identifier of a shared link to a file.
     * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
     * @param opts Optional parameters
     * @param opts.attachment **true** enables a web browser to download the file as an attachment.
-**false** means a web browser may preview the file in a new tab or window, but not
-download the file.
-
-You can only set this parameter to **false** if the content type of the file is in the supported list;
-for example, certain image files and PDF files.
-
-If the content type is not supported for preview, then a value of **false**  is ignored, and
-the attachment will be returned in the response.
- (default to true)
+    * **false** means a web browser may preview the file in a new tab or window, but not download the file.
+    * You can only set this parameter to **false** if the content type of the file is in the supported list;
+    * for example, certain image files and PDF files.
+    * If the content type is not supported for preview, then a value of **false**  is ignored, and
+    * the attachment will be returned in the response. (default to true)
     * @param opts.ifModifiedSince Only returns the content if it has been modified since the date provided.
-Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
-
+    * Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
     * @param opts.range The Range header indicates the part of a document that the server should return.
-Single part request supported, for example: bytes=1-10.
-
+    * Single part request supported, for example: bytes=1-10.
     * @returns Promise<Blob>
     */
     getSharedLinkRenditionContent(

@@ -30,31 +30,24 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
  */
 export class AuditApi extends BaseApi {
     /**
-    * Permanently delete audit entries for an audit application
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
-
-Permanently delete audit entries for an audit application **auditApplicationId**.
-
-The **where** clause must be specified, either with an inclusive time period or for
-an inclusive range of ids. The delete is within the context of the given audit application.
-
-For example:
-
-*   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-*   where=(id BETWEEN ('1234', '4321')
-
-You must have admin rights to delete audit information.
-
-    *
-    * @param auditApplicationId The identifier of an audit application.
-    * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids. For example:
-
-*   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-*   where=(id BETWEEN ('1234', '4321')
-
-    * @return Promise<{}>
-    */
+     * Permanently delete audit entries for an audit application
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
+     *
+     * Permanently delete audit entries for an audit application **auditApplicationId**.
+     * The **where** clause must be specified, either with an inclusive time period or for
+     * an inclusive range of ids. The delete is within the context of the given audit application.
+     * For example:
+     * *   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * *   where=(id BETWEEN ('1234', '4321')
+     * You must have admin rights to delete audit information.
+     *
+     * @param auditApplicationId The identifier of an audit application.
+     * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids. For example:
+     * *   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * *   where=(id BETWEEN ('1234', '4321')
+     * @return Promise<{}>
+     */
     deleteAuditEntriesForAuditApp(auditApplicationId: string, where: string): Promise<void> {
         throwIfNotDefined(auditApplicationId, 'auditApplicationId');
         throwIfNotDefined(where, 'where');
@@ -195,54 +188,41 @@ You must have admin rights to delete audit information.
     }
 
     /**
-    * List audit entries for an audit application
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
-
-Gets a list of audit entries for audit application **auditApplicationId**.
-
-You can use the **include** parameter to return additional **values** information.
-
-The list can be filtered by one or more of:
-* **createdByUser** person id
-* **createdAt** inclusive time period
-* **id** inclusive range of ids
-* **valuesKey** audit entry values contains the exact matching key
-* **valuesValue** audit entry values contains the exact matching value
-
-The default sort order is **createdAt** ascending, but you can use an optional **ASC** or **DESC**
-modifier to specify an ascending or descending sort order.
-
-For example, specifying orderBy=createdAt DESC returns audit entries in descending **createdAt** order.
-
-You must have admin rights to retrieve audit information.
-
-    *
-    * @param auditApplicationId The identifier of an audit application.
-    * @param opts Optional parameters
-    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-sort the list by one or more fields.
-
-Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-above to check if any fields used in this method have a descending default search order.
-
-To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
-    * @param opts.where Optionally filter the list. Here are some examples:
-
-*   where=(createdByUser='jbloggs')
-
-*   where=(id BETWEEN ('1234', '4321')
-
-*   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-
-*   where=(createdByUser='jbloggs' and createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-
-*   where=(valuesKey='/alfresco-access/login/user')
-
-*   where=(valuesKey='/alfresco-access/transaction/action' and valuesValue='DELETE')
-    * @return Promise<AuditEntryPaging>
-    */
+     * List audit entries for an audit application
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
+     *
+     * Gets a list of audit entries for audit application **auditApplicationId**.
+     * You can use the **include** parameter to return additional **values** information.
+     * The list can be filtered by one or more of:
+     * * **createdByUser** person id
+     * * **createdAt** inclusive time period
+     * * **id** inclusive range of ids
+     * * **valuesKey** audit entry values contains the exact matching key
+     * * **valuesValue** audit entry values contains the exact matching value
+     *
+     * The default sort order is **createdAt** ascending, but you can use an optional **ASC** or **DESC**
+     * modifier to specify an ascending or descending sort order.
+     *
+     * For example, specifying orderBy=createdAt DESC returns audit entries in descending **createdAt** order.
+     * You must have admin rights to retrieve audit information.
+     *
+     * @param auditApplicationId The identifier of an audit application.
+     * @param opts Optional parameters
+     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
+     * sort the list by one or more fields.
+     * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+     * above to check if any fields used in this method have a descending default search order.
+     * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+     * @param opts.where Optionally filter the list. Here are some examples:
+     * *   where=(createdByUser='jbloggs')
+     * *   where=(id BETWEEN ('1234', '4321')
+     * *   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * *   where=(createdByUser='jbloggs' and createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * *   where=(valuesKey='/alfresco-access/login/user')
+     * *   where=(valuesKey='/alfresco-access/transaction/action' and valuesValue='DELETE')
+     * @returns Promise<AuditEntryPaging>
+     */
     listAuditEntriesForAuditApp(
         auditApplicationId: string,
         opts?: {
@@ -277,41 +257,30 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
     }
 
     /**
-    * List audit entries for a node
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
-
-Gets a list of audit entries for node **nodeId**.
-
-The list can be filtered by **createdByUser** and for a given inclusive time period.
-
-The default sort order is **createdAt** ascending, but you can use an optional **ASC** or **DESC**
-modifier to specify an ascending or descending sort order.
-
-For example, specifying orderBy=createdAt DESC returns audit entries in descending **createdAt** order.
-
-This relies on the pre-configured 'alfresco-access' audit application.
-
-    *
-    * @param nodeId The identifier of a node.
-    * @param opts Optional parameters
-    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-sort the list by one or more fields.
-
-Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-above to check if any fields used in this method have a descending default search order.
-
-To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
-    * @param opts.where Optionally filter the list. Here are some examples:
-
-*   where=(createdByUser='-me-')
-
-*   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-
-*   where=(createdByUser='jbloggs' and createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
-    * @return Promise<AuditEntryPaging>
-    */
+     * List audit entries for a node
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
+     *
+     * The list can be filtered by **createdByUser** and for a given inclusive time period.
+     * The default sort order is **createdAt** ascending, but you can use an optional **ASC** or **DESC**
+     * modifier to specify an ascending or descending sort order.
+     *
+     * For example, specifying orderBy=createdAt DESC returns audit entries in descending **createdAt** order.
+     * This relies on the pre-configured 'alfresco-access' audit application.
+     *
+     * @param nodeId The identifier of a node.
+     * @param opts Optional parameters
+     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
+     * sort the list by one or more fields.
+     * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+     * above to check if any fields used in this method have a descending default search order.
+     * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+     * @param opts.where Optionally filter the list. Here are some examples:
+     * *   where=(createdByUser='-me-')
+     * *   where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * *   where=(createdByUser='jbloggs' and createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
+     * @returns Promise<AuditEntryPaging>
+     */
     listAuditEntriesForNode(
         nodeId: string,
         opts?: {
@@ -344,26 +313,22 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
             returnType: AuditEntryPaging
         });
     }
+
     /**
     * Update audit application info
     *
     * **Note:** this endpoint is available in Alfresco 5.2.2 and newer versions.
-
-Disable or re-enable the audit application **auditApplicationId**.
-
-New audit entries will not be created for a disabled audit application until
-it is re-enabled (and system-wide auditing is also enabled).
-
-Note, it is still possible to query &/or delete any existing audit entries even
-if auditing is disabled for the audit application.
-
-You must have admin rights to update audit application.
-
+    *
+    * New audit entries will not be created for a disabled audit application until
+    * it is re-enabled (and system-wide auditing is also enabled).
+    * Note, it is still possible to query &/or delete any existing audit entries even
+    * if auditing is disabled for the audit application.
+    * You must have admin rights to update audit application.
     *
     * @param auditApplicationId The identifier of an audit application.
     * @param auditAppBodyUpdate The audit application to update.
     * @param opts Optional parameters
-    * @return Promise<AuditApp>
+    * @returns Promise<AuditApp>
     */
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: AuditBodyUpdate, opts?: ContentFieldsQuery): Promise<AuditApp> {
         throwIfNotDefined(auditApplicationId, 'auditApplicationId');

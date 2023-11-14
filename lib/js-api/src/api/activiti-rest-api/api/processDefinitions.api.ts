@@ -243,7 +243,6 @@ export class ProcessDefinitionsApi extends BaseApi {
      * Retrieve field values (eg. the table field)
      *
      * @param processDefinitionId processDefinitionId
-     *
      * @param field
      * @param column
      * @return Promise<FormValueRepresentation []>

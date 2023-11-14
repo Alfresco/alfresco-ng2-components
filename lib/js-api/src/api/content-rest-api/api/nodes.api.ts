@@ -118,27 +118,21 @@ export class NodesApi extends BaseApi {
     }
 
     /**
-    * Create node association
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * @param nodeId The identifier of a source node.
-    * @param associationBodyCreate The target node id and assoc type.
-    * @param opts Optional parameters
-    * @param opts.fields A list of field names.
-
-You can use this parameter to restrict the fields
-returned within a response if, for example, you want to save on overall bandwidth.
-
-The list applies to a returned individual
-entity or entries within a collection.
-
-If the API method also supports the **include**
-parameter, then the fields specified in the **include**
-parameter are returned in addition to those specified in the **fields** parameter.
-
-    * @returns Promise<AssociationEntry>
-    */
+     * Create node association
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param nodeId The identifier of a source node.
+     * @param associationBodyCreate The target node id and assoc type.
+     * @param opts Optional parameters
+     * @param opts.fields A list of field names.
+     * You can use this parameter to restrict the fields
+     * returned within a response if, for example, you want to save on overall bandwidth.
+     * The list applies to a returned individual entity or entries within a collection.
+     * If the API method also supports the **include** parameter, then the fields specified in the **include**
+     * parameter are returned in addition to those specified in the **fields** parameter.
+     * @returns Promise<AssociationEntry>
+     */
     createAssociation(nodeId: string, associationBodyCreate: AssociationBody, opts?: { fields?: string[] }): Promise<AssociationEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(associationBodyCreate, 'associationBodyCreate');
@@ -248,27 +242,20 @@ parameter are returned in addition to those specified in the **fields** paramete
     }
 
     /**
-    * Create secondary child
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * @param nodeId The identifier of a parent node.
-    * @param secondaryChildAssociationBodyCreate The child node id and assoc type.
-    * @param opts Optional parameters
-    * @param opts.fields A list of field names.
-
-You can use this parameter to restrict the fields
-returned within a response if, for example, you want to save on overall bandwidth.
-
-The list applies to a returned individual
-entity or entries within a collection.
-
-If the API method also supports the **include**
-parameter, then the fields specified in the **include**
-parameter are returned in addition to those specified in the **fields** parameter.
-
-    * @returns Promise<ChildAssociationEntry>
-    */
+     * Create secondary child
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param nodeId The identifier of a parent node.
+     * @param secondaryChildAssociationBodyCreate The child node id and assoc type.
+     * @param opts Optional parameters
+     * @param opts.fields A list of field names.
+     * You can use this parameter to restrict the fields returned within a response if, for example, you want to save on overall bandwidth.
+     * The list applies to a returned individual entity or entries within a collection.
+     * If the API method also supports the **include** parameter, then the fields specified in the **include**
+     * parameter are returned in addition to those specified in the **fields** parameter.
+     * @returns Promise<ChildAssociationEntry>
+     */
     createSecondaryChildAssociation(
         nodeId: string,
         secondaryChildAssociationBodyCreate: ChildAssociationBody,
@@ -296,25 +283,21 @@ parameter are returned in addition to those specified in the **fields** paramete
         });
     }
     /**
-    * Delete node association(s)
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Delete an association, or associations, from the source **nodeId* to a target node for the given association type.
-
-If the association type is **not** specified, then all peer associations, of any type, in the direction
-from source to target, are deleted.
-
-**Note:** After removal of the peer association, or associations, from source to target, the two nodes may still have peer associations
-in the other direction.
-
-    *
-    * @param nodeId The identifier of a source node.
-    * @param targetId The identifier of a target node.
-    * @param opts Optional parameters
-    * @param opts.assocType Only delete associations of this type.
-    * @returns Promise<{}>
-    */
+     * Delete node association(s)
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Delete an association, or associations, from the source **nodeId* to a target node for the given association type.
+     * If the association type is **not** specified, then all peer associations, of any type, in the direction
+     * from source to target, are deleted.
+     * **Note:** After removal of the peer association, or associations, from source to target, the two nodes may still have peer associations in the other direction.
+     *
+     * @param nodeId The identifier of a source node.
+     * @param targetId The identifier of a target node.
+     * @param opts Optional parameters
+     * @param opts.assocType Only delete associations of this type.
+     * @returns Promise<{}>
+     */
     deleteAssociation(nodeId: string, targetId: string, opts?: { assocType?: string }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(targetId, 'targetId');
@@ -335,32 +318,27 @@ in the other direction.
         });
     }
     /**
-    * Delete a node
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Deletes the node **nodeId**.
-
-If **nodeId** is a folder, then its children are also deleted.
-
-Deleted nodes move to the trashcan unless the **permanent** query parameter is **true** and the current user is the owner of the node or an admin.
-
-Deleting a node deletes it from its primary parent and also from any secondary parents. Peer associations are also deleted, where the deleted
-node is either a source or target of an association. This applies recursively to any hierarchy of primary children of the deleted node.
-
-**Note:** If the node is not permanently deleted, and is later successfully restored to its former primary parent, then the primary
-child association is restored. This applies recursively for any primary children. No other secondary child associations or
-peer associations are restored for any of the nodes in the primary parent-child hierarchy of restored nodes, regardless of whether the original
-associations were to nodes inside or outside the restored hierarchy.
-
-    *
-    * @param nodeId The identifier of a node.
-    * @param opts Optional parameters
-    * @param opts.permanent If **true** then the node is deleted permanently, without moving to the trashcan.
-Only the owner of the node or an admin can permanently delete the node.
- (default to false)
-    * @returns Promise<{}>
-    */
+     * Delete a node
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * If **nodeId** is a folder, then its children are also deleted.
+     * Deleted nodes move to the trashcan unless the **permanent** query parameter is **true** and the current user is the owner of the node or an admin.
+     *
+     * Deleting a node deletes it from its primary parent and also from any secondary parents. Peer associations are also deleted, where the deleted
+     * node is either a source or target of an association. This applies recursively to any hierarchy of primary children of the deleted node.
+     *
+     * **Note:** If the node is not permanently deleted, and is later successfully restored to its former primary parent, then the primary
+     * child association is restored. This applies recursively for any primary children. No other secondary child associations or
+     * peer associations are restored for any of the nodes in the primary parent-child hierarchy of restored nodes, regardless of whether the original
+     * associations were to nodes inside or outside the restored hierarchy.
+     *
+     * @param nodeId The identifier of a node.
+     * @param opts Optional parameters
+     * @param opts.permanent If **true** then the node is deleted permanently, without moving to the trashcan.
+     * Only the owner of the node or an admin can permanently delete the node. (default to false)
+     * @returns Promise<{}>
+     */
     deleteNode(nodeId: string, opts?: { permanent?: boolean }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
 
@@ -380,15 +358,11 @@ Only the owner of the node or an admin can permanently delete the node.
     }
     /**
      * Delete multiple nodes
-
-     Deletes the nodes specified in the **nodeIds** array.
-
      *
      * @param nodeIds The list of node IDs to delete.
      * @param opts Optional parameters
      * @param opts.permanent If **true** then nodes are deleted permanently, without moving to the trashcan.
-     Only the owner of the node or an admin can permanently delete the node.
-     (default to false)
+     * Only the owner of the node or an admin can permanently delete the node. (default to false)
      * @returns Promise<[]>
      */
     deleteNodes(nodeIds: string[], opts?: { permanent?: boolean }): Promise<void[]> {
@@ -396,24 +370,24 @@ Only the owner of the node or an admin can permanently delete the node.
 
         return Promise.all(nodeIds.map((id) => this.deleteNode(id, opts)));
     }
+
     /**
-    * Delete secondary child or children
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Delete secondary child associations between the parent **nodeId** and child nodes for the given association type.
-
-If the association type is **not** specified, then all secondary child associations, of any type in the direction
-from parent to secondary child, will be deleted. The child will still have a primary parent and may still be
-associated as a secondary child with other secondary parents.
-
-    *
-    * @param nodeId The identifier of a parent node.
-    * @param childId The identifier of a child node.
-    * @param opts Optional parameters
-    * @param opts.assocType Only delete associations of this type.
-    * @returns Promise<{}>
-    */
+     * Delete secondary child or children
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Delete secondary child associations between the parent **nodeId** and child nodes for the given association type.
+     *
+     * If the association type is **not** specified, then all secondary child associations, of any type in the direction
+     * from parent to secondary child, will be deleted. The child will still have a primary parent and may still be
+     * associated as a secondary child with other secondary parents.
+     *
+     * @param nodeId The identifier of a parent node.
+     * @param childId The identifier of a child node.
+     * @param opts Optional parameters
+     * @param opts.assocType Only delete associations of this type.
+     * @returns Promise<{}>
+     */
     deleteSecondaryChildAssociation(nodeId: string, childId: string, opts?: { assocType?: string }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(childId, 'childId');
@@ -431,20 +405,20 @@ associated as a secondary child with other secondary parents.
     }
 
     /**
-    * Get a node
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * You can use the **include** parameter to return additional information.
-    *
-    * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
-    * - -my-
-    * - -shared-
-    * - -root-
-    * @param opts Optional parameters
-    * @param opts.relativePath A path relative to the **nodeId**. If you set this, information is returned on the node resolved by this path.
-    * @returns Promise<NodeEntry>
-    */
+     * Get a node
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * You can use the **include** parameter to return additional information.
+     *
+     * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
+     * - -my-
+     * - -shared-
+     * - -root-
+     * @param opts Optional parameters
+     * @param opts.relativePath A path relative to the **nodeId**. If you set this, information is returned on the node resolved by this path.
+     * @returns Promise<NodeEntry>
+     */
     getNode(nodeId: string, opts?: { relativePath?: string } & NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
 
@@ -467,30 +441,24 @@ associated as a secondary child with other secondary parents.
     }
 
     /**
-    * Get node content
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * @param nodeId The identifier of a node.
-    * @param opts Optional parameters
-    * @param opts.attachment **true** enables a web browser to download the file as an attachment.
-**false** means a web browser may preview the file in a new tab or window, but not
-download the file.
-
-You can only set this parameter to **false** if the content type of the file is in the supported list;
-for example, certain image files and PDF files.
-
-If the content type is not supported for preview, then a value of **false**  is ignored, and
-the attachment will be returned in the response.
- (default to true)
-    * @param opts.ifModifiedSince Only returns the content if it has been modified since the date provided.
-Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
-
-    * @param opts.range The Range header indicates the part of a document that the server should return.
-Single part request supported, for example: bytes=1-10.
-
-    * @returns Promise<Blob>
-    */
+     * Get node content
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param nodeId The identifier of a node.
+     * @param opts Optional parameters
+     * @param opts.attachment **true** enables a web browser to download the file as an attachment.
+     * **false** means a web browser may preview the file in a new tab or window, but not download the file.
+     * You can only set this parameter to **false** if the content type of the file is in the supported list;
+     * for example, certain image files and PDF files.
+     * If the content type is not supported for preview, then a value of **false**  is ignored, and
+     * the attachment will be returned in the response. (default to true)
+     * @param opts.ifModifiedSince Only returns the content if it has been modified since the date provided.
+     * Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
+     * @param opts.range The Range header indicates the part of a document that the server should return.
+     * Single part request supported, for example: bytes=1-10.
+     * @returns Promise<Blob>
+     */
     getNodeContent(
         nodeId: string,
         opts?: {
@@ -529,66 +497,55 @@ Single part request supported, for example: bytes=1-10.
     }
 
     /**
-    * List node children
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Gets a list of children of the parent node **nodeId**.
-
-Minimal information for each child is returned by default.
-
-You can use the **include** parameter to return additional information.
-
-The list of child nodes includes primary children and secondary children, if there are any.
-
-You can use the **include** parameter (include=association) to return child association details
-for each child, including the **assocTyp**e and the **isPrimary** flag.
-
-The default sort order for the returned list is for folders to be sorted before files, and by ascending name.
-
-You can override the default using **orderBy** to specify one or more fields to sort by. The default order is always ascending, but
-you can use an optional **ASC** or **DESC** modifier to specify an ascending or descending sort order.
-
-For example, specifying orderBy=name DESC returns a mixed folder/file list in descending **name** order.
-
-You can use any of the following fields to order the results:
-* isFolder
-* name
-* mimeType
-* nodeType
-* sizeInBytes
-* modifiedAt
-* createdAt
-* modifiedByUser
-* createdByUser
-
-    *
-    * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
-* -my-
-* -shared-
-* -root-
-
-    * @param opts Optional parameters
-    * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-sort the list by one or more fields.
-
-Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-above to check if any fields used in this method have a descending default search order.
-
-To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
-    * @param opts.where Optionally filter the list. Here are some examples:
-    *   where=(isFolder=true)
-    *   where=(isFile=true)
-    *   where=(nodeType='my:specialNodeType')
-    *   where=(nodeType='my:specialNodeType INCLUDESUBTYPES')
-    *   where=(isPrimary=true)
-    *   where=(assocType='my:specialAssocType')
-    *   where=(isPrimary=false and assocType='my:specialAssocType')
-    * @param opts.relativePath Return information on children in the folder resolved by this path. The path is relative to **nodeId**.
-    * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent node – either the specified parent **nodeId**, or as resolved by **relativePath**.
-    * @returns Promise<NodeChildAssociationPaging>
-    */
+     * List node children
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Gets a list of children of the parent node **nodeId**.
+     * Minimal information for each child is returned by default.
+     * You can use the **include** parameter to return additional information.
+     * The list of child nodes includes primary children and secondary children, if there are any.
+     * You can use the **include** parameter (include=association) to return child association details
+     * for each child, including the **assocTyp**e and the **isPrimary** flag.
+     *
+     * The default sort order for the returned list is for folders to be sorted before files, and by ascending name.
+     *
+     * You can override the default using **orderBy** to specify one or more fields to sort by. The default order is always ascending, but
+     * you can use an optional **ASC** or **DESC** modifier to specify an ascending or descending sort order.
+     *
+     * For example, specifying orderBy=name DESC returns a mixed folder/file list in descending **name** order.
+     * You can use any of the following fields to order the results:
+     * - isFolder
+     * - name
+     * - mimeType
+     * - nodeType
+     * - sizeInBytes
+     * - modifiedAt
+     * - createdAt
+     * - modifiedByUser
+     * - createdByUser
+     *
+     * @param nodeId The identifier of a node. You can also use one of these well-known aliases:
+     * - -my-
+     * - -shared-
+     * - -root-
+     * @param opts Optional parameters
+     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to sort the list by one or more fields.
+     * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+     * above to check if any fields used in this method have a descending default search order.
+     * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
+     * @param opts.where Optionally filter the list. Here are some examples:
+     * - where=(isFolder=true)
+     * - where=(isFile=true)
+     * - where=(nodeType='my:specialNodeType')
+     * - where=(nodeType='my:specialNodeType INCLUDESUBTYPES')
+     * - where=(isPrimary=true)
+     * - where=(assocType='my:specialAssocType')
+     * - where=(isPrimary=false and assocType='my:specialAssocType')
+     * @param opts.relativePath Return information on children in the folder resolved by this path. The path is relative to **nodeId**.
+     * @param opts.includeSource Also include **source** in addition to **entries** with folder information on the parent node – either the specified parent **nodeId**, or as resolved by **relativePath**.
+     * @returns Promise<NodeChildAssociationPaging>
+     */
     listNodeChildren(
         nodeId: string,
         opts?: {
@@ -623,29 +580,27 @@ To sort the entities in a specific order, you can use the **ASC** and **DESC** k
             returnType: NodeChildAssociationPaging
         });
     }
+
     /**
-    * List parents
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Gets a list of parent nodes that are associated with the current child **nodeId**.
-
-The list includes both the primary parent and any secondary parents.
-
-    *
-    * @param nodeId The identifier of a child node. You can also use one of these well-known aliases:
-* -my-
-* -shared-
-* -root-
-
-    * @param opts Optional parameters
-    * @param opts.where Optionally filter the list by **assocType** and/or **isPrimary**. Here are some example filters:
-*   where=(assocType='my:specialAssocType')
-*   where=(isPrimary=true)
-*   where=(isPrimary=false and assocType='my:specialAssocType')
-    * @param opts.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
-    * @returns Promise<NodeAssociationPaging>
-    */
+     * List parents
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Gets a list of parent nodes that are associated with the current child **nodeId**.
+     * The list includes both the primary parent and any secondary parents.
+     *
+     * @param nodeId The identifier of a child node. You can also use one of these well-known aliases:
+     * - -my-
+     * - -shared-
+     * - -root-
+     * @param opts Optional parameters
+     * @param opts.where Optionally filter the list by **assocType** and/or **isPrimary**. Here are some example filters:
+     * - where=(assocType='my:specialAssocType')
+     * - where=(isPrimary=true)
+     * - where=(isPrimary=false and assocType='my:specialAssocType')
+     * @param opts.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
+     * @returns Promise<NodeAssociationPaging>
+     */
     listParents(
         nodeId: string,
         opts?: {
@@ -679,25 +634,22 @@ The list includes both the primary parent and any secondary parents.
     }
 
     /**
-    * List secondary children
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Gets a list of secondary child nodes that are associated with the current parent **nodeId**, via a secondary child association.
-
-    *
-    * @param nodeId The identifier of a parent node. You can also use one of these well-known aliases:
-    * -my-
-    * -shared-
-    * -root-
-    * @param opts Optional parameters
-    * @param opts.where Optionally filter the list by assocType. Here's an example:
-    *
-    *   where=(assocType='my:specialAssocType')
-    *
-    * @param opts.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
-    * @returns Promise<NodeChildAssociationPaging>
-    */
+     * List secondary children
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * Gets a list of secondary child nodes that are associated with the current parent **nodeId**, via a secondary child association.
+     *
+     * @param nodeId The identifier of a parent node. You can also use one of these well-known aliases:
+     * -my-
+     * -shared-
+     * -root-
+     * @param opts Optional parameters
+     * @param opts.where Optionally filter the list by assocType. Here's an example:
+     * - where=(assocType='my:specialAssocType')
+     * @param opts.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
+     * @returns Promise<NodeChildAssociationPaging>
+     */
     listSecondaryChildren(
         nodeId: string,
         opts?: {
@@ -731,16 +683,16 @@ Gets a list of secondary child nodes that are associated with the current parent
     }
 
     /**
-    * List source associations
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * @param nodeId The identifier of a target node.
-    * @param opts Optional parameters
-    * @param opts.where Optionally filter the list by **assocType**. Here's an example:
-    *   where=(assocType='my:specialAssocType')
-    * @returns Promise<NodeAssociationPaging>
-    */
+     * List source associations
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param nodeId The identifier of a target node.
+     * @param opts Optional parameters
+     * @param opts.where Optionally filter the list by **assocType**. Here's an example:
+     * - where=(assocType='my:specialAssocType')
+     * @returns Promise<NodeAssociationPaging>
+     */
     listSourceAssociations(
         nodeId: string,
         opts?: {
@@ -778,7 +730,7 @@ Gets a list of secondary child nodes that are associated with the current parent
      * @param nodeId The identifier of a source node.
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list by **assocType**. Here's an example:
-     *   where=(assocType='my:specialAssocType')
+     * - where=(assocType='my:specialAssocType')
      * @returns Promise<NodeAssociationPaging>
      */
     listTargetAssociations(
@@ -812,43 +764,17 @@ Gets a list of secondary child nodes that are associated with the current parent
     }
 
     /**
-    * Lock a node
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Places a lock on node **nodeId**.
-
-**Note:** you can only lock files. More specifically, a node can only be locked if it is
-of type cm:content or a subtype of cm:content.
-
-The lock is owned by the current user, and prevents other users or processes from making updates to the node until the lock is released.
-
-If the **timeToExpire** is not set or is zero, then the lock never expires.  Otherwise, the **timeToExpire** is the number of seconds before the lock expires.
-
-When a lock expires, the lock is released.
-
-If the node is already locked, and the user is the lock owner, then the lock is renewed with the new **timeToExpire**.
-
-By default, a lock is applied that allows the owner to update or delete the node.
-You can use **type** to change the lock type to one of the following:
-* **ALLOW_OWNER_CHANGES** (default) changes to the node can be made only by the lock owner. \
-* This enum is the same value as the deprecated WRITE_LOCK described in org.alfresco.service.cmr.lock.LockType in the Alfresco Public Java API.
-* This is the default value.
-* **FULL** no changes by any user are allowed. This enum is the same value as the deprecated READ_ONLY_LOCK described in org.alfresco.service.cmr.lock.LockType in the Alfresco Public Java API.
-
-By default, a lock is persisted in the database. You can create a volatile in-memory lock by setting the **lifetime** property to EPHEMERAL.
-You might choose use EPHEMERAL locks, for example, if you are taking frequent short-term locks that you don't need
-to be kept over a restart of the repository. In this case you don't need the
-overhead of writing the locks to the database.
-
-If a lock on the node cannot be taken, then an error is returned.
-
-    *
-    * @param nodeId The identifier of a node.
-    * @param nodeBodyLock Lock details.
-    * @param opts Optional parameters
-    * @returns Promise<NodeEntry>
-    */
+     * Lock a node
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * If a lock on the node cannot be taken, then an error is returned.
+     *
+     * @param nodeId The identifier of a node.
+     * @param nodeBodyLock Lock details.
+     * @param opts Optional parameters
+     * @returns Promise<NodeEntry>
+     */
     lockNode(nodeId: string, nodeBodyLock: NodeBodyLock, opts?: NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(nodeBodyLock, 'nodeBodyLock');
@@ -876,14 +802,9 @@ If a lock on the node cannot be taken, then an error is returned.
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
-     * Move the node **nodeId** to the parent folder node **targetParentId**.
-     *
      * The **targetParentId** is specified in the in request body.
-     *
      * The moved node retains its name unless you specify a new **name** in the request body.
-     *
      * If the source **nodeId** is a folder, then its children are also moved.
-     *
      * The move will effectively change the primary parent.
      *
      * @param nodeId The identifier of a node.
@@ -946,15 +867,15 @@ If a lock on the node cannot be taken, then an error is returned.
     }
 
     /**
-    * Update a node
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-    *
-    * @param nodeId The identifier of a node.
-    * @param nodeBodyUpdate The node information to update.
-    * @param opts Optional parameters
-    * @returns Promise<NodeEntry>
-    */
+     * Update a node
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param nodeId The identifier of a node.
+     * @param nodeBodyUpdate The node information to update.
+     * @param opts Optional parameters
+     * @returns Promise<NodeEntry>
+     */
     updateNode(nodeId: string, nodeBodyUpdate: NodeBodyUpdate, opts?: NodesIncludeQuery): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(nodeBodyUpdate, 'nodeBodyUpdate');
@@ -977,39 +898,22 @@ If a lock on the node cannot be taken, then an error is returned.
         });
     }
     /**
-    * Update node content
-    *
-    * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-Updates the content of the node with identifier **nodeId**.
-
-The request body for this endpoint can be any text or binary stream.
-
-The **majorVersion** and **comment** parameters can be used to control versioning behaviour. If the content is versionable,
-a new minor version is created by default.
-
-Optionally a new **name** parameter can also be specified that must be unique within the parent folder. If specified and valid then this
-will rename the node. If invalid then an error is returned and the content is not updated.
-
-**Note:** This API method accepts any content type, but for testing with this tool text based content can be provided.
-This is because the OpenAPI Specification does not allow a wildcard to be provided or the ability for
-tooling to accept an arbitrary file.
-
-    *
-    * @param nodeId The identifier of a node.
-    * @param contentBodyUpdate The binary content
-    * @param opts Optional parameters
-    * @param opts.majorVersion If **true**, create a major version.
-Setting this parameter also enables versioning of this node, if it is not already versioned.
- (default to false)
-    * @param opts.comment Add a version comment which will appear in version history.
-Setting this parameter also enables versioning of this node, if it is not already versioned.
-
-    * @param opts.name Optional new name. This should include the file extension.
-The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
-The character . must not be used at the end of the name.
-    * @returns Promise<NodeEntry>
-    */
+     * Update node content
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+     *
+     * @param nodeId The identifier of a node.
+     * @param contentBodyUpdate The binary content
+     * @param opts Optional parameters
+     * @param opts.majorVersion If **true**, create a major version.
+     * Setting this parameter also enables versioning of this node, if it is not already versioned. (default to false)
+     * @param opts.comment Add a version comment which will appear in version history.
+     * Setting this parameter also enables versioning of this node, if it is not already versioned.
+     * @param opts.name Optional new name. This should include the file extension.
+     * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
+     * The character . must not be used at the end of the name.
+     * @returns Promise<NodeEntry>
+     */
     updateNodeContent(
         nodeId: string,
         contentBodyUpdate: string,

@@ -27,20 +27,15 @@ export class ProbesApi extends BaseApi {
     * Check readiness and liveness of the repository
     *
     * **Note:** this endpoint is available in Alfresco 6.0 and newer versions.
-
-Returns a status of 200 to indicate success and 503 for failure.
-
-The readiness probe is normally only used to check repository startup.
-
-The liveness probe should then be used to check the repository is still responding to requests.
-
-**Note:** No authentication is required to call this endpoint.
-
+    *
+    * Returns a status of 200 to indicate success and 503 for failure.
+    * The readiness probe is normally only used to check repository startup.
+    * The liveness probe should then be used to check the repository is still responding to requests.
+    * **Note:** No authentication is required to call this endpoint.
     *
     * @param probeId The name of the probe:
-* -ready-
-* -live-
-
+    * * -ready-
+    * * -live-
     * @returns Promise<ProbeEntry>
     */
     getProbe(probeId: string): Promise<ProbeEntry> {

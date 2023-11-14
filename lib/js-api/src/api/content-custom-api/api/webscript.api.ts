@@ -34,7 +34,6 @@ export class WebscriptApi extends BaseApi {
      * @param contextRoot default value alfresco
      * @param servicePath default value service
      * @param postBody
-     *
      * @returns A promise that is resolved return the webScript data and {error} if rejected.
      */
     executeWebScript(

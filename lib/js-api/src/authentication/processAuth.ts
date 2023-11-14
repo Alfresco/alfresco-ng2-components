@@ -80,7 +80,6 @@ export class ProcessAuth extends AlfrescoApiClient {
      *
      * @param username Username to login
      * @param password Password to login
-     *
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      * */
     login(username: string, password: string): AlfrescoApiClientPromise<string> {

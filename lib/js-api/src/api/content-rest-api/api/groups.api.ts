@@ -296,72 +296,27 @@ You can override the default by using the **orderBy** parameter. You can specify
     * List group memberships
     *
     * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-
- Gets a list of group membership information for person **personId**.
-
- You can use the -me- string in place of <personId> to specify the currently authenticated user.
-
- You can use the **include** parameter to return additional information.
-
- You can use the **where** parameter to filter the returned groups by **isRoot**. For example, the following **where**
- clause will return just the root groups:
-
- (isRoot=true)
-
- The **where** parameter can also be used to filter by ***zone***. This may be combined with isRoot to narrow
- a result set even further. For example, the following where clause will only return groups belonging to the
- MY.ZONE zone.
-
- where=(zones in ('MY.ZONE'))
-
- This may be combined with the isRoot filter, as shown below:
-
- where=(isRoot=false AND zones in ('MY.ZONE'))
-
- ***Note:*** restrictions include
- * AND is the only supported operator when combining isRoot and zones filters
- * Only one zone is supported by the filter
- * The quoted zone name must be placed in parenthesis — a 400 error will result if these are omitted.
-
- The default sort order for the returned list is for groups to be sorted by ascending displayName.
- You can override the default by using the **orderBy** parameter. You can specify one or more of the following fields in the **orderBy** parameter:
- * id
- * displayName
-
     *
     * @param personId The identifier of a person.
     * @param opts Optional parameters
     * @param opts.skipCount The number of entities that exist in the collection before those included in this list.
-If not supplied then the default value is 0.
- (default to 0)
-    * @param opts.maxItems The maximum number of items to return in the list.
-If not supplied then the default value is 100.
- (default to 100)
+    * If not supplied then the default value is 0. (default to 0)
+    * @param opts.maxItems The maximum number of items to return in the list. If not supplied then the default value is 100. (default to 100)
     * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
-sort the list by one or more fields.
-
-Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
-above to check if any fields used in this method have a descending default search order.
-
-To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
-
+    * sort the list by one or more fields.
+    * Each field has a default sort order, which is normally ascending order. Read the API method implementation notes
+    * above to check if any fields used in this method have a descending default search order.
+    * To sort the entities in a specific order, you can use the **ASC** and **DESC** keywords for any field.
     * @param opts.include Returns additional information about the group. The following optional fields can be requested:
-* parentIds
-* zones
-
+    * - parentIds
+    * - zones
     * @param opts.where A string to restrict the returned objects by using a predicate.
     * @param opts.fields A list of field names.
-
-You can use this parameter to restrict the fields
-returned within a response if, for example, you want to save on overall bandwidth.
-
-The list applies to a returned individual
-entity or entries within a collection.
-
-If the API method also supports the **include**
-parameter, then the fields specified in the **include**
-parameter are returned in addition to those specified in the **fields** parameter.
-
+    * You can use this parameter to restrict the fields
+    * returned within a response if, for example, you want to save on overall bandwidth.
+    * The list applies to a returned individual entity or entries within a collection.
+    * If the API method also supports the **include** parameter, then the fields specified in the **include**
+    * parameter are returned in addition to those specified in the **fields** parameter.
     * @returns Promise<GroupPaging>
     */
     listGroupMembershipsForPerson(
@@ -395,36 +350,6 @@ parameter are returned in addition to those specified in the **fields** paramete
     * List groups
     *
     * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-
-Gets a list of groups.
-
-You can use the **include** parameter to return additional information.
-
-You can use the **where** parameter to filter the returned groups by **isRoot**. For example, the following **where**
-clause will return just the root groups:
-
-(isRoot=true)
-
-The **where** parameter can also be used to filter by ***zone***. This may be combined with isRoot to narrow
-a result set even further. For example, the following where clause will only return groups belonging to the
-MY.ZONE zone.
-
-where=(zones in ('MY.ZONE'))
-
-This may be combined with the isRoot filter, as shown below:
-
-where=(isRoot=false AND zones in ('MY.ZONE'))
-
-***Note:*** restrictions include
-* AND is the only supported operator when combining isRoot and zones filters
-* Only one zone is supported by the filter
-* The quoted zone name must be placed in parenthesis — a 400 error will result if these are omitted.
-
-The default sort order for the returned list is for groups to be sorted by ascending displayName.
-You can override the default by using the **orderBy** parameter. You can specify one of the following fields in the **orderBy** parameter:
-* id
-* displayName
-
     *
     * @param opts Optional parameters
     * @returns Promise<GroupPaging>
@@ -445,15 +370,12 @@ You can override the default by using the **orderBy** parameter. You can specify
             returnType: GroupPaging
         });
     }
+
     /**
     * Update group details
     *
     * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-
-Update details (displayName) for group **groupId**.
-
-You must have admin rights to update a group.
-
+    * You must have admin rights to update a group.
     *
     * @param groupId The identifier of a group.
     * @param groupBodyUpdate The group information to update.
