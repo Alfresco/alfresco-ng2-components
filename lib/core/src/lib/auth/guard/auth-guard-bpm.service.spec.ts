@@ -21,7 +21,7 @@ import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../services/oidc-authentication.service';
