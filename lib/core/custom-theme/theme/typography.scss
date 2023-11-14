@@ -3,7 +3,7 @@
 @import '../variables/font-family';
 
 @function get-mat-typography($base-font-size, $font-family) {
-    $custom-typography: mat.define-typography-config(
+    $custom-typography: mat.define-legacy-typography-configmat.define-legacy-typography-config(
         $font-family: $default-font-family,
         $display-4: mat.define-typography-level(112px, 112px, 300),
         $display-3: mat.define-typography-level(56px, 56px, 400),
@@ -22,7 +22,7 @@
     );
 
     @if $base-font-size {
-        $custom-typography: mat.define-typography-config(
+        $custom-typography: mat.define-legacy-typography-configmat.define-legacy-typography-config(
             $display-4: mat.define-typography-level(8rem, 8rem, 300),
             $display-3: mat.define-typography-level(4rem, 4rem, 400),
             $display-2: mat.define-typography-level(3.21rem, 3.21rem, 400),
