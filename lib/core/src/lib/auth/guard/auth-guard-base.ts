@@ -19,7 +19,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanAc
 import { AuthenticationService } from '../services/authentication.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { Observable } from 'rxjs';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
