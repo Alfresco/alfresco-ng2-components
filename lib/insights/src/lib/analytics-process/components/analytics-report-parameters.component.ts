@@ -30,7 +30,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ReportParameterDetailsModel } from '../../diagram/models/report/report-parameter-details.model';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';

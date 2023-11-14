@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { mockFile, mockNewVersionUploaderData, mockNode } from '../mock';

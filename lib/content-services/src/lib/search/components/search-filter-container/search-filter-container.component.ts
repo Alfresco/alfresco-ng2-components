@@ -23,7 +23,7 @@ import { SearchHeaderQueryBuilderService } from '../../services/search-header-qu
 import { SearchCategory } from '../../models/search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
 import { FilterSearch } from '../../models/filter-search.interface';
 
 @Component({
