@@ -24,7 +24,7 @@ import { ViewerRenderComponent } from './viewer-render.component';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { MatDialog } from '@angular/material/dialog';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 

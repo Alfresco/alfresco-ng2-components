@@ -25,7 +25,7 @@ import { mockEmittedProcessAttachments, mockProcessAttachments } from '../mock/p
 import { ProcessContentService } from '../form/services/process-content.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatMenuHarness } from '@angular/material/menu/testing';
+import { MatLegacyMenuHarness as MatMenuHarness } from '@angular/material/legacy-menu/testing';
 
 describe('ProcessAttachmentListComponent', () => {
     let loader: HarnessLoader;

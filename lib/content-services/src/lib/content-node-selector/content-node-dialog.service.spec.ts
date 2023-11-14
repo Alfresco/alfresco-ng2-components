@@ -19,7 +19,7 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NodeEntry, Node, SitePaging, Site } from '@alfresco/js-api';
 import { DocumentListService, NodeAction } from '../document-list';
 import { ContentNodeDialogService } from './content-node-dialog.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { SitesService } from '../common';

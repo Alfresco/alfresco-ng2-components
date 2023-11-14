@@ -25,8 +25,8 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { DateFieldValidator, DateTimeFieldValidator } from '../core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
-import { MatInputHarness } from '@angular/material/input/testing';
+import { MatLegacyTooltipHarness as MatTooltipHarness } from '@angular/material/legacy-tooltip/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
 
 describe('DateTimeWidgetComponent', () => {
     let loader: HarnessLoader;

@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { of } from 'rxjs';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import {
@@ -43,9 +43,9 @@ import { fakeEnvironmentList } from '../../../common/mock/environment.mock';
 import { endOfDay, format, startOfDay, subYears, isValid } from 'date-fns';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
 
 describe('EditProcessFilterCloudComponent', () => {
     let loader: HarnessLoader;
