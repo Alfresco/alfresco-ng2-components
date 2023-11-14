@@ -76,11 +76,8 @@
 
         <mat-form-field *ngIf="isEditable"
             class="adf-property-field adf-textitem-chip-list-input"
-            [ngClass]="{ 'adf-property-read-only': !isEditable }"
-            [floatLabel]="'never'"
-        >
-            <input
-                matInput
+            [ngClass]="{ 'adf-property-read-only': !isEditable }">
+            <input matInput
                 class="adf-property-value"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
@@ -104,8 +101,7 @@
         [ngClass]="{ 'adf-property-read-only': !isEditable }"
         [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
         (click)="clicked()">
-        <mat-form-field class="adf-property-field adf-card-textitem-field"
-            [floatLabel]="'never'">
+        <mat-form-field class="adf-property-field adf-card-textitem-field">
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
                 {{ property.label | translate }}
             </mat-label>

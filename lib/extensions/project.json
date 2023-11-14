@@ -1,0 +1,54 @@
+{
+  "name": "extensions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/extensions/src",
+  "projectType": "library",
+  "prefix": "adf",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "lib/extensions/tsconfig.lib.json",
+        "project": "lib/extensions/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "lib/extensions/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "lib/extensions/src/test.ts",
+        "tsConfig": "lib/extensions/tsconfig.spec.json",
+        "karmaConfig": "lib/extensions/karma.conf.js",
+        "sourceMap": true,
+        "codeCoverage": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["lib/extensions/**/*.ts", "lib/extensions/**/*.html"]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/libs/extensions",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    }
+  }
+}

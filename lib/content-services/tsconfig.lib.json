@@ -11,6 +11,8 @@
       "@alfresco/adf-core/*": ["../../../dist/libs/core/*"],
       "@alfresco/js-api": ["../../../dist/libs/js-api"],
       "@alfresco/js-api/*": ["../../../dist/libs/js-api/*"]
-    }
+    },
+    "target": "ES2022",
+    "useDefineForClassFields": false
   }
 }

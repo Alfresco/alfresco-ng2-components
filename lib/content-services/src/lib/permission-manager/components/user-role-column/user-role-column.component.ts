@@ -21,7 +21,7 @@ import { RoleModel } from '../../models/role.model';
 @Component({
     selector: 'adf-user-role-column',
     template: `
-        <mat-form-field floatLabel="never" class="adf-role-selector-field" *ngIf="!readonly">
+        <mat-form-field class="adf-role-selector-field" *ngIf="!readonly">
             <mat-select
                 (click)="$event.stopPropagation()"
                 [placeholder]="placeholder | translate"
@@ -44,12 +44,12 @@ import { RoleModel } from '../../models/role.model';
         `.adf-role-selector-field {
                     width: 100%;
                 }
-        
+
                 .adf-role-selector-field .mat-mdc-form-field {
                     width: 100%;
                     max-width: 200px;
                 }
-        
+
                 .adf-readonly-role {
                     padding-left: 0 !important;
                 }
