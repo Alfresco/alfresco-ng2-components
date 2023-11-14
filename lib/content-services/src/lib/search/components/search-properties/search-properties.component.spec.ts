@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchPropertiesComponent } from './search-properties.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
-import { MatOption } from '@angular/material/core';
+import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
 import { SearchChipAutocompleteInputComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { FileSizeUnit } from './file-size-unit.enum';
 import { FileSizeOperator } from './file-size-operator.enum';
