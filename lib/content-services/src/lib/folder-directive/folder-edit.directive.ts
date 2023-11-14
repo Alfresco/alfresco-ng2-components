@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
 import { ContentService } from '../common/services/content.service';

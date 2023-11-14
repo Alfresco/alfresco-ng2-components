@@ -1,43 +1,43 @@
 <div [attr.data-automation-id]="'card-array-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
 <div class="adf-property-value adf-card-view-array-item-container">
     <ng-container *ngIf="(property.displayValue | async) as items; else elseEmptyValueBlock">
-        <mat-chip-list *ngIf="items.length > 0; else elseEmptyValueBlock" data-automation-id="card-arrayitem-chip-list-container">
-            <ng-container *ngIf="displayCount > 0; else withOutDisplayCount" >
-                <mat-chip
-                    *ngFor="let item of items.slice(0, displayCount)"
+        <mat-chip-listbox *ngIf="items.length > 0; else elseEmptyValueBlock" data-automation-id="card-arrayitem-chip-list-container">
+            <ng-container *ngIf="displayCount() > 0; else withOutDisplayCount" >
+                <mat-chip-option
+                    *ngFor="let item of items.slice(0, displayCount())"
                     (click)="clicked()"
                     [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
                     <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
                     <span>{{item?.value}}</span>
-                </mat-chip>
-                <mat-chip
-                    *ngIf="items.length > displayCount"
+                </mat-chip-option>
+                <mat-chip-option
+                    *ngIf="items.length > displayCount()"
                     data-automation-id="card-arrayitem-more-chip"
                     [matMenuTriggerFor]="menu">
-                    <span>{{items.length - displayCount}} {{'CORE.CARDVIEW.MORE' | translate}}</span>
-                </mat-chip>
+                    <span>{{items.length - displayCount()}} {{'CORE.CARDVIEW.MORE' | translate}}</span>
+                </mat-chip-option>
             </ng-container>
             <ng-template #withOutDisplayCount>
-                <mat-chip
+                <mat-chip-option
                     *ngFor="let item of items"
                     (click)="clicked()"
                     [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
                     <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
                     <span>{{item?.value}}</span>
-                </mat-chip>
+                </mat-chip-option>
             </ng-template>
-        </mat-chip-list>
+        </mat-chip-listbox>
         <mat-menu #menu="matMenu">
-            <mat-card class="adf-array-item-more-chip-container">
+            <mat-card appearance="outlined" class="adf-array-item-more-chip-container">
                 <mat-card-content>
-                    <mat-chip-list>
-                        <mat-chip (click)="clicked()"
-                            *ngFor="let item of items.slice(displayCount, items.length)"
+                    <mat-chip-listbox>
+                        <mat-chip-option (click)="clicked()"
+                            *ngFor="let item of items.slice(displayCount(), items.length)"
                             [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
                         <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
                         <span>{{item?.value}}</span>
-                        </mat-chip>
-                    </mat-chip-list>
+                        </mat-chip-option>
+                    </mat-chip-listbox>
                 </mat-card-content>
             </mat-card>
         </mat-menu>
