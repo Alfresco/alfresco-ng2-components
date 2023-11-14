@@ -1,0 +1,121 @@
+{
+  "name": "process-services-cloud",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/process-services-cloud/src",
+  "projectType": "library",
+  "prefix": "adf-cloud",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "lib/process-services-cloud/tsconfig.lib.json",
+        "project": "lib/process-services-cloud/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "project": "lib/process-services-cloud/ng-package.json",
+          "tsConfig": "lib/process-services-cloud/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "lib/process-services-cloud/src/test.ts",
+        "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",
+        "karmaConfig": "lib/process-services-cloud/karma.conf.js",
+        "sourceMap": true,
+        "codeCoverage": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["lib/process-services-cloud/**/*.ts", "lib/process-services-cloud/**/*.html"]
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "browserTarget": "process-services-cloud:storybook",
+        "configDir": "lib/process-services-cloud/.storybook",
+        "compodoc": false,
+        "styles": [
+          "demo-shell/src/styles.scss",
+          "demo-shell/src/custom-style-dev.scss",
+          "node_modules/cropperjs/dist/cropper.min.css",
+          "node_modules/pdfjs-dist/web/pdf_viewer.css"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "options": {
+        "browserTarget": "process-services-cloud:build-storybook",
+        "configDir": "lib/process-services-cloud/.storybook",
+        "outputDir": "dist/storybook/process-services-cloud",
+        "compodoc": false,
+        "styles": [
+          "demo-shell/src/styles.scss",
+          "demo-shell/src/custom-style-dev.scss",
+          "node_modules/cropperjs/dist/cropper.min.css",
+          "node_modules/pdfjs-dist/web/pdf_viewer.css"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "e2e-playwright": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx playwright test --config='e2e-playwright/playwright.config.ts'"
+          }
+        ]
+      }
+    },
+    "stylelint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+          }
+        ]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/libs/process-services-cloud",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    }
+  }
+}
