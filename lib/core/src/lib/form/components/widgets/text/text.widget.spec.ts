@@ -22,13 +22,13 @@ import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { CoreTestingModule } from '../../../../testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
+import { MatLegacyFormFieldHarness as MatFormFieldHarness } from '@angular/material/legacy-form-field/testing';
+import { MatLegacyTooltipHarness as MatTooltipHarness } from '@angular/material/legacy-tooltip/testing';
 
 describe('TextWidgetComponent', () => {
     const form = new FormModel({ taskId: 'fake-task-id' });
