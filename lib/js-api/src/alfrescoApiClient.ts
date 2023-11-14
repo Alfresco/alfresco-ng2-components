@@ -265,7 +265,7 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
     }
 
     private static addParamsToUrl(path: string, pathParams: any) {
-        return path.replace(/\{([\w-]+)}/g, function(fullMatch, key) {
+        return path.replace(/\{([\w-]+)}/g, (fullMatch, key) => {
             let value;
 
             if (Object.prototype.hasOwnProperty.call(pathParams, key)) {
@@ -342,9 +342,9 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
             return 'application/json';
         }
 
-        for (let i = 0; i < contentTypes.length; i++) {
-            if (AlfrescoApiClient.isJsonMime(contentTypes[i])) {
-                return contentTypes[i];
+        for (const item of contentTypes) {
+            if (AlfrescoApiClient.isJsonMime(item)) {
+                return item;
             }
         }
         return contentTypes[0];

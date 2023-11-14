@@ -476,8 +476,8 @@ export class Oauth2Auth extends AlfrescoApiClient {
         if (queryString !== null) {
             pairs = queryString.split('&');
 
-            for (let i = 0; i < pairs.length; i++) {
-                pair = pairs[i];
+            for (const item of pairs) {
+                pair = item;
                 separatorIndex = pair.indexOf('=');
 
                 if (separatorIndex === -1) {

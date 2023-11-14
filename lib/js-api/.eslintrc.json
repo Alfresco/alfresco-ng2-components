@@ -51,7 +51,6 @@
         "@typescript-eslint/no-shadow": "warn",
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/no-namespace": "off",
-        "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/consistent-type-definitions": "off",
         "no-redeclare": "off"
       }
