@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
+/**
+ * Throw exception if param is not defined
+ *
+ * @param param param
+ * @param name param name
+ */
 export function throwIfNotDefined(param: any, name: string) {
     if (param === null || param === undefined) {
         throw new Error(`Missing param '${name}'`);

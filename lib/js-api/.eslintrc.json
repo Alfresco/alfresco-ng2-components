@@ -35,7 +35,6 @@
         "unicorn/filename-case": "off",
         "@typescript-eslint/no-unused-expressions": "off",
         "@typescript-eslint/consistent-type-assertions": "off",
-        "jsdoc/require-jsdoc": "off",
         "jsdoc/check-param-names": "off",
         "jsdoc/require-returns": "off",
         "jsdoc/require-param": "off",
