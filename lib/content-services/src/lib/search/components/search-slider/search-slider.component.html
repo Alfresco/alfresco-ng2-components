@@ -2,8 +2,13 @@
     [min]="min"
     [max]="max"
     [step]="step"
-    [thumbLabel]="thumbLabel"
-    data-automation-id="slider-range" #ngSlider><input matSliderThumb (change)="onChangedHandler({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value})" #ngSliderThumb="matSliderThumb" [(value)]="value" />
+    data-automation-id="slider-range" #ngSlider>
+    <input
+        matSliderThumb
+        (change)="onChangedHandler({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value})"
+        #ngSliderThumb="matSliderThumb"
+        [(value)]="value" />
+    <input *ngIf="thumbLabel" matSliderThumb>
 </mat-slider>
 
 <div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
