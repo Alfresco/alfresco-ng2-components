@@ -32,7 +32,7 @@ import {
     createdTaskDetailsCloudMock
 } from '../mocks/task-details-cloud.mock';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatSelectModule } from '@angular/material/select';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
