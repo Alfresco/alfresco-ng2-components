@@ -18,7 +18,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../../dialogs';
+import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
