@@ -18,7 +18,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, AbstractControl, FormGroup, FormControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/operators';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';

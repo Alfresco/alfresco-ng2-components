@@ -18,7 +18,7 @@
 import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { FacetField } from '../../../models/facet-field.interface';
-import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { SearchFacetFieldComponent } from '../../search-facet-field/search-facet-field.component';
 
 @Component({

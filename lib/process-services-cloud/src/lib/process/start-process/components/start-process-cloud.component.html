@@ -1,7 +1,4 @@
-<mat-card
-    *ngIf="(loading$ | async) === false; else spinner"
-    class="adf-start-process"
->
+<mat-card appearance="outlined" class="adf-start-process" *ngIf="(loading$ | async) === false; else spinner">
 
     <mat-card-content>
 
