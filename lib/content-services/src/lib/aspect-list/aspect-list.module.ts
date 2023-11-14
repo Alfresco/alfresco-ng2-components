@@ -18,12 +18,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AspectListComponent } from './aspect-list.component';
-import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
+import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PipeModule } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';

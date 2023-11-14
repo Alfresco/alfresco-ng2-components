@@ -34,24 +34,25 @@ ul > li > form-field > .adf-focus {
     }
 
     &-invalid {
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-layout {
             padding-bottom: 12px;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-underline {
             background-color: var(--theme-warn-color);
         }
 
-        .mat-select {
-            .mat-select-arrow {
-                color: var(--adf-theme-foreground-secondary-text-color);
+        .mat-mdc-select {
+            &-arrow {
+                color: var(--adf-theme-foreground-secondary-text-color) !important;
             }
         }
 
         .adf-file {
             border-color: var(--theme-warn-color);
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-prefix {
             color: var(--adf-theme-foreground-secondary-text-color);
         }
@@ -69,10 +70,10 @@ ul > li > form-field > .adf-focus {
 /* query for Microsoft IE 11 */
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
     adf-form-field {
-        .mat-input-element,
-        .mat-select,
-        .mat-form-field {
-            display: block;
+        .mat-mdc-input-element,
+        .mat-mdc-select,
+        .mat-mdc-form-field {
+            display: block !important;
         }
     }
 }

@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/legacy-tabs';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { By } from '@angular/platform-browser';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { of } from 'rxjs';

@@ -39,6 +39,7 @@ import { ExtensionService } from '../../services/extension.service';
     host: { class: 'adf-dynamic-column' },
     styles: [
         `
+  ]
             .adf-dynamic-column {
                 display: flex;
                 align-items: center;

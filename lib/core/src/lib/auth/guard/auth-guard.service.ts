@@ -21,7 +21,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { JwtHelperService } from '../services/jwt-helper.service';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
