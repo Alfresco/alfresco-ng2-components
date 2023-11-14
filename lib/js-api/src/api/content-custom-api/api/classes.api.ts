@@ -20,22 +20,17 @@ import { BaseApi } from './base.api';
 
 /**
  * Constructs a new ClassesApi.
- * @alias module:api/ClassesApi
- * @class
- * @param {module:ApiClient} apiClient Optional API client implementation to use,
- * default to {@link module:ApiClient#instance} if unspecified.
  */
 export class ClassesApi extends BaseApi {
     /**
      * Gets the class information for the specified className.
-     * @param {String} className The identifier of the class.
-     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/ClassDescription}
-     * data is of type: {module:model/ClassDescription}
+     * @param className The identifier of the class.
+     * @returns a Promise, with data of type ClassDescription
      */
     getClass(className: string): Promise<ClassDescription> {
         // verify the required parameter 'className' is set
         if (className === undefined || className === null) {
-            throw new Error('Missing param \'className\' in getClass');
+            throw new Error(`Missing param 'className' in getClass`);
         }
 
         return this.get<ClassDescription>({
@@ -49,7 +44,7 @@ export class ClassesApi extends BaseApi {
     getSubclasses(className: string): Promise<ClassDescription[]> {
         // verify the required parameter 'className' is set
         if (className === undefined || className === null) {
-            throw new Error('Missing param \'className\'');
+            throw new Error(`Missing param 'className'`);
         }
 
         return this.get({

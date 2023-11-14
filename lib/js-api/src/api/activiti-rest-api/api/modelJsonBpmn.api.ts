@@ -21,8 +21,8 @@ import { throwIfNotDefined } from '../../../assert';
 export class ModelJsonBpmnApi extends BaseApi {
     /**
      * Export a previous process definition model to a JSON
-     * @param {Integer} processModelId processModelId
-     * @param {Integer} processModelHistoryId processModelHistoryId
+     * @param processModelId processModelId
+     * @param processModelHistoryId processModelHistoryId
      */
     getHistoricEditorDisplayJsonClient(processModelId: number, processModelHistoryId: number) {
         throwIfNotDefined(processModelId, 'processModelId');
@@ -41,7 +41,7 @@ export class ModelJsonBpmnApi extends BaseApi {
 
     /**
      * Export a process definition model to a JSON
-     * @param {Integer} processModelId processModelId
+     * @param processModelId processModelId
      */
     getEditorDisplayJsonClient(processModelId: number) {
         throwIfNotDefined(processModelId, 'processModelId');
@@ -58,7 +58,7 @@ export class ModelJsonBpmnApi extends BaseApi {
 
     /**
      * Function to receive the result of the getModelJSONForProcessDefinition operation.
-     * @param {String} processDefinitionId processDefinitionId
+     * @param processDefinitionId processDefinitionId
      */
     getModelJSON(processDefinitionId: string) {
         throwIfNotDefined(processDefinitionId, 'processDefinitionId');
@@ -75,7 +75,7 @@ export class ModelJsonBpmnApi extends BaseApi {
 
     /**
      * Function to receive the result of the getModelHistoryJSON operation.
-     * @param {String} processInstanceId processInstanceId
+     * @param processInstanceId processInstanceId
      */
     getModelJSONForProcessDefinition(processInstanceId: string) {
         throwIfNotDefined(processInstanceId, 'processInstanceId');

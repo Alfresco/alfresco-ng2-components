@@ -73,24 +73,24 @@ export class TaskFormsApi extends BaseApi {
     /**
      * Retrieve Column Field Values
      * Specific case to retrieve information on a specific column
-     * @param {String} taskId taskId
-     * @param {String} field field
-     * @param {String} column column
+     * @param taskId taskId
+     * @param field field
+     * @param column column
      */
     getRestFieldColumnValues(taskId: string, field: string, column: string) {
         // verify the required parameter 'taskId' is set
         if (taskId === undefined || taskId === null) {
-            throw new Error('Missing param \'taskId\' in getRestFieldValues');
+            throw new Error(`Missing param 'taskId' in getRestFieldValues`);
         }
 
         // verify the required parameter 'field' is set
         if (field === undefined || field === null) {
-            throw new Error('Missing param \'field\' in getRestFieldValues');
+            throw new Error(`Missing param 'field' in getRestFieldValues`);
         }
 
         // verify the required parameter 'column' is set
         if (column === undefined || column === null) {
-            throw new Error('Missing param \'column\' in getRestFieldValues');
+            throw new Error(`Missing param 'column' in getRestFieldValues`);
         }
 
         const pathParams = {
@@ -134,7 +134,7 @@ export class TaskFormsApi extends BaseApi {
      * Get a task form
      *
      * @param taskId taskId
-     * @return Promise<FormDefinitionRepresentation>
+     * @returns Promise<FormDefinitionRepresentation>
      */
     getTaskForm(taskId: string): Promise<FormDefinitionRepresentation> {
         throwIfNotDefined(taskId, 'taskId');
@@ -174,12 +174,13 @@ export class TaskFormsApi extends BaseApi {
 
     /**
      * Retrieve Task Form Variables
-     * @param {String} taskId taskId
+     *
+     * @param taskId taskId
      */
     getTaskFormVariables(taskId: string) {
         // verify the required parameter 'taskId' is set
         if (taskId === undefined || taskId === null) {
-            throw new Error('Missing param \'taskId\' in getTaskFormVariables');
+            throw new Error(`Missing param 'taskId' in getTaskFormVariables`);
         }
 
         const pathParams = {

@@ -132,7 +132,7 @@ export class ProcessAuth extends AlfrescoApiClient {
     /**
      * logout Alfresco API
      *
-     * @returns {AlfrescoApiClientPromise} A promise that returns {new authentication ticket} if resolved and {error} if rejected.
+     * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      * */
     logout(): AlfrescoApiClientPromise<void> {
         this.saveUsername('');

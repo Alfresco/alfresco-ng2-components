@@ -237,7 +237,8 @@ export class SuperagentHttpClient implements HttpClient {
     /**
      * Applies authentication headers to the request.
      *
-     * @param {Object} request The request object created by a <code>superagent()</code> call.
+     * @param request The request object created by a <code>superagent()</code> call.
+     * @param authentications authentications
      */
     private applyAuthToRequest(request: SuperAgentRequest, authentications: Authentication) {
         if (authentications) {
@@ -283,14 +284,16 @@ export class SuperagentHttpClient implements HttpClient {
     }
 
     private static createCSRFToken(a?: any): string {
-        return a ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, SuperagentHttpClient.createCSRFToken);
+        return a
+            ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
+            : ([1e16] + (1e16).toString()).replace(/[01]/g, SuperagentHttpClient.createCSRFToken);
     }
 
     /**
      * Deserializes an HTTP response body into a value of the specified type.
      *
-     * @param {Object} response A SuperAgent response object.
-     * @param {(String|string[]|Object.<String, Object>|Function)} returnType The type to return. Pass a string for simple types
+     * @param response A SuperAgent response object.
+     * @param returnType The type to return. Pass a string for simple types
      * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
      * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
      * all properties on <code>data<code> will be converted to this type.
@@ -330,8 +333,8 @@ export class SuperagentHttpClient implements HttpClient {
      * <li>format to string with `paramToString` for other cases</li>
      * </ul>
      *
-     * @param {Object.<String, Object>} params The parameters as object properties.
-     * @returns {Object.<String, Object>} normalized parameters.
+     * @param params The parameters as object properties.
+     * @returns normalized parameters.
      */
     private static normalizeParams(params: { [key: string]: any }): { [key: string]: any } {
         const newParams: { [key: string]: any } = {};

@@ -52,10 +52,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     username: string;
 
-    constructor(
-        config?: AlfrescoApiConfig,
-        public httpClient?: HttpClient
-    ) {
+    constructor(config?: AlfrescoApiConfig, public httpClient?: HttpClient) {
         ee(this);
 
         if (config) {
@@ -241,10 +238,10 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**
      * login Alfresco API
+     *
      * @param  username Username to login
      * @param  password Password to login
-     *
-     * @returns {Promise} A promise that returns {new authentication ticket} if resolved and {error} if rejected.
+     * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      * */
     login(username: string, password: string): Promise<any> {
         if (!this.isCredentialValid(username) || !this.isCredentialValid(password)) {

@@ -25,7 +25,6 @@ import { AlfrescoApiType } from '../to-deprecate/alfresco-api-type';
 import { HttpClient } from '../api-clients/http-client.interface';
 
 export class ContentAuth extends AlfrescoApiClient {
-
     ticketStorageLabel: string;
     ticket: string;
 
@@ -54,7 +53,6 @@ export class ContentAuth extends AlfrescoApiClient {
         } else if (this.storage.getItem(this.ticketStorageLabel)) {
             this.setTicket(this.storage.getItem(this.ticketStorageLabel));
         }
-
     }
 
     changeHost() {
@@ -86,7 +84,8 @@ export class ContentAuth extends AlfrescoApiClient {
         });
 
         const promise: any = new Promise<string>((resolve, reject) => {
-            this.authApi.createTicket(loginRequest)
+            this.authApi
+                .createTicket(loginRequest)
                 .then((data) => {
                     this.saveUsername(username);
                     this.setTicket(data.entry.id);
@@ -133,7 +132,8 @@ export class ContentAuth extends AlfrescoApiClient {
                     }
                     promise.emit('error');
                     reject(error);
-                });
+                }
+            );
         });
 
         ee(promise); // jshint ignore:line
@@ -143,7 +143,7 @@ export class ContentAuth extends AlfrescoApiClient {
     /**
      * logout Alfresco API
      *
-     * @returns {Promise} A promise that returns { authentication ticket} if resolved and {error} if rejected.
+     * @returns A promise that returns { authentication ticket} if resolved and {error} if rejected.
      * */
     logout(): Promise<void> {
         this.saveUsername('');
@@ -160,7 +160,8 @@ export class ContentAuth extends AlfrescoApiClient {
                     }
                     promise.emit('error');
                     reject(error);
-                });
+                }
+            );
         });
 
         ee(promise); // jshint ignore:line

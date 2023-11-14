@@ -35,9 +35,9 @@ export type AlfrescoApiClientPromise<T = any> = Promise<T> & {
 
 /**
  * Builds a string representation of an array-type actual parameter, according to the given collection format.
- * @param {Array} param An array parameter.
- * @param {module:ApiClient.CollectionFormatEnum} collectionFormat The array element separator strategy.
- * @returns {String|Array} A string representation of the supplied collection, using the specified delimiter. Returns
+ * @param param An array parameter.
+ * @param collectionFormat The array element separator strategy.
+ * @returns A string representation of the supplied collection, using the specified delimiter. Returns
  * <code>param</code> as is if <code>collectionFormat</code> is <code>multi</code>.
  */
 export function buildCollectionParam(param: string[], collectionFormat: string): string | any[] {

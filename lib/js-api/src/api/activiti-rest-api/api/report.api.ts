@@ -105,7 +105,7 @@ export class ReportApi extends BaseApi {
 
     /**
      * Export a report
-     * @param {string} reportId
+     * @param reportId
      * @param bodyParam
      */
     exportToCsv(reportId: string, bodyParam: { reportName?: string }) {
@@ -126,7 +126,7 @@ export class ReportApi extends BaseApi {
 
     /**
      * Save a report
-     * @param {string} reportId
+     * @param reportId
      * @param opts
      */
     saveReport(reportId: string, opts: { reportName?: string }) {
@@ -152,7 +152,8 @@ export class ReportApi extends BaseApi {
 
     /**
      * Delete a report
-     * @param {string} reportId
+     *
+     * @param reportId
      */
     deleteReport(reportId: string) {
         throwIfNotDefined(reportId, 'reportId');

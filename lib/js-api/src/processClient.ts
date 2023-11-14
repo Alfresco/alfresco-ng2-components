@@ -21,7 +21,6 @@ import { Authentication } from './authentication/authentication';
 import { HttpClient } from './api-clients/http-client.interface';
 
 export class ProcessClient extends AlfrescoApiClient {
-
     className = 'ProcessClient';
 
     constructor(config: AlfrescoApiConfig, httpClient?: HttpClient) {
@@ -44,10 +43,9 @@ export class ProcessClient extends AlfrescoApiClient {
     /**
      * set the authentications
      *
-     * @param {Object} authentications
+     * @param authentications Authentications value
      * */
     setAuthentications(authentications: Authentication) {
         this.authentications = authentications;
     }
-
 }

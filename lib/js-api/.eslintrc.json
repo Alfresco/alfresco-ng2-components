@@ -40,7 +40,6 @@
         "jsdoc/tag-lines": "off",
         "jsdoc/newline-after-description": "off",
         "jsdoc/no-multi-asterisks": "off",
-        "jsdoc/no-types": "off",
         "jsdoc/check-types": "off",
         "jsdoc/check-param-names": "off",
         "jsdoc/require-returns": "off",

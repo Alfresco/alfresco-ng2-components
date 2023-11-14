@@ -27,11 +27,9 @@ import { BaseApi } from './base.api';
  * Constructs a new WebscriptApi.
  * @alias module:api/WebscriptApi
  * @class
- * @param {module:ApiClient} apiClient Optional API client implementation to use, default to {@link module:ApiClient#instance}
- * if unspecified.
+ * @param apiClient Optional API client implementation to use, default to ApiClient instance if unspecified.
  */
 export class WebscriptApi extends BaseApi {
-
     allowedMethod: string[] = ['GET', 'POST', 'PUT', 'DELETE'];
 
     /**
@@ -39,16 +37,23 @@ export class WebscriptApi extends BaseApi {
      * Url syntax definition : http[s]://<host>:<port>/[<contextPath>/]/<servicePath>[/<scriptPath>][?<scriptArgs>]
      * example: http://localhost:8081/share/service/mytasks?priority=1
      *
-     * @param {String} httpMethod  GET, POST, PUT and DELETE
-     * @param {String} scriptPath
-     * @param {Object} scriptArgs
-     * @param {String} contextRoot default value alfresco
-     * @param {String} servicePath default value service
-     * @param {String} postBody
+     * @param httpMethod  GET, POST, PUT and DELETE
+     * @param scriptPath
+     * @param scriptArgs
+     * @param contextRoot default value alfresco
+     * @param servicePath default value service
+     * @param postBody
      *
-     * @returns {Promise} A promise that is resolved return the webScript data and {error} if rejected.
+     * @returns A promise that is resolved return the webScript data and {error} if rejected.
      */
-    executeWebScript(httpMethod: string, scriptPath: string, scriptArgs?: any, contextRoot?: string, servicePath?: string, postBody?: any): Promise<any> {
+    executeWebScript(
+        httpMethod: string,
+        scriptPath: string,
+        scriptArgs?: any,
+        contextRoot?: string,
+        servicePath?: string,
+        postBody?: any
+    ): Promise<any> {
         contextRoot = contextRoot || 'alfresco';
         servicePath = servicePath || 'service';
         postBody = postBody || null;
@@ -65,9 +70,17 @@ export class WebscriptApi extends BaseApi {
         const accepts = ['application/json', 'text/html'];
 
         return this.apiClient.callApi(
-            '/' + servicePath + '/' + scriptPath, httpMethod,
-            {}, scriptArgs, {}, {}, postBody,
-            contentTypes, accepts, null, contextRoot
+            '/' + servicePath + '/' + scriptPath,
+            httpMethod,
+            {},
+            scriptArgs,
+            {},
+            {},
+            postBody,
+            contentTypes,
+            accepts,
+            null,
+            contextRoot
         );
     }
 }

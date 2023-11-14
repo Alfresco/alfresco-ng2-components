@@ -25,18 +25,18 @@ import { BaseApi } from './base.api';
 export class TemporaryApi extends BaseApi {
     /**
      * completeTasks
-     * @param {Integer} userId userId
-     * @param {String} processDefinitionKey processDefinitionKey
+     * @param userId userId
+     * @param processDefinitionKey processDefinitionKey
      */
     completeTasks(userId: number, processDefinitionKey: string) {
         // verify the required parameter 'userId' is set
         if (userId === undefined || userId === null) {
-            throw new Error('Missing param \'userId\' in completeTasks');
+            throw new Error(`Missing param 'userId' in completeTasks`);
         }
 
         // verify the required parameter 'processDefinitionKey' is set
         if (processDefinitionKey === undefined || processDefinitionKey === null) {
-            throw new Error('Missing param \'processDefinitionKey\' in completeTasks');
+            throw new Error(`Missing param 'processDefinitionKey' in completeTasks`);
         }
 
         const queryParams = {
@@ -52,18 +52,18 @@ export class TemporaryApi extends BaseApi {
 
     /**
      * generateData
-     * @param {Integer} userId userId
-     * @param {String} processDefinitionKey processDefinitionKey
+     * @param userId userId
+     * @param processDefinitionKey processDefinitionKey
      */
     generateData(userId: number, processDefinitionKey: string) {
         // verify the required parameter 'userId' is set
         if (userId === undefined || userId === null) {
-            throw new Error('Missing param \'userId\' in generateData');
+            throw new Error(`Missing param 'userId' in generateData`);
         }
 
         // verify the required parameter 'processDefinitionKey' is set
         if (processDefinitionKey === undefined || processDefinitionKey === null) {
-            throw new Error('Missing param \'processDefinitionKey\' in generateData');
+            throw new Error(`Missing param 'processDefinitionKey' in generateData`);
         }
 
         const queryParams = {
@@ -79,9 +79,6 @@ export class TemporaryApi extends BaseApi {
 
     /**
      * Function to receive the result of the getHeaders operation.
-     * @param {String} error Error message, if any.
-     * @param {module:model/ArrayNode} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
      */
     getHeaders() {
         return this.get({
@@ -91,9 +88,6 @@ export class TemporaryApi extends BaseApi {
 
     /**
      * Function to receive the result of the getOptions operation.
-     * @param {String} error Error message, if any.
-     * @param {module:model/ArrayNode} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
      */
     getOptions() {
         return this.get({

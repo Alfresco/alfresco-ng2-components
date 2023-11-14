@@ -135,7 +135,9 @@ export class ProcessInstancesApi extends BaseApi {
      * @param filterRequest filterRequest
      * @return Promise<ResultListDataRepresentationProcessInstanceRepresentation>
      */
-    filterProcessInstances(filterRequest: ProcessInstanceFilterRequestRepresentation): Promise<ResultListDataRepresentationProcessInstanceRepresentation> {
+    filterProcessInstances(
+        filterRequest: ProcessInstanceFilterRequestRepresentation
+    ): Promise<ResultListDataRepresentationProcessInstanceRepresentation> {
         throwIfNotDefined(filterRequest, 'filterRequest');
 
         return this.post({
@@ -190,7 +192,9 @@ export class ProcessInstancesApi extends BaseApi {
      * @param queryRequest queryRequest
      * @return Promise<ResultListDataRepresentationProcessInstanceRepresentation>
      */
-    getHistoricProcessInstances(queryRequest: HistoricProcessInstanceQueryRepresentation): Promise<ResultListDataRepresentationProcessInstanceRepresentation> {
+    getHistoricProcessInstances(
+        queryRequest: HistoricProcessInstanceQueryRepresentation
+    ): Promise<ResultListDataRepresentationProcessInstanceRepresentation> {
         throwIfNotDefined(queryRequest, 'queryRequest');
 
         return this.post({
@@ -362,7 +366,9 @@ export class ProcessInstancesApi extends BaseApi {
      * @param processInstancesQuery processInstancesQuery
      * @return Promise<ResultListDataRepresentationProcessInstanceRepresentation>
      */
-    getProcessInstances(processInstancesQuery: ProcessInstanceQueryRepresentation): Promise<ResultListDataRepresentationProcessInstanceRepresentation> {
+    getProcessInstances(
+        processInstancesQuery: ProcessInstanceQueryRepresentation
+    ): Promise<ResultListDataRepresentationProcessInstanceRepresentation> {
         throwIfNotDefined(processInstancesQuery, 'processInstancesQuery');
 
         return this.post({
@@ -395,8 +401,8 @@ export class ProcessInstancesApi extends BaseApi {
     /**
      * Retrieve the process audit in the PDF format
      *
-     * @param {String} processInstanceId processId
-     * @return {Blob} process audit
+     * @param processInstanceId processId
+     * @returns process audit
      */
     getProcessAuditPdf(processInstanceId: string): Promise<Blob> {
         throwIfNotDefined(processInstanceId, 'processInstanceId');
