@@ -83,14 +83,14 @@
         }
     }
 
-    .mat-form-field {
+    .mat-mdc-form-field {
         width: 100%;
     }
 
     mat-form-field {
         width: 100%;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
     .mat-input-placeholder {
         top: 1.8em;
     }
@@ -102,7 +102,7 @@
             background-color: 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
             color: var(--theme-primary-color);
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-prefix {
             color: var(--theme-primary-color);
         }
@@ -123,19 +123,19 @@
         max-width: 100%;
         max-height: 100%;
 
-        & .mat-card {
+        & .mat-mdc-card {
             padding: 16px 24px;
             overflow: hidden;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
         & .mat-card-header-text {
             margin: 0;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & .mat-tab-body-content {
             overflow: hidden;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & .mat-tab-label {
             font-size: var(--theme-subheading-2-font-size);
             line-height: var(--theme-headline-line-height);
@@ -148,7 +148,7 @@
         & .mat-ink-bar {
             height: 4px;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         & .mat-form-field-wrapper {
             margin: 0 12px 0 0;
         }
@@ -214,11 +214,11 @@
         padding-bottom: 25px !important;
         padding-right: 25px !important;
 
-        & .mat-button {
+        & .mat-mdc-button {
             height: 36px;
             border-radius: 5px;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
         & .mat-button-wrapper {
             width: 58px;
             height: 20px;
@@ -235,7 +235,7 @@
             flex: 1;
         }
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     &-left-label-input-container .mat-form-field-label-wrapper {
         top: auto;
         bottom: 0;
@@ -250,7 +250,7 @@
 form-field {
     width: 100%;
 
-    .mat-input-element {
+    .mat-mdc-input-element {
         font-size: var(--theme-body-2-font-size);
         padding-top: 8px;
         line-height: normal;
