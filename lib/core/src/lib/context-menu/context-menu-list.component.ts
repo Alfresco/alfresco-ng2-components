@@ -17,12 +17,8 @@
 
 import { trigger } from '@angular/animations';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
-import { NgForOf, NgIf } from '@angular/common';
-import { AfterViewInit, Component, HostListener, Inject, Optional, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
-import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuItem } from '@angular/material/menu';
+import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { contextMenuAnimation } from './animations';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';

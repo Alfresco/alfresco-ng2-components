@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ThumbnailService, TranslationService } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';

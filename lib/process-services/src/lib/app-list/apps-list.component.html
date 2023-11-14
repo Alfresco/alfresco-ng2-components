@@ -8,7 +8,7 @@
     <div *ngIf="isGrid()" class="adf-app-listgrid">
         <div *ngFor="let app of appList"
             class="adf-app-listgrid-item">
-                <mat-card tabindex="0"
+                <mat-card appearance="outlined" tabindex="0"
                     role="button"
                     class="adf-app-listgrid-item-card"
                     title="{{getAppName(app) | translate}}"
