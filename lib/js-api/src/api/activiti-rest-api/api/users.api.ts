@@ -22,6 +22,17 @@ import { UserRepresentation } from '../model/userRepresentation';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
+export type GetUsersQuery = {
+    filter?: string;
+    email?: string;
+    externalId?: string;
+    externalIdCaseInsensitive?: string;
+    excludeTaskId?: string;
+    excludeProcessId?: string;
+    groupId?: number;
+    tenantId?: number;
+};
+
 /**
  * Users service.
  */
@@ -88,16 +99,7 @@ export class UsersApi extends BaseApi {
      * @param opts Optional parameters
      * @returns Promise<ResultListDataRepresentationLightUserRepresentation>
      */
-    getUsers(opts?: {
-        filter?: string;
-        email?: string;
-        externalId?: string;
-        externalIdCaseInsensitive?: string;
-        excludeTaskId?: string;
-        excludeProcessId?: string;
-        groupId?: number;
-        tenantId?: number;
-    }): Promise<ResultListDataRepresentationLightUserRepresentation> {
+    getUsers(opts?: GetUsersQuery): Promise<ResultListDataRepresentationLightUserRepresentation> {
         opts = opts || {};
 
         const queryParams = {

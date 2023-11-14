@@ -21,7 +21,6 @@ import { Authentication } from './authentication/authentication';
 import { HttpClient } from './api-clients/http-client.interface';
 
 export class ContentClient extends AlfrescoApiClient {
-
     className = 'ContentClient';
     servicePath: string;
 
@@ -46,7 +45,7 @@ export class ContentClient extends AlfrescoApiClient {
     /**
      * set the Authentications
      *
-     * @param authentications
+     * @param authentications authentications
      * */
     setAuthentications(authentications: Authentication): void {
         this.authentications = authentications;

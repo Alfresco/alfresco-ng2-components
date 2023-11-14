@@ -279,7 +279,8 @@ export class FavoritesApi extends BaseApi {
      * Gets a list of favorites for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
      *
-     * @param opts.where A string to restrict the returned objects by using a predicate.
+     * @param personId The identifier of a person.
+     * @param opts optional parameters
      * @returns Promise<FavoritePaging>
      */
     listFavorites(

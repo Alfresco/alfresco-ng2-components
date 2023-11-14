@@ -33,7 +33,10 @@ describe('Oauth2  test', () => {
 
     beforeEach(() => {
         const hostOauth2 = 'https://myOauthUrl:30081';
-        const mockStorage = { getItem: () => {}, setItem: () => {} };
+        const mockStorage = {
+            getItem: () => {},
+            setItem: () => {}
+        };
 
         oauth2Mock = new OAuthMock(hostOauth2);
         authResponseMock = new EcmAuthMock(hostOauth2);
@@ -129,11 +132,11 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            const oauth2Mock = new OAuthMock('https://myOauthUrl:30081');
-            oauth2Mock.get200Response('superman-token');
+            const mock = new OAuthMock('https://myOauthUrl:30081');
+            mock.get200Response('superman-token');
             const loginInstanceOne = await oauth2AuthInstanceOne.login('superman', 'crypto');
 
-            oauth2Mock.get200Response('barman-token');
+            mock.get200Response('barman-token');
             const loginInstanceTwo = await oauth2AuthInstanceTwo.login('barman', 'IamBarman');
 
             expect(loginInstanceOne.access_token).to.be.equal('superman-token');
@@ -168,7 +171,7 @@ describe('Oauth2  test', () => {
             });
         });
 
-        it('should refresh token when the login not use the implicitFlow ', function(done) {
+        it('should refresh token when the login not use the implicitFlow ', function (done) {
             this.timeout(3000);
             oauth2Mock.get200Response();
 
@@ -200,7 +203,7 @@ describe('Oauth2  test', () => {
             oauth2Auth.login('admin', 'admin');
         });
 
-        it('should not hang the app also if teh logout is missing', function(done) {
+        it('should not hang the app also if teh logout is missing', function (done) {
             this.timeout(3000);
             oauth2Mock.get200Response();
 
@@ -415,7 +418,7 @@ describe('Oauth2  test', () => {
 
         // TODO: very flaky test, fails on different machines if running slow, might relate to `this.timeout`
         // eslint-disable-next-line ban/ban
-        xit('should extend content session after oauth token refresh', function(done) {
+        xit('should extend content session after oauth token refresh', function (done) {
             this.timeout(3000);
 
             oauth2Mock.get200Response();

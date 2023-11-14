@@ -483,8 +483,8 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
     /**
      * Set the current Ticket
      *
-     * @param ticketEcm
-     * @param ticketBpm
+     * @param ticketEcm ecm ticket
+     * @param ticketBpm bpm ticket
      * */
     setTicket(ticketEcm: string, ticketBpm: string) {
         if (this.contentAuth) {
@@ -497,7 +497,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**
      * invalidate the current session
-     * */
+     */
     invalidateSession() {
         if (this.oauth2Auth) {
             this.oauth2Auth.invalidateSession();

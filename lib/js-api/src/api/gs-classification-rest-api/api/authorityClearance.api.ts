@@ -27,7 +27,7 @@ export class AuthorityClearanceApi extends BaseApi {
      * Get the authority clearances for a single user/group
      *
      * @param authorityId The name for the authority for which the clearance is to be fetched. Can be left blank in which case it will fetch it for all users with pagination
-     * @param opts
+     * @param opts Optional parameters
      * @returns Promise<AuthorityClearanceGroupPaging>
      */
     getAuthorityClearanceForAuthority(authorityId: string, opts?: GsPagingQuery): Promise<AuthorityClearanceGroupPaging> {

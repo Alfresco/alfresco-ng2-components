@@ -22,6 +22,7 @@ import { UserProcessInstanceFilterRepresentation } from '../model/userProcessIns
 import { UserTaskFilterRepresentation } from '../model/userTaskFilterRepresentation';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
+import { AppIdQuery } from './types';
 
 /**
  * UserFiltersApi service.
@@ -33,7 +34,9 @@ export class UserFiltersApi extends BaseApi {
      * @param userProcessInstanceFilterRepresentation userProcessInstanceFilterRepresentation
      * @returns Promise<UserProcessInstanceFilterRepresentation>
      */
-    createUserProcessInstanceFilter(userProcessInstanceFilterRepresentation: UserProcessInstanceFilterRepresentation): Promise<UserProcessInstanceFilterRepresentation> {
+    createUserProcessInstanceFilter(
+        userProcessInstanceFilterRepresentation: UserProcessInstanceFilterRepresentation
+    ): Promise<UserProcessInstanceFilterRepresentation> {
         throwIfNotDefined(userProcessInstanceFilterRepresentation, 'userProcessInstanceFilterRepresentation');
 
         return this.post({
@@ -125,7 +128,7 @@ export class UserFiltersApi extends BaseApi {
      * @param opts Optional parameters
      * @returns Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation>
      */
-    getUserProcessInstanceFilters(opts?: { appId?: number }): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
+    getUserProcessInstanceFilters(opts?: AppIdQuery): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
         return this.get({
             path: '/api/enterprise/filters/processes',
             queryParams: opts,
@@ -161,7 +164,7 @@ export class UserFiltersApi extends BaseApi {
      * @param opts Optional parameters
      * @returns Promise<ResultListDataRepresentationUserTaskFilterRepresentation>
      */
-    getUserTaskFilters(opts?: { appId?: number }): Promise<ResultListDataRepresentationUserTaskFilterRepresentation> {
+    getUserTaskFilters(opts?: AppIdQuery): Promise<ResultListDataRepresentationUserTaskFilterRepresentation> {
         return this.get({
             path: '/api/enterprise/filters/tasks',
             queryParams: opts,

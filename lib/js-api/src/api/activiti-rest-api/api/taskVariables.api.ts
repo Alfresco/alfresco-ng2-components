@@ -18,6 +18,7 @@
 import { RestVariable } from '../model/restVariable';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
+import { ScopeQuery } from './types';
 
 /**
  * TaskVariablesApi service.
@@ -73,7 +74,7 @@ export class TaskVariablesApi extends BaseApi {
      * @param opts Optional parameters
      * @return Promise<{}>
      */
-    deleteVariable(taskId: string, variableName: string, opts?: { scope?: string }): Promise<void> {
+    deleteVariable(taskId: string, variableName: string, opts?: ScopeQuery): Promise<void> {
         throwIfNotDefined(taskId, 'taskId');
         throwIfNotDefined(variableName, 'variableName');
 
@@ -96,7 +97,7 @@ export class TaskVariablesApi extends BaseApi {
      * @param opts Optional parameters
      * @return Promise<RestVariable>
      */
-    getVariable(taskId: string, variableName: string, opts?: { scope?: string }): Promise<RestVariable> {
+    getVariable(taskId: string, variableName: string, opts?: ScopeQuery): Promise<RestVariable> {
         throwIfNotDefined(taskId, 'taskId');
         throwIfNotDefined(variableName, 'variableName');
 
@@ -120,7 +121,7 @@ export class TaskVariablesApi extends BaseApi {
      * @param opts Optional parameters
      * @return Promise<RestVariable>
      */
-    getVariables(taskId: string, opts?: { scope?: string }): Promise<RestVariable> {
+    getVariables(taskId: string, opts?: ScopeQuery): Promise<RestVariable> {
         throwIfNotDefined(taskId, 'taskId');
 
         const pathParams = {

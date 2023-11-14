@@ -211,7 +211,11 @@ export class ProcessDefinitionsApi extends BaseApi {
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationProcessDefinitionRepresentation>
      */
-    getProcessDefinitions(opts?: { latest?: boolean; appDefinitionId?: number; deploymentId?: string }): Promise<ResultListDataRepresentationProcessDefinitionRepresentation> {
+    getProcessDefinitions(opts?: {
+        latest?: boolean;
+        appDefinitionId?: number;
+        deploymentId?: string;
+    }): Promise<ResultListDataRepresentationProcessDefinitionRepresentation> {
         return this.get({
             path: '/api/enterprise/process-definitions',
             queryParams: opts,
@@ -223,7 +227,7 @@ export class ProcessDefinitionsApi extends BaseApi {
      * Retrieve field values (e.g. the typeahead field)
      *
      * @param processDefinitionId processDefinitionId
-     * @param field
+     * @param field field
      * @return Promise<FormValueRepresentation[]>
      */
     getRestFieldValues(processDefinitionId: string, field: string): Promise<FormValueRepresentation[]> {
@@ -243,8 +247,8 @@ export class ProcessDefinitionsApi extends BaseApi {
      * Retrieve field values (eg. the table field)
      *
      * @param processDefinitionId processDefinitionId
-     * @param field
-     * @param column
+     * @param field field
+     * @param column column
      * @return Promise<FormValueRepresentation []>
      */
     getRestTableFieldValues(processDefinitionId: string, field: string, column: string): Promise<FormValueRepresentation[]> {

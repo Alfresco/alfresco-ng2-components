@@ -66,7 +66,7 @@ export class TypesApi extends BaseApi {
      *
      * **Note:** This is available in Alfresco 7.0.0 and newer versions.
      *
-     * @param typeId The Qname of a type(prefix:name) e.g 'cm:content'
+     * @param typeId The `Qname` of a type(prefix:name) e.g 'cm:content'
      * @returns Promise<TypeEntry>
      */
     getType(typeId: string): Promise<TypeEntry> {

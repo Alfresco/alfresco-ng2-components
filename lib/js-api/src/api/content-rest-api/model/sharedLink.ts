@@ -35,7 +35,7 @@ export class SharedLink {
     sharedByUser?: UserInfo;
     content?: ContentInfo;
     /**
-     * The allowable operations for the Quickshare link itself. See allowableOperationsOnTarget for the
+     * The allowable operations for the `Quickshare` link itself. See allowableOperationsOnTarget for the
      * allowable operations pertaining to the linked content node.
      */
     allowableOperations?: string[];

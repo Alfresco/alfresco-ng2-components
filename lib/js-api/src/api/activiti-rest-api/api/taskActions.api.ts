@@ -202,7 +202,7 @@ export class TaskActionsApi extends BaseApi {
      * Remove an involved group from a task
      *
      * @param taskId taskId
-     * @param identifier
+     * @param identifier identifier
      * @return Promise<{}>
      */
     removeInvolvedUser(taskId: string, identifier: string | UserIdentifierRepresentation): Promise<any> {

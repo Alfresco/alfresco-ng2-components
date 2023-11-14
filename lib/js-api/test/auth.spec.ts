@@ -138,14 +138,12 @@ describe('Auth', () => {
                 it('should Ticket be present in the client', () => {
                     authResponseEcmMock.get400Response();
 
-                    const alfrescoJsApi = new AlfrescoApi({
+                    const api = new AlfrescoApi({
                         ticketEcm: 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1',
                         hostEcm: ECM_HOST
                     });
 
-                    expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(
-                        alfrescoJsApi.contentClient.authentications.basicAuth.password
-                    );
+                    expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(api.contentClient.authentications.basicAuth.password);
                 });
 
                 it('should Ticket login be validate against the server if is valid', (done) => {
@@ -396,7 +394,7 @@ describe('Auth', () => {
                 authResponseBpmMock.get200Response();
                 authResponseEcmMock.get201Response();
 
-                const alfrescoJsApi = new AlfrescoApi({
+                const api = new AlfrescoApi({
                     ticketEcm: 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1',
                     ticketBpm: 'Basic YWRtaW46YWRtaW4=',
                     hostEcm: ECM_HOST,
@@ -404,8 +402,8 @@ describe('Auth', () => {
                     provider: 'ALL'
                 });
 
-                expect('Basic YWRtaW46YWRtaW4=').to.be.equal(alfrescoJsApi.processClient.authentications.basicAuth.ticket);
-                expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(alfrescoJsApi.contentClient.authentications.basicAuth.password);
+                expect('Basic YWRtaW46YWRtaW4=').to.be.equal(api.processClient.authentications.basicAuth.ticket);
+                expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(api.contentClient.authentications.basicAuth.password);
             });
 
             describe('login', () => {

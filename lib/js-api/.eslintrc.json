@@ -40,13 +40,13 @@
         "jsdoc/check-param-names": "off",
         "jsdoc/require-returns": "off",
         "jsdoc/require-param": "off",
-        "jsdoc/require-param-description": "off",
         "jsdoc/check-tag-names": "off",
         "@typescript-eslint/no-shadow": "warn",
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/consistent-type-definitions": "off",
-        "no-redeclare": "off"
+        "no-redeclare": "off",
+        "space-before-function-paren": "off"
       }
     }
   ]

@@ -336,8 +336,8 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
     /**
      * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
      *
-     * @param contentTypes
-     * @returns  The chosen content type, preferring JSON.
+     * @param contentTypes content types
+     * @returns The chosen content type, preferring JSON.
      */
     private static jsonPreferredMime(contentTypes: readonly string[]): string {
         if (!contentTypes?.length) {

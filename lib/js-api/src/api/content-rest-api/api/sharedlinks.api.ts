@@ -307,7 +307,7 @@ export class SharedlinksApi extends BaseApi {
      **Note:** The list of links is eventually consistent so newly created shared links may not appear immediately.
      *
      * @param opts Optional parameters
-     * @param opts.where Optionally filter the list by \"sharedByUser\" userid of person who shared the link (can also use -me-)
+     * @param opts.where Optionally filter the list by \"sharedByUser\" `userId` of person who shared the link (can also use -me-)
      *   where=(sharedByUser='jbloggs')
      *   where=(sharedByUser='-me-')
      * @returns Promise<SharedLinkPaging>

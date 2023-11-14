@@ -105,10 +105,12 @@ export class FormModelsApi extends BaseApi {
     /**
      * Get forms
      *
-     * @param input
+     * @param input input
      * @return Promise<FormRepresentation>
      */
-    getForms(input: string[] | GetFormsOpts): Promise<FormRepresentation | ResultListDataRepresentationRuntimeFormRepresentation | ResultListDataRepresentationFormRepresentation> {
+    getForms(
+        input: string[] | GetFormsOpts
+    ): Promise<FormRepresentation | ResultListDataRepresentationRuntimeFormRepresentation | ResultListDataRepresentationFormRepresentation> {
         if (typeof input === 'string') {
             const queryParams = {
                 formId: buildCollectionParam(input, 'multi')

@@ -180,7 +180,7 @@ export class NodesApi extends BaseApi {
      * The list applies to a returned individual entity or entries within a collection.
      * If the API method also supports the **include** parameter, then the fields specified in the **include**
      * parameter are returned in addition to those specified in the **fields** parameter.
-     * @param formParams
+     * @param formParams parameters
      * @returns Promise<NodeEntry>
      */
     createNode(nodeId: string, nodeBodyCreate: NodeBodyCreate, opts?: CreateNodeOpts, formParams?: any): Promise<NodeEntry | any> {

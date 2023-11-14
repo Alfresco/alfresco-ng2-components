@@ -59,6 +59,8 @@ export interface GroupPagingOpts {
     where?: string;
 }
 
+export type DeleteGroupOpts = { cascade?: boolean };
+
 /**
  * Groups service.
  */
@@ -151,7 +153,7 @@ export class GroupsApi extends BaseApi {
      * @param opts Optional parameters
      * @returns Promise
      */
-    deleteGroup(groupId: string, opts?: { cascade?: boolean }): Promise<void> {
+    deleteGroup(groupId: string, opts?: DeleteGroupOpts): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');
         opts = opts || {};
 

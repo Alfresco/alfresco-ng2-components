@@ -29,11 +29,11 @@ export class WebscriptApi extends BaseApi {
      * example: http://localhost:8081/share/service/mytasks?priority=1
      *
      * @param httpMethod  GET, POST, PUT and DELETE
-     * @param scriptPath
-     * @param scriptArgs
+     * @param scriptPath script path
+     * @param scriptArgs script arguments
      * @param contextRoot default value alfresco
      * @param servicePath default value service
-     * @param postBody
+     * @param postBody post body
      * @returns A promise that is resolved return the webScript data and {error} if rejected.
      */
     executeWebScript(
