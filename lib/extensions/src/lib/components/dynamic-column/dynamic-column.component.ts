@@ -31,20 +31,22 @@ import {
 import { ExtensionService } from '../../services/extension.service';
 
 @Component({
-    selector: 'adf-dynamic-column',
-    template: ` <ng-container #content></ng-container> `,
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { class: 'adf-dynamic-column' },
-    styles: [
+  selector: 'adf-dynamic-column',
+  template: `
+    <ng-container #content></ng-container>
+  `,
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'adf-dynamic-column' },
+  styles: [
+    `
+          .adf-dynamic-column {
+            display: flex;
+            align-items: center;
+            width: inherit;
+          }
         `
-            .adf-dynamic-column {
-                display: flex;
-                align-items: center;
-                width: inherit;
-            }
-        `
-    ]
+  ]
 })
 export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('content', { read: ViewContainerRef, static: true })
