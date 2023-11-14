@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
