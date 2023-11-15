@@ -1646,13 +1646,10 @@ describe('Column Resizing', () => {
     let data: { id: number; name: string }[] = [];
     let dataTableSchema: DataColumn[] = [];
 
-    const getTableBody = (): HTMLDivElement => {
-        return fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
-    }
+    const getTableBody = (): HTMLDivElement => fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
 
-    const getResizeHandler = (): HTMLDivElement => {
-        return fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
-    }
+    const getResizeHandler = (): HTMLDivElement => fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+
 
     const testClassesAfterResizing = (headerColumnsSelector = '.adf-datatable-cell-header', excludedClass = 'adf-datatable__cursor--pointer') => {
         dataTable.isResizingEnabled = true;
