@@ -2,5 +2,8 @@
     <title>Alfresco silent static page</title>
 </head>
 <body>
+    <script>
+        (window.opener || window.parent).postMessage(location.hash || ('#' + location.search), location.origin);
+    </script>
     Silent refresh static page
 </body>
