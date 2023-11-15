@@ -323,6 +323,14 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     maxColumnsVisible?: number;
 
+    /** Enables column resizing for datatable */
+    @Input()
+    isResizingEnabled = false;
+
+    /** Enables blur when resizing datatable columns */
+    @Input()
+    blurOnResize = true;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick = new EventEmitter<NodeEntityEvent>();

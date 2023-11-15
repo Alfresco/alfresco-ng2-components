@@ -238,6 +238,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     isResizingEnabled: boolean = false;
 
+    /**
+     * Flag that indicates if the datatable should be blurred when resizing.
+     */
+     @Input()
+     blurOnResize: boolean = true;
+
     headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
