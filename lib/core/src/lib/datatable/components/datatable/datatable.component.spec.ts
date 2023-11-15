@@ -1646,11 +1646,16 @@ describe('Column Resizing', () => {
     let data: { id: number; name: string }[] = [];
     let dataTableSchema: DataColumn[] = [];
 
+    const getTableBody = (): HTMLDivElement => fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+
+    const getResizeHandler = (): HTMLDivElement => fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+
+
     const testClassesAfterResizing = (headerColumnsSelector = '.adf-datatable-cell-header', excludedClass = 'adf-datatable__cursor--pointer') => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
 
-        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        const resizeHandle: HTMLElement = getResizeHandler();
         resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
         fixture.detectChanges();
 
@@ -1685,7 +1690,7 @@ describe('Column Resizing', () => {
     });
 
     it('should NOT display resize handle when the feature is Disabled [isResizingEnabled=false]', () => {
-        const resizeHandle = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        const resizeHandle = getResizeHandler();
 
         expect(resizeHandle).toBeNull();
         const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
@@ -1699,7 +1704,7 @@ describe('Column Resizing', () => {
         dataTable.isResizingEnabled = true;
 
         fixture.detectChanges();
-        const resizeHandle = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        const resizeHandle = getResizeHandler();
 
         expect(resizeHandle).not.toBeNull();
         const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
@@ -1738,18 +1743,29 @@ describe('Column Resizing', () => {
         expect(dragIcon).toBeNull();
     });
 
-    it('should blur the table body upon resizing starts', () => {
-        dataTable.isResizingEnabled = true;
-        fixture.detectChanges();
+    describe('Datatable blur', () => {
+        beforeEach(() => {
+            dataTable.isResizingEnabled = true;
+            fixture.detectChanges();
 
-        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
-        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
-        fixture.detectChanges();
+            const resizeHandle: HTMLElement = getResizeHandler();
+            resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
+            fixture.detectChanges();
+        });
 
-        const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+        it('should blur the table body upon resizing starts', () => {
+            const tableBody = getTableBody();
+            expect(dataTable.isResizing).toBeTrue();
+            expect(tableBody.classList).toContain('adf-blur-datatable-body');
+        });
 
-        expect(dataTable.isResizing).toBeTrue();
-        expect(tableBody.classList).toContain('adf-blur-datatable-body');
+        it('should not blur the table body upon resizing starts when blurOnResize is false', () => {
+            dataTable.blurOnResize = false;
+            fixture.detectChanges();
+            const tableBody = getTableBody();
+            expect(dataTable.isResizing).toBeTrue();
+            expect(tableBody.classList).not.toContain('adf-blur-datatable-body');
+        });
     });
 
     it('should set column width on resizing', fakeAsync(() => {
@@ -1819,7 +1835,7 @@ describe('Column Resizing', () => {
         tick();
         fixture.detectChanges();
 
-        const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+        const tableBody = getTableBody();
         const firstCell: HTMLElement = tableBody.querySelector('[data-automation-id="name1"]');
         const secondCell: HTMLElement = tableBody.querySelector('[data-automation-id="name2"]');
 
@@ -1832,7 +1848,7 @@ describe('Column Resizing', () => {
         tick();
         fixture.detectChanges();
 
-        const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+        const tableBody = getTableBody();
         const firstCell: HTMLElement = tableBody.querySelector('[data-automation-id="name1"]');
         const secondCell: HTMLElement = tableBody.querySelector('[data-automation-id="name2"]');
 
@@ -1844,11 +1860,11 @@ describe('Column Resizing', () => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
 
-        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        const resizeHandle: HTMLElement = getResizeHandler();
         resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
         fixture.detectChanges();
 
-        const tableBody = fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
+        const tableBody = getTableBody();
 
         expect(dataTable.isResizing).toBeTrue();
         expect(tableBody.classList).toContain('adf-blur-datatable-body');
@@ -1869,7 +1885,7 @@ describe('Column Resizing', () => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
 
-        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        const resizeHandle: HTMLElement = getResizeHandler();
         resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
         fixture.detectChanges();
 

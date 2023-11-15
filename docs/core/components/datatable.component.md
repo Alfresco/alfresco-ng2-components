@@ -423,6 +423,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | actionsVisibleOnHover | `boolean` | false | Toggles whether the actions dropdown should only be visible if the row is hovered over or the dropdown menu is open. |
 | allowFiltering | `boolean` | false | Flag that indicate if the datatable allow the use [facet widget](../../../lib/content-services/src/lib/search/models/facet-widget.interface.ts) search for filtering. |
+| blurOnResize | `boolean` | true | Toggles blur when columns of the datatable are being resized. |
 | columns | `any[]` | \[] | The columns that the datatable will show. |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | data | [`DataTableAdapter`](../../../lib/core/src/lib/datatable/data/datatable-adapter.ts) |  | Data source for the table |

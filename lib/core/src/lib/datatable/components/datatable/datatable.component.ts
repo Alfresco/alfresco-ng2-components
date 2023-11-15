@@ -236,7 +236,13 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
      * Flag that indicates if the datatable allows column resizing.
      */
     @Input()
-    isResizingEnabled: boolean = false;
+    isResizingEnabled = false;
+
+    /**
+     * Flag that indicates if the datatable should be blurred when resizing.
+     */
+     @Input()
+     blurOnResize = true;
 
     headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;

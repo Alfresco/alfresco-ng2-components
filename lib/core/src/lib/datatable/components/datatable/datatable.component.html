@@ -160,7 +160,7 @@
 
     <div
         class="adf-datatable-body"
-        [ngClass]="{ 'adf-blur-datatable-body': isDraggingHeaderColumn || isResizing }"
+        [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing) }"
         role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
