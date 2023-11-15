@@ -20,6 +20,24 @@
 import nock from 'nock';
 import { BaseMock } from '../base.mock';
 
+const adminUser = {
+    aspectNames: ['cm:ownable'],
+    firstName: 'Administrator',
+    emailNotificationsEnabled: true,
+    company: {},
+    id: 'admin',
+    enabled: true,
+    email: 'admin@alfresco.com',
+    properties: {
+        'cm:homeFolderProvider': 'bootstrapHomeFolderProvider',
+        'cm:authorizationStatus': 'AUTHORIZED',
+        'cm:homeFolder': '72866d2e-64ee-45a2-ae00-30a5ced96a41',
+        'cm:name': '56f78250-37a7-4e22-b35a-64b53ae1e5ca',
+        'cm:owner': { id: 'admin', displayName: 'Administrator' },
+        'cm:organizationId': ''
+    }
+};
+
 export class CommentMock extends BaseMock {
     post201Response(): void {
         nock(this.host, { encodedQueryParams: true })
@@ -29,43 +47,11 @@ export class CommentMock extends BaseMock {
             .reply(201, {
                 entry: {
                     createdAt: '2017-04-11T09:31:21.452+0000',
-                    createdBy: {
-                        aspectNames: ['cm:ownable'],
-                        firstName: 'Administrator',
-                        emailNotificationsEnabled: true,
-                        company: {},
-                        id: 'admin',
-                        enabled: true,
-                        email: 'admin@alfresco.com',
-                        properties: {
-                            'cm:homeFolderProvider': 'bootstrapHomeFolderProvider',
-                            'cm:authorizationStatus': 'AUTHORIZED',
-                            'cm:homeFolder': '72866d2e-64ee-45a2-ae00-30a5ced96a41',
-                            'cm:name': '56f78250-37a7-4e22-b35a-64b53ae1e5ca',
-                            'cm:owner': { id: 'admin', displayName: 'Administrator' },
-                            'cm:organizationId': ''
-                        }
-                    },
+                    createdBy: adminUser,
                     edited: false,
                     modifiedAt: '2017-04-11T09:31:21.452+0000',
                     canEdit: true,
-                    modifiedBy: {
-                        aspectNames: ['cm:ownable'],
-                        firstName: 'Administrator',
-                        emailNotificationsEnabled: true,
-                        company: {},
-                        id: 'admin',
-                        enabled: true,
-                        email: 'admin@alfresco.com',
-                        properties: {
-                            'cm:homeFolderProvider': 'bootstrapHomeFolderProvider',
-                            'cm:authorizationStatus': 'AUTHORIZED',
-                            'cm:homeFolder': '72866d2e-64ee-45a2-ae00-30a5ced96a41',
-                            'cm:name': '56f78250-37a7-4e22-b35a-64b53ae1e5ca',
-                            'cm:owner': { id: 'admin', displayName: 'Administrator' },
-                            'cm:organizationId': ''
-                        }
-                    },
+                    modifiedBy: adminUser,
                     canDelete: true,
                     id: 'c294cf79-49c1-483e-ac86-39c8fe3cce8f',
                     content: 'This is a comment'
@@ -89,43 +75,11 @@ export class CommentMock extends BaseMock {
                         {
                             entry: {
                                 createdAt: '2017-04-11T09:31:21.658+0000',
-                                createdBy: {
-                                    aspectNames: ['cm:ownable'],
-                                    firstName: 'Administrator',
-                                    emailNotificationsEnabled: true,
-                                    company: {},
-                                    id: 'admin',
-                                    enabled: true,
-                                    email: 'admin@alfresco.com',
-                                    properties: {
-                                        'cm:homeFolderProvider': 'bootstrapHomeFolderProvider',
-                                        'cm:authorizationStatus': 'AUTHORIZED',
-                                        'cm:homeFolder': '72866d2e-64ee-45a2-ae00-30a5ced96a41',
-                                        'cm:name': '56f78250-37a7-4e22-b35a-64b53ae1e5ca',
-                                        'cm:owner': { id: 'admin', displayName: 'Administrator' },
-                                        'cm:organizationId': ''
-                                    }
-                                },
+                                createdBy: adminUser,
                                 edited: false,
                                 modifiedAt: '2017-04-11T09:31:21.658+0000',
                                 canEdit: true,
-                                modifiedBy: {
-                                    aspectNames: ['cm:ownable'],
-                                    firstName: 'Administrator',
-                                    emailNotificationsEnabled: true,
-                                    company: {},
-                                    id: 'admin',
-                                    enabled: true,
-                                    email: 'admin@alfresco.com',
-                                    properties: {
-                                        'cm:homeFolderProvider': 'bootstrapHomeFolderProvider',
-                                        'cm:authorizationStatus': 'AUTHORIZED',
-                                        'cm:homeFolder': '72866d2e-64ee-45a2-ae00-30a5ced96a41',
-                                        'cm:name': '56f78250-37a7-4e22-b35a-64b53ae1e5ca',
-                                        'cm:owner': { id: 'admin', displayName: 'Administrator' },
-                                        'cm:organizationId': ''
-                                    }
-                                },
+                                modifiedBy: adminUser,
                                 canDelete: true,
                                 id: '539fc9b2-7d5b-4966-9e44-fcf433647f25',
                                 content: 'This is another comment'
@@ -134,43 +88,11 @@ export class CommentMock extends BaseMock {
                         {
                             entry: {
                                 createdAt: '2017-04-11T09:31:21.452+0000',
-                                createdBy: {
-                                    aspectNames: ['cm:ownable'],
-                                    firstName: 'Administrator',
-                                    emailNotificationsEnabled: true,
-                                    company: {},
-                                    id: 'admin',
-                                    enabled: true,
-                                    email: 'admin@alfresco.com',
-                                    properties: {
-                                        'cm:homeFolderProvider': 'bootstrapHomeFolderProvider',
-                                        'cm:authorizationStatus': 'AUTHORIZED',
-                                        'cm:homeFolder': '72866d2e-64ee-45a2-ae00-30a5ced96a41',
-                                        'cm:name': '56f78250-37a7-4e22-b35a-64b53ae1e5ca',
-                                        'cm:owner': { id: 'admin', displayName: 'Administrator' },
-                                        'cm:organizationId': ''
-                                    }
-                                },
+                                createdBy: adminUser,
                                 edited: false,
                                 modifiedAt: '2017-04-11T09:31:21.452+0000',
                                 canEdit: true,
-                                modifiedBy: {
-                                    aspectNames: ['cm:ownable'],
-                                    firstName: 'Administrator',
-                                    emailNotificationsEnabled: true,
-                                    company: {},
-                                    id: 'admin',
-                                    enabled: true,
-                                    email: 'admin@alfresco.com',
-                                    properties: {
-                                        'cm:homeFolderProvider': 'bootstrapHomeFolderProvider',
-                                        'cm:authorizationStatus': 'AUTHORIZED',
-                                        'cm:homeFolder': '72866d2e-64ee-45a2-ae00-30a5ced96a41',
-                                        'cm:name': '56f78250-37a7-4e22-b35a-64b53ae1e5ca',
-                                        'cm:owner': { id: 'admin', displayName: 'Administrator' },
-                                        'cm:organizationId': ''
-                                    }
-                                },
+                                modifiedBy: adminUser,
                                 canDelete: true,
                                 id: 'c294cf79-49c1-483e-ac86-39c8fe3cce8f',
                                 content: 'This is a comment'
