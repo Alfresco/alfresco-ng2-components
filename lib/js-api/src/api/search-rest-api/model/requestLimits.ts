@@ -18,7 +18,7 @@
 /**
  * Limit the time and resources used for query execution
  */
-export class RequestLimits {
+export interface RequestLimits {
     /**
      * Maximum time for post query permission evaluation
      */
@@ -27,10 +27,4 @@ export class RequestLimits {
      * Maximum count of post query permission evaluations
      */
     permissionEvaluationCount?: number;
-
-    constructor(input?: Partial<RequestLimits>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

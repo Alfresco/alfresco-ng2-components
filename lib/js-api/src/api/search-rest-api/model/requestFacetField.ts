@@ -18,7 +18,7 @@
 /**
  * A simple facet field
  */
-export class RequestFacetField {
+export interface RequestFacetField {
     /**
      * The facet field
      */
@@ -31,8 +31,8 @@ export class RequestFacetField {
      * Restricts the possible constraints to only indexed values with a specified prefix.
      */
     prefix?: string;
-    sort?: RequestFacetField.SortEnum | string;
-    method?: RequestFacetField.MethodEnum | string;
+    sort?: 'COUNT' | 'INDEX' | string;
+    method?: 'ENUM' | 'FC' | string;
     /**
      * When true, count results that match the query but which have no facet value for the field (in addition to the Term-based constraints).
      */
@@ -49,22 +49,4 @@ export class RequestFacetField {
      * This is used for multi-select facetting.
      */
     excludeFilters?: string[];
-
-    constructor(input?: Partial<RequestFacetField>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-}
-export namespace RequestFacetField {
-    export type SortEnum = 'COUNT' | 'INDEX';
-    export const SortEnum = {
-        COUNT: 'COUNT' as SortEnum,
-        INDEX: 'INDEX' as SortEnum
-    };
-    export type MethodEnum = 'ENUM' | 'FC';
-    export const MethodEnum = {
-        ENUM: 'ENUM' as MethodEnum,
-        FC: 'FC' as MethodEnum
-    };
 }

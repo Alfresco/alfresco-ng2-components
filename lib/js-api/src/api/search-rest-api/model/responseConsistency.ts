@@ -18,15 +18,9 @@
 /**
  * The consistency state of the index used to execute the query
  */
-export class ResponseConsistency {
+export interface ResponseConsistency {
     /**
      * The id of the last indexed transaction
      */
     lastTxId?: number;
-
-    constructor(input?: Partial<ResponseConsistency>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

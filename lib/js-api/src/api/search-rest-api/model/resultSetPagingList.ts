@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 import { ResultSetContext } from './resultSetContext';
 import { ResultSetRowEntry } from './resultSetRowEntry';
 
@@ -28,11 +28,9 @@ export class ResultSetPagingList {
         if (input) {
             Object.assign(this, input);
             this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
-            this.context = input.context ? new ResultSetContext(input.context) : undefined;
             if (input.entries) {
                 this.entries = input.entries.map((item) => new ResultSetRowEntry(item));
             }
         }
     }
-
 }

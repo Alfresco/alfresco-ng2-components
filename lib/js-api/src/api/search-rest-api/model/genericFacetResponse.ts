@@ -17,7 +17,7 @@
 
 import { GenericBucket } from './genericBucket';
 
-export class GenericFacetResponse {
+export interface GenericFacetResponse {
     /**
      * The facet type, eg. interval, range, pivot, stats
      */
@@ -30,14 +30,4 @@ export class GenericFacetResponse {
      * An array of buckets and values
      */
     buckets?: GenericBucket[];
-
-    constructor(input?: Partial<GenericFacetResponse>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.buckets) {
-                this.buckets = input.buckets.map((item) => new GenericBucket(item));
-            }
-        }
-    }
-
 }

@@ -25,7 +25,7 @@ import { SearchRequest } from './searchRequest';
 /**
  * Context that applies to the whole result set
  */
-export class ResultSetContext {
+export interface ResultSetContext {
     consistency?: ResponseConsistency;
     request?: SearchRequest;
     /**
@@ -47,25 +47,4 @@ export class ResultSetContext {
      * The highest quality suggestion is first.
      */
     spellcheck?: ResultSetContextSpellcheck[];
-
-    constructor(input?: Partial<ResultSetContext>) {
-        if (input) {
-            Object.assign(this, input);
-            this.consistency = input.consistency ? new ResponseConsistency(input.consistency) : undefined;
-            this.request = input.request ? new SearchRequest(input.request) : undefined;
-            if (input.facetQueries) {
-                this.facetQueries = input.facetQueries.map((item) => new ResultSetContextFacetQueries(item));
-            }
-            if (input.facetsFields) {
-                this.facetsFields = input.facetsFields.map((item) => new ResultBuckets(item));
-            }
-            if (input.facets) {
-                this.facets = input.facets.map((item) => new GenericFacetResponse(item));
-            }
-            if (input.spellcheck) {
-                this.spellcheck = input.spellcheck.map((item) => new ResultSetContextSpellcheck(item));
-            }
-        }
-    }
-
 }

@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-export class RequestSortDefinitionInner {
+export interface RequestSortDefinitionInner {
     /**
      * How to order - using a field, when position of the document in the index, score/relevance.
      */
-    type?: RequestSortDefinitionInner.TypeEnum | string;
+    type?: 'FIELD' | 'DOCUMENT' | 'SCORE' | string;
     /**
      * The name of the field
      */
@@ -28,19 +28,4 @@ export class RequestSortDefinitionInner {
      * The sort order. (The ordering of nulls is determined by the SOLR configuration)
      */
     ascending?: boolean;
-
-    constructor(input?: Partial<RequestSortDefinitionInner>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace RequestSortDefinitionInner {
-    export type TypeEnum = 'FIELD' | 'DOCUMENT' | 'SCORE';
-    export const TypeEnum = {
-        FIELD: 'FIELD' as TypeEnum,
-        DOCUMENT: 'DOCUMENT' as TypeEnum,
-        SCORE: 'SCORE' as TypeEnum
-    };
 }

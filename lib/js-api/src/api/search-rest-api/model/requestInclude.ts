@@ -24,13 +24,4 @@
  * allowableOperations
  * association
  */
-export class RequestInclude extends Array<string> {
-
-    constructor(input?: Partial<RequestInclude>) {
-        super();
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
+export interface RequestInclude extends Array<string> {}

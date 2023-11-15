@@ -17,7 +17,7 @@
 
 import { RequestFacetSet } from './requestFacetSet';
 
-export class RequestFacetIntervalsIntervals {
+export interface RequestFacetIntervalsIntervals {
     /**
      * The field to facet on
      */
@@ -30,14 +30,4 @@ export class RequestFacetIntervalsIntervals {
      * Sets the intervals for all fields.
      */
     sets?: RequestFacetSet[];
-
-    constructor(input?: Partial<RequestFacetIntervalsIntervals>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.sets) {
-                this.sets = input.sets.map((item) => new RequestFacetSet(item));
-            }
-        }
-    }
-
 }

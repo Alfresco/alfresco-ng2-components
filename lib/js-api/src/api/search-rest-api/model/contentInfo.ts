@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export class ContentInfo {
+export interface ContentInfo {
     mimeType: string;
     mimeTypeName: string;
     sizeInBytes: number;
     encoding?: string;
     mimeTypeGroup?: string;
-
-    constructor(input?: Partial<ContentInfo>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

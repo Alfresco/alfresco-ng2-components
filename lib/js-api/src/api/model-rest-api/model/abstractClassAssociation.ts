@@ -17,7 +17,7 @@
 
 import { AbstractClassAssociationSource } from './abstractClassAssociationSource';
 
-export class AbstractClassAssociation {
+export interface AbstractClassAssociation {
     id: string;
     title?: string;
     description?: string;
@@ -25,13 +25,4 @@ export class AbstractClassAssociation {
     isProtected?: boolean;
     source?: AbstractClassAssociationSource;
     target?: AbstractClassAssociationSource;
-
-    constructor(input?: Partial<AbstractClassAssociation>) {
-        if (input) {
-            Object.assign(this, input);
-            this.source = input.source ? new AbstractClassAssociationSource(input.source) : undefined;
-            this.target = input.target ? new AbstractClassAssociationSource(input.target) : undefined;
-        }
-    }
-
 }

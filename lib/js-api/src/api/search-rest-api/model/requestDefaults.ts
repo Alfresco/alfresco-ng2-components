@@ -18,7 +18,7 @@
 /**
  * Common query defaults
  */
-export class RequestDefaults {
+export interface RequestDefaults {
     /**
      * A list of query fields/properties used to expand TEXT: queries.
      * The default is cm:content.
@@ -31,34 +31,15 @@ export class RequestDefaults {
      * one two three
      * (one two three)
      */
-    defaultFTSOperator?: RequestDefaults.DefaultFTSOperatorEnum | string;
+    defaultFTSOperator?: 'AND' | 'OR' | string;
     /**
      * The default way to combine query parts in field query groups when AND or OR is not explicitly stated - includes ! - +
      * FIELD:(one two three)
      */
-    defaultFTSFieldOperator?: RequestDefaults.DefaultFTSFieldOperatorEnum | string;
+    defaultFTSFieldOperator?: 'AND' | 'OR' | string;
     /**
      * The default name space to use if one is not provided
      */
     namespace?: string;
     defaultFieldName?: string;
-
-    constructor(input?: Partial<RequestDefaults>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace RequestDefaults {
-    export type DefaultFTSOperatorEnum = 'AND' | 'OR';
-    export const DefaultFTSOperatorEnum = {
-        AND: 'AND' as DefaultFTSOperatorEnum,
-        OR: 'OR' as DefaultFTSOperatorEnum
-    };
-    export type DefaultFTSFieldOperatorEnum = 'AND' | 'OR';
-    export const DefaultFTSFieldOperatorEnum = {
-        AND: 'AND' as DefaultFTSFieldOperatorEnum,
-        OR: 'OR' as DefaultFTSFieldOperatorEnum
-    };
 }

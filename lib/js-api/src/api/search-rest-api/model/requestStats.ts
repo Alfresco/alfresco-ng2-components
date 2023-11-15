@@ -18,7 +18,7 @@
 /**
  * A list of stats request.
  */
-export class RequestStats {
+export interface RequestStats {
     /**
      * The stats field
      */
@@ -83,10 +83,4 @@ export class RequestStats {
      * A list of percentile values, e.g. \"1,99,99.9\"
      */
     percentiles?: number[];
-
-    constructor(input?: Partial<RequestStats>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

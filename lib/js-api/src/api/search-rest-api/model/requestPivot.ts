@@ -18,20 +18,10 @@
 /**
  * A list of pivots.
  */
-export class RequestPivot {
+export interface RequestPivot {
     /**
      * A key corresponding to a matching field facet label or stats.
      */
     key?: string;
     pivots?: RequestPivot[];
-
-    constructor(input?: Partial<RequestPivot>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.pivots) {
-                this.pivots = input.pivots.map((item) => new RequestPivot(item));
-            }
-        }
-    }
-
 }

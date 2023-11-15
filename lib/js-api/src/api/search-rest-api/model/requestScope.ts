@@ -18,24 +18,9 @@
 /**
  * Scope
  */
-export class RequestScope {
+export interface RequestScope {
     /**
      * The locations to include in the query
      */
-    locations?: RequestScope.LocationsEnum | string;
-
-    constructor(input?: Partial<RequestScope>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace RequestScope {
-    export type LocationsEnum = 'nodes' | 'versions' | 'deleted-nodes';
-    export const LocationsEnum = {
-        Nodes: 'nodes' as LocationsEnum,
-        Versions: 'versions' as LocationsEnum,
-        DeletedNodes: 'deleted-nodes' as LocationsEnum
-    };
+    locations?: 'nodes' | 'versions' | 'deleted-nodes' | string;
 }

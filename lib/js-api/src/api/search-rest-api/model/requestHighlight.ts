@@ -21,7 +21,7 @@ import { RequestHighlightFields } from './requestHighlightFields';
  * Request that highlight fragments to be added to result set rows
  * The properties reflect SOLR highlighting parameters.
  */
-export class RequestHighlight {
+export interface RequestHighlight {
     /**
      * The string used to mark the start of a highlight in a fragment.
      */
@@ -54,14 +54,4 @@ export class RequestHighlight {
      * The fields to highlight and field specific configuration properties for each field
      */
     fields?: RequestHighlightFields[];
-
-    constructor(input?: Partial<RequestHighlight>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.fields) {
-                this.fields = input.fields.map((item) => new RequestHighlightFields(item));
-            }
-        }
-    }
-
 }

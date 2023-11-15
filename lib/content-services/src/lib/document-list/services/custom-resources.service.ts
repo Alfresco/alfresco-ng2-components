@@ -41,7 +41,6 @@ const CREATE_PERMISSION: string = 'create';
 
 @Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
-
     private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
@@ -84,8 +83,7 @@ export class CustomResourcesService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets files recently accessed by a user.
@@ -120,52 +118,57 @@ export class CustomResourcesService {
         ];
 
         return new Observable((observer) => {
-            this.peopleApi.getPerson(personId)
-                .then((person) => {
-                        const username = person.entry.id;
-                        const filterQueries = [
-                            { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                            { query: `cm:modifier:'${username}' OR cm:creator:'${username}'` },
-                            { query: defaultFilter.join(' AND ') }
-                        ];
+            this.peopleApi.getPerson(personId).then(
+                (person) => {
+                    const username = person.entry.id;
+                    const filterQueries = [
+                        { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
+                        { query: `cm:modifier:'${username}' OR cm:creator:'${username}'` },
+                        { query: defaultFilter.join(' AND ') }
+                    ];
 
-                        if (filters && filters.length > 0) {
-                            filterQueries.push({
-                                query: filters.join()
-                            });
-                        }
+                    if (filters && filters.length > 0) {
+                        filterQueries.push({
+                            query: filters.join()
+                        });
+                    }
 
-                        const query = new SearchRequest({
-                            query: {
-                                query: '*',
-                                language: 'afts'
-                            },
-                            filterQueries,
-                            include: ['path', 'properties', 'allowableOperations'],
-                            sort: [{
+                    const query: SearchRequest = {
+                        query: {
+                            query: '*',
+                            language: 'afts'
+                        },
+                        filterQueries,
+                        include: ['path', 'properties', 'allowableOperations'],
+                        sort: [
+                            {
                                 type: 'FIELD',
                                 field: 'cm:modified',
                                 ascending: false
-                            }],
-                            paging: {
-                                maxItems: pagination.maxItems,
-                                skipCount: pagination.skipCount
                             }
-                        });
-                        return this.searchApi.search(query)
-                            .then((searchResult) => {
-                                    observer.next(searchResult);
-                                    observer.complete();
-                                },
-                                (err) => {
-                                    observer.error(err);
-                                    observer.complete();
-                                });
-                    },
-                    (err) => {
-                        observer.error(err);
-                        observer.complete();
-                    });
+                        ],
+                        paging: {
+                            maxItems: pagination.maxItems,
+                            skipCount: pagination.skipCount
+                        }
+                    };
+
+                    return this.searchApi.search(query).then(
+                        (searchResult) => {
+                            observer.next(searchResult);
+                            observer.complete();
+                        },
+                        (err) => {
+                            observer.error(err);
+                            observer.complete();
+                        }
+                    );
+                },
+                (err) => {
+                    observer.error(err);
+                    observer.complete();
+                }
+            );
         });
     }
 
@@ -189,36 +192,36 @@ export class CustomResourcesService {
         };
 
         return new Observable((observer) => {
-            this.favoritesApi.listFavorites('-me-', options)
-                .then((result) => {
-                        const page: FavoritePaging = {
-                            list: {
-                                entries: result.list.entries
-                                    .map(({ entry }: any) => {
-                                        const target = entry.target.file || entry.target.folder;
-                                        target.properties = {
-                                            ...(target.properties || {
-                                                'cm:title': entry.title || target.title,
-                                                'cm:description': entry.description || target.description
-                                            }),
-                                            ...(entry.properties || {})
-                                        };
-
-                                        return {
-                                            entry: target
-                                        };
+            this.favoritesApi.listFavorites('-me-', options).then(
+                (result) => {
+                    const page: FavoritePaging = {
+                        list: {
+                            entries: result.list.entries.map(({ entry }: any) => {
+                                const target = entry.target.file || entry.target.folder;
+                                target.properties = {
+                                    ...(target.properties || {
+                                        'cm:title': entry.title || target.title,
+                                        'cm:description': entry.description || target.description
                                     }),
-                                pagination: result.list.pagination
-                            }
-                        };
+                                    ...(entry.properties || {})
+                                };
 
-                        observer.next(page);
-                        observer.complete();
-                    },
-                    (err) => {
-                        observer.error(err);
-                        observer.complete();
-                    });
+                                return {
+                                    entry: target
+                                };
+                            }),
+                            pagination: result.list.pagination
+                        }
+                    };
+
+                    observer.next(page);
+                    observer.complete();
+                },
+                (err) => {
+                    observer.error(err);
+                    observer.complete();
+                }
+            );
         });
     }
 
@@ -238,29 +241,29 @@ export class CustomResourcesService {
         };
 
         return new Observable((observer) => {
-            this.sitesApi.listSiteMembershipsForPerson('-me-', options)
-                .then((result: SiteRolePaging) => {
-                        const page: SiteMemberPaging = new SiteMemberPaging({
-                            list: {
-                                entries: result.list.entries
-                                    .map(({ entry: { site } }: any) => {
-                                        site.allowableOperations = site.allowableOperations ? site.allowableOperations : [CREATE_PERMISSION];
-                                        site.name = site.name || site.title;
-                                        return {
-                                            entry: site
-                                        };
-                                    }),
-                                pagination: result.list.pagination
-                            }
-                        });
-
-                        observer.next(page);
-                        observer.complete();
-                    },
-                    (err) => {
-                        observer.error(err);
-                        observer.complete();
+            this.sitesApi.listSiteMembershipsForPerson('-me-', options).then(
+                (result: SiteRolePaging) => {
+                    const page: SiteMemberPaging = new SiteMemberPaging({
+                        list: {
+                            entries: result.list.entries.map(({ entry: { site } }: any) => {
+                                site.allowableOperations = site.allowableOperations ? site.allowableOperations : [CREATE_PERMISSION];
+                                site.name = site.name || site.title;
+                                return {
+                                    entry: site
+                                };
+                            }),
+                            pagination: result.list.pagination
+                        }
                     });
+
+                    observer.next(page);
+                    observer.complete();
+                },
+                (err) => {
+                    observer.error(err);
+                    observer.complete();
+                }
+            );
         });
     }
 
@@ -280,23 +283,20 @@ export class CustomResourcesService {
         };
 
         return new Observable((observer) => {
-            this.sitesApi
-                .listSites(options)
-                .then(
-                    (page) => {
-                        page.list.entries.map(
-                            ({ entry }: any) => {
-                                entry.name = entry.name || entry.title;
-                                return { entry };
-                            }
-                        );
-                        observer.next(page);
-                        observer.complete();
-                    },
-                    (err) => {
-                        observer.error(err);
-                        observer.complete();
+            this.sitesApi.listSites(options).then(
+                (page) => {
+                    page.list.entries.map(({ entry }: any) => {
+                        entry.name = entry.name || entry.title;
+                        return { entry };
                     });
+                    observer.next(page);
+                    observer.complete();
+                },
+                (err) => {
+                    observer.error(err);
+                    observer.complete();
+                }
+            );
         });
     }
 
@@ -410,14 +410,12 @@ export class CustomResourcesService {
      */
     getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
         if (this.isCustomSource(nodeId)) {
-
-            return this.loadFolderByNodeId(nodeId, pagination)
-                .pipe(map((result: any): string[] => result.list.entries.map((node: any): string => this.getIdFromEntry(node, nodeId))));
-
+            return this.loadFolderByNodeId(nodeId, pagination).pipe(
+                map((result: any): string[] => result.list.entries.map((node: any): string => this.getIdFromEntry(node, nodeId)))
+            );
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
-            return from(this.nodesApi.getNode(nodeId)
-                .then((node) => [node.entry.id]));
+            return from(this.nodesApi.getNode(nodeId).then((node) => [node.entry.id]));
         }
 
         return of([]);
@@ -453,7 +451,8 @@ export class CustomResourcesService {
     }
 
     private getIncludesFields(includeFields: string[]): string[] {
-        return ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
-            .filter((element, index, array) => index === array.indexOf(element));
+        return ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields].filter(
+            (element, index, array) => index === array.indexOf(element)
+        );
     }
 }

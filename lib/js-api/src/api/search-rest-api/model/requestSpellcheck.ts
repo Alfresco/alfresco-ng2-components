@@ -19,12 +19,6 @@
  * Request that spellcheck fragments to be added to result set rows
  * The properties reflect SOLR spellcheck parameters.
  */
-export class RequestSpellcheck {
+export interface RequestSpellcheck {
     query?: string;
-
-    constructor(input?: Partial<RequestSpellcheck>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

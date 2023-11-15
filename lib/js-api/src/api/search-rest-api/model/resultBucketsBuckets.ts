@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class ResultBucketsBuckets {
+export interface ResultBucketsBuckets {
     /**
      * The bucket label
      */
@@ -32,10 +32,4 @@ export class ResultBucketsBuckets {
      * An optional field for additional display information
      */
     display?: any;
-
-    constructor(input?: Partial<ResultBucketsBuckets>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

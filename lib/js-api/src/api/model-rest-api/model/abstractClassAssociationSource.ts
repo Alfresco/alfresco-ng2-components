@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export class AbstractClassAssociationSource {
+export interface AbstractClassAssociationSource {
     role?: string;
     cls?: string;
     isMandatory?: boolean;
     isMany?: boolean;
     isMandatoryEnforced?: boolean;
-
-    constructor(input?: Partial<AbstractClassAssociationSource>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

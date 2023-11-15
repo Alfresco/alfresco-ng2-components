@@ -35,7 +35,7 @@ import { RequestSpellcheck } from './requestSpellcheck';
 import { RequestStats } from './requestStats';
 import { RequestTemplates } from './requestTemplates';
 
-export class SearchRequest {
+export interface SearchRequest {
     query: RequestQuery;
     paging?: RequestPagination;
     include?: RequestInclude;
@@ -59,36 +59,4 @@ export class SearchRequest {
     limits?: RequestLimits;
     highlight?: RequestHighlight;
     ranges?: RequestRange[];
-
-    constructor(input?: Partial<SearchRequest>) {
-        if (input) {
-            Object.assign(this, input);
-            this.query = input.query ? new RequestQuery(input.query) : undefined;
-            this.paging = input.paging ? new RequestPagination(input.paging) : undefined;
-            this.include = input.include ? new RequestInclude(input.include) : undefined;
-            this.fields = input.fields ? new RequestFields(input.fields) : undefined;
-            this.sort = input.sort ? new RequestSortDefinition(input.sort) : undefined;
-            this.templates = input.templates ? new RequestTemplates(input.templates) : undefined;
-            this.defaults = input.defaults ? new RequestDefaults(input.defaults) : undefined;
-            this.localization = input.localization ? new RequestLocalization(input.localization) : undefined;
-            this.filterQueries = input.filterQueries ? new RequestFilterQueries(input.filterQueries) : undefined;
-            this.facetQueries = input.facetQueries ? new RequestFacetQueries(input.facetQueries) : undefined;
-            this.facetFields = input.facetFields ? new RequestFacetFields(input.facetFields) : undefined;
-            this.facetIntervals = input.facetIntervals ? new RequestFacetIntervals(input.facetIntervals) : undefined;
-            if (input.pivots) {
-                this.pivots = input.pivots.map((item) => new RequestPivot(item));
-            }
-            if (input.stats) {
-                this.stats = input.stats.map((item) => new RequestStats(item));
-            }
-            this.spellcheck = input.spellcheck ? new RequestSpellcheck(input.spellcheck) : undefined;
-            this.scope = input.scope ? new RequestScope(input.scope) : undefined;
-            this.limits = input.limits ? new RequestLimits(input.limits) : undefined;
-            this.highlight = input.highlight ? new RequestHighlight(input.highlight) : undefined;
-            if (input.ranges) {
-                this.ranges = input.ranges.map((item) => new RequestRange(item));
-            }
-        }
-    }
-
 }

@@ -17,7 +17,7 @@
 
 import { ResultBucketsBuckets } from './resultBucketsBuckets';
 
-export class ResultBuckets {
+export interface ResultBuckets {
     /**
      * The field name or its explicit label, if provided on the request
      */
@@ -26,14 +26,4 @@ export class ResultBuckets {
      * An array of buckets and values
      */
     buckets?: ResultBucketsBuckets[];
-
-    constructor(input?: Partial<ResultBuckets>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.buckets) {
-                this.buckets = input.buckets.map((item) => new ResultBucketsBuckets(item));
-            }
-        }
-    }
-
 }

@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export class Model {
+export interface Model {
     id: string;
     author?: string;
     description?: string;
     namespaceUri?: string;
     namespacePrefix?: string;
-
-    constructor(input?: Partial<Model>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -18,7 +18,7 @@
 /**
  * A metric used in faceting
  */
-export class GenericMetric {
+export interface GenericMetric {
     /**
      * The type of metric, e.g. count
      */
@@ -27,10 +27,4 @@ export class GenericMetric {
      * The metric value, e.g. {\"count\": 34}
      */
     value?: any;
-
-    constructor(input?: Partial<GenericMetric>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

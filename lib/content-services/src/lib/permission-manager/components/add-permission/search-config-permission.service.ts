@@ -33,7 +33,7 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
     ) {}
 
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
-        return new SearchRequest({
+        return {
             query: {
                 query: this.getQuery(searchTerm)
             },
@@ -46,7 +46,7 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
                 /* eslint-disable-next-line */
                 { query: "TYPE:'cm:authority'" }
             ]
-        });
+        };
     }
 
     private getQuery(searchTerm: string) {

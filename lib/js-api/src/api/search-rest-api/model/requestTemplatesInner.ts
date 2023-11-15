@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class RequestTemplatesInner {
+export interface RequestTemplatesInner {
     /**
      * The template name
      */
@@ -24,10 +24,4 @@ export class RequestTemplatesInner {
      * The template
      */
     template?: string;
-
-    constructor(input?: Partial<RequestTemplatesInner>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

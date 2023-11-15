@@ -18,7 +18,7 @@
 /**
  * Localization settings
  */
-export class RequestLocalization {
+export interface RequestLocalization {
     /**
      * A valid timezone id supported by @see java.time.ZoneId
      */
@@ -27,10 +27,4 @@ export class RequestLocalization {
      * A list of Locales defined by IETF BCP 47.  The ordering is significant.  The first locale (leftmost) is used for sort and query localization, whereas the remaining locales are used for query only.
      */
     locales?: string[];
-
-    constructor(input?: Partial<RequestLocalization>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

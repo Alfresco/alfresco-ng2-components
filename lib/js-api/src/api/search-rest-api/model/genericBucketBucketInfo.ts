@@ -18,7 +18,7 @@
 /**
  * Additional information of nested facet
  */
-export class GenericBucketBucketInfo {
+export interface GenericBucketBucketInfo {
     /**
      * The start of range
      */
@@ -35,10 +35,4 @@ export class GenericBucketBucketInfo {
      * Includes values less than or equal to \"end\"
      */
     endInclusive?: boolean;
-
-    constructor(input?: Partial<GenericBucketBucketInfo>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

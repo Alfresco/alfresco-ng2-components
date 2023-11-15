@@ -24,13 +24,4 @@ import { RequestTemplatesInner } from './requestTemplatesInner';
  * to generate
  * cm:name:example cm:name:example
  */
-export class RequestTemplates extends Array<RequestTemplatesInner> {
-
-    constructor(input?: Partial<RequestTemplates>) {
-        super();
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
+export interface RequestTemplates extends Array<RequestTemplatesInner> {}

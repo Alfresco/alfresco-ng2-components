@@ -20,10 +20,12 @@ import {
     CategoryBody,
     CategoryEntry,
     CategoryLinkBody,
-    CategoryPaging, PathInfo,
-    RequestQuery, ResultNode,
+    CategoryPaging,
+    PathInfo,
+    ResultNode,
     ResultSetPaging,
-    ResultSetPagingList, ResultSetRowEntry
+    ResultSetPagingList,
+    ResultSetRowEntry
 } from '@alfresco/js-api';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CategoryService } from './category.service';
@@ -35,16 +37,14 @@ describe('CategoryService', () => {
     const fakeParentCategoryId = 'testParentId';
     const fakeCategoryId = 'fakeId';
     const fakeNodeId = 'fakeNodeId';
-    const fakeCategoriesResponse: CategoryPaging = { list: { pagination: {}, entries: [] }};
-    const fakeCategoryEntry: CategoryEntry = { entry: { id: 'testId', name: 'testName' }};
+    const fakeCategoriesResponse: CategoryPaging = { list: { pagination: {}, entries: [] } };
+    const fakeCategoryEntry: CategoryEntry = { entry: { id: 'testId', name: 'testName' } };
     const fakeCategoryBody: CategoryBody = { name: 'updatedName' };
     const fakeCategoriesLinkBodies: CategoryLinkBody[] = [{ categoryId: fakeCategoryId }];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
 
         categoryService = TestBed.inject(CategoryService);
@@ -54,21 +54,21 @@ describe('CategoryService', () => {
     it('should fetch categories with provided parentId', fakeAsync(() => {
         const getSpy = spyOn(categoryService.categoriesApi, 'getSubcategories').and.returnValue(Promise.resolve(fakeCategoriesResponse));
         categoryService.getSubcategories(fakeParentCategoryId, 0, 100).subscribe(() => {
-            expect(getSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, {skipCount: 0, maxItems: 100});
+            expect(getSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, { skipCount: 0, maxItems: 100 });
         });
     }));
 
     it('should fetch root level categories when parentId not provided', fakeAsync(() => {
         const getSpy = spyOn(categoryService.categoriesApi, 'getSubcategories').and.returnValue(Promise.resolve(fakeCategoriesResponse));
         categoryService.getSubcategories(null, 0, 100).subscribe(() => {
-            expect(getSpy).toHaveBeenCalledOnceWith('-root-', {skipCount: 0, maxItems: 100});
+            expect(getSpy).toHaveBeenCalledOnceWith('-root-', { skipCount: 0, maxItems: 100 });
         });
     }));
 
     it('should fetch the category with the provided categoryId', fakeAsync(() => {
         const getSpy = spyOn(categoryService.categoriesApi, 'getCategory').and.returnValue(Promise.resolve(fakeCategoryEntry));
-        categoryService.getCategory(fakeParentCategoryId, {include: ['path']}).subscribe(() => {
-            expect(getSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, {include: ['path']});
+        categoryService.getCategory(fakeParentCategoryId, { include: ['path'] }).subscribe(() => {
+            expect(getSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, { include: ['path'] });
         });
     }));
 
@@ -119,7 +119,7 @@ describe('CategoryService', () => {
             categoryService.searchCategories(name, skipCount, maxItems);
             expect(categoryService.searchApi.search).toHaveBeenCalledWith({
                 query: {
-                    language: RequestQuery.LanguageEnum.Afts,
+                    language: 'afts',
                     query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
                 },
                 paging: {
@@ -136,7 +136,7 @@ describe('CategoryService', () => {
             categoryService.searchCategories(name);
             expect(categoryService.searchApi.search).toHaveBeenCalledWith({
                 query: {
-                    language: RequestQuery.LanguageEnum.Afts,
+                    language: 'afts',
                     query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
                 },
                 paging: {
@@ -156,9 +156,11 @@ describe('CategoryService', () => {
     });
 
     it('should fetch categories linked to node with nodeId with path included', fakeAsync(() => {
-        const getLinkedCategoriesSpy = spyOn(categoryService.categoriesApi, 'getCategoryLinksForNode').and.returnValue(Promise.resolve(fakeCategoriesResponse));
+        const getLinkedCategoriesSpy = spyOn(categoryService.categoriesApi, 'getCategoryLinksForNode').and.returnValue(
+            Promise.resolve(fakeCategoriesResponse)
+        );
         categoryService.getCategoryLinksForNode(fakeNodeId).subscribe(() => {
-            expect(getLinkedCategoriesSpy).toHaveBeenCalledOnceWith(fakeNodeId, {include: ['path']});
+            expect(getLinkedCategoriesSpy).toHaveBeenCalledOnceWith(fakeNodeId, { include: ['path'] });
         });
     }));
 

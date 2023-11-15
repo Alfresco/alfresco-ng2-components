@@ -424,14 +424,11 @@ export abstract class BaseQueryBuilderService {
     }
 
     protected get sort(): RequestSortDefinitionInner[] {
-        return this.sorting.map(
-            (def) =>
-                new RequestSortDefinitionInner({
-                    type: def.type,
-                    field: def.field,
-                    ascending: def.ascending
-                })
-        );
+        return this.sorting.map((def) => ({
+            type: def.type,
+            field: def.field,
+            ascending: def.ascending
+        }));
     }
 
     protected get facetQueries(): FacetQuery[] {

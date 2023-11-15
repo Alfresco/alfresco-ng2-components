@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Property } from '../../content-rest-api/model/property';
+import { Property } from '../../content-rest-api';
 import { AbstractClassAssociation } from './abstractClassAssociation';
 import { Model } from './model';
 
@@ -38,10 +38,6 @@ export class AbstractClass {
             if (input.properties) {
                 this.properties = input.properties.map((item) => new Property(item));
             }
-            if (input.associations) {
-                this.associations = input.associations.map((item: any) => new AbstractClassAssociation(item));
-            }
-            this.model = input.model ? new Model(input.model) : undefined;
         }
     }
 }

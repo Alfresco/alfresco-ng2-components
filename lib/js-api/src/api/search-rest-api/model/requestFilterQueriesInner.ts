@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class RequestFilterQueriesInner {
+export interface RequestFilterQueriesInner {
     /**
      * The filter query expression.
      * For multi-select facets selected facets must be order together
@@ -25,11 +25,4 @@ export class RequestFilterQueriesInner {
      * Tags used exclude the filters from facet evaluation for multi-select facet support
      */
     tags?: string[];
-
-    constructor(input?: Partial<RequestFilterQueriesInner>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

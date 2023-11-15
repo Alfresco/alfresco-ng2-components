@@ -17,16 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
-import {
-    CategoriesApi,
-    CategoryBody,
-    CategoryEntry,
-    CategoryLinkBody,
-    CategoryPaging,
-    RequestQuery,
-    ResultSetPaging,
-    SearchApi
-} from '@alfresco/js-api';
+import { CategoriesApi, CategoryBody, CategoryEntry, CategoryLinkBody, CategoryPaging, ResultSetPaging, SearchApi } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -55,7 +46,7 @@ export class CategoryService {
      * @returns Observable<CategoryPaging>
      */
     getSubcategories(parentCategoryId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
-        return from(this.categoriesApi.getSubcategories(parentCategoryId ?? '-root-', {skipCount, maxItems}));
+        return from(this.categoriesApi.getSubcategories(parentCategoryId ?? '-root-', { skipCount, maxItems }));
     }
 
     /**
@@ -115,17 +106,19 @@ export class CategoryService {
      */
     searchCategories(name: string, skipCount = 0, maxItems?: number): Observable<ResultSetPaging> {
         maxItems = maxItems || this.userPreferencesService.paginationSize;
-        return from(this.searchApi.search({
-            query: {
-                language: RequestQuery.LanguageEnum.Afts,
-                query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
-            },
-            paging: {
-                skipCount,
-                maxItems
-            },
-            include: ['path']
-        }));
+        return from(
+            this.searchApi.search({
+                query: {
+                    language: 'afts',
+                    query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
+                },
+                paging: {
+                    skipCount,
+                    maxItems
+                },
+                include: ['path']
+            })
+        );
     }
 
     /**
@@ -135,7 +128,7 @@ export class CategoryService {
      * @returns Observable<CategoryPaging> Categories that node is assigned to
      */
     getCategoryLinksForNode(nodeId: string): Observable<CategoryPaging> {
-        return from(this.categoriesApi.getCategoryLinksForNode(nodeId, {include: ['path']}));
+        return from(this.categoriesApi.getCategoryLinksForNode(nodeId, { include: ['path'] }));
     }
 
     /**
@@ -145,7 +138,7 @@ export class CategoryService {
      * @param categoryId The identifier of a category.
      * @returns Observable<void>
      */
-     unlinkNodeFromCategory(nodeId: string, categoryId: string): Observable<void> {
+    unlinkNodeFromCategory(nodeId: string, categoryId: string): Observable<void> {
         return from(this.categoriesApi.unlinkNodeFromCategory(nodeId, categoryId));
     }
 
@@ -156,7 +149,7 @@ export class CategoryService {
      * @param categoryLinkBodyCreate Array of a categories that node will be linked to.
      * @returns Observable<CategoryEntry>
      */
-     linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[]): Observable<CategoryPaging | CategoryEntry> {
+    linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[]): Observable<CategoryPaging | CategoryEntry> {
         return from(this.categoriesApi.linkNodeToCategory(nodeId, categoryLinkBodyCreate));
     }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class SearchEntryHighlight {
+export interface SearchEntryHighlight {
     /**
      * The field where a match occurred (one of the fields defined on the request)
      */
@@ -24,10 +24,4 @@ export class SearchEntryHighlight {
      * Any number of snippets for the specified field highlighting the matching text
      */
     snippets?: string[];
-
-    constructor(input?: Partial<SearchEntryHighlight>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -18,7 +18,7 @@
 /**
  * The interval to Set
  */
-export class RequestFacetSet {
+export interface RequestFacetSet {
     /**
      * A label to use to identify the set
      */
@@ -39,10 +39,4 @@ export class RequestFacetSet {
      * When true, the set will include values less than or equal to \"end\"
      */
     endInclusive?: boolean;
-
-    constructor(input?: Partial<RequestFacetSet>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

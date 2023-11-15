@@ -16,7 +16,7 @@
  */
 
 import { AspectEntry } from './aspectEntry';
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 
 export class AspectPagingList {
     pagination?: Pagination;

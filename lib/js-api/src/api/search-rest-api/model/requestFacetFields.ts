@@ -22,18 +22,9 @@ import { RequestFacetField } from './requestFacetField';
  * The Properties reflect the global properties related to field facts in SOLR.
  * They are described in detail by the SOLR documentation
  */
-export class RequestFacetFields {
+export interface RequestFacetFields {
     /**
      * Define specific fields on which to facet (adds SOLR facet.field and f.<field>.facet.* options)
      */
     facets?: RequestFacetField[];
-
-    constructor(input?: Partial<RequestFacetFields>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.facets) {
-                this.facets = input.facets.map((item) => new RequestFacetField(item));
-            }
-        }
-    }
 }

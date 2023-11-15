@@ -20,13 +20,4 @@ import { RequestFilterQueriesInner } from './requestFilterQueriesInner';
 /**
  * Filter Queries. Constraints that apply to the results set but do not affect the score of each entry.
  */
-export class RequestFilterQueries extends Array<RequestFilterQueriesInner> {
-
-    constructor(input?: Partial<RequestFilterQueries>) {
-        super();
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
+export interface RequestFilterQueries extends Array<RequestFilterQueriesInner> {}

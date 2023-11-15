@@ -21,7 +21,7 @@ import { GenericMetric } from './genericMetric';
 /**
  * A bucket of facet results
  */
-export class GenericBucket {
+export interface GenericBucket {
     /**
      * The bucket label
      */
@@ -43,16 +43,4 @@ export class GenericBucket {
      */
     facets?: any[];
     bucketInfo?: GenericBucketBucketInfo;
-
-    constructor(input?: Partial<GenericBucket>) {
-
-        if (input) {
-            Object.assign(this, input);
-            if (input.metrics) {
-                this.metrics = input.metrics.map((item) => new GenericMetric(item));
-            }
-            this.bucketInfo = input.bucketInfo ? new GenericBucketBucketInfo(input.bucketInfo) : undefined;
-        }
-    }
-
 }

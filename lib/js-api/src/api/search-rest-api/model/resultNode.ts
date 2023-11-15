@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { ContentInfo } from '../../content-rest-api/model/contentInfo';
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
-import { PathInfo } from '../../content-rest-api/model/pathInfo';
+import { ContentInfo, PathInfo, UserInfo } from '../../content-rest-api';
+import { DateAlfresco } from '../../content-custom-api';
 import { SearchEntry } from './searchEntry';
-import { UserInfo } from '../../content-rest-api/model/userInfo';
 
 export class ResultNode {
     id: string;
@@ -58,7 +56,6 @@ export class ResultNode {
             this.createdByUser = input.createdByUser ? new UserInfo(input.createdByUser) : undefined;
             this.content = input.content ? new ContentInfo(input.content) : undefined;
             this.path = input.path ? new PathInfo(input.path) : undefined;
-            this.search = input.search ? new SearchEntry(input.search) : undefined;
             this.archivedByUser = input.archivedByUser ? new UserInfo(input.archivedByUser) : undefined;
             this.archivedAt = input.archivedAt ? DateAlfresco.parseDate(input.archivedAt) : undefined;
         }

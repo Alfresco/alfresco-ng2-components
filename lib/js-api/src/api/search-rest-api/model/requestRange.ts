@@ -18,7 +18,7 @@
 /**
  * Facet range
  */
-export class RequestRange {
+export interface RequestRange {
     /**
      * The name of the field to perform range
      */
@@ -55,10 +55,4 @@ export class RequestRange {
      * Filter queries to exclude when calculating statistics
      */
     excludeFilters?: string[];
-
-    constructor(input?: Partial<RequestRange>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

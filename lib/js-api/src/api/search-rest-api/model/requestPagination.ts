@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class RequestPagination {
+export interface RequestPagination {
     /**
      * The maximum number of items to return in the query results
      */
@@ -24,10 +24,4 @@ export class RequestPagination {
      * The number of items to skip from the start of the query set
      */
     skipCount?: number;
-
-    constructor(input?: Partial<RequestPagination>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

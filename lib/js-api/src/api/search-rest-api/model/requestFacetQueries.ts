@@ -20,14 +20,4 @@ import { RequestFacetQueriesInner } from './requestFacetQueriesInner';
 /**
  * Facet queries to include
  */
-export class RequestFacetQueries extends Array<RequestFacetQueriesInner> {
-
-    constructor(input?: Partial<RequestFacetQueries>) {
-        super();
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
+export interface RequestFacetQueries extends Array<RequestFacetQueriesInner> {}

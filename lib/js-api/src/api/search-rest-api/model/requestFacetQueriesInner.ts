@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class RequestFacetQueriesInner {
+export interface RequestFacetQueriesInner {
     /**
      * A facet query
      */
@@ -24,11 +24,4 @@ export class RequestFacetQueriesInner {
      * A label to include in place of the facet query
      */
     label?: string;
-
-    constructor(input?: Partial<RequestFacetQueriesInner>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

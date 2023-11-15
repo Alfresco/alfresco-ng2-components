@@ -15,23 +15,10 @@
  * limitations under the License.
  */
 
-export class ResultSetContextSpellcheck {
-    type?: ResultSetContextSpellcheck.TypeEnum | string;
+export interface ResultSetContextSpellcheck {
+    type?: 'searchInsteadFor' | 'didYouMean' | string;
     /**
      * A suggested alternative query
      */
     suggestion?: string[];
-
-    constructor(input?: Partial<ResultSetContextSpellcheck>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-}
-export namespace ResultSetContextSpellcheck {
-    export type TypeEnum = 'searchInsteadFor' | 'didYouMean';
-    export const TypeEnum = {
-        SearchInsteadFor: 'searchInsteadFor' as TypeEnum,
-        DidYouMean: 'didYouMean' as TypeEnum
-    };
 }

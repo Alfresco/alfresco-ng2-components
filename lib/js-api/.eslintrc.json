@@ -44,7 +44,8 @@
         "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/consistent-type-definitions": "off",
         "no-redeclare": "off",
-        "space-before-function-paren": "off"
+        "space-before-function-paren": "off",
+        "@typescript-eslint/no-empty-interface": "warn"
       }
     }
   ]

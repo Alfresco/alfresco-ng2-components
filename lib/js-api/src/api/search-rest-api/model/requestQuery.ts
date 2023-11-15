@@ -18,11 +18,11 @@
 /**
  * Query.
  */
-export class RequestQuery {
+export interface RequestQuery {
     /**
      * The query language in which the query is written.
      */
-    language?: RequestQuery.LanguageEnum | string;
+    language?: 'afts' | 'lucene' | 'cmis' | string;
     /**
      * The exact search request typed in by the user
      */
@@ -31,18 +31,4 @@ export class RequestQuery {
      * The query which may have been generated in some way from the userQuery
      */
     query: string;
-
-    constructor(input?: Partial<RequestQuery>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-}
-export namespace RequestQuery {
-    export type LanguageEnum = 'afts' | 'lucene' | 'cmis';
-    export const LanguageEnum = {
-        Afts: 'afts' as LanguageEnum,
-        Lucene: 'lucene' as LanguageEnum,
-        Cmis: 'cmis' as LanguageEnum
-    };
 }

@@ -15,17 +15,11 @@
  * limitations under the License.
  */
 
-export class ResultSetContextFacetQueries {
+export interface ResultSetContextFacetQueries {
     label?: string;
     /**
      * The filter query you can use to apply this facet
      */
     filterQuery?: string;
     count?: number;
-
-    constructor(input?: Partial<ResultSetContextFacetQueries>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -17,7 +17,7 @@
 
 import { SearchEntryHighlight } from './searchEntryHighlight';
 
-export class SearchEntry {
+export interface SearchEntry {
     /**
      * The score for this row
      */
@@ -26,13 +26,4 @@ export class SearchEntry {
      * Highlight fragments if requested and available. A match can happen in any of the requested field.
      */
     highlight?: SearchEntryHighlight[];
-
-    constructor(input?: Partial<SearchEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.highlight) {
-                this.highlight = input.highlight.map((item) => new SearchEntryHighlight(item));
-            }
-        }
-    }
 }

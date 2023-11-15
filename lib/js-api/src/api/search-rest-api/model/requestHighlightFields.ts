@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class RequestHighlightFields {
+export interface RequestHighlightFields {
     /**
      * The name of the field to highlight.
      */
@@ -25,10 +25,4 @@ export class RequestHighlightFields {
     mergeContiguous?: boolean;
     prefix?: string;
     postfix?: string;
-
-    constructor(input?: Partial<RequestHighlightFields>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }
