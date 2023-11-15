@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { RMNodeBodyCreate } from '../model/rMNodeBodyCreate';
-import { UnfiledContainerAssociationPaging } from '../model/unfiledContainerAssociationPaging';
-import { UnfiledContainerEntry } from '../model/unfiledContainerEntry';
-import { UnfiledRecordContainerBodyUpdate } from '../model/unfiledRecordContainerBodyUpdate';
+import { RMNodeBodyCreate, UnfiledContainerAssociationPaging, UnfiledContainerEntry, UnfiledRecordContainerBodyUpdate } from '../model';
 import { BaseApi } from './base.api';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { throwIfNotDefined } from '../../../assert';

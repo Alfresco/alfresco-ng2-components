@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 import { TransferContainer } from './transferContainer';
 import { TransferContainerChildAssociationEntry } from './transferContainerChildAssociationEntry';
 
@@ -34,5 +34,4 @@ export class TransferContainerAssociationPagingList {
             this.source = input.source ? new TransferContainer(input.source) : undefined;
         }
     }
-
 }

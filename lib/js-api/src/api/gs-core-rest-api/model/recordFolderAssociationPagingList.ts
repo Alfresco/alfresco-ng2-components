@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 import { RecordFolder } from './recordFolder';
 import { RecordFolderChildAssociationEntry } from './recordFolderChildAssociationEntry';
 
@@ -34,5 +34,4 @@ export class RecordFolderAssociationPagingList {
             this.source = input.source ? new RecordFolder(input.source) : undefined;
         }
     }
-
 }

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
-import { PathInfo } from '../../content-rest-api/model/pathInfo';
-import { UserInfo } from '../../content-rest-api/model/userInfo';
+import { DateAlfresco } from '../../content-custom-api';
+import { PathInfo, UserInfo } from '../../content-rest-api';
 
 export class TransferChild {
     id: string;

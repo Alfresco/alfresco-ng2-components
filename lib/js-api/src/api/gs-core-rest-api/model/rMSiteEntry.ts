@@ -17,15 +17,6 @@
 
 import { RMSite } from './rMSite';
 
-export class RMSiteEntry {
+export interface RMSiteEntry {
     entry: RMSite;
-
-    constructor(input?: Partial<RMSiteEntry>) {
-
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new RMSite(input.entry) : undefined;
-        }
-    }
-
 }

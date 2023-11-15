@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-export class RequestBodyFile {
+export interface RequestBodyFile {
     targetParentId: string;
-
-    constructor(input?: Partial<RequestBodyFile>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

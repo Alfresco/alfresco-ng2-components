@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class FilePlanComponentBodyUpdate {
+export interface FilePlanComponentBodyUpdate {
     /**
      * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
      * The character . must not be used at the end of the name.
@@ -23,10 +23,4 @@ export class FilePlanComponentBodyUpdate {
     name?: string;
     aspectNames?: string[];
     properties?: { [key: string]: string };
-
-    constructor(input?: Partial<FilePlanComponentBodyUpdate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

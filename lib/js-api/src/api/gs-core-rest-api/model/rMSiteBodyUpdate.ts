@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class RMSiteBodyUpdate {
+export interface RMSiteBodyUpdate {
     title?: string;
     description?: string;
-
-    constructor(input?: Partial<RMSiteBodyUpdate>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

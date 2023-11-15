@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class RootCategoryBodyCreate {
+export interface RootCategoryBodyCreate {
     /**
      * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
      * The character . must not be used at the end of the name.
@@ -24,10 +24,4 @@ export class RootCategoryBodyCreate {
     nodeType: string;
     aspectNames?: string[];
     properties?: { [key: string]: string };
-
-    constructor(input?: Partial<RootCategoryBodyCreate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

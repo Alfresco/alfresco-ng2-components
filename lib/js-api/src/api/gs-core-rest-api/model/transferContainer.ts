@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
-import { UserInfo } from '../../content-rest-api/model/userInfo';
+import { DateAlfresco } from '../../content-custom-api';
+import { UserInfo } from '../../content-rest-api';
 
 export class TransferContainer {
     id: string;

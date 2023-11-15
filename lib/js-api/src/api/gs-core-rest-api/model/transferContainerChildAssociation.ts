@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { ChildAssociationInfo } from '../../content-rest-api/model/childAssociationInfo';
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
-import { UserInfo } from '../../content-rest-api/model/userInfo';
+import { ChildAssociationInfo, UserInfo } from '../../content-rest-api';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class TransferContainerChildAssociation {
     id: string;

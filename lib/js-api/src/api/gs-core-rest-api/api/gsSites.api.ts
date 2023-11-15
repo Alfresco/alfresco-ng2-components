@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { RMSiteBodyCreate } from '../model/rMSiteBodyCreate';
-import { RMSiteBodyUpdate } from '../model/rMSiteBodyUpdate';
-import { RMSiteEntry } from '../model/rMSiteEntry';
+import { RMSiteBodyCreate, RMSiteBodyUpdate, RMSiteEntry } from '../model';
 import { BaseApi } from './base.api';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { throwIfNotDefined } from '../../../assert';
@@ -44,8 +42,7 @@ export class GsSitesApi extends BaseApi {
         return this.post({
             path: '/gs-sites',
             queryParams: opts,
-            bodyParam: siteBodyCreate,
-            returnType: RMSiteEntry
+            bodyParam: siteBodyCreate
         });
     }
 
@@ -73,8 +70,7 @@ export class GsSitesApi extends BaseApi {
 
         return this.get({
             path: '/gs-sites/rm',
-            queryParams,
-            returnType: RMSiteEntry
+            queryParams
         });
     }
 
@@ -98,8 +94,7 @@ export class GsSitesApi extends BaseApi {
         return this.put({
             path: '/gs-sites/rm',
             queryParams,
-            bodyParam: siteBodyUpdate,
-            returnType: RMSiteEntry
+            bodyParam: siteBodyUpdate
         });
     }
 }

@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-import { FilePlanComponentBodyUpdate } from '../model/filePlanComponentBodyUpdate';
-import { RMNodeBodyCreate } from '../model/rMNodeBodyCreate';
-import { RecordEntry } from '../model/recordEntry';
-import { RecordFolderAssociationPaging } from '../model/recordFolderAssociationPaging';
-import { RecordFolderEntry } from '../model/recordFolderEntry';
+import { FilePlanComponentBodyUpdate, RecordEntry, RecordFolderAssociationPaging, RecordFolderEntry, RMNodeBodyCreate } from '../model';
 import { BaseApi } from './base.api';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { throwIfNotDefined } from '../../../assert';

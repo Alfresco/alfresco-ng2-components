@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 import { RecordCategory } from './recordCategory';
 import { RecordCategoryChildEntry } from './recordCategoryChildEntry';
 
@@ -34,5 +34,4 @@ export class RecordCategoryChildPagingList {
             this.source = input.source ? new RecordCategory(input.source) : undefined;
         }
     }
-
 }

@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { ContentInfo } from '../../content-rest-api/model/contentInfo';
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
-import { PathInfo } from '../../content-rest-api/model/pathInfo';
-import { UserInfo } from '../../content-rest-api/model/userInfo';
+import { ContentInfo, PathInfo, UserInfo } from '../../content-rest-api';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class Record {
     id: string;

@@ -16,7 +16,7 @@
  */
 
 import { FilePlan } from './filePlan';
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 import { RecordCategoryEntry } from './recordCategoryEntry';
 
 export class RecordCategoryPagingList {
@@ -34,5 +34,4 @@ export class RecordCategoryPagingList {
             this.source = input.source ? new FilePlan(input.source) : undefined;
         }
     }
-
 }

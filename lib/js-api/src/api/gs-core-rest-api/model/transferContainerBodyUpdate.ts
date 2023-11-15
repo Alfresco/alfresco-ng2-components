@@ -15,17 +15,11 @@
  * limitations under the License.
  */
 
-export class TransferContainerBodyUpdate {
+export interface TransferContainerBodyUpdate {
     /**
      * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
      * The character . must not be used at the end of the name.
      */
     name?: string;
     properties?: { [key: string]: string };
-
-    constructor(input?: Partial<TransferContainerBodyUpdate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

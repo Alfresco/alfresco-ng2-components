@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { ChildAssociationInfo } from '../../content-rest-api/model/childAssociationInfo';
-import { ContentInfo } from '../../content-rest-api/model/contentInfo';
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
-import { PathInfo } from '../../content-rest-api/model/pathInfo';
-import { UserInfo } from '../../content-rest-api/model/userInfo';
+import { ChildAssociationInfo, ContentInfo, PathInfo, UserInfo } from '../../content-rest-api';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class RecordFolderChildAssociation {
     id: string;

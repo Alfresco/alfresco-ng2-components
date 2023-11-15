@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-export class FilePlanBodyUpdate {
+export interface FilePlanBodyUpdate {
     properties?: { [key: string]: string };
-
-    constructor(input?: Partial<FilePlanBodyUpdate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

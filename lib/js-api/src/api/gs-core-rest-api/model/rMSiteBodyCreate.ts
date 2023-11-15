@@ -15,22 +15,8 @@
  * limitations under the License.
  */
 
-export class RMSiteBodyCreate {
+export interface RMSiteBodyCreate {
     title: string;
     description?: string;
-    compliance?: RMSiteBodyCreate.ComplianceEnum | string;
-
-    constructor(input?: Partial<RMSiteBodyCreate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace RMSiteBodyCreate {
-    export type ComplianceEnum = 'STANDARD' | 'DOD5015';
-    export const ComplianceEnum = {
-        STANDARD: 'STANDARD' as ComplianceEnum,
-        DOD5015: 'DOD5015' as ComplianceEnum
-    };
+    compliance?: 'STANDARD' | 'DOD5015' | string;
 }

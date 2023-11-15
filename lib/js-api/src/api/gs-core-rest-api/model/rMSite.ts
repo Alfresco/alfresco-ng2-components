@@ -15,38 +15,12 @@
  * limitations under the License.
  */
 
-export class RMSite {
+export interface RMSite {
     id: string;
     guid: string;
     title: string;
     description?: string;
-    visibility: RMSite.VisibilityEnum | string;
-    compliance: RMSite.ComplianceEnum | string;
-    role?: RMSite.RoleEnum | string;
-
-    constructor(input?: Partial<RMSite>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-}
-export namespace RMSite {
-    export type VisibilityEnum = 'PRIVATE' | 'MODERATED' | 'PUBLIC';
-    export const VisibilityEnum = {
-        PRIVATE: 'PRIVATE' as VisibilityEnum,
-        MODERATED: 'MODERATED' as VisibilityEnum,
-        PUBLIC: 'PUBLIC' as VisibilityEnum
-    };
-    export type ComplianceEnum = 'STANDARD' | 'DOD5015';
-    export const ComplianceEnum = {
-        STANDARD: 'STANDARD' as ComplianceEnum,
-        DOD5015: 'DOD5015' as ComplianceEnum
-    };
-    export type RoleEnum = 'SiteConsumer' | 'SiteCollaborator' | 'SiteContributor' | 'SiteManager';
-    export const RoleEnum = {
-        SiteConsumer: 'SiteConsumer' as RoleEnum,
-        SiteCollaborator: 'SiteCollaborator' as RoleEnum,
-        SiteContributor: 'SiteContributor' as RoleEnum,
-        SiteManager: 'SiteManager' as RoleEnum
-    };
+    visibility: 'PRIVATE' | 'MODERATED' | 'PUBLIC' | string;
+    compliance: 'STANDARD' | 'DOD5015' | string;
+    role?: 'SiteConsumer' | 'SiteCollaborator' | 'SiteContributor' | 'SiteManager' | string;
 }
