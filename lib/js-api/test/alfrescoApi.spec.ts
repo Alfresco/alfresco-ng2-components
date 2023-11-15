@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../src/alfrescoApi';
 import { EcmAuthMock, BpmAuthMock, OAuthMock } from '../test/mockObjects';
 
@@ -24,7 +24,7 @@ describe('Basic configuration test', () => {
         it('Should basePath have a default value', () => {
             const alfrescoJsApi = new AlfrescoApi({});
 
-            expect(alfrescoJsApi.contentClient.basePath).equal('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1');
+            assert.equal(alfrescoJsApi.contentClient.basePath, 'http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1');
         });
 
         it('should be reflected in the client', () => {
@@ -35,7 +35,8 @@ describe('Basic configuration test', () => {
 
             const alfrescoJsApi = new AlfrescoApi(config);
 
-            expect(alfrescoJsApi.contentClient.basePath).equal(
+            assert.equal(
+                alfrescoJsApi.contentClient.basePath,
                 'https://testServer.com:1616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
             );
         });
@@ -50,7 +51,8 @@ describe('Basic configuration test', () => {
 
             const alfrescoJsApi = new AlfrescoApi(config);
 
-            expect(alfrescoJsApi.contentClient.basePath).equal(
+            assert.equal(
+                alfrescoJsApi.contentClient.basePath,
                 'https://testServer.com:1616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
             );
 
@@ -61,7 +63,8 @@ describe('Basic configuration test', () => {
 
             alfrescoJsApi.setConfig(newConfig);
 
-            expect(alfrescoJsApi.contentClient.basePath).equal(
+            assert.equal(
+                alfrescoJsApi.contentClient.basePath,
                 'https://testServer.com:2616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
             );
         });
@@ -77,8 +80,8 @@ describe('Basic configuration test', () => {
 
             const alfrescoJsApi = new AlfrescoApi(config);
 
-            expect(alfrescoJsApi.contentClient.isCsrfEnabled()).equal(false);
-            expect(alfrescoJsApi.processClient.isCsrfEnabled()).equal(false);
+            assert.equal(alfrescoJsApi.contentClient.isCsrfEnabled(), false);
+            assert.equal(alfrescoJsApi.processClient.isCsrfEnabled(), false);
         });
 
         it('should disableCsrf false parameter should be reflected in the clients', () => {
@@ -90,8 +93,8 @@ describe('Basic configuration test', () => {
 
             const alfrescoJsApi = new AlfrescoApi(config);
 
-            expect(alfrescoJsApi.contentClient.isCsrfEnabled()).equal(true);
-            expect(alfrescoJsApi.processClient.isCsrfEnabled()).equal(true);
+            assert.equal(alfrescoJsApi.contentClient.isCsrfEnabled(), true);
+            assert.equal(alfrescoJsApi.processClient.isCsrfEnabled(), true);
         });
     });
 
@@ -103,8 +106,8 @@ describe('Basic configuration test', () => {
                 withCredentials: true
             };
             const alfrescoJsApi = new AlfrescoApi(config);
-            expect(alfrescoJsApi.contentClient.isWithCredentials()).equal(true);
-            expect(alfrescoJsApi.processClient.isWithCredentials()).equal(true);
+            assert.equal(alfrescoJsApi.contentClient.isWithCredentials(), true);
+            assert.equal(alfrescoJsApi.processClient.isWithCredentials(), true);
         });
 
         it('should withCredentials true parameter with hostEcm should be reflected in isEcmLoggedIn', () => {
@@ -115,7 +118,7 @@ describe('Basic configuration test', () => {
                 withCredentials: true
             });
 
-            expect(alfrescoJsApi.isEcmLoggedIn()).equal(true);
+            assert.equal(alfrescoJsApi.isEcmLoggedIn(), true);
         });
 
         it('should withCredentials true parameter with hostEcm should be reflected in isLoggedIn', () => {
@@ -126,7 +129,7 @@ describe('Basic configuration test', () => {
                 withCredentials: true
             });
 
-            expect(alfrescoJsApi.isLoggedIn()).equal(true);
+            assert.equal(alfrescoJsApi.isLoggedIn(), true);
         });
 
         it('should withCredentials true parameter with ALL provider should be reflected in isLoggedIn', () => {
@@ -137,7 +140,7 @@ describe('Basic configuration test', () => {
                 withCredentials: true
             });
 
-            expect(alfrescoJsApi.isLoggedIn()).equal(true);
+            assert.equal(alfrescoJsApi.isLoggedIn(), true);
         });
 
         it('should withCredentials false parameter should be reflected in the clients', () => {
@@ -147,8 +150,8 @@ describe('Basic configuration test', () => {
                 withCredentials: false
             };
             const alfrescoJsApi = new AlfrescoApi(config);
-            expect(alfrescoJsApi.contentClient.isWithCredentials()).equal(false);
-            expect(alfrescoJsApi.processClient.isWithCredentials()).equal(false);
+            assert.equal(alfrescoJsApi.contentClient.isWithCredentials(), false);
+            assert.equal(alfrescoJsApi.processClient.isWithCredentials(), false);
         });
     });
 
@@ -166,60 +169,60 @@ describe('Basic configuration test', () => {
             try {
                 await alfrescoJsApi.login(undefined, undefined);
             } catch (e) {
-                error = e;
+                error = e.message;
             }
 
-            expect(error.message).equal('missing username or password');
+            assert.equal(error, 'missing username or password');
 
             error = undefined;
 
             try {
                 await alfrescoJsApi.login('username', undefined);
             } catch (e) {
-                error = e;
+                error = e.message;
             }
 
-            expect(error.message).equal('missing username or password');
+            assert.equal(error, 'missing username or password');
 
             error = undefined;
 
             try {
                 await alfrescoJsApi.login(undefined, 'password');
             } catch (e) {
-                error = e;
+                error = e.message;
             }
 
-            expect(error.message).equal('missing username or password');
+            assert.equal(error, 'missing username or password');
 
             error = undefined;
 
             try {
                 await alfrescoJsApi.login('', '');
             } catch (e) {
-                error = e;
+                error = e.message;
             }
 
-            expect(error.message).equal('missing username or password');
+            assert.equal(error, 'missing username or password');
 
             error = undefined;
 
             try {
                 await alfrescoJsApi.login('username', '');
             } catch (e) {
-                error = e;
+                error = e.message;
             }
 
-            expect(error.message).equal('missing username or password');
+            assert.equal(error, 'missing username or password');
 
             error = undefined;
 
             try {
                 await alfrescoJsApi.login('', 'password');
             } catch (e) {
-                error = e;
+                error = e.message;
             }
 
-            expect(error.message).equal('missing username or password');
+            assert.equal(error, 'missing username or password');
         });
 
         it('Should logged-in be emitted when log in ECM', (done) => {

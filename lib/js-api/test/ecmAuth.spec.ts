@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../src/alfrescoApi';
 import { ContentAuth } from '../src/authentication/contentAuth';
 import { EcmAuthMock as AuthEcmMock } from '../test/mockObjects';
@@ -46,7 +46,7 @@ describe('Ecm Auth test', () => {
     it('should remember username on login', () => {
         const auth = new ContentAuth({}, alfrescoJsApi);
         auth.login('johndoe', 'password');
-        expect(auth.authentications.basicAuth.username).to.be.equal('johndoe');
+        assert.equal(auth.authentications.basicAuth.username, 'johndoe');
     });
 
     it('should forget username on logout', (done) => {
@@ -55,12 +55,12 @@ describe('Ecm Auth test', () => {
         authEcmMock.get201Response();
 
         auth.login('johndoe', 'password');
-        expect(auth.authentications.basicAuth.username).to.be.equal('johndoe');
+        assert.equal(auth.authentications.basicAuth.username, 'johndoe');
 
         authEcmMock.get204ResponseLogout();
 
         auth.logout().then(() => {
-            expect(auth.authentications.basicAuth.username).to.be.equal(null);
+            assert.equal(auth.authentications.basicAuth.username, null);
             done();
         });
     });
@@ -70,7 +70,7 @@ describe('Ecm Auth test', () => {
             authEcmMock.get201Response();
 
             contentAuth.login('admin', 'admin').then((data) => {
-                expect(data).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                assert.equal(data, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
                 done();
             });
         });
@@ -79,7 +79,7 @@ describe('Ecm Auth test', () => {
             authEcmMock.get201Response();
 
             contentAuth.login('admin', 'admin').then(() => {
-                expect(contentAuth.authentications.basicAuth.password).to.be.not.equal('admin');
+                assert.notEqual(contentAuth.authentications.basicAuth.password, 'admin');
                 done();
             });
         });
@@ -88,7 +88,7 @@ describe('Ecm Auth test', () => {
             authEcmMock.get201Response();
 
             contentAuth.login('admin', 'admin').then(() => {
-                expect(contentAuth.isLoggedIn()).to.be.equal(true);
+                assert.equal(contentAuth.isLoggedIn(), true);
                 done();
             });
         });
@@ -97,9 +97,9 @@ describe('Ecm Auth test', () => {
             authEcmMock.get201Response();
 
             contentAuth.login('admin', 'admin').then(() => {
-                expect(contentAuth.isLoggedIn()).to.be.equal(true);
+                assert.equal(contentAuth.isLoggedIn(), true);
                 contentAuth.changeHost();
-                expect(contentAuth.isLoggedIn()).to.be.equal(false);
+                assert.equal(contentAuth.isLoggedIn(), false);
                 done();
             });
         });
@@ -112,7 +112,7 @@ describe('Ecm Auth test', () => {
             authEcmMock.get204ResponseLogout();
 
             contentAuth.logout().then(() => {
-                expect(contentAuth.isLoggedIn()).to.be.equal(false);
+                assert.equal(contentAuth.isLoggedIn(), false);
                 done();
             });
         });
@@ -123,7 +123,7 @@ describe('Ecm Auth test', () => {
             contentAuth.login('wrong', 'name').then(
                 () => {},
                 (error: any) => {
-                    expect(error.status).to.be.equal(403);
+                    assert.equal(error.status, 403);
                     done();
                 }
             );
@@ -135,7 +135,7 @@ describe('Ecm Auth test', () => {
             contentAuth.login(null, null).then(
                 () => {},
                 (error) => {
-                    expect(error.status).to.be.equal(400);
+                    assert.equal(error.status, 400);
                     done();
                 }
             );
@@ -200,7 +200,7 @@ describe('Ecm Auth test', () => {
                     alfrescoJsApi
                 );
 
-                expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(contentAuth.authentications.basicAuth.password);
+                assert.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1', contentAuth.authentications.basicAuth.password);
             });
         });
 
@@ -217,7 +217,7 @@ describe('Ecm Auth test', () => {
                 authEcmMock.get204ResponseLogout();
 
                 contentAuth.logout().then(() => {
-                    expect(contentAuth.config.ticket).to.be.equal(undefined);
+                    assert.equal(contentAuth.config.ticket, undefined);
                     done();
                 });
             });
@@ -227,7 +227,7 @@ describe('Ecm Auth test', () => {
                 contentAuth.logout().then(
                     () => {},
                     (error) => {
-                        expect(error.error.toString()).to.be.equal('Error: Not Found');
+                        assert.equal(error.error.toString(), 'Error: Not Found');
                         done();
                     }
                 );

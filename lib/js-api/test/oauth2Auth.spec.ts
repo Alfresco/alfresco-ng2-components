@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import assert from 'assert';
 import { AlfrescoApi } from '../src/alfrescoApi';
 import { Oauth2Auth } from '../src/authentication/oauth2Auth';
 import { ContentApi } from '../src/api/content-custom-api/api/content.api';
@@ -69,9 +70,9 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            expect(oauth2Auth.discovery.loginUrl).to.be.equal(host + Oauth2Auth.DEFAULT_AUTHORIZATION_URL);
-            expect(oauth2Auth.discovery.tokenEndpoint).to.be.equal(host + Oauth2Auth.DEFAULT_TOKEN_URL);
-            expect(oauth2Auth.discovery.logoutUrl).to.be.equal(host + Oauth2Auth.DEFAULT_LOGOUT_URL);
+            assert.equal(oauth2Auth.discovery.loginUrl, host + Oauth2Auth.DEFAULT_AUTHORIZATION_URL);
+            assert.equal(oauth2Auth.discovery.tokenEndpoint, host + Oauth2Auth.DEFAULT_TOKEN_URL);
+            assert.equal(oauth2Auth.discovery.logoutUrl, host + Oauth2Auth.DEFAULT_LOGOUT_URL);
         });
 
         it('should be possible to override the default urls', async () => {
@@ -94,9 +95,9 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            expect(oauth2Auth.discovery.loginUrl).to.be.equal(authorizationUrl);
-            expect(oauth2Auth.discovery.tokenEndpoint).to.be.equal(tokenUrl);
-            expect(oauth2Auth.discovery.logoutUrl).to.be.equal(logoutUrl);
+            assert.equal(oauth2Auth.discovery.loginUrl, authorizationUrl);
+            assert.equal(oauth2Auth.discovery.tokenEndpoint, tokenUrl);
+            assert.equal(oauth2Auth.discovery.logoutUrl, logoutUrl);
         });
     });
 
@@ -139,8 +140,8 @@ describe('Oauth2  test', () => {
             mock.get200Response('barman-token');
             const loginInstanceTwo = await oauth2AuthInstanceTwo.login('barman', 'IamBarman');
 
-            expect(loginInstanceOne.access_token).to.be.equal('superman-token');
-            expect(loginInstanceTwo.access_token).to.be.equal('barman-token');
+            assert.equal(loginInstanceOne.access_token, 'superman-token');
+            assert.equal(loginInstanceTwo.access_token, 'barman-token');
 
             oauth2AuthInstanceOne.logOut();
             oauth2AuthInstanceTwo.logOut();
@@ -165,7 +166,7 @@ describe('Oauth2  test', () => {
             );
 
             oauth2Auth.login('admin', 'admin').then((data) => {
-                expect(data.access_token).to.be.equal('test-token');
+                assert.equal(data.access_token, 'test-token');
                 oauth2Auth.logOut();
                 done();
             });
@@ -287,7 +288,7 @@ describe('Oauth2  test', () => {
             oauth2Auth.setToken('200', null);
             oauth2Auth.setToken(null, null);
 
-            expect(counterCallEvent).to.be.equal(1);
+            assert.equal(counterCallEvent, 1);
 
             done();
         });
@@ -365,12 +366,13 @@ describe('Oauth2  test', () => {
             });
 
             alfrescoApi.oauth2Auth.on('ticket_exchanged', () => {
-                expect(alfrescoApi.config.ticketEcm).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
-                expect(alfrescoApi.contentClient.config.ticketEcm).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                assert.equal(alfrescoApi.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                assert.equal(alfrescoApi.contentClient.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
 
                 const content = new ContentApi(alfrescoApi);
                 const URL = content.getContentUrl('FAKE-NODE-ID');
-                expect(URL).to.be.equal(
+                assert.equal(
+                    URL,
                     'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
                 );
 
@@ -401,11 +403,12 @@ describe('Oauth2  test', () => {
             const contentApi = new ContentApi(alfrescoApi);
 
             alfrescoApi.oauth2Auth.on('ticket_exchanged', () => {
-                expect(alfrescoApi.config.ticketEcm).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
-                expect(alfrescoApi.contentClient.config.ticketEcm).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                assert.equal(alfrescoApi.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                assert.equal(alfrescoApi.contentClient.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
 
                 const URL = contentApi.getContentUrl('FAKE-NODE-ID');
-                expect(URL).to.be.equal(
+                assert.equal(
+                    URL,
                     'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
                 );
                 alfrescoApi.oauth2Auth.logOut();
@@ -439,12 +442,13 @@ describe('Oauth2  test', () => {
 
             let counterCallEvent = 0;
             alfrescoApi.oauth2Auth.on('ticket_exchanged', () => {
-                expect(alfrescoApi.config.ticketEcm).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
-                expect(alfrescoApi.contentClient.config.ticketEcm).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                assert.equal(alfrescoApi.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                assert.equal(alfrescoApi.contentClient.config.ticketEcm, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
 
                 const content = new ContentApi(alfrescoApi);
                 const URL = content.getContentUrl('FAKE-NODE-ID');
-                expect(URL).to.be.equal(
+                assert.equal(
+                    URL,
                     'https://myOauthUrl:30081/alfresco/api/-default-/public/alfresco/versions/1/nodes/FAKE-NODE-ID/content?attachment=false&alf_ticket=TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1'
                 );
 
@@ -479,7 +483,7 @@ describe('Oauth2  test', () => {
             );
 
             oauth2Auth.login('admin', 'admin').then(() => {
-                expect(oauth2Auth.isLoggedIn()).to.be.equal(true);
+                assert.equal(oauth2Auth.isLoggedIn(), true);
                 oauth2Auth.logOut();
                 done();
             });
@@ -504,7 +508,7 @@ describe('Oauth2  test', () => {
             );
 
             oauth2Auth.login('admin', 'admin').then(() => {
-                expect(oauth2Auth.authentications.basicAuth.password).to.be.not.equal('admin');
+                assert.notEqual(oauth2Auth.authentications.basicAuth.password, 'admin');
                 oauth2Auth.logOut();
                 done();
             });
@@ -578,7 +582,7 @@ describe('Oauth2  test', () => {
                 oauth2Auth.config.oauth2.publicUrls = ['public-url'];
                 chai.spy.on(PathMatcher, 'match', () => true);
 
-                expect(oauth2Auth.isPublicUrl()).be.true;
+                assert.equal(oauth2Auth.isPublicUrl(), true);
                 expect(PathMatcher.match).called.with(globalAny.window.location.href, oauth2Auth.config.oauth2.publicUrls[0]);
             });
 
@@ -587,14 +591,14 @@ describe('Oauth2  test', () => {
                 oauth2Auth.config.oauth2.publicUrls = ['public-url'];
                 chai.spy.on(PathMatcher, 'match', () => false);
 
-                expect(oauth2Auth.isPublicUrl()).be.false;
+                assert.equal(oauth2Auth.isPublicUrl(), false);
                 expect(PathMatcher.match).called.with(globalAny.window.location.href, oauth2Auth.config.oauth2.publicUrls[0]);
             });
 
             it('should return false if publicUrls property is not defined', () => {
                 chai.spy.on(PathMatcher, 'match');
 
-                expect(oauth2Auth.isPublicUrl()).be.false;
+                assert.equal(oauth2Auth.isPublicUrl(), false);
                 expect(PathMatcher.match).not.called();
             });
 
@@ -603,7 +607,7 @@ describe('Oauth2  test', () => {
                 oauth2Auth.config.oauth2.publicUrls = null;
                 chai.spy.on(PathMatcher, 'match');
 
-                expect(oauth2Auth.isPublicUrl()).be.false;
+                assert.equal(oauth2Auth.isPublicUrl(), false);
                 expect(PathMatcher.match).not.called();
             });
 

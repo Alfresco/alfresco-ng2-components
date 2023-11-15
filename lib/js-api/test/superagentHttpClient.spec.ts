@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import assert from 'assert';
 import { FormValueRepresentation } from '../src';
 import { SuperagentHttpClient } from '../src/superagentHttpClient';
-import { expect } from 'chai';
 import { Response } from 'superagent';
 
 describe('SuperagentHttpClient', () => {
@@ -62,10 +62,10 @@ describe('SuperagentHttpClient', () => {
                 securityOptions
             );
 
-            expect(response.url).equal('/fake-api/enterprise/process-instances/');
-            expect(response.header.Accept).equal('application/json');
-            expect(response.header['Content-Type']).equal('application/json');
-            expect(response._responseType).equal('blob');
+            assert.equal(response.url, '/fake-api/enterprise/process-instances/');
+            assert.equal(response.header.Accept, 'application/json');
+            assert.equal(response.header['Content-Type'], 'application/json');
+            assert.equal(response._responseType, 'blob');
         });
     });
 
@@ -86,8 +86,8 @@ describe('SuperagentHttpClient', () => {
             const result = SuperagentHttpClient['deserialize'](data, FormValueRepresentation);
             const isArray = Array.isArray(result);
             const isObject = result[0] instanceof FormValueRepresentation;
-            expect(isArray).to.equal(true);
-            expect(isObject).to.equal(true);
+            assert.equal(isArray, true);
+            assert.equal(isObject, true);
         });
     });
 });

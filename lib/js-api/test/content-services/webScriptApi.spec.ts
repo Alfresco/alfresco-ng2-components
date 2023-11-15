@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { WebscriptApi } from '../../src/api/content-custom-api';
 import { EcmAuthMock, WebScriptMock } from '../../test/mockObjects';
@@ -50,7 +50,7 @@ describe('WebScript', () => {
         webScriptMock.get404Response();
 
         webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).catch((error: any) => {
-            expect(error.status).to.be.equal(404);
+            assert.equal(error.status, 404);
             done();
         });
     });

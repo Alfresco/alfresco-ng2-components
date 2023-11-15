@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { VersionsApi } from '../../src/api/content-rest-api';
 import { EcmAuthMock, VersionMock } from '../../test/mockObjects';
@@ -42,18 +42,18 @@ describe('Versions', () => {
         versionsApi = new VersionsApi(alfrescoJsApi);
     });
 
-    it('should list all node\'s version renditions', (done) => {
+    it("should list all node's version renditions", (done) => {
         versionMock.get200ResponseVersionRenditions(nodeId, versionId);
 
         versionsApi.listVersionRenditions(nodeId, versionId).then((data) => {
             const entries = data.list.entries;
-            expect(entries.length).to.be.equal(6);
-            expect(data.list.entries[0].entry.id).to.be.equal('avatar');
+            assert.equal(entries.length, 6);
+            assert.equal(data.list.entries[0].entry.id, 'avatar');
             done();
         });
     });
 
-    it('should create rendition for a node\'s versionId', (done) => {
+    it("should create rendition for a node's versionId", (done) => {
         versionMock.create200VersionRendition(nodeId, versionId);
 
         versionsApi.createVersionRendition(nodeId, versionId, { id: 'pdf' }).then(() => {
@@ -61,11 +61,11 @@ describe('Versions', () => {
         });
     });
 
-    it('should get a node\'s version rendition', (done) => {
+    it("should get a node's version rendition", (done) => {
         versionMock.get200VersionRendition(nodeId, versionId, renditionId);
 
         versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((data) => {
-            expect(data.entry.id).to.be.equal('pdf');
+            assert.equal(data.entry.id, 'pdf');
             done();
         });
     });
@@ -75,9 +75,9 @@ describe('Versions', () => {
 
         versionsApi.listVersionHistory(nodeId).then((data) => {
             const entries = data.list.entries;
-            expect(entries.length).to.be.equal(2);
-            expect(entries[0].entry.id).to.be.equal('2.0');
-            expect(entries[1].entry.id).to.be.equal('1.0');
+            assert.equal(entries.length, 2);
+            assert.equal(entries[0].entry.id, '2.0');
+            assert.equal(entries[1].entry.id, '1.0');
             done();
         });
     });
@@ -86,7 +86,7 @@ describe('Versions', () => {
         versionMock.post201Response(nodeId, versionId);
 
         versionsApi.revertVersion(nodeId, versionId, { majorVersion: true, comment: '' }).then((data) => {
-            expect(data.entry.id).to.be.equal('3.0');
+            assert.equal(data.entry.id, '3.0');
             done();
         });
     });

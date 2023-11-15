@@ -25,7 +25,7 @@ import {
 import { AuthorityClearanceApi } from '../../src/api/gs-classification-rest-api/api/index';
 import { AuthorityClearanceMock } from '../mockObjects/goverance-services/authority-clearance.mock';
 import { AlfrescoApi } from '../../src/alfrescoApi';
-import { expect } from 'chai';
+import assert from 'assert';
 
 const DEFAULT_OPTS = {
     skipCount: 0,
@@ -72,10 +72,10 @@ describe('Authority Clearance API test', () => {
         const nodeId = 'testAuthorityId';
         authorityClearanceMock.get200AuthorityClearanceForAuthority(nodeId);
         await authorityClearanceApi.getAuthorityClearanceForAuthority(nodeId, DEFAULT_OPTS).then((response: AuthorityClearanceGroupPaging) => {
-            expect(response.list.entries[0].entry.id).equal('securityGroupFruits');
-            expect(response.list.entries[0].entry.displayLabel).equal('Security Group FRUITS');
-            expect(response.list.entries[0].entry.type).equal('USER_REQUIRES_ALL');
-            expect(response.list.entries[0].entry.marks.length).equal(3);
+            assert.equal(response.list.entries[0].entry.id, 'securityGroupFruits');
+            assert.equal(response.list.entries[0].entry.displayLabel, 'Security Group FRUITS');
+            assert.equal(response.list.entries[0].entry.type, 'USER_REQUIRES_ALL');
+            assert.equal(response.list.entries[0].entry.marks.length, 3);
         });
     });
 
@@ -86,9 +86,9 @@ describe('Authority Clearance API test', () => {
             .updateAuthorityClearance(nodeId, nodeSecurityMarkBodySingle)
             .then((data: SecurityMarkEntry | SecurityMarkPaging) => {
                 const response = data as SecurityMarkEntry;
-                expect(response.entry.id).equal('fruitMarkId1');
-                expect(response.entry.name).equal('APPLES');
-                expect(response.entry.groupId).equal('securityGroupFruits');
+                assert.equal(response.entry.id, 'fruitMarkId1');
+                assert.equal(response.entry.name, 'APPLES');
+                assert.equal(response.entry.groupId, 'securityGroupFruits');
             });
     });
 
@@ -99,9 +99,9 @@ describe('Authority Clearance API test', () => {
             .updateAuthorityClearance(nodeId, nodeSecurityMarkBodyList)
             .then((data: SecurityMarkEntry | SecurityMarkPaging) => {
                 const response: SecurityMarkPaging = data as SecurityMarkPaging;
-                expect(response.list.entries[0].entry.id).equal('fruitMarkId1');
-                expect(response.list.entries[0].entry.name).equal('APPLES');
-                expect(response.list.entries[0].entry.groupId).equal('securityGroupFruits');
+                assert.equal(response.list.entries[0].entry.id, 'fruitMarkId1');
+                assert.equal(response.list.entries[0].entry.name, 'APPLES');
+                assert.equal(response.list.entries[0].entry.groupId, 'securityGroupFruits');
             });
     });
 });

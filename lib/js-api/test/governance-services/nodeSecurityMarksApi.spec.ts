@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { NodeSecurityMarksApi } from '../../src/api/gs-classification-rest-api';
 import { NodeSecurityMarkBody } from '../../src/api/gs-classification-rest-api/model/nodeSecurityMarkBody';
@@ -55,9 +55,9 @@ describe('Node Security Mark API test', () => {
         const nodeId = 'h3bdk2knw2kn';
         nodeSecurityMarksMock.post200manageSecurityMarkOnNode(nodeId);
         await nodeSecurityMarksApi.manageSecurityMarksOnNode(nodeId, nodeSecurityMarkBody).then((data) => {
-            expect(data.list.entries[0].entry.groupId).equal('securityGroupId1');
-            expect(data.list.entries[0].entry.id).equal('Sh1G8vTQ');
-            expect(data.list.entries[0].entry.name).equal('SecurityMarkTest1');
+            assert.equal(data.list.entries[0].entry.groupId, 'securityGroupId1');
+            assert.equal(data.list.entries[0].entry.id, 'Sh1G8vTQ');
+            assert.equal(data.list.entries[0].entry.name, 'SecurityMarkTest1');
         });
     });
 
@@ -65,9 +65,9 @@ describe('Node Security Mark API test', () => {
         const nodeId = 'h3bdk2knw2kn';
         nodeSecurityMarksMock.get200SecurityMarkOnNode(nodeId);
         await nodeSecurityMarksApi.getSecurityMarksOnNode(nodeId).then((data) => {
-            expect(data.list.entries[1].entry.groupId).equal('securityGroupId2');
-            expect(data.list.entries[1].entry.id).equal('Sh1G8vTR');
-            expect(data.list.entries[1].entry.name).equal('SecurityMarkTest2');
+            assert.equal(data.list.entries[1].entry.groupId, 'securityGroupId2');
+            assert.equal(data.list.entries[1].entry.id, 'Sh1G8vTR');
+            assert.equal(data.list.entries[1].entry.name, 'SecurityMarkTest2');
         });
     });
 });

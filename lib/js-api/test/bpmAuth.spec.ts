@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import assert from 'assert';
 import chai, { expect } from 'chai';
 import { ProcessAuth } from '../src/authentication/processAuth';
 import { SuperagentHttpClient } from '../src/superagentHttpClient';
@@ -33,7 +34,7 @@ describe('Bpm Auth test', () => {
     it('should remember username on login', () => {
         const auth = new ProcessAuth({});
         auth.login('johndoe', 'password');
-        expect(auth.authentications.basicAuth.username).to.be.equal('johndoe');
+        assert.equal(auth.authentications.basicAuth.username, 'johndoe');
     });
 
     it('should forget username on logout', (done) => {
@@ -44,18 +45,16 @@ describe('Bpm Auth test', () => {
 
         authBpmMock.get200Response();
 
-        processAuth.login('admin', 'admin').then(
-            () => {
-                expect(processAuth.authentications.basicAuth.username).to.be.equal('admin');
+        processAuth.login('admin', 'admin').then(() => {
+            assert.equal(processAuth.authentications.basicAuth.username, 'admin');
 
-                authBpmMock.get200ResponseLogout();
+            authBpmMock.get200ResponseLogout();
 
-                processAuth.logout().then(() => {
-                    expect(processAuth.authentications.basicAuth.username).to.be.equal(null);
-                    done();
-                });
-            }
-        );
+            processAuth.logout().then(() => {
+                assert.equal(processAuth.authentications.basicAuth.username, null);
+                done();
+            });
+        });
     });
 
     describe('With Authentication', () => {
@@ -68,7 +67,7 @@ describe('Bpm Auth test', () => {
             });
 
             processAuth.login('admin', 'admin').then((data) => {
-                expect(data).to.be.equal('Basic YWRtaW46YWRtaW4=');
+                assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
                 done();
             });
         });
@@ -82,8 +81,8 @@ describe('Bpm Auth test', () => {
             });
 
             processAuth.login('admin', 'admin').then((data) => {
-                expect(data).to.be.equal('Basic YWRtaW46YWRtaW4=');
-                expect(processAuth.authentications.basicAuth.password).to.be.not.equal('admin');
+                assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
+                assert.notEqual(processAuth.authentications.basicAuth.password, 'admin');
                 done();
             });
         });
@@ -97,7 +96,7 @@ describe('Bpm Auth test', () => {
             });
 
             processAuth.login('admin', 'admin').then(() => {
-                expect(processAuth.isLoggedIn()).to.be.equal(true);
+                assert.equal(processAuth.isLoggedIn(), true);
                 done();
             });
         });
@@ -114,7 +113,7 @@ describe('Bpm Auth test', () => {
             authBpmMock.get200ResponseLogout();
 
             processAuth.logout().then(() => {
-                expect(processAuth.isLoggedIn()).to.be.equal(false);
+                assert.equal(processAuth.isLoggedIn(), false);
                 done();
             });
         });
@@ -128,9 +127,9 @@ describe('Bpm Auth test', () => {
             });
 
             processAuth.login('admin', 'admin').then(() => {
-                expect(processAuth.isLoggedIn()).to.be.equal(true);
+                assert.equal(processAuth.isLoggedIn(), true);
                 processAuth.changeHost();
-                expect(processAuth.isLoggedIn()).to.be.equal(false);
+                assert.equal(processAuth.isLoggedIn(), false);
                 done();
             });
         });
@@ -146,7 +145,7 @@ describe('Bpm Auth test', () => {
             processAuth.login('wrong', 'name').then(
                 () => {},
                 (error) => {
-                    expect(error.status).to.be.equal(401);
+                    assert.equal(error.status, 401);
                     done();
                 }
             );
@@ -227,7 +226,7 @@ describe('Bpm Auth test', () => {
                     contextRootBpm: 'activiti-app'
                 });
 
-                expect('Basic YWRtaW46YWRtaW4=').to.be.equal(processAuth.authentications.basicAuth.ticket);
+                assert.equal('Basic YWRtaW46YWRtaW4=', processAuth.authentications.basicAuth.ticket);
             });
         });
 
@@ -251,7 +250,7 @@ describe('Bpm Auth test', () => {
                 authBpmMock.get200ResponseLogout();
 
                 processAuth.logout().then(() => {
-                    expect(processAuth.getTicket()).to.be.equal(null);
+                    assert.equal(processAuth.getTicket(), null);
                     done();
                 });
             });

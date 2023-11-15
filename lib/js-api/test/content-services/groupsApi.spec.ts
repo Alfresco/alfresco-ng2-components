@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { GroupsApi } from '../../src/api/content-rest-api';
 import { EcmAuthMock, GroupsMock } from '../../test/mockObjects';
@@ -46,14 +46,12 @@ describe('Groups', () => {
     it('get groups', (done) => {
         groupsMock.get200GetGroups();
 
-        groupsApi.listGroups().then(
-            (data) => {
-                expect(data.list.pagination.count).to.be.equal(2);
-                expect(data.list.entries[0].entry.id).to.be.equal('GROUP_alfalfa');
-                expect(data.list.entries[1].entry.id).to.be.equal('GROUP_CallCenterAA');
-                done();
-            }
-        );
+        groupsApi.listGroups().then((data) => {
+            assert.equal(data.list.pagination.count, 2);
+            assert.equal(data.list.entries[0].entry.id, 'GROUP_alfalfa');
+            assert.equal(data.list.entries[1].entry.id, 'GROUP_CallCenterAA');
+            done();
+        });
     });
 
     it('create group', (done) => {
@@ -65,7 +63,7 @@ describe('Groups', () => {
         };
 
         groupsApi.createGroup(groupBody).then((data) => {
-            expect(data.entry.id).to.be.equal('GROUP_TEST');
+            assert.equal(data.entry.id, 'GROUP_TEST');
             done();
         });
     });
@@ -81,8 +79,8 @@ describe('Groups', () => {
         groupsMock.get200GetSingleGroup();
 
         groupsApi.getGroup('GROUP_TEST').then((data) => {
-            expect(data.entry.id).to.be.equal('GROUP_TEST');
-            expect(data.entry.displayName).to.be.equal('SAMPLE');
+            assert.equal(data.entry.id, 'GROUP_TEST');
+            assert.equal(data.entry.displayName, 'SAMPLE');
             done();
         });
     });
@@ -95,8 +93,8 @@ describe('Groups', () => {
         };
 
         groupsApi.updateGroup('GROUP_TEST', groupBody).then((data) => {
-            expect(data.entry.id).to.be.equal('GROUP_TEST');
-            expect(data.entry.displayName).to.be.equal('CHANGED');
+            assert.equal(data.entry.id, 'GROUP_TEST');
+            assert.equal(data.entry.displayName, 'CHANGED');
             done();
         });
     });
@@ -105,9 +103,9 @@ describe('Groups', () => {
         groupsMock.get200GetGroupMemberships();
 
         groupsApi.listGroupMemberships('GROUP_TEST').then((data) => {
-            expect(data.list.pagination.count).to.be.equal(1);
-            expect(data.list.entries[0].entry.id).to.be.equal('GROUP_SUB_TEST');
-            expect(data.list.entries[0].entry.displayName).to.be.equal('SAMPLE');
+            assert.equal(data.list.pagination.count, 1);
+            assert.equal(data.list.entries[0].entry.id, 'GROUP_SUB_TEST');
+            assert.equal(data.list.entries[0].entry.displayName, 'SAMPLE');
             done();
         });
     });
@@ -118,11 +116,11 @@ describe('Groups', () => {
         const groupBody = {
             id: 'GROUP_SUB_TEST',
             memberType: 'GROUP'
-          };
+        };
 
         groupsApi.createGroupMembership('GROUP_TEST', groupBody).then((data) => {
-            expect(data.entry.id).to.be.equal('GROUP_SUB_TEST');
-            expect(data.entry.displayName).to.be.equal('SAMPLE');
+            assert.equal(data.entry.id, 'GROUP_SUB_TEST');
+            assert.equal(data.entry.displayName, 'SAMPLE');
             done();
         });
     });

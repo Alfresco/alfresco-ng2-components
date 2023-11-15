@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../src/alfrescoApi';
 import { DiscoveryApi } from '../src/api/discovery-rest-api';
 import { EcmAuthMock, DiscoveryMock } from '../test/mockObjects';
@@ -48,7 +48,7 @@ describe('Discovery', () => {
         discoveryMock.get200Response();
 
         discoveryApi.getRepositoryInformation().then((data) => {
-            expect(data.entry.repository.edition).to.be.equal('Enterprise');
+            assert.equal(data.entry.repository.edition, 'Enterprise');
             done();
         });
     });

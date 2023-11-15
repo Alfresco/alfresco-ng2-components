@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { BpmAuthMock, ProcessInstanceVariablesMock } from '../mockObjects';
 import { ProcessInstanceVariablesApi, AlfrescoApi } from '../../src';
 
@@ -53,7 +53,7 @@ describe('Activiti Process Instance Variables Api', () => {
             variablesMock.addListProcessInstanceVariables200Response(processInstanceId);
 
             processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId).then((data) => {
-                expect(data.length).equal(2);
+                assert.equal(data.length, 2);
                 done();
             });
         });
@@ -63,8 +63,8 @@ describe('Activiti Process Instance Variables Api', () => {
             variablesMock.addListProcessInstanceVariables500Response(processInstanceId);
 
             processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId).then(NOOP, (error) => {
-                expect(error.status).equal(500);
-                expect(error.message).equal('{"messageKey":"UNKNOWN","message":"Unknown error"}');
+                assert.equal(error.status, 500);
+                assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
                 done();
             });
         });
@@ -76,7 +76,7 @@ describe('Activiti Process Instance Variables Api', () => {
             variablesMock.addPutProcessInstanceVariables200Response(processInstanceId);
 
             processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, []).then((data) => {
-                expect(data.length).equal(2);
+                assert.equal(data.length, 2);
                 done();
             });
         });
@@ -86,8 +86,8 @@ describe('Activiti Process Instance Variables Api', () => {
             variablesMock.addPutProcessInstanceVariables500Response(processInstanceId);
 
             processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, []).then(NOOP, (error) => {
-                expect(error.status).equal(500);
-                expect(error.message).equal('{"messageKey":"UNKNOWN","message":"Unknown error"}');
+                assert.equal(error.status, 500);
+                assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
                 done();
             });
         });
@@ -101,8 +101,8 @@ describe('Activiti Process Instance Variables Api', () => {
 
             processInstanceVariablesApi.getProcessInstanceVariable(processInstanceId, variableName).then(
                 (data) => {
-                    expect(data.name).equal('variable1');
-                    expect(data.value).equal('Value 123');
+                    assert.equal(data.name, 'variable1');
+                    assert.equal(data.value, 'Value 123');
                     done();
                 },
                 () => {
@@ -117,8 +117,8 @@ describe('Activiti Process Instance Variables Api', () => {
             variablesMock.addGetProcessInstanceVariable500Response(processInstanceId, variableName);
 
             processInstanceVariablesApi.getProcessInstanceVariable(processInstanceId, variableName).then(NOOP, (error) => {
-                expect(error.status).equal(500);
-                expect(error.message).equal('{"messageKey":"UNKNOWN","message":"Unknown error"}');
+                assert.equal(error.status, 500);
+                assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
                 done();
             });
         });
@@ -141,8 +141,8 @@ describe('Activiti Process Instance Variables Api', () => {
             variablesMock.addUpdateProcessInstanceVariable500Response(processInstanceId, variableName);
 
             processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {}).then(NOOP, (error) => {
-                expect(error.status).equal(500);
-                expect(error.message).equal('{"messageKey":"UNKNOWN","message":"Unknown error"}');
+                assert.equal(error.status, 500);
+                assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
                 done();
             });
         });
@@ -165,8 +165,8 @@ describe('Activiti Process Instance Variables Api', () => {
             variablesMock.addDeleteProcessInstanceVariable500Response(processInstanceId, variableName);
 
             processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName).then(NOOP, (error) => {
-                expect(error.status).equal(500);
-                expect(error.message).equal('{"messageKey":"UNKNOWN","message":"Unknown error"}');
+                assert.equal(error.status, 500);
+                assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
                 done();
             });
         });

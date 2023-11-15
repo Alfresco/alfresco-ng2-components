@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../src';
 import { EcmAuthMock, BpmAuthMock } from '../test/mockObjects';
 
@@ -43,30 +43,30 @@ describe('Change config', () => {
 
     describe('Change hosts', () => {
         it('Change host Ecm', () => {
-            expect(alfrescoJsApi.contentClient.basePath).to.be.equal('https://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1');
+            assert.equal(alfrescoJsApi.contentClient.basePath, 'https://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1');
 
             alfrescoJsApi.changeEcmHost('https://differenTserverEcm:9898');
 
-            expect(alfrescoJsApi.contentClient.basePath).to.be.equal('https://differenTserverEcm:9898/alfresco/api/-default-/public/alfresco/versions/1');
+            assert.equal(alfrescoJsApi.contentClient.basePath, 'https://differenTserverEcm:9898/alfresco/api/-default-/public/alfresco/versions/1');
         });
 
         it('Change host bpm', () => {
-            expect(alfrescoJsApi.processClient.basePath).to.be.equal('https://127.0.0.1:9999/activiti-app');
+            assert.equal(alfrescoJsApi.processClient.basePath, 'https://127.0.0.1:9999/activiti-app');
 
             alfrescoJsApi.changeBpmHost('https://differenTserverBpm:2222');
 
-            expect(alfrescoJsApi.processClient.basePath).to.be.equal('https://differenTserverBpm:2222/activiti-app');
+            assert.equal(alfrescoJsApi.processClient.basePath, 'https://differenTserverBpm:2222/activiti-app');
         });
 
         it('Change host ecm bpm', () => {
-            expect(alfrescoJsApi.contentClient.basePath).to.be.equal('https://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1');
-            expect(alfrescoJsApi.processClient.basePath).to.be.equal('https://127.0.0.1:9999/activiti-app');
+            assert.equal(alfrescoJsApi.contentClient.basePath, 'https://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1');
+            assert.equal(alfrescoJsApi.processClient.basePath, 'https://127.0.0.1:9999/activiti-app');
 
             alfrescoJsApi.changeEcmHost('https://differenTserverEcm:9898');
             alfrescoJsApi.changeBpmHost('https://differenTserverBpm:2222');
 
-            expect(alfrescoJsApi.contentClient.basePath).to.be.equal('https://differenTserverEcm:9898/alfresco/api/-default-/public/alfresco/versions/1');
-            expect(alfrescoJsApi.processClient.basePath).to.be.equal('https://differenTserverBpm:2222/activiti-app');
+            assert.equal(alfrescoJsApi.contentClient.basePath, 'https://differenTserverEcm:9898/alfresco/api/-default-/public/alfresco/versions/1');
+            assert.equal(alfrescoJsApi.processClient.basePath, 'https://differenTserverBpm:2222/activiti-app');
         });
     });
 });

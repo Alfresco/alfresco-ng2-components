@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { GsSitesApi } from '../../src/api/gs-core-rest-api';
 import { EcmAuthMock, GsSitesApiMock } from '../../test/mockObjects';
@@ -44,7 +44,7 @@ describe('Governance API test', () => {
         gsSitesApiMock.get200Response();
 
         gsSitesApi.getRMSite().then((data) => {
-            expect(data.entry.description).to.be.equal('Records Management Description Test');
+            assert.equal(data.entry.description, 'Records Management Description Test');
             done();
         });
     });

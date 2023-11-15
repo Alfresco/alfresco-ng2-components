@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { TaskFormsApi, AlfrescoApi } from '../../src';
 import { BpmAuthMock, TaskFormMock } from '../mockObjects';
 
@@ -49,7 +49,7 @@ describe('Activiti Task Api', () => {
         const taskId = '5028';
         const data = await taskFormsApi.getTaskFormVariables(taskId);
 
-        expect(data[0].id).equal('initiator');
+        assert.equal(data[0].id, 'initiator');
     });
 
     it('Check cookie settings', async () => {
@@ -57,6 +57,9 @@ describe('Activiti Task Api', () => {
 
         const taskId = '5028';
         await taskFormsApi.getTaskFormVariables(taskId);
-        expect((taskFormsApi.apiClient as any).authentications.cookie).equal('ACTIVITI_REMEMBER_ME=NjdOdGwvcUtFTkVEczQyMGh4WFp5QT09OmpUL1UwdFVBTC94QTJMTFFUVFgvdFE9PQ');
+        assert.equal(
+            (taskFormsApi.apiClient as any).authentications.cookie,
+            'ACTIVITI_REMEMBER_ME=NjdOdGwvcUtFTkVEczQyMGh4WFp5QT09OmpUL1UwdFVBTC94QTJMTFFUVFgvdFE9PQ'
+        );
     });
 });

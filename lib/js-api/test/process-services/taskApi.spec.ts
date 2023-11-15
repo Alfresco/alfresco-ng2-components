@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
-import { AlfrescoApi, TaskFilterRequestRepresentation, TaskRepresentation, TaskFormsApi, TaskActionsApi, TasksApi, TaskQueryRepresentation } from '../../src';
+import assert from 'assert';
+import {
+    AlfrescoApi,
+    TaskFilterRequestRepresentation,
+    TaskRepresentation,
+    TaskFormsApi,
+    TaskActionsApi,
+    TasksApi,
+    TaskQueryRepresentation
+} from '../../src';
 import { BpmAuthMock, TasksMock } from '../mockObjects';
 
 describe('Activiti Task Api', () => {
@@ -57,16 +65,16 @@ describe('Activiti Task Api', () => {
         const requestNode = new TaskQueryRepresentation();
         const data = await tasksApi.listTasks(requestNode);
 
-        expect(data.data[0].processDefinitionName).equal('Process Test Api');
-        expect(data.data[1].processDefinitionName).equal('Process Test Api');
-        expect(data.size).equal(2);
+        assert.equal(data.data[0].processDefinitionName, 'Process Test Api');
+        assert.equal(data.data[1].processDefinitionName, 'Process Test Api');
+        assert.equal(data.size, 2);
     });
 
     it('get Task', async () => {
         tasksMock.get200ResponseGetTask('10');
 
         const data = await tasksApi.getTask('10');
-        expect(data.name).equal('Upload Document');
+        assert.equal(data.name, 'Upload Document');
     });
 
     it('bad filter Tasks', (done) => {
@@ -86,8 +94,8 @@ describe('Activiti Task Api', () => {
         requestNode.appDefinitionId = 1;
 
         const data = await tasksApi.filterTasks(requestNode);
-        expect(data.size).equal(2);
-        expect(data.data[0].id).equal('7506');
+        assert.equal(data.size, 2);
+        assert.equal(data.data[0].id, '7506');
     });
 
     it('complete Task not found', (done) => {
@@ -124,9 +132,9 @@ describe('Activiti Task Api', () => {
         const taskId = '2518';
         const data = await taskFormsApi.getTaskForm(taskId);
 
-        expect(data.name).equal('Metadata');
-        expect(data.fields[0].name).equal('Label');
-        expect(data.fields[0].fieldType).equal('ContainerRepresentation');
+        assert.equal(data.name, 'Metadata');
+        assert.equal(data.fields[0].name, 'Label');
+        assert.equal(data.fields[0].fieldType, 'ContainerRepresentation');
     });
 
     it('Get getRestFieldValuesColumn ', async () => {
@@ -135,9 +143,9 @@ describe('Activiti Task Api', () => {
         const taskId = '2518';
         const data = await taskFormsApi.getTaskForm(taskId);
 
-        expect(data.name).equal('Metadata');
-        expect(data.fields[0].name).equal('Label');
-        expect(data.fields[0].fieldType).equal('ContainerRepresentation');
+        assert.equal(data.name, 'Metadata');
+        assert.equal(data.fields[0].name, 'Label');
+        assert.equal(data.fields[0].fieldType, 'ContainerRepresentation');
     });
 
     it('get form field values that are populated through a REST backend', async () => {

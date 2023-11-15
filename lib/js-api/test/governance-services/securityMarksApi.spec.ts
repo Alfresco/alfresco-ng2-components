@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { SecurityGroupsApi, SecurityMarksBody, SecurityMarksApi } from '../../src/api/gs-classification-rest-api';
 import { SecurityGroupBody } from '../../src/api/gs-classification-rest-api/model/securityGroupBody';
@@ -68,9 +68,9 @@ describe('Security Mark API test', () => {
         securityGroupMock.createSecurityGroup200Response();
         await securityGroupApi.createSecurityGroup(securityGroupBody).then((data) => {
             securityGroupId = data.entry.id;
-            expect(data.entry.id).not.equal(null);
-            expect(data.entry.groupName).to.be.equal('Alfresco');
-            expect(data.entry.groupType).to.be.equal('HIERARCHICAL');
+            assert.notEqual(data.entry.id, null);
+            assert.equal(data.entry.groupName, 'Alfresco');
+            assert.equal(data.entry.groupType, 'HIERARCHICAL');
         });
     });
 
@@ -78,34 +78,34 @@ describe('Security Mark API test', () => {
         securityMarkApiMock.createSecurityMark200Response(securityGroupId);
         await securityMarksApi.createSecurityMarks(securityGroupId, securityMarksBodySingle).then((data: any) => {
             securityMarkId = data.entry.id;
-            expect(data.entry.id).not.equal(null);
-            expect(data.entry.name).to.be.equal('SecurityMarkTest');
-            expect(data.entry.groupId).to.be.equal(securityGroupId);
+            assert.notEqual(data.entry.id, null);
+            assert.equal(data.entry.name, 'SecurityMarkTest');
+            assert.equal(data.entry.groupId, securityGroupId);
         });
     });
 
     it('create multiple Security Mark', async () => {
         securityMarkApiMock.createSecurityMarks200Response(securityGroupId);
         await securityMarksApi.createSecurityMarks(securityGroupId, securityMarksBody).then((data: any) => {
-            expect(data.list.entries[0].entry.id).not.equal(null);
-            expect(data.list.entries[0].entry.name).to.be.equal('SecurityMark3');
-            expect(data.list.entries[0].entry.groupId).to.be.equal(securityGroupId);
+            assert.notEqual(data.list.entries[0].entry.id, null);
+            assert.equal(data.list.entries[0].entry.name, 'SecurityMark3');
+            assert.equal(data.list.entries[0].entry.groupId, securityGroupId);
         });
     });
 
     it('get All Security Marks', async () => {
         securityMarkApiMock.get200GetSecurityMark(securityGroupId);
         await securityMarksApi.getSecurityMarks(securityGroupId).then((data) => {
-            expect(data.list.entries.length).to.be.above(0);
+            assert.equal(data.list.entries.length > 0, true);
         });
     });
 
     it('get Security Mark Information', async () => {
         securityMarkApiMock.get200GetSingleSecurityMark(securityGroupId, securityMarkId);
         await securityMarksApi.getSecurityMark(securityGroupId, securityMarkId).then((data) => {
-            expect(data.entry.id).not.equal(null);
-            expect(data.entry.name).to.be.equal('SecurityMarkTest');
-            expect(data.entry.groupId).to.be.equal(securityGroupId);
+            assert.notEqual(data.entry.id, null);
+            assert.equal(data.entry.name, 'SecurityMarkTest');
+            assert.equal(data.entry.groupId, securityGroupId);
         });
     });
 
@@ -115,9 +115,9 @@ describe('Security Mark API test', () => {
         };
         securityMarkApiMock.put200UpdateSecurityMarkResponse(securityGroupId, securityMarkId);
         await securityMarksApi.updateSecurityMark(securityGroupId, securityMarkId, updatedSecurityMarkBody).then((data) => {
-            expect(data.entry.id).not.equal(null);
-            expect(data.entry.name).to.be.equal('AlfrescoSecurityMark');
-            expect(data.entry.groupId).to.be.equal(securityGroupId);
+            assert.notEqual(data.entry.id, null);
+            assert.equal(data.entry.name, 'AlfrescoSecurityMark');
+            assert.equal(data.entry.groupId, securityGroupId);
         });
     });
 

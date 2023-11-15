@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { EcmAuthMock, UploadMock } from '../test/mockObjects';
 import fs from 'fs';
 import { UploadApi, AlfrescoApi, NodeEntry } from '../src';
@@ -50,8 +50,8 @@ xdescribe('Upload', () => {
             const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
 
             uploadApi.uploadFile(file).then((data: NodeEntry) => {
-                expect(data.entry.isFile).to.be.equal(true);
-                expect(data.entry.name).to.be.equal('testFile.txt');
+                assert.equal(data.entry.isFile, true);
+                assert.equal(data.entry.name, 'testFile.txt');
                 done();
             });
         });
@@ -64,7 +64,7 @@ xdescribe('Upload', () => {
             uploadApi.uploadFile(file).then(
                 () => {},
                 (error: any) => {
-                    expect(error.status).to.be.equal(409);
+                    assert.equal(error.status, 409);
                     done();
                 }
             );
@@ -76,8 +76,8 @@ xdescribe('Upload', () => {
             const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
 
             uploadApi.uploadFile(file, null, null, null, { autoRename: true }).then((data: NodeEntry) => {
-                expect(data.entry.isFile).to.be.equal(true);
-                expect(data.entry.name).to.be.equal('testFile-2.txt');
+                assert.equal(data.entry.isFile, true);
+                assert.equal(data.entry.name, 'testFile-2.txt');
                 done();
             });
         });
@@ -170,8 +170,8 @@ xdescribe('Upload', () => {
             });
 
             Promise.all([promiseProgressOne, promiseProgressTwo]).then(() => {
-                expect(progressOneOk).equal(true);
-                expect(progressTwoOk).equal(true);
+                assert.equal(progressOneOk, true);
+                assert.equal(progressTwoOk, true);
                 done();
             });
         });
@@ -206,8 +206,8 @@ xdescribe('Upload', () => {
             });
 
             Promise.all([promiseErrorOne, promiseErrorTwo]).then(() => {
-                expect(errorOneOk).equal(true);
-                expect(errorTwoOk).equal(true);
+                assert.equal(errorOneOk, true);
+                assert.equal(errorTwoOk, true);
                 done();
             });
         });
@@ -242,8 +242,8 @@ xdescribe('Upload', () => {
             });
 
             Promise.all([promiseSuccessOne, promiseSuccessTwo]).then(() => {
-                expect(successOneOk).equal(true);
-                expect(successTwoOk).equal(true);
+                assert.equal(successOneOk, true);
+                assert.equal(successTwoOk, true);
                 done();
             });
         });
@@ -268,8 +268,8 @@ xdescribe('Upload', () => {
             });
 
             Promise.all([p1, p2]).then(() => {
-                expect(resolveOneOk).equal(true);
-                expect(resolveTwoOk).equal(true);
+                assert.equal(resolveOneOk, true);
+                assert.equal(resolveTwoOk, true);
                 done();
             });
         });
@@ -294,8 +294,8 @@ xdescribe('Upload', () => {
             });
 
             Promise.all([p1, p2]).then(() => {
-                expect(rejectOneOk).equal(true);
-                expect(rejectTwoOk).equal(true);
+                assert.equal(rejectOneOk, true);
+                assert.equal(rejectTwoOk, true);
                 done();
             });
         });

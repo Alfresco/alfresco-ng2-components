@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { BpmAuthMock, ProcessMock } from '../mockObjects';
 import { AlfrescoApi, ProcessDefinitionsApi, ProcessInstanceQueryRepresentation, ProcessInstancesApi } from '../../src';
 
@@ -55,9 +55,9 @@ describe('Activiti Process Api', () => {
         requestNode.state = 'completed';
 
         processInstancesApi.getProcessInstances(requestNode).then((data) => {
-            expect(data.data[0].name).equal('Process Test Api - July 26th 2016');
-            expect(data.data[1].name).equal('Process Test Api - July 26th 2016');
-            expect(data.size).equal(2);
+            assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
+            assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
+            assert.equal(data.size, 2);
             done();
         });
     });
@@ -68,8 +68,8 @@ describe('Activiti Process Api', () => {
         const requestNode = new ProcessInstanceQueryRepresentation();
 
         processInstancesApi.getProcessInstances(requestNode).then((data) => {
-            expect(data.data[0].name).equal('Process Test Api - July 26th 2016');
-            expect(data.data[1].name).equal('Process Test Api - July 26th 2016');
+            assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
+            assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
             done();
         });
     });
@@ -79,7 +79,7 @@ describe('Activiti Process Api', () => {
         const processDefinitionId = 'testProcess:1:7504';
 
         processDefinitionsApi.getProcessDefinitionStartForm(processDefinitionId).then((data) => {
-            expect(data.processDefinitionId).equal('testProcess:1:7504');
+            assert.equal(data.processDefinitionId, 'testProcess:1:7504');
             done();
         });
     });

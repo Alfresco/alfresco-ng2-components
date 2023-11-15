@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { UserProfileApi } from '../../src/api/activiti-rest-api/api/userProfile.api';
 import { BpmAuthMock, ProfileMock } from '../mockObjects';
@@ -50,14 +50,14 @@ describe('Activiti Profile Api', () => {
     });
 
     it('get Profile url Picture', () => {
-        expect(profileApi.getProfilePictureUrl()).equal('https://127.0.0.1:9999/activiti-app/app/rest/admin/profile-picture');
+        assert.equal(profileApi.getProfilePictureUrl(), 'https://127.0.0.1:9999/activiti-app/app/rest/admin/profile-picture');
     });
 
     it('get Profile', async () => {
         profileMock.get200getProfile();
         const data = await profileApi.getProfile();
-        expect(data.lastName).equal('Administrator');
-        expect(data.groups[0].name).equal('analytics-users');
-        expect(data.tenantName).equal('test');
+        assert.equal(data.lastName, 'Administrator');
+        assert.equal(data.groups[0].name, 'analytics-users');
+        assert.equal(data.tenantName, 'test');
     });
 });

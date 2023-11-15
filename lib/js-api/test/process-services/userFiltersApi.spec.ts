@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { UserFiltersApi } from '../../src/api/activiti-rest-api';
 import { BpmAuthMock, UserFiltersMock } from '../mockObjects';
@@ -50,6 +50,6 @@ describe('Activiti User Filter Api', () => {
         };
 
         const data = await userFiltersApi.getUserTaskFilters(opts);
-        expect(data.data[0].name).equal('Involved Tasks');
+        assert.equal(data.data[0].name, 'Involved Tasks');
     });
 });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { EcmAuthMock, BpmAuthMock, NodeMock, ProfileMock } from '../test/mockObjects';
 import { NodesApi, UserProfileApi, AlfrescoApi } from '../src';
 
@@ -56,7 +56,7 @@ describe('Auth', () => {
                     authResponseEcmMock.get201Response();
 
                     alfrescoJsApi.login('admin', 'admin').then((data: string) => {
-                        expect(data).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                        assert.equal(data, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
                         done();
                     });
                 });
@@ -65,7 +65,7 @@ describe('Auth', () => {
                     authResponseEcmMock.get403Response();
 
                     alfrescoJsApi.login('wrong', 'name').then(NOOP, (error: ErrorResponse) => {
-                        expect(error.status).to.be.equal(403);
+                        assert.equal(error.status, 403);
                         done();
                     });
                 });
@@ -76,7 +76,7 @@ describe('Auth', () => {
                     authResponseEcmMock.get201Response();
 
                     alfrescoJsApi.login('admin', 'admin').then(() => {
-                        expect(alfrescoJsApi.isLoggedIn()).to.be.equal(true);
+                        assert.equal(alfrescoJsApi.isLoggedIn(), true);
                         done();
                     });
                 });
@@ -89,7 +89,7 @@ describe('Auth', () => {
                     authResponseEcmMock.get204ResponseLogout();
 
                     alfrescoJsApi.logout().then(() => {
-                        expect(alfrescoJsApi.isLoggedIn()).to.be.equal(false);
+                        assert.equal(alfrescoJsApi.isLoggedIn(), false);
                         done();
                     });
                 });
@@ -143,7 +143,7 @@ describe('Auth', () => {
                         hostEcm: ECM_HOST
                     });
 
-                    expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(api.contentClient.authentications.basicAuth.password);
+                    assert.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1', api.contentClient.authentications.basicAuth.password);
                 });
 
                 it('should Ticket login be validate against the server if is valid', (done) => {
@@ -152,8 +152,8 @@ describe('Auth', () => {
                     authResponseEcmMock.get200ValidTicket(ticket);
 
                     alfrescoJsApi.loginTicket(ticket, null).then((data: string) => {
-                        expect(alfrescoJsApi.contentAuth.authentications.basicAuth.password).to.be.equal(ticket);
-                        expect(data).to.be.equal(ticket);
+                        assert.equal(alfrescoJsApi.contentAuth.authentications.basicAuth.password, ticket);
+                        assert.equal(data, ticket);
                         done();
                     });
                 });
@@ -179,7 +179,7 @@ describe('Auth', () => {
                     authResponseEcmMock.get204ResponseLogout();
 
                     alfrescoJsApi.logout().then(() => {
-                        expect(alfrescoJsApi.config.ticket).to.be.equal(undefined);
+                        assert.equal(alfrescoJsApi.config.ticket, undefined);
                         done();
                     });
                 });
@@ -187,7 +187,7 @@ describe('Auth', () => {
                 it('should Logout be rejected if the Ticket is already expired', (done) => {
                     authResponseEcmMock.get404ResponseLogout();
                     alfrescoJsApi.logout().then(NOOP, (error: any) => {
-                        expect(error.error.toString()).to.be.equal('Error: Not Found');
+                        assert.equal(error.error.toString(), 'Error: Not Found');
                         done();
                     });
                 });
@@ -206,7 +206,7 @@ describe('Auth', () => {
                     nodeMock.get401CreationFolder();
 
                     nodesApi.createFolder('newFolder', null, null).then(NOOP, () => {
-                        expect(alfrescoJsApi.contentAuth.authentications.basicAuth.password).to.be.equal(null);
+                        assert.equal(alfrescoJsApi.contentAuth.authentications.basicAuth.password, null);
                         done();
                     });
                 });
@@ -215,7 +215,7 @@ describe('Auth', () => {
                     nodeMock.get401CreationFolder();
 
                     nodesApi.createFolder('newFolder', null, null).then(NOOP, () => {
-                        expect(alfrescoJsApi.isLoggedIn()).to.be.equal(false);
+                        assert.equal(alfrescoJsApi.isLoggedIn(), false);
                         done();
                     });
                 });
@@ -257,7 +257,7 @@ describe('Auth', () => {
                     authResponseBpmMock.get200Response();
 
                     alfrescoJsApi.login('admin', 'admin').then((data: string) => {
-                        expect(data).to.be.equal('Basic YWRtaW46YWRtaW4=');
+                        assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
                         done();
                     });
                 });
@@ -266,7 +266,7 @@ describe('Auth', () => {
                     authResponseBpmMock.get401Response();
 
                     alfrescoJsApi.login('wrong', 'name').then(NOOP, (error: ErrorResponse) => {
-                        expect(error.status).to.be.equal(401);
+                        assert.equal(error.status, 401);
                         done();
                     });
                 });
@@ -277,7 +277,7 @@ describe('Auth', () => {
                     authResponseBpmMock.get200Response();
 
                     alfrescoJsApi.login('admin', 'admin').then(() => {
-                        expect(alfrescoJsApi.isLoggedIn()).to.be.equal(true);
+                        assert.equal(alfrescoJsApi.isLoggedIn(), true);
                         done();
                     }, NOOP);
                 });
@@ -290,7 +290,7 @@ describe('Auth', () => {
                     authResponseBpmMock.get200ResponseLogout();
 
                     alfrescoJsApi.logout().then(() => {
-                        expect(alfrescoJsApi.isLoggedIn()).to.be.equal(false);
+                        assert.equal(alfrescoJsApi.isLoggedIn(), false);
                         done();
                     }, NOOP);
                 });
@@ -350,7 +350,7 @@ describe('Auth', () => {
                     profileMock.get401getProfile();
 
                     profileApi.getProfile().then(NOOP, () => {
-                        expect(alfrescoJsApi.processAuth.authentications.basicAuth.ticket).to.be.equal(null);
+                        assert.equal(alfrescoJsApi.processAuth.authentications.basicAuth.ticket, null);
                         done();
                     });
                 });
@@ -361,7 +361,7 @@ describe('Auth', () => {
                     profileApi.getProfile().then(
                         () => NOOP,
                         () => {
-                            expect(alfrescoJsApi.isLoggedIn()).to.be.equal(false);
+                            assert.equal(alfrescoJsApi.isLoggedIn(), false);
                             done();
                         }
                     );
@@ -402,8 +402,8 @@ describe('Auth', () => {
                     provider: 'ALL'
                 });
 
-                expect('Basic YWRtaW46YWRtaW4=').to.be.equal(api.processClient.authentications.basicAuth.ticket);
-                expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(api.contentClient.authentications.basicAuth.password);
+                assert.equal('Basic YWRtaW46YWRtaW4=', api.processClient.authentications.basicAuth.ticket);
+                assert.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1', api.contentClient.authentications.basicAuth.password);
             });
 
             describe('login', () => {
@@ -412,8 +412,8 @@ describe('Auth', () => {
                     authResponseEcmMock.get201Response();
 
                     alfrescoJsApi.login('admin', 'admin').then((data: string[]) => {
-                        expect(data[0]).to.be.equal('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
-                        expect(data[1]).to.be.equal('Basic YWRtaW46YWRtaW4=');
+                        assert.equal(data[0], 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+                        assert.equal(data[1], 'Basic YWRtaW46YWRtaW4=');
                         done();
                     });
                 });
@@ -452,7 +452,7 @@ describe('Auth', () => {
                     authResponseEcmMock.get204ResponseLogout();
 
                     alfrescoJsApi.logout().then(() => {
-                        expect(alfrescoJsApi.isLoggedIn()).to.be.equal(false);
+                        assert.equal(alfrescoJsApi.isLoggedIn(), false);
                         done();
                     });
                 });
@@ -462,7 +462,7 @@ describe('Auth', () => {
                     authResponseEcmMock.get401Response();
 
                     alfrescoJsApi.login('wrong', 'name').then(NOOP, (error: ErrorResponse) => {
-                        expect(error.status).to.be.equal(401);
+                        assert.equal(error.status, 401);
                         done();
                     });
                 });
@@ -473,7 +473,7 @@ describe('Auth', () => {
                 authResponseEcmMock.get201Response();
 
                 alfrescoJsApi.login('admin', 'admin').then(() => {
-                    expect(alfrescoJsApi.isLoggedIn()).to.be.equal(true);
+                    assert.equal(alfrescoJsApi.isLoggedIn(), true);
                     done();
                 });
             });

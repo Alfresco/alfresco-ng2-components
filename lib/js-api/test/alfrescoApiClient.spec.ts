@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import assert from 'assert';
 import { AlfrescoApi, DateAlfresco } from '../src';
 import { EcmAuthMock } from '../test/mockObjects';
-import { expect } from 'chai';
 
 describe('Alfresco Core API Client', () => {
     describe('type conversion', () => {
@@ -31,7 +31,7 @@ describe('Alfresco Core API Client', () => {
             });
 
             alfrescoJsApi.login('admin', 'admin').then(() => {
-                expect(alfrescoJsApi.getEcmUsername()).to.be.equal('admin');
+                assert.equal(alfrescoJsApi.getEcmUsername(), 'admin');
                 done();
             });
         });
@@ -41,39 +41,39 @@ describe('Alfresco Core API Client', () => {
         const equalTime = (actual: Date, expected: Date) => actual.getTime() === expected.getTime();
 
         it('should convert dates falling in GMT without a timezone', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17'), new Date(Date.UTC(2015, 10, 17, 3, 33, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17'), new Date(Date.UTC(2015, 10, 17, 3, 33, 17))), true);
         });
 
         it('should convert dates falling in BST without a timezone', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-10-17T03:33:17'), new Date(Date.UTC(2015, 9, 17, 3, 33, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-10-17T03:33:17'), new Date(Date.UTC(2015, 9, 17, 3, 33, 17))), true);
         });
 
         it('should convert dates with a UTC Zulu-time timezone', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17Z'), new Date(Date.UTC(2015, 10, 17, 3, 33, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17Z'), new Date(Date.UTC(2015, 10, 17, 3, 33, 17))), true);
         });
 
         it('should convert dates with a UTC zero-offset timezone', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+0000'), new Date(Date.UTC(2015, 10, 17, 3, 33, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+0000'), new Date(Date.UTC(2015, 10, 17, 3, 33, 17))), true);
         });
 
         it('should convert dates with a positive offset timezone', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+0200'), new Date(Date.UTC(2015, 10, 17, 1, 33, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+0200'), new Date(Date.UTC(2015, 10, 17, 1, 33, 17))), true);
         });
 
         it('should convert dates with a negative offset timezone', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17-0200'), new Date(Date.UTC(2015, 10, 17, 5, 33, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17-0200'), new Date(Date.UTC(2015, 10, 17, 5, 33, 17))), true);
         });
 
         it('should convert dates with a part-hour offset', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-11-17T03:23:17-0930'), new Date(Date.UTC(2015, 10, 17, 12, 53, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:23:17-0930'), new Date(Date.UTC(2015, 10, 17, 12, 53, 17))), true);
         });
 
         it('should convert dates with a timezone HH:MM separator', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+02:00'), new Date(Date.UTC(2015, 10, 17, 1, 33, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+02:00'), new Date(Date.UTC(2015, 10, 17, 1, 33, 17))), true);
         });
 
         it('should convert dates with a timezone with hours only', () => {
-            expect(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+02'), new Date(Date.UTC(2015, 10, 17, 1, 33, 17)))).to.be.equal(true);
+            assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+02'), new Date(Date.UTC(2015, 10, 17, 1, 33, 17))), true);
         });
     });
 });

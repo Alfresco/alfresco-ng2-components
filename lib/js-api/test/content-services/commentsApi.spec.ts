@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { CommentsApi } from '../../src/api/content-rest-api';
-import { CommentMock, EcmAuthMock } from '../../test/mockObjects';
+import assert from 'assert';
+import { AlfrescoApi, CommentsApi } from '../../src';
+import { CommentMock, EcmAuthMock } from '../mockObjects';
 
 describe('Comments', () => {
-
     let authResponseMock: EcmAuthMock;
     let commentMock: CommentMock;
     let commentsApi: CommentsApi;
@@ -48,26 +46,22 @@ describe('Comments', () => {
     it('should add a comment', (done) => {
         commentMock.post201Response();
 
-        commentsApi.createComment(
-            '74cd8a96-8a21-47e5-9b3b-a1b3e296787d',
-            {
+        commentsApi
+            .createComment('74cd8a96-8a21-47e5-9b3b-a1b3e296787d', {
                 content: 'This is a comment'
-            }
-        ).then((data) => {
-            expect(data.entry.content).to.be.equal('This is a comment');
-            done();
-        });
+            })
+            .then((data) => {
+                assert.equal(data.entry.content, 'This is a comment');
+                done();
+            });
     });
 
     it('should get a comment', (done) => {
         commentMock.get200Response();
 
-        commentsApi.listComments('74cd8a96-8a21-47e5-9b3b-a1b3e296787d').then(
-            (data) => {
-                expect(data.list.entries[0].entry.content).to.be.equal('This is another comment');
-                done();
-            }
-        );
+        commentsApi.listComments('74cd8a96-8a21-47e5-9b3b-a1b3e296787d').then((data) => {
+            assert.equal(data.list.entries[0].entry.content, 'This is another comment');
+            done();
+        });
     });
-
 });

@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { QueriesApi } from '../../src/api/content-rest-api';
-import { EcmAuthMock, FindNodesMock } from '../../test/mockObjects';
+import assert from 'assert';
+import { AlfrescoApi, QueriesApi } from '../../src';
+import { EcmAuthMock, FindNodesMock } from '../mockObjects';
 
 describe('Queries', () => {
     let authResponseMock: EcmAuthMock;
@@ -45,14 +44,12 @@ describe('Queries', () => {
     });
 
     describe('nodes', () => {
-
         const searchTerm = 'test';
 
         it('should throw exception if no search term is provided', () => {
-            const badCall = () => {
+            assert.throws(() => {
                 queriesApi.findNodes(null);
-            };
-            expect(badCall).to.throw(`Missing param 'term'`);
+            }, `Error: Missing param 'term'`);
         });
 
         it('should invoke error handler on a server error', (done) => {
@@ -69,14 +66,12 @@ describe('Queries', () => {
         it('should return query results', (done) => {
             nodesMock.get200Response();
 
-            queriesApi.findNodes(searchTerm).then(
-                (data) => {
-                    expect(data.list.pagination.count).to.be.equal(2);
-                    expect(data.list.entries[0].entry.name).to.be.equal('coins1.JPG');
-                    expect(data.list.entries[1].entry.name).to.be.equal('coins2.JPG');
-                    done();
-                }
-            );
+            queriesApi.findNodes(searchTerm).then((data) => {
+                assert.equal(data.list.pagination.count, 2);
+                assert.equal(data.list.entries[0].entry.name, 'coins1.JPG');
+                assert.equal(data.list.entries[1].entry.name, 'coins2.JPG');
+                done();
+            });
         });
     });
 });

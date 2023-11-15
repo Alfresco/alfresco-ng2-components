@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { ModelJsonBpmnApi } from '../../src/api/activiti-rest-api';
 import { BpmAuthMock, ModelJsonBpmMock } from '../mockObjects';
@@ -46,12 +46,12 @@ describe('Activiti Model JsonBpmn Api', () => {
     it('get Model JsonBpmn', async () => {
         modelJsonBpmMock.get200EditorDisplayJsonClient();
         const data = await modelJsonBpmnApi.getEditorDisplayJsonClient(1);
-        expect(data).not.equal(null);
+        assert.notEqual(data, null);
     });
 
     it('get Model JsonBpmn history', async () => {
         modelJsonBpmMock.get200HistoricEditorDisplayJsonClient();
         const data = await modelJsonBpmnApi.getHistoricEditorDisplayJsonClient(1, 1);
-        expect(data).not.equal(null);
+        assert.notEqual(data, null);
     });
 });

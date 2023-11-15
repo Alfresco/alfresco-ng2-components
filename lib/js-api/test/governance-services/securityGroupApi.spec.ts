@@ -17,7 +17,7 @@
 
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { SecurityGroupsApi } from '../../src/api/gs-classification-rest-api';
-import { expect } from 'chai';
+import assert from 'assert';
 import { SecurityGroupBody } from '../../src/api/gs-classification-rest-api/model/securityGroupBody';
 import { EcmAuthMock } from '../../test/mockObjects';
 import { SecurityGroupApiMock } from '../../test/mockObjects/goverance-services/security-groups.mock';
@@ -36,7 +36,7 @@ describe('Security Group API test', () => {
         const hostEcm = 'https://127.0.0.1:8080';
         authResponseMock = new EcmAuthMock(hostEcm);
         authResponseMock.get201Response();
-        securityGroupMock  = new SecurityGroupApiMock(hostEcm);
+        securityGroupMock = new SecurityGroupApiMock(hostEcm);
         const alfrescoApi = new AlfrescoApi({
             hostEcm
         });
@@ -46,31 +46,28 @@ describe('Security Group API test', () => {
 
     it('create Security Group', async () => {
         securityGroupMock.createSecurityGroup200Response();
-        await securityGroupApi.createSecurityGroup(securityGroupBody)
-            .then(data => {
-                securityGroupId = data.entry.id;
-                expect(data.entry.id).not.equal(null);
-                expect(data.entry.groupName).to.be.equal('Alfresco');
-                expect(data.entry.groupType).to.be.equal('HIERARCHICAL');
-            });
+        await securityGroupApi.createSecurityGroup(securityGroupBody).then((data) => {
+            securityGroupId = data.entry.id;
+            assert.notEqual(data.entry.id, null);
+            assert.equal(data.entry.groupName, 'Alfresco');
+            assert.equal(data.entry.groupType, 'HIERARCHICAL');
+        });
     });
 
     it('get All Security Groups', async () => {
         securityGroupMock.getSecurityGroups200Response();
-        await securityGroupApi.getSecurityGroups()
-            .then(data => {
-                expect(data.list.entries.length).to.be.above(0);
-            });
+        await securityGroupApi.getSecurityGroups().then((data) => {
+            assert.equal(data.list.entries.length > 0, true);
+        });
     });
 
     it('get Security Group Information', async () => {
         securityGroupMock.getSecurityGroupInfo200Response(securityGroupId);
-        await securityGroupApi.getSecurityGroupInfo(securityGroupId)
-            .then(data => {
-                expect(data.entry.id).not.equal(null);
-                expect(data.entry.groupName).to.be.equal('Alfresco');
-                expect(data.entry.groupType).to.be.equal('HIERARCHICAL');
-            });
+        await securityGroupApi.getSecurityGroupInfo(securityGroupId).then((data) => {
+            assert.notEqual(data.entry.id, null);
+            assert.equal(data.entry.groupName, 'Alfresco');
+            assert.equal(data.entry.groupType, 'HIERARCHICAL');
+        });
     });
 
     it('update Security Group', async () => {
@@ -78,20 +75,22 @@ describe('Security Group API test', () => {
         const updatedSecurityGroupBody: SecurityGroupBody = {
             groupName: 'Nasa'
         };
-        await securityGroupApi.updateSecurityGroup(securityGroupId,updatedSecurityGroupBody)
-            .then(data => {
-                expect(data.entry.id).not.equal(null);
-                expect(data.entry.groupName).to.be.equal('Nasa');
-                expect(data.entry.groupType).to.be.equal('HIERARCHICAL');
-            });
+        await securityGroupApi.updateSecurityGroup(securityGroupId, updatedSecurityGroupBody).then((data) => {
+            assert.notEqual(data.entry.id, null);
+            assert.equal(data.entry.groupName, 'Nasa');
+            assert.equal(data.entry.groupType, 'HIERARCHICAL');
+        });
     });
 
     it('delete Security Group', async () => {
         securityGroupMock.deleteSecurityGroup200Response(securityGroupId);
-        await securityGroupApi.deleteSecurityGroup(securityGroupId).then((data) => {
-            Promise.resolve(data);
-        }).catch((err)=>{
-            Promise.reject(err);
-        });
+        await securityGroupApi
+            .deleteSecurityGroup(securityGroupId)
+            .then((data) => {
+                Promise.resolve(data);
+            })
+            .catch((err) => {
+                Promise.reject(err);
+            });
     });
 });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi, TagBody, TagEntry, TagsApi } from '../../src';
 import { EcmAuthMock, TagMock } from '../mockObjects';
 
@@ -48,9 +48,9 @@ describe('Tags', () => {
             tagMock.get200Response();
 
             tagsApi.listTags().then((data) => {
-                expect(data.list.pagination.count).equal(2);
-                expect(data.list.entries[0].entry.tag).equal('tag-test-1');
-                expect(data.list.entries[1].entry.tag).equal('tag-test-2');
+                assert.equal(data.list.pagination.count, 2);
+                assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
+                assert.equal(data.list.entries[1].entry.tag, 'tag-test-2');
                 done();
             });
         });
@@ -74,8 +74,8 @@ describe('Tags', () => {
                     tag: 'tag-test-1'
                 })
                 .then((data) => {
-                    expect(data.list.entries[0].entry.tag).to.equal('tag-test-1');
-                    expect(data.list.entries[0].entry.id).to.equal('0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
+                    assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
+                    assert.equal(data.list.entries[0].entry.id, '0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
                     done();
                 });
         });
@@ -89,13 +89,13 @@ describe('Tags', () => {
                     matching: true
                 })
                 .then((data) => {
-                    expect(data?.list.entries.length).to.equal(2);
+                    assert.equal(data?.list.entries.length, 2);
 
-                    expect(data.list.entries[0].entry.tag).to.equal('tag-test-1');
-                    expect(data.list.entries[0].entry.id).to.equal('0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
+                    assert.equal(data.list.entries[0].entry.tag, 'tag-test-1');
+                    assert.equal(data.list.entries[0].entry.id, '0d89aa82-f2b8-4a37-9a54-f4c5148174d6');
 
-                    expect(data.list.entries[1].entry.tag).to.equal('tag-test-2');
-                    expect(data.list.entries[1].entry.id).to.equal('d79bdbd0-9f55-45bb-9521-811e15bf48f6');
+                    assert.equal(data.list.entries[1].entry.tag, 'tag-test-2');
+                    assert.equal(data.list.entries[1].entry.id, 'd79bdbd0-9f55-45bb-9521-811e15bf48f6');
 
                     done();
                 });
@@ -105,16 +105,16 @@ describe('Tags', () => {
     describe('createTags', () => {
         it('should return created tags', (done: Mocha.Done) => {
             tagMock.createTags201Response();
-            tagsApi.createTags([new TagBody(), new TagBody()]).then((tags: TagEntry[]) => {
-                expect(tags).length(2);
-                expect(tags[0].entry.tag).equal('tag-test-1');
-                expect(tags[1].entry.tag).equal('tag-test-2');
+            tagsApi.createTags([new TagBody(), new TagBody()]).then((tags) => {
+                assert.equal(tags.length, 2);
+                assert.equal(tags[0].entry.tag, 'tag-test-1');
+                assert.equal(tags[1].entry.tag, 'tag-test-2');
                 done();
             });
         });
 
         it('should throw error if tags are not passed', () => {
-            expect(tagsApi.createTags.bind(tagsApi, null)).throw();
+            assert.throws(tagsApi.createTags.bind(tagsApi, null));
         });
     });
 
@@ -128,9 +128,9 @@ describe('Tags', () => {
             tagMock.get201ResponseForAssigningTagsToNode(tags);
 
             tagsApi.assignTagsToNode('someNodeId', tags).then((tagPaging) => {
-                expect(tagPaging.list.pagination.count).equal(2);
-                expect(tagPaging.list.entries[0].entry.tag).equal(tag1.tag);
-                expect(tagPaging.list.entries[1].entry.tag).equal(tag2.tag);
+                assert.equal(tagPaging.list.pagination.count, 2);
+                assert.equal(tagPaging.list.entries[0].entry.tag, tag1.tag);
+                assert.equal(tagPaging.list.entries[1].entry.tag, tag2.tag);
                 done();
             });
         });
@@ -143,7 +143,7 @@ describe('Tags', () => {
 
             tagsApi.assignTagsToNode('someNodeId', tags).then((data) => {
                 const tagEntry = data as TagEntry;
-                expect(tagEntry.entry.tag).equal(tag.tag);
+                assert.equal(tagEntry.entry.tag, tag.tag);
                 done();
             });
         });

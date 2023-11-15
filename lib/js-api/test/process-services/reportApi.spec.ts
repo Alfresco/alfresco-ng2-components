@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { BpmAuthMock, ReportsMock } from '../mockObjects';
 import { ReportApi, AlfrescoApi } from '../../src';
 
@@ -55,10 +55,10 @@ describe('Activiti Report Api', () => {
         reportsMock.get200ResponseTasksByProcessDefinitionId(reportId, processDefinitionId);
 
         const data = await reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId);
-        expect(data.length).equal(3);
-        expect(data[0]).equal('Fake Task 1');
-        expect(data[1]).equal('Fake Task 2');
-        expect(data[2]).equal('Fake Task 3');
+        assert.equal(data.length, 3);
+        assert.equal(data[0], 'Fake Task 1');
+        assert.equal(data[1], 'Fake Task 2');
+        assert.equal(data[2], 'Fake Task 3');
     });
 
     it('should return the chart reports', async () => {
@@ -68,14 +68,14 @@ describe('Activiti Report Api', () => {
         reportsMock.get200ResponseReportsByParams(reportId, paramsQuery);
 
         const data = await reportApi.getReportsByParams(reportId, paramsQuery);
-        expect(data.elements.length).equal(3);
-        expect(data.elements[0].type).equal('table');
+        assert.equal(data.elements.length, 3);
+        assert.equal(data.elements[0].type, 'table');
 
-        expect(data.elements[1].type).equal('pieChart');
-        expect(data.elements[1].titleKey).equal('REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.PROC-INST-CHART-TITLE');
+        assert.equal(data.elements[1].type, 'pieChart');
+        assert.equal(data.elements[1].titleKey, 'REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.PROC-INST-CHART-TITLE');
 
-        expect(data.elements[2].type).equal('table');
-        expect(data.elements[2].titleKey).equal('REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.DETAIL-TABLE');
+        assert.equal(data.elements[2].type, 'table');
+        assert.equal(data.elements[2].titleKey, 'REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.DETAIL-TABLE');
     });
 
     it('should return the process definitions when the appId is not provided', async () => {
@@ -83,18 +83,18 @@ describe('Activiti Report Api', () => {
 
         const res = await reportApi.getProcessDefinitions();
 
-        expect(res.length).equal(4);
-        expect(res[0].id).equal('Process_sid-0FF10DA3-E2BD-4E6A-9013-6D66FC8A4716:1:30004');
-        expect(res[0].name).equal('Fake Process Name 1');
+        assert.equal(res.length, 4);
+        assert.equal(res[0].id, 'Process_sid-0FF10DA3-E2BD-4E6A-9013-6D66FC8A4716:1:30004');
+        assert.equal(res[0].name, 'Fake Process Name 1');
 
-        expect(res[1].id).equal('SecondProcess:1:15027');
-        expect(res[1].name).equal('Fake Process Name 2');
+        assert.equal(res[1].id, 'SecondProcess:1:15027');
+        assert.equal(res[1].name, 'Fake Process Name 2');
 
-        expect(res[2].id).equal('Simpleprocess:15:10004');
-        expect(res[2].name).equal('Fake Process Name 3');
+        assert.equal(res[2].id, 'Simpleprocess:15:10004');
+        assert.equal(res[2].name, 'Fake Process Name 3');
 
-        expect(res[3].id).equal('fruitorderprocess:5:42530');
-        expect(res[3].name).equal('Fake Process Name 4');
+        assert.equal(res[3].id, 'fruitorderprocess:5:42530');
+        assert.equal(res[3].name, 'Fake Process Name 4');
     });
 
     it('should return the report list', async () => {
@@ -102,22 +102,22 @@ describe('Activiti Report Api', () => {
 
         const res = await reportApi.getReportList();
 
-        expect(res.length).equal(5);
+        assert.equal(res.length, 5);
 
-        expect(res[0].id).equal(11011);
-        expect(res[0].name).equal('Process definition heat map');
+        assert.equal(res[0].id, 11011);
+        assert.equal(res[0].name, 'Process definition heat map');
 
-        expect(res[1].id).equal(11012);
-        expect(res[1].name).equal('Process definition overview');
+        assert.equal(res[1].id, 11012);
+        assert.equal(res[1].name, 'Process definition overview');
 
-        expect(res[2].id).equal(11013);
-        expect(res[2].name).equal('Process instances overview');
+        assert.equal(res[2].id, 11013);
+        assert.equal(res[2].name, 'Process instances overview');
 
-        expect(res[3].id).equal(11014);
-        expect(res[3].name).equal('Task overview');
+        assert.equal(res[3].id, 11014);
+        assert.equal(res[3].name, 'Task overview');
 
-        expect(res[4].id).equal(11015);
-        expect(res[4].name).equal('Task service level agreement');
+        assert.equal(res[4].id, 11015);
+        assert.equal(res[4].name, 'Task service level agreement');
     });
 
     it('should return the report parameters', async () => {
@@ -127,25 +127,25 @@ describe('Activiti Report Api', () => {
         const res = await reportApi.getReportParams(reportId);
         const paramsDefinition = JSON.parse(res.definition);
 
-        expect(res.id).equal(11013);
-        expect(res.name).equal('Process instances overview');
-        expect(paramsDefinition.parameters.length).equal(4);
+        assert.equal(res.id, 11013);
+        assert.equal(res.name, 'Process instances overview');
+        assert.equal(paramsDefinition.parameters.length, 4);
 
-        expect(paramsDefinition.parameters[0].id).equal('processDefinitionId');
-        expect(paramsDefinition.parameters[0].nameKey).equal('REPORTING.DEFAULT-REPORTS.PROCESS-INSTANCES-OVERVIEW.PROCESS-DEFINITION');
-        expect(paramsDefinition.parameters[0].type).equal('processDefinition');
+        assert.equal(paramsDefinition.parameters[0].id, 'processDefinitionId');
+        assert.equal(paramsDefinition.parameters[0].nameKey, 'REPORTING.DEFAULT-REPORTS.PROCESS-INSTANCES-OVERVIEW.PROCESS-DEFINITION');
+        assert.equal(paramsDefinition.parameters[0].type, 'processDefinition');
 
-        expect(paramsDefinition.parameters[1].id).equal('dateRange');
-        expect(paramsDefinition.parameters[1].nameKey).equal('REPORTING.DEFAULT-REPORTS.PROCESS-INSTANCES-OVERVIEW.DATE-RANGE');
-        expect(paramsDefinition.parameters[1].type).equal('dateRange');
+        assert.equal(paramsDefinition.parameters[1].id, 'dateRange');
+        assert.equal(paramsDefinition.parameters[1].nameKey, 'REPORTING.DEFAULT-REPORTS.PROCESS-INSTANCES-OVERVIEW.DATE-RANGE');
+        assert.equal(paramsDefinition.parameters[1].type, 'dateRange');
 
-        expect(paramsDefinition.parameters[2].id).equal('slowProcessInstanceInteger');
-        expect(paramsDefinition.parameters[2].nameKey).equal('REPORTING.DEFAULT-REPORTS.PROCESS-INSTANCES-OVERVIEW.SLOW-PROC-INST-NUMBER');
-        expect(paramsDefinition.parameters[2].type).equal('integer');
+        assert.equal(paramsDefinition.parameters[2].id, 'slowProcessInstanceInteger');
+        assert.equal(paramsDefinition.parameters[2].nameKey, 'REPORTING.DEFAULT-REPORTS.PROCESS-INSTANCES-OVERVIEW.SLOW-PROC-INST-NUMBER');
+        assert.equal(paramsDefinition.parameters[2].type, 'integer');
 
-        expect(paramsDefinition.parameters[3].id).equal('status');
-        expect(paramsDefinition.parameters[3].nameKey).equal('REPORTING.PROCESS-STATUS');
-        expect(paramsDefinition.parameters[3].type).equal('status');
+        assert.equal(paramsDefinition.parameters[3].id, 'status');
+        assert.equal(paramsDefinition.parameters[3].nameKey, 'REPORTING.PROCESS-STATUS');
+        assert.equal(paramsDefinition.parameters[3].type, 'status');
     });
 
     it('should update the report', async () => {
@@ -172,8 +172,8 @@ describe('Activiti Report Api', () => {
         reportsMock.get200ResponseExportReport(reportId);
 
         const response = await reportApi.exportToCsv(reportId, queryParams);
-        expect(response).not.equal(null);
-        expect(response).not.equal(undefined);
+        assert.notEqual(response, null);
+        assert.notEqual(response, undefined);
     });
 
     it('should save the report', async () => {

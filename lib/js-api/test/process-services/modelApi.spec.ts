@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../../src/alfrescoApi';
 import { ModelsApi } from '../../src/api/activiti-rest-api';
 import { BpmAuthMock, ModelsMock } from '../mockObjects';
@@ -52,6 +52,6 @@ describe('Activiti Models Api', () => {
         };
 
         const data = await modelsApi.getModels(opts);
-        expect(data.data[0].name).equal('Metadata');
+        assert.equal(data.data[0].name, 'Metadata');
     });
 });

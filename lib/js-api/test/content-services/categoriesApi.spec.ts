@@ -15,14 +15,10 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { CategoriesApi } from '../../src/api/content-rest-api';
-import { EcmAuthMock } from '../../test/mockObjects';
+import assert from 'assert';
+import { AlfrescoApi, CategoriesApi, CategoryPaging, CategoryEntry } from '../../src';
+import { EcmAuthMock } from '../mockObjects';
 import { CategoriesMock } from '../mockObjects/content-services/categories.mock';
-import { CategoryPaging } from '../../src/api/content-rest-api/model/categoryPaging';
-import { CategoryEntry } from '../../src/api/content-rest-api/model/categoryEntry';
-import { fail } from 'assert';
 
 describe('Categories', () => {
     let authResponseMock: EcmAuthMock;
@@ -47,9 +43,9 @@ describe('Categories', () => {
     it('should return 200 while getting subcategories for category with categoryId if all is ok', (done) => {
         categoriesMock.get200ResponseSubcategories('-root-');
         categoriesApi.getSubcategories('-root-').then((response: CategoryPaging) => {
-            expect(response.list.pagination.count).equal(2);
-            expect(response.list.entries[0].entry.parentId).equal('-root-');
-            expect(response.list.entries[0].entry.id).equal('testId1');
+            assert.equal(response.list.pagination.count, 2);
+            assert.equal(response.list.entries[0].entry.parentId, '-root-');
+            assert.equal(response.list.entries[0].entry.id, 'testId1');
             done();
         });
     });
@@ -59,7 +55,7 @@ describe('Categories', () => {
         categoriesApi.getSubcategories('notExistingId').then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(404);
+                assert.equal(error.status, 404);
                 done();
             }
         );
@@ -68,8 +64,8 @@ describe('Categories', () => {
     it('should return 200 while getting category with categoryId if category exists', (done) => {
         categoriesMock.get200ResponseCategory('testId1');
         categoriesApi.getCategory('testId1').then((response: CategoryEntry) => {
-            expect(response.entry.parentId).equal('-root-');
-            expect(response.entry.id).equal('testId1');
+            assert.equal(response.entry.parentId, '-root-');
+            assert.equal(response.entry.id, 'testId1');
             done();
         });
     });
@@ -79,7 +75,7 @@ describe('Categories', () => {
         categoriesApi.getCategory('notExistingId').then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(404);
+                assert.equal(error.status, 404);
                 done();
             }
         );
@@ -88,8 +84,8 @@ describe('Categories', () => {
     it('should return 200 while getting categories linked to node with nodeId if node has some categories assigned', (done) => {
         categoriesMock.get200ResponseNodeCategoryLinks('testNode');
         categoriesApi.getCategoryLinksForNode('testNode').then((response: CategoryPaging) => {
-            expect(response.list.entries[0].entry.parentId).equal('testNode');
-            expect(response.list.entries[0].entry.id).equal('testId1');
+            assert.equal(response.list.entries[0].entry.parentId, 'testNode');
+            assert.equal(response.list.entries[0].entry.id, 'testId1');
             done();
         });
     });
@@ -99,7 +95,7 @@ describe('Categories', () => {
         categoriesApi.getCategoryLinksForNode('testNode').then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(403);
+                assert.equal(error.status, 403);
                 done();
             }
         );
@@ -110,7 +106,7 @@ describe('Categories', () => {
         categoriesApi.getCategoryLinksForNode('testNode').then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(404);
+                assert.equal(error.status, 404);
                 done();
             }
         );
@@ -118,8 +114,7 @@ describe('Categories', () => {
 
     it('should return 204 after unlinking category', (done) => {
         categoriesMock.get204CategoryUnlinked('testNode', 'testId1');
-        categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then((response: any) => {
-            expect(response.noContent);
+        categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(() => {
             done();
         });
     });
@@ -129,7 +124,7 @@ describe('Categories', () => {
         categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(404);
+                assert.equal(error.status, 404);
                 done();
             }
         );
@@ -140,7 +135,7 @@ describe('Categories', () => {
         categoriesApi.unlinkNodeFromCategory('testNode', 'testId1').then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(403);
+                assert.equal(error.status, 403);
                 done();
             }
         );
@@ -148,9 +143,9 @@ describe('Categories', () => {
 
     it('should return 200 while updating category if all is ok', (done) => {
         categoriesMock.get200ResponseCategoryUpdated('testId1');
-        categoriesApi.updateCategory('testId1', { name: 'testName1' }).then((response: CategoryEntry) => {
-            expect(response.entry.id).equal('testId1');
-            expect(response.entry.name).equal('testName1');
+        categoriesApi.updateCategory('testId1', { name: 'testName1' }).then((response) => {
+            assert.equal(response.entry.id, 'testId1');
+            assert.equal(response.entry.name, 'testName1');
             done();
         });
     });
@@ -160,7 +155,7 @@ describe('Categories', () => {
         categoriesApi.updateCategory('testId1', { name: 'testName1' }).then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(404);
+                assert.equal(error.status, 404);
                 done();
             }
         );
@@ -171,7 +166,7 @@ describe('Categories', () => {
         categoriesApi.updateCategory('testId1', { name: 'testName1' }).then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(403);
+                assert.equal(error.status, 403);
                 done();
             }
         );
@@ -180,8 +175,8 @@ describe('Categories', () => {
     it('should return 201 while creating category if all is ok', (done) => {
         categoriesMock.get201ResponseCategoryCreated('testId1');
         categoriesApi.createSubcategories('testId1', [{ name: 'testName10' }]).then((response: CategoryPaging | CategoryEntry) => {
-            expect((response as CategoryEntry).entry.parentId).equal('testId1');
-            expect((response as CategoryEntry).entry.name).equal('testName10');
+            assert.equal((response as CategoryEntry).entry.parentId, 'testId1');
+            assert.equal((response as CategoryEntry).entry.name, 'testName10');
             done();
         });
     });
@@ -191,7 +186,7 @@ describe('Categories', () => {
         categoriesApi.createSubcategories('testId1', [{ name: 'testName10' }]).then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(409);
+                assert.equal(error.status, 409);
                 done();
             }
         );
@@ -202,7 +197,7 @@ describe('Categories', () => {
         categoriesApi.createSubcategories('testId1', [{ name: 'testName10' }]).then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(403);
+                assert.equal(error.status, 403);
                 done();
             }
         );
@@ -212,11 +207,11 @@ describe('Categories', () => {
         categoriesMock.get201ResponseCategoryLinked('testNode');
         categoriesApi.linkNodeToCategory('testNode', [{ categoryId: 'testId1' }]).then((response) => {
             if (response instanceof CategoryEntry) {
-                expect(response.entry.id).equal('testId1');
-                expect(response.entry.name).equal('testName1');
+                assert.equal(response.entry.id, 'testId1');
+                assert.equal(response.entry.name, 'testName1');
                 done();
             } else {
-                fail();
+                assert.fail();
             }
         });
     });
@@ -225,11 +220,11 @@ describe('Categories', () => {
         categoriesMock.get201ResponseCategoryLinkedArray('testNodeArr');
         categoriesApi.linkNodeToCategory('testNodeArr', [{ categoryId: 'testId1' }, { categoryId: 'testId2' }]).then((response) => {
             const categoriesPaging = response as CategoryPaging;
-            expect(categoriesPaging.list.pagination.count).equal(2);
-            expect(categoriesPaging.list.entries[0].entry.id).equal('testId1');
-            expect(categoriesPaging.list.entries[0].entry.name).equal('testName1');
-            expect(categoriesPaging.list.entries[1].entry.id).equal('testId2');
-            expect(categoriesPaging.list.entries[1].entry.name).equal('testName2');
+            assert.equal(categoriesPaging.list.pagination.count, 2);
+            assert.equal(categoriesPaging.list.entries[0].entry.id, 'testId1');
+            assert.equal(categoriesPaging.list.entries[0].entry.name, 'testName1');
+            assert.equal(categoriesPaging.list.entries[1].entry.id, 'testId2');
+            assert.equal(categoriesPaging.list.entries[1].entry.name, 'testName2');
             done();
         });
     });
@@ -239,7 +234,7 @@ describe('Categories', () => {
         categoriesApi.linkNodeToCategory('testNode', [{ categoryId: 'testId1' }]).then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(404);
+                assert.equal(error.status, 404);
                 done();
             }
         );
@@ -250,7 +245,7 @@ describe('Categories', () => {
         categoriesApi.linkNodeToCategory('testNode', [{ categoryId: 'testId1' }]).then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(403);
+                assert.equal(error.status, 403);
                 done();
             }
         );
@@ -261,7 +256,7 @@ describe('Categories', () => {
         categoriesApi.linkNodeToCategory('testNode', [{ categoryId: 'testId1' }]).then(
             () => {},
             (error: { status: number }) => {
-                expect(error.status).equal(405);
+                assert.equal(error.status, 405);
                 done();
             }
         );

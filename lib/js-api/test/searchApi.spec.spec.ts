@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { expect } from 'chai';
+import assert from 'assert';
 import { AlfrescoApi } from '../src/alfrescoApi';
 import { SearchApi } from '../src/api/search-rest-api';
 import { EcmAuthMock, SearchMock } from '../test/mockObjects';
@@ -54,14 +54,9 @@ describe('Search', () => {
                     language: 'cmis'
                 }
             })
-            .then(
-                (data) => {
-                    expect(data.list.entries[0].entry.name).to.be.equal('user');
-                    done();
-                },
-                (error) => {
-                    console.error(error);
-                }
-            );
+            .then((data) => {
+                assert.equal(data.list.entries[0].entry.name, 'user');
+                done();
+            });
     });
 });

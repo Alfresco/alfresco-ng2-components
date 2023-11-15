@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi } from '../src/alfrescoApi';
-import { Oauth2Auth } from '../src/authentication/oauth2Auth';
+import assert from 'assert';
+import { AlfrescoApi, Oauth2Auth } from '../src';
 import chai, { expect } from 'chai';
 import spies from 'chai-spies';
 chai.use(spies);
@@ -57,7 +57,7 @@ describe('Oauth2 Implicit flow test', () => {
                 alfrescoJsApi
             );
         } catch (error) {
-            expect(error.message).to.be.equal('Missing redirectUri required parameter');
+            assert.equal(error.message, 'Missing redirectUri required parameter');
             done();
         }
     });
