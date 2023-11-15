@@ -1646,10 +1646,16 @@ describe('Column Resizing', () => {
     let data: { id: number; name: string }[] = [];
     let dataTableSchema: DataColumn[] = [];
 
+    /**
+     * Returns datatable body div element
+     */
     function getTableBody(): HTMLDivElement {
         return fixture.debugElement.nativeElement.querySelector('.adf-datatable-body');
     }
 
+    /**
+     * Returns resize handler div element
+     */
     function getResizeHandler(): HTMLDivElement {
         return fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
     }
