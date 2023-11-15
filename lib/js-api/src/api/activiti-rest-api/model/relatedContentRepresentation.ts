@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 import { LightUserRepresentation } from './lightUserRepresentation';
 
 export class RelatedContentRepresentation {
@@ -39,7 +39,6 @@ export class RelatedContentRepresentation {
         if (input) {
             Object.assign(this, input);
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
-            this.createdBy = input.createdBy ? new LightUserRepresentation(input.createdBy) : undefined;
         }
     }
 }

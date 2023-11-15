@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class TaskQueryRepresentation {
     appDefinitionId?: number;
@@ -40,7 +40,6 @@ export class TaskQueryRepresentation {
             this.dueBefore = input.dueBefore ? DateAlfresco.parseDate(input.dueBefore) : undefined;
         }
     }
-
 }
 export namespace TaskQueryRepresentation {
     export type SortEnum = 'created-desc' | 'created-asc' | 'due-desc' | 'due-asc';

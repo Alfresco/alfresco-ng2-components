@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class File {
+export interface File {
     absolute?: boolean;
     absoluteFile?: any;
     absolutePath?: string;
@@ -31,10 +31,4 @@ export class File {
     path?: string;
     totalSpace?: number;
     usableSpace?: number;
-
-    constructor(input?: Partial<File>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -15,17 +15,11 @@
  * limitations under the License.
  */
 
-export class VariableMappingRepresentation {
+export interface VariableMappingRepresentation {
     inProcessVariable?: string;
     inVariableType?: string;
     mappedVariable?: string;
     outProcessVariable?: string;
     outVariableType?: string;
     typeOfMapping?: string;
-
-    constructor(input?: Partial<VariableMappingRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export class LayoutRepresentation {
+export interface LayoutRepresentation {
     colspan?: number;
     column?: number;
     row?: number;
-
-    constructor(input?: Partial<LayoutRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -15,14 +15,6 @@
  * limitations under the License.
  */
 
-export class GlobalDateFormatRepresentation {
+export interface GlobalDateFormatRepresentation {
     globalDateFormat?: string;
-
-    constructor(input?: Partial<GlobalDateFormatRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

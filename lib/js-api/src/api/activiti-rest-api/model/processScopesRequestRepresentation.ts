@@ -17,17 +17,7 @@
 
 import { ProcessScopeIdentifierRepresentation } from './processScopeIdentifierRepresentation';
 
-export class ProcessScopesRequestRepresentation {
+export interface ProcessScopesRequestRepresentation {
     identifiers?: ProcessScopeIdentifierRepresentation[];
     overriddenModel?: string;
-
-    constructor(input?: Partial<ProcessScopesRequestRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.identifiers) {
-                this.identifiers = input.identifiers.map((item) => new ProcessScopeIdentifierRepresentation(item));
-            }
-        }
-    }
-
 }

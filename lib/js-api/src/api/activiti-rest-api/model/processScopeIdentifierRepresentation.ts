@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class ProcessScopeIdentifierRepresentation {
+export interface ProcessScopeIdentifierRepresentation {
     processActivityId?: string;
     processModelId?: number;
-
-    constructor(input?: Partial<ProcessScopeIdentifierRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

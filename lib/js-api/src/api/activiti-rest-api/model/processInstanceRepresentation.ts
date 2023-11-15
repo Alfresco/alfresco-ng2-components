@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 import { LightUserRepresentation } from './lightUserRepresentation';
 import { RestVariable } from './restVariable';
 
@@ -44,7 +44,6 @@ export class ProcessInstanceRepresentation {
             Object.assign(this, input);
             this.ended = input.ended ? DateAlfresco.parseDate(input.ended) : undefined;
             this.started = input.started ? DateAlfresco.parseDate(input.started) : undefined;
-            this.startedBy = input.startedBy ? new LightUserRepresentation(input.startedBy) : undefined;
             if (input.variables) {
                 this.variables = input.variables.map((item) => new RestVariable(item));
             }

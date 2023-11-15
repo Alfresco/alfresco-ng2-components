@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class CommentAuditInfo {
+export interface CommentAuditInfo {
     author?: string;
     message?: string;
-
-    constructor(input?: Partial<CommentAuditInfo>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

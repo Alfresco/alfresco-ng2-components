@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class BulkUserUpdateRepresentation {
+export interface BulkUserUpdateRepresentation {
     accountType?: string;
     password?: string;
     primaryGroupId?: number;
@@ -23,12 +23,4 @@ export class BulkUserUpdateRepresentation {
     status?: string;
     tenantId?: number;
     users?: number[];
-
-    constructor(input?: Partial<BulkUserUpdateRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { ProcessScopeRepresentation } from '../model/processScopeRepresentation';
-import { ProcessScopesRequestRepresentation } from '../model/processScopesRequestRepresentation';
+import { ProcessScopeRepresentation, ProcessScopesRequestRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class DecisionTaskRepresentation {
     activityId?: string;
@@ -32,11 +32,9 @@ export class DecisionTaskRepresentation {
     processInstanceId?: string;
 
     constructor(input?: Partial<DecisionTaskRepresentation>) {
-
         if (input) {
             Object.assign(this, input);
             this.decisionExecutionEnded = input.decisionExecutionEnded ? DateAlfresco.parseDate(input.decisionExecutionEnded) : undefined;
         }
     }
-
 }

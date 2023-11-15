@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 import { GroupRepresentation } from './groupRepresentation';
 import { LightAppRepresentation } from './lightAppRepresentation';
 
@@ -45,9 +45,6 @@ export class UserRepresentation {
     constructor(input?: Partial<UserRepresentation>) {
         if (input) {
             Object.assign(this, input);
-            if (input.apps) {
-                this.apps = input.apps.map((item) => new LightAppRepresentation(item));
-            }
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
             if (input.groups) {
                 this.groups = input.groups.map((item) => new GroupRepresentation(item));
@@ -57,5 +54,4 @@ export class UserRepresentation {
             this.primaryGroup = input.primaryGroup ? new GroupRepresentation(input.primaryGroup) : undefined;
         }
     }
-
 }

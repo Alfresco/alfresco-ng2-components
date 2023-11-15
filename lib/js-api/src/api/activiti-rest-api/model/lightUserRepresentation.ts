@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class LightUserRepresentation {
+export interface LightUserRepresentation {
     company?: string;
     email?: string;
     externalId?: string;
@@ -23,11 +23,4 @@ export class LightUserRepresentation {
     id?: number;
     lastName?: string;
     pictureId?: number;
-
-    constructor(input?: Partial<LightUserRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

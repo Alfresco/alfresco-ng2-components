@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { ResultListDataRepresentationAlfrescoContentRepresentation } from '../model/resultListDataRepresentationAlfrescoContentRepresentation';
-import { ResultListDataRepresentationAlfrescoEndpointRepresentation } from '../model/resultListDataRepresentationAlfrescoEndpointRepresentation';
-import { ResultListDataRepresentationAlfrescoSiteRepresenation } from '../model/resultListDataRepresentationAlfrescoSiteRepresenation';
+import {
+    ResultListDataRepresentationAlfrescoContentRepresentation,
+    ResultListDataRepresentationAlfrescoEndpointRepresentation,
+    ResultListDataRepresentationAlfrescoSiteRepresenation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -41,8 +43,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/integration/alfresco/{repositoryId}/sites',
-            pathParams,
-            returnType: ResultListDataRepresentationAlfrescoSiteRepresenation
+            pathParams
         });
     }
 
@@ -71,8 +72,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/rest/integration/alfresco/{repositoryId}/sites/{siteId}/folderpath/{folderPath}/content',
-            pathParams,
-            returnType: ResultListDataRepresentationAlfrescoContentRepresentation
+            pathParams
         });
     }
 
@@ -94,8 +94,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/integration/alfresco/{repositoryId}/folders/{folderId}/content',
-            pathParams,
-            returnType: ResultListDataRepresentationAlfrescoContentRepresentation
+            pathParams
         });
     }
 
@@ -117,8 +116,7 @@ export class IntegrationAlfrescoOnPremiseApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/integration/alfresco/{repositoryId}/sites/{siteId}/content',
-            pathParams,
-            returnType: ResultListDataRepresentationAlfrescoContentRepresentation
+            pathParams
         });
     }
 

@@ -52,18 +52,6 @@ export class FormDefinitionRepresentation {
             if (input.fields) {
                 this.fields = input.fields.map((item) => new FormFieldRepresentation(item));
             }
-            if (input.javascriptEvents) {
-                this.javascriptEvents = input.javascriptEvents.map((item) => new FormJavascriptEventRepresentation(item));
-            }
-            if (input.outcomes) {
-                this.outcomes = input.outcomes.map((item) => new FormOutcomeRepresentation(item));
-            }
-            if (input.tabs) {
-                this.tabs = input.tabs.map((item) => new FormTabRepresentation(item));
-            }
-            if (input.variables) {
-                this.variables = input.variables.map((item) => new FormVariableRepresentation(item));
-            }
         }
     }
 }

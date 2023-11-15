@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { HistoricTaskInstanceQueryRepresentation } from '../model/historicTaskInstanceQueryRepresentation';
-import { IdentityLinkRepresentation } from '../model/identityLinkRepresentation';
-import { ResultListDataRepresentationTaskRepresentation } from '../model/resultListDataRepresentationTaskRepresentation';
-import { TaskAuditInfoRepresentation } from '../model/taskAuditInfoRepresentation';
-import { TaskFilterRequestRepresentation } from '../model/taskFilterRequestRepresentation';
-import { TaskQueryRepresentation } from '../model/taskQueryRepresentation';
-import { TaskRepresentation } from '../model/taskRepresentation';
-import { TaskUpdateRepresentation } from '../model/taskUpdateRepresentation';
+import {
+    HistoricTaskInstanceQueryRepresentation,
+    IdentityLinkRepresentation,
+    ResultListDataRepresentationTaskRepresentation,
+    TaskAuditInfoRepresentation,
+    TaskFilterRequestRepresentation,
+    TaskQueryRepresentation,
+    TaskRepresentation,
+    TaskUpdateRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -48,8 +50,7 @@ export class TasksApi extends BaseApi {
         return this.post({
             path: '/api/enterprise/tasks/{taskId}/identitylinks',
             pathParams,
-            bodyParam: identityLinkRepresentation,
-            returnType: IdentityLinkRepresentation
+            bodyParam: identityLinkRepresentation
         });
     }
 
@@ -158,8 +159,7 @@ export class TasksApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/tasks/{taskId}/identitylinks/{family}/{identityId}/{type}',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 
@@ -181,8 +181,7 @@ export class TasksApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/tasks/{taskId}/identitylinks/{family}',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 
@@ -201,8 +200,7 @@ export class TasksApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/tasks/{taskId}/identitylinks',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 

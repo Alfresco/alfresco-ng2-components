@@ -15,17 +15,9 @@
  * limitations under the License.
  */
 
-export class DataSourceConfigRepresentation {
+export interface DataSourceConfigRepresentation {
     driverClass?: string;
     jdbcUrl?: string;
     password?: string;
     username?: string;
-
-    constructor(input?: Partial<DataSourceConfigRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

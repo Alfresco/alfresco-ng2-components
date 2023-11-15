@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { ResultListDataRepresentationUserProcessInstanceFilterRepresentation } from '../model/resultListDataRepresentationUserProcessInstanceFilterRepresentation';
-import { ResultListDataRepresentationUserTaskFilterRepresentation } from '../model/resultListDataRepresentationUserTaskFilterRepresentation';
-import { UserFilterOrderRepresentation } from '../model/userFilterOrderRepresentation';
-import { UserProcessInstanceFilterRepresentation } from '../model/userProcessInstanceFilterRepresentation';
-import { UserTaskFilterRepresentation } from '../model/userTaskFilterRepresentation';
+import {
+    ResultListDataRepresentationUserProcessInstanceFilterRepresentation,
+    ResultListDataRepresentationUserTaskFilterRepresentation,
+    UserFilterOrderRepresentation,
+    UserProcessInstanceFilterRepresentation,
+    UserTaskFilterRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { AppIdQuery } from './types';

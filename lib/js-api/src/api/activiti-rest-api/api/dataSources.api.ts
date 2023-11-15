@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ResultListDataRepresentationDataSourceRepresentation } from '../model/resultListDataRepresentationDataSourceRepresentation';
+import { ResultListDataRepresentationDataSourceRepresentation } from '../model';
 import { BaseApi } from './base.api';
 
 /**
@@ -31,8 +31,7 @@ export class DataSourcesApi extends BaseApi {
     getDataSources(opts?: { tenantId?: number }): Promise<ResultListDataRepresentationDataSourceRepresentation> {
         return this.get({
             path: '/api/enterprise/editor/data-sources',
-            queryParams: opts,
-            returnType: ResultListDataRepresentationDataSourceRepresentation
+            queryParams: opts
         });
     }
 }

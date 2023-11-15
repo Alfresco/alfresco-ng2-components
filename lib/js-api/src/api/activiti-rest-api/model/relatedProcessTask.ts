@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class RelatedProcessTask {
+export interface RelatedProcessTask {
     processId?: string;
     taskId?: string;
-
-    constructor(input?: Partial<RelatedProcessTask>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

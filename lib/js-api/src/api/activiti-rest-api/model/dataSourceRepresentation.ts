@@ -17,16 +17,9 @@
 
 import { DataSourceConfigRepresentation } from './dataSourceConfigRepresentation';
 
-export class DataSourceRepresentation {
+export interface DataSourceRepresentation {
     config?: DataSourceConfigRepresentation;
     id?: number;
     name?: string;
     tenantId?: number;
-
-    constructor(input?: Partial<DataSourceRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            this.config = input.config ? new DataSourceConfigRepresentation(input.config) : undefined;
-        }
-    }
 }

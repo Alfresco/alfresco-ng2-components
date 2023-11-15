@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { CreateEndpointBasicAuthRepresentation } from '../model/createEndpointBasicAuthRepresentation';
-import { EndpointBasicAuthRepresentation } from '../model/endpointBasicAuthRepresentation';
-import { EndpointConfigurationRepresentation } from '../model/endpointConfigurationRepresentation';
+import { CreateEndpointBasicAuthRepresentation, EndpointBasicAuthRepresentation, EndpointConfigurationRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -52,8 +50,7 @@ export class AdminEndpointsApi extends BaseApi {
 
         return this.post({
             path: '/api/enterprise/admin/endpoints',
-            bodyParam: representation,
-            returnType: EndpointConfigurationRepresentation
+            bodyParam: representation
         });
     }
 
@@ -126,8 +123,7 @@ export class AdminEndpointsApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/admin/endpoints/{endpointConfigurationId}',
             pathParams,
-            queryParams,
-            returnType: EndpointConfigurationRepresentation
+            queryParams
         });
     }
 
@@ -146,7 +142,6 @@ export class AdminEndpointsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/admin/endpoints',
-            returnType: EndpointConfigurationRepresentation,
             queryParams
         });
     }
@@ -210,7 +205,10 @@ export class AdminEndpointsApi extends BaseApi {
      * @param createRepresentation createRepresentation
      * @return Promise<EndpointBasicAuthRepresentation>
      */
-    updateBasicAuthConfiguration(basicAuthId: number, createRepresentation: CreateEndpointBasicAuthRepresentation): Promise<EndpointBasicAuthRepresentation> {
+    updateBasicAuthConfiguration(
+        basicAuthId: number,
+        createRepresentation: CreateEndpointBasicAuthRepresentation
+    ): Promise<EndpointBasicAuthRepresentation> {
         throwIfNotDefined(basicAuthId, 'basicAuthId');
         throwIfNotDefined(createRepresentation, 'createRepresentation');
 
@@ -233,7 +231,10 @@ export class AdminEndpointsApi extends BaseApi {
      * @param representation representation
      * @return Promise<EndpointConfigurationRepresentation>
      */
-    updateEndpointConfiguration(endpointConfigurationId: number, representation: EndpointConfigurationRepresentation): Promise<EndpointConfigurationRepresentation> {
+    updateEndpointConfiguration(
+        endpointConfigurationId: number,
+        representation: EndpointConfigurationRepresentation
+    ): Promise<EndpointConfigurationRepresentation> {
         throwIfNotDefined(endpointConfigurationId, 'endpointConfigurationId');
         throwIfNotDefined(representation, 'representation');
 
@@ -244,8 +245,7 @@ export class AdminEndpointsApi extends BaseApi {
         return this.put({
             path: '/api/enterprise/admin/endpoints/{endpointConfigurationId}',
             pathParams,
-            bodyParam: representation,
-            returnType: EndpointConfigurationRepresentation
+            bodyParam: representation
         });
     }
 }

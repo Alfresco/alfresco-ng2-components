@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class SaveFormRepresentation {
+export interface SaveFormRepresentation {
     values?: any;
-
-    constructor(input?: Partial<SaveFormRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

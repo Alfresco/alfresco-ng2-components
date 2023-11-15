@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class LightTenantRepresentation {
+export interface LightTenantRepresentation {
     id?: number;
     name?: string;
-
-    constructor(input?: Partial<LightTenantRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

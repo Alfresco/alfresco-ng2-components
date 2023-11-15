@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-export class IdentityLinkRepresentation {
+export interface IdentityLinkRepresentation {
     group?: string;
     type?: string;
     user?: string;
-
-    constructor(input?: Partial<IdentityLinkRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

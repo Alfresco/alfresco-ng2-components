@@ -17,7 +17,7 @@
 
 import { EndpointRequestHeaderRepresentation } from './endpointRequestHeaderRepresentation';
 
-export class EndpointConfigurationRepresentation {
+export interface EndpointConfigurationRepresentation {
     basicAuthId?: number;
     basicAuthName?: string;
     host?: string;
@@ -28,13 +28,4 @@ export class EndpointConfigurationRepresentation {
     protocol?: string;
     requestHeaders?: EndpointRequestHeaderRepresentation[];
     tenantId?: number;
-
-    constructor(input?: Partial<EndpointConfigurationRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.requestHeaders) {
-                this.requestHeaders = input.requestHeaders.map((item) => new EndpointRequestHeaderRepresentation(item));
-            }
-        }
-    }
 }

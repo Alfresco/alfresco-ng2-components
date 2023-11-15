@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-export class AuditLogFormDataRepresentation {
+export interface AuditLogFormDataRepresentation {
     fieldId?: string;
     fieldName?: string;
     value?: string;
-
-    constructor(input?: Partial<AuditLogFormDataRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

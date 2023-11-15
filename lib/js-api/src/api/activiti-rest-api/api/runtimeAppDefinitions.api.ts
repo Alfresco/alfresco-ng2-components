@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { AppDefinitionRepresentation } from '../model/appDefinitionRepresentation';
-import { ResultListDataRepresentationAppDefinitionRepresentation } from '../model/resultListDataRepresentationAppDefinitionRepresentation';
-import { RuntimeAppDefinitionSaveRepresentation } from '../model/runtimeAppDefinitionSaveRepresentation';
+import {
+    AppDefinitionRepresentation,
+    ResultListDataRepresentationAppDefinitionRepresentation,
+    RuntimeAppDefinitionSaveRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -57,8 +59,7 @@ export class RuntimeAppDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/runtime-app-definitions/{appDefinitionId}',
-            pathParams,
-            returnType: AppDefinitionRepresentation
+            pathParams
         });
     }
 
@@ -71,8 +72,7 @@ export class RuntimeAppDefinitionsApi extends BaseApi {
      */
     getAppDefinitions(): Promise<ResultListDataRepresentationAppDefinitionRepresentation> {
         return this.get({
-            path: '/api/enterprise/runtime-app-definitions',
-            returnType: ResultListDataRepresentationAppDefinitionRepresentation
+            path: '/api/enterprise/runtime-app-definitions'
         });
     }
 }

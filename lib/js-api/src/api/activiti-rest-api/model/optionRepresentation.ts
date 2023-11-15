@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export class OptionRepresentation {
+export interface OptionRepresentation {
     id?: string;
     name?: string;
-
-    constructor(input?: Partial<OptionRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

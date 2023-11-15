@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-export class AuditDecisionExpressionInfoRepresentation {
+export interface AuditDecisionExpressionInfoRepresentation {
     type?: string;
     value?: any;
     variable?: string;
-
-    constructor(input?: Partial<AuditDecisionExpressionInfoRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

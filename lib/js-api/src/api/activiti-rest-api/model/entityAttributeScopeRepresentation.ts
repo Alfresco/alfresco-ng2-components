@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class EntityAttributeScopeRepresentation {
+export interface EntityAttributeScopeRepresentation {
     name?: string;
     type?: string;
-
-    constructor(input?: Partial<EntityAttributeScopeRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

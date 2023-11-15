@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 import { FormDefinitionRepresentation } from './formDefinitionRepresentation';
 
 export class FormRepresentation {
@@ -37,5 +37,4 @@ export class FormRepresentation {
             this.lastUpdated = input.lastUpdated ? DateAlfresco.parseDate(input.lastUpdated) : undefined;
         }
     }
-
 }

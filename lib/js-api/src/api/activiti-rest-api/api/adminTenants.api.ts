@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-import { CreateTenantRepresentation } from '../model/createTenantRepresentation';
-import { ImageUploadRepresentation } from '../model/imageUploadRepresentation';
-import { LightTenantRepresentation } from '../model/lightTenantRepresentation';
-import { TenantEvent } from '../model/tenantEvent';
-import { TenantRepresentation } from '../model/tenantRepresentation';
+import { CreateTenantRepresentation, ImageUploadRepresentation, LightTenantRepresentation, TenantEvent, TenantRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -39,8 +35,7 @@ export class AdminTenantsApi extends BaseApi {
 
         return this.post({
             path: '/api/enterprise/admin/tenants',
-            bodyParam: createTenantRepresentation,
-            returnType: LightTenantRepresentation
+            bodyParam: createTenantRepresentation
         });
     }
 
@@ -130,8 +125,7 @@ export class AdminTenantsApi extends BaseApi {
      */
     getTenants(): Promise<LightTenantRepresentation> {
         return this.get({
-            path: '/api/enterprise/admin/tenants',
-            returnType: LightTenantRepresentation
+            path: '/api/enterprise/admin/tenants'
         });
     }
 

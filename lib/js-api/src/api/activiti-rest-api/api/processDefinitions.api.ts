@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { FormDefinitionRepresentation } from '../model/formDefinitionRepresentation';
-import { FormValueRepresentation } from '../model/formValueRepresentation';
-import { IdentityLinkRepresentation } from '../model/identityLinkRepresentation';
-import { ResultListDataRepresentationProcessDefinitionRepresentation } from '../model/resultListDataRepresentationProcessDefinitionRepresentation';
-import { ResultListDataRepresentationRuntimeDecisionTableRepresentation } from '../model/resultListDataRepresentationRuntimeDecisionTableRepresentation';
-import { ResultListDataRepresentationRuntimeFormRepresentation } from '../model/resultListDataRepresentationRuntimeFormRepresentation';
+import {
+    FormDefinitionRepresentation,
+    FormValueRepresentation,
+    IdentityLinkRepresentation,
+    ResultListDataRepresentationProcessDefinitionRepresentation,
+    ResultListDataRepresentationRuntimeDecisionTableRepresentation,
+    ResultListDataRepresentationRuntimeFormRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -46,8 +48,7 @@ export class ProcessDefinitionsApi extends BaseApi {
         return this.post({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/identitylinks',
             pathParams,
-            bodyParam: identityLinkRepresentation,
-            returnType: IdentityLinkRepresentation
+            bodyParam: identityLinkRepresentation
         });
     }
 
@@ -97,8 +98,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/identitylinks/{family}/{identityId}',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 
@@ -120,8 +120,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/identitylinks/{family}',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 
@@ -140,8 +139,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/identitylinks',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 
@@ -160,8 +158,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/decision-tables',
-            pathParams,
-            returnType: ResultListDataRepresentationRuntimeDecisionTableRepresentation
+            pathParams
         });
     }
 
@@ -180,8 +177,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/forms',
-            pathParams,
-            returnType: ResultListDataRepresentationRuntimeFormRepresentation
+            pathParams
         });
     }
 
@@ -218,8 +214,7 @@ export class ProcessDefinitionsApi extends BaseApi {
     }): Promise<ResultListDataRepresentationProcessDefinitionRepresentation> {
         return this.get({
             path: '/api/enterprise/process-definitions',
-            queryParams: opts,
-            returnType: ResultListDataRepresentationProcessDefinitionRepresentation
+            queryParams: opts
         });
     }
 

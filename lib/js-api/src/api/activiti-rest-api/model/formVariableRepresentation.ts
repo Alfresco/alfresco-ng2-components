@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-export class FormVariableRepresentation {
+export interface FormVariableRepresentation {
     name?: string;
     type?: string;
     value?: any;
-
-    constructor(input?: Partial<FormVariableRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -15,14 +15,6 @@
  * limitations under the License.
  */
 
-export class AddGroupCapabilitiesRepresentation {
+export interface AddGroupCapabilitiesRepresentation {
     capabilities?: string[];
-
-    constructor(input?: Partial<AddGroupCapabilitiesRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

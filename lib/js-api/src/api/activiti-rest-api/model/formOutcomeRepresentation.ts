@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class FormOutcomeRepresentation {
+export interface FormOutcomeRepresentation {
     id?: string;
     name?: string;
-
-    constructor(input?: Partial<FormOutcomeRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

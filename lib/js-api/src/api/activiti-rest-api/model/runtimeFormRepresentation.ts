@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class RuntimeFormRepresentation {
+export interface RuntimeFormRepresentation {
     appDefinitionId?: number;
     appDeploymentId?: number;
     description?: string;
@@ -23,11 +23,4 @@ export class RuntimeFormRepresentation {
     modelId?: number;
     name?: string;
     tenantId?: number;
-
-    constructor(input?: Partial<RuntimeFormRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

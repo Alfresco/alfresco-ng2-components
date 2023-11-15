@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class UserAccountCredentialsRepresentation {
+export interface UserAccountCredentialsRepresentation {
     password?: string;
     username?: string;
-
-    constructor(input?: Partial<UserAccountCredentialsRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

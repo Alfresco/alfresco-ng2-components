@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { JsonNode } from '../model/jsonNode';
-import { ResultListDataRepresentationRuntimeDecisionTableRepresentation } from '../model/resultListDataRepresentationRuntimeDecisionTableRepresentation';
-import { RuntimeDecisionTableRepresentation } from '../model/runtimeDecisionTableRepresentation';
+import { JsonNode, ResultListDataRepresentationRuntimeDecisionTableRepresentation, RuntimeDecisionTableRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -71,8 +69,7 @@ export class DecisionTablesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/decisions/decision-tables/{decisionTableId}',
-            pathParams,
-            returnType: RuntimeDecisionTableRepresentation
+            pathParams
         });
     }
 
@@ -85,8 +82,7 @@ export class DecisionTablesApi extends BaseApi {
     getDecisionTables(opts?: GetDecisionTablesOpts): Promise<ResultListDataRepresentationRuntimeDecisionTableRepresentation> {
         return this.get({
             path: '/api/enterprise/decisions/decision-tables',
-            queryParams: opts,
-            returnType: ResultListDataRepresentationRuntimeDecisionTableRepresentation
+            queryParams: opts
         });
     }
 }

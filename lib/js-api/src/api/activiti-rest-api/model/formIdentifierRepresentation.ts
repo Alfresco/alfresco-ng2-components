@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class FormIdentifierRepresentation {
+export interface FormIdentifierRepresentation {
     formId?: number;
-
-    constructor(input?: Partial<FormIdentifierRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

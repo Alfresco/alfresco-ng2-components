@@ -58,14 +58,6 @@ export class FormFieldRepresentation {
     constructor(input?: Partial<FormFieldRepresentation>) {
         if (input) {
             Object.assign(this, input);
-
-            this.layout = input.layout ? new LayoutRepresentation(input.layout) : undefined;
-
-            if (input.options) {
-                this.options = input.options.map((item) => new OptionRepresentation(item));
-            }
-
-            this.visibilityCondition = input.visibilityCondition ? new ConditionRepresentation(input.visibilityCondition) : undefined;
         }
     }
 }

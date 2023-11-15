@@ -17,19 +17,9 @@
 
 import { RuntimeDecisionTableRepresentation } from './runtimeDecisionTableRepresentation';
 
-export class ResultListDataRepresentationRuntimeDecisionTableRepresentation {
+export interface ResultListDataRepresentationRuntimeDecisionTableRepresentation {
     data?: RuntimeDecisionTableRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationRuntimeDecisionTableRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new RuntimeDecisionTableRepresentation(item));
-            }
-        }
-    }
-
 }

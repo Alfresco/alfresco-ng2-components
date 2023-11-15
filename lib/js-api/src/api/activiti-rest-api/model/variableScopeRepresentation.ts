@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class VariableScopeRepresentation {
+export interface VariableScopeRepresentation {
     mapVariable?: string;
     mappedColumn?: string;
     mappedDataModel?: number;
@@ -23,10 +23,4 @@ export class VariableScopeRepresentation {
     mappedVariableName?: string;
     processVariableName?: string;
     processVariableType?: string;
-
-    constructor(input?: Partial<VariableScopeRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

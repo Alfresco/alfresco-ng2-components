@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class ChangePasswordRepresentation {
+export interface ChangePasswordRepresentation {
     newPassword?: string;
     oldPassword?: string;
-
-    constructor(input?: Partial<ChangePasswordRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

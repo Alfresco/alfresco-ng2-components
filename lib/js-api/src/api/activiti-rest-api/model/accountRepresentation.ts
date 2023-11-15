@@ -15,18 +15,10 @@
  * limitations under the License.
  */
 
-export class AccountRepresentation {
+export interface AccountRepresentation {
     authorizationUrl?: string;
     authorized?: boolean;
     metaDataAllowed?: boolean;
     name?: string;
     serviceId?: string;
-
-    constructor(input?: Partial<AccountRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

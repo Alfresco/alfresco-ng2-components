@@ -28,7 +28,6 @@ export class ProcessContentRepresentation {
             if (input.content) {
                 this.content = input.content.map((item) => new RelatedContentRepresentation(item));
             }
-            this.field = input.field ? new NamedObject(input.field) : undefined;
         }
     }
 }

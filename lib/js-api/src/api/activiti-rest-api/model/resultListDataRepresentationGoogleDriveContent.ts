@@ -17,19 +17,9 @@
 
 import { GoogleDriveContent } from './googleDriveContent';
 
-export class ResultListDataRepresentationGoogleDriveContent {
+export interface ResultListDataRepresentationGoogleDriveContent {
     data?: GoogleDriveContent[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationGoogleDriveContent>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new GoogleDriveContent(item));
-            }
-        }
-    }
-
 }

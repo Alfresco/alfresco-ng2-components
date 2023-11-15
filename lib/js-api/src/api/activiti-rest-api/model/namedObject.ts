@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export class NamedObject {
+export interface NamedObject {
     id?: string;
     name?: string;
-
-    constructor(input?: Partial<NamedObject>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

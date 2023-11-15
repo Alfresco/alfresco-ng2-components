@@ -115,8 +115,7 @@ export class UsersApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/users',
-            queryParams,
-            returnType: ResultListDataRepresentationLightUserRepresentation
+            queryParams
         });
     }
 

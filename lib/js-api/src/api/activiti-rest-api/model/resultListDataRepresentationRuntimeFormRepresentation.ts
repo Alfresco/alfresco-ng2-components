@@ -17,19 +17,9 @@
 
 import { RuntimeFormRepresentation } from './runtimeFormRepresentation';
 
-export class ResultListDataRepresentationRuntimeFormRepresentation {
+export interface ResultListDataRepresentationRuntimeFormRepresentation {
     data?: RuntimeFormRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationRuntimeFormRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new RuntimeFormRepresentation(item));
-            }
-        }
-    }
-
 }

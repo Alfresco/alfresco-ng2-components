@@ -17,18 +17,9 @@
 
 import { RelatedProcessTask } from './relatedProcessTask';
 
-export class ResultListDataRepresentationRelatedProcessTask {
+export interface ResultListDataRepresentationRelatedProcessTask {
     data?: RelatedProcessTask[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationRelatedProcessTask>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new RelatedProcessTask(item));
-            }
-        }
-    }
 }

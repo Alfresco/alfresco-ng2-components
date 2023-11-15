@@ -17,20 +17,9 @@
 
 import { EntityAttributeScopeRepresentation } from './entityAttributeScopeRepresentation';
 
-export class EntityVariableScopeRepresentation {
+export interface EntityVariableScopeRepresentation {
     attributes?: EntityAttributeScopeRepresentation[];
     entityName?: string;
     mappedDataModel?: number;
     mappedVariableName?: string;
-
-    constructor(input?: Partial<EntityVariableScopeRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-            if (input.attributes) {
-                this.attributes = input.attributes.map((item) => new EntityAttributeScopeRepresentation(item));
-            }
-        }
-    }
-
 }

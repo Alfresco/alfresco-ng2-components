@@ -17,16 +17,6 @@
 
 import { AppDefinitionRepresentation } from './appDefinitionRepresentation';
 
-export class RuntimeAppDefinitionSaveRepresentation {
+export interface RuntimeAppDefinitionSaveRepresentation {
     appDefinitions?: AppDefinitionRepresentation[];
-
-    constructor(input?: Partial<RuntimeAppDefinitionSaveRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.appDefinitions) {
-                this.appDefinitions = input.appDefinitions.map((item) => new AppDefinitionRepresentation(item));
-            }
-        }
-    }
-
 }

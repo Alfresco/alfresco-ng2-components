@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class UserFilterOrderRepresentation {
+export interface UserFilterOrderRepresentation {
     appId?: number;
     order?: number[];
-
-    constructor(input?: Partial<UserFilterOrderRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

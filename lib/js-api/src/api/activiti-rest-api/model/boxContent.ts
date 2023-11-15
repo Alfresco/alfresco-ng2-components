@@ -15,18 +15,10 @@
  * limitations under the License.
  */
 
-export class BoxContent {
+export interface BoxContent {
     folder?: boolean;
     id?: string;
     mimeType?: string;
     simpleType?: string;
     title?: string;
-
-    constructor(input?: Partial<BoxContent>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

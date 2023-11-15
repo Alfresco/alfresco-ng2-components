@@ -15,14 +15,6 @@
  * limitations under the License.
  */
 
-export class ChecklistOrderRepresentation {
+export interface ChecklistOrderRepresentation {
     order?: string[];
-
-    constructor(input?: Partial<ChecklistOrderRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

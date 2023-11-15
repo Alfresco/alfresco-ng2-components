@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class GroupCapabilityRepresentation {
+export interface GroupCapabilityRepresentation {
     id?: number;
     name?: string;
-
-    constructor(input?: Partial<GroupCapabilityRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

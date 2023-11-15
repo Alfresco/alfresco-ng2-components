@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-export class ResetPasswordRepresentation {
+export interface ResetPasswordRepresentation {
     email?: string;
-
-    constructor(input?: Partial<ResetPasswordRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

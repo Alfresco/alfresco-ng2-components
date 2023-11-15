@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class UserIdentifierRepresentation {
+export interface UserIdentifierRepresentation {
     email?: string;
     userId?: string;
-
-    constructor(input?: Partial<UserIdentifierRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export class GoogleDriveContent {
+export interface GoogleDriveContent {
     folder?: boolean;
     id?: string;
     mimeType?: string;
     simpleType?: string;
     title?: string;
-
-    constructor(input?: Partial<GoogleDriveContent>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

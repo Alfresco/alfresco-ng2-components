@@ -17,18 +17,9 @@
 
 import { AbstractUserRepresentation } from './abstractUserRepresentation';
 
-export class ResultListDataRepresentationAbstractUserRepresentation {
+export interface ResultListDataRepresentationAbstractUserRepresentation {
     data?: AbstractUserRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationAbstractUserRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new AbstractUserRepresentation(item));
-            }
-        }
-    }
 }

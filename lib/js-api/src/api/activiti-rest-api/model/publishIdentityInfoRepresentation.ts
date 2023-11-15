@@ -18,16 +18,8 @@
 import { LightGroupRepresentation } from './lightGroupRepresentation';
 import { LightUserRepresentation } from './lightUserRepresentation';
 
-export class PublishIdentityInfoRepresentation {
+export interface PublishIdentityInfoRepresentation {
     group?: LightGroupRepresentation;
     person?: LightUserRepresentation;
     type?: string;
-
-    constructor(input?: Partial<PublishIdentityInfoRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            this.group = input.group ? new LightGroupRepresentation(input.group) : undefined;
-            this.person = input.person ? new LightUserRepresentation(input.person) : undefined;
-        }
-    }
 }

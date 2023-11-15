@@ -17,18 +17,7 @@
 
 import { AuditDecisionExpressionInfoRepresentation } from './auditDecisionExpressionInfoRepresentation';
 
-export class AuditDecisionRuleInfoRepresentation {
+export interface AuditDecisionRuleInfoRepresentation {
     expressions?: AuditDecisionExpressionInfoRepresentation[];
     title?: string;
-
-    constructor(input?: Partial<AuditDecisionRuleInfoRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-            if (input.expressions) {
-                this.expressions = input.expressions.map((item) => new AuditDecisionExpressionInfoRepresentation(item));
-            }
-        }
-    }
-
 }

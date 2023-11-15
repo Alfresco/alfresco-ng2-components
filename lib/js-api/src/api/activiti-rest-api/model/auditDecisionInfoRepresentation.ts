@@ -18,21 +18,7 @@
 import { AuditCalculatedValueRepresentation } from './auditCalculatedValueRepresentation';
 import { AuditDecisionRuleInfoRepresentation } from './auditDecisionRuleInfoRepresentation';
 
-export class AuditDecisionInfoRepresentation {
+export interface AuditDecisionInfoRepresentation {
     appliedRules?: AuditDecisionRuleInfoRepresentation[];
     calculatedValues?: AuditCalculatedValueRepresentation[];
-
-    constructor(input?: Partial<AuditDecisionInfoRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-            if (input.appliedRules) {
-                this.appliedRules = input.appliedRules.map((item) => new AuditDecisionRuleInfoRepresentation(item));
-            }
-            if (input.calculatedValues) {
-                this.calculatedValues = input.calculatedValues.map((item) => new AuditCalculatedValueRepresentation(item));
-            }
-        }
-    }
-
 }

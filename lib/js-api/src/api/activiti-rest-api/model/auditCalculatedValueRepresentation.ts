@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class AuditCalculatedValueRepresentation {
+export interface AuditCalculatedValueRepresentation {
     name?: string;
     value?: string;
-
-    constructor(input?: Partial<AuditCalculatedValueRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -17,19 +17,9 @@
 
 import { BoxContent } from './boxContent';
 
-export class ResultListDataRepresentationBoxContent {
+export interface ResultListDataRepresentationBoxContent {
     data?: BoxContent[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationBoxContent>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new BoxContent(item));
-            }
-        }
-    }
-
 }

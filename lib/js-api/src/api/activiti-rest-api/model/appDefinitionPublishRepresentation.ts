@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class AppDefinitionPublishRepresentation {
+export interface AppDefinitionPublishRepresentation {
     comment?: string;
     force?: boolean;
-
-    constructor(input?: Partial<AppDefinitionPublishRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

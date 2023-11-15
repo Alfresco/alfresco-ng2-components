@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class ImageUploadRepresentation {
     created?: Date;
@@ -29,5 +29,4 @@ export class ImageUploadRepresentation {
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
         }
     }
-
 }

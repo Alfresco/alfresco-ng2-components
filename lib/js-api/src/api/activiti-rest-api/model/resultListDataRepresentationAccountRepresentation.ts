@@ -17,18 +17,9 @@
 
 import { AccountRepresentation } from './accountRepresentation';
 
-export class ResultListDataRepresentationAccountRepresentation {
+export interface ResultListDataRepresentationAccountRepresentation {
     data?: AccountRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationAccountRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new AccountRepresentation(item));
-            }
-        }
-    }
 }

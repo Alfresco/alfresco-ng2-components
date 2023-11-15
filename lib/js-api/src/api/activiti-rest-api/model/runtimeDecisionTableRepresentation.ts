@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class RuntimeDecisionTableRepresentation {
+export interface RuntimeDecisionTableRepresentation {
     category?: string;
     deploymentId?: number;
     description?: string;
@@ -25,11 +25,4 @@ export class RuntimeDecisionTableRepresentation {
     resourceName?: string;
     tenantId?: string;
     version?: number;
-
-    constructor(input?: Partial<RuntimeDecisionTableRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

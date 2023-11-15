@@ -25,16 +25,11 @@ export class AppDefinition {
     theme?: string;
 
     constructor(input?: Partial<AppDefinition>) {
-
         if (input) {
             Object.assign(this, input);
             if (input.models) {
                 this.models = input.models.map((item: any) => new AppModelDefinition(item));
             }
-            if (input.publishIdentityInfo) {
-                this.publishIdentityInfo = input.publishIdentityInfo.map((item: any) => new PublishIdentityInfoRepresentation(item));
-            }
         }
     }
-
 }

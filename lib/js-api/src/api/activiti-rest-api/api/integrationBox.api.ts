@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { ResultListDataRepresentationBoxContent } from '../model/resultListDataRepresentationBoxContent';
-import { UserAccountCredentialsRepresentation } from '../model/userAccountCredentialsRepresentation';
+import { ResultListDataRepresentationBoxContent, UserAccountCredentialsRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -107,8 +106,7 @@ export class IntegrationBoxApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/integration/box/files',
             queryParams: opts,
-            accepts: ['*/*'],
-            returnType: ResultListDataRepresentationBoxContent
+            accepts: ['*/*']
         });
     }
 

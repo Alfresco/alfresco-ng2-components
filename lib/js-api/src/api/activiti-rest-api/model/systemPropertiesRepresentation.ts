@@ -15,15 +15,9 @@
  * limitations under the License.
  */
 
-export class SystemPropertiesRepresentation {
+export interface SystemPropertiesRepresentation {
     allowInvolveByEmail?: boolean;
     disableJavaScriptEventsInFormEditor?: boolean;
     logoutDisabled?: boolean;
     authConfiguration: { authUrl: string; realm: string; clientId: string; useBrowserLogout: boolean };
-
-    constructor(input?: Partial<SystemPropertiesRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

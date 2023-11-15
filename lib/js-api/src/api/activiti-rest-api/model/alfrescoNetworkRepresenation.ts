@@ -15,14 +15,6 @@
  * limitations under the License.
  */
 
-export class AlfrescoNetworkRepresenation {
+export interface AlfrescoNetworkRepresenation {
     id?: string;
-
-    constructor(input?: Partial<AlfrescoNetworkRepresenation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

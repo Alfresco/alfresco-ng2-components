@@ -34,12 +34,6 @@ export class TaskAuditInfoRepresentation {
     constructor(input?: Partial<TaskAuditInfoRepresentation>) {
         if (input) {
             Object.assign(this, input);
-            if (input.comments) {
-                this.comments = input.comments.map((item) => new CommentAuditInfo(item));
-            }
-            if (input.formData) {
-                this.formData = input.formData.map((item) => new AuditLogFormDataRepresentation(item));
-            }
         }
     }
 }

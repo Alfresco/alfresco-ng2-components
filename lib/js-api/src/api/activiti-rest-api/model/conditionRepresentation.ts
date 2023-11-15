@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class ConditionRepresentation {
+export interface ConditionRepresentation {
     leftFormFieldId?: string;
     leftRestResponseId?: string;
     nextCondition?: ConditionRepresentation;
@@ -25,11 +25,4 @@ export class ConditionRepresentation {
     rightRestResponseId?: string;
     rightType?: string;
     rightValue?: any;
-
-    constructor(input?: Partial<ConditionRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            this.nextCondition = input.nextCondition ? new ConditionRepresentation(input.nextCondition) : undefined;
-        }
-    }
 }

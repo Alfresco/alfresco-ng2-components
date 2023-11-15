@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class FormJavascriptEventRepresentation {
+export interface FormJavascriptEventRepresentation {
     event?: string;
     javascriptLogic?: string;
-
-    constructor(input?: Partial<FormJavascriptEventRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ResultListDataRepresentationAccountRepresentation } from '../model/resultListDataRepresentationAccountRepresentation';
+import { ResultListDataRepresentationAccountRepresentation } from '../model';
 import { BaseApi } from './base.api';
 
 /**
@@ -30,8 +30,7 @@ export class AccountIntegrationApi extends BaseApi {
      */
     getAccounts(): Promise<ResultListDataRepresentationAccountRepresentation> {
         return this.get({
-            path: '/api/enterprise/account/integration',
-            returnType: ResultListDataRepresentationAccountRepresentation
+            path: '/api/enterprise/account/integration'
         });
     }
 }

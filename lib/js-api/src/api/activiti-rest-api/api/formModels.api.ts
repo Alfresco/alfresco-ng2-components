@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { FormDefinitionRepresentation } from '../model/formDefinitionRepresentation';
-import { FormRepresentation } from '../model/formRepresentation';
-import { FormSaveRepresentation } from '../model/formSaveRepresentation';
-import { ResultListDataRepresentationFormRepresentation } from '../model/resultListDataRepresentationFormRepresentation';
-import { ResultListDataRepresentationRuntimeFormRepresentation } from '../model/resultListDataRepresentationRuntimeFormRepresentation';
-import { ValidationErrorRepresentation } from '../model/validationErrorRepresentation';
+import {
+    FormDefinitionRepresentation,
+    FormRepresentation,
+    FormSaveRepresentation,
+    ResultListDataRepresentationFormRepresentation,
+    ResultListDataRepresentationRuntimeFormRepresentation,
+    ValidationErrorRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { throwIfNotDefined } from '../../../assert';
@@ -124,8 +126,7 @@ export class FormModelsApi extends BaseApi {
         } else if (typeof input === 'object') {
             return this.get({
                 path: '/api/enterprise/forms',
-                queryParams: input,
-                returnType: ResultListDataRepresentationRuntimeFormRepresentation
+                queryParams: input
             });
         } else {
             return this.get({
@@ -178,8 +179,7 @@ export class FormModelsApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/editor/form-models/{formId}/validate',
             pathParams,
-            bodyParam: saveRepresentation,
-            returnType: ValidationErrorRepresentation
+            bodyParam: saveRepresentation
         });
     }
 }

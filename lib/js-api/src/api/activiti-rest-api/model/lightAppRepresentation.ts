@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export class LightAppRepresentation {
+export interface LightAppRepresentation {
     description?: string;
     icon?: string;
     id?: number;
     name?: string;
     theme?: string;
-
-    constructor(input?: Partial<LightAppRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

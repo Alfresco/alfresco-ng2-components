@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class ProcessDefinitionMetaDataRepresentation {
+export interface ProcessDefinitionMetaDataRepresentation {
     key?: string;
     value?: string;
-
-    constructor(input?: Partial<ProcessDefinitionMetaDataRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

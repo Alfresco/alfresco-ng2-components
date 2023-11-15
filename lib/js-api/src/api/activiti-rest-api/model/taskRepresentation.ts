@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 import { LightGroupRepresentation } from './lightGroupRepresentation';
 import { LightUserRepresentation } from './lightUserRepresentation';
 import { RestVariable } from './restVariable';
@@ -59,16 +59,9 @@ export class TaskRepresentation {
     constructor(input?: Partial<TaskRepresentation>) {
         if (input) {
             Object.assign(this, input);
-            this.assignee = input.assignee ? new LightUserRepresentation(input.assignee) : undefined;
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
             this.dueDate = input.dueDate ? DateAlfresco.parseDate(input.dueDate) : undefined;
             this.endDate = input.endDate ? DateAlfresco.parseDate(input.endDate) : undefined;
-            if (input.involvedGroups) {
-                this.involvedGroups = input.involvedGroups.map((item) => new LightGroupRepresentation(item));
-            }
-            if (input.involvedPeople) {
-                this.involvedPeople = input.involvedPeople.map((item) => new LightUserRepresentation(item));
-            }
             if (input.variables) {
                 this.variables = input.variables.map((item) => new RestVariable(item));
             }

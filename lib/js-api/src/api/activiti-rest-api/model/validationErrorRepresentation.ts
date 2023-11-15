@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class ValidationErrorRepresentation {
+export interface ValidationErrorRepresentation {
     defaultDescription?: string;
     id?: string;
     name?: string;
@@ -23,10 +23,4 @@ export class ValidationErrorRepresentation {
     problemReference?: string;
     validatorSetName?: string;
     warning?: boolean;
-
-    constructor(input?: Partial<ValidationErrorRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

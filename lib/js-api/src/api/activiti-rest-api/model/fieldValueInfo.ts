@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class FieldValueInfo {
+export interface FieldValueInfo {
     type?: string;
     value?: string;
-
-    constructor(input?: Partial<FieldValueInfo>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

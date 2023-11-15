@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { RelatedContentRepresentation } from '../model/relatedContentRepresentation';
-import { ResultListDataRepresentationRelatedContentRepresentation } from '../model/resultListDataRepresentationRelatedContentRepresentation';
+import {
+    RelatedContentRepresentation,
+    ResultListDataRepresentationRelatedContentRepresentation,
+    ResultListDataRepresentationRelatedProcessTask
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
-import { ResultListDataRepresentationRelatedProcessTask } from '../model/resultListDataRepresentationRelatedProcessTask';
 
 /**
  * Content service.
@@ -313,8 +315,7 @@ export class ContentApi extends BaseApi {
                 source,
                 size,
                 page
-            },
-            returnType: ResultListDataRepresentationRelatedProcessTask
+            }
         });
     }
 }

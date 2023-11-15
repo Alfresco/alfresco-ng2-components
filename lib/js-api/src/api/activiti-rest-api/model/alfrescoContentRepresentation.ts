@@ -15,17 +15,9 @@
  * limitations under the License.
  */
 
-export class AlfrescoContentRepresentation {
+export interface AlfrescoContentRepresentation {
     folder?: boolean;
     id?: string;
     simpleType?: string;
     title?: string;
-
-    constructor(input?: Partial<AlfrescoContentRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

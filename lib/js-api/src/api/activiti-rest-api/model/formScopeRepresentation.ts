@@ -27,7 +27,6 @@ export class FormScopeRepresentation {
     outcomes?: FormOutcomeRepresentation[];
 
     constructor(input?: Partial<FormScopeRepresentation>) {
-
         if (input) {
             Object.assign(this, input);
             if (input.fieldVariables) {
@@ -36,10 +35,6 @@ export class FormScopeRepresentation {
             if (input.fields) {
                 this.fields = input.fields.map((item) => new FormFieldRepresentation(item));
             }
-            if (input.outcomes) {
-                this.outcomes = input.outcomes.map((item) => new FormOutcomeRepresentation(item));
-            }
         }
     }
-
 }

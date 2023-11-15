@@ -17,19 +17,9 @@
 
 import { LightUserRepresentation } from './lightUserRepresentation';
 
-export class ResultListDataRepresentationLightUserRepresentation {
+export interface ResultListDataRepresentationLightUserRepresentation {
     data?: LightUserRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationLightUserRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new LightUserRepresentation(item));
-            }
-        }
-    }
-
 }

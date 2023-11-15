@@ -15,16 +15,9 @@
  * limitations under the License.
  */
 
-export class AbstractGroupRepresentation {
+export interface AbstractGroupRepresentation {
     externalId?: string;
     id?: number;
     name?: string;
     status?: string;
-
-    constructor(input?: Partial<AbstractGroupRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

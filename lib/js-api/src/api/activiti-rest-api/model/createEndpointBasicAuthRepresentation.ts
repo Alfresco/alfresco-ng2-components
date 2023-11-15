@@ -15,15 +15,9 @@
  * limitations under the License.
  */
 
-export class CreateEndpointBasicAuthRepresentation {
+export interface CreateEndpointBasicAuthRepresentation {
     name?: string;
     password?: string;
     tenantId?: number;
     username?: string;
-
-    constructor(input?: Partial<CreateEndpointBasicAuthRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { AbstractUserRepresentation } from '../model/abstractUserRepresentation';
-import { BulkUserUpdateRepresentation } from '../model/bulkUserUpdateRepresentation';
-import { ResultListDataRepresentationAbstractUserRepresentation } from '../model/resultListDataRepresentationAbstractUserRepresentation';
-import { UserRepresentation } from '../model/userRepresentation';
+import {
+    AbstractUserRepresentation,
+    BulkUserUpdateRepresentation,
+    ResultListDataRepresentationAbstractUserRepresentation,
+    UserRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -88,8 +90,7 @@ export class AdminUsersApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/admin/users/{userId}',
             pathParams,
-            queryParams: opts,
-            returnType: AbstractUserRepresentation
+            queryParams: opts
         });
     }
 
@@ -102,8 +103,7 @@ export class AdminUsersApi extends BaseApi {
     getUsers(opts?: GetUsersOpts): Promise<ResultListDataRepresentationAbstractUserRepresentation> {
         return this.get({
             path: '/api/enterprise/admin/users',
-            queryParams: opts,
-            returnType: ResultListDataRepresentationAbstractUserRepresentation
+            queryParams: opts
         });
     }
 

@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class EndpointRequestHeaderRepresentation {
+export interface EndpointRequestHeaderRepresentation {
     name?: string;
     value?: string;
-
-    constructor(input?: Partial<EndpointRequestHeaderRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

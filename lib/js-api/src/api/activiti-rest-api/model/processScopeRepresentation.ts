@@ -20,7 +20,7 @@ import { FormScopeRepresentation } from './formScopeRepresentation';
 import { VariableMappingRepresentation } from './variableMappingRepresentation';
 import { VariableScopeRepresentation } from './variableScopeRepresentation';
 
-export class ProcessScopeRepresentation {
+export interface ProcessScopeRepresentation {
     activityIds?: string[];
     activityIdsByCollapsedSubProcessIdMap?: { [key: string]: string };
     activityIdsByDecisionTableIdMap?: { [key: string]: string };
@@ -37,10 +37,4 @@ export class ProcessScopeRepresentation {
     processModelType?: number;
     responseVariables?: { [key: string]: VariableScopeRepresentation };
     reusableFieldMapping?: { [key: string]: VariableMappingRepresentation };
-
-    constructor(input?: Partial<ProcessScopeRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

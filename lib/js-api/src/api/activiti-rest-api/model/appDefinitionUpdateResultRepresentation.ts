@@ -27,11 +27,8 @@ export class AppDefinitionUpdateResultRepresentation {
     messageKey?: string;
 
     constructor(input?: Partial<AppDefinitionUpdateResultRepresentation>) {
-
         if (input) {
             Object.assign(this, input);
-            this.appDefinition = input.appDefinition ? new AppDefinitionRepresentation(input.appDefinition) : undefined;
         }
     }
-
 }

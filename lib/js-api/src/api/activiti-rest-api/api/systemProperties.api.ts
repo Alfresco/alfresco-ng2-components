@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { GlobalDateFormatRepresentation } from '../model/globalDateFormatRepresentation';
-import { PasswordValidationConstraints } from '../model/passwordValidationConstraints';
-import { SystemPropertiesRepresentation } from '../model/systemPropertiesRepresentation';
+import { GlobalDateFormatRepresentation, PasswordValidationConstraints, SystemPropertiesRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -40,8 +38,7 @@ export class SystemPropertiesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/system/properties/global-date-format/{tenantId}',
-            pathParams,
-            returnType: GlobalDateFormatRepresentation
+            pathParams
         });
     }
 
@@ -60,8 +57,7 @@ export class SystemPropertiesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/system/properties/password-validation-constraints/{tenantId}',
-            pathParams,
-            returnType: PasswordValidationConstraints
+            pathParams
         });
     }
 
@@ -74,8 +70,7 @@ export class SystemPropertiesApi extends BaseApi {
      */
     getProperties(): Promise<SystemPropertiesRepresentation> {
         return this.get({
-            path: '/api/enterprise/system/properties',
-            returnType: SystemPropertiesRepresentation
+            path: '/api/enterprise/system/properties'
         });
     }
 

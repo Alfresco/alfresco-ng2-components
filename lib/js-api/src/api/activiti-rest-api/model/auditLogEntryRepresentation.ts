@@ -17,7 +17,7 @@
 
 import { AuditLogFormDataRepresentation } from './auditLogFormDataRepresentation';
 
-export class AuditLogEntryRepresentation {
+export interface AuditLogEntryRepresentation {
     activityId?: string;
     activityName?: string;
     activityType?: string;
@@ -30,15 +30,4 @@ export class AuditLogEntryRepresentation {
     taskAssignee?: string;
     taskName?: string;
     type?: string;
-
-    constructor(input?: Partial<AuditLogEntryRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-            if (input.formData) {
-                this.formData = input.formData.map((item) => new AuditLogFormDataRepresentation(item));
-            }
-        }
-    }
-
 }

@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export class UserActionRepresentation {
+export interface UserActionRepresentation {
     action?: string;
     newPassword?: string;
     oldPassword?: string;
-
-    constructor(input?: Partial<UserActionRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { ResultListDataRepresentationLightGroupRepresentation } from '../model/resultListDataRepresentationLightGroupRepresentation';
-import { ResultListDataRepresentationLightUserRepresentation } from '../model/resultListDataRepresentationLightUserRepresentation';
+import { ResultListDataRepresentationLightGroupRepresentation, ResultListDataRepresentationLightUserRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -41,8 +40,7 @@ export class ActivitiGroupsApi extends BaseApi {
     getGroups(opts?: GetGroupsOpts): Promise<ResultListDataRepresentationLightGroupRepresentation> {
         return this.get({
             path: '/api/enterprise/groups',
-            queryParams: opts,
-            returnType: ResultListDataRepresentationLightGroupRepresentation
+            queryParams: opts
         });
     }
 
@@ -61,8 +59,7 @@ export class ActivitiGroupsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/groups/{groupId}/users',
-            pathParams,
-            returnType: ResultListDataRepresentationLightUserRepresentation
+            pathParams
         });
     }
 }

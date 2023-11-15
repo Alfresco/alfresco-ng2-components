@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class AppModelDefinition {
     createdBy?: number;
@@ -31,11 +31,9 @@ export class AppModelDefinition {
     version?: number;
 
     constructor(input?: Partial<AppModelDefinition>) {
-
         if (input) {
             Object.assign(this, input);
             this.lastUpdated = input.lastUpdated ? DateAlfresco.parseDate(input.lastUpdated) : undefined;
         }
     }
-
 }

@@ -17,17 +17,8 @@
 
 import { AppDefinitionRepresentation } from './appDefinitionRepresentation';
 
-export class AppDefinitionSaveRepresentation {
+export interface AppDefinitionSaveRepresentation {
     appDefinition?: AppDefinitionRepresentation;
     force?: boolean;
     publish?: boolean;
-
-    constructor(input?: Partial<AppDefinitionSaveRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-            this.appDefinition = input.appDefinition ? new AppDefinitionRepresentation(input.appDefinition) : undefined;
-        }
-    }
-
 }

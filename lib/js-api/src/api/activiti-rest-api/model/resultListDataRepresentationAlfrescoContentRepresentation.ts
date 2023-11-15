@@ -17,18 +17,9 @@
 
 import { AlfrescoContentRepresentation } from './alfrescoContentRepresentation';
 
-export class ResultListDataRepresentationAlfrescoContentRepresentation {
+export interface ResultListDataRepresentationAlfrescoContentRepresentation {
     data?: AlfrescoContentRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationAlfrescoContentRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new AlfrescoContentRepresentation(item));
-            }
-        }
-    }
 }

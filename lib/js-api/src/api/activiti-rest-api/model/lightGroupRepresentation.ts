@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-export class LightGroupRepresentation {
+export interface LightGroupRepresentation {
     externalId?: string;
     groups?: LightGroupRepresentation[];
     id?: number;
     name?: string;
     status?: string;
-
-    constructor(input?: Partial<LightGroupRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-            if (input.groups) {
-                this.groups = input.groups.map((item) => new LightGroupRepresentation(item));
-            }
-        }
-    }
-
 }

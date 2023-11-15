@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class AlfrescoSiteRepresenation {
+export interface AlfrescoSiteRepresenation {
     id?: string;
     title?: string;
-
-    constructor(input?: Partial<AlfrescoSiteRepresenation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

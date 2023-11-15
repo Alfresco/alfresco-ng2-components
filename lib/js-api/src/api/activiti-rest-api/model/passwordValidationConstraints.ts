@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export class PasswordValidationConstraints {
+export interface PasswordValidationConstraints {
     minLength?: number;
     passwordCriteriaMessage?: string;
     regularExpression?: string;
-
-    constructor(input?: Partial<PasswordValidationConstraints>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

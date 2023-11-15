@@ -17,19 +17,9 @@
 
 import { LightGroupRepresentation } from './lightGroupRepresentation';
 
-export class ResultListDataRepresentationLightGroupRepresentation {
+export interface ResultListDataRepresentationLightGroupRepresentation {
     data?: LightGroupRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationLightGroupRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new LightGroupRepresentation(item));
-            }
-        }
-    }
-
 }

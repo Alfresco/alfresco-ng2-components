@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { CompleteFormRepresentation } from '../model/completeFormRepresentation';
-import { FormDefinitionRepresentation } from '../model/formDefinitionRepresentation';
-import { FormValueRepresentation } from '../model/formValueRepresentation';
-import { ProcessInstanceVariableRepresentation } from '../model/processInstanceVariableRepresentation';
-import { SaveFormRepresentation } from '../model/saveFormRepresentation';
+import {
+    CompleteFormRepresentation,
+    FormDefinitionRepresentation,
+    FormValueRepresentation,
+    ProcessInstanceVariableRepresentation,
+    SaveFormRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -64,8 +66,7 @@ export class TaskFormsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/task-forms/{taskId}/variables',
-            pathParams,
-            returnType: ProcessInstanceVariableRepresentation
+            pathParams
         });
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 import { GroupCapabilityRepresentation } from './groupCapabilityRepresentation';
 import { UserRepresentationGroup } from './userRepresentationGroup';
 
@@ -37,9 +37,7 @@ export class GroupRepresentation {
     constructor(input?: Partial<GroupRepresentation>) {
         if (input) {
             Object.assign(this, input);
-            if (input.capabilities) {
-                this.capabilities = input.capabilities.map((item) => new GroupCapabilityRepresentation(item));
-            }
+
             if (input.groups) {
                 this.groups = input.groups.map((item) => new GroupRepresentation(item));
             }
@@ -50,5 +48,4 @@ export class GroupRepresentation {
             }
         }
     }
-
 }

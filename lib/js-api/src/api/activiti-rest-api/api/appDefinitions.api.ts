@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { AppDefinitionPublishRepresentation } from '../model/appDefinitionPublishRepresentation';
-import { AppDefinitionRepresentation } from '../model/appDefinitionRepresentation';
-import { AppDefinitionSaveRepresentation } from '../model/appDefinitionSaveRepresentation';
-import { AppDefinitionUpdateResultRepresentation } from '../model/appDefinitionUpdateResultRepresentation';
+import {
+    AppDefinitionPublishRepresentation,
+    AppDefinitionRepresentation,
+    AppDefinitionSaveRepresentation,
+    AppDefinitionUpdateResultRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -86,8 +88,7 @@ export class AppDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/app-definitions/{modelId}',
-            pathParams,
-            returnType: AppDefinitionRepresentation
+            pathParams
         });
     }
 
@@ -141,8 +142,7 @@ export class AppDefinitionsApi extends BaseApi {
             path: '/api/enterprise/app-definitions/import',
             queryParams: opts,
             formParams,
-            contentTypes: ['multipart/form-data'],
-            returnType: AppDefinitionRepresentation
+            contentTypes: ['multipart/form-data']
         });
     }
 

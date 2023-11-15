@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ResultListDataRepresentationGoogleDriveContent } from '../model/resultListDataRepresentationGoogleDriveContent';
+import { ResultListDataRepresentationGoogleDriveContent } from '../model';
 import { BaseApi } from './base.api';
 
 /**
@@ -47,8 +47,7 @@ export class IntegrationDriveApi extends BaseApi {
     getFiles(opts?: { filter?: string; parent?: string; currentFolderOnly?: boolean }): Promise<ResultListDataRepresentationGoogleDriveContent> {
         return this.get({
             path: '/api/enterprise/integration/google-drive/files',
-            queryParams: opts,
-            returnType: ResultListDataRepresentationGoogleDriveContent
+            queryParams: opts
         });
     }
 }

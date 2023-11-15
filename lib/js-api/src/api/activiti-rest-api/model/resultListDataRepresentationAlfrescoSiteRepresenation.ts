@@ -17,19 +17,9 @@
 
 import { AlfrescoSiteRepresenation } from './alfrescoSiteRepresenation';
 
-export class ResultListDataRepresentationAlfrescoSiteRepresenation {
+export interface ResultListDataRepresentationAlfrescoSiteRepresenation {
     data?: AlfrescoSiteRepresenation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationAlfrescoSiteRepresenation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new AlfrescoSiteRepresenation(item));
-            }
-        }
-    }
-
 }

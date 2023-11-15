@@ -16,7 +16,7 @@
  */
 
 import { AppDefinitionRepresentation } from './appDefinitionRepresentation';
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 import { LightUserRepresentation } from './lightUserRepresentation';
 
 export class AppDeploymentRepresentation {
@@ -28,13 +28,9 @@ export class AppDeploymentRepresentation {
     id?: number;
 
     constructor(input?: Partial<AppDeploymentRepresentation>) {
-
         if (input) {
             Object.assign(this, input);
-            this.appDefinition = input.appDefinition ? new AppDefinitionRepresentation(input.appDefinition) : undefined;
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
-            this.createdBy = input.createdBy ? new LightUserRepresentation(input.createdBy) : undefined;
         }
     }
-
 }

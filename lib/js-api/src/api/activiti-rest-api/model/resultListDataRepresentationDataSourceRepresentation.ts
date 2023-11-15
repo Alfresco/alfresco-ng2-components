@@ -17,19 +17,9 @@
 
 import { DataSourceRepresentation } from './dataSourceRepresentation';
 
-export class ResultListDataRepresentationDataSourceRepresentation {
+export interface ResultListDataRepresentationDataSourceRepresentation {
     data?: DataSourceRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationDataSourceRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new DataSourceRepresentation(item));
-            }
-        }
-    }
-
 }

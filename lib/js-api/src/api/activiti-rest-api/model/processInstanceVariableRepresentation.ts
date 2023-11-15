@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export class ProcessInstanceVariableRepresentation {
+export interface ProcessInstanceVariableRepresentation {
     id?: string;
     type?: string;
     value?: any;
-
-    constructor(input?: Partial<ProcessInstanceVariableRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

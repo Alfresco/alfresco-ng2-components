@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export class AssigneeIdentifierRepresentation {
+export interface AssigneeIdentifierRepresentation {
     assignee?: string;
     email?: string;
-
-    constructor(input?: Partial<AssigneeIdentifierRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export class CreateTenantRepresentation {
+export interface CreateTenantRepresentation {
     active?: boolean;
     configuration?: string;
     domain?: string;
     maxUsers?: number;
     name?: string;
-
-    constructor(input?: Partial<CreateTenantRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

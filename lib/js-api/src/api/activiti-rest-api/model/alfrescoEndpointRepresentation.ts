@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class AlfrescoEndpointRepresentation {
     accountUsername?: string;
@@ -32,12 +32,10 @@ export class AlfrescoEndpointRepresentation {
     version?: string;
 
     constructor(input?: Partial<AlfrescoEndpointRepresentation>) {
-
         if (input) {
             Object.assign(this, input);
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
             this.lastUpdated = input.lastUpdated ? DateAlfresco.parseDate(input.lastUpdated) : undefined;
         }
     }
-
 }

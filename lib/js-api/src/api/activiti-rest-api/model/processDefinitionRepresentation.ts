@@ -17,7 +17,7 @@
 
 import { ProcessDefinitionMetaDataRepresentation } from './processDefinitionMetaDataRepresentation';
 
-export class ProcessDefinitionRepresentation {
+export interface ProcessDefinitionRepresentation {
     category?: string;
     deploymentId?: string;
     description?: string;
@@ -28,13 +28,4 @@ export class ProcessDefinitionRepresentation {
     name?: string;
     tenantId?: string;
     version?: number;
-
-    constructor(input?: Partial<ProcessDefinitionRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.metaDataValues) {
-                this.metaDataValues = input.metaDataValues.map((item) => new ProcessDefinitionMetaDataRepresentation(item));
-            }
-        }
-    }
 }

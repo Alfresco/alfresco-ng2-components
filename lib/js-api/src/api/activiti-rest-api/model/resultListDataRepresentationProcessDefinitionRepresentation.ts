@@ -17,19 +17,9 @@
 
 import { ProcessDefinitionRepresentation } from './processDefinitionRepresentation';
 
-export class ResultListDataRepresentationProcessDefinitionRepresentation {
+export interface ResultListDataRepresentationProcessDefinitionRepresentation {
     data?: ProcessDefinitionRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationProcessDefinitionRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new ProcessDefinitionRepresentation(item));
-            }
-        }
-    }
-
 }

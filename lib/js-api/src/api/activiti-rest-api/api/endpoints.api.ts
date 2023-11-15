@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { EndpointConfigurationRepresentation } from '../model/endpointConfigurationRepresentation';
+import { EndpointConfigurationRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -38,8 +38,7 @@ export class EndpointsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/editor/endpoints/{endpointConfigurationId}',
-            pathParams,
-            returnType: EndpointConfigurationRepresentation
+            pathParams
         });
     }
 
@@ -50,8 +49,7 @@ export class EndpointsApi extends BaseApi {
      */
     getEndpointConfigurations(): Promise<EndpointConfigurationRepresentation> {
         return this.get({
-            path: '/api/enterprise/editor/endpoints',
-            returnType: EndpointConfigurationRepresentation
+            path: '/api/enterprise/editor/endpoints'
         });
     }
 }

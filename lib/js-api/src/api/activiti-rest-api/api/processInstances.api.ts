@@ -15,20 +15,22 @@
  * limitations under the License.
  */
 
-import { CreateProcessInstanceRepresentation } from '../model/createProcessInstanceRepresentation';
-import { FormDefinitionRepresentation } from '../model/formDefinitionRepresentation';
-import { HistoricProcessInstanceQueryRepresentation } from '../model/historicProcessInstanceQueryRepresentation';
-import { IdentityLinkRepresentation } from '../model/identityLinkRepresentation';
-import { ProcessInstanceAuditInfoRepresentation } from '../model/processInstanceAuditInfoRepresentation';
-import { ProcessInstanceFilterRequestRepresentation } from '../model/processInstanceFilterRequestRepresentation';
-import { ProcessInstanceQueryRepresentation } from '../model/processInstanceQueryRepresentation';
-import { ProcessInstanceRepresentation } from '../model/processInstanceRepresentation';
-import { ProcessInstanceVariableRepresentation } from '../model/processInstanceVariableRepresentation';
-import { ResultListDataRepresentationProcessContentRepresentation } from '../model/resultListDataRepresentationProcessContentRepresentation';
-import { ResultListDataRepresentationProcessInstanceRepresentation } from '../model/resultListDataRepresentationProcessInstanceRepresentation';
+import {
+    CreateProcessInstanceRepresentation,
+    FormDefinitionRepresentation,
+    HistoricProcessInstanceQueryRepresentation,
+    IdentityLinkRepresentation,
+    ProcessInstanceAuditInfoRepresentation,
+    ProcessInstanceFilterRequestRepresentation,
+    ProcessInstanceQueryRepresentation,
+    ProcessInstanceRepresentation,
+    ProcessInstanceVariableRepresentation,
+    ResultListDataRepresentationDecisionTaskRepresentation,
+    ResultListDataRepresentationProcessContentRepresentation,
+    ResultListDataRepresentationProcessInstanceRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
-import { ResultListDataRepresentationDecisionTaskRepresentation } from '../model/resultListDataRepresentationDecisionTaskRepresentation';
 
 /**
  * Process Instances service.
@@ -72,8 +74,7 @@ export class ProcessInstancesApi extends BaseApi {
         return this.post({
             path: '/api/enterprise/process-instances/{processInstanceId}/identitylinks',
             pathParams,
-            bodyParam: identityLinkRepresentation,
-            returnType: IdentityLinkRepresentation
+            bodyParam: identityLinkRepresentation
         });
     }
 
@@ -165,6 +166,7 @@ export class ProcessInstancesApi extends BaseApi {
             returnType: ResultListDataRepresentationDecisionTaskRepresentation
         });
     }
+
     /**
      * Get historic variables for a process instance
      *
@@ -180,8 +182,7 @@ export class ProcessInstancesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-instances/{processInstanceId}/historic-variables',
-            pathParams,
-            returnType: ProcessInstanceVariableRepresentation
+            pathParams
         });
     }
 
@@ -227,8 +228,7 @@ export class ProcessInstancesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-instances/{processInstanceId}/identitylinks/{family}/{identityId}/{type}',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 
@@ -250,8 +250,7 @@ export class ProcessInstancesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-instances/{processInstanceId}/identitylinks/{family}',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 
@@ -270,8 +269,7 @@ export class ProcessInstancesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-instances/{processInstanceId}/identitylinks',
-            pathParams,
-            returnType: IdentityLinkRepresentation
+            pathParams
         });
     }
 

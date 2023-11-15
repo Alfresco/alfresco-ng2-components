@@ -17,19 +17,9 @@
 
 import { AppDefinitionRepresentation } from './appDefinitionRepresentation';
 
-export class ResultListDataRepresentationAppDefinitionRepresentation {
+export interface ResultListDataRepresentationAppDefinitionRepresentation {
     data?: AppDefinitionRepresentation[];
     size?: number;
     start?: number;
     total?: number;
-
-    constructor(input?: Partial<ResultListDataRepresentationAppDefinitionRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.data) {
-                this.data = input.data.map((item) => new AppDefinitionRepresentation(item));
-            }
-        }
-    }
-
 }

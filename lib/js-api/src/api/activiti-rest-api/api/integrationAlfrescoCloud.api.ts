@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { ResultListDataRepresentationAlfrescoContentRepresentation } from '../model/resultListDataRepresentationAlfrescoContentRepresentation';
-import { ResultListDataRepresentationAlfrescoNetworkRepresenation } from '../model/resultListDataRepresentationAlfrescoNetworkRepresenation';
-import { ResultListDataRepresentationAlfrescoSiteRepresenation } from '../model/resultListDataRepresentationAlfrescoSiteRepresenation';
+import {
+    ResultListDataRepresentationAlfrescoContentRepresentation,
+    ResultListDataRepresentationAlfrescoNetworkRepresenation,
+    ResultListDataRepresentationAlfrescoSiteRepresenation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -53,8 +55,7 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
      */
     getAllNetworks(): Promise<ResultListDataRepresentationAlfrescoNetworkRepresenation> {
         return this.get({
-            path: '/api/enterprise/integration/alfresco-cloud/networks',
-            returnType: ResultListDataRepresentationAlfrescoNetworkRepresenation
+            path: '/api/enterprise/integration/alfresco-cloud/networks'
         });
     }
 
@@ -74,8 +75,7 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/integration/alfresco-cloud/networks/{networkId}/sites',
-            pathParams,
-            returnType: ResultListDataRepresentationAlfrescoSiteRepresenation
+            pathParams
         });
     }
 
@@ -101,8 +101,7 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/integration/alfresco-cloud/networks/{networkId}/sites/{siteId}/folderpath/{folderPath}/content',
             pathParams,
-            queryParams: opts,
-            returnType: ResultListDataRepresentationAlfrescoContentRepresentation
+            queryParams: opts
         });
     }
 
@@ -124,8 +123,7 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/integration/alfresco-cloud/networks/{networkId}/folders/{folderId}/content',
-            pathParams,
-            returnType: ResultListDataRepresentationAlfrescoContentRepresentation
+            pathParams
         });
     }
 
@@ -147,8 +145,7 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/integration/alfresco-cloud/networks/{networkId}/sites/{siteId}/content',
-            pathParams,
-            returnType: ResultListDataRepresentationAlfrescoContentRepresentation
+            pathParams
         });
     }
 }

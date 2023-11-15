@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class AppDefinitionRepresentation {
+export interface AppDefinitionRepresentation {
     defaultAppId?: string;
     deploymentId?: string;
     description?: string;
@@ -25,12 +25,4 @@ export class AppDefinitionRepresentation {
     name?: string;
     tenantId?: number;
     theme?: string;
-
-    constructor(input?: Partial<AppDefinitionRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

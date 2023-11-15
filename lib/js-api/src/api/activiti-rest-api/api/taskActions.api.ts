@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { AssigneeIdentifierRepresentation } from '../model/assigneeIdentifierRepresentation';
-import { FormIdentifierRepresentation } from '../model/formIdentifierRepresentation';
-import { TaskRepresentation } from '../model/taskRepresentation';
-import { UserIdentifierRepresentation } from '../model/userIdentifierRepresentation';
+import { AssigneeIdentifierRepresentation, FormIdentifierRepresentation, TaskRepresentation, UserIdentifierRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 

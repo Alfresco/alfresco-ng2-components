@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class AbstractUserRepresentation {
+export interface AbstractUserRepresentation {
     company?: string;
     email?: string;
     externalId?: string;
@@ -23,11 +23,4 @@ export class AbstractUserRepresentation {
     id?: number;
     lastName?: string;
     pictureId?: number;
-
-    constructor(input?: Partial<AbstractUserRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

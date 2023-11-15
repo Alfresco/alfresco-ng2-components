@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { AbstractGroupRepresentation } from '../model/abstractGroupRepresentation';
-import { AddGroupCapabilitiesRepresentation } from '../model/addGroupCapabilitiesRepresentation';
-import { GroupRepresentation } from '../model/groupRepresentation';
-import { LightGroupRepresentation } from '../model/lightGroupRepresentation';
-import { ResultListDataRepresentationLightUserRepresentation } from '../model/resultListDataRepresentationLightUserRepresentation';
+import {
+    AbstractGroupRepresentation,
+    AddGroupCapabilitiesRepresentation,
+    GroupRepresentation,
+    LightGroupRepresentation,
+    ResultListDataRepresentationLightUserRepresentation
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -278,8 +280,7 @@ export class AdminGroupsApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/admin/groups/{groupId}/users',
             pathParams,
-            queryParams: opts,
-            returnType: ResultListDataRepresentationLightUserRepresentation
+            queryParams: opts
         });
     }
 
@@ -300,8 +301,7 @@ export class AdminGroupsApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/admin/groups/{groupId}',
             pathParams,
-            queryParams: opts,
-            returnType: AbstractGroupRepresentation
+            queryParams: opts
         });
     }
 
@@ -314,8 +314,7 @@ export class AdminGroupsApi extends BaseApi {
     getGroups(opts?: { tenantId?: number; functional?: boolean; summary?: boolean }): Promise<LightGroupRepresentation> {
         return this.get({
             path: '/api/enterprise/admin/groups',
-            queryParams: opts,
-            returnType: LightGroupRepresentation
+            queryParams: opts
         });
     }
 
@@ -334,8 +333,7 @@ export class AdminGroupsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/admin/groups/{groupId}/related-groups',
-            pathParams,
-            returnType: LightGroupRepresentation
+            pathParams
         });
     }
 

@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { ModelRepresentation } from '../model/modelRepresentation';
-import { ObjectNode } from '../model/objectNode';
-import { ResultListDataRepresentationModelRepresentation } from '../model/resultListDataRepresentationModelRepresentation';
-import { ValidationErrorRepresentation } from '../model/validationErrorRepresentation';
+import { ModelRepresentation, ObjectNode, ResultListDataRepresentationModelRepresentation, ValidationErrorRepresentation } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -312,7 +309,6 @@ export class ModelsApi extends BaseApi {
             path: '/api/enterprise/models/{modelId}/editor/validate',
             pathParams,
             bodyParam: postBody,
-            returnType: ValidationErrorRepresentation,
             contentTypes: ['application/x-www-form-urlencoded']
         });
     }

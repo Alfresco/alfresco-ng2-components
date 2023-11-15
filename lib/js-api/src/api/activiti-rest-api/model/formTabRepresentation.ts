@@ -17,17 +17,8 @@
 
 import { ConditionRepresentation } from './conditionRepresentation';
 
-export class FormTabRepresentation {
+export interface FormTabRepresentation {
     id?: string;
     title?: string;
     visibilityCondition?: ConditionRepresentation;
-
-    constructor(input?: Partial<FormTabRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-            this.visibilityCondition = input.visibilityCondition ? new ConditionRepresentation(input.visibilityCondition) : undefined;
-        }
-    }
-
 }

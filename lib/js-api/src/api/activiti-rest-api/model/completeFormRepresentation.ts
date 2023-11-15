@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class CompleteFormRepresentation {
+export interface CompleteFormRepresentation {
     outcome?: string;
     values?: any;
-
-    constructor(input?: Partial<CompleteFormRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }
