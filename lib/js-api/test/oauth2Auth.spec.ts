@@ -626,7 +626,6 @@ describe('Oauth2  test', () => {
                 let implicitLoginCalled = false;
                 oauth2Auth.implicitLogin = () => {
                     implicitLoginCalled = true;
-                    return Promise.resolve();
                 };
 
                 await oauth2Auth.checkFragment();
