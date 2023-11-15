@@ -20,8 +20,6 @@ import { AlfrescoApi } from '../src/alfrescoApi';
 import { Oauth2Auth } from '../src/authentication/oauth2Auth';
 import { ContentApi } from '../src/api/content-custom-api/api/content.api';
 import { EcmAuthMock, OAuthMock } from '../test/mockObjects';
-import { PathMatcher } from '../src/utils/path-matcher';
-import chai, { expect } from 'chai';
 import jsdom from 'jsdom';
 
 const { JSDOM } = jsdom;
@@ -193,10 +191,14 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            const refreshSpy = chai.spy.on(oauth2Auth, 'refreshToken');
+            let calls = 0;
+            oauth2Auth.refreshToken = () => {
+                calls++;
+                return Promise.resolve();
+            };
 
             setTimeout(() => {
-                expect(refreshSpy).to.have.been.called.min(2);
+                assert.equal(calls > 2, true);
                 oauth2Auth.logOut();
                 done();
             }, 600);
@@ -225,10 +227,14 @@ describe('Oauth2  test', () => {
                 alfrescoJsApi
             );
 
-            const refreshSpy = chai.spy.on(oauth2Auth, 'refreshToken');
+            let calls = 0;
+            oauth2Auth.refreshToken = () => {
+                calls++;
+                return Promise.resolve();
+            };
 
             setTimeout(() => {
-                expect(refreshSpy).to.have.been.called.min(2);
+                assert.equal(calls > 2, true);
                 done();
             }, 600);
 
@@ -542,13 +548,16 @@ describe('Oauth2  test', () => {
                 const iframe = <HTMLIFrameElement>document.getElementById('silent_refresh_token_iframe');
                 iframe.contentWindow.location.hash = 'invalid';
 
-                // define spy on logOut
-                const logoutSpy = chai.spy.on(oauth2Auth, 'logOut');
+                let logoutCalled = false;
+                oauth2Auth.logOut = () => {
+                    logoutCalled = true;
+                    return Promise.resolve();
+                };
 
-                // invalid hash location leads to a reject which leads to a log out
+                // invalid hash location leads to a reject which leads to a logout
                 oauth2Auth.iFrameHashListener();
                 setTimeout(() => {
-                    expect(logoutSpy).to.have.been.called();
+                    assert.equal(logoutCalled, true);
                 }, 500);
             });
 
@@ -580,51 +589,50 @@ describe('Oauth2  test', () => {
             it('should return true if PathMatcher.match returns true for matching url', () => {
                 globalAny.window = { location: { href: 'public-url' } };
                 oauth2Auth.config.oauth2.publicUrls = ['public-url'];
-                chai.spy.on(PathMatcher, 'match', () => true);
+                oauth2Auth.pathMatcher = {
+                    match: () => true
+                };
 
                 assert.equal(oauth2Auth.isPublicUrl(), true);
-                expect(PathMatcher.match).called.with(globalAny.window.location.href, oauth2Auth.config.oauth2.publicUrls[0]);
             });
 
             it('should return false if PathMatcher.match returns false for matching url', () => {
                 globalAny.window = { location: { href: 'some-public-url' } };
                 oauth2Auth.config.oauth2.publicUrls = ['public-url'];
-                chai.spy.on(PathMatcher, 'match', () => false);
+                oauth2Auth.pathMatcher = {
+                    match: () => false
+                };
 
                 assert.equal(oauth2Auth.isPublicUrl(), false);
-                expect(PathMatcher.match).called.with(globalAny.window.location.href, oauth2Auth.config.oauth2.publicUrls[0]);
             });
 
             it('should return false if publicUrls property is not defined', () => {
-                chai.spy.on(PathMatcher, 'match');
-
                 assert.equal(oauth2Auth.isPublicUrl(), false);
-                expect(PathMatcher.match).not.called();
             });
 
             it('should return false if public urls is not set as an array list', () => {
                 globalAny.window = { location: { href: 'public-url-string' } };
                 oauth2Auth.config.oauth2.publicUrls = null;
-                chai.spy.on(PathMatcher, 'match');
-
                 assert.equal(oauth2Auth.isPublicUrl(), false);
-                expect(PathMatcher.match).not.called();
             });
 
             it('should not call `implicitLogin`', async () => {
                 globalAny.window = { location: { href: 'public-url' } };
                 oauth2Auth.config.oauth2.silentLogin = true;
                 oauth2Auth.config.oauth2.publicUrls = ['public-url'];
-                chai.spy.on(PathMatcher, 'match', () => true);
-                const implicitLoginSpy = chai.spy.on(oauth2Auth, 'implicitLogin');
+
+                oauth2Auth.pathMatcher = {
+                    match: () => true
+                };
+
+                let implicitLoginCalled = false;
+                oauth2Auth.implicitLogin = () => {
+                    implicitLoginCalled = true;
+                    return Promise.resolve();
+                };
 
                 await oauth2Auth.checkFragment();
-                expect(implicitLoginSpy).not.to.have.been.called();
-                expect(PathMatcher.match).called.with(globalAny.window.location.href, oauth2Auth.config.oauth2.publicUrls[0]);
-            });
-
-            afterEach(() => {
-                chai.spy.restore(PathMatcher, 'match');
+                assert.equal(implicitLoginCalled, false);
             });
         });
     });

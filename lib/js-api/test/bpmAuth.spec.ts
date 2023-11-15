@@ -16,12 +16,9 @@
  */
 
 import assert from 'assert';
-import chai, { expect } from 'chai';
-import { ProcessAuth } from '../src/authentication/processAuth';
+import { ProcessAuth } from '../src';
 import { SuperagentHttpClient } from '../src/superagentHttpClient';
 import { BpmAuthMock } from './mockObjects';
-import spies from 'chai-spies';
-chai.use(spies);
 
 describe('Bpm Auth test', () => {
     const hostBpm = 'https://127.0.0.1:9999';
@@ -257,14 +254,21 @@ describe('Bpm Auth test', () => {
         });
 
         describe('CSRF Token', () => {
-            let setCsrfTokenStub: any;
+            let originalMethod: any;
+            let setCsrfTokenCalled = false;
 
             beforeEach(() => {
-                setCsrfTokenStub = chai.spy.on(SuperagentHttpClient.prototype, 'setCsrfToken');
+                originalMethod = SuperagentHttpClient.prototype.setCsrfToken;
+                setCsrfTokenCalled = false;
+
+                SuperagentHttpClient.prototype.setCsrfToken = () => {
+                    setCsrfTokenCalled = true;
+                };
             });
 
             afterEach(() => {
-                chai.spy.restore(SuperagentHttpClient.prototype, 'setCsrfToken');
+                SuperagentHttpClient.prototype.setCsrfToken = originalMethod;
+                setCsrfTokenCalled = false;
             });
 
             it('should be enabled by default', (done) => {
@@ -276,7 +280,7 @@ describe('Bpm Auth test', () => {
                 });
 
                 processAuth.login('admin', 'admin').then(() => {
-                    expect(setCsrfTokenStub).to.have.been.called();
+                    assert.equal(setCsrfTokenCalled, true);
                     done();
                 });
             });
@@ -291,7 +295,7 @@ describe('Bpm Auth test', () => {
                 });
 
                 processAuth.login('admin', 'admin').then(() => {
-                    expect(setCsrfTokenStub).not.to.have.been.called();
+                    assert.equal(setCsrfTokenCalled, false);
                     done();
                 });
             });

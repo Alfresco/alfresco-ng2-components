@@ -69,6 +69,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
     };
 
     iFrameHashListener: any;
+    pathMatcher = new PathMatcher();
 
     constructor(config: AlfrescoApiConfig, alfrescoApi: AlfrescoApi, httpClient?: HttpClient) {
         super(undefined, httpClient);
@@ -233,7 +234,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
         const publicUrls = this.config.oauth2.publicUrls || [];
 
         if (Array.isArray(publicUrls)) {
-            return publicUrls.length > 0 && publicUrls.some((urlPattern: string) => PathMatcher.match(window.location.href, urlPattern));
+            return publicUrls.length > 0 && publicUrls.some((urlPattern: string) => this.pathMatcher.match(window.location.href, urlPattern));
         }
         return false;
     }

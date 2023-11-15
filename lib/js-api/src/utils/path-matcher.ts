@@ -16,14 +16,12 @@
  */
 
 export class PathMatcher {
-    static match(path: string, pattern: string) {
+    match(path: string, pattern: string): boolean {
         return new RegExp(
-            `^${
-            pattern
+            `^${pattern
                 .replace(/(^|[^*])\*(?!\*)/g, '$1([^\\/]*)')
                 .replace(/\/\*\*\//g, '/(.+)/|/')
-                .replace(/\*\*/g, '(.*)')
-        }$`
+                .replace(/\*\*/g, '(.*)')}$`
         ).test(path);
     }
 }
