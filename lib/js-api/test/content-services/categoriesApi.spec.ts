@@ -17,8 +17,7 @@
 
 import assert from 'assert';
 import { AlfrescoApi, CategoriesApi, CategoryPaging, CategoryEntry } from '../../src';
-import { EcmAuthMock } from '../mockObjects';
-import { CategoriesMock } from '../mockObjects/content-services/categories.mock';
+import { EcmAuthMock, CategoriesMock } from '../mockObjects';
 
 describe('Categories', () => {
     let authResponseMock: EcmAuthMock;

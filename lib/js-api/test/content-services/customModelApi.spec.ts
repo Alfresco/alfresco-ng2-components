@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { CustomModelApi } from '../../src/api/content-custom-api';
-import { EcmAuthMock, CustomModelMock } from '../../test/mockObjects';
+import { AlfrescoApi, CustomModelApi } from '../../src';
+import { EcmAuthMock, CustomModelMock } from '../mockObjects';
 
 describe('Custom Model Api', () => {
     let authResponseMock: EcmAuthMock;

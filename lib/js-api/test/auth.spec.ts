@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { EcmAuthMock, BpmAuthMock, NodeMock, ProfileMock } from '../test/mockObjects';
+import { EcmAuthMock, BpmAuthMock, NodeMock, ProfileMock } from './mockObjects';
 import { NodesApi, UserProfileApi, AlfrescoApi } from '../src';
 
 const NOOP = () => {

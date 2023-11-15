@@ -16,8 +16,7 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { ModelsApi } from '../../src/api/activiti-rest-api';
+import { AlfrescoApi, ModelsApi } from '../../src';
 import { BpmAuthMock, ModelsMock } from '../mockObjects';
 
 describe('Activiti Models Api', () => {

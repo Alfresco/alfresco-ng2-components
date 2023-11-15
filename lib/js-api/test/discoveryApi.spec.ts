@@ -16,9 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../src/alfrescoApi';
-import { DiscoveryApi } from '../src/api/discovery-rest-api';
-import { EcmAuthMock, DiscoveryMock } from '../test/mockObjects';
+import { AlfrescoApi, DiscoveryApi } from '../src';
+import { DiscoveryMock, EcmAuthMock } from './mockObjects';
 
 describe('Discovery', () => {
     let authResponseMock: EcmAuthMock;

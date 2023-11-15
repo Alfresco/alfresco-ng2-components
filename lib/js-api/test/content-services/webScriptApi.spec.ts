@@ -16,9 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { WebscriptApi } from '../../src/api/content-custom-api';
-import { EcmAuthMock, WebScriptMock } from '../../test/mockObjects';
+import { AlfrescoApi, WebscriptApi } from '../../src';
+import { EcmAuthMock, WebScriptMock } from '../mockObjects';
 
 describe('WebScript', () => {
     const hostEcm = 'https://127.0.0.1:8080';

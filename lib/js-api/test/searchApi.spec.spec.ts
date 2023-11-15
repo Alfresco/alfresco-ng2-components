@@ -16,9 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../src/alfrescoApi';
-import { SearchApi } from '../src/api/search-rest-api';
-import { EcmAuthMock, SearchMock } from '../test/mockObjects';
+import { AlfrescoApi, SearchApi } from '../src';
+import { EcmAuthMock, SearchMock } from './mockObjects';
 
 describe('Search', () => {
     let authResponseMock: EcmAuthMock;

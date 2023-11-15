@@ -17,7 +17,7 @@
 
 import assert from 'assert';
 import { AlfrescoApi, DateAlfresco } from '../src';
-import { EcmAuthMock } from '../test/mockObjects';
+import { EcmAuthMock } from './mockObjects';
 
 describe('Alfresco Core API Client', () => {
     describe('type conversion', () => {

@@ -16,13 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { SecurityGroupsApi, SecurityMarksBody, SecurityMarksApi } from '../../src/api/gs-classification-rest-api';
-import { SecurityGroupBody } from '../../src/api/gs-classification-rest-api/model/securityGroupBody';
-import { SecurityMarkBody } from '../../src/api/gs-classification-rest-api/model/securityMarkBody';
-import { EcmAuthMock } from '../mockObjects/content-services/ecm-auth.mock';
-import { SecurityMarkApiMock } from '../mockObjects/goverance-services/security-marks.mock';
-import { SecurityGroupApiMock } from '../mockObjects/goverance-services/security-groups.mock';
+import { AlfrescoApi, SecurityGroupBody, SecurityGroupsApi, SecurityMarkBody, SecurityMarksApi, SecurityMarksBody } from '../../src';
+import { EcmAuthMock, SecurityGroupApiMock, SecurityMarkApiMock } from '../mockObjects';
 
 describe('Security Mark API test', () => {
     let authResponseMock: EcmAuthMock;

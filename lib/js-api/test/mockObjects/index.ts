@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './content-services/categories.mock';
 export * from './content-services/comment.mock';
 export * from './content-services/ecm-auth.mock';
 export * from './content-services/custom-model.mock';
@@ -30,10 +31,11 @@ export * from './content-services/upload.mock';
 export * from './content-services/version.mock';
 export * from './content-services/webscript.mock';
 
+export * from './goverance-services/authority-clearance.mock';
 export * from './goverance-services/gs-sites.mock';
+export * from './goverance-services/node-security-marks.mock';
 export * from './goverance-services/security-groups.mock';
 export * from './goverance-services/security-marks.mock';
-
 
 export * from './process-services/bpm-auth.mock';
 export * from './process-services/process.mock';

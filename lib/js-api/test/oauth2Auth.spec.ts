@@ -16,10 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../src/alfrescoApi';
-import { Oauth2Auth } from '../src/authentication/oauth2Auth';
-import { ContentApi } from '../src/api/content-custom-api/api/content.api';
-import { EcmAuthMock, OAuthMock } from '../test/mockObjects';
+import { AlfrescoApi, ContentApi, Oauth2Auth } from '../src';
+import { EcmAuthMock, OAuthMock } from './mockObjects';
 import jsdom from 'jsdom';
 
 const { JSDOM } = jsdom;

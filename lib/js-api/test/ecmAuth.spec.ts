@@ -16,8 +16,7 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../src/alfrescoApi';
-import { ContentAuth } from '../src/authentication/contentAuth';
+import { AlfrescoApi, ContentAuth } from '../src';
 import { EcmAuthMock as AuthEcmMock } from '../test/mockObjects';
 
 describe('Ecm Auth test', () => {

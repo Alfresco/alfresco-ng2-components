@@ -16,8 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../src/alfrescoApi';
-import { EcmAuthMock, BpmAuthMock, OAuthMock } from '../test/mockObjects';
+import { AlfrescoApi } from '../src';
+import { BpmAuthMock, EcmAuthMock, OAuthMock } from './mockObjects';
 
 describe('Basic configuration test', () => {
     describe('config parameter ', () => {

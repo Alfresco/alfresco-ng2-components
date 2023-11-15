@@ -16,9 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { GroupsApi } from '../../src/api/content-rest-api';
-import { EcmAuthMock, GroupsMock } from '../../test/mockObjects';
+import { AlfrescoApi, GroupsApi } from '../../src';
+import { EcmAuthMock, GroupsMock } from '../mockObjects';
 
 describe('Groups', () => {
     let authResponseMock: EcmAuthMock;

@@ -16,8 +16,7 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { UserProfileApi } from '../../src/api/activiti-rest-api/api/userProfile.api';
+import { AlfrescoApi, UserProfileApi } from '../../src';
 import { BpmAuthMock, ProfileMock } from '../mockObjects';
 
 describe('Activiti Profile Api', () => {

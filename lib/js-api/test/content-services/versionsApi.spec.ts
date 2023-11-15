@@ -16,9 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { VersionsApi } from '../../src/api/content-rest-api';
-import { EcmAuthMock, VersionMock } from '../../test/mockObjects';
+import { AlfrescoApi, VersionsApi } from '../../src';
+import { EcmAuthMock, VersionMock } from '../mockObjects';
 
 describe('Versions', () => {
     const nodeId = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';

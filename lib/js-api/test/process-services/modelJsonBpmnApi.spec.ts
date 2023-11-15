@@ -16,8 +16,7 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { ModelJsonBpmnApi } from '../../src/api/activiti-rest-api';
+import { AlfrescoApi, ModelJsonBpmnApi } from '../../src';
 import { BpmAuthMock, ModelJsonBpmMock } from '../mockObjects';
 
 describe('Activiti Model JsonBpmn Api', () => {

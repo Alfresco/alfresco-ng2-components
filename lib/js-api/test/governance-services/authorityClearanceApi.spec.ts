@@ -15,17 +15,9 @@
  * limitations under the License.
  */
 
-import { EcmAuthMock } from '../mockObjects/content-services/ecm-auth.mock';
-import {
-    AuthorityClearanceGroupPaging,
-    NodeSecurityMarkBody,
-    SecurityMarkEntry,
-    SecurityMarkPaging
-} from '../../src/api/gs-classification-rest-api/model/index';
-import { AuthorityClearanceApi } from '../../src/api/gs-classification-rest-api/api/index';
-import { AuthorityClearanceMock } from '../mockObjects/goverance-services/authority-clearance.mock';
-import { AlfrescoApi } from '../../src/alfrescoApi';
 import assert from 'assert';
+import { AlfrescoApi, NodeSecurityMarkBody, SecurityMarkEntry, SecurityMarkPaging, AuthorityClearanceApi } from '../../src';
+import { AuthorityClearanceMock, EcmAuthMock } from '../mockObjects';
 
 const DEFAULT_OPTS = {
     skipCount: 0,
@@ -71,7 +63,7 @@ describe('Authority Clearance API test', () => {
     it('get authority clearances for an authority', async () => {
         const nodeId = 'testAuthorityId';
         authorityClearanceMock.get200AuthorityClearanceForAuthority(nodeId);
-        await authorityClearanceApi.getAuthorityClearanceForAuthority(nodeId, DEFAULT_OPTS).then((response: AuthorityClearanceGroupPaging) => {
+        await authorityClearanceApi.getAuthorityClearanceForAuthority(nodeId, DEFAULT_OPTS).then((response) => {
             assert.equal(response.list.entries[0].entry.id, 'securityGroupFruits');
             assert.equal(response.list.entries[0].entry.displayLabel, 'Security Group FRUITS');
             assert.equal(response.list.entries[0].entry.type, 'USER_REQUIRES_ALL');

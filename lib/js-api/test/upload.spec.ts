@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { EcmAuthMock, UploadMock } from '../test/mockObjects';
+import { EcmAuthMock, UploadMock } from './mockObjects';
 import fs from 'fs';
 import { UploadApi, AlfrescoApi, NodeEntry } from '../src';
 

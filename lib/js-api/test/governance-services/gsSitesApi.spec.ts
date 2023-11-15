@@ -16,9 +16,8 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { GsSitesApi } from '../../src/api/gs-core-rest-api';
-import { EcmAuthMock, GsSitesApiMock } from '../../test/mockObjects';
+import { AlfrescoApi, GsSitesApi } from '../../src';
+import { EcmAuthMock, GsSitesApiMock } from '../mockObjects';
 
 describe('Governance API test', () => {
     let authResponseMock: EcmAuthMock;

@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi } from '../../src/alfrescoApi';
-import { PersonBodyCreate } from '../../src/api/content-rest-api/model/personBodyCreate';
-import { PeopleApi } from '../../src/api/content-rest-api';
-import { EcmAuthMock, PeopleMock } from '../../test/mockObjects';
+import { AlfrescoApi, PersonBodyCreate, PeopleApi } from '../../src';
+import { EcmAuthMock, PeopleMock } from '../mockObjects';
 
 describe('PeopleApi', () => {
     let authResponseMock: EcmAuthMock;

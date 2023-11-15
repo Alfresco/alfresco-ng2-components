@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi } from '../src/alfrescoApi';
-import { PersonBodyCreate } from '../src/api/content-rest-api/model/personBodyCreate';
-import { PeopleApi } from '../src/api/content-rest-api/api/people.api';
+import { AlfrescoApi, PeopleApi, PersonBodyCreate } from '../src';
 import { PeopleMock } from './mockObjects';
 
 describe('PeopleApi', () => {

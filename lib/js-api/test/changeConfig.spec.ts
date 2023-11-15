@@ -17,7 +17,7 @@
 
 import assert from 'assert';
 import { AlfrescoApi } from '../src';
-import { EcmAuthMock, BpmAuthMock } from '../test/mockObjects';
+import { EcmAuthMock, BpmAuthMock } from './mockObjects';
 
 describe('Change config', () => {
     let authResponseBpmMock: BpmAuthMock;
