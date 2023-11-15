@@ -60,8 +60,9 @@ runs:
             echo "Setting up CI flags for Push develop patch"
         else
           echo "Setting up CI flags for Push on develop branch"
-          base=$(git describe --tags $(git rev-list --tags --max-count=1))
-          echo "NX_CALCULATION_FLAGS=--base=$base --head=$HEAD_HASH" >> $GITHUB_ENV
+          # base=$(git describe --tags $(git rev-list --tags --max-count=1))
+          # we publish always all the libs until we don't handle partial release
+          echo "NX_CALCULATION_FLAGS=--all" >> $GITHUB_ENV
         fi
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
