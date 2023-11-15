@@ -189,7 +189,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
-      - run: npx nx run-many --all --target=npm-publish --exclude=demoshell $NX_CALCULATION_FLAGS --tag=$TAG_NPM --skip-nx-cache || exit 1
+      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
       - uses: actions/setup-node@v3
@@ -198,7 +198,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
-      - run: npx nx run-many --all --target=npm-publish --exclude=demoshell $NX_CALCULATION_FLAGS --tag=$TAG_NPM --skip-nx-cache || exit 1
+      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
