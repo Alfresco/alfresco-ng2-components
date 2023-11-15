@@ -49,8 +49,7 @@ export class DecisionTablesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/decisions/decision-tables/{decisionTableId}/editorJson',
-            pathParams,
-            returnType: JsonNode
+            pathParams
         });
     }
 

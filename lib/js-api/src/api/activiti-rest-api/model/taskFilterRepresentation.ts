@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 
 export class TaskFilterRepresentation {
     asc?: boolean;
@@ -26,7 +26,7 @@ export class TaskFilterRepresentation {
     processDefinitionId?: string;
     processDefinitionKey?: string;
     sort?: string;
-    state?: TaskFilterRepresentation.StateEnum | string;
+    state?: 'active' | 'completed' | 'all' | 'running' | string;
 
     constructor(input?: Partial<TaskFilterRepresentation>) {
         if (input) {
@@ -35,13 +35,4 @@ export class TaskFilterRepresentation {
             this.dueBefore = input.dueBefore ? DateAlfresco.parseDate(input.dueBefore) : undefined;
         }
     }
-
-}
-export namespace TaskFilterRepresentation {
-    export type StateEnum = 'active' | 'completed' | 'all';
-    export const StateEnum = {
-        Active: 'active' as StateEnum,
-        Completed: 'completed' as StateEnum,
-        All: 'all' as StateEnum
-    };
 }

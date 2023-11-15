@@ -18,7 +18,7 @@
 import { AuditDecisionInfoRepresentation } from './auditDecisionInfoRepresentation';
 import { AuditLogEntryRepresentation } from './auditLogEntryRepresentation';
 
-export class ProcessInstanceAuditInfoRepresentation {
+export interface ProcessInstanceAuditInfoRepresentation {
     decisionInfo?: AuditDecisionInfoRepresentation;
     entries?: AuditLogEntryRepresentation[];
     processDefinitionName?: string;
@@ -29,10 +29,4 @@ export class ProcessInstanceAuditInfoRepresentation {
     processInstanceInitiator?: string;
     processInstanceName?: string;
     processInstanceStartTime?: string;
-
-    constructor(input?: Partial<ProcessInstanceAuditInfoRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

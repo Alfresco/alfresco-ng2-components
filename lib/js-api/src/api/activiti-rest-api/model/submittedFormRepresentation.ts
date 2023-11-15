@@ -32,7 +32,6 @@ export class SubmittedFormRepresentation {
     constructor(input?: Partial<SubmittedFormRepresentation>) {
         if (input) {
             Object.assign(this, input);
-            this.form = input.form ? new FormDefinitionRepresentation(input.form) : undefined;
             this.submitted = input.submitted ? DateAlfresco.parseDate(input.submitted) : undefined;
         }
     }

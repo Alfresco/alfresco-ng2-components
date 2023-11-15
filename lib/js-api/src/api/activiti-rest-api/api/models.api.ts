@@ -112,8 +112,7 @@ export class ModelsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/models/{modelId}/editor/json',
-            pathParams,
-            returnType: ObjectNode
+            pathParams
         });
     }
 

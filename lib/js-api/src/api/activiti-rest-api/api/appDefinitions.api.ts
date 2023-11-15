@@ -114,8 +114,7 @@ export class AppDefinitionsApi extends BaseApi {
             path: '/api/enterprise/app-definitions/publish-app',
             formParams,
             queryParams,
-            contentTypes: ['multipart/form-data'],
-            returnType: AppDefinitionUpdateResultRepresentation
+            contentTypes: ['multipart/form-data']
         });
     }
 
@@ -166,8 +165,7 @@ export class AppDefinitionsApi extends BaseApi {
         return this.post({
             path: '/api/enterprise/app-definitions/{modelId}/publish',
             pathParams,
-            bodyParam: publishModel,
-            returnType: AppDefinitionUpdateResultRepresentation
+            bodyParam: publishModel
         });
     }
 

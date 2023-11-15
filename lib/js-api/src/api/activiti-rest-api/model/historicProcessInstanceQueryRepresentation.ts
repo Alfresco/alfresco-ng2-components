@@ -50,9 +50,6 @@ export class HistoricProcessInstanceQueryRepresentation {
             this.finishedBefore = input.finishedBefore ? DateAlfresco.parseDate(input.finishedBefore) : undefined;
             this.startedAfter = input.startedAfter ? DateAlfresco.parseDate(input.startedAfter) : undefined;
             this.startedBefore = input.startedBefore ? DateAlfresco.parseDate(input.startedBefore) : undefined;
-            if (input.variables) {
-                this.variables = input.variables.map((item) => new QueryVariable(item));
-            }
         }
     }
 }

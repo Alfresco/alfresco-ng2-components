@@ -48,11 +48,11 @@ describe('Activiti Process Api', () => {
     it('get activiti Process list filtered', (done) => {
         processMock.get200Response();
 
-        const requestNode = new ProcessInstanceQueryRepresentation();
-
-        requestNode.page = 0;
-        requestNode.sort = 'created-desc';
-        requestNode.state = 'completed';
+        const requestNode: ProcessInstanceQueryRepresentation = {
+            page: 0,
+            sort: 'created-desc',
+            state: 'completed'
+        };
 
         processInstancesApi.getProcessInstances(requestNode).then((data) => {
             assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
@@ -65,9 +65,7 @@ describe('Activiti Process Api', () => {
     it('get activiti Process list', (done) => {
         processMock.get200Response();
 
-        const requestNode = new ProcessInstanceQueryRepresentation();
-
-        processInstancesApi.getProcessInstances(requestNode).then((data) => {
+        processInstancesApi.getProcessInstances({}).then((data) => {
             assert.equal(data.data[0].name, 'Process Test Api - July 26th 2016');
             assert.equal(data.data[1].name, 'Process Test Api - July 26th 2016');
             done();

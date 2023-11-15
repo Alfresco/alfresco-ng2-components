@@ -332,8 +332,7 @@ export class ProcessInstancesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-instances/{processInstanceId}/start-form',
-            pathParams,
-            returnType: FormDefinitionRepresentation
+            pathParams
         });
     }
 
@@ -390,8 +389,7 @@ export class ProcessInstancesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-instances/{processInstanceId}/audit-log',
-            pathParams,
-            returnType: ProcessInstanceAuditInfoRepresentation
+            pathParams
         });
     }
 

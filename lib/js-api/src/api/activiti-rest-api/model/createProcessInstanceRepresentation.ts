@@ -17,7 +17,7 @@
 
 import { RestVariable } from './restVariable';
 
-export class CreateProcessInstanceRepresentation {
+export interface CreateProcessInstanceRepresentation {
     businessKey?: string;
     name?: string;
     outcome?: string;
@@ -25,14 +25,4 @@ export class CreateProcessInstanceRepresentation {
     processDefinitionKey?: string;
     values?: any;
     variables?: RestVariable[];
-
-    constructor(input?: Partial<CreateProcessInstanceRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.variables) {
-                this.variables = input.variables.map((item) => new RestVariable(item));
-            }
-        }
-    }
-
 }

@@ -43,8 +43,7 @@ export class UserFiltersApi extends BaseApi {
 
         return this.post({
             path: '/api/enterprise/filters/processes',
-            bodyParam: userProcessInstanceFilterRepresentation,
-            returnType: UserProcessInstanceFilterRepresentation
+            bodyParam: userProcessInstanceFilterRepresentation
         });
     }
 
@@ -117,8 +116,7 @@ export class UserFiltersApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/filters/processes/{userFilterId}',
-            pathParams,
-            returnType: UserProcessInstanceFilterRepresentation
+            pathParams
         });
     }
 
@@ -133,8 +131,7 @@ export class UserFiltersApi extends BaseApi {
     getUserProcessInstanceFilters(opts?: AppIdQuery): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
         return this.get({
             path: '/api/enterprise/filters/processes',
-            queryParams: opts,
-            returnType: ResultListDataRepresentationUserProcessInstanceFilterRepresentation
+            queryParams: opts
         });
     }
 
@@ -225,8 +222,7 @@ export class UserFiltersApi extends BaseApi {
         return this.put({
             path: '/api/enterprise/filters/processes/{userFilterId}',
             pathParams,
-            bodyParam: userProcessInstanceFilterRepresentation,
-            returnType: UserProcessInstanceFilterRepresentation
+            bodyParam: userProcessInstanceFilterRepresentation
         });
     }
 

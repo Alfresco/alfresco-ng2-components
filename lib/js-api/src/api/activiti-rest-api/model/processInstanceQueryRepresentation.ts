@@ -15,34 +15,13 @@
  * limitations under the License.
  */
 
-export class ProcessInstanceQueryRepresentation {
+export interface ProcessInstanceQueryRepresentation {
     appDefinitionId?: number;
     page?: number;
     processDefinitionId?: string;
     processInstanceId?: string;
     size?: number;
-    sort?: ProcessInstanceQueryRepresentation.SortEnum | string;
+    sort?: 'created-desc' | 'created-asc' | 'ended-desc' | 'ended-asc';
     start?: number;
-    state?: ProcessInstanceQueryRepresentation.StateEnum | string;
-
-    constructor(input?: Partial<ProcessInstanceQueryRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-}
-export namespace ProcessInstanceQueryRepresentation {
-    export type SortEnum = 'created-desc' | 'created-asc' | 'ended-desc' | 'ended-asc';
-    export const SortEnum = {
-        CreatedDesc: 'created-desc' as SortEnum,
-        CreatedAsc: 'created-asc' as SortEnum,
-        EndedDesc: 'ended-desc' as SortEnum,
-        EndedAsc: 'ended-asc' as SortEnum
-    };
-    export type StateEnum = 'running' | 'completed' | 'all';
-    export const StateEnum = {
-        Running: 'running' as StateEnum,
-        Completed: 'completed' as StateEnum,
-        All: 'all' as StateEnum
-    };
+    state?: 'running' | 'completed' | 'all';
 }

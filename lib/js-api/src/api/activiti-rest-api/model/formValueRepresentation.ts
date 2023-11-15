@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-export class FormValueRepresentation {
+export interface FormValueRepresentation {
     id?: string;
     name?: string;
-
-    constructor(input?: Partial<FormValueRepresentation>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

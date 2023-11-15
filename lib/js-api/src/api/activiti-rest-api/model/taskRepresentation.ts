@@ -62,9 +62,6 @@ export class TaskRepresentation {
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
             this.dueDate = input.dueDate ? DateAlfresco.parseDate(input.dueDate) : undefined;
             this.endDate = input.endDate ? DateAlfresco.parseDate(input.endDate) : undefined;
-            if (input.variables) {
-                this.variables = input.variables.map((item) => new RestVariable(item));
-            }
         }
     }
 

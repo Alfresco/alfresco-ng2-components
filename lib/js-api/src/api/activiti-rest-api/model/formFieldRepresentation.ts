@@ -19,7 +19,7 @@ import { ConditionRepresentation } from './conditionRepresentation';
 import { LayoutRepresentation } from './layoutRepresentation';
 import { OptionRepresentation } from './optionRepresentation';
 
-export class FormFieldRepresentation {
+export interface FormFieldRepresentation {
     fieldType?: string;
     /* Child fields, when `fieldType` is set to `ContainerRepresentation` */
     fields?: { [key: string]: Array<FormFieldRepresentation> };
@@ -54,10 +54,4 @@ export class FormFieldRepresentation {
     type?: string;
     value?: any;
     visibilityCondition?: ConditionRepresentation;
-
-    constructor(input?: Partial<FormFieldRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -22,7 +22,7 @@ import { FormOutcomeRepresentation } from './formOutcomeRepresentation';
 import { FormTabRepresentation } from './formTabRepresentation';
 import { FormVariableRepresentation } from './formVariableRepresentation';
 
-export class FormDefinitionRepresentation {
+export interface FormDefinitionRepresentation {
     className?: string;
     customFieldTemplates?: { [key: string]: string };
     customFieldsValueInfo?: { [key: string]: FieldValueInfo };
@@ -45,13 +45,4 @@ export class FormDefinitionRepresentation {
     taskId?: string;
     taskName?: string;
     variables?: FormVariableRepresentation[];
-
-    constructor(input?: Partial<FormDefinitionRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.fields) {
-                this.fields = input.fields.map((item) => new FormFieldRepresentation(item));
-            }
-        }
-    }
 }

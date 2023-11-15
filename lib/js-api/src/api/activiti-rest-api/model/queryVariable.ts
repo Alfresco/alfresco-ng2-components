@@ -15,31 +15,20 @@
  * limitations under the License.
  */
 
-export class QueryVariable {
+export interface QueryVariable {
     name?: string;
     operation?: string;
     type?: string;
     value?: any;
-    variableOperation?: QueryVariable.VariableOperationEnum | string;
-
-    constructor(input?: Partial<QueryVariable>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-}
-export namespace QueryVariable {
-    export type VariableOperationEnum = 'EQUALS' | 'NOT_EQUALS' | 'EQUALS_IGNORE_CASE' | 'NOT_EQUALS_IGNORE_CASE' | 'LIKE' | 'LIKE_IGNORE_CASE' | 'GREATER_THAN' | 'GREATER_THAN_OR_EQUALS' | 'LESS_THAN' | 'LESS_THAN_OR_EQUALS';
-    export const VariableOperationEnum = {
-        EQUALS: 'EQUALS' as VariableOperationEnum,
-        NOTEQUALS: 'NOT_EQUALS' as VariableOperationEnum,
-        EQUALSIGNORECASE: 'EQUALS_IGNORE_CASE' as VariableOperationEnum,
-        NOTEQUALSIGNORECASE: 'NOT_EQUALS_IGNORE_CASE' as VariableOperationEnum,
-        LIKE: 'LIKE' as VariableOperationEnum,
-        LIKEIGNORECASE: 'LIKE_IGNORE_CASE' as VariableOperationEnum,
-        GREATERTHAN: 'GREATER_THAN' as VariableOperationEnum,
-        GREATERTHANOREQUALS: 'GREATER_THAN_OR_EQUALS' as VariableOperationEnum,
-        LESSTHAN: 'LESS_THAN' as VariableOperationEnum,
-        LESSTHANOREQUALS: 'LESS_THAN_OR_EQUALS' as VariableOperationEnum
-    };
+    variableOperation?:
+        | 'EQUALS'
+        | 'NOT_EQUALS'
+        | 'EQUALS_IGNORE_CASE'
+        | 'NOT_EQUALS_IGNORE_CASE'
+        | 'LIKE'
+        | 'LIKE_IGNORE_CASE'
+        | 'GREATER_THAN'
+        | 'GREATER_THAN_OR_EQUALS'
+        | 'LESS_THAN'
+        | 'LESS_THAN_OR_EQUALS';
 }

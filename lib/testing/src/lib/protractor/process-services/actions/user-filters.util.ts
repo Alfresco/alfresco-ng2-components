@@ -79,7 +79,7 @@ export class UserFiltersUtil {
             return this.userFiltersApi.getUserProcessInstanceFilters({ appId });
         } catch (error) {
             Logger.error('List process filters - Service error, Response: ', error);
-            return new ResultListDataRepresentationUserProcessInstanceFilterRepresentation();
+            return null;
         }
     }
 

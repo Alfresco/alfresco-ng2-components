@@ -126,8 +126,7 @@ export class TaskFormsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/task-forms/{taskId}/form-values/{field}',
-            pathParams,
-            returnType: FormValueRepresentation
+            pathParams
         });
     }
 
@@ -146,8 +145,7 @@ export class TaskFormsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/task-forms/{taskId}',
-            pathParams,
-            returnType: FormDefinitionRepresentation
+            pathParams
         });
     }
 

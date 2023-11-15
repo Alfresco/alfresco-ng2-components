@@ -17,17 +17,10 @@
 
 import { ProcessInstanceFilterRepresentation } from './processInstanceFilterRepresentation';
 
-export class ProcessInstanceFilterRequestRepresentation {
+export interface ProcessInstanceFilterRequestRepresentation {
     appDefinitionId?: number;
     filter?: ProcessInstanceFilterRepresentation;
     filterId?: number;
     page?: number;
     size?: number;
-
-    constructor(input?: Partial<ProcessInstanceFilterRequestRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            this.filter = input.filter ? new ProcessInstanceFilterRepresentation(input.filter) : undefined;
-        }
-    }
 }

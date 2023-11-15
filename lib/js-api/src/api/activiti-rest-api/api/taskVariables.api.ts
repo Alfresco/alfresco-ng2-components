@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { RestVariable } from '../model/restVariable';
+import { RestVariable } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ScopeQuery } from './types';
@@ -42,8 +42,7 @@ export class TaskVariablesApi extends BaseApi {
         return this.post({
             path: '/api/enterprise/tasks/{taskId}/variables',
             pathParams,
-            bodyParam: restVariables,
-            returnType: RestVariable
+            bodyParam: restVariables
         });
     }
 
@@ -109,8 +108,7 @@ export class TaskVariablesApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/tasks/{taskId}/variables/{variableName}',
             pathParams,
-            queryParams: opts,
-            returnType: RestVariable
+            queryParams: opts
         });
     }
 
@@ -131,8 +129,7 @@ export class TaskVariablesApi extends BaseApi {
         return this.get({
             path: '/api/enterprise/tasks/{taskId}/variables',
             pathParams,
-            queryParams: opts,
-            returnType: RestVariable
+            queryParams: opts
         });
     }
 
@@ -157,8 +154,7 @@ export class TaskVariablesApi extends BaseApi {
         return this.put({
             path: '/api/enterprise/tasks/{taskId}/variables/{variableName}',
             pathParams,
-            bodyParam: restVariable,
-            returnType: RestVariable
+            bodyParam: restVariable
         });
     }
 }

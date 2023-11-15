@@ -15,15 +15,9 @@
  * limitations under the License.
  */
 
-export class RestVariable {
+export interface RestVariable {
     name?: string;
     scope?: string;
     type?: string;
     value?: any;
-
-    constructor(input?: Partial<RestVariable>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

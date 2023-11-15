@@ -17,7 +17,7 @@
 
 import { AppDefinitionRepresentation } from './appDefinitionRepresentation';
 
-export class AppDefinitionUpdateResultRepresentation {
+export interface AppDefinitionUpdateResultRepresentation {
     appDefinition?: AppDefinitionRepresentation;
     customData?: any;
     error?: boolean;
@@ -25,10 +25,4 @@ export class AppDefinitionUpdateResultRepresentation {
     errorType?: number;
     message?: string;
     messageKey?: string;
-
-    constructor(input?: Partial<AppDefinitionUpdateResultRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

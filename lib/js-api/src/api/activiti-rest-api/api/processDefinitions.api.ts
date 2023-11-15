@@ -194,8 +194,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/start-form',
-            pathParams,
-            returnType: FormDefinitionRepresentation
+            pathParams
         });
     }
 
@@ -233,8 +232,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/start-form-values/{field}',
-            pathParams,
-            returnType: FormValueRepresentation
+            pathParams
         });
     }
 
@@ -255,8 +253,7 @@ export class ProcessDefinitionsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-definitions/{processDefinitionId}/start-form-values/{field}/{column}',
-            pathParams,
-            returnType: FormValueRepresentation
+            pathParams
         });
     }
 }

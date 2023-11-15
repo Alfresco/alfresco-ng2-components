@@ -27,9 +27,9 @@ export class TaskQueryRepresentation {
     processDefinitionId?: string;
     processInstanceId?: string;
     size?: number;
-    sort?: TaskQueryRepresentation.SortEnum | string;
+    sort?: 'created-desc' | 'created-asc' | 'due-desc' | 'due-asc' | string;
     start?: number;
-    state?: TaskQueryRepresentation.StateEnum | string;
+    state?: 'active' | 'completed' | 'all' | 'open' | string;
     taskId?: string;
     text?: string;
 
@@ -40,19 +40,4 @@ export class TaskQueryRepresentation {
             this.dueBefore = input.dueBefore ? DateAlfresco.parseDate(input.dueBefore) : undefined;
         }
     }
-}
-export namespace TaskQueryRepresentation {
-    export type SortEnum = 'created-desc' | 'created-asc' | 'due-desc' | 'due-asc';
-    export const SortEnum = {
-        CreatedDesc: 'created-desc' as SortEnum,
-        CreatedAsc: 'created-asc' as SortEnum,
-        DueDesc: 'due-desc' as SortEnum,
-        DueAsc: 'due-asc' as SortEnum
-    };
-    export type StateEnum = 'active' | 'completed' | 'all';
-    export const StateEnum = {
-        Active: 'active' as StateEnum,
-        Completed: 'completed' as StateEnum,
-        All: 'all' as StateEnum
-    };
 }

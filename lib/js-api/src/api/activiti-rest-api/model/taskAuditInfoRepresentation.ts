@@ -18,7 +18,7 @@
 import { AuditLogFormDataRepresentation } from './auditLogFormDataRepresentation';
 import { CommentAuditInfo } from './commentAuditInfo';
 
-export class TaskAuditInfoRepresentation {
+export interface TaskAuditInfoRepresentation {
     assignee?: string;
     comments?: CommentAuditInfo[];
     endTime?: string;
@@ -30,10 +30,4 @@ export class TaskAuditInfoRepresentation {
     startTime?: string;
     taskId?: string;
     taskName?: string;
-
-    constructor(input?: Partial<TaskAuditInfoRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

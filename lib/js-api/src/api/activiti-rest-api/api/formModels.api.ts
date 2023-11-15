@@ -56,8 +56,7 @@ export class FormModelsApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/forms/{formId}/editorJson',
-            pathParams,
-            returnType: FormDefinitionRepresentation
+            pathParams
         });
     }
 

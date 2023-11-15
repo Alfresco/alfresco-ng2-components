@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {} from '../model/';
-import { RestVariable } from '../model/restVariable';
+import { RestVariable } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -86,8 +85,7 @@ export class ProcessInstanceVariablesApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/process-instances/{processInstanceId}/variables/{variableName}',
-            pathParams,
-            returnType: RestVariable
+            pathParams
         });
     }
 
@@ -131,8 +129,7 @@ export class ProcessInstanceVariablesApi extends BaseApi {
         return this.put({
             path: '/api/enterprise/process-instances/{processInstanceId}/variables/{variableName}',
             pathParams,
-            bodyParam: restVariable,
-            returnType: RestVariable
+            bodyParam: restVariable
         });
     }
 }

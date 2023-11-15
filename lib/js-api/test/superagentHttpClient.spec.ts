@@ -16,7 +16,6 @@
  */
 
 import assert from 'assert';
-import { FormValueRepresentation } from '../src';
 import { SuperagentHttpClient } from '../src/superagentHttpClient';
 import { Response } from 'superagent';
 
@@ -83,11 +82,9 @@ describe('SuperagentHttpClient', () => {
                     }
                 ]
             } as Response;
-            const result = SuperagentHttpClient['deserialize'](data, FormValueRepresentation);
+            const result = SuperagentHttpClient['deserialize'](data);
             const isArray = Array.isArray(result);
-            const isObject = result[0] instanceof FormValueRepresentation;
             assert.equal(isArray, true);
-            assert.equal(isObject, true);
         });
     });
 });

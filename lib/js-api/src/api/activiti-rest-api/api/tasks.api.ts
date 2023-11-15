@@ -219,8 +219,7 @@ export class TasksApi extends BaseApi {
 
         return this.get({
             path: '/api/enterprise/tasks/{taskId}/audit',
-            pathParams,
-            returnType: TaskAuditInfoRepresentation
+            pathParams
         });
     }
 

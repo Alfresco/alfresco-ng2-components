@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class ObjectNode {
+export interface ObjectNode {
     array?: boolean;
     bigDecimal?: boolean;
     bigInteger?: boolean;
@@ -30,7 +30,7 @@ export class ObjectNode {
     integralNumber?: boolean;
     long?: boolean;
     missingNode?: boolean;
-    nodeType?: ObjectNode.NodeTypeEnum | string;
+    nodeType?: 'ARRAY' | 'BINARY' | 'BOOLEAN' | 'MISSING' | 'NULL' | 'NUMBER' | 'OBJECT' | 'POJO' | 'STRING';
     null?: boolean;
     // eslint-disable-next-line id-blacklist
     number?: boolean;
@@ -39,26 +39,4 @@ export class ObjectNode {
     short?: boolean;
     textual?: boolean;
     valueNode?: boolean;
-
-    constructor(input?: Partial<ObjectNode>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace ObjectNode {
-    export type NodeTypeEnum = 'ARRAY' | 'BINARY' | 'BOOLEAN' | 'MISSING' | 'NULL' | 'NUMBER' | 'OBJECT' | 'POJO' | 'STRING';
-    export const NodeTypeEnum = {
-        ARRAY: 'ARRAY' as NodeTypeEnum,
-        BINARY: 'BINARY' as NodeTypeEnum,
-        BOOLEAN: 'BOOLEAN' as NodeTypeEnum,
-        MISSING: 'MISSING' as NodeTypeEnum,
-        NULL: 'NULL' as NodeTypeEnum,
-        NUMBER: 'NUMBER' as NodeTypeEnum,
-        OBJECT: 'OBJECT' as NodeTypeEnum,
-        POJO: 'POJO' as NodeTypeEnum,
-        STRING: 'STRING' as NodeTypeEnum
-    };
 }

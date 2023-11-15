@@ -18,23 +18,11 @@
 import { FormFieldRepresentation } from './formFieldRepresentation';
 import { FormOutcomeRepresentation } from './formOutcomeRepresentation';
 
-export class FormScopeRepresentation {
+export interface FormScopeRepresentation {
     description?: string;
     fieldVariables?: FormFieldRepresentation[];
     fields?: FormFieldRepresentation[];
     id?: number;
     name?: string;
     outcomes?: FormOutcomeRepresentation[];
-
-    constructor(input?: Partial<FormScopeRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.fieldVariables) {
-                this.fieldVariables = input.fieldVariables.map((item) => new FormFieldRepresentation(item));
-            }
-            if (input.fields) {
-                this.fields = input.fields.map((item) => new FormFieldRepresentation(item));
-            }
-        }
-    }
 }

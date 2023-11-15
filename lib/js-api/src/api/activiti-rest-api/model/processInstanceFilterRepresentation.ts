@@ -15,17 +15,11 @@
  * limitations under the License.
  */
 
-export class ProcessInstanceFilterRepresentation {
+export interface ProcessInstanceFilterRepresentation {
     asc?: boolean;
     name?: string;
     processDefinitionId?: string;
     processDefinitionKey?: string;
     sort?: string;
     state?: string;
-
-    constructor(input?: Partial<ProcessInstanceFilterRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

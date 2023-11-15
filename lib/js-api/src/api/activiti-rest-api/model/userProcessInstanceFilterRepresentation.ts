@@ -17,7 +17,7 @@
 
 import { ProcessInstanceFilterRepresentation } from './processInstanceFilterRepresentation';
 
-export class UserProcessInstanceFilterRepresentation {
+export interface UserProcessInstanceFilterRepresentation {
     appId?: number;
     filter?: ProcessInstanceFilterRepresentation;
     icon?: string;
@@ -25,11 +25,4 @@ export class UserProcessInstanceFilterRepresentation {
     index?: number;
     name?: string;
     recent?: boolean;
-
-    constructor(input?: Partial<UserProcessInstanceFilterRepresentation>) {
-        if (input) {
-            Object.assign(this, input);
-            this.filter = input.filter ? new ProcessInstanceFilterRepresentation(input.filter) : undefined;
-        }
-    }
 }
