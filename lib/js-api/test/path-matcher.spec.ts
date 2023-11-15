@@ -19,7 +19,7 @@ import assert from 'assert';
 import { PathMatcher } from '../src/utils/path-matcher';
 
 describe('PathMatcher', () => {
-    let pathPatcher = new PathMatcher();
+    const pathPatcher = new PathMatcher();
 
     describe('match', () => {
         it('should return true if path is exactly the same like pattern', () => {

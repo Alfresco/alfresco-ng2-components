@@ -41,7 +41,7 @@ describe('Versions', () => {
         versionsApi = new VersionsApi(alfrescoJsApi);
     });
 
-    it("should list all node's version renditions", (done) => {
+    it('should list all node version renditions', (done) => {
         versionMock.get200ResponseVersionRenditions(nodeId, versionId);
 
         versionsApi.listVersionRenditions(nodeId, versionId).then((data) => {
@@ -52,7 +52,7 @@ describe('Versions', () => {
         });
     });
 
-    it("should create rendition for a node's versionId", (done) => {
+    it('should create rendition for a node versionId', (done) => {
         versionMock.create200VersionRendition(nodeId, versionId);
 
         versionsApi.createVersionRendition(nodeId, versionId, { id: 'pdf' }).then(() => {
@@ -60,7 +60,7 @@ describe('Versions', () => {
         });
     });
 
-    it("should get a node's version rendition", (done) => {
+    it('should get a node version rendition', (done) => {
         versionMock.get200VersionRendition(nodeId, versionId, renditionId);
 
         versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((data) => {
