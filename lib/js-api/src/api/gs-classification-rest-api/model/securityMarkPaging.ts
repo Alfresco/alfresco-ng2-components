@@ -17,13 +17,6 @@
 
 import { SecurityMarkPagingList } from './securityMarkPagingList';
 
-export class SecurityMarkPaging {
+export interface SecurityMarkPaging {
     list?: SecurityMarkPagingList;
-
-    constructor(input?: Partial<SecurityMarkPaging>) {
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new SecurityMarkPagingList(input.list) : undefined;
-        }
-    }
 }

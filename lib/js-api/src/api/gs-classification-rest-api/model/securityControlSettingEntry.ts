@@ -17,14 +17,6 @@
 
 import { SecurityControlSetting } from './securityControlSetting';
 
-export class SecurityControlSettingEntry {
+export interface SecurityControlSettingEntry {
     entry: SecurityControlSetting;
-
-    constructor(input?: Partial<SecurityControlSettingEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new SecurityControlSetting(input.entry) : undefined;
-        }
-    }
-
 }

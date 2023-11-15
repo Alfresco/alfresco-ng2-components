@@ -21,16 +21,7 @@ import { SecurityMarkInformation } from './securityMarkInformation';
 /**
  * Information about how a piece of content should be secured. This field is only included when requested.
  */
-export class Instruction {
+export interface Instruction {
     classificationInformation?: ClassificationInformation;
     securityMarkInformation?: SecurityMarkInformation;
-
-    constructor(input?: Partial<Instruction>) {
-        if (input) {
-            Object.assign(this, input);
-            this.classificationInformation = input.classificationInformation ? new ClassificationInformation(input.classificationInformation) : undefined;
-            this.securityMarkInformation = input.securityMarkInformation ? new SecurityMarkInformation(input.securityMarkInformation) : undefined;
-        }
-    }
-
 }

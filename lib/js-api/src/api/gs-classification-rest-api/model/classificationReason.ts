@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-export class ClassificationReason {
+export interface ClassificationReason {
     id: string;
     code: string;
     description: string;
-
-    constructor(input?: Partial<ClassificationReason>) {
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

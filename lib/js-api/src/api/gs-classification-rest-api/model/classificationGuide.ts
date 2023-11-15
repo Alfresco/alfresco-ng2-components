@@ -18,16 +18,9 @@
 /**
  * A classification guide.
  */
-export class ClassificationGuide {
+export interface ClassificationGuide {
     name: string;
     originatingOrganization: string;
     publishedOn: Date;
     enabled?: boolean;
-
-    constructor(input?: Partial<ClassificationGuide>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

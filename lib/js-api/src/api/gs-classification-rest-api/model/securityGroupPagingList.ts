@@ -15,20 +15,10 @@
  * limitations under the License.
  */
 
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 import { SecurityGroupEntry } from './securityGroupEntry';
 
-export class SecurityGroupPagingList {
+export interface SecurityGroupPagingList {
     pagination?: Pagination;
     entries?: SecurityGroupEntry[];
-
-    constructor(input?: Partial<SecurityGroupPagingList>) {
-        if (input) {
-            Object.assign(this, input);
-            this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
-            if (input.entries) {
-                this.entries = input.entries.map((item) => new SecurityGroupEntry(item));
-            }
-        }
-    }
 }

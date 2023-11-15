@@ -38,8 +38,7 @@ export class AuthorityClearanceApi extends BaseApi {
         return this.get({
             path: '/cleared-authorities/{authorityId}/clearing-marks',
             pathParams,
-            queryParams: opts,
-            returnType: AuthorityClearanceGroupPaging
+            queryParams: opts
         });
     }
 
@@ -54,13 +53,11 @@ export class AuthorityClearanceApi extends BaseApi {
         const pathParams = {
             authorityId
         };
-        const returnType = authorityClearance.length > 1 ? SecurityMarkPaging : SecurityMarkEntry;
 
         return this.post({
             path: '/cleared-authorities/{authorityId}/clearing-marks',
             pathParams,
-            bodyParam: authorityClearance,
-            returnType
+            bodyParam: authorityClearance
         });
     }
 }

@@ -17,13 +17,6 @@
 
 import { DeclassificationExemption } from './declassificationExemption';
 
-export class DeclassificationExemptionEntry {
+export interface DeclassificationExemptionEntry {
     entry: DeclassificationExemption;
-
-    constructor(input?: Partial<DeclassificationExemptionEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new DeclassificationExemption(input.entry) : undefined;
-        }
-    }
 }

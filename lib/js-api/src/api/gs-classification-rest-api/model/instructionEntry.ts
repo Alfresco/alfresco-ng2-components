@@ -17,14 +17,6 @@
 
 import { Instruction } from './instruction';
 
-export class InstructionEntry {
+export interface InstructionEntry {
     entry: Instruction;
-
-    constructor(input?: Partial<InstructionEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new Instruction(input.entry) : undefined;
-        }
-    }
-
 }

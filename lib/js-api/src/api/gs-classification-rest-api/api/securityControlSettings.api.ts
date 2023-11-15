@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { SecurityControlSettingBody } from '../model/securityControlSettingBody';
-import { SecurityControlSettingEntry } from '../model/securityControlSettingEntry';
+import { SecurityControlSettingBody, SecurityControlSettingEntry } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -42,8 +41,7 @@ export class SecurityControlSettingsApi extends BaseApi {
 
         return this.get({
             path: '/security-control-settings/{securityControlSettingKey}',
-            pathParams,
-            returnType: SecurityControlSettingEntry
+            pathParams
         });
     }
 
@@ -55,7 +53,10 @@ export class SecurityControlSettingsApi extends BaseApi {
      * @param securityControlSettingValue The new value for the security control setting. This can be a string or number, depending on the setting key.
      * @returns Promise<SecurityControlSettingEntry>
      */
-    updateSecurityControlSetting(securityControlSettingKey: string, securityControlSettingValue: SecurityControlSettingBody): Promise<SecurityControlSettingEntry> {
+    updateSecurityControlSetting(
+        securityControlSettingKey: string,
+        securityControlSettingValue: SecurityControlSettingBody
+    ): Promise<SecurityControlSettingEntry> {
         throwIfNotDefined(securityControlSettingKey, 'securityControlSettingKey');
         throwIfNotDefined(securityControlSettingValue, 'securityControlSettingValue');
 
@@ -66,8 +67,7 @@ export class SecurityControlSettingsApi extends BaseApi {
         return this.put({
             path: '/security-control-settings/{securityControlSettingKey}',
             pathParams,
-            bodyParam: securityControlSettingValue,
-            returnType: SecurityControlSettingEntry
+            bodyParam: securityControlSettingValue
         });
     }
 }

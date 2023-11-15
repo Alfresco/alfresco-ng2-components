@@ -16,20 +16,9 @@
  */
 
 import { ClassificationReasonEntry } from './classificationReasonEntry';
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 
-export class ClassificationReasonsPagingList {
+export interface ClassificationReasonsPagingList {
     pagination?: Pagination;
     entries?: ClassificationReasonEntry[];
-
-    constructor(input?: Partial<ClassificationReasonsPagingList>) {
-        if (input) {
-            Object.assign(this, input);
-            this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
-            if (input.entries) {
-                this.entries = input.entries.map((item) => new ClassificationReasonEntry(item));
-            }
-        }
-    }
-
 }

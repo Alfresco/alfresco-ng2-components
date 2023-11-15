@@ -17,14 +17,4 @@
 
 import { SecurityMark } from './securityMark';
 
-export class SecurityMarks extends Array<SecurityMark> {
-
-    constructor(input?: Partial<SecurityMarks>) {
-        super();
-
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
+export interface SecurityMarks extends Array<SecurityMark> {}

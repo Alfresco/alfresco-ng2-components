@@ -18,15 +18,9 @@
 /**
  * The classification guide which the topic is contained in. This field is only returned when requested.
  */
-export class ClassificationGuideInTopic {
+export interface ClassificationGuideInTopic {
     name: string;
     originatingOrganization: string;
     publishedOn: Date;
     enabled?: boolean;
-
-    constructor(input?: Partial<ClassificationGuideInTopic>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

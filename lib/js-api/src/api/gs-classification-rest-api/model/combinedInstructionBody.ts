@@ -18,16 +18,7 @@
 import { ClassificationInformation } from './classificationInformation';
 import { SecurityMarkInformationBody } from './securityMarkInformationBody';
 
-export class CombinedInstructionBody {
+export interface CombinedInstructionBody {
     classificationInformation?: ClassificationInformation;
     securityMarkInformation?: SecurityMarkInformationBody;
-
-    constructor(input?: Partial<CombinedInstructionBody>) {
-        if (input) {
-            Object.assign(this, input);
-            this.classificationInformation = input.classificationInformation ? new ClassificationInformation(input.classificationInformation) : undefined;
-            this.securityMarkInformation = input.securityMarkInformation ? new SecurityMarkInformationBody(input.securityMarkInformation) : undefined;
-        }
-    }
-
 }

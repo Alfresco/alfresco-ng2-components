@@ -23,6 +23,7 @@ export * from './authorityClearanceMark';
 export * from './classificationGuideEntry';
 export * from './classificationGuidePaging';
 export * from './classificationGuidePagingList';
+export * from './classificationGuideBody';
 export * from './classificationGuidesBody';
 export * from './classificationGuidesEntry';
 export * from './classificationInformation';

@@ -74,26 +74,22 @@ describe('Authority Clearance API test', () => {
     it('add single security marks to an authority', async () => {
         const nodeId = 'testAuthorityId';
         authorityClearanceMock.post200AuthorityClearanceWithSingleItem(nodeId);
-        await authorityClearanceApi
-            .updateAuthorityClearance(nodeId, nodeSecurityMarkBodySingle)
-            .then((data: SecurityMarkEntry | SecurityMarkPaging) => {
-                const response = data as SecurityMarkEntry;
-                assert.equal(response.entry.id, 'fruitMarkId1');
-                assert.equal(response.entry.name, 'APPLES');
-                assert.equal(response.entry.groupId, 'securityGroupFruits');
-            });
+        await authorityClearanceApi.updateAuthorityClearance(nodeId, nodeSecurityMarkBodySingle).then((data) => {
+            const response = data as SecurityMarkEntry;
+            assert.equal(response.entry.id, 'fruitMarkId1');
+            assert.equal(response.entry.name, 'APPLES');
+            assert.equal(response.entry.groupId, 'securityGroupFruits');
+        });
     });
 
     it('add multiple security marks on an authority', async () => {
         const nodeId = 'testAuthorityId';
         authorityClearanceMock.post200AuthorityClearanceWithList(nodeId);
-        await authorityClearanceApi
-            .updateAuthorityClearance(nodeId, nodeSecurityMarkBodyList)
-            .then((data: SecurityMarkEntry | SecurityMarkPaging) => {
-                const response: SecurityMarkPaging = data as SecurityMarkPaging;
-                assert.equal(response.list.entries[0].entry.id, 'fruitMarkId1');
-                assert.equal(response.list.entries[0].entry.name, 'APPLES');
-                assert.equal(response.list.entries[0].entry.groupId, 'securityGroupFruits');
-            });
+        await authorityClearanceApi.updateAuthorityClearance(nodeId, nodeSecurityMarkBodyList).then((data) => {
+            const response = data as SecurityMarkPaging;
+            assert.equal(response.list.entries[0].entry.id, 'fruitMarkId1');
+            assert.equal(response.list.entries[0].entry.name, 'APPLES');
+            assert.equal(response.list.entries[0].entry.groupId, 'securityGroupFruits');
+        });
     });
 });

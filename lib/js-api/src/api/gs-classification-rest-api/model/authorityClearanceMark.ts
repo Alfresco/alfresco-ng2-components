@@ -15,15 +15,9 @@
  * limitations under the License.
  */
 
-export class AuthorityClearanceMark {
+export interface AuthorityClearanceMark {
     id: string;
     displayLabel: string;
     applied: boolean;
     inherited: boolean;
-
-    constructor(input?: Partial<AuthorityClearanceMark>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

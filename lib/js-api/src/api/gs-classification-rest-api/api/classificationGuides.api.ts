@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { ClassificationGuideBody } from '../model/classificationGuideBody';
-import { ClassificationGuideEntry } from '../model/classificationGuideEntry';
-import { ClassificationGuidePaging } from '../model/classificationGuidePaging';
-import { InstructionEntry } from '../model/instructionEntry';
-import { SubtopicPaging } from '../model/subtopicPaging';
-import { TopicBody } from '../model/topicBody';
-import { TopicEntry } from '../model/topicEntry';
-import { TopicPaging } from '../model/topicPaging';
+import {
+    ClassificationGuideBody,
+    ClassificationGuideEntry,
+    ClassificationGuidePaging,
+    InstructionEntry,
+    SubtopicPaging,
+    TopicBody,
+    TopicEntry,
+    TopicPaging
+} from '../model';
 import { BaseApi } from './base.api';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { throwIfNotDefined } from '../../../assert';
@@ -46,8 +48,7 @@ export class ClassificationGuidesApi extends BaseApi {
     combinedInstructions(opts?: CombinedInstructionsOpts): Promise<InstructionEntry> {
         return this.post({
             path: '/combined-instructions',
-            bodyParam: opts?.instructions,
-            returnType: InstructionEntry
+            bodyParam: opts?.instructions
         });
     }
 
@@ -62,8 +63,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
         return this.post({
             path: '/classification-guides',
-            bodyParam: classificationGuide,
-            returnType: ClassificationGuideEntry
+            bodyParam: classificationGuide
         });
     }
 
@@ -188,8 +188,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
         return this.get({
             path: '/classification-guides',
-            queryParams,
-            returnType: ClassificationGuidePaging
+            queryParams
         });
     }
 
@@ -306,8 +305,7 @@ export class ClassificationGuidesApi extends BaseApi {
 
         return this.get({
             path: '/classification-guides/{classificationGuideId}',
-            pathParams,
-            returnType: ClassificationGuideEntry
+            pathParams
         });
     }
 
@@ -357,8 +355,7 @@ export class ClassificationGuidesApi extends BaseApi {
         return this.put({
             path: '/classification-guides/{classificationGuideId}',
             pathParams,
-            bodyParam: classificationGuide,
-            returnType: ClassificationGuideEntry
+            bodyParam: classificationGuide
         });
     }
 

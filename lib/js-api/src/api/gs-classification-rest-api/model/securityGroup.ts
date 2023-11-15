@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export class SecurityGroup {
-    id: string;
-    groupName: string;
-    groupType: string;
-    inUse: boolean;
-    systemGroup: boolean;
-
-    constructor(input?: Partial<SecurityGroup>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
+export interface SecurityGroup {
+    id?: string;
+    groupName?: string;
+    groupType?: string;
+    inUse?: boolean;
+    systemGroup?: boolean;
 }

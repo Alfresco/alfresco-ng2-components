@@ -17,13 +17,6 @@
 
 import { SecurityGroup } from './securityGroup';
 
-export class SecurityGroupEntry {
+export interface SecurityGroupEntry {
     entry: SecurityGroup;
-
-    constructor(input?: Partial<SecurityGroupEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new SecurityGroup(input.entry) : undefined;
-        }
-    }
 }

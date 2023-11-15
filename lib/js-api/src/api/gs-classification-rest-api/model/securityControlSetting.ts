@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export class SecurityControlSetting {
+export interface SecurityControlSetting {
     key: string;
     value: any;
-
-    constructor(input?: Partial<SecurityControlSetting>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

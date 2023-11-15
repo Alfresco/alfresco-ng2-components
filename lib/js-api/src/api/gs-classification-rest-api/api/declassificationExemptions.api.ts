@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { DeclassificationExemptionBody } from '../model/declassificationExemptionBody';
-import { DeclassificationExemptionEntry } from '../model/declassificationExemptionEntry';
-import { DeclassificationExemptionsPaging } from '../model/declassificationExemptionsPaging';
+import { DeclassificationExemptionBody, DeclassificationExemptionEntry, DeclassificationExemptionsPaging } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { GsPagingQuery } from './types';
@@ -37,8 +35,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
 
         return this.post({
             path: '/declassification-exemptions',
-            bodyParam: declassificationExemption,
-            returnType: DeclassificationExemptionEntry
+            bodyParam: declassificationExemption
         });
     }
 
@@ -71,8 +68,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
     listDeclassificationExemptions(opts?: GsPagingQuery): Promise<DeclassificationExemptionsPaging> {
         return this.get({
             path: '/declassification-exemptions',
-            queryParams: opts,
-            returnType: DeclassificationExemptionsPaging
+            queryParams: opts
         });
     }
 
@@ -91,8 +87,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
 
         return this.get({
             path: '/declassification-exemptions/{declassificationExemptionId}',
-            pathParams,
-            returnType: DeclassificationExemptionEntry
+            pathParams
         });
     }
 
@@ -117,8 +112,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
         return this.put({
             path: '/declassification-exemptions/{declassificationExemptionId}',
             pathParams,
-            bodyParam: declassificationExemption,
-            returnType: DeclassificationExemptionEntry
+            bodyParam: declassificationExemption
         });
     }
 }

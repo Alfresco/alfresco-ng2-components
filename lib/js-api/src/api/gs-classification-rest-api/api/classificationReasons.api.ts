@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { ClassificationReasonBody } from '../model/classificationReasonBody';
-import { ClassificationReasonEntry } from '../model/classificationReasonEntry';
-import { ClassificationReasonsPaging } from '../model/classificationReasonsPaging';
+import { ClassificationReasonBody, ClassificationReasonEntry, ClassificationReasonsPaging } from '../model';
 import { BaseApi } from './base.api';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { throwIfNotDefined } from '../../../assert';
@@ -40,8 +38,7 @@ export class ClassificationReasonsApi extends BaseApi {
 
         return this.post({
             path: '/classification-reasons',
-            bodyParam: classificationReason,
-            returnType: ClassificationReasonEntry
+            bodyParam: classificationReason
         });
     }
 
@@ -82,8 +79,7 @@ export class ClassificationReasonsApi extends BaseApi {
 
         return this.get({
             path: '/classification-reasons',
-            queryParams,
-            returnType: ClassificationReasonsPaging
+            queryParams
         });
     }
 
@@ -102,8 +98,7 @@ export class ClassificationReasonsApi extends BaseApi {
 
         return this.get({
             path: '/classification-reasons/{classificationReasonId}',
-            pathParams,
-            returnType: ClassificationReasonEntry
+            pathParams
         });
     }
 
@@ -125,8 +120,7 @@ export class ClassificationReasonsApi extends BaseApi {
         return this.put({
             path: '/classification-reasons/{classificationReasonId}',
             pathParams,
-            bodyParam: classificationReason,
-            returnType: ClassificationReasonEntry
+            bodyParam: classificationReason
         });
     }
 }

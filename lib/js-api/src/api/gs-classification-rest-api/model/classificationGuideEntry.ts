@@ -17,14 +17,6 @@
 
 import { ClassificationGuide } from './classificationGuide';
 
-export class ClassificationGuideEntry {
+export interface ClassificationGuideEntry {
     entry: ClassificationGuide;
-
-    constructor(input?: Partial<ClassificationGuideEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new ClassificationGuide(input.entry) : undefined;
-        }
-    }
-
 }

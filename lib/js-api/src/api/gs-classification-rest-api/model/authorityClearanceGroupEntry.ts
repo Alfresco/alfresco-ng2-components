@@ -17,13 +17,6 @@
 
 import { AuthorityClearanceGroup } from './authorityClearanceGroup';
 
-export class AuthorityClearanceGroupEntry {
+export interface AuthorityClearanceGroupEntry {
     entry: AuthorityClearanceGroup;
-
-    constructor(input?: Partial<AuthorityClearanceGroupEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new AuthorityClearanceGroup(input.entry) : undefined;
-        }
-    }
 }

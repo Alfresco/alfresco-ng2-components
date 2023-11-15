@@ -17,16 +17,10 @@
 
 import { AuthorityClearanceMark } from './authorityClearanceMark';
 
-export class AuthorityClearanceGroup {
+export interface AuthorityClearanceGroup {
     id: string;
     displayLabel: string;
     systemGroup: boolean;
     type: string;
     marks: AuthorityClearanceMark[];
-
-    constructor(input?: Partial<AuthorityClearanceGroup>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

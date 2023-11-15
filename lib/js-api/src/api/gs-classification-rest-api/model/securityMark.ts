@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 
-export class SecurityMark {
+export interface SecurityMark {
     id: string;
     name: string;
     groupId: string;
-
-    constructor(input?: Partial<SecurityMark>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

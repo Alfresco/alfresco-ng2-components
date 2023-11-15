@@ -43,8 +43,7 @@ export class NodeSecurityMarksApi extends BaseApi {
         return this.post({
             path: '/secured-nodes/{nodeId}/securing-marks',
             pathParams,
-            bodyParam: dataBody,
-            returnType: SecurityMarkPaging
+            bodyParam: dataBody
         });
     }
 
@@ -65,8 +64,7 @@ export class NodeSecurityMarksApi extends BaseApi {
         return this.get({
             path: '/secured-nodes/{nodeId}/securing-marks',
             pathParams,
-            queryParams: opts,
-            returnType: SecurityMarkPaging
+            queryParams: opts
         });
     }
 }

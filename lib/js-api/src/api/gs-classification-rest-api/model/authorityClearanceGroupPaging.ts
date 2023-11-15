@@ -17,13 +17,6 @@
 
 import { AuthorityClearanceGroupPagingList } from './authorityClearanceGroupPagingList';
 
-export class AuthorityClearanceGroupPaging {
+export interface AuthorityClearanceGroupPaging {
     list?: AuthorityClearanceGroupPagingList;
-
-    constructor(input?: Partial<AuthorityClearanceGroupPaging>) {
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new AuthorityClearanceGroupPagingList(input.list) : undefined;
-        }
-    }
 }

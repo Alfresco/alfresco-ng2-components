@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DeclassificationDate } from '../model/declassificationDate';
+import { DeclassificationDate } from '../model';
 import { BaseApi } from './base.api';
 import { DateAlfresco } from '../../content-custom-api';
 import { throwIfNotDefined } from '../../../assert';

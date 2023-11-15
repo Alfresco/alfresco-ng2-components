@@ -17,14 +17,6 @@
 
 import { SecurityMarksBody } from './securityMarksBody';
 
-export class SecurityMarkInformationBody {
+export interface SecurityMarkInformationBody {
     add: SecurityMarksBody;
-
-    constructor(input?: Partial<SecurityMarkInformationBody>) {
-
-        if (input) {
-            Object.assign(this, input);
-            this.add = input.add ? new SecurityMarksBody(input.add) : undefined;
-        }
-    }
 }

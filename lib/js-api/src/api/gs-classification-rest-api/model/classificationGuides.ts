@@ -18,16 +18,10 @@
 /**
  * A classification guide in a list.
  */
-export class ClassificationGuides {
+export interface ClassificationGuides {
     name: string;
     originatingOrganization: string;
     publishedOn: Date;
     enabled?: boolean;
     hasTopics?: boolean;
-
-    constructor(input?: Partial<ClassificationGuides>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

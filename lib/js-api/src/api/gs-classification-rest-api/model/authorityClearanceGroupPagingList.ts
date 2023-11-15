@@ -18,17 +18,7 @@
 import { Pagination } from '../../content-rest-api';
 import { AuthorityClearanceGroupEntry } from './authorityClearanceGroupEntry';
 
-export class AuthorityClearanceGroupPagingList {
+export interface AuthorityClearanceGroupPagingList {
     pagination: Pagination;
     entries?: AuthorityClearanceGroupEntry[];
-
-    constructor(input?: Partial<AuthorityClearanceGroupPagingList>) {
-        if (input) {
-            Object.assign(this, input);
-            this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
-            if (input.entries) {
-                this.entries = input.entries.map((item) => new AuthorityClearanceGroupEntry(item));
-            }
-        }
-    }
 }

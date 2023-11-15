@@ -17,9 +17,7 @@
 
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
-import { SecurityMarkEntry } from '../model/securityMarkEntry';
-import { SecurityMarkBody } from '../model/securityMarkBody';
-import { SecurityMarkPaging } from '../model/securityMarkPaging';
+import { SecurityMarkBody, SecurityMarkEntry, SecurityMarkPaging } from '../model';
 import { GsPagingQuery } from './types';
 
 /**
@@ -45,8 +43,7 @@ export class SecurityMarksApi extends BaseApi {
         return this.get({
             path: '/security-groups/{securityGroupId}/security-marks',
             pathParams,
-            queryParams: opts,
-            returnType: SecurityMarkPaging
+            queryParams: opts
         });
     }
 
@@ -62,13 +59,11 @@ export class SecurityMarksApi extends BaseApi {
         throwIfNotDefined(securityMarkBody, 'securityMarkBody');
 
         const pathParams = { securityGroupId };
-        const returnType = securityMarkBody.length > 1 ? SecurityMarkPaging : SecurityMarkEntry;
 
         return this.post({
             path: '/security-groups/{securityGroupId}/security-marks',
             pathParams,
-            bodyParam: securityMarkBody,
-            returnType
+            bodyParam: securityMarkBody
         });
     }
 
@@ -90,8 +85,7 @@ export class SecurityMarksApi extends BaseApi {
 
         return this.get({
             path: '/security-groups/{securityGroupId}/security-marks/{securityMarkId}',
-            pathParams,
-            returnType: SecurityMarkEntry
+            pathParams
         });
     }
 
@@ -116,8 +110,7 @@ export class SecurityMarksApi extends BaseApi {
         return this.put({
             path: '/security-groups/{securityGroupId}/security-marks/{securityMarkId}',
             pathParams,
-            bodyParam: securityMarkBody,
-            returnType: SecurityMarkEntry
+            bodyParam: securityMarkBody
         });
     }
 

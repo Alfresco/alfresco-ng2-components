@@ -17,15 +17,6 @@
 
 import { ClassificationReasonsPagingList } from './classificationReasonsPagingList';
 
-export class ClassificationReasonsPaging {
+export interface ClassificationReasonsPaging {
     list?: ClassificationReasonsPagingList;
-
-    constructor(input?: Partial<ClassificationReasonsPaging>) {
-
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new ClassificationReasonsPagingList(input.list) : undefined;
-        }
-    }
-
 }

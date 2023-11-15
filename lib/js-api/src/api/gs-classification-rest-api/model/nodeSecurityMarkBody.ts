@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export class NodeSecurityMarkBody {
+export interface NodeSecurityMarkBody {
     id: string;
     groupId: string;
     op: string;
-
-    constructor(input?: Partial<NodeSecurityMarkBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

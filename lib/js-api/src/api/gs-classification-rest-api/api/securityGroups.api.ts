@@ -16,9 +16,7 @@
  */
 
 import { BaseApi } from './base.api';
-import { SecurityGroupPaging } from '../model/securityGroupPaging';
-import { SecurityGroupBody } from '../model/securityGroupBody';
-import { SecurityGroupEntry } from '../model/securityGroupEntry';
+import { SecurityGroupBody, SecurityGroupEntry, SecurityGroupPaging } from '../model';
 import { GsGroupInclude, GsPagingQuery } from './types';
 
 /**
@@ -36,8 +34,7 @@ export class SecurityGroupsApi extends BaseApi {
     getSecurityGroups(opts?: GsPagingQuery & GsGroupInclude): Promise<SecurityGroupPaging> {
         return this.get({
             path: '/security-groups',
-            queryParams: opts,
-            returnType: SecurityGroupPaging
+            queryParams: opts
         });
     }
 
@@ -52,8 +49,7 @@ export class SecurityGroupsApi extends BaseApi {
         return this.post({
             path: '/security-groups',
             queryParams: opts,
-            bodyParam: securityGroupBody,
-            returnType: SecurityGroupEntry
+            bodyParam: securityGroupBody
         });
     }
 
@@ -72,8 +68,7 @@ export class SecurityGroupsApi extends BaseApi {
         return this.get({
             path: '/security-groups/{securityGroupId}',
             pathParams,
-            queryParams: opts,
-            returnType: SecurityGroupEntry
+            queryParams: opts
         });
     }
 
@@ -94,8 +89,7 @@ export class SecurityGroupsApi extends BaseApi {
             path: '/security-groups/{securityGroupId}',
             pathParams,
             queryParams: opts,
-            bodyParam: securityGroupBody,
-            returnType: SecurityGroupEntry
+            bodyParam: securityGroupBody
         });
     }
 

@@ -16,20 +16,9 @@
  */
 
 import { ClassificationGuidesEntry } from './classificationGuidesEntry';
-import { Pagination } from '../../content-rest-api/model/pagination';
+import { Pagination } from '../../content-rest-api';
 
-export class ClassificationGuidePagingList {
+export interface ClassificationGuidePagingList {
     pagination?: Pagination;
     entries?: ClassificationGuidesEntry[];
-
-    constructor(input?: Partial<ClassificationGuidePagingList>) {
-        if (input) {
-            Object.assign(this, input);
-            this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
-            if (input.entries) {
-                this.entries = input.entries.map((item) => new ClassificationGuidesEntry(item));
-            }
-        }
-    }
-
 }

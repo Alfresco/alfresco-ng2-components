@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class SecurityGroupBody {
+export interface SecurityGroupBody {
     groupName?: string;
     groupType?: string;
-
-    constructor(input?: Partial<SecurityGroupBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -17,14 +17,6 @@
 
 import { DeclassificationExemptionsPagingList } from './declassificationExemptionsPagingList';
 
-export class DeclassificationExemptionsPaging {
+export interface DeclassificationExemptionsPaging {
     list?: DeclassificationExemptionsPagingList;
-
-    constructor(input?: Partial<DeclassificationExemptionsPaging>) {
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new DeclassificationExemptionsPagingList(input.list) : undefined;
-        }
-    }
-
 }

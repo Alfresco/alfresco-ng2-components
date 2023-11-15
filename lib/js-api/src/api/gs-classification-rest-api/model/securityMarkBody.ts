@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-export class SecurityMarkBody {
+export interface SecurityMarkBody {
     name: string;
-
-    constructor(input?: Partial<SecurityMarkBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

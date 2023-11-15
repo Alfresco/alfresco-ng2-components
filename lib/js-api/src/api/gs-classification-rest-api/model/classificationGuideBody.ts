@@ -15,16 +15,9 @@
  * limitations under the License.
  */
 
-export class ClassificationGuideBody {
+export interface ClassificationGuideBody {
     name: string;
     originatingOrganization: string;
     publishedOn: Date;
     enabled?: boolean;
-
-    constructor(input?: Partial<ClassificationGuideBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

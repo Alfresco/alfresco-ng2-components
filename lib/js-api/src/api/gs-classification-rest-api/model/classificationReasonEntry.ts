@@ -17,14 +17,6 @@
 
 import { ClassificationReason } from './classificationReason';
 
-export class ClassificationReasonEntry {
+export interface ClassificationReasonEntry {
     entry: ClassificationReason;
-
-    constructor(input?: Partial<ClassificationReasonEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new ClassificationReason(input.entry) : undefined;
-        }
-    }
-
 }

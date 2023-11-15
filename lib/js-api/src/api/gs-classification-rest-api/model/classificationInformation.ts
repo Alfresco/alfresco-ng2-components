@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class ClassificationInformation {
+export interface ClassificationInformation {
     level: string;
     classificationAgency?: string;
     reasonIds: string[];
@@ -25,10 +25,4 @@ export class ClassificationInformation {
     declassifyOn?: Date;
     declassificationEvent?: string;
     exemptionIds?: string[];
-
-    constructor(input?: Partial<ClassificationInformation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -17,15 +17,8 @@
 
 import { InstructionBody } from './instructionBody';
 
-export class TopicBody {
+export interface TopicBody {
     name: string;
     description?: string;
     instruction?: InstructionBody;
-
-    constructor(input?: Partial<TopicBody>) {
-        if (input) {
-            Object.assign(this, input);
-            this.instruction = input.instruction ? new InstructionBody(input.instruction) : undefined;
-        }
-    }
 }

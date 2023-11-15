@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export class DeclassificationExemption {
+export interface DeclassificationExemption {
     id: string;
     code: string;
     description: string;
-
-    constructor(input?: Partial<DeclassificationExemption>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

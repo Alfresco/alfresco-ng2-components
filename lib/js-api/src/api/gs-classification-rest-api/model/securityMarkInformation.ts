@@ -17,15 +17,6 @@
 
 import { SecurityMarks } from './securityMarks';
 
-export class SecurityMarkInformation {
+export interface SecurityMarkInformation {
     add: SecurityMarks;
-
-    constructor(input?: Partial<SecurityMarkInformation>) {
-
-        if (input) {
-            Object.assign(this, input);
-            this.add = input.add ? new SecurityMarks(input.add) : undefined;
-        }
-    }
-
 }

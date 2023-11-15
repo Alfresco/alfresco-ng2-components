@@ -16,7 +16,7 @@
  */
 
 import { ClassificationGuideInTopic } from './classificationGuideInTopic';
-import { DateAlfresco } from '../../content-custom-api/model/dateAlfresco';
+import { DateAlfresco } from '../../content-custom-api';
 import { Instruction } from './instruction';
 import { Path } from './path';
 
@@ -40,10 +40,7 @@ export class Topic {
     constructor(input?: Partial<Topic>) {
         if (input) {
             Object.assign(this, input);
-            this.instruction = input.instruction ? new Instruction(input.instruction) : undefined;
             this.createdAt = input.createdAt ? DateAlfresco.parseDate(input.createdAt) : undefined;
-            this.path = input.path ? new Path(input.path) : undefined;
-            this.classificationGuide = input.classificationGuide ? new ClassificationGuideInTopic(input.classificationGuide) : undefined;
         }
     }
 }

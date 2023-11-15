@@ -17,13 +17,6 @@
 
 import { ClassificationGuidePagingList } from './classificationGuidePagingList';
 
-export class ClassificationGuidePaging {
+export interface ClassificationGuidePaging {
     list?: ClassificationGuidePagingList;
-
-    constructor(input?: Partial<ClassificationGuidePaging>) {
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new ClassificationGuidePagingList(input.list) : undefined;
-        }
-    }
 }

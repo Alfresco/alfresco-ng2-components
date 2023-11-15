@@ -17,13 +17,6 @@
 
 import { SecurityGroupPagingList } from './securityGroupPagingList';
 
-export class SecurityGroupPaging {
+export interface SecurityGroupPaging {
     list?: SecurityGroupPagingList;
-
-    constructor(input?: Partial<SecurityGroupPaging>) {
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new SecurityGroupPagingList(input.list) : undefined;
-        }
-    }
 }
