@@ -362,21 +362,26 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
         if (this.isOauthConfiguration()) {
             return this.oauth2Auth.logOut();
-        } else {
-            if (this.isBpmConfiguration()) {
-                return this.processAuth.logout();
-            } else if (this.isEcmConfiguration()) {
-                const contentPromise = this.contentAuth.logout();
-                contentPromise.then(
-                    () => (this.config.ticket = undefined),
-                    () => {}
-                );
-                return contentPromise;
-            } else if (this.isEcmBpmConfiguration()) {
-                return this._logoutBPMECM();
-            }
-            return Promise.resolve();
         }
+
+        if (this.isBpmConfiguration()) {
+            return this.processAuth.logout();
+        }
+
+        if (this.isEcmConfiguration()) {
+            const contentPromise = this.contentAuth.logout();
+            contentPromise.then(
+                () => (this.config.ticket = undefined),
+                () => {}
+            );
+            return contentPromise;
+        }
+
+        if (this.isEcmBpmConfiguration()) {
+            return this._logoutBPMECM();
+        }
+
+        return Promise.resolve();
     }
 
     private _logoutBPMECM(): Promise<void> {
@@ -410,17 +415,21 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
     isLoggedIn(): boolean {
         if (this.isOauthConfiguration()) {
             return this.oauth2Auth.isLoggedIn();
-        } else {
-            if (this.isBpmConfiguration()) {
-                return this.processAuth.isLoggedIn();
-            } else if (this.isEcmConfiguration()) {
-                return this.config.withCredentials ? true : this.contentAuth.isLoggedIn();
-            } else if (this.isEcmBpmConfiguration()) {
-                return this.config.withCredentials ? true : this.contentAuth.isLoggedIn() && this.processAuth.isLoggedIn();
-            } else {
-                return false;
-            }
         }
+
+        if (this.isBpmConfiguration()) {
+            return this.processAuth.isLoggedIn();
+        }
+
+        if (this.isEcmConfiguration()) {
+            return this.config.withCredentials ? true : this.contentAuth.isLoggedIn();
+        }
+
+        if (this.isEcmBpmConfiguration()) {
+            return this.config.withCredentials ? true : this.contentAuth.isLoggedIn() && this.processAuth.isLoggedIn();
+        }
+
+        return false;
     }
 
     isBpmLoggedIn(): boolean {

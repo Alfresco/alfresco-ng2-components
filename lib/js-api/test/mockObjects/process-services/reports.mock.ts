@@ -153,10 +153,6 @@ const fakeProcessDefinitionsNoApp: any[] = [
 ];
 
 export class ReportsMock extends BaseMock {
-    constructor(host?: string) {
-        super(host);
-    }
-
     get200ResponseCreateDefaultReport(): void {
         nock(this.host, { encodedQueryParams: true }).post('/activiti-app/app/rest/reporting/default-reports').reply(200);
     }

@@ -131,10 +131,7 @@ describe('Node', () => {
                 return Promise.resolve();
             };
 
-            // const deleteNodeSpy = chai.spy.on(nodesApi, 'deleteNode', () => Promise.resolve());
-
             nodesApi.deleteNodes(['80a94ac8-3ece-47ad-864e-5d939424c47c', '80a94ac8-3ece-47ad-864e-5d939424c47d']).then(() => {
-                // expect(deleteNodeSpy).to.have.been.called.exactly(2);
                 assert.equal(calls, 2);
                 done();
             });
