@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export class DeletedNodeBodyRestore {
+export interface DeletedNodeBodyRestore {
     targetParentId?: string;
     assocType?: string;
-
-    constructor(input?: Partial<DeletedNodeBodyRestore>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

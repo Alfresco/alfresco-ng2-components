@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class CommentBody {
+export interface CommentBody {
     content: string;
-
-    constructor(input?: Partial<CommentBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

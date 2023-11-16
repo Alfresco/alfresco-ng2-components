@@ -18,10 +18,7 @@
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
-import { CategoryPaging } from '../model/categoryPaging';
-import { CategoryEntry } from '../model/categoryEntry';
-import { CategoryBody } from '../model/categoryBody';
-import { CategoryLinkBody } from '../model/CategoryLinkBody';
+import { CategoryBody, CategoryEntry, CategoryLinkBody, CategoryPaging } from '../model';
 import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './types';
 
 export type CategoryQuery = ContentFieldsQuery & ContentIncludeQuery;

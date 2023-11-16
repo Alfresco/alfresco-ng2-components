@@ -15,17 +15,10 @@
  * limitations under the License.
  */
 
-export class AuditApp {
+export interface AuditApp {
     id: string;
     name?: string;
     isEnabled?: boolean;
     maxEntryId?: number;
     minEntryId?: number;
-
-    constructor(input?: Partial<AuditApp>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -17,13 +17,6 @@
 
 import { Association } from './association';
 
-export class AssociationEntry {
+export interface AssociationEntry {
     entry: Association;
-
-    constructor(input?: Partial<AssociationEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new Association(input.entry) : undefined;
-        }
-    }
 }

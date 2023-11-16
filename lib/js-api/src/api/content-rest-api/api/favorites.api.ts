@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import { FavoriteBodyCreate } from '../model/favoriteBodyCreate';
-import { FavoriteEntry } from '../model/favoriteEntry';
-import { FavoritePaging } from '../model/favoritePaging';
-import { FavoriteSiteBodyCreate } from '../model/favoriteSiteBodyCreate';
-import { FavoriteSiteEntry } from '../model/favoriteSiteEntry';
-import { SiteEntry } from '../model/siteEntry';
-import { SitePaging } from '../model/sitePaging';
+import { FavoriteBodyCreate, FavoriteEntry, FavoritePaging, FavoriteSiteBodyCreate, FavoriteSiteEntry, SiteEntry, SitePaging } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
@@ -104,8 +98,7 @@ export class FavoritesApi extends BaseApi {
             path: '/people/{personId}/favorite-sites',
             pathParams,
             queryParams,
-            bodyParam: favoriteSiteBodyCreate,
-            returnType: FavoriteSiteEntry
+            bodyParam: favoriteSiteBodyCreate
         });
     }
 

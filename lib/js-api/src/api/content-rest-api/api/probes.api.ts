@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ProbeEntry } from '../model/probeEntry';
+import { ProbeEntry } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 
@@ -47,8 +47,7 @@ export class ProbesApi extends BaseApi {
 
         return this.get({
             path: '/probes/{probeId}',
-            pathParams,
-            returnType: ProbeEntry
+            pathParams
         });
     }
 }

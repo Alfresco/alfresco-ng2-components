@@ -17,14 +17,6 @@
 
 import { Group } from './group';
 
-export class GroupEntry {
+export interface GroupEntry {
     entry: Group;
-
-    constructor(input?: Partial<GroupEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new Group(input.entry) : undefined;
-        }
-    }
-
 }

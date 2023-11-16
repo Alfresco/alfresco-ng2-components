@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class RenditionBodyCreate {
+export interface RenditionBodyCreate {
     id: string;
-
-    constructor(input?: Partial<RenditionBodyCreate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

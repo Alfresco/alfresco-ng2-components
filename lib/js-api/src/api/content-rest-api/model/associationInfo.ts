@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-export class AssociationInfo {
+export interface AssociationInfo {
     assocType: string;
-
-    constructor(input?: Partial<AssociationInfo>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

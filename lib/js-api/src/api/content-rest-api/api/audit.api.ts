@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-import { AuditApp } from '../model/auditApp';
-import { AuditAppPaging } from '../model/auditAppPaging';
-import { AuditBodyUpdate } from '../model/auditBodyUpdate';
-import { AuditEntryEntry } from '../model/auditEntryEntry';
-import { AuditEntryPaging } from '../model/auditEntryPaging';
+import { AuditApp, AuditAppPaging, AuditBodyUpdate, AuditEntryEntry, AuditEntryPaging } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
@@ -119,8 +115,7 @@ export class AuditApi extends BaseApi {
         return this.get({
             path: '/audit-applications/{auditApplicationId}',
             pathParams,
-            queryParams,
-            returnType: AuditApp
+            queryParams
         });
     }
 
@@ -346,8 +341,7 @@ export class AuditApi extends BaseApi {
             path: '/audit-applications/{auditApplicationId}',
             pathParams,
             queryParams,
-            bodyParam: auditAppBodyUpdate,
-            returnType: AuditApp
+            bodyParam: auditAppBodyUpdate
         });
     }
 }

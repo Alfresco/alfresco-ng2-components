@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class FavoriteSite {
+export interface FavoriteSite {
     id: string;
-
-    constructor(input?: Partial<FavoriteSite>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

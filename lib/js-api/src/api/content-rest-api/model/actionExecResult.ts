@@ -15,16 +15,9 @@
  * limitations under the License.
  */
 
-export class ActionExecResult {
+export interface ActionExecResult {
     /**
      * The unique identifier of the action pending execution
      */
     id: string;
-
-    constructor(input?: Partial<ActionExecResult>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

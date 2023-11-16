@@ -15,18 +15,11 @@
  * limitations under the License.
  */
 
-export class ErrorError {
+export interface ErrorError {
     errorKey?: string;
     statusCode: number;
     briefSummary: string;
     stackTrace: string;
     descriptionURL: string;
     logId?: string;
-
-    constructor(input?: Partial<ErrorError>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

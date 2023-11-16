@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export class RevertBody {
+export interface RevertBody {
     majorVersion?: boolean;
     comment?: string;
-
-    constructor(input?: Partial<RevertBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

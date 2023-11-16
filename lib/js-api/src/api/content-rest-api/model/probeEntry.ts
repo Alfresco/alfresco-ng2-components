@@ -17,14 +17,6 @@
 
 import { ProbeEntryEntry } from './probeEntryEntry';
 
-export class ProbeEntry {
+export interface ProbeEntry {
     entry?: ProbeEntryEntry;
-
-    constructor(input?: Partial<ProbeEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new ProbeEntryEntry(input.entry) : undefined;
-        }
-    }
-
 }

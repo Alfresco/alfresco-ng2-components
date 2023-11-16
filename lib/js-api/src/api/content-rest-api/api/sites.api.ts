@@ -15,28 +15,30 @@
  * limitations under the License.
  */
 
-import { SiteBodyCreate } from '../model/siteBodyCreate';
-import { SiteBodyUpdate } from '../model/siteBodyUpdate';
-import { SiteContainerEntry } from '../model/siteContainerEntry';
-import { SiteContainerPaging } from '../model/siteContainerPaging';
-import { SiteEntry } from '../model/siteEntry';
-import { SiteMemberEntry } from '../model/siteMemberEntry';
-import { SiteMemberPaging } from '../model/siteMemberPaging';
-import { SiteMembershipBodyCreate } from '../model/siteMembershipBodyCreate';
-import { SiteMembershipBodyUpdate } from '../model/siteMembershipBodyUpdate';
-import { SiteMembershipRequestBodyCreate } from '../model/siteMembershipRequestBodyCreate';
-import { SiteMembershipRequestBodyUpdate } from '../model/siteMembershipRequestBodyUpdate';
-import { SiteMembershipRequestEntry } from '../model/siteMembershipRequestEntry';
-import { SiteMembershipRequestPaging } from '../model/siteMembershipRequestPaging';
-import { SiteMembershipRequestWithPersonPaging } from '../model/siteMembershipRequestWithPersonPaging';
-import { SitePaging } from '../model/sitePaging';
-import { SiteRoleEntry } from '../model/siteRoleEntry';
-import { SiteRolePaging } from '../model/siteRolePaging';
+import {
+    SiteBodyCreate,
+    SiteBodyUpdate,
+    SiteContainerEntry,
+    SiteContainerPaging,
+    SiteEntry,
+    SiteGroupEntry,
+    SiteGroupPaging,
+    SiteMemberEntry,
+    SiteMemberPaging,
+    SiteMembershipBodyCreate,
+    SiteMembershipBodyUpdate,
+    SiteMembershipRequestBodyCreate,
+    SiteMembershipRequestBodyUpdate,
+    SiteMembershipRequestEntry,
+    SiteMembershipRequestPaging,
+    SiteMembershipRequestWithPersonPaging,
+    SitePaging,
+    SiteRoleEntry,
+    SiteRolePaging
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
-import { SiteGroupEntry } from '../model/siteGroupEntry';
-import { SiteGroupPaging } from '../model/siteGroupPaging';
 import { ContentFieldsQuery, ContentPagingQuery } from './types';
 
 /**
@@ -339,8 +341,7 @@ export class SitesApi extends BaseApi {
         return this.get({
             path: '/sites/{siteId}/containers/{containerId}',
             pathParams,
-            queryParams,
-            returnType: SiteContainerEntry
+            queryParams
         });
     }
 

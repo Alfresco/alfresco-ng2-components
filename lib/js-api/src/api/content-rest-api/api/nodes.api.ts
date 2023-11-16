@@ -15,19 +15,21 @@
  * limitations under the License.
  */
 
-import { AssociationBody } from '../model/associationBody';
-import { AssociationEntry } from '../model/associationEntry';
-import { ChildAssociationBody } from '../model/childAssociationBody';
-import { ChildAssociationEntry } from '../model/childAssociationEntry';
-import { DirectAccessUrlEntry } from '../model/directAccessUrlEntry';
-import { NodeAssociationPaging } from '../model/nodeAssociationPaging';
-import { NodeBodyCopy } from '../model/nodeBodyCopy';
-import { NodeBodyCreate } from '../model/nodeBodyCreate';
-import { NodeBodyLock } from '../model/nodeBodyLock';
-import { NodeBodyMove } from '../model/nodeBodyMove';
-import { NodeBodyUpdate } from '../model/nodeBodyUpdate';
-import { NodeChildAssociationPaging } from '../model/nodeChildAssociationPaging';
-import { NodeEntry } from '../model/nodeEntry';
+import {
+    AssociationBody,
+    AssociationEntry,
+    ChildAssociationBody,
+    ChildAssociationEntry,
+    DirectAccessUrlEntry,
+    NodeAssociationPaging,
+    NodeBodyCopy,
+    NodeBodyCreate,
+    NodeBodyLock,
+    NodeBodyMove,
+    NodeBodyUpdate,
+    NodeChildAssociationPaging,
+    NodeEntry
+} from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
@@ -149,8 +151,7 @@ export class NodesApi extends BaseApi {
             path: '/nodes/{nodeId}/targets',
             pathParams,
             queryParams,
-            bodyParam: associationBodyCreate,
-            returnType: AssociationEntry
+            bodyParam: associationBodyCreate
         });
     }
 

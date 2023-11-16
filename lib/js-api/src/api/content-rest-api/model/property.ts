@@ -17,7 +17,7 @@
 
 import { Constraint } from './constraint';
 
-export class Property {
+export interface Property {
     id: string;
     /**
      * the human-readable title
@@ -55,14 +55,4 @@ export class Property {
      * list of constraints defined for the property
      */
     constraints?: Constraint[];
-
-    constructor(input?: Partial<Property>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.constraints) {
-                this.constraints = input.constraints.map((item) => new Constraint(item));
-            }
-        }
-    }
-
 }

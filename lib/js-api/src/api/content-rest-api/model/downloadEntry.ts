@@ -17,14 +17,6 @@
 
 import { Download } from './download';
 
-export class DownloadEntry {
+export interface DownloadEntry {
     entry: Download;
-
-    constructor(input?: Partial<DownloadEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new Download(input.entry) : undefined;
-        }
-    }
-
 }

@@ -28,7 +28,6 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class NodeLockDialogComponent implements OnInit {
-
     form: UntypedFormGroup;
     node: Node = null;
     nodeName: string;
@@ -46,8 +45,7 @@ export class NodeLockDialogComponent implements OnInit {
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         const { node } = this.data;
@@ -73,15 +71,17 @@ export class NodeLockDialogComponent implements OnInit {
     }
 
     private get nodeBodyLock(): NodeBodyLock {
-        return new NodeBodyLock({
+        return {
             timeToExpire: this.lockTimeInSeconds,
             type: this.form.value.allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
             lifetime: 'PERSISTENT'
-        });
+        };
     }
 
     private toggleLock(): Promise<NodeEntry> {
-        const { data: { node } } = this;
+        const {
+            data: { node }
+        } = this;
 
         if (this.form.value.isLocked) {
             return this.nodesApi.lockNode(node.id, this.nodeBodyLock);

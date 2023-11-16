@@ -44,12 +44,13 @@ describe('PeopleApi', () => {
     it('should add a person', (done) => {
         peopleMock.get201Response();
 
-        const payload = new PersonBodyCreate();
-        payload.id = 'chewbe';
-        payload.email = 'chewbe@millenniumfalcon.com';
-        payload.lastName = 'Chewbe';
-        payload.firstName = 'chewbacca';
-        payload.password = 'Rrrrrrrghghghghgh';
+        const payload: PersonBodyCreate = {
+            id: 'chewbe',
+            email: 'chewbe@millenniumfalcon.com',
+            lastName: 'Chewbe',
+            firstName: 'chewbacca',
+            password: 'Rrrrrrrghghghghgh'
+        };
 
         peopleApi.createPerson(payload).then(() => {
             done();

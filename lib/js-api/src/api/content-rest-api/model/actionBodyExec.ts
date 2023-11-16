@@ -15,18 +15,11 @@
  * limitations under the License.
  */
 
-export class ActionBodyExec {
+export interface ActionBodyExec {
     actionDefinitionId: string;
     /**
      * The entity upon which to execute the action, typically a node ID or similar.
      */
     targetId?: string;
     params?: any;
-
-    constructor(input?: Partial<ActionBodyExec>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

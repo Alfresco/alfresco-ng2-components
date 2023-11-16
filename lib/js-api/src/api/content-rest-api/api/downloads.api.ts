@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { DownloadBodyCreate } from '../model/downloadBodyCreate';
-import { DownloadEntry } from '../model/downloadEntry';
+import { DownloadBodyCreate, DownloadEntry } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
@@ -79,8 +78,7 @@ export class DownloadsApi extends BaseApi {
         return this.post({
             path: '/downloads',
             queryParams,
-            bodyParam: downloadBodyCreate,
-            returnType: DownloadEntry
+            bodyParam: downloadBodyCreate
         });
     }
 
@@ -112,8 +110,7 @@ export class DownloadsApi extends BaseApi {
         return this.get({
             path: '/downloads/{downloadId}',
             pathParams,
-            queryParams,
-            returnType: DownloadEntry
+            queryParams
         });
     }
 }

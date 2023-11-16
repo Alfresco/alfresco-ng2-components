@@ -15,17 +15,10 @@
  * limitations under the License.
  */
 
-export class ActionParameterDefinition {
+export interface ActionParameterDefinition {
     name?: string;
     type?: string;
     multiValued?: boolean;
     mandatory?: boolean;
     displayLabel?: string;
-
-    constructor(input?: Partial<ActionParameterDefinition>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

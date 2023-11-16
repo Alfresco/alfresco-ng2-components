@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import { DirectAccessUrlEntry } from '../model/directAccessUrlEntry';
-import { RenditionBodyCreate } from '../model/renditionBodyCreate';
-import { RenditionEntry } from '../model/renditionEntry';
-import { RenditionPaging } from '../model/renditionPaging';
-import { RevertBody } from '../model/revertBody';
-import { VersionEntry } from '../model/versionEntry';
-import { VersionPaging } from '../model/versionPaging';
+import { DirectAccessUrlEntry, RenditionBodyCreate, RenditionEntry, RenditionPaging, RevertBody, VersionEntry, VersionPaging } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';

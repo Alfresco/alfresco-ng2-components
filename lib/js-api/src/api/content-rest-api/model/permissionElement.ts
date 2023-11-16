@@ -18,19 +18,11 @@
 export class PermissionElement {
     authorityId?: string;
     name?: string;
-    accessStatus?: PermissionElement.AccessStatusEnum | string;
+    accessStatus?: 'ALLOWED' | 'DENIED' | string;
 
     constructor(input?: Partial<PermissionElement>) {
         if (input) {
             Object.assign(this, input);
         }
     }
-
-}
-export namespace PermissionElement {
-    export type AccessStatusEnum = 'ALLOWED' | 'DENIED';
-    export const AccessStatusEnum = {
-        ALLOWED: 'ALLOWED' as AccessStatusEnum,
-        DENIED: 'DENIED' as AccessStatusEnum
-    };
 }

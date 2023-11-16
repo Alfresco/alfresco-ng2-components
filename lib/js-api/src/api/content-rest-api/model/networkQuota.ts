@@ -20,14 +20,8 @@
  * the number of sites in the network, the number of people in the network,
  * and the number of network administrators
  */
-export class NetworkQuota {
+export interface NetworkQuota {
     id: string;
     limit: number;
     usage: number;
-
-    constructor(input?: Partial<NetworkQuota>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

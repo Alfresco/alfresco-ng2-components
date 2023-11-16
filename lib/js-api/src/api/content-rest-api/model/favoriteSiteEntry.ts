@@ -17,14 +17,6 @@
 
 import { FavoriteSite } from './favoriteSite';
 
-export class FavoriteSiteEntry {
+export interface FavoriteSiteEntry {
     entry: FavoriteSite;
-
-    constructor(input?: Partial<FavoriteSiteEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new FavoriteSite(input.entry) : undefined;
-        }
-    }
-
 }

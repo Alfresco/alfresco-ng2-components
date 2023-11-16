@@ -17,14 +17,6 @@
 
 import { AuditApp } from './auditApp';
 
-export class AuditAppEntry {
+export interface AuditAppEntry {
     entry?: AuditApp;
-
-    constructor(input?: Partial<AuditAppEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new AuditApp(input.entry) : undefined;
-        }
-    }
-
 }

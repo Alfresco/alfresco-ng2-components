@@ -15,17 +15,11 @@
  * limitations under the License.
  */
 
-export class NodeBodyMove {
+export interface NodeBodyMove {
     targetParentId: string;
     /**
      * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
      * The character . must not be used at the end of the name.
      */
     name?: string;
-
-    constructor(input?: Partial<NodeBodyMove>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

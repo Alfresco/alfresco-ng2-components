@@ -17,7 +17,7 @@
 
 import { ActionParameterDefinition } from './actionParameterDefinition';
 
-export class ActionDefinition {
+export interface ActionDefinition {
     /**
      * Identifier of the action definition — used for example when executing an action
      */
@@ -43,14 +43,4 @@ export class ActionDefinition {
      */
     trackStatus: boolean;
     parameterDefinitions?: ActionParameterDefinition[];
-
-    constructor(input?: Partial<ActionDefinition>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.parameterDefinitions) {
-                this.parameterDefinitions = input.parameterDefinitions.map((item) => new ActionParameterDefinition(item));
-            }
-        }
-    }
-
 }

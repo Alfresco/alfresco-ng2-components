@@ -17,14 +17,6 @@
 
 import { ActionDefinition } from './actionDefinition';
 
-export class ActionDefinitionEntry {
+export interface ActionDefinitionEntry {
     entry: ActionDefinition;
-
-    constructor(input?: Partial<ActionDefinitionEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new ActionDefinition(input.entry) : undefined;
-        }
-    }
-
 }

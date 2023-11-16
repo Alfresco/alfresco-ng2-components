@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class GroupBodyUpdate {
+export interface GroupBodyUpdate {
     displayName: string;
-
-    constructor(input?: Partial<GroupBodyUpdate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

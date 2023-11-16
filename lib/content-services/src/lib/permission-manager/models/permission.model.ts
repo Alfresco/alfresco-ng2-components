@@ -18,10 +18,9 @@
 import { PermissionElement } from '@alfresco/js-api';
 
 export class PermissionDisplayModel implements PermissionElement {
-
     authorityId?: string;
     name?: string;
-    accessStatus?: PermissionElement.AccessStatusEnum;
+    accessStatus?: 'ALLOWED' | 'DENIED' | string;
     isInherited: boolean = false;
     icon: string;
     readonly?: boolean;

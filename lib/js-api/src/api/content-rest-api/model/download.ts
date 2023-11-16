@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class Download {
+export interface Download {
     /**
      * number of files added so far in the zip
      */
@@ -39,22 +39,5 @@ export class Download {
     /**
      * the current status of the download node creation
      */
-    status?: Download.StatusEnum | string;
-
-    constructor(input?: Partial<Download>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace Download {
-    export type StatusEnum = 'PENDING' | 'CANCELLED' | 'IN_PROGRESS' | 'DONE' | 'MAX_CONTENT_SIZE_EXCEEDED';
-    export const StatusEnum = {
-        PENDING: 'PENDING' as StatusEnum,
-        CANCELLED: 'CANCELLED' as StatusEnum,
-        INPROGRESS: 'IN_PROGRESS' as StatusEnum,
-        DONE: 'DONE' as StatusEnum,
-        MAXCONTENTSIZEEXCEEDED: 'MAX_CONTENT_SIZE_EXCEEDED' as StatusEnum
-    };
+    status?: 'PENDING' | 'CANCELLED' | 'IN_PROGRESS' | 'DONE' | 'MAX_CONTENT_SIZE_EXCEEDED' | string;
 }

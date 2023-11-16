@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import { ClientBody } from '../model/clientBody';
-import { PasswordResetBody } from '../model/passwordResetBody';
-import { PersonBodyCreate } from '../model/personBodyCreate';
-import { PersonBodyUpdate } from '../model/personBodyUpdate';
-import { PersonEntry } from '../model/personEntry';
-import { PersonPaging } from '../model/personPaging';
+import { ClientBody, PasswordResetBody, PersonBodyCreate, PersonBodyUpdate, PersonEntry, PersonPaging } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';

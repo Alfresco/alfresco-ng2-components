@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class Company {
+export interface Company {
     organization?: string;
     address1?: string;
     address2?: string;
@@ -24,11 +24,4 @@ export class Company {
     telephone?: string;
     fax?: string;
     email?: string;
-
-    constructor(input?: Partial<Company>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

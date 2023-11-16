@@ -17,7 +17,7 @@
 
 import { Company } from './company';
 
-export class PersonBodyUpdate {
+export interface PersonBodyUpdate {
     firstName?: string;
     lastName?: string;
     description?: string;
@@ -37,12 +37,4 @@ export class PersonBodyUpdate {
     oldPassword?: string;
     aspectNames?: string[];
     properties?: any;
-
-    constructor(input?: Partial<PersonBodyUpdate>) {
-        if (input) {
-            Object.assign(this, input);
-            this.company = input.company ? new Company(input.company) : undefined;
-        }
-    }
-
 }

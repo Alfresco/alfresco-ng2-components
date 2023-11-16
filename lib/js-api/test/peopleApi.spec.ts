@@ -34,22 +34,18 @@ describe('PeopleApi', () => {
     });
 
     it('should add a person', (done) => {
-        const personBodyCreate = new PersonBodyCreate();
         peopleMock.get201Response();
 
-        personBodyCreate.id = 'chewbe';
-        personBodyCreate.email = 'chewbe@millenniumfalcon.com';
-        personBodyCreate.lastName = 'Chewbe';
-        personBodyCreate.firstName = 'chewbacca';
-        personBodyCreate.password = 'Rrrrrrrghghghghgh';
+        const personBodyCreate: PersonBodyCreate = {
+            id: 'chewbe',
+            email: 'chewbe@millenniumfalcon.com',
+            lastName: 'Chewbe',
+            firstName: 'chewbacca',
+            password: 'Rrrrrrrghghghghgh'
+        };
 
-        peopleApi.createPerson(personBodyCreate).then(
-            () => {
-                done();
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+        peopleApi.createPerson(personBodyCreate).then(() => {
+            done();
+        });
     });
 });

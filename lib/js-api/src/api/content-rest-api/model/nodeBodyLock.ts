@@ -15,27 +15,8 @@
  * limitations under the License.
  */
 
-export class NodeBodyLock {
+export interface NodeBodyLock {
     timeToExpire?: number;
-    type?: NodeBodyLock.TypeEnum | string;
-    lifetime?: NodeBodyLock.LifetimeEnum | string;
-
-    constructor(input?: Partial<NodeBodyLock>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace NodeBodyLock {
-    export type TypeEnum = 'ALLOW_OWNER_CHANGES' | 'FULL';
-    export const TypeEnum = {
-        ALLOWOWNERCHANGES: 'ALLOW_OWNER_CHANGES' as TypeEnum,
-        FULL: 'FULL' as TypeEnum
-    };
-    export type LifetimeEnum = 'PERSISTENT' | 'EPHEMERAL';
-    export const LifetimeEnum = {
-        PERSISTENT: 'PERSISTENT' as LifetimeEnum,
-        EPHEMERAL: 'EPHEMERAL' as LifetimeEnum
-    };
+    type?: 'ALLOW_OWNER_CHANGES' | 'FULL' | string;
+    lifetime?: 'PERSISTENT' | 'EPHEMERAL' | string;
 }

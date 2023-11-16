@@ -35,7 +35,6 @@ export class Rating {
     constructor(input?: Partial<Rating>) {
         if (input) {
             Object.assign(this, input);
-            this.aggregate = input.aggregate ? new RatingAggregate(input.aggregate) : undefined;
             this.ratedAt = input.ratedAt ? DateAlfresco.parseDate(input.ratedAt) : undefined;
         }
     }

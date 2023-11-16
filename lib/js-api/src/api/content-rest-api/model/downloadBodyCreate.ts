@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class DownloadBodyCreate {
+export interface DownloadBodyCreate {
     nodeIds: string[];
-
-    constructor(input?: Partial<DownloadBodyCreate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

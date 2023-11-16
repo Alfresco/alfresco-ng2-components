@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export class SiteContainer {
+export interface SiteContainer {
     id: string;
     folderId: string;
-
-    constructor(input?: Partial<SiteContainer>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

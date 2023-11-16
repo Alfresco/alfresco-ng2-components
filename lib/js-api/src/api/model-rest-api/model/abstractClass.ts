@@ -35,9 +35,6 @@ export class AbstractClass {
     constructor(input?: Partial<AbstractClass>) {
         if (input) {
             Object.assign(this, input);
-            if (input.properties) {
-                this.properties = input.properties.map((item) => new Property(item));
-            }
         }
     }
 }

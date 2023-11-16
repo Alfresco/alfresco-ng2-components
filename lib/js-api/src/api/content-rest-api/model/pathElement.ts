@@ -15,16 +15,9 @@
  * limitations under the License.
  */
 
-export class PathElement {
+export interface PathElement {
     id?: string;
     name?: string;
     nodeType?: string;
     aspectNames?: string[];
-
-    constructor(input?: Partial<PathElement>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

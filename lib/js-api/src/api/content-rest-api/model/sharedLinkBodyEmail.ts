@@ -15,16 +15,9 @@
  * limitations under the License.
  */
 
-export class SharedLinkBodyEmail {
+export interface SharedLinkBodyEmail {
     client?: string;
     message?: string;
     locale?: string;
     recipientEmails?: string[];
-
-    constructor(input?: Partial<SharedLinkBodyEmail>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

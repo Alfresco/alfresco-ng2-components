@@ -17,14 +17,6 @@
 
 import { SiteContainer } from './siteContainer';
 
-export class SiteContainerEntry {
+export interface SiteContainerEntry {
     entry: SiteContainer;
-
-    constructor(input?: Partial<SiteContainerEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new SiteContainer(input.entry) : undefined;
-        }
-    }
-
 }

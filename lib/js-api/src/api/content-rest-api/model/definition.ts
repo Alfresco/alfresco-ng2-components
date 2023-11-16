@@ -17,19 +17,9 @@
 
 import { Property } from './property';
 
-export class Definition {
+export interface Definition {
     /**
      * List of property definitions effective for this node as the result of combining the type with all aspects.
      */
     properties?: Property[];
-
-    constructor(input?: Partial<Definition>) {
-        if (input) {
-            Object.assign(this, input);
-            if (input.properties) {
-                this.properties = input.properties.map((item) => new Property(item));
-            }
-        }
-    }
-
 }

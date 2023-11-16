@@ -25,10 +25,6 @@ export class PathInfo {
     constructor(input?: Partial<PathInfo>) {
         if (input) {
             Object.assign(this, input);
-            if (input.elements) {
-                this.elements = input.elements.map((item) => new PathElement(item));
-            }
         }
     }
-
 }

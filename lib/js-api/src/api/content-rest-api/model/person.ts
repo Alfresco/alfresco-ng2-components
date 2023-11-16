@@ -46,9 +46,7 @@ export class Person {
     constructor(input?: Partial<Person>) {
         if (input) {
             Object.assign(this, input);
-            this.company = input.company ? new Company(input.company) : undefined;
             this.statusUpdatedAt = input.statusUpdatedAt ? DateAlfresco.parseDate(input.statusUpdatedAt) : undefined;
-            this.capabilities = input.capabilities ? new Capabilities(input.capabilities) : undefined;
         }
     }
 }

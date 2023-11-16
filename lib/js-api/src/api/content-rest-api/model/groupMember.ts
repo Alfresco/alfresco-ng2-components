@@ -15,22 +15,8 @@
  * limitations under the License.
  */
 
-export class GroupMember {
+export interface GroupMember {
     id: string;
     displayName: string;
-    memberType: GroupMember.MemberTypeEnum | string;
-
-    constructor(input?: Partial<GroupMember>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace GroupMember {
-    export type MemberTypeEnum = 'GROUP' | 'PERSON';
-    export const MemberTypeEnum = {
-        GROUP: 'GROUP' as MemberTypeEnum,
-        PERSON: 'PERSON' as MemberTypeEnum
-    };
+    memberType: 'GROUP' | 'PERSON' | string;
 }

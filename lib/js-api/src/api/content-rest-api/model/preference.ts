@@ -18,7 +18,7 @@
 /**
  * A specific preference.
  */
-export class Preference {
+export interface Preference {
     /**
      * The unique id of the preference
      */
@@ -27,10 +27,4 @@ export class Preference {
      * The value of the preference. Note that this can be of any JSON type.
      */
     value?: string;
-
-    constructor(input?: Partial<Preference>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

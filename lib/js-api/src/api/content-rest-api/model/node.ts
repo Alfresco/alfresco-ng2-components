@@ -58,7 +58,6 @@ export class Node {
             this.content = input.content ? new ContentInfo(input.content) : undefined;
             this.path = input.path ? new PathInfo(input.path) : undefined;
             this.permissions = input.permissions ? new PermissionsInfo(input.permissions) : undefined;
-            this.definition = input.definition ? new Definition(input.definition) : undefined;
         }
     }
 }

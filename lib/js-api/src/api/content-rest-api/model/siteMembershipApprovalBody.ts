@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class SiteMembershipApprovalBody {
+export interface SiteMembershipApprovalBody {
     role?: string;
-
-    constructor(input?: Partial<SiteMembershipApprovalBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

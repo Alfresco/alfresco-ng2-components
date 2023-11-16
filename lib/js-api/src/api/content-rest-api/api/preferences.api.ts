@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { PreferenceEntry } from '../model/preferenceEntry';
-import { PreferencePaging } from '../model/preferencePaging';
+import { PreferenceEntry, PreferencePaging } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
@@ -53,8 +52,7 @@ export class PreferencesApi extends BaseApi {
         return this.get({
             path: '/people/{personId}/preferences/{preferenceName}',
             pathParams,
-            queryParams,
-            returnType: PreferenceEntry
+            queryParams
         });
     }
 

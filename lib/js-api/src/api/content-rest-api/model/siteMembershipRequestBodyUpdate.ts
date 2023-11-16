@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class SiteMembershipRequestBodyUpdate {
+export interface SiteMembershipRequestBodyUpdate {
     message?: string;
-
-    constructor(input?: Partial<SiteMembershipRequestBodyUpdate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class ProbeEntryEntry {
+export interface ProbeEntryEntry {
     message: string;
-
-    constructor(input?: Partial<ProbeEntryEntry>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

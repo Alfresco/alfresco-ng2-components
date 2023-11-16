@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class PasswordResetBody {
+export interface PasswordResetBody {
     /**
      * the new password
      */
@@ -28,11 +28,4 @@ export class PasswordResetBody {
      * the workflow key provided in the reset password email
      */
     key: string;
-
-    constructor(input?: Partial<PasswordResetBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

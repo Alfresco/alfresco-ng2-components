@@ -35,24 +35,13 @@ export class PersonNetwork {
     isEnabled: boolean;
     createdAt?: Date;
     paidNetwork?: boolean;
-    subscriptionLevel?: PersonNetwork.SubscriptionLevelEnum | string;
+    subscriptionLevel?: 'Free' | 'Standard' | 'Enterprise' | string;
     quotas?: NetworkQuota[];
 
     constructor(input?: Partial<PersonNetwork>) {
         if (input) {
             Object.assign(this, input);
             this.createdAt = input.createdAt ? DateAlfresco.parseDate(input.createdAt) : undefined;
-            if (input.quotas) {
-                this.quotas = input.quotas.map((item) => new NetworkQuota(item));
-            }
         }
     }
-}
-export namespace PersonNetwork {
-    export type SubscriptionLevelEnum = 'Free' | 'Standard' | 'Enterprise';
-    export const SubscriptionLevelEnum = {
-        Free: 'Free' as SubscriptionLevelEnum,
-        Standard: 'Standard' as SubscriptionLevelEnum,
-        Enterprise: 'Enterprise' as SubscriptionLevelEnum
-    };
 }

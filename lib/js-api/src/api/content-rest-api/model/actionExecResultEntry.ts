@@ -17,14 +17,6 @@
 
 import { ActionExecResult } from './actionExecResult';
 
-export class ActionExecResultEntry {
+export interface ActionExecResultEntry {
     entry: ActionExecResult;
-
-    constructor(input?: Partial<ActionExecResultEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new ActionExecResult(input.entry) : undefined;
-        }
-    }
-
 }

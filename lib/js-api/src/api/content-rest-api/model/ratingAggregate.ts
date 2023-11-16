@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-export class RatingAggregate {
+export interface RatingAggregate {
     numberOfRatings: number;
     average?: number;
-
-    constructor(input?: Partial<RatingAggregate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

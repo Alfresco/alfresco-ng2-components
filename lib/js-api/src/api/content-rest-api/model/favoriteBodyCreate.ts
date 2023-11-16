@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class FavoriteBodyCreate {
+export interface FavoriteBodyCreate {
     target: any;
-
-    constructor(input?: Partial<FavoriteBodyCreate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

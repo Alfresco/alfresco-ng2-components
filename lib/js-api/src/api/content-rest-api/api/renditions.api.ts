@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { DirectAccessUrlEntry } from '../model/directAccessUrlEntry';
-import { RenditionBodyCreate } from '../model/renditionBodyCreate';
-import { RenditionEntry } from '../model/renditionEntry';
-import { RenditionPaging } from '../model/renditionPaging';
+import { DirectAccessUrlEntry, RenditionBodyCreate, RenditionEntry, RenditionPaging } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 

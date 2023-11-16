@@ -41,8 +41,6 @@ export class NodeBodyCreate {
         if (input) {
             Object.assign(this, input);
             this.permissions = input.permissions ? new PermissionsBody(input.permissions) : undefined;
-            this.definition = input.definition ? new Definition(input.definition) : undefined;
-            this.association = input.association ? new NodeBodyCreateAssociation(input.association) : undefined;
             if (input.secondaryChildren) {
                 this.secondaryChildren = input.secondaryChildren.map((item) => new ChildAssociationBody(item));
             }

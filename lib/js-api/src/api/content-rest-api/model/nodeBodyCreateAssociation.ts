@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class NodeBodyCreateAssociation {
+export interface NodeBodyCreateAssociation {
     assocType?: string;
-
-    constructor(input?: Partial<NodeBodyCreateAssociation>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

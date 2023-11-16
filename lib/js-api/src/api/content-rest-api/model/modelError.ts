@@ -17,14 +17,6 @@
 
 import { ErrorError } from './errorError';
 
-export class ModelError {
+export interface ModelError {
     error?: ErrorError;
-
-    constructor(input?: Partial<ModelError>) {
-        if (input) {
-            Object.assign(this, input);
-            this.error = input.error ? new ErrorError(input.error) : undefined;
-        }
-    }
-
 }

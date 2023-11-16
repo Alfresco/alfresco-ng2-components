@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 
-export class GroupBodyCreate {
+export interface GroupBodyCreate {
     id: string;
     displayName: string;
     parentIds?: string[];
-
-    constructor(input?: Partial<GroupBodyCreate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

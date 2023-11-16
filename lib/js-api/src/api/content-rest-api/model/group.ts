@@ -15,17 +15,10 @@
  * limitations under the License.
  */
 
-export class Group {
-    id: string;
-    displayName: string;
-    isRoot: boolean;
+export interface Group {
+    id?: string;
+    displayName?: string;
+    isRoot?: boolean;
     parentIds?: string[];
     zones?: string[];
-
-    constructor(input?: Partial<Group>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

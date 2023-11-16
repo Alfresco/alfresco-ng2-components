@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { ActionBodyExec } from '../model/actionBodyExec';
-import { ActionDefinitionEntry } from '../model/actionDefinitionEntry';
-import { ActionDefinitionList } from '../model/actionDefinitionList';
-import { ActionExecResultEntry } from '../model/actionExecResultEntry';
+import { ActionBodyExec, ActionDefinitionEntry, ActionDefinitionList, ActionExecResultEntry } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
@@ -45,8 +42,7 @@ export class ActionsApi extends BaseApi {
 
         return this.get({
             path: '/action-definitions/{actionDefinitionId}',
-            pathParams,
-            returnType: ActionDefinitionEntry
+            pathParams
         });
     }
 
@@ -63,8 +59,7 @@ export class ActionsApi extends BaseApi {
 
         return this.post({
             path: '/action-executions',
-            bodyParam: actionBodyExec,
-            returnType: ActionExecResultEntry
+            bodyParam: actionBodyExec
         });
     }
 

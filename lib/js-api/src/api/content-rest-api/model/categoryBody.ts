@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-export class CategoryBody {
+export interface CategoryBody {
     name: string;
-
-    constructor(input?: Partial<CategoryBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -25,10 +25,8 @@ export class SiteGroup {
     constructor(input?: Partial<SiteGroup>) {
         if (input) {
             Object.assign(this, input);
-            this.group = input.group ? new GroupMember(input.group) : undefined;
         }
     }
-
 }
 export namespace SiteGroup {
     export type RoleEnum = 'SiteConsumer' | 'SiteCollaborator' | 'SiteContributor' | 'SiteManager';

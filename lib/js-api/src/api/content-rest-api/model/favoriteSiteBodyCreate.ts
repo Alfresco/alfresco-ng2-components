@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class FavoriteSiteBodyCreate {
+export interface FavoriteSiteBodyCreate {
     id: string;
-
-    constructor(input?: Partial<FavoriteSiteBodyCreate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-export class AuditBodyUpdate {
+export interface AuditBodyUpdate {
     isEnabled?: boolean;
-
-    constructor(input?: Partial<AuditBodyUpdate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

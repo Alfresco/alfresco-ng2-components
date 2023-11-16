@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import { GroupBodyCreate } from '../model/groupBodyCreate';
-import { GroupBodyUpdate } from '../model/groupBodyUpdate';
-import { GroupEntry } from '../model/groupEntry';
-import { GroupMemberEntry } from '../model/groupMemberEntry';
-import { GroupMemberPaging } from '../model/groupMemberPaging';
-import { GroupMembershipBodyCreate } from '../model/groupMembershipBodyCreate';
-import { GroupPaging } from '../model/groupPaging';
+import { GroupBodyCreate, GroupBodyUpdate, GroupEntry, GroupMemberEntry, GroupMemberPaging, GroupMembershipBodyCreate, GroupPaging } from '../model';
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
@@ -97,8 +91,7 @@ export class GroupsApi extends BaseApi {
         return this.post({
             path: '/groups',
             queryParams,
-            bodyParam: groupBodyCreate,
-            returnType: GroupEntry
+            bodyParam: groupBodyCreate
         });
     }
 
@@ -133,8 +126,7 @@ export class GroupsApi extends BaseApi {
             path: '/groups/{groupId}/members',
             pathParams: { groupId },
             queryParams,
-            bodyParam: groupMembershipBodyCreate,
-            returnType: GroupMemberEntry
+            bodyParam: groupMembershipBodyCreate
         });
     }
 
@@ -229,8 +221,7 @@ export class GroupsApi extends BaseApi {
         return this.get({
             path: '/groups/{groupId}',
             pathParams,
-            queryParams,
-            returnType: GroupEntry
+            queryParams
         });
     }
 
@@ -385,8 +376,7 @@ export class GroupsApi extends BaseApi {
             path: '/groups/{groupId}',
             pathParams,
             queryParams,
-            bodyParam: groupBodyUpdate,
-            returnType: GroupEntry
+            bodyParam: groupBodyUpdate
         });
     }
 }

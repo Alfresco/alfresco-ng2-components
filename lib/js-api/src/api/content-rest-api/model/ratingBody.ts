@@ -15,27 +15,13 @@
  * limitations under the License.
  */
 
-export class RatingBody {
+export interface RatingBody {
     /**
      * The rating scheme type. Possible values are likes and fiveStar.
      */
-    id: RatingBody.IdEnum | string;
+    id: 'likes' | 'fiveStar' | string;
     /**
      * The rating. The type is specific to the rating scheme, boolean for the likes and an integer for the fiveStar
      */
     myRating: string;
-
-    constructor(input?: Partial<RatingBody>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
-}
-export namespace RatingBody {
-    export type IdEnum = 'likes' | 'fiveStar';
-    export const IdEnum = {
-        Likes: 'likes' as IdEnum,
-        FiveStar: 'fiveStar' as IdEnum
-    };
 }

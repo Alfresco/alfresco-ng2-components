@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 
-export class Capabilities {
+export interface Capabilities {
     isAdmin?: boolean;
     isGuest?: boolean;
     isMutable?: boolean;
-
-    constructor(input?: Partial<Capabilities>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
-
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class SiteMembershipRequestBodyCreate {
+export interface SiteMembershipRequestBodyCreate {
     message?: string;
     id: string;
     title?: string;
@@ -25,9 +25,4 @@ export class SiteMembershipRequestBodyCreate {
      * **Note:** This is available in Alfresco 7.0.0 and newer versions.
      */
     client?: string;
-    constructor(input?: Partial<SiteMembershipRequestBodyCreate>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }
