@@ -35,6 +35,9 @@ export class AspectListComponent implements OnInit, OnDestroy {
     @Input()
     nodeId: string = '';
 
+    @Input()
+    excludedAspects?: string[] = [];
+
     /** Emitted every time the user select a new aspect */
     @Output()
     valueChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
@@ -56,13 +59,14 @@ export class AspectListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        let aspects$: Observable<AspectEntry[]>;
         if (this.nodeId) {
             const node$ = this.nodeApiService.getNode(this.nodeId);
             const customAspect$ = this.aspectListService.getCustomAspects(this.aspectListService.getVisibleAspects())
             .pipe(map(
                 (customAspects) => customAspects.flatMap((customAspect) => customAspect.entry.id)
             ));
-            this.aspects$ = zip(node$, customAspect$).pipe(
+            aspects$ = zip(node$, customAspect$).pipe(
                 tap(([node, customAspects]) => {
                     this.nodeAspects = node.aspectNames.filter((aspect) => this.aspectListService.getVisibleAspects().includes(aspect) || customAspects.includes(aspect));
                     this.nodeAspectStatus = [ ...this.nodeAspects ];
@@ -71,9 +75,11 @@ export class AspectListComponent implements OnInit, OnDestroy {
                 concatMap(() => this.aspectListService.getAspects()),
                 takeUntil(this.onDestroy$));
         } else {
-            this.aspects$ = this.aspectListService.getAspects()
+            aspects$ = this.aspectListService.getAspects()
                 .pipe(takeUntil(this.onDestroy$));
         }
+        this.aspects$ = aspects$.pipe(map((aspects) =>
+            aspects.filter((aspect) => !this.excludedAspects.includes(aspect.entry.id))));
     }
 
     onCheckBoxClick(event: Event) {

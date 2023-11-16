@@ -21,13 +21,14 @@ import { Observable, Subject } from 'rxjs';
 import { AspectListDialogComponentData } from '../aspect-list-dialog-data.interface';
 import { AspectListDialogComponent } from '../aspect-list-dialog.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { AppConfigService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DialogAspectListService {
 
-    constructor(private dialog: MatDialog, private overlayContainer: OverlayContainer) {
+    constructor(private dialog: MatDialog, private overlayContainer: OverlayContainer, private appConfig: AppConfigService) {
     }
 
     openAspectListDialog(nodeId?: string, selectorAutoFocusedOnClose?: string): Observable<string[]> {
@@ -41,7 +42,11 @@ export class DialogAspectListService {
             description: 'ADF-ASPECT-LIST.DIALOG.DESCRIPTION',
             overTableMessage: 'ADF-ASPECT-LIST.DIALOG.OVER-TABLE-MESSAGE',
             select,
-            nodeId
+            nodeId,
+            excludedAspects: [
+                ...!this.appConfig.get('plugins.tags') ? ['cm:taggable'] : [],
+                ...!this.appConfig.get('plugins.categories') ? ['cm:generalclassifiable'] : []
+            ]
         };
 
         this.openDialog(data, 'adf-aspect-list-dialog', '750px', selectorAutoFocusedOnClose);
