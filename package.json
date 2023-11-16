@@ -100,6 +100,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.1502.10",
     "@angular-devkit/build-angular": "15.2.10",
     "@angular-devkit/core": "15.2.10",
     "@angular-devkit/schematics": "15.2.10",
@@ -124,6 +125,7 @@
     "@storybook/addon-essentials": "6.5.16",
     "@storybook/angular": "6.5.16",
     "@storybook/builder-webpack5": "6.5.16",
+    "@storybook/core-server": "6.5.16",
     "@storybook/manager-webpack5": "6.5.16",
     "@types/ejs": "^3.1.5",
     "@types/event-emitter": "^0.3.3",
