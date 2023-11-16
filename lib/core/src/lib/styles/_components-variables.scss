@@ -70,8 +70,15 @@
         --adf-people-cloud-input-label-focus-color: mat.get-color-from-palette($primary),
         --adf-people-cloud-autosuggest-result-active-color: mat.get-color-from-palette($foreground, text),
         --adf-people-cloud-autosuggest-result-disabled-color: mat.get-color-from-palette($foreground, secondary-text),
-        --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn)
-
+        --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
+        --adf-info-drawer-tab-active-focused-color:unset,
+        --adf-info-drawer-tab-active-focused-bottom-line:unset,
+        --adf-metadata-property-panel-border-color: $adf-ref-metadata-property-panel-border-color,
+        --adf-metadata-buttons-background-color: $adf-ref-metadata-buttons-background-color,
+        --adf-metadata-action-button-clear-color: $adf-ref-metadata-action-button-clear-color,
+        --adf-metadata-property-panel-text-color: $adf-ref-metadata-property-panel-text-color,
+        --adf-metadata-property-panel-label-color: $adf-ref-metadata-property-panel-label-color,
+        --adf-metadata-property-panel-title-color: $adf-ref-metadata-property-panel-title-color,
     );
 
     // propagates SCSS variables into the CSS variables scope
