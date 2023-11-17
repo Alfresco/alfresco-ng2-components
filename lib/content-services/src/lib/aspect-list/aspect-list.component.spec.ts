@@ -136,9 +136,8 @@ describe('AspectListComponent', () => {
         });
 
         it('should show the loading spinner when result is loading', async () => {
-            const delayResult = of(null).pipe(delay(0));
-            spyOn(nodeService, 'getNode').and.returnValue(delayResult);
-            spyOn(aspectListService, 'getAspects').and.returnValue(delayResult);
+            spyOn(nodeService, 'getNode').and.returnValue(of(null).pipe(delay(0)));
+            spyOn(aspectListService, 'getAspects').and.returnValue(of([]).pipe(delay(0)));
             fixture.detectChanges();
 
             expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
@@ -156,7 +155,6 @@ describe('AspectListComponent', () => {
             nodeService = TestBed.inject(NodesApiService);
             spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] } as any));
             component.nodeId = 'fake-node-id';
-            fixture.detectChanges();
             loader = TestbedHarnessEnvironment.loader(fixture);
         });
 
@@ -165,27 +163,40 @@ describe('AspectListComponent', () => {
         });
 
         it('should return true when same aspect list selected', () => {
+            fixture.detectChanges();
             expect(component.hasEqualAspect).toBe(true);
         });
 
         it('should return false when different aspect list selected', () => {
+            fixture.detectChanges();
             component.clear();
             expect(component.hasEqualAspect).toBe(false);
         });
 
         it('should show all the aspects', async () => {
+            fixture.detectChanges();
             expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBe(true);
             expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBe(true);
         });
 
         it('should show aspect id when name or title is not set', () => {
+            fixture.detectChanges();
             const noNameAspect = fixture.nativeElement.querySelector('#aspect-list-cst-nonamedAspect .adf-aspect-list-element-title');
             expect(noNameAspect).toBeDefined();
             expect(noNameAspect).not.toBeNull();
             expect(noNameAspect.innerText).toBe('cst:nonamedAspect');
         });
 
+        it('should not show aspect if it is excluded aspect', () => {
+            component.excludedAspects = ['cst:nonamedAspect'];
+
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector(`#aspect-list-${component.excludedAspects[0].replace(':', '-')}`))
+                .toBeNull();
+        });
+
         it('should show the details when a row is clicked', async () => {
+            fixture.detectChanges();
             const panel = await loader.getHarness(MatExpansionPanelHarness);
             await panel.expand();
             expect(await panel.getDescription()).not.toBeNull();
@@ -204,6 +215,7 @@ describe('AspectListComponent', () => {
         });
 
         it('should show as checked the node properties', async () => {
+            fixture.detectChanges();
             const panel = await loader.getHarness(MatExpansionPanelHarness);
             await panel.expand();
 
@@ -212,6 +224,7 @@ describe('AspectListComponent', () => {
         });
 
         it('should remove aspects unchecked', async () => {
+            fixture.detectChanges();
             const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
             await panel[1].expand();
 
@@ -230,6 +243,7 @@ describe('AspectListComponent', () => {
         });
 
         it('should reset the properties on reset', async () => {
+            fixture.detectChanges();
             const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
             await panel[1].expand();
 
@@ -244,6 +258,7 @@ describe('AspectListComponent', () => {
         });
 
         it('should clear all the properties on clear', async () => {
+            fixture.detectChanges();
             expect(component.nodeAspects.length).toBe(1);
             component.clear();
             expect(component.nodeAspects.length).toBe(0);
@@ -256,7 +271,6 @@ describe('AspectListComponent', () => {
             component = fixture.componentInstance;
             aspectListService = TestBed.inject(AspectListService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
-            fixture.detectChanges();
             loader = TestbedHarnessEnvironment.loader(fixture);
         });
 
@@ -265,8 +279,17 @@ describe('AspectListComponent', () => {
         });
 
         it('should show all the aspects', async () => {
+            fixture.detectChanges();
             expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBe(true);
             expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBe(true);
+        });
+
+        it('should not show excluded aspects', async () => {
+            component.excludedAspects = ['frs:AspectOne', 'frs:SecondAspect'];
+
+            fixture.detectChanges();
+            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBeFalse();
+            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBeFalse();
         });
     });
 });
