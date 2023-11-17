@@ -1580,6 +1580,12 @@
         "strictDiscoveryDocumentValidation": {
           "type": "boolean",
           "description": " Defines whether every url provided by the discovery document has to start with the issuer's url."
+        },
+        "implicitFlow": {
+          "type": ["boolean", "string"]
+        },
+        "codeFlow": {
+          "type": ["boolean", "string"]
         }
       }
     },
