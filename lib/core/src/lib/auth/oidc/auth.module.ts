@@ -19,7 +19,6 @@ import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthModule, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { AlfrescoApiNoAuthService } from '../../api-factories/alfresco-api-no-auth.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { AuthenticationService } from '../services/authentication.service';
 import { StorageService } from '../../common/services/storage.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 import { authConfigFactory, AuthConfigService } from './auth-config.service';
@@ -50,7 +49,6 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
         // { provide: AuthGuard, useClass: OidcAuthGuard },
         // { provide: AuthGuardEcm, useClass: OidcAuthGuard },
         // { provide: AuthGuardBpm, useClass: OidcAuthGuard },
-        AuthenticationService,
         { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
         {
             provide: AUTH_CONFIG,
