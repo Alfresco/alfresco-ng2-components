@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ViewEncapsulation,
-    Input,
-    OnInit,
-    DEFAULT_CURRENCY_CODE,
-    inject
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, OnInit, DEFAULT_CURRENCY_CODE, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { CurrencyConfig } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
@@ -38,12 +30,10 @@ import { CommonModule } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AmountCellComponent extends DataTableCellComponent implements OnInit {
-
     @Input()
     currencyConfig: CurrencyConfig;
 
     private readonly defaultCurrencyCode: string = inject(DEFAULT_CURRENCY_CODE);
-
     readonly defaultCurrencyConfig: CurrencyConfig = {
         code: this.defaultCurrencyCode,
         display: 'symbol',

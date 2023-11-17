@@ -244,7 +244,13 @@
                                 </ng-template>
                             </div>
                             <div *ngSwitchCase="'icon'" class="adf-cell-value">
-                                <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
+                                <adf-icon-cell
+                                    [data]="data"
+                                    [column]="col"
+                                    [row]="row"
+                                    [resolverFn]="resolverFn"
+                                    [tooltip]="getCellTooltip(row, col)">
+                                </adf-icon-cell>
                             </div>
                             <div *ngSwitchCase="'date'" class="adf-cell-value" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  [attr.data-automation-id]="'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium') ">

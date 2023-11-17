@@ -27,7 +27,7 @@ import { BooleanPipe } from '../../../pipes/boolean.pipe';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container *ngIf="value$ | async | adfBoolean as value">
-            <span [title]="value">
+            <span [title]="tooltip">
                 {{ value }}
             </span>
         </ng-container>

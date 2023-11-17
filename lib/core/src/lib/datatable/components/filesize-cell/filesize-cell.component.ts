@@ -21,7 +21,7 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
 @Component({
     selector: 'adf-filesize-cell',
     template: `
-        <ng-container *ngIf="(value$ | async | adfFileSize) as fileSize">
+        <ng-container *ngIf="value$ | async | adfFileSize as fileSize">
             <span [title]="tooltip">{{ fileSize }}</span>
         </ng-container>
     `,
