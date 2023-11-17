@@ -21,15 +21,20 @@ import { Observable, Subject } from 'rxjs';
 import { AspectListDialogComponentData } from '../aspect-list-dialog-data.interface';
 import { AspectListDialogComponent } from '../aspect-list-dialog.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { AppConfigService } from '@alfresco/adf-core';
+import { TagService } from '../../tag';
+import { CategoryService } from '../../category';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DialogAspectListService {
 
-    constructor(private dialog: MatDialog, private overlayContainer: OverlayContainer, private appConfig: AppConfigService) {
-    }
+    constructor(
+        private dialog: MatDialog,
+        private overlayContainer: OverlayContainer,
+        private tagService: TagService,
+        private categoryService: CategoryService
+    ) {}
 
     openAspectListDialog(nodeId?: string, selectorAutoFocusedOnClose?: string): Observable<string[]> {
         const select = new Subject<string[]>();
@@ -44,8 +49,8 @@ export class DialogAspectListService {
             select,
             nodeId,
             excludedAspects: [
-                ...!this.appConfig.get('plugins.tags') ? ['cm:taggable'] : [],
-                ...!this.appConfig.get('plugins.categories') ? ['cm:generalclassifiable'] : []
+                ...this.tagService.areTagsEnabled() ? [] : ['cm:taggable'],
+                ...this.categoryService.areCategoriesEnabled() ? [] : ['cm:generalclassifiable']
             ]
         };
 

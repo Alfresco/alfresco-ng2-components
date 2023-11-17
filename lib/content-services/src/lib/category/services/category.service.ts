@@ -35,7 +35,11 @@ export class CategoryService {
         return this._searchApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private userPreferencesService: UserPreferencesService,
+        private appConfigService: AppConfigService
+    ) {}
 
     /**
      * Get subcategories of a given parent category
@@ -151,5 +155,9 @@ export class CategoryService {
      */
     linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[]): Observable<CategoryPaging | CategoryEntry> {
         return from(this.categoriesApi.linkNodeToCategory(nodeId, categoryLinkBodyCreate));
+    }
+
+    areCategoriesEnabled(): boolean {
+         return this.appConfigService.get('plugins.categories', true);
     }
 }

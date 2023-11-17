@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -35,7 +35,11 @@ export class TagService {
     @Output()
     refresh = new EventEmitter();
 
-    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private userPreferencesService: UserPreferencesService,
+        private appConfigService: AppConfigService
+    ) {}
 
     /**
      * Gets a list of tags added to a node.
@@ -171,5 +175,9 @@ export class TagService {
      */
     assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging | TagEntry> {
         return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(tap((data) => this.refresh.emit(data)));
+    }
+
+    areTagsEnabled(): boolean {
+        return this.appConfigService.get('plugins.tags', true);
     }
 }
