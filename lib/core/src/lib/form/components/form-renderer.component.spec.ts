@@ -437,7 +437,7 @@ describe('Form Renderer Component', () => {
                 `${oneSpanTextWidgetContainerId} section .adf-grid-list-single-column`
             );
             sectionGridElement.forEach((element) => {
-                expect(element.style['width']).toBe('50%', 'Elemens is wrong sized for this section');
+                expect(element.style['width']).toBe('50%');
             });
             const fullWidthElement = fixture.nativeElement.querySelector(
                 `${twoSpanTextWidgetContainerId} section.adf-grid-list-column-view .adf-grid-list-single-column`
