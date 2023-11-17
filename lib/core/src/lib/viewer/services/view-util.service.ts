@@ -27,17 +27,15 @@ export class ViewUtilService {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
         media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
         text: ['txt', 'xml', 'html', 'json', 'ts', 'css', 'md'],
-        pdf: ['pdf'],
-        doc: ['doc', 'docx', 'odt']
+        pdf: ['pdf']
     };
 
     // Mime types that are supported by the Viewer without conversion
     private mimeTypes = {
-        text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript', 'odt'],
+        text: ['text/plain', 'text/csv', 'text/xml', 'text/html', 'application/x-javascript'],
         pdf: ['application/pdf'],
         image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
-        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav'],
-        doc: ['application/msword']
+        media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav']
     };
 
     /**
@@ -141,10 +139,6 @@ export class ViewUtilService {
 
         if (this.extensions.pdf.indexOf(extension) >= 0) {
             return 'pdf';
-        }
-
-        if (['doc', 'docx', 'odt'].indexOf(extension) >= 0) {
-            return 'doc';
         }
 
         return 'unknown';

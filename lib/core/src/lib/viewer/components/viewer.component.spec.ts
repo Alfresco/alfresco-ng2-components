@@ -115,6 +115,36 @@ describe('ViewerComponent', () => {
 
     });
 
+    describe('mimeTypeForUnknown', () => {
+        it('should set mimeType input correctly', () => {
+            const mimeTypeValue = 'image/png';
+            component.mimeType = mimeTypeValue;
+
+            expect(component.mimeType).toEqual(mimeTypeValue);
+        });
+
+        it('should set mimeTypeForUnknown input correctly', () => {
+            const mimeTypeForUnknownValue = 'application/msWord';
+            component.mimeTypeForUnknown = mimeTypeForUnknownValue;
+
+            expect(component.mimeTypeForUnknown).toEqual(mimeTypeForUnknownValue);
+        });
+
+        it('should set alt attribute correctly based on mimeTypeForUnknown', () => {
+            const mimeTypeValue = 'image/jpeg';
+            const altAttributeValue = 'Alt Text';
+
+            component.mimeType = mimeTypeValue;
+            component.mimeTypeForUnknown = altAttributeValue;
+
+            fixture.detectChanges();
+
+            const altAttribute = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('alt');
+
+            expect(altAttribute).toEqual(altAttributeValue);
+        });
+    });
+
     describe('File Name Test', () => {
 
         it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {

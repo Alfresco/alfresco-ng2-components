@@ -476,6 +476,18 @@ describe('AlfrescoViewerComponent', () => {
         //
     });
 
+    describe('mimeTypeForUnknown', () => {
+        it('should set mimeTypeForUnknown based on nodeData content', () => {
+            const nodeData = {
+                content: {
+                    mimeType: 'application/pdf'
+                }
+            };
+            component.mimeTypeForUnknown = nodeData.content.mimeType;
+            expect(component.mimeTypeForUnknown).toEqual(nodeData.content.mimeType);
+        });
+    });
+
     describe('Toolbar', () => {
         it('should show only next file button', async () => {
             component.allowNavigate = true;
