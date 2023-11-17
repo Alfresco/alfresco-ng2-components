@@ -85,7 +85,7 @@ export class AppConfigService {
      * Returns current authentication type as configured via `authType` property.
      */
     get authType(): 'OAUTH' | 'BASIC' {
-        return this.get('authType');
+        return this.get(AppConfigValues.AUTHTYPE);
     }
 
     constructor(protected http: HttpClient, protected extensionService: ExtensionService) {

@@ -75,14 +75,12 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return this.oauthService.hasValidIdToken();
     }
 
-    isImplicitFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.implicitFlow;
+    isImplicitFlow(): boolean {
+        return this.appConfig.oauth2.implicitFlow;
     }
 
     isAuthCodeFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.codeFlow;
+        return this.appConfig.oauth2.codeFlow;
     }
 
     login(username: string, password: string): Observable<{ type: string; ticket: any }> {

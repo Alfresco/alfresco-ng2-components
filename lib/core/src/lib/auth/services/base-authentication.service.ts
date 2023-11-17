@@ -18,7 +18,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { RedirectionModel } from '../models/redirection.model';
 import { Observable, Observer, ReplaySubject, throwError } from 'rxjs';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { LogService } from '../../common/services/log.service';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
@@ -118,8 +118,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     }
 
     isOauthConfiguration(): boolean {
-        const authType = this.appConfig.get('authType') as string;
-        return authType === 'OAUTH';
+        return this.isOauth();
     }
 
     /**
@@ -135,6 +134,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     }
 
     isOauth(): boolean {
-        return this.appConfig.get(AppConfigValues.AUTHTYPE) === 'OAUTH';
+        return this.appConfig.authType === 'OAUTH';
     }
 }
