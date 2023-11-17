@@ -1513,7 +1513,16 @@
       ],
       "properties": {
         "host": {
-          "type": "string"
+          "type": "string",
+          "description": "Host URL address"
+        },
+        "oidc": {
+          "type": "boolean",
+          "description": "Defines whether to use OpenId Connect during implicit flow."
+        },
+        "issuer": {
+          "type": "string",
+          "description": "The issuer's uri."
         },
         "silentLogin": {
           "type": ["boolean", "string"]
@@ -1522,19 +1531,33 @@
           "type": "string"
         },
         "clientId": {
-          "type": "string"
+          "type": "string",
+          "description": "The client's id as registered with the auth server"
         },
         "secret": {
           "type": "string"
         },
         "redirectUri": {
-          "type": "string"
+          "type": "string",
+          "description": "The client's redirectUri as registered with the auth server"
+        },
+        "postLogoutRedirectUri": {
+          "type": "string",
+          "description": "An optional second redirectUri where the auth server redirects the user to after logging out."
         },
         "redirectUriLogout": {
           "type": "string"
         },
         "refreshTokenTimeout": {
           "type": "number"
+        },
+        "silentRefreshRedirectUri": {
+          "type": "string",
+          "description": "The redirect uri used when doing silent refresh."
+        },
+        "silentRefreshTimeout": {
+          "type": "number",
+          "description": "Timeout for silent refresh."
         },
         "publicUrls": {
           "type": "array",
@@ -1543,7 +1566,26 @@
           }
         },
         "scope": {
-          "type": "string"
+          "type": "string",
+          "description": "The requested scopes"
+        },
+        "dummyClientSecret": {
+          "type": "string",
+          "description": "Some auth servers don't allow using password flow w/o a client secret while the standards do not demand for it. In this case, you can set a password here. As this password is exposed to the public it does not bring additional security and is therefore as good as using no password."
+        },
+        "skipIssuerCheck": {
+          "type": "boolean",
+          "description": "Defined whether to skip the validation of the issuer in the discovery document. Normally, the discovey document's url starts with the url of the issuer."
+        },
+        "strictDiscoveryDocumentValidation": {
+          "type": "boolean",
+          "description": " Defines whether every url provided by the discovery document has to start with the issuer's url."
+        },
+        "implicitFlow": {
+          "type": ["boolean", "string"]
+        },
+        "codeFlow": {
+          "type": ["boolean", "string"]
         }
       }
     },
