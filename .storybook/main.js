@@ -1,5 +1,12 @@
 module.exports = {
-    framework: '@storybook/angular',
+    framework: {
+        name: '@storybook/angular',
+        options: {}
+    },
     staticDirs: [{ from: '../../../demo-shell/src/app.config.json', to: 'app.config.json' }],
-    core: { builder: 'webpack5' }
+    docs: {
+        autodocs: true
+    },
+    stories: [],
+    addons:[],
 };
