@@ -26,6 +26,8 @@ import { AspectListService } from './services/aspect-list.service';
 import { delay } from 'rxjs/operators';
 import { AspectEntry, Node } from '@alfresco/js-api';
 import { NodesApiService } from '../common/services/nodes-api.service';
+import { By } from '@angular/platform-browser';
+import { AspectListComponent } from '@alfresco/adf-content-services';
 
 const aspectListMock: AspectEntry[] = [
     {
@@ -103,35 +105,35 @@ describe('AspectListDialogComponent', () => {
         keyCode: 27
     } as KeyboardEventInit);
 
-    describe('Without passing node id', () => {
-        beforeEach(async () => {
-            data = {
-                title: 'Title',
-                description: 'Description that can be longer or shorter',
-                overTableMessage: 'Over here',
-                select: new Subject<string[]>()
-            };
-
-            TestBed.configureTestingModule({
-                imports: [TranslateModule.forRoot(), ContentTestingModule, MatDialogModule],
-                providers: [
-                    { provide: MAT_DIALOG_DATA, useValue: data },
-                    {
-                        provide: MatDialogRef,
-                        useValue: {
-                            keydownEvents: () => of(event),
-                            backdropClick: () => of(null),
-                            close: jasmine.createSpy('close')
-                        }
+    beforeEach(async () => {
+        data = {
+            title: 'Title',
+            description: 'Description that can be longer or shorter',
+            overTableMessage: 'Over here',
+            select: new Subject<string[]>(),
+            excludedAspects: []
+        };
+        await TestBed.configureTestingModule({
+            imports: [TranslateModule.forRoot(), ContentTestingModule, MatDialogModule],
+            providers: [
+                { provide: MAT_DIALOG_DATA, useValue: data },
+                {
+                    provide: MatDialogRef,
+                    useValue: {
+                        keydownEvents: () => of(event),
+                        backdropClick: () => of(null),
+                        close: jasmine.createSpy('close')
                     }
-                ]
-            }).compileComponents();
-        });
+                }
+            ]
+        }).compileComponents();
+        fixture = TestBed.createComponent(AspectListDialogComponent);
+    });
 
+    describe('Without passing node id', () => {
         beforeEach(() => {
             aspectListService = TestBed.inject(AspectListService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of(aspectListMock));
-            fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.detectChanges();
         });
 
@@ -243,32 +245,7 @@ describe('AspectListDialogComponent', () => {
 
     describe('Passing the node id', () => {
         beforeEach(async () => {
-            data = {
-                title: 'Title',
-                description: 'Description that can be longer or shorter',
-                overTableMessage: 'Over here',
-                select: new Subject<string[]>(),
-                nodeId: 'fake-node-id'
-            };
-
-            TestBed.configureTestingModule({
-                imports: [TranslateModule.forRoot(), ContentTestingModule, MatDialogModule],
-                providers: [
-                    { provide: MAT_DIALOG_DATA, useValue: data },
-                    {
-                        provide: MatDialogRef,
-                        useValue: {
-                            close: jasmine.createSpy('close'),
-                            keydownEvents: () => of(event),
-                            backdropClick: () => of(null)
-                        }
-                    }
-                ]
-            });
-            await TestBed.compileComponents();
-        });
-
-        beforeEach(async () => {
+            data.nodeId = 'fake-node-id';
             aspectListService = TestBed.inject(AspectListService);
             nodeService = TestBed.inject(NodesApiService);
             spyOn(aspectListService, 'getAspects').and.returnValue(of([...aspectListMock, ...customAspectListMock]));
@@ -278,7 +255,6 @@ describe('AspectListDialogComponent', () => {
                 of(new Node({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] })).pipe(delay(0))
             );
             fixture = TestBed.createComponent(AspectListDialogComponent);
-            fixture.componentInstance.data.select = new Subject<string[]>();
             fixture.detectChanges();
             await fixture.whenStable();
         });
@@ -326,6 +302,16 @@ describe('AspectListDialogComponent', () => {
             await fixture.whenStable();
 
             expect(applyButton.disabled).toBe(false);
+        });
+    });
+
+    describe('AspectListComponent', () => {
+        it('should have set excludedAspects from dialog data', () => {
+            data.excludedAspects = ['some aspect 1', 'some aspect 2'];
+
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.directive(AspectListComponent)).componentInstance.excludedAspects)
+                .toBe(data.excludedAspects);
         });
     });
 });
