@@ -79,7 +79,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return this.appConfig.oauth2.implicitFlow;
     }
 
-    isAuthCodeFlow() {
+    isAuthCodeFlow(): boolean {
         return this.appConfig.oauth2.codeFlow;
     }
 
