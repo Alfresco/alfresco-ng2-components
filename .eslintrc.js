@@ -1,5 +1,6 @@
 module.exports = {
     root: true,
+
     ignorePatterns: [
         'projects/**/*',
         '**/node_modules/**/*',
@@ -10,7 +11,9 @@ module.exports = {
         '**/scripts',
         '**/docs'
     ],
+
     plugins: ['@nrwl/nx'],
+
     overrides: [
         {
             files: ['*.ts'],
@@ -191,5 +194,7 @@ module.exports = {
                 '@alfresco/eslint-angular/no-angular-material-selectors': 'error'
             }
         }
-    ]
+    ],
+
+    extends: ['plugin:storybook/recommended']
 };
