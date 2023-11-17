@@ -19,7 +19,7 @@ import { Inject, Injectable } from '@angular/core';
 import { AuthConfig } from 'angular-oauth2-oidc';
 import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
+import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 
 /**
  * Create auth configuration factory
@@ -84,7 +84,7 @@ export class AuthConfigService {
 
         // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to error
         // `cannot match any routes`, and displaying the wildcard ** error page
-        return oauth2.implicitFlow && useHash ? `${redirectUri}/?` : redirectUri;
+        return (oauth2.codeFlow || oauth2.implicitFlow) && useHash ? `${redirectUri}/?` : redirectUri;
     }
 
     private getLocationOrigin() {

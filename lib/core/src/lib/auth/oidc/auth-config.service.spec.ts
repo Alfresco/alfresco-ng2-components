@@ -149,7 +149,7 @@ describe('AuthConfigService', () => {
             const expectedConfig = {
                 oidc: true,
                 issuer: 'http://localhost:3000/auth/realms/alfresco',
-                redirectUri: 'http://localhost:3000/#/view/authentication-confirmation',
+                redirectUri: 'http://localhost:3000/#/view/authentication-confirmation/?',
                 silentRefreshRedirectUri: 'http://localhost:3000/assets/silent-refresh.html',
                 postLogoutRedirectUri: 'http://localhost:3000/#/logout',
                 clientId: 'fakeClientId',

@@ -721,7 +721,7 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(component.implicitFlow).toBe(false);
+                    expect(component.ssoLogin).toBe(false);
                     expect(component.redirectToImplicitLogin).toHaveBeenCalled();
                 });
 
@@ -734,7 +734,7 @@ describe('LoginComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(component.implicitFlow).toBe(true);
+                    expect(component.ssoLogin).toBe(true);
                 });
 
             }));
