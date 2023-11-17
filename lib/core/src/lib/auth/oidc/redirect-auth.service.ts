@@ -171,7 +171,7 @@ export class RedirectAuthService extends AuthService {
 
         try {
             await this.ensureDiscoveryDocument();
-            return void this.oauthService.setupAutomaticSilentRefresh();
+            this.oauthService.setupAutomaticSilentRefresh();
         } catch {
             // do nothing
         }
