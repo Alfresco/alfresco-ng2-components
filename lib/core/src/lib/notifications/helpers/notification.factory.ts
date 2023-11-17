@@ -31,8 +31,7 @@ export const info = (messages: string | string[], initiator: NotificationInitiat
     icon: 'info',
     datetime: new Date(),
     initiator,
-    messages: [].concat(messages),
-    read: false
+    messages: [].concat(messages)
 });
 
 export const warning = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
@@ -40,8 +39,7 @@ export const warning = (messages: string | string[], initiator: NotificationInit
     icon: 'warning',
     datetime: new Date(),
     initiator,
-    messages: [].concat(messages),
-    read: false
+    messages: [].concat(messages)
 });
 
 export const error = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
@@ -49,6 +47,5 @@ export const error = (messages: string | string[], initiator: NotificationInitia
     icon: 'error',
     datetime: new Date(),
     initiator,
-    messages: [].concat(messages),
-    read: false
+    messages: [].concat(messages)
 });
