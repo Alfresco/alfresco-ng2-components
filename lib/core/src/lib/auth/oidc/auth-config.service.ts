@@ -55,7 +55,7 @@ export class AuthConfigService {
         const redirectUri = this.getRedirectUri();
 
         const authConfig: AuthConfig = {
-            oidc: oauth2.codeFlow || false,
+            oidc: oauth2.implicitFlow || oauth2.codeFlow || false,
             issuer: oauth2.host,
             redirectUri,
             silentRefreshRedirectUri: oauth2.redirectSilentIframeUri,
@@ -85,7 +85,7 @@ export class AuthConfigService {
 
         // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to error
         // `cannot match any routes`, and displaying the wildcard ** error page
-        return oauth2.codeFlow && useHash ? `${redirectUri}/?` : redirectUri;
+        return (oauth2.codeFlow || oauth2.implicitFlow) && useHash ? `${redirectUri}/?` : redirectUri;
     }
 
     private getLocationOrigin() {

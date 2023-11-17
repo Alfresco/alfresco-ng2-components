@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     @Output()
     executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
-    implicitFlow: boolean = false;
+    ssoLogin: boolean = false;
 
     form: UntypedFormGroup;
     isError: boolean = false;
@@ -155,8 +155,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                 const oauth = this.appConfig.oauth2;
                 if (oauth?.silentLogin) {
                     this.redirectToImplicitLogin();
-                } else if (oauth?.implicitFlow) {
-                    this.implicitFlow = true;
+                } else if (oauth?.implicitFlow || oauth?.codeFlow) {
+                    this.ssoLogin = true;
                 }
             }
 
