@@ -55,6 +55,7 @@ export class AuthConfigService {
         const redirectUri = this.getRedirectUri();
 
         const authConfig: AuthConfig = {
+            ...oauth2,
             oidc: oauth2.implicitFlow || oauth2.codeFlow || false,
             issuer: oauth2.host,
             redirectUri,
@@ -63,7 +64,7 @@ export class AuthConfigService {
             clientId: oauth2.clientId,
             scope: oauth2.scope,
             dummyClientSecret: oauth2.secret || '',
-            ...(oauth2.codeFlow && { responseType: 'code' })
+            ...(oauth2.codeFlow && { responseType: 'code' }),
         };
 
         return authConfig;
