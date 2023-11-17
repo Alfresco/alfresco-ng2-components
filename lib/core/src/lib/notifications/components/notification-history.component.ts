@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewChild, OnDestroy, OnInit, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
-import { NOTIFICATION_STORAGE, NotificationModel } from '../models/notification.model';
+import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -33,6 +33,7 @@ import { PaginationModel } from '../../models/pagination.model';
 export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
 
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
+    public static NOTIFICATION_STORAGE = 'notification-history';
 
     @ViewChild(MatMenuTrigger, { static: true })
     trigger: MatMenuTrigger;
@@ -52,17 +53,17 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     onDestroy$ = new Subject<boolean>();
     notifications: NotificationModel[] = [];
     paginatedNotifications: NotificationModel[] = [];
-    unreadNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
-    constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
+    constructor(
+        private notificationService: NotificationService,
+        public storageService: StorageService,
+        public cd: ChangeDetectorRef) {
+
+    }
 
     ngOnInit() {
-        this.notifications = JSON.parse(this.storageService.getItem(NOTIFICATION_STORAGE)) || [];
-        this.unreadNotifications =
-            JSON.parse(this.storageService.getItem(NOTIFICATION_STORAGE))?.filter(
-                (notification: NotificationModel) => !notification.read
-            ) || [];
+        this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
     }
 
     ngAfterViewInit(): void {
@@ -80,10 +81,10 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     addNewNotification(notification: NotificationModel) {
-        this.unreadNotifications.unshift(notification);
+        this.notifications.unshift(notification);
 
-        if (this.unreadNotifications.length > NotificationHistoryComponent.MAX_NOTIFICATION_STACK_LENGTH) {
-            this.unreadNotifications.shift();
+        if (this.notifications.length > NotificationHistoryComponent.MAX_NOTIFICATION_STACK_LENGTH) {
+            this.notifications.shift();
         }
 
         this.saveNotifications();
@@ -91,11 +92,9 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     saveNotifications() {
-        this.unreadNotifications.forEach((notification: NotificationModel) => {
-            this.notifications.push(notification);
-        });
-
-        this.storageService.setItem(NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
+        this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications.filter((notification) =>
+            notification.type !== NOTIFICATION_TYPE.RECURSIVE
+        )));
     }
 
     onMenuOpened() {
@@ -113,13 +112,9 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     markAsRead() {
-        this.unreadNotifications = [];
-        this.notifications.forEach((notification: NotificationModel) => {
-            notification.read = true;
-        });
-
-        this.storageService.setItem(NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
+        this.notifications = [];
         this.paginatedNotifications = [];
+        this.storageService.removeItem(NotificationHistoryComponent.NOTIFICATION_STORAGE);
         this.createPagination();
         this.trigger.closeMenu();
     }
@@ -128,16 +123,16 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.pagination = {
             skipCount: this.maxNotifications,
             maxItems: this.maxNotifications,
-            totalItems: this.unreadNotifications.length,
-            hasMoreItems: this.unreadNotifications.length > this.maxNotifications
+            totalItems: this.notifications.length,
+            hasMoreItems: this.notifications.length > this.maxNotifications
         };
-        this.paginatedNotifications = this.unreadNotifications.slice(0, this.pagination.skipCount);
+        this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
     }
 
     loadMore() {
         this.pagination.skipCount = this.pagination.maxItems + this.pagination.skipCount;
-        this.pagination.hasMoreItems = this.unreadNotifications.length > this.pagination.skipCount;
-        this.paginatedNotifications = this.unreadNotifications.slice(0, this.pagination.skipCount);
+        this.pagination.hasMoreItems = this.notifications.length > this.pagination.skipCount;
+        this.paginatedNotifications = this.notifications.slice(0, this.pagination.skipCount);
     }
 
     hasMoreNotifications(): boolean {
