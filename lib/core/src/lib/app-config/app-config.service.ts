@@ -81,6 +81,13 @@ export class AppConfigService {
         return this.status === Status.LOADED;
     }
 
+    /**
+     * Returns current authentication type as configured via `authType` property.
+     */
+    get authType(): 'OAUTH' | 'BASIC' {
+        return this.get('authType');
+    }
+
     constructor(protected http: HttpClient, protected extensionService: ExtensionService) {
         this.onLoadSubject = new ReplaySubject();
         this.onLoad = this.onLoadSubject.asObservable();

@@ -40,11 +40,6 @@ export class AuthConfigService {
         @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig
     ) {}
 
-    private _authConfig!: AuthConfig;
-    get authConfig(): AuthConfig {
-        return this._authConfig;
-    }
-
     loadConfig(): Promise<AuthConfig> {
         return this.appConfigService.onLoad.pipe(take(1)).toPromise().then(this.loadAppConfig.bind(this));
     }

@@ -21,152 +21,163 @@ import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RedirectAuthService extends AuthService {
+    onLogin: Observable<any>;
 
-  onLogin: Observable<any>;
+    private _loadDiscoveryDocumentPromise = Promise.resolve(false);
 
-  private _loadDiscoveryDocumentPromise = Promise.resolve(false);
+    /** Subscribe to whether the user has valid Id/Access tokens.  */
+    authenticated$!: Observable<boolean>;
 
-  /** Subscribe to whether the user has valid Id/Access tokens.  */
-  authenticated$!: Observable<boolean>;
+    /** Subscribe to errors reaching the IdP. */
+    idpUnreachable$!: Observable<Error>;
 
-  /** Subscribe to errors reaching the IdP. */
-  idpUnreachable$!: Observable<Error>;
-
-  /**
-   * Get whether the user has valid Id/Access tokens.
-   *
-   * @returns `true` if the user is authenticated, otherwise `false`
-   */
-  get authenticated(): boolean {
-    return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
-  }
-
-  private authConfig!: AuthConfig | Promise<AuthConfig>;
-
-  constructor(
-    private oauthService: OAuthService,
-    private _oauthStorage: OAuthStorage,
-    @Inject(AUTH_CONFIG) authConfig: AuthConfig
-  ) {
-    super();
-    this.authConfig = authConfig;
-
-    this.oauthService.clearHashAfterLogin = true;
-
-    this.authenticated$ = this.oauthService.events.pipe(
-      map(() => this.authenticated),
-      distinctUntilChanged(),
-      shareReplay(1)
-    );
-
-    this.onLogin = this.authenticated$.pipe(
-        filter((authenticated) => authenticated),
-        map(() => undefined)
-    );
-
-    this.idpUnreachable$ = this.oauthService.events.pipe(
-      filter((event): event is OAuthErrorEvent => event.type === 'discovery_document_load_error'),
-      map((event) => event.reason as Error)
-    );
-  }
-
-  init() {
-    if (isPromise(this.authConfig)) {
-        return this.authConfig.then((config) => this.configureAuth(config));
+    /**
+     * Get whether the user has valid Id/Access tokens.
+     *
+     * @returns `true` if the user is authenticated, otherwise `false`
+     */
+    get authenticated(): boolean {
+        return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
     }
 
-    return this.configureAuth(this.authConfig);
-  }
+    private authConfig!: AuthConfig | Promise<AuthConfig>;
 
-  logout() {
-    this.oauthService.logOut();
-  }
+    constructor(
+        private oauthService: OAuthService,
+        private oauthStorage: OAuthStorage,
+        private appConfig: AppConfigService,
+        @Inject(AUTH_CONFIG) authConfig: AuthConfig
+    ) {
+        super();
+        this.authConfig = authConfig;
 
-  ensureDiscoveryDocument(): Promise<boolean> {
-    this._loadDiscoveryDocumentPromise = this._loadDiscoveryDocumentPromise
-      .catch(() => false)
-      .then((loaded) => {
-        if (!loaded) {
-          return this.oauthService.loadDiscoveryDocument().then(() => true);
+        this.oauthService.clearHashAfterLogin = true;
+
+        this.authenticated$ = this.oauthService.events.pipe(
+            map(() => this.authenticated),
+            distinctUntilChanged(),
+            shareReplay(1)
+        );
+
+        this.onLogin = this.authenticated$.pipe(
+            filter((authenticated) => authenticated),
+            map(() => undefined)
+        );
+
+        this.idpUnreachable$ = this.oauthService.events.pipe(
+            filter((event): event is OAuthErrorEvent => event.type === 'discovery_document_load_error'),
+            map((event) => event.reason as Error)
+        );
+    }
+
+    async init() {
+        if (isPromise(this.authConfig)) {
+            return this.authConfig.then((config) => this.configureAuth(config));
         }
-        return true;
-      });
-    return this._loadDiscoveryDocumentPromise;
-  }
 
-
-  login(currentUrl?: string): void {
-    let stateKey: string | undefined;
-
-    if (currentUrl) {
-        const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
-        stateKey = `auth_state_${randomValue}${Date.now()}`;
-        this._oauthStorage.setItem(stateKey, JSON.stringify(currentUrl || {}));
+        return this.configureAuth(this.authConfig);
     }
 
-    // initLoginFlow will initialize the login flow in either code or implicit depending on the configuration
-    this.ensureDiscoveryDocument().then(() => void this.oauthService.initLoginFlow(stateKey));
-  }
-
-  baseAuthLogin(username: string, password: string): Observable<TokenResponse> {
-    this.oauthService.useHttpBasicAuth = true;
-
-    return from(this.oauthService.fetchTokenUsingPasswordFlow(username, password)).pipe(
-        map((response) => {
-            const props = new Map<string, string>();
-            props.set('id_token', response.id_token);
-            // for backward compatibility we need to set the response in our storage
-            this.oauthService['storeAccessTokenResponse'](response.access_token, response.refresh_token, response.expires_in, response.scope, props);
-            return response;
-        })
-    );
-  }
-
-  async loginCallback(): Promise<string | undefined> {
-    return this.ensureDiscoveryDocument()
-      .then(() => this.oauthService.tryLogin({ preventClearHashAfterLogin: false }))
-      .then(() => this._getRedirectUrl());
-  }
-
-  private _getRedirectUrl() {
-    const DEFAULT_REDIRECT = '/';
-    const stateKey = this.oauthService.state;
-
-    if (stateKey) {
-      const stateStringified = this._oauthStorage.getItem(stateKey);
-      if (stateStringified) {
-        // cleanup state from storage
-        this._oauthStorage.removeItem(stateKey);
-        return JSON.parse(stateStringified);
-      }
-    }
-
-    return DEFAULT_REDIRECT;
-  }
-
-  private configureAuth(config: AuthConfig) {
-    this.oauthService.configure(config);
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-
-    if (config.sessionChecksEnabled) {
-      this.oauthService.events.pipe(filter((event) => event.type === 'session_terminated')).subscribe(() => {
+    logout() {
         this.oauthService.logOut();
-      });
     }
 
-    return this.ensureDiscoveryDocument().then(() =>
-      void this.oauthService.setupAutomaticSilentRefresh()
-    ).catch(() => {
-       // catch error to prevent the app from crashing when trying to access unprotected routes
-    });
-  }
+    ensureDiscoveryDocument(): Promise<boolean> {
+        if (this.appConfig.authType === 'BASIC') {
+            return Promise.resolve(true);
+        }
 
-  updateIDPConfiguration(config: AuthConfig) {
-    this.oauthService.configure(config);
-  }
+        this._loadDiscoveryDocumentPromise = this._loadDiscoveryDocumentPromise
+            .catch(() => false)
+            .then((loaded) => {
+                if (!loaded) {
+                    return this.oauthService.loadDiscoveryDocument().then(() => true);
+                }
+                return true;
+            });
+        return this._loadDiscoveryDocumentPromise;
+    }
+
+    login(currentUrl?: string): void {
+        let stateKey: string | undefined;
+
+        if (currentUrl) {
+            const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
+            stateKey = `auth_state_${randomValue}${Date.now()}`;
+            this.oauthStorage.setItem(stateKey, JSON.stringify(currentUrl || {}));
+        }
+
+        // initLoginFlow will initialize the login flow in either code or implicit depending on the configuration
+        this.ensureDiscoveryDocument().then(() => void this.oauthService.initLoginFlow(stateKey));
+    }
+
+    baseAuthLogin(username: string, password: string): Observable<TokenResponse> {
+        this.oauthService.useHttpBasicAuth = true;
+
+        return from(this.oauthService.fetchTokenUsingPasswordFlow(username, password)).pipe(
+            map((response) => {
+                const props = new Map<string, string>();
+                props.set('id_token', response.id_token);
+                // for backward compatibility we need to set the response in our storage
+                this.oauthService['storeAccessTokenResponse'](
+                    response.access_token,
+                    response.refresh_token,
+                    response.expires_in,
+                    response.scope,
+                    props
+                );
+                return response;
+            })
+        );
+    }
+
+    async loginCallback(): Promise<string | undefined> {
+        return this.ensureDiscoveryDocument()
+            .then(() => this.oauthService.tryLogin({ preventClearHashAfterLogin: false }))
+            .then(() => this._getRedirectUrl());
+    }
+
+    private _getRedirectUrl() {
+        const DEFAULT_REDIRECT = '/';
+        const stateKey = this.oauthService.state;
+
+        if (stateKey) {
+            const stateStringified = this.oauthStorage.getItem(stateKey);
+            if (stateStringified) {
+                // cleanup state from storage
+                this.oauthStorage.removeItem(stateKey);
+                return JSON.parse(stateStringified);
+            }
+        }
+
+        return DEFAULT_REDIRECT;
+    }
+
+    private async configureAuth(config: AuthConfig) {
+        this.oauthService.configure(config);
+        this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+
+        if (config.sessionChecksEnabled) {
+            this.oauthService.events.pipe(filter((event) => event.type === 'session_terminated')).subscribe(() => {
+                this.oauthService.logOut();
+            });
+        }
+
+        try {
+            await this.ensureDiscoveryDocument();
+            return void this.oauthService.setupAutomaticSilentRefresh();
+        } catch {
+            // do nothing
+        }
+    }
+
+    updateIDPConfiguration(config: AuthConfig) {
+        this.oauthService.configure(config);
+    }
 }

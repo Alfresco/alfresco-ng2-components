@@ -27,6 +27,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
+import { AppConfigService } from '../../app-config/app-config.service';
 
 /**
  * Create a Login Factory function
@@ -36,8 +37,8 @@ import { AuthenticationConfirmationComponent } from './view/authentication-confi
  * @param config auth configuration
  * @returns a factory function
  */
-export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, config: AuthConfig) {
-    const service = new RedirectAuthService(oAuthService, storage, config);
+export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, appConfig: AppConfigService, config: AuthConfig) {
+    const service = new RedirectAuthService(oAuthService, storage, appConfig, config);
     return () => service.init();
 }
 
@@ -49,19 +50,18 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
         // { provide: AuthGuard, useClass: OidcAuthGuard },
         // { provide: AuthGuardEcm, useClass: OidcAuthGuard },
         // { provide: AuthGuardBpm, useClass: OidcAuthGuard },
-        { provide: AuthenticationService},
+        AuthenticationService,
         { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
         {
             provide: AUTH_CONFIG,
             useFactory: authConfigFactory,
             deps: [AuthConfigService]
         },
-        RedirectAuthService,
         { provide: AuthService, useExisting: RedirectAuthService },
         {
             provide: APP_INITIALIZER,
             useFactory: loginFactory,
-            deps: [OAuthService, OAuthStorage, AUTH_CONFIG],
+            deps: [OAuthService, OAuthStorage, AUTH_CONFIG, AppConfigService],
             multi: true
         }
     ]
