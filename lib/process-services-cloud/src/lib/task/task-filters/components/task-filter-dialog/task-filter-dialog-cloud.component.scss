@@ -2,6 +2,7 @@ adf-cloud-task-filter-dialog {
     .adf-task-filter-dialog .mat-mdc-card {
         padding: 0;
         box-shadow: none;
+
         /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
         mat-card-actions {
             display: flex;
