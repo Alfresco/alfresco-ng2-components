@@ -908,7 +908,7 @@ export const colspanForm = {
                         1: [
                             {
                                 id: 'Text04sjhr',
-                                name: 'Text',
+                                name: 'TextColspan',
                                 type: 'text',
                                 readOnly: false,
                                 required: false,
@@ -917,6 +917,51 @@ export const colspanForm = {
                                 minLength: 0,
                                 maxLength: 0,
                                 regexPattern: null,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'f4285ad-g123-1a73-521d-7nm4a7231aul0',
+                    name: 'Label',
+                    type: 'container',
+                    tab: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        1: [
+                            {
+                                id: 'Text01dask',
+                                name: 'Text',
+                                type: 'text',
+                                readOnly: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minValue: null,
+                                maxValue: null,
+                                required: false,
+                                visibilityCondition: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                }
+                            }
+                        ],
+                        2: [
+                            {
+                                id: 'Text02ds21',
+                                name: 'Text',
+                                type: 'text',
+                                readOnly: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minValue: null,
+                                maxValue: null,
+                                required: false,
                                 visibilityCondition: null,
                                 params: {
                                     existingColspan: 1,
