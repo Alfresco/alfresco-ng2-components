@@ -160,9 +160,9 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     mimeType: string;
 
-    /** Overload mimeTypeForUnknown*/
+    /** Overload originalMimeType*/
     @Input()
-    mimeTypeForUnknown: string;
+    originalMimeType: string;
 
     /**
      * Context object available for binding by the local sidebarRightTemplate with let declarations.

@@ -476,17 +476,17 @@ describe('AlfrescoViewerComponent', () => {
         //
     });
 
-    describe('mimeTypeForUnknown', () => {
+    describe('originalMimeType', () => {
 
-        it('should set mimeTypeForUnknown based on nodeData content', () => {
+        it('should set originalMimeType based on nodeData content', () => {
             const nodeData = {
                 content: {
                     mimeType: 'application/pdf'
                 }
             };
 
-            component.mimeTypeForUnknown = nodeData.content.mimeType;
-            expect(component.mimeTypeForUnknown).toEqual(nodeData.content.mimeType);
+            component.originalMimeType = nodeData.content.mimeType;
+            expect(component.originalMimeType).toEqual(nodeData.content.mimeType);
         });
     });
 

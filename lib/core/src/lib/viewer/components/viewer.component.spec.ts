@@ -115,7 +115,7 @@ describe('ViewerComponent', () => {
 
     });
 
-    describe('mimeTypeForUnknown', () => {
+    describe('originalMimeType', () => {
 
         it('should set mimeType input correctly', () => {
             const mimeTypeValue = 'image/png';
@@ -124,18 +124,18 @@ describe('ViewerComponent', () => {
             expect(component.mimeType).toEqual(mimeTypeValue);
         });
 
-        it('should set mimeTypeForUnknown input correctly', () => {
-            const mimeTypeForUnknownValue = 'application/msWord';
-            component.mimeTypeForUnknown = mimeTypeForUnknownValue;
+        it('should set originalMimeType input correctly', () => {
+            const originalMimeTypeValue = 'application/msWord';
+            component.originalMimeType = originalMimeTypeValue;
 
-            expect(component.mimeTypeForUnknown).toEqual(mimeTypeForUnknownValue);
+            expect(component.originalMimeType).toEqual(originalMimeTypeValue);
         });
 
-        it('should set alt attribute correctly based on mimeTypeForUnknown', () => {
+        it('should set alt attribute correctly based on originalMimeType', () => {
             const mimeTypeValue = 'image/jpeg';
             const altAttributeValue = 'Alt Text';
             component.mimeType = mimeTypeValue;
-            component.mimeTypeForUnknown = altAttributeValue;
+            component.originalMimeType = altAttributeValue;
             fixture.detectChanges();
             const altAttribute = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('alt');
 
