@@ -64,7 +64,7 @@ export class AuthConfigService {
             clientId: oauth2.clientId,
             scope: oauth2.scope,
             dummyClientSecret: oauth2.secret || '',
-            ...(oauth2.codeFlow && { responseType: 'code' }),
+            ...(oauth2.codeFlow && { responseType: 'code' })
         };
 
         return authConfig;
