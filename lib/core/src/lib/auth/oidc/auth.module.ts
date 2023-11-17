@@ -33,6 +33,7 @@ import { AppConfigService } from '../../app-config/app-config.service';
  *
  * @param oAuthService auth service
  * @param storage storage service
+ * @param appConfig application config
  * @param config auth configuration
  * @returns a factory function
  */

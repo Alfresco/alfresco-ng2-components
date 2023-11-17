@@ -83,6 +83,8 @@ export class AppConfigService {
 
     /**
      * Returns current authentication type as configured via `authType` property.
+     *
+     * @returns authentication type
      */
     get authType(): 'OAUTH' | 'BASIC' {
         return this.get(AppConfigValues.AUTHTYPE);
