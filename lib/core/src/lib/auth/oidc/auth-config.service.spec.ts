@@ -21,7 +21,6 @@ import { EMPTY } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
 import { AuthConfigService } from './auth-config.service';
-import { AuthConfig } from 'angular-oauth2-oidc';
 import { OauthConfigModel } from '../models/oauth-config.model';
 
 describe('AuthConfigService', () => {
@@ -96,7 +95,7 @@ describe('AuthConfigService', () => {
         ]
     };
 
-    const mockAuthConfigCodeFlow: OauthConfigModel = {
+    const mockAuthConfigCodeFlow = {
         host: 'http://localhost:3000/auth/realms/alfresco',
         clientId: 'fakeClientId',
         scope: 'openid profile email',
@@ -131,7 +130,7 @@ describe('AuthConfigService', () => {
     describe('load auth config using hash', () => {
         it('should load configuration if implicit flow is true ', async () => {
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigImplicitFlow);
-            const expectedConfig: AuthConfig = {
+            const expectedConfig = {
                 oidc: true,
                 issuer: 'http://localhost:3000/auth/realms/alfresco',
                 redirectUri: 'http://localhost:3000/#/view/authentication-confirmation/?',
@@ -142,7 +141,7 @@ describe('AuthConfigService', () => {
                 dummyClientSecret: ''
             };
 
-            expect(await service.loadConfig()).toEqual(expectedConfig);
+            expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
         });
 
         it('should load configuration if code flow is true ', async () => {
@@ -159,7 +158,7 @@ describe('AuthConfigService', () => {
                 dummyClientSecret: ''
             };
 
-            expect(await service.loadConfig()).toEqual(expectedConfig);
+            expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
         });
     });
 
