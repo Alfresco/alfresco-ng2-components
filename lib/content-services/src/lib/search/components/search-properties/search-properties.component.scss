@@ -33,6 +33,7 @@ adf-search-properties {
             }
         }
     }
+
     /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-underline {
         display: none;
@@ -44,7 +45,9 @@ adf-search-properties {
 
     adf-search-chip-autocomplete-input {
         display: block;
+
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-outline {
             /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
@@ -74,6 +77,7 @@ adf-search-properties {
 
         .mat-form-field-appearance-outline {
             /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+
             /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-outline-thick {
                 /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
