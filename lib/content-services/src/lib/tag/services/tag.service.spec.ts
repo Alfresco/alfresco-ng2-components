@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -338,6 +338,33 @@ describe('TagService', () => {
                 });
                 tick();
             }));
+        });
+
+        describe('areTagsEnabled', () => {
+            let getSpy: jasmine.Spy<(key: string, defaultValue?: boolean) => boolean>;
+
+            beforeEach(() => {
+                getSpy = spyOn(TestBed.inject(AppConfigService), 'get');
+            });
+
+            it('should call get on AppConfigService with correct parameters', () => {
+                service.areTagsEnabled();
+                expect(getSpy).toHaveBeenCalledWith('plugins.tags', true);
+            });
+
+            it('should return true if get from AppConfigService returns true', () => {
+                getSpy.and.returnValue(true);
+
+                const enabledTags = service.areTagsEnabled();
+                expect(enabledTags).toBeTrue();
+            });
+
+            it('should return false if get from AppConfigService returns false', () => {
+                getSpy.and.returnValue(false);
+
+                const enabledTags = service.areTagsEnabled();
+                expect(enabledTags).toBeFalse();
+            });
         });
     });
 });
