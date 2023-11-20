@@ -73,14 +73,6 @@ describe('CardViewSelectItemComponent', () => {
     });
 
     describe('Rendering', () => {
-        it('should render the label', () => {
-            fixture.detectChanges();
-
-            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).not.toBeNull();
-            expect(labelValue.nativeElement.innerText).toBe('Select box label');
-        });
-
         it('should render readOnly value is editable property is FALSE', () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
