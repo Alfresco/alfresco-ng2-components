@@ -18,7 +18,8 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import {
-    AspectListDialogComponent, AspectListDialogComponentData,
+    AspectListDialogComponent,
+    AspectListDialogComponentData,
     CategoryService,
     DialogAspectListService,
     TagService
