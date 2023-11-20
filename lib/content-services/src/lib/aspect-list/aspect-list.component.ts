@@ -35,6 +35,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
     @Input()
     nodeId: string = '';
 
+    /** List of aspects' ids which should not be displayed. */
     @Input()
     excludedAspects?: string[] = [];
 

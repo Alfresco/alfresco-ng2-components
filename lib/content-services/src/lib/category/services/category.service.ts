@@ -157,6 +157,11 @@ export class CategoryService {
         return from(this.categoriesApi.linkNodeToCategory(nodeId, categoryLinkBodyCreate));
     }
 
+    /**
+     * Checks if categories plugin is enabled.
+     *
+     * @returns boolean true if categories plugin is enabled, false otherwise.
+     */
     areCategoriesEnabled(): boolean {
          return this.appConfigService.get('plugins.categories', true);
     }

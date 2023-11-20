@@ -29,6 +29,7 @@ export interface AspectListDialogComponentData {
     overTableMessage: string;
     select: Subject<string[]>;
     nodeId?: string;
+    excludedAspects?: string[];
 }
 ```
 
@@ -41,6 +42,7 @@ The properties are described in the table below:
 | overTableMessage | `string` | "" | Text that will be showed on the top of the aspect list table |
 | select | [`Subject<Node>`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | Event emitted with the current node selection when the dialog closes |
 | nodeId | `string` | "" | Identifier of a node to apply aspects to. |
+| excludedAspects | `string[]` | undefined | List of aspects' ids which should not be displayed. |
 
 If you don't want to manage the dialog yourself then it is easier to use the
 [Aspect List component](aspect-list.component.md), or the

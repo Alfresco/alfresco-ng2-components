@@ -177,6 +177,11 @@ export class TagService {
         return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(tap((data) => this.refresh.emit(data)));
     }
 
+    /**
+     * Checks if tags plugin is enabled.
+     *
+     * @returns boolean true if tags plugin is enabled, false otherwise.
+     */
     areTagsEnabled(): boolean {
         return this.appConfigService.get('plugins.tags', true);
     }
