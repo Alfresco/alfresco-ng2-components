@@ -50,6 +50,7 @@
         min-width: 250px;
     }
     /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
     &-userinfo-tab .mat-tab-label {
         flex: auto;
         font-weight: 500;
@@ -103,6 +104,7 @@
         border: 0;
         vertical-align: middle;
     }
+    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
     /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
     &-hide-tab .mat-tab-label-active {
         display: none;

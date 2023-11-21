@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
