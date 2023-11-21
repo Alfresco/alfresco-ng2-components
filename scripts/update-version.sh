@@ -6,8 +6,6 @@ VERSION_IN_PACKAGE_JSON=`node -p "require('$DIR/../package.json')".version;`;
 eval JS_API=true
 eval GNU=false
 eval DIFFERENT_JS_API=false
-eval AUTO=false
-eval TOTAL_BUILD=true;
 eval SEMANTIC="minor";
 
 eval projects=( "cli"
