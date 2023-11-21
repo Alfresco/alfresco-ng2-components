@@ -103,7 +103,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Your name here'}))
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Your name here'}));
                 expect(inputField).toBeTruthy();
             });
 
@@ -253,7 +253,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the field placeholder', async () => {
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'simple placeholder'}))
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'simple placeholder'}));
                 expect(inputField).toBeTruthy();
             });
 
@@ -261,7 +261,7 @@ describe('TextWidgetComponent', () => {
                 const input = await loader.getHarness(MatInputHarness);
                 await (await input.host()).click();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'simple placeholder'}))
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'simple placeholder'}));
                 expect(inputField).toBeTruthy();
             });
 
@@ -392,7 +392,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the input mask placeholder', async () => {
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Phone : (__) ___-___'}))
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Phone : (__) ___-___'}));
                 expect(inputField).toBeTruthy();
             });
 
@@ -400,7 +400,7 @@ describe('TextWidgetComponent', () => {
                 const input = await loader.getHarness(MatInputHarness);
                 await (await input.host()).click();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Phone : (__) ___-___'}))
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Phone : (__) ___-___'}));
                 expect(inputField).toBeTruthy();
             });
         });
