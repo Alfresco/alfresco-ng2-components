@@ -67,7 +67,7 @@ import { FileAutoDownloadComponent } from './file-auto-download/file-auto-downlo
 import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
