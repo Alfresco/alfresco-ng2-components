@@ -34,15 +34,25 @@ show_help() {
 }
 
 next_alpha_mode() {
+    NEXT_VERSION=`node -p "require('$DIR/../package.json')".version;`;
     # If we are creating a new alpha for a prerelease, we need to simply call it with -alpha
     if [[ $VERSION_IN_PACKAGE_JSON =~ [0-9]*\.[0-9]*\.[0-9]*-.* ]]; then
-        SEMANTIC_PARAM="";
+        echo "No minor update needed"
     else
-        SEMANTIC_PARAM="-minor";
+        echo "Running minor update"
+        ADF_VERSION=$(npm view @alfresco/adf-core version)
+        NEXT_VERSION=( ${ADF_VERSION//./ } )
+        ((NEXT_VERSION[1]++))
+        NEXT_VERSION[2]=0
+        NEXT_VERSION="${NEXT_VERSION[0]}.${NEXT_VERSION[1]}.${NEXT_VERSION[2]}"
     fi
 
-    echo "====== Auto find next ALPHA version ===== ${SEMANTIC_PARAM} "
-    VERSION=$(./next_version.sh ${SEMANTIC_PARAM} -alpha)
+    if [[  $GH_BUILD_NUMBER != "" ]]; then
+        echo "Adding build number"
+        NEXT_VERSION=${NEXT_VERSION}-${GH_BUILD_NUMBER}
+    fi
+
+    VERSION=$NEXT_VERSION
 
     echo "====== version lib ${VERSION} ====="
     JS_API=false
