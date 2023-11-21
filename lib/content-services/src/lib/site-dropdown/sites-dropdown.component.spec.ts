@@ -31,7 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SitesService } from '../common/services/sites.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
 import { SiteEntry } from '@alfresco/js-api';
 
 const customSiteList = {

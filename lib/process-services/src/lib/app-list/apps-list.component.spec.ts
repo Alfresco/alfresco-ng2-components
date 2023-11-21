@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 describe('AppsListComponent', () => {
     let loader: HarnessLoader;

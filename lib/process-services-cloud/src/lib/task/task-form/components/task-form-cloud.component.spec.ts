@@ -35,7 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
