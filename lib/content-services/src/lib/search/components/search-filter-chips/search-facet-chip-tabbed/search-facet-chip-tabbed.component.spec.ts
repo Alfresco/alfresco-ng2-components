@@ -24,7 +24,7 @@ import { FacetField } from '../../../models/facet-field.interface';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyChipHarness as MatChipHarness } from '@angular/material/legacy-chips/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('SearchFacetChipTabbedComponent', () => {
