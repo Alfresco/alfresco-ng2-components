@@ -30,28 +30,32 @@ show_help() {
     echo "-gnu for gnu"
 }
 
-next_alpha_mode() {
-    NEXT_VERSION=`node -p "require('$DIR/../package.json')".version;`;
-    # If we are creating a new alpha for a prerelease, we need to simply call it with -alpha
-    if [[ $NEXT_VERSION =~ [0-9]*\.[0-9]*\.[0-9]*-.* ]]; then
-        echo "No minor update needed"
+get_next_version() {
+    PKG_VERSION=`node -p "require('$1/package.json')".version;`;
+
+    if [[ $PKG_VERSION =~ [0-9]*\.[0-9]*\.[0-9]*-.* ]]; then
+       PKG_VERSION=$PKG_VERSION
     else
-        echo "Running minor update"
-        ADF_VERSION=$(npm view @alfresco/adf-core version)
-        NEXT_VERSION=( ${ADF_VERSION//./ } )
-        ((NEXT_VERSION[1]++))
-        NEXT_VERSION[2]=0
-        NEXT_VERSION="${NEXT_VERSION[0]}.${NEXT_VERSION[1]}.${NEXT_VERSION[2]}"
+        PKG_VERSION=( ${PKG_VERSION//./ } )
+        ((PKG_VERSION[1]++))
+        PKG_VERSION[2]=0
+        PKG_VERSION="${PKG_VERSION[0]}.${PKG_VERSION[1]}.${PKG_VERSION[2]}"
     fi
 
     if [[ $GH_BUILD_NUMBER != "" ]]; then
         echo "Adding build number"
-        NEXT_VERSION=$NEXT_VERSION-$GH_BUILD_NUMBER
+        PKG_VERSION=$PKG_VERSION-$GH_BUILD_NUMBER
     fi
 
-    VERSION=$NEXT_VERSION
+    echo $PKG_VERSION
+}
 
-    echo "====== version lib $VERSION ====="
+next_alpha_mode() {
+    VERSION=`get_next_version $DIR/..`
+    JS_API_VERSION=`get_next_version $DIR/../lib/js-api/src`
+
+    echo "====== New libs version: $VERSION ====="
+    echo "====== New js-api version: $VERSION ====="
     JS_API=false
 }
 
