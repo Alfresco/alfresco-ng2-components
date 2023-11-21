@@ -98,7 +98,7 @@ update_library_dependencies() {
     done
 }
 
-update_root_package_json() {
+update_root_dependencies() {
     echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of .* to ~${VERSION} ======"
     DESTDIR="$DIR/../"
 
@@ -111,7 +111,7 @@ update_root_package_json() {
     done
 }
 
-update_total_build_dependency_js_version(){
+update_root_js_api_version(){
     echo "====== UPDATE DEPENDENCY VERSION @alfresco/js-api total build to ~${1} in ${DESTDIR}======"
     DESTDIR="$DIR/../"
     PACKAGETOCHANGE="@alfresco\/js-api"
@@ -176,21 +176,22 @@ do
     fi
 done
 
-update_root_package_json
+update_root_dependencies
 
 if $JS_API == true; then
     if $DIFFERENT_JS_API == true; then
-        update_total_build_dependency_js_version ${VERSION_JS_API}
+        update_root_js_api_version ${VERSION_JS_API}
     else
-        update_total_build_dependency_js_version ${VERSION}
+        update_root_js_api_version ${VERSION}
     fi
 fi
+
+# bump root package.json
+npm version --allow-same-version --no-git-tag-version --force ${VERSION}
 
 echo "====== UPDATE DEMO SHELL ======"
 
 DESTDIR="$DIR/../demo-shell/"
-npm version --allow-same-version --no-git-tag-version --force ${VERSION}
-
 cd $DESTDIR
 npm version --allow-same-version --no-git-tag-version --force ${VERSION}
 cd -
