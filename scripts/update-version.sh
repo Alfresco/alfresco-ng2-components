@@ -75,10 +75,12 @@ version_js_change() {
 
 update_library_version() {
     echo "====== $1@$VERSION ======"
+
     DESTDIR="$DIR/../lib/$1"
     if [[ $1 == "js-api" ]]; then
         DESTDIR="$DESTDIR/src"
     fi
+
     cd $DESTDIR
     npm version --allow-same-version --no-git-tag-version --force $VERSION
 }
@@ -87,9 +89,9 @@ update_dependencies() {
     PROJECT=$1
     VERSION=$2
 
-    sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \">=${VERSION}\"/g" "package.json"
-    sed "${sedi[@]}" "s/\"${PROJECT}\": \"~.*\"/\"${PROJECT}\": \"~${VERSION}\"/g" "package.json"
-    sed "${sedi[@]}" "s/\"${PROJECT}\": \"^.*\"/\"${PROJECT}\": \"^${VERSION}\"/g" "package.json"
+    sed "${sedi[@]}" "s/\"$PROJECT\": \".*\"/\"$PROJECT\": \">=$VERSION\"/g" "package.json"
+    sed "${sedi[@]}" "s/\"$PROJECT\": \"~.*\"/\"$PROJECT\": \"~$VERSION\"/g" "package.json"
+    sed "${sedi[@]}" "s/\"$PROJECT\": \"^.*\"/\"$PROJECT\": \"^$VERSION\"/g" "package.json"
 }
 
 update_library_dependencies() {
