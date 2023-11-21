@@ -20,8 +20,8 @@ import { PermissionContainerComponent } from './permission-container.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
-import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('PermissionContainerComponent', () => {
     let loader: HarnessLoader;

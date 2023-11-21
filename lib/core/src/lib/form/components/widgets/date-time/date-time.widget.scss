@@ -2,9 +2,11 @@
 .adf {
     &-date-time-widget {
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-suffix {
             top: 26px;
         }
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-label-wrapper {
             top: 20px;
@@ -13,9 +15,11 @@
 
     &-left-label-input-datepicker {
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-suffix {
             top: 0;
         }
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-infix {
             width: 100%;
