@@ -19,8 +19,6 @@ eval projects=( "cli"
 
 cd `dirname $0`
 
-prefix="@alfresco\/adf-"
-
 projectslength=${#projects[@]}
 
 show_help() {
@@ -103,22 +101,31 @@ update_library_dependencies() {
 
     cd $DESTDIR
 
-    for (( j=0; j<${projectslength}; j++ ));
+    for PROJECT in ${projects[@]}
     do
-        PROJECT=${prefix}${projects[$j]}
-        echo "====== $1 => $PROJECT@$VERSION ======"
+        if [[ $PROJECT == "js-api" ]]; then
+            PROJECT="@alfresco\/$PROJECT"
+        else
+            PROJECT="@alfresco\/adf-$PROJECT"
+        fi
+        echo "├─ $PROJECT@$VERSION"
         update_dependencies $PROJECT $VERSION
     done
 }
 
 update_root_dependencies() {
+    echo "====== Root package.json ======"
     DESTDIR="$DIR/../"
     cd $DESTDIR
 
-    for (( j=0; j<${projectslength}; j++ ));
+    for PROJECT in ${projects[@]}
     do
-        PROJECT=${prefix}${projects[$j]}
-        echo "====== $PROJECT@$VERSION ======"
+        if [[ $PROJECT == "js-api" ]]; then
+            PROJECT="@alfresco\/$PROJECT"
+        else
+            PROJECT="@alfresco\/adf-$PROJECT"
+        fi
+        echo "├─ $PROJECT@$VERSION"
         update_dependencies $PROJECT $VERSION
     done
 }
