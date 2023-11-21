@@ -43,7 +43,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
     template: ` <adf-cloud-process-list #processListCloud>
