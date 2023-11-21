@@ -103,6 +103,7 @@ update_library_dependencies() {
         PROJECT=${prefix}${projects[$j]}
         update_dependencies $PROJECT $VERSION
     done
+    cd -
 }
 
 update_root_dependencies() {
@@ -115,6 +116,7 @@ update_root_dependencies() {
         PROJECT=${prefix}${projects[$j]}
         update_dependencies $PROJECT $VERSION
     done
+    cd -
 }
 
 update_root_js_api_version(){
@@ -124,6 +126,7 @@ update_root_js_api_version(){
 
     PROJECT="@alfresco\/js-api"
     update_dependencies $PROJECT $1
+    cd -
 }
 
 update_component_js_version(){
@@ -133,6 +136,7 @@ update_component_js_version(){
 
    PROJECT="@alfresco\/js-api"
    update_dependencies $PROJECT $2
+   cd -
 }
 
 while [[ $1  == -* ]]; do
