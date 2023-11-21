@@ -22,7 +22,6 @@ import { TasksPage } from '../pages/tasks.page';
 import { TasksListPage } from '../pages/tasks-list.page';
 import { TaskDetailsPage } from '../pages/task-details.page';
 import { TaskFiltersDemoPage } from '../pages/task-filters-demo.page';
-import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
 describe('Task Filters Sorting', () => {
@@ -87,12 +86,12 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277254] Should display tasks under new filter from newest to oldest when they are completed', async () => {
-        const newFilter = new UserProcessInstanceFilterRepresentation({
+        const newFilter = {
             appId,
             name: 'Newest first',
             icon: 'glyphicon-filter',
             filter: { sort: 'created-desc', state: 'completed' }
-        });
+        };
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
@@ -104,12 +103,12 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277255] Should display tasks under new filter from oldest to newest when they are completed', async () => {
-        const newFilter = new UserProcessInstanceFilterRepresentation({
+        const newFilter = {
             appId,
             name: 'Newest last',
             icon: 'glyphicon-filter',
             filter: { sort: 'created-asc', state: 'completed' }
-        });
+        };
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
@@ -121,12 +120,12 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277256] Should display tasks under new filter from closest due date to farthest when they are completed', async () => {
-        const newFilter = new UserProcessInstanceFilterRepresentation({
+        const newFilter = {
             appId,
             name: 'Due first',
             icon: 'glyphicon-filter',
             filter: { sort: 'due-desc', state: 'completed' }
-        });
+        };
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
@@ -138,12 +137,12 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', async () => {
-        const newFilter = new UserProcessInstanceFilterRepresentation({
+        const newFilter = {
             appId,
             name: 'Due last',
             icon: 'glyphicon-filter',
             filter: { sort: 'due-asc', state: 'completed' }
-        });
+        };
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
@@ -155,12 +154,12 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277258] Should display tasks under new filter from newest to oldest when they are open  ', async () => {
-        const newFilter = new UserProcessInstanceFilterRepresentation({
+        const newFilter = {
             appId,
             name: 'Newest first Open',
             icon: 'glyphicon-filter',
             filter: { sort: 'created-desc', state: 'open' }
-        });
+        };
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
@@ -172,12 +171,12 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277259] Should display tasks under new filter from oldest to newest when they are open', async () => {
-        const newFilter = new UserProcessInstanceFilterRepresentation({
+        const newFilter = {
             appId,
             name: 'Newest last Open',
             icon: 'glyphicon-filter',
             filter: { sort: 'created-asc', state: 'open' }
-        });
+        };
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
@@ -189,12 +188,12 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277260] Should display tasks under new filter from closest due date to farthest when they are open', async () => {
-        const newFilter = new UserProcessInstanceFilterRepresentation({
+        const newFilter = {
             appId,
             name: 'Due first Open',
             icon: 'glyphicon-filter',
             filter: { sort: 'due-desc', state: 'open' }
-        });
+        };
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
@@ -206,12 +205,12 @@ describe('Task Filters Sorting', () => {
     });
 
     it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', async () => {
-        const newFilter = new UserProcessInstanceFilterRepresentation({
+        const newFilter = {
             appId,
             name: 'Due last Open',
             icon: 'glyphicon-filter',
             filter: { sort: 'due-asc', state: 'open' }
-        });
+        };
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();

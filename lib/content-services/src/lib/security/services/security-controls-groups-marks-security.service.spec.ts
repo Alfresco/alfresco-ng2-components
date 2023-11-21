@@ -21,7 +21,7 @@ import { SecurityControlsService } from './security-controls-groups-marks-securi
 import { fakeAuthorityClearanceApiResponse } from './mock/security-authorities.mock';
 import { fakeGroupsApiResponse, createNewSecurityGroupMock } from './mock/security-groups.mock';
 import { fakeMarksApiResponse, createNewSecurityMarkMock } from './mock/security-marks.mock';
-import { SecurityGroup, SecurityGroupBody, SecurityGroupEntry, SecurityMarkBody, SecurityMarkEntry } from '@alfresco/js-api';
+import { SecurityGroupBody, SecurityMarkBody, SecurityMarkEntry } from '@alfresco/js-api';
 
 describe('SecurityControlsService', () => {
     let service: SecurityControlsService;
@@ -74,15 +74,13 @@ describe('SecurityControlsService', () => {
 
     it('should create new security group', async () => {
         spyOn(service.groupsApi, 'createSecurityGroup').and.returnValue(
-            Promise.resolve(
-                new SecurityGroupEntry({
-                    entry: new SecurityGroup({
-                        groupName: 'TestGroup',
-                        groupType: 'HIERARCHICAL',
-                        id: 'eddf6269-ceba-42c6-b979-9ac445d29a94'
-                    })
-                })
-            )
+            Promise.resolve({
+                entry: {
+                    groupName: 'TestGroup',
+                    groupType: 'HIERARCHICAL',
+                    id: 'eddf6269-ceba-42c6-b979-9ac445d29a94'
+                }
+            })
         );
         const response = await service.createSecurityGroup(createNewSecurityGroupMock).toPromise();
 
@@ -110,37 +108,31 @@ describe('SecurityControlsService', () => {
 
     it('should create new security mark', async () => {
         spyOn(service.marksApi, 'createSecurityMarks').and.returnValue(
-            Promise.resolve(
-                new SecurityMarkEntry({
-                    entry: {
-                        groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
-                        name: 'securityMark1',
-                        id: 'ffBOeOJJ'
-                    }
-                })
-            )
+            Promise.resolve({
+                entry: {
+                    groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
+                    name: 'securityMark1',
+                    id: 'ffBOeOJJ'
+                }
+            })
         );
 
-        const response = await service.createSecurityMarks(securityGroupId, createNewSecurityMarkMock);
-        if (response instanceof SecurityMarkEntry) {
-            securityMarkId = response.entry.id;
-            expect(response.entry.groupId).toEqual('eddf6269-ceba-42c6-b979-9ac445d29a94');
-            expect(response.entry.name).toEqual('securityMark1');
-            expect(response.entry.id).toEqual('ffBOeOJJ');
-        }
+        const response = (await service.createSecurityMarks(securityGroupId, createNewSecurityMarkMock)) as SecurityMarkEntry;
+        securityMarkId = response.entry.id;
+        expect(response.entry.groupId).toEqual('eddf6269-ceba-42c6-b979-9ac445d29a94');
+        expect(response.entry.name).toEqual('securityMark1');
+        expect(response.entry.id).toEqual('ffBOeOJJ');
     });
 
     it('should edit a security mark', async () => {
         spyOn(service.marksApi, 'updateSecurityMark').and.returnValue(
-            Promise.resolve(
-                new SecurityMarkEntry({
-                    entry: {
-                        groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
-                        name: 'securityMark1',
-                        id: 'ffBOeOJJ'
-                    }
-                })
-            )
+            Promise.resolve({
+                entry: {
+                    groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
+                    name: 'securityMark1',
+                    id: 'ffBOeOJJ'
+                }
+            })
         );
         const response = await service.updateSecurityMark(securityGroupId, securityMarkId, securityMarkBody);
 
@@ -153,15 +145,13 @@ describe('SecurityControlsService', () => {
 
     it('should update a security group', async () => {
         spyOn(service.groupsApi, 'updateSecurityGroup').and.returnValue(
-            Promise.resolve(
-                new SecurityGroupEntry({
-                    entry: new SecurityGroup({
-                        groupName: 'TestGroup',
-                        groupType: 'HIERARCHICAL',
-                        id: 'eddf6269-ceba-42c6-b979-9ac445d29a94'
-                    })
-                })
-            )
+            Promise.resolve({
+                entry: {
+                    groupName: 'TestGroup',
+                    groupType: 'HIERARCHICAL',
+                    id: 'eddf6269-ceba-42c6-b979-9ac445d29a94'
+                }
+            })
         );
         const opts = {};
         const response = await service.updateSecurityGroup(securityGroupId, securityGroupBody, opts);
@@ -172,15 +162,13 @@ describe('SecurityControlsService', () => {
 
     it('should delete a security mark', async () => {
         spyOn(service.marksApi, 'deleteSecurityMark').and.returnValue(
-            Promise.resolve(
-                new SecurityMarkEntry({
-                    entry: {
-                        groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
-                        name: 'securityMark1',
-                        id: 'ffBOeOJJ'
-                    }
-                })
-            )
+            Promise.resolve({
+                entry: {
+                    groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
+                    name: 'securityMark1',
+                    id: 'ffBOeOJJ'
+                }
+            })
         );
         const response = await service.deleteSecurityMark(securityGroupId, securityMarkId);
         securityMarkId = response.entry.id;
@@ -218,17 +206,15 @@ describe('SecurityControlsService', () => {
 
     it('should update a clearances for authority', async () => {
         spyOn(service.authorityClearanceApi, 'updateAuthorityClearance').and.returnValue(
-            Promise.resolve(
-                new SecurityMarkEntry({
-                    entry: {
-                        id: 'test-id',
-                        name: 'test-name',
-                        groupId: 'test-groupId'
-                    }
-                })
-            )
+            Promise.resolve({
+                entry: {
+                    id: 'test-id',
+                    name: 'test-name',
+                    groupId: 'test-groupId'
+                }
+            })
         );
-        const response = await service
+        const response = (await service
             .updateClearancesForAuthority('test-id', [
                 {
                     groupId: 'test-group-id',
@@ -236,13 +222,11 @@ describe('SecurityControlsService', () => {
                     id: 'test-id'
                 }
             ])
-            .toPromise();
+            .toPromise()) as SecurityMarkEntry;
 
-        if (response instanceof SecurityMarkEntry) {
-            expect(response.entry.id).toEqual('test-id');
-            expect(response.entry.groupId).toEqual('test-groupId');
-            expect(response.entry.name).toEqual('test-name');
-        }
+        expect(response.entry.id).toEqual('test-id');
+        expect(response.entry.groupId).toEqual('test-groupId');
+        expect(response.entry.name).toEqual('test-name');
     });
 
     it('should reload security groups', (doneCallback) => {

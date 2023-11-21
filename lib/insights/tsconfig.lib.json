@@ -8,7 +8,9 @@
       "@alfresco/adf-extensions": ["../../../dist/libs/extensions"],
       "@alfresco/adf-extensions/*": ["../../../dist/libs/extensions/*"],
       "@alfresco/adf-core": ["../../../dist/libs/core"],
-      "@alfresco/adf-core/*": ["../../../dist/libs/core/*"]
+      "@alfresco/adf-core/*": ["../../../dist/libs/core/*"],
+      "@alfresco/js-api": ["../../../dist/libs/js-api"],
+      "@alfresco/js-api/*": ["../../../dist/libs/js-api/*"]
     }
   }
 }

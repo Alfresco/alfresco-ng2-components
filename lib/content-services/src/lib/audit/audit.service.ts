@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { AuditApi, AuditAppPaging, AuditApp, AuditBodyUpdate, AuditEntryPaging, AuditEntryEntry } from '@alfresco/js-api';
+import { AuditApi, AuditAppPaging, AuditApp, AuditEntryPaging, AuditEntryEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -72,7 +72,7 @@ export class AuditService {
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: boolean, opts?: any): Observable<AuditApp | any> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate }), queryOptions));
+        return from(this.auditApi.updateAuditApp(auditApplicationId, { isEnabled: auditAppBodyUpdate }, queryOptions));
     }
 
     /**

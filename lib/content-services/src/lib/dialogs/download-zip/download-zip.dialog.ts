@@ -17,8 +17,6 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DownloadEntry } from '@alfresco/js-api';
-import { LogService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { DownloadZipService } from './services/download-zip.service';
 import { ContentService } from '../../common/services/content.service';
@@ -39,7 +37,6 @@ export class DownloadZipDialogComponent implements OnInit {
         private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
         @Inject(MAT_DIALOG_DATA)
         public data: any,
-        private logService: LogService,
         private downloadZipService: DownloadZipService,
         private nodeService: NodesApiService,
         private contentService: ContentService
@@ -49,8 +46,6 @@ export class DownloadZipDialogComponent implements OnInit {
         if (this.data?.nodeIds?.length > 0) {
             if (!this.cancelled) {
                 this.downloadZip(this.data.nodeIds);
-            } else {
-                this.logService.log('Cancelled');
             }
         }
     }
@@ -63,12 +58,11 @@ export class DownloadZipDialogComponent implements OnInit {
 
     downloadZip(nodeIds: string[]) {
         if (nodeIds && nodeIds.length > 0) {
-            this.downloadZipService.createDownload({ nodeIds }).subscribe((data: DownloadEntry) => {
+            this.downloadZipService.createDownload({ nodeIds }).subscribe((data) => {
                 if (data?.entry?.id) {
                     const url = this.contentService.getContentUrl(data.entry.id, true);
 
                     this.nodeService.getNode(data.entry.id).subscribe((downloadNode) => {
-                        this.logService.log(downloadNode);
                         const fileName = downloadNode.name;
                         this.downloadId = data.entry.id;
                         this.waitAndDownload(data.entry.id, url, fileName);
@@ -83,7 +77,7 @@ export class DownloadZipDialogComponent implements OnInit {
             return;
         }
 
-        this.downloadZipService.getDownload(downloadId).subscribe((downloadEntry: DownloadEntry) => {
+        this.downloadZipService.getDownload(downloadId).subscribe((downloadEntry) => {
             if (downloadEntry.entry) {
                 if (downloadEntry.entry.status === 'DONE') {
                     this.download(url, fileName);

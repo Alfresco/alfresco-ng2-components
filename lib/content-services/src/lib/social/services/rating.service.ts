@@ -25,15 +25,13 @@ import { RatingServiceInterface } from './rating.service.interface';
     providedIn: 'root'
 })
 export class RatingService implements RatingServiceInterface {
-
     private _ratingsApi: RatingsApi;
     get ratingsApi(): RatingsApi {
         this._ratingsApi = this._ratingsApi ?? new RatingsApi(this.apiService.getInstance());
         return this._ratingsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets the current user's rating for a node.
@@ -55,10 +53,10 @@ export class RatingService implements RatingServiceInterface {
      * @returns Details about the rating, including the new value
      */
     postRating(nodeId: string, ratingType: string, vote: any): Observable<RatingEntry | any> {
-        const ratingBody: RatingBody = new RatingBody({
+        const ratingBody: RatingBody = {
             id: ratingType,
             myRating: vote
-        });
+        };
         return from(this.ratingsApi.createRating(nodeId, ratingBody));
     }
 

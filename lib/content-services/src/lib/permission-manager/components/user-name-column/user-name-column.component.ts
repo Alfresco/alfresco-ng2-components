@@ -26,7 +26,7 @@ import { EcmUserModel } from '../../../common/models/ecm-user.model';
     template: `
         <div class="adf-ellipsis-cell" [attr.data-automation-id]="displayText$ | async">
             <span class="adf-user-name-column" title="{{ displayText$ | async }}"> {{ displayText$ | async }}</span>
-            <br/>
+            <br />
             <span class="adf-user-email-column" title="{{ subTitleText$ | async }}" *ngIf="subTitleText$ | async">
                 {{ subTitleText$ | async }}
             </span>
@@ -51,7 +51,7 @@ export class UserNameColumnComponent implements OnInit {
     ngOnInit() {
         if (this.context != null) {
             const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
-            const permissionGroup = authorityId ? { displayName: authorityId } as  Group : null;
+            const permissionGroup = authorityId ? ({ displayName: authorityId } as Group) : null;
             this.updatePerson(person);
             this.updateGroup(group || permissionGroup);
         }
@@ -68,7 +68,7 @@ export class UserNameColumnComponent implements OnInit {
             this.displayText$.next(`${person.firstName ?? ''} ${person.lastName ?? ''}`);
             this.subTitleText$.next(person.email ?? '');
         }
-   }
+    }
 
     private updateGroup(group: Group) {
         if (group) {

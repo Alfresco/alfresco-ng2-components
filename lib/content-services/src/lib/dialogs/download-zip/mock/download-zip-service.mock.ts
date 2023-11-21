@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DownloadBodyCreate, DownloadEntry } from '@alfresco/js-api';
+import { DownloadBodyCreate, DownloadEntry, Node } from '@alfresco/js-api';
 import { from, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { zipNode, downloadEntry } from './download-zip-data.mock';
@@ -40,8 +40,7 @@ class AlfrescoApiMock {
 }
 
 export class ContentApiMock {
-    getContentUrl = (_: string, _1?: boolean, _2?: string): string =>
-        zipNode.entry.contentUrl;
+    getContentUrl = (_: string, _1?: boolean, _2?: string): string => zipNode.entry.contentUrl;
 }
 
 class CoreMock {
@@ -54,13 +53,9 @@ export class NodesApiMock {
 }
 
 class DownloadsApiMock {
-    createDownload = (
-        _: DownloadBodyCreate,
-        _2?: any
-    ): Promise<DownloadEntry> => Promise.resolve(downloadEntry);
+    createDownload = (_: DownloadBodyCreate, _2?: any): Promise<DownloadEntry> => Promise.resolve(downloadEntry);
 
-    getDownload = (_: string, _2?: any): Promise<DownloadEntry> =>
-        Promise.resolve(downloadEntry);
+    getDownload = (_: string, _2?: any): Promise<DownloadEntry> => Promise.resolve(downloadEntry);
     cancelDownload(_: string) {}
 }
 
@@ -72,9 +67,7 @@ export class DownloadZipMockService {
     }
 
     createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
-        return from(this.downloadsApi.createDownload(payload)).pipe(
-            catchError((err) => of(err))
-        );
+        return from(this.downloadsApi.createDownload(payload)).pipe(catchError((err) => of(err)));
     }
 
     getDownload(downloadId: string): Observable<DownloadEntry> {

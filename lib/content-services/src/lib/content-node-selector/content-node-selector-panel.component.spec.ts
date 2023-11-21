@@ -18,14 +18,13 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Node, NodeEntry, NodePaging, PathElement, ResultSetPaging, Site, SiteEntry, SitePaging, SitePagingList, UserInfo } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, ResultSetPaging, Site, SiteEntry, SitePaging, SitePagingList, UserInfo } from '@alfresco/js-api';
 import { AppConfigService, DataRow, ThumbnailService, DataColumn } from '@alfresco/adf-core';
 import { ContentService } from '../common/services/content.service';
 import { UploadService } from '../common/services/upload.service';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { FileModel, FileUploadStatus } from '../common/models/file.model';
 import { FileUploadCompleteEvent } from '../common/events/file.event';
-
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -129,7 +128,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should trigger siteChange event on init with parent site Title of start folder', () => {
                 let lastValue: string;
-                component.siteChange.subscribe((siteTitle: string) => lastValue = siteTitle);
+                component.siteChange.subscribe((siteTitle: string) => (lastValue = siteTitle));
 
                 component.ngOnInit();
                 fixture.detectChanges();
@@ -143,7 +142,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 await fixture.whenStable();
 
                 let lastValue: string;
-                component.siteChange.subscribe((siteTitle: string) => lastValue = siteTitle);
+                component.siteChange.subscribe((siteTitle: string) => (lastValue = siteTitle));
 
                 const sitesDropdown = fixture.debugElement.query(By.directive(DropdownSitesComponent));
                 sitesDropdown.componentInstance.selectedSite({ value: fakeSiteEntry });
@@ -180,7 +179,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should trigger the select event when selection has been made', () => {
                 const expectedNode = { id: 'fakeid' } as Node;
                 let lastValue: Node[];
-                component.select.subscribe((nodes) => lastValue = nodes);
+                component.select.subscribe((nodes) => (lastValue = nodes));
 
                 component.chosenNode = [expectedNode];
                 expect(lastValue.length).toBe(1);
@@ -303,7 +302,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
-                const chosenNode = new Node({ path: { elements: [new PathElement({ name: 'one' })] } });
+                const chosenNode = new Node({ path: { elements: [{ name: 'one' }] } });
                 component.onCurrentSelection([{ entry: chosenNode }]);
                 fixture.detectChanges();
 
@@ -318,7 +317,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
-                const chosenNode = new Node({ path: { elements: [new PathElement({ name: 'fake-path' })] }, isFile: false, isFolder: true });
+                const chosenNode = new Node({ path: { elements: [{ name: 'fake-path' }] }, isFile: false, isFolder: true });
                 component.onCurrentSelection([{ entry: chosenNode }]);
                 fixture.detectChanges();
 

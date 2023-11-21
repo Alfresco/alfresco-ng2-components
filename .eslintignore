@@ -1,0 +1,11 @@
+.angular
+nxcache
+node_modules
+dist
+coverage
+.github
+.vscode
+scripts
+/angular.json
+docs/**/*.md
+lib/js-api/docs/**/*.md

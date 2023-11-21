@@ -32,7 +32,7 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
      * @returns Query body defined by the parameters
      */
     generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
-        return new SearchRequest({
+        return {
             query: {
                 query: searchTerm ? `'${searchTerm}*' OR name:'${searchTerm}*'` : searchTerm
             },
@@ -42,6 +42,6 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
                 skipCount
             },
             filterQueries: [{ query: `TYPE:'cm:folder' OR TYPE:'cm:content'` }, { query: 'NOT cm:creator:System' }]
-        });
+        };
     }
 }

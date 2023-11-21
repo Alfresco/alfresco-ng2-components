@@ -218,16 +218,18 @@ jobs:
       # max-parallel: 4
       matrix:
         unit-tests:
+          - name: js-api
+            exclude: "core,insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
           - name: content-services
-            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular"
+            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
           - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
+            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular,js-api"
           - name: insights
-            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular"
+            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular,js-api"
           - name: process-services
-            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular"
+            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular,js-api"
           - name: process-cloud
-            exclude: "insights,core,extensions,content-services,process-services,eslint-plugin-eslint-angular"
+            exclude: "insights,core,extensions,content-services,process-services,eslint-plugin-eslint-angular,js-api"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

@@ -27,7 +27,6 @@ import {
     SecurityGroupBody,
     SecurityMarkPaging,
     SecurityMarkBody,
-    SecurityGroupPaging,
     AuthorityClearanceApi,
     AuthorityClearanceGroupPaging,
     NodeSecurityMarkBody,
@@ -98,13 +97,11 @@ export class SecurityControlsService {
                     skipCount,
                     maxItems
                 })
-                .then((response: SecurityGroupPaging) => {
+                .then((response) => {
                     this.groupsPaginatedSource.next(
                         (securityControlsGroupResponse = {
                             pagination: response.list.pagination,
-                            entries: response.list.entries.map(
-                                (group: SecurityGroupEntry) => group.entry
-                            )
+                            entries: response.list.entries.map((group) => group.entry)
                         })
                     );
                     resolve(securityControlsGroupResponse);
@@ -119,9 +116,7 @@ export class SecurityControlsService {
      * @param input securityGroupBody.
      * @returns Observable<SecurityGroupEntry>
      */
-    createSecurityGroup(
-        input: SecurityGroupBody
-    ): Observable<SecurityGroupEntry> {
+    createSecurityGroup(input: SecurityGroupBody): Observable<SecurityGroupEntry> {
         this.loadingSource.next(true);
         const payload: SecurityGroupBody = {
             ...input
@@ -131,9 +126,7 @@ export class SecurityControlsService {
         };
         const promise = this.groupsApi.createSecurityGroup(payload, opts);
 
-        return from(promise).pipe(
-            finalize(() => this.loadingSource.next(false))
-        );
+        return from(promise).pipe(finalize(() => this.loadingSource.next(false)));
     }
 
     /**
@@ -143,15 +136,10 @@ export class SecurityControlsService {
      * @param input securityMarkBody[].
      * @returns Promise<SecurityMarkPaging | SecurityMarkEntry>
      */
-    createSecurityMarks(
-        securityGroupId: string,
-        input: SecurityMarkBody[]
-    ): Promise<SecurityMarkPaging | SecurityMarkEntry> {
+    createSecurityMarks(securityGroupId: string, input: SecurityMarkBody[]): Promise<SecurityMarkPaging | SecurityMarkEntry> {
         this.loadingSource.next(true);
-        const promise = this.marksApi.createSecurityMarks(
-            securityGroupId,
-            input
-        )
+        const promise = this.marksApi
+            .createSecurityMarks(securityGroupId, input)
             .then((result) => {
                 this.loadingSource.next(false);
                 return result;
@@ -172,23 +160,18 @@ export class SecurityControlsService {
      * @param skipCount The number of entities that exist in the collection before those included in this list.
      * @returns Promise<SecurityControlsMarkResponse>
      */
-    getSecurityMark(
-        securityGroupId: string,
-        skipCount = DEFAULT_SKIP_COUNT
-    ): Promise<SecurityControlsMarkResponse> {
+    getSecurityMark(securityGroupId: string, skipCount = DEFAULT_SKIP_COUNT): Promise<SecurityControlsMarkResponse> {
         let securityControlsMarkResponse: SecurityControlsMarkResponse;
         return new Promise((resolve, reject) => {
             this.marksApi
                 .getSecurityMarks(securityGroupId, {
                     skipCount
                 })
-                .then((response: SecurityMarkPaging) => {
+                .then((response) => {
                     this.marksPaginatedSource.next(
                         (securityControlsMarkResponse = {
                             pagination: response.list.pagination,
-                            entries: response.list.entries.map(
-                                (mark: SecurityMarkEntry) => mark.entry
-                            )
+                            entries: response.list.entries.map((mark) => mark.entry)
                         })
                     );
                     resolve(securityControlsMarkResponse);
@@ -205,11 +188,7 @@ export class SecurityControlsService {
      * @param opts additional information about the security group
      * @returns Promise<SecurityGroupEntry>
      */
-    updateSecurityGroup(
-        securityGroupId: string,
-        input: SecurityGroupBody,
-        opts?: any
-    ): Promise<SecurityGroupEntry> {
+    updateSecurityGroup(securityGroupId: string, input: SecurityGroupBody, opts?: any): Promise<SecurityGroupEntry> {
         this.loadingSource.next(true);
         const payload: SecurityGroupBody = {
             ...input
@@ -219,11 +198,8 @@ export class SecurityControlsService {
                 DEFAULT_INCLUDE
             };
         }
-        const promise = this.groupsApi.updateSecurityGroup(
-            securityGroupId,
-            payload,
-            opts
-        )
+        const promise = this.groupsApi
+            .updateSecurityGroup(securityGroupId, payload, opts)
             .then((result) => {
                 this.loadingSource.next(false);
                 return result;
@@ -244,20 +220,13 @@ export class SecurityControlsService {
      * @param input securityMarkBody.
      * @returns Promise<SecurityMarkEntry>
      */
-    updateSecurityMark(
-        securityGroupId: string,
-        securityMarkId: string,
-        input: SecurityMarkBody
-    ): Promise<SecurityMarkEntry> {
+    updateSecurityMark(securityGroupId: string, securityMarkId: string, input: SecurityMarkBody): Promise<SecurityMarkEntry> {
         this.loadingSource.next(true);
         const payload: SecurityMarkBody = {
             ...input
         };
-        const promise = this.marksApi.updateSecurityMark(
-            securityGroupId,
-            securityMarkId,
-            payload
-        )
+        const promise = this.marksApi
+            .updateSecurityMark(securityGroupId, securityMarkId, payload)
             .then((result) => {
                 this.loadingSource.next(false);
                 return result;
@@ -276,15 +245,11 @@ export class SecurityControlsService {
      * @param securityGroupId The key for the security group id.
      * @returns Observable<void>
      */
-    deleteSecurityGroup(
-        securityGroupId: string
-    ): Observable<void> {
+    deleteSecurityGroup(securityGroupId: string): Observable<void> {
         this.loadingSource.next(true);
         const promise = this.groupsApi.deleteSecurityGroup(securityGroupId);
 
-        return from(promise).pipe(
-            finalize(() => this.loadingSource.next(false))
-        );
+        return from(promise).pipe(finalize(() => this.loadingSource.next(false)));
     }
 
     /**
@@ -294,15 +259,10 @@ export class SecurityControlsService {
      * @param securityMarkId The key for the security mark id.
      * @returns Promise<SecurityMarkEntry>
      */
-    deleteSecurityMark(
-        securityGroupId: string,
-        securityMarkId: string
-    ): Promise<SecurityMarkEntry> {
+    deleteSecurityMark(securityGroupId: string, securityMarkId: string): Promise<SecurityMarkEntry> {
         this.loadingSource.next(true);
-        const promise = this.marksApi.deleteSecurityMark(
-            securityGroupId,
-            securityMarkId
-        )
+        const promise = this.marksApi
+            .deleteSecurityMark(securityGroupId, securityMarkId)
             .then((result) => {
                 this.loadingSource.next(false);
                 return result;
@@ -330,14 +290,12 @@ export class SecurityControlsService {
     ): Observable<AuthorityClearanceGroupPaging> {
         this.loadingSource.next(true);
         const opts = {
-            skipCount, maxItems
+            skipCount,
+            maxItems
         };
-        const promise =
-            this.authorityClearanceApi.getAuthorityClearanceForAuthority(authorityName, opts);
+        const promise = this.authorityClearanceApi.getAuthorityClearanceForAuthority(authorityName, opts);
 
-        return from(promise).pipe(
-            finalize(() => this.loadingSource.next(false))
-        );
+        return from(promise).pipe(finalize(() => this.loadingSource.next(false)));
     }
 
     /**
@@ -347,7 +305,10 @@ export class SecurityControlsService {
      * @param securityMarksList NodeSecurityMarkBody[]
      * @returns Observable<SecurityMarkEntry | SecurityMarkPaging>
      */
-    updateClearancesForAuthority(authorityName: string, securityMarksList: NodeSecurityMarkBody[]): Observable<SecurityMarkEntry | SecurityMarkPaging> {
+    updateClearancesForAuthority(
+        authorityName: string,
+        securityMarksList: NodeSecurityMarkBody[]
+    ): Observable<SecurityMarkEntry | SecurityMarkPaging> {
         this.loadingSource.next(true);
         const promise = this.authorityClearanceApi.updateAuthorityClearance(authorityName, securityMarksList);
 

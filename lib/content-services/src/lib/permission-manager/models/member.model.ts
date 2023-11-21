@@ -30,7 +30,7 @@ export interface NodePermissionsModel {
 export class MemberModel {
     id: string;
     role: string;
-    accessStatus: PermissionElement.AccessStatusEnum | string;
+    accessStatus: 'ALLOWED' | 'DENIED' | string;
     entry: {
         person?: EcmUserModel;
         group?: Group;
@@ -62,10 +62,10 @@ export class MemberModel {
         }
 
         if (entry.nodeType === 'cm:authorityContainer') {
-            const group = new Group({
+            const group: Group = {
                 id: entry.properties['cm:authorityName'],
                 displayName: entry.properties['cm:authorityDisplayName'] || entry.properties['cm:authorityName']
-            });
+            };
 
             result.id = group.id;
             result.entry = { group };
