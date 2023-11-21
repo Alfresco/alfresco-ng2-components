@@ -58,80 +58,85 @@ cd temp
 
 for PACKAGE in ${projects[@]}
 do
- mkdir $PACKAGE
- cd  $PACKAGE
- npm pack '@alfresco/'$PACKAGE@$VERSION
- tar zxf 'alfresco-'$PACKAGE-$VERSION.tgz
+    mkdir $PACKAGE
+    cd  $PACKAGE
+    npm pack '@alfresco/'$PACKAGE@$VERSION
+    tar zxf 'alfresco-'$PACKAGE-$VERSION.tgz
 
-
-if [ $PACKAGE == 'adf-testing' ]; then
-    if [ ! -f package/'main.js' ]; then
-        error_out '31;1' "$PACKAGE testing not ok!" >&2
-        exit 1
-     else
-         echo "testing ok!"
-     fi
-fi
-
-if [ $PACKAGE == 'adf-core' ]; then
-    if [ ! -f package/lib/prebuilt-themes/'adf-blue-orange.css' ]; then
-        error_out '31;1' "$PACKAGE prebuilt-theme not found!" >&2
-        exit 1
-     else
-         echo "prebuilt-theme ok!"
+    if [ $PACKAGE == 'js-api' ]; then
+        if [ ! -f package/esm2020/'alfresco-js-api.mjs' ]; then
+            error_out '31;1' "esm2020/alfresco-js-api.mjs not found!" >&2
+            exit 1
+        else
+            echo "esm2020 ok!"
+        fi
     fi
 
- fi
-
-if [ $PACKAGE != 'adf-testing' ] && [ $PACKAGE != 'eslint-plugin-eslint-angular' ]; then
-
- if [ ! -f package/fesm2015/$PACKAGE'.mjs' ]; then
-    error_out '31;1' "fesm2015/$PACKAGE.mjs not found!" >&2
-    exit 1
- else
-     echo "fesm2015 ok!"
- fi
-
- if [ ! -f package/esm2020/$PACKAGE'.mjs' ]; then
-    error_out '31;1' "esm2020/$PACKAGE.mjs not found!" >&2
-    exit 1
- else
-     echo "esm2020 ok!"
- fi
-
- if [ ! -f package/fesm2020/$PACKAGE'.mjs' ]; then
-    error_out '31;1' "fesm2020/$PACKAGE.mjs not found!" >&2
-    exit 1
- else
-     echo "fesm2020 ok!"
- fi
-
- if [ ! -f package/README.md ]; then
-    error_out '31;1' "$PACKAGE readme not found!" >&2
-    exit 1
- else
-     echo "readme ok!"
- fi
-
- if [ ! -f package/bundles/assets/$PACKAGE/i18n/en.json ]; then
-     if [ $PACKAGE == 'adf-extensions' ]; then
-       echo "no i18n needed"
-    elif [ $PACKAGE == 'adf-testing' ]; then
-       echo "no i18n needed"
-    else
-        error_out '31;1' "$PACKAGE i18n not found!" >&2
-        exit 1
+    if [ $PACKAGE == 'adf-testing' ]; then
+        if [ ! -f package/'main.js' ]; then
+            error_out '31;1' "$PACKAGE testing not ok!" >&2
+            exit 1
+        else
+            echo "testing ok!"
+        fi
     fi
- else
-     echo "i18n ok!"
- fi
- fi
 
- cd ..
+    if [ $PACKAGE == 'adf-core' ]; then
+        if [ ! -f package/lib/prebuilt-themes/'adf-blue-orange.css' ]; then
+            error_out '31;1' "$PACKAGE prebuilt-theme not found!" >&2
+            exit 1
+        else
+            echo "prebuilt-theme ok!"
+        fi
+    fi
+
+    if [ $PACKAGE != 'adf-testing' ] && [ $PACKAGE != 'js-api' ] && [ $PACKAGE != 'eslint-plugin-eslint-angular' ]; then
+        if [ ! -f package/fesm2015/$PACKAGE'.mjs' ]; then
+            error_out '31;1' "fesm2015/$PACKAGE.mjs not found!" >&2
+            exit 1
+        else
+            echo "fesm2015 ok!"
+        fi
+
+        if [ ! -f package/esm2020/$PACKAGE'.mjs' ]; then
+            error_out '31;1' "esm2020/$PACKAGE.mjs not found!" >&2
+            exit 1
+        else
+            echo "esm2020 ok!"
+        fi
+
+        if [ ! -f package/fesm2020/$PACKAGE'.mjs' ]; then
+            error_out '31;1' "fesm2020/$PACKAGE.mjs not found!" >&2
+            exit 1
+        else
+            echo "fesm2020 ok!"
+        fi
+
+        if [ ! -f package/README.md ]; then
+            error_out '31;1' "$PACKAGE readme not found!" >&2
+            exit 1
+        else
+            echo "readme ok!"
+        fi
+
+        if [ ! -f package/bundles/assets/$PACKAGE/i18n/en.json ]; then
+            if [ $PACKAGE == 'adf-extensions' ]; then
+                echo "no i18n needed"
+            elif [ $PACKAGE == 'adf-testing' ]; then
+                echo "no i18n needed"
+            else
+                error_out '31;1' "$PACKAGE i18n not found!" >&2
+                exit 1
+            fi
+        else
+            echo "i18n ok!"
+        fi
+    fi
+
+    cd ..
 done
- cd ..
 
+cd ..
 rm -rf temp
 
 set_npm_registry
-
