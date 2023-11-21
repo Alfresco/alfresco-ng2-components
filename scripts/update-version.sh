@@ -48,12 +48,12 @@ next_alpha_mode() {
 
     if [[ $GH_BUILD_NUMBER != "" ]]; then
         echo "Adding build number"
-        NEXT_VERSION=${NEXT_VERSION}-${GH_BUILD_NUMBER}
+        NEXT_VERSION=$NEXT_VERSION-$GH_BUILD_NUMBER
     fi
 
     VERSION=$NEXT_VERSION
 
-    echo "====== version lib ${VERSION} ====="
+    echo "====== version lib $VERSION ====="
     JS_API=false
 }
 
@@ -74,14 +74,13 @@ version_js_change() {
 }
 
 update_library_version() {
-    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
-    DESTDIR="$DIR/../lib/${1}"
+    echo "====== $1@$VERSION ======"
+    DESTDIR="$DIR/../lib/$1"
     if [[ $1 == "js-api" ]]; then
         DESTDIR="$DESTDIR/src"
     fi
     cd $DESTDIR
-    npm version --allow-same-version --no-git-tag-version --force ${VERSION}
-    cd -
+    npm version --allow-same-version --no-git-tag-version --force $VERSION
 }
 
 update_dependencies() {
@@ -94,49 +93,50 @@ update_dependencies() {
 }
 
 update_library_dependencies() {
-    echo "====== UPDATE DEPENDENCY VERSION of .* to ~${VERSION} in ${1}======"
-    DESTDIR="$DIR/../lib/${1}"
+    DESTDIR="$DIR/../lib/$1"
+
+    if [[ $1 == "js-api" ]]; then
+        DESTDIR="$DESTDIR/src"
+    fi
+
     cd $DESTDIR
 
     for (( j=0; j<${projectslength}; j++ ));
     do
         PROJECT=${prefix}${projects[$j]}
+        echo "====== $1 => $PROJECT@$VERSION ======"
         update_dependencies $PROJECT $VERSION
     done
-    cd -
 }
 
 update_root_dependencies() {
-    echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of .* to ~${VERSION} ======"
     DESTDIR="$DIR/../"
     cd $DESTDIR
 
     for (( j=0; j<${projectslength}; j++ ));
     do
         PROJECT=${prefix}${projects[$j]}
+        echo "====== $PROJECT@$VERSION ======"
         update_dependencies $PROJECT $VERSION
     done
-    cd -
 }
 
 update_root_js_api_version(){
-    echo "====== UPDATE DEPENDENCY VERSION @alfresco/js-api total build to ${1} in ${DESTDIR}======"
+    echo "====== $DESTDIR/@alfresco/js-api@$1 ======"
     DESTDIR="$DIR/../"
     cd $DESTDIR
 
     PROJECT="@alfresco\/js-api"
     update_dependencies $PROJECT $1
-    cd -
 }
 
 update_component_js_version(){
-   echo "====== UPDATE DEPENDENCY VERSION of @alfresco/js-api in ${1} to ${2} ======"
-   DESTDIR="$DIR/../lib/${1}"
+   echo "====== $1/@alfresco/js-api@$2 ======"
+   DESTDIR="$DIR/../lib/$1"
    cd $DESTDIR
 
    PROJECT="@alfresco\/js-api"
    update_dependencies $PROJECT $2
-   cd -
 }
 
 while [[ $1  == -* ]]; do
@@ -168,8 +168,6 @@ echo "====== UPDATE COMPONENTS ======"
 
 for PROJECT in ${projects[@]}
 do
-    echo "====== UPDATE $PROJECT ======"
-
     update_library_version $PROJECT
     update_library_dependencies $PROJECT
 
@@ -186,18 +184,17 @@ update_root_dependencies
 
 if $JS_API == true; then
     if $DIFFERENT_JS_API == true; then
-        update_root_js_api_version ${VERSION_JS_API}
+        update_root_js_api_version $VERSION_JS_API
     else
-        update_root_js_api_version ${VERSION}
+        update_root_js_api_version $VERSION
     fi
 fi
 
 # bump root package.json
-npm version --allow-same-version --no-git-tag-version --force ${VERSION}
+npm version --allow-same-version --no-git-tag-version --force $VERSION
 
 echo "====== UPDATE DEMO SHELL ======"
 
 DESTDIR="$DIR/../demo-shell/"
 cd $DESTDIR
-npm version --allow-same-version --no-git-tag-version --force ${VERSION}
-cd -
+npm version --allow-same-version --no-git-tag-version --force $VERSION
