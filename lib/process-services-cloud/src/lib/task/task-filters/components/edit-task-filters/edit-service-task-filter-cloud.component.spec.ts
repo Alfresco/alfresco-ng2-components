@@ -37,8 +37,8 @@ import { mockApplicationTaskFilterProperties } from '../../mock/edit-task-filter
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
-import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 describe('EditServiceTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
