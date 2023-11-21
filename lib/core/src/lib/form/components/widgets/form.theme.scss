@@ -35,9 +35,11 @@ ul > li > form-field > .adf-focus {
 
     &-invalid {
         /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-layout {
             padding-bottom: 12px;
         }
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-underline {
             background-color: var(--theme-warn-color);
@@ -52,6 +54,7 @@ ul > li > form-field > .adf-focus {
         .adf-file {
             border-color: var(--theme-warn-color);
         }
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-prefix {
             color: var(--adf-theme-foreground-secondary-text-color);
