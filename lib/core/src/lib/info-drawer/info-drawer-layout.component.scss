@@ -17,6 +17,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
         background-color: var(--theme-card-background-color);
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & .mat-tab-label {
             height: 32px;
             text-align: left;
@@ -67,6 +68,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
             > *:last-child {
                 margin-bottom: 0;
             }
+            /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
             /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
             .adf-info-drawer-tabs .mat-tab-body-content {
                 .adf-manage-versions-empty,
