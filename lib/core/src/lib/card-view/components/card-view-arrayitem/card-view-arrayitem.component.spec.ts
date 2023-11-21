@@ -17,16 +17,18 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-view-arrayitem.model';
 import { By } from '@angular/platform-browser';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyChipHarness as MatChipHarness, MatLegacyChipListHarness as MatChipListHarness } from '@angular/material/legacy-chips/testing';
-import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
+import { MatChipHarness, MatChipListboxHarness} from '@angular/material/chips/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('CardViewArrayItemComponent', () => {
     let loader: HarnessLoader;
@@ -51,7 +53,7 @@ describe('CardViewArrayItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [TranslateModule.forRoot(), MatMenuModule, MatButtonModule, MatChipsModule]
         });
         fixture = TestBed.createComponent(CardViewArrayItemComponent);
         service = TestBed.inject(CardViewUpdateService);
@@ -92,7 +94,7 @@ describe('CardViewArrayItemComponent', () => {
         });
 
         it('should NOT call service on chip list container click', async () => {
-            const chipList = await loader.getHarness(MatChipListHarness);
+            const chipList = await loader.getHarness(MatChipListboxHarness);
             await (await chipList.host()).click();
 
             expect(serviceSpy).not.toHaveBeenCalled();
@@ -108,20 +110,22 @@ describe('CardViewArrayItemComponent', () => {
             expect(labelValue.nativeElement.innerText).toBe('Array of items');
         });
 
-        it('should render chip list', () => {
+        it('should render chip list', async () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
                 editable: true
             });
             fixture.detectChanges();
 
-            const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
-            const chip1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] span');
-            const chip2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] span');
+            const chipListBox = await loader.getHarness(MatChipListboxHarness);
+            const chipList = await chipListBox.getChips();
+            expect(chipList).not.toBeNull();
+            expect(chipList.length).toBe(4);
 
-            expect(chipListContainer).not.toBeNull();
-            expect(chip1.innerText).toEqual('Zlatan');
-            expect(chip2.innerText).toEqual('Lionel Messi');
+            const firstChipText = await chipList[0].getText();
+            const secondChipText = await chipList[1].getText();
+            expect(firstChipText).toEqual('Zlatan');
+            expect(secondChipText).toEqual('Lionel Messi');
         });
 
         it('should render chip with defined icon', async () => {
@@ -131,17 +135,19 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
-            const chip1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] span');
+            const chipListBox = await loader.getHarness(MatChipListboxHarness);
+            const chipList = await chipListBox.getChips();
+            expect(chipList).not.toBeNull();
+            expect(chipList.length).toBe(4);
+
             const chip1Icon = await loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="card-arrayitem-chip-Zlatan"]` }));
-
-            const chip2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] span');
             const chip2Icon = await loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="card-arrayitem-chip-Lionel Messi"]` }));
+            const firstChipText = await chipList[0].getText();
+            const secondChipText = await chipList[1].getText();
 
-            expect(chipListContainer).not.toBeNull();
-            expect(chip1.innerText).toEqual('Zlatan');
+            expect(firstChipText).toEqual('Zlatan');
             expect(await chip1Icon.getName()).toBe('person');
-            expect(chip2.innerText).toEqual('Lionel Messi');
+            expect(secondChipText).toEqual('Lionel Messi');
             expect(await chip2Icon.getName()).toBe('group');
         });
 
@@ -171,7 +177,7 @@ describe('CardViewArrayItemComponent', () => {
         it('should render all values if noOfItemsToDisplay is not defined', async () => {
             fixture.detectChanges();
 
-            const chipList = await loader.getHarness(MatChipListHarness);
+            const chipList = await loader.getHarness(MatChipListboxHarness);
             const chips = await chipList.getChips();
 
             const moreElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-more-chip"]'));
@@ -186,7 +192,7 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chipList = await loader.getHarness(MatChipListHarness);
+            const chipList = await loader.getHarness(MatChipListboxHarness);
             const chips = await chipList.getChips();
 
             expect(chips.length).toBe(3);

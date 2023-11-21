@@ -292,7 +292,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             const value = getTextFieldValue(component.property.key);
             expect(value).toBe('item1,item2,item3');
-            expect(await loader.hasHarness(MatChipListHarness)).toBe(false);
+            expect(await loader.hasHarness(MatChipGridHarness)).toBe(false);
         });
 
         it('should display the label for multi-valued chips if displayLabelForChips is true', async () => {
