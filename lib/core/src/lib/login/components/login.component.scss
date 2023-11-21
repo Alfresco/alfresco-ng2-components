@@ -95,6 +95,7 @@
         margin-right: 10px;
     }
     /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
+    /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
     .mat-card-header-text {
         margin: 0 auto;
     }
@@ -119,6 +120,7 @@
         line-height: normal;
         box-shadow: none;
     }
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
     /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.*/
     .adf-login-button .mat-button-wrapper {
         display: inline-flex;
@@ -199,6 +201,7 @@
         color: var(--adf-theme-foreground-text-color);
     }
     /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .adf-login__field .mat-form-field-wrapper {
         margin: 1em 0 0;
         font-size: var(--theme-subheading-2-font-size);
@@ -232,6 +235,7 @@
     .adf-login__remember-me {
         padding-top: 22px;
     }
+    /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.*/
     /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.*/
     .adf-login__remember-me .mat-checkbox-label {
         opacity: 0.87;
