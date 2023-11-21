@@ -28,8 +28,8 @@ import { CoreTestingModule } from '../../../../testing';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
-import { MatLegacyTooltipHarness as MatTooltipHarness } from '@angular/material/legacy-tooltip/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('CheckboxWidgetComponent', () => {
     let loader: HarnessLoader;
