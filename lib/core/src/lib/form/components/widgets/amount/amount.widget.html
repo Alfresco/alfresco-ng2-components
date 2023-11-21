@@ -1,31 +1,21 @@
-<div class="adf-amount-widget__container adf-amount-widget {{ field.className }}"
-     [class.adf-invalid]="!field.isValid && isTouched()"
-     [class.adf-readonly]="field.readOnly"
-     [class.adf-left-label-input-container]="field.leftLabels">
-    <div>
-        <label class="adf-label"
-               [class.adf-left-label]="field.leftLabels"
-               [attr.for]="field.id">
-            {{ field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
-    </div>
-    <div>
-        <mat-form-field class="adf-amount-widget__input" [hideRequiredMarker]="true">
-            <span matPrefix class="adf-amount-widget__prefix-spacing">{{ currency }} &nbsp;</span>
-            <input matInput
-                   [title]="field.tooltip"
-                   class="adf-input"
-                   type="text"
-                   [id]="field.id"
-                   [required]="isRequired()"
-                   [placeholder]="placeholder"
-                   [value]="field.value"
-                   [(ngModel)]="field.value"
-                   (ngModelChange)="onFieldChanged(field)"
-                   [disabled]="field.readOnly"
-                   (blur)="markAsTouched()">
-        </mat-form-field>
-        <error-widget [error]="field.validationSummary"></error-widget>
-        <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
-                      required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-    </div>
+<div class="adf-amount-widget__container adf-amount-widget {{field.className}}"
+       [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly"
+       [class.adf-left-label-input-container]="field.leftLabels">
+       <div>
+              <label class="adf-label"
+                     [class.adf-left-label]="field.leftLabels" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+       </div>
+       <div>
+              <mat-form-field class="adf-amount-widget__input" [hideRequiredMarker]="true">
+                     <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }} &nbsp;</span>
+                     <input matInput [matTooltip]="field.tooltip" matTooltipPosition="above" matTooltipShowDelay="1000"
+                            class="adf-input" type="text" [id]="field.id" [required]="isRequired()"
+                            [placeholder]="placeholder" [value]="field.value" [(ngModel)]="field.value"
+                            (ngModelChange)="onFieldChanged(field)" [disabled]="field.readOnly"
+                            (blur)="markAsTouched()">
+              </mat-form-field>
+              <error-widget [error]="field.validationSummary"></error-widget>
+              <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
+                     required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+       </div>
 </div>

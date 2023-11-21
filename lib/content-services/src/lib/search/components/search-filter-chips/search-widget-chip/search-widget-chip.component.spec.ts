@@ -24,7 +24,7 @@ import { By } from '@angular/platform-browser';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyChipHarness as MatChipHarness } from '@angular/material/legacy-chips/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('SearchWidgetChipComponent', () => {

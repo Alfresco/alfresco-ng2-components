@@ -22,7 +22,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sizeOptions, stepOne, stepThree } from '../../../mock';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { By } from '@angular/platform-browser';
 
 describe('SearchCheckListComponent', () => {

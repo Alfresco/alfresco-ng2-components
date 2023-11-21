@@ -22,7 +22,7 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyChipHarness as MatChipHarness, MatLegacyChipRemoveHarness as MatChipRemoveHarness } from '@angular/material/legacy-chips/testing';
+import { MatChipHarness, MatChipRemoveHarness } from '@angular/material/chips/testing';
 
 @Component({
     selector: 'adf-test-component',
