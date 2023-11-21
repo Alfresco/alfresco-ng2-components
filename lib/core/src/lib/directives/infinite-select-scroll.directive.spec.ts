@@ -18,7 +18,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
-import {  MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
@@ -71,7 +71,7 @@ describe('InfiniteSelectScrollDirective', () => {
     }));
 
     it('should call an action on scrollEnd event', fakeAsync(() => {
-        const panel = document.querySelector('.mat-select-panel')  as HTMLElement;
+        const panel = document.querySelector('.mat-mdc-select-panel')  as HTMLElement;
         panel.scrollTop = panel.scrollHeight;
         panel.dispatchEvent(new Event('scroll'));
         fixture.detectChanges();
