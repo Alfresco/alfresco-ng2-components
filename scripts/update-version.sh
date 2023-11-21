@@ -6,7 +6,6 @@ VERSION_IN_PACKAGE_JSON=`node -p "require('$DIR/../package.json')".version;`;
 eval JS_API=true
 eval GNU=false
 eval DIFFERENT_JS_API=false
-eval SEMANTIC="minor";
 
 eval projects=( "cli"
     "core"
@@ -39,7 +38,7 @@ next_alpha_mode() {
     if [[ $VERSION_IN_PACKAGE_JSON =~ [0-9]*\.[0-9]*\.[0-9]*-.* ]]; then
         SEMANTIC_PARAM="";
     else
-        SEMANTIC_PARAM="-${SEMANTIC}";
+        SEMANTIC_PARAM="-minor";
     fi
 
     echo "====== Auto find next ALPHA version ===== ${SEMANTIC_PARAM} "
@@ -52,11 +51,6 @@ next_alpha_mode() {
 gnu_mode() {
     echo "====== GNU MODE ====="
     GNU=true
-}
-
-semantic_set() {
-    echo "====== semantic MODE $1 ====="
-    SEMANTIC=$1
 }
 
 version_change() {
