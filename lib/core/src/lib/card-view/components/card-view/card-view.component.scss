@@ -26,11 +26,11 @@
     .adf-property {
         .adf-property-field {
             width: 100%;
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-underline {
                 display: none;
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-input-element {
                 text-overflow: ellipsis;
                 color: var(--adf-metadata-property-panel-title-color);
@@ -44,20 +44,21 @@
                     padding-left: 12px;
                 }
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-infix {
                 display: flex;
                 border-top-width: 0;
                 padding: 0;
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-flex {
                 padding-top: 0;
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-wrapper {
                 padding-bottom: 0;
             }
+
             /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-label {
                 padding: 0;
@@ -65,7 +66,8 @@
                 display: flex;
                 flex-direction: column;
                 height: 20px;
-
+                
+                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
                 &.mat-form-field-empty {
                     transform: translateY(-1.3437em) scale(1);
                 }

@@ -27,7 +27,7 @@ import { AddPermissionDialogData } from './add-permission-dialog-data.interface'
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('AddPermissionDialog', () => {
     let loader: HarnessLoader;
