@@ -43,9 +43,9 @@ import { fakeEnvironmentList } from '../../../common/mock/environment.mock';
 import { endOfDay, format, startOfDay, subYears, isValid } from 'date-fns';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 describe('EditProcessFilterCloudComponent', () => {
     let loader: HarnessLoader;

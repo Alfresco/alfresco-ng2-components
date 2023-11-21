@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { isValid } from 'date-fns';
+import { addMinutes, isValid } from 'date-fns';
 import { DateFnsUtils } from './date-fns-utils';
 
 describe('DateFnsUtils', () => {
@@ -73,7 +73,7 @@ describe('DateFnsUtils', () => {
         const expectedParsedDate = new Date('2023-09-22T00:00:00Z');
 
         const result = DateFnsUtils.parseDate(dateString, dateFormat);
-        expect(result).toEqual(expectedParsedDate);
+        expect(result).toEqual(addMinutes(expectedParsedDate,expectedParsedDate.getTimezoneOffset()));
     });
 
     it('should parse alternative ISO datetime', () => {

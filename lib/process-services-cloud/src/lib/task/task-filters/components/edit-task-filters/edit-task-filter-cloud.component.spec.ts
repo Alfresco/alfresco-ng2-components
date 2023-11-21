@@ -54,9 +54,9 @@ import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filte
 import { set } from 'date-fns';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 describe('EditTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
