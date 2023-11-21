@@ -51,8 +51,8 @@ import { ProcessDefinitionCloud, TaskVariableCloud } from '@alfresco/adf-process
 import { first } from 'rxjs/operators';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyAutocompleteHarness as MatAutocompleteHarness } from '@angular/material/legacy-autocomplete/testing';
-import { MatLegacyButtonHarness as MatButtonHarness } from '@angular/material/legacy-button/testing';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('StartProcessCloudComponent', () => {
     let loader: HarnessLoader;
