@@ -191,15 +191,15 @@ while [[ $1  == -* ]]; do
 done
 
 if $GNU; then
- sedi='-i'
+    sedi='-i'
 else
- sedi=('-i' '')
+    sedi=('-i' '')
 fi
 
 if [[ "${VERSION}" == "" ]]
 then
-  echo "Version number required"
-  exit 1
+    echo "Version number required"
+    exit 1
 fi
 
 cd "$DIR/../"
@@ -207,18 +207,18 @@ cd "$DIR/../"
 echo "====== UPDATE COMPONENTS ======"
 
 # use for loop to read all values and indexes
-for (( i=0; i<${projectslength}; i++ ));
+for PROJECT in ${projects[@]}
 do
-   echo "====== UPDATE COMPONENT ${projects[$i]} ======"
-   update_component_version ${projects[$i]}
-   update_component_dependency_version ${projects[$i]}
+   echo "====== UPDATE COMPONENT $PROJECT ======"
+   update_component_version $PROJECT
+   update_component_dependency_version $PROJECT
 
    if $JS_API == true; then
 
     if $DIFFERENT_JS_API == true; then
-        update_component_js_version ${projects[$i]} ${VERSION_JS_API}
+        update_component_js_version $PROJECT $VERSION_JS_API
     else
-        update_component_js_version ${projects[$i]} ${VERSION}
+        update_component_js_version $PROJECT $VERSION
     fi
 
    fi
