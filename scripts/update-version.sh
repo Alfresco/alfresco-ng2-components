@@ -32,22 +32,8 @@ show_help() {
     echo ""
     echo "-vj or -versionjsapi  to use a different version of js-api"
     echo "-v or -version  version to update"
-    echo "-major increase the major number and reset minor and patch"
-    echo "-minor increase the minor number and reset the patch number"
-    echo "-patch increase the patch number"
     echo "-nextalpha update next alpha version of js-api and lib automatically"
-    echo "-nextbeta update next beta version of js-api and lib automatically"
-    echo "-alpha update last alpha version of js-api and lib automatically"
-    echo "-beta update beta alpha version of js-api and lib automatically"
     echo "-gnu for gnu"
-}
-
-last_alpha_mode() {
-    length=`expr $projectslength - 1`
-    echo "====== Auto find last ALPHA version of ${projects[${length}]} ====="
-    VERSION=$(npm view @alfresco/adf-${projects[${length}]}@alpha version)
-
-    echo "====== version lib ${VERSION} ====="
 }
 
 next_alpha_mode() {
@@ -63,26 +49,6 @@ next_alpha_mode() {
 
     echo "====== version lib ${VERSION} ====="
     JS_API=false
-}
-
-next_beta_mode() {
-    echo "====== Auto find next BETA version ===== ${SEMANTIC}"
-    VERSION=$(./next_version.sh -${SEMANTIC} -beta)
-
-    echo "====== version lib ${VERSION} ====="
-    JS_API=false
-}
-
-last_beta_mode() {
-    echo "====== Auto find last BETA version ====="
-    VERSION=$(npm view @alfresco/adf-core@beta version)
-
-    echo "====== version lib ${VERSION} ====="
-
-    DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view @alfresco/js-api@alpha version)
-
-    echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
 
 gnu_mode() {
@@ -162,30 +128,13 @@ update_component_js_version(){
 
 }
 
-args=("$@")
-
-while [[ $1  == -* ]]; do
-    case "$1" in
-      -major)  semantic_set "major"; shift;;
-      -minor)  semantic_set "minor"; shift;;
-      -patch) semantic_set "patch"; shift;;
-      -*) shift;;
-    esac
-done
-
-set -- "${args[@]}"
-
 while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -v|version) version_change $2; shift 2;;
-      -sj|sjsapi) skip_js; shift;;
       -vj|versionjsapi)  version_js_change $2; shift 2;;
       -gnu) gnu_mode; shift;;
-      -alpha) last_alpha_mode; shift;;
       -nextalpha) next_alpha_mode; shift;;
-      -beta) last_beta_mode; shift;;
-      -nextbeta) next_beta_mode; shift;;
       -*) shift;;
     esac
 done
