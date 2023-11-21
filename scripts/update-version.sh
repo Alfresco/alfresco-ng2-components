@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-VERSION_IN_PACKAGE_JSON=`node -p "require('$DIR/../package.json')".version;`;
 
 eval JS_API=true
 eval GNU=false
@@ -36,7 +35,7 @@ show_help() {
 next_alpha_mode() {
     NEXT_VERSION=`node -p "require('$DIR/../package.json')".version;`;
     # If we are creating a new alpha for a prerelease, we need to simply call it with -alpha
-    if [[ $VERSION_IN_PACKAGE_JSON =~ [0-9]*\.[0-9]*\.[0-9]*-.* ]]; then
+    if [[ $NEXT_VERSION =~ [0-9]*\.[0-9]*\.[0-9]*-.* ]]; then
         echo "No minor update needed"
     else
         echo "Running minor update"
@@ -47,7 +46,7 @@ next_alpha_mode() {
         NEXT_VERSION="${NEXT_VERSION[0]}.${NEXT_VERSION[1]}.${NEXT_VERSION[2]}"
     fi
 
-    if [[  $GH_BUILD_NUMBER != "" ]]; then
+    if [[ $GH_BUILD_NUMBER != "" ]]; then
         echo "Adding build number"
         NEXT_VERSION=${NEXT_VERSION}-${GH_BUILD_NUMBER}
     fi
@@ -85,52 +84,55 @@ update_library_version() {
     cd -
 }
 
+update_dependencies() {
+    PROJECT=$1
+    VERSION=$2
+
+    sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \">=${VERSION}\"/g" "package.json"
+    sed "${sedi[@]}" "s/\"${PROJECT}\": \"~.*\"/\"${PROJECT}\": \"~${VERSION}\"/g" "package.json"
+    sed "${sedi[@]}" "s/\"${PROJECT}\": \"^.*\"/\"${PROJECT}\": \"^${VERSION}\"/g" "package.json"
+}
+
 update_library_dependencies() {
     echo "====== UPDATE DEPENDENCY VERSION of .* to ~${VERSION} in ${1}======"
     DESTDIR="$DIR/../lib/${1}"
+    cd $DESTDIR
 
     for (( j=0; j<${projectslength}; j++ ));
     do
         PROJECT=${prefix}${projects[$j]}
-        sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \">=${VERSION}\"/g"  ${DESTDIR}/package.json
-        sed "${sedi[@]}" "s/\"${PROJECT}\": \"~.*\"/\"${PROJECT}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
-        sed "${sedi[@]}" "s/\"${PROJECT}\": \"^.*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
+        update_dependencies $PROJECT $VERSION
     done
 }
 
 update_root_dependencies() {
     echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of .* to ~${VERSION} ======"
     DESTDIR="$DIR/../"
+    cd $DESTDIR
 
     for (( j=0; j<${projectslength}; j++ ));
     do
         PROJECT=${prefix}${projects[$j]}
-        sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \">=${VERSION}\"/g"  ${DESTDIR}/package.json
-        sed "${sedi[@]}" "s/\"${PROJECT}\": \"~.*\"/\"${PROJECT}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
-        sed "${sedi[@]}" "s/\"${PROJECT}\": \"^.*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
+        update_dependencies $PROJECT $VERSION
     done
 }
 
 update_root_js_api_version(){
-    echo "====== UPDATE DEPENDENCY VERSION @alfresco/js-api total build to ~${1} in ${DESTDIR}======"
+    echo "====== UPDATE DEPENDENCY VERSION @alfresco/js-api total build to ${1} in ${DESTDIR}======"
     DESTDIR="$DIR/../"
-    PACKAGETOCHANGE="@alfresco\/js-api"
+    cd $DESTDIR
 
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \">=${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"^${1}\"/g"  ${DESTDIR}/package.json
+    PROJECT="@alfresco\/js-api"
+    update_dependencies $PROJECT $1
 }
 
 update_component_js_version(){
    echo "====== UPDATE DEPENDENCY VERSION of @alfresco/js-api in ${1} to ${2} ======"
    DESTDIR="$DIR/../lib/${1}"
+   cd $DESTDIR
 
-   PACKAGETOCHANGE="@alfresco\/js-api"
-
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \">=${2}\"/g"  ${DESTDIR}/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"~${2}\"/g"  ${DESTDIR}/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"^${2}\"/g"  ${DESTDIR}/package.json
-
+   PROJECT="@alfresco\/js-api"
+   update_dependencies $PROJECT $2
 }
 
 while [[ $1  == -* ]]; do
