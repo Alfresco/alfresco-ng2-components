@@ -163,7 +163,7 @@ describe('Test PdfViewer component', () => {
         });
     });
 
-    xdescribe('User interaction', () => {
+    describe('User interaction', () => {
 
         let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
         let componentUrlTestComponent: UrlTestComponent;

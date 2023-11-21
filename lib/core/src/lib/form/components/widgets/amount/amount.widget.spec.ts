@@ -200,7 +200,7 @@ describe('AmountWidgetComponent - rendering', () => {
         await fixture.whenStable();
 
         const field = await loader.getHarness(MatFormFieldHarness);
-        const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Check Placeholder Text'}))
+        const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Check Placeholder Text'}));
         expect(inputField).toBeTruthy();
         expect(await field.getPrefixText()).toBe('$');
 
