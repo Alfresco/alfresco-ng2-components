@@ -28,7 +28,7 @@ import { shareReplay, skip } from 'rxjs/operators';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
     template: ` <adf-cloud-service-task-list #taskListCloud>

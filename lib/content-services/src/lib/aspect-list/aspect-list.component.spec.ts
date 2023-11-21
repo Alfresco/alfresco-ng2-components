@@ -25,9 +25,9 @@ import { AspectEntry } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
-import { MatLegacyTableHarness as MatTableHarness } from '@angular/material/legacy-table/testing';
-import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
-import { MatLegacyProgressSpinnerHarness as MatProgressSpinnerHarness } from '@angular/material/legacy-progress-spinner/testing';
+import { MatTableHarness } from '@angular/material/table/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 const aspectListMock: AspectEntry[] = [
     {

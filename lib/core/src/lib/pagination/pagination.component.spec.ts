@@ -15,14 +15,17 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { PaginationModel } from '../models/pagination.model';
-import { setupTestBed } from '@alfresco/adf-core';
+import { TranslationService } from '../translation/translation.service';
+import { TranslationMock } from '../mock/translation.service.mock';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { MatMenuModule } from '@angular/material/menu';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;
@@ -41,12 +44,20 @@ describe('PaginationComponent', () => {
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
 
-    setupTestBed({
-        imports: [CoreTestingModule],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule,
+                HttpClientModule,
+                MatMenuModule,
+                TranslateModule.forRoot({
+                    loader: {provide: TranslateLoader, useClass: TranslateFakeLoader}
+                })
+            ],
+            providers:[
+                { provide: TranslationService, useClass: TranslationMock }
+            ]
+        });
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -57,7 +68,7 @@ describe('PaginationComponent', () => {
     });
 
     it('should have an "empty" class if no items present', async () => {
-        fixture.detectChanges();
+       fixture.detectChanges();
         await fixture.whenStable();
 
         expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();
