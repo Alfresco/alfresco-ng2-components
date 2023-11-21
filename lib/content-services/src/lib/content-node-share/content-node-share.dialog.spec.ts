@@ -28,7 +28,7 @@ import { By } from '@angular/platform-browser';
 import { NodeEntry } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacySlideToggleHarness as MatSlideToggleHarness } from '@angular/material/legacy-slide-toggle/testing';
+import { MatSlideToggleHarness } from '@angular/material/slide-toggle/testing';
 
 describe('ShareDialogComponent', () => {
     let loader: HarnessLoader;
