@@ -32,7 +32,8 @@ import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
 import { DirectionalityConfigService } from '../common/services/directionality-config.service';
-import { AuthModule } from '../auth';
+import { AuthModule, RedirectAuthService } from '../auth';
+import { EMPTY } from 'rxjs';
 
 @NgModule({
     imports: [
@@ -54,7 +55,8 @@ import { AuthModule } from '../auth';
             useFactory: directionalityConfigFactory,
             deps: [ DirectionalityConfigService ],
             multi: true
-        }
+        },
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
     ],
     exports: [
         NoopAnimationsModule,
