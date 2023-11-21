@@ -479,13 +479,13 @@ describe('AlfrescoViewerComponent', () => {
     describe('originalMimeType', () => {
 
         it('should set originalMimeType based on nodeData content', () => {
+            component.originalMimeType= 'application/pdf';
             const nodeData = {
                 content: {
                     mimeType: 'application/pdf'
                 }
             };
-
-            component.originalMimeType = nodeData.content.mimeType;
+            component.ngOnInit();
             expect(component.originalMimeType).toEqual(nodeData.content.mimeType);
         });
     });

@@ -117,29 +117,18 @@ describe('ViewerComponent', () => {
 
     describe('originalMimeType', () => {
 
-        it('should set mimeType input correctly', () => {
-            const mimeTypeValue = 'image/png';
-            component.mimeType = mimeTypeValue;
-
-            expect(component.mimeType).toEqual(mimeTypeValue);
-        });
-
-        it('should set originalMimeType input correctly', () => {
-            const originalMimeTypeValue = 'application/msWord';
-            component.originalMimeType = originalMimeTypeValue;
-
-            expect(component.originalMimeType).toEqual(originalMimeTypeValue);
-        });
-
-        it('should set alt attribute correctly based on originalMimeType', () => {
-            const mimeTypeValue = 'image/jpeg';
-            const altAttributeValue = 'Alt Text';
-            component.mimeType = mimeTypeValue;
-            component.originalMimeType = altAttributeValue;
+        it('should set alt attribute to originalMimeType when originalMimeType is provided', () => {
+            component.originalMimeType = 'image/png';
             fixture.detectChanges();
             const altAttribute = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('alt');
+            expect(altAttribute).toBe('image/png');
+        });
 
-            expect(altAttribute).toEqual(altAttributeValue);
+        it('should set src attribute based on originalMimeType when originalMimeType is provided', () => {
+            component.originalMimeType = 'image';
+            fixture.detectChanges();
+            const srcAttribute = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('src');
+            expect(srcAttribute).toContain('image');
         });
     });
 

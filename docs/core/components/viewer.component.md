@@ -70,6 +70,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
 | fileName | `string` |  | Override Content filename. |
 | mimeType | `string` |  | Overload mimeType |
+| originalMimeType | `string` |  | Overload originalMimeType |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
 | readOnly | `boolean` | true | Enable when where is possible the editing functionalities |
 | showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
@@ -113,6 +114,7 @@ You can provide custom file parameters, for example a value for the `mimeType` o
     [fileName]="fileName"
     [allowGoBack]="false"
     [mimeType]="mimeType"
+    [originalMimeType]="originalMimeType"
     [urlFile]="fileUrl">
 </adf-viewer>
 ```
