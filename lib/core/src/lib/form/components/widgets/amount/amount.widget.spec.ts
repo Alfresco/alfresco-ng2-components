@@ -20,14 +20,14 @@ import { FormFieldModel } from '../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { FormBaseModule } from '../../../form-base.module';
 import { FormFieldTypes } from '../core/form-field-types';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyTooltipHarness as MatTooltipHarness } from '@angular/material/legacy-tooltip/testing';
-import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
-import { MatLegacyFormFieldHarness as MatFormFieldHarness } from '@angular/material/legacy-form-field/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -37,7 +37,7 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -145,7 +145,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -200,7 +200,8 @@ describe('AmountWidgetComponent - rendering', () => {
         await fixture.whenStable();
 
         const field = await loader.getHarness(MatFormFieldHarness);
-        expect(await field.getLabel()).toBe('Check Placeholder Text');
+        const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Check Placeholder Text'}))
+        expect(inputField).toBeTruthy();
         expect(await field.getPrefixText()).toBe('$');
 
         const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
@@ -340,7 +341,7 @@ describe('AmountWidgetComponent settings', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule],
+            imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormBaseModule],
             providers: [
                 {
                     provide: ADF_AMOUNT_SETTINGS,

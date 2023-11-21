@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
 describe('ColumnsSelectorComponent', () => {
     let fixture: ComponentFixture<ColumnsSelectorComponent>;
