@@ -36,8 +36,8 @@ import { Node } from '@alfresco/js-api';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacySlideToggleHarness as MatSlideToggleHarness } from '@angular/material/legacy-slide-toggle/testing';
-import { MatLegacySelectHarness as MatSelectHarness } from '@angular/material/legacy-select/testing';
+import { MatSlideToggleHarness } from '@angular/material/slide-toggle/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('PermissionListComponent', () => {
     let loader: HarnessLoader;
