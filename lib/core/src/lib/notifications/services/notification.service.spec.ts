@@ -20,11 +20,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatIconHarness } from '@angular/material/icon/testing';
-import { MatLegacySnackBarHarness as MatSnackBarHarness } from '@angular/material/legacy-snack-bar/testing';
+import {MatSnackBarHarness} from '@angular/material/snack-bar/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslationMock } from '../../mock';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     template: '',
@@ -91,8 +94,10 @@ describe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatSnackBarModule],
-            declarations: [ProvidesNotificationServiceComponent]
+            imports: [TranslateModule.forRoot(), NoopAnimationsModule, HttpClientModule, MatSnackBarModule],
+            declarations: [ProvidesNotificationServiceComponent],
+            providers:[
+            { provide: TranslationService, useClass: TranslationMock }]
         });
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
