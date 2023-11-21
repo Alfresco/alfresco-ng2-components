@@ -77,7 +77,7 @@
             </mat-chip-row>
         </mat-chip-grid>
 
-        <mat-form-field *ngIf="isEditable"
+        <mat-form-field [hidden]="!isEditable"
             class="adf-property-field adf-textitem-chip-list-input"
             [ngClass]="{ 'adf-property-read-only': !isEditable }">
             <input matInput

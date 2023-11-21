@@ -23,12 +23,14 @@ import { TextWidgetComponent } from './text.widget';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CoreTestingModule } from '../../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatLegacyInputHarness as MatInputHarness } from '@angular/material/legacy-input/testing';
-import { MatLegacyFormFieldHarness as MatFormFieldHarness } from '@angular/material/legacy-form-field/testing';
-import { MatLegacyTooltipHarness as MatTooltipHarness } from '@angular/material/legacy-tooltip/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TextWidgetComponent', () => {
     const form = new FormModel({ taskId: 'fake-task-id' });
@@ -41,7 +43,13 @@ describe('TextWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
+            imports: [TranslateModule.forRoot(),
+                      NoopAnimationsModule,
+                      MatInputModule,
+                      MatFormFieldModule,
+                      MatTooltipModule,
+                      FormsModule,
+                      MatIconModule]
         });
         fixture = TestBed.createComponent(TextWidgetComponent);
         widget = fixture.componentInstance;
@@ -95,8 +103,8 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const field = await loader.getHarness(MatFormFieldHarness);
-                expect(await field.getLabel()).toBe('Your name here');
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Your name here'}))
+                expect(inputField).toBeTruthy();
             });
 
             it('should be able to set min/max length properties for Text widget', async () => {
@@ -254,16 +262,16 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the field placeholder', async () => {
-                const field = await loader.getHarness(MatFormFieldHarness);
-                expect(await field.getLabel()).toBe('simple placeholder');
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'simple placeholder'}))
+                expect(inputField).toBeTruthy();
             });
 
             it('should show the field placeholder when clicked', async () => {
                 const input = await loader.getHarness(MatInputHarness);
                 await (await input.host()).click();
 
-                const field = await loader.getHarness(MatFormFieldHarness);
-                expect(await field.getLabel()).toBe('simple placeholder');
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'simple placeholder'}))
+                expect(inputField).toBeTruthy();
             });
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async () => {
@@ -393,16 +401,16 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the input mask placeholder', async () => {
-                const field = await loader.getHarness(MatFormFieldHarness);
-                expect(await field.getLabel()).toBe('Phone : (__) ___-___');
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Phone : (__) ___-___'}))
+                expect(inputField).toBeTruthy();
             });
 
             it('should show the input mask placeholder when clicked', async () => {
                 const input = await loader.getHarness(MatInputHarness);
                 await (await input.host()).click();
 
-                const field = await loader.getHarness(MatFormFieldHarness);
-                expect(await field.getLabel()).toBe('Phone : (__) ___-___');
+                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Phone : (__) ___-___'}))
+                expect(inputField).toBeTruthy();
             });
         });
 

@@ -17,12 +17,8 @@
 
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
-import { CoreTestingModule } from '../../../../testing';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
-import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
 
 describe('MultilineTextWidgetComponentComponent', () => {
     let loader: HarnessLoader;
