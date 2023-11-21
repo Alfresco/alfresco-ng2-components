@@ -74,15 +74,18 @@ version_js_change() {
     DIFFERENT_JS_API=true
 }
 
-update_component_version() {
-   echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
-   DESTDIR="$DIR/../lib/${1}"
-   cd $DESTDIR
-   npm version --allow-same-version --no-git-tag-version --force ${VERSION}
-   cd -
+update_library_version() {
+    echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
+    DESTDIR="$DIR/../lib/${1}"
+    if [[ $1 == "js-api" ]]; then
+        DESTDIR="$DESTDIR/src"
+    fi
+    cd $DESTDIR
+    npm version --allow-same-version --no-git-tag-version --force ${VERSION}
+    cd -
 }
 
-update_component_dependency_version() {
+update_library_dependencies() {
     echo "====== UPDATE DEPENDENCY VERSION of .* to ~${VERSION} in ${1}======"
     DESTDIR="$DIR/../lib/${1}"
 
@@ -95,7 +98,7 @@ update_component_dependency_version() {
     done
 }
 
-update_total_build_dependency_version() {
+update_root_package_json() {
     echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of .* to ~${VERSION} ======"
     DESTDIR="$DIR/../"
 
@@ -157,25 +160,23 @@ cd "$DIR/../"
 
 echo "====== UPDATE COMPONENTS ======"
 
-# use for loop to read all values and indexes
 for PROJECT in ${projects[@]}
 do
-   echo "====== UPDATE COMPONENT $PROJECT ======"
-   update_component_version $PROJECT
-   update_component_dependency_version $PROJECT
+    echo "====== UPDATE $PROJECT ======"
 
-   if $JS_API == true; then
+    update_library_version $PROJECT
+    update_library_dependencies $PROJECT
 
-    if $DIFFERENT_JS_API == true; then
-        update_component_js_version $PROJECT $VERSION_JS_API
-    else
-        update_component_js_version $PROJECT $VERSION
+    if $JS_API == true; then
+        if $DIFFERENT_JS_API == true; then
+            update_component_js_version $PROJECT $VERSION_JS_API
+        else
+            update_component_js_version $PROJECT $VERSION
+        fi
     fi
-
-   fi
 done
 
-update_total_build_dependency_version
+update_root_package_json
 
 if $JS_API == true; then
     if $DIFFERENT_JS_API == true; then
