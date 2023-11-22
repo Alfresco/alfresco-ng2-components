@@ -40,7 +40,16 @@ describe('TaskAttachmentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskAttachmentListComponent]
+            imports: [
+                TranslateModule.forRoot(),
+                HttpClientModule,
+                MatMenuModule,
+                NoopAnimationsModule,
+                MatProgressSpinnerModule
+            ],
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ]
         });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
