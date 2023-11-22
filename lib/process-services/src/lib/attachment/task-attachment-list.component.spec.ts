@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
@@ -44,9 +44,14 @@ describe('TaskAttachmentList', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                ProcessTestingModule
+                HttpClientModule,
+                MatMenuModule,
+                NoopAnimationsModule,
+                MatProgressSpinnerModule
             ],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ]
         });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
