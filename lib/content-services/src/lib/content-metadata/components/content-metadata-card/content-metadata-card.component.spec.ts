@@ -20,12 +20,23 @@ import { By } from '@angular/platform-browser';
 import { Node } from '@alfresco/js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { SimpleChange } from '@angular/core';
+import { APP_INITIALIZER, SimpleChange } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { of } from 'rxjs';
+import { AlfrescoApiService, AlfrescoApiServiceMock, AuthModule, PipeModule, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { versionCompatibilityFactory } from '../../../version-compatibility/version-compatibility-factory';
+import { VersionCompatibilityService } from '../../../version-compatibility';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CategoryService } from '../../../category';
+import { TagService } from '../../../tag';
+import { PropertyDescriptorsService } from '../../public-api';
 
 describe('ContentMetadataCardComponent', () => {
     let component: ContentMetadataCardComponent;
@@ -34,15 +45,40 @@ describe('ContentMetadataCardComponent', () => {
     let node: Node;
     const preset = 'custom-preset';
     let nodeAspectService: NodeAspectService = null;
+    let tagService: TagService = null;
+    let categoryService: CategoryService = null;
+    let propertyDescriptorsService: PropertyDescriptorsService = null;
 
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [
+                TranslateModule.forRoot(),
+                NoopAnimationsModule,
+                AuthModule.forRoot({ useHash: true }),
+                HttpClientModule,
+                MatDialogModule,
+                PipeModule,
+                MatSnackBarModule,
+                MatTooltipModule
+            ],
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: TranslationService, useClass: TranslationMock },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: versionCompatibilityFactory,
+                    deps: [ VersionCompatibilityService ],
+                    multi: true
+                }
+            ]
         });
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         contentMetadataService = TestBed.inject(ContentMetadataService);
+        tagService = TestBed.inject(TagService);
+        categoryService = TestBed.inject(CategoryService);
+        propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
         component = fixture.componentInstance;
         node = {
             aspectNames: [],
@@ -59,6 +95,9 @@ describe('ContentMetadataCardComponent', () => {
         component.editAspectSupported = true;
         nodeAspectService = TestBed.inject(NodeAspectService);
         spyOn(contentMetadataService, 'getContentTypeProperty').and.returnValue(of([]));
+        spyOn(tagService, 'getTagsByNodeId').and.returnValue(of());
+        spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of());
+        spyOn(propertyDescriptorsService, 'load').and.returnValue(of());
         fixture.detectChanges();
     });
 
