@@ -58,7 +58,7 @@ describe('DateRangeFilterComponent', () => {
     it('should get on option change', async () => {
         spyOn(service, 'getDateRange');
         spyOn(component.dateTypeChange, 'emit');
-        const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-select-trigger');
+        const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-mdc-select-trigger');
         stateElement.click();
         fixture.detectChanges();
 
@@ -72,7 +72,7 @@ describe('DateRangeFilterComponent', () => {
 
     it('should not emit event on `RANGE` option change', async () => {
         spyOn(component.dateTypeChange, 'emit');
-        const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-select-trigger');
+        const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-mdc-select-trigger');
         stateElement.click();
         fixture.detectChanges();
         const rangeOption = document.querySelector('[data-automation-id="adf-cloud-edit-process-property-options-RANGE"]') as HTMLElement;
