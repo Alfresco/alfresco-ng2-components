@@ -36,7 +36,11 @@ import {
     TagsCreatorMode,
     TagService
 } from '@alfresco/adf-content-services';
-import { MatExpansionPanel } from '@angular/material/expansion';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -158,8 +162,16 @@ describe('ContentMetadataComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [TranslateModule.forRoot(),
+                      NoopAnimationsModule,
+                      AuthModule.forRoot({ useHash: true }),
+                      HttpClientModule,
+                      MatDialogModule,
+                      MatSnackBarModule,
+                      MatTooltipModule,
+                      PipeModule],
             providers: [
+                { provide: TranslationService, useClass: TranslationMock },
                 {
                     provide: TagService,
                     useValue: {
@@ -350,6 +362,8 @@ describe('ContentMetadataComponent', () => {
         it('should throw error on unsuccessful save', fakeAsync(() => {
             component.readOnly = false;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
+
             updateService.update(property, 'updated-value');
             tick(600);
 
@@ -359,7 +373,6 @@ describe('ContentMetadataComponent', () => {
                 sub.unsubscribe();
             });
 
-            spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
 
             fixture.detectChanges();
             toggleEditModeForGeneralInfo();
