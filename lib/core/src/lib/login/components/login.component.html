@@ -3,7 +3,7 @@
         <div class="adf-ie11FixerChild">
 
             <mat-card class="adf-login-card-wide">
-                <form 
+                <form
                     id="adf-login-form"
                     [formGroup]="form"
                     autocomplete="off"
@@ -12,13 +12,13 @@
                         <mat-card-title>
                             <div class="adf-alfresco-logo">
                                 <!--HEADER TEMPLATE-->
-                                <ng-template 
+                                <ng-template
                                     *ngIf="headerTemplate"
                                     ngFor
                                     [ngForOf]="[data]"
                                     [ngForTemplate]="headerTemplate">
                                 </ng-template>
-                                <img 
+                                <img
                                     *ngIf="!headerTemplate"
                                     id="adf-login-img-logo"
                                     class="adf-img-logo"
@@ -44,10 +44,10 @@
                             </div>
                         </div>
 
-                        <div *ngIf="!implicitFlow">
+                        <div *ngIf="!ssoLogin">
 
                             <!--USERNAME FIELD-->
-                            <div 
+                            <div
                                 class="adf-login__field"
                                 [ngClass]="{'adf-is-invalid': isErrorStyle(form.controls.username)}">
                                 <mat-form-field
@@ -137,14 +137,14 @@
                                         class="adf-login-button-label">
                                             {{'LOGIN.BUTTON.LOGIN' | translate }}
                                     </span>
-                                    <div 
+                                    <div
                                         *ngIf="actualLoginStep === LoginSteps.Checking"
                                         class="adf-interactive-login-label">
                                             <span class="adf-login-button-label">
                                                 {{ 'LOGIN.BUTTON.CHECKING' | translate}}
                                             </span>
                                             <div class="adf-login-spinner-container">
-                                                <mat-spinner 
+                                                <mat-spinner
                                                     id="checking-spinner"
                                                     class="adf-login-checking-spinner"
                                                     [diameter]="25">
@@ -169,7 +169,7 @@
                                 </mat-checkbox>
                             </div>
                         </div>
-                        <div *ngIf="implicitFlow">
+                        <div *ngIf="ssoLogin">
                             <button
                                 type="button"
                                 (click)="implicitLogin()"

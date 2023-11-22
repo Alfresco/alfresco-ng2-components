@@ -1,5 +1,5 @@
 {
-  "$schema": "../../lib/core/src/lib/app-config/schema.json",
+  "$schema": "../../lib/core/src/lib/app-config/app.config.schema.json",
   "ecmHost": "{protocol}//{hostname}{:port}",
   "bpmHost": "{protocol}//{hostname}{:port}",
   "identityHost": "{protocol}//{hostname}{:port}/auth/admin/realms/alfresco",
@@ -20,7 +20,8 @@
     "clientId": "alfresco",
     "scope": "openid profile email",
     "secret": "",
-    "implicitFlow": true,
+    "implicitFlow": false,
+    "codeFlow": true,
     "silentLogin": true,
     "redirectSilentIframeUri": "{protocol}//{hostname}{:port}/assets/silent-refresh.html",
     "redirectUri": "/",

@@ -57,6 +57,7 @@ import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.com
 import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
 import { NumberCellComponent } from './components/number-cell/number-cell.component';
 import { LocalizedDatePipe } from '../pipes';
+import { IconCellComponent } from './components/icon-cell/icon-cell.component';
 
 @NgModule({
     imports: [
@@ -79,7 +80,8 @@ import { LocalizedDatePipe } from '../pipes';
         NumberCellComponent,
         LocationCellComponent,
         DateCellComponent,
-        LocalizedDatePipe
+        LocalizedDatePipe,
+        IconCellComponent
     ],
     declarations: [
         DataTableComponent,

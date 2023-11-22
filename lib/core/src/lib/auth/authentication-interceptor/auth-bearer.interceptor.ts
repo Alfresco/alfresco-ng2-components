@@ -72,7 +72,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     // prevent adding any content type, to properly handle formData with boundary browser generated value,
     // as adding any Content-Type its going to break the upload functionality
 
-    if (headers.get('Content-Type') === 'multipart/form-data') {
+    if (headers.get('Content-Type') === 'multipart/form-data' && !(reqBody instanceof FormData)) {
         return headers.delete('Content-Type');
     }
 

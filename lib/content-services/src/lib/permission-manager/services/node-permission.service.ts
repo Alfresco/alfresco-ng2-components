@@ -18,17 +18,7 @@
 import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EcmUserModel } from '../../common/models/ecm-user.model';
-import {
-    Group,
-    GroupMemberEntry,
-    GroupMemberPaging,
-    GroupsApi,
-    Node,
-    PathElement,
-    PermissionElement,
-    ResultSetPaging,
-    SearchRequest
-} from '@alfresco/js-api';
+import { Group, GroupMemberPaging, GroupsApi, Node, PathElement, PermissionElement, SearchRequest } from '@alfresco/js-api';
 import { SearchService } from '../../search/services/search.service';
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
@@ -60,13 +50,14 @@ export class NodePermissionService {
      * @returns Array of strings representing the roles
      */
     getNodeRoles(node: Node): Observable<string[]> {
-        if (node.path.elements.some(el => (el.nodeType === 'st:site' || el.nodeType === 'st:sites'))) {
+        if (node.path.elements.some((el) => el.nodeType === 'st:site' || el.nodeType === 'st:sites')) {
             const searchRequest = this.buildRetrieveSiteQueryBody(node.path.elements);
             return this.searchApiService.searchByQueryBody(searchRequest).pipe(
-                switchMap((siteNodeList: ResultSetPaging) => {
+                switchMap((siteNodeList) => {
                     const siteName = siteNodeList.list.entries[0].entry.name;
                     return this.getGroupMembersBySiteName(siteName);
-                }));
+                })
+            );
         } else {
             return of(node.permissions?.settable);
         }
@@ -152,7 +143,7 @@ export class NodePermissionService {
     private getDuplicatedPermissions(nodeLocallySet: PermissionElement[], permissionListAdded: PermissionElement[]): PermissionElement[] {
         const duplicatePermissions: PermissionElement[] = [];
         if (nodeLocallySet) {
-            permissionListAdded.forEach((permission: PermissionElement) => {
+            permissionListAdded.forEach((permission) => {
                 const duplicate = nodeLocallySet.find((localPermission) => this.isEqualPermission(localPermission, permission));
                 if (duplicate) {
                     duplicatePermissions.push(duplicate);
@@ -193,9 +184,9 @@ export class NodePermissionService {
     private getGroupMembersBySiteName(siteName: string): Observable<string[]> {
         const groupName = 'GROUP_site_' + siteName;
         return this.getGroupMemberByGroupName(groupName).pipe(
-            map((groupMemberPaging: GroupMemberPaging) => {
+            map((groupMemberPaging) => {
                 const displayResult: string[] = [];
-                groupMemberPaging.list.entries.forEach((member: GroupMemberEntry) => {
+                groupMemberPaging.list.entries.forEach((member) => {
                     displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_' + siteName));
                 });
                 return displayResult;
@@ -219,7 +210,7 @@ export class NodePermissionService {
     }
 
     private buildRetrieveSiteQueryBody(nodePath: PathElement[]): SearchRequest {
-        const pathNames = nodePath.map((node: PathElement) => 'name: "' + node.name + '"');
+        const pathNames = nodePath.map((node) => 'name: "' + node.name + '"');
         const builtPathNames = pathNames.join(' OR ');
 
         return {
@@ -319,7 +310,7 @@ export class NodePermissionService {
 
     transformNodeToUserPerson(node: Node): { person: EcmUserModel; group: Group } {
         let person = null;
-        let group = null;
+        let group: Group = null;
         if (node.nodeType === 'cm:person') {
             const firstName = node.properties['cm:firstName'];
             const lastName = node.properties['cm:lastName'];
@@ -331,7 +322,7 @@ export class NodePermissionService {
         if (node.nodeType === 'cm:authorityContainer') {
             const displayName = node.properties['cm:authorityDisplayName'] || node.properties['cm:authorityName'];
             const id = node.properties['cm:authorityName'];
-            group = new Group({ displayName, id });
+            group = { displayName, id };
         }
         return { person, group };
     }

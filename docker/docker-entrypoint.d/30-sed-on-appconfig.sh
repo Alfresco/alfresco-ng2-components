@@ -33,6 +33,11 @@ if [ -n "${APP_CONFIG_OAUTH2_IMPLICIT_FLOW}" ]; then
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
 fi
 
+if [ -n "${APP_CONFIG_OAUTH2_CODE_FLOW}" ]; then
+  sed -e "s/\"codeFlow\": [^,]*/\"codeFlow\": ${APP_CONFIG_OAUTH2_CODE_FLOW}/g" \
+    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
+fi
+
 if [ -n "${APP_CONFIG_OAUTH2_SILENT_LOGIN}" ]; then
   sed -e "s/\"silentLogin\": [^,]*/\"silentLogin\": ${APP_CONFIG_OAUTH2_SILENT_LOGIN}/g" \
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
