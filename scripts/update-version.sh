@@ -87,10 +87,25 @@ update_library_version() {
     npm version --allow-same-version --no-git-tag-version --force $VERSION
 }
 
-update_dependencies() {
+update_dependency_version() {
     sed "${sedi[@]}" "s/\"$1\": \".*\"/\"$1\": \">=$2\"/g" "package.json"
     sed "${sedi[@]}" "s/\"$1\": \"~.*\"/\"$1\": \"~$2\"/g" "package.json"
     sed "${sedi[@]}" "s/\"$1\": \"^.*\"/\"$1\": \"^$2\"/g" "package.json"
+}
+
+update_dependencies() {
+    for PROJECT in ${projects[@]}
+    do
+        if [[ $PROJECT == "js-api" ]]; then
+            PROJECT="@alfresco\/$PROJECT"
+            echo "├─ $PROJECT@$JS_API_VERSION"
+            update_dependency_version $PROJECT $JS_API_VERSION
+        else
+            PROJECT="@alfresco\/adf-$PROJECT"
+            echo "├─ $PROJECT@$VERSION"
+            update_dependency_version $PROJECT $VERSION
+        fi
+    done
 }
 
 update_library_dependencies() {
@@ -101,52 +116,28 @@ update_library_dependencies() {
     fi
 
     cd $DESTDIR
-
-    for PROJECT in ${projects[@]}
-    do
-        if [[ $PROJECT == "js-api" ]]; then
-            PROJECT="@alfresco\/$PROJECT"
-        else
-            PROJECT="@alfresco\/adf-$PROJECT"
-        fi
-        echo "├─ $PROJECT@$VERSION"
-        update_dependencies $PROJECT $VERSION
-    done
+    update_dependencies
 }
 
 update_root_dependencies() {
     echo "====== Root package.json ======"
     DESTDIR="$DIR/../"
     cd $DESTDIR
-
-    for PROJECT in ${projects[@]}
-    do
-        if [[ $PROJECT == "js-api" ]]; then
-            PROJECT="@alfresco\/$PROJECT"
-        else
-            PROJECT="@alfresco\/adf-$PROJECT"
-        fi
-        echo "├─ $PROJECT@$VERSION"
-        update_dependencies $PROJECT $VERSION
-    done
+    update_dependencies
 }
 
 update_root_js_api_version(){
     echo "====== $DESTDIR/@alfresco/js-api@$1 ======"
     DESTDIR="$DIR/../"
     cd $DESTDIR
-
-    PROJECT="@alfresco\/js-api"
-    update_dependencies $PROJECT $1
+    update_dependency_version "@alfresco\/js-api" $1
 }
 
 update_component_js_version(){
    echo "====== $1/@alfresco/js-api@$2 ======"
    DESTDIR="$DIR/../lib/$1"
    cd $DESTDIR
-
-   PROJECT="@alfresco\/js-api"
-   update_dependencies $PROJECT $2
+   update_dependency_version "@alfresco\/js-api" $2
 }
 
 while [[ $1  == -* ]]; do
