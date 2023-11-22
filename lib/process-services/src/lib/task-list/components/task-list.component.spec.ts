@@ -18,7 +18,7 @@
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
+import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn, DataTableModule, AppConfigServiceMock, AlfrescoApiServiceMock, AlfrescoApiService } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -93,7 +93,19 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [
+                TranslateModule.forRoot(),
+                DataTableModule,
+                NoopAnimationsModule,
+                MatProgressSpinnerModule,
+                HttpClientTestingModule
+            ],
+            declarations: [TaskListComponent],
+            providers:[
+                TaskListService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
+            ]
         });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
@@ -779,8 +791,14 @@ describe('TaskListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [TaskListContextMenuComponent]
+            imports: [
+                TranslateModule.forRoot(),
+                MatProgressSpinnerModule,
+                ProcessTestingModule
+            ],
+            declarations: [
+                TaskListContextMenuComponent
+            ]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
