@@ -1074,8 +1074,7 @@
         "build": {
           "builder": "nx:run-commands",
           "options": {
-            "command":
-              "cd lib/cli && npm i && npm run dist",
+            "command": "cd lib/cli && npm run dist",
             "stylePreprocessorOptions": {
               "includePaths": [
                 "lib", "lib/core/src/lib"
