@@ -215,6 +215,7 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
         return result;
     } catch (error) {
         handleError(error);
+        return null;
     }
 }
 
@@ -232,6 +233,7 @@ async function getHomeFoldersCount(): Promise<number> {
         return homesFolderApiResult.list.pagination.totalItems;
     } catch (error) {
         handleError(error);
+        return 0;
     }
 }
 
@@ -246,6 +248,7 @@ async function getGroupsCount(): Promise<number> {
         return groupsApiResult.list.pagination.totalItems;
     } catch (error) {
         handleError(error);
+        return 0;
     }
 }
 
@@ -260,6 +263,7 @@ async function getSitesCount(): Promise<number> {
         return sitesApiResult.list.pagination.totalItems;
     } catch (error) {
         handleError(error);
+        return 0;
     }
 }
 
@@ -282,6 +286,7 @@ async function getFilesCount(): Promise<number> {
         return searchApiResult.list.pagination.totalItems;
     } catch (error) {
         handleError(error);
+        return 0;
     }
 }
 

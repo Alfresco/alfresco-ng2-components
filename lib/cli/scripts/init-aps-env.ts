@@ -190,6 +190,7 @@ async function hasDefaultTenant(tenantId: number, tenantName: string): Promise<b
     } else {
         logger.info(`Wrong configuration. Another tenant has been created with id ${tenant.id} and name ${tenant.name}`);
         throwError(`Wrong configuration. Another tenant has been created with id ${tenant.id} and name ${tenant.name}`);
+        return false;
     }
 }
 
@@ -212,6 +213,7 @@ async function createDefaultTenant(tenantName: string) {
         return tenant.id;
     } catch (error) {
         logger.info(`APS: not able to create the default tenant: ${JSON.parse(error.message)}` );
+        return null;
     }
 }
 
@@ -285,6 +287,7 @@ async function isDefaultAppDeployed(appName: string): Promise<boolean> {
         return defaultApp && defaultApp.length > 0;
     } catch (error) {
         logger.error(`Aps app failed to import/Publish!`);
+        return false;
     }
 }
 
@@ -306,6 +309,7 @@ async function importPublishApp(appName: string): Promise<AppDefinitionUpdateRes
         return result;
     } catch (error) {
         logger.error(`Aps app failed to import/Publish!`, error.message);
+        return null;
     }
 }
 
@@ -353,6 +357,7 @@ async function hasLicense(): Promise<boolean> {
         return false;
     } catch (error) {
         logger.error(`Aps not able to check the license` );
+        return false;
     }
 }
 
@@ -378,6 +383,7 @@ async function getDefaultApsUsersFromRealm() {
         return apsDefaultUsers;
     } catch (error) {
         logger.error(`APS: not able to fetch user: ${error.message}` );
+        return null;
     }
 }
 
@@ -403,6 +409,7 @@ async function isContentRepoPresent(tenantId: number, contentName: string): Prom
         return !!contentRepos.data.find(repo => repo.name === contentName);
     } catch (error) {
         logger.error(`APS: not able to create content: ${error.message}` );
+        return null;
     }
 }
 

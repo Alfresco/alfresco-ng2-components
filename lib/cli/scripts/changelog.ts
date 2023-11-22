@@ -155,7 +155,7 @@ export default function main(_args: string[], workingDir: string) {
 
     if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
-        return;
+        exit(0);
     }
 
     const dir = path.resolve(program.dir || workingDir);
