@@ -647,7 +647,7 @@ describe('ProcessListContextMenuComponent', () => {
         contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
         fixture.detectChanges();
         await fixture.whenStable();
-        const contextActions = document.querySelectorAll('.mat-menu-item');
+        const contextActions = document.querySelectorAll('.mat-mdc-menu-item');
 
         expect(contextActions.length).toBe(2);
         expect(contextActions[0]['disabled']).toBe(false, 'View Process Details action not enabled');
