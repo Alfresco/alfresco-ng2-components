@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-eval JS_API=true
+eval JS_API=false
 eval GNU=false
 eval DIFFERENT_JS_API=false
 
@@ -19,14 +19,11 @@ eval projects=( "cli"
 
 cd `dirname $0`
 
-projectslength=${#projects[@]}
-
 show_help() {
     echo "Usage: update-version.sh"
     echo ""
     echo "-vj or -versionjsapi  to use a different version of js-api"
     echo "-v or -version  version to update"
-    echo "-nextalpha update next alpha version of js-api and lib automatically"
     echo "-gnu for gnu"
 }
 
@@ -49,14 +46,11 @@ get_next_version() {
     echo $PKG_VERSION
 }
 
-next_alpha_mode() {
-    VERSION=`get_next_version $DIR/..`
-    JS_API_VERSION=`get_next_version $DIR/../lib/js-api/src`
+VERSION=`get_next_version $DIR/..`
+JS_API_VERSION=`get_next_version $DIR/../lib/js-api/src`
 
-    echo "====== New libs version: $VERSION ====="
-    echo "====== New js-api version: $VERSION ====="
-    JS_API=false
-}
+echo "====== New libs version: $VERSION ====="
+echo "====== New js-api version: $VERSION ====="
 
 gnu_mode() {
     echo "====== GNU MODE ====="

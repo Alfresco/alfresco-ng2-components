@@ -7,5 +7,5 @@ BRANCH=${GITHUB_REF##*/}
 if [[ $BRANCH =~ ^develop(-patch.*)?$ ]]
 then
     echo "Replace NPM version with new Alpha tag"
-    ./scripts/update-version.sh -gnu -nextalpha || exit 1;
+    ./scripts/update-version.sh -gnu || exit 1;
 fi
