@@ -43,7 +43,6 @@ get_next_version() {
     fi
 
     if [[ $GH_BUILD_NUMBER != "" ]]; then
-        echo "Adding build number"
         PKG_VERSION=$PKG_VERSION-$GH_BUILD_NUMBER
     fi
 
