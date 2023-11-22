@@ -59,7 +59,7 @@ describe('CreateProcessAttachmentComponent', () => {
                 MatButtonModule,
                 MatIconModule
             ],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },]
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);
         component = fixture.componentInstance;
