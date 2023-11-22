@@ -93,7 +93,7 @@ describe('SearchFilterChipsComponent', () => {
 
         fixture.detectChanges();
 
-        const facetChip = fixture.debugElement.query(By.css('[data-automation-id="search-fact-chip-f1"] mat-chip'));
+        const facetChip = fixture.debugElement.query(By.css('[data-automation-id="search-fact-chip-f1"] mat-chip-option'));
         facetChip.triggerEventHandler('click', { stopPropagation: () => null });
 
         fixture.detectChanges();
@@ -142,7 +142,7 @@ describe('SearchFilterChipsComponent', () => {
         };
         fixture.detectChanges();
 
-        const facetChip = fixture.debugElement.query(By.css('[data-automation-id="search-fact-chip-f1"] mat-chip'));
+        const facetChip = fixture.debugElement.query(By.css('[data-automation-id="search-fact-chip-f1"] mat-chip-option'));
         facetChip.triggerEventHandler('click', { stopPropagation: () => null });
 
         fixture.detectChanges();
@@ -182,7 +182,7 @@ describe('SearchFilterChipsComponent', () => {
         };
         fixture.detectChanges();
 
-        const facetChip = fixture.debugElement.query(By.css('[data-automation-id="search-fact-chip-f1"] mat-chip'));
+        const facetChip = fixture.debugElement.query(By.css('[data-automation-id="search-fact-chip-f1"] mat-chip-option'));
         facetChip.triggerEventHandler('click', { stopPropagation: () => null });
 
         fixture.detectChanges();
@@ -211,7 +211,7 @@ describe('SearchFilterChipsComponent', () => {
 
         fixture.detectChanges();
 
-        const facetChip = fixture.debugElement.query(By.css(`[data-automation-id="search-fact-chip-query-response"] mat-chip`));
+        const facetChip = fixture.debugElement.query(By.css(`[data-automation-id="search-fact-chip-query-response"] mat-chip-option`));
         facetChip.triggerEventHandler('click', { stopPropagation: () => null });
         fixture.detectChanges();
         const facetField: SearchFacetFieldComponent = fixture.debugElement.query(By.css('adf-search-facet-field')).componentInstance;
@@ -234,7 +234,7 @@ describe('SearchFilterChipsComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip-option'));
             expect(chips.length).toBe(0);
         });
 
@@ -245,7 +245,7 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip-option'));
             expect(chips.length).toBe(2);
 
             const titleElements = fixture.debugElement.queryAll(By.css('.adf-search-filter-placeholder'));
@@ -259,7 +259,7 @@ describe('SearchFilterChipsComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            let chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            let chips = fixture.debugElement.queryAll(By.css('mat-chip-option'));
             expect(chips.length).toBe(6);
 
             fixture.detectChanges();
@@ -275,7 +275,7 @@ describe('SearchFilterChipsComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            chips = fixture.debugElement.queryAll(By.css('mat-chip-option'));
             expect(chips.length).toBe(8);
         });
 
@@ -403,7 +403,7 @@ describe('SearchFilterChipsComponent', () => {
             firstOption.triggerEventHandler('change', { checked: true });
             fixture.detectChanges();
 
-            const checkedOption = fixture.debugElement.query(By.css(`${field} mat-checkbox.mat-checkbox-checked`));
+            const checkedOption = fixture.debugElement.query(By.css(`${field} mat-checkbox.mat-mdc-checkbox-checked`));
             expect(checkedOption.nativeElement.innerText).toEqual('Extra Small (10239)');
 
             expect(queryBuilder.update).toHaveBeenCalledTimes(1);

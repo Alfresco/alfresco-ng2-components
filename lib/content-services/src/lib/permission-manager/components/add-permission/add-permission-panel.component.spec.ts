@@ -194,10 +194,12 @@ describe('AddPermissionPanelComponent', () => {
         typeWordIntoSearchInput('a');
         await fixture.whenStable();
         fixture.detectChanges();
+        const result1 = fixture.debugElement.query(By.css('#result_option_0 .mat-mdc-list-item-unscoped-content'));
+        const result2 = fixture.debugElement.query(By.css('#result_option_1 .mat-mdc-list-item-unscoped-content'));
 
-        expect(element.querySelector('#result_option_0 .mat-list-text')).toBeTruthy();
-        expect(element.querySelector('#result_option_1 .mat-list-text')).toBeTruthy();
-        expect(element.querySelector('#result_option_0 .mat-list-text').innerHTML).not.toEqual(element.querySelector('#result_option_1 .mat-list-text').innerHTML);
+        expect(result1).toBeTruthy();
+        expect(result2).toBeTruthy();
+        expect(result1.nativeElement.innerHTML).not.toEqual(result2.nativeElement.innerHTML);
     });
 
     it('should emit unique element in between multiple search', async () => {

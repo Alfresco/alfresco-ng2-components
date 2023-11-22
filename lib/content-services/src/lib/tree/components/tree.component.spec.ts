@@ -17,7 +17,7 @@
 
 import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContextMenuDirective, CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, ContextMenuDirective, ContextMenuModule, IconModule, TranslationMock, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { MatTreeModule } from '@angular/material/tree';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import {
@@ -33,6 +33,13 @@ import { TreeServiceMock } from '../mock/tree-service.service.mock';
 import { By } from '@angular/platform-browser';
 import { SelectionChange } from '@angular/cdk/collections';
 import { DebugElement } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientModule } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
@@ -49,7 +56,7 @@ describe('TreeComponent', () => {
 
     const getNodePadding = (nodeId: string) => parseInt(getComputedStyle(getNode(nodeId).nativeElement).paddingLeft, 10);
 
-    const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .mat-progress-spinner`);
+    const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .mat-mdc-progress-spinner`);
 
     const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-icon`);
 
@@ -61,14 +68,24 @@ describe('TreeComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreTestingModule,
-                MatTreeModule
+                TranslateModule.forRoot(),
+                HttpClientModule,
+                NoopAnimationsModule,
+                MatTreeModule,
+                MatIconModule,
+                MatMenuModule,
+                MatProgressSpinnerModule,
+                MatCheckboxModule,
+                IconModule,
+                ContextMenuModule
             ],
             declarations: [
                 TreeComponent
             ],
             providers: [
-                { provide: TreeService, useClass: TreeServiceMock }
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: TreeService, useClass: TreeServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         });
 
@@ -139,7 +156,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         component.loadingRoot$ = of(true);
         fixture.detectChanges();
-        const matSpinnerElement = fixture.nativeElement.querySelector('.adf-tree-loading-spinner-container .mat-progress-spinner');
+        const matSpinnerElement = fixture.nativeElement.querySelector('.adf-tree-loading-spinner-container .mat-mdc-progress-spinner');
         expect(matSpinnerElement).not.toBeNull();
     });
 
