@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
@@ -24,6 +24,11 @@ import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockEmittedTaskAttachments, mockTaskAttachments } from '../mock/task/task-attachments.mock';
 import { ProcessContentService } from '../form/services/process-content.service';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { HttpClientModule } from '@angular/common/http';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TaskAttachmentList', () => {
 
@@ -40,9 +45,14 @@ describe('TaskAttachmentList', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                ProcessTestingModule
+                HttpClientModule,
+                MatMenuModule,
+                NoopAnimationsModule,
+                MatProgressSpinnerModule
             ],
-            schemas: [NO_ERRORS_SCHEMA]
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ]
         });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
@@ -146,7 +156,7 @@ describe('TaskAttachmentList', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        const actionMenu = window.document.querySelectorAll('button.mat-mdc-menu-item').length;
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
@@ -166,7 +176,7 @@ describe('TaskAttachmentList', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        const actionMenu = window.document.querySelectorAll('button.mat-mdc-menu-item').length;
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();

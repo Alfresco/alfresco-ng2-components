@@ -77,7 +77,7 @@ describe('GroupCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component')).nativeElement;
             expect(tooltipElement).toBeTruthy();
             expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
           });
@@ -92,7 +92,7 @@ describe('GroupCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component'));
             expect(tooltipElement).toBeFalsy();
         });
     });
@@ -156,7 +156,7 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledGroupChip: HTMLElement = element.querySelector('.mat-chip-disabled');
+            const disabledGroupChip: HTMLElement = element.querySelector('.mat-mdc-chip-disabled');
             expect(disabledGroupChip).toBeTruthy();
         });
 
@@ -180,7 +180,7 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledGroupChips = element.querySelectorAll('.mat-chip-disabled');
+            const disabledGroupChips = element.querySelectorAll('.mat-mdc-chip-disabled');
             expect(disabledGroupChips.item(0)).toBeTruthy();
             expect(disabledGroupChips.item(1)).toBeTruthy();
         });
