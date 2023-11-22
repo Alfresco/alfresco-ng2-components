@@ -38,7 +38,21 @@ describe('RadioButtonsWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatRadioModule, FormsModule, MatIconModule]
+            imports: [
+                TranslateModule.forRoot(),
+                MatRadioModule,
+                MatTooltipModule,
+                MatButtonModule,
+                FormsModule,
+                HttpClientTestingModule,
+                MatIconModule
+            ],
+            declarations:[RadioButtonsWidgetComponent, ErrorWidgetComponent],
+            providers:[
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
+            ]
         });
         taskFormService = TestBed.inject(TaskFormService);
         processDefinitionService = TestBed.inject(ProcessDefinitionService);
