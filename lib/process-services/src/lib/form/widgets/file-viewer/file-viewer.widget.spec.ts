@@ -19,6 +19,7 @@ import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormModel, FormService, FormFieldModel } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -47,7 +48,8 @@ describe('FileViewerWidgetComponent', () => {
                 TranslateModule.forRoot()
             ],
             declarations: [ FileViewerWidgetComponent ],
-            providers: [ { provide: FormService, useValue: formServiceStub } ]
+            providers: [ { provide: FormService, useValue: formServiceStub } ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
           });
 
         formServiceStub = TestBed.inject(FormService);
