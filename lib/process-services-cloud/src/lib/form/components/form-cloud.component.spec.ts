@@ -26,13 +26,8 @@ import {
     FormFieldTypes,
     FormModel,
     FormOutcomeEvent,
-    FormOutcomeModel,
-    FormRenderingService,
-    FormService,
-    UploadWidgetContentLinkModel,
-    WidgetVisibilityService,
-    provideTranslations,
-    AuthModule
+    FormOutcomeModel, FormRenderingService, FormService,
+    UploadWidgetContentLinkModel, WidgetVisibilityService, provideTranslations, AuthModule, FormFieldEvent
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -1633,7 +1628,7 @@ describe('retrieve metadata on submit', () => {
     it('should enable save button when form field value changed', () => {
         formComponent.disableSaveButton = true;
 
-        formService.formFieldValueChanged.next();
+        formService.formFieldValueChanged.next({} as FormFieldEvent);
 
         expect(formComponent.disableSaveButton).toBeFalse();
     });
