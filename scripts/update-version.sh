@@ -88,12 +88,9 @@ update_library_version() {
 }
 
 update_dependencies() {
-    PROJECT=$1
-    VERSION=$2
-
-    sed "${sedi[@]}" "s/\"$PROJECT\": \".*\"/\"$PROJECT\": \">=$VERSION\"/g" "package.json"
-    sed "${sedi[@]}" "s/\"$PROJECT\": \"~.*\"/\"$PROJECT\": \"~$VERSION\"/g" "package.json"
-    sed "${sedi[@]}" "s/\"$PROJECT\": \"^.*\"/\"$PROJECT\": \"^$VERSION\"/g" "package.json"
+    sed "${sedi[@]}" "s/\"$1\": \".*\"/\"$1\": \">=$2\"/g" "package.json"
+    sed "${sedi[@]}" "s/\"$1\": \"~.*\"/\"$1\": \"~$2\"/g" "package.json"
+    sed "${sedi[@]}" "s/\"$1\": \"^.*\"/\"$1\": \"^$2\"/g" "package.json"
 }
 
 update_library_dependencies() {
