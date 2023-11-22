@@ -17,7 +17,7 @@
 
 import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContextMenuDirective, CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, ContextMenuDirective, ContextMenuModule, IconModule, TranslationMock, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import { MatTreeModule } from '@angular/material/tree';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import {
@@ -67,14 +67,24 @@ describe('TreeComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreTestingModule,
-                MatTreeModule
+                TranslateModule.forRoot(),
+                HttpClientModule,
+                NoopAnimationsModule,
+                MatTreeModule,
+                MatIconModule,
+                MatMenuModule,
+                MatProgressSpinnerModule,
+                MatCheckboxModule,
+                IconModule,
+                ContextMenuModule
             ],
             declarations: [
                 TreeComponent
             ],
             providers: [
-                { provide: TreeService, useClass: TreeServiceMock }
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: TreeService, useClass: TreeServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         });
 
