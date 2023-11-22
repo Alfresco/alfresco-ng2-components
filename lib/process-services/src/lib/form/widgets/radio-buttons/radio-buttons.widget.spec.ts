@@ -22,6 +22,7 @@ import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -37,7 +38,21 @@ describe('RadioButtonsWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatRadioModule, FormsModule, MatIconModule]
+            imports: [
+                TranslateModule.forRoot(),
+                MatRadioModule,
+                MatTooltipModule,
+                MatButtonModule,
+                FormsModule,
+                HttpClientTestingModule,
+                MatIconModule
+            ],
+            declarations:[RadioButtonsWidgetComponent, ErrorWidgetComponent],
+            providers:[
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
+            ]
         });
         taskFormService = TestBed.inject(TaskFormService);
         processDefinitionService = TestBed.inject(ProcessDefinitionService);
