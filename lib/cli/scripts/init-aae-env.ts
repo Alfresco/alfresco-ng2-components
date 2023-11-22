@@ -124,6 +124,7 @@ async function getApplications(): Promise<{ list: { entries: any[] } }> {
     } catch (error) {
         logger.error(`Get application by status ${error.status} `);
         isValid = false;
+        return null;
     }
 }
 
@@ -158,6 +159,7 @@ function getDescriptors() {
     } catch (error) {
         logger.error(`Get Descriptors ${error.status} `);
         isValid = false;
+        return null;
     }
 }
 
@@ -192,6 +194,7 @@ function getProjects() {
     } catch (error) {
         logger.error('Get Projects' + error.status);
         isValid = false;
+        return null;
     }
 }
 
@@ -227,6 +230,7 @@ function getProjectRelease(projectId: string) {
     } catch (error) {
         logger.error('Get Projects Release' + error.status);
         isValid = false;
+        return null;
     }
 }
 
@@ -297,6 +301,7 @@ function deleteProject(projectId: string) {
     } catch (error) {
         logger.error('Delete project error' + error.status);
         isValid = false;
+        return null;
     }
 }
 
@@ -373,6 +378,7 @@ function deleteDescriptor(name: string) {
     } catch (error) {
         logger.error('Delete descriptor' + error.status);
         isValid = false;
+        return null;
     }
 }
 
@@ -408,6 +414,7 @@ function deploy(model: any) {
     } catch (error) {
         logger.error('Deploy post' + error.status);
         isValid = false;
+        return null;
     }
 }
 

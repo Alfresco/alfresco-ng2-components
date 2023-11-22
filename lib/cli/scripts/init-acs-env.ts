@@ -148,6 +148,7 @@ async function lockFile(nodeId: string): Promise<NodeEntry> {
         return result;
     } catch (error) {
         logger.error('Failed to lock file with error: ', error.stack);
+        return null;
     }
 }
 

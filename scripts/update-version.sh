@@ -77,7 +77,7 @@ update_library_version() {
     fi
 
     cd $DESTDIR
-    npm version --allow-same-version --no-git-tag-version --force $VERSION
+    npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
 }
 
 update_dependency_version() {
@@ -156,9 +156,8 @@ then
     exit 1
 fi
 
+echo "====== UPDATE COMPONENT LIBRARIES ======"
 cd "$DIR/../"
-
-echo "====== UPDATE COMPONENTS ======"
 
 for PROJECT in ${projects[@]}
 do
@@ -185,10 +184,10 @@ if $JS_API == true; then
 fi
 
 # bump root package.json
-npm version --allow-same-version --no-git-tag-version --force $VERSION
+npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
 
 echo "====== UPDATE DEMO SHELL ======"
 
 DESTDIR="$DIR/../demo-shell/"
 cd $DESTDIR
-npm version --allow-same-version --no-git-tag-version --force $VERSION
+npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
