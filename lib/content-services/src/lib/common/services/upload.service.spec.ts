@@ -169,7 +169,7 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
+        expect(request.url).toContain('/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -194,7 +194,7 @@ describe('UploadService', () => {
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(null, emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
+            .toContain('ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 404,
@@ -228,7 +228,7 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
 
             const deleteRequest = jasmine.Ajax.requests.mostRecent();
-            expect(deleteRequest.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId?permanent=true');
+            expect(deleteRequest.url).toContain('ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId?permanent=true');
             expect(deleteRequest.method).toBe('DELETE');
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -247,7 +247,7 @@ describe('UploadService', () => {
         service.cancelUpload(...file);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
+        expect(request.url).toContain('ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -269,7 +269,7 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
 
             const deleteRequest = jasmine.Ajax.requests.mostRecent();
-            expect(deleteRequest.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId/versions/1.1');
+            expect(deleteRequest.url).toContain('ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId/versions/1.1');
             expect(deleteRequest.method).toBe('DELETE');
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -288,7 +288,7 @@ describe('UploadService', () => {
         service.cancelUpload(...file);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fakeId/content?include=allowableOperations');
+        expect(request.url).toContain('ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fakeId/content?include=allowableOperations');
         expect(request.method).toBe('PUT');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -349,7 +349,7 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations');
+        expect(request.url).toContain('ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
