@@ -156,9 +156,8 @@ then
     exit 1
 fi
 
+echo "====== UPDATE COMPONENT LIBRARIES ======"
 cd "$DIR/../"
-
-echo "====== UPDATE COMPONENTS ======"
 
 for PROJECT in ${projects[@]}
 do
