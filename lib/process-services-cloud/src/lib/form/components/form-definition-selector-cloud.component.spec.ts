@@ -49,7 +49,7 @@ describe('FormDefinitionCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
-        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
+        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-mdc-select-trigger')));
         clickMatSelect.triggerEventHandler('click', null);
         fixture.detectChanges();
         const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
@@ -63,7 +63,7 @@ describe('FormDefinitionCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
-        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
+        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-mdc-select-trigger')));
         clickMatSelect.triggerEventHandler('click', null);
         fixture.detectChanges();
         const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
@@ -80,7 +80,7 @@ describe('FormDefinitionCloudComponent', () => {
     it('should display the name of the form that is selected', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
-        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
+        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-mdc-select-trigger')));
         clickMatSelect.triggerEventHandler('click', null);
         fixture.detectChanges();
         const options: any = fixture.debugElement.queryAll(By.css('mat-option'));

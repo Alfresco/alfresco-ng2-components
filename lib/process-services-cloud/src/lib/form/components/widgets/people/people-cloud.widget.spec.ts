@@ -49,6 +49,7 @@ describe('PeopleCloudWidgetComponent', () => {
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockShepherdsPie);
+        spyOn(identityUserService, 'search').and.stub();
     });
 
     afterEach(() => {
@@ -105,7 +106,7 @@ describe('PeopleCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component')).nativeElement;
             expect(tooltipElement).toBeTruthy();
             expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
           });
@@ -113,14 +114,14 @@ describe('PeopleCloudWidgetComponent', () => {
         it('should hide tooltip', async () => {
             const cloudPeopleInput = element.querySelector('adf-cloud-people');
             cloudPeopleInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             cloudPeopleInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component'));
             expect(tooltipElement).toBeFalsy();
         });
     });
@@ -202,7 +203,7 @@ describe('PeopleCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledPeopleChip: HTMLElement = element.querySelector('.mat-chip-disabled');
+            const disabledPeopleChip: HTMLElement = element.querySelector('.mat-mdc-chip-disabled');
             expect(disabledPeopleChip).toBeTruthy();
         });
 
@@ -226,7 +227,7 @@ describe('PeopleCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledPeopleChips = element.querySelectorAll('.mat-chip-disabled');
+            const disabledPeopleChips = element.querySelectorAll('.mat-mdc-chip-disabled');
             expect(disabledPeopleChips.item(0)).toBeTruthy();
             expect(disabledPeopleChips.item(1)).toBeTruthy();
         });
