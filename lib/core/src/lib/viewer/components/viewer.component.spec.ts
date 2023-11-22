@@ -120,14 +120,28 @@ describe('ViewerComponent', () => {
         it('should set alt attribute to originalMimeType when originalMimeType is provided', () => {
             component.originalMimeType = 'image/png';
             fixture.detectChanges();
-            const altAttribute = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('alt');
+            const altAttribute: string = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('alt');
             expect(altAttribute).toBe('image/png');
         });
 
         it('should set src attribute based on originalMimeType when originalMimeType is provided', () => {
             component.originalMimeType = 'image';
             fixture.detectChanges();
-            const srcAttribute = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('src');
+            const srcAttribute: string = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('src');
+            expect(srcAttribute).toContain('image');
+        });
+
+        it('should set alt attribute to mimeType when originalMimeType is not provided', () => {
+            component.mimeType = 'application/pdf';
+            fixture.detectChanges();
+            const altAttribute: string = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('alt');
+            expect(altAttribute).toBe('application/pdf');
+        });
+
+        it('should set src attribute based on mimeType when originalMimeType is not provided', () => {
+            component.mimeType = 'image';
+            fixture.detectChanges();
+            const srcAttribute: string = fixture.nativeElement.querySelector('.adf-viewer__mimeicon').getAttribute('src');
             expect(srcAttribute).toContain('image');
         });
     });

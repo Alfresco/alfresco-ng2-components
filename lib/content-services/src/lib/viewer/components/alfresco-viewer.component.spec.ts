@@ -477,16 +477,38 @@ describe('AlfrescoViewerComponent', () => {
     });
 
     describe('originalMimeType', () => {
-
-        it('should set originalMimeType based on nodeData content', () => {
-            component.originalMimeType= 'application/pdf';
-            const nodeData = {
+        it('should set originalMimeType based on nodeData content', async () => {
+            const defaultNode: Node = {
+                id: '123',
+                name: 'Mock Node',
+                nodeType: 'cm:content',
+                isFolder: false,
+                isFile: true,
+                modifiedAt: new Date(),
+                modifiedByUser: { id: 'user123', displayName: 'John Doe' },
+                createdAt: new Date(),
+                createdByUser: { id: 'user456', displayName: 'Jane Doe' },
+                isLocked: false,
+                parentId: 'parent123',
+                isLink: false,
+                isFavorite: false,
                 content: {
-                    mimeType: 'application/pdf'
-                }
+                    mimeType: 'application/msWord',
+                    mimeTypeName: 'Doc Document',
+                    sizeInBytes: 0
+                },
+                aspectNames: ['cm:auditable', 'cm:versionable'],
+                properties: { customProperty: 'customValue' },
+                allowableOperations: ['update', 'delete', 'create-child'],
+                path: { name: '/Sites/Document Library/Mock Node', isComplete: true },
+                permissions: {},
+                definition: {}
             };
-            component.ngOnInit();
-            expect(component.originalMimeType).toEqual(nodeData.content.mimeType);
+
+            spyOn(component['viewUtilService'], 'getViewerType').and.returnValue('unknown');
+
+            await component['setUpNodeFile'](defaultNode);
+            expect(component.originalMimeType).toEqual(defaultNode?.content?.mimeType);
         });
     });
 
