@@ -33,15 +33,17 @@ describe('PropertyDescriptorLoaderService', () => {
         classesApi = service['classesApi'];
     });
 
-    it('should load the groups passed by paramter', () => {
-        spyOn(classesApi, 'getClass');
+    it('should load the groups passed by paramter', (done) => {
+        spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve({}));
 
-        service.load(['exif:exif', 'cm:content', 'custom:custom']).subscribe(() => {});
-
-        expect(classesApi.getClass).toHaveBeenCalledTimes(3);
-        expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
-        expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
-        expect(classesApi.getClass).toHaveBeenCalledWith('custom_custom');
+        service.load(['exif:exif', 'cm:content', 'custom:custom'])
+            .subscribe(() => {
+                expect(classesApi.getClass).toHaveBeenCalledTimes(3);
+                expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
+                expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+                expect(classesApi.getClass).toHaveBeenCalledWith('custom_custom');
+                done();
+            });
     });
 
     it('should merge the forked values', (done) => {
