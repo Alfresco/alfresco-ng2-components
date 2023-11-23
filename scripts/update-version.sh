@@ -69,15 +69,17 @@ version_js_change() {
 }
 
 update_library_version() {
-    echo "====== $1@$VERSION ======"
-
     DESTDIR="$DIR/../lib/$1"
-    if [[ $1 == "js-api" ]]; then
-        DESTDIR="$DESTDIR/src"
-    fi
 
-    cd $DESTDIR
-    npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
+    if [[ $1 == "js-api" ]]; then
+        cd $DESTDIR/src
+        echo "====== $1@$JS_API_VERSION ======"
+        npm version --allow-same-version --no-git-tag-version --force --loglevel=error $JS_API_VERSION
+    else
+        cd $DESTDIR
+        echo "====== $1@$VERSION ======"
+        npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
+    fi
 }
 
 update_dependency_version() {
