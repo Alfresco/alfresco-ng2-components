@@ -479,7 +479,7 @@ describe('AlfrescoViewerComponent', () => {
     describe('originalMimeType', () => {
         it('should set originalMimeType based on nodeData content', async () => {
             const defaultNode: Node = {
-                id: '123',
+                id: 'mock-id',
                 name: 'Mock Node',
                 nodeType: 'cm:content',
                 isFolder: false,
@@ -488,27 +488,27 @@ describe('AlfrescoViewerComponent', () => {
                 modifiedByUser: { id: 'user123', displayName: 'John Doe' },
                 createdAt: new Date(),
                 createdByUser: { id: 'user456', displayName: 'Jane Doe' },
-                isLocked: false,
-                parentId: 'parent123',
-                isLink: false,
-                isFavorite: false,
-                content: {
-                    mimeType: 'application/msWord',
-                    mimeTypeName: 'Doc Document',
-                    sizeInBytes: 0
-                },
-                aspectNames: ['cm:auditable', 'cm:versionable'],
-                properties: { customProperty: 'customValue' },
-                allowableOperations: ['update', 'delete', 'create-child'],
-                path: { name: '/Sites/Document Library/Mock Node', isComplete: true },
-                permissions: {},
-                definition: {}
+                properties: { 'cm:versionLabel': 'mock-version-label' }
             };
+            component.nodeEntry = { entry: defaultNode };
+            component.nodeId = '123';
+            spyOn(renditionService, 'getNodeRendition').and.returnValue(
+                Promise.resolve({
+                    url: '',
+                    mimeType: ''
+                })
+            );
 
-            spyOn(component['viewUtilService'], 'getViewerType').and.returnValue('unknown');
-
-            await component['setUpNodeFile'](defaultNode);
-            expect(component.originalMimeType).toEqual(defaultNode?.content?.mimeType);
+            fixture.detectChanges();
+            nodesApiService.nodeUpdated.next({
+                id: '123',
+                name: 'file2',
+                content: {
+                    mimeType: 'application/msWord'
+                }
+            } as any);
+            await fixture.whenStable();
+            expect(component.originalMimeType).toEqual('application/msWord');
         });
     });
 
