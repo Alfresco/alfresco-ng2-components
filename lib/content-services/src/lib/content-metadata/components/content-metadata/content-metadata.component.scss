@@ -24,11 +24,6 @@ $panel-properties-height: 56px !default;
                 margin-right: 0;
             }
 
-            .adf-metadata-properties-title {
-                font-weight: 700;
-                font-size: 15px;
-                padding-left: 12px;
-            }
         }
 
         .mat-expansion-panel-content {
@@ -60,14 +55,6 @@ $panel-properties-height: 56px !default;
             padding: 16px 0 0 12px;
         }
 
-        &-tags {
-            &-title {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 15px;
-                height: $panel-properties-height;
-            }
 
             adf-tags-creator {
                 .adf-tags-creation {

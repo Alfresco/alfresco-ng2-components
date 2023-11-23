@@ -431,6 +431,7 @@ describe('ContentMetadataComponent', () => {
             title: '',
             properties: []
         };
+
         beforeEach(() => {
             component.currentGroup = mockGroup;
             showErrorSpy = spyOn(notificationService, 'showError').and.stub();
