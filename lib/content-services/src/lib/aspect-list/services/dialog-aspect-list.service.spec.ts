@@ -17,13 +17,11 @@
 
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import {
-    AspectListDialogComponent,
-    AspectListDialogComponentData,
-    CategoryService,
-    DialogAspectListService,
-    TagService
-} from '@alfresco/adf-content-services';
+import { DialogAspectListService } from './dialog-aspect-list.service';
+import { AspectListDialogComponent } from '../aspect-list-dialog.component';
+import { AspectListDialogComponentData } from '../aspect-list-dialog-data.interface';
+import { CategoryService } from '../../category/services/category.service';
+import { TagService } from '../../tag/services/tag.service';
 import { TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';

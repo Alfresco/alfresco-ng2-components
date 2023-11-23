@@ -21,9 +21,8 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AspectListComponent } from './aspect-list.component';
 import { AspectListService } from './services/aspect-list.service';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { AspectEntry } from '@alfresco/js-api';
-import { delay } from 'rxjs/operators';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
@@ -136,8 +135,8 @@ describe('AspectListComponent', () => {
         });
 
         it('should show the loading spinner when result is loading', async () => {
-            spyOn(nodeService, 'getNode').and.returnValue(of(null).pipe(delay(0)));
-            spyOn(aspectListService, 'getAspects').and.returnValue(of([]).pipe(delay(0)));
+            spyOn(nodeService, 'getNode').and.returnValue(EMPTY);
+            spyOn(aspectListService, 'getAspects').and.returnValue(EMPTY);
             fixture.detectChanges();
 
             expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
@@ -162,106 +161,105 @@ describe('AspectListComponent', () => {
             fixture.destroy();
         });
 
-        it('should return true when same aspect list selected', () => {
-            fixture.detectChanges();
-            expect(component.hasEqualAspect).toBe(true);
+        describe('without excluding aspects', () => {
+            beforeEach(() => {
+                fixture.detectChanges();
+            });
+
+            it('should return true when same aspect list selected', () => {
+                expect(component.hasEqualAspect).toBe(true);
+            });
+
+            it('should return false when different aspect list selected', () => {
+                component.clear();
+                expect(component.hasEqualAspect).toBe(false);
+            });
+
+            it('should show all the aspects', async () => {
+                expect(await loader.hasHarness(MatExpansionPanelHarness.with({selector: '#aspect-list-FirstAspect'}))).toBe(true);
+                expect(await loader.hasHarness(MatExpansionPanelHarness.with({selector: '#aspect-list-SecondAspect'}))).toBe(true);
+            });
+
+            it('should show aspect id when name or title is not set', () => {
+                const noNameAspect = fixture.nativeElement.querySelector('#aspect-list-cst-nonamedAspect .adf-aspect-list-element-title');
+                expect(noNameAspect).toBeDefined();
+                expect(noNameAspect).not.toBeNull();
+                expect(noNameAspect.innerText).toBe('cst:nonamedAspect');
+            });
+
+            it('should show the details when a row is clicked', async () => {
+                const panel = await loader.getHarness(MatExpansionPanelHarness);
+                await panel.expand();
+                expect(await panel.getDescription()).not.toBeNull();
+
+                const table = await panel.getHarness(MatTableHarness);
+                const [row1, row2] = await table.getRows();
+                const [r1c1, r1c2, r1c3] = await row1.getCells();
+                expect(await r1c1.getText()).toBe('channelPassword');
+                expect(await r1c2.getText()).toBe('The authenticated channel password');
+                expect(await r1c3.getText()).toBe('d:propA');
+
+                const [r2c1, r2c2, r2c3] = await row2.getCells();
+                expect(await r2c1.getText()).toBe('channelUsername');
+                expect(await r2c2.getText()).toBe('The authenticated channel username');
+                expect(await r2c3.getText()).toBe('d:propB');
+            });
+
+            it('should show as checked the node properties', async () => {
+                const panel = await loader.getHarness(MatExpansionPanelHarness);
+                await panel.expand();
+
+                const checkbox = await panel.getHarness(MatCheckboxHarness);
+                expect(await checkbox.isChecked()).toBe(true);
+            });
+
+            it('should remove aspects unchecked', async () => {
+                const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
+                await panel[1].expand();
+
+                const checkbox = await panel[1].getHarness(MatCheckboxHarness);
+                expect(await checkbox.isChecked()).toBe(false);
+
+                await checkbox.toggle();
+
+                expect(component.nodeAspects.length).toBe(2);
+                expect(component.nodeAspects[1]).toBe('frs:SecondAspect');
+
+                await checkbox.toggle();
+
+                expect(component.nodeAspects.length).toBe(1);
+                expect(component.nodeAspects[0]).toBe('frs:AspectOne');
+            });
+
+            it('should reset the properties on reset', async () => {
+                const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
+                await panel[1].expand();
+
+                const checkbox = await panel[1].getHarness(MatCheckboxHarness);
+                expect(await checkbox.isChecked()).toBe(false);
+
+                await checkbox.toggle();
+
+                expect(component.nodeAspects.length).toBe(2);
+                component.reset();
+                expect(component.nodeAspects.length).toBe(1);
+            });
+
+            it('should clear all the properties on clear', async () => {
+                expect(component.nodeAspects.length).toBe(1);
+                component.clear();
+                expect(component.nodeAspects.length).toBe(0);
+            });
         });
 
-        it('should return false when different aspect list selected', () => {
-            fixture.detectChanges();
-            component.clear();
-            expect(component.hasEqualAspect).toBe(false);
-        });
+        describe('with excluded aspects', () => {
+            it('should not show aspect if it is excluded aspect', () => {
+                component.excludedAspects = ['cst:nonamedAspect'];
 
-        it('should show all the aspects', async () => {
-            fixture.detectChanges();
-            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBe(true);
-            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBe(true);
-        });
-
-        it('should show aspect id when name or title is not set', () => {
-            fixture.detectChanges();
-            const noNameAspect = fixture.nativeElement.querySelector('#aspect-list-cst-nonamedAspect .adf-aspect-list-element-title');
-            expect(noNameAspect).toBeDefined();
-            expect(noNameAspect).not.toBeNull();
-            expect(noNameAspect.innerText).toBe('cst:nonamedAspect');
-        });
-
-        it('should not show aspect if it is excluded aspect', () => {
-            component.excludedAspects = ['cst:nonamedAspect'];
-
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector(`#aspect-list-${component.excludedAspects[0].replace(':', '-')}`))
-                .toBeNull();
-        });
-
-        it('should show the details when a row is clicked', async () => {
-            fixture.detectChanges();
-            const panel = await loader.getHarness(MatExpansionPanelHarness);
-            await panel.expand();
-            expect(await panel.getDescription()).not.toBeNull();
-
-            const table = await panel.getHarness(MatTableHarness);
-            const [row1, row2] = await table.getRows();
-            const [r1c1, r1c2, r1c3] = await row1.getCells();
-            expect(await r1c1.getText()).toBe('channelPassword');
-            expect(await r1c2.getText()).toBe('The authenticated channel password');
-            expect(await r1c3.getText()).toBe('d:propA');
-
-            const [r2c1, r2c2, r2c3] = await row2.getCells();
-            expect(await r2c1.getText()).toBe('channelUsername');
-            expect(await r2c2.getText()).toBe('The authenticated channel username');
-            expect(await r2c3.getText()).toBe('d:propB');
-        });
-
-        it('should show as checked the node properties', async () => {
-            fixture.detectChanges();
-            const panel = await loader.getHarness(MatExpansionPanelHarness);
-            await panel.expand();
-
-            const checkbox = await panel.getHarness(MatCheckboxHarness);
-            expect(await checkbox.isChecked()).toBe(true);
-        });
-
-        it('should remove aspects unchecked', async () => {
-            fixture.detectChanges();
-            const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
-            await panel[1].expand();
-
-            const checkbox = await panel[1].getHarness(MatCheckboxHarness);
-            expect(await checkbox.isChecked()).toBe(false);
-
-            await checkbox.toggle();
-
-            expect(component.nodeAspects.length).toBe(2);
-            expect(component.nodeAspects[1]).toBe('frs:SecondAspect');
-
-            await checkbox.toggle();
-
-            expect(component.nodeAspects.length).toBe(1);
-            expect(component.nodeAspects[0]).toBe('frs:AspectOne');
-        });
-
-        it('should reset the properties on reset', async () => {
-            fixture.detectChanges();
-            const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
-            await panel[1].expand();
-
-            const checkbox = await panel[1].getHarness(MatCheckboxHarness);
-            expect(await checkbox.isChecked()).toBe(false);
-
-            await checkbox.toggle();
-
-            expect(component.nodeAspects.length).toBe(2);
-            component.reset();
-            expect(component.nodeAspects.length).toBe(1);
-        });
-
-        it('should clear all the properties on clear', async () => {
-            fixture.detectChanges();
-            expect(component.nodeAspects.length).toBe(1);
-            component.clear();
-            expect(component.nodeAspects.length).toBe(0);
+                fixture.detectChanges();
+                expect(fixture.nativeElement.querySelector(`#aspect-list-${component.excludedAspects[0].replace(':', '-')}`))
+                    .toBeNull();
+            });
         });
     });
 

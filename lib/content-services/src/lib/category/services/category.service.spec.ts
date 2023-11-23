@@ -192,16 +192,12 @@ describe('CategoryService', () => {
 
         it('should return true if get from AppConfigService returns true', () => {
             getSpy.and.returnValue(true);
-
-            const enabledCategories = categoryService.areCategoriesEnabled();
-            expect(enabledCategories).toBeTrue();
+            expect(categoryService.areCategoriesEnabled()).toBeTrue();
         });
 
         it('should return false if get from AppConfigService returns false', () => {
             getSpy.and.returnValue(false);
-
-            const enabledCategories = categoryService.areCategoriesEnabled();
-            expect(enabledCategories).toBeFalse();
+            expect(categoryService.areCategoriesEnabled()).toBeFalse();
         });
     });
 });

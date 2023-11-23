@@ -354,16 +354,12 @@ describe('TagService', () => {
 
             it('should return true if get from AppConfigService returns true', () => {
                 getSpy.and.returnValue(true);
-
-                const enabledTags = service.areTagsEnabled();
-                expect(enabledTags).toBeTrue();
+                expect(service.areTagsEnabled()).toBeTrue();
             });
 
             it('should return false if get from AppConfigService returns false', () => {
                 getSpy.and.returnValue(false);
-
-                const enabledTags = service.areTagsEnabled();
-                expect(enabledTags).toBeFalse();
+                expect(service.areTagsEnabled()).toBeFalse();
             });
         });
     });

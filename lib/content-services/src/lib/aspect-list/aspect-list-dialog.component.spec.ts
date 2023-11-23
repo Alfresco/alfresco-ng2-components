@@ -27,7 +27,7 @@ import { delay } from 'rxjs/operators';
 import { AspectEntry, Node } from '@alfresco/js-api';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { By } from '@angular/platform-browser';
-import { AspectListComponent } from '@alfresco/adf-content-services';
+import { AspectListComponent } from './aspect-list.component';
 
 const aspectListMock: AspectEntry[] = [
     {
