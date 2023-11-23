@@ -38,7 +38,8 @@ describe('AttachFileWidgetDialogComponent', () => {
         actionName: 'Choose',
         currentFolderId: '-my-',
         selected: new EventEmitter<any>(),
-        ecmHost: 'http://fakeUrl.com'
+        ecmHost: 'http://fakeUrl.com',
+        isSelectionValid: (entry: Node) => entry.isFile
     };
     let element: HTMLInputElement;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
@@ -147,7 +148,7 @@ describe('AttachFileWidgetDialogComponent', () => {
             expect(element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]')).not.toBeNull();
         });
 
-        it('should be able to select a file', (done) => {
+        it('should be able to choose a file', (done) => {
             data.selected.subscribe((nodeList: Node[]) => {
                 expect(nodeList[0].id).toBe('fake');
                 expect(nodeList[0].isFile).toBeTruthy();
@@ -160,6 +161,18 @@ describe('AttachFileWidgetDialogComponent', () => {
                 const chooseButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
                 chooseButton.click();
             });
+        });
+
+        it('[C594015] should not be able to choose a folder', () => {
+            spyOn(widget,'onSelect');
+            const fakeFolderNode: Node = new Node({ id: 'fakeFolder', isFile: false, isFolder: true});
+
+            contentNodePanel.componentInstance.onCurrentSelection([ { entry: fakeFolderNode }]);
+            fixture.detectChanges();
+
+            const chooseButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
+            expect(chooseButton.disabled).toBe(true);
+            expect(widget.onSelect).toHaveBeenCalledOnceWith([]);
         });
 
         it('should update the title when a site is selected', () => {
