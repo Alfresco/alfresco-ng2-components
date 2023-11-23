@@ -94,11 +94,14 @@ env:
   PROXY_HOST_ECM: ${{ secrets.E2E_HOST }}
 
 jobs:
-  check-package-lock:
+  pre-checks:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Ensure SHA pinned actions
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@3.0.1
 
       - name: Check package-lock.json version
         run: |
@@ -193,7 +196,7 @@ jobs:
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-22.04
-    needs: [check-if-pr-is-approved, check-package-lock]
+    needs: [check-if-pr-is-approved, pre-checks]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -479,7 +482,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, check-package-lock, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
+    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
     steps:
       - uses: actions/checkout@v3
       - name: Log e2e result
