@@ -21,13 +21,14 @@ import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.servi
 import { Subject, of } from 'rxjs';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlfrescoEndpointRepresentation } from '@alfresco/js-api';
 
 describe('AttachFileWidgetDialogService', () => {
 
     let service: AttachFileWidgetDialogService;
     let materialDialog: MatDialog;
     let spyOnDialogOpen: jasmine.Spy;
-    let mockRepository: any;
+    let mockRepository: AlfrescoEndpointRepresentation;
 
     beforeEach(() => {
         TestBed.configureTestingModule({

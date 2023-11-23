@@ -105,13 +105,13 @@ describe('AttachFileWidgetDialogComponent', () => {
             expect(element.querySelector('#attach-file-login-panel')).not.toBeNull();
             expect(element.querySelector('#username')).not.toBeNull();
             expect(element.querySelector('#password')).not.toBeNull();
-            expect(element.querySelector('button[data-automation-id="attach-file-dialog-actions-login"]')).not.toBeNull();
+            expect(element.querySelector('[data-automation-id="attach-file-dialog-actions-login"]')).not.toBeNull();
         });
 
         it('should be able to login', (done) => {
             spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
             isLogged = true;
-            let loginButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-login"]');
+            let loginButton: HTMLButtonElement = element.querySelector('[data-automation-id="attach-file-dialog-actions-login"]');
             const usernameInput: HTMLInputElement = element.querySelector('#username');
             const passwordInput: HTMLInputElement = element.querySelector('#password');
             usernameInput.value = 'fakse-user';
@@ -122,8 +122,8 @@ describe('AttachFileWidgetDialogComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#attach-file-content-node')).not.toBeNull();
-                loginButton = element.querySelector('button[data-automation-id="attach-file-dialog-actions-login"]');
-                const chooseButton = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
+                loginButton = element.querySelector('[data-automation-id="attach-file-dialog-actions-login"]');
+                const chooseButton = element.querySelector('[data-automation-id="attach-file-dialog-actions-choose"]');
                 expect(loginButton).toBeNull();
                 expect(chooseButton).not.toBeNull();
                 done();
@@ -145,7 +145,7 @@ describe('AttachFileWidgetDialogComponent', () => {
             expect(element.querySelector('#attach-file-content-node')).not.toBeNull();
             expect(element.querySelector('#username')).toBeNull();
             expect(element.querySelector('#password')).toBeNull();
-            expect(element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]')).not.toBeNull();
+            expect(element.querySelector('[data-automation-id="attach-file-dialog-actions-choose"]')).not.toBeNull();
         });
 
         it('should be able to choose a file', (done) => {
@@ -158,7 +158,7 @@ describe('AttachFileWidgetDialogComponent', () => {
             contentNodePanel.componentInstance.select.emit([fakeNode]);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const chooseButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
+                const chooseButton: HTMLButtonElement = element.querySelector('[data-automation-id="attach-file-dialog-actions-choose"]');
                 chooseButton.click();
             });
         });
@@ -170,7 +170,7 @@ describe('AttachFileWidgetDialogComponent', () => {
             contentNodePanel.componentInstance.onCurrentSelection([ { entry: fakeFolderNode }]);
             fixture.detectChanges();
 
-            const chooseButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
+            const chooseButton: HTMLButtonElement = element.querySelector('[data-automation-id="attach-file-dialog-actions-choose"]');
             expect(chooseButton.disabled).toBe(true);
             expect(widget.onSelect).toHaveBeenCalledOnceWith([]);
         });
@@ -199,7 +199,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         it('should close the dialog once user loggedIn', () => {
             fixture.detectChanges();
             isLogged = true;
-            const loginButton = element.querySelector<HTMLButtonElement>('button[data-automation-id="attach-file-dialog-actions-login"]');
+            const loginButton = element.querySelector<HTMLButtonElement>('[data-automation-id="attach-file-dialog-actions-login"]');
             const usernameInput = element.querySelector<HTMLInputElement>('#username');
             const passwordInput = element.querySelector<HTMLInputElement>('#password');
             usernameInput.value = 'fake-user';
