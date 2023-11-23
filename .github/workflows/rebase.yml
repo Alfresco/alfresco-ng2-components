@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the latest code
-      uses: actions/checkout@v3
+      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
       with:
         fetch-depth: 0
     - name: Automatic Rebase
-      uses: cirrus-actions/rebase@1.8
+      uses: cirrus-actions/rebase@b87d48154a87a85666003575337e27b8cd65f691 # 1.8
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
