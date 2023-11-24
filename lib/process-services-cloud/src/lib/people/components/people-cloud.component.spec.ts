@@ -38,7 +38,7 @@ describe('PeopleCloudComponent', () => {
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
     let identityUserService: IdentityUserServiceInterface;
-    let searchSpy: jasmine.Spy;
+    let searchSpy;
 
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     /**
