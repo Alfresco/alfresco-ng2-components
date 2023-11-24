@@ -34,7 +34,13 @@
     "postbuild:ci": "node ./scripts/app-config-replace.js",
     "06": "echo -------------------------------------------- Clean ----------------------------------------------",
     "clean": "rimraf dist node_modules dist/libs",
-    "playwright": "npx playwright test --config='e2e-playwright/playwright.config.ts'"
+    "playwright": "npx playwright test --config='e2e-playwright/playwright.config.ts'",
+    "js_api_build": "shx rm -rf ./dist/libs/js-api && npm-run-all js_api_build_cjs js_api_build_esm5 js_api_build_esm2015 js_api_build_types js_api_assets",
+    "js_api_build_cjs": "tsc -p ./lib/js-api/tsconfig/tsconfig.cjs.json",
+    "js_api_build_esm5": "shx rm -rf ./dist/libs/js-api/esm5 && tsc -p ./lib/js-api/tsconfig/tsconfig.esm5.json",
+    "js_api_build_esm2015": "shx rm -rf ./dist/libs/js-api/esm2015 && tsc -p ./lib/js-api/tsconfig/tsconfig.esm2015.json",
+    "js_api_build_types": "shx rm -rf ./dist/libs/js-api/typings && tsc -p ./lib/js-api/tsconfig/tsconfig.types.json",
+    "js_api_assets": "shx cp ./lib/js-api/package.json ./dist/libs/js-api/ && shx cp ./lib/js-api/README.md ./dist/libs/js-api/ && shx cp ./lib/js-api/LICENSE.txt ./dist/libs/js-api/"
   },
   "repository": {
     "type": "git",
@@ -94,6 +100,7 @@
     "raphael": "2.3.0",
     "rxjs": "6.6.6",
     "subscriptions-transport-ws": "^0.11.0",
+    "superagent": "^8.1.2",
     "tslib": "^2.6.2",
     "zone.js": "~0.11.4"
   },
@@ -132,6 +139,7 @@
     "@types/pdfjs-dist": "^2.10.378",
     "@types/selenium-webdriver": "^4.0.11",
     "@types/shelljs": "^0.8.15",
+    "@types/superagent": "^4.1.22",
     "@typescript-eslint/eslint-plugin": "5.59.8",
     "@typescript-eslint/parser": "5.62.0",
     "@typescript-eslint/typescript-estree": "6.7.0",
@@ -176,6 +184,7 @@
     "moment": "^2.29.4",
     "ng-packagr": "14.0.3",
     "nock": "^13.3.8",
+    "npm-run-all": "^4.1.5",
     "nx": "14.4.2",
     "postcss": "^8.4.31",
     "postcss-sass": "^0.5.0",
@@ -188,6 +197,7 @@
     "sass-loader": "13.3.2",
     "selenium-webdriver": "4.1.0",
     "shelljs": "^0.8.5",
+    "shx": "^0.3.4",
     "spdx-license-list": "^6.8.0",
     "stylelint": "^14.15.0",
     "stylelint-config-standard-scss": "^3.0.0",
