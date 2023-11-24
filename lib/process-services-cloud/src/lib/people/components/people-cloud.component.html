@@ -1,7 +1,6 @@
 <form>
     <mat-form-field [floatLabel]="'auto'" class="adf-people-cloud" [class.adf-invalid]="hasError() && isDirty()">
-        <mat-label *ngIf="!isReadonly()" id="adf-people-cloud-title-id" class="adf-people-cloud-title"
-            [ngClass]="{'adf-people-cloud-title--focus': isFocused}">>{{ title | translate }}</mat-label>
+        <mat-label *ngIf="!isReadonly()" id="adf-people-cloud-title-id">{{ title | translate }}</mat-label>
         <mat-chip-grid #userMultipleChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-people-chip-list">
             <mat-chip-row
                 *ngFor="let user of selectedUsers"
