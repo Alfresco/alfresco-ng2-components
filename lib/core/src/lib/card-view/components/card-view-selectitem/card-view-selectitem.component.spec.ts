@@ -26,6 +26,7 @@ import { AppConfigService } from '../../../app-config/app-config.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatLabel } from '@angular/material/form-field';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -73,6 +74,25 @@ describe('CardViewSelectItemComponent', () => {
     });
 
     describe('Rendering', () => {
+        it('should render custom label when editable is set to false', () => {
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: false
+            });
+            fixture.detectChanges();
+            const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
+            expect(labelValue).not.toBeNull();
+            expect(labelValue.nativeElement.innerText).toBe('Select box label');
+        });
+
+        it('should render mat label when editable is set to true', () => {
+            component.editable = true;
+            fixture.detectChanges();
+            const labelValue = fixture.debugElement.query(By.directive(MatLabel));
+            expect(labelValue).not.toBeNull();
+            expect(labelValue.nativeElement.innerText).toBe('Select box label');
+        });
+
         it('should render readOnly value is editable property is FALSE', () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
