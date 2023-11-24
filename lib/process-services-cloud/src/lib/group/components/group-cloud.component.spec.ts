@@ -18,20 +18,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { IdentityGroupService } from '../services/identity-group.service';
 import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
+import { TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;
     let fixture: ComponentFixture<GroupCloudComponent>;
     let element: HTMLElement;
     let identityGroupService: IdentityGroupService;
-    let findGroupsByNameSpy: jasmine.Spy;
+    let findGroupsByNameSpy;
 
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     /**
@@ -92,9 +92,11 @@ describe('GroupCloudComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                CoreTestingModule,
-                ProcessServiceCloudTestingModule,
+                NoopAnimationsModule,
                 GroupCloudModule
+            ],
+            providers: [
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         });
         fixture = TestBed.createComponent(GroupCloudComponent);
