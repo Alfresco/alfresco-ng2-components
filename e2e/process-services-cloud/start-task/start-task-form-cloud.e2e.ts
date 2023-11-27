@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import {
@@ -28,9 +28,7 @@ import {
     GroupIdentityService,
     TaskFormCloudComponent,
     LocalStorageUtil,
-    StartProcessCloudPage,
     TaskHeaderCloudPage,
-    ProcessHeaderCloudPage,
     TasksService,
     UploadActions,
     ContentNodeSelectorDialogPage,
@@ -43,7 +41,6 @@ import { StartProcessCloudConfiguration } from './../config/start-process-cloud.
 import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
 import { ProcessDetailsCloudDemoPage } from './../pages/process-details-cloud-demo.page';
 import { FileModel } from '../../models/ACS/file.model';
-import CONSTANTS = require('../../util/constants');
 
 describe('Start Task Form', () => {
 
@@ -61,7 +58,6 @@ describe('Start Task Form', () => {
     const breadCrumbDropdownPage = new BreadcrumbDropdownPage();
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
     const widget = new ProcessCloudWidgetPage();
-    const startProcessPage = new StartProcessCloudPage();
 
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const editProcessFilter = processCloudDemoPage.editProcessFilterCloudComponent();
@@ -69,7 +65,6 @@ describe('Start Task Form', () => {
     const processFilter = processCloudDemoPage.processFilterCloudComponent;
 
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
-    const processHeaderCloud = new ProcessHeaderCloudPage();
 
     const apiService = createApiService();
     const uploadActions = new UploadActions(apiService);
@@ -82,7 +77,6 @@ describe('Start Task Form', () => {
     const startProcessCloudConfig = startProcessCloudConfiguration.getConfiguration();
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
-    const startEventFormProcess = StringUtil.generateRandomString(5);
     let testUser; let groupInfo;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
