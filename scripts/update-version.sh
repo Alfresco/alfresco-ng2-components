@@ -64,20 +64,22 @@ version_change() {
 
 version_js_change() {
     echo "====== Alfresco JS-API version $1 ====="
-    VERSION_JS_API=$1
+    JS_API_VERSION=$1
     DIFFERENT_JS_API=true
 }
 
 update_library_version() {
-    echo "====== $1@$VERSION ======"
-
     DESTDIR="$DIR/../lib/$1"
-    if [[ $1 == "js-api" ]]; then
-        DESTDIR="$DESTDIR/src"
-    fi
 
-    cd $DESTDIR
-    npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
+    if [[ $1 == "js-api" ]]; then
+        cd $DESTDIR/src
+        echo "====== $1@$JS_API_VERSION ======"
+        npm version --allow-same-version --no-git-tag-version --force --loglevel=error $JS_API_VERSION
+    else
+        cd $DESTDIR
+        echo "====== $1@$VERSION ======"
+        npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
+    fi
 }
 
 update_dependency_version() {
@@ -90,9 +92,15 @@ update_dependencies() {
     for PROJECT in ${projects[@]}
     do
         if [[ $PROJECT == "js-api" ]]; then
-            PROJECT="@alfresco\/$PROJECT"
-            echo "├─ $PROJECT@$JS_API_VERSION"
-            update_dependency_version $PROJECT $JS_API_VERSION
+            if [[ $1 == "cli" ]]; then
+                echo "├─ hotfix: Pinning CLI to 7.2.0"
+                PROJECT="@alfresco\/$PROJECT"
+                update_dependency_version $PROJECT "7.2.0"
+            else
+                PROJECT="@alfresco\/$PROJECT"
+                echo "├─ $PROJECT@$JS_API_VERSION"
+                update_dependency_version $PROJECT $JS_API_VERSION
+            fi
         else
             PROJECT="@alfresco\/adf-$PROJECT"
             echo "├─ $PROJECT@$VERSION"
@@ -109,7 +117,7 @@ update_library_dependencies() {
     fi
 
     cd $DESTDIR
-    update_dependencies
+    update_dependencies $1
 }
 
 update_root_dependencies() {
@@ -166,7 +174,7 @@ do
 
     if $JS_API == true; then
         if $DIFFERENT_JS_API == true; then
-            update_component_js_version $PROJECT $VERSION_JS_API
+            update_component_js_version $PROJECT $JS_API_VERSION
         else
             update_component_js_version $PROJECT $VERSION
         fi
@@ -177,7 +185,7 @@ update_root_dependencies
 
 if $JS_API == true; then
     if $DIFFERENT_JS_API == true; then
-        update_root_js_api_version $VERSION_JS_API
+        update_root_js_api_version $JS_API_VERSION
     else
         update_root_js_api_version $VERSION
     fi

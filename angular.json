@@ -1077,7 +1077,8 @@
             "command": "cd lib/cli && npm run dist",
             "stylePreprocessorOptions": {
               "includePaths": [
-                "lib", "lib/core/src/lib"
+                "lib",
+                "lib/core/src/lib"
               ]
             }
           },
