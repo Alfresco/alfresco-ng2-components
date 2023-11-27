@@ -148,7 +148,6 @@
       "NO_EXISTING_TAGS": "No Existing Tags",
       "TITLE": "Create Tags",
       "CREATE_TAG": "Create: {{tag}}",
-      "NAME": "Name",
       "TAG_SEARCH_PLACEHOLDER": "Search Tags",
       "ERRORS": {
         "EXISTING_TAG": "Tag already exists",

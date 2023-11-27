@@ -34,11 +34,8 @@ adf-tags-creator {
         background: var(--adf-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
+        padding-left: 8px;
 
-        input {
-            height: 100%;
-            padding-left: 8px;
-        }
     }
 
     .adf-create-tag-label {
