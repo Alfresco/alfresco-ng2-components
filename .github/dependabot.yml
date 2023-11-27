@@ -9,22 +9,18 @@ updates:
     open-pull-requests-limit: 5
     target-branch: develop
     groups:
-      - label: "Angular Updates"
-        packages:
+      angular:
+        patterns:
           - "@angular/*"
-        version: "widen"
-      - label: "Angular-devkit Updates"
-        packages:
+      angular-devkit:
+        patterns:
           - "@angular-devkit/*"
-        version: "widen"
-      - label: "ngrx Updates"
-        packages:
+      ngrx:
+        patterns:
           - "@ngrx/*"
-        version: "widen"
-      - label: "nrwl Updates"
-        packages:
+      nrwl:
+        patterns:
           - "@nrwl/*"
-        version: "widen"
     ignore:
       - dependency-name: "pdfjs-dist"
       - dependency-name: "@types/*"
