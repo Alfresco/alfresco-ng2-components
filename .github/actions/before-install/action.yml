@@ -37,10 +37,10 @@ runs:
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
     - name: PULL_REQUEST event Derive appropriate NX SHAs for pull request
-        if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
-        uses: nrwl/nx-set-shas@0e2d18b530b83b68263ff7b74e46b1ba300c83fc # v3.3.2
-        with:
-          main-branch-name: github.base_ref
+      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
+      uses: nrwl/nx-set-shas@0e2d18b530b83b68263ff7b74e46b1ba300c83fc # v3.3.2
+      with:
+        main-branch-name: github.base_ref
 
     - name: Print derinved NX SHAs
       shell: bash
