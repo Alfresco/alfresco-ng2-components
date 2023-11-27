@@ -24,7 +24,7 @@ updates:
       - label: "nrwl Updates"
         packages:
           - "@nrwl/*"
-        version: "widen"
+        version: "widen"    
   ignore:
     - dependency-name: "pdfjs-dist"
     - dependency-name: "@types/*"
