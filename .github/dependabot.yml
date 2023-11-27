@@ -1,19 +1,19 @@
 version: 2
 updates:
-  - package-ecosystem: npm
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "07:00"
-    open-pull-requests-limit: 5
-    target-branch: develop
-    groups:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: "weekly"
+    day: "sunday"
+    time: "07:00"
+  open-pull-requests-limit: 5
+  target-branch: develop
+  groups:
       - label: "Angular Updates"
         packages:
           - "@angular/*"
         version: "widen"
-      - label: "Angular-devkit Updates"
+     - label: "Angular-devkit Updates"
         packages:
           - "@angular-devkit/*"
         version: "widen"
@@ -25,72 +25,72 @@ updates:
         packages:
           - "@nrwl/*"
         version: "widen"
-    ignore:
-      - dependency-name: "pdfjs-dist"
-      - dependency-name: "@types/*"
-      - dependency-name: "typescript"
+  ignore:
+    - dependency-name: "pdfjs-dist"
+    - dependency-name: "@types/*"
+    - dependency-name: "typescript"
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/artifact-append"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/artifact-extract"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/artifact-initialize"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/before-install"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/download-node-modules-and-artifacts"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/e2e"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/enable-dryrun"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/get-latest-tag-sha"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/npm-check-bundle"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/print-affected-libs"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/set-npm-tag"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/setup"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/setup-chrome"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/slack-group-area"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/upload-node-modules-and-artifacts"
-    schedule:
-      interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/artifact-append"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/artifact-extract"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/artifact-initialize"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/before-install"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/download-node-modules-and-artifacts"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/e2e"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/enable-dryrun"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/get-latest-tag-sha"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/npm-check-bundle"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/print-affected-libs"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/set-npm-tag"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/setup"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/setup-chrome"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/slack-group-area"
+  schedule:
+    interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/.github/actions/upload-node-modules-and-artifacts"
+  schedule:
+    interval: "weekly"
