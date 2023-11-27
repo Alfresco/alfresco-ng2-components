@@ -244,19 +244,12 @@
       "sourceRoot": "lib/js-api/src",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "nx:run-commands",
           "options": {
-            "tsConfig": "lib/js-api/src/tsconfig.lib.json",
-            "project": "lib/js-api/src/ng-package.json"
+            "command": "npm run js_api_build"
           },
           "configurations": {
-            "production": {
-              "project": "lib/js-api/src/ng-package.json",
-              "tsConfig": "lib/js-api/src/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "lib/js-api/src/tsconfig.lib.json"
-            }
+            "production": {}
           },
           "defaultConfiguration": "production"
         },

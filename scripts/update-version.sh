@@ -92,15 +92,9 @@ update_dependencies() {
     for PROJECT in ${projects[@]}
     do
         if [[ $PROJECT == "js-api" ]]; then
-            if [[ $1 == "cli" ]]; then
-                echo "├─ hotfix: Pinning CLI to 7.2.0"
-                PROJECT="@alfresco\/$PROJECT"
-                update_dependency_version $PROJECT "7.2.0"
-            else
-                PROJECT="@alfresco\/$PROJECT"
-                echo "├─ $PROJECT@$JS_API_VERSION"
-                update_dependency_version $PROJECT $JS_API_VERSION
-            fi
+            PROJECT="@alfresco\/$PROJECT"
+            echo "├─ $PROJECT@$JS_API_VERSION"
+            update_dependency_version $PROJECT $JS_API_VERSION
         else
             PROJECT="@alfresco\/adf-$PROJECT"
             echo "├─ $PROJECT@$VERSION"
