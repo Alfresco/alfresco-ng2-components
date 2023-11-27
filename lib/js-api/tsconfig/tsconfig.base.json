@@ -1,0 +1,15 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "mapRoot": ".",
+        "paths": {
+            "@alfresco/js-api": ["./"],
+            "@alfresco/js-api/*": ["./*"]
+        },
+        "inlineSources": true
+    },
+    "files": [
+        "../index.ts"
+    ]
+}

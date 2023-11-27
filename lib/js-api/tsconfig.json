@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "importHelpers": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "strictFunctionTypes": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "stripInternal": false,
+    "target": "es2015",
+    "outDir": "./.out",
+    "lib": ["es2018", "dom"],
+    "typeRoots": ["node_modules/@types"],
+    "types": []
+  },
+  "exclude": [".history", "*/node_modules", "config", "performance", "coverage", "node_modules", "package", "dist", "test"]
+}

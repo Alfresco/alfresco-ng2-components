@@ -64,7 +64,7 @@ version_change() {
 
 version_js_change() {
     echo "====== Alfresco JS-API version $1 ====="
-    VERSION_JS_API=$1
+    JS_API_VERSION=$1
     DIFFERENT_JS_API=true
 }
 
@@ -111,7 +111,7 @@ update_library_dependencies() {
     fi
 
     cd $DESTDIR
-    update_dependencies
+    update_dependencies $1
 }
 
 update_root_dependencies() {
@@ -168,7 +168,7 @@ do
 
     if $JS_API == true; then
         if $DIFFERENT_JS_API == true; then
-            update_component_js_version $PROJECT $VERSION_JS_API
+            update_component_js_version $PROJECT $JS_API_VERSION
         else
             update_component_js_version $PROJECT $VERSION
         fi
@@ -179,7 +179,7 @@ update_root_dependencies
 
 if $JS_API == true; then
     if $DIFFERENT_JS_API == true; then
-        update_root_js_api_version $VERSION_JS_API
+        update_root_js_api_version $JS_API_VERSION
     else
         update_root_js_api_version $VERSION
     fi
