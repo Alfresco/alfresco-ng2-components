@@ -220,10 +220,10 @@ jobs:
       steps:
 
         - uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844 # v1.23.0
-          name: Nofify FE hxp-front-end-apps workflow failed
+          name: Nofify FE eng-guild-front-end workflow failed
           if: ${{ contains(toJson(needs.*.result), 'failure') }}
           env:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           with:
-            channel-id: 'C04N93XU491' #hxp-front-end-apps
-            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author: name:${{ github.event.pusher.name }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
+            channel-id: 'C016SMNNL8L' #eng-guild-front-end
+            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author: name:${{ github.event.pusher.name }} username:${{ github.event.pusher.username }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
