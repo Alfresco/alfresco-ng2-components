@@ -46,7 +46,7 @@ describe('AttachFileWidgetDialogService', () => {
                 error: new Subject<any>()
             }
         } as any);
-        mockRepository = { id: 1, name: 'fake-title', repositoryUrl: 'http://fakeurl.com/alfresco' };
+        mockRepository = { id: 1, name: 'fake-title', repositoryUrl: 'https://fakeurl.com/alfresco' };
     });
 
     it('should be able to open the dialog when node has permission', () => {

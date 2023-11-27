@@ -38,7 +38,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         actionName: 'Choose',
         currentFolderId: '-my-',
         selected: new EventEmitter<any>(),
-        ecmHost: 'http://fakeUrl.com',
+        ecmHost: 'https://fakeUrl.com',
         isSelectionValid: (entry: Node) => entry.isFile
     };
     let element: HTMLInputElement;
