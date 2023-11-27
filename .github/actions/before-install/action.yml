@@ -36,17 +36,18 @@ runs:
         echo "Setting up CI to run with commit flag [affected:*] flag."
         echo "BREAK_ACTION=true" >> $GITHUB_ENV
 
-    - name: PULL_REQUEST event
-      if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
+    - name: PULL_REQUEST event Derive appropriate NX SHAs for pull request
+        if: ${{ env.BREAK_ACTION == false && github.event_name == 'pull_request' && !github.event.pull_request.merged }}
+        uses: nrwl/nx-set-shas@0e2d18b530b83b68263ff7b74e46b1ba300c83fc # v3.3.2
+        with:
+          main-branch-name: github.base_ref
+
+    - name: Print derinved NX SHAs
       shell: bash
       run: |
-        echo "Setting up CI flags for Pull Request event"
-        NX_CALCULATION_FLAGS="--base=origin/${GITHUB_BASE_REF} --head=$HEAD_HASH"
-        {
-          echo "NX_CALCULATION_FLAGS=$NX_CALCULATION_FLAGS";
-          echo "BASE_HASH=origin/${GITHUB_BASE_REF}";
-          echo "BREAK_ACTION=true";
-        } >> $GITHUB_ENV
+        echo "BASE: ${{ env.NX_BASE }}"
+        echo "HEAD: ${{ env.NX_HEAD }}"
+        echo -e "\033[38;05;34;1m NX_CALCULATION_FLAGS: $NX_CALCULATION_FLAGS \033[0m"
 
     - name: RELEASE on master/develop patch branch
       if: ${{ env.BREAK_ACTION == false && github.event.pull_request.merged }}
