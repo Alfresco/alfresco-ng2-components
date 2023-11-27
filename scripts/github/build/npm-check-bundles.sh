@@ -37,8 +37,8 @@ do
     tar zxf 'alfresco-'$PACKAGE-$PKG_VERSION.tgz
 
     if [ $PACKAGE == 'js-api' ]; then
-        if [ ! -f package/esm2020/'alfresco-js-api.mjs' ]; then
-            error_out '31;1' "esm2020/alfresco-js-api.mjs not found!" >&2
+        if [ ! -f package/esm2015/'index.js' ]; then
+            error_out '31;1' "esm2015/index.js not found!" >&2
             exit 1
         else
             echo "esm2020: ok"
