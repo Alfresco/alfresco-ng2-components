@@ -94,17 +94,6 @@ env:
   PROXY_HOST_ECM: ${{ secrets.E2E_HOST }}
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
-      - uses: marocchino/validate-dependabot@30653575251e0731f7c99bff8773e3988361597e # v2.1.0
-        id: validate
-      - uses: marocchino/sticky-pull-request-comment@efaaab3fd41a9c3de579aba759d2552635e590fd # v2.8.0
-        if: always()
-        with:
-          header: validate-dependabot
-          message: ${{ steps.validate.outputs.markdown }}
   pre-checks:
     runs-on: ubuntu-22.04
     steps:
