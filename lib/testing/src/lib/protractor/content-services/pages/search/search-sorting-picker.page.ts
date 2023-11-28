@@ -22,7 +22,7 @@ import { DropdownPage } from '../../../core/pages/material/dropdown.page';
 
 export class SearchSortingPickerPage {
 
-    sortingDropdown = new DropdownPage($('.adf-sorting-picker .mat-select-arrow'));
+    sortingDropdown = new DropdownPage($('.adf-sorting-picker .mat-mdc-select-arrow'));
     orderArrow = $('adf-sorting-picker button mat-icon');
 
     async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
