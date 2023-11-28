@@ -141,9 +141,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     isCategoriesPanelExpanded: boolean;
     currentGroup: CardViewGroup;
 
-    isEditingGeneralInfo = false;
-    isEditingTags = false;
-    isEditingCategories = false;
+    isEditingModeGeneralInfo = false;
+    isEditingModeTags = false;
+    isEditingModeCategories = false;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -323,7 +323,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     // Returns the editing state of the panel
     isEditingPanel(): boolean {
         return (
-            (this.isEditingGeneralInfo || this.isEditingTags || this.isEditingCategories || this.currentGroup?.editable) && this.hasMetadataChanged
+            (this.isEditingModeGeneralInfo || this.isEditingModeTags || this.isEditingModeCategories || this.currentGroup?.editable) && this.hasMetadataChanged
         );
     }
 
@@ -335,10 +335,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             return;
         }
 
-        const currentMode = this.isEditingGeneralInfo;
+        const currentMode = this.isEditingModeGeneralInfo;
         this.cancelEditing();
-        this.isEditingGeneralInfo = !currentMode;
+        this.isEditingModeGeneralInfo = !currentMode;
         this.isGeneralPanelExpanded = true;
+        this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
     }
 
     onToggleTagsEdit(event?: MouseEvent) {
@@ -349,18 +350,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             return;
         }
 
-        const currentValue = this.isEditingTags;
+        const currentValue = this.isEditingModeTags;
         this.cancelEditing();
-        this.isEditingTags = !currentValue;
-        this.isTagPanelExpanded = this.isEditingTags;
+        this.isEditingModeTags = !currentValue;
+        this.isTagPanelExpanded = this.isEditingModeTags;
         this.tagNameControlVisible = true;
+        this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
     }
 
     private cancelEditing() {
-        this.isEditingGeneralInfo = false;
-        this.isEditingCategories = false;
-        this.isEditingTags = false;
-        this.isEditingTags = false;
+        this.isEditingModeGeneralInfo = false;
+        this.isEditingModeCategories = false;
+        this.isEditingModeTags = false;
     }
 
     onCancelGeneralInfoEdit(event?: MouseEvent) {
@@ -415,11 +416,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             return;
         }
 
-        const currentValue = this.isEditingCategories;
+        const currentValue = this.isEditingModeCategories;
         this.cancelEditing();
-        this.isEditingCategories = !currentValue;
-        this.isCategoriesPanelExpanded = this.isEditingCategories;
+        this.isEditingModeCategories = !currentValue;
+        this.isCategoriesPanelExpanded = this.isEditingModeCategories;
         this.categoryControlVisible = true;
+        this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
     }
 
     onToggleGroupEdit(group: CardViewGroup, event?: MouseEvent) {
@@ -429,6 +431,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
             return;
         }
+        this.cancelEditing();
 
         if (this.currentGroup && this.currentGroup.title !== group.title) {
             this.currentGroup.editable = false;
@@ -442,27 +445,43 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     showEmptyTagMessage(): boolean {
-        return this.tags?.length === 0 && !this.isEditingTags;
+        return this.tags?.length === 0 && !this.isEditingModeTags;
     }
 
     showEmptyCategoryMessage(): boolean {
-        return this.categories?.length === 0 && !this.isEditingCategories;
+        return this.categories?.length === 0 && !this.isEditingModeCategories;
     }
 
     get canEditGeneralInfo(): boolean {
-        return !this.isEditingGeneralInfo && !this.readOnly;
+        return !this.isEditingModeGeneralInfo && !this.readOnly;
+    }
+    
+    get isEditingGeneralInfo(): boolean {
+        return this.isEditingModeGeneralInfo && !this.readOnly;
     }
 
     get canEditTags(): boolean {
-        return !this.isEditingTags && !this.readOnly;
+        return !this.isEditingModeTags && !this.readOnly;
+    }
+
+    get isEditingTags(): boolean {
+        return this.isEditingModeTags && !this.readOnly;
     }
 
     get canEditCategories(): boolean {
-        return !this.isEditingCategories && !this.readOnly;
+        return !this.isEditingModeCategories && !this.readOnly;
+    }
+
+    get isEditingCategories(): boolean {
+        return this.isEditingModeCategories && !this.readOnly;
     }
 
     hasGroupToggleEdit(group: CardViewGroup): boolean {
         return !group.editable && !this.readOnly;
+    }
+
+    isGroupToggleEditing(group: CardViewGroup): boolean {
+        return group.editable && !this.readOnly;
     }
 
     showGroup(group: CardViewGroup): boolean {

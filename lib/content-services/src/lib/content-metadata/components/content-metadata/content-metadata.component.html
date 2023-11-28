@@ -38,7 +38,7 @@
         <adf-card-view
             (keydown)="keyDown($event)"
             [properties]="basicProperties$ | async"
-            [editable]="isEditingGeneralInfo"
+            [editable]="isEditingModeGeneralInfo"
             [displayEmpty]="displayEmpty"
             [copyToClipboardAction]="copyToClipboardAction"
             [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
@@ -78,14 +78,14 @@
                     </div>
                     </adf-content-metadata-header>
             </mat-expansion-panel-header>
-            <div *ngIf="!isEditingTags" class="adf-metadata-properties-tags">
+            <div *ngIf="!isEditingModeTags" class="adf-metadata-properties-tags">
                 <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
             </div>
             <div *ngIf="showEmptyTagMessage()" class="adf-metadata-no-item-added">
                 {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
             </div>
             <adf-tags-creator
-                *ngIf="isEditingTags"
+                *ngIf="isEditingModeTags"
                 class="adf-metadata-properties-tags"
                 [(tagNameControlVisible)]="tagNameControlVisible"
                 (tagsChange)="storeTagsToAssign($event)"
@@ -128,14 +128,14 @@
                     </div>
                 </adf-content-metadata-header>
             </mat-expansion-panel-header>
-            <div *ngIf="!isEditingCategories">
+            <div *ngIf="!isEditingModeCategories">
                 <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
             </div>
             <div *ngIf="showEmptyCategoryMessage()" class="adf-metadata-no-item-added">
                 {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
             </div>
             <adf-categories-management
-                *ngIf="isEditingCategories"
+                *ngIf="isEditingModeCategories"
                 class="adf-metadata-categories-header"
                 [(categoryNameControlVisible)]="categoryControlVisible"
                 [disableRemoval]="saving"
@@ -178,7 +178,7 @@
                                 (click)="onToggleGroupEdit(group, $event)">
                             <mat-icon>mode_edit</mat-icon>
                         </button>
-                        <div class="adf-metadata-action-buttons" *ngIf="group.editable">
+                        <div class="adf-metadata-action-buttons" *ngIf="isGroupToggleEditing(group)">
                             <button mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                                     (click)="onCancelGroupEdit(group, $event)"
