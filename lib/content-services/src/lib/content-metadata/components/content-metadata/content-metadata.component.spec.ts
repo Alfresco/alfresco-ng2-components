@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { DebugElement, SimpleChange } from '@angular/core';
+import { ChangeDetectorRef, DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
@@ -52,6 +52,7 @@ describe('ContentMetadataComponent', () => {
     let categoryService: CategoryService;
     let getClassSpy: jasmine.Spy;
     let notificationService: NotificationService;
+    let changeDetectorRef: ChangeDetectorRef;
 
     const preset = 'custom-preset';
 
@@ -176,6 +177,7 @@ describe('ContentMetadataComponent', () => {
         notificationService = TestBed.inject(NotificationService);
         const propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
         const classesApi = propertyDescriptorsService['classesApi'];
+        changeDetectorRef = fixture.componentRef.injector.get(ChangeDetectorRef);
 
         node = {
             id: 'node-id',
@@ -1100,9 +1102,8 @@ describe('ContentMetadataComponent', () => {
         });
     });
 
-    // TODO: fails with ExpressionChangedAfterItHasBeenCheckedError, help needed
     // eslint-disable-next-line ban/ban
-    xdescribe('Expand the panel', () => {
+    describe('Expand the panel', () => {
         let expectedNode: Node;
 
         beforeEach(() => {
@@ -1115,25 +1116,23 @@ describe('ContentMetadataComponent', () => {
             component.displayAspect = 'EXIF';
             component.expanded = true;
             component.displayEmpty = true;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
             await fixture.whenStable();
             let defaultProp = queryDom(fixture);
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
 
             component.displayAspect = 'CUSTOM';
 
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
             await fixture.whenStable();
 
             defaultProp = queryDom(fixture);
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
+        });
+
+        it('should expand the section when displayAspect set as Properties', async () => {
             component.displayAspect = 'Properties';
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            defaultProp = queryDom(fixture);
-            expect(defaultProp.componentInstance.expanded).toBeTruthy();
+            expect(component.isGeneralPanelExpanded).toBeTruthy();
         });
 
         it('should not expand anything if input is wrong', async () => {
@@ -1141,7 +1140,8 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = true;
 
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
+
             await fixture.whenStable();
 
             const defaultProp = queryDom(fixture);
