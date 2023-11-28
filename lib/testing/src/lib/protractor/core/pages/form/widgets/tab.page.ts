@@ -21,21 +21,21 @@ import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class TabPage {
 
-    changeTabAnimation = $('.mat-tab-labels div[class="mat-ripple-element"]');
+    changeTabAnimation = $('.mat-mdc-tab-ripple div[class="mat-ripple-element"]');
 
     public disabledContentNodeSelectorTabInfoIcon = TestElement.byCss('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]');
 
     async clickTabByLabel(tabLabel): Promise<void> {
-        const user = element(by.cssContainingText('.mat-tab-label-content', tabLabel));
+        const user = element(by.cssContainingText('.mdc-tab__text-label', tabLabel));
         await BrowserActions.click(user);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.changeTabAnimation);
     }
 
     async checkTabIsDisplayedByLabel(tabLabel): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.mat-tab-label-content', tabLabel)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.mdc-tab__text-label', tabLabel)));
     }
 
     async checkTabIsNotDisplayedByLabel(tabLabel): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('.mat-tab-label-content', tabLabel)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('.mdc-tab__text-label', tabLabel)));
     }
 }
