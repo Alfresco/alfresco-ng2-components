@@ -20,10 +20,10 @@ import { element, by, browser } from 'protractor';
 
 export class ProcessServiceTabBarPage {
 
-    tasksButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Tasks')).first();
-    processButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Process')).first();
-    reportsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Reports')).first();
-    reportsButtonSelected = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div[aria-selected="true"]', 'Reports')).first();
+    tasksButton = element.all(by.cssContainingText('div.mat-mdc-tab-label-container .mdc-tab__text-label', 'Tasks')).first();
+    processButton = element.all(by.cssContainingText('div.mat-mdc-tab-label-container .mdc-tab__text-label', 'Process')).first();
+    reportsButton = element.all(by.cssContainingText('div.mat-mdc-tab-label-container .mdc-tab__text-label', 'Reports')).first();
+    reportsButtonSelected = element.all(by.cssContainingText('div.mat-mdc-tab-label-container .mdc-tab-indicator--active .mdc-tab__text-label', 'Reports')).first();
 
     async clickTasksButton(): Promise<void> {
         await BrowserActions.click(this.tasksButton);
