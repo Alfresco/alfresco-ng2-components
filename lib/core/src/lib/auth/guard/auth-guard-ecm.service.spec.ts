@@ -44,7 +44,7 @@ describe('AuthGuardService ECM', () => {
             providers: [
                 {
                     provide: OidcAuthenticationService, useValue: {
-                        ssoImplicitLogin: () => { },
+                        ssoLogin: () => { },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -115,7 +115,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         spyOn(oidcAuthenticationService, 'isPublicUrl').and.returnValue(false);
-        spyOn(oidcAuthenticationService, 'ssoImplicitLogin').and.stub();
+        spyOn(oidcAuthenticationService, 'ssoLogin').and.stub();
 
         appConfigService.config.oauth2 = {
             silentLogin: true,
@@ -129,7 +129,7 @@ describe('AuthGuardService ECM', () => {
         const route = {url : 'abc'} as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
-        expect(oidcAuthenticationService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
+        expect(oidcAuthenticationService.ssoLogin).toHaveBeenCalledTimes(1);
     });
 
     it('should not redirect url if NOT logged in and isOAuth but no silentLogin configured', async () => {

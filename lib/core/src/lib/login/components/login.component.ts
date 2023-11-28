@@ -154,7 +154,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             if (this.authService.isOauth()) {
                 const oauth = this.appConfig.oauth2;
                 if (oauth?.silentLogin) {
-                    this.redirectToImplicitLogin();
+                    this.redirectToSSOLogin();
                 } else if (oauth?.implicitFlow || oauth?.codeFlow) {
                     this.ssoLogin = true;
                 }
@@ -184,8 +184,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.onSubmit(this.form.value);
     }
 
-    redirectToImplicitLogin() {
-        this.oidcAuthenticationService.ssoImplicitLogin();
+    redirectToSSOLogin() {
+        this.oidcAuthenticationService.ssoLogin();
     }
 
     /**
@@ -212,7 +212,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.authService.isLoggedIn()) {
             this.router.navigate([this.successRoute]);
         }
-        this.oidcAuthenticationService.ssoImplicitLogin();
+        this.oidcAuthenticationService.ssoLogin();
     }
 
     /**

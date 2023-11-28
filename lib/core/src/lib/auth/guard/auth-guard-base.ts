@@ -98,7 +98,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
             return this.navigate(urlToRedirect);
        } else if (this.getOauthConfig().silentLogin && !this.oidcAuthenticationService.isPublicUrl()) {
             if (!this.oidcAuthenticationService.hasValidIdToken() || !this.oidcAuthenticationService.hasValidAccessToken()) {
-                this.oidcAuthenticationService.ssoImplicitLogin();
+                this.oidcAuthenticationService.ssoLogin(url);
             }
         } else {
             return this.navigate(urlToRedirect);
