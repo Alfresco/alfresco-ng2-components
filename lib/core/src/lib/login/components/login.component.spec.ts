@@ -65,7 +65,7 @@ describe('LoginComponent', () => {
             providers: [
                 {
                     provide: OidcAuthenticationService, useValue: {
-                        ssoImplicitLogin: () => { },
+                        ssoLogin: () => { },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -715,14 +715,14 @@ describe('LoginComponent', () => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
                 appConfigService.config.oauth2 = { implicitFlow: true, silentLogin: true };
 
-                spyOn(component, 'redirectToImplicitLogin').and.stub();
+                spyOn(component, 'redirectToSSOLogin').and.stub();
 
                 component.ngOnInit();
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
                     expect(component.ssoLogin).toBe(false);
-                    expect(component.redirectToImplicitLogin).toHaveBeenCalled();
+                    expect(component.redirectToSSOLogin).toHaveBeenCalled();
                 });
 
             }));
