@@ -47,7 +47,7 @@ get_next_version() {
 }
 
 VERSION=`get_next_version $DIR/..`
-JS_API_VERSION=`get_next_version $DIR/../lib/js-api/src`
+JS_API_VERSION=`get_next_version $DIR/../lib/js-api`
 
 echo "====== New libs version: $VERSION ====="
 echo "====== New js-api version: $VERSION ====="
@@ -70,13 +70,12 @@ version_js_change() {
 
 update_library_version() {
     DESTDIR="$DIR/../lib/$1"
+    cd $DESTDIR
 
     if [[ $1 == "js-api" ]]; then
-        cd $DESTDIR/src
         echo "====== $1@$JS_API_VERSION ======"
         npm version --allow-same-version --no-git-tag-version --force --loglevel=error $JS_API_VERSION
     else
-        cd $DESTDIR
         echo "====== $1@$VERSION ======"
         npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
     fi
@@ -92,15 +91,9 @@ update_dependencies() {
     for PROJECT in ${projects[@]}
     do
         if [[ $PROJECT == "js-api" ]]; then
-            if [[ $1 == "cli" ]]; then
-                echo "├─ hotfix: Pinning CLI to 7.2.0"
-                PROJECT="@alfresco\/$PROJECT"
-                update_dependency_version $PROJECT "7.2.0"
-            else
-                PROJECT="@alfresco\/$PROJECT"
-                echo "├─ $PROJECT@$JS_API_VERSION"
-                update_dependency_version $PROJECT $JS_API_VERSION
-            fi
+            PROJECT="@alfresco\/$PROJECT"
+            echo "├─ $PROJECT@$JS_API_VERSION"
+            update_dependency_version $PROJECT $JS_API_VERSION
         else
             PROJECT="@alfresco\/adf-$PROJECT"
             echo "├─ $PROJECT@$VERSION"
@@ -111,11 +104,6 @@ update_dependencies() {
 
 update_library_dependencies() {
     DESTDIR="$DIR/../lib/$1"
-
-    if [[ $1 == "js-api" ]]; then
-        DESTDIR="$DESTDIR/src"
-    fi
-
     cd $DESTDIR
     update_dependencies $1
 }
