@@ -21,7 +21,7 @@ import { DropdownPage } from '../material/dropdown.page';
 
 export class FormFields {
 
-    selectFormDropdown = new DropdownPage($$('.adf-attach-form .mat-select-arrow').first());
+    selectFormDropdown = new DropdownPage($$('.adf-attach-form .mat-mdc-select-arrow').first());
     formContent = $('adf-form-renderer');
     refreshButton = $('div[class*="form-reload-button"] mat-icon');
     saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));

@@ -48,7 +48,7 @@ export class ViewerPage {
     infoSideBar = $('#adf-right-sidebar');
     viewer = $('adf-viewer');
     imgViewer = $('adf-img-viewer');
-    activeTab = $('div[class*="mat-tab-label-active"]');
+    activeTab = $('div[class*="mdc-tab--active"]');
     toolbar = $('#adf-viewer-toolbar');
     canvasLayer = $$('.canvasWrapper > canvas').first();
 
@@ -253,7 +253,7 @@ export class ViewerPage {
 
     async checkTabIsActive(tabName: string): Promise<void> {
         const tab = element(
-            by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName)
+            by.cssContainingText('.adf-info-drawer-layout-content div.mat-mdc-tab-label-container .mdc-tab-indicator--active .mdc-tab__text-label', tabName)
         );
         await BrowserVisibility.waitUntilElementIsVisible(tab);
     }

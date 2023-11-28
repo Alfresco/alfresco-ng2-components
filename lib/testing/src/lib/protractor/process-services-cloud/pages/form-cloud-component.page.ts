@@ -22,8 +22,8 @@ import { ConfigEditorPage } from '../../core/pages/config-editor-page';
 
 export class FormCloudComponentPage {
 
-    formCloudEditor = $$('.mat-tab-list .mat-tab-label').get(1);
-    formCloudRender = $$('.mat-tab-list .mat-tab-label').get(0);
+    formCloudEditor = $$('.mat-mdc-tab-group .mat-mdc-tab').get(1);
+    formCloudRender = $$('.mat-mdc-tab-group .mat-mdc-tab').get(0);
 
     configEditorPage = new ConfigEditorPage();
 
