@@ -28,10 +28,10 @@ export class AttachFileWidgetPage {
     filesListLocator = 'div[data-automation-id="adf-attach-widget-readonly-list"]';
     attachFileWidget = $('#attachfile');
     attachedFileMenu = $('mat-list-item button');
-    attachedFileOptions = $('.mat-menu-panel .mat-menu-content');
-    viewFileOptionButton = $(`.mat-menu-panel .mat-menu-content button[id$="show-file"]`);
-    downloadFileOptionButton = $(`.mat-menu-panel .mat-menu-content button[id$="download-file"]`);
-    removeFileOptionButton = TestElement.byCss(`.mat-menu-panel .mat-menu-content button[id$="remove"]`);
+    attachedFileOptions = $('.mat-mdc-menu-content');
+    viewFileOptionButton = $(`.mat-mdc-menu-content button[id$="show-file"]`);
+    downloadFileOptionButton = $(`.mat-mdc-menu-content button[id$="download-file"]`);
+    removeFileOptionButton = TestElement.byCss(`.mat-mdc-menu-content button[id$="remove"]`);
 
     async attachFile(fieldId: string, fileLocation: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);

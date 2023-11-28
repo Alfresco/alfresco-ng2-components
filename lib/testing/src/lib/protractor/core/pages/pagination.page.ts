@@ -34,7 +34,7 @@ export class PaginationPage {
     nextButtonDisabled = $('button[class*="adf-pagination__next-button"][disabled]');
     previousButtonDisabled = $('button[class*="adf-pagination__previous-button"][disabled]');
     pageDropDown = $('div[class*="adf-pagination__actualinfo-block"] button');
-    pageDropDownOptions = $$('div[class*="mat-menu-content"] button');
+    pageDropDownOptions = $$('div[class*="mat-mdc-menu-content"] button');
     paginationSection = $('adf-pagination');
     paginationSectionEmpty = $('adf-pagination[class*="adf-pagination__empty"]');
     totalFiles = $('.adf-pagination__range');
@@ -94,7 +94,7 @@ export class PaginationPage {
 
     async clickOnPageDropdownOption(numberOfItemPerPage: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageDropDownOptions.first());
-        const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
+        const option = element(by.cssContainingText('div[class*="mat-mdc-menu-content"] button', numberOfItemPerPage));
         await BrowserActions.click(option);
     }
 

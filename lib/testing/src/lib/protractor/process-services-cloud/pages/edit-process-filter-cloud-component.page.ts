@@ -168,7 +168,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     isApplicationListLoaded(): Promise<boolean> {
-        const emptyList = $(`[data-automation-id='adf-cloud-edit-process-property-appName'] .mat-select-placeholder`);
+        const emptyList = $(`[data-automation-id='adf-cloud-edit-process-property-appName'] .mat-mdc-select-placeholder`);
         return BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
     }
 
