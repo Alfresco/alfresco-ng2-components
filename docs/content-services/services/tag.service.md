@@ -62,6 +62,9 @@ Manages tags in Content Services.
     -   _tagId:_ `string`  - The identifier of a tag.
     -   _tagBody:_ `TagBody`  - The updated tag.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`>` - Updated tag.
+-   **areTagsEnabled**():`boolean`<br/>
+    Checks if tags plugin is enabled.
+    -   **Returns** `boolean` - true if tags plugin is enabled, false otherwise.
 
 ## Details
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigService, CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
 import {
     CategoryBody,
     CategoryEntry,
@@ -177,4 +177,27 @@ describe('CategoryService', () => {
             expect(linkCategoriesSpy).toHaveBeenCalledOnceWith(fakeNodeId, fakeCategoriesLinkBodies);
         });
     }));
+
+    describe('areCategoriesEnabled', () => {
+        let getSpy: jasmine.Spy<(key: string, defaultValue?: boolean) => boolean>;
+
+        beforeEach(() => {
+            getSpy = spyOn(TestBed.inject(AppConfigService), 'get');
+        });
+
+        it('should call get on AppConfigService with correct parameters', () => {
+            categoryService.areCategoriesEnabled();
+            expect(getSpy).toHaveBeenCalledWith('plugins.categories', true);
+        });
+
+        it('should return true if get from AppConfigService returns true', () => {
+            getSpy.and.returnValue(true);
+            expect(categoryService.areCategoriesEnabled()).toBeTrue();
+        });
+
+        it('should return false if get from AppConfigService returns false', () => {
+            getSpy.and.returnValue(false);
+            expect(categoryService.areCategoriesEnabled()).toBeFalse();
+        });
+    });
 });
