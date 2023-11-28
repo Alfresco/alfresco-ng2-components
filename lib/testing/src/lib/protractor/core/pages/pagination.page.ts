@@ -26,7 +26,7 @@ export class PaginationPage {
     pageSelectorArrow = $('button[data-automation-id="page-selector"]');
     itemsPerPage = $('.adf-pagination__max-items');
     itemsPerPageOpenDropdown = $('.adf-pagination__perpage-block button');
-    itemsPerPageOptions = $$('.adf-pagination__page-selector .mat-menu-item');
+    itemsPerPageOptions = $$('.adf-pagination__page-selector .mat-mdc-menu-item');
     currentPage = $('.adf-pagination__current-page');
     totalPages = $('.adf-pagination__total-pages');
     paginationRange = $('.adf-pagination__range');
@@ -42,7 +42,7 @@ export class PaginationPage {
     async selectItemsPerPage(numberOfItem: string): Promise<void> {
         await BrowserActions.clickExecuteScript(`div[class*="adf-pagination__perpage-block"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
-        const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
+        const itemsPerPage = element.all(by.cssContainingText('.mat-mdc-menu-item', numberOfItem)).first();
         await BrowserVisibility.waitUntilElementIsPresent(itemsPerPage);
         await BrowserActions.click(itemsPerPage);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.pageSelectorDropDown);

@@ -35,7 +35,7 @@ export class DropdownPage {
 
     async selectOption(option: string): Promise<void> {
         Logger.log(`Select dropdown option ${option}`);
-        const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
+        const optionElement = element.all(by.cssContainingText('.mat-mdc-option .mdc-list-item__primary-text', option)).first();
         await BrowserActions.click(optionElement);
         await browser.waitForAngular();
     }
@@ -49,7 +49,7 @@ export class DropdownPage {
     }
 
     async getNumberOfOptions(): Promise<number> {
-        const dropdownOptions = $$('.mat-select-panel mat-option');
+        const dropdownOptions = $$('.mat-mdc-select-panel .mat-mdc-option');
         return dropdownOptions.count();
     }
 
@@ -71,12 +71,12 @@ export class DropdownPage {
     }
 
     async selectOptionFromIndex(index: number): Promise<void> {
-        const value = element.all(by.className('mat-option')).get(index);
+        const value = element.all(by.className('mat-mdc-option')).get(index);
         await BrowserActions.click(value);
     }
 
     async checkOptionsPanelIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($$(`.mat-select-panel`).first());
+        await BrowserVisibility.waitUntilElementIsVisible($$(`.mat-mdc-select-panel`).first());
     }
 
     async getSelectedOptionText(): Promise<string> {
@@ -85,11 +85,11 @@ export class DropdownPage {
     }
 
     async checkOptionIsDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('.mat-mdc-option .mdc-list-item__primary-text', option)).first());
     }
 
     async checkOptionIsNotDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
+        await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText('.mat-mdc-option .mdc-list-item__primary-text', option)).first());
     }
 
     async selectDropdownOption(option: string): Promise<void> {
