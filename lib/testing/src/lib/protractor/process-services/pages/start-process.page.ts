@@ -37,7 +37,7 @@ export class StartProcessPage {
     processDefinitionOptionsPanel = $('div[class*="mat-autocomplete-panel"]');
 
     processDefinitionDropdown = new DropdownPage($('#adf-select-process-dropdown'));
-    applicationDropdown = new DropdownPage($('[data-automation-id*="start-process-app"] .mat-select-arrow'));
+    applicationDropdown = new DropdownPage($('[data-automation-id*="start-process-app"] .mat-mdc-select-arrow'));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
