@@ -116,7 +116,7 @@ export class MetadataViewPage {
 
     async clickOnPropertiesTab(): Promise<void> {
         const propertiesTab = element(
-            by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`)
+            by.cssContainingText(`.adf-info-drawer-layout-content div.mat-mdc-tab-label-container .mdc-tab__text-label`, `Properties`)
         );
         await BrowserActions.click(propertiesTab);
     }
