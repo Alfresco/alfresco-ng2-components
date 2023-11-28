@@ -49,4 +49,5 @@ export interface DocumentListPresetRef extends ExtensionElement {
         [key: string]: string;
         visible?: string;
     };
+    draggable?: boolean;
 }
