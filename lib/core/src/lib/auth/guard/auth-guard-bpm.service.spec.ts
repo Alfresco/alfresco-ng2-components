@@ -45,7 +45,7 @@ describe('AuthGuardService BPM', () => {
             providers: [
                 {
                     provide: OidcAuthenticationService, useValue: {
-                        ssoImplicitLogin: () => { },
+                        ssoLogin: () => { },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -71,7 +71,7 @@ describe('AuthGuardService BPM', () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         spyOn(oidcAuthenticationService, 'isPublicUrl').and.returnValue(false);
-        spyOn(oidcAuthenticationService, 'ssoImplicitLogin').and.stub();
+        spyOn(oidcAuthenticationService, 'ssoLogin').and.stub();
 
         appConfigService.config.oauth2 = {
             silentLogin: true,
@@ -86,7 +86,7 @@ describe('AuthGuardService BPM', () => {
         const route = { url: 'abc' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
-        expect(oidcAuthenticationService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
+        expect(oidcAuthenticationService.ssoLogin).toHaveBeenCalledTimes(1);
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async () => {

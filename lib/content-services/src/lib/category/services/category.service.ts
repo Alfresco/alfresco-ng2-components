@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { CategoriesApi, CategoryBody, CategoryEntry, CategoryLinkBody, CategoryPaging, ResultSetPaging, SearchApi } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
 
@@ -35,7 +35,11 @@ export class CategoryService {
         return this._searchApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private userPreferencesService: UserPreferencesService,
+        private appConfigService: AppConfigService
+    ) {}
 
     /**
      * Get subcategories of a given parent category
@@ -151,5 +155,14 @@ export class CategoryService {
      */
     linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[]): Observable<CategoryPaging | CategoryEntry> {
         return from(this.categoriesApi.linkNodeToCategory(nodeId, categoryLinkBodyCreate));
+    }
+
+    /**
+     * Checks if categories plugin is enabled.
+     *
+     * @returns boolean true if categories plugin is enabled, false otherwise.
+     */
+    areCategoriesEnabled(): boolean {
+         return this.appConfigService.get('plugins.categories', true);
     }
 }

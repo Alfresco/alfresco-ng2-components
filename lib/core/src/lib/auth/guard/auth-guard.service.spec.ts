@@ -45,7 +45,7 @@ describe('AuthGuardService', () => {
             providers: [
                 {
                     provide: OidcAuthenticationService, useValue: {
-                        ssoImplicitLogin: () => { },
+                        ssoLogin: () => { },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false
                     }
@@ -125,13 +125,13 @@ describe('AuthGuardService', () => {
     });
 
     it('should NOT redirect url if the User is NOT logged in and isOAuth but with silentLogin configured', async () => {
-        spyOn(oidcAuthenticationService, 'ssoImplicitLogin').and.stub();
+        spyOn(oidcAuthenticationService, 'ssoLogin').and.stub();
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = true;
 
         expect(await authGuard.canActivate(null, state)).toBeFalsy();
-        expect(oidcAuthenticationService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
+        expect(oidcAuthenticationService.ssoLogin).toHaveBeenCalledTimes(1);
     });
 
     it('should set redirect url', async () => {

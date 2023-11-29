@@ -138,8 +138,8 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return this.getUsername();
     }
 
-    ssoImplicitLogin() {
-        this.auth.login();
+    ssoLogin(redirectUrl?: string) {
+        this.auth.login(redirectUrl);
     }
 
     ssoCodeFlowLogin() {

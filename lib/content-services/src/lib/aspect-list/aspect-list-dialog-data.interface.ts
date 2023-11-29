@@ -23,4 +23,5 @@ export interface AspectListDialogComponentData {
     overTableMessage: string;
     select: Subject<string[]>;
     nodeId?: string;
+    excludedAspects?: string[];
 }

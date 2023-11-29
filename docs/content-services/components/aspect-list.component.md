@@ -30,6 +30,7 @@ The aspect are filtered via the app.config.json in this way :
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | nodeId | `string` | "" | Node Id of the node that we want to update |
+| excludedAspects | `string[]` | undefined | List of aspects' ids which should not be displayed. |
 
 ### Events
 

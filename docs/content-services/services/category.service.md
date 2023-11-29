@@ -65,6 +65,9 @@ Manages categories in Content Services.
     -   _nodeId:_ `string`  - The identifier of a node.
     -   _categoryLinkBodyCreate:_ [`CategoryLinkBody[]`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryLinkBody.md)  - Categories that node will be linked to.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`]((https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md))` | `[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>` - Categories that node has been linked to.
+-   **areCategoriesEnabled**():`boolean`<br/>
+    Checks if categories plugin is enabled.
+    -   **Returns** `boolean` - true if categories plugin is enabled, false otherwise.
 
 ## Details
 

@@ -27,4 +27,7 @@ export interface SearchCategory {
         selector: string;
         settings: SearchWidgetSettings;
     };
+    rules?: {
+        visible: string;
+    };
 }
