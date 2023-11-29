@@ -22,9 +22,34 @@ describe('ThumbnailService', () => {
 
     let service: ThumbnailService;
 
+    const mockNode = {
+        isFile: false,
+        createdByUser: { id: 'admin', displayName: 'Administrator' },
+        modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
+        nodeType: 'cm:content',
+        content: {
+          mimeType: 'application/rtf',
+          mimeTypeName: 'Rich Text Format',
+          sizeInBytes: 14530
+        },
+        createdAt: new Date('2017-05-24T15:08:55.640Z'),
+        isFolder: true,
+        modifiedByUser: { id: 'admin', displayName: 'Administrator' },
+        name: 'b_txt_file.rtf',
+        id: 'test node 1',
+        aspectNames: ['']
+    };
+
     beforeEach(() => {
         service = TestBed.inject(ThumbnailService);
     });
+
+    function testNodeIcon(iconPath: string, isFolderType: boolean, isFileType: boolean) {
+        mockNode.isFolder = isFolderType;
+        mockNode.isFile = isFileType;
+        const value = service.getNodeIcon(mockNode);
+        expect(value).toContain(iconPath);
+    }
 
     it('should return the correct icon for a PDF document', () => {
         expect(service.getMimeTypeIcon('application/pdf')).toContain('ft_ic_pdf');
@@ -52,5 +77,29 @@ describe('ThumbnailService', () => {
 
     it('should return the correct icon for a mht file', () => {
         expect(service.getMimeTypeIcon('multipart/related')).toContain('ft_ic_website.svg');
+    });
+  
+    it('should resolve folder icon', () => {
+        testNodeIcon('assets/images/ft_ic_folder.svg', true, false);
+    });
+
+    it('should resolve link folder icon', () => {
+        mockNode.nodeType = "app:folderlink";
+        testNodeIcon('assets/images/ft_ic_folder_shortcut_link.svg', true, false);
+    });
+
+    it('should resolve smart folder icon', () => {
+        mockNode.aspectNames = ['smf:customConfigSmartFolder']
+        testNodeIcon('assets/images/ft_ic_smart_folder.svg', true, false);
+    });
+
+    it('should resolve file icon for content type', () => {
+        testNodeIcon('assets/images/ft_ic_ms_word.svg', false, true);
+    });
+
+    it('should resolve fallback file icon for unknown node', () => {
+        mockNode.isFile = false;
+        mockNode.isFolder = false;
+        testNodeIcon('assets/images/ft_ic_miscellaneous', false, false)
     });
 });
