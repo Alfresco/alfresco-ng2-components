@@ -57,7 +57,7 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
@@ -973,6 +973,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     getFlexValue({ width = 0 }: DataColumn): string {
         return `0 1 ${width < DataTableComponent.MINIMUM_COLUMN_SIZE ? DataTableComponent.MINIMUM_COLUMN_SIZE : width}px`;
+    }
+
+    sortPredicate(index: number, _drag: CdkDrag, drop: CdkDropList): boolean {
+        return index > 0 && index < drop.getSortedItems().length;
     }
 
     private updateColumnsWidths(): void {

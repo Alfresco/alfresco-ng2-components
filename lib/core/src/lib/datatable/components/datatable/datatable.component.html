@@ -10,6 +10,7 @@
         <adf-datatable-row
             cdkDropList
             cdkDropListOrientation="horizontal"
+            [cdkDropListSortPredicate]="sortPredicate"
             data-automation-id="datatable-row-header"
             [disabled]="!isHeaderVisible()"
             class="adf-datatable-row"
