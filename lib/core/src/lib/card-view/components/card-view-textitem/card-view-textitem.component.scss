@@ -54,4 +54,12 @@
     .adf-property-read-only {
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
     }
+
+    .adf-property-not-clickable-value {
+        color: var(--adf-metadata-property-panel-label-color);
+    }
+
+    .adf-property-value-editable {
+        color: var(--adf-metadata-property-panel-title-color);
+    }
 }

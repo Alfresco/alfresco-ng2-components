@@ -9,6 +9,14 @@
         display: flex;
         padding: 6px 0;
         line-height: 20px;
+
+        &.adf-property-value-editable {
+            color: var(--adf-metadata-property-panel-title-color);
+        }
+
+        &.adf-property-not-clickable-value {
+            color: var(--adf-metadata-property-panel-label-color);
+        }
     }
 
     .adf-property {
@@ -23,7 +31,7 @@
                 text-overflow: ellipsis;
                 color: var(--adf-metadata-property-panel-title-color);
                 margin-top: 32px;
-                padding: 6px 0 6px 6px;
+                padding: 6px 0;
                 line-height: 20px;
             }
 
@@ -61,12 +69,22 @@
         color: var(--adf-metadata-property-panel-text-color);
 
         &.adf-property-value-editable {
+            color: var(--adf-metadata-property-panel-title-color);
             background-color: var(--adf-metadata-buttons-background-color);
             border-radius: 6px;
 
             &.mat-input-element {
+                color: var(--adf-metadata-action-button-clear-color);
                 padding: 6px 0 6px 12px;
                 margin: 32px 0 0;
+            }
+        }
+
+        &.adf-property-not-clickable-value {
+            color: var(--adf-metadata-property-panel-label-color);
+
+            &.mat-input-element {
+                color: var(--adf-metadata-property-panel-label-color);
             }
         }
 

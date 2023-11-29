@@ -1,10 +1,12 @@
 <label class="adf-property-label"
      [attr.data-automation-id]="'card-dateitem-label-' + property.key"
      *ngIf="showProperty() || isEditable()"
-     [attr.for]="'card-view-dateitem-' + property.key">
+     [attr.for]="'card-view-dateitem-' + property.key"
+     [ngClass]="{'adf-property-not-clickable-value': notClickable, 'adf-property-value-editable': editable}"
+     >
     {{ property.label | translate }}
 </label>
-<div class="adf-property-value" [ngClass]="{'adf-property-value-editable': editable}">
+<div class="adf-property-value" [ngClass]="{'adf-property-value-editable': editable, 'adf-property-not-clickable-value': notClickable}">
     <span *ngIf="!isEditable() && !property.multivalued"
           [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span *ngIf="showProperty()"

@@ -17,11 +17,20 @@
             padding: 6px 0 6px 12px;
             margin-top: 0;
             border-radius: 6px;
+
+            .mat-select-value {
+                color: var(--adf-metadata-action-button-clear-color);
+            }
         }
     }
 
     .adf-property-read-only {
         padding: 6px 0;
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+        color: var(--adf-metadata-property-panel-title-color);
+    }
+
+    .adf-property-not-clickable-value {
+        color: var(--adf-metadata-property-panel-label-color);
     }
 }

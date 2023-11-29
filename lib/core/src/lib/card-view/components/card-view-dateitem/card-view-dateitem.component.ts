@@ -110,6 +110,10 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         return this.editable && this.property.editable;
     }
 
+    get notClickable(): boolean {
+        return this.editable && !this.property.editable;
+    }
+
     showDatePicker() {
         this.datepicker.open();
     }

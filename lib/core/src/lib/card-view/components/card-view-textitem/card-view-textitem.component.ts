@@ -214,6 +214,10 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         return this.editable && this.property.editable;
     }
 
+    get notClickable(): boolean {
+        return this.editable && !this.property.editable;
+    }
+
     get isClickable(): boolean {
         return this.property.clickable;
     }

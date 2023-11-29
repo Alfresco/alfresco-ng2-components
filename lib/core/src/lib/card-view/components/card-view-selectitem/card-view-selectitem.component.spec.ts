@@ -108,7 +108,7 @@ describe('CardViewSelectItemComponent', () => {
             fixture.detectChanges();
 
             expect(component.value).toEqual('two');
-            expect(component.isEditable()).toBe(true);
+            expect(component.isEditable).toBe(true);
 
             const select = await loader.getHarness(MatSelectHarness);
             await select.open();
@@ -131,7 +131,7 @@ describe('CardViewSelectItemComponent', () => {
             fixture.detectChanges();
 
             expect(component.value).toEqual(2);
-            expect(component.isEditable()).toBe(true);
+            expect(component.isEditable).toBe(true);
 
             const select = await loader.getHarness(MatSelectHarness);
             await select.open();
@@ -154,7 +154,7 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(component.isEditable()).toBe(true);
+            expect(component.isEditable).toBe(true);
 
             const select = await loader.getHarness(MatSelectHarness);
             await select.open();

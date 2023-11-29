@@ -4,7 +4,7 @@ adf-tags-creator {
     .adf-label-with-icon-button {
         background: var(--adf-metadata-buttons-background-color);
         width: fit-content;
-        height: 32px;
+        min-height: 32px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -35,7 +35,7 @@ adf-tags-creator {
         background: var(--adf-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
-        padding: 0 6px 0 6px;
+        padding: 0 6px;
     }
 
     .adf-create-tag-label {

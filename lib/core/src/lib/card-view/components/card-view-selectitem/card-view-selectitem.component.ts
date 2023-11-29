@@ -75,6 +75,10 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         return this.editable && this.property.editable;
     }
 
+    get notClickable(): boolean {
+        return this.editable && !this.property.editable;
+    }
+
     getOptions(): Observable<CardViewSelectItemOption<string | number>[]> {
         return this.options$ || this.property.options$;
     }

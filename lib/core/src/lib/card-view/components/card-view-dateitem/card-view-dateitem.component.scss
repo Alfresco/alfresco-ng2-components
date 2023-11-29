@@ -3,10 +3,15 @@
         padding: 6px 0;
         line-height: 20px;
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+        color: var(--adf-metadata-property-panel-title-color);
 
         &.adf-property-value-editable {
             border-radius: 6px;
             border-bottom: inherit;
+        }
+
+        &.adf-property-not-clickable-value {
+            padding-left: 12px;
         }
     }
 

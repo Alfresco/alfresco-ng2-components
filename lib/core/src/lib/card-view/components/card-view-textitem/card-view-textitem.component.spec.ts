@@ -295,6 +295,20 @@ describe('CardViewTextItemComponent', () => {
             const labelElement = fixture.debugElement.query(By.css(`.adf-property-label`));
             expect(labelElement).toBeNull();
         });
+
+        it('should return true when editable is true, and property.editable is false', () => {
+            component.editable = true;
+            component.property.editable = false;
+            fixture.detectChanges();
+            expect(component.notClickable).toBe(true);
+        });
+
+        it('should return false when editable is false, and property.editable is false', () => {
+            component.editable = false;
+            component.property.editable = false;
+            fixture.detectChanges();
+            expect(component.notClickable).toBe(false);
+        });
     });
 
     describe('clickable', () => {
