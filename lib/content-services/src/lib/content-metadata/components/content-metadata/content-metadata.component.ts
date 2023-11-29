@@ -444,18 +444,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    showEmptyTagMessage(): boolean {
+    get showEmptyTagMessage(): boolean {
         return this.tags?.length === 0 && !this.isEditingModeTags;
     }
 
-    showEmptyCategoryMessage(): boolean {
+    get showEmptyCategoryMessage(): boolean {
         return this.categories?.length === 0 && !this.isEditingModeCategories;
     }
 
     get canEditGeneralInfo(): boolean {
         return !this.isEditingModeGeneralInfo && !this.readOnly;
     }
-    
+
     get isEditingGeneralInfo(): boolean {
         return this.isEditingModeGeneralInfo && !this.readOnly;
     }

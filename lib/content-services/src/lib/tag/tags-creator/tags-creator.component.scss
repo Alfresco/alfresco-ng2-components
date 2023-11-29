@@ -28,13 +28,14 @@ adf-tags-creator {
     .adf-tag-name-field,
     .adf-tag-name-field[hidden] {
         padding-top: 10px;
+        margin-right: 12px;
     }
 
     .adf-tag-search-field {
         background: var(--adf-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
-        padding-left: 8px;
+        padding: 0 6px 0 6px;
     }
 
     .adf-create-tag-label {

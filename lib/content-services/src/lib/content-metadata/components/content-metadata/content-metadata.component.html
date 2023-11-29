@@ -81,7 +81,7 @@
             <div *ngIf="!isEditingModeTags" class="adf-metadata-properties-tags">
                 <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
             </div>
-            <div *ngIf="showEmptyTagMessage()" class="adf-metadata-no-item-added">
+            <div *ngIf="showEmptyTagMessage" class="adf-metadata-no-item-added">
                 {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
             </div>
             <adf-tags-creator
@@ -131,7 +131,7 @@
             <div *ngIf="!isEditingModeCategories">
                 <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
             </div>
-            <div *ngIf="showEmptyCategoryMessage()" class="adf-metadata-no-item-added">
+            <div *ngIf="showEmptyCategoryMessage" class="adf-metadata-no-item-added">
                 {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
             </div>
             <adf-categories-management

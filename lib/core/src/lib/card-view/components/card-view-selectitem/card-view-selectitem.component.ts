@@ -71,7 +71,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         this.filter$.next(value.toString());
     }
 
-    isEditable(): boolean {
+    get isEditable(): boolean {
         return this.editable && this.property.editable;
     }
 

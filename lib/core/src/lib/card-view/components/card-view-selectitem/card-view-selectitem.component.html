@@ -1,18 +1,18 @@
-<ng-container *ngIf="!property.isEmpty() || isEditable()">
+<ng-container *ngIf="!property.isEmpty() || isEditable">
     <div
         [attr.data-automation-id]="'card-select-label-' + property.key"
         class="adf-property-label"
-        [ngClass]="{'adf-property-value-editable' : isEditable()}"
+        [ngClass]="{'adf-property-value-editable' : isEditable}"
     >{{ property.label | translate }}</div>
     <div class="adf-property-field">
         <div
-            *ngIf="!isEditable()"
+            *ngIf="!isEditable"
             class="adf-property-value adf-property-read-only"
             [attr.data-automation-id]="'select-readonly-value-' + property.key"
             data-automation-class="read-only-value">{{ (property.displayValue | async) | translate }}
         </div>
-        <div *ngIf="isEditable()">
-            <mat-form-field class="adf-property-value" [ngClass]="{'adf-property-value-editable' : isEditable()}">
+        <div *ngIf="isEditable">
+            <mat-form-field class="adf-property-value" [ngClass]="{'adf-property-value-editable' : isEditable}">
                 <mat-select
                     [(value)]="value"
                     panelClass="adf-select-filter"
