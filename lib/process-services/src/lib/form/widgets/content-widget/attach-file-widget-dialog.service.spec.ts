@@ -21,12 +21,14 @@ import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.servi
 import { Subject, of } from 'rxjs';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlfrescoEndpointRepresentation } from '@alfresco/js-api';
 
 describe('AttachFileWidgetDialogService', () => {
 
     let service: AttachFileWidgetDialogService;
     let materialDialog: MatDialog;
     let spyOnDialogOpen: jasmine.Spy;
+    let mockRepository: AlfrescoEndpointRepresentation;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,10 +46,11 @@ describe('AttachFileWidgetDialogService', () => {
                 error: new Subject<any>()
             }
         } as any);
+        mockRepository = { id: 1, name: 'fake-title', repositoryUrl: 'https://fakeurl.com/alfresco' };
     });
 
     it('should be able to open the dialog when node has permission', () => {
-        service.openLogin({ id: 1, name: 'fake-title', repositoryUrl: 'http://fakeurl.com/alfresco' }, 'fake-action');
+        service.openLogin(mockRepository, 'fake-action');
         expect(spyOnDialogOpen).toHaveBeenCalled();
     });
 
@@ -55,5 +58,17 @@ describe('AttachFileWidgetDialogService', () => {
         spyOn(materialDialog, 'closeAll');
         service.close();
         expect(materialDialog.closeAll).toHaveBeenCalled();
+    });
+
+    it('should attach predicate on dialog opening which accepts only file nodes', () => {
+        const spyOnOpenLoginDialog = spyOn((service as any), 'openLoginDialog');
+
+        service.openLogin(mockRepository, 'fake-action');
+
+        expect(spyOnOpenLoginDialog).toHaveBeenCalledTimes(1);
+        const actualIsSelectionValid = (spyOnOpenLoginDialog.calls.mostRecent().args[0] as any).isSelectionValid;
+
+        expect(actualIsSelectionValid({ isFile: true, isFolder: false })).toBe(true);
+        expect(actualIsSelectionValid({ isFile: false, isFolder: true })).toBe(false);
     });
 });
