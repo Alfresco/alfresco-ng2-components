@@ -976,7 +976,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     sortPredicate(index: number, _drag: CdkDrag, drop: CdkDropList): boolean {
-        return index > 0 && index < drop.getSortedItems().length;
+        return !drop.getSortedItems()[index].disabled;
     }
 
     private updateColumnsWidths(): void {
