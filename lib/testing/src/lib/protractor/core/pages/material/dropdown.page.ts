@@ -66,7 +66,7 @@ export class DropdownPage {
     }
 
     async checkOptionIsSelected(option: string): Promise<void> {
-        const selectedOption = this.dropDownElement.element(by.cssContainingText('.mdc-list-item__primary-text', option));
+        const selectedOption = this.dropDownElement.element(by.cssContainingText('.mat-mdc-select-value-text span', option));
         await BrowserVisibility.waitUntilElementIsVisible(selectedOption);
     }
 
