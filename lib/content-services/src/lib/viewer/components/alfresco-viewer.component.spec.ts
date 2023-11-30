@@ -476,6 +476,42 @@ describe('AlfrescoViewerComponent', () => {
         //
     });
 
+    describe('originalMimeType', () => {
+        it('should set originalMimeType based on nodeData content', async () => {
+            const defaultNode: Node = {
+                id: 'mock-id',
+                name: 'Mock Node',
+                nodeType: 'cm:content',
+                isFolder: false,
+                isFile: true,
+                modifiedAt: new Date(),
+                modifiedByUser: { id: 'user123', displayName: 'John Doe' },
+                createdAt: new Date(),
+                createdByUser: { id: 'user456', displayName: 'Jane Doe' },
+                properties: { 'cm:versionLabel': 'mock-version-label' }
+            };
+            component.nodeEntry = { entry: defaultNode };
+            component.nodeId = '123';
+            spyOn(renditionService, 'getNodeRendition').and.returnValue(
+                Promise.resolve({
+                    url: '',
+                    mimeType: ''
+                })
+            );
+
+            fixture.detectChanges();
+            nodesApiService.nodeUpdated.next({
+                id: '123',
+                name: 'file2',
+                content: {
+                    mimeType: 'application/msWord'
+                }
+            } as any);
+            await fixture.whenStable();
+            expect(component.originalMimeType).toEqual('application/msWord');
+        });
+    });
+
     describe('Toolbar', () => {
         it('should show only next file button', async () => {
             component.allowNavigate = true;
