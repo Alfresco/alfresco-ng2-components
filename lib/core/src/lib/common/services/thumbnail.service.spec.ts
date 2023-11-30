@@ -44,6 +44,11 @@ describe('ThumbnailService', () => {
         service = TestBed.inject(ThumbnailService);
     });
 
+    /**
+     * Test Node Icons
+     *
+     * @param iconPath to test icon type
+    */
     function testNodeIcon(iconPath: string, isFolderType: boolean, isFileType: boolean) {
         mockNode.isFolder = isFolderType;
         mockNode.isFile = isFileType;
@@ -78,18 +83,18 @@ describe('ThumbnailService', () => {
     it('should return the correct icon for a mht file', () => {
         expect(service.getMimeTypeIcon('multipart/related')).toContain('ft_ic_website.svg');
     });
-  
+
     it('should resolve folder icon', () => {
         testNodeIcon('assets/images/ft_ic_folder.svg', true, false);
     });
 
     it('should resolve link folder icon', () => {
-        mockNode.nodeType = "app:folderlink";
+        mockNode.nodeType = 'app:folderlink';
         testNodeIcon('assets/images/ft_ic_folder_shortcut_link.svg', true, false);
     });
 
     it('should resolve smart folder icon', () => {
-        mockNode.aspectNames = ['smf:customConfigSmartFolder']
+        mockNode.aspectNames = ['smf:customConfigSmartFolder'];
         testNodeIcon('assets/images/ft_ic_smart_folder.svg', true, false);
     });
 
@@ -98,8 +103,6 @@ describe('ThumbnailService', () => {
     });
 
     it('should resolve fallback file icon for unknown node', () => {
-        mockNode.isFile = false;
-        mockNode.isFolder = false;
-        testNodeIcon('assets/images/ft_ic_miscellaneous', false, false)
+        testNodeIcon('assets/images/ft_ic_miscellaneous', false, false);
     });
 });
