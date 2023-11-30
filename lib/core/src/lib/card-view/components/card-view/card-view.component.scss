@@ -35,6 +35,13 @@
                 line-height: 20px;
             }
 
+            .adf-card-view__key-value-pairs__row {
+                .mat-input-element {
+                    margin-top: 0px;
+                    padding-left: 12px;
+                }
+            }
+
             .mat-form-field-infix {
                 display: flex;
                 border-top-width: 0;
@@ -96,7 +103,7 @@
             background-color: var(--adf-metadata-buttons-background-color);
             border-radius: 6px;
             padding: 6px 0;
-            margin: 0 !important;
+            margin: 0;
             width: 100%;
         }
     }
