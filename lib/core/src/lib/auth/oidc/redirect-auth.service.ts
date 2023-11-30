@@ -129,7 +129,7 @@ export class RedirectAuthService extends AuthService {
 
   async loginCallback(): Promise<string | undefined> {
     return this.ensureDiscoveryDocument()
-      .then(() => this.oauthService.tryLogin({ preventClearHashAfterLogin: false }))
+      .then(() => this.oauthService.tryLogin({ preventClearHashAfterLogin: true }))
       .then(() => this._getRedirectUrl());
   }
 
