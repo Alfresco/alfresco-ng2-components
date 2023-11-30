@@ -47,8 +47,11 @@ describe('ThumbnailService', () => {
     /**
      * Test Node Icons
      *
-     * @param iconPath to test icon type
-    */
+     * @param iconPath to test icon path 
+     * @param isFolderType set folder type
+     * @param isFileType set file type
+     *
+     */
     function testNodeIcon(iconPath: string, isFolderType: boolean, isFileType: boolean) {
         mockNode.isFolder = isFolderType;
         mockNode.isFile = isFileType;
