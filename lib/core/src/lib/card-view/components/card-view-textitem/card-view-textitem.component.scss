@@ -34,7 +34,7 @@
     }
 
     .adf-textitem-clickable {
-        cursor: pointer !important;
+        cursor: pointer;
         padding-top: 3px;
 
         .adf-textitem-action:hover {
@@ -42,7 +42,7 @@
         }
 
         &-value {
-            cursor: pointer !important;
+            cursor: pointer;
             color: var(--theme-primary-color) !important;
         }
     }
