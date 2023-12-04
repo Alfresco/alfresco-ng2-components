@@ -19,8 +19,7 @@
             color: unset;
         }
 
-        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
-        &.mat-chip-list-wrapper {
+        &.mdc-evolution-chip-set__chips {
             margin: 4px 6px;
         }
     }

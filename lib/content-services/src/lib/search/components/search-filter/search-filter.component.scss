@@ -4,9 +4,8 @@
         color: var(--adf-theme-foreground-text-color-087);
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
-    .mat-checkbox-label,
-    .mat-radio-label {
+    .mat-mdc-checkbox label,
+    .mat-mdc-radio-button label {
         color: var(--adf-theme-foreground-text-color-054);
     }
 }
