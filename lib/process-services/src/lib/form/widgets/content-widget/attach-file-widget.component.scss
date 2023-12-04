@@ -39,7 +39,7 @@
     &-attach-widget-repo-button {
         padding-left: 10px;
         /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
-        .mat-button-wrapper {
+        .mdc-button__label {
             display: inline;
         }
 
@@ -70,13 +70,13 @@
             margin-bottom: 0;
         }
         /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
-        .mat-list-text {
+        .mdc-list-item__primary-text {
             max-width: 200px;
         }
 
         @include layout-bp(lt-md) {
             /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
-            .mat-list-text {
+            .mdc-list-item__primary-text {
                 max-width: 150px;
             }
         }

@@ -41,12 +41,12 @@
             display: flex;
             justify-content: space-between;
 
-            & .mat-button {
+            & .mat-mdc-button {
                 text-transform: uppercase;
                 border-radius: 5px;
             }
 
-            & .mat-button-wrapper {
+            & .mdc-button__label {
                 opacity: 0.54;
                 font-size: var(--theme-button-font-size);
                 font-weight: bold;
