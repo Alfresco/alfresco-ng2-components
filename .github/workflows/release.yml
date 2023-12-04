@@ -219,7 +219,7 @@ jobs:
       needs: [release-demoshell, release-storybook, release-npm, npm-check-bundle]
       steps:
 
-        - uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844 # v1.23.0
+        - uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117 # v1.24.0
           name: Nofify FE eng-guild-front-end workflow failed
           if: ${{ contains(toJson(needs.*.result), 'failure') }}
           env:
