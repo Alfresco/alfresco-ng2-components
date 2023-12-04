@@ -1,8 +1,7 @@
 .adf {
     &-date-widget {
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        /* stylelint-disable-next-line */
-        .mat-form-field-suffix {
+        .mat-mdc-form-field-text-suffix {
             top: 26px;
         }
 
@@ -13,14 +12,12 @@
 
     &-left-label-input-datepicker {
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        /* stylelint-disable-next-line */
-        .mat-form-field-suffix {
+        .mat-mdc-form-field-text-suffix {
             top: 0;
         }
 
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        /* stylelint-disable-next-line */
-        .mat-form-field-infix {
+        .mat-mdc-form-field-infix {
             width: 100%;
         }
     }
