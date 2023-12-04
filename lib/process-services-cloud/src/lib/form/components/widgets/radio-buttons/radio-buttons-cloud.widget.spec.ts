@@ -22,13 +22,17 @@ import { FormCloudService } from '../../../services/form-cloud.service';
 import { RadioButtonsCloudWidgetComponent } from './radio-buttons-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { of, throwError } from 'rxjs';
-import { By } from '@angular/platform-browser';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('RadioButtonsCloudWidgetComponent', () => {
     let fixture: ComponentFixture<RadioButtonsCloudWidgetComponent>;
     let widget: RadioButtonsCloudWidgetComponent;
     let formCloudService: FormCloudService;
     let element: HTMLElement;
+    let loader: HarnessLoader;
     const restOption: FormFieldOption[] = [
         {
             id: 'opt-1',
@@ -51,6 +55,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 
@@ -124,18 +129,15 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widgetLabel.innerText).toBe('radio-name-label*');
         expect(widget.field.isValid).toBe(false);
 
-        const option = element.querySelector<HTMLElement>('#radio-id-opt-1 label');
-        option.click();
+        const option = await loader.getHarness(MatRadioButtonHarness.with({ label: 'opt-name-1' }));
+        await option.check();
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
-        expect(selectedOption.innerText).toBe('opt-name-1');
+        const selectedOption = await loader.getHarness(MatRadioButtonHarness.with({ checked: true }));
+        expect(await selectedOption.getLabelText()).toBe('opt-name-1');
         expect(widget.field.isValid).toBe(true);
     });
 
-    it('should set Radio Button as valid when required and not empty', () => {
+    it('should set Radio Button as valid when required and not empty', async () => {
         widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',
@@ -149,8 +151,8 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
-        expect(selectedOption.innerText).toBe('opt-name-2');
+        const selectedOption = await loader.getHarness(MatRadioButtonHarness.with({ checked: true }));
+        expect(await selectedOption.getLabelText()).toBe('opt-name-2');
         expect(widget.field.isValid).toBe(true);
     });
 
@@ -167,22 +169,22 @@ describe('RadioButtonsCloudWidgetComponent', () => {
             restUrl: 'http://mocky.com/mocky-12344',
             value: { id: 'opt-1' }
         });
-
         fixture.detectChanges();
-        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
-        expect(selectedOption.innerText).toBe('opt-name-1');
+
+        expect(widget.isChecked(widget.field.options[0])).toBeTrue();
         expect(widget.field.isValid).toBe(true);
     });
 
-    it('should show error message if the restUrl failed to fetch options', () => {
+    it('should show error message if the restUrl failed to fetch options', async () => {
         spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
         widget.field.restUrl = 'https://fake-rest-url';
         widget.field.optionType = 'rest';
         widget.field.restIdProperty = 'name';
         fixture.detectChanges();
 
-        const radioButtons = element.querySelector<HTMLInputElement>('mat-radio-group');
-        radioButtons.click();
+        const radioButtons = await loader.getHarness(MatRadioGroupHarness);
+        await (await radioButtons.host()).click();
+
         fixture.detectChanges();
 
         const errorMessage = element.querySelector('.adf-radio-group-error-message .adf-error-text');
@@ -190,6 +192,22 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         expect(errorIcon.textContent).toBe('error_outline');
         expect(errorMessage.textContent).toBe('FORM.FIELD.REST_API_FAILED');
+    });
+
+    it('should change the value of the form when an option is clicked', async () => {
+        widget.field = new FormFieldModel(new FormModel({}), {
+            id: 'radio-id',
+            name: 'radio-name-label',
+            type: FormFieldTypes.RADIO_BUTTONS,
+            options: restOption
+        });
+        fixture.detectChanges();
+        const formValueSpy = spyOn(widget.formService.formRulesEvent, 'next');
+        const radioButton = await loader.getHarness(MatRadioButtonHarness.with({ label: 'opt-name-1' }));
+        await radioButton.check();
+
+        expect(widget.field.value).toEqual('opt-1');
+        expect(formValueSpy).toHaveBeenCalled();
     });
 
     describe('when tooltip is set', () => {
@@ -205,28 +223,19 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const radioButtonsInput = element.querySelector('mat-radio-button');
-            radioButtonsInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            await tooltip.show();
+            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
           });
 
         it('should hide tooltip', async () => {
-            const radioButtonsInput = element.querySelector('mat-radio-button');
-            radioButtonsInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const radioButton = await loader.getHarness(MatRadioButtonHarness);
 
-            radioButtonsInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            await radioButton.focus();
+            await radioButton.blur();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeFalse();
         });
     });
 });
