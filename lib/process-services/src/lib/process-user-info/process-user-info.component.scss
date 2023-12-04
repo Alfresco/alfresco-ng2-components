@@ -63,7 +63,7 @@
         min-width: 250px;
     }
     /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
-    &-userinfo-tab .mat-tab-label {
+    &-userinfo-tab .mdc-tab__text-label {
         flex: auto;
         font-weight: 500;
         font-size: var(--theme-body-1-font-size);
