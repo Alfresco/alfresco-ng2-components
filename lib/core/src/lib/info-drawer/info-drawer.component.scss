@@ -4,7 +4,7 @@
             display: block;
             margin: 0;
         }
-        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         .mdc-tab__text-label {
             min-width: 0;
@@ -41,8 +41,7 @@
                     & .mat-tab-body-content > *:last-child {
                         margin-bottom: 0;
                     }
-                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
-                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+
                     .mdc-tab__text-label {
                         flex-grow: 1;
 
