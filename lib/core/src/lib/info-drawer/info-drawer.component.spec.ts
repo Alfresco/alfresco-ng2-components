@@ -142,7 +142,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mdc-tab--active .mdc-tab__text-label'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('Tab1');
+        expect(tab[0].nativeElement.innerText).toContain('TAB1');
     });
 
     it('should select the tab 2 (index 1)', () => {
@@ -150,7 +150,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mdc-tab--active .mdc-tab__text-label'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('Tab2');
+        expect(tab[0].nativeElement.innerText).toContain('TAB2');
     });
 
     it('should render a tab with icon', () => {
