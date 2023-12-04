@@ -13,7 +13,7 @@
             border-radius: 5px;
         }
         /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
-        & .mat-button-wrapper {
+        & .mdc-button__label {
             width: 58px;
             height: 20px;
             opacity: 0.54;
