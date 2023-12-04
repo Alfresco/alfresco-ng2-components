@@ -151,8 +151,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const selectedOption = await loader.getHarness(MatRadioButtonHarness.with({ checked: true }));
-        expect(await selectedOption.getLabelText()).toBe('opt-name-2');
+        await loader.getHarness(MatRadioButtonHarness.with({ checked: true, label: 'opt-name-2' }));
         expect(widget.field.isValid).toBe(true);
     });
 
@@ -195,7 +194,8 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should change the value of the form when an option is clicked', async () => {
-        widget.field = new FormFieldModel(new FormModel({}), {
+        const form = new FormModel({});
+        widget.field = new FormFieldModel(form, {
             id: 'radio-id',
             name: 'radio-name-label',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -223,18 +223,20 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
+            const radioButton = await loader.getHarness(MatRadioButtonHarness);
+            await (await radioButton.host()).hover();
             const tooltip = await loader.getHarness(MatTooltipHarness);
-            await tooltip.show();
             expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
           });
 
         it('should hide tooltip', async () => {
             const radioButton = await loader.getHarness(MatRadioButtonHarness);
-
-            await radioButton.focus();
-            await radioButton.blur();
-
             const tooltipElement = await loader.getHarness(MatTooltipHarness);
+
+            await (await radioButton.host()).hover();
+            expect(await tooltipElement.isOpen()).toBeTrue();
+
+            await (await radioButton.host()).mouseAway();
             expect(await tooltipElement.isOpen()).toBeFalse();
         });
     });
