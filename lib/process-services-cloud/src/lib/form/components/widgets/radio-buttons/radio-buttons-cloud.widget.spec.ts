@@ -132,8 +132,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         const option = await loader.getHarness(MatRadioButtonHarness.with({ label: 'opt-name-1' }));
         await option.check();
 
-        const selectedOption = await loader.getHarness(MatRadioButtonHarness.with({ checked: true }));
-        expect(await selectedOption.getLabelText()).toBe('opt-name-1');
+        await loader.getHarness(MatRadioButtonHarness.with({ checked: true, label: 'opt-name-1'}));
         expect(widget.field.isValid).toBe(true);
     });
 
