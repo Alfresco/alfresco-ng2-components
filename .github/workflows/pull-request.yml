@@ -139,7 +139,7 @@ jobs:
 
       - name: Get PR number
         if: ${{ github.event_name != 'schedule' }}
-        uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6 # v0.7.0
+        uses: kamatama41/get-pr-number-action@0bcaab5752c0b699149e74667c8ce2f764cbb7fa # v0.9.1
         id: action
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
