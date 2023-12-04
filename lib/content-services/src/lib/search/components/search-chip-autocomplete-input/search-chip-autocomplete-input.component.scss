@@ -3,13 +3,11 @@ adf-search-chip-autocomplete-input {
         width: 100%;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    .mat-form-field-appearance-outline .mat-form-field-outline {
+    .mat-form-field-appearance-outline .mdc-text-field--outlined {
         top: 0;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
         border: none;
     }
 
@@ -21,8 +19,7 @@ adf-search-chip-autocomplete-input {
         word-break: break-word;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
-    .mat-chip-remove.adf-option-chips-delete-button {
+    .mat-mdc-chip-remove.adf-option-chips-delete-button {
         font-size: 13px;
         height: 13px;
         width: 13px;
@@ -34,19 +31,16 @@ adf-search-chip-autocomplete-input {
         }
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
-    .mat-chip-list-wrapper {
+    .mdc-evolution-chip-set__chips {
         min-height: 40px;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    .mat-form-field-wrapper {
+    .mat-mdc-text-field-wrapper {
         padding: 0;
     }
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of tooltip that may no longer apply for the MDC version. */
-.mat-tooltip-hide {
+.mat-mdc-tooltip-hide {
     display: none;
 }
 

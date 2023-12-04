@@ -11,7 +11,6 @@ adf-search-facet-chip-tabbed {
 }
 
 adf-search-filter-tabbed {
-    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
     .mat-mdc-tab-body-content {
         margin-top: 16px;
     }
