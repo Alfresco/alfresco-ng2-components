@@ -1,11 +1,10 @@
 adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
+    }
 
-        /* stylelint-disable-next-line */
-        .mat-form-field-infix {
-            border: none;
-        }
+    .mat-mdc-form-field-infix {
+        border: none;
     }
 
     .adf-autocomplete-added-option-chips.adf-option-chips {
