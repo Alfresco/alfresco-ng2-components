@@ -57,7 +57,7 @@
         padding-left: 10px;
 
         /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
-        .mat-button-wrapper {
+        .mdc-button__label {
             display: inline;
         }
 

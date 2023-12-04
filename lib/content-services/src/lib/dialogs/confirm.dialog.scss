@@ -2,7 +2,6 @@
     flex: 1 1 auto;
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
-.adf-confirm-dialog .mat-dialog-actions .mat-button-wrapper {
+.adf-confirm-dialog .mat-mdc-dialog-actions .mdc-button__label {
     text-transform: uppercase;
 }
