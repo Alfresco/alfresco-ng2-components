@@ -131,7 +131,7 @@ describe('TaskHeaderCloudComponent', () => {
         xit('should display priority with default values', async () => {
             fixture.detectChanges();
 
-            const priorityEl = fixture.debugElement.nativeElement.querySelector('[data-automation-id="header-priority"] .mat-select-trigger');
+            const priorityEl = fixture.debugElement.nativeElement.querySelector('[data-automation-id="header-priority"] .mat-mdc-select-trigger');
             expect(priorityEl).toBeDefined();
             expect(priorityEl).not.toBeNull();
 
