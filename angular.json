@@ -20,7 +20,8 @@
               "zen-observable",
               "subscriptions-transport-ws",
               "d",
-              "chart.js"
+              "chart.js",
+              "cropperjs"
             ],
             "outputPath": "dist/demo-shell",
             "index": "demo-shell/src/index.html",
