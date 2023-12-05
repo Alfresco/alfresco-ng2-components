@@ -74,7 +74,7 @@ $adf-pagination-empty-border: none !default;
     }
 
     &__page-selector {
-        max-height: 250px !important;
+        max-height: 250px;
     }
 
     &.adf-pagination__empty {
