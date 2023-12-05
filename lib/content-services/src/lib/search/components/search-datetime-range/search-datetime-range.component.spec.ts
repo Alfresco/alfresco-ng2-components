@@ -180,7 +180,7 @@ describe('SearchDatetimeRangeComponent', () => {
             to: toInGmt
         }, true);
 
-        const expectedQuery = `cm:created:['2021-02-24T15:00:00.000Z' TO '2021-02-28T13:00:59.000Z']`;
+        const expectedQuery = `cm:created:['2021-02-24T20:30:00.000Z' TO '2021-02-28T18:30:59.000Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();

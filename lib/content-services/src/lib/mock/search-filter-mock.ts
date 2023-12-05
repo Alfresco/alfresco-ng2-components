@@ -375,7 +375,10 @@ export const searchFilter = {
                 selector: 'date-range',
                 settings: {
                     field: 'cm:created',
-                    dateFormat: 'DD-MMM-YY'
+                    dateFormat: 'DD-MMM-YY',
+                    displayedLabelsByField: {
+                        'cm:created': 'Created Date (range)'
+                    }
                 }
             }
         },
