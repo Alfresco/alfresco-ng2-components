@@ -80,7 +80,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     onOptionClick(optionSelected: any) {
         this.field.value = optionSelected;
-        this.fieldChanged.emit(this.field);
+        this.onFieldChanged(this.field);
     }
 
     handleError(error: any) {
