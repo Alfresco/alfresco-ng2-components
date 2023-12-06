@@ -155,7 +155,7 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(13);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
 
             await navigationBarPage.navigateToContentServices();
 
@@ -170,7 +170,7 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(13);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
 
             await navigationBarPage.navigateToContentServices();
             jsonFile.categories[5].component.settings.pageSize = 9;
@@ -184,7 +184,7 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(12);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(15);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
@@ -213,21 +213,21 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(8);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.typeFiltersPage().clickShowMoreButton();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(13);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
 
             await searchFiltersPage.typeFiltersPage().clickShowLessButton();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(8);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
@@ -244,21 +244,21 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(8);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.typeFiltersPage().clickShowMoreButton();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(13);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
 
             await searchFiltersPage.typeFiltersPage().clickShowLessButton();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(8);
+            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
