@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('TaskAttachmentList', () => {
 
@@ -48,7 +49,8 @@ describe('TaskAttachmentList', () => {
                 HttpClientModule,
                 MatMenuModule,
                 NoopAnimationsModule,
-                MatProgressSpinnerModule
+                MatProgressSpinnerModule,
+                MatTooltipModule
             ],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
