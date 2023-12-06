@@ -59,7 +59,7 @@ export class GroupCloudComponentPage {
 
     async checkSelectedGroup(group: string): Promise<boolean> {
         try {
-            await TestElement.byText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group).waitVisible();
+            await TestElement.byText('mat-chip-row[data-automation-id*="adf-cloud-group-chip-"]', group).waitVisible();
             return true;
         } catch (e) {
             return false;
@@ -67,11 +67,11 @@ export class GroupCloudComponentPage {
     }
 
     async checkGroupNotSelected(group: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip-row[data-automation-id*="adf-cloud-group-chip-"]', group)));
     }
 
     async removeSelectedGroup(group: string): Promise<void> {
-        const locator = $(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`);
+        const locator = $(`mat-chip-row[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`);
         await BrowserActions.click(locator);
     }
 
