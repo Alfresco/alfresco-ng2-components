@@ -47,7 +47,8 @@ describe('TaskAttachmentList', () => {
                 HttpClientModule,
                 MatMenuModule,
                 NoopAnimationsModule,
-                MatProgressSpinnerModule
+                MatProgressSpinnerModule,
+                MatTooltipModule
             ],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
