@@ -37,8 +37,8 @@ export class EditTaskFilterCloudComponentPage {
     id = $('input[data-automation-id="adf-cloud-edit-task-property-taskId"]');
     processDefinitionId = $('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]');
     processInstanceId = $('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]');
-    lastModifiedFrom = $('input[data-placeholder="LastModifiedFrom"]');
-    lastModifiedTo = $('input[data-placeholder="LastModifiedTo"]');
+    lastModifiedFrom = $('input[placeholder="LastModifiedFrom"]');
+    lastModifiedTo = $('input[placeholder="LastModifiedTo"]');
     parentTaskId = $('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]');
     owner = $('input[data-automation-id="adf-cloud-edit-task-property-owner"]');
     saveButton = $('[data-automation-id="adf-filter-action-save"]');
