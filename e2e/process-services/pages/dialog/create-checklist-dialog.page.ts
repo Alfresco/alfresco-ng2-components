@@ -42,7 +42,7 @@ export class ChecklistDialog {
     }
 
     async getNameFieldPlaceholder(): Promise<string> {
-        return BrowserActions.getAttribute(this.nameField, 'data-placeholder');
+        return BrowserActions.getAttribute(this.nameField, 'placeholder');
     }
 
     async checkCancelButtonIsEnabled(): Promise<void> {

@@ -64,7 +64,7 @@ export class StartProcessCloudPage {
 
     async selectFirstOptionFromProcessDropdown(): Promise<void> {
         await this.clickProcessDropdownArrow();
-        const selectFirstProcessDropdown = $$('.mat-option-text').first();
+        const selectFirstProcessDropdown = $$('.mdc-list-item__primary-text').first();
         await BrowserActions.click(selectFirstProcessDropdown);
     }
 
