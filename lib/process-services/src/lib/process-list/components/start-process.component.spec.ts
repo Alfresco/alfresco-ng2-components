@@ -339,11 +339,16 @@ describe('StartProcessComponent', () => {
             selectElement.click();
 
             fixture.detectChanges();
+<<<<<<< Updated upstream
 
             fixture.componentInstance.inputAutocomplete.openPanel();
             fixture.detectChanges();
             // await fixture.whenStable();
             const options: any = fixture.debugElement.queryAll(By.css('.mdc-list-item__primary-textk'));
+=======
+            await fixture.whenStable();
+            const options: any = fixture.debugElement.queryAll(By.css('.mdc-list-item__primary-text'));
+>>>>>>> Stashed changes
 
             expect(options.length).toBe(2);
             expect(options[0].nativeElement.innerText).toBe('My Process 1');
