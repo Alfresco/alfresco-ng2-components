@@ -25,7 +25,7 @@ export class DatePickerCalendarPage {
     datePicker = $('mat-calendar[id*="mat-datepicker"]');
     nextMonthButton = $('button[class*="mat-calendar-next-button"]');
     previousMonthButton = $('button[class*="mat-calendar-previous-button"]');
-    todayDate = TestElement.byCss('div.mat-calendar-body-today');
+    todayDate = TestElement.byCss('span.mat-calendar-body-today');
     periodButton = $('button[class*=mat-calendar-period-button]');
 
     async getSelectedDate(): Promise<string> {

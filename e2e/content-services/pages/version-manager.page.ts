@@ -110,7 +110,7 @@ export class VersionManagePage {
 
     async clickActionButton(version: string): Promise<void> {
         await TestElement.byId(`adf-version-list-action-menu-button-${version}`).click();
-        await TestElement.byCss('.cdk-overlay-container .mat-menu-content').waitVisible();
+        await TestElement.byCss('.cdk-overlay-container .mat-mdc-menu-content').waitVisible();
     }
 
     async closeActionsMenu(): Promise<void> {
