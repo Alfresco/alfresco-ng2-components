@@ -1,88 +1,49 @@
 ---
 Title: Search date range component
-Added: v2.4.0
+Added: v6.2.0
 Status: Active
-Last reviewed: 2018-06-11
+Last reviewed: 2023-07-10
 ---
 
-# [Search date range component](../../../lib/content-services/src/lib/search/components/search-date-range/search-date-range.component.ts "Defined in search-date-range.component.ts")
+# [Search date range component](../../../lib/content-services/src/lib/search/components/search-date-range-tabbed/search-date-range/search-date-range.component.ts "Defined in search-date-range.component.ts")
 
-Implements a [search widget](../../../lib/content-services/src/lib/search/search-widget.interface.ts) for the [Search Filter component](search-filter.component.md).
+Represents a date range component for the [SearchDateRangeTabbedComponent](search-date-range-tabbed.component.md).
 
 ![Date Range Widget](../../docassets/images/search-date-range.png)
 
+NOTE: As of v6.5.0, the settings configuration for the original SearchDateRangeComponent have changed. If you have been using this component since
+before that release, please ensure that your component configuration is updated according to the new settings listed below. 
+
 ## Basic usage
 
-```json
-{
-    "search": {
-        "categories": [
-            {
-                "id": "createdDateRange",
-                "name": "Created Date (range)",
-                "enabled": true,
-                "component": {
-                    "selector": "date-range",
-                    "settings": {
-                        "field": "cm:created"
-                    }
-                }
-            }
-        ]
-    }
-}
+```html
+
+<adf-search-date-range></adf-search-date-range>
 ```
 
-### Settings
+## Class Members
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| field | string | Field to apply the query to. Required value |
-| dateFormat | string | Date format. Dates used by the datepicker are [Moment.js](https://momentjs.com/docs/#/parsing/string-format/) instances, so you can use any date format supported by Moment. Default is 'DD/MM/YYYY'. |
-| maxDate | string | A fixed date or the string `"today"` that will set the maximum searchable date. Default is no maximum. |
-| hideDefaultAction | boolean | Show/hide the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) actions. By default is false. |
+### Properties
+
+| Name         | Type            | Description                                                                                                                                                                                                                                                |
+|--------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| field        | string          | Field to apply the query to. Required value                                                                                                                                                                                                                |
+| maxDate      | string          | A fixed date (default format: dd-MMM-yy) or the string `"today"` that will set the maximum searchable date. Default is today.                                                                                                                              |
+| dateFormat   | string          | Date format. Dates used by the datepicker are Javascript Date objects, using [date-fns](https://date-fns.org/v2.30.0/docs/format) for formatting, so you can use any date format supported by the library. Default is 'dd-MMM-yy (sample date - 07-Jun-23) |
+| initialValue | SearchDateRange | Initial value for the component                                                                                                                                                                                                                            |
+
+### Events
+
+| Name                | Type                                                                                   | Description                                                                                                                                    |
+|---------------------|----------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| changed             | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Partial<SearchDateRange>>` | Emitted whenever a change is made in the component values. Emits the changes being made in the component.                                      |
+| valid               | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>`                  | Emitted whenever a change is made in the component values. Emits a flag indicating whether the current state of the component is valid or not. |
 
 ## Details
 
-This component lets the user select a range between two dates based on the particular `field`.
-See the [Search filter component](search-filter.component.md) for full details of how to use widgets
-in a search query.
+This component lets the user choose a variety of options to perform date related operations.
 
-### Custom date format
-
-You can set the date range picker to work with any date format your app requires. You can use
-any date format supported by [Moment.js](https://momentjs.com/docs/#/parsing/string-format/)
-in the `dateFormat` and in the `maxDate` setting:
-
-```json
-{
-    "search": {
-        "categories": [
-            {
-                "id": "createdDateRange",
-                "name": "Created Date (range)",
-                "enabled": true,
-                "component": {
-                    "selector": "date-range",
-                    "settings": {
-                        "field": "cm:created",
-                        "dateFormat": "DD-MMM-YY",
-                        "maxDate": "02-Mar-20"
-                    }
-                }
-            }
-        ]
-    }
-}
-```
-
-## See also
-
--   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
--   [Search filter chips component](search-filter-chips.component.md)
--   [Search filter component](search-filter.component.md)
--   [Search check list component](search-check-list.component.md)
--   [Search number range component](search-number-range.component.md)
--   [Search radio component](search-radio.component.md)
--   [Search slider component](search-slider.component.md)
--   [Search text component](search-text.component.md)
+- Anytime - No date related data will be returned. This option is selected by default
+- In the last - Allows user to perform date related operations over a period of time. The user can select the length of the period from current time, 
+as well as its unit. Currently, 3 units are supported - Days, Weeks, and Months.
+- Between - Allows the user to select a range of dates to perform operations on.

@@ -19,7 +19,6 @@ import { ElementFinder } from 'protractor';
 import { SearchTextPage } from './search-text.page';
 import { SearchCheckListPage } from './search-check-list.page';
 import { SearchRadioPage } from './search-radio.page';
-import { DateRangeFilterPage } from './date-range-filter.page';
 import { NumberRangeFilterPage } from './number-range-filter.page';
 import { SearchSliderPage } from './search-slider.page';
 import { BrowserActions } from '../../../core/utils/browser-actions';
@@ -37,10 +36,6 @@ export class SearchCategoriesPage {
 
     static radioFiltersPage(filter: ElementFinder): SearchRadioPage {
         return new SearchRadioPage(filter);
-    }
-
-    static dateRangeFilter(filter: ElementFinder): DateRangeFilterPage {
-        return new DateRangeFilterPage(filter);
     }
 
     static numberRangeFilter(filter: ElementFinder): NumberRangeFilterPage {

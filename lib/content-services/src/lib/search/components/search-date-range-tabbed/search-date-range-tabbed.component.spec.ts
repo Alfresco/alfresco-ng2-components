@@ -19,12 +19,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SearchDateRangeAdvanced } from './search-date-range-advanced/search-date-range-advanced';
+import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
-import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced/search-date-range-advanced.component';
-import { SearchDateRangeAdvancedTabbedComponent } from './search-date-range-advanced-tabbed.component';
-import { DateRangeType } from './search-date-range-advanced/date-range-type';
-import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
+import { SearchDateRangeComponent } from './search-date-range/search-date-range.component';
+import { SearchDateRangeTabbedComponent } from './search-date-range-tabbed.component';
+import { DateRangeType } from './search-date-range/date-range-type';
+import { InLastDateType } from './search-date-range/in-last-date-type';
 import {
     endOfDay,
     endOfToday,
@@ -44,10 +44,10 @@ import {
 export class MockSearchFilterTabbedComponent {}
 
 @Component({
-    selector: 'adf-search-date-range-advanced',
+    selector: 'adf-search-date-range',
     template: ``
 })
-export class MockSearchDateRangeAdvancedComponent {
+export class MockSearchDateRangeComponent {
     @Input()
     dateFormat: string;
     @Input()
@@ -55,39 +55,39 @@ export class MockSearchDateRangeAdvancedComponent {
     @Input()
     field: string;
     @Input()
-    initialValue: SearchDateRangeAdvanced;
+    initialValue: SearchDateRange;
 
     @Output()
-    changed = new EventEmitter<Partial<SearchDateRangeAdvanced>>();
+    changed = new EventEmitter<Partial<SearchDateRange>>();
     @Output()
     valid = new EventEmitter<boolean>();
 }
-describe('SearchDateRangeAdvancedTabbedComponent', () => {
-    let component: SearchDateRangeAdvancedTabbedComponent;
-    let fixture: ComponentFixture<SearchDateRangeAdvancedTabbedComponent>;
-    let betweenMockData: SearchDateRangeAdvanced;
-    let inLastMockData: SearchDateRangeAdvanced;
-    let anyMockDate: SearchDateRangeAdvanced;
+describe('SearchDateRangeTabbedComponent', () => {
+    let component: SearchDateRangeTabbedComponent;
+    let fixture: ComponentFixture<SearchDateRangeTabbedComponent>;
+    let betweenMockData: SearchDateRange;
+    let inLastMockData: SearchDateRange;
+    let anyMockDate: SearchDateRange;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchDateRangeAdvancedTabbedComponent, SearchFilterTabbedComponent, SearchDateRangeAdvancedComponent],
+            declarations: [SearchDateRangeTabbedComponent, SearchFilterTabbedComponent, SearchDateRangeComponent],
             imports: [
                 TranslateModule.forRoot(),
                 ContentTestingModule
             ],
             providers: [
                 { provide: SearchFilterTabbedComponent, useClass: MockSearchFilterTabbedComponent },
-                { provide: SearchDateRangeAdvancedComponent, useClass: MockSearchDateRangeAdvancedComponent }
+                { provide: SearchDateRangeComponent, useClass: MockSearchDateRangeComponent }
             ]
         });
-        fixture = TestBed.createComponent(SearchDateRangeAdvancedTabbedComponent);
+        fixture = TestBed.createComponent(SearchDateRangeTabbedComponent);
 
         component = fixture.componentInstance;
-        component.id = 'dateRangeAdvanced';
+        component.id = 'dateRange';
         component.context = {
             queryFragments: {
-                dateRangeAdvanced: ''
+                dateRange: ''
             },
             update: jasmine.createSpy('update')
         } as any;
@@ -219,7 +219,7 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         const inLastStartDate = startOfWeek(subWeeks(new Date(), 5));
         const query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
          ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
-        expect(component.context.queryFragments['dateRangeAdvanced']).toEqual(query);
+        expect(component.context.queryFragments['dateRange']).toEqual(query);
         expect(component.context.update).toHaveBeenCalled();
     });
 
@@ -230,7 +230,7 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         expect(component.combinedQuery).toBe('');
         expect(component.combinedDisplayValue).toBe('');
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
-        expect(component.context.queryFragments['dateRangeAdvanced']).toEqual('');
+        expect(component.context.queryFragments['dateRange']).toEqual('');
         expect(component.context.update).toHaveBeenCalled();
     });
 });

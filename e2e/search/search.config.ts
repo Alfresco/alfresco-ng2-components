@@ -155,7 +155,10 @@ export class SearchConfiguration {
                         selector: 'date-range',
                         settings: {
                             field: 'cm:created',
-                            dateFormat: 'DD-MMM-YY'
+                            dateFormat: 'DD-MMM-YY',
+                            displayedLabelsByField: {
+                                'cm:created': 'Created Date'
+                            }
                         }
                     }
                 },
@@ -182,7 +185,7 @@ export class SearchConfiguration {
                     name: 'Date',
                     enabled: true,
                     component: {
-                        selector: 'date-range-advanced',
+                        selector: 'date-range',
                         settings: {
                             dateFormat: 'dd-MMM-yy',
                             maxDate: 'today',

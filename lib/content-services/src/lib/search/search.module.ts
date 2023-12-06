@@ -37,7 +37,6 @@ import { SearchSliderComponent } from './components/search-slider/search-slider.
 import { SearchNumberRangeComponent } from './components/search-number-range/search-number-range.component';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
-import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from './search-query-service.token';
 import { SearchQueryBuilderService } from './services/search-query-builder.service';
@@ -53,8 +52,8 @@ import { SearchLogicalFilterComponent } from './components/search-logical-filter
 import { ResetSearchDirective } from './components/reset-search.directive';
 import { SearchPropertiesComponent } from './components/search-properties/search-properties.component';
 import { SearchFilterTabbedComponent } from './components/search-filter-tabbed/search-filter-tabbed.component';
-import { SearchDateRangeAdvancedComponent } from './components/search-date-range-advanced-tabbed/search-date-range-advanced/search-date-range-advanced.component';
-import { SearchDateRangeAdvancedTabbedComponent } from './components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component';
+import { SearchDateRangeComponent } from './components/search-date-range-tabbed/search-date-range/search-date-range.component';
+import { SearchDateRangeTabbedComponent } from './components/search-date-range-tabbed/search-date-range-tabbed.component';
 import { SearchFilterTabDirective } from './components/search-filter-tabbed/search-filter-tab.directive';
 import { SearchFacetChipTabbedComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
@@ -84,7 +83,6 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchNumberRangeComponent,
         SearchPanelComponent,
         SearchCheckListComponent,
-        SearchDateRangeComponent,
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
@@ -98,8 +96,8 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         ResetSearchDirective,
         SearchPropertiesComponent,
         SearchFilterTabbedComponent,
-        SearchDateRangeAdvancedComponent,
-        SearchDateRangeAdvancedTabbedComponent,
+        SearchDateRangeComponent,
+        SearchDateRangeTabbedComponent,
         SearchFilterTabDirective,
         SearchFacetChipTabbedComponent,
         SearchFacetTabbedContentComponent
@@ -119,7 +117,6 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchNumberRangeComponent,
         SearchPanelComponent,
         SearchCheckListComponent,
-        SearchDateRangeComponent,
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
@@ -129,7 +126,8 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchFacetFieldComponent,
         SearchLogicalFilterComponent,
         SearchFilterTabbedComponent,
-        SearchDateRangeAdvancedComponent,
+        SearchDateRangeComponent,
+        SearchDateRangeTabbedComponent,
         ResetSearchDirective,
         SearchFacetChipTabbedComponent,
         SearchFacetTabbedContentComponent

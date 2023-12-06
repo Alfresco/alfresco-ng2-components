@@ -1,6 +1,6 @@
 <adf-search-filter-tabbed>
     <ng-container *ngFor="let field of fields">
-        <adf-search-date-range-advanced
+        <adf-search-date-range
             *adf-search-filter-tab="settings.displayedLabelsByField[field]"
             [dateFormat]="settings.dateFormat"
             [maxDate]="settings.maxDate"
@@ -8,6 +8,6 @@
             [initialValue]="startValue"
             (changed)="onDateRangedValueChanged($event, field)"
             (valid)="tabsValidity[field]=$event">
-        </adf-search-date-range-advanced>
+        </adf-search-date-range>
     </ng-container>
 </adf-search-filter-tabbed>

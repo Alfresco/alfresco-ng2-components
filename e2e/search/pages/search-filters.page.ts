@@ -17,7 +17,6 @@
 
 import {
     BrowserVisibility,
-    DateRangeFilterPage,
     NumberRangeFilterPage,
     SearchCategoriesPage,
     SearchCheckListPage,
@@ -36,7 +35,6 @@ export class SearchFiltersPage {
     fileSizeFilter = $('[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]');
     nameFilter = $('[data-automation-id="expansion-panel-Name"]');
     checkListFilter = $('[data-automation-id="expansion-panel-Check List"]');
-    createdDateRangeFilter = $('[data-automation-id="expansion-panel-Created Date (range)"]');
     typeFilter = $('[data-automation-id="expansion-panel-Type"]');
     sizeRangeFilter = $('[data-automation-id="expansion-panel-Content Size (range)"]');
     sizeSliderFilter = $('[data-automation-id="expansion-panel-Content Size"]');
@@ -54,10 +52,6 @@ export class SearchFiltersPage {
 
     sizeRangeFilterPage(): NumberRangeFilterPage {
         return SearchCategoriesPage.numberRangeFilter(this.sizeRangeFilter);
-    }
-
-    createdDateRangeFilterPage(): DateRangeFilterPage {
-        return SearchCategoriesPage.dateRangeFilter(this.createdDateRangeFilter);
     }
 
     textFiltersPage(): SearchTextPage {
@@ -154,18 +148,6 @@ export class SearchFiltersPage {
 
     async checkCheckListFilterIsExpanded(): Promise<void> {
         await this.searchCategoriesPage.checkFilterIsExpanded(this.checkListFilter);
-    }
-
-    async checkCreatedRangeFilterIsDisplayed(): Promise<void> {
-        await this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
-    }
-
-    async clickCreatedRangeFilterHeader(): Promise<void> {
-        await this.searchCategoriesPage.clickFilterHeader(this.createdDateRangeFilter);
-    }
-
-    async checkCreatedRangeFilterIsExpanded(): Promise<void> {
-        await this.searchCategoriesPage.checkFilterIsExpanded(this.createdDateRangeFilter);
     }
 
     async checkTypeFilterIsDisplayed(): Promise<void> {

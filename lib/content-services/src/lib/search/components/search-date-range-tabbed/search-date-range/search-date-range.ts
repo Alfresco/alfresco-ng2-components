@@ -18,7 +18,7 @@
 import { DateRangeType } from './date-range-type';
 import { InLastDateType } from './in-last-date-type';
 
-export interface SearchDateRangeAdvanced {
+export interface SearchDateRange {
     dateRangeType: DateRangeType;
     inLastValueType?: InLastDateType;
     inLastValue?: string;
