@@ -73,9 +73,15 @@ ul > li > form-field > .adf-focus {
 /* query for Microsoft IE 11 */
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
     adf-form-field {
+<<<<<<< Updated upstream
         .mat-mdc-input-element,
         .mat-mdc-select,
         .mat-mdc-form-field {
+=======
+        .mat-input-element,
+        .mat-mdc-select,
+        .mat-form-field {
+>>>>>>> Stashed changes
             display: block !important;
         }
     }

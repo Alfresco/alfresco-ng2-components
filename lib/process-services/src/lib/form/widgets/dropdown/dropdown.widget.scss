@@ -6,8 +6,13 @@
             padding-top: 0;
             width: 100%;
         }
+<<<<<<< Updated upstream
         /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
         .mat-select-value-text {
+=======
+
+        .mat-mdc-select-value-text {
+>>>>>>> Stashed changes
             font-size: var(--theme-body-1-font-size);
         }
 
