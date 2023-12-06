@@ -28,10 +28,17 @@ export class AttachFileWidgetPage {
     filesListLocator = 'div[data-automation-id="adf-attach-widget-readonly-list"]';
     attachFileWidget = $('#attachfile');
     attachedFileMenu = $('mat-list-item button');
+<<<<<<< Updated upstream
     attachedFileOptions = $('.mat-mdc-menu-content');
     viewFileOptionButton = $(`.mat-mdc-menu-content button[id$="show-file"]`);
     downloadFileOptionButton = $(`.mat-mdc-menu-content button[id$="download-file"]`);
     removeFileOptionButton = TestElement.byCss(`.mat-mdc-menu-content button[id$="remove"]`);
+=======
+    attachedFileOptions = $('.mat-mdc-menu-panel .mat-mdc-menu-content');
+    viewFileOptionButton = $(`.mat-mdc-menu-panel .mat-mdc-menu-content button[id$="show-file"]`);
+    downloadFileOptionButton = $(`.mat-mdc-menu-panel .mat-mdc-menu-content button[id$="download-file"]`);
+    removeFileOptionButton = TestElement.byCss(`.mat-mdc-menu-panel .mat-mdc-menu-content button[id$="remove"]`);
+>>>>>>> Stashed changes
 
     async attachFile(fieldId: string, fileLocation: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);

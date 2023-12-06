@@ -55,7 +55,7 @@ export class ContentServicesPage {
     downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
     multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
-    selectionModeDropdown = $('.mat-select[placeholder="Selection Mode"]');
+    selectionModeDropdown = $('.mat-mdc-select[placeholder="Selection Mode"]');
 
     async isContextActionEnabled(actionName: string): Promise<boolean> {
         const actionButton = $(`button[data-automation-id="context-${actionName}"`);

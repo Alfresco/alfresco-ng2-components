@@ -33,7 +33,7 @@ export class StartProcessCloudPage {
     processDefinition = $('input[id="processDefinitionName"]');
     processDefinitionOptionsPanel = $('div[class*="processDefinitionOptions"]');
 
-    getSelectProcessDropdownLocatorByName = (name: string): ElementFinder => element(by.cssContainingText('.mat-option-text', name));
+    getSelectProcessDropdownLocatorByName = (name: string): ElementFinder => element(by.cssContainingText('.mdc-list-item__primary-text', name));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
@@ -63,7 +63,7 @@ export class StartProcessCloudPage {
 
     async selectFirstOptionFromProcessDropdown(): Promise<void> {
         await this.clickProcessDropdownArrow();
-        const selectFirstProcessDropdown = $$('.mat-option-text').first();
+        const selectFirstProcessDropdown = $$('.mdc-list-item__primary-text').first();
         await BrowserActions.click(selectFirstProcessDropdown);
     }
 
