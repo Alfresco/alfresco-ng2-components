@@ -104,7 +104,11 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
                 const extraFreeSpace = 20;
                 this._fileSizeOperatorsMaxWidth = Math.max(...this._fileSizeOperators.map((operator) =>
                     this.getOperatorNameWidth(operator, this.getCanvasFont(this.fileSizeOperatorSelectElement.nativeElement)))) +
+<<<<<<< Updated upstream
                     this.fileSizeOperatorSelectElement.nativeElement.querySelector('.mat-mdc-select-arrow').clientWidth +
+=======
+                    this.fileSizeOperatorSelectElement.nativeElement.querySelector('.mat-mdc-select-arrow-wrapper').clientWidth +
+>>>>>>> Stashed changes
                     extraFreeSpace;
             });
         }
