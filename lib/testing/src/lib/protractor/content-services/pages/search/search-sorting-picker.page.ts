@@ -27,7 +27,7 @@ export class SearchSortingPickerPage {
 
     async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
         await this.sortingDropdown.clickDropdown();
-        const selectedSortingOption = element(by.cssContainingText('.mat-option-text', sortType));
+        const selectedSortingOption = element(by.cssContainingText('.mdc-list-item__primary-text', sortType));
         await BrowserActions.click(selectedSortingOption);
         await this.sortByOrder(sortOrder);
     }
@@ -53,7 +53,7 @@ export class SearchSortingPickerPage {
     }
 
     async clickSortingOption(option: string): Promise<void> {
-        const selectedSortingOption = element(by.cssContainingText('.mat-option-text', option));
+        const selectedSortingOption = element(by.cssContainingText('.mdc-list-item__primary-text', option));
         await BrowserActions.click(selectedSortingOption);
     }
 
