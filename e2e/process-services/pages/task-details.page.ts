@@ -180,7 +180,7 @@ export class TaskDetailsPage {
     }
 
     async getDescriptionPlaceholder(): Promise<string> {
-        return BrowserActions.getAttribute(this.descriptionField, 'data-placeholder');
+        return BrowserActions.getAttribute(this.descriptionField, 'placeholder');
     }
 
     getDueDate(): Promise<string> {
@@ -310,7 +310,7 @@ export class TaskDetailsPage {
     }
 
     async getInvolvePeoplePlaceholder(): Promise<string> {
-        return BrowserActions.getAttribute(this.addPeopleField, 'data-placeholder');
+        return BrowserActions.getAttribute(this.addPeopleField, 'placeholder');
     }
 
     async checkCancelButtonIsEnabled(): Promise<void> {
