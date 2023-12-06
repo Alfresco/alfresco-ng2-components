@@ -20,7 +20,7 @@ import { ProcessInstanceHeaderPage, TestElement } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
     processInstanceHeaderPage = new ProcessInstanceHeaderPage();
-    processTitle = TestElement.byCss('.mat-card-title');
+    processTitle = TestElement.byCss('.mat-mdc-card-title');
     processDetailsMessage = TestElement.byCss('adf-process-instance-details div');
     showDiagramButtonDisabled = TestElement.byCss('button[id="show-diagram-button"][disabled]');
     propertiesList = TestElement.byCss('.adf-property-list');

@@ -22,7 +22,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class ProcessInstanceTasksPage {
 
     startProcessDialog = $('#adf-start-process-dialog');
-    title = this.startProcessDialog.$('h4.mat-dialog-title');
+    title = this.startProcessDialog.$('h4.mat-mdc-dialog-title');
     closeButton = this.startProcessDialog.element(by.cssContainingText(`div.adf-start-process-dialog-actions button span`, 'Close'));
     startForm = $('div[data-automation-id="start-form"]');
 

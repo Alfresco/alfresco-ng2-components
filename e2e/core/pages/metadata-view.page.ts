@@ -38,7 +38,7 @@ export class MetadataViewPage {
     multiSwitch = $(`#adf-metadata-multi`);
     defaultPropertiesSwitch = $('#adf-metadata-default-properties');
     closeButton = element(by.cssContainingText('button.mat-button span', 'Close'));
-    displayAspect = $(`input[data-placeholder='Display Aspect']`);
+    displayAspect = $(`input[placeholder='Display Aspect']`);
     applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
     saveMetadataButton = $(`[data-automation-id='save-metadata']`);
     saveGeneralMetadataButton = $(`[data-automation-id='save-general-info-metadata']`);

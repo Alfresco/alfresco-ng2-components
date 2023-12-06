@@ -27,7 +27,7 @@ import { BrowserActions, BrowserVisibility, FormFields } from '@alfresco/adf-tes
 export class TasksPage {
     createButton = $('button[data-automation-id="create-button"');
     addChecklistButton = $('button[class*="adf-add-to-checklist-button"]');
-    rowByRowName = by.xpath('ancestor::mat-chip');
+    rowByRowName = by.xpath('ancestor::mat-chip-list');
     checklistContainer = $('div[class*="checklist-menu"]');
     taskTitle = '.adf-activiti-task-details__header span';
     completeButtonNoForm = $('#adf-no-form-complete-button');

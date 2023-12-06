@@ -25,7 +25,7 @@ export class AttachFormPage {
     completeButton = $('#adf-attach-form-complete-button');
     formDropdown = $('#form_id');
     cancelButton = $('#adf-attach-form-cancel-button');
-    defaultTitle = $('.mat-card-title');
+    defaultTitle = $('.mat-mdc-card-title');
     attachFormDropdown = new DropdownPage($('.adf-attach-form-row'));
 
     async checkAttachFormButtonIsDisplayed(): Promise<void> {
