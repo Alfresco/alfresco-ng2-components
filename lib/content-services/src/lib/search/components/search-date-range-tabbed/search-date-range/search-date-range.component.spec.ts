@@ -225,7 +225,7 @@ describe('SearchDateRangeComponent', () => {
             betweenStartDate: undefined,
             betweenEndDate: undefined
         };
-        let dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-in-last"] .mdc-radio__native-control');
+        let dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-in-last"] .mdc-radio__native-control');
         dateRangeTypeRadioButton.click();
         selectDropdownOption('date-range-in-last-option-weeks');
         enterValueInInputFieldAndTriggerEvent('date-range-in-last-input', '');
@@ -246,7 +246,7 @@ describe('SearchDateRangeComponent', () => {
             betweenStartDate: '',
             betweenEndDate: ''
         };
-        dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-between"] .mdc-radio__native-control');
+        dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-between"] .mdc-radio__native-control');
         dateRangeTypeRadioButton.click();
         fixture.detectChanges();
         expect(component.changed.emit).not.toHaveBeenCalledWith(value);
@@ -261,7 +261,7 @@ describe('SearchDateRangeComponent', () => {
             betweenStartDate: null,
             betweenEndDate: null
         };
-        let dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-in-last"] .mdc-radio__native-control');
+        let dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-in-last"] .mdc-radio__native-control');
         dateRangeTypeRadioButton.click();
         selectDropdownOption('date-range-in-last-option-weeks');
         enterValueInInputFieldAndTriggerEvent('date-range-in-last-input', '5');
@@ -283,7 +283,7 @@ describe('SearchDateRangeComponent', () => {
             betweenStartDate: startDateSampleValue,
             betweenEndDate: endDateSampleValue
         };
-        dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-between"] .mdc-radio__native-control');
+        dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-between"] .mdc-radio__native-control');
         dateRangeTypeRadioButton.click();
         component.betweenStartDateFormControl.setValue(startDateSampleValue);
         component.betweenEndDateFormControl.setValue(endDateSampleValue);
