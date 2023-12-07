@@ -203,13 +203,8 @@ describe('DropdownCloudWidgetComponent', () => {
 
             await openSelect();
 
-<<<<<<< Updated upstream
-            const options = fixture.debugElement.queryAll(By.css('.mat-mdc-option'));
-            expect(options[0].nativeElement.innerText).toBe('default1_value');
-=======
             const option = fixture.debugElement.query(By.css('.mdc-list-item__primary-text'));
             expect(option.nativeElement.innerText).toBe('default1_value');
->>>>>>> Stashed changes
         });
 
         it('should preselect dropdown widget value when String (defined value) passed ', async () => {
@@ -232,11 +227,7 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             await openSelect();
-<<<<<<< Updated upstream
-            const options = fixture.debugElement.queryAll(By.css('.mat-mdc-option'));
-=======
             const options = fixture.debugElement.queryAll(By.css('.mdc-list-item__primary-text'));
->>>>>>> Stashed changes
             expect(options[0].nativeElement.innerText).toBe('default1_value');
             expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
         });
@@ -460,12 +451,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_1, option_2');
 
             await openSelect('#dropdown-id');
-
-<<<<<<< Updated upstream
-            const options = fixture.debugElement.queryAll(By.css('mat-option.mdc-list-item--selected span'));
-=======
-            const options = fixture.debugElement.queryAll(By.css('.mat-mdc-selected span'));
->>>>>>> Stashed changes
+            const options = fixture.debugElement.queryAll(By.css('.mdc-list-item--selected span'));
             expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
                 .toEqual(['option_1', 'option_2']);
         });
@@ -533,12 +519,8 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_3, option_4');
 
             await openSelect('#dropdown-id');
+            const options = fixture.debugElement.queryAll(By.css('.mdc-list-item--selected span'));
 
-<<<<<<< Updated upstream
-            const options = fixture.debugElement.queryAll(By.css('mat-option.mdc-list-item--selected span'));
-=======
-            const options = fixture.debugElement.queryAll(By.css('.mat-mdc-selected span'));
->>>>>>> Stashed changes
             expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
                 .toEqual(['option_3', 'option_4']);
         });
