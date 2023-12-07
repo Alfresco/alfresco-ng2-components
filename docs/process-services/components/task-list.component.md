@@ -55,9 +55,11 @@ when the task list is empty:
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app. |
 | assignment | `string` |  | The assignment of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate, "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
+| blurOnResize | `boolean` | true | Toggles blur when columns of the list are being resized. |
 | data | [`DataTableAdapter`](../../../lib/core/src/lib/datatable/data/datatable-adapter.ts) |  | Data source object that represents the number and the type of the columns that you want to show. |
 | dueAfter | `string` |  | Filter the tasks. Display only tasks with `created_date` after `dueAfter`. |
 | dueBefore | `string` |  | Filter the tasks. Display only tasks with `created_date` before `dueBefore`. |
+| isResizingEnabled | `boolean` | false | Toggles column resizing for task list. |
 | includeProcessInstance | `boolean` |  | Toggles inclusion of Process Instances |
 | landingTaskId | `string` |  | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected. |
 | multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |

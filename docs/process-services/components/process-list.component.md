@@ -52,7 +52,9 @@ when the process list is empty:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app. |
+| blurOnResize | `boolean` | true | Toggles blur when columns of the list are being resized. |
 | data | [`DataTableAdapter`](../../../lib/core/src/lib/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
+| isResizingEnabled | `boolean` | false | Toggles column resizing for processes list. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
 | page | `number` | 0 | The page number of the processes to fetch. |
 | presetColumn | `string` |  | Custom preset column schema in JSON format. |
