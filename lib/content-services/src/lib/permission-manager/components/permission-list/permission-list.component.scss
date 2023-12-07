@@ -1,78 +1,71 @@
-.adf {
-    &-permission-card {
-        height: 100%;
-        box-sizing: border-box;
-        display: flex !important;
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    &-permission-loader {
-        margin-left: 45%;
-        overflow: hidden;
-    }
-
-    &-permission-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 15px;
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
-    }
-
-    &-inherit-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        &-header {
-            margin-bottom: 10px;
-            margin-top: 10px;
+adf-permission-list {
+    .adf {
+        &-permission-card {
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-    }
 
-    &-inherit-toggle {
-        padding-left: 30px;
-    }
-
-    &-inherit-subtitle {
-        padding-bottom: 5px;
-    }
-
-    &-permission-content-header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 5px 15px;
-    }
-
-    &-permission-role-column-header {
-        position: relative !important;
-        height: 40px;
-
-        .mat-form-field-infix {
-            border: none;
+        &-permission-loader {
+            margin-left: 45%;
+            overflow: hidden;
         }
-    }
 
-    &-permission-header {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        height: 100%;
-        overflow: hidden;
-        min-height: 0;
-    }
+        &-permission-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border: 1px solid var(--adf-theme-foreground-text-color-007);
+        }
 
-    &-permission-list {
-        display: flex;
-        height: calc(100% - 63px);
-    }
+        &-inherit-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
 
-    &-local-permission-container {
-        overflow: hidden;
-        flex: 1 1 auto;
+            &-header {
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
+        }
+
+        &-inherit-toggle {
+            padding-left: 30px;
+        }
+
+        &-inherit-subtitle {
+            padding-bottom: 5px;
+        }
+
+        &-permission-content-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 5px 15px;
+        }
+
+        &-permission-header {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 100%;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        &-permission-list {
+            display: flex;
+            height: calc(100% - 63px);
+        }
+
+        &-local-permission-container {
+            overflow: hidden;
+            flex: 1 1 auto;
+        }
     }
 }
 
@@ -91,4 +84,9 @@
         overflow: hidden;
         box-shadow: 0 8px 9px -5px var(--adf-theme-foreground-divider-color), 0 15px 22px 2px var(--adf-theme-foreground-divider-color);
     }
+}
+
+.adf-datatable .adf-datatable-row .adf-datatable-cell-value .adf-permission-role-column-header {
+    position: relative;
+    height: 40px;
 }
