@@ -536,7 +536,7 @@ describe('ViewerComponent', () => {
 
             });
 
-            it('should show close button on right side when showCloseButton is true and allowGoBack is true', () => {
+            it('should show close button on right side when showCloseButton is true and allowGoBack is false', () => {
                 component.showCloseButton = true;
                 component.allowGoBack = false;
                 fixture.detectChanges();
@@ -545,7 +545,7 @@ describe('ViewerComponent', () => {
 
             });
 
-            it('should hide close button on right side when showCloseButton is false', () => {
+            it('should hide close button when showCloseButton is false', () => {
                 component.showCloseButton = false;
                 fixture.detectChanges();
 
