@@ -294,7 +294,7 @@ describe('DataTable', () => {
         });
 
         it('should have assigned filterDisabledColumns to sortPredicate of CdkDropList', () => {
-            expect(getDropList().sortPredicate).toBeDefined();
+            expect(getDropList().sortPredicate).toBe(dataTable.filterDisabledColumns);
         });
 
         it('should sortPredicate from CdkDropList return true if column is enabled', () => {
