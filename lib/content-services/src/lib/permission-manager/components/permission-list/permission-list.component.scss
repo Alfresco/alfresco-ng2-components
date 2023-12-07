@@ -89,4 +89,8 @@ adf-permission-list {
 .adf-datatable .adf-datatable-row .adf-datatable-cell-value .adf-permission-role-column-header {
     position: relative;
     height: 40px;
+
+    .mat-form-field-infix {
+        border: none;
+    }
 }
