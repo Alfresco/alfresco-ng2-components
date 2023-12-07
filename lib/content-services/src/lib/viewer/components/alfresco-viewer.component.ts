@@ -31,6 +31,7 @@ import {
 } from '@angular/core';
 import {
     AlfrescoApiService,
+    AppConfigService,
     LogService,
     Track,
     ViewerComponent,
@@ -196,6 +197,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     nodeEntry: NodeEntry;
     tracks: Track[] = [];
     readOnly: boolean = true;
+    showCloseButton: boolean = true;
 
     sidebarRightTemplateContext: { node: Node } = { node: null };
     sidebarLeftTemplateContext: { node: Node } = { node: null };
@@ -234,9 +236,11 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         private uploadService: UploadService,
         public dialog: MatDialog,
         private cdr: ChangeDetectorRef,
-        private nodeActionsService: NodeActionsService
+        private nodeActionsService: NodeActionsService,
+        private appConfig: AppConfigService
     ) {
         renditionService.maxRetries = this.maxRetries;
+        this.allowGoBack = this.appConfig.get('viewer.isCloseButtonOnLeft', false);
     }
 
     ngOnInit() {
@@ -266,7 +270,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private async setupSharedLink() {
-        this.allowGoBack = false;
+        this.showCloseButton = false;
 
         try {
             const sharedLinkEntry = await this.sharedLinksApi.getSharedLink(this.sharedLinkId);

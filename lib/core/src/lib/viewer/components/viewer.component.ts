@@ -177,6 +177,12 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     sidebarLeftTemplateContext: T = null;
 
     /**
+     * show/hide close button on shareable link.
+     */
+    @Input()
+    showCloseButton = true;
+
+    /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
      */
     enableDownloadPrompt: boolean = false;

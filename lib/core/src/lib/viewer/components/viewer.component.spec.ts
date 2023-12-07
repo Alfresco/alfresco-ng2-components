@@ -525,6 +525,34 @@ describe('ViewerComponent', () => {
             });
         });
 
+        describe('Close Button', () => {
+
+            it('should show close button on left side when showCloseButton is true and allowGoBack is true', () => {
+                component.showCloseButton = true;
+                component.allowGoBack = true;
+                fixture.detectChanges();
+
+                expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
+
+            });
+
+            it('should show close button on right side when showCloseButton is true and allowGoBack is true', () => {
+                component.showCloseButton = true;
+                component.allowGoBack = false;
+                fixture.detectChanges();
+
+                expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
+
+            });
+
+            it('should hide close button on right side when showCloseButton is false', () => {
+                component.showCloseButton = false;
+                fixture.detectChanges();
+
+                expect(element.querySelector('.adf-viewer-close-button')).toBeNull();
+            });
+        });
+
         describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
 
             beforeEach(() => {
