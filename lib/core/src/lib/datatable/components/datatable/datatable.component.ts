@@ -975,7 +975,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return `0 1 ${width < DataTableComponent.MINIMUM_COLUMN_SIZE ? DataTableComponent.MINIMUM_COLUMN_SIZE : width}px`;
     }
 
-    sortPredicate(index: number, _drag: CdkDrag, drop: CdkDropList): boolean {
+    filterDisabledColumns(index: number, _drag: CdkDrag, drop: CdkDropList): boolean {
         return !drop.getSortedItems()[index].disabled;
     }
 
