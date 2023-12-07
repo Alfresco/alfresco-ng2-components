@@ -35,11 +35,7 @@ export class DropdownPage {
 
     async selectOption(option: string): Promise<void> {
         Logger.log(`Select dropdown option ${option}`);
-<<<<<<< Updated upstream
         const optionElement = element.all(by.cssContainingText('.mat-mdc-option .mdc-list-item__primary-text', option)).first();
-=======
-        const optionElement = element.all(by.cssContainingText('mat-option span.mdc-list-item__primary-text', option)).first();
->>>>>>> Stashed changes
         await BrowserActions.click(optionElement);
         await browser.waitForAngular();
     }
@@ -53,11 +49,7 @@ export class DropdownPage {
     }
 
     async getNumberOfOptions(): Promise<number> {
-<<<<<<< Updated upstream
         const dropdownOptions = $$('.mat-mdc-select-panel .mat-mdc-option');
-=======
-        const dropdownOptions = $$('.mat-mdc-select-panel mat-option');
->>>>>>> Stashed changes
         return dropdownOptions.count();
     }
 
@@ -88,28 +80,16 @@ export class DropdownPage {
     }
 
     async getSelectedOptionText(): Promise<string> {
-<<<<<<< Updated upstream
-        const selectedOption = this.dropDownElement.$('.mdc-list-item__primary-text');
-=======
         const selectedOption = this.dropDownElement.$('.mat-mdc-select-value-text span');
->>>>>>> Stashed changes
         return BrowserActions.getText(selectedOption);
     }
 
     async checkOptionIsDisplayed(option: string): Promise<void> {
-<<<<<<< Updated upstream
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('.mat-mdc-option .mdc-list-item__primary-text', option)).first());
     }
 
     async checkOptionIsNotDisplayed(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText('.mat-mdc-option .mdc-list-item__primary-text', option)).first());
-=======
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mdc-list-item__primary-text', option)).first());
-    }
-
-    async checkOptionIsNotDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText('mat-option span.mdc-list-item__primary-text', option)).first());
->>>>>>> Stashed changes
     }
 
     async selectDropdownOption(option: string): Promise<void> {
