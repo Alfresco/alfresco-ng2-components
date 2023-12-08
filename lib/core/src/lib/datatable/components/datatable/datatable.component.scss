@@ -386,7 +386,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         min-height: inherit;
 
         &:first-child {
-            padding-left: 15px;
+            margin-left: 15px;
             box-sizing: content-box;
         }
 
