@@ -68,6 +68,7 @@ export class SettingsPage {
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
+        await this.setCodeFlow(true);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
@@ -100,22 +101,32 @@ export class SettingsPage {
     }
 
     async setSilentLogin(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleButton);
 
         const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes(materialLocators.Checked.root);
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            await BrowserActions.click(this.silentLoginToggleLabel);
+            await BrowserActions.click(this.silentLoginToggleButton);
         }
     }
 
     async setImplicitFlow(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowButton);
 
         const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes(materialLocators.Checked.root);
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            await BrowserActions.click(this.implicitFlowLabel);
+            await BrowserActions.click(this.implicitFlowButton);
+        }
+    }
+
+    async setCodeFlow(enableToggle) {
+        await BrowserVisibility.waitUntilElementIsVisible(this.codeFlowButton);
+
+        const isChecked = (await BrowserActions.getAttribute(this.codeFlowButton, 'aria-checked')) === 'true';
+
+        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+            await BrowserActions.click(this.codeFlowButton);
         }
     }
 }
