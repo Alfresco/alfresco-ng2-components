@@ -111,6 +111,14 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     @Input()
     showContextMenu: boolean = false;
 
+    /** Enables column resizing for datatable */
+    @Input()
+    isResizingEnabled = false;
+
+    /** Enables blur when resizing datatable columns */
+    @Input()
+    blurOnResize = true;
+
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
