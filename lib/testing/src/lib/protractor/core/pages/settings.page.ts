@@ -28,10 +28,9 @@ export class SettingsPage {
     logoutUrlText = $('input[id="logout-url"]');
     identityHostText = $('input[id="identityHost"]');
     ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
-    silentLoginToggleLabel = $('mat-slide-toggle[formcontrolname="silentLogin"] label');
-    silentLoginToggleElement = $('mat-slide-toggle[formcontrolname="silentLogin"]');
-    implicitFlowLabel = $('mat-slide-toggle[formcontrolname="implicitFlow"] label');
-    implicitFlowElement = $('mat-slide-toggle[formcontrolname="implicitFlow"]');
+    silentLoginToggleButton = $('button[name="silentLogin"]');
+    implicitFlowButton = $('button[name="implicitFlow"]');
+    codeFlowButton = $('button[name="codeFlow"]');
     applyButton = $('button[data-automation-id="settings-apply-button"]');
     providerDropdown = new DropdownPage($('mat-select[id="adf-provider-selector"]'));
 
@@ -67,6 +66,7 @@ export class SettingsPage {
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
+        await this.setCodeFlow(true);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
@@ -99,22 +99,32 @@ export class SettingsPage {
     }
 
     async setSilentLogin(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleButton);
 
-        const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes('mat-checked');
+        const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleButton, 'aria-checked')) === 'true';
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            await BrowserActions.click(this.silentLoginToggleLabel);
+            await BrowserActions.click(this.silentLoginToggleButton);
         }
     }
 
     async setImplicitFlow(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowButton);
 
-        const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes('mat-checked');
+        const isChecked = (await BrowserActions.getAttribute(this.implicitFlowButton, 'aria-checked')) === 'true';;
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            await BrowserActions.click(this.implicitFlowLabel);
+            await BrowserActions.click(this.implicitFlowButton);
+        }
+    }
+
+    async setCodeFlow(enableToggle) {
+        await BrowserVisibility.waitUntilElementIsVisible(this.codeFlowButton);
+
+        const isChecked = (await BrowserActions.getAttribute(this.codeFlowButton, 'aria-checked')) === 'true';
+
+        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+            await BrowserActions.click(this.codeFlowButton);
         }
     }
 }
