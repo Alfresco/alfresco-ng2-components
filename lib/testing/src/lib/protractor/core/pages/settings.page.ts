@@ -100,6 +100,7 @@ export class SettingsPage {
         await this.setSilentLogin(silentLogin);
         await this.setCodeFlow(false);
         await this.setImplicitFlow(implicitFlow);
+        await this.setCodeFlow(true);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
@@ -132,7 +133,7 @@ export class SettingsPage {
     }
 
     async setSilentLogin(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleButton);
 
         const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes(materialLocators.Checked.root);
 
@@ -142,7 +143,7 @@ export class SettingsPage {
     }
 
     async setImplicitFlow(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
+        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowButton);
 
         const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes(materialLocators.Checked.root);
 
