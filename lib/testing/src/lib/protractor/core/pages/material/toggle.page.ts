@@ -22,7 +22,7 @@ export class TogglePage {
 
     async enableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
-        if (check.indexOf('mat-checked') < 0) {
+        if (check.indexOf('mdc-switch--checked') < 0) {
             const elem = toggle.$$('input').first();
             await BrowserActions.clickScript(elem);
         }
@@ -30,7 +30,7 @@ export class TogglePage {
 
     async disableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
-        if (check.indexOf('mat-checked') >= 0) {
+        if (check.indexOf('mdc-switch--checked') >= 0) {
             const elem = toggle.$$('input').first();
             await BrowserActions.clickScript(elem);
         }
