@@ -33,6 +33,7 @@ export class DataTableComponentPage {
     selectedRowNumber: ElementFinder;
     allSelectedRows: ElementArrayFinder;
     selectAll: ElementFinder;
+    selectAllChecked: ElementFinder;
     emptyList: ElementFinder;
     emptyListTitle: ElementFinder;
     emptyListSubtitle: ElementFinder;
@@ -67,12 +68,12 @@ export class DataTableComponentPage {
 
     async checkAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectAll.$('input[aria-checked="true"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectAllChecked);
     }
 
     async uncheckAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectAll.$('input[aria-checked="true"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectAll.$('.mat-mdc-checkbox-checked'));
     }
 
     async clickCheckbox(columnName: string, columnValue: string): Promise<void> {
@@ -81,16 +82,21 @@ export class DataTableComponentPage {
     }
 
     async checkRowIsNotChecked(columnName: string, columnValue: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(columnName, columnValue).$('input[aria-checked="true"]'));
+        const rowSelector = this.getRowCheckboxChecked(columnName, columnValue);
+        await BrowserVisibility.waitUntilElementIsNotVisible(rowSelector);
     }
 
     async checkRowIsChecked(columnName: string, columnValue: string): Promise<void> {
-        const rowCheckbox = this.getRowCheckbox(columnName, columnValue);
-        await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.$('input[aria-checked="true"]'));
+        const rowCheckbox = this.getRowCheckboxChecked(columnName, columnValue);
+        await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox);
     }
 
     getRowCheckbox(columnName: string, columnValue: string): ElementFinder {
         return this.getRow(columnName, columnValue).$(materialLocators.Checkbox.root);
+    }
+
+    getRowCheckboxChecked(columnName: string, columnValue: string): ElementFinder {
+        return this.getRow(columnName, columnValue).$('mat-checkbox.mat-mdc-checkbox-checked');
     }
 
     async checkNoRowIsSelected(): Promise<void> {
