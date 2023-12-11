@@ -183,7 +183,7 @@ jobs:
           ./scripts/github/build/bumpversion.sh
           npx nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
-      - uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3.8.2
+      - uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
@@ -192,7 +192,7 @@ jobs:
       - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
-      - uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3.8.2
+      - uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         name: release libraries Npm registry
         with:
           node-version-file: '.nvmrc'
