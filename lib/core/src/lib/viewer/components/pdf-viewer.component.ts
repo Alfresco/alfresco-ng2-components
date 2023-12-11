@@ -35,7 +35,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { PDFDocumentProxy, OnProgressParameters } from 'pdfjs-dist';
+import { PDFDocumentProxy, OnProgressParameters, PDFDocumentLoadingTask } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 
@@ -95,7 +95,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
 
-    loadingTask: any;
+    loadingTask: PDFDocumentLoadingTask;
     isPanelDisabled = true;
     showThumbnails: boolean = false;
     pdfThumbnailsContext: { viewer: any } = { viewer: null };
@@ -208,7 +208,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         this.isPanelDisabled = true;
         this.loadingTask.promise
-            .then((pdfDocument: PDFDocumentProxy) => {
+            .then((pdfDocument) => {
                 this.totalPages = pdfDocument.numPages;
                 this.page = 1;
                 this.displayPage = 1;
