@@ -183,7 +183,7 @@
                         key="createdAt"
                         sortingKey="createdAt"
                         type="date"
-                        [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
+                        [format]="'timeAgo'"
                         class="adf-ellipsis-cell">
                     </data-column>
 
@@ -327,12 +327,6 @@
         <section>
             <mat-slide-toggle [(ngModel)]="allowVersionDownload">
                 Enable version download
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="enableMediumTimeFormat" id="enableMediumTimeFormat">
-                Enable medium time format for document list
             </mat-slide-toggle>
         </section>
 

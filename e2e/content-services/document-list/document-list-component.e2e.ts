@@ -21,7 +21,6 @@ import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, User
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { NodeEntry } from '@alfresco/js-api';
-import { format } from 'date-fns';
 
 describe('Document List Component', () => {
     let uploadedFolder: NodeEntry;
@@ -69,14 +68,6 @@ describe('Document List Component', () => {
         const docxFileModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
-        });
-        const timeAgoFileModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
-        });
-        const mediumFileModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
 
         let pdfUploadedNode: NodeEntry;
@@ -137,24 +128,6 @@ describe('Document List Component', () => {
             await contentServicesPage.checkColumnSizeHeader();
             await contentServicesPage.checkColumnCreatedByHeader();
             await contentServicesPage.checkColumnCreatedHeader();
-        });
-
-        it('[C279928] Should be able to display date with timeAgo', async () => {
-            await apiService.login(acsUser.username, acsUser.password);
-            timeAgoUploadedNode = await uploadActions.uploadFile(timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
-            await contentServicesPage.goToDocumentList();
-            const dateValue = await contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
-            await expect(dateValue).toMatch(/(ago|few)/);
-        });
-
-        it('[C279929] Should be able to display the date with date type', async () => {
-            await apiService.login(acsUser.username, acsUser.password);
-            mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
-            const createdDate = format(new Date(mediumDateUploadedNode.entry.createdAt), 'PP');
-            await contentServicesPage.goToDocumentList();
-            await contentServicesPage.enableMediumTimeFormat();
-            const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
-            await expect(dateValue).toContain(createdDate);
         });
     });
 
