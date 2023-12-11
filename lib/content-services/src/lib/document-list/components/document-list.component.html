@@ -21,6 +21,8 @@
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"
+    (columnsWidthChanged)="onColumnsWidthChanged($event)"
+    (columnOrderChanged)="onColumnOrderChanged($event)"
     (rowClick)="onNodeClick($event.value?.node)"
     (rowDblClick)="onNodeDblClick($event.value?.node)"
     (row-select)="onNodeSelect($any($event).detail)"

@@ -367,6 +367,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Output()
     filterSelection = new EventEmitter<FilterSearch[]>();
 
+    @Output()
+    columnsWidthChanged = new EventEmitter<any>();
+
+    @Output()
+    columnsVisibilityChanged = new EventEmitter<any>();
+
     @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
 
@@ -778,9 +784,53 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             }
         }
     }
-    onColumnsVisibilityChange(updatedColumns: Array<DataColumn>): void {
-        this.data.setColumns(updatedColumns);
+
+    onColumnsVisibilityChange(columns: DataColumn[]) {
+        this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
+            if (column.isHidden !== undefined) {
+                visibleColumnsMap[column.id] = !column.isHidden;
+            }
+
+            return visibleColumnsMap;
+        }, {});
+
+        this.createColumns();
+        // this.createDatatableSchema();
+        this.data.setColumns(this.columns);
+        this.columnsVisibilityChanged.emit(this.columnsVisibility);
     }
+
+    setColumnsVisibility (columnsVisibility: any) {
+        this.columnsVisibility = columnsVisibility
+        console.log(columnsVisibility)
+    }
+
+    onColumnOrderChanged(columnsWithNewOrder: DataColumn[]) {
+        this.columnsOrder = columnsWithNewOrder.map((column) => column.id);
+        // this.createColumns();
+
+    }
+
+    onColumnsWidthChanged(columns: DataColumn[]) {
+        const newColumnsWidths = columns.reduce((widthsColumnsMap, column) => {
+            if (column.width) {
+                widthsColumnsMap[column.id] = Math.ceil(column.width);
+            }
+            return widthsColumnsMap;
+        }, {});
+
+        this.columnsWidths = { ...this.columnsWidths, ...newColumnsWidths };
+        console.log(this.columnsWidths)
+
+        this.columnsWidthChanged.emit(this.columnsWidths);
+        this.createColumns();
+    }
+
+    setColumnsWidths (columnsWidths: any) {
+        this.columnsWidths = columnsWidths
+        console.log(columnsWidths)
+    }
+
     onNodeClick(nodeEntry: NodeEntry) {
         const domEvent = new CustomEvent('node-click', {
             detail: {
