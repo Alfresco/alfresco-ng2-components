@@ -1102,7 +1102,6 @@ describe('ContentMetadataComponent', () => {
         });
     });
 
-    // eslint-disable-next-line ban/ban
     describe('Expand the panel', () => {
         let expectedNode: Node;
 

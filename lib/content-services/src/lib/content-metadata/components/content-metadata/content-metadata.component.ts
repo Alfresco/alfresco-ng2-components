@@ -172,7 +172,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         this.cardViewContentUpdateService.updatedAspect$
             .pipe(debounceTime(500), takeUntil(this.onDestroy$))
-            .subscribe((node) => this.loadProperties(node));
+            .subscribe((node) => {
+                this.node.aspectNames = node?.aspectNames;
+                this.loadProperties(node)
+            });
 
         this.loadProperties(this.node);
         this.verifyAllowableOperations();
@@ -227,6 +230,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.node && !changes.node.firstChange) {
             this.loadProperties(changes.node.currentValue);
         }
+        if(changes.readOnly && changes.readOnly.currentValue) {
+            this.cancelEditing();
+            this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
+        }
     }
 
     ngOnDestroy() {
@@ -247,32 +254,27 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    onSaveGeneralInfoChanges(event?: MouseEvent) {
+    private onSave(event?: MouseEvent) {
         event?.stopPropagation();
 
         this.onSaveChanges();
         this.cancelEditing();
+    }
+
+    onSaveGeneralInfoChanges(event?: MouseEvent) {
+        this.onSave(event);
     }
 
     onSaveTagsChanges(event?: MouseEvent) {
-        event?.stopPropagation();
-
-        this.onSaveChanges();
-        this.cancelEditing();
+        this.onSave(event);
     }
 
     onSaveCategoriesChanges(event?: MouseEvent) {
-        event?.stopPropagation();
-
-        this.onSaveChanges();
-        this.cancelEditing();
+        this.onSave(event);
     }
 
     onSaveGroupChanges(group: CardViewGroup, event?: MouseEvent) {
-        event?.stopPropagation();
-
-        this.onSaveChanges();
-        this.cancelEditing();
+        this.onSave(event);
 
         group.editable = false;
     }

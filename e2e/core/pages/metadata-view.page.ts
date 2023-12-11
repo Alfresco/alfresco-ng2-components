@@ -125,11 +125,6 @@ export class MetadataViewPage {
         return BrowserActions.getAttribute(this.editIcon, 'title');
     }
 
-    async editPropertyIconIsDisplayed(propertyName: string) {
-        const editPropertyIcon = $('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon');
-        await BrowserVisibility.waitUntilElementIsPresent(editPropertyIcon);
-    }
-
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
         const textField = $('input[data-automation-id="card-textitem-value-' + propertyName + '"]');
         await BrowserActions.clearSendKeys(textField, text.toString());

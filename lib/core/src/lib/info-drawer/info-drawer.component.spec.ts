@@ -25,10 +25,14 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ESCAPE } from '@angular/cdk/keycodes';
 
+let fixture: ComponentFixture<InfoDrawerComponent>;
+
+const getNodeIcon = () =>
+fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
     let component: InfoDrawerComponent;
-    let fixture: ComponentFixture<InfoDrawerComponent>;
     let translateService: TranslateService;
 
     beforeEach(() => {
@@ -106,8 +110,7 @@ describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
     let translateService: TranslateService;
-    const nodeIcon = () =>
-    fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -163,7 +166,7 @@ describe('Custom InfoDrawer', () => {
     it('should render a icon with title', () => {
         component.icon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
-        const icon =  nodeIcon();
+        const icon =  getNodeIcon();
         const srcAttribute = icon[0].nativeElement.getAttribute('src');
         expect(icon.length).toBe(1);
         expect(srcAttribute).toContain('/assets/images/ft_ic_miscellaneous.svg');
@@ -184,8 +187,6 @@ class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
 describe('Header visibility InfoDrawer', () => {
     let fixture: ComponentFixture<VisibilityInfoDrawerComponent>;
     let component: VisibilityInfoDrawerComponent;
-    const nodeIcon = () =>
-                  fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -206,7 +207,7 @@ describe('Header visibility InfoDrawer', () => {
         component.icon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
         const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
-        const icon = nodeIcon();
+        const icon = getNodeIcon();
         const srcAttribute = icon[0].nativeElement.getAttribute('src');
         expect(title.length).toBe(1);
         expect(icon.length).toBe(1);
@@ -219,7 +220,7 @@ describe('Header visibility InfoDrawer', () => {
         component.showHeader = false;
         fixture.detectChanges();
         const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
-        const icon = nodeIcon();
+        const icon = getNodeIcon();
         expect(title.length).toBe(0);
         expect(icon.length).toBe(0);
     });

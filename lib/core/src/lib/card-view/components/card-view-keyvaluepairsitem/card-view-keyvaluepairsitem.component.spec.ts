@@ -111,7 +111,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             addButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
-            const removeButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__remove-btn'));
+            const removeButton = fixture.debugElement.query(By.css('.adf-property-col-delete'));
             removeButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 

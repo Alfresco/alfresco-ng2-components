@@ -2,7 +2,6 @@
     padding-top: 12px;
 
     .adf-category-name-field {
-        display: flex;
         justify-content: space-between;
         width: 100%;
         color: var(--adf-metadata-property-panel-text-color);
@@ -13,6 +12,7 @@
 
         input {
             padding: 0 8px;
+            height: 32px;
         }
     }
 
