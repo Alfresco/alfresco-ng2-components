@@ -123,9 +123,9 @@ export class AppConfigService {
         }
 
         if (typeof result === 'object') {
-            result = JSON.parse(JSON.stringify(result).replace('{hostname}', this.getLocationHostname()));
-            result = JSON.parse(JSON.stringify(result).replace('{:port}', this.getLocationPort(':')));
-            result = JSON.parse(JSON.stringify(result).replace('{protocol}', this.getLocationProtocol()));
+            result = JSON.parse(JSON.stringify(result).replace(/{hostname}/g, this.getLocationHostname()));
+            result = JSON.parse(JSON.stringify(result).replace(/{:port}/g, this.getLocationPort(':')));
+            result = JSON.parse(JSON.stringify(result).replace(/{protocol}/g, this.getLocationProtocol()));
         }
 
         if (result === undefined) {
