@@ -32,7 +32,6 @@ import {
     SimpleChanges
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LogService } from '../../common/services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -120,7 +119,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     constructor(
         private dialog: MatDialog,
         private renderingQueueServices: RenderingQueueServices,
-        private logService: LogService,
         private appConfigService: AppConfigService
     ) {
         // needed to preserve "this" context
@@ -305,33 +303,37 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             let scale: number;
             switch (this.currentScaleMode) {
-                case 'init':
+                case 'init': {
                     scale = this.getUserScaling();
                     if (!scale) {
                         scale = this.autoScaling(pageHeightScale, pageWidthScale);
                     }
                     break;
-                case 'page-actual':
+                }
+                case 'page-actual': {
                     scale = 1;
                     break;
-                case 'page-width':
+                }
+                case 'page-width': {
                     scale = pageWidthScale;
                     break;
-                case 'page-height':
+                }
+                case 'page-height': {
                     scale = pageHeightScale;
                     break;
-                case 'page-fit':
+                }
+                case 'page-fit': {
                     scale = this.getUserScaling();
                     if (!scale) {
                         scale = this.autoScaling(pageHeightScale, pageWidthScale);
                     }
                     break;
-                case 'auto':
+                }
+                case 'auto': {
                     scale = this.autoScaling(pageHeightScale, pageWidthScale);
-
                     break;
+                }
                 default:
-                    this.logService.error(`pdfViewSetScale: '${scaleMode}' is an unknown zoom value.`);
                     return;
             }
 
