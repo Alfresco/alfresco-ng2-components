@@ -36,12 +36,14 @@ import { LogService } from '../../common/services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { PDFDocumentProxy } from 'pdfjs-dist';
+import { PDFDocumentProxy, OnProgressParameters } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
+
+export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto';
 
 @Component({
     selector: 'adf-pdf-viewer',
@@ -87,7 +89,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     totalPages: number;
     loadingPercent: number;
     pdfViewer: any;
-    currentScaleMode: 'init' | 'page-actual' | 'page-width' | 'page-height' | 'page-fit' | 'auto' = 'init';
+    currentScaleMode: PdfScaleMode = 'init';
 
     MAX_AUTO_SCALE: number = 1.25;
     DEFAULT_SCALE_DELTA: number = 1.1;
@@ -125,7 +127,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
         this.onPageRendered = this.onPageRendered.bind(this);
-        this.randomPdfId = window.crypto.randomUUID();
+
+        this.randomPdfId = Date.now().toString();
         this.pdfjsWorkerDestroy$
             .pipe(
                 catchError(() => null),
@@ -200,7 +203,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.onPdfPassword(callback, reason);
         };
 
-        this.loadingTask.onProgress = (progressData) => {
+        this.loadingTask.onProgress = (progressData: OnProgressParameters) => {
             const level = progressData.loaded / progressData.total;
             this.loadingPercent = Math.round(level * 100);
         };
@@ -276,10 +279,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      *
      * @param scaleMode - new scale mode
      */
-    scalePage(scaleMode) {
+    scalePage(scaleMode: PdfScaleMode) {
         this.currentScaleMode = scaleMode;
 
-        const viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
+        const viewerContainer = this.getMainContainer();
         const documentContainer = this.getDocumentContainer();
 
         if (this.pdfViewer && documentContainer) {
@@ -348,11 +351,15 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return this.checkPageFitInContainer(scale);
     }
 
-    private getDocumentContainer() {
+    private getMainContainer(): HTMLElement {
+        return document.getElementById(`${this.randomPdfId}-viewer-main-container`);
+    }
+
+    private getDocumentContainer(): HTMLElement {
         return document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
     }
 
-    private getViewer() {
+    private getViewer(): HTMLElement {
         return document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`);
     }
 

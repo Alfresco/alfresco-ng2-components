@@ -186,7 +186,11 @@ export class NodesApiService {
             }
         }
 
-        return this.createNodeInsideRoot(name || window.crypto.randomUUID(), nodeType, properties, path);
+        return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
+    }
+
+    private randomNodeName(): string {
+        return `node_${Date.now()}`;
     }
 
     /**
