@@ -303,7 +303,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             let scale: number;
             switch (this.currentScaleMode) {
-                case 'init': {
+                case 'init':
+                case 'page-fit': {
                     scale = this.getUserScaling();
                     if (!scale) {
                         scale = this.autoScaling(pageHeightScale, pageWidthScale);
@@ -320,13 +321,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 }
                 case 'page-height': {
                     scale = pageHeightScale;
-                    break;
-                }
-                case 'page-fit': {
-                    scale = this.getUserScaling();
-                    if (!scale) {
-                        scale = this.autoScaling(pageHeightScale, pageWidthScale);
-                    }
                     break;
                 }
                 case 'auto': {
