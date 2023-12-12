@@ -1,3 +1,4 @@
+/* stylelint-disable scss/no-global-function-names */
 @use './reference-variables' as *;
 @use '@angular/material' as mat;
 
@@ -52,7 +53,6 @@
         --adf-identity-user-info-line-height: $adf-ref-line-height,
         --adf-identity-user-info-font-size: var(--theme-adf-picture-1-font-size),
         --adf-user-info-container-margin-right: $adf-ref-margin-right,
-
         --adf-info-drawer-tab-default-color: mat.get-color-from-palette($accent),
         --adf-info-drawer-tab-default-background: mat.get-color-from-palette($background, card),
         --adf-info-drawer-tab-default-bottom-line:$adf-ref-tab-bottom-line-default,
