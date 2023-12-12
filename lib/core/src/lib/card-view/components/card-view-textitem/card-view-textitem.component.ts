@@ -24,7 +24,6 @@ import { TranslationService } from '../../../translation/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { UntypedFormControl } from '@angular/forms';
 import { debounceTime, takeUntil, filter } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -44,30 +43,24 @@ const templateTypes = {
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges, OnDestroy {
     @Input()
-    editable: boolean = false;
+    displayEmpty = true;
 
     @Input()
-    displayEmpty: boolean = true;
+    copyToClipboardAction = true;
 
     @Input()
-    copyToClipboardAction: boolean = true;
-
-    @Input()
-    useChipsForMultiValueProperty: boolean = true;
+    useChipsForMultiValueProperty = true;
 
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
     @Input()
-    displayLabelForChips: boolean = false;
+    displayLabelForChips = false;
 
     editedValue: string | string[];
     errors: CardViewItemValidator[];
     templateType: string;
-
-    textInput: UntypedFormControl = new UntypedFormControl();
-
-    private onDestroy$ = new Subject<boolean>();
+    textInput = new UntypedFormControl();
 
     constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
         super();
@@ -79,7 +72,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
                 .pipe(
                     filter((textInputValue) => textInputValue !== this.editedValue && textInputValue !== null),
                     debounceTime(50),
-                    takeUntil(this.onDestroy$)
+                    takeUntil(this.destroy$)
                 )
                 .subscribe((textInputValue) => {
                     this.editedValue = textInputValue;
@@ -198,8 +191,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
+        super.ngOnDestroy();
     }
 
     get showProperty(): boolean {
@@ -210,20 +202,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         return this.hasIcon && this.editable;
     }
 
-    get isEditable(): boolean {
-        return this.editable && this.property.editable;
-    }
-
-    get notClickable(): boolean {
-        return this.editable && !this.property.editable;
-    }
-
     get isClickable(): boolean {
         return this.property.clickable;
-    }
-
-    get hasIcon(): boolean {
-        return !!this.property.icon;
     }
 
     get hasErrors(): boolean {

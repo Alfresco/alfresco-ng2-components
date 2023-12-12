@@ -300,14 +300,14 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             component.property.editable = false;
             fixture.detectChanges();
-            expect(component.notClickable).toBe(true);
+            expect(component.isReadonlyProperty).toBe(true);
         });
 
         it('should return false when editable is false, and property.editable is false', () => {
             component.editable = false;
             component.property.editable = false;
             fixture.detectChanges();
-            expect(component.notClickable).toBe(false);
+            expect(component.isReadonlyProperty).toBe(false);
         });
     });
 

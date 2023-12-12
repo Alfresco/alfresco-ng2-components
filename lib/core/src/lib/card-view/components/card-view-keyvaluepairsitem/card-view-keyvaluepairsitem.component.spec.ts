@@ -75,7 +75,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(component.isEditable()).toBe(false);
+            expect(component.isEditable).toBe(false);
             const table = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__read-only'));
             const form = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
 

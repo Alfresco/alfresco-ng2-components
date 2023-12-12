@@ -2,7 +2,7 @@
      class="adf-property-label">{{ property.label | translate }}</div>
 <div class="adf-property-field">
 
-    <div *ngIf="!isEditable()" class="adf-card-view__key-value-pairs__read-only adf-property-value">
+    <div *ngIf="!isEditable" class="adf-card-view__key-value-pairs__read-only adf-property-value">
         <mat-table #table [dataSource]="matTableValues" class="mat-elevation-z8">
             <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef>{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}
@@ -20,7 +20,7 @@
         </mat-table>
     </div>
 
-    <div class="adf-card-view__key-value-pairs adf-property-value" *ngIf="isEditable() && values && values.length">
+    <div class="adf-card-view__key-value-pairs adf-property-value" *ngIf="isEditable && values && values.length">
         <div class="adf-card-view__key-value-pairs__row">
             <div class="adf-property-col-key">{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}</div>
             <div class="adf-property-col-value">{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.VALUE' | translate }}</div>
@@ -34,7 +34,7 @@
                 (blur)="onBlur(item.value)"
                 [attr.data-automation-id]="'card-'+ property.key +'-name-input-' + i"
                 [(ngModel)]="values[i].name">
-            
+
             <input
                 matInput
                 class="adf-property-col-value adf-property-value-input"
@@ -51,7 +51,7 @@
             </button>
         </div>
     </div>
-    <div *ngIf="isEditable()" class="adf-property-value adf-card-view__key-value-pairs__add-btn-container">
+    <div *ngIf="isEditable" class="adf-property-value adf-card-view__key-value-pairs__add-btn-container">
         <button (click)="add()"
                 mat-button
                 class="adf-card-view__key-value-pairs__add-btn"

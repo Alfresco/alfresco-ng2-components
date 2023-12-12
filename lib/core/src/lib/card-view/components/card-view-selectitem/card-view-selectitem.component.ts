@@ -17,7 +17,7 @@
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, inject, ViewEncapsulation } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
 import { MatSelectChange } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
@@ -35,8 +35,6 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     private appConfig = inject(AppConfigService);
     static HIDE_FILTER_LIMIT = 5;
 
-    @Input() editable: boolean = false;
-
     @Input() options$: Observable<CardViewSelectItemOption<string | number>[]>;
 
     @Input()
@@ -46,11 +44,8 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     displayEmpty: boolean = true;
 
     value: string | number;
-    filter$: BehaviorSubject<string> = new BehaviorSubject('');
+    filter$ = new BehaviorSubject<string>('');
     showInputFilter: boolean = false;
-
-    private onDestroy$ = new Subject<void>();
-
     list$: Observable<CardViewSelectItemOption<string | number>[]> = null;
 
     ngOnChanges(): void {
@@ -59,8 +54,8 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     ngOnInit() {
         this.getOptions()
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((options: CardViewSelectItemOption<string>[]) => {
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((options) => {
                 this.showInputFilter = options.length > this.optionsLimit;
             });
 
@@ -71,25 +66,17 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         this.filter$.next(value.toString());
     }
 
-    get isEditable(): boolean {
-        return this.editable && this.property.editable;
-    }
-
-    get notClickable(): boolean {
-        return this.editable && !this.property.editable;
-    }
-
-    getOptions(): Observable<CardViewSelectItemOption<string | number>[]> {
+    private getOptions(): Observable<CardViewSelectItemOption<string | number>[]> {
         return this.options$ || this.property.options$;
     }
 
     getList(): Observable<CardViewSelectItemOption<string | number>[]> {
         return combineLatest([this.getOptions(), this.filter$])
             .pipe(
-                map(([items, filter]) => items.filter((item: CardViewSelectItemOption<string>) =>
+                map(([items, filter]) => items.filter((item) =>
                     filter ? item.label.toLowerCase().includes(filter.toLowerCase())
                         : true)),
-                takeUntil(this.onDestroy$)
+                takeUntil(this.destroy$)
             );
     }
 
@@ -99,17 +86,12 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         this.property.value = selectedOption;
     }
 
-    showNoneOption() {
-        return this.displayNoneOption;
-    }
-
     get showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
     ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
+        super.ngOnDestroy();
     }
 
     private get optionsLimit(): number {
