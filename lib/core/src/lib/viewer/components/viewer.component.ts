@@ -176,7 +176,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     sidebarLeftTemplateContext: T = null;
 
-     /**
+    /**
      * Change the close button position Right/Left.
      */
     @Input()
