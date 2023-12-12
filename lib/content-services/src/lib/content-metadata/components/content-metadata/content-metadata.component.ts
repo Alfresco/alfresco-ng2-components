@@ -99,11 +99,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     /** True if tags should be displayed, false otherwise */
     @Input()
-    displayTags = true;
+    displayTags = false;
 
     /** True if categories should be displayed, false otherwise */
     @Input()
-    displayCategories = true;
+    displayCategories = false;
 
     /** List of custom metadata panels to be displayed with registered custom components */
     @Input()
