@@ -185,7 +185,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     stickyHeader: boolean;
-    enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
 
     constructor(
