@@ -65,6 +65,8 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
             config = {};
         }
 
+        this.fakeChangeToTriggerAffectedTest();
+
         this.storage = Storage.getInstance();
         this.storage.setDomainPrefix(config.domainPrefix);
 
@@ -82,6 +84,10 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         }
 
         return config;
+    }
+
+    private fakeChangeToTriggerAffectedTest() {
+        return '';
     }
 
     private initAuth(config: AlfrescoApiConfig): void {
@@ -574,3 +580,4 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         }
     }
 }
+
