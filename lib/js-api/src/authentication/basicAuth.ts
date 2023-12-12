@@ -19,4 +19,5 @@ export interface BasicAuth {
     username?: string;
     password?: string;
     ticket?: string;
+    test?: string;
 }
