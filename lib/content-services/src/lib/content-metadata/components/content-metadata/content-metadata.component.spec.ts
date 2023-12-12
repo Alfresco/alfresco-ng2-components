@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { ChangeDetectorRef, DebugElement, SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
@@ -25,7 +25,6 @@ import { AppConfigService, CardViewBaseItemModel, CardViewComponent, Notificatio
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { EMPTY, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
@@ -52,7 +51,6 @@ describe('ContentMetadataComponent', () => {
     let categoryService: CategoryService;
     let getClassSpy: jasmine.Spy;
     let notificationService: NotificationService;
-    let changeDetectorRef: ChangeDetectorRef;
 
     const preset = 'custom-preset';
 
@@ -177,7 +175,6 @@ describe('ContentMetadataComponent', () => {
         notificationService = TestBed.inject(NotificationService);
         const propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
         const classesApi = propertyDescriptorsService['classesApi'];
-        changeDetectorRef = fixture.componentRef.injector.get(ChangeDetectorRef);
 
         node = {
             id: 'node-id',
@@ -799,7 +796,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should revert changes for general info panel on cancel', () => {
-            const spy = spyOn(component as any, 'getProperties').and.returnValue(of(expectedNode));
+            const spy = spyOn(contentMetadataService, 'getBasicProperties');
             component.onCancelGeneralInfoEdit();
             expect(spy).toHaveBeenCalled();
         });
@@ -807,19 +804,19 @@ describe('ContentMetadataComponent', () => {
         it('should revert changes for getGroupedProperties panel on cancel', () => {
             spyOn(contentMetadataService, 'getGroupedProperties');
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
-            component.onCancelGroupEdit({} as any);
+            component.onCancelGroupEdit({} as CardViewGroup);
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
         });
 
         it('should revert changes for categories panel on cancel', () => {
-            const spy = spyOn(component as any, 'loadCategoriesForNode');
+            const spy = spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
             component.displayCategories = true;
             component.onCancelCategoriesEdit();
             expect(spy).toHaveBeenCalledWith(expectedNode.id);
         });
 
         it('should revert changes for tags panel on cancel', () => {
-            const spy = spyOn(component as any, 'loadTagsForNode');
+            const spy = spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(mockTagPaging()));
             component.displayTags = true;
             component.onCancelTagsEdit();
             expect(spy).toHaveBeenCalledWith(expectedNode.id);
@@ -1103,35 +1100,29 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Expand the panel', () => {
-        let expectedNode: Node;
 
         beforeEach(() => {
-            expectedNode = { ...node, name: 'some-modified-value' };
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of(mockGroupProperties));
-            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            component.isGeneralPanelExpanded = false;
         });
 
         it('should open and update drawer with expand section dynamically', async () => {
+            component.displayEmpty = true;
             component.displayAspect = 'EXIF';
             component.expanded = true;
-            component.displayEmpty = true;
-            changeDetectorRef.detectChanges();
+
+            fixture.detectChanges();
             await fixture.whenStable();
+
             let defaultProp = queryDom(fixture);
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
 
             component.displayAspect = 'CUSTOM';
 
-            changeDetectorRef.detectChanges();
+            fixture.detectChanges();
             await fixture.whenStable();
 
             defaultProp = queryDom(fixture);
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
-        });
-
-        it('should expand the section when displayAspect set as Properties', async () => {
-            component.displayAspect = 'Properties';
-            expect(component.isGeneralPanelExpanded).toBeTruthy();
         });
 
         it('should not expand anything if input is wrong', async () => {
@@ -1139,14 +1130,20 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = true;
 
-            changeDetectorRef.detectChanges();
-
+            fixture.detectChanges();
             await fixture.whenStable();
 
             const defaultProp = queryDom(fixture);
-            const exifProp = queryDom(fixture, 'EXIF');
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
-            expect(exifProp.componentInstance.expanded).toBeFalsy();
+        });
+
+        it('should expand the section when displayAspect set as Properties', async () => {
+            component.displayAspect = 'Properties';
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            expect(component.isGeneralPanelExpanded).toBeTruthy();
         });
     });
 

@@ -127,11 +127,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      */
     @Output()
     tagsChange = new EventEmitter<string[]>();
-    /**
-     * Emitted when input is showing or hiding.
-     */
-    @Output()
-    tagNameControlVisibleChange = new EventEmitter<boolean>();
 
     readonly nameErrorMessagesByErrors = new Map<keyof TagNameControlErrors, string>([
         ['duplicatedExistingTag', 'EXISTING_TAG'],

@@ -25,15 +25,11 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ESCAPE } from '@angular/cdk/keycodes';
 
-let fixture: ComponentFixture<InfoDrawerComponent>;
-
-const getNodeIcon = () =>
-fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
-
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
     let component: InfoDrawerComponent;
     let translateService: TranslateService;
+    let fixture: ComponentFixture<InfoDrawerComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -110,6 +106,8 @@ describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
     let translateService: TranslateService;
+    const getNodeIcon = () =>
+    fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -187,6 +185,8 @@ class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
 describe('Header visibility InfoDrawer', () => {
     let fixture: ComponentFixture<VisibilityInfoDrawerComponent>;
     let component: VisibilityInfoDrawerComponent;
+    const getNodeIcon = () =>
+    fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
 
     beforeEach(() => {
         TestBed.configureTestingModule({

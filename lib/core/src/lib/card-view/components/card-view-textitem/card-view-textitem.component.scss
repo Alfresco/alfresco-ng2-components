@@ -41,9 +41,11 @@
             color: var(--adf-theme-foreground-text-color);
         }
 
-        &-value {
-            cursor: pointer;
-            color: var(--theme-primary-color) !important;
+        .adf-property-field {
+            .mat-input-element {
+                color: var(--theme-primary-color);
+                cursor: pointer;
+            }
         }
     }
 

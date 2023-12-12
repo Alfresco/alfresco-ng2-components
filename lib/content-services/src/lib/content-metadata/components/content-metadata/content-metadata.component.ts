@@ -230,7 +230,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.node && !changes.node.firstChange) {
             this.loadProperties(changes.node.currentValue);
         }
-        if(changes.readOnly && changes.readOnly.currentValue) {
+        if(changes?.readOnly && changes?.readOnly?.currentValue) {
             this.cancelEditing();
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
         }

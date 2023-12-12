@@ -87,7 +87,7 @@
             <adf-tags-creator
                 *ngIf="isEditingModeTags"
                 class="adf-metadata-properties-tags"
-                [(tagNameControlVisible)]="tagNameControlVisible"
+                [tagNameControlVisible]="tagNameControlVisible"
                 (tagsChange)="storeTagsToAssign($event)"
                 [mode]="tagsCreatorMode"
                 [tags]="assignedTags"
@@ -150,9 +150,13 @@
     <mat-expansion-panel
         *ngFor="let customPanel of customPanels"
         [expanded]="canExpandTheCard(customPanel.panelTitle)"
-        class="adf-content-metadata-panel">
+        (opened)="customPanel.expanded = true"
+        (closed)="customPanel.expanded = false"
+        class="adf-content-metadata-panel"
+        hideToggle>
         <mat-expansion-panel-header>
-            <mat-panel-title class="adf-metadata-custom-panel-title">{{ customPanel.panelTitle | translate }}</mat-panel-title>
+            <adf-content-metadata-header [title]="customPanel.panelTitle" [expanded]="customPanel.expanded">
+            </adf-content-metadata-header>
         </mat-expansion-panel-header>
         <adf-dynamic-component [id]="customPanel.component" [data]="{ node }"></adf-dynamic-component>
     </mat-expansion-panel>
@@ -198,7 +202,7 @@
                     </adf-content-metadata-header>
                 </mat-expansion-panel-header>
                 <div *ngIf="!showGroup(group) && !group.editable" class="adf-metadata-no-item-added">
-                    {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate: { groupTitle: group.title } }}
+                    {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate: { groupTitle: group.title | translate } }}
                 </div>
                 <adf-card-view
                     (keydown)="keyDown($event)"
