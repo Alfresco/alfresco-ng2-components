@@ -174,7 +174,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             .pipe(debounceTime(500), takeUntil(this.onDestroy$))
             .subscribe((node) => {
                 this.node.aspectNames = node?.aspectNames;
-                this.loadProperties(node)
+                this.loadProperties(node);
             });
 
         this.loadProperties(this.node);
