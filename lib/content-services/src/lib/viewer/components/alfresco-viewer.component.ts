@@ -31,7 +31,6 @@ import {
 } from '@angular/core';
 import {
     AlfrescoApiService,
-    AppConfigService,
     LogService,
     Track,
     ViewerComponent,
@@ -161,6 +160,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowFullScreen = true;
 
+    /** Change the close button position Right/Left */
+    @Input()
+    closeButtonPosition = 'right';
+
     /** The template for the right sidebar. The template context contains the loaded node data. */
     @Input()
     sidebarRightTemplate: TemplateRef<any> = null;
@@ -197,7 +200,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     nodeEntry: NodeEntry;
     tracks: Track[] = [];
     readOnly: boolean = true;
-    showCloseButton: boolean = true;
 
     sidebarRightTemplateContext: { node: Node } = { node: null };
     sidebarLeftTemplateContext: { node: Node } = { node: null };
@@ -236,11 +238,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         private uploadService: UploadService,
         public dialog: MatDialog,
         private cdr: ChangeDetectorRef,
-        private nodeActionsService: NodeActionsService,
-        private appConfig: AppConfigService
+        private nodeActionsService: NodeActionsService
     ) {
         renditionService.maxRetries = this.maxRetries;
-        this.allowGoBack = this.appConfig.get('viewer.isCloseButtonOnLeft', false);
     }
 
     ngOnInit() {
@@ -270,7 +270,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private async setupSharedLink() {
-        this.showCloseButton = false;
+        this.allowGoBack = false;
 
         try {
             const sharedLinkEntry = await this.sharedLinksApi.getSharedLink(this.sharedLinkId);

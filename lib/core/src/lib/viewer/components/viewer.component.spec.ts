@@ -527,29 +527,28 @@ describe('ViewerComponent', () => {
 
         describe('Close Button', () => {
 
-            it('should show close button on left side when showCloseButton is true and allowGoBack is true', () => {
-                component.showCloseButton = true;
+            it('should show close button on left side when closeButtonPosition is left and allowGoBack is true', () => {
                 component.allowGoBack = true;
+                component.closeButtonPosition = 'left';
                 fixture.detectChanges();
 
-                expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
-
+                expect(element.querySelector('.adf-left-close-button')).not.toBeNull();
             });
 
-            it('should show close button on right side when showCloseButton is true and allowGoBack is false', () => {
-                component.showCloseButton = true;
+            it('should show close button on right side when closeButtonPosition is right and allowGoBack is true', () => {
+                component.allowGoBack = true;
+                component.closeButtonPosition = 'right';
+                fixture.detectChanges();
+
+                expect(element.querySelector('.adf-right-close-button')).not.toBeNull();
+            });
+
+            it('should hide close button allowGoBack is false', () => {
                 component.allowGoBack = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
-
-            });
-
-            it('should hide close button when showCloseButton is false', () => {
-                component.showCloseButton = false;
-                fixture.detectChanges();
-
-                expect(element.querySelector('.adf-viewer-close-button')).toBeNull();
+                expect(element.querySelector('.adf-right-close-button')).toBeNull();
+                expect(element.querySelector('.adf-left-close-button')).toBeNull();
             });
         });
 
