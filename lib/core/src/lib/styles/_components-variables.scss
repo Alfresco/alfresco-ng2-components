@@ -4,6 +4,7 @@
 @mixin adf-components-variables($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
 
     $defaults: (
         --adf-card-view-background: $adf-ref-card-background,
@@ -62,6 +63,12 @@
         --adf-info-drawer-tab-active-focused-background: mat.get-color-from-palette($primary),
         --adf-info-drawer-tab-active-focused-color:unset,
         --adf-info-drawer-tab-active-focused-bottom-line:unset,
+
+        --adf-people-cloud-input-label-default-color: $adf-ref-text-field-label-color,
+        --adf-people-cloud-input-label-focus-color: mat.get-color-from-palette($primary),
+        --adf-people-cloud-autosuggest-result-active-color: $adf-ref-autosuggest-result-active-color,
+        --adf-people-cloud-autosuggest-result-disabled-color: $adf-ref-autosuggest-result-disabled-color,
+        --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn)
     );
 
     // propagates SCSS variables into the CSS variables scope
