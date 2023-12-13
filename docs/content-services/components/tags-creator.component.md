@@ -13,7 +13,7 @@ Allows to create multiple tags. That component contains input and two lists. Top
 
 ```html
 <adf-tags-creator
-    [(tagNameControlVisible)]="tagNameControlVisible"
+    [tagNameControlVisible]="tagNameControlVisible"
     (tagsChange)="tags = $event"
     [mode]="tagsCreatorMode">
 </adf-tags-creator>

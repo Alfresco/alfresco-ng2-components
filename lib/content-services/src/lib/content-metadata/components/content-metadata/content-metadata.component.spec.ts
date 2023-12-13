@@ -273,6 +273,8 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should call removeTag and assignTagsToNode on TagService on save click', fakeAsync(() => {
+            component.isEditingModeTags = true;
+            component.displayTags = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
@@ -368,6 +370,7 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should call removeTag and assignTagsToNode on TagService after confirming confirmation dialog when content type is changed', fakeAsync(() => {
+            component.displayTags = true;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
@@ -1549,7 +1552,7 @@ describe('ContentMetadataComponent', () => {
         it('should render correct custom panel with title and component', () => {
             component.customPanels = [{ panelTitle: 'testTitle', component: 'testComponent' }];
             fixture.detectChanges();
-            const panelTitle = fixture.debugElement.query(By.css('.adf-metadata-custom-panel-title')).nativeElement;
+            const panelTitle = fixture.debugElement.query(By.css('.adf-metadata-custom-panel-title .adf-metadata-properties-title')).nativeElement;
             const customComponent = fixture.debugElement.query(By.css('adf-dynamic-component')).nativeElement;
             expect(panelTitle.innerText).toEqual('testTitle');
             expect(customComponent).toBeDefined();
