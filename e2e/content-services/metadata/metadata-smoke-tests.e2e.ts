@@ -98,7 +98,7 @@ describe('Metadata component', () => {
             await contentServicesPage.waitForTableBody();
         });
 
-        it("[C245652] Should be possible to display a file's properties", async () => {
+        it('[C245652] Should be possible to display a file properties', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
