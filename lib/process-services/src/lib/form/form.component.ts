@@ -118,11 +118,16 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     ngOnInit() {
         this.formService.formContentClicked.pipe(takeUntil(this.onDestroy$)).subscribe((content) => this.formContentClicked.emit(content));
 
+        this.fakeMethod();
         this.formService.validateForm.pipe(takeUntil(this.onDestroy$)).subscribe((validateFormEvent) => {
             if (validateFormEvent.errorsField.length > 0) {
                 this.formError.next(validateFormEvent.errorsField);
             }
         });
+    }
+
+    fakeMethod() {
+        return 'fake';
     }
 
     ngOnDestroy() {
