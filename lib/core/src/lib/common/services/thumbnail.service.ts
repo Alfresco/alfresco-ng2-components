@@ -187,11 +187,11 @@ export class ThumbnailService {
      *
      * @returns URL string
      */
-    public getDefaultMimeTypeIcon(): string {
+    getDefaultMimeTypeIcon(): string {
         return DEFAULT_ICON;
     }
 
-    public getNodeIcon(node: Node): string {
+    getNodeIcon(node: Node): string {
         if (node?.isFolder) {
             return this.getFolderIcon(node);
         }
@@ -215,16 +215,14 @@ export class ThumbnailService {
 
     isSmartFolder(node: Node): boolean {
         if (node) {
-            const nodeAspects = this.getNodeAspectNames(node);
-            return nodeAspects?.includes('smf:customConfigSmartFolder') || nodeAspects?.includes('smf:systemConfigSmartFolder');
+            return this.hasAspect(node, 'smf:customConfigSmartFolder') || this.hasAspect(node, 'smf:systemConfigSmartFolder');
         }
         return false;
     }
 
     isRuleFolder(node: Node): boolean {
         if (node) {
-            const nodeAspects = this.getNodeAspectNames(node);
-            return nodeAspects?.includes('rule:rules');
+            return this.hasAspect(node, 'rule:rules');
         }
         return false;
     }
@@ -233,7 +231,7 @@ export class ThumbnailService {
         return node?.nodeType === 'app:folderlink';
     }
 
-    private getNodeAspectNames(node: Node): string[] {
-        return node?.aspectNames || [];
+    private hasAspect(node: Node, aspectName: string): boolean {
+        return node?.aspectNames?.includes(aspectName);
     }
 }

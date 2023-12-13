@@ -40,7 +40,8 @@
                 [cdkAutosizeMaxRows]="1"
                 [cdkAutosizeMaxRows]="5"
                 class="adf-property-value"
-                [ngClass]="{'adf-property-value-editable': editable,
+                [ngClass]="{
+                    'adf-property-value-editable': editable,
                     'adf-property-readonly-value': isReadonlyProperty
                 }"
                 [placeholder]="property.default"
@@ -101,7 +102,7 @@
             <input matInput
                 [type]=property.inputType
                 class="adf-property-value"
-                title="{{property.label | translate }}"
+                title="{{ property.label | translate }}"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
                     'adf-textitem-clickable-value': !isEditable,
