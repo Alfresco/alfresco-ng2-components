@@ -20,7 +20,7 @@
         padding: 10px 0;
     }
 
-    &-people-cloud-option-active:not(&:disabled){
+    &-people-cloud-option-active:not(&:disabled) {
         color: var(--adf-people-cloud-autosuggest-result-active-color);
     }
 
@@ -57,7 +57,9 @@
         }
     }
 
-    &-error, &-error-text, &-error-icon {
+    &-error,
+    &-error-text,
+    &-error-icon {
         color: var(--adf-people-cloud-input-caption-error-color);
     }
 }
