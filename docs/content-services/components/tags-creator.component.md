@@ -35,5 +35,4 @@ Allows to create multiple tags. That component contains input and two lists. Top
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | existingTagsPanelVisibilityChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when bottom list is showing or hiding. |
-| tagNameControlVisibleChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when input is showing or hiding. |
 | tagsChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string[]>` | Emitted when tags in top list are changed. |

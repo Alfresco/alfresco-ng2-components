@@ -155,6 +155,7 @@ describe('Metadata component', () => {
                 browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
             );
 
+            await metadataViewPage.clickEditIconGeneral();
             await metadataViewPage.enterPropertyText('properties.cm:name', 'exampleText.png');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'example title');
             await metadataViewPage.enterDescriptionText('example description');
@@ -181,7 +182,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(
                 browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
             );
-            await metadataViewPage.clickSaveMetadata();
+            await metadataViewPage.clickSaveGeneralMetadata();
         });
 
         it('[C260181] Should be possible edit all the metadata aspect', async () => {
