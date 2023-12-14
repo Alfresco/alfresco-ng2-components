@@ -327,7 +327,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     /** Sets columns width for DataTableSchema */
     @Input()
-    set setColumnsWidths (columnsWidths: { [columnId: string]: number } | undefined) {
+    set setColumnsWidths(columnsWidths: { [columnId: string]: number } | undefined) {
         this.columnsWidths = columnsWidths;
     }
 
@@ -823,13 +823,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.columnsVisibilityChanged.emit(this.columnsVisibility);
     }
 
-    onColumnOrderChanged(columnsWithNewOrder: DataColumn[]) {
+    onColumnOrderChange(columnsWithNewOrder: DataColumn[]) {
         this.columnsOrder = columnsWithNewOrder.map((column) => column.id);
         this.createColumns();
         this.columnsOrderChanged.emit(this.columnsOrder);
     }
 
-    onColumnsWidthChanged(columns: DataColumn[]) {
+    onColumnsWidthChange(columns: DataColumn[]) {
         const newColumnsWidths = columns.reduce((widthsColumnsMap, column) => {
             if (column.width) {
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
