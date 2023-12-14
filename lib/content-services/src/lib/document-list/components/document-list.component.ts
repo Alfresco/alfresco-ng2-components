@@ -319,6 +319,24 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     columnsPresetKey?: string;
 
+    /** Sets columns visibility for DataTableSchema */
+    @Input()
+    set setColumnsVisibility(columnsVisibility: { [columnId: string]: boolean } | undefined) {
+        this.columnsVisibility = columnsVisibility;
+    }
+
+    /** Sets columns width for DataTableSchema */
+    @Input()
+    set setColumnsWidths (columnsWidths: { [columnId: string]: number } | undefined) {
+        this.columnsWidths = columnsWidths;
+    }
+
+    /** Sets columns order for DataTableSchema */
+    @Input()
+    set setColumnsOrder(columnsOrder: string[] | undefined) {
+        this.columnsOrder = columnsOrder;
+    }
+
     /** Limit of possible visible columns, including "$thumbnail" column if provided */
     @Input()
     maxColumnsVisible?: number;
@@ -367,11 +385,17 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Output()
     filterSelection = new EventEmitter<FilterSearch[]>();
 
+    /** Emitted when column widths change */
     @Output()
-    columnsWidthChanged = new EventEmitter<any>();
+    columnsWidthChanged = new EventEmitter<{ [columnId: string]: number } | undefined>();
 
+    /** Emitted when columns visibility change */
     @Output()
-    columnsVisibilityChanged = new EventEmitter<any>();
+    columnsVisibilityChanged = new EventEmitter<{ [columnId: string]: boolean } | undefined>();
+
+    /** Emitted when columns order change */
+    @Output()
+    columnsOrderChanged = new EventEmitter<string[] | undefined>();
 
     @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
@@ -795,20 +819,14 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }, {});
 
         this.createColumns();
-        // this.createDatatableSchema();
         this.data.setColumns(this.columns);
         this.columnsVisibilityChanged.emit(this.columnsVisibility);
     }
 
-    setColumnsVisibility (columnsVisibility: any) {
-        this.columnsVisibility = columnsVisibility
-        console.log(columnsVisibility)
-    }
-
     onColumnOrderChanged(columnsWithNewOrder: DataColumn[]) {
         this.columnsOrder = columnsWithNewOrder.map((column) => column.id);
-        // this.createColumns();
-
+        this.createColumns();
+        this.columnsOrderChanged.emit(this.columnsOrder);
     }
 
     onColumnsWidthChanged(columns: DataColumn[]) {
@@ -820,15 +838,8 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }, {});
 
         this.columnsWidths = { ...this.columnsWidths, ...newColumnsWidths };
-        console.log(this.columnsWidths)
-
-        this.columnsWidthChanged.emit(this.columnsWidths);
         this.createColumns();
-    }
-
-    setColumnsWidths (columnsWidths: any) {
-        this.columnsWidths = columnsWidths
-        console.log(columnsWidths)
+        this.columnsWidthChanged.emit(this.columnsWidths);
     }
 
     onNodeClick(nodeEntry: NodeEntry) {

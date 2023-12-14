@@ -895,6 +895,34 @@ describe('DocumentList', () => {
         documentList.onNodeDblClick(file);
     });
 
+    it('should emit new columns order on columnOrderChanged', () => {
+        const newColumnsOrder = [{key: 'key', type: 'text', id: 'tag'}, {key: 'key1', type: 'text', id: 'name'}];
+        spyOn(documentList.columnsOrderChanged, 'emit');
+        spyOn(documentList, 'onColumnOrderChanged').and.callThrough();
+        documentList.dataTable.columnOrderChanged.emit(newColumnsOrder as DataColumn[]);
+
+        expect(documentList.onColumnOrderChanged).toHaveBeenCalledWith(newColumnsOrder);
+        expect(documentList.columnsOrderChanged.emit).toHaveBeenCalledWith(['tag', 'name']);
+    });
+
+    it('should emit new columns width on columnsWidthChanged', () => {
+        const newColumnWidth = [{key: 'key', type: 'text', id: 'tag', width: 65}, {key: 'key1', type: 'text', id: 'name', width: 77}];
+        spyOn(documentList.columnsWidthChanged, 'emit');
+        spyOn(documentList, 'onColumnsWidthChanged').and.callThrough();
+        documentList.dataTable.columnsWidthChanged.emit(newColumnWidth as DataColumn[]);
+
+        expect(documentList.onColumnsWidthChanged).toHaveBeenCalledWith(newColumnWidth);
+        expect(documentList.columnsWidthChanged.emit).toHaveBeenCalledWith({'tag': 65, 'name': 77});
+    });
+
+    it('should emit new columns visibility', () => {
+        const newColumnsVisisbility = [{key: 'key', type: 'text', id: 'tag', isHidden: true}, {key: 'key1', type: 'text', id: 'name'}];
+        spyOn(documentList.columnsVisibilityChanged, 'emit');
+        documentList.onColumnsVisibilityChange(newColumnsVisisbility as DataColumn[]);
+
+        expect(documentList.columnsVisibilityChanged.emit).toHaveBeenCalledWith({'tag': false});
+    });
+
     it('should perform folder navigation on single click', () => {
         const folder = new FolderNode();
         spyOn(documentList, 'navigateTo').and.stub();
