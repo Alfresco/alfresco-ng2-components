@@ -18,7 +18,6 @@
                 </mat-icon>
             </mat-chip>
             <input *ngIf="!isReadonly()" matInput
-                   #chipInput
                    [formControl]="searchUserCtrl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="userMultipleChipList"
