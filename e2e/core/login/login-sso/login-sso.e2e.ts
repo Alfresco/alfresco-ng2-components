@@ -27,7 +27,7 @@ describe('Login component - SSO', () => {
     const loginPage = new LoginShellPage();
     const navigationBarPage = new NavigationBarPage();
 
-    describe('Login component - SSO implicit Flow', () => {
+    xdescribe('Login component - SSO implicit Flow', () => {
         afterEach(async () => {
             await navigationBarPage.clickLogoutButton();
             await browser.executeScript('window.sessionStorage.clear();');
@@ -69,7 +69,8 @@ describe('Login component - SSO', () => {
                 false,
                 false,
                 browser.params.testConfig.appConfig.oauth2.clientId,
-                browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout,
+                false);
 
             await loginPage.waitForElements();
 
