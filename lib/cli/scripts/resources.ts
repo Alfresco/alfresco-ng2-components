@@ -213,7 +213,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             'script-acs-process': 'script-acs-process'
         },
         security: [
-            { role: 'ACTIVITI_ADMIN', groups: [], users: ['processadminuser', 'superadminuser'] },
+            { role: 'ACTIVITI_ADMIN', groups: [], users: ['processadminuser'] },
             { role: 'ACTIVITI_USER', groups: [], users: ['hruser', 'salesuser', 'testadmin', 'testuser'] }
         ]
     }
