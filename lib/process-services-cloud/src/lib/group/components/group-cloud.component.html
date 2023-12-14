@@ -1,7 +1,9 @@
 <form>
-    <mat-form-field class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
-        <mat-label *ngIf="!isReadonly()"
-            id="adf-group-cloud-title-id">{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}</mat-label>
+    <mat-form-field floatLabel="auto" class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
+        <mat-label *ngIf="!isReadonly()" id="adf-group-cloud-title-id" class="adf-cloud-group-title"
+            [ngClass]="{'adf-cloud-group-title--focus': isFocused}">
+            {{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}
+        </mat-label>
         <mat-chip-list #groupChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-group-chip-list">
             <mat-chip
                 *ngFor="let group of selectedGroups"
