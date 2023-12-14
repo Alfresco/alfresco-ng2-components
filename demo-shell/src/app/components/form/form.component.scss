@@ -31,8 +31,10 @@
     }
 }
 
-.app-form-config-editor {
-    min-height: 500px;
+.mat-tab-body {
+    .app-form-config-editor {
+        height: 500px;
+    }
 }
 
 .app-form-editor-buttons {
