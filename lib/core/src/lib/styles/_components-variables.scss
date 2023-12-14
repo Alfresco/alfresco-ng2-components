@@ -68,13 +68,14 @@
 
         --adf-people-cloud-input-label-default-color: mat.get-color-from-palette($foreground, secondary-text),
         --adf-people-cloud-input-label-focus-color: mat.get-color-from-palette($primary),
-        --adf-people-cloud-autosuggest-result-active-color: mat.get-color-from-palette($foreground, text),
-        --adf-people-cloud-autosuggest-result-disabled-color: mat.get-color-from-palette($foreground, secondary-text),
+        --adf-people-cloud-autosuggest-result-active-color: $adf-ref-autosuggest-result-active-color,
+        --adf-people-cloud-autosuggest-result-disabled-color: $adf-ref-autosuggest-result-disabled-color,
         --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
-        --adf-group-cloud-input-label-default-color: mat.get-color-from-palette($foreground, secondary-text),
+
+        --adf-group-cloud-input-label-default-color: $adf-ref-text-field-label-color,
         --adf-group-cloud-input-label-focus-color: mat.get-color-from-palette($primary),
-        --adf-group-cloud-autosuggest-result-active-color: mat.get-color-from-palette($foreground, text),
-        --adf-group-cloud-autosuggest-result-disabled-color: mat.get-color-from-palette($foreground, secondary-text),
+        --adf-group-cloud-autosuggest-result-active-color: $adf-ref-autosuggest-result-active-color,
+        --adf-group-cloud-autosuggest-result-disabled-color: $adf-ref-autosuggest-result-disabled-color,
         --adf-group-cloud-input-caption-error-color: mat.get-color-from-palette($warn)
     );
 
