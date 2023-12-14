@@ -26,7 +26,7 @@ describe('Login component - SSO', () => {
     const loginPage = new LoginShellPage();
     const navigationBarPage = new NavigationBarPage();
 
-    xdescribe('Login component - SSO implicit Flow', () => {
+    describe('Login component - SSO implicit Flow', () => {
         afterEach(async () => {
             await navigationBarPage.clickLogoutButton();
             await browser.executeScript('window.sessionStorage.clear();');
