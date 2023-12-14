@@ -57,7 +57,7 @@ export class SettingsPage {
         await BrowserActions.click(this.ssoRadioButton);
     }
 
-    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout') {
+    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout', codeFlow = true) {
         await this.goToSettingsPage();
         await this.setProvider('ECM');
         await this.clickSsoRadioButton();
@@ -66,7 +66,7 @@ export class SettingsPage {
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
-        await this.setCodeFlow(true);
+        await this.setCodeFlow(codeFlow);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
