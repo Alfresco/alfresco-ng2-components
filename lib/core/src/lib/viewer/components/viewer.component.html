@@ -8,7 +8,9 @@
          cdkTrapFocusAutoCapture>
         <ng-content select="adf-viewer-toolbar"></ng-content>
         <ng-container *ngIf="showToolbar && !toolbar">
-            <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
+                  <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar" 
+                  [ngClass]="{ 'adf-viewer-right-close-button': closeButtonPosition === 'right'}"
+                  >
                 <adf-toolbar-title>
 
                     <ng-container *ngIf="allowLeftSidebar">
@@ -24,8 +26,8 @@
                     </ng-container>
 
                     <button *ngIf="allowGoBack && closeButtonPosition === 'left'"
-                            class="adf-viewer-close-button adf-left-close-button"
-                            data-automation-id="adf-toolbar-back"
+                            class="adf-viewer-close-button"
+                            data-automation-id="adf-toolbar-left-back"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                             mat-icon-button
                             title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
@@ -124,7 +126,7 @@
                     <adf-toolbar-divider></adf-toolbar-divider>
 
                     <button class="adf-viewer-close-button adf-right-close-button"
-                            data-automation-id="adf-toolbar-back"
+                            data-automation-id="adf-toolbar-right-back"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                             mat-icon-button
                             title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"

@@ -37,7 +37,7 @@ import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { filter, first, skipWhile, takeUntil } from 'rxjs/operators';
-import { Track } from '../models/viewer.model';
+import { CloseButtonPosition, Track } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
 import { DownloadPromptDialogComponent } from './download-prompt-dialog/download-prompt-dialog.component';
 import { AppConfigService } from '../../app-config';
@@ -180,7 +180,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
      * Change the close button position Right/Left.
      */
     @Input()
-    closeButtonPosition = 'right';
+    closeButtonPosition = CloseButtonPosition.Left;
 
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.

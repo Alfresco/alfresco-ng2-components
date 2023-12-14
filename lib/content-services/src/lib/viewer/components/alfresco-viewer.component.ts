@@ -31,6 +31,7 @@ import {
 } from '@angular/core';
 import {
     AlfrescoApiService,
+    CloseButtonPosition,
     LogService,
     Track,
     ViewerComponent,
@@ -162,7 +163,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Change the close button position Right/Left */
     @Input()
-    closeButtonPosition = 'right';
+    closeButtonPosition = CloseButtonPosition.Left;
 
     /** The template for the right sidebar. The template context contains the loaded node data. */
     @Input()

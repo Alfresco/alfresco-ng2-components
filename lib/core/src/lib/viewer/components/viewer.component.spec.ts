@@ -29,7 +29,8 @@ import {
     ViewUtilService,
     AppConfigService,
     DownloadPromptDialogComponent,
-    DownloadPromptActions
+    DownloadPromptActions,
+    CloseButtonPosition
 } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ViewerWithCustomMoreActionsComponent } from './mock/adf-viewer-container-more-actions.component.mock';
@@ -351,11 +352,12 @@ describe('ViewerComponent', () => {
         });
 
         it('should render close viewer button if it is not a shared link', (done) => {
+            component.closeButtonPosition = CloseButtonPosition.Left;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).toBeDefined();
-                expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).not.toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-left-back"]')).toBeDefined();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-left-back"]')).not.toBeNull();
                 done();
             });
         });
@@ -527,28 +529,33 @@ describe('ViewerComponent', () => {
 
         describe('Close Button', () => {
 
+            const getRightCloseButton = () => element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-right-back"]');
+            const getLeftCloseButton = () => element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-left-back"]');
+
             it('should show close button on left side when closeButtonPosition is left and allowGoBack is true', () => {
                 component.allowGoBack = true;
-                component.closeButtonPosition = 'left';
+                component.closeButtonPosition = CloseButtonPosition.Left;
                 fixture.detectChanges();
 
-                expect(element.querySelector('.adf-left-close-button')).not.toBeNull();
+                expect(getLeftCloseButton()).not.toBeNull();
+                expect(getRightCloseButton()).toBeNull();
             });
 
             it('should show close button on right side when closeButtonPosition is right and allowGoBack is true', () => {
                 component.allowGoBack = true;
-                component.closeButtonPosition = 'right';
+                component.closeButtonPosition =  CloseButtonPosition.Right;
                 fixture.detectChanges();
 
-                expect(element.querySelector('.adf-right-close-button')).not.toBeNull();
+                expect(getRightCloseButton()).not.toBeNull();
+                expect(getLeftCloseButton()).toBeNull();
             });
 
             it('should hide close button allowGoBack is false', () => {
                 component.allowGoBack = false;
                 fixture.detectChanges();
 
-                expect(element.querySelector('.adf-right-close-button')).toBeNull();
-                expect(element.querySelector('.adf-left-close-button')).toBeNull();
+                expect(getRightCloseButton()).toBeNull();
+                expect(getLeftCloseButton()).toBeNull();
             });
         });
 

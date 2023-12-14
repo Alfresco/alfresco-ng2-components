@@ -68,7 +68,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | allowDownload | `boolean` | true | Toggles downloading. |
 | allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
 | allowGoBack | `boolean` | true | Allows `back` navigation. |
-| closeButtonPosition | `string` | `right` | Set close button position right/left. |
+| closeButtonPosition | `string` | `left` | Set close button position right/left. |
 | allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
 | allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
 | allowPrint | `boolean` | false | Toggles printing. |
