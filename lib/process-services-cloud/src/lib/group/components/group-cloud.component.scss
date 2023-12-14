@@ -17,15 +17,25 @@
     &-cloud-group {
         width: 100%;
 
-        &-option-not-active {
-            background: inherit !important;
+        &-title {
+            color: var(--adf-group-cloud-input-label-default-color);
+
+            &--focus {
+                color: var(--adf-group-cloud-input-label-focus-color);
+            }
         }
 
-        .mat-form-field {
-            width: 100%;
+        &-option-active:not(&:disabled) {
+            color: var(--adf-group-cloud-autosuggest-result-active-color);
+        }
+
+        &-option-not-active:not(&:active) {
+            background: inherit !important;
+            color: var(--adf-group-cloud-autosuggest-result-disabled-color);
         }
 
         &-error {
+            color: var(--adf-group-cloud-input-caption-error-color);
             margin-top: -10px;
             position: absolute;
             height: 20px;
@@ -33,26 +43,17 @@
             &-message {
                 padding-right: 8px;
                 height: 16px;
-                font-size: var(--theme-caption-font-size);
                 line-height: 1.33;
-                color: var(--theme-warn-color);
                 width: auto;
-            }
-
-            &-icon {
-                font-size: var(--theme-adf-icon-1-font-size);
-                color: var(--theme-warn-color);
             }
         }
     }
 }
 
-.mat-autocomplete-panel .mat-fab {
+.adf-group-short-name {
     background: var(--theme-primary-color);
     width: 40px;
     height: 40px;
-    font-weight: bolder;
-    font-size: var(--theme-adf-picture-1-font-size);
     box-shadow: none !important;
 
     .mat-button-wrapper {
