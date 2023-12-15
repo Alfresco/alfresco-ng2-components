@@ -71,12 +71,14 @@
         --adf-people-cloud-autosuggest-result-active-color: $adf-ref-autosuggest-result-active-color,
         --adf-people-cloud-autosuggest-result-disabled-color: $adf-ref-autosuggest-result-disabled-color,
         --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
-
         --adf-group-cloud-input-label-default-color: $adf-ref-text-field-label-color,
         --adf-group-cloud-input-label-focus-color: mat.get-color-from-palette($primary),
         --adf-group-cloud-autosuggest-result-active-color: $adf-ref-autosuggest-result-active-color,
         --adf-group-cloud-autosuggest-result-disabled-color: $adf-ref-autosuggest-result-disabled-color,
-        --adf-group-cloud-input-caption-error-color: mat.get-color-from-palette($warn)
+        --adf-group-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
+
+        --adf-task-assignment-filter-option-default-color: $adf-ref-select-option-color,
+        --adf-task-assignment-filter-option-selected-color: mat.get-color-from-palette($primary)
     );
 
     // propagates SCSS variables into the CSS variables scope

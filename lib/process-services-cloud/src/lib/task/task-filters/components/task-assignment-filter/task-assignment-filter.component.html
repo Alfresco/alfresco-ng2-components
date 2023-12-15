@@ -1,12 +1,14 @@
 <div class="adf-cloud-assignment-container">
-    <mat-form-field [floatLabel]="'auto'">
+    <mat-form-field floatLabel="auto" class="adf-task-assignment-filter-container">
         <mat-select class="adf-task-assignment-filter"
                     placeholder="{{ 'ADF_CLOUD_TASK_ASSIGNMENT_FILTER.ASSIGNMENT_TYPE' | translate }}"
                     [(ngModel)]="assignmentType"
                     [attr.data-automation-id]="'adf-task-assignment-filter-select'"
                     (selectionChange)="onAssignmentTypeChange($event)">
             <mat-option *ngFor="let assignmentType of assignmentTypeOptions"
-                [value]="assignmentType.value"
+                class="adf-task-assignment-filter-option"
+                [ngClass]="{'adf-task-assignment-filter-option--selected': filterOption.selected}"
+                [value]="assignmentType.value" #filterOption
                 [attr.data-automation-id]="'adf-task-assignment-filter-' + assignmentType.value">
                 {{ assignmentType.label | translate }}
             </mat-option>
