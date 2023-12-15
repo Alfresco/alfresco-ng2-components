@@ -75,7 +75,8 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        await (await taskPage.clickOnAddChecklistButton()).clickCreateChecklistButton();
+        await taskPage.clickOnAddChecklistButton();
+        await checklistDialog.clickCreateChecklistButton();
         await taskPage.checkChecklistDialogIsNotDisplayed();
         await taskPage.checkNoChecklistIsDisplayed();
         expect(await taskPage.getNumberOfChecklists()).toEqual('0');
