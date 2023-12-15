@@ -87,7 +87,9 @@
         --adf-group-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
 
         --adf-task-assignment-filter-option-default-color: $adf-ref-select-option-color,
-        --adf-task-assignment-filter-option-selected-color: mat.get-color-from-palette($primary)
+        --adf-task-assignment-filter-option-selected-color: mat.get-color-from-palette($primary),
+        --adf-task-assignment-filter-label-default-color: $adf-ref-select-field-label-color,
+        --adf-task-assignment-filter-label-focus-color: mat.get-color-from-palette($primary)
     );
 
     // propagates SCSS variables into the CSS variables scope
