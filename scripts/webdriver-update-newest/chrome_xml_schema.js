@@ -46,13 +46,13 @@ class ChromeXml extends config_source_1.XmlConfigSource {
     getOsTypeName() {
         // Get the os type name.
         if (this.ostype === 'Darwin') {
-            return 'mac';
+            return 'mac-x64';
         }
         else if (this.ostype === 'Windows_NT') {
-            return 'win';
+            return 'win64';
         }
         else {
-            return 'linux';
+            return 'linux64';
         }
     }
     /**
@@ -95,48 +95,43 @@ class ChromeXml extends config_source_1.XmlConfigSource {
     /**
      * Gets a specific item from the XML.
      */
-    getSpecificChromeDriverVersion(inputVersion) {
-        return this.getVersionList().then(list => {
-            const specificVersion = getValidSemver(inputVersion);
-            if (specificVersion === '') {
-                throw new Error(`version ${inputVersion} ChromeDriver does not exist`);
-            }
-            let itemFound = '';
-            for (let item of list) {
-                // Get a semantic version.
-                let version = item.split('/')[0];
-                if (semver.valid(version) == null) {
-                    const lookUpVersion = getValidSemver(version);
-                    if (semver.valid(lookUpVersion)) {
-                        // Check to see if the specified version matches.
-                        if (lookUpVersion === specificVersion) {
-                            // When item found is null, check the os arch
-                            // 64-bit version works OR not 64-bit version and the path does not have '64'
-                            if (itemFound == '') {
-                                if (this.osarch === 'x64' ||
-                                    (this.osarch !== 'x64' && !item.includes(this.getOsTypeName() + '64'))) {
-                                    itemFound = item;
-                                }
-                                if (this.osarch === 'arm64' && this.ostype === 'Darwin' && item.includes('m1')) {
-                                    itemFound = item;
-                                }
-                            }
-                            else if (this.osarch === 'x64') {
-                                // No win64 version exists, so even on x64 we need to look for win32
-                                const osTypeNameAndArch = this.getOsTypeName() + (this.getOsTypeName() === 'win' ? '32' : '64');
-                                if (item.includes(osTypeNameAndArch)) {
-                                    itemFound = item;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (itemFound == '') {
-                return { url: '', version: inputVersion };
-            }
-            else {
-                return { url: config_1.Config.cdnUrls().chrome + itemFound, version: inputVersion };
+    getSpecificChromeDriverVersion(versionRequired) {
+        const path = require('path')
+        const fs = require('fs')
+
+        let baseTagVersion = versionRequired.split('.');
+        baseTagVersion.splice(-1);
+        baseTagVersion = baseTagVersion.join('.');
+
+        const lastKnownGoodVersionsWithDownloads_Url = 'https://googlechromelabs.github.io/chrome-for-testing/latest-patch-versions-per-build-with-downloads.json';
+        return http_utils_1.requestBody(lastKnownGoodVersionsWithDownloads_Url).then(body => {
+            const version_Body = JSON.parse(body)['builds'][baseTagVersion]
+
+            const opSys = this.getOsTypeName();
+
+            const currentVersion = version_Body['version']
+            const currentVersion_Url = version_Body['downloads']['chromedriver'].find(obj => obj['platform'] == opSys)['url']
+
+            const latestMajorVersion = currentVersion.split('.')[0]
+
+            const localVersion_FileName = fs.readdirSync(path.resolve(__dirname, '..', '..', '..', 'selenium'))
+                .find(f => f.startsWith(`chromedriver_${latestMajorVersion}`)) || ''
+
+            const localVersion = localVersion_FileName.slice(13, -4)
+            const localVersion_Url = currentVersion_Url.replace(currentVersion, localVersion)
+
+            const localMajorVersion = localVersion.split('.')[0]
+
+            if (latestMajorVersion == localMajorVersion) {
+                return Promise.resolve({
+                    url: localVersion_Url,
+                    version: localVersion,
+                })
+            } else {
+                return Promise.resolve({
+                    url: currentVersion_Url,
+                    version: currentVersion,
+                })
             }
         });
     }
