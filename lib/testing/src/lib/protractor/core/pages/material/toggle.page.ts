@@ -22,17 +22,15 @@ export class TogglePage {
 
     async enableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
-        if (check.indexOf('mdc-switch--checked') < 0) {
-            const elem = toggle.$$('input').first();
-            await BrowserActions.clickScript(elem);
+        if (check.indexOf('mdc-switch--unselected') < 0) {
+            await BrowserActions.click(toggle);
         }
     }
 
     async disableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
-        if (check.indexOf('mdc-switch--checked') >= 0) {
-            const elem = toggle.$$('input').first();
-            await BrowserActions.clickScript(elem);
+        if (check.indexOf('mat-mdc-slide-toggle-checked') >= 0) {
+            await BrowserActions.click(toggle);
         }
     }
 }

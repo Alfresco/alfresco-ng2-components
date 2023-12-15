@@ -27,13 +27,13 @@ import { BrowserActions, BrowserVisibility, FormFields } from '@alfresco/adf-tes
 export class TasksPage {
     createButton = $('button[data-automation-id="create-button"');
     addChecklistButton = $('button[class*="adf-add-to-checklist-button"]');
-    rowByRowName = by.xpath('ancestor::mat-chip-list');
+    rowByRowName = by.xpath('ancestor::mat-chip-option');
     checklistContainer = $('div[class*="checklist-menu"]');
     taskTitle = '.adf-activiti-task-details__header span';
     completeButtonNoForm = $('#adf-no-form-complete-button');
     checklistDialog = $('#checklist-dialog');
     checklistNoMessage = $('#checklist-none-message');
-    numberOfChecklists = $('[data-automation-id="checklist-label"] mat-chip');
+    numberOfChecklists = $('[data-automation-id="checklist-label"] mat-chip-option .mat-mdc-chip-action-label');
 
     async createNewTask(): Promise<StartTaskDialogPage> {
         await this.clickOnCreateButton();
