@@ -5,6 +5,7 @@
 @mixin adf-components-variables($theme) {
     $primary: map-get($theme, primary);
     $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
     $foreground: map-get($theme, foreground);
