@@ -68,8 +68,8 @@
         --adf-people-cloud-input-label-focus-color: mat.get-color-from-palette($primary),
         --adf-people-cloud-autosuggest-result-active-color: mat.get-color-from-palette($foreground, text),
         --adf-people-cloud-autosuggest-result-disabled-color: mat.get-color-from-palette($foreground, secondary-text),
-        --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
-        
+        --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn)
+
     );
 
     // propagates SCSS variables into the CSS variables scope
