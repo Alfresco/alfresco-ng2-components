@@ -75,10 +75,11 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        await (await taskPage.clickOnAddChecklistButton()).clickCreateChecklistButton();
+        await taskPage.clickOnAddChecklistButton();
+        await checklistDialog.clickCreateChecklistButton();
         await taskPage.checkChecklistDialogIsNotDisplayed();
         await taskPage.checkNoChecklistIsDisplayed();
-        await expect(await taskPage.getNumberOfChecklists()).toEqual('0');
+        expect(await taskPage.getNumberOfChecklists()).toEqual('0');
     });
 
     it('[C279975] Should no checklist be created when clicking on Cancel button on checklist dialog', async () => {
