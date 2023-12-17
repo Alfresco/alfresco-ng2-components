@@ -20,7 +20,8 @@
         flex-direction: column;
         display: flex;
 
-        .adf-task-name, .adf-task-description, .input-row {
+        .adf-task-name,
+        .adf-task-description {
             display: flex;
             margin-bottom: 10px;
 
@@ -29,7 +30,7 @@
             }
         }
 
-        .input-row {
+        .adf-input-row {
             @include layout-bp(lt-md) {
                 flex-direction: column;
             }
@@ -94,7 +95,6 @@ adf-start-task {
     }
 
     .adf {
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         &-start-task-input-container .mat-mdc-text-field-wrapper {
             padding-top: 8px;
         }
