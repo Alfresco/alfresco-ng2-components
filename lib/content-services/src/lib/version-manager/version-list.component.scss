@@ -1,7 +1,15 @@
 .adf-version-list {
-    /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
-    .mat-list-item-content {
+    .mdc-list-item__content {
         border-bottom: 1px solid #d8d8d8;
+
+        span {
+            display: flex;
+            align-items: center;
+        }
+
+        p.mat-line {
+            display: flex;
+        }
     }
 
     &-item-version {
