@@ -1,12 +1,13 @@
-.adf {
-    &-permission-card {
-        height: 100%;
-        box-sizing: border-box;
-        display: flex !important;
-        flex-direction: column;
-        overflow: hidden;
-    }
 
+adf-permission-list .adf-permission-card {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.adf {
     &-permission-loader {
         margin-left: 45%;
         overflow: hidden;
@@ -45,15 +46,6 @@
         flex-direction: row;
         align-items: center;
         padding: 5px 15px;
-    }
-
-    &-permission-role-column-header {
-        position: relative !important;
-        height: 40px;
-
-        .mat-form-field-infix {
-            border: none;
-        }
     }
 
     &-permission-header {
