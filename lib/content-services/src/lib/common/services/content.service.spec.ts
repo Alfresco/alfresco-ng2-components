@@ -154,23 +154,23 @@ describe('ContentService', () => {
         it('should resolve folder icon', () => {
             expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_folder.svg');
         });
-    
+
         it('should resolve link folder icon', () => {
             node.nodeType = 'app:folderlink';
             expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_folder_shortcut_link.svg');
         });
-    
+
         it('should resolve smart folder icon', () => {
             node.aspectNames = ['smf:customConfigSmartFolder'];
             expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_smart_folder.svg');
         });
-    
+
         it('should resolve file icon for content type', () => {
             node.isFolder = false;
             node.isFile = true;
             expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_ms_word.svg');
         });
-    
+
         it('should resolve fallback file icon for unknown node', () => {
             node.isFolder = false;
             node.isFile = false;
