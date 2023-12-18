@@ -19,7 +19,6 @@
 import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Node } from '@alfresco/js-api';
 
 const DEFAULT_ICON = './assets/images/ft_ic_miscellaneous.svg';
 
@@ -189,49 +188,5 @@ export class ThumbnailService {
      */
     getDefaultMimeTypeIcon(): string {
         return DEFAULT_ICON;
-    }
-
-    getNodeIcon(node: Node): string {
-        if (node?.isFolder) {
-            return this.getFolderIcon(node);
-        }
-        if (node?.isFile) {
-            return this.getMimeTypeIcon(node?.content?.mimeType);
-        }
-        return this.getDefaultMimeTypeIcon();
-    }
-
-    private getFolderIcon(node: Node): string {
-        if (this.isSmartFolder(node)) {
-            return this.getMimeTypeIcon('smartFolder');
-        } else if (this.isRuleFolder(node)) {
-            return this.getMimeTypeIcon('ruleFolder');
-        } else if (this.isLinkFolder(node)) {
-            return this.getMimeTypeIcon('linkFolder');
-        } else {
-            return this.getMimeTypeIcon('folder');
-        }
-    }
-
-    isSmartFolder(node: Node): boolean {
-        if (node) {
-            return this.hasAspect(node, 'smf:customConfigSmartFolder') || this.hasAspect(node, 'smf:systemConfigSmartFolder');
-        }
-        return false;
-    }
-
-    isRuleFolder(node: Node): boolean {
-        if (node) {
-            return this.hasAspect(node, 'rule:rules');
-        }
-        return false;
-    }
-
-    isLinkFolder(node: Node): boolean {
-        return node?.nodeType === 'app:folderlink';
-    }
-
-    private hasAspect(node: Node, aspectName: string): boolean {
-        return node?.aspectNames?.includes(aspectName);
     }
 }

@@ -17,31 +17,13 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ThumbnailService } from './thumbnail.service';
-import { Node } from '@alfresco/js-api';
 
 describe('ThumbnailService', () => {
+
     let service: ThumbnailService;
-    let node: Node;
 
     beforeEach(() => {
         service = TestBed.inject(ThumbnailService);
-        node = {
-            isFolder: true,
-            isFile: false,
-            createdByUser: { id: 'admin', displayName: 'Administrator' },
-            modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
-            nodeType: 'cm:content',
-            content: {
-                mimeType: 'application/rtf',
-                mimeTypeName: 'Rich Text Format',
-                sizeInBytes: 14530
-            },
-            createdAt: new Date('2017-05-24T15:08:55.640Z'),
-            modifiedByUser: { id: 'admin', displayName: 'Administrator' },
-            name: 'b_txt_file.rtf',
-            id: 'test node 1',
-            aspectNames: ['']
-        } as Node;
     });
 
     it('should return the correct icon for a PDF document', () => {
@@ -70,31 +52,5 @@ describe('ThumbnailService', () => {
 
     it('should return the correct icon for a mht file', () => {
         expect(service.getMimeTypeIcon('multipart/related')).toContain('ft_ic_website.svg');
-    });
-
-    it('should resolve folder icon', () => {
-        expect(service.getNodeIcon(node)).toContain('assets/images/ft_ic_folder.svg');
-    });
-
-    it('should resolve link folder icon', () => {
-        node.nodeType = 'app:folderlink';
-        expect(service.getNodeIcon(node)).toContain('assets/images/ft_ic_folder_shortcut_link.svg');
-    });
-
-    it('should resolve smart folder icon', () => {
-        node.aspectNames = ['smf:customConfigSmartFolder'];
-        expect(service.getNodeIcon(node)).toContain('assets/images/ft_ic_smart_folder.svg');
-    });
-
-    it('should resolve file icon for content type', () => {
-        node.isFolder = false;
-        node.isFile = true;
-        expect(service.getNodeIcon(node)).toContain('assets/images/ft_ic_ms_word.svg');
-    });
-
-    it('should resolve fallback file icon for unknown node', () => {
-        node.isFolder = false;
-        node.isFile = false;
-        expect(service.getNodeIcon(node)).toContain('assets/images/ft_ic_miscellaneous');
     });
 });
