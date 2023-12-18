@@ -102,6 +102,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     showToolbar = true;
 
+    /** Override loading status */
+    @Input()
+    isLoading?: boolean
+
     /**
      * If `true` then show the Viewer as a full page over the current content.
      * Otherwise fit inside the parent div.
