@@ -1,6 +1,7 @@
 <form>
-    <mat-form-field [floatLabel]="'auto'" class="adf-people-cloud" [class.adf-invalid]="hasError() && isDirty()">
-        <mat-label *ngIf="!isReadonly()" id="adf-people-cloud-title-id">{{ title | translate }}</mat-label>
+    <mat-form-field floatLabel="auto" class="adf-people-cloud" [class.adf-invalid]="hasError() && isDirty()">
+        <mat-label *ngIf="!isReadonly()" id="adf-people-cloud-title-id" class="adf-people-cloud-title"
+            [ngClass]="{'adf-people-cloud-title--focus': isFocused}">{{ title | translate }}</mat-label>
         <mat-chip-list #userMultipleChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-people-chip-list">
             <mat-chip
                 *ngFor="let user of selectedUsers"
@@ -17,6 +18,7 @@
                 </mat-icon>
             </mat-chip>
             <input *ngIf="!isReadonly()" matInput
+                   #chipInput
                    [formControl]="searchUserCtrl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="userMultipleChipList"
@@ -32,7 +34,8 @@
                           (optionSelected)="onSelect($event.option.value)"
                           [displayWith]="getDisplayName">
             <ng-container *ngIf="(searchUsers$ | async)?.length else noResults" >
-            <mat-option *ngFor="let user of searchUsers$ | async; let i = index" [value]="user">
+            <mat-option *ngFor="let user of searchUsers$ | async; let i = index" [value]="user"
+                class="adf-people-cloud-option-active">
                 <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{user.username}}"
                      data-automation-id="adf-people-cloud-row">
                     <div [outerHTML]="user | usernameInitials:'adf-people-cloud-pic'"></div>
