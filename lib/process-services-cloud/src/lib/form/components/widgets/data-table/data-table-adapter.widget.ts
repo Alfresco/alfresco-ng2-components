@@ -23,6 +23,7 @@ import {
 
 export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
 
+    static readonly hiddenColumnTypes = ['image', 'location'];
     private rows: DataRow[];
     private columns: DataColumn[];
 
@@ -30,6 +31,7 @@ export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
         super(data, schema);
         this.rows = super.getRows();
         this.columns = super.getColumns();
+        this.hideColumnTypes(WidgetDataTableAdapter.hiddenColumnTypes);
     }
 
     getRows(): DataRow[] {
@@ -42,6 +44,12 @@ export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
 
     isDataSourceValid(): boolean {
         return this.hasAllColumnsLinkedToData() && this.hasAllMandatoryColumnPropertiesHaveValues();
+    }
+
+    private hideColumnTypes(typesToHide: string[]): void {
+        this.columns
+            .filter(column => typesToHide.includes(column.type))
+            .forEach(column => column.isHidden = true);
     }
 
     private hasAllMandatoryColumnPropertiesHaveValues(): boolean {
