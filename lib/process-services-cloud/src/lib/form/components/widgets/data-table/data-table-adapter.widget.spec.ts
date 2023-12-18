@@ -20,7 +20,9 @@ import {
     mockEuropeCountriesData,
     mockCountriesIncorrectData,
     mockInvalidSchemaDefinition,
-    mockSchemaDefinition
+    mockSchemaDefinition,
+    mockMultipleTypesData,
+    mockMultipleTypesSchemaDefinition
 } from '../../../mocks/data-table-widget.mock';
 import { ObjectDataRow } from '@alfresco/adf-core';
 
@@ -63,5 +65,18 @@ describe('WidgetDataTableAdapter', () => {
         const isValid = widgetDataTableAdapter.isDataSourceValid();
 
         expect(isValid).toBeTrue();
+    });
+
+    it('should hide specific column types', () => {
+        widgetDataTableAdapter = new WidgetDataTableAdapter(mockMultipleTypesData, mockMultipleTypesSchemaDefinition);
+        const columns = widgetDataTableAdapter.getColumns();
+
+        expect(columns.length).toBe(4);
+
+        columns.forEach(column => {
+            WidgetDataTableAdapter.hiddenColumnTypes.includes(column.type)
+                ? expect(column.isHidden).toBeTrue()
+                : expect(column.isHidden).toBeFalse();
+        });
     });
 });

@@ -52,6 +52,46 @@ export const mockInvalidSchemaDefinition: DataColumn[] = [
     }
 ];
 
+export const mockMultipleTypesSchemaDefinition: DataColumn[] = [
+    {
+        type: 'text',
+        key: 'text',
+        title: 'Text column',
+        sortable: true,
+        draggable: true
+    },
+    {
+        type: 'location',
+        key: 'location',
+        title: 'Location column',
+        sortable: true,
+        draggable: true
+    },
+    {
+        type: 'image',
+        key: 'imageUrl',
+        title: 'Image column',
+        sortable: true,
+        draggable: true
+    },
+    {
+        type: 'fileSize',
+        key: 'fileSize',
+        title: 'FileSize column',
+        sortable: true,
+        draggable: true
+    }
+];
+
+export const mockMultipleTypesData = [
+    {
+        text: 'Example text',
+        location: '-me-/logo.jpg',
+        imageUrl: 'https://exmaple.domain.com/logo.jpg',
+        fileSize: 223400
+    }
+];
+
 export const mockEuropeCountriesData = [
     {
         id: 'PL',
