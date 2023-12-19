@@ -44,26 +44,20 @@
                              matListAvatar
                              [outerHTML]="notification.initiator | usernameInitials : 'adf-notification-initiator-pic'"></div>
                         <ng-template #no_avatar>
-                            <mat-icon mat-list-icon
-                                      class="adf-notification-history-menu-initiator">{{ notification.icon }}
-                            </mat-icon>
+                            <mat-icon matListItemLine
+                                      class="adf-notification-history-menu-initiator">{{notification.icon}}</mat-icon>
                         </ng-template>
                         <p class="adf-notification-history-menu-text adf-notification-history-menu-message"
                            *ngFor="let message of notification.messages"
-                           mat-line
-                           [matTooltip]="message"
-                           matTooltipShowDelay="{{ 1000 }}">
-                            {{ message }}
-                        </p>
-                        <p class="adf-notification-history-menu-text adf-notification-history-menu-date" mat-line>
-                            {{ notification.datetime | adfTimeAgo }}
-                        </p>
+                           matListItemLine [matTooltip]="message" matTooltipShowDelay="1000">{{ message }}</p>
+                        <p class="adf-notification-history-menu-text adf-notification-history-menu-date"
+                           matListItemLine> {{notification.datetime | adfTimeAgo}} </p>
                     </mat-list-item>
                 </ng-container>
                 <ng-template #empty_list_template>
                     <mat-list-item id="adf-notification-history-component-no-message"
                                    class="adf-notification-history-menu-no-message">
-                        <p mat-line>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</p>
+                        <p matListItemLine>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</p>
                     </mat-list-item>
                 </ng-template>
             </mat-list>
