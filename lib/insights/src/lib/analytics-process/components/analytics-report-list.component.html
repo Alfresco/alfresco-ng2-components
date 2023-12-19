@@ -6,7 +6,7 @@
             *ngFor="let report of reports; let idx = index"
             [class.adf-active]="currentReport === report">
             <span [attr.id]="'report-list-' + idx" class="adf-activiti-filters__label">
-                <mat-icon mat-list-icon
+                <mat-icon matListItemLine
                     [attr.data-automation-id]="report.name + '_filter'"
                     class="adf-activiti-filters__entry-icon">assignment</mat-icon>
                 <span class="adf-text">{{report.name}}</span>
