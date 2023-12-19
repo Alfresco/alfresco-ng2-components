@@ -23,7 +23,7 @@ export class SearchBarPage {
     searchBar = $(`adf-search-control input`);
     searchBarExpanded: TestElement = TestElement.byCss(`adf-search-control mat-form-field[class*="mat-focused"] input`);
     noResultMessage = $(`p[class*='adf-search-fixed-text']`);
-    rowsAuthor = `.mat-list-text p[class*='adf-search-fixed-text']`;
+    rowsAuthor = `p[class*='adf-search-fixed-text']`;
     completeName = `h4[class*='adf-search-fixed-text']`;
     highlightName = `.adf-highlight`;
     searchBarPage = $(`mat-list[id='autocomplete-search-result-list']`);
