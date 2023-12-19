@@ -9,7 +9,6 @@
         (change)="onChangedHandler({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value})"
         #ngSliderThumb="matSliderThumb"
         [(value)]="value" />
-    <input *ngIf="thumbLabel" matSliderThumb>
 </mat-slider>
 
 <div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
