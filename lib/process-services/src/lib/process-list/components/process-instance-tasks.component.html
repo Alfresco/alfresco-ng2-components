@@ -14,7 +14,7 @@
 <div class="menu-container" *ngIf="activeTasks?.length > 0" data-automation-id="active-tasks">
     <mat-list>
         <mat-list-item class="process-tasks__task-item" *ngFor="let task of activeTasks" (click)="clickTask(task)">
-                <mat-icon mat-list-icon>assignment</mat-icon>
+                <mat-icon matListItemLine>assignment</mat-icon>
                 <h3 matLine>{{task.name || 'Nameless task'}}</h3>
                 <span matLine>
                     {{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
@@ -36,7 +36,7 @@
     <div class="menu-container" data-automation-id="start-form">
         <mat-list>
             <mat-list-item class="process-tasks__task-item" (click)="clickStartTask()">
-                <mat-icon mat-list-icon>assignment</mat-icon>
+                <mat-icon matListItemLine>assignment</mat-icon>
                 <h3 matLine>{{ 'ADF_PROCESS_LIST.DETAILS.LABELS.START_FORM'|translate }}</h3>
                 <span matLine>
                     {{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(processInstanceDetails.startedBy), created: getFormatDate(processInstanceDetails.started, 'mediumDate') } }}
@@ -56,7 +56,7 @@
 <div class="menu-container" *ngIf="completedTasks?.length > 0" data-automation-id="completed-tasks">
     <mat-list>
         <mat-list-item class="process-tasks__task-item" *ngFor="let task of completedTasks" (click)="clickTask(task)">
-            <mat-icon mat-list-icon>assignment</mat-icon>
+            <mat-icon matListItemLine>assignment</mat-icon>
             <h3 matLine>{{task.name || 'Nameless task'}}</h3>
             <span matLine>
                 {{ 'ADF_PROCESS_LIST.DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
