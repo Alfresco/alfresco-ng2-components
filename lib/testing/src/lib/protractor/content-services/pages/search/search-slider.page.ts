@@ -31,21 +31,21 @@ export class SearchSliderPage {
     }
 
     async getMaxValue() {
-        return BrowserActions.getAttribute(this.filter.$(this.slider), 'aria-valuemax');
+        return BrowserActions.getAttribute(this.filter.$(this.slider).$('input'), 'max');
     }
 
     async getMinValue() {
-        return BrowserActions.getAttribute(this.filter.$(this.slider), 'aria-valuemin');
+        return BrowserActions.getAttribute(this.filter.$(this.slider).$('input'), 'min');
     }
 
     async getValue() {
-        return BrowserActions.getAttribute(this.filter.$(this.slider), 'aria-valuenow');
+        return BrowserActions.getAttribute(this.filter.$(this.slider).$('input'), 'aria-valuetext');
     }
 
     async setValue(value: number): Promise<void> {
-        const elem = this.filter.$(this.slider).$('.mat-slider-wrapper');
+        const elem = this.filter.$(this.slider).$('.mdc-slider__thumb-knob');
         await browser.actions().mouseMove(elem, { x: 0, y: 0 }).perform();
-        await browser.actions().mouseDown().mouseMove({x: value * 20, y: 0}).mouseUp().perform();
+        await browser.actions().mouseDown().mouseMove({x: value * 25, y: 0}).mouseUp().perform();
     }
 
     async checkSliderIsDisplayed(): Promise<void> {
