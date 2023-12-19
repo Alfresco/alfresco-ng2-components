@@ -6,7 +6,7 @@
         <div>
             <mat-list *ngIf="hasFile">
                 <mat-list-item class="adf-upload-files-row" *ngFor="let file of uploadedFiles">
-                    <img mat-list-icon class="adf-upload-widget__icon" [id]="'file-'+file.id+'-icon'"
+                    <img matListItemLine class="adf-upload-widget__icon" [id]="'file-'+file.id+'-icon'"
                         [src]="getIcon(file.content.mimeType)" [alt]="mimeTypeIcon" (click)="fileClicked(file)"
                         (keyup.enter)="fileClicked(file)" role="button" tabindex="0" />
                     <span class="adf-upload-widget__button" matLine id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)"
