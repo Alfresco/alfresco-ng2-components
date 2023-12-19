@@ -107,9 +107,9 @@ describe('Search Slider Filter', () => {
         await sizeSliderFilter.setValue(size);
         await searchFilters.clickSizeSliderFilterHeader();
         await searchFilters.checkSizeSliderFilterIsCollapsed();
+        await searchFilters.checkSizeSliderFilterIsDisplayed();
         await searchFilters.clickSizeSliderFilterHeader();
         await searchFilters.checkSizeSliderFilterIsExpanded();
-        await searchFilters.checkSizeSliderFilterIsDisplayed();
 
         expect(await sizeSliderFilter.getValue()).toEqual(`${size}`);
     });
