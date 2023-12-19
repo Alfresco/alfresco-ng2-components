@@ -50,11 +50,11 @@ export class SearchCategoriesPage {
     }
 
     async clickFilter(filter: ElementFinder): Promise<void> {
-        await BrowserActions.click(filter.$('mat-expansion-panel-header'));
+        await BrowserActions.click(filter.$(' .mat-expansion-panel-header'));
     }
 
     async clickFilterHeader(filter: ElementFinder): Promise<void> {
-        const fileSizeFilterHeader = filter.$('mat-expansion-panel-header');
+        const fileSizeFilterHeader = filter.$(' .mat-expansion-panel-header');
         await BrowserActions.click(fileSizeFilterHeader);
     }
 
