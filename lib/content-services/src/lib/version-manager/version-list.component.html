@@ -2,18 +2,18 @@
                   color="accent"></mat-progress-bar>
 <mat-list class="adf-version-list adf-version-list-element" [hidden]="isLoading">
     <cdk-virtual-scroll-viewport #viewport itemSize="88" class="adf-version-list-viewport">
-        <mat-list-item class="adf-version-list-item"
-                       *cdkVirtualFor="let version of versionsDataSource; let idx = index; let latestVersion = first">
-            <mat-icon mat-list-icon>insert_drive_file</mat-icon>
-            <p mat-line class="adf-version-list-item-line adf-version-list-item-name"
+        <mat-list-item class="adf-version-list-item" *cdkVirtualFor="let version of versionsDataSource; let idx = index; let latestVersion = first">
+            <mat-icon matListItemLine>insert_drive_file</mat-icon>
+            <p matListItemLine class="adf-version-list-item-line adf-version-list-item-name"
                [id]="'adf-version-list-item-name-' + version.entry.id">{{ version.entry.name }}</p>
-            <p mat-line>
+            <p matListItemLine>
                 <span class="adf-version-list-item-line adf-version-list-item-version"
                       [id]="'adf-version-list-item-version-' + version.entry.id">{{ version.entry.id }}</span> -
                 <span class="adf-version-list-item-line adf-version-list-item-date"
                       [id]="'adf-version-list-item-date-' + version.entry.id">{{ version.entry.modifiedAt | date }}</span>
             </p>
-            <p mat-line
+            <p
+                matListItemLine
                [id]="'adf-version-list-item-comment-' + version.entry.id"
                class="adf-version-list-item-comment"
                *ngIf="showComments"
