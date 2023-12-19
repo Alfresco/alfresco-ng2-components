@@ -1,12 +1,13 @@
-.adf-task-form {
+.aps-task-form-container{
+    .adf-task-form {
     &-container {
         overflow: hidden;
     }
 
     &-actions {
-        float: right;
-        padding-bottom: 25px !important;
-        padding-right: 25px !important;
+
+        padding-right: 25px;
+        padding-bottom: 25px;
 
         & .mat-button {
             height: 36px;
@@ -22,7 +23,7 @@
         }
     }
 }
-
+}
 adf-task-form {
     mat-spinner {
         display: flex;
@@ -31,3 +32,13 @@ adf-task-form {
         align-items: center;
     }
 }
+// .adf-content-border{
+//     .aps-task-form-container{
+//         .adf{
+//             &-task-form-actions{
+//                 padding-right: 25px;
+               
+//             }
+//         }
+//     }
+// }
