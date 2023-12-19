@@ -207,7 +207,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**@private? */
     errorHandler(error: { status?: number }) {
-        if (error.status === 401) {
+        if (this.config.oauthInit && error.status === 401) {
             this.invalidateSession();
         }
 
