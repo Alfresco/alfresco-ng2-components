@@ -17,8 +17,8 @@
             [attr.aria-expanded]="!isDialogMinimized"
             (click)="toggleMinimized()">
             <mat-icon
+                matListItemLine
                 class="adf-upload-dialog__header-button-icon"
-                mat-list-icon
                 title="{{ (isDialogMinimized ? 'ADF_FILE_UPLOAD.BUTTON.MAXIMIZE': 'ADF_FILE_UPLOAD.BUTTON.MINIMIZE') | translate }}">
                     {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
             </mat-icon>
