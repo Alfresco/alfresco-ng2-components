@@ -198,4 +198,20 @@ describe('AppConfigService', () => {
         expect(fakeCallBack).toHaveBeenCalled();
     });
 
+    it('should replace all the configuration placeholders if the provided key is an object', () => {
+        appConfigService.config.objectKey = {
+            firstUrl: '{protocol}//{hostname}{:port}',
+            secondUrl: '{protocol}//{hostname}{:port}',
+            thirdUrl: '{protocol}//{hostname}{:port}'
+        };
+        spyOn(appConfigService, 'getLocationHostname').and.returnValue('localhost');
+        spyOn(appConfigService, 'getLocationPort').and.returnValue(':8080');
+        spyOn(appConfigService, 'getLocationProtocol').and.returnValue('http:');
+
+        expect(appConfigService.get<any>('objectKey').firstUrl).toEqual('http://localhost:8080');
+        expect(appConfigService.get<any>('objectKey').secondUrl).toEqual('http://localhost:8080');
+        expect(appConfigService.get<any>('objectKey').thirdUrl).toEqual('http://localhost:8080');
+    });
+
+
 });

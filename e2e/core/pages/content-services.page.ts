@@ -235,11 +235,6 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
     }
 
-    async enableMediumTimeFormat(): Promise<void> {
-        const mediumTimeFormat = $('#enableMediumTimeFormat');
-        await BrowserActions.click(mediumTimeFormat);
-    }
-
     async checkPaginationIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.emptyPagination);
     }

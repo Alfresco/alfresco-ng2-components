@@ -101,7 +101,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Ensure SHA pinned actions
-        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@b35f285b9bb7e80de0967367cee66d3b6d50ceca # v3.0.1
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@b1b635d24259e8a047a6ce7d6501ea432aa7a830 # v3.0.2
 
       - name: Check package-lock.json version
         run: |
@@ -121,10 +121,10 @@ jobs:
          fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@042fc28b3e308e1d1159dfee61bc46c5940ed7b6 # v5.4.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@b88340ccab0e8f2351eb1e056235f5671cfc5aab # v5.6.0
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@042fc28b3e308e1d1159dfee61bc46c5940ed7b6 # v5.4.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@b88340ccab0e8f2351eb1e056235f5671cfc5aab # v5.6.0
 
       - name: ci:force flag parser
         shell: bash

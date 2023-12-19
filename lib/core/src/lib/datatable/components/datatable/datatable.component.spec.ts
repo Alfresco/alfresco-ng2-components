@@ -30,7 +30,7 @@ import { DataColumnComponent } from '../../data-column/data-column.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
 import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
@@ -213,6 +213,13 @@ describe('DataTable', () => {
     describe('Header modes', () => {
         const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
         const emptyData = new ObjectDataTableAdapter();
+        const getDropList = (): CdkDropList => {
+            dataTable.showHeader = ShowHeaderMode.Data;
+            dataTable.loading = false;
+            dataTable.data = newData;
+            fixture.detectChanges();
+            return fixture.debugElement.query(By.directive(CdkDropList)).injector.get(CdkDropList);
+        };
 
         it('should show the header if showHeader is `Data` and there is data', () => {
             dataTable.showHeader = ShowHeaderMode.Data;
@@ -284,6 +291,32 @@ describe('DataTable', () => {
         it('should never show the header if loading is true', () => {
             dataTable.loading = true;
             testNotShownHeader(emptyData);
+        });
+
+        it('should have assigned filterDisabledColumns to sortPredicate of CdkDropList', () => {
+            expect(getDropList().sortPredicate).toBe(dataTable.filterDisabledColumns);
+        });
+
+        it('should sortPredicate from CdkDropList return true if column is enabled', () => {
+            const dropList = getDropList();
+            spyOn(dropList, 'getSortedItems').and.returnValue([{
+                disabled: true
+            }, {
+                disabled: false
+            }] as CdkDrag[]);
+
+            expect(dropList.sortPredicate(1, undefined, dropList)).toBeTrue();
+        });
+
+        it('should sortPredicate from CdkDropList return false if column is disabled', () => {
+            const dropList = getDropList();
+            spyOn(dropList, 'getSortedItems').and.returnValue([{
+                disabled: true
+            }, {
+                disabled: true
+            }] as CdkDrag[]);
+
+            expect(dropList.sortPredicate(1, undefined, dropList)).toBeFalse();
         });
     });
 
