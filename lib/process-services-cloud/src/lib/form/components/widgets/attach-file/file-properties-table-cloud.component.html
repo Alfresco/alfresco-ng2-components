@@ -2,17 +2,16 @@
     <table mat-table [dataSource]="uploadedFiles" class="adf-properties-table adf-file-properties-table mat-elevation-z0" *ngIf="hasFile">
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">
-                <mat-icon mat-list-icon class="adf-datatable-selected"
-                          *ngIf="selectedNode && element.id === selectedNode.id" (click)="onRowClicked(element)">
+            <td class="adf-file-properties-table-cell" mat-cell *matCellDef="let element">
+                <mat-icon matListItemLine class="adf-datatable-selected"
+                    *ngIf="selectedNode && element.id === selectedNode.id" (click)="onRowClicked(element)">
                     check_circle
                 </mat-icon>
-                <img mat-list-icon class="adf-attach-widget__icon"
-                     *ngIf="!selectedNode || element.id !== selectedNode.id" [id]="'file-'+element?.id+'-icon'"
-                     (click)="onRowClicked(element)"
-                     (keyup.enter)="onRowClicked(element)"
-                     [src]="element.content ? getIcon(element.content.mimeType) : getIcon(element['mimeType'])"
-                     [alt]="mimeTypeIcon" role="button" tabindex="0" />
+                <img matListItemLine class="adf-attach-widget__icon"
+                    *ngIf="!selectedNode || element.id !== selectedNode.id" [id]="'file-'+element?.id+'-icon'"
+                    (click)="onRowClicked(element)"
+                    [src]="element.content ? getIcon(element.content.mimeType) : getIcon(element['mimeType'])"
+                    [alt]="mimeTypeIcon" role="button" tabindex="0" />
             </td>
         </ng-container>
 
