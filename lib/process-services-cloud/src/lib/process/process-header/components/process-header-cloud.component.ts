@@ -25,6 +25,7 @@ import { Subject } from 'rxjs';
 @Component({
     selector: 'adf-cloud-process-header',
     templateUrl: './process-header-cloud.component.html',
+    styleUrls: ['./process-header-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-cloud-process-header' }
 })

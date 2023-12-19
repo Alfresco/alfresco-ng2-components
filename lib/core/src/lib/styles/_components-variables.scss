@@ -85,6 +85,7 @@
         --adf-task-assignment-filter-label-focus-color: mat.get-color-from-palette($primary)
         --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn)
 
+        --adf-process-header-cloud-card-background-color: mat.get-color-from-palette($background, card),
     );
 
     // propagates SCSS variables into the CSS variables scope
