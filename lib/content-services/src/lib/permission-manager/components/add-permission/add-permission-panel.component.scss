@@ -14,6 +14,14 @@ $search-result-height: calc(100% - 75px);
         &-search {
             display: none;
         }
+        .adf-list-option-item .mat-list-text {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .adf-result-name {
+                padding-left: 16px;
+            }
+        }
     }
 
     &-permission-start-message {
@@ -51,16 +59,7 @@ $search-result-height: calc(100% - 75px);
         mat-pseudo-checkbox {
             display: none;
         }
-
-        .mat-list-text {
-            display: flex;
-            flex-direction: row !important;
-            align-items: center;
-
-            .adf-result-name {
-                padding-left: 16px !important;
-            }
-        }
+        
     }
 
     &-permission-action {
