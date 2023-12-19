@@ -3,11 +3,11 @@
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-                <mat-icon mat-list-icon class="adf-datatable-selected"
+                <mat-icon matListItemLine class="adf-datatable-selected"
                     *ngIf="selectedNode && element.id === selectedNode.id" (click)="onRowClicked(element)">
                     check_circle
                 </mat-icon>
-                <img mat-list-icon class="adf-attach-widget__icon"
+                <img matListItemLine class="adf-attach-widget__icon"
                     *ngIf="!selectedNode || element.id !== selectedNode.id" [id]="'file-'+element?.id+'-icon'"
                     (click)="onRowClicked(element)"
                     [src]="element.content ? getIcon(element.content.mimeType) : getIcon(element['mimeType'])"
