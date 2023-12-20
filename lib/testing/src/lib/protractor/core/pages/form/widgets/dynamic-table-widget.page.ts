@@ -25,7 +25,7 @@ export class DynamicTableWidgetPage {
     labelLocator: Locator = by.css('dynamic-table-widget div div');
     columnNameLocator: Locator = by.css('table[id*="dynamic-table"] th');
     cancelButton = element(by.cssContainingText('button span', 'Cancel'));
-    editButton = element(by.cssContainingText('button span', 'edit'));
+    editButton = element(by.css('[data-automation-id="dynamic-table-button-edit"]'));
     columnDateTime = $('#columnDateTime');
     columnDate = $('#columnDate');
     calendarHeader = $('.mat-datetimepicker-calendar-header-date-time');

@@ -22,7 +22,7 @@ import { $$, $ } from 'protractor';
 export class CheckboxWidgetPage {
 
     formFields = new FormFields();
-    checkboxLabel = $('span[class*="mat-checkbox-label"]');
+    checkboxLabel = $('mat-checkbox label');
     checkboxLocator = ('mat-checkbox');
 
     getCheckboxLabel(): Promise<string> {
@@ -30,7 +30,7 @@ export class CheckboxWidgetPage {
     }
 
     async clickCheckboxInput(fieldId: string): Promise<void> {
-        const checkboxInput = $$(`mat-checkbox[id="${fieldId}"] span`).first();
+        const checkboxInput = $$(`mat-checkbox[id="${fieldId}"] input`).first();
         await BrowserActions.click(checkboxInput);
     }
 
@@ -45,6 +45,6 @@ export class CheckboxWidgetPage {
     async isCheckboxChecked(fieldId: string): Promise<boolean> {
         const checkboxWidget = await (await this.formFields.getWidget(fieldId)).$(this.checkboxLocator);
         const attributeValue =  await BrowserActions.getAttribute(checkboxWidget, 'class');
-        return attributeValue.includes('mat-checkbox-checked');
+        return attributeValue.includes('mat-mdc-checkbox-checked');
     }
 }
