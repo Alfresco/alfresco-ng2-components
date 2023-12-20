@@ -33,20 +33,20 @@ export class SearchCheckListPage {
 
     async clickCheckListOption(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const result = this.filter.$$(`mat-checkbox[data-automation-id*='${option}'] .mat-checkbox-inner-container`).first();
+        const result = this.filter.$(`mat-checkbox[data-automation-id*='${option}'] input`);
         await BrowserActions.click(result);
     }
 
     async checkChipIsDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip', option)).$('mat-icon'));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-row', option)).$('mat-icon'));
     }
 
     async checkChipIsNotDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip', option)).$('mat-icon'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip-row', option)).$('mat-icon'));
     }
 
     async removeFilterOption(option: string): Promise<void> {
-        const cancelChipButton = element(by.cssContainingText('mat-chip', option)).$('mat-icon');
+        const cancelChipButton = element(by.cssContainingText('mat-chip-row', option)).$('mat-icon');
         await BrowserActions.click(cancelChipButton);
     }
 

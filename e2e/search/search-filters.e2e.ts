@@ -199,7 +199,7 @@ describe('Search Filters', () => {
     it('[C287796] Should be able to display the correct bucket number after selecting a filter', async () => {
         await BrowserActions.getUrl(`${browser.baseUrl}/search;q=*`);
 
-        await searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
+        await searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG');
 
         const bucketNumberForFilter = await searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
         const resultFileNames: any = await contentList.getAllRowsColumnValues('Display name');
