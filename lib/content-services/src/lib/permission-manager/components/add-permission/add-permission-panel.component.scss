@@ -14,15 +14,19 @@ $search-result-height: calc(100% - 75px);
         &-search {
             display: none;
         }
+    }
 
-        .adf-list-option-item {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
+    &-list-option-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
 
-            .adf-result-name {
-                padding-left: 16px;
-            }
+        mat-pseudo-checkbox {
+            display: none;
+        }
+
+        .adf-result-name {
+            padding-left: 16px;
         }
     }
 
@@ -54,12 +58,6 @@ $search-result-height: calc(100% - 75px);
                     color: var(--adf-theme-foreground-base-color);
                 }
             }
-        }
-    }
-
-    &-list-option-item {
-        mat-pseudo-checkbox {
-            display: none;
         }
     }
 
