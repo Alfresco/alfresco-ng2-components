@@ -1,14 +1,12 @@
-.aps-task-form-container{
     .adf-task-form {
     &-container {
         overflow: hidden;
     }
 
-    &-actions {
+    &-actions{
 
         padding-right: 25px;
         padding-bottom: 25px;
-
         & .mat-button {
             height: 36px;
             border-radius: 5px;
@@ -23,7 +21,7 @@
         }
     }
 }
-}
+
 adf-task-form {
     mat-spinner {
         display: flex;
