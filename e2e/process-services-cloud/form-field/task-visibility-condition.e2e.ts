@@ -107,7 +107,7 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
     });
 
-    fit('[C315232] Should be able to complete a process with visibility condition for boolean widgets', async () => {
+    it('[C315232] Should be able to complete a process with visibility condition for boolean widgets', async () => {
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
         await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.booleanvisibilityprocess);
