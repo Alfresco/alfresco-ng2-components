@@ -1,75 +1,79 @@
-<mat-form-field floatPlaceholder="never"
-                class="adf-permission-search-input">
-    <input matInput
-           id="searchInput"
-           [formControl]="searchInput"
-           type="text"
-           title="{{'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate}}"
-           placeholder="{{'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate}}"
-           [value]="searchedWord">
+<mat-form-field floatPlaceholder="never" class="adf-permission-search-input">
+    <input
+        matInput
+        id="searchInput"
+        [formControl]="searchInput"
+        type="text"
+        title="{{ 'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate }}"
+        placeholder="{{ 'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate }}"
+        [value]="searchedWord"
+    />
 
-    <mat-icon *ngIf="searchedWord?.length > 0"
-              class="adf-permission-search-icon"
-              data-automation-id="adf-permission-clear-input"
-              id="adf-permission-clear-input"
-              matSuffix
-              (click)="clearSearch()">clear
+    <mat-icon
+        *ngIf="searchedWord?.length > 0"
+        class="adf-permission-search-icon"
+        data-automation-id="adf-permission-clear-input"
+        id="adf-permission-clear-input"
+        matSuffix
+        (click)="clearSearch()"
+        >clear
     </mat-icon>
 
-    <mat-icon *ngIf="searchedWord?.length === 0"
-              class="adf-permission-search-icon"
-              data-automation-id="adf-permission-search-icon"
-              matSuffix>search
+    <mat-icon *ngIf="searchedWord?.length === 0" class="adf-permission-search-icon" data-automation-id="adf-permission-search-icon" matSuffix
+        >search
     </mat-icon>
 </mat-form-field>
 
-<div *ngIf="searchedWord?.length === 0"
-     class="adf-permission-start-message"
-     id="adf-add-permission-type-search">
-    <span>{{'PERMISSION_MANAGER.ADD-PERMISSION.TYPE-MESSAGE' | translate}}</span>
+<div *ngIf="searchedWord?.length === 0" class="adf-permission-start-message" id="adf-add-permission-type-search">
+    <span>{{ 'PERMISSION_MANAGER.ADD-PERMISSION.TYPE-MESSAGE' | translate }}</span>
 </div>
 
-<adf-search #search
-            [searchTerm]="searchedWord"
-            id="adf-add-permission-authority-results"
-            class="adf-permission-result-list"
-            [class.adf-permission-result-list-search]="searchedWord.length === 0">
+<adf-search
+    #search
+    [searchTerm]="searchedWord"
+    id="adf-add-permission-authority-results"
+    class="adf-permission-result-list"
+    [class.adf-permission-result-list-search]="searchedWord.length === 0"
+>
     <ng-template let-data>
-        <mat-selection-list class="adf-permission-result-list-elements"
-                            title="{{'PERMISSION_MANAGER.ADD-PERMISSION.USER-GROUP-LIST' | translate}}"
-                            (selectionChange)="onSelectionChange()">
-            <mat-list-option id="adf-add-permission-group-everyone"
-                             class="adf-list-option-item"
-                             #eveyone
-                             [disableRipple]="true"
-                             [value]="EVERYONE">
-                <adf-user-icon-column [node]="EVERYONE" id="add-group-icon" [selected]="eveyone.selected"></adf-user-icon-column>
-                <p class="adf-result-name">
-                    {{'PERMISSION_MANAGER.ADD-PERMISSION.EVERYONE' | translate}}
-                </p>
+        <mat-selection-list
+            class="adf-permission-result-list-elements"
+            title="{{ 'PERMISSION_MANAGER.ADD-PERMISSION.USER-GROUP-LIST' | translate }}"
+            (selectionChange)="onSelectionChange()"
+        >
+            <mat-list-option id="adf-add-permission-group-everyone" #eveyone [disableRipple]="true" [value]="EVERYONE">
+                <div class="adf-list-option-item">
+                    <adf-user-icon-column [node]="EVERYONE" id="add-group-icon" [selected]="eveyone.selected"></adf-user-icon-column>
+                    <p class="adf-result-name">
+                        {{ 'PERMISSION_MANAGER.ADD-PERMISSION.EVERYONE' | translate }}
+                    </p>
+                </div>
             </mat-list-option>
 
-            <mat-list-option *ngFor="let item of data?.list?.entries; let idx = index"
-                             [disableRipple]="true"
-                             [value]="item"
-                             class="adf-list-option-item"
-                             id="result_option_{{idx}}"
-                             #option>
-                <adf-user-icon-column [node]="item" [selected]="option.selected"></adf-user-icon-column>
-                <p class="adf-result-name">
-                    <ng-container *ngIf="item.entry?.properties['cm:authorityDisplayName']; else authorityName">
-                        {{item.entry.properties['cm:authorityDisplayName']}}
-                    </ng-container>
-                    <ng-template #authorityName>
-                        <ng-container *ngIf="item.entry?.properties['cm:authorityName']; else owner">
-                            {{item.entry.properties['cm:authorityName']}}
+            <mat-list-option
+                *ngFor="let item of data?.list?.entries; let idx = index"
+                [disableRipple]="true"
+                [value]="item"
+                id="result_option_{{ idx }}"
+                #option
+            >
+                <div class="adf-list-option-item">
+                    <adf-user-icon-column [node]="item" [selected]="option.selected"></adf-user-icon-column>
+                    <p class="adf-result-name">
+                        <ng-container *ngIf="item.entry?.properties['cm:authorityDisplayName']; else authorityName">
+                            {{ item.entry.properties['cm:authorityDisplayName'] }}
                         </ng-container>
-                    </ng-template>
-                    <ng-template #owner>
-                        {{item.entry?.properties['cm:firstName'] ? item.entry?.properties['cm:firstName'] : '' }}
-                        {{item.entry?.properties['cm:lastName'] ? item.entry?.properties['cm:lastName']: ''}}
-                    </ng-template>
-                </p>
+                        <ng-template #authorityName>
+                            <ng-container *ngIf="item.entry?.properties['cm:authorityName']; else owner">
+                                {{ item.entry.properties['cm:authorityName'] }}
+                            </ng-container>
+                        </ng-template>
+                        <ng-template #owner>
+                            {{ item.entry?.properties['cm:firstName'] ? item.entry?.properties['cm:firstName'] : '' }}
+                            {{ item.entry?.properties['cm:lastName'] ? item.entry?.properties['cm:lastName'] : '' }}
+                        </ng-template>
+                    </p>
+                </div>
             </mat-list-option>
         </mat-selection-list>
     </ng-template>

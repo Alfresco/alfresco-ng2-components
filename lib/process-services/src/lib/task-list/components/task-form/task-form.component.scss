@@ -1,12 +1,13 @@
-    .adf-task-form {
+.adf-task-form {
     &-container {
         overflow: hidden;
     }
 
-    &-actions{
+    &-actions {
         float: right;
         padding-right: 25px;
         padding-bottom: 25px;
+
         & .mat-button {
             height: 36px;
             border-radius: 5px;
