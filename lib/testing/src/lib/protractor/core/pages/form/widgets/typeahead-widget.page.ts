@@ -23,7 +23,7 @@ export class TypeaheadWidgetPage {
 
     field = $('input[data-automation-id="adf-typeahed-search-input"]');
     firstResult = $('#adf-typeahed-widget-user-0');
-    groupDropDownList = $('.mat-autocomplete-panel');
+    groupDropDownList = $('.mat-mdc-autocomplete-panel');
     formFields = new FormFields();
 
     getFieldLabel(fieldId: string): Promise<string> {
