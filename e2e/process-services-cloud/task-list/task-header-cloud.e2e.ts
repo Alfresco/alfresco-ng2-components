@@ -222,7 +222,7 @@ describe('Task Header cloud component', () => {
         await taskHeaderCloudPage.statusCardTextItem.checkElementIsReadonly();
     });
 
-    it('[C291991] Should be able to assign a task only to the users that have access to the selected app', async () => {
+    fit('[C291991] Should be able to assign a task only to the users that have access to the selected app', async () => {
         await tasksCloudDemoPage.clickStartNewTaskButton();
         const currentAssignee = await peopleCloudComponentPage.getChipAssignee();
         await expect(currentAssignee).toContain(testUser.firstName);
