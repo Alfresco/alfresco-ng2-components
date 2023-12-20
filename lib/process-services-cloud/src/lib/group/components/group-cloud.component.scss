@@ -50,7 +50,7 @@
 /* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
 
 /* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
-.mat-autocomplete-panel .mat-fab {
+.mat-mdc-autocomplete-panel .mat-fab {
     background: var(--theme-primary-color);
     width: 40px;
     height: 40px;
