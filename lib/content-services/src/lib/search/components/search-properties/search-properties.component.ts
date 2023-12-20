@@ -149,6 +149,8 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     };
 
     reset() {
+        this.context.queryFragments[this.id] = '';
+        this.context.update();
         this.form.reset();
         this.reset$.next();
         this.displayValue$.next('');
