@@ -24,7 +24,7 @@ export class GroupWidgetPage {
     groupField = $('input[data-automation-id="adf-group-search-input"]');
     firstResult = $('#adf-group-widget-user-0');
     formFields = new FormFields();
-    groupDropDownList: Locator = by.css('.mat-autocomplete-panel');
+    groupDropDownList: Locator = by.css('.mat-mdc-autocomplete-panel');
 
     getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId);
