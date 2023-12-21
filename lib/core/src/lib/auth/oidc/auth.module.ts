@@ -27,6 +27,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
+import { OidcAuthGuard } from './oidc-auth.guard';
 
 /**
  * Create a Login Factory function
@@ -46,9 +47,6 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
         { provide: OAuthStorage, useExisting: StorageService },
-        // { provide: AuthGuard, useClass: OidcAuthGuard },
-        // { provide: AuthGuardEcm, useClass: OidcAuthGuard },
-        // { provide: AuthGuardBpm, useClass: OidcAuthGuard },
         { provide: AuthenticationService},
         { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
         {
