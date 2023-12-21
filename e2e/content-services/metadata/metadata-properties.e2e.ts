@@ -34,13 +34,9 @@ describe('CardView Component - properties', () => {
     const METADATA = {
         DATA_FORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
-        COMMENTS_TAB: 'COMMENTS',
-        PROPERTY_TAB: 'PROPERTIES',
+        COMMENTS_TAB: 'Comments',
+        PROPERTY_TAB: 'Properties',
         DEFAULT_ASPECT: 'Properties',
-        MORE_INFO_BUTTON: 'More information',
-        LESS_INFO_BUTTON: 'Less information',
-        ARROW_DOWN: 'keyboard_arrow_down',
-        ARROW_UP: 'keyboard_arrow_up',
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
@@ -90,7 +86,6 @@ describe('CardView Component - properties', () => {
 
         await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-        await metadataViewPage.clickOnInformationButton();
 
         await metadataViewPage.clickMetadataGroup('EXIF');
 
@@ -108,11 +103,9 @@ describe('CardView Component - properties', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.editIconIsDisplayed();
+        await metadataViewPage.isEditGeneralIconDisplayed();
 
         await CheckboxPage.check(metadataViewPage.readonlySwitch);
-
-        await metadataViewPage.editIconIsNotDisplayed();
     });
 
     it('[C268965] Should multi property allow expand multi accordion at the same time when set', async () => {
@@ -121,15 +114,9 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await metadataViewPage.clickOnInformationButton();
 
-        await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
-        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-
-        await metadataViewPage.clickMetadataGroup('properties');
-
-        await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
+        await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
 
         await metadataViewPage.clickMetadataGroup('EXIF');
 
@@ -168,11 +155,7 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await metadataViewPage.informationButtonIsDisplayed();
-
         await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
-
-        await metadataViewPage.informationButtonIsNotDisplayed();
     });
 
     it('[C307975] Should be able to choose which aspect to show expanded in the info-drawer', async () => {

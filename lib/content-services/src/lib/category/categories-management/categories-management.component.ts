@@ -181,6 +181,13 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         return this._categoryNameControl;
     }
 
+    /*
+     * Returns `true` if categories empty and category panel non editable state, otherwise `false`
+    */
+    get showEmptyCategoryMessage(): boolean {
+        return this.categories.length === 0 && !this.categoryNameControlVisible;
+    }
+
     get existingCategories(): Category[] {
         return this._existingCategories;
     }
@@ -206,16 +213,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Hides and emits categoryNameControl and hides existing categories panel.
-     */
-    hideNameInput() {
-        this.categoryNameControlVisible = false;
-        this.categoryNameControlVisibleChange.emit(false);
-        this._existingCategoriesPanelVisible = false;
-        this.clearCategoryNameInput();
-    }
-
-    /**
      * Adds category that has been typed to a categoryNameControl and hides it afterwards.
      */
     addCategory() {
@@ -223,7 +220,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             const newCatName = this.categoryNameControl.value.trim();
             const newCat = new Category({ id: newCatName, name: newCatName });
             this.categories.push(newCat);
-            this.hideNameInput();
             this.clearCategoryNameInput();
             this._existingCategories = null;
             this.categoriesChange.emit(this.categories);

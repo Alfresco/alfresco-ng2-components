@@ -98,12 +98,18 @@ Now that the `my-preset` configuration is defined, let's use it in a view of the
 </adf-content-metadata-card>
 ```
 
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
+
 ### Viewing the result
 
-After saving the html file, open the ADF app in a browser and dive into the `Personal Files > Sites > swsdp` folder of the Alfresco's repository. Once there, select the `documentLibrary` folder (one click only) and click on the view details icon (the `i` on the top right). Scrolling down the metadata tab on the right, click on the `More information` item at the bottom. Once clicked, you will see two different groups: `Properties` (already there by default) and `This is my preset`. Click on `This is my preset` to show the properties related.
+After saving the html file, open the ADF app in a browser and dive into the `Personal Files > Sites > swsdp` folder of the Alfresco's repository. Once there, select the `documentLibrary` folder (one click only) and click on the view details icon (the `menu_open icon` on the top right). Scrolling down the metadata tab on the right. You will see different panels: `Properties` (already there by default), `Tags`, `Categories` and `grouped properties`.
 
 In the following screenshot you can see how the result should look:
 
-![content_metadata_preset](../docassets/images/content_metadata_preset.png)
+![UI_Property_Panel](../docassets/images/UI_property_panel.png)
 
 To check it out, double click on the `documentLibrary` folder and select (with one click) the `Presentations` folder. You should see the `This is my preset` group disappear from the metadata panel, because the node doesn't have the `st:siteContainer` aspect.

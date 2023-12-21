@@ -1,204 +1,67 @@
-.adf {
-    &-textitem-edit-icon.mat-icon {
-        font-size: var(--theme-subheading-2-font-size);
-        width: 16px;
-        height: 16px;
-        color: var(--adf-theme-foreground-text-color-025);
+.adf-card-view-textitem {
+    .adf-textitem-error {
+        font-size: var(--theme-caption-font-size);
+        padding-top: 6px;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+
+            li {
+                margin: 0;
+                padding: 0;
+            }
+        }
     }
 
-    &-textitem-action.mat-icon-button {
+    .adf-textitem-action {
         width: 20px;
         height: 20px;
         line-height: 20px;
         color: var(--adf-theme-foreground-text-color-025);
-    }
 
-    &-textitem-action:hover,
-    &-textitem-action:focus {
-        color: var(--adf-theme-foreground-text-color);
-    }
-
-    &-update-icon {
-        padding-left: 13px;
-    }
-
-    &-textitem-readonly {
-        cursor: pointer !important;
-
-        &:hover .adf-textitem-action,
-        &:focus .adf-textitem-action {
+        &:hover,
+        &:focus {
             color: var(--adf-theme-foreground-text-color);
         }
     }
 
-    &-textitem-chip-list-container {
-        margin-bottom: 25px !important;
-        margin-top: 6px;
-
+    .adf-textitem-chip-list-container {
         .mat-form-field-label {
             margin-top: 6px;
         }
     }
 
-    &-textitem-clickable {
-        cursor: pointer !important;
+    .adf-textitem-clickable {
+        cursor: pointer;
         padding-top: 3px;
 
-        .adf-textitem-edit-icon.mat-icon {
-            line-height: 16px;
-        }
-
-        &:hover .adf-textitem-action {
+        .adf-textitem-action:hover {
             color: var(--adf-theme-foreground-text-color);
         }
-    }
 
-    &-textitem-clickable-value {
-        cursor: pointer !important;
-        color: var(--theme-primary-color) !important;
-    }
-
-    &-textitem-editable {
-        &-controls {
-            display: flex;
-            align-items: center;
-
-            mat-icon:not(.adf-button-disabled):hover {
-                color: var(--adf-theme-foreground-text-color);
-                cursor: pointer !important;
-            }
-
-            mat-form-field {
-                width: 100%;
-            }
-
-            input:focus,
-            textarea:focus {
-                border: 1px solid var(--theme-accent-color-a200);
-            }
-        }
-
-        &-error {
-            font-size: var(--theme-caption-font-size);
-            padding-top: 6px;
-
-            ul {
-                margin: 0;
-                padding: 0;
-                list-style-type: none;
-
-                li {
-                    margin: 0;
-                    padding: 0;
-                }
-            }
-        }
-    }
-
-    &-textitem-default-value {
-        color: var(--adf-theme-foreground-text-color-054);
-    }
-
-    &-textitem-editable .mat-form-field-wrapper {
-        margin: 0;
-        padding-bottom: 0;
-    }
-
-    &-textitem-editable .mat-form-field-underline {
-        display: none;
-    }
-
-    &-textitem-editable .mat-form-field-infix {
-        padding: 0;
-        border-top: none;
-    }
-
-    &-textitem-editable .mat-form-field-label-wrapper {
-        padding-top: 2em;
-        position: static;
-    }
-
-    &-textitem-editable .mat-form-field-label {
-        top: 4px;
-    }
-
-    &-textitem-editable .mat-input-element {
-        font-family: inherit;
-        position: relative;
-        padding-top: 6px;
-    }
-
-    &-textitem-editable .mat-input-element:focus {
-        padding: 5px;
-        left: -6px;
-        top: 0;
-    }
-
-    &-textitem-editable input.mat-input-element {
-        margin-bottom: 2px;
-    }
-
-    &-textitem-editable input.mat-input-element:focus {
-        margin-bottom: -8px;
-    }
-
-    &-textitem-scroll {
-        overflow-x: auto;
-        white-space: nowrap;
-        display: block;
-
-        &::-webkit-scrollbar {
-            height: 5px;
-        }
-
-        &:hover::-webkit-scrollbar-thumb {
-            display: block;
-            background-color: var(--adf-theme-foreground-text-color-025);
-            border-radius: 2px;
-        }
-    }
-
-    &-textitem-multiline {
-        display: block;
-    }
-}
-
-.adf-property-field {
-    .adf-property-clear-value,
-    .adf-textitem-edit-value {
-        width: 30px;
-        height: 30px;
-    }
-}
-
-.mat-form-field:not(.adf-textitem-chip-list-input) {
-    .mat-form-field-suffix {
-        .adf-textitem-edit-icon {
-            display: block;
-        }
-
-        .adf-textitem-clear-icon {
-            display: none;
-        }
-
-        .adf-textitem-edit-icon,
-        .adf-textitem-clear-icon {
-            background: transparent;
-            border: none;
-
-            &:hover {
+        .adf-property-field {
+            .mat-input-element {
+                color: var(--theme-primary-color);
                 cursor: pointer;
             }
         }
+    }
 
-        &:hover {
-            .adf-textitem-edit-icon {
-                display: none;
-            }
+    .adf-textitem-default-value {
+        color: var(--adf-theme-foreground-text-color-054);
+    }
 
-            .adf-textitem-clear-icon {
-                display: block;
-            }
-        }
+    .adf-property-read-only {
+        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+    }
+
+    .adf-property-readonly-value {
+        color: var(--adf-metadata-property-panel-label-color);
+    }
+
+    .adf-property-value-editable {
+        color: var(--adf-metadata-property-panel-title-color);
     }
 }

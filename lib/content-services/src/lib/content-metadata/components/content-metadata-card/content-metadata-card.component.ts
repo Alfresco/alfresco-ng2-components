@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { ContentMetadataCustomPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
@@ -84,10 +84,6 @@ export class ContentMetadataCardComponent implements OnChanges {
     @Input()
     customPanels: ContentMetadataCustomPanel[];
 
-    /** Emitted when content's editable state is changed. */
-    @Output()
-    editableChange = new EventEmitter<boolean>();
-
     private _displayDefaultProperties: boolean = true;
 
     /**
@@ -123,15 +119,6 @@ export class ContentMetadataCardComponent implements OnChanges {
 
     onDisplayDefaultPropertiesChange(): void {
         this.expanded = !this._displayDefaultProperties;
-    }
-
-    toggleEdit(): void {
-        this.editable = !this.editable;
-        this.editableChange.emit(this.editable);
-    }
-
-    toggleExpanded(): void {
-        this.expanded = !this.expanded;
     }
 
     hasAllowableOperations() {

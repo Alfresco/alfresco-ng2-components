@@ -33,11 +33,7 @@ export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemMo
     }
 
     showClickableIcon(): boolean {
-        return this.hasIcon() && this.isClickable();
-    }
-
-    hasIcon(): boolean {
-        return !!this.property.icon;
+        return this.hasIcon && this.isClickable();
     }
 
     displayCount(): number {

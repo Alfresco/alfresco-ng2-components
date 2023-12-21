@@ -193,7 +193,7 @@
     },
     "METADATA": {
       "BASIC": {
-        "HEADER": "Properties",
+        "HEADER": "General info",
         "NAME": "Name",
         "TITLE": "Title",
         "DESCRIPTION": "Description",
@@ -401,10 +401,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Page {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "More information",
-        "LESS_INFORMATION": "Less information"
       }
     },
     "PDF_DIALOG": {
@@ -573,5 +569,8 @@
   "ADF_DROPDOWN": {
     "LOADING": "Loading...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
   }
 }

@@ -104,7 +104,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         if (tagNameControlVisible) {
             this._existingTagsPanelVisible = true;
             setTimeout(() => {
-                this.tagNameInputElement.nativeElement.scrollIntoView();
+                this.tagNameInputElement?.nativeElement?.scrollIntoView();
             });
         } else {
             this._existingTagsPanelVisible = false;
@@ -127,11 +127,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      */
     @Output()
     tagsChange = new EventEmitter<string[]>();
-    /**
-     * Emitted when input is showing or hiding.
-     */
-    @Output()
-    tagNameControlVisibleChange = new EventEmitter<boolean>();
 
     readonly nameErrorMessagesByErrors = new Map<keyof TagNameControlErrors, string>([
         ['duplicatedExistingTag', 'EXISTING_TAG'],
@@ -219,6 +214,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._tagNameControl;
     }
 
+    /*
+     * Returns `true` if tags empty and non editable state, otherwise `false`
+    */
+    get showEmptyTagMessage(): boolean {
+        return this.tags?.length === 0 && !this.tagNameControlVisible;
+    }
+
     get existingTags(): TagEntry[] {
         return this._existingTags;
     }
@@ -244,24 +246,12 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Hide input for typing name for new tag or for searching. When input is hidden then panel of existing tags is hidden as well.
-     */
-    hideNameInput(): void {
-        this.tagNameControlVisible = false;
-        this._existingTagsPanelVisible = false;
-        this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
-        this.tagNameControlVisibleChange.emit(this.tagNameControlVisible);
-        this.clearTagNameInput();
-    }
-
-    /**
      * Add tags to top list using value which is set in input. Adding tag is not allowed when value in input is invalid
      * or if user is still typing what means that validation for input is not called yet.
      */
     addTag(): void {
         if (!this._typing && !this.tagNameControl.invalid) {
             this.tags.push(this.tagNameControl.value.trim());
-            this.hideNameInput();
             this.clearTagNameInput();
             this.checkScrollbarVisibility();
             this.tagsChange.emit(this.tags);

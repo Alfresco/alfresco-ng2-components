@@ -189,24 +189,6 @@ describe('CardViewTextItemComponent', () => {
             expect(value).toBe('Lorem ipsum');
         });
 
-        it('should render the edit icon in case of editable:true', () => {
-            component.editable = true;
-            component.property.editable = true;
-
-            fixture.detectChanges();
-
-            const editIcon = fixture.debugElement.query(By.css('.adf-textitem-edit-icon'));
-            expect(editIcon).not.toBeNull('Edit icon should be shown');
-        });
-
-        it('should NOT render the edit icon in case of editable:false', async () => {
-            component.editable = false;
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const editIcon = fixture.debugElement.query(By.css('.adf-textitem-edit-icon'));
-            expect(editIcon).toBeNull('Edit icon should NOT be shown');
-        });
-
         it('should NOT render the picker and toggle in case of editable:true but (general) editable:false', async () => {
             component.editable = false;
             component.property.editable = true;
@@ -312,6 +294,20 @@ describe('CardViewTextItemComponent', () => {
 
             const labelElement = fixture.debugElement.query(By.css(`.adf-property-label`));
             expect(labelElement).toBeNull();
+        });
+
+        it('should return true when editable is true, and property.editable is false', () => {
+            component.editable = true;
+            component.property.editable = false;
+            fixture.detectChanges();
+            expect(component.isReadonlyProperty).toBe(true);
+        });
+
+        it('should return false when editable is false, and property.editable is false', () => {
+            component.editable = false;
+            component.property.editable = false;
+            fixture.detectChanges();
+            expect(component.isReadonlyProperty).toBe(false);
         });
     });
 
@@ -491,26 +487,6 @@ describe('CardViewTextItemComponent', () => {
             );
         });
 
-        it('should clear value when clear value icon is clicked', async () => {
-            spyOn(component, 'update');
-            component.property.value = 'testValue';
-            component.property.icon = 'FAKE_ICON';
-            component.property.clickable = true;
-            component.property.editable = true;
-            component.editable = true;
-            component.property.isValid = () => true;
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-            const clickEl = fixture.debugElement.query(By.css(`.adf-textitem-clear-icon`));
-            clickEl.triggerEventHandler('click', new MouseEvent('click'));
-
-            fixture.detectChanges();
-            const elementValue = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(elementValue.nativeElement.textContent).toEqual('');
-            expect(component.update).toHaveBeenCalled();
-        });
     });
 
     describe('Update', () => {
@@ -593,7 +569,7 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const errorMessage: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
+            const errorMessage: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-textitem-error');
             expect(errorMessage.textContent).toBe(expectedErrorMessages[0].message);
         });
 
@@ -602,13 +578,13 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            let errorMessage: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
+            let errorMessage: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-textitem-error');
             expect(errorMessage.textContent).toBe(expectedErrorMessages[0].message);
 
             component.editable = false;
             fixture.detectChanges();
 
-            errorMessage = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
+            errorMessage = fixture.debugElement.nativeElement.querySelector('.adf-textitem-error');
             expect(errorMessage).toBeNull();
         });
 

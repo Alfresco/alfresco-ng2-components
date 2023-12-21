@@ -186,7 +186,7 @@ export class ThumbnailService {
      *
      * @returns URL string
      */
-    public getDefaultMimeTypeIcon(): string {
+    getDefaultMimeTypeIcon(): string {
         return DEFAULT_ICON;
     }
 }

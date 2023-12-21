@@ -47,6 +47,9 @@ export class InfoDrawerComponent {
     @Input()
     title: string|null = null;
 
+    @Input()
+    icon: string | null = null;
+
     /** The selected index tab. */
     @Input()
     selectedIndex: number = 0;

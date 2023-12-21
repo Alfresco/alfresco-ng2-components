@@ -20,7 +20,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerComponent, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BaseCardView } from '../base-card-view';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
@@ -45,23 +44,15 @@ import { isValid } from 'date-fns';
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
     @Input()
-    property: CardViewDateItemModel;
+    displayEmpty = true;
 
     @Input()
-    editable: boolean = false;
-
-    @Input()
-    displayEmpty: boolean = true;
-
-    @Input()
-    displayClearAction: boolean = true;
+    displayClearAction = true;
 
     @ViewChild('datetimePicker')
     public datepicker: MatDatetimepickerComponent<any>;
 
     valueDate: Date;
-
-    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private dateAdapter: DateAdapter<Date>,
@@ -75,7 +66,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntil(this.destroy$))
             .subscribe((locale) => {
                 this.property.locale = locale;
             });
@@ -94,8 +85,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     }
 
     ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
+        super.ngOnDestroy();
     }
 
     showProperty(): boolean {
@@ -104,10 +94,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     showClearAction(): boolean {
         return this.displayClearAction && (!this.property.isEmpty() || !!this.property.default);
-    }
-
-    isEditable(): boolean {
-        return this.editable && this.property.editable;
     }
 
     showDatePicker() {
