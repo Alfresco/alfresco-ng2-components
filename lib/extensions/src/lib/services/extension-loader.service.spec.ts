@@ -121,4 +121,70 @@ describe('ExtensionLoaderService', () => {
             done();
         });
     });
+
+    it('should load extensions from passed extension value', (done) => {
+        appExtensionsConfig.$references = ['test.extension.1.json'];
+
+        extensionLoaderService.load(
+            'assets/app.extensions.json',
+            'assets/plugins',
+            undefined,
+            [{
+                $id: 'extension-value-id',
+                $license: 'license',
+                $name: 'name',
+                $version:'version',
+                $vendor: 'vendor'
+            }]).then((config: ExtensionConfig) => {
+                const hasExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id');
+                expect(hasExtensionValue).toBe(true);
+                done();
+            });
+    });
+
+    it('should load extensions if we passed only extension value', (done) => {
+        extensionLoaderService.load(
+            'assets/app.extensions.json',
+            'assets/plugins',
+            undefined,
+            [{
+                $id: 'extension-value-id',
+                $license: 'license',
+                $name: 'name',
+                $version:'version',
+                $vendor: 'vendor'
+            }]).then((config: ExtensionConfig) => {
+                const hasExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id');
+                expect(hasExtensionValue).toBe(true);
+                done();
+            });
+    });
+
+    it('should load extensions few extension values', (done) => {
+        appExtensionsConfig.$references = ['test.extension.1.json'];
+
+        extensionLoaderService.load(
+            'assets/app.extensions.json',
+            'assets/plugins',
+            undefined,
+            [{
+                $id: 'extension-value-id-1',
+                $license: 'license',
+                $name: 'name',
+                $version:'version',
+                $vendor: 'vendor'
+            },{
+                $id: 'extension-value-id-2',
+                $license: 'license',
+                $name: 'name',
+                $version:'version',
+                $vendor: 'vendor'
+            }]).then((config: ExtensionConfig) => {
+                const hasFirstExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id-1');
+                expect(hasFirstExtensionValue).toBe(true);
+                const hasSecondExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id-2');
+                expect(hasSecondExtensionValue).toBe(true);
+                done();
+            });
+    });
 });
