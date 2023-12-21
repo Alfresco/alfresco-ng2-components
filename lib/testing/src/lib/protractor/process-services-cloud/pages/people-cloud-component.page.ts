@@ -28,7 +28,7 @@ export class PeopleCloudComponentPage {
     formFields = new FormFields();
     labelLocator: Locator = by.css(`label[class*='adf-label']`);
     inputLocator: Locator = by.css('input');
-    assigneeChipList = $('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]');
+    assigneeChipList = $('mat-chip-grid[data-automation-id="adf-cloud-people-chip-list"]');
     noOfUsersDisplayed = $$('mat-option span.adf-people-label-name');
 
     getAssigneeRowLocatorByContainingName = async (name: string): Promise<ElementFinder> => element.all(by.cssContainingText('mat-option span.adf-people-label-name', name)).first();
@@ -64,12 +64,12 @@ export class PeopleCloudComponentPage {
 
     async getChipAssignee(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeChipList);
-        return this.assigneeChipList.all(by.css('mat-chip')).first().getText();
+        return this.assigneeChipList.all(by.css('mat-chip-row')).first().getText();
     }
 
     async getChipAssigneeCount(): Promise<number> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeChipList);
-        return this.assigneeChipList.all(by.css('mat-chip')).count();
+        return this.assigneeChipList.all(by.css('mat-chip-row')).count();
     }
 
     async checkUserIsDisplayed(name: string): Promise<boolean> {
