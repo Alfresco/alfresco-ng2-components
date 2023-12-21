@@ -61,7 +61,8 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
             useFactory: loginFactory,
             deps: [OAuthService, OAuthStorage, AUTH_CONFIG],
             multi: true
-        }
+        },
+        OidcAuthGuard
     ]
 })
 export class AuthModule {

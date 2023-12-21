@@ -16,7 +16,7 @@
  */
 
 import { Inject, Injectable } from '@angular/core';
-import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthService, OAuthStorage, TokenResponse } from 'angular-oauth2-oidc';
+import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
@@ -127,9 +127,9 @@ export class RedirectAuthService extends AuthService {
     );
   }
 
-  async loginCallback(): Promise<string | undefined> {
+  async loginCallback(loginOptions?: LoginOptions): Promise<string | undefined> {
     return this.ensureDiscoveryDocument()
-      .then(() => this.oauthService.tryLogin({ preventClearHashAfterLogin: true }))
+      .then(() => this.oauthService.tryLogin({ ...loginOptions, preventClearHashAfterLogin: true }))
       .then(() => this._getRedirectUrl());
   }
 

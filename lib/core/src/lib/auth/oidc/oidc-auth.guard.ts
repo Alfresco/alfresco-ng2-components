@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -25,22 +25,20 @@ export class OidcAuthGuard implements CanActivate {
   constructor(private auth: AuthService) {}
 
   canActivate(
-    _route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this._isAuthenticated(state);
+    return this._isAuthenticated();
   }
 
-  canActivateChild(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this._isAuthenticated(state);
+  canActivateChild() {
+    return this._isAuthenticated();
   }
 
-  private _isAuthenticated(state: RouterStateSnapshot) {
+  private _isAuthenticated() {
     if (this.auth.authenticated) {
       return true;
     }
 
-    const loginResult = this.auth.login(state.url);
+    const loginResult = this.auth.loginCallback({customHashFragment: window.location.search});
 
     if (loginResult instanceof Promise) {
       return loginResult.then(() => true).catch(() => false);
