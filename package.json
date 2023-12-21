@@ -80,7 +80,7 @@
     "@editorjs/underline": "1.1.0",
     "@mat-datetimepicker/core": "^10.1.1",
     "@ngx-translate/core": "^14.0.0",
-    "@storybook/core-server": "^6.5.16",
+    "@storybook/core-server": "^7.6.5",
     "angular-oauth2-oidc": "^13.0.1",
     "angular-oauth2-oidc-jwks": "^15.0.1",
     "apollo-angular": "^5.0.2",
