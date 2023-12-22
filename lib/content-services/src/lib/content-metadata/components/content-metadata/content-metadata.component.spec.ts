@@ -724,8 +724,6 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should load the group properties on node change', () => {
-            getGroupedPropertiesSpy;
-
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
@@ -748,7 +746,6 @@ describe('ContentMetadataComponent', () => {
                 }
             ];
             component.preset = presetConfig;
-            getGroupedPropertiesSpy;
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -823,7 +820,6 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should revert changes for getGroupedProperties panel on cancel', () => {
-            getGroupedPropertiesSpy;
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             component.onCancelGroupEdit({} as CardViewGroup);
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
