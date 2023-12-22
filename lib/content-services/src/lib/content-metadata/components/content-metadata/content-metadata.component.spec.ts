@@ -41,6 +41,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -54,6 +55,7 @@ describe('ContentMetadataComponent', () => {
     let categoryService: CategoryService;
     let getClassSpy: jasmine.Spy;
     let notificationService: NotificationService;
+    let getGroupedPropertiesSpy: jasmine.Spy;
 
     const preset = 'custom-preset';
 
@@ -173,6 +175,7 @@ describe('ContentMetadataComponent', () => {
                       HttpClientModule,
                       MatDialogModule,
                       MatSnackBarModule,
+                      MatProgressBarModule,
                       MatTooltipModule,
                       PipeModule],
             providers: [
@@ -227,6 +230,7 @@ describe('ContentMetadataComponent', () => {
         component.node = node;
         component.preset = preset;
         spyOn(contentMetadataService, 'getContentTypeProperty').and.returnValue(of([]));
+        getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties');
         getClassSpy = spyOn(classesApi, 'getClass');
         fixture.detectChanges();
     });
@@ -248,6 +252,7 @@ describe('ContentMetadataComponent', () => {
     describe('Folder', () => {
         it('should show the folder node', (done) => {
             component.expanded = false;
+            getGroupedPropertiesSpy.and.returnValue(of([]));
             fixture.detectChanges();
 
             component.basicProperties$.subscribe(() => {
@@ -275,7 +280,7 @@ describe('ContentMetadataComponent', () => {
 
         it('nodeAspectUpdate', fakeAsync(() => {
             const fakeNode = { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node' } as Node;
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            getGroupedPropertiesSpy.and.stub();
             spyOn(contentMetadataService, 'getBasicProperties').and.stub();
             updateService.updateNodeAspect(fakeNode);
 
@@ -690,7 +695,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should load the group properties on node change', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties');
+            getGroupedPropertiesSpy;
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -714,7 +719,7 @@ describe('ContentMetadataComponent', () => {
                 }
             ];
             component.preset = presetConfig;
-            spyOn(contentMetadataService, 'getGroupedProperties');
+            getGroupedPropertiesSpy;
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -725,7 +730,7 @@ describe('ContentMetadataComponent', () => {
             const expectedProperties = [];
             component.expanded = true;
 
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: expectedProperties } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: expectedProperties } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -739,7 +744,7 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = false;
 
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [] } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -750,7 +755,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should hide card views group when the grouped properties are empty', async () => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -763,7 +768,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should display card views group when there is at least one property that is not empty', async () => {
             component.expanded = true;
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -784,12 +789,8 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getBasicProperties).toHaveBeenCalled();
         });
 
-        it('should reload properties for group panel on cancel', () => {
-            const getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+        it('should revert changes for getGroupedProperties panel on cancel', () => {
+            getGroupedPropertiesSpy;
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             component.readOnly = false;
             fixture.detectChanges();
@@ -937,6 +938,7 @@ describe('ContentMetadataComponent', () => {
 
             component.expanded = true;
             component.preset = 'default';
+            getGroupedPropertiesSpy.and.callThrough();
         });
 
         it('should show Versionable with given content-metadata config', async () => {
