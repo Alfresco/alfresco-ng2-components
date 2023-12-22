@@ -36,10 +36,6 @@ export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemMode
     @Input()
     editable: boolean;
 
-    isEditable() {
-        return this.editable && this.property.editable;
-    }
-
     changed(change: MatCheckboxChange) {
         this.cardViewUpdateService.update({ ...this.property } as CardViewBoolItemModel, change.checked );
         this.property.value = change.checked;
