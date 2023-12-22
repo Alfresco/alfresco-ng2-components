@@ -43,6 +43,7 @@ export class MetadataViewPage {
     saveMetadataButton = $(`[data-automation-id='save-metadata']`);
     saveGeneralMetadataButton = $(`[data-automation-id='save-general-info-metadata']`);
     resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
+    informationButton = $(`button[data-automation-id='meta-data-card-toggle-expand']`);
 
     private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
         $(`[data-automation-id="adf-metadata-group-${groupName}"]`);
@@ -273,5 +274,13 @@ export class MetadataViewPage {
 
     async clickSaveGeneralMetadata(): Promise<void> {
         await BrowserActions.click(this.saveGeneralMetadataButton);
+    }
+
+    async informationButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(this.informationButton);
+    }
+
+    async informationButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.informationButton);
     }
 }
