@@ -29,7 +29,6 @@ import { SearchProperties } from './search-properties';
 describe('SearchPropertiesComponent', () => {
     let component: SearchPropertiesComponent;
     let fixture: ComponentFixture<SearchPropertiesComponent>;
-    let searchQueryBuilderService = jasmine.createSpyObj('SearchQueryBuilderService', ['update']);
 
     const clickFileSizeOperatorsSelect = () => {
         fixture.debugElement.query(By.css('[data-automation-id=adf-search-properties-file-size-operator-select]')).nativeElement.click();
@@ -65,9 +64,6 @@ describe('SearchPropertiesComponent', () => {
         TestBed.configureTestingModule({
             declarations: [ SearchPropertiesComponent ],
             imports: [ ContentTestingModule, TranslateModule.forRoot() ],
-            providers: [
-                { provide: SearchQueryBuilderService, useValue: searchQueryBuilderService }
-            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(SearchPropertiesComponent);
@@ -348,9 +344,6 @@ describe('SearchPropertiesComponent', () => {
             fixture.detectChanges();
             searchChipAutocompleteInputComponent = getSearchChipAutocompleteInputComponent();
             searchChipAutocompleteInputComponent.optionsChanged.emit([{value: 'pdf'}, {value: 'txt'}]);
-            searchQueryBuilderService.queryFragments = {};
-            component.id = 'testId';
-            component.context = searchQueryBuilderService;
         });
 
         it('should reset form', () => {
@@ -374,8 +367,11 @@ describe('SearchPropertiesComponent', () => {
         });
 
         it('should clear the queryFragments for the component id and call update', () => {
-            component.context.queryFragments[component.id] = 'some query';
-
+            component.context = TestBed.inject(SearchQueryBuilderService);
+            component.id = 'test-id'
+            component.context.queryFragments[component.id] = 'test-query'
+            fixture.detectChanges();
+            spyOn(component.context, 'update');
             component.reset();
 
             expect(component.context.queryFragments[component.id]).toBe('');
