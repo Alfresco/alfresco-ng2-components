@@ -142,7 +142,7 @@ describe('ExtensionLoaderService', () => {
             });
     });
 
-    it('should load extensions if we passed only extension value', (done) => {
+    it('should load extensions if only extension value was passed', (done) => {
         extensionLoaderService.load(
             'assets/app.extensions.json',
             'assets/plugins',
@@ -160,7 +160,7 @@ describe('ExtensionLoaderService', () => {
             });
     });
 
-    it('should load extensions few extension values', (done) => {
+    it('should load extensions with multiple extension values', (done) => {
         appExtensionsConfig.$references = ['test.extension.1.json'];
 
         extensionLoaderService.load(
