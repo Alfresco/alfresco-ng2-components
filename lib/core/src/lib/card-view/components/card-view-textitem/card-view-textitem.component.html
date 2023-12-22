@@ -2,7 +2,7 @@
     <div *ngSwitchDefault>
         <mat-form-field class="adf-property-field adf-card-textitem-field"
             [ngClass]="{'adf-property-read-only': !isEditable }"
-            [floatLabel]="'never'">
+            [floatLabel]="'always'">
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
