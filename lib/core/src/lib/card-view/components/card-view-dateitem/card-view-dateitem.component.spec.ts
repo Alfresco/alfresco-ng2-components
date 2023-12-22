@@ -29,7 +29,6 @@ import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
-import { addMinutes } from 'date-fns';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -195,7 +194,7 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
         const property = { ...component.property };
 
-        component.onDateChanged({ value: addMinutes(expectedDate, expectedDate.getTimezoneOffset()) } as MatDatetimepickerInputEvent<Date>);
+        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
         expect(itemUpdatedSpy).toHaveBeenCalledWith({
             target: property,
             changed: {
@@ -211,7 +210,7 @@ describe('CardViewDateItemComponent', () => {
         const expectedDate = new Date('Jul 10 2017');
         fixture.detectChanges();
 
-        component.onDateChanged({ value: addMinutes(expectedDate, expectedDate.getTimezoneOffset()) } as MatDatetimepickerInputEvent<Date>);
+        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
 
         await fixture.whenStable();
         expect(component.property.value).toEqual(expectedDate);
@@ -325,7 +324,7 @@ describe('CardViewDateItemComponent', () => {
         component.property.default = 'Jul 10 2017 00:01:00';
         component.property.key = 'fake-key';
         component.property.value = new Date('Jul 10 2017 00:01:00');
-        const expectedDate = new Date('Jul 10 2018 00:01:00');
+        const expectedDate = new Date('Jul 10 2018');
         fixture.detectChanges();
 
         await fixture.whenStable();
@@ -336,7 +335,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
 
         fixture.detectChanges();
-        expect(addMinutes(component.property.value, component.property.value.getTimezoneOffset())).toEqual(expectedDate);
+        expect(component.property.value).toEqual(expectedDate);
     });
 
     it('should render chips for multivalue dates when chips are enabled', async () => {
