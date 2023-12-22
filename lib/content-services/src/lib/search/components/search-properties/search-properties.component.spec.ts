@@ -63,7 +63,7 @@ describe('SearchPropertiesComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [ SearchPropertiesComponent ],
-            imports: [ ContentTestingModule, TranslateModule.forRoot() ],
+            imports: [ ContentTestingModule, TranslateModule.forRoot() ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(SearchPropertiesComponent);
@@ -368,8 +368,8 @@ describe('SearchPropertiesComponent', () => {
 
         it('should clear the queryFragments for the component id and call update', () => {
             component.context = TestBed.inject(SearchQueryBuilderService);
-            component.id = 'test-id'
-            component.context.queryFragments[component.id] = 'test-query'
+            component.id = 'test-id';
+            component.context.queryFragments[component.id] = 'test-query';
             fixture.detectChanges();
             spyOn(component.context, 'update');
             component.reset();
