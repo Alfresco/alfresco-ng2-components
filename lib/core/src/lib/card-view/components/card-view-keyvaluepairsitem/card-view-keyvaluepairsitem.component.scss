@@ -26,7 +26,6 @@
                 justify-content: center;
             }
 
-
             &__add-btn.mat-mdc-button {
                 margin-bottom: 20px;
             }
@@ -34,15 +33,15 @@
             &__read-only {
                 padding-bottom: 20px;
 
-            .mat-mdc-table {
-                box-shadow: none;
-            }
+                .mat-mdc-table {
+                    box-shadow: none;
+                }
 
-            .mat-mdc-header-row,
-            .mat-mdc-row {
-                padding: 0;
+                .mat-mdc-header-row,
+                .mat-mdc-row {
+                    padding: 0;
+                }
             }
         }
     }
-
 }
