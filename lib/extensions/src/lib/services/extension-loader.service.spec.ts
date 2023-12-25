@@ -89,9 +89,16 @@ describe('ExtensionLoaderService', () => {
             const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
             expect(pluginsReference).toEqual(['test.extension.1']);
         });
-    });
 
-    it('should load extensions from passed extension value', (done) => {
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        httpMock.expectOne('assets/plugins/test.extension.1.json').flush(pluginConfig1);
+        httpMock.expectNone('assets/plugins/test.extension.2.json');
+        httpMock.expectNone('assets/plugins/test.extension.3.json');
+        flushMicrotasks();
+    }));
+
+    it('should load extensions from passed extension value',fakeAsync(() => {
         appExtensionsConfig.$references = ['test.extension.1.json'];
 
         extensionLoaderService.load(
@@ -107,11 +114,14 @@ describe('ExtensionLoaderService', () => {
             }]).then((config: ExtensionConfig) => {
                 const hasExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id');
                 expect(hasExtensionValue).toBe(true);
-                done();
             });
-    });
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        httpMock.expectOne('assets/plugins/test.extension.1.json').flush(pluginConfig1);
+        flushMicrotasks();
+    }));
 
-    it('should load extensions if only extension value was passed', (done) => {
+    it('should load extensions if only extension value was passed', fakeAsync(() => {
         extensionLoaderService.load(
             'assets/app.extensions.json',
             'assets/plugins',
@@ -125,11 +135,13 @@ describe('ExtensionLoaderService', () => {
             }]).then((config: ExtensionConfig) => {
                 const hasExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id');
                 expect(hasExtensionValue).toBe(true);
-                done();
             });
-    });
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        flushMicrotasks();
+    }));
 
-    it('should load extensions with multiple extension values', (done) => {
+    it('should load extensions with multiple extension values', fakeAsync(() => {
         appExtensionsConfig.$references = ['test.extension.1.json'];
 
         extensionLoaderService.load(
@@ -153,7 +165,10 @@ describe('ExtensionLoaderService', () => {
                 expect(hasFirstExtensionValue).toBe(true);
                 const hasSecondExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id-2');
                 expect(hasSecondExtensionValue).toBe(true);
-                done();
             });
-    });
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        httpMock.expectOne('assets/plugins/test.extension.1.json').flush(pluginConfig1);
+        flushMicrotasks();
+    }));
 });
