@@ -161,6 +161,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowFullScreen = true;
 
+    /** Toggles the 'Info Button' */
+    @Input()
+    hideInfoButton = false;
+
     /** Change the close button position Right/Left */
     @Input()
     closeButtonPosition = CloseButtonPosition.Left;

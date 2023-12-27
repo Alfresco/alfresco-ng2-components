@@ -424,6 +424,35 @@ describe('ViewerComponent', () => {
             });
         });
 
+        describe('Info Button', () => {
+
+            const infoButton = () => element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-sidebar"]');
+
+            it('should NOT display info button on the right side', (done) => {
+                component.allowRightSidebar = true;
+                component.hideInfoButton = true;
+
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(infoButton()).toBeNull();
+                    done();
+                });
+            });
+
+            it('should display info button on the right side', (done) => {
+                component.allowRightSidebar = true;
+                component.hideInfoButton = false;
+
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(infoButton()).not.toBeNull();
+                    done();
+                });
+            });
+        });
+
         describe('View', () => {
 
             describe('Overlay mode true', () => {

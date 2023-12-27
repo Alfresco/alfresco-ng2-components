@@ -182,6 +182,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     closeButtonPosition = CloseButtonPosition.Left;
 
+    /** Toggles the 'Info Button' */
+    @Input()
+    hideInfoButton = false;
+
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
      */

@@ -25,7 +25,7 @@ const MAX_LOADING_TIME = 120000;
 
 export class ViewerPage {
     tabsPage = new TabsPage();
-    closeButton = $('.adf-viewer-close-button');
+    closeButton = $('button.adf-viewer-close-button');
     fileName = $('#adf-viewer-display-name');
     infoButton = $('button[data-automation-id="adf-toolbar-sidebar"]');
     previousPageButton = $('#viewer-previous-page-button');
