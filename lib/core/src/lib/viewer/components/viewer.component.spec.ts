@@ -425,22 +425,19 @@ describe('ViewerComponent', () => {
         });
 
         describe('Info Button', () => {
-
             const infoButton = () => element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-sidebar"]');
 
             it('should NOT display info button on the right side', () => {
                 component.allowRightSidebar = true;
                 component.hideInfoButton = true;
-
                 fixture.detectChanges();
 
-                expect(infoButton()).toBeNull(); 
+                expect(infoButton()).toBeNull();
             });
 
             it('should display info button on the right side', () => {
                 component.allowRightSidebar = true;
                 component.hideInfoButton = false;
-
                 fixture.detectChanges();
 
                 expect(infoButton()).not.toBeNull();
