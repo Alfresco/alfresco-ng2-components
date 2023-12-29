@@ -19,6 +19,10 @@
         }
     }
 
+    .adf-property-container {
+        margin-bottom: 10px;
+    }
+
     .adf-property {
         .adf-property-field {
             width: 100%;
@@ -30,7 +34,7 @@
             .mat-input-element {
                 text-overflow: ellipsis;
                 color: var(--adf-metadata-property-panel-title-color);
-                margin-top: 32px;
+                margin-top: 20px;
                 padding: 6px 0;
                 line-height: 20px;
             }
@@ -57,7 +61,7 @@
             }
 
             .mat-form-field-label {
-                padding: 6px 0;
+                padding: 0;
                 justify-content: center;
                 display: flex;
                 flex-direction: column;
@@ -83,7 +87,7 @@
             &.mat-input-element {
                 color: var(--adf-metadata-action-button-clear-color);
                 padding: 6px 0 6px 12px;
-                margin: 32px 0 0;
+                margin: 20px 0 0;
             }
         }
 
