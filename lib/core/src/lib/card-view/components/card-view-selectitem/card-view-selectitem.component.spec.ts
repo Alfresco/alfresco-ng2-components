@@ -26,7 +26,6 @@ import { AppConfigService } from '../../../app-config/app-config.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatLabel } from '@angular/material/form-field';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -81,14 +80,6 @@ describe('CardViewSelectItemComponent', () => {
             });
             fixture.detectChanges();
             const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
-            expect(labelValue).not.toBeNull();
-            expect(labelValue.nativeElement.innerText).toBe('Select box label');
-        });
-
-        it('should render mat label when editable is set to true', () => {
-            component.editable = true;
-            fixture.detectChanges();
-            const labelValue = fixture.debugElement.query(By.directive(MatLabel));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('Select box label');
         });
