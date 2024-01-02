@@ -105,7 +105,7 @@ export class ActivitiContentService {
         const params: RelatedContentRepresentation = {
             source: accountId,
             mimeType: node?.content?.mimeType,
-            sourceId: node.id + ';' + node.properties['cm:versionLabel'] + '@' + currentSideId,
+            sourceId: node.id + ';' + node.properties?.['cm:versionLabel'] + '@' + currentSideId,
             name: node.name,
             link: node.isLink
         };
