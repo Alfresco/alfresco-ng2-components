@@ -695,7 +695,6 @@ describe('AlfrescoViewerComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('[data-automation-id="adf-toolbar-left-back"]')).toBeDefined();
                 expect(element.querySelector('[data-automation-id="adf-toolbar-left-back"]')).not.toBeNull();
                 done();
             });

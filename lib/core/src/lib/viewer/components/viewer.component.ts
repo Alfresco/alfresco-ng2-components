@@ -71,6 +71,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @ContentChild(ViewerMoreActionsComponent)
     mnuMoreActions: ViewerMoreActionsComponent;
 
+    get CloseButtonPosition() {
+        return CloseButtonPosition; 
+    }
+
     /**
      * If you want to load an external file that does not come from ACS you
      * can use this URL to specify where to load the file from.

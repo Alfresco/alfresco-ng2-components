@@ -63,7 +63,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
 | allowGoBack | `boolean` | true | Allows `back` navigation. |
 | closeButtonPosition | `CloseButtonPosition` | `left` | Set close button position right/left. |
-| hideInfoButton | `boolean` | `false` | Toggles Info button. |
+| hideInfoButton | `boolean` | false | Toggles Info button. |
 | allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
 | allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
 | allowRightSidebar | `boolean` | false | Allow the right sidebar. |
