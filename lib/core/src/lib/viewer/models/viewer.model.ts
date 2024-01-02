@@ -15,6 +15,11 @@
  * limitations under the License.
  */
 
+export enum CloseButtonPosition {
+    Right = 'right',
+    Left = 'left'
+}
+
 export interface Track {
     src: string;
     label?: string;

@@ -26,7 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoViewerComponent, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
-import { CoreTestingModule, EventMock, ViewUtilService, ViewerComponent } from '@alfresco/adf-core';
+import { CloseButtonPosition, CoreTestingModule, EventMock, ViewUtilService, ViewerComponent } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
@@ -691,11 +691,11 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should render close viewer button if it is not a shared link', (done) => {
+            component.closeButtonPosition = CloseButtonPosition.Left;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).toBeDefined();
-                expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).not.toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-left-back"]')).not.toBeNull();
                 done();
             });
         });
@@ -709,7 +709,7 @@ describe('AlfrescoViewerComponent', () => {
             component.ngOnChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('[data-automation-id="adf-toolbar-back"]')).toBeNull();
+                expect(element.querySelector('[data-automation-id="adf-toolbar-left-back"]')).toBeNull();
                 done();
             });
         });
