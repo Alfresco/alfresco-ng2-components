@@ -27,6 +27,9 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
     protected cardViewUpdateService = inject(CardViewUpdateService);
 
     @Input()
+    editable = false;
+
+    @Input()
     property: T;
 
     protected destroy$ = new Subject<boolean>();
@@ -37,6 +40,18 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
                 this.property.value = itemModel.value;
             }
         });
+    }
+
+    get isEditable(): boolean {
+        return this.editable && this.property.editable;
+    }
+
+    get isReadonlyProperty(): boolean {
+        return this.editable && !this.property.editable;
+    }
+
+    get hasIcon(): boolean {
+        return !!this.property.icon;
     }
 
     ngOnDestroy(): void {

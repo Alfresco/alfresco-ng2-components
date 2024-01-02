@@ -222,17 +222,6 @@ describe('TaskHeaderCloudComponent', () => {
             const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
             expect(loading).toBeTruthy();
         });
-
-        it('should not render edit icon if the task in assigned state and assingned user is different from current logged-in user', () => {
-            isTaskEditableSpy.and.returnValue(false);
-            fixture.detectChanges();
-            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
-            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
-            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull();
-            expect(descriptionEditIcon).toBeNull();
-            expect(dueDateEditIcon).toBeNull();
-        });
     });
 
     describe('Task with parentTaskId', () => {
@@ -328,9 +317,7 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should render edit icon if the task in assigned state and assingee should be current user', () => {
             fixture.detectChanges();
-            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-description"] [class*="adf-textitem-edit-icon"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(descriptionEditIcon).not.toBeNull();
             expect(dueDateEditIcon).not.toBeNull();
         });
 
@@ -372,16 +359,6 @@ describe('TaskHeaderCloudComponent', () => {
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
             expect(value).toBeNull();
         });
-
-        it('should not render edit icon if the task in created state and not assigned', () => {
-            fixture.detectChanges();
-            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
-            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
-            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull();
-            expect(descriptionEditIcon).toBeNull();
-            expect(dueDateEditIcon).toBeNull();
-        });
     });
 
     describe('Completed Task', () => {
@@ -404,16 +381,6 @@ describe('TaskHeaderCloudComponent', () => {
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
             expect(value).toBeNull('Edit icon should NOT be shown');
         });
-
-        it('should not render edit icon if the task in completed state', () => {
-            fixture.detectChanges();
-            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
-            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
-            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull();
-            expect(descriptionEditIcon).toBeNull();
-            expect(dueDateEditIcon).toBeNull();
-        });
     });
 
     describe('Suspended Task', () => {
@@ -435,16 +402,6 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
             expect(value).toBeNull();
-        });
-
-        it('should not render edit icon if the task in suspended state', () => {
-            fixture.detectChanges();
-            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
-            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
-            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull();
-            expect(descriptionEditIcon).toBeNull();
-            expect(dueDateEditIcon).toBeNull();
         });
     });
 

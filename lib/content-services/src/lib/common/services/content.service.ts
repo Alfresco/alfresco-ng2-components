@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { ContentApi, Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
-import { AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
 
@@ -43,7 +43,7 @@ export class ContentService {
         return this._contentApi;
     }
 
-    constructor(public authService: AuthenticationService, public apiService: AlfrescoApiService) {}
+    constructor(public authService: AuthenticationService, public apiService: AlfrescoApiService, private thumbnailService?: ThumbnailService) {}
 
     /**
      * Gets a content URL for the given node.
@@ -144,5 +144,49 @@ export class ContentService {
         }
 
         return hasAllowableOperations;
+    }
+
+    getNodeIcon(node: Node): string {
+        if (node?.isFolder) {
+            return this.getFolderIcon(node);
+        }
+        if (node?.isFile) {
+            return this.thumbnailService.getMimeTypeIcon(node?.content?.mimeType);
+        }
+        return this.thumbnailService.getDefaultMimeTypeIcon();
+    }
+
+    private getFolderIcon(node: Node): string {
+        if (this.isSmartFolder(node)) {
+            return this.thumbnailService.getMimeTypeIcon('smartFolder');
+        } else if (this.isRuleFolder(node)) {
+            return this.thumbnailService.getMimeTypeIcon('ruleFolder');
+        } else if (this.isLinkFolder(node)) {
+            return this.thumbnailService.getMimeTypeIcon('linkFolder');
+        } else {
+            return this.thumbnailService.getMimeTypeIcon('folder');
+        }
+    }
+
+    isSmartFolder(node: Node): boolean {
+        if (node) {
+            return this.hasAspect(node, 'smf:customConfigSmartFolder') || this.hasAspect(node, 'smf:systemConfigSmartFolder');
+        }
+        return false;
+    }
+
+    isRuleFolder(node: Node): boolean {
+        if (node) {
+            return this.hasAspect(node, 'rule:rules');
+        }
+        return false;
+    }
+
+    isLinkFolder(node: Node): boolean {
+        return node?.nodeType === 'app:folderlink';
+    }
+
+    private hasAspect(node: Node, aspectName: string): boolean {
+        return node?.aspectNames?.includes(aspectName);
     }
 }

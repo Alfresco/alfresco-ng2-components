@@ -23,9 +23,9 @@
                         </button>
                     </ng-container>
 
-                    <button *ngIf="allowGoBack"
+                    <button *ngIf="allowGoBack && closeButtonPosition === CloseButtonPosition.Left"
                             class="adf-viewer-close-button"
-                            data-automation-id="adf-toolbar-back"
+                            data-automation-id="adf-toolbar-left-back"
                             [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                             mat-icon-button
                             title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
@@ -90,7 +90,7 @@
                     <mat-icon>fullscreen</mat-icon>
                 </button>
 
-                <ng-container *ngIf="allowRightSidebar">
+                <ng-container *ngIf="allowRightSidebar && !hideInfoButton">
                     <adf-toolbar-divider></adf-toolbar-divider>
 
                     <button mat-icon-button
@@ -118,6 +118,19 @@
                               [overlapTrigger]="false">
                         <ng-content select="adf-viewer-more-actions"></ng-content>
                     </mat-menu>
+                </ng-container>
+
+                <ng-container *ngIf="allowGoBack && closeButtonPosition === CloseButtonPosition.Right">
+                    <adf-toolbar-divider></adf-toolbar-divider>
+
+                    <button class="adf-viewer-close-button"
+                            data-automation-id="adf-toolbar-right-back"
+                            [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
+                            mat-icon-button
+                            title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
+                            (click)="onClose()">
+                        <mat-icon>close</mat-icon>
+                    </button>
                 </ng-container>
 
             </adf-toolbar>

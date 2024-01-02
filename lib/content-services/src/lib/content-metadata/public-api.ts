@@ -16,14 +16,15 @@
  */
 
 export * from './components/content-metadata/content-metadata.component';
+export * from './components/content-metadata/content-metadata-header.component';
 export * from './components/content-metadata-card/content-metadata-card.component';
+
 export * from './services/basic-properties.service';
 export * from './services/content-metadata.service';
 export * from './services/property-descriptors.service';
 export * from './services/property-groups-translator.service';
 export * from './services/config/content-metadata-config.factory';
 export * from './services/content-type-property.service';
-
 export * from './services/config/indifferent-config.service';
 export * from './services/config/layout-oriented-config.service';
 export * from './services/config/aspect-oriented-config.service';

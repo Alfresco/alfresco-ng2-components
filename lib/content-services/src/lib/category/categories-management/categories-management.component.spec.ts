@@ -223,44 +223,19 @@ describe('CategoriesManagementComponent', () => {
                 component.categoryNameControlVisible = true;
                 fixture.detectChanges();
             });
-            it('should be hidden initially', () => {
-                component.categoryNameControlVisible = false;
-                fixture.detectChanges();
-                const categoryControl: HTMLDivElement = fixture.debugElement.query(By.css('.adf-category-name-field')).nativeElement;
-                expect(categoryControl.hidden).toBeTrue();
-            });
 
             it('should be visible when categoryNameControlVisible is true', () => {
                 const categoryControl = fixture.debugElement.query(By.css('.adf-category-name-field'));
                 expect(categoryControl).toBeTruthy();
             });
+        });
 
-            it('should have correct label and hide button', () => {
-                const categoryControlLabel = fixture.debugElement.query(By.css('#adf-category-name-input-label')).nativeElement;
-                const categoryControlHideBtn: HTMLButtonElement = fixture.debugElement.query(By.css('.adf-category-name-field button')).nativeElement;
-                expect(categoryControlHideBtn).toBeTruthy();
-                expect(categoryControlHideBtn.attributes.getNamedItem('title').textContent.trim()).toBe('CATEGORIES_MANAGEMENT.HIDE_INPUT');
-                expect(categoryControlLabel.textContent.trim()).toBe('CATEGORIES_MANAGEMENT.NAME');
+        describe('showEmptyCategoryMessage', () => {
+            it('should return true when categories empty and category in non editable state', () => {
+                component.categories = [];
+                component.categoryNameControlVisible = false;
+                expect(component.showEmptyCategoryMessage).toBeTrue();
             });
-
-            it('should hide and clear category control and existing categories panel on clicking hide button', fakeAsync(() => {
-                typeCategory('test');
-                const categoryControlHideBtn: HTMLButtonElement = fixture.debugElement.query(By.css('.adf-category-name-field button')).nativeElement;
-                const controlVisibilityChangeSpy = spyOn(component.categoryNameControlVisibleChange, 'emit').and.callThrough();
-                categoryControlHideBtn.click();
-                fixture.detectChanges();
-
-                const categoryControl: HTMLDivElement = fixture.debugElement.query(By.css('.adf-category-name-field')).nativeElement;
-                expect(categoryControl.hidden).toBeTrue();
-                expect(component.categoryNameControlVisible).toBeFalse();
-                expect(component.existingCategoriesPanelVisible).toBeFalse();
-                expect(controlVisibilityChangeSpy).toHaveBeenCalledOnceWith(false);
-
-                component.categoryNameControlVisible = true;
-                fixture.detectChanges();
-                tick(100);
-                expect(getCategoryControlInput().value).toBe('');
-            }));
         });
 
         describe('Spinner', () => {
@@ -472,13 +447,8 @@ describe('CategoriesManagementComponent', () => {
             expect(categoriesChangeSpy).toHaveBeenCalledOnceWith(component.categories);
         }));
 
-        it('should clear and hide input after category is created', fakeAsync(() => {
-            const controlVisibilityChangeSpy = spyOn(component.categoryNameControlVisibleChange, 'emit');
+        it('should clear input after category is created', fakeAsync(() => {
             createCategory('test');
-            const categoryControl: HTMLDivElement = fixture.debugElement.query(By.css('.adf-category-name-field')).nativeElement;
-
-            expect(categoryControl.hidden).toBeTrue();
-            expect(controlVisibilityChangeSpy).toHaveBeenCalledOnceWith(false);
             expect(getExistingCategoriesList()).toEqual([]);
             expect(component.categoryNameControl.value).toBe('');
             expect(component.categoryNameControl.untouched).toBeTrue();

@@ -27,9 +27,6 @@ import { BaseCardView } from '../base-card-view';
 
 export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel> {
     @Input()
-    property: CardViewMapItemModel;
-
-    @Input()
     displayEmpty: boolean = true;
 
     showProperty() {

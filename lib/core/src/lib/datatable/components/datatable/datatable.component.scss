@@ -419,6 +419,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         }
     }
 
+    .adf-datatable-actions-menu {
+        margin-left: auto;
+    }
+
     .adf-cell-value {
         display: flex;
         min-height: inherit;

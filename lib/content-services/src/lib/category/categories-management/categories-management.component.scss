@@ -1,15 +1,17 @@
 .adf-categories-management {
+    padding-top: 12px;
+
     .adf-category-name-field {
-        display: flex;
         justify-content: space-between;
         width: 100%;
+        color: var(--adf-metadata-property-panel-text-color);
+        background: var(--adf-metadata-buttons-background-color);
+        height: 32px;
+        border-radius: 12px;
+        align-items: center;
 
-        mat-form-field {
-            width: 100%;
-        }
-
-        .adf-btn-padded {
-            margin-right: -14px;
+        input {
+            padding: 7px 8px;
         }
     }
 
@@ -18,10 +20,6 @@
         justify-content: space-between;
         align-items: center;
         word-break: break-word;
-
-        .adf-btn-padded {
-            margin-right: -14px;
-        }
     }
 
     .adf-categories-padded {
@@ -31,11 +29,14 @@
     [hidden] {
         visibility: hidden;
     }
+
+    .adf-no-categories-message {
+        margin-bottom: 0;
+        height: 30px;
+    }
 }
 
 .adf-categories-list {
-    padding-bottom: 10px;
-
     .mat-list-base .mat-list-item,
     .mat-list-base .mat-list-option {
         display: flex;

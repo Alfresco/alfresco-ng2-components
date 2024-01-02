@@ -18,4 +18,5 @@
 export interface ContentMetadataCustomPanel {
     panelTitle: string;
     component: string;
+    expanded?: boolean;
 }

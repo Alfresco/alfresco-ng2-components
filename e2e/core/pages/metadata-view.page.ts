@@ -32,9 +32,7 @@ export class MetadataViewPage {
     description = $(`span[data-automation-id='card-textitem-value-properties.cm:description']`);
     author = $(`[data-automation-id='card-textitem-value-properties.cm:author']`);
     editIcon = $(`button[data-automation-id='meta-data-card-toggle-edit']`);
-    informationButton = $(`button[data-automation-id='meta-data-card-toggle-expand']`);
-    informationSpan = $(`span[data-automation-id='meta-data-card-toggle-expand-label']`);
-    informationIcon = $(`span[data-automation-id='meta-data-card-toggle-expand-label'] ~ mat-icon`);
+    editIconGeneral = $(`button[data-automation-id='meta-data-general-info-edit']`);
     displayEmptySwitch = $(`#adf-metadata-empty`);
     readonlySwitch = $(`#adf-metadata-readonly`);
     multiSwitch = $(`#adf-metadata-multi`);
@@ -43,6 +41,7 @@ export class MetadataViewPage {
     displayAspect = $(`input[data-placeholder='Display Aspect']`);
     applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
     saveMetadataButton = $(`[data-automation-id='save-metadata']`);
+    saveGeneralMetadataButton = $(`[data-automation-id='save-general-info-metadata']`);
     resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
 
     private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
@@ -102,28 +101,17 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
     }
 
+    async isEditGeneralIconDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.editIconGeneral);
+    }
+
     async editIconClick(): Promise<void> {
         await BrowserActions.clickExecuteScript('button[data-automation-id="meta-data-card-toggle-edit"]');
     }
 
-    async informationButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.informationButton);
-    }
-
-    async informationButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.informationButton);
-    }
-
-    async clickOnInformationButton(): Promise<void> {
-        await BrowserActions.click(this.informationButton);
-    }
-
-    async getInformationButtonText(): Promise<string> {
-        return BrowserActions.getText(this.informationSpan);
-    }
-
-    async getInformationIconText(): Promise<string> {
-        return BrowserActions.getText(this.informationIcon);
+    async clickEditIconGeneral(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.editIconGeneral);
+        await BrowserActions.click(this.editIconGeneral);
     }
 
     async clickOnPropertiesTab(): Promise<void> {
@@ -135,11 +123,6 @@ export class MetadataViewPage {
 
     async getEditIconTooltip(): Promise<string> {
         return BrowserActions.getAttribute(this.editIcon, 'title');
-    }
-
-    async editPropertyIconIsDisplayed(propertyName: string) {
-        const editPropertyIcon = $('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon');
-        await BrowserVisibility.waitUntilElementIsPresent(editPropertyIcon);
     }
 
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
@@ -159,11 +142,6 @@ export class MetadataViewPage {
         const textField = $('[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]');
 
         return BrowserActions.getInputValue(textField);
-    }
-
-    async getPropertyIconTooltip(propertyName: string): Promise<string> {
-        const editPropertyIcon = $('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon');
-        return BrowserActions.getAttribute(editPropertyIcon, 'title');
     }
 
     async clickMetadataGroup(groupName: string): Promise<void> {
@@ -285,5 +263,9 @@ export class MetadataViewPage {
 
     async clickResetMetadata(): Promise<void> {
         await BrowserActions.click(this.resetMetadataButton);
+    }
+
+    async clickSaveGeneralMetadata(): Promise<void> {
+        await BrowserActions.click(this.saveGeneralMetadataButton);
     }
 }

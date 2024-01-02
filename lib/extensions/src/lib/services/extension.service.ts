@@ -42,6 +42,11 @@ export const EXTENSION_JSONS = new InjectionToken<string[][]>('extension-jsons',
     factory: extensionJsonsFactory
 });
 
+export const EXTENSION_JSON_VALUES = new InjectionToken<string[][]>('extension-jsons-values', {
+    providedIn: 'root',
+    factory: extensionJsonsFactory
+});
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 /**
  * Provides the extension json values for the angular modules
@@ -53,6 +58,20 @@ export function provideExtensionConfig(jsons: string[]) {
     return {
         provide: EXTENSION_JSONS,
         useValue: jsons,
+        multi: true
+    };
+};
+
+/**
+ * Provides the extension json raw values for the angular modules
+ *
+ * @param extensionConfigValue config value
+ * @returns a provider section
+ */
+export function provideExtensionConfigValues(extensionConfigValue: ExtensionConfig[]) {
+    return {
+        provide: EXTENSION_JSON_VALUES,
+        useValue: extensionConfigValue,
         multi: true
     };
 };
@@ -78,7 +97,8 @@ export class ExtensionService {
         protected loader: ExtensionLoaderService,
         protected componentRegister: ComponentRegisterService,
         protected ruleService: RuleService,
-        @Inject(EXTENSION_JSONS) protected extensionJsons: string[]
+        @Inject(EXTENSION_JSONS) protected extensionJsons: string[],
+        @Inject(EXTENSION_JSON_VALUES) protected extensionJsonValues: ExtensionConfig[]
     ) {
         this.setup$ = this.onSetup$.asObservable();
     }
@@ -92,8 +112,10 @@ export class ExtensionService {
         const config = await this.loader.load(
             this.configPath,
             this.pluginsPath,
-            this.extensionJsons.flat()
+            this.extensionJsons.flat(),
+            this.extensionJsonValues.flat()
         );
+
         this.setup(config);
         return config;
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, OnChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
 import { MatTableDataSource } from '@angular/material/table';
@@ -30,20 +30,12 @@ import { BaseCardView } from '../base-card-view';
 })
 
 export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {
-
-    @Input()
-    editable: boolean = false;
-
     values: CardViewKeyValuePairsItemType[];
     matTableValues: MatTableDataSource<CardViewKeyValuePairsItemType>;
 
     ngOnChanges() {
         this.values = this.property.value || [];
         this.matTableValues = new MatTableDataSource(this.values);
-    }
-
-    isEditable(): boolean {
-        return this.editable && this.property.editable;
     }
 
     add(): void {
@@ -55,8 +47,8 @@ export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKey
         this.save(true);
     }
 
-    onBlur(value): void {
-        if (value.length) {
+    onBlur(value: any): void {
+        if (value?.length) {
             this.save();
         }
     }

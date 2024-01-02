@@ -150,6 +150,10 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
 
     reset() {
         this.form.reset();
+        if (this.id && this.context) {
+            this.context.queryFragments[this.id] = '';
+            this.context.update();
+        }
         this.reset$.next();
         this.displayValue$.next('');
     }

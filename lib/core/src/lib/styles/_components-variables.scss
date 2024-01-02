@@ -1,3 +1,4 @@
+/* stylelint-disable scss/no-global-function-names */
 @use './reference-variables' as *;
 @use '@angular/material' as mat;
 
@@ -52,7 +53,6 @@
         --adf-identity-user-info-line-height: $adf-ref-line-height,
         --adf-identity-user-info-font-size: var(--theme-adf-picture-1-font-size),
         --adf-user-info-container-margin-right: $adf-ref-margin-right,
-
         --adf-info-drawer-tab-default-color: mat.get-color-from-palette($accent),
         --adf-info-drawer-tab-default-background: mat.get-color-from-palette($background, card),
         --adf-info-drawer-tab-default-bottom-line:$adf-ref-tab-bottom-line-default,
@@ -70,8 +70,13 @@
         --adf-people-cloud-input-label-focus-color: mat.get-color-from-palette($primary),
         --adf-people-cloud-autosuggest-result-active-color: mat.get-color-from-palette($foreground, text),
         --adf-people-cloud-autosuggest-result-disabled-color: mat.get-color-from-palette($foreground, secondary-text),
-        --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn)
-
+        --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
+        --adf-metadata-property-panel-border-color: $adf-ref-metadata-property-panel-border-color,
+        --adf-metadata-buttons-background-color: $adf-ref-metadata-buttons-background-color,
+        --adf-metadata-action-button-clear-color: $adf-ref-metadata-action-button-clear-color,
+        --adf-metadata-property-panel-text-color: $adf-ref-metadata-property-panel-text-color,
+        --adf-metadata-property-panel-label-color: $adf-ref-metadata-property-panel-label-color,
+        --adf-metadata-property-panel-title-color: $adf-ref-metadata-property-panel-title-color,
     );
 
     // propagates SCSS variables into the CSS variables scope

@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    LoginPage,
-    StringUtil,
-    UploadActions,
-    UserModel,
-    UsersActions,
-    ViewerPage
-} from '@alfresco/adf-testing';
+import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -31,20 +24,6 @@ import CONSTANTS = require('../../util/constants');
 import { SitesApi } from '@alfresco/js-api';
 
 describe('permissions', () => {
-
-    const METADATA = {
-        DATA_FORMAT: 'mmm dd yyyy',
-        TITLE: 'Details',
-        COMMENTS_TAB: 'COMMENTS',
-        PROPERTY_TAB: 'PROPERTIES',
-        DEFAULT_ASPECT: 'Properties',
-        MORE_INFO_BUTTON: 'More information',
-        LESS_INFO_BUTTON: 'Less information',
-        ARROW_DOWN: 'keyboard_arrow_down',
-        ARROW_UP: 'keyboard_arrow_up',
-        EDIT_BUTTON_TOOLTIP: 'Edit'
-    };
-
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
@@ -130,9 +109,7 @@ describe('permissions', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-
-        await metadataViewPage.clickOnInformationButton();
+        await expect(await viewerPage.getActiveTab()).toEqual('Properties');
 
         await metadataViewPage.clickMetadataGroup('EXIF');
 
@@ -150,9 +127,7 @@ describe('permissions', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-
-        await metadataViewPage.clickOnInformationButton();
+        await expect(await viewerPage.getActiveTab()).toEqual('Properties');
 
         await metadataViewPage.clickMetadataGroup('EXIF');
 

@@ -31,7 +31,12 @@ export class ExtensionLoaderService {
     constructor(private http: HttpClient) {
     }
 
-    load(configPath: string, pluginsPath: string, extensions?: string[]): Promise<ExtensionConfig> {
+    load(
+        configPath: string,
+        pluginsPath: string,
+        extensions?: string[],
+        extensionValues?: ExtensionConfig[]
+    ): Promise<ExtensionConfig> {
         return new Promise<any>((resolve) => {
             this.loadConfig(configPath, 0).then((result) => {
                 if (result) {
@@ -48,16 +53,24 @@ export class ExtensionLoaderService {
                         config.$references = this.filterIgnoredExtensions(config.$references, config.$ignoreReferenceList);
                     }
 
-                    if (config.$references && config.$references.length > 0) {
-                        const plugins = config.$references.map((name, idx) =>
+                    if (config.$references?.length > 0 || extensionValues) {
+                        const plugins = (config.$references ?? []).map((name, idx) =>
                             this.loadConfig(`${pluginsPath}/${name}`, idx)
                         );
 
                         Promise.all(plugins).then((results) => {
-                            const configs = results
+                            let configs = results
                                 .filter((entry) => entry)
                                 .sort(sortByOrder)
                                 .map((entry) => entry.config);
+
+                            if (extensionValues) {
+                                configs = [
+                                    ...configs,
+                                    ...extensionValues
+                                ];
+                            }
+
 
                             if (configs.length > 0) {
                                 config = mergeObjects(config, ...configs);

@@ -93,6 +93,9 @@ Displays the documents from a repository.
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 | where | `string` |  | Filters the Node list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
+| setColumnsVisibility | `{ [columnId: string]: boolean } \| undefined` |  | Sets columns visibility for DataTableSchema. |
+| setColumnsWidths | `{ [columnId: string]: number } \| undefined` |  | Sets columns width for DataTableSchema. |
+| setColumnsOrder | `string[] \| undefined` |  | Sets columns order for DataTableSchema. |
 
 ### Events
 
@@ -106,6 +109,9 @@ Displays the documents from a repository.
 | nodeSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]>` | Emitted when the node selection change |
 | preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../../core/components/viewer.component.md). |
 | ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the Document List has loaded all items and is ready for use |
+| columnsVisibilityChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<{ [columnId: string]: boolean } \| undefined>` | Emitted when columns visibility change |
+| columnsWidthChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<{ [columnId: string]: number } \| undefined>` | Emitted when columns width change |
+| columnsOrderChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`< string[] \| undefined>` | Emitted when columns order change |
 
 ## Details
 

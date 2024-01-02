@@ -43,7 +43,7 @@ describe('ExtensionService', () => {
         loader = new ExtensionLoaderService(null);
         componentRegister = new ComponentRegisterService();
         ruleService = new RuleService(loader);
-        service = new ExtensionService(loader, componentRegister, ruleService, []);
+        service = new ExtensionService(loader, componentRegister, ruleService, [], []);
     });
 
     it('should load and setup a config', async () => {
@@ -53,7 +53,7 @@ describe('ExtensionService', () => {
         await service.load();
 
         expect(loader.load).toHaveBeenCalled();
-        expect(loader.load).toHaveBeenCalledWith('assets/app.extensions.json', 'assets/plugins', []);
+        expect(loader.load).toHaveBeenCalledWith('assets/app.extensions.json', 'assets/plugins', [], []);
         expect(service.setup).toHaveBeenCalledWith(blankConfig);
     });
 

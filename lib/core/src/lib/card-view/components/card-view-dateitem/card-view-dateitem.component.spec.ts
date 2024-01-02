@@ -166,7 +166,7 @@ describe('CardViewDateItemComponent', () => {
         component.property.editable = true;
         fixture.detectChanges();
 
-        expect(component.isEditable()).toBe(false);
+        expect(component.isEditable).toBe(false);
         const datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-${component.property.key}"]`));
         const datePickerToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-${component.property.key}"]`));
         expect(datePicker).toBeNull('Datepicker should NOT be in DOM');

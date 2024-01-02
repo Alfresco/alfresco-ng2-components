@@ -1,7 +1,18 @@
-<adf-content-metadata [displayDefaultProperties]="displayDefaultProperties" [expanded]="expanded" [node]="node"
-    [preset]="preset" [displayEmpty]="displayEmpty" [editable]="editable" [multi]="multi"
-    [displayAspect]="displayAspect" [copyToClipboardAction]="copyToClipboardAction"
-    [useChipsForMultiValueProperty]="useChipsForMultiValueProperty" *ngIf="!loading; else loadingTemplate">
+<adf-content-metadata
+    [displayDefaultProperties]="displayDefaultProperties"
+    [expanded]="expanded"
+    [node]="node"
+    [preset]="preset"
+    [displayEmpty]="displayEmpty"
+    [readOnly]="!editable"
+    [multi]="multi"
+    [displayAspect]="displayAspect"
+    [copyToClipboardAction]="copyToClipboardAction"
+    [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
+    [displayTags]="false"
+    [displayCategories]="false"
+    *ngIf="!loading; else loadingTemplate"
+>
 </adf-content-metadata>
 <ng-template #loadingTemplate>
     <div class="adf-properties-viewer-wrapper-loading">

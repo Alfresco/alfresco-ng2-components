@@ -129,4 +129,52 @@ describe('ContentService', () => {
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeTruthy();
         });
     });
+
+    describe('Node Icons', () => {
+        let node: Node;
+
+        node = {
+            isFolder: true,
+            isFile: false,
+            createdByUser: { id: 'admin', displayName: 'Administrator' },
+            modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
+            nodeType: 'cm:content',
+            content: {
+                mimeType: 'application/rtf',
+                mimeTypeName: 'Rich Text Format',
+                sizeInBytes: 14530
+            },
+            createdAt: new Date('2017-05-24T15:08:55.640Z'),
+            modifiedByUser: { id: 'admin', displayName: 'Administrator' },
+            name: 'b_txt_file.rtf',
+            id: 'test node 1',
+            aspectNames: ['']
+        } as Node;
+
+        it('should resolve folder icon', () => {
+            expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_folder.svg');
+        });
+
+        it('should resolve link folder icon', () => {
+            node.nodeType = 'app:folderlink';
+            expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_folder_shortcut_link.svg');
+        });
+
+        it('should resolve smart folder icon', () => {
+            node.aspectNames = ['smf:customConfigSmartFolder'];
+            expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_smart_folder.svg');
+        });
+
+        it('should resolve file icon for content type', () => {
+            node.isFolder = false;
+            node.isFile = true;
+            expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_ms_word.svg');
+        });
+
+        it('should resolve fallback file icon for unknown node', () => {
+            node.isFolder = false;
+            node.isFile = false;
+            expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_miscellaneous');
+        });
+    });
 });

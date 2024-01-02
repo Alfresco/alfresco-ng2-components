@@ -241,10 +241,12 @@
 
                 <adf-info-drawer [title]="'Details'" *ngIf="documentList.selection[0]">
                     <adf-info-drawer-tab label="Properties">
-                        <adf-content-metadata-card
+                        <adf-content-metadata
                             [node]="documentList.selection[0].entry"
-                            [displayEmpty]="displayEmptyMetadata">
-                        </adf-content-metadata-card>
+                            [displayEmpty]="displayEmptyMetadata"
+                            [displayTags]="true"
+                            [displayCategories]="true">
+                        </adf-content-metadata>
                     </adf-info-drawer-tab>
                     <adf-info-drawer-tab label="Versions">
                         <ng-container *ngIf="hasOneFileSelected();else choose_document_template">

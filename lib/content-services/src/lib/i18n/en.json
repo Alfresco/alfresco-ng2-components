@@ -148,7 +148,7 @@
       "NO_EXISTING_TAGS": "No Existing Tags",
       "TITLE": "Create Tags",
       "CREATE_TAG": "Create: {{tag}}",
-      "NAME": "Name",
+      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
       "ERRORS": {
         "EXISTING_TAG": "Tag already exists",
         "ALREADY_ADDED_TAG": "Tag is already added",
@@ -158,8 +158,7 @@
         "CREATE_TAGS": "Error while creating the tags"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Delete tag",
-        "HIDE_INPUT": "Hide input"
+        "DELETE_TAG": "Delete tag"
       },
       "TAGS_LOADING": "Tags loading",
       "CREATE_TAGS_SUCCESS": "Tags created successfully"
@@ -169,7 +168,6 @@
     "CATEGORIES_TITLE": "Categories",
     "NO_CATEGORIES_CREATED": "No Categories created",
     "NO_CATEGORIES_ASSIGNED": "No Categories assigned",
-    "ASSIGN_CATEGORIES": "Assign Categories",
     "UNASSIGN_CATEGORY": "Unassign Category",
     "DELETE_CATEGORY": "Delete Category",
     "EXISTING_CATEGORIES": "Existing Categories:",
@@ -178,7 +176,7 @@
     "GENERIC_CREATE": "Create: {{name}}",
     "NAME": "Category name",
     "LOADING": "Loading",
-    "HIDE_INPUT": "Hide input",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
       "NOT_FOUND": "Categories not found",
       "REQUIRED": "Category name is required",
@@ -187,7 +185,8 @@
       "DUPLICATED_CATEGORY": "Category is already added",
       "CREATE_CATEGORIES": "Error while creating categories",
       "EXISTING_CATEGORIES": "Some categories already exist"
-    }
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -488,7 +487,9 @@
       "MODIFIED_DATE": "Modified Date",
       "CONTENT_TYPE": "Content Type",
       "TAGS": "Tags",
-      "ADD_TAG_TOOLTIP": "Add tag"
+      "NO_TAGS_ADDED": "There are currently no tags added",
+      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
+      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

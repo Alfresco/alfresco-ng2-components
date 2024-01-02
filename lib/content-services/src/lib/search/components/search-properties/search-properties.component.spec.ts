@@ -365,6 +365,18 @@ describe('SearchPropertiesComponent', () => {
             component.reset();
             expect(component.displayValue$.next).toHaveBeenCalledWith('');
         });
+
+        it('should clear the queryFragments for the component id and call update', () => {
+            component.context = TestBed.inject(SearchQueryBuilderService);
+            component.id = 'test-id';
+            component.context.queryFragments[component.id] = 'test-query';
+            fixture.detectChanges();
+            spyOn(component.context, 'update');
+            component.reset();
+
+            expect(component.context.queryFragments[component.id]).toBe('');
+            expect(component.context.update).toHaveBeenCalled();
+        });
     });
 
     describe('setValue', () => {
