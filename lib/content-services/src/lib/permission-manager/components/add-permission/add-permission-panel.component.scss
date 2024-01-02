@@ -7,6 +7,9 @@ $search-result-height: calc(100% - 75px);
         overflow: auto;
         border: 2px solid var(--adf-theme-foreground-text-color-007);
 
+        mat-pseudo-checkbox {
+            display: none;
+        }
         &-elements {
             width: 100%;
         }
@@ -20,10 +23,6 @@ $search-result-height: calc(100% - 75px);
         display: flex;
         flex-direction: row;
         align-items: center;
-
-        mat-pseudo-checkbox {
-            display: none;
-        }
 
         .adf-result-name {
             padding-left: 16px;
