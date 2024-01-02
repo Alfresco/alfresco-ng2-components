@@ -72,7 +72,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     mnuMoreActions: ViewerMoreActionsComponent;
 
     get CloseButtonPosition() {
-        return CloseButtonPosition; 
+        return CloseButtonPosition;
     }
 
     /**
