@@ -6,6 +6,10 @@
     &.adf-datatable {
         overflow: hidden;
 
+        .adf-datatable-row .adf-permission-role-column-header {
+            position: relative;
+        }
+
         .adf-delete-permission-column {
             min-width: 80px;
 

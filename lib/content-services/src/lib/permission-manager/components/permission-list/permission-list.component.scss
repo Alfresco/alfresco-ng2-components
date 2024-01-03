@@ -2,7 +2,7 @@
     &-permission-card {
         height: 100%;
         box-sizing: border-box;
-        display: flex !important;
+        display: flex;
         flex-direction: column;
         overflow: hidden;
     }
@@ -48,7 +48,7 @@
     }
 
     &-permission-role-column-header {
-        position: relative !important;
+        position: relative;
         height: 40px;
 
         .mat-form-field-infix {
