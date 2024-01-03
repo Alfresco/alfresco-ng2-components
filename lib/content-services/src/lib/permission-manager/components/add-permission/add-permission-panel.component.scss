@@ -7,12 +7,26 @@ $search-result-height: calc(100% - 75px);
         overflow: auto;
         border: 2px solid var(--adf-theme-foreground-text-color-007);
 
+        mat-pseudo-checkbox {
+            display: none;
+        }
+
         &-elements {
             width: 100%;
         }
 
         &-search {
             display: none;
+        }
+    }
+
+    &-list-option-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .adf-result-name {
+            padding-left: 16px;
         }
     }
 
@@ -43,22 +57,6 @@ $search-result-height: calc(100% - 75px);
                 &:hover {
                     color: var(--adf-theme-foreground-base-color);
                 }
-            }
-        }
-    }
-
-    &-list-option-item {
-        mat-pseudo-checkbox {
-            display: none;
-        }
-
-        .mat-list-text {
-            display: flex;
-            flex-direction: row !important;
-            align-items: center;
-
-            .adf-result-name {
-                padding-left: 16px !important;
             }
         }
     }
