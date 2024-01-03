@@ -1,5 +1,5 @@
 <div class="adf-property-list">
-    <div *ngFor="let property of properties">
+    <div *ngFor="let property of properties" class="adf-property-container">
         <div [attr.data-automation-id]="'header-'+property.key" class="adf-property">
             <adf-card-view-item-dispatcher
                 [property]="property"
