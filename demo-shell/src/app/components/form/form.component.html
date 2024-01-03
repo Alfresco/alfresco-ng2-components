@@ -16,14 +16,13 @@
             </div>
         </mat-tab>
         <mat-tab label="Editor">
-            <div class="app-form-config-editor">
-                <ngx-monaco-editor
-                    id="adf-form-config-editor"
-                    [options]="editorOptions"
-                    [(ngModel)]="formConfig"
-                    (onInit)="onInitFormEditor($event)">
-                </ngx-monaco-editor>
-            </div>
+            <ngx-monaco-editor
+                id="adf-form-config-editor"
+                class="adf-form-config-editor"
+                [options]="editorOptions"
+                [(ngModel)]="formConfig"
+                (onInit)="onInitFormEditor($event)">
+            </ngx-monaco-editor>
             <div class="app-form-editor-buttons">
                 <button mat-raised-button id="app-form-config-save" (click)="onSaveFormConfig()">Save form config</button>
                 <button mat-raised-button id="app-form-config-clear" (click)="onClearFormConfig()">Clear form config</button>
