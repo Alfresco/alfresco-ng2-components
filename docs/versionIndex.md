@@ -118,7 +118,7 @@ backend services have been tested with each released version of ADF.
 
 <!--v500 end-->
 
-## v5.0.0
+## v4.7.0
 
 <!--v470 start-->
 
