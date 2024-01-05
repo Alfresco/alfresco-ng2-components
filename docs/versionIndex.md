@@ -52,6 +52,14 @@ backend services have been tested with each released version of ADF.
 
 <!--v640 end-->
 
+## v6.3.0
+
+<!--v630 start-->
+
+-   [Date Time Pipe](core/pipes/date-time.pipe.md)
+
+<!--v630 end-->
+
 ## v6.2.0
 
 <!--v620 start-->
@@ -61,7 +69,6 @@ backend services have been tested with each released version of ADF.
 -   [Search Date Range Tabbed Component](content-services/components/search-date-range-tabbed.component.md)
 -   [Search Filter Tabbed Component](content-services/components/search-filter-tabbed.component.md)
 -   [Search Facet Chip Tabbed Component](content-services/components/search-facet-chip-tabbed.md)
--   [Date Time Pipe](core/pipes/date-time.pipe.md)
 
 <!--v620 end-->
 
@@ -104,6 +111,12 @@ backend services have been tested with each released version of ADF.
 -   [Task comments component](process-services/components/task-comments.component.md)
 
 <!--v510 end-->
+
+## v5.0.0
+
+<!--v500 start-->
+
+<!--v500 end-->
 
 ## v4.7.0
 
