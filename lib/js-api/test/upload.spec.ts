@@ -17,15 +17,17 @@
 
 import assert from 'assert';
 import { EcmAuthMock, UploadMock } from './mockObjects';
-import fs from 'fs';
-import { UploadApi, AlfrescoApi, NodeEntry } from '../src';
+import { createReadStream } from 'fs';
+import { join } from 'path';
+import { UploadApi, AlfrescoApi } from '../src';
 
-// eslint-disable-next-line ban/ban
-xdescribe('Upload', () => {
+describe('Upload', () => {
     let authResponseMock: EcmAuthMock;
     let uploadMock: UploadMock;
     let alfrescoJsApi: AlfrescoApi;
     let uploadApi: UploadApi;
+
+    const createTestFileStream = (fileName: string) => createReadStream(join(__dirname, 'mockObjects/assets', fileName));
 
     beforeEach(async () => {
         const hostEcm = 'https://127.0.0.1:8080';
@@ -44,25 +46,22 @@ xdescribe('Upload', () => {
     });
 
     describe('Upload File', () => {
-        it('upload file should return 200 if is all ok', (done) => {
+        it('upload file should return 200 if is all ok', async () => {
             uploadMock.get201CreationFile();
 
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
 
-            uploadApi.uploadFile(file).then((data: NodeEntry) => {
-                assert.equal(data.entry.isFile, true);
-                assert.equal(data.entry.name, 'testFile.txt');
-                done();
-            });
+            const data = await uploadApi.uploadFile(file);
+            assert.equal(data.entry.isFile, true);
+            assert.equal(data.entry.name, 'testFile.txt');
         });
 
         it('upload file should get 409 if new name clashes with an existing file in the current parent folder', (done) => {
             uploadMock.get409CreationFileNewNameClashes();
 
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
 
-            uploadApi.uploadFile(file).then(
-                () => {},
+            uploadApi.uploadFile(file).catch(
                 (error: any) => {
                     assert.equal(error.status, 409);
                     done();
@@ -70,20 +69,19 @@ xdescribe('Upload', () => {
             );
         });
 
-        it('upload file should get 200 and rename if the new name clashes with an existing file in the current parent folder and autorename is true', (done) => {
+        it('upload file should get 200 and rename if the new name clashes with an existing file in the current parent folder and autorename is true', async () => {
             uploadMock.get201CreationFileAutoRename();
 
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
 
-            uploadApi.uploadFile(file, null, null, null, { autoRename: true }).then((data: NodeEntry) => {
-                assert.equal(data.entry.isFile, true);
-                assert.equal(data.entry.name, 'testFile-2.txt');
-                done();
-            });
+            const data = await uploadApi.uploadFile(file, null, null, null, { autoRename: true });
+
+            assert.equal(data.entry.isFile, true);
+            assert.equal(data.entry.name, 'testFile-2.txt');
         });
 
         it('Abort should stop the  file file upload', (done) => {
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
 
             const promise: any = uploadApi.uploadFile(file, null, null, null, { autoRename: true });
             promise.once('abort', () => {
@@ -98,7 +96,7 @@ xdescribe('Upload', () => {
         it('Upload should fire done event at the end of an upload', (done) => {
             uploadMock.get201CreationFile();
 
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
 
             const uploadPromise: any = uploadApi.uploadFile(file);
 
@@ -111,7 +109,7 @@ xdescribe('Upload', () => {
         it('Upload should fire error event if something go wrong', (done) => {
             uploadMock.get409CreationFileNewNameClashes();
 
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
 
             const uploadPromise: any = uploadApi.uploadFile(file);
             uploadPromise.catch(() => {});
@@ -123,7 +121,7 @@ xdescribe('Upload', () => {
         it('Upload should fire unauthorized event if get 401', (done) => {
             uploadMock.get401Response();
 
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
 
             const uploadPromise: any = uploadApi.uploadFile(file);
 
@@ -136,15 +134,15 @@ xdescribe('Upload', () => {
         it('Upload should fire progress event during the upload', (done) => {
             uploadMock.get201CreationFile();
 
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
             const uploadPromise: any = uploadApi.uploadFile(file);
 
             uploadPromise.once('progress', () => done());
         });
 
         it('Multiple Upload should fire progress events on the right promise during the upload', (done) => {
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
-            const fileTwo = fs.createReadStream('./test/mockObjects/assets/testFile2.txt');
+            const file = createTestFileStream('testFile.txt');
+            const fileTwo = createTestFileStream('testFile2.txt');
 
             let progressOneOk = false;
             let progressTwoOk = false;
@@ -177,8 +175,8 @@ xdescribe('Upload', () => {
         });
 
         it('Multiple Upload should fire error events on the right promise during the upload', (done) => {
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
-            const fileTwo = fs.createReadStream('./test/mockObjects/assets/testFile2.txt');
+            const file = createTestFileStream('testFile.txt');
+            const fileTwo = createTestFileStream('testFile2.txt');
 
             let errorOneOk = false;
             let errorTwoOk = false;
@@ -213,8 +211,8 @@ xdescribe('Upload', () => {
         });
 
         it('Multiple Upload should fire success events on the right promise during the upload', (done) => {
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
-            const fileTwo = fs.createReadStream('./test/mockObjects/assets/testFile2.txt');
+            const file = createTestFileStream('testFile.txt');
+            const fileTwo = createTestFileStream('testFile2.txt');
 
             let successOneOk = false;
             let successTwoOk = false;
@@ -249,8 +247,8 @@ xdescribe('Upload', () => {
         });
 
         it('Multiple Upload should resolve the correct promise', (done) => {
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
-            const fileTwo = fs.createReadStream('./test/mockObjects/assets/testFile2.txt');
+            const file = createTestFileStream('testFile.txt');
+            const fileTwo = createTestFileStream('testFile2.txt');
 
             let resolveOneOk = false;
             let resolveTwoOk = false;
@@ -275,8 +273,8 @@ xdescribe('Upload', () => {
         });
 
         it('Multiple Upload should reject the correct promise', (done) => {
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
-            const fileTwo = fs.createReadStream('./test/mockObjects/assets/testFile2.txt');
+            const file = createTestFileStream('testFile.txt');
+            const fileTwo = createTestFileStream('testFile2.txt');
 
             let rejectOneOk = false;
             let rejectTwoOk = false;
@@ -301,7 +299,7 @@ xdescribe('Upload', () => {
         });
 
         it('Is possible use chain events', (done) => {
-            const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
+            const file = createTestFileStream('testFile.txt');
 
             uploadMock.get401Response();
 
