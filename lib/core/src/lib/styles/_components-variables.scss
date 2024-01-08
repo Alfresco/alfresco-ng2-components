@@ -88,7 +88,9 @@
         --adf-task-assignment-filter-option-default-color: mat.get-color-from-palette($foreground, text),
         --adf-task-assignment-filter-option-selected-color: mat.get-color-from-palette($primary),
         --adf-task-assignment-filter-label-default-color: mat.get-color-from-palette($foreground, secondary-text),
-        --adf-task-assignment-filter-label-focus-color: mat.get-color-from-palette($primary)
+        --adf-task-assignment-filter-label-focus-color: mat.get-color-from-palette($primary),
+
+        --adf-process-header-cloud-card-background: mat.get-color-from-palette($background, card)
     );
 
     // propagates SCSS variables into the CSS variables scope
