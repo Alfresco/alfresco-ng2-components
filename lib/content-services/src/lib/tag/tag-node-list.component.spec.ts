@@ -156,8 +156,7 @@ describe('TagNodeList', () => {
         });
     });
 
-    // eslint-disable-next-line
-    xdescribe('Limit tags display', () => {
+    describe('Limit tags display', () => {
         let initialEntries: TagEntry[];
 
         /**
