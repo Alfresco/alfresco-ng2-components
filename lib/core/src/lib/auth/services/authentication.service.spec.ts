@@ -28,8 +28,8 @@ import { CookieServiceMock } from '../../mock';
 import { AppConfigServiceMock } from '../../common';
 
 declare let jasmine: any;
-// eslint-disable-next-line
-xdescribe('AuthenticationService', () => {
+
+describe('AuthenticationService', () => {
     let authService: AuthenticationService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let appConfigService: AppConfigService;
