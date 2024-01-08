@@ -19,7 +19,6 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
@@ -34,14 +33,14 @@ xdescribe('AuthenticationService', () => {
     let cookie: CookieService;
     let oidcAuthenticationService: OidcAuthenticationService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
+
         sessionStorage.clear();
         localStorage.clear();
         authService = TestBed.inject(AuthenticationService);
