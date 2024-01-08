@@ -19,29 +19,42 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from './oidc-authentication.service';
+import { AuthModule } from '../oidc/auth.module';
+import { HttpClientModule } from '@angular/common/http';
+import { CookieServiceMock } from '../../mock';
+import { AppConfigServiceMock } from '../../common';
 
 declare let jasmine: any;
-// eslint-disable-next-line
-xdescribe('AuthenticationService', () => {
+
+describe('AuthenticationService', () => {
     let authService: AuthenticationService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let appConfigService: AppConfigService;
     let cookie: CookieService;
     let oidcAuthenticationService: OidcAuthenticationService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                AuthModule.forRoot({ useHash: true }),
+                HttpClientModule
+            ],
+            providers: [
+                {
+                    provide: CookieService,
+                    useClass: CookieServiceMock
+                },
+                {
+                    provide: AppConfigService,
+                    useClass: AppConfigServiceMock
+                }
+            ]
+        });
+
         sessionStorage.clear();
         localStorage.clear();
         authService = TestBed.inject(AuthenticationService);
