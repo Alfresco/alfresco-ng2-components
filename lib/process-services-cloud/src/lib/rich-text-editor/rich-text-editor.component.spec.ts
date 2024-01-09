@@ -20,8 +20,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { RichTextEditorComponent } from './rich-text-editor.component';
+import { take } from 'rxjs';
 
-fdescribe('RichTextEditorComponent', () => {
+describe('RichTextEditorComponent', () => {
     let component: RichTextEditorComponent;
     let fixture: ComponentFixture<RichTextEditorComponent>;
     let debugElement: DebugElement;
@@ -50,9 +51,7 @@ fdescribe('RichTextEditorComponent', () => {
         TestBed.configureTestingModule({
             declarations: [RichTextEditorComponent]
         }).compileComponents();
-    });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(RichTextEditorComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
@@ -76,36 +75,39 @@ fdescribe('RichTextEditorComponent', () => {
         expect(component.dynamicId).toContain('editorjs');
     });
 
-    it('should get editorjs data by calling getEditorContent', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-        spyOn(component.editorInstance, 'save').and.returnValue(Promise.resolve(mockEditorData) as any);
-        const savedEditorData = await component.getEditorContent();
-        expect(savedEditorData).toEqual(mockEditorData);
-    });
-// eslint-disable-next-line
-    xit('should destroy editor instance on ngOnDestroy', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const destroyEditorSpy = spyOn(component.editorInstance, 'destroy');
-        component.ngOnDestroy();
-        expect(destroyEditorSpy).toHaveBeenCalledTimes(1);
-        expect(destroyEditorSpy).toHaveBeenCalled();
-    });
-// eslint-disable-next-line
-    xit('should not destroy editor instance on ngOnDestroy if editor is not ready', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const destroyEditorSpy = spyOn(component.editorInstance, 'destroy');
-        component.isReady = false;
-        component.ngOnDestroy();
-        expect(destroyEditorSpy).not.toHaveBeenCalled();
+    describe('editorjs', () => {
+        beforeEach((done) => {
+            fixture.detectChanges();
+            component.outputData$.pipe(take(1)).subscribe(() => {
+                done();
+            });
+        });
+
+        it('should get editorjs data by calling getEditorContent', async () => {
+            spyOn(component.editorInstance, 'save').and.returnValue(Promise.resolve(mockEditorData) as any);
+            const savedEditorData = await component.getEditorContent();
+            expect(savedEditorData).toEqual(mockEditorData);
+        });
+
+        it('should destroy editor instance on ngOnDestroy', () => {
+            const destroyEditorSpy = spyOn(component.editorInstance, 'destroy');
+            component.ngOnDestroy();
+            expect(destroyEditorSpy).toHaveBeenCalledTimes(1);
+            expect(destroyEditorSpy).toHaveBeenCalled();
+        });
+
+        it('should not destroy editor instance on ngOnDestroy if editor is not ready', () => {
+            const destroyEditorSpy = spyOn(component.editorInstance, 'destroy');
+            component.isReady = false;
+            component.ngOnDestroy();
+            expect(destroyEditorSpy).not.toHaveBeenCalled();
+        });
     });
 
     it('should add readonly class if readOnly is set to true', async () => {
         component.readOnly = true;
         fixture.detectChanges();
-        await fixture.whenStable();
+
         const editorEl = debugElement.query(By.css(cssSelectors.editorJsElement));
         expect(editorEl.nativeElement.classList).toContain('readonly');
     });
@@ -113,9 +115,8 @@ fdescribe('RichTextEditorComponent', () => {
     it('should not add readonly class if readOnly is set to false', async () => {
         component.readOnly = false;
         fixture.detectChanges();
-        await fixture.whenStable();
+
         const editorEl = debugElement.query(By.css(cssSelectors.editorJsElement));
         expect(editorEl.nativeElement.classList).not.toContain('readonly');
     });
-
 });
