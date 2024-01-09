@@ -125,8 +125,8 @@ describe('TaskHeaderCloudComponent', () => {
             const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
             expect(statusEl.nativeElement.value).toBe('ASSIGNED');
         });
-        //eslint-disable-next-line
-        xit('should display priority with default values', async () => {
+
+        it('should display priority with default values', async () => {
             fixture.detectChanges();
             const dropdown = await loader.getHarness(MatSelectHarness);
             await dropdown.open();
@@ -413,23 +413,23 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
 
             await fixture.whenStable();
-            const candidateGroup1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup1"] span');
-            const candidateGroup2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup2"] span');
+            const candidateGroup1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup1"]');
+            const candidateGroup2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup2"]');
             expect(getCandidateGroupsSpy).toHaveBeenCalled();
-            expect(candidateGroup1.innerText).toBe('mockgroup1');
-            expect(candidateGroup2.innerText).toBe('mockgroup2');
+            expect(candidateGroup1.innerText).toContain('mockgroup1');
+            expect(candidateGroup2.innerText).toContain('mockgroup2');
         });
-        //eslint-disable-next-line
-        xit('should display candidate user', async () => {
+
+        it('should display candidate user', async () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
             await fixture.whenStable();
-            const candidateUser1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser1"] span');
-            const candidateUser2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser2"] span');
+            const candidateUser1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser1"]');
+            const candidateUser2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser2"]');
             expect(getCandidateUsersSpy).toHaveBeenCalled();
-            expect(candidateUser1.innerText).toBe('mockuser1');
-            expect(candidateUser2.innerText).toBe('mockuser2');
+            expect(candidateUser1.innerText).toContain('mockuser1');
+            expect(candidateUser2.innerText).toContain('mockuser2');
         });
 
         it('should display placeholder if no candidate groups', async () => {
