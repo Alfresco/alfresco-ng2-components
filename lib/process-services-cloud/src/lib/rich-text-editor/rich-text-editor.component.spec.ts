@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 
 import { RichTextEditorComponent } from './rich-text-editor.component';
 
-describe('RichTextEditorComponent', () => {
+fdescribe('RichTextEditorComponent', () => {
     let component: RichTextEditorComponent;
     let fixture: ComponentFixture<RichTextEditorComponent>;
     let debugElement: DebugElement;
@@ -75,8 +75,8 @@ describe('RichTextEditorComponent', () => {
         await fixture.whenStable();
         expect(component.dynamicId).toContain('editorjs');
     });
-// eslint-disable-next-line
-    xit('should get editorjs data by calling getEditorContent', async () => {
+
+    it('should get editorjs data by calling getEditorContent', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
         spyOn(component.editorInstance, 'save').and.returnValue(Promise.resolve(mockEditorData) as any);

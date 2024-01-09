@@ -468,8 +468,7 @@ describe('CategoriesManagementComponent', () => {
         }));
 
         describe('Errors', () => {
-            //eslint-disable-next-line
-            xit('should display validation error when searching for empty category', fakeAsync(() => {
+            it('should display validation error when searching for empty category', fakeAsync(() => {
                 typeCategory('   ');
                 component.categoryNameControl.markAsTouched();
                 fixture.detectChanges();
