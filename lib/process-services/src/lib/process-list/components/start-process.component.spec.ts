@@ -341,7 +341,7 @@ describe('StartProcessComponent', () => {
             fixture.componentInstance.inputAutocomplete.openPanel();
             fixture.detectChanges();
             await fixture.whenStable();
-            const options: any = fixture.debugElement.queryAll(By.css('.mdc-list-item__primary-textk'));
+            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
 
 
             expect(options.length).toBe(2);
