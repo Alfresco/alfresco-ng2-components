@@ -110,8 +110,8 @@ describe('DateCellComponent', () => {
         checkDisplayedDate(expectedDate);
         checkDisplayedTooltip(expectedTooltip);
     });
-    //eslint-disable-next-line
-    xit('should display date and tooltip with based on appConfig values if dateConfig is NOT provided', () => {
+
+    it('should display date and tooltip with based on appConfig values if dateConfig is NOT provided', () => {
         const mockDateConfig: DateConfig = {};
         const expectedDate = 'Oct 25, 2023';
         const expectedTooltip = 'October 25, 2023 at 12:00:00 AM GMT+0';
@@ -164,8 +164,8 @@ describe('DateCellComponent', () => {
         renderDateCell(mockDateConfig, yesterday, mockTooltip);
         checkDisplayedDate(expectedDate);
     });
-    //eslint-disable-next-line
-    xit('should display date with column format if dateConfig format is not provided', () => {
+
+    it('should display date with column format if dateConfig format is not provided', () => {
         component.column = mockColumn;
         const mockDateConfig: DateConfig = {
             tooltipFormat: 'short'
