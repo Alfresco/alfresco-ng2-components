@@ -22,7 +22,7 @@
         $value: math.div($value, 255);
 
         @if ($value < 0.0393) {
-            $value: $value / 12.92;
+            $value: math.div($value, 12.92);
         } @else {
             $value: math.div($value + 0.055, 1.055);
             $value: math.pow($value, 2.4);
