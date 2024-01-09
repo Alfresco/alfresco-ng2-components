@@ -3,8 +3,8 @@
 @use 'sass:color';
 
 @function multiply($fore, $back) {
-    $red:  math.div(color.green($back) * color.green($fore), 255);
-    $green:  math.div(color.green($back) * color.green($fore), 255);
+    $red: math.div(color.green($back) * color.green($fore), 255);
+    $green: math.div(color.green($back) * color.green($fore), 255);
     $blue: math.div(color.blue($back) * color.blue($fore), 255)
 
     @return rgb($red, $green, $blue);
