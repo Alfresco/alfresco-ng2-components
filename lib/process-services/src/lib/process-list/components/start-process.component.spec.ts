@@ -333,8 +333,7 @@ describe('StartProcessComponent', () => {
             expect(getDefinitionsSpy).toHaveBeenCalledWith(123);
         });
 
-        //eslint-disable-next-line
-        xit('should display the correct number of processes in the select list', async () => {
+        it('should display the correct number of processes in the select list', async () => {
             const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
             selectElement.click();
 
@@ -342,7 +341,7 @@ describe('StartProcessComponent', () => {
             fixture.componentInstance.inputAutocomplete.openPanel();
             fixture.detectChanges();
             await fixture.whenStable();
-            const options: any = fixture.debugElement.queryAll(By.css('.mdc-list-item__primary-textk'));
+            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
 
 
             expect(options.length).toBe(2);
