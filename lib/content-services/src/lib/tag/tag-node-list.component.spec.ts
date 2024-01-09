@@ -95,6 +95,10 @@ describe('TagNodeList', () => {
         resizeCallback = resizeObserverSpy.calls.mostRecent().args[0];
     });
 
+    afterEach(() => {
+        component.ngOnDestroy();
+    });
+
     describe('Rendering tests', () => {
 
         it('Tag list relative a single node should be rendered', async () => {
@@ -294,6 +298,7 @@ describe('TagNodeList', () => {
             fixture.detectChanges();
             expect(viewMoreButton.hidden).toBeTrue();
             expect(findTagChips()).toHaveSize(4);
+
         });
     });
 });
