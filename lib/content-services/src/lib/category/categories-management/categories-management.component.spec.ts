@@ -19,7 +19,7 @@ import { Category, CategoryPaging, ResultNode, ResultSetPaging } from '@alfresco
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
-import { MatList } from '@angular/material/list';
+import { MatSelectionList } from '@angular/material/list';
 import { By } from '@angular/platform-browser';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -29,6 +29,7 @@ import { CategoriesManagementComponent } from './categories-management.component
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatListOptionHarness } from '@angular/material/list/testing';
 
 describe('CategoriesManagementComponent', () => {
     let loader: HarnessLoader;
@@ -90,8 +91,8 @@ describe('CategoriesManagementComponent', () => {
      *
      * @returns list of material option element
      */
-    function getExistingCategoriesList(): HTMLElement[] {
-        return fixture.debugElement.queryAll(By.css('.adf-category'))?.map((debugElem) => debugElem.nativeElement);
+    function getExistingCategoriesList(): Promise<MatListOptionHarness[]> {
+        return loader.getAllHarnesses(MatListOptionHarness);
     }
 
     /**
@@ -158,7 +159,7 @@ describe('CategoriesManagementComponent', () => {
      * @returns native element
      */
     function getCreateCategoryLabel(): HTMLSpanElement {
-        return fixture.debugElement.query(By.css('.adf-create-category-label'))?.nativeElement;
+        return fixture.debugElement.query(By.css('.adf-existing-categories-panel span.adf-create-category-label'))?.nativeElement;
     }
 
     /**
@@ -303,8 +304,8 @@ describe('CategoriesManagementComponent', () => {
         it('should have no required validator set for category control', () => {
             expect(component.categoryNameControl.hasValidator(Validators.required)).toBeFalse();
         });
-        //eslint-disable-next-line
-        xit('should display validation error when searching for empty category', fakeAsync(() => {
+
+        it('should display validation error when searching for empty category', fakeAsync(() => {
             typeCategory('   ');
 
             expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.EMPTY_CATEGORY');
@@ -319,11 +320,12 @@ describe('CategoriesManagementComponent', () => {
             expect(component.categoryNameControlVisible).toBeFalse();
             expect(component.categories).toEqual([]);
         });
-        // eslint-disable-next-line
-        xit('should not display create category label', fakeAsync(() => {
+
+        it('should not display create category label', fakeAsync(async () => {
             typeCategory('test');
             fixture.detectChanges();
             expect(getCreateCategoryLabel()).toBeUndefined();
+
         }));
 
         it('should not disable existing categories', fakeAsync(() => {
@@ -332,12 +334,11 @@ describe('CategoriesManagementComponent', () => {
             expect(getSelectionList().disabled).toBeFalse();
         }));
         // eslint-disable-next-line
-        xit('should add selected category to categories list and remove from existing categories', fakeAsync(() => {
+        it('should add selected category to categories list and remove from existing categories', fakeAsync(async () => {
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
             typeCategory('test');
-            // const options = getExistingCategoriesList();
-            // eslint-disable-next-line no-underscore-dangle
-            options[0].click();
+            const options = await getExistingCategoriesList();
+            await options[0].select();
 
             expect(component.categories.length).toBe(3);
             expect(component.categories[2].name).toBe('testCat');
@@ -346,13 +347,12 @@ describe('CategoriesManagementComponent', () => {
             discardPeriodicTasks();
             flush();
         }));
-        // eslint-disable-next-line
-        xit('should remove selected category from categories list and add it back to existing categories', fakeAsync(() => {
+
+        it('should remove selected category from categories list and add it back to existing categories', fakeAsync(async () => {
             typeCategory('test');
-            // const options = getExistingCategoriesList();
-            // eslint-disable-next-line no-underscore-dangle
-            options[0].click();
-            fixture.detectChanges();
+
+            const options = await getExistingCategoriesList();
+            await options[0].select();
 
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
             const removeCategoryButtons = getRemoveCategoryButtons();
@@ -454,9 +454,9 @@ describe('CategoriesManagementComponent', () => {
             expect(categoriesChangeSpy).toHaveBeenCalledOnceWith(component.categories);
         }));
 
-        it('should clear input after category is created', fakeAsync(() => {
+        it('should clear input after category is created', fakeAsync(async () => {
             createCategory('test');
-            expect(getExistingCategoriesList()).toEqual([]);
+            expect(await getExistingCategoriesList()).toEqual([]);
             expect(component.categoryNameControl.value).toBe('');
             expect(component.categoryNameControl.untouched).toBeTrue();
         }));
@@ -475,8 +475,7 @@ describe('CategoriesManagementComponent', () => {
         }));
 
         describe('Errors', () => {
-            //eslint-disable-next-line
-            xit('should display validation error when searching for empty category', fakeAsync(() => {
+            it('should display validation error when searching for empty category', fakeAsync(() => {
                 typeCategory('   ');
                 component.categoryNameControl.markAsTouched();
                 fixture.detectChanges();
