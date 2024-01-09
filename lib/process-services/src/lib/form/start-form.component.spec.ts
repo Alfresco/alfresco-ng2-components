@@ -358,8 +358,8 @@ describe('StartFormComponent', () => {
             expect(tabField2.name).toBe('Tab 2');
             expect(tabsWidgetElement).toBeTruthy();
         });
-        // eslint-disable-next-line
-        xit('should define title and [custom-action-buttons]', async () => {
+
+        it('should define title and [custom-action-buttons]', async () => {
             getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
@@ -370,7 +370,7 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const titleElement = fixture.debugElement.nativeElement.querySelector('mat-mdc-card-title>h2');
+            const titleElement = fixture.debugElement.nativeElement.querySelector('.mdl-card__title-text');
             const actionButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-mdc-button');
 
             expect(titleElement.innerText.trim()).toEqual('Mock Title');

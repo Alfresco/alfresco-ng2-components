@@ -131,8 +131,8 @@ describe('GroupCloudWidgetComponent', () => {
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
     });
-//eslint-disable-next-line
-    xdescribe('when is readOnly', () => {
+
+    describe('when is readOnly', () => {
 
         const readOnly = true;
 
