@@ -373,8 +373,8 @@ describe('StartFormComponent', () => {
             expect(tabField2.name).toBe('Tab 2');
             expect(tabsWidgetElement).toBeTruthy();
         });
-        // eslint-disable-next-line
-        xit('should define title and [custom-action-buttons]', async () => {
+
+        it('should define title and [custom-action-buttons]', async () => {
             getStartFormSpy.and.returnValue(of(startMockFormWithTab));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
