@@ -182,8 +182,8 @@ describe('PeopleCloudWidgetComponent', () => {
             expect(element.querySelector('.adf-error-text').textContent).toContain('ADF_CLOUD_USERS.ERROR.NOT_FOUND');
         });
     });
-//eslint-disable-next-line
-    xdescribe('when is readOnly', () => {
+
+    describe('when is readOnly', () => {
 
         const readOnly = true;
 
