@@ -63,7 +63,7 @@ export class DataColumnComponent implements OnInit {
 
     /** Enable resize for column */
     @Input()
-    resizable: boolean = true;
+    resizable = true;
 
     /** Hide column */
     @Input()

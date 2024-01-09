@@ -1697,8 +1697,7 @@ describe('Column Resizing', () => {
     const getResizeHandlersCount = (): number => {
         const resizeHandlers = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable__resize-handle');
         return resizeHandlers.length;
-    }
-
+    };
 
     const testClassesAfterResizing = (headerColumnsSelector = '.adf-datatable-cell-header', excludedClass = 'adf-datatable__cursor--pointer') => {
         dataTable.isResizingEnabled = true;
