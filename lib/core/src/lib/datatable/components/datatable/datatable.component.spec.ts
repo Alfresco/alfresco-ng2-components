@@ -1694,6 +1694,11 @@ describe('Column Resizing', () => {
 
     const getResizeHandler = (): HTMLDivElement => fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
 
+    const getResizeHandlersCount = (): number => {
+        const resizeHandlers = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable__resize-handle');
+        return resizeHandlers.length;
+    }
+
 
     const testClassesAfterResizing = (headerColumnsSelector = '.adf-datatable-cell-header', excludedClass = 'adf-datatable__cursor--pointer') => {
         dataTable.isResizingEnabled = true;
@@ -1742,6 +1747,22 @@ describe('Column Resizing', () => {
         headerColumns.forEach((header: HTMLElement) => {
             expect(header.classList).toContain('adf-datatable__cursor--pointer');
         });
+    });
+
+    it('should display resize handle for each column by default', () => {
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        expect(getResizeHandlersCount()).toBe(2);
+    });
+
+    it('should NOT display resize handle for the column when the column has resizable param set to false', () => {
+        dataTable.isResizingEnabled = true;
+        dataTableSchema[0].resizable = false;
+        dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
+        fixture.detectChanges();
+
+        expect(getResizeHandlersCount()).toBe(1);
     });
 
     it('should display resize handle when the feature is Enabled [isResizingEnabled=true]', () => {

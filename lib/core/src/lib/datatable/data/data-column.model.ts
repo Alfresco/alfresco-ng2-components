@@ -37,6 +37,7 @@ export interface DataColumn<T = unknown> {
     sortingKey?: string;
     header?: TemplateRef<any>;
     draggable?: boolean;
+    resizable?: boolean;
     isHidden?: boolean;
     width?: number;
     customData?: T;

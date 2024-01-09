@@ -61,6 +61,10 @@ export class DataColumnComponent implements OnInit {
     @Input()
     draggable: boolean = false;
 
+    /** Enable resize for column */
+    @Input()
+    resizable: boolean = true;
+
     /** Hide column */
     @Input()
     isHidden: boolean = false;

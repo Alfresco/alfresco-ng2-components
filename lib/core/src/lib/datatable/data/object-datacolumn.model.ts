@@ -35,6 +35,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     sortingKey?: string;
     header?: TemplateRef<any>;
     draggable: boolean;
+    resizable: boolean;
     isHidden: boolean;
     customData?: T;
     width?: number;
@@ -58,6 +59,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.sortingKey = input.sortingKey;
         this.header = input.header;
         this.draggable = input.draggable ?? false;
+        this.resizable = input.resizable ?? true;
         this.isHidden = input.isHidden ?? false;
         this.customData = input.customData;
         this.width = input.width;

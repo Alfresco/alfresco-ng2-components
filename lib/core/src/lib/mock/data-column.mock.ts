@@ -36,6 +36,7 @@ export const getDataColumnMock = <T = unknown>(
     sortingKey: 'sortingKey',
     header: undefined,
     draggable: false,
+    resizable: true,
     isHidden: false,
     customData: undefined,
     ...column

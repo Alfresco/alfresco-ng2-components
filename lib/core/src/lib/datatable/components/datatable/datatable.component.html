@@ -96,7 +96,7 @@
                     </span>
                 </div>
                 <div
-                    *ngIf="isResizingEnabled"
+                    *ngIf="isResizingEnabled && col.resizable"
                     adf-resize-handle
                     class="adf-datatable__resize-handle"
                     [resizableContainer]="resizableElement">
