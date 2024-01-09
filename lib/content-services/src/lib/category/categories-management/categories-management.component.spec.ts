@@ -159,7 +159,7 @@ describe('CategoriesManagementComponent', () => {
      *
      * @returns native element
      */
-    function getCreateCategoryLabel(): HTMLLabelElement {
+    function getCreateCategoryLabel(): HTMLSpanElement {
         return fixture.debugElement.query(By.css('.adf-existing-categories-panel span.adf-create-category-label'))?.nativeElement;
     }
 
