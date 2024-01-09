@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { RichTextEditorComponent } from './rich-text-editor.component';
+import { take } from 'rxjs';
 
 describe('RichTextEditorComponent', () => {
     let component: RichTextEditorComponent;
@@ -56,9 +57,7 @@ describe('RichTextEditorComponent', () => {
         await TestBed.configureTestingModule({
             declarations: [RichTextEditorComponent]
         }).compileComponents();
-    });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(RichTextEditorComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
