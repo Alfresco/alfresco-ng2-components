@@ -156,12 +156,12 @@ adf-cli docker --target "link" --dockerRepo "${docker_repository}"  --dockerTags
 The following command is in charge of Initializing the activiti cloud env with the default apps:
 
 ```bash
-adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devopsusername" --devopsPassword "devopspassword"
+adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devopsusername" --devopsPassword "devopspassword" --appsRepository "repository with default apps name"
 ```
 
 You can also specify the environment ids of the envs where to deploy the app adding the `--envs` option:
 ```bash
-adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devopsusername" --devopsPassword "devopspassword" --envs envId1 envId2
+adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devopsusername" --devopsPassword "devopspassword" --envs envId1 envId2 --appsRepository "repository with default apps name"
 ```
 
 If you want to add a new app the schema needs to be:

@@ -18,11 +18,12 @@
  */
 
 import program from 'commander';
-import fetch from 'node-fetch';
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
+import { GitHubRepoUtils } from './github-folder-downloader';
+
 const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
 
 let alfrescoJsApiModeler: AlfrescoApi;
@@ -42,6 +43,9 @@ export interface ConfigArgs {
     host: string;
     tag: string;
     envs: string[];
+    ghToken: string;
+    branch: string;
+    appsRepository: string;
 }
 
 export const AAE_MICROSERVICES = ['deployment-service', 'modeling-service', 'dmn-service'];
@@ -94,7 +98,7 @@ async function healthCheck(nameService: string) {
  */
 async function getApplications(): Promise<{ list: { entries: any[] } }> {
     const url = `${args.host}/deployment-service/v1/applications`;
-
+    logger.info(url)
     const pathParams = {};
     const queryParams = {};
     const headerParams = {};
@@ -105,8 +109,7 @@ async function getApplications(): Promise<{ list: { entries: any[] } }> {
 
     try {
         await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword);
-
-        const result = alfrescoJsApiDevops.oauth2Auth.callCustomApi(
+        const result = await alfrescoJsApiDevops.oauth2Auth.callCustomApi(
             url,
             'GET',
             pathParams,
@@ -117,12 +120,10 @@ async function getApplications(): Promise<{ list: { entries: any[] } }> {
             contentTypes,
             accepts
         );
-        result.on('error', (error) => {
-            logger.error(`Get application by status ${error} `);
-        });
+        // logger.info(result)
         return result;
     } catch (error) {
-        logger.error(`Get application by status ${error.status} `);
+        logger.error(`Get application by status ${JSON.stringify(error)} `);
         isValid = false;
         return null;
     }
@@ -312,7 +313,6 @@ function deleteProject(projectId: string) {
  */
 async function importAndReleaseProject(absoluteFilePath: string) {
     const fileContent = fs.createReadStream(absoluteFilePath);
-
     try {
         const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(
             `${args.host}/modeling-service/v1/projects/import`,
@@ -340,7 +340,7 @@ async function importAndReleaseProject(absoluteFilePath: string) {
             ['application/json']
         );
     } catch (error) {
-        logger.error(`Not able to import the project/create the release ${absoluteFilePath} with status: ${error}`);
+        logger.error(`Not able to import the project/create the release with status: ${JSON.stringify(error)}`);
         isValid = false;
         throw error;
     }
@@ -464,7 +464,7 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs): AlfrescoApi {
  * @param tag tag
  * @param envs environments
  */
-async function deployMissingApps(tag?: string, envs?: string[]) {
+async function deployMissingApps(envs: any) {
     const deployedApps = await getApplications();
     const failingApps = findFailingApps(deployedApps.list.entries);
     const missingApps = findMissingApps(deployedApps.list.entries);
@@ -479,7 +479,7 @@ async function deployMissingApps(tag?: string, envs?: string[]) {
         exit(1);
     } else if (missingApps.length > 0) {
         logger.warn(`Missing apps: ${JSON.stringify(missingApps)}`);
-        await checkIfAppIsReleased(missingApps, tag, envs);
+        await checkIfAppIsReleased(missingApps, envs);
     } else {
         const reset = '\x1b[0m';
         const green = '\x1b[32m';
@@ -494,22 +494,25 @@ async function deployMissingApps(tag?: string, envs?: string[]) {
  * @param tag tag
  * @param envs environments
  */
-async function checkIfAppIsReleased(missingApps: any[], tag?: string, envs?: string[]) {
+async function checkIfAppIsReleased(missingApps: any[], envs: any) {
     const projectList = await getProjects();
+
     let TIME = 5000;
     let noError = true;
+
+    const gitHubRepoUtils = new GitHubRepoUtils(envs.ghToken, envs.appsRepository);
+    await gitHubRepoUtils.downloadRepoAndUnpackRepository('HylandSoftware', envs.branch);
 
     for (let i = 0; i < missingApps.length; i++) {
         noError = true;
         const currentAbsentApp = missingApps[i];
         const project = projectList.list.entries.find((currentApp: any) => currentAbsentApp.name === currentApp.entry.name);
         let projectRelease: any;
-
         if (project === undefined) {
             logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
 
             try {
-                projectRelease = await importProjectAndRelease(currentAbsentApp, tag);
+                projectRelease = await importProjectAndRelease(currentAbsentApp, gitHubRepoUtils);
             } catch (error) {
                 logger.info(`error status ${error.status}`);
 
@@ -530,7 +533,7 @@ async function checkIfAppIsReleased(missingApps: any[], tag?: string, envs?: str
 
             if (projectReleaseList.list.entries.length === 0) {
                 logger.warn('Project needs release');
-                projectRelease = await releaseProject(project);
+                projectRelease = await releaseProject(project.entry.id);
                 logger.warn(`Project released: ${projectRelease.id}`);
             } else {
                 logger.info('Project already has release');
@@ -558,6 +561,7 @@ async function checkIfAppIsReleased(missingApps: any[], tag?: string, envs?: str
                 await deployWithPayload(currentAbsentApp, projectRelease);
             }
         }
+
     }
 }
 
@@ -611,16 +615,11 @@ async function checkDescriptorExist(name: string): Promise<boolean> {
  * @param app application
  * @param tag tag
  */
-async function importProjectAndRelease(app: any, tag?: string) {
-    const appLocationReplaced = app.file_location(tag);
+async function importProjectAndRelease(app: any, gitHubRepoUtils: GitHubRepoUtils) {
+    const pathToApp = await gitHubRepoUtils.zipNeededApplication(app.name)
 
-    logger.warn('App fileLocation ' + appLocationReplaced);
-    await getFileFromRemote(appLocationReplaced, app.name);
-
+    const projectRelease = await importAndReleaseProject(pathToApp)
     logger.warn('Project imported ' + app.name);
-    const projectRelease = await importAndReleaseProject(`${app.name}.zip`);
-
-    await deleteLocalFile(`${app.name}`);
     return projectRelease;
 }
 
@@ -667,48 +666,6 @@ function findFailingApps(deployedApps: any[]): any[] {
 }
 
 /**
- * Get file from the remote
- *
- * @param url url to file
- * @param name name
- */
-async function getFileFromRemote(url: string, name: string): Promise<void> {
-    return fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response;
-        })
-        .then((response) => new Promise<void>((resolve, reject) => {
-            const outputFile = fs.createWriteStream(`${name}.zip`);
-            response.body.pipe(outputFile);
-            outputFile.on('finish', () => {
-                logger.info(`The file is finished downloading.`);
-                resolve();
-            });
-            outputFile.on('error', (error) => {
-                logger.error(`Not possible to download the project form remote`);
-                reject(error);
-            });
-        }))
-        .catch((error) => {
-            logger.error(`Failed to fetch file from remote: ${error.message}`);
-            throw error;
-        });
-}
-
-/**
- * Deletes local file
- *
- * @param name file name
- */
-async function deleteLocalFile(name: string) {
-    logger.info(`Deleting local file ${name}.zip`);
-    fs.unlinkSync(`${name}.zip`);
-}
-
-/**
  * Perform a timeout
  *
  * @param time delay in milliseconds
@@ -728,7 +685,7 @@ export default async function main() {
         .version('0.1.0')
         .description(
             'The following command is in charge of Initializing the activiti cloud env with the default apps' +
-                'adf-cli init-aae-env --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"'
+            'adf-cli init-aae-env --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword" --appsRepository "repositoryName"'
         )
         .option('-h, --host [type]', 'Host gateway')
         .option('--oauth [type]', 'SSO host')
@@ -742,6 +699,9 @@ export default async function main() {
         .option('--devopsPassword [type]', 'devops password')
         .option('--tag [type]', 'tag name of the codebase')
         .option('--envs [type...]', 'environment ids of the envs where to deploy the app')
+        .option('--ghToken [type]', 'GitHub token to retrieve the private repo')
+        .option('--branch [type]', 'target branch of GitHub repository with the default apps. Default main')
+        .option('--appsRepository [type]', 'GitHub repository with the apps')
         .parse(argv);
 
     if (argv.includes('-h') || argv.includes('--help')) {
@@ -763,7 +723,10 @@ export default async function main() {
         scope: options.scope,
         secret: options.secret,
         tag: options.tag,
-        envs: options.envs
+        envs: options.envs,
+        ghToken: options.ghToken,
+        branch: options.branch,
+        appsRepository: options.appsRepository
     };
 
     alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
@@ -799,9 +762,16 @@ export default async function main() {
             }
         );
 
-        await deployMissingApps(args.tag, args.envs);
+        await deployMissingApps(args);
+
+        const pathToRepositoryWithApps = `${process.cwd()}/${args.appsRepository}`;
+        if (fs.existsSync(pathToRepositoryWithApps)) {
+            fs.rmSync(pathToRepositoryWithApps, { force: true, recursive: true });
+        }
     } else {
         logger.error('The environment is not up');
         exit(1);
     }
 }
+
+main()
