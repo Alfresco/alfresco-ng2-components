@@ -23,6 +23,7 @@ import { argv, exit } from 'node:process';
 import * as shell from 'shelljs';
 import * as path from 'path';
 import program from 'commander';
+import { logger } from './logger';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
 
@@ -116,7 +117,15 @@ function getCommits(options: DiffOptions): Array<Commit> {
 
     return log
         .split('\\n')
-        .map((str: string) => JSON.parse(str) as Commit)
+        .map((str: string) => {
+            try {
+                return JSON.parse(str) as Commit;
+            } catch (error) {
+                logger.error(`Unparsable commit message: ${str}, dropping it... Please apply manual fix.`);
+                return null;
+            }
+        })
+        .filter((commit) => commit !== null)
         .filter((commit: Commit) => commitAuthorAllowed(commit, authorFilter));
 }
 
