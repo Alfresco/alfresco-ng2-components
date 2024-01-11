@@ -147,6 +147,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE',
                     value: this.taskDetails.assignee,
                     key: 'assignee',
+                    editable: this.isTaskEditable(),
                     clickable: this.isAssigneePropertyClickable(),
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT'),
                     icon: 'create'
@@ -279,9 +280,11 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
      */
     refreshData() {
         if (this.taskDetails) {
+
             const defaultProperties = this.initDefaultProperties();
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
+            console.log(this.properties);
         }
     }
 
