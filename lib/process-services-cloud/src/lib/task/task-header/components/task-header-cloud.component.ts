@@ -280,11 +280,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
      */
     refreshData() {
         if (this.taskDetails) {
-
             const defaultProperties = this.initDefaultProperties();
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
-            console.log(this.properties);
         }
     }
 
