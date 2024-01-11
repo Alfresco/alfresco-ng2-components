@@ -114,7 +114,7 @@
                 [(ngModel)]="editedValue"
                 (blur)="update()"
                 (keydown.enter)="update()"
-                [disabled]="!isEditable"
+                [disabled]="!editable"
                 [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <button mat-icon-button
                 matSuffix
