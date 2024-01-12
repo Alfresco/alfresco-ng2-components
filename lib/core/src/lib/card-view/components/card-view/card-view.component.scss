@@ -65,6 +65,10 @@
                 display: flex;
                 flex-direction: column;
                 height: 20px;
+
+                &.mat-form-field-empty {
+                    transform: translateY(-1.3437em) scale(1);
+                }
             }
 
             .mat-form-field-label-wrapper {
