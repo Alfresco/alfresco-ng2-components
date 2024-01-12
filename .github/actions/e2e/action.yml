@@ -184,7 +184,7 @@ runs:
     - name: upload artifacts on gh
       id: upload_gh
       if: ${{ steps.determine-affected.outputs.isAffected == 'true' }}
-      uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+      uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
       with:
         name: e2e-artifact-output
         path: /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/e2e-output-*
