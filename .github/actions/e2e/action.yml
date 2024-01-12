@@ -177,7 +177,7 @@ runs:
       if: ${{ steps.determine-affected.outputs.isAffected == 'true' && github.event_name == 'schedule' && failure() }}
       uses: ./.github/actions/artifact-append
       with:
-        artifact-name: global-e2e-result
+        artifact-name: "global-e2e-result-${{ inputs.e2e-test-id }}"
         file-name: e2e-failures.txt
         content: "${{ inputs.e2e-test-id }}"
 
