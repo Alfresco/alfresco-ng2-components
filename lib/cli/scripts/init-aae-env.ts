@@ -98,7 +98,6 @@ async function healthCheck(nameService: string) {
  */
 async function getApplications(): Promise<{ list: { entries: any[] } }> {
     const url = `${args.host}/deployment-service/v1/applications`;
-    logger.info(url)
     const pathParams = {};
     const queryParams = {};
     const headerParams = {};
@@ -501,7 +500,7 @@ async function checkIfAppIsReleased(missingApps: any[], envs: any) {
     let noError = true;
 
     const gitHubRepoUtils = new GitHubRepoUtils(envs.ghToken, envs.appsRepository);
-    await gitHubRepoUtils.downloadRepoAndUnpackRepository('HylandSoftware', envs.branch);
+    await gitHubRepoUtils.downloadAndUnpackRepository('HylandSoftware', envs.branch);
 
     for (let i = 0; i < missingApps.length; i++) {
         noError = true;

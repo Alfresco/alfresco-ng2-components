@@ -6,14 +6,14 @@ export class GitHubRepoUtils {
     private baseURL = 'https://api.github.com';
     private token: string;
     private repo: string;
-    private subFolderName: string;
+    private subfolderName: string;
 
     constructor(token: string, repo: string) {
         this.token = token;
         this.repo = repo;
     }
 
-    async downloadRepoAndUnpackRepository(owner: string, branch = 'main'): Promise<void> {
+    async downloadAndUnpackRepository(owner: string, branch = 'main'): Promise<void> {
         const url = `${this.baseURL}/repos/${owner}/${this.repo}/zipball/${branch}`;
         const headers = {
             Authorization: `token ${this.token}`,
@@ -26,10 +26,10 @@ export class GitHubRepoUtils {
                 responseType: 'arraybuffer',
                 headers,
             });
-            const repoZipped = new AdmZip(response.data);
-            this.subFolderName = (repoZipped.getEntries().find(entry => entry.entryName.includes(owner))).entryName;
+            const zippedRepo = new AdmZip(response.data);
+            this.subfolderName = (zippedRepo.getEntries().find(entry => entry.entryName.includes(owner))).entryName;
 
-            new AdmZip(response.data).extractAllTo(this.repo, /** overwrite **/ true);
+            new AdmZip(response.data).extractAllTo(this.repo, true);
 
         } catch (error) {
             throw new Error(`Failed to download repository: ${error}`);
@@ -40,12 +40,12 @@ export class GitHubRepoUtils {
         const pathToZip = path.resolve(`${process.cwd()}/${this.repo}`, `${appName}.zip`);
         try {
             const zip = new AdmZip();
-            zip.addLocalFolder(`${process.cwd()}/${this.repo}/${this.subFolderName}${appName}`);
+            zip.addLocalFolder(`${process.cwd()}/${this.repo}/${this.subfolderName}${appName}`);
             await zip.writeZipPromise(pathToZip);
+            return pathToZip;
         } catch (e) {
-            console.log(`Error during zipping app ${e}`)
+            throw Error(`Error during zipping app ${e}`)
         }
-        return pathToZip;
     }
 
 }
