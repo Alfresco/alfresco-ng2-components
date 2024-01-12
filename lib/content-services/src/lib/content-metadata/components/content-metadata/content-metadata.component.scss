@@ -7,6 +7,16 @@ $panel-properties-height: 56px !default;
             border: 1px solid var(--adf-metadata-property-panel-border-color);
             border-radius: 12px;
             margin: 12px;
+
+            .adf-property-list .adf-property .adf-property-field {
+                .mat-input-element {
+                    margin-top: 20px;
+                }
+
+                .mat-form-field-label {
+                    transform: translateY(-1.3437em) scale(1);
+                }
+            }
         }
 
         mat-expansion-panel-header {
