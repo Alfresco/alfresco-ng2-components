@@ -684,7 +684,7 @@ export default async function main() {
         .version('0.1.0')
         .description(
             'The following command is in charge of Initializing the activiti cloud env with the default apps' +
-            'adf-cli init-aae-env --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword" --appsRepository "repositoryName"'
+            'adf-cli init-aae-env --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword" --ghToken "GitHub Token" --appsRepository "repositoryName"'
         )
         .option('-h, --host [type]', 'Host gateway')
         .option('--oauth [type]', 'SSO host')
