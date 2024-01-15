@@ -490,7 +490,7 @@ jobs:
         if: ${{ github.event_name == 'schedule' }}
         uses: ./.github/actions/artifact-extract
         with:
-          artifact-name: global-e2e-result
+          artifact-name: "global-e2e-result-${{ matrix.e2e-test.test-id }}"
           file-name: e2e-failures.txt
       - name: identify-slack-group
         id: groups
