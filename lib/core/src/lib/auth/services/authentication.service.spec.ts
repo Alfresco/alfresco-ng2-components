@@ -70,6 +70,7 @@ describe('AuthenticationService', () => {
         });
 
        it('should emit login event for kerberos', (done) => {
+            spyOn(basicAlfrescoAuthService, 'requireAlfTicket').and.returnValue(Promise.resolve());
             const disposableLogin = authService.onLogin.subscribe(() => {
                 disposableLogin.unsubscribe();
                 done();
