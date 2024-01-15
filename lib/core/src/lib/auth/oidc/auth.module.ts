@@ -27,7 +27,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
-import { OidcAuthGuard } from './oidc-auth.guard';
 
 /**
  * Create a Login Factory function
@@ -61,8 +60,7 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
             useFactory: loginFactory,
             deps: [OAuthService, OAuthStorage, AUTH_CONFIG],
             multi: true
-        },
-        OidcAuthGuard
+        }
     ]
 })
 export class AuthModule {

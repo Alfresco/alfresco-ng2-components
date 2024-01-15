@@ -20,7 +20,9 @@ import { CanActivate, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class OidcAuthGuard implements CanActivate {
   constructor(private auth: AuthService) {}
 
