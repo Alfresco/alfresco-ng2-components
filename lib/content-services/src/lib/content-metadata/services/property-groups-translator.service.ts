@@ -187,7 +187,7 @@ export class PropertyGroupTranslatorService {
 
     private checkECMTypeValidity(ecmPropertyType: string) {
         if (RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
-            this.notificationService.showError(`Unknown type for mapping: ${ecmPropertyType}`);
+            this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
         }
     }
 
