@@ -18,13 +18,14 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { VersionListComponent } from './version-list.component';
+import { VersionListComponent, VersionListDataSource } from './version-list.component';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { Node, VersionPaging, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
+import { Node, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentVersionService } from './content-version.service';
+import { take } from 'rxjs/operators';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -56,14 +57,16 @@ describe('VersionListComponent', () => {
 
         component = fixture.componentInstance;
         component.node = { id: nodeId, allowableOperations: ['update'] } as Node;
+        component.isLoading = false;
 
         spyOn(component, 'downloadContent').and.stub();
         spyOn(component.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node({ id: 'nodeInfoId' }) })));
+        spyOn(VersionListDataSource.prototype, 'getNextBatch').and.callFake(() => of(versionTest));
+        spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
     });
 
     it('should raise confirmation dialog on delete', () => {
         fixture.detectChanges();
-        component.versions = versionTest;
 
         spyOn(dialog, 'open').and.returnValue({
             afterClosed: () => of(false)
@@ -74,15 +77,13 @@ describe('VersionListComponent', () => {
         expect(dialog.open).toHaveBeenCalled();
     });
 
-    it('should delete the version if user confirms', () => {
-        fixture.detectChanges();
-        component.versions = versionTest;
+    it('should delete the version if user confirms', async () => {
         spyOn(dialog, 'open').and.returnValue({
             afterClosed: () => of(true)
         } as any);
-
         spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
 
+        fixture.detectChanges();
         component.deleteVersion(versionId);
 
         expect(dialog.open).toHaveBeenCalled();
@@ -90,14 +91,12 @@ describe('VersionListComponent', () => {
     });
 
     it('should not delete version if user rejects', () => {
-        component.versions = versionTest;
-
         spyOn(dialog, 'open').and.returnValue({
             afterClosed: () => of(false)
         } as any);
 
         spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
-
+        fixture.detectChanges();
         component.deleteVersion(versionId);
 
         expect(dialog.open).toHaveBeenCalled();
@@ -115,40 +114,35 @@ describe('VersionListComponent', () => {
     });
 
     describe('Version history fetching', () => {
-        it('should use loading bar', () => {
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
+        it('should use loading bar', (done) => {
+            fixture.detectChanges();
 
             let loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
             expect(loadingProgressBar).toBeNull();
 
-            component.ngOnChanges();
-            fixture.detectChanges();
+            component.versionsDataSource.isLoading.pipe(take(1)).subscribe(() => {
+                fixture.detectChanges();
+                loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
+                expect(loadingProgressBar).not.toBeNull();
+                done();
+            });
 
-            loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
-            expect(loadingProgressBar).not.toBeNull();
+            component.ngOnChanges();
         });
 
         it('should load the versions for a given id', () => {
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
+            fixture.detectChanges();
+            spyOn(component.versionsDataSource, 'reset');
 
             component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(component.versionsApi.listVersionHistory).toHaveBeenCalledWith(nodeId);
+            expect(component.versionsDataSource.reset).toHaveBeenCalled();
+            expect(component.versionsDataSource.getNextBatch).toHaveBeenCalled();
         });
 
         it('should show the versions after loading', (done) => {
             fixture.detectChanges();
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
-                Promise.resolve(
-                    new VersionPaging({
-                        list: {
-                            entries: [versionTest[0]]
-                        }
-                    })
-                )
-            );
-
             component.ngOnChanges();
 
             fixture.whenStable().then(() => {
@@ -165,16 +159,6 @@ describe('VersionListComponent', () => {
         });
 
         it('should NOT show the versions comments if input property is set not to show them', (done) => {
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
-                Promise.resolve(
-                    new VersionPaging({
-                        list: {
-                            entries: [versionTest[0]]
-                        }
-                    })
-                )
-            );
-
             component.showComments = false;
             fixture.detectChanges();
 
@@ -190,9 +174,6 @@ describe('VersionListComponent', () => {
         });
 
         it('should be able to download a version', () => {
-            spyOn(component.versionsApi, 'listVersionHistory').and.returnValue(
-                Promise.resolve(new VersionPaging({ list: { entries: [versionTest[0]] } }))
-            );
             spyOn(contentVersionService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
 
             fixture.detectChanges();
@@ -209,9 +190,6 @@ describe('VersionListComponent', () => {
         });
 
         it('should NOT be able to download a version if configured so', () => {
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
-                Promise.resolve(new VersionPaging({ list: { entries: [versionTest[0]] } }))
-            );
             const spyOnDownload = spyOn(component.contentApi, 'getContentUrl').and.stub();
 
             component.allowDownload = false;
@@ -232,10 +210,7 @@ describe('VersionListComponent', () => {
 
         it('should load the versions for a given id', () => {
             fixture.detectChanges();
-            component.versions = versionTest;
-
             const spyOnRevertVersion = spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(versionTest[0]));
-
             component.restore(versionId);
 
             expect(spyOnRevertVersion).toHaveBeenCalledWith(nodeId, versionId, { majorVersion: true, comment: '' });
@@ -243,8 +218,6 @@ describe('VersionListComponent', () => {
 
         it('should get node info after restoring the node', fakeAsync(() => {
             fixture.detectChanges();
-            component.versions = versionTest;
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
             spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(versionTest[0]));
 
@@ -257,8 +230,6 @@ describe('VersionListComponent', () => {
 
         it('should emit with node info data', fakeAsync(() => {
             fixture.detectChanges();
-            component.versions = versionTest;
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
             spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(versionTest[0]));
 
@@ -273,18 +244,16 @@ describe('VersionListComponent', () => {
 
         it('should reload the version list after a version restore', fakeAsync(() => {
             fixture.detectChanges();
-            component.versions = versionTest;
 
-            const spyOnListVersionHistory = spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
-                Promise.resolve({ list: { entries: versionTest } })
-            );
             spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(null));
+            spyOn(component.versionsDataSource, 'reset');
 
             component.restore(versionId);
             fixture.detectChanges();
             tick();
 
-            expect(spyOnListVersionHistory).toHaveBeenCalledTimes(1);
+            expect(component.versionsDataSource.reset).toHaveBeenCalled();
+            expect(component.versionsDataSource.getNextBatch).toHaveBeenCalled();
         }));
     });
 
@@ -302,15 +271,6 @@ describe('VersionListComponent', () => {
         beforeEach(() => {
             fixture.detectChanges();
             versionTest[1].entry.id = '1.1';
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
-                Promise.resolve(
-                    new VersionPaging({
-                        list: {
-                            entries: versionTest
-                        }
-                    })
-                )
-            );
         });
 
         describe('showActions', () => {
@@ -320,8 +280,6 @@ describe('VersionListComponent', () => {
             });
 
             it('should show Actions if showActions is true', (done) => {
-                component.versions = versionTest;
-
                 component.showActions = true;
                 fixture.detectChanges();
 

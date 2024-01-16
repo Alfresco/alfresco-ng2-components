@@ -1,55 +1,53 @@
-<mat-list class="adf-version-list" *ngIf="!isLoading; else loading_template">
-    <mat-list-item *ngFor="let version of versions; let idx = index; let latestVersion = first">
-        <mat-icon mat-list-icon>insert_drive_file</mat-icon>
-        <p mat-line class="adf-version-list-item-name" [id]="'adf-version-list-item-name-' + version.entry.id" >{{version.entry.name}}</p>
-        <p mat-line>
-            <span class="adf-version-list-item-version"  [id]="'adf-version-list-item-version-' + version.entry.id" >{{version.entry.id}}</span> -
-            <span class="adf-version-list-item-date"     [id]="'adf-version-list-item-date-' + version.entry.id" >{{version.entry.modifiedAt | date}}</span>
-        </p>
-        <p mat-line [id]="'adf-version-list-item-comment-'+ version.entry.id" class="adf-version-list-item-comment"
-           *ngIf="showComments">{{version.entry.versionComment}}</p>
+<mat-progress-bar *ngIf="isLoading" data-automation-id="version-history-loading-bar" mode="indeterminate" color="accent"></mat-progress-bar>
+<mat-list class="adf-version-list" [hidden]="isLoading">
+    <cdk-virtual-scroll-viewport #viewport itemSize="88" class="adf-version-list-viewport">
+        <mat-list-item *cdkVirtualFor="let version of versionsDataSource; let idx = index; let latestVersion = first">
+            <mat-icon mat-list-icon>insert_drive_file</mat-icon>
+            <p mat-line class="adf-version-list-item-name" [id]="'adf-version-list-item-name-' + version.entry.id" >{{version.entry.name}}</p>
+            <p mat-line>
+                <span class="adf-version-list-item-version"  [id]="'adf-version-list-item-version-' + version.entry.id" >{{version.entry.id}}</span> -
+                <span class="adf-version-list-item-date"     [id]="'adf-version-list-item-date-' + version.entry.id" >{{version.entry.modifiedAt | date}}</span>
+            </p>
+            <p mat-line [id]="'adf-version-list-item-comment-'+ version.entry.id" class="adf-version-list-item-comment"
+               *ngIf="showComments">{{version.entry.versionComment}}</p>
 
-        <div *ngIf="showActions">
-            <mat-menu [id]="'adf-version-list-action-menu-'+version.entry.id"
-                      #versionMenu="matMenu" yPosition="below" xPosition="before">
-                <ng-container *adf-acs-version="'7'">
-                    <button *ngIf="allowViewVersions"
-                            [id]="'adf-version-list-action-view-'+version.entry.id"
-                            mat-menu-item
-                            (click)="onViewVersion(version.entry.id)">
-                        {{ 'ADF_VERSION_LIST.ACTIONS.VIEW' | translate }}
-                    </button>
-                </ng-container>
-                <button
-                    [id]="'adf-version-list-action-restore-'+version.entry.id"
-                    [disabled]="!canUpdate() || latestVersion"
-                    mat-menu-item
-                    (click)="restore(version.entry.id)">
-                    {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
-                </button>
-                <button *ngIf="allowDownload"
-                        [id]="'adf-version-list-action-download-'+version.entry.id"
+            <div *ngIf="showActions">
+                <mat-menu [id]="'adf-version-list-action-menu-'+version.entry.id"
+                          #versionMenu="matMenu" yPosition="below" xPosition="before">
+                    <ng-container *adf-acs-version="'7'">
+                        <button *ngIf="allowViewVersions"
+                                [id]="'adf-version-list-action-view-'+version.entry.id"
+                                mat-menu-item
+                                (click)="onViewVersion(version.entry.id)">
+                            {{ 'ADF_VERSION_LIST.ACTIONS.VIEW' | translate }}
+                        </button>
+                    </ng-container>
+                    <button
+                        [id]="'adf-version-list-action-restore-'+version.entry.id"
+                        [disabled]="!canUpdate() || latestVersion"
                         mat-menu-item
-                        (click)="downloadVersion(version.entry.id)">
-                    {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
-                </button>
-                <button
-                    [disabled]="!canDelete()"
-                    [id]="'adf-version-list-action-delete-'+version.entry.id"
-                    (click)="deleteVersion(version.entry.id)"
-                    mat-menu-item>
-                    {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
-                </button>
-            </mat-menu>
+                        (click)="restore(version.entry.id)">
+                        {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
+                    </button>
+                    <button *ngIf="allowDownload"
+                            [id]="'adf-version-list-action-download-'+version.entry.id"
+                            mat-menu-item
+                            (click)="downloadVersion(version.entry.id)">
+                        {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
+                    </button>
+                    <button
+                        [disabled]="!canDelete()"
+                        [id]="'adf-version-list-action-delete-'+version.entry.id"
+                        (click)="deleteVersion(version.entry.id)"
+                        mat-menu-item>
+                        {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
+                    </button>
+                </mat-menu>
 
-            <button mat-icon-button [matMenuTriggerFor]="versionMenu" [id]="'adf-version-list-action-menu-button-'+version.entry.id" title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-        </div>
-    </mat-list-item>
+                <button mat-icon-button [matMenuTriggerFor]="versionMenu" [id]="'adf-version-list-action-menu-button-'+version.entry.id" title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </div>
+        </mat-list-item>
+    </cdk-virtual-scroll-viewport>
 </mat-list>
-
-<ng-template #loading_template>
-    <mat-progress-bar data-automation-id="version-history-loading-bar" mode="indeterminate"
-                      color="accent"></mat-progress-bar>
-</ng-template>

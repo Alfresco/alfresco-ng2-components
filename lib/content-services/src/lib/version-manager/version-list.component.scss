@@ -1,4 +1,8 @@
 .adf-version-list {
+    &-viewport {
+        height: 100%;
+    }
+
     .mat-list-item-content {
         border-bottom: 1px solid #d8d8d8;
     }
