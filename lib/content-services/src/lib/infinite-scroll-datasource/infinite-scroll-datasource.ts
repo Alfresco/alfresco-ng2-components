@@ -45,16 +45,7 @@ export abstract class InfiniteScrollDatasource<T> extends DataSource<T> {
     abstract getNextBatch(pagingOptions: ContentPagingQuery): Observable<T[]>;
 
     connect(collectionViewer: CollectionViewer): Observable<T[]> {
-        this.isLoading$.next(true);
-        this.getNextBatch({ skipCount: 0, maxItems: this.batchSize })
-            .pipe(take(1))
-            .subscribe((firstBatch) => {
-                this._itemsCount += firstBatch.length;
-                this._firstItem = firstBatch[0];
-                this.dataStream.next(firstBatch);
-                this.isLoading$.next(false);
-            });
-        this.batchesFetched += 1;
+        this.reset();
         this.subscription.add(
             collectionViewer.viewChange.subscribe((range) => {
                 if (this.batchesFetched * this.batchSize <= range.end) {

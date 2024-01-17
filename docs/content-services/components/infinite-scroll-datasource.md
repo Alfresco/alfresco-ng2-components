@@ -29,7 +29,7 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
 
 Then in component that will have the infinite scroll define the datasource as instance of a class created in previous step, optionally you can set custom size of the items batch or listen to loading state changes:
 ```ts
- this.versionsDataSource = new VersionListDataSource(this.versionsApi, this.node);
+this.versionsDataSource = new VersionListDataSource(this.versionsApi, this.node);
 this.versionsDataSource.batchSize = 50;
 this.versionsDataSource.isLoading.pipe(takeUntil(this.onDestroy$)).subscribe((isLoading) => this.isLoading = isLoading);
 ```

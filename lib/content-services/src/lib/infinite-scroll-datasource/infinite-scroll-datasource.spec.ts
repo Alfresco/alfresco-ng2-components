@@ -97,7 +97,7 @@ describe('InfiniteScrollDatasource', () => {
     let component: TestComponent;
 
     const getRenderedItems = (): HTMLDivElement[] => {
-        return fixture.debugElement.queryAll(By.css('.test-item')).map((element) => element.nativeElement);
+        return fixture.debugElement.queryAll(By.css('.test-item')).map(element => element.nativeElement);
     };
 
     beforeEach(() => {
