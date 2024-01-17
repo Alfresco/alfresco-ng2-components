@@ -32,6 +32,11 @@ describe('ContentNodeSelectorPanelService', () => {
         expect(contentNodeSelectorPanelService.isTypeSupported('d:date')).toEqual(true);
     });
 
+    it('should support datetime type', () => {
+        expect(contentNodeSelectorPanelService.modelPropertyTypeToSearchFilterTypeMap.get('d:datetime')).toEqual('datetime-range');
+        expect(contentNodeSelectorPanelService.isTypeSupported('d:datetime')).toEqual(true);
+    });
+
     it('should return false for an unsupported type', () => {
         expect(contentNodeSelectorPanelService.isTypeSupported('d:unsupported')).toEqual(false);
     });
