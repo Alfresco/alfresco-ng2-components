@@ -73,8 +73,6 @@ export const mockConvertedSearchCategoriesFromModels: SearchCategory[] = [
                 pattern: `account:creation:'(.*?)'`,
                 field: `account:creation`,
                 placeholder: `Enter the creation`,
-                maxDate: 'today',
-                dateFormat: 'dd-MMM-yy',
                 displayedLabelsByField: {
                     'account:creation': 'account:creation'
                 }

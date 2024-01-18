@@ -64,7 +64,7 @@ export class ContentNodeSelectorPanelService {
         return filterSearch;
     }
 
-    private getSpecificDateRangeSettings(prefixedName: string, dateFormat: string = 'dd-MMM-yy', maxDate: string = 'today') {
+    private getSpecificDateRangeSettings(prefixedName: string) {
         const buildDisplayedLabelsByField = (prefixedName) => {
             const displayedLabelsByField = {};
 
@@ -76,8 +76,6 @@ export class ContentNodeSelectorPanelService {
         }
 
         const settings = {
-            dateFormat,
-            maxDate,
             displayedLabelsByField: buildDisplayedLabelsByField(prefixedName)
         };
 
