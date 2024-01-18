@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
-export * from './document-library.model.mock';
-export * from './document-list.component.mock';
-export * from './search.component.mock';
-export * from './search.service.mock';
-export * from './search-filter-mock';
-export * from './sites-dropdown.component.mock';
-export * from './search-query.mock';
-export * from './new-version-uploader.service.mock';
-export * from './date-range-search-filter.mock';
+import { Pipe, PipeTransform } from '@angular/core';
+import { SearchWidgetSettings } from '../search/models/search-widget-settings.interface';
+
+@Pipe({
+  name: 'tabLabels'
+})
+export class TabLabelsPipe implements PipeTransform {
+
+  transform(field: string, settings?: SearchWidgetSettings): string {
+    return settings && settings.displayedLabelsByField && settings.displayedLabelsByField[field] ? settings.displayedLabelsByField[field] : field;
+  }
+
+}

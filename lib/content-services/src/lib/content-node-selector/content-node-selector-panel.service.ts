@@ -55,31 +55,12 @@ export class ContentNodeSelectorPanelService {
                     settings: {
                         pattern: `${modelProperty.prefixedName}:'(.*?)'`,
                         field: `${modelProperty.prefixedName}`,
-                        placeholder: `Enter the ${modelProperty.name}`,
-                        ...(modelProperty.dataType === 'd:date' && this.getSpecificDateRangeSettings(modelProperty.prefixedName))
+                        placeholder: `Enter the ${modelProperty.name}`
                     }
                 }
             };
         }
         return filterSearch;
-    }
-
-    private getSpecificDateRangeSettings(prefixedName: string) {
-        const buildDisplayedLabelsByField = (prefixedName) => {
-            const displayedLabelsByField = {};
-
-            prefixedName.split(',').map(res => {
-                displayedLabelsByField[`${res}`] = res;
-            });
-
-            return displayedLabelsByField;
-        }
-
-        const settings = {
-            displayedLabelsByField: buildDisplayedLabelsByField(prefixedName)
-        };
-
-        return settings;
     }
 
     isTypeSupported(dataType: string): boolean {

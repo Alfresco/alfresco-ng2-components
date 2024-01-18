@@ -72,10 +72,7 @@ export const mockConvertedSearchCategoriesFromModels: SearchCategory[] = [
             settings: {
                 pattern: `account:creation:'(.*?)'`,
                 field: `account:creation`,
-                placeholder: `Enter the creation`,
-                displayedLabelsByField: {
-                    'account:creation': 'account:creation'
-                }
+                placeholder: `Enter the creation`
             }
         }
     }

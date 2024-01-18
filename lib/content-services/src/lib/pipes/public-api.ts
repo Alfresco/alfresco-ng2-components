@@ -17,4 +17,5 @@
 
 export * from './node-name-tooltip.pipe';
 export * from './is-included.pipe';
+export * from './tab-labels.pipe';
 export * from './content-pipe.module';
