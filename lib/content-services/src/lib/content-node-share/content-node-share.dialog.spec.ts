@@ -293,6 +293,28 @@ describe('ShareDialogComponent', () => {
         expect(fixture.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]').style.display).toEqual('none');
     });
 
+    it('should not display floating label for expiration field', () => {
+        component.data = {
+            node,
+            baseShareUrl: 'some-url/'
+        };
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-expiration-field"]'))
+            .componentInstance.floatLabel).toBe('never');
+    });
+
+    it('should not display floating label for public link field', () => {
+        component.data = {
+            node,
+            baseShareUrl: 'some-url/'
+        };
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-public-link-field"]'))
+            .componentInstance.floatLabel).toBe('never');
+    });
+
     describe('datetimepicker type', () => {
         beforeEach(() => {
             spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of());
