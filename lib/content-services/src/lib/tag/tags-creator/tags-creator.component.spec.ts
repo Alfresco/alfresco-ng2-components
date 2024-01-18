@@ -524,7 +524,7 @@ describe('TagsCreatorComponent', () => {
                 typeTag(name);
 
                 expect(tagService.findTagByName).toHaveBeenCalledWith(name);
-            }))
+            }));
 
             it('should not perform search if an illegal character is specified', fakeAsync(() => {
                 spyOn(tagService, 'findTagByName').and.returnValue(EMPTY);
