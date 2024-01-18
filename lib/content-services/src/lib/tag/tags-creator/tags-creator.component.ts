@@ -41,6 +41,7 @@ interface TagNameControlErrors {
     duplicatedAddedTag?: boolean;
     emptyTag?: boolean;
     required?: boolean;
+    specialCharacters?: boolean;
 }
 
 const DEFAULT_TAGS_SORTING = {
@@ -132,7 +133,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         ['duplicatedExistingTag', 'EXISTING_TAG'],
         ['duplicatedAddedTag', 'ALREADY_ADDED_TAG'],
         ['emptyTag', 'EMPTY_TAG'],
-        ['required', 'REQUIRED']
+        ['required', 'REQUIRED'],
+        ['specialCharacters', 'SPECIAL_CHARACTERS']
     ]);
 
     private readonly existingTagsListLimit = 15;
@@ -144,7 +146,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         [
             this.validateIfNotAlreadyAdded.bind(this),
             Validators.required,
-            this.validateEmptyTag
+            this.validateEmptyTag,
+            this.validateSpecialCharacters
         ],
         this.validateIfNotExistingTag.bind(this)
     );
@@ -301,7 +304,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private loadTags(name: string) {
-        if (name) {
+        if (name && !this.tagNameControl.hasError('specialCharacters')) {
             forkJoin({
                 exactResult: this.tagService.findTagByName(name),
                 searchedResult: this.tagService.searchTags(name, DEFAULT_TAGS_SORTING, false, 0, this.existingTagsListLimit)
@@ -366,6 +369,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private validateEmptyTag(tagNameControl: FormControl<string>): TagNameControlErrors | null {
         return tagNameControl.value.length && !tagNameControl.value.trim()
             ? { emptyTag: true }
+            : null;
+    }
+
+    private validateSpecialCharacters(tagNameControl: FormControl<string>): TagNameControlErrors | null {
+        const specialSymbolsRegex: RegExp = /[':"\\|<>\/?]/;
+        return tagNameControl.value.length && specialSymbolsRegex.test(tagNameControl.value)
+            ? { specialCharacters: true }
             : null;
     }
 
