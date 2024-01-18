@@ -382,6 +382,14 @@ describe('TagsCreatorComponent', () => {
                 expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
             }));
 
+            it('should show error for prohibited characters', fakeAsync(() => {
+                typeTag('tag*"<>\\/?:|');
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
+                const error = getFirstError();
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.SPECIAL_CHARACTERS');
+            }));
+
             it('should show error when duplicated already existing tag', fakeAsync(() => {
                 const tag = 'Some tag';
 
@@ -516,6 +524,17 @@ describe('TagsCreatorComponent', () => {
                 typeTag(name);
 
                 expect(tagService.findTagByName).toHaveBeenCalledWith(name);
+            }));
+
+            it('should not perform search if an illegal character is specified', fakeAsync(() => {
+                spyOn(tagService, 'findTagByName').and.returnValue(EMPTY);
+                spyOn(tagService, 'searchTags').and.returnValue(EMPTY);
+
+                const name = 'Tag:"\'>';
+                typeTag(name);
+
+                expect(tagService.findTagByName).not.toHaveBeenCalled();
+                expect(tagService.searchTags).not.toHaveBeenCalled();
             }));
 
             it('should call searchTags on tagService using name set in input and correct params', fakeAsync(() => {
