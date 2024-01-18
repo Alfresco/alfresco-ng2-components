@@ -37,6 +37,8 @@ import {
     subWeeks
 } from 'date-fns';
 
+const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
+
 @Component({
   selector: 'adf-search-date-range-tabbed',
   templateUrl: './search-date-range-tabbed.component.html',
@@ -67,6 +69,13 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
 
     ngOnInit(): void {
         this.fields = this.settings?.field.split(',').map(field => field.trim());
+        this.setDefaultDateFormatSettings();
+    }
+
+    private setDefaultDateFormatSettings() {
+        if (this.settings && !this.settings.dateFormat) {
+            this.settings.dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;
+        }
     }
 
     getCurrentValue(): { [key: string]: Partial<SearchDateRange> } {
@@ -163,9 +172,13 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         this.displayValueMapByField.set(field, this.generateDisplayValue(value));
         this.displayValueMapByField.forEach((displayValue: string, fieldForDisplayLabel: string) => {
             if (displayValue) {
-                const displayLabelForField = `${this.translateService.instant(this.settings.displayedLabelsByField[fieldForDisplayLabel]).toUpperCase()}: ${displayValue}`;
+                const displayLabelForField = `${this.translateService.instant(this.getDisplayLabelForField(fieldForDisplayLabel)).toUpperCase()}: ${displayValue}`;
                 this.combinedDisplayValue = this.combinedDisplayValue ? `${this.combinedDisplayValue} ${displayLabelForField}` : `${displayLabelForField}`;
             }
         });
+    }
+
+    private getDisplayLabelForField(fieldForDisplayLabel: string): string {
+        return this.settings && this.settings.displayedLabelsByField && this.settings.displayedLabelsByField[fieldForDisplayLabel] ? this.settings.displayedLabelsByField[fieldForDisplayLabel] : fieldForDisplayLabel;
     }
 }
