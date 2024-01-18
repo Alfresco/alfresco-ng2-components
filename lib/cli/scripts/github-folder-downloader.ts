@@ -1,35 +1,34 @@
-import axios, { AxiosResponse } from 'axios';
 import AdmZip from 'adm-zip';
 import path from 'path';
+import { Octokit } from "@octokit/rest";
 
 export class GitHubRepoUtils {
-    private baseURL = 'https://api.github.com';
-    private token: string;
     private repo: string;
     private subfolderName: string;
+    private octokit: Octokit;
 
     constructor(token: string, repo: string) {
-        this.token = token;
+        this.octokit = new Octokit({
+            auth: `token ${token}`,
+            baseUrl: 'https://api.github.com',
+        })
+
         this.repo = repo;
     }
 
     async downloadAndUnpackRepository(owner: string, branch = 'main'): Promise<void> {
-        const url = `${this.baseURL}/repos/${owner}/${this.repo}/zipball/${branch}`;
-        const headers = {
-            Authorization: `token ${this.token}`,
-            Accept: 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28'
-        };
-
         try {
-            const response: AxiosResponse = await axios.get(url, {
-                responseType: 'arraybuffer',
-                headers,
-            });
-            const zippedRepo = new AdmZip(response.data);
+            const response = await this.octokit.repos.downloadZipballArchive({
+                repo: this.repo,
+                owner,
+                ref: branch,
+             })
+
+            const parsedResponse = Buffer.from(<ArrayBuffer>response.data);
+            const zippedRepo = new AdmZip(parsedResponse);
             this.subfolderName = (zippedRepo.getEntries().find(entry => entry.entryName.includes(owner))).entryName;
 
-            new AdmZip(response.data).extractAllTo(this.repo, true);
+            zippedRepo.extractAllTo(this.repo, true);
 
         } catch (error) {
             throw new Error(`Failed to download repository: ${error}`);
