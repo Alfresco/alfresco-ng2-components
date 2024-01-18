@@ -25,11 +25,11 @@ import {
     CardViewDateItemModel,
     CardViewIntItemModel,
     CardViewFloatItemModel,
-    NotificationService,
     CardViewBoolItemModel,
     CardViewDatetimeItemModel,
     CardViewSelectItemModel,
-    CardViewSelectItemProperties
+    CardViewSelectItemProperties,
+    LogService
 } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -42,7 +42,7 @@ describe('PropertyGroupTranslatorService', () => {
     let propertyGroup: OrganisedPropertyGroup;
     let property: Property;
     let propertyValues: { [key: string]: any };
-    let notificationService: NotificationService;
+    let logService: LogService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -51,7 +51,7 @@ describe('PropertyGroupTranslatorService', () => {
                 ContentTestingModule
             ]
         });
-        notificationService = TestBed.inject(NotificationService);
+        logService = TestBed.inject(LogService);
         service = TestBed.inject(PropertyGroupTranslatorService);
 
         property = {
@@ -137,7 +137,7 @@ describe('PropertyGroupTranslatorService', () => {
         });
 
         it('should log an error if unrecognised type is found', () => {
-            const showError = spyOn(notificationService, 'showError').and.stub();
+            const logServiceError = spyOn(logService, 'error').and.stub();
 
             property.name = 'FAS:PLAGUE';
             property.title = 'The Faro Plague';
@@ -149,7 +149,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyGroups.push(Object.assign({}, propertyGroup));
 
             service.translateToCardViewGroups(propertyGroups, propertyValues, null);
-            expect(showError).toHaveBeenCalledWith('Unknown type for mapping: daemonic:scorcher');
+            expect(logServiceError).toHaveBeenCalledWith('Unknown type for mapping: daemonic:scorcher');
         });
 
         it('should fall back to single-line property type if unrecognised type is found', () => {

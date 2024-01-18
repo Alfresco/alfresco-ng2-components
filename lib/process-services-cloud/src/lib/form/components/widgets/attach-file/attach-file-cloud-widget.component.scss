@@ -27,16 +27,6 @@
 
         button span {
             font-size: var(--theme-caption-font-size);
-
-            mat-icon {
-                line-height: 12px;
-                height: 12px;
-                width: 12px;
-            }
-
-            .material-icons {
-                font-size: var(--theme-adf-picture-1-font-size);
-            }
         }
     }
 
@@ -86,9 +76,10 @@
     }
 
     &-attach-widget__icon {
-        padding: 6px;
-        float: left;
-        cursor: pointer;
+        font-size: var(--theme-adf-picture-1-font-size);
+        height: var(--theme-adf-picture-1-font-size);
+        width: var(--theme-adf-picture-1-font-size);
+        line-height: calc(var(--theme-adf-picture-1-font-size) - 2px);
     }
 
     &-attach-widget__reset {

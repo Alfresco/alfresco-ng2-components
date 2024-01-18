@@ -37,6 +37,7 @@
         --adf-theme-primary-900:mat.get-color-from-palette($primary, 900),
 
         --theme-warn-color: mat.get-color-from-palette($warn),
+        --theme-warn-color-a700: mat.get-color-from-palette($warn, A700),
         --theme-warn-color-default-contrast: mat.get-color-from-palette($warn, default-contrast),
 
         --theme-accent-color: mat.get-color-from-palette($accent),

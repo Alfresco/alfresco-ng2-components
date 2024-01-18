@@ -57,7 +57,12 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         this.appConfig.onLoad
             .subscribe(() => {
                 if (!this.isOauth() && this.isLoggedIn()) {
-                    this.onLogin.next('logged-in');
+                    this.requireAlfTicket().then(() => {
+                        this.onLogin.next('logged-in');
+                    }).catch(() => {
+                        this.contentAuth.invalidateSession();
+                        this.onLogout.next('logout');
+                    });
                 }
             });
 

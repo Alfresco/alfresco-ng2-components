@@ -3,9 +3,9 @@
 @use 'sass:color';
 
 @function multiply($fore, $back) {
-    $red: color.red($back) * color.red($fore) / 255;
-    $green: color.green($back) * color.green($fore) / 255;
-    $blue: color.blue($back) * color.blue($fore) / 255;
+    $red: math.div(color.red($back) * color.red($fore), 255);
+    $green: math.div(color.green($back) * color.green($fore), 255);
+    $blue: math.div(color.blue($back) * color.blue($fore), 255);
 
     @return rgb($red, $green, $blue);
 }
@@ -19,12 +19,12 @@
 
     @each $name, $value in $colors {
         $adjusted: 0;
-        $value: $value / 255;
+        $value: math.div($value, 255);
 
         @if ($value < 0.0393) {
-            $value: $value / 12.92;
+            $value: math.div($value, 12.92);
         } @else {
-            $value: ($value + 0.055) / 1.055;
+            $value: math.div($value + 0.055, 1.055);
             $value: math.pow($value, 2.4);
         }
 
