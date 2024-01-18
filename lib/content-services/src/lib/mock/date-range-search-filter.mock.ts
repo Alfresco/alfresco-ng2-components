@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchCategory } from "../search/models/search-category.interface";
+import { SearchCategory } from '../search/models/search-category.interface';
 
 export const mockSearchFilterWithoutDisplayedLabelsByField: SearchCategory = {
     id : 'test',
@@ -26,7 +26,7 @@ export const mockSearchFilterWithoutDisplayedLabelsByField: SearchCategory = {
         selector: 'date-range',
         settings: {
             pattern: `test:'(.*?)'`,
-            field: `test`,
+            field: 'test',
             placeholder: 'test placeholder'
         }
     }
@@ -41,7 +41,7 @@ export const mockSearchFilterWithWrongDisplayedLabelsByField: SearchCategory = {
         selector: 'date-range',
         settings: {
             pattern: `test:'(.*?)'`,
-            field: `test`,
+            field: 'test',
             placeholder: 'test placeholder',
             displayedLabelsByField: {
                 'wrong-test': 'test-tab-label'
@@ -59,7 +59,7 @@ export const mockSearchFilterWithDisplayedLabelsByField: SearchCategory = {
         selector: 'date-range',
         settings: {
             pattern: `test:'(.*?)'`,
-            field: `test`,
+            field: 'test',
             placeholder: 'test placeholder',
             displayedLabelsByField: {
                 'test': 'test-tab-label'

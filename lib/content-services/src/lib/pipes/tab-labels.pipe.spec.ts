@@ -16,10 +16,10 @@
  */
 
 import { TabLabelsPipe } from './tab-labels.pipe';
-import { 
-  mockSearchFilterWithoutDisplayedLabelsByField, 
-  mockSearchFilterWithWrongDisplayedLabelsByField, 
-  mockSearchFilterWithDisplayedLabelsByField 
+import {
+  mockSearchFilterWithoutDisplayedLabelsByField,
+  mockSearchFilterWithWrongDisplayedLabelsByField,
+  mockSearchFilterWithDisplayedLabelsByField
 } from '../mock/date-range-search-filter.mock';
 
 describe('TabLabelsPipe', () => {
