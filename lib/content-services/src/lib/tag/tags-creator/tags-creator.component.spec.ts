@@ -32,7 +32,7 @@ import { DebugElement } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 
-fdescribe('TagsCreatorComponent', () => {
+describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
     let component: TagsCreatorComponent;
     let tagService: TagService;
