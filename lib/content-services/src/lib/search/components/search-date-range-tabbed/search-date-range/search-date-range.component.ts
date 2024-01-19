@@ -48,6 +48,8 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     @Input()
     field: string;
     @Input()
+    hideDefaultAction = false;
+    @Input()
     set initialValue(value: SearchDateRange) {
         if (value) {
             this.form.patchValue(value);
@@ -58,6 +60,10 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     changed = new EventEmitter<Partial<SearchDateRange>>();
     @Output()
     valid = new EventEmitter<boolean>();
+    @Output()
+    reset = new EventEmitter<void>();
+    @Output()
+    submit = new EventEmitter<void>();
 
     form = this.formBuilder.group<SearchDateRange>({
         dateRangeType: DateRangeType.ANY,
@@ -135,6 +141,22 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
             this.changed.emit(this.form.value);
         }
         this.valid.emit(this.form.valid);
+    }
+
+    apply() {
+        this.submit.emit();
+    }
+
+    clear() {
+        this.form.reset({
+            dateRangeType: DateRangeType.ANY,
+            inLastValueType: InLastDateType.DAYS,
+            inLastValue: undefined,
+            betweenStartDate: undefined,
+            betweenEndDate: undefined
+        });
+
+        this.reset.emit();
     }
 
     dateChanged(event: Event, formControl: UntypedFormControl) {
