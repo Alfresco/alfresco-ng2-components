@@ -4,6 +4,8 @@ Title: Changelog for alfresco-ng2-components v6.6.0
 
 # Changelog
 
+- [fdab441d45](git@github.com:Alfresco/alfresco-ng2-components/commit/fdab441d45) [AAE-19610] Submit query on change event for search date range tabbed widget (#9256)
+- [720fbb98ca](git@github.com:Alfresco/alfresco-ng2-components/commit/720fbb98ca) [AAE-19708] Fix breaking change for actions/upload-artifact v4.1.0 (#9270)
 - [4ec8ca9aa5](git@github.com:Alfresco/alfresco-ng2-components/commit/4ec8ca9aa5) [AAE-18281] Update uat-be-default-app with subprocess-parallel (#9253)
 - [ca38f05f30](git@github.com:Alfresco/alfresco-ng2-components/commit/ca38f05f30) [ACS-6584] Added validation for illegal characters when creating a tag (#9251)
 - [e1fcaed12d](git@github.com:Alfresco/alfresco-ng2-components/commit/e1fcaed12d) [AAE-19610] Add specific date range settings to search filter (#9250)
