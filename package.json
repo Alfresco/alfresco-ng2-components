@@ -112,7 +112,7 @@
     "@angular-eslint/template-parser": "16.2.0",
     "@angular/cli": "~14.2.12",
     "@angular/compiler-cli": "14.1.3",
-    "@editorjs/code": "2.8.0",
+    "@editorjs/code": "2.9.0",
     "@editorjs/inline-code": "1.4.0",
     "@editorjs/marker": "1.2.2",
     "@nrwl/angular": "14.8.9",
