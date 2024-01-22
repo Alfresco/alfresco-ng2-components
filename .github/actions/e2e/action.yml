@@ -186,7 +186,7 @@ runs:
       if: ${{ steps.determine-affected.outputs.isAffected == 'true' }}
       uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       with:
-        name: e2e-artifact-output
+        name: e2e-artifact-output-${{inputs.e2e-test-id}}
         path: /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/e2e-output-*
 
     - name: upload smart-runner tests results on s3 to cache tests
