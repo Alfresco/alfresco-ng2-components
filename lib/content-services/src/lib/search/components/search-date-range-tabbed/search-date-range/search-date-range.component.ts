@@ -24,7 +24,7 @@ import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRange } from './search-date-range';
 import { FormBuilder, UntypedFormControl, Validators } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from '@alfresco/adf-core';
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
@@ -98,7 +98,10 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
             .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
         this.form.controls.dateRangeType.valueChanges.pipe(takeUntil(this.destroy$))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));
-        this.form.valueChanges.pipe(takeUntil(this.destroy$))
+        this.form.valueChanges.pipe(
+            debounceTime(100),
+            takeUntil(this.destroy$)
+            )
             .subscribe(() => this.onChange());
     }
 
