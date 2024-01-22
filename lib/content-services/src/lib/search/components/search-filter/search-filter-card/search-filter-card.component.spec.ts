@@ -37,7 +37,7 @@ describe('SearchFilterCardComponent', () => {
                 placeholder: 'test-placeholder'
             }
         }
-    }
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
