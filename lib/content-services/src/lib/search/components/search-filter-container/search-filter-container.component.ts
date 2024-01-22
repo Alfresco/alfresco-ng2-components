@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, EventEmitter, ViewEncapsulation, ViewChild, Inject, OnDestroy, ElementRef } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    OnInit,
+    EventEmitter,
+    ViewEncapsulation,
+    ViewChild,
+    Inject,
+    OnDestroy,
+    ElementRef
+} from '@angular/core';
 import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';

@@ -308,7 +308,8 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Content actions"
+      "TOOLTIP": "Content actions",
+      "SELECT_COLUMNS": "Select columns"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Actions",

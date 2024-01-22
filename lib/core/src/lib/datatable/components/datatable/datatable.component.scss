@@ -10,9 +10,10 @@ $data-table-column-padding: 18px !default;
 $data-table-card-padding: var(--theme-headline-line-height) !default;
 $data-table-cell-top: calc($data-table-card-padding / 2);
 $data-table-thumbnail-width: 65px !default;
-$data-table-cell-min-width: 65px !default;
+$data-table-cell-min-width-1: 65px !default;
+$data-table-cell-min-width-2: 110px !default;
 $data-table-cell-min-width-no-grow: 100px !default;
-$data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
+$data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
 .adf-datatable {
     overflow-y: scroll;
@@ -24,6 +25,14 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
     &__resize-handle {
         padding: 0 2px;
+
+        &-visible {
+            visibility: visible;
+        }
+
+        &-hidden {
+            visibility: hidden;
+        }
 
         &--divider {
             padding: 24px 0;
@@ -316,7 +325,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-datatable-cell-header {
         text-align: left;
         box-sizing: border-box;
-        min-width: $data-table-cell-min-width;
+        min-width: $data-table-cell-min-width-1;
 
         &--text {
             text-align: left;
@@ -376,6 +385,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         min-width: $data-table-cell-min-width-no-grow;
     }
 
+    .adf-datatable-cell-header.adf-min-width-cell,
+    .adf-datatable-cell.adf-min-width-cell {
+        min-width: $data-table-cell-min-width-2;
+    }
+
     /* stylelint-disable-next-line no-duplicate-selectors */
     .adf-datatable-cell,
     .adf-datatable-cell-header {
@@ -421,6 +435,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
     .adf-datatable-actions-menu {
         margin-left: auto;
+        justify-content: end;
     }
 
     .adf-cell-value {
@@ -611,6 +626,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-datatable__header--sorted-asc,
     .adf-datatable__header--sorted-desc {
         color: var(--adf-theme-foreground-text-color);
+        padding-right: 0.5rem;
 
         &::after {
             @include typo-icon;
@@ -620,7 +636,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             left: 5px;
             right: 5px;
             position: relative;
-            vertical-align: sub;
+            vertical-align: middle;
         }
     }
 
@@ -661,7 +677,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 3px;
+        right: 10px;
         margin: auto;
         color: #ccc;
         cursor: move;

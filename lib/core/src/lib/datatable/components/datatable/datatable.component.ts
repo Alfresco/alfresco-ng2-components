@@ -257,7 +257,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     isDraggingHeaderColumn = false;
     hoveredHeaderColumnIndex = -1;
-    isResizing = false;
+    resizingColumnIndex = -1;
 
     /** This array of fake rows fix the flex layout for the gallery view */
     fakeRows = [];
@@ -966,7 +966,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     onResizingEnd(): void {
-        this.isResizing = false;
+        this.resizingColumnIndex = -1;
 
         this.updateColumnsWidths();
     }
@@ -1009,6 +1009,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         (sorting.key === col.key || sorting.key === col.sortingKey) &&
         sorting.direction?.toLocaleLowerCase() === direction;
     };
+
+    get isResizing(): boolean {
+        return this.resizingColumnIndex >= 0;
+    }
 }
 
 export interface DataTableDropEvent {
