@@ -166,6 +166,19 @@ describe('SearchDateRangeTabbedComponent', () => {
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
     });
 
+    it('should update displayValue when values are changed', () => {
+        spyOn(component.displayValue$, 'next');
+        component.onDateRangedValueChanged(betweenMockData, 'createdDate');
+        component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
+        fixture.detectChanges();
+        expect(component.displayValue$.next).toHaveBeenCalledWith('CREATED DATE: 05-Jun-23 - 07-Jun-23 MODIFIED DATE: SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.WEEKS');
+
+        component.onDateRangedValueChanged(anyMockDate, 'createdDate');
+        component.onDateRangedValueChanged(anyMockDate, 'modifiedDate');
+        fixture.detectChanges();
+        expect(component.displayValue$.next).toHaveBeenCalledWith('');
+    });
+
     it('should update query when values are changed', () => {
         component.onDateRangedValueChanged(betweenMockData, 'createdDate');
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
