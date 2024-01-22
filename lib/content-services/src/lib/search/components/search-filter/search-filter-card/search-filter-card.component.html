@@ -1,0 +1,15 @@
+<div class="adf-search-filter-card">
+    <adf-search-widget-container
+        [id]="category.id"
+        [selector]="category.component.selector"
+        [settings]="category.component.settings">
+    </adf-search-widget-container>
+    <div class="adf-search-filter-card-actions">
+        <button mat-button class="adf-search-action-button" (click)="clear()" id="clear-filter-button">
+            {{ 'SEARCH.FILTER.BUTTONS.CLEAR' | translate }}
+        </button>
+        <button mat-flat-button class="adf-search-action-button" color="primary" (click)="apply()" id="apply-filter-button">
+            {{ 'SEARCH.FILTER.BUTTONS.APPLY' | translate }}
+        </button>
+    </div>
+</div>

@@ -111,7 +111,6 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         this.value[field] = value;
         this.updateQuery(value, field);
         this.updateDisplayValue(value, field);
-        this.submitValues();
     }
 
     private generateQuery(value: Partial<SearchDateRange>, field: string): string {
