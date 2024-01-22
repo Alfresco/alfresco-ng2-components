@@ -45,13 +45,4 @@
       </mat-form-field>
     </span>
   </mat-radio-group>
-
-  <div class="adf-facet-buttons adf-facet-buttons--topSpace" *ngIf="!hideDefaultAction">
-    <button mat-button color="primary" type="button" (click)="clear()" data-automation-id="datetime-range-clear-btn">
-        {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
-    </button>
-    <button mat-button color="primary" (click)="apply()" [disabled]="!form.valid" data-automation-id="datetime-range-apply-btn">
-        {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
-    </button>
-</div>
 </div>
