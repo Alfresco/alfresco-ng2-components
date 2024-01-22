@@ -106,7 +106,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
             this.context.update();
         }
     }
-    
+
     onDateRangedValueChanged(value: Partial<SearchDateRange>, field: string) {
         this.value[field] = value;
         this.updateQuery(value, field);
