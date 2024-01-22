@@ -49,7 +49,7 @@ npm start
 
 This command compiles and starts the project in watch mode.
 Browser will automatically reload upon changes.
-Upon start you can navigate to `http://localhost:3000` with your preferred browser.
+Upon start, you can navigate to `http://localhost:3000` with your preferred browser.
 
 ### Important notes
 
