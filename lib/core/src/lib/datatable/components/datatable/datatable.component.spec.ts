@@ -73,7 +73,7 @@ export const resolverFn = (row: DataRow, col: DataColumn) => {
     return value;
 };
 
-fdescribe('DataTable', () => {
+describe('DataTable', () => {
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let element: any;
