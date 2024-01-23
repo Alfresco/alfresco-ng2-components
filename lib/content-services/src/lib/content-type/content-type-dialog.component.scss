@@ -1,6 +1,6 @@
 .adf {
     &-content-type-dialog {
-        .mat-expansion-panel {
+        & .adf-content-type-accordion {
             margin-bottom: 10px;
         }
     }

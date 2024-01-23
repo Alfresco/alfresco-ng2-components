@@ -33,7 +33,6 @@ export enum Relations {
 
 @Component({
     selector: 'adf-sites-dropdown',
-    styleUrls: ['./sites-dropdown.component.scss'],
     templateUrl: './sites-dropdown.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-sites-dropdown' }

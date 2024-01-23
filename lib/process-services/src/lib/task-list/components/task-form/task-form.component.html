@@ -60,11 +60,12 @@
                 </ng-template>
             </mat-card-content>
             <mat-card-actions>
-                <div class="adf-task-form-actions"> 
+                <div class="adf-task-form-actions">
                     <ng-template [ngTemplateOutlet]="taskFormButtons"></ng-template>
                     <button mat-button
                         *ngIf="!isCompletedTask()" id="adf-no-form-complete-button"
                         color="primary"
+                        class="adf-task-form-actions-button"
                         [disabled]="canCompleteNoFormTask()"
                         (click)="onCompleteTask()">
                         {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
@@ -100,5 +101,5 @@
   </ng-template>
 </ng-container>
 <ng-template #loadingTemplate>
-  <mat-spinner></mat-spinner>
+  <mat-spinner class="adf-task-form-spinner"></mat-spinner>
 </ng-template>

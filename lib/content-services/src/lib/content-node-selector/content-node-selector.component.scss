@@ -1,10 +1,4 @@
 adf-content-node-selector {
-    .adf-content-node-selector-headless-tabs {
-        .mat-tab-header {
-            display: none;
-        }
-    }
-
     .adf-upload-dialog {
         box-shadow: none;
 
@@ -46,14 +40,7 @@ adf-content-node-selector {
 }
 
 .adf-content-node-selector-dialog {
-    &-content {
-        padding-left: 24px;
-        padding-right: 24px;
-    }
-
-    .mat-dialog-title {
-        margin-left: 24px;
-        margin-right: 24px;
+    .adf-content-node-selector-dialog-title {
         font-size: var(--theme-title-font-size);
         font-weight: 600;
         font-style: normal;
@@ -68,17 +55,7 @@ adf-content-node-selector {
         }
     }
 
-    .mat-dialog-container {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .mat-dialog-content {
-        margin: 0;
-        overflow: hidden;
-    }
-
-    .mat-dialog-actions {
+    .adf-content-node-selector-dialog-actions {
         padding: 8px;
         height: 61px;
         background-color: var(--theme-background-color);
@@ -102,10 +79,10 @@ adf-content-node-selector {
             }
         }
     }
+}
 
-    @media screen and (max-width: 768px) {
-        .mat-dialog-container {
-            height: 100vh;
-        }
+@media screen and (max-width: 768px) {
+    .adf-content-node-selector-dialog {
+        height: 100vh;
     }
 }

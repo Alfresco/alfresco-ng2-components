@@ -9,13 +9,14 @@
                 <button
                     (click)="openSelectDialog()"
                     mat-raised-button
+                    class="adf-attach-widget__menu-upload__button"
                     color="primary"
                     [id]="field.id"
                     [matTooltip]="field.tooltip"
                     matTooltipPosition="above"
                     matTooltipShowDelay="1000">
                         {{ 'FORM.FIELD.ATTACH' | translate }}
-                        <mat-icon class="adf-attach-widget__icon">{{getWidgetIcon()}}</mat-icon>
+                        <mat-icon class="adf-attach-widget__menu-upload__button__icon">{{getWidgetIcon()}}</mat-icon>
                 </button>
             </div>
         </div>

@@ -7,26 +7,10 @@
         padding: 5px 0;
         overflow-y: auto;
 
-        .mat-checkbox-label {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .mat-checkbox-layout {
-            width: 100%;
-        }
-
-        .adf-facet-label {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .mat-checkbox {
+        .adf-search-filter-facet-checkbox {
             margin: 5px;
 
-            &.mat-checkbox-checked .mat-checkbox-label {
+            .adf-search-filter-facet-checkbox-checked {
                 font-weight: bold;
             }
         }
@@ -45,7 +29,7 @@
                 width: 27px;
                 margin-top: -4px;
 
-                .mat-icon {
+                .adf-search-field-icon {
                     font-size: var(--theme-subheading-1-font-size);
                 }
             }
@@ -57,14 +41,6 @@
                 font-size: var(--theme-body-1-font-size);
                 line-height: 24px;
                 letter-spacing: 0.25px;
-
-                .mat-form-field-underline {
-                    display: none;
-                }
-
-                .mat-form-field-suffix {
-                    padding-right: 1px;
-                }
             }
         }
     }
@@ -72,7 +48,7 @@
     .adf-facet-buttons {
         text-align: right;
 
-        .mat-button {
+        .button {
             text-transform: uppercase;
         }
 
@@ -81,8 +57,7 @@
         }
     }
 
-    .mat-checkbox-label,
-    .mat-radio-label {
+    .adf-facet-label {
         color: var(--adf-theme-foreground-text-color-054);
     }
 }

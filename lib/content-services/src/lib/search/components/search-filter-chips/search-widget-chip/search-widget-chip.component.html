@@ -16,7 +16,7 @@
         &nbsp;{{ displayValue | translate }}
     </span>
     <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
-    <mat-icon>{{ chipIcon }}</mat-icon>
+    <mat-icon class="adf-search-filter-chip-icon">{{ chipIcon }}</mat-icon>
 </mat-chip>
 
 <mat-menu #menu="matMenu" class="adf-search-widget-extra-width" backdropClass="adf-search-filter-chip-menu" [class]="'adf-search-filter-chip-menu-panel-' + category.id" (closed)="onClosed()">

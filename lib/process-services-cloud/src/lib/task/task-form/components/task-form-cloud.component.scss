@@ -8,23 +8,23 @@
         padding-bottom: 25px !important;
         padding-right: 25px !important;
 
-        & .mat-button {
+        & .adf-task-form-actions-button {
             height: 36px;
             border-radius: 5px;
-        }
 
-        & .mat-button-wrapper {
-            width: 58px;
-            height: 20px;
-            opacity: 0.54;
-            font-size: var(--theme-body-2-font-size);
-            font-weight: bold;
+            span {
+                width: 58px;
+                height: 20px;
+                opacity: 0.54;
+                font-size: var(--theme-body-2-font-size);
+                font-weight: bold;
+            }
         }
     }
 }
 
 adf-cloud-task-form {
-    mat-spinner {
+    .adf-task-form-spinner {
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;

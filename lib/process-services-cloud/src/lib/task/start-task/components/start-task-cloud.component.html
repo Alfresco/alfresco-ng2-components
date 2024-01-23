@@ -1,12 +1,12 @@
 <mat-card>
     <mat-card-header class="adf-cloud-start-task-heading">
-        <mat-card-title>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
+        <mat-card-title class="adf-cloud-start-task-heading-title">{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
     </mat-card-header>
     <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
 
         <mat-card-content>
             <div class="adf-task-name">
-                <mat-form-field>
+                <mat-form-field class="adf-task-name-form-field">
                     <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate }}</mat-label>
                     <input
                         matInput
@@ -22,7 +22,7 @@
                 </mat-form-field>
             </div>
             <div class="adf-cloud-start-task-form-row">
-                <mat-form-field>
+                <mat-form-field class="adf-cloud-start-task-form-row-form-field">
                     <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
                     <textarea
                         matInput
@@ -90,6 +90,7 @@
             <div class="adf-cloud-start-task-footer">
                 <button
                     mat-button
+                    class="adf-cloud-start-task-footer-button"
                     type="button"
                     (click)="onCancel()"
                     id="button-cancel">
@@ -100,6 +101,7 @@
                     type="submit"
                     [disabled]="!canStartTask()"
                     mat-button
+                    class="adf-cloud-start-task-footer-button"
                     id="button-start">
                     {{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
                 </button>

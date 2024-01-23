@@ -1,11 +1,11 @@
 <mat-tree class="adf-tree-view-main" [dataSource]="dataSource"
           [treeControl]="treeControl" *ngIf="nodeId; else missingNodeId">
-    <mat-tree-node class="adf-tree-view-node"
+    <mat-tree-node class="adf-tree-view adf-tree-view-node"
         *matTreeNodeDef="let treeNode" id="{{treeNode.name + '-tree-node'}}"
         matTreeNodePadding [matTreeNodePaddingIndent]="15">
         {{treeNode.name}}
     </mat-tree-node>
-    <mat-tree-node class="adf-tree-view-node"
+    <mat-tree-node class="adf-tree-view adf-tree-view-node"
         id="{{treeNode.name + '-tree-child-node'}}" *matTreeNodeDef="let treeNode; when: hasChild"
         matTreeNodePadding [matTreeNodePaddingIndent]="15">
         <button matTreeNodeToggle id="{{'button-'+treeNode.name}}" (click)="onNodeClicked(treeNode.node)"

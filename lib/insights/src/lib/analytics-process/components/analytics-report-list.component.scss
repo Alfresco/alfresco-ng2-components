@@ -13,16 +13,14 @@
         overflow: hidden;
     }
 
-    .mat-nav-list .mat-list-item .mat-list-item-content {
-        line-height: 48px;
-    }
+    .adf-activiti-filters__entry {
+        .adf-active {
+            color: var(--theme-primary-color);
 
-    .adf-activiti-filters__entry.adf-active {
-        color: var(--theme-primary-color);
-    }
-
-    .adf-activiti-filters__entry.adf-active .adf-activiti-filters__entry-icon {
-        color: var(--theme-primary-color);
+            .adf-activiti-filters__entry-icon {
+                color: var(--theme-primary-color);
+            }
+        }
     }
 
     .adf-report-card-grids {

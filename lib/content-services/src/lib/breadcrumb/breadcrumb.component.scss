@@ -23,10 +23,6 @@
             height: 0;
             overflow: hidden;
             margin-top: 35px;
-
-            &.mat-select {
-                width: 0;
-            }
         }
 
         &-trigger {
@@ -98,18 +94,6 @@
             opacity: 1;
             margin-top: 9px;
             font-size: var(--theme-adf-icon-1-font-size);
-        }
-
-        &.mat-primary {
-            color: var(--theme-primary-color);
-        }
-
-        &.mat-accent {
-            color: var(--theme-accent-color);
-        }
-
-        &.mat-warn {
-            color: var(--theme-warn-color);
         }
 
         &-anchor {

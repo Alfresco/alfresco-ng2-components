@@ -9,25 +9,17 @@
         width: 100%;
     }
 
-    .mat-toolbar {
-        min-height: 48px;
+    .adf-toolbar-container.adf-toolbar-container-row {
         border: 1px solid var(--adf-theme-foreground-text-color-007);
         color: var(--adf-theme-foreground-text-color-054);
-    }
-
-    .mat-toolbar-row {
-        height: 48px;
+        height: 64px;
         font-size: var(--theme-body-1-font-size);
         white-space: normal;
-    }
-
-    .mat-toolbar-single-row {
         padding: 0 16px;
-        height: 64px;
     }
 
     &.adf-toolbar--inline {
-        .mat-toolbar {
+        .adf-toolbar-container {
             background-color: inherit;
             border: none;
             padding: 0;

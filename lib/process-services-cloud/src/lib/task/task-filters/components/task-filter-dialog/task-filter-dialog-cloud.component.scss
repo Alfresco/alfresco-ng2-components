@@ -1,9 +1,9 @@
 adf-cloud-task-filter-dialog {
-    .adf-task-filter-dialog .mat-card {
+    .adf-task-filter-dialog .adf-task-filter-dialog-card {
         padding: 0;
         box-shadow: none;
 
-        mat-card-actions {
+        .adf-task-filter-dialog-card-actions {
             display: flex;
             max-height: 100%;
             place-content: flex-end;
@@ -11,7 +11,7 @@ adf-cloud-task-filter-dialog {
         }
     }
 
-    .adf-task-filter-dialog .mat-card-content {
+    .adf-task-filter-dialog .adf-task-filter-dialog-card-content {
         padding: 0;
         box-shadow: none;
 

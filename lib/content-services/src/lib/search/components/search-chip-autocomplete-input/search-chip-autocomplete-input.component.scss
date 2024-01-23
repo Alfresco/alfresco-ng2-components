@@ -1,17 +1,13 @@
 adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
-    }
 
-    .mat-form-field-appearance-outline .mat-form-field-outline {
-        top: 0;
+        /* stylelint-disable-next-line */
+        .mat-form-field-infix {
+            border: none;
+        }
     }
-
-    .mat-form-field-infix {
-        border: none;
-    }
-
-    .mat-chip.adf-option-chips {
+    .adf-autocomplete-added-option-chips.adf-option-chips {
         border: 1px solid var(--theme-text-color);
         border-radius: 10px;
         background-color: var(--theme-primary-color-default-contrast);
@@ -19,32 +15,21 @@ adf-search-chip-autocomplete-input {
         word-break: break-word;
     }
 
-    .mat-chip-remove.adf-option-chips-delete-button {
+    .adf-option-chips-delete-button.adf-autocomplete-added-option-chips-delete-button {
         font-size: 13px;
         height: 13px;
         width: 13px;
 
-        .adf-option-chips-delete-icon.mat-icon {
+        .adf-option-chips-delete-icon.adf-autocomplete-added-option-chips-delete-icon{
             font-size: 13px;
             height: 13px;
             width: 13px;
         }
     }
 
-    .mat-chip-list-wrapper {
-        min-height: 40px;
-    }
-
-    .mat-form-field-wrapper {
-        padding: 0;
-    }
 }
 
-.mat-tooltip-hide {
-    display: none;
-}
-
-.mat-option.adf-autocomplete-added-option {
+.adf-search-chip-autocomplete-added-option.adf-autocomplete-added-option {
     background: var(--adf-theme-mat-grey-color-a200);
     color: var(--adf-theme-primary-300);
 }
