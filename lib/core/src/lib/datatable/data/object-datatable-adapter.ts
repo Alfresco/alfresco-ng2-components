@@ -133,8 +133,8 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                 }
 
                 return sorting.direction === 'asc'
-                    ? left.localeCompare(right, 'en', sorting.options)
-                    : right.localeCompare(left, 'en', sorting.options);
+                    ? left.localeCompare(right, undefined, sorting.options)
+                    : right.localeCompare(left, undefined, sorting.options);
             });
         }
     }
