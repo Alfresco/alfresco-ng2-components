@@ -46,9 +46,6 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
         { provide: OAuthStorage, useExisting: StorageService },
-        // { provide: AuthGuard, useClass: OidcAuthGuard },
-        // { provide: AuthGuardEcm, useClass: OidcAuthGuard },
-        // { provide: AuthGuardBpm, useClass: OidcAuthGuard },
         { provide: AuthenticationService},
         { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
         {
@@ -68,6 +65,7 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
 })
 export class AuthModule {
     static forRoot(config: AuthModuleConfig = { useHash: false }): ModuleWithProviders<AuthModule> {
+        config.preventClearHashAfterLogin = config.preventClearHashAfterLogin ?? true;
         return {
             ngModule: AuthModule,
             providers: [{ provide: AUTH_MODULE_CONFIG, useValue: config }]

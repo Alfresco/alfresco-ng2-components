@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TokenResponse } from 'angular-oauth2-oidc';
+import { LoginOptions, TokenResponse } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
 
 /**
@@ -54,6 +54,6 @@ export abstract class AuthService {
    *
    * @returns Promise, resolve with stored state, reject if unable to reach IdP
    */
-  abstract loginCallback(): Promise<string | undefined>;
+  abstract loginCallback(loginOptions?: LoginOptions): Promise<string | undefined>;
   abstract updateIDPConfiguration(...args: any[]): void;
 }
