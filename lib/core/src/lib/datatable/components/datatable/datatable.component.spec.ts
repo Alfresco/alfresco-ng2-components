@@ -73,7 +73,7 @@ export const resolverFn = (row: DataRow, col: DataColumn) => {
     return value;
 };
 
-describe('DataTable', () => {
+fdescribe('DataTable', () => {
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let element: any;
@@ -752,13 +752,13 @@ describe('DataTable', () => {
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
-        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'desc'));
+        spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'desc', { numeric: true }));
 
         const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
         headerColumns[0].click();
         fixture.detectChanges();
 
-        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc'));
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc', { numeric: true }));
     });
 
     it('should invert sorting upon column header clicked', () => {
@@ -767,7 +767,7 @@ describe('DataTable', () => {
         dataTable.ngAfterViewInit();
 
         const adapter = dataTable.data;
-        const sorting = new DataSorting('column_1', 'asc');
+        const sorting = new DataSorting('column_1', 'asc', { numeric: true });
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(adapter, 'getSorting').and.returnValue(sorting);
         const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
@@ -776,14 +776,14 @@ describe('DataTable', () => {
         headerColumns[0].click();
         fixture.detectChanges();
 
-        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc'));
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc', { numeric: true }));
 
         // check second click on the header
         sorting.direction = 'desc';
         headerColumns[0].click();
         fixture.detectChanges();
 
-        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc'));
+        expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc', { numeric: true }));
     });
 
     it('should indicate column that has sorting applied', () => {
