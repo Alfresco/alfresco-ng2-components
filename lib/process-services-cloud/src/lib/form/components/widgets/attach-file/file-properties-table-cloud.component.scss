@@ -1,5 +1,5 @@
-.adf-file-properties-table {
-    table {
+.adf-file-properties-table-container {
+    .adf-file-properties-table.adf-properties-table table {
         width: 100%;
         border: 1px solid var(--adf-theme-foreground-text-color-007);
         box-shadow: none;
@@ -22,7 +22,7 @@
 
         th {
             font-weight: bold;
-            padding-right: 0 !important;
+            padding-right: 0;
         }
 
         td {
@@ -30,12 +30,12 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding-right: 0 !important;
+            padding-right: 0;
         }
 
         td.adf-file-properties-table-cell:first-of-type,
         td.adf-file-properties-table-cell:last-of-type {
-            width: 18% !important;
+            width: 18%;
         }
     }
 }

@@ -1,4 +1,4 @@
-<div (keyup)="onKeyPress($event)">
+<div (keyup)="onKeyPress($event)" class="adf-notification-history-container">
     <button mat-button
             [matMenuTriggerFor]="menu"
             [attr.aria-label]="'NOTIFICATIONS.OPEN_HISTORY' | translate"
@@ -45,10 +45,10 @@
                             <mat-icon mat-list-icon
                                       class="adf-notification-history-menu-initiator">{{notification.icon}}</mat-icon>
                         </ng-template>
-                        <p class="adf-notification-history-menu-message"
+                        <p class="adf-notification-history-menu-text adf-notification-history-menu-message"
                            *ngFor="let message of notification.messages"
                            mat-line [matTooltip]="message" matTooltipShowDelay="1000">{{ message }}</p>
-                        <p class="adf-notification-history-menu-date"
+                        <p class="adf-notification-history-menu-text adf-notification-history-menu-date"
                            mat-line> {{notification.datetime | adfTimeAgo}} </p>
                     </mat-list-item>
                 </ng-container>

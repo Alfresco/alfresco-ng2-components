@@ -2,8 +2,9 @@
     &-people-cloud {
         width: 100%;
 
-        &-option-not-active {
-            background: inherit !important;
+        &-option-not-active:not(&:active) {
+            background: inherit;
+            color: var(--adf-group-cloud-autosuggest-result-disabled-color);
         }
 
         &-title {

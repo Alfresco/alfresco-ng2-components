@@ -24,7 +24,7 @@ import { TestElement } from '../../../../core/test-element';
 export class AttachFileWidgetCloudPage {
 
     widget: ElementFinder;
-    filesListLocator: string = 'div[class="adf-file-properties-table"]';
+    filesListLocator: string = 'div[class="adf-file-properties-table-container"]';
 
     constructor(fieldId: string) {
         this.assignWidget(fieldId);

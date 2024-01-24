@@ -1,16 +1,16 @@
 adf-version-manager {
-    .adf-version-list .adf-version-list-item {
-        height: auto !important;
-        width: 100% !important;
-        padding: 16px 0 !important;
+    .adf-version-list .adf-version-list-item:has(.adf-version-list-item-line) {
+        height: auto;
+        width: 100%;
+        padding: 16px 0;
     }
 }
 
 .adf-version-list-item-comment.adf-version-list-item-line {
     height: 100%;
     word-break: break-all;
-    white-space: unset !important;
-    overflow: unset !important;
+    white-space: unset;
+    overflow: unset;
 }
 
 .adf-button.adf-upload-new-version {
@@ -21,17 +21,22 @@ adf-version-manager {
     position: relative;
 }
 
-.adf-new-version-uploader-container {
-    padding: 16px 0;
-    width: 100%;
-    height: 0;
-    float: left !important;
-    position: relative;
-}
-
 .adf-new-version-container {
     height: inherit;
     overflow: hidden;
+
+    .adf-new-version-uploader-container {
+        padding: 16px 0;
+        width: 100%;
+        height: 0;
+        float: left;
+        position: relative;
+    }
+
+    .adf-version-list.adf-version-list-element {
+        width: 100%;
+        float: left;
+    }
 }
 
 .adf-version-list-table {
@@ -40,9 +45,4 @@ adf-version-manager {
 
 .adf-version-upload-table {
     width: 100%;
-}
-
-.adf-version-list {
-    width: 100% !important;
-    float: left !important;
 }

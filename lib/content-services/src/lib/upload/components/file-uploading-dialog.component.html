@@ -8,6 +8,7 @@
     <header class="adf-upload-dialog__header">
         <button
             mat-button
+            class="adf-upload-dialog__header-button"
             [attr.data-automation-id]="'adf-upload-dialog__toggle-minimize'"
             [attr.aria-label]="(isDialogMinimized ?
                 'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MAXIMIZE':
@@ -16,6 +17,7 @@
             [attr.aria-expanded]="!isDialogMinimized"
             (click)="toggleMinimized()">
             <mat-icon
+                class="adf-upload-dialog__header-button-icon"
                 mat-list-icon
                 title="{{ (isDialogMinimized ? 'ADF_FILE_UPLOAD.BUTTON.MAXIMIZE': 'ADF_FILE_UPLOAD.BUTTON.MINIMIZE') | translate }}">
                     {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
@@ -56,6 +58,7 @@
     <section class="adf-upload-dialog__content"
         [class.adf-upload-dialog--padding]="isConfirmation">
         <adf-file-uploading-list
+            class="adf-file-uploading-list"
             [class.adf-upload-dialog--hide]="isConfirmation"
             #uploadList
             [files]="filesUploadingList">

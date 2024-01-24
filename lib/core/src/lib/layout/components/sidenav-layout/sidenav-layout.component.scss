@@ -25,6 +25,7 @@
     }
 
     @include flex.layout-bp(lt-sm) {
+        /* stylelint-disable declaration-no-important */
         .adf-layout-container {
             width: calc(-50px + 100vw) !important;
             max-width: 300px !important;

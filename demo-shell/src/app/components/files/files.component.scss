@@ -1,5 +1,5 @@
-.app-container {
-    margin: 10px !important;
+.app-container:has(.app-document-list-container) {
+    margin: 10px;
 }
 
 .app-error-message {

@@ -17,8 +17,8 @@
 .adf-new-version-max-width {
     width: 100%;
     float: right;
-}
 
-.adf-new-version-text-area {
-    resize: none !important;
+    .adf-new-version-text-area {
+        resize: none;
+    }
 }

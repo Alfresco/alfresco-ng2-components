@@ -7,9 +7,9 @@
         }
     }
 
-    &-multiline-word-counter {
+    &-multiline-word-counter:has(.adf-multiline-word-counter-value) {
         float: right;
-        margin-top: -20px !important;
+        margin-top: -20px;
         min-height: 24px;
         min-width: 1px;
         font-size: var(--theme-caption-font-size);

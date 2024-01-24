@@ -72,7 +72,7 @@ $tree-header-font-size: 12px !default;
     min-width: 100%;
     box-sizing: border-box;
 
-    .adf-tree-cell-header {
+    .adf-tree-cell-header:has(.adf-tree-cell-value) {
         cursor: pointer;
         position: relative;
         vertical-align: bottom;
@@ -80,11 +80,11 @@ $tree-header-font-size: 12px !default;
         font-weight: bold;
         line-height: 24px;
         letter-spacing: 0;
-        min-height: $tree-row-height !important;
+        min-height: $tree-row-height;
         font-size: $tree-header-font-size;
         color: var(--adf-theme-foreground-text-color);
         box-sizing: border-box;
-        padding-top: 12px !important;
+        padding-top: 12px;
 
         &:focus {
             outline-offset: -1px;

@@ -23,11 +23,11 @@ adf-file-uploading-list-row:not(:first-child) {
         padding: 0 1em 0 0.5em;
     }
 
-    &__group,
-    &__block,
-    &__file-version {
+    .adf-file-uploading-row__group,
+    .adf-file-uploading-row__block,
+    .adf-file-uploading-row__file-version {
         min-width: 100px;
-        display: flex !important;
+        display: flex;
         justify-content: flex-end;
         line-height: 40px;
         height: 40px;

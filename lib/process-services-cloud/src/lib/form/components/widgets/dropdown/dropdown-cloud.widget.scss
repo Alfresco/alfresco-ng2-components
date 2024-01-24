@@ -4,7 +4,7 @@
         margin-top: 13px;
 
         .adf-select {
-            padding-top: 0 !important;
+            padding-top: 0;
             width: 100%;
         }
 
@@ -16,12 +16,14 @@
             width: 100%;
         }
 
-        &-dropdown-required-message .adf-error-container {
-            margin-top: 1px !important;
+        &-dropdown-required-message {
+            .adf-error-container {
+                margin-top: 1px;
+            }
         }
 
         &-dropdown-failed-message .adf-error-container {
-            margin-top: 1px !important;
+            margin-top: 1px;
         }
     }
 }

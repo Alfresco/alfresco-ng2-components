@@ -79,8 +79,8 @@ $adf-columns-selector-space: 12px;
         border: 1px solid var(--theme-background-color);
         background: var(--theme-background-color);
 
-        :focus {
-            outline: none !important;
+        &:focus {
+            outline: none;
         }
     }
 

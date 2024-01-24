@@ -3,9 +3,8 @@
         class="adf-layout-container-sidenav"
         [position]="position"
         [disableClose]="!isMobileScreenSize"
-        [ngClass]="{ 'adf-sidenav--hidden': hideSidenav }"
         [@sidenavAnimation]="sidenavAnimationState"
-        [opened]="!isMobileScreenSize"
+        [opened]="!isMobileScreenSize || !hideSidenav"
         [mode]="isMobileScreenSize ? 'over' : 'side'">
         <ng-content sidenav select="[app-layout-navigation]"></ng-content>
     </mat-sidenav>

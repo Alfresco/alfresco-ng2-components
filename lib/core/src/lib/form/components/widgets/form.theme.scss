@@ -39,12 +39,12 @@ ul > li > form-field > .adf-focus {
         }
 
         .mat-form-field-underline {
-            background-color: var(--theme-warn-color) !important;
+            background-color: var(--theme-warn-color);
         }
 
         .mat-select {
-            &-arrow {
-                color: var(--adf-theme-foreground-secondary-text-color) !important;
+            .mat-select-arrow {
+                color: var(--adf-theme-foreground-secondary-text-color);
             }
         }
 
@@ -72,7 +72,7 @@ ul > li > form-field > .adf-focus {
         .mat-input-element,
         .mat-select,
         .mat-form-field {
-            display: block !important;
+            display: block;
         }
     }
 }

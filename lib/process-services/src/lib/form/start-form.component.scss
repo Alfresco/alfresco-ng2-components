@@ -1,106 +1,108 @@
-.adf {
-    &-form-container {
-        max-width: 100% !important;
-        max-height: 100% !important;
+.adf-form-container {
+    max-width: 100%;
+    max-height: 100%;
 
-        & .mat-card {
-            padding: 16px 24px;
-            overflow: hidden;
-        }
-
-        & .mat-card-header-text {
-            margin: 0 !important;
-        }
-
-        & .mat-tab-body-content {
-            overflow: hidden;
-        }
-
-        & .mat-tab-label {
-            font-size: var(--theme-subheading-2-font-size);
-            line-height: var(--theme-headline-line-height);
-            letter-spacing: -0.4px;
-            text-align: left;
-            color: var(--adf-theme-foreground-text-color-054);
-            text-transform: uppercase;
-        }
-
-        & .mat-ink-bar {
-            height: 4px;
-        }
-
-        & .mat-form-field-wrapper {
-            margin: 0 12px 0 0;
-        }
+    & .mat-card {
+        padding: 16px 24px;
+        overflow: hidden;
     }
 
-    &-form-title {
-        font-size: var(--theme-title-font-size);
+    & .mat-card-header-text {
+        margin: 0;
     }
 
-    &-form-debug-container {
-        padding: 10px;
+    & .mat-tab-body-content {
+        overflow: hidden;
     }
 
-    &-form-debug-container .adf-debug-toggle-text {
-        padding-left: 15px;
-        cursor: pointer;
-    }
-
-    &-form-debug-container .adf-debug-toggle-text:hover {
-        font-weight: bold;
-    }
-
-    &-form-reload-button {
-        position: absolute;
-        right: 12px;
-        top: 30px;
-    }
-
-    &-form-validation-button {
-        position: absolute;
-        right: 50px;
-        top: 39px;
-        color: var(--theme-accent-color);
-
-        & .adf-invalid-color {
-            color: var(--theme-warn-color);
-        }
-    }
-
-    &-form-hide-button {
-        display: none !important;
-    }
-
-    &-task-title {
-        text-align: center;
-    }
-
-    &-label {
-        width: 32px;
-        height: 16px;
-        font-size: var(--theme-caption-font-size);
+    & .mat-tab-label {
+        font-size: var(--theme-subheading-2-font-size);
         line-height: var(--theme-headline-line-height);
+        letter-spacing: -0.4px;
         text-align: left;
-        white-space: nowrap;
+        color: var(--adf-theme-foreground-text-color-054);
+        text-transform: uppercase;
     }
 
-    &-form-mat-card-actions {
-        float: right;
-        padding-bottom: 25px !important;
-        padding-right: 25px !important;
+    & .mat-ink-bar {
+        height: 4px;
+    }
 
-        & .mat-button {
-            height: 36px;
-            border-radius: 5px;
-        }
+    & .mat-form-field-wrapper {
+        margin: 0 12px 0 0;
+    }
 
-        & .mat-button-wrapper {
-            width: 58px;
-            height: 20px;
-            opacity: 0.54;
-            font-size: var(--theme-body-2-font-size);
-            font-weight: bold;
+    .adf-form-container-card {
+        .adf {
+            &-form-title {
+                font-size: var(--theme-title-font-size);
+            }
+
+            &-form-debug-container {
+                padding: 10px;
+            }
+
+            &-form-debug-container .adf-debug-toggle-text {
+                padding-left: 15px;
+                cursor: pointer;
+            }
+
+            &-form-debug-container .adf-debug-toggle-text:hover {
+                font-weight: bold;
+            }
+
+            &-form-reload-button {
+                position: absolute;
+                right: 12px;
+                top: 30px;
+            }
+
+            &-form-validation-button {
+                position: absolute;
+                right: 50px;
+                top: 39px;
+                color: var(--theme-accent-color);
+
+                & .adf-invalid-color {
+                    color: var(--theme-warn-color);
+                }
+            }
+
+            &-form-hide-button {
+                display: none;
+            }
+
+            &-task-title {
+                text-align: center;
+            }
+
+            &-label {
+                width: 32px;
+                height: 16px;
+                font-size: var(--theme-caption-font-size);
+                line-height: var(--theme-headline-line-height);
+                text-align: left;
+                white-space: nowrap;
+            }
+
+            &-form-mat-card-actions {
+                float: right;
+                padding-bottom: 25px;
+                padding-right: 25px;
+
+                & .mat-button {
+                    height: 36px;
+                    border-radius: 5px;
+                }
+
+                & .mat-button-wrapper {
+                    width: 58px;
+                    height: 20px;
+                    opacity: 0.54;
+                    font-size: var(--theme-body-2-font-size);
+                    font-weight: bold;
+                }
+            }
         }
     }
 }

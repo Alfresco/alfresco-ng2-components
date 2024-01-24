@@ -12,8 +12,9 @@
         padding: 1em;
     }
 
-    &--hide {
-        display: none !important;
+    &--hide.adf-upload-dialog__confirmation,
+    &--hide.adf-file-uploading-list {
+        display: none;
     }
 
     &--minimized {
@@ -29,11 +30,11 @@
         display: flex;
         align-items: center;
 
-        button {
+        &-button:is(button) {
             min-width: 0;
             padding: 0;
             line-height: 0;
-            color: var(--adf-theme-foreground-text-color-054) !important;
+            color: var(--adf-theme-foreground-text-color-054);
         }
     }
 
