@@ -17,7 +17,7 @@
 
 import { MDAST } from 'mdast';
 import { UNIST } from 'unist';
-import * as mdToString from 'mdast-util-to-string';
+import { toString } from 'mdast-util-to-string';
 import * as jsyaml from 'js-yaml';
 
 export const schema = `
@@ -116,7 +116,7 @@ export class Node {
 
     children(): Node[] {
         if (this.orig['children']) {
-            return this.orig['children'].map(x => new Node(x));
+            return this.orig['children'].map((x) => new Node(x));
         } else {
             return null;
         }
@@ -124,53 +124,34 @@ export class Node {
 }
 
 export class Parent {
-
     constructor(protected orig: UNIST.Parent) {}
 
     plaintext(): string {
-        return mdToString(this.orig);
+        return toString(this.orig);
     }
 
     paragraph(): Paragraph {
-        return new Paragraph(<MDAST.Paragraph> this.orig.children.find(
-            (ch: UNIST.Node) => (ch.type === 'paragraph')
-        ));
+        return new Paragraph(<MDAST.Paragraph>this.orig.children.find((ch: UNIST.Node) => ch.type === 'paragraph'));
     }
 
     paragraphs(): Paragraph[] {
-        return this.orig.children.filter(
-            (ch: UNIST.Node) =>
-                 (ch.type === 'paragraph')
-            )
-        .map(ch => new Paragraph(<MDAST.Paragraph> ch));
+        return this.orig.children.filter((ch: UNIST.Node) => ch.type === 'paragraph').map((ch) => new Paragraph(<MDAST.Paragraph>ch));
     }
 
     link(): Link {
-        return new Link(<MDAST.Link> this.orig.children.find(
-            (ch: UNIST.Node) => (ch.type === 'link')
-        ));
+        return new Link(<MDAST.Link>this.orig.children.find((ch: UNIST.Node) => ch.type === 'link'));
     }
 
     links(): Link[] {
-        return this.orig.children.filter(
-            (ch: UNIST.Node) =>
-                 (ch.type === 'link')
-            )
-        .map(ch => new Link(<MDAST.Link> ch));
+        return this.orig.children.filter((ch: UNIST.Node) => ch.type === 'link').map((ch) => new Link(<MDAST.Link>ch));
     }
 
     text(): Text {
-        return new Text(<MDAST.TextNode> this.orig.children.find(
-            (ch: UNIST.Node) => (ch.type === 'text')
-        ));
+        return new Text(<MDAST.TextNode>this.orig.children.find((ch: UNIST.Node) => ch.type === 'text'));
     }
 
     texts(): Text[] {
-        return this.orig.children.filter(
-            (ch: UNIST.Node) =>
-                 (ch.type === 'text')
-            )
-        .map(ch => new Text(<MDAST.TextNode> ch));
+        return this.orig.children.filter((ch: UNIST.Node) => ch.type === 'text').map((ch) => new Text(<MDAST.TextNode>ch));
     }
 }
 
@@ -192,9 +173,7 @@ export class Root extends Parent {
 
     metadata(args): string {
         if (!this._meta) {
-            const yamlElement: any = this.orig.children.find(
-                (ch: UNIST.Node) => (ch.type === 'yaml')
-            );
+            const yamlElement: any = this.orig.children.find((ch: UNIST.Node) => ch.type === 'yaml');
 
             if (yamlElement) {
                 this._meta = jsyaml.safeLoad(yamlElement.value);
@@ -213,41 +192,35 @@ export class Root extends Parent {
     heading(args): Heading {
         const depth = args['depth'];
 
-        return new Heading(<MDAST.Heading> this.orig.children.find(
-            (ch: UNIST.Node) =>
-                (ch.type === 'heading') &&
-                ((depth === 0) || (depth === (<MDAST.Heading> ch).depth))
-        ));
+        return new Heading(
+            <MDAST.Heading>this.orig.children.find((ch: UNIST.Node) => ch.type === 'heading' && (depth === 0 || depth === (<MDAST.Heading>ch).depth))
+        );
     }
 
     headings(args): Heading[] {
         const depth = args['depth'];
 
-        return this.orig.children.filter(
-            (ch: UNIST.Node) =>
-                 (ch.type === 'heading') &&
-                ((depth === 0) || (depth === (<MDAST.Heading> ch).depth)))
-        .map(ch => new Heading(<MDAST.Heading> ch));
+        return this.orig.children
+            .filter((ch: UNIST.Node) => ch.type === 'heading' && (depth === 0 || depth === (<MDAST.Heading>ch).depth))
+            .map((ch) => new Heading(<MDAST.Heading>ch));
     }
 }
 
 export class Heading extends Parent {
     depth(): number {
-        return (<MDAST.Heading> this.orig).depth;
+        return (<MDAST.Heading>this.orig).depth;
     }
 }
 
-export class Paragraph extends Parent {
-}
+export class Paragraph extends Parent {}
 
 export class Link extends Parent {
-
     title(): string {
-        return (<MDAST.Link> this.orig).title;
+        return (<MDAST.Link>this.orig).title;
     }
 
     url(): string {
-        return (<MDAST.Link> this.orig).url;
+        return (<MDAST.Link>this.orig).url;
     }
 }
 
@@ -269,11 +242,8 @@ export class Docset {
 
         const pathnames = Object.keys(mdCache);
 
-        pathnames.forEach(pathname => {
-
-            if (!pathname.match(/README/) &&
-                pathname.match(libNamesRegex)
-            ) {
+        pathnames.forEach((pathname) => {
+            if (!pathname.match(/README/) && pathname.match(libNamesRegex)) {
                 const doc = new Root(mdCache[pathname].mdInTree);
                 doc.id = pathname.replace(/\\/g, '/');
                 this.docs.push(doc);
@@ -285,7 +255,7 @@ export class Docset {
         if (args['idFilter'] === '') {
             return this.docs;
         } else {
-            return this.docs.filter(doc => doc.id.indexOf(args['idFilter'] + '/') !== -1);
+            return this.docs.filter((doc) => doc.id.indexOf(args['idFilter'] + '/') !== -1);
         }
     }
 
