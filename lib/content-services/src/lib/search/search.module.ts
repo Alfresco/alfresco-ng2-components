@@ -28,6 +28,7 @@ import { SearchComponent } from './components/search.component';
 import { EmptySearchResultComponent } from './components/empty-search-result.component';
 import { SearchWidgetContainerComponent } from './components/search-widget-container/search-widget-container.component';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { SearchFilterCardComponent } from './components/search-filter/search-filter-card/search-filter-card.component';
 import { SearchChipListComponent } from './components/search-chip-list/search-chip-list.component';
 import { SearchTextComponent } from './components/search-text/search-text.component';
 import { SearchChipAutocompleteInputComponent } from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
@@ -73,6 +74,7 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchControlComponent,
         EmptySearchResultComponent,
         SearchFilterComponent,
+        SearchFilterCardComponent,
         SearchChipListComponent,
         SearchWidgetContainerComponent,
         SearchTextComponent,
@@ -107,6 +109,7 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchControlComponent,
         EmptySearchResultComponent,
         SearchFilterComponent,
+        SearchFilterCardComponent,
         SearchChipListComponent,
         SearchWidgetContainerComponent,
         SearchTextComponent,

@@ -6,10 +6,16 @@
         </label>
         <div class="adf-attach-widget-container" (focusout)="markAsTouched()">
             <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible()">
-                <button (click)="openSelectDialog()" mat-raised-button color="primary" [id]="field.id"
-                    [matTooltip]="field.tooltip" matTooltipPosition="above" matTooltipShowDelay="1000">
-                    {{ 'FORM.FIELD.ATTACH' | translate }}
-                    <mat-icon>{{getWidgetIcon()}}</mat-icon>
+                <button
+                    (click)="openSelectDialog()"
+                    mat-raised-button
+                    color="primary"
+                    [id]="field.id"
+                    [matTooltip]="field.tooltip"
+                    matTooltipPosition="above"
+                    matTooltipShowDelay="1000">
+                        {{ 'FORM.FIELD.ATTACH' | translate }}
+                        <mat-icon class="adf-attach-widget__icon">{{getWidgetIcon()}}</mat-icon>
                 </button>
             </div>
         </div>

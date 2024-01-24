@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
-import { OidcAuthGuard } from './oidc-auth.guard';
+import { Pipe, PipeTransform } from '@angular/core';
+import { SearchWidgetSettings } from '../search/models/search-widget-settings.interface';
 
-const routes: Routes = [
-  { path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent, canActivate: [OidcAuthGuard]}
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+@Pipe({
+  name: 'tabLabels'
 })
-export class AuthRoutingModule {}
+export class TabLabelsPipe implements PipeTransform {
+
+  transform(field: string, settings?: SearchWidgetSettings): string {
+    return settings && settings.displayedLabelsByField && settings.displayedLabelsByField[field] ? settings.displayedLabelsByField[field] : field;
+  }
+
+}

@@ -20,6 +20,7 @@ import { NgModule } from '@angular/core';
 import { NodeNameTooltipPipe } from './node-name-tooltip.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { IsIncludedPipe } from './is-included.pipe';
+import { TabLabelsPipe } from './tab-labels.pipe';
 
 @NgModule({
     imports: [
@@ -28,15 +29,18 @@ import { IsIncludedPipe } from './is-included.pipe';
     ],
     declarations: [
         NodeNameTooltipPipe,
-        IsIncludedPipe
+        IsIncludedPipe,
+        TabLabelsPipe
     ],
     providers: [
         NodeNameTooltipPipe,
-        IsIncludedPipe
+        IsIncludedPipe,
+        TabLabelsPipe
     ],
     exports: [
         NodeNameTooltipPipe,
-        IsIncludedPipe
+        IsIncludedPipe,
+        TabLabelsPipe
     ]
 })
 export class ContentPipeModule {

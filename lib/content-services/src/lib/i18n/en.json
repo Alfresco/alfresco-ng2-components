@@ -155,7 +155,8 @@
         "EMPTY_TAG": "Tag name can't contain only spaces",
         "REQUIRED": "Tag name is required",
         "FETCH_TAGS": "Error while fetching the tags",
-        "CREATE_TAGS": "Error while creating the tags"
+        "CREATE_TAGS": "Error while creating the tags",
+        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
       },
       "TOOLTIPS": {
         "DELETE_TAG": "Delete tag"

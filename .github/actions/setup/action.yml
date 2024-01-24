@@ -26,12 +26,12 @@ runs:
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@f2259c2bb5ff4a5579d1a425cb130175a6459665 # v5.10.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@e75b58f8772ae86fc67fe2d48ff05392d9021393 # v5.11.1
 # CACHE
       - name: Node Modules cache
         id: node-modules-cache
         if: ${{ inputs.enable-node-modules-cache == 'true' }}
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
         env:
           cache-name: node-modules-cache
         with:
@@ -43,7 +43,7 @@ runs:
             node_modules-${{ runner.os }}-build-
             node_modules-${{ runner.os }}-
       - name: pip cache
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
         if: ${{ inputs.enable-cache == 'true' }}
         with:
           path: ~/.cache/pip

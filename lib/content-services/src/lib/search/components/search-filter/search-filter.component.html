@@ -17,11 +17,9 @@
                 {{ category.name | translate }}
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <adf-search-widget-container
-            [id]="category.id"
-            [selector]="category.component.selector"
-            [settings]="category.component.settings">
-        </adf-search-widget-container>
+        <adf-search-filter-card 
+            [category]="category">
+        </adf-search-filter-card>
     </mat-expansion-panel>
 
     <ng-container *ngIf="facetFiltersService.tabbedFacet && showContextFacets">
