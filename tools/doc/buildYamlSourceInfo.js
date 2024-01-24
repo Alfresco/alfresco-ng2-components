@@ -1,12 +1,12 @@
-var fs = require("fs");
-var path = require("path");
-var ejs = require("ejs");
+const fs = require('fs');
+const path = require('path');
+const ejs = require('ejs');
 
-var templateFolder = path.resolve("tools", "doc", "yamlTemplates");
-var outputFolder = path.resolve("docs", "sourceinfo");
+const templateFolder = path.resolve('tools', 'doc', 'yamlTemplates');
+const outputFolder = path.resolve('docs', 'sourceinfo');
 
 if (process.argv.length < 3) {
-    console.log("Error: Source filename required");
+    console.log('Error: Source filename required');
     process.exit();
 }
 
@@ -16,41 +16,36 @@ if (!fs.existsSync(outputFolder)) {
     fs.mkdirSync(outputFolder);
 }
 
-var docData = JSON.parse(fs.readFileSync(path.resolve(process.argv[2]), "utf8"));
-var tempFilename = path.resolve(templateFolder, "template.ejs");
-var tempSource = fs.readFileSync(tempFilename, "utf8");
-var template = ejs.compile(
-    tempSource,
-    {
-        filename: tempFilename,
-        cache: true
-    }
-);
+const docData = JSON.parse(fs.readFileSync(path.resolve(process.argv[2]), 'utf8'));
+const tempFilename = path.resolve(templateFolder, 'template.ejs');
+const tempSource = fs.readFileSync(tempFilename, 'utf8');
+const template = ejs.compile(tempSource, {
+    filename: tempFilename,
+    cache: true
+});
 
 searchItemsRecursively(docData);
 
 function searchItemsRecursively(item) {
     if (interestedIn(item.kind)) {
-
         processItem(item);
     } else if (item.children) {
-        item.children.forEach(child => {
+        item.children.forEach((child) => {
             searchItemsRecursively(child);
         });
     }
 }
 
 function interestedIn(itemKind) {
-    return (itemKind === 128) || (itemKind === 256) || (itemKind === 4194304);
+    return itemKind === 128 || itemKind === 256 || itemKind === 4194304;
 }
 
-
 function processItem(item) {
-    var docText = template(item);
+    const docText = template(item);
 
-    if( item.name  === 'Widget'){
-        console.log('item ' + JSON.stringify(item.name ));
+    if (item.name === 'Widget') {
+        console.log('item ' + JSON.stringify(item.name));
     }
 
-    fs.writeFileSync(path.resolve(outputFolder, item.name + ".yml"), docText);
+    fs.writeFileSync(path.resolve(outputFolder, item.name + '.yml'), docText);
 }
