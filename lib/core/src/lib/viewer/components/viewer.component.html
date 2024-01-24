@@ -171,7 +171,8 @@
                 (submitFile)="onSubmitFile($event)"
                 [urlFile]="urlFile"
                 (isSaving)="allowNavigate = !$event"
-                [tracks]="tracks">
+                [tracks]="tracks"
+                [viewerTemplateExtensions]="viewerExtensions ?? viewerTemplateExtensions">
             </adf-viewer-render>
 
         </div>

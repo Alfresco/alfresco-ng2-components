@@ -17,7 +17,7 @@
 
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { Component, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
@@ -33,8 +33,20 @@ import { By } from '@angular/platform-browser';
 @Component({
     selector: 'adf-double-viewer',
     template: `
-        <adf-viewer-render [urlFile]="urlFileViewer1" #viewer1></adf-viewer-render>
+        <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions" #viewer1></adf-viewer-render>
         <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2></adf-viewer-render>
+        <ng-template #viewerExtension>
+            <adf-viewer-extension [supportedExtensions]="['json']">
+                <ng-template>
+                    <h1>JSON Viewer</h1>
+                </ng-template>
+            </adf-viewer-extension>
+            <adf-viewer-extension [supportedExtensions]="['test']">
+                <ng-template>
+                    <h1>Test Viewer</h1>
+                </ng-template>
+            </adf-viewer-extension>
+        </ng-template>
     `
 })
 class DoubleViewerComponent {
@@ -43,6 +55,9 @@ class DoubleViewerComponent {
 
     @ViewChild('viewer2')
     viewer2: ViewerRenderComponent;
+
+    @ViewChild('viewerExtension', { static: true })
+    viewerTemplateExtensions: TemplateRef<any>;
 
     urlFileViewer1: string;
     urlFileViewer2: string;
@@ -258,6 +273,43 @@ describe('ViewerComponent', () => {
                 expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
                 done();
             });
+        });
+    });
+
+    describe('Custom viewer extension template', () => {
+        const getCustomViewerContent = (fixture: ComponentFixture<DoubleViewerComponent>): HTMLHeadingElement => {
+            return fixture.debugElement.query(By.css('.adf-viewer-render-custom-content h1')).nativeElement;
+        };
+
+        it('should render provided custom template when file type matches supported extensions', async () => {
+            const fixtureCustom = TestBed.createComponent(DoubleViewerComponent);
+            fixtureCustom.detectChanges();
+            await fixtureCustom.whenStable();
+
+            const customComponent = fixtureCustom.componentInstance.viewer1;
+            fixtureCustom.componentInstance.urlFileViewer1 = 'fake-url-file.json';
+            customComponent.ngOnChanges();
+
+            fixtureCustom.detectChanges();
+            await fixtureCustom.whenStable();
+
+            let customContent = getCustomViewerContent(fixtureCustom);
+            expect(customComponent.extensionsSupportedByTemplates).toEqual(['json', 'test']);
+            expect(customComponent.extensionTemplates.length).toBe(2);
+            expect(customComponent.extensionTemplates[0].isVisible).toBeTrue();
+            expect(customComponent.extensionTemplates[1].isVisible).toBeFalse();
+            expect(customContent.innerText).toBe('JSON Viewer');
+
+            fixtureCustom.componentInstance.urlFileViewer1 = 'fake-url-file.test';
+            customComponent.ngOnChanges();
+
+            fixtureCustom.detectChanges();
+            await fixtureCustom.whenStable();
+
+            customContent = getCustomViewerContent(fixtureCustom);
+            expect(customComponent.extensionTemplates[0].isVisible).toBeFalse();
+            expect(customComponent.extensionTemplates[1].isVisible).toBeTrue();
+            expect(customContent.innerText).toBe('Test Viewer');
         });
     });
 

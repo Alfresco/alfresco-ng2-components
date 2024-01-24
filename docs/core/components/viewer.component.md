@@ -85,6 +85,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | sidebarRightTemplateContext |  | null | Context object available for binding by the local sidebarRightTemplate with let declarations. |
 | tracks | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
+| viewerExtensions | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. |
 
 ### Events
 
@@ -209,47 +210,47 @@ The Viewer supports dynamically-loaded viewer preview extensions, to know more a
 
 #### Code extension mechanism]
 
-You can define your own custom handler to handle other file formats that are not yet supported by
+You can define your own custom handler to override supported file formats or handle other file formats that are not yet supported by
 the [Viewer component](viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
 to handle 3D data files:
 
 ```html
 <adf-viewer [urlFile]="urlFile">
-    
-    <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
-        <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
-            <threed-viewer 
-                [urlFile]="urlFileContent" 
-                [extension]="extension">
-            </threed-viewer>
-        </ng-template>
-    </adf-viewer-extension>
-
+    <ng-template #viewerExtensions>
+        <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
+                <threed-viewer 
+                    [urlFile]="urlFileContent" 
+                    [extension]="extension">
+                </threed-viewer>
+            </ng-template>
+        </adf-viewer-extension>
+    </ng-template>
 </adf-viewer> 
 ```
 
 Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
 
-You can define multiple `adf-viewer-extension` templates if required:
-
+You need to keep all instances of `adf-viewer-extension` inside `viewerExtensions` template, also you can define multiple `adf-viewer-extension` templates if required:
 ```html
 <adf-viewer [urlFile]="urlFile">
+    <ng-template #viewerExtensions>
+        <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
+            <ng-template let-urlFileContent="urlFileContent">
+                <my-custom-xls-component
+                    urlFileContent="urlFileContent">
+                </my-custom-xls-component>
+            </ng-template>
+        </adf-viewer-extension>
 
-    <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
-        <ng-template let-urlFileContent="urlFileContent">
-            <my-custom-xls-component 
-                urlFileContent="urlFileContent">
-            </my-custom-xls-component>
-        </ng-template>
-    </adf-viewer-extension>
-
-    <adf-viewer-extension [supportedExtensions]="['txt']" #extension>
-        <ng-template let-urlFileContent="urlFileContent" >               
-            <my-custom-txt-component 
-                urlFileContent="urlFileContent">
-            </my-custom-txt-component>
-        </ng-template>
-    </adf-viewer-extension>
+        <adf-viewer-extension [supportedExtensions]="['txt']" #extension>
+            <ng-template let-urlFileContent="urlFileContent" >
+                <my-custom-txt-component
+                    urlFileContent="urlFileContent">
+                </my-custom-txt-component>
+            </ng-template>
+        </adf-viewer-extension>
+    </ng-template>
 </adf-viewer> 
 ```
 

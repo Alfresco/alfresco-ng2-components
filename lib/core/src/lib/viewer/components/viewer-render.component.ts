@@ -18,7 +18,7 @@
 import {
     Component, EventEmitter,
     Input, OnChanges, Output, TemplateRef,
-    ViewEncapsulation, OnInit, OnDestroy
+    ViewEncapsulation, OnInit, OnDestroy, Injector
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
@@ -79,6 +79,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     tracks: Track[] = [];
 
+    /** Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. */
+    @Input()
+    viewerTemplateExtensions: TemplateRef<any>;
+
     /** Emitted when the filename extension changes. */
     @Output()
     extensionChange = new EventEmitter<string>();
@@ -96,6 +100,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     isSaving = new EventEmitter<boolean>();
 
     extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
+    extensionsSupportedByTemplates: string[] = [];
     extension: string;
     internalFileName: string;
     viewerType: string = 'unknown';
@@ -133,7 +138,8 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     constructor(private viewUtilService: ViewUtilService,
                 private extensionService: AppExtensionService,
-                public dialog: MatDialog) {
+                public dialog: MatDialog,
+                public readonly injector: Injector) {
     }
 
     ngOnInit() {
@@ -166,7 +172,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     private setUpUrlFile() {
         this.internalFileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
         this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
-        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType);
+        this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates);
 
         this.extensionChange.emit(this.extension);
         this.scrollTop();
