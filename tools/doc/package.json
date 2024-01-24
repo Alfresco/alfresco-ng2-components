@@ -11,7 +11,6 @@
     "graphql": "^15.4.0",
     "graphql-request": "^3.1.0",
     "js-yaml": "3.14.1",
-    "markdownlint-cli": "^0.34.0",
     "mdast": "3.0.0",
     "mdast-util-compact": "1.0.3",
     "mdast-util-heading-range": "2.1.3",

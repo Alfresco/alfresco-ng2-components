@@ -9,7 +9,6 @@
     "ng": "nx",
     "00": "echo -------------------------------------------- DOC  -----------------------------------------------",
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
-    "markdownlint": "markdownlint ./docs",
     "docbuild": "(cd ./tools/doc; npm i) && node tools/doc/node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.doc.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
     "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "affected:libs": "nx affected:libs",
