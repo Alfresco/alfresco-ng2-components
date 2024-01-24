@@ -277,9 +277,8 @@ describe('ViewerComponent', () => {
     });
 
     describe('Custom viewer extension template', () => {
-        const getCustomViewerContent = (fixture: ComponentFixture<DoubleViewerComponent>): HTMLHeadingElement => {
-            return fixture.debugElement.query(By.css('.adf-viewer-render-custom-content h1')).nativeElement;
-        };
+        const getCustomViewerContent = (customFixture: ComponentFixture<DoubleViewerComponent>): HTMLHeadingElement =>
+            customFixture.debugElement.query(By.css('.adf-viewer-render-custom-content h1')).nativeElement;
 
         it('should render provided custom template when file type matches supported extensions', async () => {
             const fixtureCustom = TestBed.createComponent(DoubleViewerComponent);
@@ -390,7 +389,6 @@ describe('ViewerComponent', () => {
                 expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
-
         }, 25000);
 
         it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
