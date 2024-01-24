@@ -11,7 +11,6 @@
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
     "markdownlint": "markdownlint ./docs",
     "docbuild": "(cd ./tools/doc; npm i) && node tools/doc/node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.doc.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
-    "review-checker": "node ./tools/doc/reviewChecker.js",
     "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "affected:libs": "nx affected:libs",
     "coverage": "./lib/config/create-coverage-index.sh && lite-server -c ./lib/config/proxy-coverage.json",
