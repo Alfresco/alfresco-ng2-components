@@ -96,7 +96,7 @@ export class ExtensionLoaderService {
      * Retrieves configuration elements.
      * Filters element by **enabled** and **order** attributes.
      * Example:
-     *  `getElements<ViewerExtensionRef>(config, 'features.viewer.content')`
+     *  `getElements<ViewerExtensionRef>(config, 'features.viewer.extensions')`
      *
      * @param config configuration settings
      * @param key element key

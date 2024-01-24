@@ -72,7 +72,7 @@ export class AppExtensionService {
      */
     getViewerExtensions(): ViewerExtensionRef[] {
         return this.extensionService
-            .getElements<ViewerExtensionRef>('features.viewer.content')
+            .getElements<ViewerExtensionRef>('features.viewer.extensions')
             .filter((extension) => !this.isViewerExtensionDisabled(extension));
     }
 
