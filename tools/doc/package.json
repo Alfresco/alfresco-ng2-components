@@ -9,7 +9,6 @@
     "ejs": "^3.1.6",
     "fast-levenshtein": "^3.0.0",
     "graphql": "^15.4.0",
-    "graphql-request": "^3.1.0",
     "js-yaml": "3.14.1",
     "mdast": "3.0.0",
     "mdast-util-compact": "1.0.3",

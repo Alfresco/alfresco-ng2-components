@@ -31,10 +31,10 @@ let nameExceptions;
 export function processDocs(mdCache, aggData) {
     nameExceptions = aggData.config.typeNameExceptions;
 
-    const pathnames = Object.keys(mdCache);
+    const pathNames = Object.keys(mdCache);
     let internalErrors;
 
-    pathnames.forEach(pathname => {
+    pathNames.forEach((pathname) => {
         internalErrors = [];
         updateFile(mdCache[pathname].mdOutTree, pathname, aggData, internalErrors);
 
@@ -47,7 +47,7 @@ export function processDocs(mdCache, aggData) {
 function showErrors(filename, errorMessages) {
     console.log(filename);
 
-    errorMessages.forEach(message => {
+    errorMessages.forEach((message) => {
         console.log('    ' + message);
     });
 
@@ -55,7 +55,6 @@ function showErrors(filename, errorMessages) {
 }
 
 function updateFile(tree, pathname, aggData, errorMessages) {
-
     const className = ngNameToClassName(path.basename(pathname, '.md'), nameExceptions);
     const classTypeMatch = className.match(/component|directive|service/i);
     const compData = aggData.classInfo[className];
@@ -66,8 +65,6 @@ function updateFile(tree, pathname, aggData, errorMessages) {
         // Copy docs back from the .md file when the JSDocs are empty.
         const inputMD = getPropDocsFromMD(tree, 'Properties', 3);
         const outputMD = getPropDocsFromMD(tree, 'Events', 2);
-
-
 
         updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
 
@@ -81,7 +78,7 @@ function updateFile(tree, pathname, aggData, errorMessages) {
         const template = ejs.compile(templateSource);
 
         let mdText = template(compData);
-        mdText = mdText.replace(/^ +\|/mg, '|');
+        mdText = mdText.replace(/^ +\|/gm, '|');
 
         const newSection = remark().parse(mdText.trim()).children;
 
@@ -91,7 +88,7 @@ function updateFile(tree, pathname, aggData, errorMessages) {
             return newSection;
         });
 
-        compData.errors.forEach(err => {
+        compData.errors.forEach((err) => {
             errorMessages.push(err);
         });
     }
@@ -104,37 +101,31 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
 
     const nav = new MDNav(tree);
 
-    const classMemHeading = nav
-        .heading(h => {
-            return (h.children[0].type === 'text') && (h.children[0].value === 'Class members');
-        });
+    const classMemHeading = nav.heading((h) => {
+        return h.children[0].type === 'text' && h.children[0].value === 'Class members';
+    });
 
     const propsTable = classMemHeading
-        .heading(h => {
-            return (h.children[0].type === 'text') && (h.children[0].value === sectionHeading);
-        }).table();
+        .heading((h) => {
+            return h.children[0].type === 'text' && h.children[0].value === sectionHeading;
+        })
+        .table();
 
-    let propTableRow = propsTable.childNav
-        .tableRow(() => true, 1).childNav;
+    let propTableRow = propsTable.childNav.tableRow(() => true, 1).childNav;
 
     let i = 1;
 
     while (!propTableRow.empty) {
-        const propName = propTableRow
-            .tableCell().childNav
-            .text().item.value;
+        const propName = propTableRow.tableCell().childNav.text().item.value;
 
-        const propDocText = propTableRow
-            .tableCell(() => true, docsColumn).childNav
-            .text().item;
+        const propDocText = propTableRow.tableCell(() => true, docsColumn).childNav.text().item;
 
         if (propDocText) {
             result[propName] = propDocText.value;
         }
 
         i++;
-        propTableRow = propsTable.childNav
-            .tableRow(() => true, i).childNav;
+        propTableRow = propsTable.childNav.tableRow(() => true, i).childNav;
     }
 
     return result;
@@ -145,25 +136,22 @@ function getMethodDocsFromMD(tree) {
 
     const nav = new MDNav(tree);
 
-    const classMemHeading = nav
-        .heading(h => {
-            return (h.children[0].type === 'text') && (h.children[0].value === 'Class members');
-        });
+    const classMemHeading = nav.heading((h) => {
+        return h.children[0].type === 'text' && h.children[0].value === 'Class members';
+    });
 
     const methListItems = classMemHeading
-        .heading(h => {
-            return (h.children[0].type === 'text') && (h.children[0].value === 'Methods');
-        }).list().childNav;
+        .heading((h) => {
+            return h.children[0].type === 'text' && h.children[0].value === 'Methods';
+        })
+        .list().childNav;
 
-    let methItem = methListItems
-        .listItem();
+    let methItem = methListItems.listItem();
 
     let i = 0;
 
     while (!methItem.empty) {
-        const methNameSection = methItem.childNav
-            .paragraph().childNav
-            .strong().childNav;
+        const methNameSection = methItem.childNav.paragraph().childNav.strong().childNav;
 
         let methName = '';
 
@@ -171,23 +159,19 @@ function getMethodDocsFromMD(tree) {
         if (!methNameSection.empty) {
             methName = methNameSection.text().item.value;
 
-            const methDoc = methItem.childNav
-                .paragraph().childNav
-                .html()
-                .text().value;
+            const methDoc = methItem.childNav.paragraph().childNav.html().text().value;
 
             const params = getMDMethodParams(methItem);
 
             result[methName] = {
-                'docText': methDoc.replace(/^\n/, ''),
-                'params': params
+                docText: methDoc.replace(/^\n/, ''),
+                params: params
             };
         }
 
         i++;
 
-        methItem = methListItems
-            .listItem(l => true, i);
+        methItem = methListItems.listItem((l) => true, i);
     }
 
     return result;
@@ -198,31 +182,24 @@ function getMDMethodParams(methItem: MDNav) {
 
     const paramList = methItem.childNav.list().childNav;
 
-    const paramListItems = paramList
-        .listItems();
+    const paramListItems = paramList.listItems();
 
-    paramListItems.forEach(paramListItem => {
-        const paramNameNode = paramListItem.childNav
-            .paragraph().childNav
-            .emph().childNav;
+    paramListItems.forEach((paramListItem) => {
+        const paramNameNode = paramListItem.childNav.paragraph().childNav.emph().childNav;
 
         let paramName;
 
         if (!paramNameNode.empty) {
             paramName = paramNameNode.text().item.value.replace(/:/, '');
         } else {
-            let item = paramListItem.childNav.paragraph().childNav
-                .strong().childNav.text();
+            let item = paramListItem.childNav.paragraph().childNav.strong().childNav.text();
 
             if (paramName) {
                 paramName = item.value;
             }
-
         }
 
-        const paramDoc = paramListItem.childNav
-            .paragraph().childNav
-            .text(t => true, 1).value; // item.value;
+        const paramDoc = paramListItem.childNav.paragraph().childNav.text((t) => true, 1).value; // item.value;
 
         result[paramName] = paramDoc.replace(/^[ -]+/, '');
     });
@@ -231,7 +208,7 @@ function getMDMethodParams(methItem: MDNav) {
 }
 
 function updatePropDocsFromMD(comp: ComponentInfo, inputDocs, outputDocs, errorMessages) {
-    comp.properties.forEach(prop => {
+    comp.properties.forEach((prop) => {
         let propMDDoc: string;
 
         if (prop.isInput) {
@@ -249,7 +226,7 @@ function updatePropDocsFromMD(comp: ComponentInfo, inputDocs, outputDocs, errorM
 }
 
 function updateMethodDocsFromMD(comp: ComponentInfo, methodDocs, errorMessages) {
-    comp.methods.forEach(meth => {
+    comp.methods.forEach((meth) => {
         const currMethMD = methodDocs[meth.name];
 
         // If JSDocs are empty but MD docs aren't then the Markdown is presumably more up-to-date.
@@ -258,7 +235,7 @@ function updateMethodDocsFromMD(comp: ComponentInfo, methodDocs, errorMessages) 
             errorMessages.push(`Warning: empty JSDocs for method sig "${meth.name}" may need sync with the .md file.`);
         }
 
-        meth.params.forEach(param => {
+        meth.params.forEach((param) => {
             if (!param.docText && currMethMD && currMethMD.params[param.name]) {
                 param.docText = currMethMD.params[param.name];
                 errorMessages.push(`Warning: empty JSDocs for parameter "${param.name} (${meth.name})" may need sync with the .md file.`);

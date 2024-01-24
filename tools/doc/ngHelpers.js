@@ -7,7 +7,7 @@ module.exports = {
 };
 
 function ngNameToDisplayName(ngName) {
-    var mainSections = ngName.split('.');
+    const mainSections = ngName.split('.');
     mainSections[0] = dekebabifyName(mainSections[0]);
     return mainSections.join(' ');
 }
@@ -19,18 +19,18 @@ function initialCap(str) {
 function ngNameToClassName(rawName, nameExceptions) {
     if (nameExceptions[rawName]) return nameExceptions[rawName];
 
-    var name = rawName.replace(/\]|\(|\)/g, '');
+    const name = rawName.replace(/\]|\(|\)/g, '');
 
-    var fileNameSections = name.split('.');
-    var compNameSections = fileNameSections[0].split('-');
+    const fileNameSections = name.split('.');
+    const compNameSections = fileNameSections[0].split('-');
 
-    var outCompName = '';
+    let outCompName = '';
 
-    for (var i = 0; i < compNameSections.length; i++) {
+    for (let i = 0; i < compNameSections.length; i++) {
         outCompName = outCompName + initialCap(compNameSections[i]);
     }
 
-    var itemTypeIndicator = '';
+    let itemTypeIndicator = '';
 
     if (fileNameSections.length > 1) {
         itemTypeIndicator = initialCap(fileNameSections[1]);
@@ -40,13 +40,13 @@ function ngNameToClassName(rawName, nameExceptions) {
 }
 
 function dekebabifyName(name) {
-    var result = name.replace(/-/g, ' ');
+    let result = name.replace(/-/g, ' ');
     result = result.substr(0, 1).toUpperCase() + result.substr(1);
     return result;
 }
 
 function kebabifyClassName(name) {
-    var result = name.replace(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/, (match) => {
+    let result = name.replace(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/, (match) => {
         return '.' + match.toLowerCase();
     });
 

@@ -40,13 +40,13 @@ function aggPhase() {
     const template = ejs.compile(templateSource);
 
     let mdText = template(indexDocData);
-    mdText = mdText.replace(/^ +\|/mg, '|');
+    mdText = mdText.replace(/^ +\|/gm, '|');
 
-    const newSection = remark().use(frontMatter, ['yaml']).data('settings', {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
+    const newSection = remark().use(frontMatter, ['yaml']).data('settings', { paddedTable: false, gfm: false }).parse(mdText.trim()).children;
 
     const tutIndexFile = path.resolve(tutFolder, 'README.md');
     const tutIndexText = fs.readFileSync(tutIndexFile, 'utf8');
-    const tutIndexMD = remark().use(frontMatter, ['yaml']).data('settings', {paddedTable: false, gfm: false}).parse(tutIndexText);
+    const tutIndexMD = remark().use(frontMatter, ['yaml']).data('settings', { paddedTable: false, gfm: false }).parse(tutIndexText);
 
     replaceSection(tutIndexMD, 'Tutorials', (before, section, after) => {
         newSection.unshift(before);
@@ -54,7 +54,10 @@ function aggPhase() {
         return newSection;
     });
 
-    fs.writeFileSync(tutIndexFile, remark().use(frontMatter, {type: 'yaml', fence: '---'}).data('settings', {paddedTable: false, gfm: false}).stringify(tutIndexMD));
+    fs.writeFileSync(
+        tutIndexFile,
+        remark().use(frontMatter, { type: 'yaml', fence: '---' }).data('settings', { paddedTable: false, gfm: false }).stringify(tutIndexMD)
+    );
 }
 
 function getIndexDocData() {
@@ -62,7 +65,7 @@ function getIndexDocData() {
     const summaryArray = JSON.parse(fs.readFileSync(indexFile, 'utf8'));
     let indexArray = [];
 
-    summaryArray.forEach(element => {
+    summaryArray.forEach((element) => {
         if (element['title'] === 'Tutorials') {
             indexArray = element['children'];
         }
@@ -72,7 +75,7 @@ function getIndexDocData() {
         tuts: []
     };
 
-    indexArray.forEach(element => {
+    indexArray.forEach((element) => {
         const tutData = { link: element['file'] };
 
         const tutFile = path.resolve(tutFolder, element['file']);
@@ -89,21 +92,16 @@ function getIndexDocData() {
 
         const briefDesc = getFirstParagraph(tutMD);
 
-        const briefDescText = remark()
-        .use(frontMatter, {type: 'yaml', fence: '---'})
-        .data('settings', {paddedTable: false, gfm: false})
-        .stringify(briefDesc);
-
-        tutData['briefDesc'] = briefDescText;
+        tutData['briefDesc'] = remark()
+            .use(frontMatter, { type: 'yaml', fence: '---' })
+            .data('settings', { paddedTable: false, gfm: false })
+            .stringify(briefDesc);
 
         const title = getFirstHeading(tutMD);
-
-        const titleText = remark()
-        .use(frontMatter, {type: 'yaml', fence: '---'})
-        .data('settings', {paddedTable: false, gfm: false})
-        .stringify(title.children[0]);
-
-        tutData['title'] = titleText;
+        tutData['title'] = remark()
+            .use(frontMatter, { type: 'yaml', fence: '---' })
+            .data('settings', { paddedTable: false, gfm: false })
+            .stringify(title.children[0]);
 
         result.tuts.push(tutData);
     });
@@ -122,11 +120,10 @@ function getDocMetadata(tree) {
 function getFirstParagraph(tree) {
     let s = 0;
 
-    for (; (s < tree.children.length) && !unist.isParagraph(tree.children[s]); s++) {}
+    for (; s < tree.children.length && !unist.isParagraph(tree.children[s]); s++) {}
 
     if (s < tree.children.length) {
         return tree.children[s];
-
     } else {
         return null;
     }
@@ -135,11 +132,10 @@ function getFirstParagraph(tree) {
 function getFirstHeading(tree) {
     let s = 0;
 
-    for (; (s < tree.children.length) && !unist.isHeading(tree.children[s]); s++) {}
+    for (; s < tree.children.length && !unist.isHeading(tree.children[s]); s++) {}
 
     if (s < tree.children.length) {
         return tree.children[s];
-
     } else {
         return null;
     }
