@@ -46,7 +46,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
     ngAfterContentInit() {
         this.templateModel = { template: this.template, isVisible: false };
-
+        this.viewerComponent.extensionsSupportedByTemplates.push(...this.supportedExtensions);
         this.viewerComponent.extensionTemplates.push(this.templateModel);
 
         this.viewerComponent.extensionChange
@@ -54,12 +54,6 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
             .subscribe(fileExtension => {
                 this.templateModel.isVisible = this.isVisible(fileExtension);
             });
-
-        if (this.supportedExtensions instanceof Array) {
-            this.supportedExtensions.forEach((extension) => {
-                this.viewerComponent.externalExtensions.push(extension);
-            });
-        }
     }
 
     ngOnDestroy() {

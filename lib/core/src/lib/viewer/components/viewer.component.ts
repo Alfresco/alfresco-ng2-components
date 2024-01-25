@@ -71,6 +71,9 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @ContentChild(ViewerMoreActionsComponent)
     mnuMoreActions: ViewerMoreActionsComponent;
 
+    @ContentChild('viewerExtensions', { static: false })
+    viewerTemplateExtensions: TemplateRef<any>;
+
     get CloseButtonPosition() {
         return CloseButtonPosition;
     }
@@ -189,6 +192,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     /** Toggles the 'Info Button' */
     @Input()
     hideInfoButton = false;
+
+    /** Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. */
+    @Input()
+    viewerExtensions: TemplateRef<any>;
 
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.

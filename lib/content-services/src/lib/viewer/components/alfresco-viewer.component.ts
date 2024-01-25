@@ -80,6 +80,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @ContentChild(ViewerOpenWithComponent)
     openWith: ViewerOpenWithComponent;
 
+    @ContentChild('viewerExtensions', { static: false })
+    viewerExtensions: TemplateRef<any>;
+
     /** Node Id of the file to load. */
     @Input()
     nodeId: string = null;

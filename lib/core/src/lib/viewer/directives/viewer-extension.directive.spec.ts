@@ -26,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 describe('ExtensionViewerDirective', () => {
     let extensionViewerDirective: ViewerExtensionDirective;
+    let viewerRenderer: ViewerRenderComponent;
 
     class MockElementRef extends ElementRef {
         constructor() {
@@ -42,12 +43,13 @@ describe('ExtensionViewerDirective', () => {
             providers: [
                 { provide: Location, useClass: SpyLocation },
                 ViewerExtensionDirective,
-                {provide: ElementRef, useClass: MockElementRef},
+                { provide: ElementRef, useClass: MockElementRef },
                 ViewerRenderComponent,
                 { provide: ChangeDetectorRef, useValue: { detectChanges: () => {} } }
             ]
         });
         extensionViewerDirective = TestBed.inject(ViewerExtensionDirective);
+        viewerRenderer = TestBed.inject(ViewerRenderComponent);
         extensionViewerDirective.templateModel = {template: '', isVisible: false};
     });
 
@@ -63,5 +65,13 @@ describe('ExtensionViewerDirective', () => {
     it('if the file in the viewer not has an extension handled by this extension isVisible should be false', () => {
         extensionViewerDirective.supportedExtensions = ['xls', 'sts'];
         expect(extensionViewerDirective.isVisible('png')).not.toBeTruthy();
+    });
+
+    it('should set correct template and supported extensions in viewer renderer component', () => {
+        extensionViewerDirective.supportedExtensions = ['png', 'txt'];
+        extensionViewerDirective.ngAfterContentInit();
+        expect(viewerRenderer.extensionTemplates.length).toBe(1);
+        expect(viewerRenderer.extensionTemplates[0]).toEqual(extensionViewerDirective.templateModel);
+        expect(viewerRenderer.extensionsSupportedByTemplates).toEqual(extensionViewerDirective.supportedExtensions);
     });
 });

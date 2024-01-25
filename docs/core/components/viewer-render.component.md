@@ -62,6 +62,7 @@ Using with file [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob):
 | thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
 | tracks | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
+| viewerTemplateExtensions | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. |
 
 ### Events
 
@@ -200,34 +201,13 @@ The [Viewer render component](viewer.component.md) should now be able to display
 
 The Viewer supports dynamically-loaded viewer preview extensions, to know more about it [Preview Extension component](../../extensions/components/preview-extension.component.md). This 
 
-#### Code extension mechanism]
+#### Code extension mechanism
 
-You can define your own custom handler to handle other file formats that are not yet supported by
-the [Viewer render component](viewer.component.md). Below is an example that shows how to use the `adf-viewer-render-extension`
-to handle 3D data files:
+You can define your own custom handler to override supported file formats or handle other file formats that are not yet supported by
+the [Viewer render component](viewer.component.md). In order to do that first you need to define a template containing at least one `adf-viewer-extension`:
 
-```html
-<adf-viewer-render [nodeId]="nodeId">
-    
-    <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
-        <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
-            <threed-viewer 
-                [urlFile]="urlFileContent" 
-                [extension]="extension">
-            </threed-viewer>
-        </ng-template>
-    </adf-viewer-extension>
-
-</adf-viewer-render> 
-```
-
-Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
-
-You can define multiple `adf-viewer-render-extension` templates if required:
-
-```html
-<adf-viewer-render [nodeId]="nodeId">
-
+```html    
+<ng-template #viewerExtensions>
     <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
         <ng-template let-urlFileContent="urlFileContent">
             <my-custom-xls-component 
@@ -243,6 +223,22 @@ You can define multiple `adf-viewer-render-extension` templates if required:
             </my-custom-txt-component>
         </ng-template>
     </adf-viewer-render-extension>
+</ng-template>
+```
+
+Next in your component you need to get a reference of created template
+
+```ts
+@ViewChild('viewerExtensions')
+viewerTemplateExtensions: TemplateRef<any>;
+```
+
+and pass it via `viewerTemplateExtensions` input:
+
+```html
+<adf-viewer-render>
+    ...
+    [viewerTemplateExtensions]="viewerTemplateExtensions"
 </adf-viewer-render> 
 ```
 

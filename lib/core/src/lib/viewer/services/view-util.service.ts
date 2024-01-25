@@ -88,8 +88,8 @@ export class ViewUtilService {
         return null;
     }
 
-    getViewerType(extension: string, mimeType: string): string {
-        let viewerType = this.getViewerTypeByExtension(extension);
+    getViewerType(extension: string, mimeType: string, extensionsSupportedByTemplates?: string[]): string {
+        let viewerType = this.getViewerTypeByExtension(extension, extensionsSupportedByTemplates);
 
         if (viewerType === 'unknown') {
             viewerType = this.getViewerTypeByMimeType(mimeType);
@@ -112,7 +112,7 @@ export class ViewUtilService {
         return 'unknown';
     }
 
-    private getViewerTypeByExtension(extension: string): string {
+    private getViewerTypeByExtension(extension: string, extensionsSupportedByTemplates?: string[]): string {
         if (extension) {
             extension = extension.toLowerCase();
         }
@@ -121,7 +121,7 @@ export class ViewUtilService {
             return 'external';
         }
 
-        if (this.isCustomViewerExtension(extension)) {
+        if (this.isCustomViewerExtension(extension, extensionsSupportedByTemplates)) {
             return 'custom';
         }
 
@@ -148,8 +148,11 @@ export class ViewUtilService {
         return !!this.viewerExtensions.find((ext) => ext.fileExtension === '*');
     }
 
-    isCustomViewerExtension(extension: string): boolean {
+    isCustomViewerExtension(extension: string, extensionsSupportedByTemplates?: string[]): boolean {
         const extensions = this.externalExtensions || [];
+        if (extensionsSupportedByTemplates) {
+            extensions.push(...extensionsSupportedByTemplates);
+        }
 
         if (extension && extensions.length > 0) {
             extension = extension.toLowerCase();
