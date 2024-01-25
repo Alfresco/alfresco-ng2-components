@@ -72,7 +72,7 @@ export abstract class InfiniteScrollDatasource<T> extends DataSource<T> {
         this.getNextBatch({ skipCount: 0, maxItems: this.batchSize })
             .pipe(take(1))
             .subscribe((firstBatch) => {
-                this._itemsCount += firstBatch.length;
+                this._itemsCount = firstBatch.length;
                 this._firstItem = firstBatch[0];
                 this.dataStream.next(firstBatch);
                 this.isLoading$.next(false);
