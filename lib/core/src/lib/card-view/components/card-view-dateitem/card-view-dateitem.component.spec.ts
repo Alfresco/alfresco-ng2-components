@@ -24,7 +24,7 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '../../../app-config/app-config.service';
 import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';

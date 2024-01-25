@@ -77,9 +77,23 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             if (!this.property.value) {
                 this.property.value = [];
             }
+            if (Array.isArray(this.property.value) && this.property.value.length > 0) {
+                if (this.property.type === 'date') {
+                    this.valueDate.setHours(0, 0, 0, 0);
+                    this.property.value = this.property.value.map((date: Date) => {
+                        date.setHours(0, 0, 0, 0);
+                        return date;
+                    });
+                }
+                this.valueDate = DateFnsUtils.localToUtc(new Date(this.property.value[0]));
+            }
         } else {
             if (this.property.value && !Array.isArray(this.property.value)) {
                 this.valueDate = DateFnsUtils.localToUtc(new Date(this.property.value));
+                if (this.property.type === 'date') {
+                    this.valueDate.setHours(0, 0, 0, 0);
+                    this.property.value.setHours(0, 0, 0, 0);
+                }
             }
         }
     }
@@ -105,6 +119,10 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             if (isValid(event.value)) {
                 this.valueDate = event.value;
                 this.property.value = DateFnsUtils.utcToLocal(event.value);
+                if (this.property.type === 'date') {
+                    this.valueDate.setHours(0, 0, 0, 0);
+                    this.property.value.setHours(0, 0, 0, 0);
+                }
                 this.update();
             }
         }
@@ -127,7 +145,11 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     addDateToList(event: MatDatetimepickerInputEvent<Date>) {
         if (event.value) {
             if (isValid(event.value) && this.property.multivalued && Array.isArray(this.property.value)) {
-                this.property.value.push(DateFnsUtils.utcToLocal(event.value));
+                const localDate = DateFnsUtils.utcToLocal(event.value);
+                if (this.property.type === 'date') {
+                    localDate.setHours(0, 0, 0, 0);
+                }
+                this.property.value.push(localDate);
                 this.update();
             }
         }
