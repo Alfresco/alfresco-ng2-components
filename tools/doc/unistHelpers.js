@@ -60,6 +60,12 @@ module.exports = {
             children: content
         };
     },
+    makeInlineCode: function (codeText) {
+        return {
+            "type": "inlineCode",
+            "value": codeText
+        }
+    },
     makeImage: function (url, alt) {
         return {
             type: 'image',
