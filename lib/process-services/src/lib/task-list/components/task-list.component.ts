@@ -406,9 +406,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     private loadTasksByState(): Observable<TaskListModel> {
-        return this.requestNode.state === 'all'
-            ? this.taskListService.findAllTasksWithoutState(this.requestNode)
-            : this.taskListService.findTasksByState(this.requestNode);
+        return this.taskListService.findTasksByState(this.requestNode);
     }
 
     /**
