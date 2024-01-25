@@ -1,51 +1,43 @@
-var path = require("path");
-var fs = require("fs");
+const path = require('path');
+const fs = require('fs');
+const remark = require('remark');
+const replaceSection = require('mdast-util-heading-range');
+const { toString } = require('mdast-util-to-string');
+const ejs = require('ejs');
+const unist = require('../unistHelpers');
+const mdNav = require('../mdNav');
 
-var remark = require("remark");
-//var tocGenerator = require("mdast-util-toc");
-var replaceSection = require("mdast-util-heading-range");
-var tostring = require("mdast-util-to-string");
-
-var ejs = require("ejs");
-
-var unist = require("../unistHelpers");
-var mdNav = require("../mdNav");
-
-const contentsHeading = "Contents";
+const contentsHeading = 'Contents';
 const minHeadingsForToc = 8;
 const maxTocHeadingDepth = 3;
 
-var templateFolder = path.resolve("tools", "doc", "templates");
+const templateFolder = path.resolve('tools', 'doc', 'templates');
 
 module.exports = {
-    "processDocs": processDocs
-}
-
+    processDocs: processDocs
+};
 
 function processDocs(mdCache, aggData, errorMessages) {
-    var pathnames = Object.keys(mdCache);
+    const pathNames = Object.keys(mdCache);
 
-    pathnames.forEach(pathname => {
+    pathNames.forEach((pathname) => {
         updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
     });
 }
 
-
-
 // Find an existing Contents section or add a new empty one if needed.
 // Returns true if section is present/needed, false if not needed.
 function establishContentsSection(mdTree) {
-    var firstL2HeadingPos = -1;
-    var numTocHeadings = 0;
-    var foundContentsHeading = false;
+    let firstL2HeadingPos = -1;
+    let numTocHeadings = 0;
+    let foundContentsHeading = false;
 
-    for (var i = 0; i < mdTree.children.length; i++) {
-        var child = mdTree.children[i];
-        
+    for (let i = 0; i < mdTree.children.length; i++) {
+        const child = mdTree.children[i];
+
         // Look through all headings.
-        if (child.type === "heading") {
-
-            if ((child.depth > 1) && (child.depth <= maxTocHeadingDepth)) {
+        if (child.type === 'heading') {
+            if (child.depth > 1 && child.depth <= maxTocHeadingDepth) {
                 numTocHeadings++;
             }
 
@@ -57,7 +49,7 @@ function establishContentsSection(mdTree) {
 
                 // If it is also a Contents heading then we're done. We don't include the
                 // Contents heading itself within the ToC, so decrement the count for that.
-                if ((child.children[0].value === contentsHeading) && !foundContentsHeading) {
+                if (child.children[0].value === contentsHeading && !foundContentsHeading) {
                     foundContentsHeading = true;
                     numTocHeadings--;
                 }
@@ -69,42 +61,38 @@ function establishContentsSection(mdTree) {
     // If there are enough headings for a ToC to be necessary then
     // add one in the right place.
     if (!foundContentsHeading) {
-        var newContsHeading = unist.makeHeading(unist.makeText(contentsHeading), 2);
+        const newHeading = unist.makeHeading(unist.makeText(contentsHeading), 2);
 
         // If we found another L2 heading then add the Contents in just before it.
-        if (firstL2HeadingPos != -1) {
-            mdTree.children.splice(firstL2HeadingPos, 0, newContsHeading);
+        if (firstL2HeadingPos !== -1) {
+            mdTree.children.splice(firstL2HeadingPos, 0, newHeading);
         } else {
             // Otherwise, the unlikely situation where a ToC is required but there
             // are no L2 headings! Add it as the second element in the document.
-            mdTree.children.splice(1, 0, newContsHeading);
+            mdTree.children.splice(1, 0, newHeading);
         }
     }
 
     return numTocHeadings;
 }
 
-
-
-
-
 function updateFile(tree, pathname, _aggData, _errorMessages) {
-    if (path.basename(pathname, ".md").match(/README|versionIndex/)) {
+    if (path.basename(pathname, '.md').match(/README|versionIndex/)) {
         return false;
     }
 
-// If we need a contents section then add one or update the existing one.
-    var numTocHeadings = establishContentsSection(tree);
+    // If we need a contents section then add one or update the existing one.
+    const numTocHeadings = establishContentsSection(tree);
 
     if (numTocHeadings >= minHeadingsForToc) {
-        var newToc = makeToc(tree); //tocGenerator(tree, {heading: contentsHeading, maxDepth: 3});
+        const newToc = makeToc(tree);
 
-        replaceSection(tree, contentsHeading, function(before, oldSection, after) {
+        replaceSection(tree, contentsHeading, function (before, oldSection, after) {
             return [before, newToc, after];
         });
     } else {
         // Otherwise, we don't need one, so remove any existing one.
-        replaceSection(tree, contentsHeading, function(before, oldSection, after) {
+        replaceSection(tree, contentsHeading, function (before, oldSection, after) {
             return [after];
         });
     }
@@ -112,44 +100,39 @@ function updateFile(tree, pathname, _aggData, _errorMessages) {
     return true;
 }
 
-
 function makeToc(tree) {
-    var nav = new mdNav.MDNav(tree);
+    const nav = new mdNav.MDNav(tree);
+    const headings = nav.headings((h) => h.depth > 1 && h.depth <= maxTocHeadingDepth);
+    const context = { headings: [] };
 
-    var headings = nav.headings(h => 
-        (h.depth > 1) &&
-        (h.depth <= maxTocHeadingDepth) //&&
-        //!((h.children[0].type === "text") && (h.children[0].value === "Contents"))
-    );
+    headings.forEach((heading) => {
+        let linkTitle = '';
 
-    var context = {headings: []};
-
-    headings.forEach(heading => {
-        var linkTitle = "";
-
-        if (!((heading.item.children.length > 0) && (heading.item.children[0].type === "text") && (heading.item.children[0].value === "Contents"))) {
-            linkTitle = tostring(heading.item).trim();
+        if (!(heading.item.children.length > 0 && heading.item.children[0].type === 'text' && heading.item.children[0].value === 'Contents')) {
+            linkTitle = toString(heading.item).trim();
         }
 
-        if (linkTitle !== "") {
+        if (linkTitle !== '') {
             context.headings.push({
-                "level": heading.item.depth - 2,
-                "title": linkTitle,
-                //"anchor": "#" + linkTitle.toLowerCase().replace(/ /g, "-").replace(/[:;@\.,'"`$\(\)\/]/g ,"")
-                "anchor": "#" + linkTitle.toLowerCase()
-                                .replace(/[^a-z0-9\s\-_]/g, '')
-                                .replace(/\s/g ,"-")
-                                .replace(/\-+$/, '')
-            })
-        };
+                level: heading.item.depth - 2,
+                title: linkTitle,
+                anchor:
+                    '#' +
+                    linkTitle
+                        .toLowerCase()
+                        .replace(/[^a-z0-9\s\-_]/g, '')
+                        .replace(/\s/g, '-')
+                        .replace(/-+$/, '')
+            });
+        }
     });
 
-    var templateName = path.resolve(templateFolder, "toc.ejs");
-    var templateSource = fs.readFileSync(templateName, "utf8");
-    var template = ejs.compile(templateSource);
+    const templateName = path.resolve(templateFolder, 'toc.ejs');
+    const templateSource = fs.readFileSync(templateName, 'utf8');
+    const template = ejs.compile(templateSource);
 
-    var mdText = template(context);
-    var newMD = remark().parse(mdText);
+    const mdText = template(context);
+    const newMD = remark().parse(mdText);
 
     return newMD.children[0];
 }

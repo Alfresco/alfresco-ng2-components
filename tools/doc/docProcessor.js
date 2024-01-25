@@ -1,25 +1,22 @@
-var fs = require("fs");
-var path = require("path");
+const fs = require('fs');
+const path = require('path');
+const program = require('commander');
+const lodash = require('lodash');
+const jsyaml = require('js-yaml');
+const remark = require('remark');
+const frontMatter = require('remark-frontmatter');
+const mdCompact = require('mdast-util-compact');
+const minimatch = require('minimatch');
 
-var program = require("commander");
-var lodash = require("lodash");
-var jsyaml = require("js-yaml");
-
-var remark = require("remark");
-var frontMatter = require("remark-frontmatter");
-var mdCompact = require("mdast-util-compact");
-var minimatch = require("minimatch");
-
-var si = require("./sourceInfoClasses");
+const si = require('./sourceInfoClasses');
 
 // "Aggregate" data collected over the whole file set.
-var aggData = {};
+const aggData = {};
 
-var toolsFolderName = "tools";
-var configFileName = "doctool.config.json";
-var defaultFolder = path.resolve("docs");
-var sourceInfoFolder = path.resolve("docs", "sourceinfo");
-
+const toolsFolderName = 'tools';
+const configFileName = 'doctool.config.json';
+const defaultFolder = path.resolve('docs');
+const sourceInfoFolder = path.resolve('docs', 'sourceinfo');
 
 function filterFiles(filePath) {
     let isAllowed = true;
@@ -27,31 +24,33 @@ function filterFiles(filePath) {
     this.excludedFileList = aggData['config'].exclude;
 
     if (this.excludedFileList) {
-        isAllowed = this.excludedFileList.filter((pattern) => {
-            return minimatch(filePath, pattern.toString(), {
-                nocase: true
-            });
-        }).length === 0;
+        isAllowed =
+            this.excludedFileList.filter((pattern) => {
+                return minimatch(filePath, pattern.toString(), {
+                    nocase: true
+                });
+            }).length === 0;
     }
 
     return isAllowed;
 }
 
+const toolModules = loadToolModules();
+
+let toolList;
 
 function updatePhase(mdCache, aggData) {
-
-    toolList.forEach(toolName => {
+    toolList.forEach((toolName) => {
         console.log(`Tool: ${toolName}`);
         toolModules[toolName].processDocs(mdCache, aggData);
     });
 
-    var filenames = Object.keys(mdCache);
+    const filenames = Object.keys(mdCache);
 
-
-    for (var i = 0; i < filenames.length; i++) {
-        var pathname = filenames[i];
-        var tree = mdCache[pathname].mdOutTree;
-        var original = mdCache[pathname].mdInTree;
+    for (let i = 0; i < filenames.length; i++) {
+        const pathname = filenames[i];
+        const tree = mdCache[pathname].mdOutTree;
+        const original = mdCache[pathname].mdInTree;
 
         if (program.json) {
             let filename = path.basename(pathname);
@@ -67,30 +66,36 @@ function updatePhase(mdCache, aggData) {
                 console.log(`Modified: ${pathname}`);
             }
 
-            fs.writeFileSync(filenames[i], remark().use(frontMatter, {
-                type: 'yaml',
-                fence: '---'
-            }).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
+            fs.writeFileSync(
+                filenames[i],
+                remark()
+                    .use(frontMatter, {
+                        type: 'yaml',
+                        fence: '---'
+                    })
+                    .data('settings', { paddedTable: false, gfm: false })
+                    .stringify(tree)
+            );
         }
     }
 }
 
 function minimiseTree(tree) {
-    let minPropsTree = JSON.parse(JSON.stringify(tree, (key, value) => key === "position" ? undefined : value));
+    let minPropsTree = JSON.parse(JSON.stringify(tree, (key, value) => (key === 'position' ? undefined : value)));
     mdCompact(minPropsTree);
     return minPropsTree;
 }
 
 function loadToolModules() {
-    var mods = {};
-    var toolsFolderPath = path.resolve(__dirname, toolsFolderName);
-    var modFiles = fs.readdirSync(toolsFolderPath);
+    const mods = {};
+    const toolsFolderPath = path.resolve(__dirname, toolsFolderName);
+    const modFiles = fs.readdirSync(toolsFolderPath);
 
-    for (var i = 0; i < modFiles.length; i++) {
-        var modPath = path.resolve(toolsFolderPath, modFiles[i])
+    for (let i = 0; i < modFiles.length; i++) {
+        const modPath = path.resolve(toolsFolderPath, modFiles[i]);
 
-        if (path.extname(modPath) === ".js") {
-            var toolName = path.basename(modPath, ".js");
+        if (path.extname(modPath) === '.js') {
+            const toolName = path.basename(modPath, '.js');
             mods[toolName] = require(modPath);
         }
     }
@@ -98,19 +103,17 @@ function loadToolModules() {
     return mods;
 }
 
-
 function loadConfig() {
-    var configFilePath = path.resolve(__dirname, configFileName)
+    const configFilePath = path.resolve(__dirname, configFileName);
     return JSON.parse(fs.readFileSync(configFilePath));
 }
 
-
 function getAllDocFilePaths(docFolder, files) {
-    var items = fs.readdirSync(docFolder);
+    const items = fs.readdirSync(docFolder);
 
-    for (var i = 0; i < items.length; i++) {
-        var itemPath = path.resolve(docFolder, items[i]);
-        var itemInfo = fs.statSync(itemPath);
+    for (let i = 0; i < items.length; i++) {
+        const itemPath = path.resolve(docFolder, items[i]);
+        const itemInfo = fs.statSync(itemPath);
 
         if (itemInfo.isFile()) {
             files.push(itemPath);
@@ -120,16 +123,15 @@ function getAllDocFilePaths(docFolder, files) {
     }
 }
 
-
 function initMdCache(filenames) {
-    var mdCache = {};
+    const mdCache = {};
 
-    for (var i = 0; i < filenames.length; i++) {
-        var pathname = filenames[i];
+    for (let i = 0; i < filenames.length; i++) {
+        const pathname = filenames[i];
         mdCache[pathname] = {};
 
-        var src = fs.readFileSync(pathname);
-        var tree = remark().use(frontMatter, ["yaml"]).parse(src);
+        const src = fs.readFileSync(pathname);
+        const tree = remark().use(frontMatter, ['yaml']).parse(src);
         mdCache[pathname].mdInTree = minimiseTree(tree);
         mdCache[pathname].mdOutTree = minimiseTree(tree);
     }
@@ -138,13 +140,13 @@ function initMdCache(filenames) {
 }
 
 function initClassInfo(aggData) {
-    var yamlFilenames = fs.readdirSync(path.resolve(sourceInfoFolder));
+    const yamlFilenames = fs.readdirSync(path.resolve(sourceInfoFolder));
 
     aggData.classInfo = {};
 
-    yamlFilenames.forEach(yamlFilename => {
-        var classYamlText = fs.readFileSync(path.resolve(sourceInfoFolder, yamlFilename), "utf8");
-        var classYaml = jsyaml.safeLoad(classYamlText);
+    yamlFilenames.forEach((yamlFilename) => {
+        const classYamlText = fs.readFileSync(path.resolve(sourceInfoFolder, yamlFilename), 'utf8');
+        const classYaml = jsyaml.safeLoad(classYamlText);
 
         if (program.verbose) {
             console.log(classYaml.items[0].name);
@@ -155,20 +157,20 @@ function initClassInfo(aggData) {
 }
 
 program
-    .usage("[options] <source>")
-    .option("-p, --profile [profileName]", "Select named config profile", "default")
-    .option("-j, --json", "Output JSON data for Markdown syntax tree")
-    .option("-v, --verbose", "Log doc files as they are processed")
-    .option("-t, --timing", "Output time taken for run")
+    .usage('[options] <source>')
+    .option('-p, --profile [profileName]', 'Select named config profile', 'default')
+    .option('-j, --json', 'Output JSON data for Markdown syntax tree')
+    .option('-v, --verbose', 'Log doc files as they are processed')
+    .option('-t, --timing', 'Output time taken for run')
     .parse(process.argv);
 
-var startTime;
+let startTime;
 
 if (program.timing) {
     startTime = process.hrtime();
 }
 
-var sourcePath;
+let sourcePath;
 
 if (program.args.length === 0) {
     sourcePath = defaultFolder;
@@ -176,25 +178,20 @@ if (program.args.length === 0) {
     sourcePath = path.resolve(program.args[0]);
 }
 
-var sourceInfo = fs.statSync(sourcePath);
-
-var toolModules = loadToolModules();
-
-var config = loadConfig();
+const sourceInfo = fs.statSync(sourcePath);
+const config = loadConfig();
 aggData['config'] = config;
-
-var toolList;
 
 if (config.profiles[program.profile]) {
     toolList = config.profiles[program.profile];
-    var toolListText = toolList.join(", ");
+    var toolListText = toolList.join(', ');
     console.log(`Using '${program.profile}' profile: ${toolListText}`);
 } else {
     console.log(`Aborting: unknown profile '${program.profile}`);
     return 0;
 }
 
-var files = [];
+let files = [];
 
 if (sourceInfo.isDirectory()) {
     getAllDocFilePaths(sourcePath, files);
@@ -203,22 +200,18 @@ if (sourceInfo.isDirectory()) {
     files = [sourcePath];
 }
 
-files = files.filter(filename =>
-    (filename !== undefined) &&
-    (path.extname(filename) === ".md") &&
-    (filename !== "README.md") && filterFiles(filename)
-);
+files = files.filter((filename) => filename !== undefined && path.extname(filename) === '.md' && filename !== 'README.md' && filterFiles(filename));
 
-var mdCache = initMdCache(files);
+const mdCache = initMdCache(files);
 
-console.log("Loading source data...");
+console.log('Loading source data...');
 
 initClassInfo(aggData);
 
-console.log("Updating Markdown files...");
+console.log('Updating Markdown files...');
 updatePhase(mdCache, aggData);
 
 if (program.timing) {
-    var endTime = process.hrtime(startTime);
+    const endTime = process.hrtime(startTime);
     console.log(`Run complete in ${endTime[0]} sec`);
 }
