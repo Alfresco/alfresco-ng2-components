@@ -48,6 +48,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | cssClass | `string` |  | Additional CSS class to be applied to column (header and cells). |
 | customData | `any` |  | You can specify any custom data which can be used by any specific feature |
 | draggable | `boolean` | false | Enable drag and drop for header column |
+| resizable | `boolean` | true | Enable column resizing |
 | editable | `boolean` | false | Toggles the editing support of the column data. |
 | focus | `boolean` | true | Enable or disable cell focus |
 | format | `string` |  | Value format (if supported by the parent component), for example format of the date. |

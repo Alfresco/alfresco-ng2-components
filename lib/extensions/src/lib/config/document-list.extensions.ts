@@ -50,4 +50,5 @@ export interface DocumentListPresetRef extends ExtensionElement {
         visible?: string;
     };
     draggable?: boolean;
+    resizable?: boolean;
 }

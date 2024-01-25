@@ -565,6 +565,10 @@
         "desktopOnly": {
           "description": "Display column only for large screens",
           "type": "boolean"
+        },
+        "resizable": {
+          "description": "Toggles resizable state of the column",
+          "type": "boolean"
         }
       }
     }

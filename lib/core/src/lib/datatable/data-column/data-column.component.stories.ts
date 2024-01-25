@@ -85,6 +85,20 @@ export default {
                 }
             }
         },
+        resizable: {
+            description: 'Toggles resize for column.',
+            control: { type: 'boolean' },
+            defaultValue: true,
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: true
+                }
+            }
+        },
         editable: {
             description: 'Toggles the editing support of the column data.',
             control: { type: 'boolean', disable: true },
@@ -328,8 +342,8 @@ const template: Story<DataColumnComponent> = (args: DataColumnComponent & { rows
     template: `
         <adf-datatable [rows]="rows">
             <data-columns>
-                <data-column 
-                    [key]="key" 
+                <data-column
+                    [key]="key"
                     [type]="type"
                     [title]="title"
                     [editable]="editable"
