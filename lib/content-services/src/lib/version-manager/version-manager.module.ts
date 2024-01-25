@@ -27,6 +27,7 @@ import { UploadModule } from '../upload/upload.module';
 import { VersionCompatibilityModule } from '../version-compatibility/version-compatibility.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { VersionComparisonComponent } from './version-comparison.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { VersionComparisonComponent } from './version-comparison.component';
         CoreModule,
         UploadModule,
         VersionCompatibilityModule,
-        FormsModule
+        FormsModule,
+        ScrollingModule
     ],
     exports: [
         VersionUploadComponent,

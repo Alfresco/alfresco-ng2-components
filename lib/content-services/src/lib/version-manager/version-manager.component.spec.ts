@@ -55,7 +55,7 @@ describe('VersionManagerComponent', () => {
 
     it('should load the versions for a given node', () => {
         fixture.detectChanges();
-        expect(spyOnListVersionHistory).toHaveBeenCalledWith(node.id);
+        expect(spyOnListVersionHistory).toHaveBeenCalledWith(node.id, { skipCount: 0, maxItems: 100 });
     });
 
     it('should toggle new version if given a new file as input', () => {
