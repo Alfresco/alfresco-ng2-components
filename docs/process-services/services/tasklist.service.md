@@ -63,12 +63,12 @@ Manages Task Instances.
 -   **findAllTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets all tasks matching a query and state value.
     -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks.
-    -   _state:_ `string`  - (Optional) Task state. Can be "active" or "completed". State "all" applies to both "active" and "completed" tasks.
+    -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed". State "all" applies to both "active" and "completed" tasks.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
 -   **findTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets tasks matching a query and state value.
     -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
-    -   _state:_ `string`  - (Optional) Task state. Can be "active" or "completed". State "all" applies to both "active" and "completed" tasks.
+    -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed". State "all" applies to both "active" and "completed" tasks.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
 -   **getFilterForTaskById**(taskId: `string`, filterList: [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
     Gets all the filters in the list that belong to a task.
