@@ -37,6 +37,7 @@
             </adf-content-metadata-header>
         </mat-expansion-panel-header>
         <adf-card-view
+            class="adf-metadata-properties-expansion-panel"
             (keydown)="keyDown($event)"
             [properties]="basicProperties$ | async"
             [editable]="isEditingModeGeneralInfo"

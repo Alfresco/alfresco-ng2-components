@@ -1,22 +1,24 @@
 adf-cloud-task-filter-dialog {
-    .adf-task-filter-dialog .adf-task-filter-dialog-card {
-        padding: 0;
-        box-shadow: none;
+    .adf-task-filter-dialog {
+        .adf-task-filter-dialog-card {
+            padding: 0;
+            box-shadow: none;
 
-        .adf-task-filter-dialog-card-actions {
-            display: flex;
-            max-height: 100%;
-            place-content: flex-end;
-            align-items: flex-end;
+            .adf-task-filter-dialog-card-actions {
+                display: flex;
+                max-height: 100%;
+                place-content: flex-end;
+                align-items: flex-end;
+            }
         }
-    }
 
-    .adf-task-filter-dialog .adf-task-filter-dialog-card-content {
-        padding: 0;
-        box-shadow: none;
+        .adf-task-filter-dialog-card-content {
+            padding: 0;
+            box-shadow: none;
 
-        .adf-task-filter-name {
-            flex: 1;
+            .adf-task-filter-name {
+                flex: 1;
+            }
         }
     }
 }

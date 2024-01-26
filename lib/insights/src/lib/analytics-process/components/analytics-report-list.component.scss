@@ -1,9 +1,14 @@
 .adf-analytics-report-list {
     .adf-activiti-filters__entry {
         cursor: pointer;
+
+        .adf-active {
+            color: var(--theme-primary-color);
+        }
     }
 
     .adf-activiti-filters__entry-icon {
+        color: var(--theme-primary-color);
         position: relative;
         top: 5px;
     }
@@ -11,16 +16,6 @@
     .adf-activiti-filters__label {
         white-space: nowrap;
         overflow: hidden;
-    }
-
-    .adf-activiti-filters__entry {
-        .adf-active {
-            color: var(--theme-primary-color);
-
-            .adf-activiti-filters__entry-icon {
-                color: var(--theme-primary-color);
-            }
-        }
     }
 
     .adf-report-card-grids {

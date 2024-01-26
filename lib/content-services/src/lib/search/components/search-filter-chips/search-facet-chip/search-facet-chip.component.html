@@ -1,6 +1,6 @@
 <mat-chip [attr.data-automation-id]="'search-filter-chip-' + field.label"
           disableRipple
-          class="adf-search-filter-chip"
+          class="adf-search-filter-chip adf-search-filter-facet-chip"
           [class.adf-search-toggle-chip]="(facetField.displayValue$ | async) || menuTrigger.menuOpen"
           [disabled]="!isPopulated()"
           tabIndex="0"

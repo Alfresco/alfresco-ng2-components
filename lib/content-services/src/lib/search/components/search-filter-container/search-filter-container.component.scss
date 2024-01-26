@@ -8,6 +8,7 @@
 
             &-active {
                 color: var(--theme-primary-color);
+
                 span {
                     border: 2px solid var(--adf-theme-background-card-color) !important;
                     width: 10px;
@@ -59,6 +60,7 @@
 
 .adf-search-filter-menu.adf-filter-menu {
     min-width: 260px;
+
     > div:first-child {
         padding: 0;
     }

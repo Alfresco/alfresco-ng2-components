@@ -24,15 +24,20 @@
         font-size: var(--theme-title-font-size);
     }
 
-    &-people-select-icon.adf-datatable-selected {
-        margin: 2px -2px 0 0 !important;
-        height: 100%;
-        width: 100%;
+    &-people-select-icon {
+        margin: 0 !important;
 
         svg {
             fill: var(--theme-accent-color);
             width: 40px;
             height: 40px;
         }
+    }
+
+    &-datatable-selected {
+        height: 100%;
+        width: 100%;
+        margin-left: -2px;
+        margin-top: 2px;
     }
 }

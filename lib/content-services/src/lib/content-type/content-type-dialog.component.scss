@@ -1,12 +1,8 @@
 .adf {
     &-content-type-dialog {
         & .adf-content-type-accordion {
-            margin-bottom: 10px;
+            margin: 10px;
         }
-    }
-
-    &-content-type-accordion {
-        margin: 10px;
     }
 
     &-content-type-dialog-title {

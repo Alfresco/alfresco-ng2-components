@@ -20,6 +20,11 @@
         color: var(--adf-theme-foreground-disabled-text-color);
     }
 
+    &.adf-search-filter-facet-chip::after {
+        background: var(--adf-theme-background-unselected-chip-color);
+        color: unset;
+    }
+
     .adf-search-filter-ellipsis {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -36,7 +41,7 @@
         padding-left: 5px;
     }
 
-    &-menu + * .adf-search-filter-chip-menu-panel-checkList {
+    &-menu + * .adf-search-filter-chip-menu-panel {
         min-width: 320px;
         border-radius: 12px;
 

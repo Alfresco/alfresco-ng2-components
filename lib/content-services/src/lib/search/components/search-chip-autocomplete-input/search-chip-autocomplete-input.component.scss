@@ -7,6 +7,7 @@ adf-search-chip-autocomplete-input {
             border: none;
         }
     }
+
     .adf-autocomplete-added-option-chips.adf-option-chips {
         border: 1px solid var(--theme-text-color);
         border-radius: 10px;
@@ -20,13 +21,12 @@ adf-search-chip-autocomplete-input {
         height: 13px;
         width: 13px;
 
-        .adf-option-chips-delete-icon.adf-autocomplete-added-option-chips-delete-icon{
+        .adf-option-chips-delete-icon.adf-autocomplete-added-option-chips-delete-icon {
             font-size: 13px;
             height: 13px;
             width: 13px;
         }
     }
-
 }
 
 .adf-search-chip-autocomplete-added-option.adf-autocomplete-added-option {

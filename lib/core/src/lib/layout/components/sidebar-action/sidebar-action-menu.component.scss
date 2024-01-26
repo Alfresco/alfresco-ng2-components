@@ -2,7 +2,7 @@
 
 .adf {
     &-sidebar-action-menu {
-        & .mat-raised-button {
+        & .adf-sidebar-action-menu-button {
             width: 100%;
             display: block;
             box-shadow: none !important;
@@ -12,11 +12,6 @@
             color: var(--theme-primary-color-default-contrast) !important;
             border-radius: 4px;
 
-            & mat-icon {
-                width: 24px;
-                height: 25px;
-                color: var(--theme-primary-color-default-contrast) !important;
-            }
         }
 
         &-text {
@@ -40,17 +35,17 @@
         text-align: left;
         letter-spacing: -0.4px;
 
-        .mat-menu-item {
+        button {
             font-size: var(--theme-body-1-font-size);
             color: var(--adf-theme-foreground-text-color-087);
             text-align: left;
             line-height: 1.5;
             letter-spacing: -0.4px;
-        }
 
-        .mat-menu-item:hover {
-            color: var(--theme-primary-color);
-            opacity: inherit;
+            &:hover {
+                color: var(--theme-primary-color);
+                opacity: inherit;
+            }
         }
     }
 
