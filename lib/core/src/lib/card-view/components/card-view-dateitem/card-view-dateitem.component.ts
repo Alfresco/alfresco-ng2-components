@@ -98,7 +98,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     onDateChanged(event: MatDatetimepickerInputEvent<Date>) {
         if (event.value) {
             if (isValid(event.value)) {
-                this.property.value = new Date(event.value);
+                this.property.value = this.dateAdapter.parse(event.value, this.property.format);
                 if (this.property.type === 'date') {
                     this.property.value.setHours(0, 0, 0, 0);
                 }
@@ -148,7 +148,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     private initSingleValueProperty() {
         if (this.property.value && !Array.isArray(this.property.value)) {
-            this.property.value = new Date(this.property.value);
+            this.property.value = this.dateAdapter.parse(this.property.value, this.property.format);
             if (this.property.type === 'date') {
                 this.property.value.setHours(0, 0, 0, 0);
             }
@@ -162,7 +162,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         }
         if (Array.isArray(this.property.value) && this.property.value.length > 0) {
             this.property.value = this.property.value.map((date: Date) => {
-                const localDate = new Date(date);
+                const localDate = this.dateAdapter.parse(date, this.property.format);
                 if (this.property.type === 'date') {
                     localDate.setHours(0, 0, 0, 0);
                 }
