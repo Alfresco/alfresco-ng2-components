@@ -93,11 +93,11 @@
         --adf-process-header-cloud-card-background: mat.get-color-from-palette($background, card),
         --adf-info-drawer-tab-active-focused-color:unset,
         --adf-info-drawer-tab-active-focused-bottom-line:unset,
-        --adf-header-icon-button-default-color: inherit,
-        --adf-header-icon-button-default-border-radius: inherit,
-        --adf-header-icon-button-hover-color: inherit,
-        --adf-header-icon-button-pressed-color: inherit,
-        --adf-header-icon-button-disabled-color: inherit,
+        --adf-header-icon-button-default-color: $adf-ref-header-icon-color,
+        --adf-header-icon-button-default-border-radius: $adf-ref-header-icon-border-radius,
+        --adf-header-icon-button-hover-color: $adf-ref-header-icon-color,
+        --adf-header-icon-button-pressed-color: $adf-ref-header-icon-color,
+        --adf-header-icon-button-disabled-color: $adf-ref-header-icon-color,
     );
 
     // propagates SCSS variables into the CSS variables scope
