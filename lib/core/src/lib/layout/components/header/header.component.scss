@@ -58,6 +58,19 @@ adf-layout-header .mat-toolbar-single-row {
             display: none;
         }
     }
+
+    .adf-header-icon-button {
+        color: var(--adf-header-icon-button-default-color);
+        border-radius: var(--adf-header-icon-button-default-border-radius);
+
+        &:hover {
+            color: var(--adf-header-icon-button-hover-color);
+        }
+
+        &:active {
+            color: var(--adf-header-icon-button-pressed-color);
+        }
+    }
 }
 
 [dir='rtl'] adf-layout-header .mat-toolbar-single-row {

@@ -240,7 +240,7 @@ describe('HeaderLayoutComponent', () => {
 
             const toggleIcon = fixture.debugElement.query(By.css('.adf-menu-icon'));
 
-            expect(toggleIcon.nativeElement.textContent).toBe('menu');
+            expect(toggleIcon.nativeElement.textContent.trim()).toBe('menu');
         });
 
         it('should display the correct toggle icon', () => {
@@ -250,7 +250,7 @@ describe('HeaderLayoutComponent', () => {
 
             const toggleIcon = fixture.debugElement.query(By.css('.adf-menu-icon'));
 
-            expect(toggleIcon.nativeElement.textContent).toBe('apps');
+            expect(toggleIcon.nativeElement.textContent.trim()).toBe('apps');
         });
     });
 
