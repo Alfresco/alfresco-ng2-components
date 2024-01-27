@@ -16,8 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { GroupEntry, GroupsApi } from '@alfresco/js-api';
+import { Group, GroupEntry, GroupsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -47,5 +48,15 @@ export class GroupService {
         } else {
             return accumulator;
         }
+    }
+
+    getGroup(id: string): Observable<GroupEntry> {
+        return from(this.groupsApi.getGroup(id));
+    }
+
+    updateGroup(group: Group): Observable<GroupEntry> {
+        return from(this.groupsApi.updateGroup(group.id, {
+            displayName: group.displayName
+        }));
     }
 }
