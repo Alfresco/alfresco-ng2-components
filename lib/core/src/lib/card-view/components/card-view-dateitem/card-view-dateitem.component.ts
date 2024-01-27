@@ -26,7 +26,6 @@ import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../translation/translation.service';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../common/utils/date-fns-adapter';
 import { ADF_DATETIME_FORMATS, AdfDateTimeFnsAdapter } from '../../../common/utils/datetime-fns-adapter';
-import { DateFnsUtils } from '../../../common';
 import { isValid } from 'date-fns';
 
 @Component({
@@ -74,13 +73,9 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         (this.dateAdapter as AdfDateFnsAdapter).displayFormat = 'MMM DD';
 
         if (this.property.multivalued) {
-            if (!this.property.value) {
-                this.property.value = [];
-            }
+            this.initMultivaluedProperty();
         } else {
-            if (this.property.value && !Array.isArray(this.property.value)) {
-                this.valueDate = DateFnsUtils.localToUtc(new Date(this.property.value));
-            }
+            this.initSingleValueProperty();
         }
     }
 
@@ -103,8 +98,11 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     onDateChanged(event: MatDatetimepickerInputEvent<Date>) {
         if (event.value) {
             if (isValid(event.value)) {
+                this.property.value = new Date(event.value);
+                if (this.property.type === 'date') {
+                    this.property.value.setHours(0, 0, 0, 0);
+                }
                 this.valueDate = event.value;
-                this.property.value = DateFnsUtils.utcToLocal(event.value);
                 this.update();
             }
         }
@@ -127,7 +125,11 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     addDateToList(event: MatDatetimepickerInputEvent<Date>) {
         if (event.value) {
             if (isValid(event.value) && this.property.multivalued && Array.isArray(this.property.value)) {
-                this.property.value.push(DateFnsUtils.utcToLocal(event.value));
+                const localDate = event.value;
+                if (this.property.type === 'date') {
+                    localDate.setHours(0, 0, 0, 0);
+                }
+                this.property.value.push(localDate);
                 this.update();
             }
         }
@@ -142,5 +144,31 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     update() {
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, this.property.value);
+    }
+
+    private initSingleValueProperty() {
+        if (this.property.value && !Array.isArray(this.property.value)) {
+            this.property.value = new Date(this.property.value);
+            if (this.property.type === 'date') {
+                this.property.value.setHours(0, 0, 0, 0);
+            }
+            this.valueDate = this.property.value;
+        }
+    }
+
+    private initMultivaluedProperty() {
+        if (!this.property.value) {
+            this.property.value = [];
+        }
+        if (Array.isArray(this.property.value) && this.property.value.length > 0) {
+            this.property.value = this.property.value.map((date: Date) => {
+                const localDate = new Date(date);
+                if (this.property.type === 'date') {
+                    localDate.setHours(0, 0, 0, 0);
+                }
+                return localDate;
+            });
+            this.valueDate = this.property.value[0];
+        }
     }
 }
