@@ -15,8 +15,12 @@
  * limitations under the License.
  */
 
-export * from './edit-json/edit-json.dialog';
-export * from './edit-json/edit-json.dialog.module';
-export * from './unsaved-changes-dialog/unsaved-changes-dialog.component';
-export * from './unsaved-changes-dialog/unsaved-changes-dialog.module';
-export * from './unsaved-changes-dialog/unsaved-changes.guard';
+import { Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+    selector: 'adf-unsaved-changes-dialog',
+    encapsulation: ViewEncapsulation.None,
+    templateUrl: './unsaved-changes-dialog.component.html',
+    styleUrls: ['./unsaved-changes-dialog.component.scss']
+})
+export class UnsavedChangesDialogComponent {}

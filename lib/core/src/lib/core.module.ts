@@ -67,6 +67,7 @@ import { AdfDateFnsAdapter } from './common/utils/date-fns-adapter';
 import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
 import { StoragePrefixFactory } from './app-config';
+import { UnsavedChangesDialogModule } from './dialogs';
 
 @NgModule({
     imports: [
@@ -101,6 +102,7 @@ import { StoragePrefixFactory } from './app-config';
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule,
+        UnsavedChangesDialogModule,
         HttpClientModule,
         HttpClientXsrfModule.withOptions({
             cookieName: 'CSRF-TOKEN',

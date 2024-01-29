@@ -1,0 +1,32 @@
+adf-unsaved-changes-dialog {
+    margin-top: -4px;
+    display: block;
+
+    .adf-unsaved-changes-dialog {
+        &-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        &-cancel-button {
+            background-color: var(--adf-secondary-button-background);
+            margin-right: 4px;
+        }
+
+        &-discard-changes-button {
+            color: var(--theme-warn-color-default-contrast);
+            background-color: var(--adf-danger-button-background);
+            min-width: 143px;
+        }
+
+        &-cancel-button, &-discard-changes-button {
+            padding: 4px 14px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+        }
+    }
+}
