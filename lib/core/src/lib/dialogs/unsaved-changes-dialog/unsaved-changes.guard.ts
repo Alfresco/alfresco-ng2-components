@@ -31,7 +31,6 @@ export class UnsavedChangesGuard implements CanDeactivate<any> {
     constructor(private dialog: MatDialog) {}
 
     canDeactivate(): boolean | Observable<boolean> {
-        console.log(12345);
         return this.unsaved ?
             this.dialog.open<UnsavedChangesDialogComponent, undefined, boolean>(UnsavedChangesDialogComponent, {
                 maxWidth: 346
