@@ -81,7 +81,6 @@ export class VariableMapperService {
             case 'boolean':
                 return 'boolean';
             case 'integer':
-                return 'number';
             case 'string':
                 return 'text';
             case 'date':
