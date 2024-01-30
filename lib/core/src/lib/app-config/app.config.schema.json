@@ -1527,9 +1527,6 @@
         "silentLogin": {
           "type": ["boolean", "string"]
         },
-        "authPath": {
-          "type": "string"
-        },
         "clientId": {
           "type": "string",
           "description": "The client's id as registered with the auth server"
