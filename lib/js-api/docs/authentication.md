@@ -195,8 +195,6 @@ const alfrescoApi = new AlfrescoApi({
 
 #### Password Flow
 
-If your auth endpoint is different from the standard one "/oauth/token" you can override it through the property authPath
-
 **Example**
 
 ```javascript
@@ -204,8 +202,7 @@ const alfrescoApi = new AlfrescoApi({
     oauth2: {
         host: 'HOST_OAUTH2_SERVER',
         clientId: 'YOUR_CLIENT_ID',
-        secret: 'SECRET',
-        authPath:'my-custom-auth-endpoint/token'
+        secret: 'SECRET'
     },
     authType: 'OAUTH',
     provider: 'ALL'
