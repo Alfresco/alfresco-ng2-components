@@ -119,7 +119,7 @@ export const mergeObjects = (...objects: any[]): any => {
                     if (Array.isArray(source[prop])) {
                         result[prop] = mergeArrays(result[prop], source[prop]);
                     } else {
-                        result[prop] = [...result[prop], source[prop]]
+                        result[prop] = [...result[prop], source[prop]];
                     }
                 } else if (prop in result && typeof result[prop] === 'object') {
                     result[prop] = mergeObjects(result[prop], source[prop]);
