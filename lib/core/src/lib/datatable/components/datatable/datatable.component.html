@@ -59,7 +59,7 @@
                     #resizableElement="adf-resizable"
                     [coverPadding]="10"
                     (resizing)="onResizing($event, columnIndex)"
-                    (resizeStart)="isResizing = true"
+                    (resizeStart)="resizingColumnIndex = columnIndex"
                     (resizeEnd)="onResizingEnd()"
                     [attr.data-automation-id]="'auto_header_content_id_' + col.key"
                     class="adf-datatable-cell-header-content"
@@ -68,12 +68,6 @@
                         !isDraggingHeaderColumn &&
                         !isResizing && col.sortable}"
                 >
-                    <span
-                        *ngIf="hoveredHeaderColumnIndex === columnIndex && col.draggable && !isResizing"
-                        class="adf-datatable-cell-header-drag-icon-placeholder"
-                        [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-placeholder-'+col.key"
-                    ></span>
-
                     <ng-container *ngIf="!col.header">
                         <span *ngIf="col.title" matTooltip="{{col.title | translate}}" class="adf-datatable-cell-value">{{col.title | translate}}</span>
 
@@ -88,15 +82,22 @@
                         <ng-template [ngTemplateOutlet]="col.header" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
                     </div>
 
-                    <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
-
                     <span
                         [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
                         [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
                     </span>
+
+                    <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate" [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
+
+                    <span
+                        *ngIf="hoveredHeaderColumnIndex === columnIndex && col.draggable && !isResizing"
+                        class="adf-datatable-cell-header-drag-icon-placeholder"
+                        [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-placeholder-'+col.key"
+                    ></span>
                 </div>
                 <div
                     *ngIf="isResizingEnabled && col.resizable"
+                    [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
                     adf-resize-handle
                     class="adf-datatable__resize-handle"
                     [resizableContainer]="resizableElement">
@@ -126,13 +127,13 @@
                 <ng-container *ngIf="mainActionTemplate">
                     <button
                         data-automation-id="adf-datatable-main-menu-button"
+                        matTooltip="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
                         mat-icon-button
                         #mainMenuTrigger="matMenuTrigger"
                         (keydown.enter)="mainMenuTrigger.openMenu()"
                         [matMenuTriggerFor]="mainMenu">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon>view_week</mat-icon>
                     </button>
-
                     <mat-menu #mainMenu>
                         <ng-container
                             [ngTemplateOutlet]="mainActionTemplate"
@@ -210,7 +211,7 @@
                      class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
                      [attr.data-automation-id]="getAutomationValue(row)"
-                     [attr.aria-selected]="row.isSelected ? true : false"
+                     [attr.aria-selected]="row.isSelected"
                      [attr.aria-label]="col.title ? (col.title | translate) : null"
                      (click)="onRowClick(row, $event)"
                      (keydown.enter)="onEnterKeyPressed(row, $any($event))"
