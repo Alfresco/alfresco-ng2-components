@@ -42,6 +42,7 @@
   },
   "allowedNonPeerDependencies": [
     "cropperjs",
-    "angular-oauth2-oidc"
+    "angular-oauth2-oidc",
+    "jsrsasign"
   ]
 }

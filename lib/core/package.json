@@ -22,7 +22,8 @@
   "dependencies": {
     "cropperjs": "^1.5.13",
     "angular-oauth2-oidc": "^13.0.1",
-    "angular-oauth2-oidc-jwks": "^13.0.1"
+    "angular-oauth2-oidc-jwks": "^13.0.1",
+    "jsrsasign": "10.9.0"
   },
   "peerDependencies": {
     "@angular/animations": ">=14.1.3",

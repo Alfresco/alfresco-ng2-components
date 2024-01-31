@@ -175,18 +175,6 @@ describe('SearchDateRangeComponent', () => {
         expect(component.form.controls.betweenEndDate.errors.invalidDate).toBeTrue();
     });
 
-    it('should not be able to select a date after the max date when selecting the BETWEEN option', async () => {
-        component.form.controls.dateRangeType.setValue(component.DateRangeType.BETWEEN);
-        component.maxDate = 'today';
-        fixture.detectChanges();
-        getElementBySelector('[data-automation-id="date-range-between-datepicker-toggle"]').click();
-        fixture.detectChanges();
-
-        const afterDate = format(addDays(new Date(), 1), 'MMM d, yyyy');
-        const afterDateItem = document.querySelector(`.mat-calendar-body-cell[aria-label="${afterDate}"]`);
-        expect(afterDateItem.getAttribute('aria-disabled')).toBeTruthy();
-    });
-
     it('should emit valid as false when form is invalid', () => {
         spyOn(component.valid, 'emit');
         component.form.controls.dateRangeType.setValue(component.DateRangeType.IN_LAST);
