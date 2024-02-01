@@ -578,5 +578,8 @@
   },
   "INFO_DRAWER": {
     "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Load more"
   }
 }

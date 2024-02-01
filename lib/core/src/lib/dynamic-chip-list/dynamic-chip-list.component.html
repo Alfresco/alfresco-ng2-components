@@ -1,0 +1,25 @@
+<div
+    class="adf-tag-node-list"
+    [class.adf-flex-column]="limitChipsDisplayed && (!calculationsDone || columnFlexDirection)"
+    [class.adf-dynamic-chip-list-button-in-next-line]="moveLoadMoreButtonToNextRow"
+    #nodeListContainer>
+    <mat-chip-list [class.adf-full-width]="limitChipsDisplayed && !calculationsDone" role="listbox" [attr.aria-label]="'METADATA.BASIC.TAGS' | translate">
+        <mat-chip class="adf-tag-chips"
+                  *ngFor="let currentEntry of chipsToDisplay; let idx = index"
+                  (removed)="removeTag(currentEntry.id)">
+            <span id="tag_name_{{idx}}">{{currentEntry.name}}</span>
+            <mat-icon *ngIf="showDelete" id="tag_chips_delete_{{currentEntry.name}}"
+                      class="adf-tag-chips-delete-icon" matChipRemove>cancel
+            </mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+    <button mat-button
+        [hidden]="!limitChipsDisplayed"
+        [style.left.px]="viewMoreButtonLeftOffset"
+        [style.margin-top.px]="viewMoreButtonMarginTop"
+        class="adf-view-more-button"
+        [class.adf-hidden-btn]="!calculationsDone"
+        (click)="displayAllChips($event)"
+        >{{ pagination ? ('DYNAMIC_CHIP_LIST.LOAD_MORE' | translate) : ('TAG_NODE_LIST.VIEW_MORE' | translate: { count: undisplayedChipsCount}) }}
+    </button>
+</div>

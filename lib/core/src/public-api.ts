@@ -37,6 +37,7 @@ export * from './lib/templates/index';
 export * from './lib/pipes/index';
 export * from './lib/services/index';
 export * from './lib/directives/index';
+export * from './lib/dynamic-chip-list/index';
 export * from './lib/clipboard/index';
 export * from './lib/dialogs/index';
 export * from './lib/icon/index';
