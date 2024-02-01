@@ -1,6 +1,6 @@
 .adf-tag-node-list {
     display: flex;
-    align-items: center;
+    //align-items: center;
     flex-direction: row;
     width: inherit;
 
@@ -24,7 +24,7 @@
 
     &.adf-dynamic-chip-list-button-in-next-line {
         align-items: unset;
-        padding-bottom: 36px;
+        padding-bottom: 54px;
     }
 
     .adf-full-width {

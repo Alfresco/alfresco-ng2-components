@@ -16,10 +16,10 @@
     <button mat-button
         [hidden]="!limitChipsDisplayed"
         [style.left.px]="viewMoreButtonLeftOffset"
-        [style.margin-top.px]="viewMoreButtonMarginTop"
+        [style.top.px]="viewMoreButtonTop"
         class="adf-view-more-button"
         [class.adf-hidden-btn]="!calculationsDone"
-        (click)="displayAllChips($event)"
-        >{{ pagination ? ('DYNAMIC_CHIP_LIST.LOAD_MORE' | translate) : ('TAG_NODE_LIST.VIEW_MORE' | translate: { count: undisplayedChipsCount}) }}
+        (click)="displayAllChips($event)">
+        {{ pagination ? ('DYNAMIC_CHIP_LIST.LOAD_MORE' | translate) : ('TAG_NODE_LIST.VIEW_MORE' | translate: { count: undisplayedChipsCount}) }}
     </button>
 </div>

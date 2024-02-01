@@ -83,7 +83,7 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
     moveLoadMoreButtonToNextRow = false;
     undisplayedChipsCount = 0;
     viewMoreButtonLeftOffset: number;
-    viewMoreButtonMarginTop = 0;
+    viewMoreButtonTop = 0;
 
     private onDestroy$ = new Subject<boolean>();
     private initialLimitChipsDisplayed: boolean;
@@ -137,64 +137,45 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
             const viewMoreBtnWidth: number = viewMoreButton.getBoundingClientRect().width;
             const firstChip = this.matChips.get(0);
             const chipMargin = firstChip ? this.getChipMargin(this.matChips.get(0)) : 0;
-            let viewMoreButtonMarginTop = -viewMoreButton.offsetHeight;
             let chipsWidth = 0;
-            let chips = this.matChips.toArray();
+            const chips = this.matChips.toArray();
             let lastIndex = 0;
             do {
                 chipsWidth = Math.max(chips.reduce((width, val, index) => {
-                    console.log(val);
-                    console.log(val._elementRef.nativeElement.getBoundingClientRect().width);
-                    console.log(chipMargin);
-                    console.log(containerWidth);
-                    console.log(viewMoreBtnWidth);
                     width += val._elementRef.nativeElement.getBoundingClientRect().width + chipMargin;
-                    console.log(width);
-                    const max = index === chips.length - 1 ? containerWidth - viewMoreBtnWidth : containerWidth;
-                    if (max >= width) {
-                        console.log(1);
+                    const availableSpace = index === chips.length - 1 ? containerWidth - viewMoreBtnWidth : containerWidth;
+                    if (availableSpace >= width) {
                         chipsToDisplay++;
                         lastIndex++;
                         this.viewMoreButtonLeftOffset = width;
                         this.viewMoreButtonLeftOffsetBeforeFlexDirection = width;
                     }
-                    /*if (containerWidth - viewMoreBtnWidth < width && this.pagination) {
-                        width = 0;
-                        viewMoreButtonMarginTop += viewMoreButton.offsetHeight;
-                    }*/
                     return width;
                 }, 0), chipsWidth);
-                console.log(chipsToDisplay);
-                console.log(lastIndex);
-                console.log(chipsToDisplay < this.pagination?.maxItems);
-                console.log(chipsToDisplay !== this.matChips.length && this.matChips.length);
-                console.log('TUTAJ ' + chipsWidth);
                 chips.splice(0, lastIndex);
                 lastIndex = 0;
-                viewMoreButtonMarginTop += viewMoreButton.offsetHeight;
             } while (chipsToDisplay <= this.pagination?.maxItems || chipsToDisplay < this.matChips.length && this.matChips.length);
-            console.log(containerWidth);
-            console.log(chipsWidth);
-            console.log(viewMoreBtnWidth);
             if ((containerWidth - chipsWidth - viewMoreBtnWidth) <= 0) {
-                console.log(1123123);
-                console.log((chipsToDisplay === 1 || this.pagination));
-                console.log((containerWidth < (this.matChips.last._elementRef.nativeElement.offsetWidth + this.matChips.last._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth)));
-                this.columnFlexDirection = chipsToDisplay === 1 && !this.pagination && (containerWidth < (this.matChips.last._elementRef.nativeElement.offsetWidth + this.matChips.last._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
-                this.moveLoadMoreButtonToNextRow = this.pagination && (containerWidth < (this.matChips.last._elementRef.nativeElement.offsetWidth + this.matChips.last._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
+                const hasNotEnoughSpaceForMoreButton = (containerWidth < (this.matChips.last._elementRef.nativeElement.offsetWidth + this.matChips.last._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
+                this.columnFlexDirection = chipsToDisplay === 1 && !this.pagination && hasNotEnoughSpaceForMoreButton;
+                this.moveLoadMoreButtonToNextRow = this.pagination && hasNotEnoughSpaceForMoreButton;
                 this.undisplayedChipsCount = this.chipsToDisplay.length - chipsToDisplay;
                 this.chipsToDisplay = this.chipsToDisplay.slice(0, chipsToDisplay);
             } else {
                 this.moveLoadMoreButtonToNextRow = false;
             }
             this.limitChipsDisplayed = this.undisplayedChipsCount ? this.initialLimitChipsDisplayed : !!this.pagination;
-            this.viewMoreButtonMarginTop = viewMoreButtonMarginTop;
-            console.log(this.columnFlexDirection);
-            console.log(this.viewMoreButtonLeftOffsetBeforeFlexDirection);
-            if (!this.pagination) {
-                this.viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
+            if (this.pagination) {
+                const lastChipTop = this.matChips.last._elementRef.nativeElement.offsetTop;
+                if (this.moveLoadMoreButtonToNextRow) {
+                    this.viewMoreButtonLeftOffset = 0;
+                    this.viewMoreButtonTop = lastChipTop + viewMoreButton.offsetHeight;
+                } else {
+                    this.viewMoreButtonLeftOffset = this.viewMoreButtonLeftOffsetBeforeFlexDirection;
+                    this.viewMoreButtonTop = lastChipTop;
+                }
             } else {
-                this.viewMoreButtonLeftOffset = this.moveLoadMoreButtonToNextRow ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
+                this.viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
             }
             this.calculationsDone = true;
         }
