@@ -91,7 +91,7 @@ jobs:
     needs: release
     timeout-minutes: 20
     name: "Release tag"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: $BOT_GITHUB_TOKEN
     steps:
