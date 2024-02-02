@@ -20,10 +20,10 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef, EventEmitter,
-    Input,
+    Input, OnChanges,
     OnDestroy,
     OnInit, Output,
-    QueryList,
+    QueryList, SimpleChanges,
     ViewChild,
     ViewChildren,
     ViewEncapsulation
@@ -44,16 +44,14 @@ import { Pagination } from '@alfresco/js-api';
     styleUrls: ['./dynamic-chip-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewInit {
+export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, AfterViewInit {
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
+
     @Input()
-    set chips(chips: Chip[]) {
-        this.initialChips = chips;
-        this.chipsToDisplay = chips;
-        if (this.limitChipsDisplayed && this.chipsToDisplay.length > 0) {
-            this.calculateChipsToDisplay();
-        }
-    }
+    pagination: Pagination;
+
+    @Input()
+    chips: Chip[];
 
     initialChips: Chip[] = [];
 
@@ -65,11 +63,8 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
     @Input()
     limitChipsDisplayed = false;
 
-    @Input()
-    pagination: Pagination;
-
     @Output()
-    displayAll = new EventEmitter<void>();
+    displayNext = new EventEmitter<void>();
 
     @ViewChild('nodeListContainer')
     containerView: ElementRef;
@@ -84,6 +79,7 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
     undisplayedChipsCount = 0;
     viewMoreButtonLeftOffset: number;
     viewMoreButtonTop = 0;
+    paginationData: Pagination;
 
     private onDestroy$ = new Subject<boolean>();
     private initialLimitChipsDisplayed: boolean;
@@ -96,7 +92,31 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
 
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.pagination) {
+            if (this.pagination) {
+                this.limitChipsDisplayed = this.pagination.hasMoreItems;
+            }
+            console.log(11);
+            this.paginationData = this.pagination;
+            console.log(12345);
+        }
+        if (changes.chips) {
+            console.log(22);
+            this.initialChips = this.chips;
+            this.chipsToDisplay = this.initialChips;
+            console.log(this.chipsToDisplay);
+            console.log(this.limitChipsDisplayed);
+            if (this.limitChipsDisplayed && this.chipsToDisplay.length > 0) {
+                this.calculateChipsToDisplay();
+            }
+        }
+    }
+
     ngOnInit() {
+        if (this.paginationData) {
+            this.limitChipsDisplayed = this.paginationData.hasMoreItems;
+        }
         this.initialLimitChipsDisplayed = this.limitChipsDisplayed;
     }
 
@@ -117,13 +137,19 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
         //});
     }
 
-    displayAllChips(event: Event): void {
+    displayNextChips(event: Event): void {
         event.preventDefault();
         event.stopPropagation();
-        this.limitChipsDisplayed = false;
-        this.requestedDisplayingAllChips = true;
-        this.resizeObserver.unobserve(this.containerView.nativeElement);
-        this.displayAll.emit();
+        if (this.paginationData) {
+            this.requestedDisplayingAllChips = !this.paginationData.hasMoreItems;
+        } else {
+            this.limitChipsDisplayed = false;
+            this.requestedDisplayingAllChips = true;
+        }
+        if (this.requestedDisplayingAllChips) {
+            this.resizeObserver.unobserve(this.containerView.nativeElement);
+        }
+        this.displayNext.emit();
     }
 
     private calculateChipsToDisplay() {
@@ -140,11 +166,18 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
             let chipsWidth = 0;
             const chips = this.matChips.toArray();
             let lastIndex = 0;
+            let totalPaginatedItems = 0;
+            if (this.paginationData) {
+                console.log(this.paginationData);
+                totalPaginatedItems = this.paginationData.count + this.paginationData.skipCount;
+            }
             do {
                 chipsWidth = Math.max(chips.reduce((width, val, index) => {
                     width += val._elementRef.nativeElement.getBoundingClientRect().width + chipMargin;
                     const availableSpace = index === chips.length - 1 ? containerWidth - viewMoreBtnWidth : containerWidth;
+                    console.log(val);
                     if (availableSpace >= width) {
+                        console.log(1);
                         chipsToDisplay++;
                         lastIndex++;
                         this.viewMoreButtonLeftOffset = width;
@@ -154,18 +187,21 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
                 }, 0), chipsWidth);
                 chips.splice(0, lastIndex);
                 lastIndex = 0;
-            } while (chipsToDisplay <= this.pagination?.maxItems || chipsToDisplay < this.matChips.length && this.matChips.length);
+                console.log(chipsToDisplay);
+                console.log(totalPaginatedItems);
+                console.log(this.matChips.length);
+            } while (chipsToDisplay <= totalPaginatedItems || chipsToDisplay < this.matChips.length && this.matChips.length);
             if ((containerWidth - chipsWidth - viewMoreBtnWidth) <= 0) {
-                const hasNotEnoughSpaceForMoreButton = (containerWidth < (this.matChips.last._elementRef.nativeElement.offsetWidth + this.matChips.last._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
-                this.columnFlexDirection = chipsToDisplay === 1 && !this.pagination && hasNotEnoughSpaceForMoreButton;
-                this.moveLoadMoreButtonToNextRow = this.pagination && hasNotEnoughSpaceForMoreButton;
+                const hasNotEnoughSpaceForMoreButton = (containerWidth < (this.matChips.last?._elementRef.nativeElement.offsetWidth + this.matChips.last?._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
+                this.columnFlexDirection = chipsToDisplay === 1 && !this.paginationData && hasNotEnoughSpaceForMoreButton;
+                this.moveLoadMoreButtonToNextRow = this.paginationData && hasNotEnoughSpaceForMoreButton;
                 this.undisplayedChipsCount = this.chipsToDisplay.length - chipsToDisplay;
                 this.chipsToDisplay = this.chipsToDisplay.slice(0, chipsToDisplay);
             } else {
                 this.moveLoadMoreButtonToNextRow = false;
             }
-            this.limitChipsDisplayed = this.undisplayedChipsCount ? this.initialLimitChipsDisplayed : !!this.pagination;
-            if (this.pagination) {
+            this.limitChipsDisplayed = this.undisplayedChipsCount ? this.initialLimitChipsDisplayed : !!this.paginationData;
+            if (this.paginationData) {
                 const lastChipTop = this.matChips.last._elementRef.nativeElement.offsetTop;
                 if (this.moveLoadMoreButtonToNextRow) {
                     this.viewMoreButtonLeftOffset = 0;
@@ -185,16 +221,4 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, AfterViewIni
         const chipStyles = window.getComputedStyle(chip._elementRef.nativeElement);
         return parseInt(chipStyles.marginLeft, 10) + parseInt(chipStyles.marginRight, 10);
     }
-
-    /*private calculateChipsWidth(chips: QueryList<MatChip>, chipMargin, containerWidth, viewMoreBtnWidth, chipsToDisplay) {
-        return chips.reduce((width, val, index) => {
-            width += val._elementRef.nativeElement.offsetWidth + chipMargin;
-            if (containerWidth - viewMoreBtnWidth > width || chipsToDisplay <= this.pagination?.maxItems) {
-                chipsToDisplay = index + 1;
-                this.viewMoreButtonLeftOffset = width;
-                this.viewMoreButtonLeftOffsetBeforeFlexDirection = width;
-            }
-            return width;
-        }, 0);
-    }*/
 }

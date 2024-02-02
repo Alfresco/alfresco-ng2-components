@@ -19,7 +19,7 @@
         [style.top.px]="viewMoreButtonTop"
         class="adf-view-more-button"
         [class.adf-hidden-btn]="!calculationsDone"
-        (click)="displayAllChips($event)">
-        {{ pagination ? ('DYNAMIC_CHIP_LIST.LOAD_MORE' | translate) : ('TAG_NODE_LIST.VIEW_MORE' | translate: { count: undisplayedChipsCount}) }}
+        (click)="displayNextChips($event)">
+        {{ paginationData ? ('DYNAMIC_CHIP_LIST.LOAD_MORE' | translate) : ('TAG_NODE_LIST.VIEW_MORE' | translate: { count: undisplayedChipsCount}) }}
     </button>
 </div>
