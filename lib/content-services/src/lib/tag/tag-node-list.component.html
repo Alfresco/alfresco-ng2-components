@@ -2,5 +2,6 @@
     [chips]="tagChips"
     [limitChipsDisplayed]="limitTagsDisplayed"
     [showDelete]="showDelete"
-    (displayNext)="refreshTag()">
+    (displayNext)="refreshTag()"
+    (removedChip)="removeTag($event)">
 </adf-dynamic-chip-list>

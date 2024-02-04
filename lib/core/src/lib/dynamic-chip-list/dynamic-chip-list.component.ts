@@ -66,6 +66,9 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
     @Output()
     displayNext = new EventEmitter<void>();
 
+    @Output()
+    removedChip = new EventEmitter<string>();
+
     @ViewChild('nodeListContainer')
     containerView: ElementRef;
 
@@ -104,6 +107,7 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
             if (this.limitChipsDisplayed && this.chipsToDisplay.length) {
                 setTimeout(() => {
                     this.calculateChipsToDisplay();
+                    this.changeDetectorRef.detectChanges();
                 });
             }
         }
@@ -126,11 +130,8 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
         this.resizeObserver.unobserve(this.containerView.nativeElement);
     }
 
-    removeTag(tag: string) {
-        console.log(tag);
-        //this.tagService.removeTag(this.nodeId, tag).subscribe(() => {
-            //this.refreshTag();
-        //});
+    removeTag(id: string) {
+        this.removedChip.emit(id);
     }
 
     displayNextChips(event: Event): void {
@@ -165,9 +166,9 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
             do {
                 chipsWidth = Math.max(chips.reduce((width, val, index) => {
                     width += val._elementRef.nativeElement.getBoundingClientRect().width + chipMargin;
-                    const availableSpace = index && index === chips.length - 1 ? containerWidth - viewMoreBtnWidth : containerWidth;
+                    const availableSpace = index && index === chips.length - 1 || !this.paginationData ? containerWidth - viewMoreBtnWidth : containerWidth;
                     if (availableSpace >= width) {
-                        chipsToDisplay++;
+                        chipsToDisplay = (this.paginationData ? chipsToDisplay : index) + 1;
                         lastIndex++;
                         this.viewMoreButtonLeftOffset = width;
                         this.viewMoreButtonLeftOffsetBeforeFlexDirection = width;
@@ -176,9 +177,9 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
                 }, 0), chipsWidth);
                 chips.splice(0, lastIndex);
                 lastIndex = 0;
-            } while (chips.length|| chipsToDisplay < this.matChips.length && this.matChips.length);
+            } while ((chips.length || chipsToDisplay < this.matChips.length && this.matChips.length) && this.paginationData);
             if ((containerWidth - chipsWidth - viewMoreBtnWidth) <= 0) {
-                const hasNotEnoughSpaceForMoreButton = (containerWidth < (this.matChips.last?._elementRef.nativeElement.offsetWidth + this.matChips.last?._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
+                const hasNotEnoughSpaceForMoreButton = (containerWidth < (this.matChips.get(0)?._elementRef.nativeElement.offsetWidth  + viewMoreBtnWidth));
                 this.columnFlexDirection = chipsToDisplay === 1 && !this.paginationData && hasNotEnoughSpaceForMoreButton;
                 this.moveLoadMoreButtonToNextRow = this.paginationData && hasNotEnoughSpaceForMoreButton;
                 this.undisplayedChipsCount = this.chipsToDisplay.length - chipsToDisplay;

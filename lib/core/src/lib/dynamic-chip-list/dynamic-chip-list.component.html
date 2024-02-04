@@ -2,6 +2,7 @@
     class="adf-tag-node-list"
     [class.adf-flex-column]="limitChipsDisplayed && (!calculationsDone || columnFlexDirection)"
     [class.adf-dynamic-chip-list-button-in-next-line]="moveLoadMoreButtonToNextRow"
+    [class.adf-dynamic-chip-list-paginated]="paginationData"
     #nodeListContainer>
     <mat-chip-list [class.adf-full-width]="limitChipsDisplayed && !calculationsDone" role="listbox" [attr.aria-label]="'METADATA.BASIC.TAGS' | translate">
         <mat-chip class="adf-tag-chips"

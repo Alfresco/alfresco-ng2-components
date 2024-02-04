@@ -1,6 +1,5 @@
 .adf-tag-node-list {
     display: flex;
-    //align-items: center;
     flex-direction: row;
     width: inherit;
     padding-top: 12px;
@@ -9,7 +8,6 @@
     .adf-view-more-button {
         color: var(--adf-theme-foreground-text-color-054);
         position: absolute;
-        margin: -2px 4px 4px 24px;
 
         &[hidden] {
             visibility: hidden;
@@ -24,12 +22,36 @@
         }
     }
 
+    &.adf-dynamic-chip-list-paginated {
+        mat-chip-list {
+            width: 100%;
+
+            & > div {
+                width: 100%;
+            }
+        }
+
+        .adf-view-more-button {
+            margin: -2px 4px 4px 24px;
+        }
+    }
+
     &.adf-dynamic-chip-list-button-in-next-line {
         align-items: unset;
         padding-bottom: 54px;
 
         .adf-view-more-button {
             margin-top: 4px;
+        }
+    }
+
+    &:not(.adf-dynamic-chip-list-paginated) {
+        align-items: center;
+
+        &:not(.adf-flex-column) {
+            .adf-view-more-button {
+                margin-top: 10px;
+            }
         }
     }
 
@@ -68,13 +90,5 @@
         height: 20px;
         width: 20px;
         color: var(--theme-primary-color-default-contrast);
-    }
-
-    mat-chip-list {
-        width: 100%;
-
-        & > div {
-            width: 100%;
-        }
     }
 }
