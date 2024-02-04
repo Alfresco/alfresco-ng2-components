@@ -94,21 +94,17 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.pagination) {
-            if (this.pagination) {
-                this.limitChipsDisplayed = this.pagination.hasMoreItems;
-            }
-            console.log(11);
+            this.limitChipsDisplayed = this.pagination?.hasMoreItems;
             this.paginationData = this.pagination;
-            console.log(12345);
+            this.initialLimitChipsDisplayed = this.limitChipsDisplayed;
         }
         if (changes.chips) {
-            console.log(22);
             this.initialChips = this.chips;
             this.chipsToDisplay = this.initialChips;
-            console.log(this.chipsToDisplay);
-            console.log(this.limitChipsDisplayed);
-            if (this.limitChipsDisplayed && this.chipsToDisplay.length > 0) {
-                this.calculateChipsToDisplay();
+            if (this.limitChipsDisplayed && this.chipsToDisplay.length) {
+                setTimeout(() => {
+                    this.calculateChipsToDisplay();
+                });
             }
         }
     }
@@ -153,7 +149,7 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
     }
 
     private calculateChipsToDisplay() {
-        if (!this.requestedDisplayingAllChips) {
+        if (!this.requestedDisplayingAllChips && this.chips.length) {
             this.chipsToDisplay = this.initialChips;
             this.changeDetectorRef.detectChanges();
             this.undisplayedChipsCount = 0;
@@ -166,18 +162,11 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
             let chipsWidth = 0;
             const chips = this.matChips.toArray();
             let lastIndex = 0;
-            let totalPaginatedItems = 0;
-            if (this.paginationData) {
-                console.log(this.paginationData);
-                totalPaginatedItems = this.paginationData.count + this.paginationData.skipCount;
-            }
             do {
                 chipsWidth = Math.max(chips.reduce((width, val, index) => {
                     width += val._elementRef.nativeElement.getBoundingClientRect().width + chipMargin;
-                    const availableSpace = index === chips.length - 1 ? containerWidth - viewMoreBtnWidth : containerWidth;
-                    console.log(val);
+                    const availableSpace = index && index === chips.length - 1 ? containerWidth - viewMoreBtnWidth : containerWidth;
                     if (availableSpace >= width) {
-                        console.log(1);
                         chipsToDisplay++;
                         lastIndex++;
                         this.viewMoreButtonLeftOffset = width;
@@ -187,10 +176,7 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
                 }, 0), chipsWidth);
                 chips.splice(0, lastIndex);
                 lastIndex = 0;
-                console.log(chipsToDisplay);
-                console.log(totalPaginatedItems);
-                console.log(this.matChips.length);
-            } while (chipsToDisplay <= totalPaginatedItems || chipsToDisplay < this.matChips.length && this.matChips.length);
+            } while (chips.length|| chipsToDisplay < this.matChips.length && this.matChips.length);
             if ((containerWidth - chipsWidth - viewMoreBtnWidth) <= 0) {
                 const hasNotEnoughSpaceForMoreButton = (containerWidth < (this.matChips.last?._elementRef.nativeElement.offsetWidth + this.matChips.last?._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
                 this.columnFlexDirection = chipsToDisplay === 1 && !this.paginationData && hasNotEnoughSpaceForMoreButton;
@@ -200,8 +186,8 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
             } else {
                 this.moveLoadMoreButtonToNextRow = false;
             }
-            this.limitChipsDisplayed = this.undisplayedChipsCount ? this.initialLimitChipsDisplayed : !!this.paginationData;
-            if (this.paginationData) {
+            this.limitChipsDisplayed = this.undisplayedChipsCount ? this.initialLimitChipsDisplayed : this.paginationData?.hasMoreItems;
+            if (this.paginationData?.hasMoreItems) {
                 const lastChipTop = this.matChips.last._elementRef.nativeElement.offsetTop;
                 if (this.moveLoadMoreButtonToNextRow) {
                     this.viewMoreButtonLeftOffset = 0;
