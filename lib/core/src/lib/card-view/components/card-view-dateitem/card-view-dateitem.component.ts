@@ -161,9 +161,10 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             this.property.value = [];
         }
         if (Array.isArray(this.property.value) && this.property.value.length > 0) {
-            const originalDate = new Date(this.property.value[0]);
             this.property.value = this.property.value.map((date: Date | string) => new Date(date));
-            this.valueDate = this.property.type === 'date' ? DateFnsUtils.forceLocal(originalDate) : originalDate;
+            this.valueDate = this.property.type === 'date'
+                ? DateFnsUtils.forceLocal(this.property.value[0])
+                : this.property.value[0];
         }
     }
 }
