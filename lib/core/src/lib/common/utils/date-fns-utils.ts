@@ -15,16 +15,9 @@
  * limitations under the License.
  */
 
-import { format, parse, parseISO, isValid, isBefore, isAfter } from 'date-fns';
+import { format, parse, parseISO, isValid, isBefore, isAfter, lightFormat } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
-const panDate = (num: number = 1): string => {
-    let text = num.toString();
-    while (text.length < 2){
-        text = '0' + text;
-    }
-    return text;
-};
 
 export class DateFnsUtils {
     static getLocaleFromString(locale: string): Locale {
@@ -211,11 +204,11 @@ export class DateFnsUtils {
     }
 
     static forceLocal(date: Date): Date {
-        return new Date(`${date.getUTCFullYear()}-${panDate(date.getUTCMonth() + 1)}-${panDate(date.getUTCDate())}T00:00:00.000`);
+        return new Date(lightFormat(date, 'yyyy-MM-dd'));
     }
 
     static forceUtc(date: Date): Date {
-        return new Date(`${date.getFullYear()}-${panDate(date.getMonth() + 1)}-${panDate(date.getDate())}T00:00:00.000Z`);
+        return new Date(lightFormat(date, 'yyyy-MM-dd').concat('T00:00:00.000Z'));
     }
 
 }
