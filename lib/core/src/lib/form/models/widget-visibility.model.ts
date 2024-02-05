@@ -54,7 +54,7 @@ export class WidgetVisibilityModel {
     }
 
     get leftValue(): any {
-        if (this.json.leftValue) {
+        if (this.json.leftValue || this.json.leftValue === false || this.json.leftValue === 0) {
             return this.json.leftValue;
         } else if (this.leftFormFieldId) {
             return this.leftFormFieldId;
@@ -86,7 +86,7 @@ export class WidgetVisibilityModel {
     }
 
     get rightValue(): any {
-        if (this.json.rightValue) {
+        if (this.json.rightValue || this.json.rightValue === false || this.json.rightValue === 0) {
             return this.json.rightValue;
         } else if (this.rightFormFieldId) {
             return this.rightFormFieldId;
