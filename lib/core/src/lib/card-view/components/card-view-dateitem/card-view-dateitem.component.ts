@@ -27,7 +27,7 @@ import { TranslationService } from '../../../translation/translation.service';
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../common/utils/date-fns-adapter';
 import { ADF_DATETIME_FORMATS, AdfDateTimeFnsAdapter } from '../../../common/utils/datetime-fns-adapter';
 import { isValid } from 'date-fns';
-import { DateFnsUtils } from '../../../../..';
+import { DateFnsUtils } from '../../../common/utils/date-fns-utils';
 
 @Component({
     providers: [
