@@ -316,6 +316,7 @@
             "karmaConfig": "lib/core/karma.conf.js",
             "sourceMap": true,
             "codeCoverage": true,
+            "watch": true,
             "stylePreprocessorOptions": {
               "includePaths": [
                 "lib", "lib/core/src/lib"

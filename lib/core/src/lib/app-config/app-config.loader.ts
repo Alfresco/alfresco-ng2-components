@@ -18,7 +18,7 @@
 import { AppConfigService, AppConfigValues } from './app-config.service';
 import { StorageService } from '../common/services/storage.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { StoragePrefixFactory } from './app-config-storage.factory';
+import { StoragePrefixFactory } from './app-config-storage-prefix.factory';
 
 /**
  * Create a factory to load app configuration
