@@ -20,6 +20,7 @@ import { DynamicComponentModel } from '../../common/services/dynamic-component-m
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
+import { DateFnsUtils } from '../../../..';
 
 type DateItemType = Date | Date[] | null;
 
@@ -40,23 +41,28 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
         if (cardViewDateItemProperties.locale) {
             this.locale = cardViewDateItemProperties.locale;
         }
-
     }
 
     get displayValue(): string | string[] {
         if (this.multivalued) {
             if (this.value && Array.isArray(this.value)) {
-                return this.value.map((date) => this.transformDate(date));
+                return this.value.map((date) => this.transformDate(this.prepareDate(date)));
             } else {
                 return this.default ? [this.default] : [];
             }
         } else {
-            return this.value && !Array.isArray(this.value) ? this.transformDate(this.value) : this.default;
+            return this.value && !Array.isArray(this.value)
+                ? this.transformDate(this.prepareDate(this.value))
+                : this.default;
         }
     }
 
     transformDate(value: Date | string | number): string {
         this.localizedDatePipe = new LocalizedDatePipe();
         return this.localizedDatePipe.transform(value, this.format, this.locale);
+    }
+
+    private prepareDate(date: Date): Date {
+        return this.type === 'date' ? DateFnsUtils.forceLocal(date) : date;
     }
 }

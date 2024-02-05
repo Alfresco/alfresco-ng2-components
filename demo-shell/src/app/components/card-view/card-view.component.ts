@@ -114,17 +114,17 @@ export class CardViewComponent implements OnInit, OnDestroy {
             }),
             new CardViewDateItemModel({
                 label: 'CardView Date Item',
-                value: new Date(1983, 11, 24, 10, 0, 30),
+                value: new Date('1983-11-24T00:00:00Z'),
                 key: 'date',
-                default: new Date(1983, 11, 24, 10, 0, 30),
+                default: new Date('1983-11-24T00:00:00Z'),
                 format: 'shortDate',
                 editable: this.isEditable
             }),
             new CardViewDateItemModel({
                 label: 'CardView Date Item - Multivalue (chips)',
-                value: [new Date(1983, 11, 24, 10, 0, 30)],
+                value: [new Date('1983-11-24T00:00:00Z')],
                 key: 'date',
-                default: new Date(1983, 11, 24, 10, 0, 30),
+                default: new Date('1983-11-24T00:00:00Z'),
                 format: 'shortDate',
                 editable: this.isEditable,
                 multivalued: true

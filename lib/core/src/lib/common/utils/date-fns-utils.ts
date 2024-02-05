@@ -18,6 +18,14 @@
 import { format, parse, parseISO, isValid, isBefore, isAfter } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
+const panDate = (num: number = 1): string => {
+    let text = num.toString();
+    while (text.length < 2){
+        text = '0' + text;
+    }
+    return text;
+};
+
 export class DateFnsUtils {
     static getLocaleFromString(locale: string): Locale {
         let dateFnsLocale: Locale;
@@ -201,4 +209,13 @@ export class DateFnsUtils {
     static localToUtc(date: Date): Date {
         return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
+
+    static forceLocal(date: Date): Date {
+        return new Date(`${date.getUTCFullYear()}-${panDate(date.getUTCMonth() + 1)}-${panDate(date.getUTCDate())}T00:00:00.000`);
+    }
+
+    static forceUtc(date: Date): Date {
+        return new Date(`${date.getFullYear()}-${panDate(date.getMonth() + 1)}-${panDate(date.getDate())}T00:00:00.000Z`);
+    }
+
 }
