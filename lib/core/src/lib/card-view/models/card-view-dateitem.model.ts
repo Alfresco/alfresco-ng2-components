@@ -20,7 +20,7 @@ import { DynamicComponentModel } from '../../common/services/dynamic-component-m
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
-import { DateFnsUtils } from '../../../..';
+import { DateFnsUtils } from '../../common/utils/date-fns-utils';
 
 type DateItemType = Date | Date[] | null;
 
