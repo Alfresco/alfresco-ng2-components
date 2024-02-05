@@ -66,6 +66,7 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
 import { AdfDateFnsAdapter } from './common/utils/date-fns-adapter';
 import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
+import { StoragePrefixFactory } from './app-config';
 
 @NgModule({
     imports: [
@@ -151,10 +152,17 @@ export class CoreModule {
                 AdfDateFnsAdapter,
                 AdfDateTimeFnsAdapter,
                 MomentDateAdapter,
+                StoragePrefixFactory,
                 {
                     provide: APP_INITIALIZER,
                     useFactory: loadAppConfig,
-                    deps: [ AppConfigService, StorageService, AdfHttpClient ], multi: true
+                    deps: [
+                        AppConfigService,
+                        StorageService,
+                        AdfHttpClient,
+                        StoragePrefixFactory
+                    ],
+                    multi: true
                 },
                 {
                     provide: APP_INITIALIZER,
