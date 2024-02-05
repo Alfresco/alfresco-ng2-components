@@ -1,11 +1,11 @@
-.adf-tag-node-list {
+.adf-dynamic-chip-list-container {
     display: flex;
     flex-direction: row;
     width: inherit;
     padding-top: 12px;
     padding-bottom: 12px;
 
-    .adf-view-more-button {
+    .adf-dynamic-chip-list-view-more-button {
         color: var(--adf-theme-foreground-text-color-054);
         position: absolute;
 
@@ -14,10 +14,10 @@
         }
     }
 
-    &.adf-flex-column {
+    &.adf-dynamic-chip-list-flex-column {
         flex-direction: column;
 
-        .adf-view-more-button {
+        .adf-dynamic-chip-list-view-more-button {
             position: relative;
         }
     }
@@ -31,7 +31,7 @@
             }
         }
 
-        .adf-view-more-button {
+        .adf-dynamic-chip-list-view-more-button {
             margin: -2px 4px 4px 24px;
         }
     }
@@ -40,7 +40,7 @@
         align-items: unset;
         padding-bottom: 54px;
 
-        .adf-view-more-button {
+        .adf-dynamic-chip-list-view-more-button {
             margin-top: 4px;
         }
     }
@@ -48,41 +48,29 @@
     &:not(.adf-dynamic-chip-list-paginated) {
         align-items: center;
 
-        &:not(.adf-flex-column) {
-            .adf-view-more-button {
+        &:not(.adf-dynamic-chip-list-flex-column) {
+            .adf-dynamic-chip-list-view-more-button {
                 margin-top: 10px;
             }
         }
     }
 
-    .adf-full-width {
+    .adf-dynamic-chip-list-full-width {
         width: 100%;
     }
 
-    .adf-hidden-btn {
+    .adf-dynamic-chip-list-hidden-btn {
         visibility: hidden;
     }
 
-    .adf-tag-chips {
+    .adf-dynamic-chip-list-chip {
         color: var(--theme-primary-color-default-contrast);
         background-color: var(--theme-primary-color);
         height: auto;
         word-break: break-word;
     }
 
-    .adf-tag-chips-delete {
-        overflow: visible;
-        cursor: pointer;
-        height: 17px;
-        width: 20px;
-        float: right;
-        border: 0;
-        background: none;
-        padding: 0;
-        margin: -1px 0 0 10px;
-    }
-
-    .adf-tag-chips-delete-icon {
+    .adf-dynamic-chip-list-delete-icon {
         font-size: var(--theme-title-font-size);
         background-repeat: no-repeat;
         display: inline-block;
