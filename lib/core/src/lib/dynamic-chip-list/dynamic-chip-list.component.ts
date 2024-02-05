@@ -179,7 +179,8 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
                 lastIndex = 0;
             } while ((chips.length || chipsToDisplay < this.matChips.length && this.matChips.length) && this.paginationData);
             if ((containerWidth - chipsWidth - viewMoreBtnWidth) <= 0) {
-                const hasNotEnoughSpaceForMoreButton = (containerWidth < (this.matChips.get(0)?._elementRef.nativeElement.offsetWidth  + viewMoreBtnWidth));
+                const chip = this.paginationData ? this.matChips.last : this.matChips.first;
+                const hasNotEnoughSpaceForMoreButton = (containerWidth < (chip?._elementRef.nativeElement.offsetWidth + chip?._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
                 this.columnFlexDirection = chipsToDisplay === 1 && !this.paginationData && hasNotEnoughSpaceForMoreButton;
                 this.moveLoadMoreButtonToNextRow = this.paginationData && hasNotEnoughSpaceForMoreButton;
                 this.undisplayedChipsCount = this.chipsToDisplay.length - chipsToDisplay;
