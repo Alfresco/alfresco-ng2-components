@@ -16,7 +16,7 @@
  */
 
 import { of } from 'rxjs';
-import { StoragePrefixFactory, StoragePrefixFactoryService } from './app-config-storage.factory';
+import { StoragePrefixFactory, StoragePrefixFactoryService } from './app-config-storage-prefix.factory';
 import { AppConfigService } from './app-config.service';
 
 type TestAppConfigService = Pick<AppConfigService, 'select'>;
