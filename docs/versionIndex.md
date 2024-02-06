@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v6.6.0](#v660)
 -   [v6.4.0](#v640)
 -   [v6.2.0](#v620)
 -   [v6.1.0](#v610)
@@ -43,6 +44,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v6.6.0
+
+<!--v660 start-->
+
+-   [Dynamic Chip List component](core/components/dynamic-chip-list.component.md)
+
+<!--v660 end-->
 
 ## v6.4.0
 

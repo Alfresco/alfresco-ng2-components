@@ -39,7 +39,7 @@ import { Pagination } from '@alfresco/js-api';
 
 /**
  *
- * This component show dynamic list of chips which render depending on free space.
+ * This component shows dynamic list of chips which render depending on free space.
  */
 
 @Component({
@@ -50,23 +50,27 @@ import { Pagination } from '@alfresco/js-api';
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
+    /** Provide if you want to use paginated chips. */
     @Input()
     pagination: Pagination;
 
+    /** List of chips to display. */
     @Input()
     chips: Chip[];
 
-    /** Show delete button */
+    /** Show delete button. */
     @Input()
     showDelete = true;
 
-    /** Should limit number of chips displayed */
+    /** Should limit number of chips displayed. */
     @Input()
     limitChipsDisplayed = false;
 
+    /** Emitted when button for view more is clicked. */
     @Output()
     displayNext = new EventEmitter<void>();
 
+    /** Emitted when any chip is removed. */
     @Output()
     removedChip = new EventEmitter<string>();
 
