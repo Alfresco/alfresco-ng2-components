@@ -51,30 +51,33 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     results = new EventEmitter<TagEntry[]>();
 
     private onDestroy$ = new Subject<boolean>();
-    tagChips: Chip[] = [];
+    private _tagChips: Chip[] = [];
 
-    constructor(private tagService: TagService) {
+    get tagChips(): Chip[] {
+        return this._tagChips;
     }
 
-    ngOnChanges() {
+    constructor(private tagService: TagService) {}
+
+    ngOnChanges(): void {
         this.refreshTag();
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.tagService.refresh
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => this.refreshTag());
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    refreshTag() {
+    refreshTag(): void {
         if (this.nodeId) {
             this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging) => {
-                this.tagChips = tagPaging.list.entries.map((tag) => ({
+                this._tagChips = tagPaging.list.entries.map((tag) => ({
                     id: tag.entry.id,
                     name: tag.entry.tag
                 }));
@@ -83,7 +86,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         }
     }
 
-    removeTag(tag: string) {
+    removeTag(tag: string): void {
         this.tagService.removeTag(this.nodeId, tag).subscribe(() => {
             this.refreshTag();
         });

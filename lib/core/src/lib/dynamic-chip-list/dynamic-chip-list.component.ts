@@ -19,11 +19,15 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
-    ElementRef, EventEmitter,
-    Input, OnChanges,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
     OnDestroy,
-    OnInit, Output,
-    QueryList, SimpleChanges,
+    OnInit,
+    Output,
+    QueryList,
+    SimpleChanges,
     ViewChild,
     ViewChildren,
     ViewEncapsulation
@@ -44,16 +48,13 @@ import { Pagination } from '@alfresco/js-api';
     styleUrls: ['./dynamic-chip-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, AfterViewInit {
+export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
-
     @Input()
     pagination: Pagination;
 
     @Input()
     chips: Chip[];
-
-    initialChips: Chip[] = [];
 
     /** Show delete button */
     @Input()
@@ -84,6 +85,7 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
     viewMoreButtonTop = 0;
     paginationData: Pagination;
 
+    private initialChips: Chip[] = [];
     private onDestroy$ = new Subject<boolean>();
     private initialLimitChipsDisplayed: boolean;
     private viewMoreButtonLeftOffsetBeforeFlexDirection: number;
@@ -95,7 +97,7 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
 
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.pagination) {
             this.limitChipsDisplayed = this.pagination?.hasMoreItems;
             this.paginationData = this.pagination;
@@ -113,25 +115,21 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
         }
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.paginationData) {
             this.limitChipsDisplayed = this.paginationData.hasMoreItems;
         }
         this.initialLimitChipsDisplayed = this.limitChipsDisplayed;
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.resizeObserver.observe(this.containerView.nativeElement);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
         this.resizeObserver.unobserve(this.containerView.nativeElement);
-    }
-
-    removeTag(id: string) {
-        this.removedChip.emit(id);
     }
 
     displayNextChips(event: Event): void {
@@ -159,7 +157,7 @@ export class DynamicChipListComponent implements OnDestroy, OnInit, OnChanges, A
             const viewMoreButton = this.containerView.nativeElement.children[1];
             const viewMoreBtnWidth: number = viewMoreButton.getBoundingClientRect().width;
             const firstChip = this.matChips.get(0);
-            const chipMargin = firstChip ? this.getChipMargin(this.matChips.get(0)) : 0;
+            const chipMargin = firstChip ? this.getChipMargin(firstChip) : 0;
             let chipsWidth = 0;
             const chips = this.matChips.toArray();
             let lastIndex = 0;

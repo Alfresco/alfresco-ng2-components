@@ -21,7 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TitleCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [UnsavedChangesDialogComponent],
@@ -30,7 +30,7 @@ import { TitleCasePipe } from '@angular/common';
         TranslateModule,
         MatButtonModule,
         MatIconModule,
-        TitleCasePipe
+        CommonModule
     ],
     exports: [UnsavedChangesDialogComponent]
 })
