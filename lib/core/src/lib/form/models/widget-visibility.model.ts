@@ -54,13 +54,14 @@ export class WidgetVisibilityModel {
     }
 
     get leftValue(): any {
-        if (this.json.leftValue) {
+        if (this.json.leftValue != null) {
             return this.json.leftValue;
         } else if (this.leftFormFieldId) {
             return this.leftFormFieldId;
-        } else {
+        } else if(this.leftRestResponseId){
             return this.leftRestResponseId;
         }
+        return null;
     }
 
     set leftValue(leftValue: any) {
@@ -81,7 +82,7 @@ export class WidgetVisibilityModel {
         return null;
     }
 
-    set rightType(rightType: string | null) {
+    set rightType(rightType: string) {
         this.json.rightType = rightType;
     }
 
@@ -90,9 +91,10 @@ export class WidgetVisibilityModel {
             return this.json.rightValue;
         } else if (this.rightFormFieldId) {
             return this.rightFormFieldId;
-        } else {
+        } else if(this.rightRestResponseId){
             return this.rightRestResponseId;
         }
+        return null;
     }
 
     set rightValue(rightValue: any) {

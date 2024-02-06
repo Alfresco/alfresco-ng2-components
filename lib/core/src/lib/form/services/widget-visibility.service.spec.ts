@@ -421,28 +421,42 @@ describe('WidgetVisibilityService', () => {
             expect(rightValue).toBe('dropdown_label');
         });
 
-        it('should getRightValue be able to return 0 when rightType is set to value', () => {
-            visibilityObjTest.rightType = 'value';
-            visibilityObjTest.rightValue = 0;
-            const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+        describe('rightType is set to value', () => {
+            it('should be able to return 0 when rightValue is a number', () => {
+                visibilityObjTest.rightType = 'value';
+                visibilityObjTest.rightValue = 0;
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
 
-            expect(rightValue).toBe(0);
-        });
+                expect(rightValue).toBe(0);
+            });
 
-        it('should getRightValue be able to return false when rightType is set to value', () => {
-            visibilityObjTest.rightType = 'value';
-            visibilityObjTest.rightValue = false;
-            const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+            it('should be able to return false when rightValue is a boolean', () => {
+                visibilityObjTest.rightType = 'value';
+                visibilityObjTest.rightValue = false;
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
 
-            expect(rightValue).toBe(false);
-        });
+                expect(rightValue).toBe(false);
+            });
 
-        it('should getRightValue be able to return empty string when rightType is set to value', () => {
-            visibilityObjTest.rightType = 'value';
-            visibilityObjTest.rightValue = '';
-            const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+            it('should be able to return empty string when rightValue is a string', () => {
+                visibilityObjTest.rightType = 'value';
+                visibilityObjTest.rightValue = '';
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
 
-            expect(rightValue).toBe('');
+                expect(rightValue).toBe('');
+            });
+
+            it('should return null when rightValue is undefined or null', () => {
+                visibilityObjTest.rightType = 'value';
+                visibilityObjTest.rightValue = undefined;
+                const rightValueWhenUndefined: any = service.getRightValue(formTest, visibilityObjTest);
+
+                visibilityObjTest.rightValue = null;
+                const rightValueWhenNull: any = service.getRightValue(formTest, visibilityObjTest);
+
+                expect(rightValueWhenUndefined).toBe(null);
+                expect(rightValueWhenNull).toBe(null);
+            });
         });
 
         it('should be able to evaluate condition with a dropdown <label>', () => {
