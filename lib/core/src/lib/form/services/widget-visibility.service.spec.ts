@@ -421,6 +421,30 @@ describe('WidgetVisibilityService', () => {
             expect(rightValue).toBe('dropdown_label');
         });
 
+        it('should getRightValue be able to return 0 when rightType is set to value', () => {
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = 0;
+            const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+            expect(rightValue).toBe(0);
+        });
+
+        it('should getRightValue be able to return false when rightType is set to value', () => {
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = false;
+            const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+            expect(rightValue).toBe(false);
+        });
+
+        it('should getRightValue be able to return empty string when rightType is set to value', () => {
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = '';
+            const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+            expect(rightValue).toBe('');
+        });
+
         it('should be able to evaluate condition with a dropdown <label>', () => {
             visibilityObjTest.leftFormFieldId = 'test_5';
             visibilityObjTest.operator = '==';
