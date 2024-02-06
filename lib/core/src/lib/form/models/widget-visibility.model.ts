@@ -82,7 +82,7 @@ export class WidgetVisibilityModel {
         return null;
     }
 
-    set rightType(rightType: string) {
+    set rightType(rightType: string | null) {
         this.json.rightType = rightType;
     }
 
