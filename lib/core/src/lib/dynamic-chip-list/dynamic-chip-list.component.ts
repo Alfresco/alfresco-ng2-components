@@ -38,10 +38,8 @@ import { Chip } from './chip';
 import { Pagination } from '@alfresco/js-api';
 
 /**
- *
  * This component shows dynamic list of chips which render depending on free space.
  */
-
 @Component({
     selector: 'adf-dynamic-chip-list',
     templateUrl: './dynamic-chip-list.component.html',

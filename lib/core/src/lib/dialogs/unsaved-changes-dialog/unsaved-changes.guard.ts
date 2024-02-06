@@ -22,6 +22,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
 import { tap } from 'rxjs/operators';
 
+/**
+ * Guard responsible for protecting leaving page with unsaved changes.
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -30,6 +33,11 @@ export class UnsavedChangesGuard implements CanDeactivate<any> {
 
     constructor(private dialog: MatDialog) {}
 
+    /**
+     * Allows to deactivate route when there is no unsaved changes, otherwise displays dialog to confirm discarding changes.
+     *
+     * @returns boolean | Observable<boolean> true when there is no unsaved changes or changes can be discarded, false otherwise.
+     */
     canDeactivate(): boolean | Observable<boolean> {
         return this.unsaved ?
             this.dialog.open<UnsavedChangesDialogComponent, undefined, boolean>(UnsavedChangesDialogComponent, {

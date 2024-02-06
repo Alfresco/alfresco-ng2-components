@@ -145,6 +145,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Edit JSON Dialog](core/dialogs/edit-json.dialog.md) | Allows a user to preview or edit a JSON content in a dialog. | [Source](../lib/testing/src/lib/core/dialog/edit-json-dialog.ts) |
+| [Unsaved Changes Dialog](core/dialogs/unsaved-changes-dialog.component.md) | Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding. | [Source](../lib/core/src/lib/dialogs/unsaved-changes-dialog/unsaved-changes-dialog.component.ts) | 
 
 ### Interfaces
 
@@ -239,6 +240,7 @@ The model to update the DataTable require the ID of the row you want change and 
 | [Storage service](core/services/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/src/lib/common/services/storage.service.ts) |
 | [Thumbnail service](core/services/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/src/lib/common/services/thumbnail.service.ts) |
 | [Translation service](core/services/translation.service.md) | Supports localisation. | [Source](../lib/core/src/lib/translation/translation.service.ts) |
+| [Unsaved Changes guard](core/services/unsaved-changes.guard.md) | This guard prevents deactivating route if page has any unsaved changes. User needs intentionally discard changes through displayed modal to leave actual route. | [Source](../lib/core/src/lib/dialogs/unsaved-changes-dialog/unsaved-changes.guard.ts) |
 | [Upload Service](core/services/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/content-services/src/lib/common/services/upload.service.ts) |
 | [User access service](core/services/user-access.service.md) | Checks the global and application access of a user | [Source](../lib/core/src/lib/auth/services/user-access.service.ts) |
 | [User Preferences Service](core/services/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/src/lib/common/services/user-preferences.service.ts) |

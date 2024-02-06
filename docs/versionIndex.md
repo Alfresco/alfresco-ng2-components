@@ -50,6 +50,8 @@ backend services have been tested with each released version of ADF.
 <!--v660 start-->
 
 -   [Dynamic Chip List component](core/components/dynamic-chip-list.component.md)
+-   [Unsaved Changes Dialog component](core/dialogs/unsaved-changes-dialog.component.md)
+-   [Unsaved Changes guard](core/services/unsaved-changes.guard.md)
 
 <!--v660 end-->
 
