@@ -320,5 +320,27 @@ describe('LayoutOrientedConfigService', () => {
                 });
             });
         });
+
+        it('should include all exclusions passed to filterExcludedPreset', () => {
+            let properties: OrganisedPropertyGroup[] = [{ 
+                name: 'propGroup',
+                title: 'propGroup',
+                properties: [ { name: 'property1', title: 'Custom title', editable: true } as Property,
+                    { name: 'property2', title: 'Custom title', editable: true } as Property,
+                    { name: 'property3', title: 'Custom title', editable: true } as Property,
+                    { name: 'property4', title: 'Custom title', editable: true } as Property,
+            ]}];
+
+            configService = createConfigService([
+                { title: 'Property group', items: [ { aspect: 'berseria', properties: ['property1', 'property2', 'property3', 'property4'] } ] },
+                { title: 'Exclude group 1', items: [ { exclude: ['property1'],  properties: [] } ] },
+                { title: 'Exclude group 2', items: [ { exclude: ['property2'],  properties: [] } ] },
+                { title: 'Exclude group 3', items: [ { exclude: ['property3'],  properties: [] } ] },
+            ]);
+
+            let result = configService.filterExcludedPreset(properties);
+
+            expect(result.length).toBe(1);
+        });
     });
 });
