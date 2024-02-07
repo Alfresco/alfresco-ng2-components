@@ -421,9 +421,12 @@ describe('WidgetVisibilityService', () => {
             expect(rightValue).toBe('dropdown_label');
         });
 
-        describe('rightType is set to value', () => {
-            it('should be able to return 0 when rightValue is a number', () => {
+        describe('getRightValue when rightType is set to value', () => {
+            beforeEach(() => {
                 visibilityObjTest.rightType = 'value';
+            });
+
+            it('should be able to return 0 when rightValue is a number', () => {
                 visibilityObjTest.rightValue = 0;
                 const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
 
@@ -431,7 +434,6 @@ describe('WidgetVisibilityService', () => {
             });
 
             it('should be able to return false when rightValue is a boolean', () => {
-                visibilityObjTest.rightType = 'value';
                 visibilityObjTest.rightValue = false;
                 const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
 
@@ -439,15 +441,20 @@ describe('WidgetVisibilityService', () => {
             });
 
             it('should be able to return empty string when rightValue is a string', () => {
-                visibilityObjTest.rightType = 'value';
                 visibilityObjTest.rightValue = '';
                 const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
 
                 expect(rightValue).toBe('');
             });
 
+            it('should be able to return object when rightValue is an object', () => {
+                visibilityObjTest.rightValue = { key: 'value' };
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+                expect(rightValue).toEqual({ key: 'value' });
+            });
+
             it('should return null when rightValue is undefined or null', () => {
-                visibilityObjTest.rightType = 'value';
                 visibilityObjTest.rightValue = undefined;
                 const rightValueWhenUndefined: any = service.getRightValue(formTest, visibilityObjTest);
 
