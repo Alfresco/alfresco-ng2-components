@@ -50,10 +50,22 @@ export class GroupService {
         }
     }
 
+    /**
+     * Returns group for specified id.
+     *
+     * @param id id of group to return.
+     * @returns Observable<GroupEntry> group for specified id.
+     */
     getGroup(id: string): Observable<GroupEntry> {
         return from(this.groupsApi.getGroup(id));
     }
 
+    /**
+     * Updates specified group.
+     *
+     * @param group group to update.
+     * @returns Observable<GroupEntry> updated group.
+     */
     updateGroup(group: Group): Observable<GroupEntry> {
         return from(this.groupsApi.updateGroup(group.id, {
             displayName: group.displayName
