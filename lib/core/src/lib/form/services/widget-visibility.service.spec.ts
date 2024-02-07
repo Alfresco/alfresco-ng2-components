@@ -440,6 +440,13 @@ describe('WidgetVisibilityService', () => {
                 expect(rightValue).toBe(false);
             });
 
+            it('should be able to return "false" when rightValue is a string', () => {
+                visibilityObjTest.rightValue = 'false';
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+                expect(rightValue).toBe('false');
+            });
+
             it('should be able to return empty string when rightValue is a string', () => {
                 visibilityObjTest.rightValue = '';
                 const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
