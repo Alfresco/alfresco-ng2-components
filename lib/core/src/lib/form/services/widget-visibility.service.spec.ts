@@ -527,13 +527,6 @@ describe('WidgetVisibilityService', () => {
                 expect(rightValue).toBe('false');
             });
 
-            it('should be able to return empty string when rightValue is a string', () => {
-                visibilityObjTest.rightValue = '';
-                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
-
-                expect(rightValue).toBe('');
-            });
-
             it('should be able to return object when rightValue is an object', () => {
                 visibilityObjTest.rightValue = { key: 'value' };
                 const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
