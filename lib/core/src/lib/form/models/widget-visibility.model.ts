@@ -38,7 +38,7 @@ export class WidgetVisibilityModel {
         }
     }
 
-    get leftType(): string {
+    get leftType(): string | null {
         if (this.leftFormFieldId) {
             return WidgetTypeEnum.field;
         } else if (this.leftRestResponseId) {
@@ -54,20 +54,21 @@ export class WidgetVisibilityModel {
     }
 
     get leftValue(): any {
-        if (this.json.leftValue) {
+        if (this.json.leftValue?.toString()) {
             return this.json.leftValue;
         } else if (this.leftFormFieldId) {
             return this.leftFormFieldId;
-        } else {
+        } else if(this.leftRestResponseId){
             return this.leftRestResponseId;
         }
+        return null;
     }
 
     set leftValue(leftValue: any) {
         this.json.leftValue = leftValue;
     }
 
-    get rightType(): string {
+    get rightType(): string | null {
         if (this.json.rightType) {
             return this.json.rightType;
         } else if (this.json.rightValue) {
@@ -86,13 +87,14 @@ export class WidgetVisibilityModel {
     }
 
     get rightValue(): any {
-        if (this.json.rightValue) {
+        if (this.json.rightValue?.toString()) {
             return this.json.rightValue;
         } else if (this.rightFormFieldId) {
             return this.rightFormFieldId;
-        } else {
+        } else if(this.rightRestResponseId){
             return this.rightRestResponseId;
         }
+        return null;
     }
 
     set rightValue(rightValue: any) {
