@@ -27,4 +27,10 @@ import { SearchFilterTabDirective } from './search-filter-tab.directive';
 export class SearchFilterTabbedComponent {
     @ContentChildren(SearchFilterTabDirective)
     tabsContents: QueryList<SearchFilterTabDirective>;
+
+    selectedIndex: number = 0;
+
+    onTabIndexChanged(index: number): void {
+        this.selectedIndex = index;
+    }
 }

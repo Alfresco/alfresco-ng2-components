@@ -428,9 +428,11 @@ describe('ContentNodeSelectorComponent', () => {
         it('should tabs be headless when local upload is not enabled', () => {
             component.data.showLocalUploadButton = false;
             fixture.detectChanges();
-            const tabGroup = fixture.debugElement.queryAll(By.css('.adf-content-node-selector-headless-tabs'))[0];
+            const tabGroup = fixture.debugElement.queryAll(By.css('.adf-content-node-selector-dialog-content'))[0];
+            const nodePanel = fixture.debugElement.queryAll(By.css('.adf-content-node-selector-panel'))[0];
 
-            expect(tabGroup).not.toBe(undefined);
+            expect(tabGroup).toBeUndefined();
+            expect(nodePanel).not.toBeUndefined();
         });
 
         it('should tabs show headers when local upload is enabled', () => {

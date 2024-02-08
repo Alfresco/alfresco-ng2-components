@@ -217,14 +217,6 @@ describe('ContentUserInfoComponent', () => {
                     expect(ecmJobTitle.nativeElement.textContent).toContain('N/A');
                 });
 
-                it('should not show the tabs', () => {
-                    const imageButton = element.querySelector<HTMLButtonElement>('[data-automation-id="user-initials-image"]');
-                    imageButton.click();
-                    fixture.detectChanges();
-                    const tabHeader = fixture.debugElement.query(By.css('#tab-group-env'));
-                    expect(tabHeader.classes['adf-hide-tab']).toBeTruthy();
-                });
-
                 it('should display the current user Initials if the user dose not have avatarId', () => {
                     fixture.detectChanges();
                     const pipe = new InitialUsernamePipe(new FakeSanitizer());
