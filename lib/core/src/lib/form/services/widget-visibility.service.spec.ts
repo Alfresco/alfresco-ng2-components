@@ -36,7 +36,7 @@ import {
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('WidgetVisibilityService', () => {
+fdescribe('WidgetVisibilityService', () => {
     let service: WidgetVisibilityService;
     let booleanResult: boolean | undefined;
 
@@ -55,23 +55,76 @@ describe('WidgetVisibilityService', () => {
     describe('should be able to evaluate next condition operations', () => {
 
         it('using == and return true', () => {
-            booleanResult = service.evaluateCondition('test', 'test', '==');
-            expect(booleanResult).toBeTruthy();
+            const resultsArray = [
+                service.evaluateCondition('test', 'test', '=='),
+                service.evaluateCondition('2', 2, '=='),
+                service.evaluateCondition(0, 0, '=='),
+                service.evaluateCondition(true, true, '=='),
+                service.evaluateCondition(false, false, '=='),
+                service.evaluateCondition('true', true, '=='),
+                service.evaluateCondition(true, 'true', '=='),
+                service.evaluateCondition('true', 'true', '==')
+            ];
+
+            resultsArray.forEach((result) => {
+                expect(result).toBeTruthy();
+            });
+        });
+
+        it('using == and return false', () => {
+            const resultsArray = [
+                service.evaluateCondition('test', 'te', '=='),
+                service.evaluateCondition('2', 3, '=='),
+                service.evaluateCondition(0, 1, '=='),
+                service.evaluateCondition(true, false, '=='),
+                service.evaluateCondition(false, true, '=='),
+                service.evaluateCondition('false', true, '=='),
+                service.evaluateCondition(false, 'true', '=='),
+                service.evaluateCondition('false', 'true', '==')
+            ];
+
+            resultsArray.forEach((result) => {
+                expect(result).toBeFalsy();
+            });
+        });
+
+        it('using != and return true', () => {
+            const resultsArray = [
+                service.evaluateCondition('test', 'te', '!='),
+                service.evaluateCondition('2', 3, '!='),
+                service.evaluateCondition(0, 1, '!='),
+                service.evaluateCondition(true, false, '!='),
+                service.evaluateCondition(false, true, '!='),
+                service.evaluateCondition('false', true, '!='),
+                service.evaluateCondition(false, 'true', '!='),
+                service.evaluateCondition('false', 'true', '!=')
+            ];
+
+            resultsArray.forEach((result) => {
+                expect(result).toBeTruthy();
+            });
+        });
+
+        it('using != and return false', () => {
+            const resultsArray = [
+                service.evaluateCondition('test', 'test', '!='),
+                service.evaluateCondition('2', 2, '!='),
+                service.evaluateCondition(0, 0, '!='),
+                service.evaluateCondition(true, true, '!='),
+                service.evaluateCondition(false, false, '!='),
+                service.evaluateCondition('true', true, '!='),
+                service.evaluateCondition(true, 'true', '!='),
+                service.evaluateCondition('true', 'true', '!=')
+            ];
+
+            resultsArray.forEach((result) => {
+                expect(result).toBeFalsy();
+            });
         });
 
         it('using < and return true', () => {
             booleanResult = service.evaluateCondition(1, 2, '<');
             expect(booleanResult).toBeTruthy();
-        });
-
-        it('using != and return true', () => {
-            booleanResult = service.evaluateCondition(true, false, '!=');
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using != and return false', () => {
-            booleanResult = service.evaluateCondition(true, true, '!=');
-            expect(booleanResult).toBeFalsy();
         });
 
         it('using >= and return true', () => {
@@ -326,6 +379,32 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = '';
             visibilityObjTest.leftRestResponseId = '';
             visibilityObjTest.operator = '!=';
+            const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
+        it('should return true when true == "true"', () => {
+            spyOn(service, 'getFieldValue').and.returnValue(true);
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
+            visibilityObjTest.leftType = 'field';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = 'true';
+
+            const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
+        it('should return true when 1 > 0', () => {
+            spyOn(service, 'getFieldValue').and.returnValue(1);
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
+            visibilityObjTest.leftType = 'field';
+            visibilityObjTest.operator = '>';
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = 0;
+
             const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
