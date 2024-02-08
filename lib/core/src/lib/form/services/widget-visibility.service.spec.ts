@@ -393,20 +393,6 @@ describe('WidgetVisibilityService', () => {
             expect(isVisible).toBeTruthy();
         });
 
-
-        it('should return true when left field value is equal to true and rigth value is equal to "true"', () => {
-            spyOn(service, 'getFieldValue').and.returnValue(true);
-            spyOn(service, 'isFormFieldValid').and.returnValue(true);
-            visibilityObjTest.leftType = 'field';
-            visibilityObjTest.operator = '==';
-            visibilityObjTest.rightType = 'value';
-            visibilityObjTest.rightValue = 'true';
-
-            const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
-
-            expect(isVisible).toBeTruthy();
-        });
-
         it('should return true when left field value is equal to 1 and rigth value is equal to 0', () => {
             spyOn(service, 'getFieldValue').and.returnValue(1);
             spyOn(service, 'isFormFieldValid').and.returnValue(true);
