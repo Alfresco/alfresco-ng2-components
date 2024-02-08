@@ -65,14 +65,14 @@ describe('WidgetVisibilityService', () => {
 
         it('using == and return true', () => {
             const resultsArray = evaluateConditions([
-                ['test', 'test'],
-                ['2', 2],
-                [0, 0],
                 [true, true],
                 [false, false],
                 ['true', true],
                 [true, 'true'],
-                ['true', 'true']
+                ['true', 'true'],
+                ['test', 'test'],
+                ['4', 4],
+                [0, 0]
             ], '==');
 
             resultsArray.forEach((result) => {
@@ -82,14 +82,14 @@ describe('WidgetVisibilityService', () => {
 
         it('using == and return false', () => {
             const resultsArray = evaluateConditions([
-                ['test', 'te'],
-                ['2', 3],
-                [0, 1],
                 [true, false],
                 [false, true],
                 ['false', true],
                 [false, 'true'],
-                ['false', 'true']
+                ['false', 'true'],
+                ['test', 'testt'],
+                ['2', 3],
+                [0, 1]
             ], '==');
 
             resultsArray.forEach((result) => {
@@ -100,7 +100,7 @@ describe('WidgetVisibilityService', () => {
         it('using != and return true', () => {
             const resultsArray = evaluateConditions([
                 ['test', 'te'],
-                ['2', 3],
+                ['4', 123],
                 [0, 1],
                 [true, false],
                 [false, true],
@@ -116,8 +116,8 @@ describe('WidgetVisibilityService', () => {
 
         it('using != and return false', () => {
             const resultsArray = evaluateConditions([
-                ['test', 'test'],
-                ['2', 2],
+                ['testtest', 'testtest'],
+                ['7', 7],
                 [0, 0],
                 [true, true],
                 [false, false],
