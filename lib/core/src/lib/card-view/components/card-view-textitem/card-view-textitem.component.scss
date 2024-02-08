@@ -27,6 +27,13 @@
         }
     }
 
+    .adf-textitem-default .adf-property-read-only {
+        .mat-form-field-label-wrapper {
+            top: -9px;
+            padding-top: 0.9375em;
+        }
+    }
+
     .adf-textitem-chip-list-container {
         .mat-form-field-label {
             margin-top: 6px;
