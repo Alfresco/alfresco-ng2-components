@@ -38,7 +38,7 @@ export class WidgetVisibilityModel {
         }
     }
 
-    get leftType(): string {
+    get leftType(): string | null {
         if (this.leftFormFieldId) {
             return WidgetTypeEnum.field;
         } else if (this.leftRestResponseId) {
@@ -68,7 +68,7 @@ export class WidgetVisibilityModel {
         this.json.leftValue = leftValue;
     }
 
-    get rightType(): string {
+    get rightType(): string | null {
         if (this.json.rightType) {
             return this.json.rightType;
         } else if (this.json.rightValue) {
