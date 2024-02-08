@@ -42,6 +42,15 @@ describe('WidgetVisibilityService', () => {
 
     const stubFormWithFields = new FormModel(fakeFormJson);
 
+    const evaluateConditions = (conditionsArgs: [leftValue: any, rightValue: any][], operator: string ): (boolean | undefined)[] => {
+        const resultsArray: (boolean | undefined)[] = [];
+
+        conditionsArgs.forEach(([leftValue, rightValue]) => {
+            resultsArray.push(service.evaluateCondition(leftValue, rightValue, operator));
+        });
+        return resultsArray;
+    };
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -55,70 +64,70 @@ describe('WidgetVisibilityService', () => {
     describe('should be able to evaluate next condition operations', () => {
 
         it('using == and return true', () => {
-            const resultsArray = [
-                service.evaluateCondition('test', 'test', '=='),
-                service.evaluateCondition('2', 2, '=='),
-                service.evaluateCondition(0, 0, '=='),
-                service.evaluateCondition(true, true, '=='),
-                service.evaluateCondition(false, false, '=='),
-                service.evaluateCondition('true', true, '=='),
-                service.evaluateCondition(true, 'true', '=='),
-                service.evaluateCondition('true', 'true', '==')
-            ];
+            const resultsArray = evaluateConditions([
+                ['test', 'test'],
+                ['2', 2],
+                [0, 0],
+                [true, true],
+                [false, false],
+                ['true', true],
+                [true, 'true'],
+                ['true', 'true']
+            ], '==');
 
             resultsArray.forEach((result) => {
-                expect(result).toBeTruthy();
+                expect(result).toBe(true);
             });
         });
 
         it('using == and return false', () => {
-            const resultsArray = [
-                service.evaluateCondition('test', 'te', '=='),
-                service.evaluateCondition('2', 3, '=='),
-                service.evaluateCondition(0, 1, '=='),
-                service.evaluateCondition(true, false, '=='),
-                service.evaluateCondition(false, true, '=='),
-                service.evaluateCondition('false', true, '=='),
-                service.evaluateCondition(false, 'true', '=='),
-                service.evaluateCondition('false', 'true', '==')
-            ];
+            const resultsArray = evaluateConditions([
+                ['test', 'te'],
+                ['2', 3],
+                [0, 1],
+                [true, false],
+                [false, true],
+                ['false', true],
+                [false, 'true'],
+                ['false', 'true']
+            ], '==');
 
             resultsArray.forEach((result) => {
-                expect(result).toBeFalsy();
+                expect(result).toBe(false);
             });
         });
 
         it('using != and return true', () => {
-            const resultsArray = [
-                service.evaluateCondition('test', 'te', '!='),
-                service.evaluateCondition('2', 3, '!='),
-                service.evaluateCondition(0, 1, '!='),
-                service.evaluateCondition(true, false, '!='),
-                service.evaluateCondition(false, true, '!='),
-                service.evaluateCondition('false', true, '!='),
-                service.evaluateCondition(false, 'true', '!='),
-                service.evaluateCondition('false', 'true', '!=')
-            ];
+            const resultsArray = evaluateConditions([
+                ['test', 'te'],
+                ['2', 3],
+                [0, 1],
+                [true, false],
+                [false, true],
+                ['false', true],
+                [false, 'true'],
+                ['false', 'true']
+            ], '!=');
 
             resultsArray.forEach((result) => {
-                expect(result).toBeTruthy();
+                expect(result).toBe(true);
             });
         });
 
         it('using != and return false', () => {
-            const resultsArray = [
-                service.evaluateCondition('test', 'test', '!='),
-                service.evaluateCondition('2', 2, '!='),
-                service.evaluateCondition(0, 0, '!='),
-                service.evaluateCondition(true, true, '!='),
-                service.evaluateCondition(false, false, '!='),
-                service.evaluateCondition('true', true, '!='),
-                service.evaluateCondition(true, 'true', '!='),
-                service.evaluateCondition('true', 'true', '!=')
-            ];
+            const resultsArray = evaluateConditions([
+                ['test', 'test'],
+                ['2', 2],
+                [0, 0],
+                [true, true],
+                [false, false],
+                ['true', true],
+                [true, 'true'],
+                ['true', 'true']
+            ], '!=');
 
             resultsArray.forEach((result) => {
-                expect(result).toBeFalsy();
+                expect(result).toBe(false);
             });
         });
 
