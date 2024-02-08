@@ -131,14 +131,56 @@ describe('WidgetVisibilityService', () => {
             });
         });
 
-        it('using < and return true', () => {
-            booleanResult = service.evaluateCondition(1, 2, '<');
-            expect(booleanResult).toBeTruthy();
+        it('using < and return false', () => {
+            const resultsArray = evaluateConditions([
+                [2, 1],
+                [1, 0],
+                [0, -1]
+            ], '<');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(false);
+            });
+        });
+
+        it('using <= and return true', () => {
+            const resultsArray = evaluateConditions([
+                [3, 4],
+                [0, 1],
+                [0, 0],
+                [1, 1]
+            ], '<=');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(true);
+            });
+        });
+
+        it('using > and return false', () => {
+            const resultsArray = evaluateConditions([
+                [0, 1],
+                [0, 141],
+                [-144, 0],
+                [32, 44]
+            ], '>');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(false);
+            });
         });
 
         it('using >= and return true', () => {
-            booleanResult = service.evaluateCondition(2, 2, '>=');
-            expect(booleanResult).toBeTruthy();
+            const resultsArray = evaluateConditions([
+                [12, 2],
+                [2, 2],
+                [1, 0],
+                [0, 0],
+                [0, -10]
+            ], '>=');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(true);
+            });
         });
 
         it('using empty with null values and return true', () => {
@@ -156,11 +198,6 @@ describe('WidgetVisibilityService', () => {
             expect(booleanResult).toBeFalsy();
         });
 
-        it('using > and return false', () => {
-            booleanResult = service.evaluateCondition(2, 3, '>');
-            expect(booleanResult).toBeFalsy();
-        });
-
         it('using not empty with null values and return false', () => {
             booleanResult = service.evaluateCondition(null, null, '!empty');
             expect(booleanResult).toBeFalsy();
@@ -169,21 +206,6 @@ describe('WidgetVisibilityService', () => {
         it('using OR NOT with empty strings and return false', () => {
             booleanResult = service.evaluateCondition('', '', '!empty');
             expect(booleanResult).toBeFalsy();
-        });
-
-        it('using <= and return false', () => {
-            booleanResult = service.evaluateCondition(2, 1, '<=');
-            expect(booleanResult).toBeFalsy();
-        });
-
-        it('using <= and return true for different values', () => {
-            booleanResult = service.evaluateCondition(1, 2, '<=');
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using <= and return true for same values', () => {
-            booleanResult = service.evaluateCondition(2, 2, '<=');
-            expect(booleanResult).toBeTruthy();
         });
 
         it('should return undefined for invalid operation', () => {
