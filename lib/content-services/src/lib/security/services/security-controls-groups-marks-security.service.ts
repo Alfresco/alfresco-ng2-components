@@ -32,8 +32,9 @@ import {
     NodeSecurityMarkBody,
     GsGroupInclude
 } from '@alfresco/js-api';
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService } from '@alfresco/adf-core';
 import { finalize } from 'rxjs/operators';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 const DEFAULT_SKIP_COUNT = 0;
 const DEFAULT_INCLUDE = 'inUse';

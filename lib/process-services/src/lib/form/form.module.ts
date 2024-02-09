@@ -32,10 +32,11 @@ import { TypeaheadWidgetComponent } from './widgets/typeahead/typeahead.widget';
 import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
 import { DynamicTableModule } from './widgets/dynamic-table/dynamic-table.module';
 import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
-import { AlfrescoViewerModule } from '@alfresco/adf-content-services';
+import { AlfrescoViewerModule, AlfrescoApiModule } from '@alfresco/adf-content-services';
 
 @NgModule({
     imports: [
+        AlfrescoApiModule,
         DynamicTableModule,
         CoreModule,
         AlfrescoViewerModule,

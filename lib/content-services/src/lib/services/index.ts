@@ -15,5 +15,4 @@
  * limitations under the License.
  */
 
-export * from './src/public-api';
-export * from './api/src/index';
+export * from './public-api';

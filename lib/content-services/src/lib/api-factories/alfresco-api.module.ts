@@ -15,5 +15,20 @@
  * limitations under the License.
  */
 
-export * from './src/public-api';
-export * from './api/src/index';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { AlfrescoApiNoAuthService } from './alfresco-api-no-auth.service';
+import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from '../api-factories/alfresco-api-v2-loader.service';
+import { AlfrescoApiService } from "../services";
+
+@NgModule({
+    providers :[
+        { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: createAlfrescoApiInstance,
+            deps: [ AlfrescoApiLoaderService ],
+            multi: true
+        }
+    ]
+})
+export class AlfrescoApiModule { }

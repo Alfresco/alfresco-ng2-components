@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, from } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';

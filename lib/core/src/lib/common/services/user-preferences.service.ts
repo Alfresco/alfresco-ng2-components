@@ -21,7 +21,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { distinctUntilChanged, map, filter } from 'rxjs/operators';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiService } from '../../../../../content-services/src/lib/services/alfresco-api.service';
 import { LanguageItem } from './language-item.interface';
 
 // eslint-disable-next-line no-shadow

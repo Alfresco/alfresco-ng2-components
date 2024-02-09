@@ -36,7 +36,6 @@ const routes: Routes = [
         CoreModule,
         ContentModule,
         InfoDrawerModule,
-        ContentModule,
         ContentDirectiveModule,
         ContentMetadataModule,
         VersionManagerModule

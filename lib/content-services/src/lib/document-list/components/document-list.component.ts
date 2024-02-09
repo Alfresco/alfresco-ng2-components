@@ -53,7 +53,6 @@ import {
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
     RequestPaginationModel,
-    AlfrescoApiService,
     UserPreferenceValues,
     DataRow,
     DataTableService,
@@ -61,6 +60,7 @@ import {
     DataColumn
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, of } from 'rxjs';

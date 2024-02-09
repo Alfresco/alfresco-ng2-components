@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { ObjectDataTableAdapter, AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { ObjectDataTableAdapter, LogService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { WebscriptApi } from '@alfresco/js-api';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 /**
  * @deprecated Webscript component has never been turned into a product and has no UI/UX and no use cases in ACA/ADW/ACC.

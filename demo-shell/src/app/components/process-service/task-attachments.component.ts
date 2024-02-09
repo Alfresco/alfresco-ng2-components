@@ -22,11 +22,12 @@ import {
     TaskListService,
     TaskUploadService
 } from '@alfresco/adf-process-services';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
 /**
  * Provide a task upload service factory

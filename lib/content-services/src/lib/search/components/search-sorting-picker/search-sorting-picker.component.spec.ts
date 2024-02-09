@@ -17,10 +17,11 @@
 
 import { SearchSortingPickerComponent } from './search-sorting-picker.component';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../../models/search-configuration.interface';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 
 describe('SearchSortingPickerComponent', () => {
     let queryBuilder: SearchQueryBuilderService;

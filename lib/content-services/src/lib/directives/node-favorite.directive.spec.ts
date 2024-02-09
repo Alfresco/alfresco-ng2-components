@@ -18,7 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
-import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 describe('NodeFavoriteDirective', () => {
     let directive: NodeFavoriteDirective;

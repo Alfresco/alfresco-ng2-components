@@ -49,6 +49,7 @@ import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { ContentUserInfoModule } from './content-user-info/content-user-info.module';
+import { AlfrescoApiModule } from './api-factories/alfresco-api.module';
 import { SecurityControlsServiceModule } from './security/services/security-controls-service.module';
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
@@ -56,6 +57,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
 
 @NgModule({
     imports: [
+        AlfrescoApiModule,
         ContentPipeModule,
         CoreModule,
         SocialModule,
@@ -94,6 +96,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         provideTranslations('adf-content-services', 'assets/adf-content-services')
     ],
     exports: [
+        AlfrescoApiModule,
         ContentPipeModule,
         SocialModule,
         TagModule,

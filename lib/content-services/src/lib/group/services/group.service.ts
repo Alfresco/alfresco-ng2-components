@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { ContentIncludeQuery, Group, GroupEntry, GroupsApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

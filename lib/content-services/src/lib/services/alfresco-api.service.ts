@@ -17,11 +17,8 @@
 
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { AppConfigService, AppConfigValues, OauthConfigModel, StorageService, OpenidConfiguration } from '@alfresco/adf-core';
 import { ReplaySubject } from 'rxjs';
-import { OauthConfigModel } from '../auth/models/oauth-config.model';
-import { StorageService } from '../common/services/storage.service';
-import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
 import { AlfrescoApiFactory } from './alfresco-api.interface';
 
 export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');

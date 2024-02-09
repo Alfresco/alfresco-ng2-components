@@ -15,5 +15,7 @@
  * limitations under the License.
  */
 
-export * from './src/public-api';
-export * from './api/src/index';
+export * from './alfresco-api-no-auth.service';
+export * from './alfresco-api-v2-loader.service';
+
+export * from './alfresco-api.module';

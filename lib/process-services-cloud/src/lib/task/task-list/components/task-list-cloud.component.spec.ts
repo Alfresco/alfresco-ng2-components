@@ -25,12 +25,12 @@ import {
     User,
     DataColumn,
     ColumnsSelectorComponent,
-    AlfrescoApiService,
     AlfrescoApiServiceMock,
     AppConfigServiceMock,
     TranslationService,
     TranslationMock
 } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../mock/fake-task-response.mock';
