@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, ExternalContent } from '@alfresco/adf-core';
-import { SitesService } from '@alfresco/adf-content-services';
+import { AlfrescoApiService, SitesService } from '@alfresco/adf-content-services';
+import { ExternalContent } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import {
     IntegrationAlfrescoOnPremiseApi,

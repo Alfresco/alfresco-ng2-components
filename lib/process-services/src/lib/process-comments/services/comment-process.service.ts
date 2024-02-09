@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { CommentModel, AlfrescoApiService, CommentsService, User } from '@alfresco/adf-core';
+import { CommentModel, CommentsService, User } from '@alfresco/adf-core';
 import { map } from 'rxjs/operators';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { PeopleProcessService } from '../../services/people-process.service';

@@ -46,6 +46,9 @@ import { AlfrescoViewerComponent } from './viewer';
 import { ContentTypeDialogComponent } from './content-type';
 import { MaterialModule } from './material.module';
 import { AlfrescoIconComponent } from './alfresco-icon/alfresco-icon.component';
+import { AlfrescoApiService } from './services/alfresco-api.service';
+import { AlfrescoApiNoAuthService } from './api-factories/alfresco-api-no-auth.service';
+import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
 
 @NgModule({
     imports: [
@@ -111,6 +114,7 @@ export class ContentModule {
             providers: [
                 provideTranslations('adf-content-services', 'assets/adf-content-services'),
                 ContentAuthLoaderService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: versionCompatibilityFactory,
@@ -121,6 +125,12 @@ export class ContentModule {
                     provide: APP_INITIALIZER,
                     useFactory: contentAuthLoaderFactory,
                     deps: [ContentAuthLoaderService],
+                    multi: true
+                },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: createAlfrescoApiInstance,
+                    deps: [AlfrescoApiLoaderService],
                     multi: true
                 }
             ]

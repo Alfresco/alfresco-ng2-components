@@ -17,9 +17,10 @@
 
 import { TypeEntry, TypePaging, TypesApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 @Injectable({
     providedIn: 'root'
 })

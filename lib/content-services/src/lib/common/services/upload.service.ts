@@ -20,10 +20,11 @@ import { Minimatch } from 'minimatch';
 import { Subject } from 'rxjs';
 import { FileUploadCompleteEvent, FileUploadDeleteEvent, FileUploadErrorEvent, FileUploadEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
-import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { filter } from 'rxjs/operators';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';
 import { NodeBodyCreate, NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;

@@ -23,8 +23,6 @@ import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extension
 import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoViewerComponent, ContentService, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
 import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
     AuthModule,
     CloseButtonPosition,
     EventMock,
@@ -41,6 +39,10 @@ import { throwError } from 'rxjs';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { AlfrescoApiService } from '../../services';
+import { AlfrescoApiServiceMock } from '../../mock';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',

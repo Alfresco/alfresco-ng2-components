@@ -23,6 +23,16 @@
       },
       "defaultConfiguration": "production"
     },
+    "build-schematics": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx tsc -p lib/core/tsconfig.schematics.json && cp lib/core/schematics/migrations/collection.json dist/libs/core/schematics/migrations/collection.json"
+          }
+        ]
+      }
+    },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
@@ -133,7 +143,7 @@
     },
     "npm-publish": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build", "pretheme"],
+      "dependsOn": ["build", "pretheme", "build-schematics"],
       "options": {
         "cwd": "dist/libs/core",
         "commands": [

@@ -19,8 +19,6 @@ import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
     AppConfigService,
     AppConfigServiceMock,
     TranslationService,
@@ -28,6 +26,7 @@ import {
     CoreModule,
     AuthModule
 } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServicesCloudModule } from '../process-services-cloud.module';
 import { RouterTestingModule } from '@angular/router/testing';

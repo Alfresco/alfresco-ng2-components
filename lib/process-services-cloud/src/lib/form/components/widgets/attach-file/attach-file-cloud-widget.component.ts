@@ -25,7 +25,6 @@ import {
     FormValues,
     ContentLinkModel,
     AppConfigService,
-    AlfrescoApiService,
     UploadWidgetContentLinkModel,
     DestinationFolderPath
 } from '@alfresco/adf-core';
@@ -35,6 +34,7 @@ import { ProcessCloudContentService } from '../../../services/process-cloud-cont
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import {
+    AlfrescoApiService,
     ContentNodeSelectorPanelService,
     NewVersionUploaderDataAction,
     NewVersionUploaderDialogData,

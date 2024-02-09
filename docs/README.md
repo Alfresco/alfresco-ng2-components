@@ -194,7 +194,7 @@ A collection of Angular components for generic use.
 | Name | Description | Source link |
 | ---- | ----------- | -------- |
 | [APS Alfresco Content Service](core/services/activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/process-services/src/lib/form/services/activiti-alfresco.service.ts) |
-| [Alfresco Api Service](core/services/alfresco-api.service.md) | Provides access to an initialized AlfrescoJSApi instance. | [Source](../lib/core/src/lib/services/alfresco-api.service.ts) |
+| [Alfresco Api Service](core/services/alfresco-api.service.md) | Provides access to an initialized AlfrescoJSApi instance. | [Source](lib/content-services/src/lib/services/alfresco-api.service.ts) |
 | [App Config service](core/services/app-config.service.md) | Supports app configuration settings, stored server side. | [Source](../lib/core/src/lib/app-config/app-config.service.ts) |
 | [Apps Process service](core/services/apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../lib/process-services/src/lib/services/apps-process.service.ts) |
 | [Auth Guard Bpm service](core/services/auth-guard-bpm.service.md) | Adds authentication with Process Services to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard-bpm.service.ts) |

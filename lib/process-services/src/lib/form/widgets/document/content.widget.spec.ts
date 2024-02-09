@@ -22,6 +22,7 @@ import { ContentLinkModel, CoreTestingModule, DownloadService } from '@alfresco/
 import { of } from 'rxjs';
 import { ContentWidgetComponent } from './content.widget';
 import { ProcessContentService } from '../../services/process-content.service';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 declare let jasmine: any;
 
@@ -59,7 +60,8 @@ describe('ContentWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ContentWidgetComponent]
+            imports: [CoreTestingModule, ContentWidgetComponent],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         downloadService = TestBed.inject(DownloadService);
         processContentService = TestBed.inject(ProcessContentService);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { PathInfo } from '@alfresco/js-api';
+import { PathInfo } from '../../../models/path.model';
 import { DataColumn } from '../../data/data-column.model';
 
 export const mockCarsData: any = [

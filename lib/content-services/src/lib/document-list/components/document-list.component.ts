@@ -19,7 +19,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-    AlfrescoApiService,
     AppConfigService,
     ColumnsSelectorComponent,
     CustomEmptyContentTemplateDirective,
@@ -86,6 +85,7 @@ import { FilterHeaderComponent } from './filter-header/filter-header.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 

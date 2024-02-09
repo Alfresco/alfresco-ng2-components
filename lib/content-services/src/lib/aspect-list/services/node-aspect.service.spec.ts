@@ -23,7 +23,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeAspectService } from './node-aspect.service';
 import { DialogAspectListService } from './dialog-aspect-list.service';
 import { CardViewContentUpdateService } from '../../common/services/card-view-content-update.service';
-import { TagService } from '@alfresco/adf-content-services';
+import { TagService } from '../../tag';
 
 describe('NodeAspectService', () => {
     let dialogAspectListService: DialogAspectListService;

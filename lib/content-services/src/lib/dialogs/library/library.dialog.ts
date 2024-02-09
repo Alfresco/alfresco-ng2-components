@@ -28,7 +28,7 @@ import {
 } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
+import { NotificationService } from '@alfresco/adf-core';
 import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
 import { CommonModule } from '@angular/common';
@@ -38,6 +38,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AutoFocusDirective } from '../../directives';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
+import { AlfrescoApiService } from '../../services';
 
 @Component({
     selector: 'adf-library-dialog',

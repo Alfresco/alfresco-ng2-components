@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } 
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PathInfo } from '@alfresco/js-api';
+import { PathInfo } from '../../../models/path.model';
 
 @Component({
     standalone: true,

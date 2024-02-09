@@ -20,10 +20,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
     CoreModule,
-    AlfrescoApiService,
     AppConfigService,
     CookieService,
-    AlfrescoApiServiceMock,
     AppConfigServiceMock,
     CookieServiceMock,
     AuthModule,
@@ -31,8 +29,10 @@ import {
 } from '@alfresco/adf-core';
 import { ContentModule } from '../content.module';
 import { versionCompatibilityFactory } from '../version-compatibility/version-compatibility-factory';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { AlfrescoApiServiceMock } from '../mock';
 
 @NgModule({
     imports: [

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { inject, Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError, flatMap, filter } from 'rxjs/operators';
@@ -31,6 +30,7 @@ import {
     UserTaskFilterRepresentation,
     TaskRepresentation
 } from '@alfresco/js-api';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
 @Injectable({
     providedIn: 'root'

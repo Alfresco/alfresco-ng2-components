@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "lib": [
+        "es2018",
+        "dom"
+      ],
+      "declaration": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "noEmitOnError": true,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitThis": true,
+      "noUnusedParameters": true,
+      "noUnusedLocals": true,
+      "rootDir": "./schematics",
+      "outDir": "../../dist/libs/core/schematics",
+      "skipDefaultLibCheck": true,
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "strictNullChecks": true,
+      "target": "es2015",
+      "types": []
+    },
+    "include": [
+      "schematics/**/*"
+    ]
+  }
+

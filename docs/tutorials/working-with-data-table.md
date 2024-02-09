@@ -111,21 +111,21 @@ the source code below to the `mydatatable` component, just before the constructo
 data = new ObjectDataTableAdapter(
   [
     {
-      id: 1, 
-      firstName: 'Name #1', 
-      lastName: 'Lastname #1', 
+      id: 1,
+      firstName: 'Name #1',
+      lastName: 'Lastname #1',
       icon: 'material-icons://folder_open'
     },
     {
-      id: 2, 
-      firstName: 'Name #2', 
-      lastName: 'Lastname #2', 
+      id: 2,
+      firstName: 'Name #2',
+      lastName: 'Lastname #2',
       icon: 'material-icons://accessibility'
     },
     {
-      id: 3, 
-      firstName: 'Name #3', 
-      lastName: 'Lastname #3', 
+      id: 3,
+      firstName: 'Name #3',
+      lastName: 'Lastname #3',
       icon: 'material-icons://alarm'
     }
   ]
@@ -137,21 +137,21 @@ configure the columns. Open the `src/app/mydatatable/mydatatable.component.html`
 with the following:
 
 ```html
-<adf-datatable 
+<adf-datatable
   [data]="data">
   <data-columns>
-    <data-column 
-      key="icon" 
-      type="image" 
+    <data-column
+      key="icon"
+      type="image"
         [sortable]="false">
       </data-column>
-    <data-column 
-      key="firstName" 
+    <data-column
+      key="firstName"
       title="First Name">
     </data-column>
-    <data-column 
-      key="lastName" 
-      title="Last Name" 
+    <data-column
+      key="lastName"
+      title="Last Name"
       class="full-width name-column">
     </data-column>
   </data-columns>
@@ -179,7 +179,7 @@ As a simple example, we'll add a `click` event to display an alert when a row is
 `src/app/mydatatable/mydatatable.component.html` and add the following:
 
 ```html
-<adf-datatable 
+<adf-datatable
   (rowClick)="onRowClick($event)"
   [data]="data">
   .......
@@ -205,9 +205,9 @@ Let's dig a bit deeper into the different options for rendering columns within t
 is quite in-depth and has lots of examples. We highly recommend checking it out.
 
 From the documentation we can see that the [Data Column component](../core/components/data-column.component.md) has quite a few properties but the
-most important ones are `key`, `type`, `sortable`, `title` and  `class`. 
+most important ones are `key`, `type`, `sortable`, `title` and  `class`.
 
--   `key` is the name of the corresponding property in the [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) object. 
+-   `key` is the name of the corresponding property in the [`ObjectDataTableAdapter`](lib/core/src/lib/datatable/data/object-datatable-adapter.ts) object.
 -   `type` indicates how to render. By default it will take the `text` from the matching key in the data,
     but other modes are also available:
     	 \- `image` will take a URI for a Material Icon or a URL for any image and display it.
@@ -231,24 +231,24 @@ Open `src/app/mydatatable/mydatatable.component.ts` and change the data to the f
 data = new ObjectDataTableAdapter(
   [
     {
-      id: 1, 
-      name: 'Name #1', 
-      createdBy: 'User #1', 
-      status: 'green', 
+      id: 1,
+      name: 'Name #1',
+      createdBy: 'User #1',
+      status: 'green',
       icon: 'material-icons://folder_open'
     },
     {
-      id: 2, 
-      name: 'Name #2', 
-      createdBy: 'User #2', 
-      status: 'red', 
+      id: 2,
+      name: 'Name #2',
+      createdBy: 'User #2',
+      status: 'red',
       icon: 'material-icons://accessibility'
     },
     {
-      id: 3, 
-      name: 'Name #3', 
-      createdBy: 'User #3', 
-      status: 'green', 
+      id: 3,
+      name: 'Name #3',
+      createdBy: 'User #3',
+      status: 'green',
       icon: 'material-icons://alarm'
     }
   ]
@@ -286,7 +286,7 @@ file and replace the content with the following:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { ObjectDataTableAdapter, ObjectDataRow } from '@alfresco/adf-core';
 
 @Component({
@@ -356,7 +356,7 @@ Make the changes shown below to the `src/app/mydatatable/mydatatable.component.h
 </adf-datatable>
 ```
 
-Also update `src/app/mydatatable/mydatatable.component.ts` as follows: 
+Also update `src/app/mydatatable/mydatatable.component.ts` as follows:
 
 ```ts
 import { DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
