@@ -15,10 +15,21 @@
  * limitations under the License.
  */
 
-export * from './product-version.model';
-export * from './comment.model';
-export * from './pagination.model';
-export * from './request-pagination.model';
-export * from './decimal-number.model';
-export * from './general-user.model';
-export * from './path.model';
+export class PathInfo {
+    elements?: PathElement[];
+    name?: string;
+    isComplete?: boolean;
+
+    constructor(input?: Partial<PathInfo>) {
+        if (input) {
+            Object.assign(this, input);
+        }
+    }
+}
+
+export interface PathElement {
+    id?: string;
+    name?: string;
+    nodeType?: string;
+    aspectNames?: string[];
+}

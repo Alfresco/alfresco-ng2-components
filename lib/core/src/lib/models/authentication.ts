@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-export * from './product-version.model';
-export * from './comment.model';
-export * from './pagination.model';
-export * from './request-pagination.model';
-export * from './decimal-number.model';
-export * from './general-user.model';
-export * from './path.model';
+import { BasicAuth } from './basicAuth';
+import { Oauth2 } from './oauth2';
+
+export interface Authentication {
+    basicAuth?: BasicAuth;
+    oauth2?: Oauth2;
+    cookie?: string;
+    type?: string;
+}
