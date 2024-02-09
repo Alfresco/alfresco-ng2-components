@@ -43,24 +43,25 @@
             <p class="adf-existing-categories-label">
                 {{ existingCategoriesMsg | translate }}
             </p>
-            <mat-selection-list
+            <mat-list
                 [disabled]="isCRUDMode"
-                (selectionChange)="addCategoryToAssign($event)">
-                <mat-list-option
+                class="adf-categories-management-list">
+                <mat-list-item
                     *ngFor="let category of existingCategories"
                     class="adf-category"
-                    [value]="category">
+                    (click)='addCategoryToAssign(category)'>
                     {{ category.name }}
-                </mat-list-option>
+                </mat-list-item>
                 <p *ngIf="!existingCategories?.length && !existingCategoriesLoading"
                    data-automation-id="no-categories-message">
                     {{ 'CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES' | translate }}
                 </p>
-            </mat-selection-list>
+            </mat-list>
         </ng-container>
         <mat-spinner
             *ngIf="existingCategoriesLoading"
             [diameter]="50"
+            class="adf-categories-management-spinner"
             [attr.aria-label]="'CATEGORIES_MANAGEMENT.LOADING' | translate">
         </mat-spinner>
     </div>

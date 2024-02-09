@@ -1,4 +1,5 @@
 <mat-radio-group
+    class="adf-search-radio-group"
     [(ngModel)]="value"
     (change)="changeHandler($event)">
     <mat-radio-button [attr.data-automation-id]="'search-radio-'+(option.name | translate)"
@@ -8,7 +9,7 @@
         <div
             matTooltip="{{ option.name | translate }}"
             matTooltipPosition="right"
-            class="filter-label">
+            class="adf-filter-label">
             {{ option.name | translate }}
         </div>
     </mat-radio-button>

@@ -42,6 +42,15 @@ describe('WidgetVisibilityService', () => {
 
     const stubFormWithFields = new FormModel(fakeFormJson);
 
+    const evaluateConditions = (conditionsArgs: [leftValue: any, rightValue: any][], operator: string ): (boolean | undefined)[] => {
+        const resultsArray: (boolean | undefined)[] = [];
+
+        conditionsArgs.forEach(([leftValue, rightValue]) => {
+            resultsArray.push(service.evaluateCondition(leftValue, rightValue, operator));
+        });
+        return resultsArray;
+    };
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -55,28 +64,123 @@ describe('WidgetVisibilityService', () => {
     describe('should be able to evaluate next condition operations', () => {
 
         it('using == and return true', () => {
-            booleanResult = service.evaluateCondition('test', 'test', '==');
-            expect(booleanResult).toBeTruthy();
+            const resultsArray = evaluateConditions([
+                [true, true],
+                [false, false],
+                ['true', true],
+                [true, 'true'],
+                ['true', 'true'],
+                ['test', 'test'],
+                ['4', 4],
+                [0, 0]
+            ], '==');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(true);
+            });
         });
 
-        it('using < and return true', () => {
-            booleanResult = service.evaluateCondition(1, 2, '<');
-            expect(booleanResult).toBeTruthy();
+        it('using == and return false', () => {
+            const resultsArray = evaluateConditions([
+                [true, false],
+                [false, true],
+                ['false', true],
+                [false, 'true'],
+                ['false', 'true'],
+                ['test', 'testt'],
+                ['2', 3],
+                [0, 1]
+            ], '==');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(false);
+            });
         });
 
         it('using != and return true', () => {
-            booleanResult = service.evaluateCondition(true, false, '!=');
-            expect(booleanResult).toBeTruthy();
+            const resultsArray = evaluateConditions([
+                ['test', 'te'],
+                ['4', 123],
+                [0, 1],
+                [true, false],
+                [false, true],
+                ['false', true],
+                [false, 'true'],
+                ['false', 'true']
+            ], '!=');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(true);
+            });
         });
 
         it('using != and return false', () => {
-            booleanResult = service.evaluateCondition(true, true, '!=');
-            expect(booleanResult).toBeFalsy();
+            const resultsArray = evaluateConditions([
+                ['testtest', 'testtest'],
+                ['7', 7],
+                [0, 0],
+                [true, true],
+                [false, false],
+                ['true', true],
+                [true, 'true'],
+                ['true', 'true']
+            ], '!=');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(false);
+            });
+        });
+
+        it('using < and return false', () => {
+            const resultsArray = evaluateConditions([
+                [2, 1],
+                [1, 0],
+                [0, -1]
+            ], '<');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(false);
+            });
+        });
+
+        it('using <= and return true', () => {
+            const resultsArray = evaluateConditions([
+                [3, 4],
+                [0, 1],
+                [0, 0],
+                [1, 1]
+            ], '<=');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(true);
+            });
+        });
+
+        it('using > and return false', () => {
+            const resultsArray = evaluateConditions([
+                [0, 1],
+                [0, 141],
+                [-144, 0],
+                [32, 44]
+            ], '>');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(false);
+            });
         });
 
         it('using >= and return true', () => {
-            booleanResult = service.evaluateCondition(2, 2, '>=');
-            expect(booleanResult).toBeTruthy();
+            const resultsArray = evaluateConditions([
+                [12, 2],
+                [2, 2],
+                [1, 0],
+                [0, 0],
+                [0, -10]
+            ], '>=');
+
+            resultsArray.forEach((result) => {
+                expect(result).toBe(true);
+            });
         });
 
         it('using empty with null values and return true', () => {
@@ -94,11 +198,6 @@ describe('WidgetVisibilityService', () => {
             expect(booleanResult).toBeFalsy();
         });
 
-        it('using > and return false', () => {
-            booleanResult = service.evaluateCondition(2, 3, '>');
-            expect(booleanResult).toBeFalsy();
-        });
-
         it('using not empty with null values and return false', () => {
             booleanResult = service.evaluateCondition(null, null, '!empty');
             expect(booleanResult).toBeFalsy();
@@ -107,21 +206,6 @@ describe('WidgetVisibilityService', () => {
         it('using OR NOT with empty strings and return false', () => {
             booleanResult = service.evaluateCondition('', '', '!empty');
             expect(booleanResult).toBeFalsy();
-        });
-
-        it('using <= and return false', () => {
-            booleanResult = service.evaluateCondition(2, 1, '<=');
-            expect(booleanResult).toBeFalsy();
-        });
-
-        it('using <= and return true for different values', () => {
-            booleanResult = service.evaluateCondition(1, 2, '<=');
-            expect(booleanResult).toBeTruthy();
-        });
-
-        it('using <= and return true for same values', () => {
-            booleanResult = service.evaluateCondition(2, 2, '<=');
-            expect(booleanResult).toBeTruthy();
         });
 
         it('should return undefined for invalid operation', () => {
@@ -331,6 +415,45 @@ describe('WidgetVisibilityService', () => {
             expect(isVisible).toBeTruthy();
         });
 
+
+        it('should return true when left field value is equal to true and rigth value is equal to "true"', () => {
+            spyOn(service, 'getFieldValue').and.returnValue(true);
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
+            visibilityObjTest.leftType = 'field';
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = 'true';
+
+            const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
+        it('should return true when left field value is equal to 1 and rigth value is equal to 0', () => {
+            spyOn(service, 'getFieldValue').and.returnValue(1);
+            spyOn(service, 'isFormFieldValid').and.returnValue(true);
+            visibilityObjTest.leftType = 'field';
+            visibilityObjTest.operator = '>';
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = 0;
+
+            const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
+        it('should return true when left variable value is equal to 10 and rigth value is equal to 0', () => {
+            spyOn(service, 'getVariableValue').and.returnValue('10');
+            visibilityObjTest.leftType = 'variable';
+            visibilityObjTest.operator = '>';
+            visibilityObjTest.rightType = 'value';
+            visibilityObjTest.rightValue = 0;
+
+            const isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
+
+            expect(isVisible).toBeTruthy();
+        });
+
         it('should return always true when field does not have a visibility condition', () => {
             jsonFieldFake.visibilityCondition = undefined;
             const fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
@@ -419,6 +542,51 @@ describe('WidgetVisibilityService', () => {
 
             expect(rightValue).toBeDefined();
             expect(rightValue).toBe('dropdown_label');
+        });
+
+        describe('getRightValue when rightType is set to value', () => {
+            beforeEach(() => {
+                visibilityObjTest.rightType = 'value';
+            });
+
+            it('should be able to return 0 when rightValue is a number', () => {
+                visibilityObjTest.rightValue = 0;
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+                expect(rightValue).toBe(0);
+            });
+
+            it('should be able to return false when rightValue is a boolean', () => {
+                visibilityObjTest.rightValue = false;
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+                expect(rightValue).toBe(false);
+            });
+
+            it('should be able to return "false" when rightValue is a string', () => {
+                visibilityObjTest.rightValue = 'false';
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+                expect(rightValue).toBe('false');
+            });
+
+            it('should be able to return object when rightValue is an object', () => {
+                visibilityObjTest.rightValue = { key: 'value' };
+                const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
+
+                expect(rightValue).toEqual({ key: 'value' });
+            });
+
+            it('should return null when rightValue is undefined or null', () => {
+                visibilityObjTest.rightValue = undefined;
+                const rightValueWhenUndefined: any = service.getRightValue(formTest, visibilityObjTest);
+
+                visibilityObjTest.rightValue = null;
+                const rightValueWhenNull: any = service.getRightValue(formTest, visibilityObjTest);
+
+                expect(rightValueWhenUndefined).toBe(null);
+                expect(rightValueWhenNull).toBe(null);
+            });
         });
 
         it('should be able to evaluate condition with a dropdown <label>', () => {

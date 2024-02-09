@@ -6,21 +6,6 @@
     width: 100%;
 }
 
-.adf-lock-file-name {
-    .mat-checkbox-layout {
-        width: 100%;
-    }
-
-    .mat-checkbox-label {
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-
-    .mat-checkbox-inner-container {
-        margin: auto 8px auto 0;
-    }
-}
-
 .adf-dialog-buttons button {
     text-transform: uppercase;
 }
@@ -34,11 +19,7 @@
 }
 
 @media screen and (max-width: 380px) {
-    .mat-form-field {
-        font-size: 6px;
-    }
-
-    .mat-dialog-title {
+    .adf-folder-dialog-title {
         margin: 0;
     }
 

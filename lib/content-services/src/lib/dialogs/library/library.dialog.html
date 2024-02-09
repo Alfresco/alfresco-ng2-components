@@ -2,7 +2,7 @@
 
 <mat-dialog-content>
   <form novalidate [formGroup]="form" (submit)="submit()">
-    <mat-form-field>
+    <mat-form-field class="adf-library-dialog-form-field">
       <input
         placeholder="{{ 'LIBRARY.DIALOG.FORM.NAME' | translate }}"
         required
@@ -28,7 +28,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="adf-library-dialog-form-field">
       <input
         required
         placeholder="{{ 'LIBRARY.DIALOG.FORM.SITE_ID' | translate }}"
@@ -46,7 +46,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="adf-library-dialog-form-field">
       <textarea
         matInput
         placeholder="{{ 'LIBRARY.DIALOG.FORM.DESCRIPTION' | translate }}"
@@ -60,12 +60,14 @@
     </mat-form-field>
 
     <mat-radio-group
+      class="adf-library-dialog-radio-group"
       [ngModelOptions]="{ standalone: true }"
       [(ngModel)]="visibilityOption"
       (change)="visibilityChangeHandler($event)"
     >
       <mat-radio-button
         color="primary"
+        class="adf-library-dialog-radio-group-button"
         [disabled]="option.disabled"
         *ngFor="let option of visibilityOptions"
         [attr.data-automation-id]="option.value"
@@ -79,12 +81,13 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="adf-action-buttons">
-  <button mat-button mat-dialog-close data-automation-id="cancel-library-id">
+  <button class="adf-action-button" mat-button mat-dialog-close data-automation-id="cancel-library-id">
     {{ 'LIBRARY.DIALOG.CANCEL' | translate }}
   </button>
 
   <button
     color="primary"
+    class="adf-action-button"
     mat-button
     (click)="submit()"
     [disabled]="!form.valid || disableCreateButton"

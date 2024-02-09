@@ -1,23 +1,11 @@
 .adf-search-radio {
-    .mat-radio-group {
+    .adf-search-radio-group {
         display: flex;
         flex-direction: column;
     }
 
-    .mat-radio-button {
-        margin: 5px;
-    }
-
     .adf-facet-filter {
-        .mat-radio-label-content {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .mat-radio-label {
-            width: 100%;
-        }
+        margin: 5px;
 
         .adf-filter-label {
             text-overflow: ellipsis;

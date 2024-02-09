@@ -2,7 +2,7 @@
     <div class="adf-facet-result-filter">
         <div class="adf-facet-search-container">
             <button mat-icon-button class="adf-facet-search-icon" tabindex="-1">
-                <mat-icon>search</mat-icon>
+                <mat-icon class="adf-search-field-icon">search</mat-icon>
             </button>
             <mat-form-field class="adf-facet-search-field" floatLabel="never">
                 <input matInput placeholder="{{ 'SEARCH.FILTER.ACTIONS.SEARCH' | translate }}"
@@ -19,9 +19,12 @@
     <div class="adf-checklist">
         <mat-checkbox *ngFor="let bucket of field.buckets" [checked]="bucket.checked"
             [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
-            (change)="onToggleBucket($event, field, bucket)">
+            (change)="onToggleBucket($event, field, bucket)"
+            class="adf-search-filter-facet-checkbox">
             <div matTooltip="{{ bucket.display || bucket.label | translate }} {{ getBucketCountDisplay(bucket) }}"
-                matTooltipPosition="right" class="adf-facet-label">
+                matTooltipPosition="right"
+                class="adf-facet-label"
+                [class.adf-search-filter-facet-checkbox-checked]='bucket.checked'>
                 {{ bucket.display || bucket.label | translate }} {{ getBucketCountDisplay(bucket) }}
             </div>
         </mat-checkbox>

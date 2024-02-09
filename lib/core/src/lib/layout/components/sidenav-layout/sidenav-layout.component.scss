@@ -25,12 +25,13 @@
     }
 
     @include flex.layout-bp(lt-sm) {
-        .mat-drawer {
+        .adf-layout-container {
             width: calc(-50px + 100vw) !important;
             max-width: 300px !important;
         }
     }
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .mat-drawer-content {
         @include flex-column;
 

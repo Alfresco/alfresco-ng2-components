@@ -8,7 +8,7 @@
                     [formGroup]="form"
                     autocomplete="off"
                     (submit)="onSubmit(form.value)">
-                    <mat-card-header>
+                    <mat-card-header class="adf-login-card-header-text">
                         <mat-card-title>
                             <div class="adf-alfresco-logo">
                                 <!--HEADER TEMPLATE-->
@@ -51,7 +51,7 @@
                                 class="adf-login__field"
                                 [ngClass]="{'adf-is-invalid': isErrorStyle(form.controls.username)}">
                                 <mat-form-field
-                                    class="adf-full-width"
+                                    class="adf-full-width adf-login-form-field"
                                     floatPlaceholder="never"
                                     color="primary">
                                     <input
@@ -81,7 +81,7 @@
                             <!--PASSWORD FIELD-->
                             <div class="adf-login__field">
                                 <mat-form-field
-                                    class="adf-full-width"
+                                    class="adf-full-width adf-login-form-field"
                                     floatPlaceholder="never"
                                     color="primary">
                                         <input
@@ -99,7 +99,7 @@
                                             (click)="toggleShowPassword($event)"
                                             (keyup.enter)="toggleShowPassword($event)"
                                             [attr.data-automation-id]="isPasswordShow ? 'hide_password' : 'show_password'">
-                                                <mat-icon class="adf-login-password-icon">
+                                                <mat-icon class="adf-login-form-password-icon adf-login-password-icon">
                                                     {{ isPasswordShow ? 'visibility' : 'visibility_off' }}
                                                 </mat-icon>
                                         </button>
@@ -165,7 +165,9 @@
                                     class="adf-login-remember-me"
                                     [checked]="rememberMe"
                                     (change)="rememberMe = !rememberMe">
+                                    <div class="adf-login-remember-me-label">
                                         {{ 'LOGIN.LABEL.REMEMBER' | translate }}
+                                    </div>
                                 </mat-checkbox>
                             </div>
                         </div>

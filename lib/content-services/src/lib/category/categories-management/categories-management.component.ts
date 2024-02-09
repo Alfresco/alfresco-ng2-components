@@ -18,7 +18,6 @@
 import { Category } from '@alfresco/js-api';
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSelectionListChange } from '@angular/material/list';
 import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { debounce, first, map, takeUntil, tap } from 'rxjs/operators';
 import { CategoriesManagementMode } from './categories-management-mode';
@@ -229,10 +228,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     /**
      * Adds existing category to categories list and removes it from existing categories list.
      *
-     * @param change - selection list change containing selected category
+     * @param category - selection list change containing selected category
      */
-    addCategoryToAssign(change: MatSelectionListChange) {
-        const selectedCategory: Category = change.options[0].value;
+    addCategoryToAssign(category: Category) {
+        const selectedCategory: Category = category;
         this.categories.push(selectedCategory);
         this._existingCategories.splice(this._existingCategories.indexOf(selectedCategory), 1);
         this.categoryNameControl.updateValueAndValidity();

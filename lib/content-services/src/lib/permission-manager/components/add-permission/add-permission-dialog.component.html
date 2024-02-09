@@ -1,9 +1,9 @@
-<h2 mat-dialog-title id="add-permission-dialog-title">
+<h2 mat-dialog-title class='adf-add-permission-dialog-title' id="add-permission-dialog-title">
     {{ (data?.title ? data?.title : "PERMISSION_MANAGER.ADD-PERMISSION.BASE-DIALOG-TITLE") | translate }}
 </h2>
 
 <ng-container *ngIf="!isSearchActive">
-    <mat-dialog-content>
+    <mat-dialog-content class="adf-add-permission-dialog-content">
         <button mat-button (click)="enableSearch()" class="adf-search-user-button">
             {{ "PERMISSION_MANAGER.ADD-PERMISSION.SEARCH" | translate }}
             <span class="adf-toolbar--spacer"></span>
@@ -73,7 +73,7 @@
 
     </mat-dialog-content>
 
-    <mat-dialog-actions>
+    <mat-dialog-actions class="adf-add-permission-dialog-actions">
         <button mat-button
                 mat-dialog-close
                 data-automation-id="add-permission-dialog-close-button">
@@ -91,11 +91,11 @@
 </ng-container>
 
 <ng-container *ngIf="isSearchActive">
-    <mat-dialog-content>
+    <mat-dialog-content class="adf-add-permission-dialog-content">
         <adf-add-permission-panel class="adf-search-container" (select)="onSelect($event)"></adf-add-permission-panel>
     </mat-dialog-content>
 
-    <mat-dialog-actions>
+    <mat-dialog-actions class="adf-add-permission-dialog-actions">
             <button mat-button
                     (click)="canCloseDialog()"
                     data-automation-id="add-permission-dialog-close-button">

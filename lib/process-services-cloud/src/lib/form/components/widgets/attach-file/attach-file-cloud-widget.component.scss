@@ -20,7 +20,7 @@
         align-items: center;
         margin-right: 8px;
 
-        .mat-raised-button {
+        .adf-attach-widget__menu-upload__button {
             line-height: 28px;
             font-size: var(--theme-caption-font-size);
         }
@@ -41,18 +41,6 @@
 
     &-attach-widget__image-logo {
         padding-left: 5px;
-    }
-
-    &-attach-widget-repo-button {
-        padding-left: 10px;
-
-        .mat-button-wrapper {
-            display: inline;
-        }
-
-        .mat-mini-fab.mat-accent {
-            background-color: inherit;
-        }
     }
 
     &-attach-widget {
@@ -87,17 +75,17 @@
     }
 
     &-attach-files-row {
-        div.mat-list-item-content {
+        > div:first-child {
             cursor: pointer;
         }
 
-        .mat-line {
+        .adf-file {
             margin-bottom: 0;
         }
     }
 
     &-attach-selected-file-row {
-        div.mat-list-item-content {
+        > div:first-child {
             .adf-datatable-selected {
                 color: var(--theme-primary-color);
                 padding-right: 6px;
