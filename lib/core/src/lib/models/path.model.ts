@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,21 @@
  * limitations under the License.
  */
 
-export * from './product-version.model';
-export * from './comment.model';
-export * from './pagination.model';
-export * from './request-pagination.model';
-export * from './decimal-number.model';
-export * from './general-user.model';
-export * from './path.model';
+export class PathInfo {
+    elements?: PathElement[];
+    name?: string;
+    isComplete?: boolean;
+
+    constructor(input?: Partial<PathInfo>) {
+        if (input) {
+            Object.assign(this, input);
+        }
+    }
+}
+
+export interface PathElement {
+    id?: string;
+    name?: string;
+    nodeType?: string;
+    aspectNames?: string[];
+}

@@ -16,7 +16,8 @@
  */
 
 import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
-import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient } from '@alfresco/js-api';
+import { Emitters  as JsApiEmitters } from '../../../src/lib/models/http-client.interface';
+import { HttpClient as JsApiHttpClient } from './interfaces';
 import {
     HttpClient,
     HttpContext,
