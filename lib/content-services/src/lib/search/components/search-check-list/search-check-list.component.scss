@@ -3,17 +3,11 @@
     flex-direction: column;
 
     .adf-facet-filter {
-        &.mat-checkbox {
-            display: block;
-        }
+        display: block;
 
-        .mat-checkbox-label {
+        .adf-search-check-list-label {
             text-overflow: ellipsis;
             overflow: hidden;
-            width: 100%;
-        }
-
-        .mat-checkbox-layout {
             width: 100%;
         }
 

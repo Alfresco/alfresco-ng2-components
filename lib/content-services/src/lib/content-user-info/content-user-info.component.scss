@@ -49,27 +49,12 @@
         display: inline-block;
     }
 
-    &-userinfo-menu_button.mat-button {
+    &-userinfo-menu_button.adf-content-userinfo-button {
         margin-right: 0;
         border-radius: 90%;
         padding: 0;
         min-width: 40px;
         height: 40px;
-    }
-
-    &-userinfo-tab .mat-tab-header {
-        align-self: center;
-        width: 100%;
-        min-width: 250px;
-    }
-
-    &-userinfo-tab .mat-tab-label {
-        flex: auto;
-        font-weight: 500;
-        font-size: var(--theme-body-1-font-size);
-        text-transform: uppercase;
-        line-height: 48px;
-        text-align: center;
     }
 
     &-userinfo-card-header {
@@ -81,7 +66,7 @@
         box-sizing: border-box;
     }
 
-    &-userinfo-card.mat-card {
+    &-userinfo-card.adf-content-userinfo-card {
         padding: 0;
     }
 
@@ -146,14 +131,10 @@
     &-userinfo-detail {
         text-align: left;
     }
-
-    &-hide-tab .mat-tab-label-active {
-        display: none !important;
-    }
 }
 
 @media only screen and (min-device-width: 480px) {
-    .mat-menu-panel.adf-userinfo-menu {
+    .adf-content-userinfo-menu.adf-userinfo-menu {
         max-height: 450px;
         min-width: 450px;
         overflow: auto;
@@ -161,6 +142,6 @@
     }
 }
 
-.mat-menu-panel.adf-userinfo-menu .mat-menu-content {
+.adf-content-userinfo-menu.adf-userinfo-menu > div {
     padding: 0;
 }

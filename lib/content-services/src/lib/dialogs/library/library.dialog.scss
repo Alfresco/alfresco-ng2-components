@@ -1,19 +1,16 @@
 .adf-library-dialog {
-    .mat-radio-group {
+    .adf-library-dialog-radio-group {
         display: flex;
         flex-direction: column;
         margin: 0 0 20px;
     }
 
-    .mat-radio-group .mat-radio-button {
+    .adf-library-dialog-radio-group .adf-library-dialog-radio-group-button {
         margin: 10px 0;
     }
 
-    .mat-form-field {
+    .adf-library-dialog-form-field {
         width: 100%;
-    }
-
-    mat-form-field {
         padding-top: 20px;
     }
 
@@ -22,7 +19,7 @@
         flex-direction: row;
         justify-content: flex-end;
 
-        .mat-button {
+        .adf-action-button {
             text-transform: uppercase;
         }
     }

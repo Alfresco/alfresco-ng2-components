@@ -13,7 +13,7 @@
         [attr.data-automation-id]="'expansion-panel-'+category.name"
         [(expanded)]="category.expanded">
         <mat-expansion-panel-header>
-            <mat-panel-title>
+            <mat-panel-title class="adf-search-filter-header-title">
                 {{ category.name | translate }}
             </mat-panel-title>
         </mat-expansion-panel-header>
@@ -25,7 +25,7 @@
     <ng-container *ngIf="facetFiltersService.tabbedFacet && showContextFacets">
         <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+facetFiltersService.tabbedFacet.label" [expanded]="true">
             <mat-expansion-panel-header>
-                <mat-panel-title>{{ facetFiltersService.tabbedFacet.label | translate }}</mat-panel-title>
+                <mat-panel-title class="adf-search-filter-header-title">{{ facetFiltersService.tabbedFacet.label | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
             <adf-search-facet-tabbed-content
                 [tabbedFacet]="facetFiltersService.tabbedFacet"
@@ -38,7 +38,7 @@
         <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of facetFiltersService.responseFacets"
                              [expanded]="shouldExpand(field)">
             <mat-expansion-panel-header>
-                <mat-panel-title>{{ field.label | translate }}</mat-panel-title>
+                <mat-panel-title class="adf-search-filter-header-title">{{ field.label | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
 
             <adf-search-facet-field [field]="field"></adf-search-facet-field>

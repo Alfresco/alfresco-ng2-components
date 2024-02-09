@@ -2,6 +2,7 @@
     <mat-checkbox
         *ngFor="let option of options"
         [checked]="option.checked"
+        labelPosition="before"
         (keydown.enter)="option.checked = !option.checked"
         [attr.data-automation-id]="'checkbox-' + (option.name)"
         [attr.aria-label]="option.name | translate"
@@ -9,7 +10,7 @@
         class="adf-facet-filter">
         <div matTooltip="{{ option.name | translate }}"
             matTooltipPosition="right"
-            class="facet-name">
+            class="adf-search-check-list-label">
             {{ option.name | translate }}
         </div>
 

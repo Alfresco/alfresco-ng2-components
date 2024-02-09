@@ -1,14 +1,14 @@
 @use '@angular/material' as mat;
 
 .adf-search-form {
-    &.mat-button {
+    &.adf-search-form-button {
         height: 35px;
         max-width: 190px;
         min-width: 190px;
         align-content: center;
         overflow: hidden;
 
-        .mat-button-wrapper {
+        > span:first-child {
             display: flex;
             align-items: center;
         }
@@ -35,14 +35,14 @@
     &-icon-selected {
         border-color: var(--theme-accent-color);
     }
+}
 
-    &-menu + * .mat-menu-panel {
-        @include mat.elevation(2);
+.adf-search-form-menu {
+    @include mat.elevation(2);
 
-        border-radius: 6px;
+    border-radius: 6px;
 
-        .mat-menu-content {
-            padding: 0;
-        }
+    > div:first-child {
+        padding: 0;
     }
 }

@@ -19,7 +19,7 @@ import { Category, CategoryPaging, ResultNode, ResultSetPaging } from '@alfresco
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
-import { MatListOption, MatSelectionList } from '@angular/material/list';
+import { MatList } from '@angular/material/list';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
@@ -91,8 +91,8 @@ describe('CategoriesManagementComponent', () => {
      *
      * @returns list of material option element
      */
-    function getExistingCategoriesList(): MatListOption[] {
-        return fixture.debugElement.queryAll(By.directive(MatListOption))?.map((debugElem) => debugElem.componentInstance);
+    function getExistingCategoriesList(): HTMLElement[] {
+        return fixture.debugElement.queryAll(By.css('.adf-category'))?.map((debugElem) => debugElem.nativeElement);
     }
 
     /**
@@ -129,8 +129,8 @@ describe('CategoriesManagementComponent', () => {
      *
      * @returns material selection list
      */
-    function getSelectionList(): MatSelectionList {
-        return fixture.debugElement.query(By.directive(MatSelectionList)).componentInstance;
+    function getSelectionList(): MatList {
+        return fixture.debugElement.query(By.directive(MatList)).componentInstance;
     }
 
     /**
@@ -159,7 +159,7 @@ describe('CategoriesManagementComponent', () => {
      * @returns native element
      */
     function getCreateCategoryLabel(): HTMLSpanElement {
-        return fixture.debugElement.query(By.css('.adf-existing-categories-panel span'))?.nativeElement;
+        return fixture.debugElement.query(By.css('.adf-create-category-label'))?.nativeElement;
     }
 
     /**
@@ -323,7 +323,7 @@ describe('CategoriesManagementComponent', () => {
 
         it('should not display create category label', fakeAsync(() => {
             typeCategory('test');
-
+            fixture.detectChanges();
             expect(getCreateCategoryLabel()).toBeUndefined();
         }));
 
@@ -338,7 +338,7 @@ describe('CategoriesManagementComponent', () => {
             typeCategory('test');
             const options = getExistingCategoriesList();
             // eslint-disable-next-line no-underscore-dangle
-            options[0]._handleClick();
+            options[0].click();
 
             expect(component.categories.length).toBe(3);
             expect(component.categories[2].name).toBe('testCat');
@@ -352,7 +352,7 @@ describe('CategoriesManagementComponent', () => {
             typeCategory('test');
             const options = getExistingCategoriesList();
             // eslint-disable-next-line no-underscore-dangle
-            options[0]._handleClick();
+            options[0].click();
             fixture.detectChanges();
 
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();

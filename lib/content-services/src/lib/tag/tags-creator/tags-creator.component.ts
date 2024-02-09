@@ -33,7 +33,6 @@ import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } 
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
 import { TagsCreatorMode } from './tags-creator-mode';
-import { MatSelectionListChange } from '@angular/material/list';
 import { TagService } from '../services/tag.service';
 
 interface TagNameControlErrors {
@@ -278,10 +277,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     /**
      * Called when user selects any tag from list of existing tags. It moves tag from existing tags list to top list.
      *
-     * @param change changes
+     * @param selectedTag changes
      */
-    addExistingTagToTagsToAssign(change: MatSelectionListChange): void {
-        const selectedTag: TagEntry = change.options[0].value;
+    addExistingTagToTagsToAssign(selectedTag: TagEntry): void {
         this.tags.push(selectedTag.entry.tag);
         this.removeTagFromArray(this.existingTags, selectedTag);
         this.tagNameControl.updateValueAndValidity();

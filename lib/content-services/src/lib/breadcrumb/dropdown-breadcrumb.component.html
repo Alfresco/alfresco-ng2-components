@@ -9,15 +9,16 @@
         (click)="open()"
         [attr.aria-label]="'BREADCRUMB.ARIA-LABEL.DROPDOWN' | translate"
         data-automation-id="dropdown-breadcrumb-trigger">
-        <mat-icon [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
+        <mat-icon class="adf-dropdown-breadcrumb-icon" [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
     </button>
 
-    <mat-icon class="adf-dropdown-breadcrumb-item-chevron">chevron_right</mat-icon>
+    <mat-icon class="adf-dropdown-breadcrumb-icon adf-dropdown-breadcrumb-item-chevron">chevron_right</mat-icon>
 
     <div class="adf-dropdown-breadcrumb-path">
         <mat-select
             #dropdown
             *ngIf="hasPreviousNodes()"
+            class="adf-dropdown-breadcrumb-path-select"
             tabindex="-1"
             data-automation-id="dropdown-breadcrumb-path"
             aria-labelledby="dropdown-breadcrumb-button">
@@ -26,7 +27,7 @@
                 *ngFor="let node of previousNodes;"
                 (click)="onRoutePathClick(node, $event)"
                 (onSelectionChange)="onRouteClick(node)"
-                class="adf-dropdown-breadcrumb-path-option"
+                class="adf-dropdown-breadcrumb-path-option adf-dropdown-breadcrumb-path-option-node"
                 data-automation-class="dropdown-breadcrumb-path-option"
                 [disabled]="readOnly">
                 {{ node.name | translate }}

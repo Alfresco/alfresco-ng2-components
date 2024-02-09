@@ -19,21 +19,25 @@
     }
 
     &-aspect-list-dialog {
-        .mat-dialog-actions {
-            justify-content: space-between;
-        }
+        justify-content: space-between;
     }
 
     &-aspect-dialog-content {
         padding-top: 3px;
 
         .adf-aspect-property-table {
-            .mat-cell {
+            .adf-aspect-property-table-cell {
                 font-size: smaller;
             }
 
-            .mat-column-name {
-                width: 30%;
+            .adf-aspect-property-table-column {
+                &-name {
+                    width: 30%;
+                }
+
+                &-title {
+                    width: 50%;
+                }
             }
         }
     }

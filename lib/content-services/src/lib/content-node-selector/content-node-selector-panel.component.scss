@@ -13,12 +13,11 @@ h2.adf-search-results-label {
     color: var(--adf-theme-foreground-text-color-087);
 }
 
-.adf-toolbar .mat-toolbar {
-    max-height: 48px;
-    border-bottom-width: 0;
-    font-size: var(--theme-body-1-font-size);
-
-    &.mat-toolbar-single-row {
+.adf-content-node-selector-panel {
+    .adf-toolbar .adf-toolbar-container.adf-toolbar-container-row {
+        max-height: 48px;
+        border-bottom-width: 0;
+        font-size: var(--theme-body-1-font-size);
         height: auto;
     }
 }
@@ -48,13 +47,8 @@ h2.adf-search-results-label {
             }
         }
 
-        .mat-form-field-underline .mat-form-field-ripple {
-            height: 1px;
-            transition: none;
-        }
-
         .adf-site-dropdown-container {
-            .mat-form-field {
+            .adf-sites-dropdown-form-field {
                 display: block;
                 margin-bottom: 15px;
             }
@@ -64,7 +58,7 @@ h2.adf-search-results-label {
             width: 100%;
             margin-bottom: 0;
 
-            .mat-select-trigger {
+            .adf-sites-dropdown-select-trigger {
                 font-size: var(--theme-body-1-font-size);
             }
         }
@@ -73,7 +67,7 @@ h2.adf-search-results-label {
             .adf-dropdown-breadcrumb-trigger {
                 outline: none;
 
-                .mat-icon {
+                .adf-dropdown-breadcrumb-icon {
                     color: var(--adf-theme-foreground-base-color-045);
 
                     &:hover {
@@ -81,7 +75,7 @@ h2.adf-search-results-label {
                     }
                 }
 
-                &:focus .mat-icon {
+                &:focus .adf-dropdown-breadcrumb-icon {
                     color: var(--theme-primary-color);
                 }
             }

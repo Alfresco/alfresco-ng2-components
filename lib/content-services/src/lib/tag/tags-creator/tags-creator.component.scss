@@ -94,38 +94,25 @@ adf-tags-creator {
                 height: auto;
                 width: unset;
 
+                &:hover {
+                    cursor: pointer;
+                    background: var(--adf-theme-mat-grey-color-a200);
+                }
+
+                & span {
+                    padding: 0;
+                }
+
                 & + .adf-tag {
                     margin-top: -10px;
                 }
-
-                .mat-list-item-content-reverse {
-                    padding: 0;
-
-                    .mat-pseudo-checkbox {
-                        display: none;
-                    }
-                }
             }
 
-            mat-spinner {
+            .adf-tags-creator-spinner {
                 margin: auto;
                 overflow: unset;
                 min-height: 62px;
             }
-
-            .mat-list-item-disabled {
-                background-color: inherit;
-                color: inherit;
-            }
-        }
-    }
-
-    mat-dialog-actions {
-        margin-right: -24px;
-        background-color: inherit;
-
-        .adf-save-button {
-            margin-right: 24px;
         }
     }
 

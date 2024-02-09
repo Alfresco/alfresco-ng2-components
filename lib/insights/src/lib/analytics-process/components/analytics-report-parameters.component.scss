@@ -59,7 +59,7 @@
     border-bottom: solid 1px var(--adf-theme-foreground-divider-color);
     padding-top: 10px;
 
-    .mat-toolbar {
+    .adf-toolbar-container {
         border: 0 !important;
         padding: 0 !important;
     }
@@ -92,11 +92,11 @@
 }
 
 .adf-report-dialog {
-    .mat-form-field {
+    .adf-example-full-width {
         width: 100%;
     }
 
-    .mat-dialog-actions {
+    .adf-report-dialog-actions {
         justify-content: flex-end;
     }
 }

@@ -1,6 +1,6 @@
 @import 'styles/flex';
 
-adf-layout-header .mat-toolbar-single-row {
+adf-layout-header .adf-toolbar-container-row {
     color: var(--theme-header-text-color) !important;
     background-color: var(--theme-primary-color);
     position: relative;
@@ -10,7 +10,7 @@ adf-layout-header .mat-toolbar-single-row {
         position: relative;
         margin-right: 0;
 
-        .mat-icon {
+        .adf-menu-icon-header {
             font-size: 29px;
             padding: 0 5px 0 0;
         }
@@ -73,7 +73,7 @@ adf-layout-header .mat-toolbar-single-row {
     }
 }
 
-[dir='rtl'] adf-layout-header .mat-toolbar-single-row {
+[dir='rtl'] adf-layout-header .adf-toolbar-container-row {
     .adf-menu-icon {
         margin-right: -11px;
     }
@@ -99,7 +99,7 @@ adf-layout-header .mat-toolbar-single-row {
     }
 }
 
-[dir='ltr'] adf-layout-header .mat-toolbar-single-row {
+[dir='ltr'] adf-layout-header .adf-toolbar-container-row {
     .adf-menu-icon {
         margin-left: -11px;
     }

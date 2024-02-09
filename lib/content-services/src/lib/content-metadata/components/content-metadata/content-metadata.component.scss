@@ -9,35 +9,24 @@ $panel-properties-height: 56px !default;
             margin: 12px;
 
             .adf-property-list .adf-property .adf-property-field {
-                .mat-input-element {
+                .adf-property-value:not(.adf-card-view-selectitem .adf-property-value) {
                     margin-top: 20px;
                 }
 
-                .mat-form-field-label {
-                    transform: translateY(-1.3437em) scale(1);
+                label {
+                    font-size: 19px;
+                    line-height: 20px;
                 }
             }
         }
 
-        mat-expansion-panel-header {
+        .adf-metadata-properties-header {
             height: $panel-properties-height;
             padding: 0 12px;
             border-radius: 12px 12px 0 0;
 
-            &.mat-expanded {
-                height: $panel-properties-height;
+            &.adf-metadata-properties-header-expanded {
                 border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
-            }
-
-            .mat-content {
-                display: contents;
-                margin-right: 0;
-            }
-        }
-
-        .mat-expansion-panel-content {
-            .mat-expansion-panel-body {
-                padding: 0 12px 12px;
             }
         }
 

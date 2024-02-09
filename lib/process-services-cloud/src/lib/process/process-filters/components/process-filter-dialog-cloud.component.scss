@@ -1,22 +1,17 @@
 adf-cloud-process-filter-dialog-cloud {
-    .adf-process-filter-dialog .mat-card {
-        padding: 0;
-        box-shadow: none;
-
-        mat-card-actions {
-            display: flex;
-            max-height: 100%;
-            place-content: flex-end;
-            align-items: flex-end;
-        }
-    }
-
-    .adf-process-filter-dialog .mat-card-content {
+    .adf-process-filter-dialog .adf-process-filter-dialog-card {
         padding: 0;
         box-shadow: none;
 
         .adf-process-filter-name {
             flex: 1;
+        }
+
+        .adf-process-filter-dialog-actions {
+            display: flex;
+            max-height: 100%;
+            place-content: flex-end;
+            align-items: flex-end;
         }
     }
 }

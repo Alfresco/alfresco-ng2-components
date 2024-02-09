@@ -1,5 +1,5 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
-    <mat-form-field>
+    <mat-form-field class="adf-sites-dropdown-form-field">
         <mat-label>{{ 'NODE_SELECTOR.LOCATION' | translate }}</mat-label>
         <mat-select
             adf-infinite-select-scroll
@@ -12,6 +12,9 @@
             floatPlaceholder="never"
             [(value)]="selected"
             (selectionChange)="selectedSite($event)">
+            <mat-select-trigger class="adf-sites-dropdown-select-trigger">
+                {{ selected?.entry.title | translate}}
+            </mat-select-trigger>
             <mat-option *ngFor="let site of siteList?.list.entries;" [value]="site">
                 {{ site.entry.title | translate}}
             </mat-option>

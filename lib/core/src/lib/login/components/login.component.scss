@@ -95,7 +95,7 @@
         margin-right: 10px;
     }
 
-    .mat-card-header-text {
+    .adf-login-card-header-text {
         margin: 0 auto;
     }
 
@@ -118,10 +118,6 @@
         height: 36px;
         line-height: normal;
         box-shadow: none;
-    }
-
-    .adf-login-button .mat-button-wrapper {
-        display: inline-flex;
     }
 
     .adf-login-button-label {
@@ -195,20 +191,20 @@
         opacity: 0.54;
     }
 
-    .mat-form-field .adf-login-password-icon.mat-icon {
+    .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
         color: var(--adf-theme-foreground-text-color);
     }
 
-    .adf-login__field .mat-form-field-wrapper {
+    .adf-login__field {
         margin: 1em 0 0;
         font-size: var(--theme-subheading-2-font-size);
-    }
 
-    .adf-login__field input:-webkit-autofill {
-        /* stylelint-disable */
-        -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
-        -webkit-text-fill-color: var(--adf-theme-foreground-text-color) !important;
-        /* stylelint-enable */
+        & input:-webkit-autofill {
+            /* stylelint-disable */
+            -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
+            -webkit-text-fill-color: var(--adf-theme-foreground-text-color) !important;
+            /* stylelint-enable */
+        }
     }
 
     .adf-login-validation {
@@ -233,7 +229,7 @@
         padding-top: 22px;
     }
 
-    .adf-login__remember-me .mat-checkbox-label {
+    .adf-login__remember-me .adf-login-remember-me-label {
         opacity: 0.87;
     }
 

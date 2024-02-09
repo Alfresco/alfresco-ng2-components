@@ -23,10 +23,6 @@ $adf-average-star-color: #808080;
         cursor: pointer;
         width: 25px;
 
-        .mat-list-item-content {
-            padding: 0 !important;
-        }
-
         &:hover {
             transform: rotate(13deg) scale(1.2);
         }

@@ -1,5 +1,7 @@
-<mat-tab-group>
-    <mat-tab *ngFor="let tabContent of tabsContents" label="{{tabContent.name | translate}}">
+<mat-tab-group (selectedIndexChange)="onTabIndexChanged($event)">
+    <mat-tab *ngFor="let tabContent of tabsContents; let i = index"
+             [labelClass]='selectedIndex === i ? "adf-search-tab-label-active" : ""'
+             label="{{tabContent.name | translate}}">
         <ng-container *ngTemplateOutlet="tabContent.templateRef"></ng-container>
     </mat-tab>
 </mat-tab-group>

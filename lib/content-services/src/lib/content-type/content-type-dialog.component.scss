@@ -1,12 +1,8 @@
 .adf {
     &-content-type-dialog {
-        .mat-expansion-panel {
-            margin-bottom: 10px;
+        & .adf-content-type-accordion {
+            margin: 10px;
         }
-    }
-
-    &-content-type-accordion {
-        margin: 10px;
     }
 
     &-content-type-dialog-title {

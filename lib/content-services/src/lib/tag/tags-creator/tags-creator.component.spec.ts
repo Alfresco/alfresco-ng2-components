@@ -30,7 +30,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EMPTY, of, throwError } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
@@ -157,15 +157,6 @@ describe('TagsCreatorComponent', () => {
 
         tick(timeout);
         fixture.detectChanges();
-    }
-
-    /**
-     * Find the selection list
-     *
-     * @returns material component
-     */
-    function findSelectionList(): MatSelectionList {
-        return fixture.debugElement.query(By.directive(MatSelectionList)).componentInstance;
     }
 
     /**
@@ -513,8 +504,8 @@ describe('TagsCreatorComponent', () => {
              * @returns list of tags
              */
             function getExistingTags(): string[] {
-                const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag .mat-list-text`));
-                return tagElements.map(el => el.nativeElement.firstChild.nodeValue.trim());
+                const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag`));
+                return tagElements.map(el => el.nativeElement.textContent.trim());
             }
 
             it('should call findTagByName on tagService using name set in input', fakeAsync(() => {
@@ -673,38 +664,12 @@ describe('TagsCreatorComponent', () => {
 
             it('should selection be disabled if mode is Create', fakeAsync(() => {
                 component.mode = TagsCreatorMode.CREATE;
-                spyOn(tagService, 'searchTags').and.returnValue(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: 'tag' } as any }
-                            ],
-                            pagination: {}
-                        }
-                    })
-                );
-
-                typeTag('Tag');
-
-                expect(findSelectionList().disabled).toBeTrue();
+                expect(component.isOnlyCreateMode()).toBeTrue();
             }));
 
             it('should selection be enabled if mode is Create And Assign', fakeAsync(() => {
                 component.mode = TagsCreatorMode.CREATE_AND_ASSIGN;
-                spyOn(tagService, 'searchTags').and.returnValue(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: 'tag' } as any }
-                            ],
-                            pagination: {}
-                        }
-                    })
-                );
-
-                typeTag('Tag');
-
-                expect(findSelectionList().disabled).toBeFalse();
+                expect(component.isOnlyCreateMode()).toBeFalse();
             }));
 
             it('should select existing tag when selectionChange event emits', fakeAsync(() => {
@@ -724,11 +689,8 @@ describe('TagsCreatorComponent', () => {
                 );
 
                 typeTag('Tag');
-                findSelectionList().selectionChange.emit({
-                    options: [{
-                        value: selectedTag
-                    }]
-                } as MatSelectionListChange);
+
+                component.addExistingTagToTagsToAssign(selectedTag);
                 fixture.detectChanges();
 
                 expect(getAddedTags()).toEqual([selectedTag.entry.tag]);

@@ -5,7 +5,8 @@
         [(expanded)]="isGeneralPanelExpanded"
         [attr.data-automation-id]="'adf-metadata-group-properties'"
         hideToggle>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="adf-metadata-properties-header"
+                                    [class.adf-metadata-properties-header-expanded]='isGeneralPanelExpanded'>
             <adf-content-metadata-header [title]="'CORE.METADATA.BASIC.HEADER'" [expanded]="isGeneralPanelExpanded">
                 <button *ngIf="canEditGeneralInfo"
                         mat-icon-button
@@ -36,6 +37,7 @@
             </adf-content-metadata-header>
         </mat-expansion-panel-header>
         <adf-card-view
+            class="adf-metadata-properties-expansion-panel"
             (keydown)="keyDown($event)"
             [properties]="basicProperties$ | async"
             [editable]="isEditingModeGeneralInfo"
@@ -48,7 +50,8 @@
 
     <ng-container *ngIf="displayTags">
         <mat-expansion-panel hideToggle [(expanded)]="isTagPanelExpanded" class="adf-content-metadata-panel">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="adf-metadata-properties-header"
+                                        [class.adf-metadata-properties-header-expanded]='isTagPanelExpanded'>
                 <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="isTagPanelExpanded">
                     <button *ngIf="canEditTags"
                             mat-icon-button
@@ -98,7 +101,8 @@
 
     <ng-container *ngIf="displayCategories">
         <mat-expansion-panel hideToggle [(expanded)]="isCategoriesPanelExpanded" class="adf-content-metadata-panel">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="adf-metadata-properties-header"
+                                        [class.adf-metadata-properties-header-expanded]='isCategoriesPanelExpanded'>
                 <adf-content-metadata-header [title]="'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE'" [expanded]="isCategoriesPanelExpanded">
                     <button *ngIf="canEditCategories"
                             mat-icon-button
@@ -154,7 +158,8 @@
         (closed)="customPanel.expanded = false"
         class="adf-content-metadata-panel"
         hideToggle>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="adf-metadata-properties-header"
+                                    [class.adf-metadata-properties-header-expanded]='customPanel.expanded'>
             <adf-content-metadata-header class="adf-metadata-custom-panel-title" [title]="customPanel.panelTitle" [expanded]="customPanel.expanded">
             </adf-content-metadata-header>
         </mat-expansion-panel-header>
@@ -171,7 +176,8 @@
                 (closed)="group.expanded = false"
                 class="adf-content-metadata-panel"
                 hideToggle>
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header class="adf-metadata-properties-header"
+                                            [class.adf-metadata-properties-header-expanded]='group.expanded'>
                     <adf-content-metadata-header [title]="group.title" [expanded]="group.expanded">
                         <button *ngIf="hasGroupToggleEdit(group)"
                                 mat-icon-button
