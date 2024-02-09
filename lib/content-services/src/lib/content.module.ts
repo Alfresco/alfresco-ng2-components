@@ -22,6 +22,7 @@ import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf
 
 import { MaterialModule } from './material.module';
 
+import { AlfrescoApiModule } from './api-factories/alfresco-api.module';
 import { TagModule } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
@@ -53,6 +54,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
 @NgModule({
     imports: [
         ...CONTENT_PIPES,
+        AlfrescoApiModule,
         CoreModule,
         TagModule,
         CommonModule,
@@ -85,6 +87,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
         ...CONTENT_PIPES,
+        AlfrescoApiModule,
         TagModule,
         DocumentListModule,
         ContentUserInfoModule,

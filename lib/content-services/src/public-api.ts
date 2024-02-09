@@ -43,6 +43,8 @@ export * from './lib/tree/index';
 export * from './lib/category/index';
 export * from './lib/viewer/index';
 export * from './lib/security/index';
+export * from './lib/api-factories';
+export * from './lib/services/index';
 export * from './lib/infinite-scroll-datasource';
 export * from './lib/prediction/index';
 

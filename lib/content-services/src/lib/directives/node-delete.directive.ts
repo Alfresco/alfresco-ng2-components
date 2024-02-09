@@ -20,8 +20,9 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { NodeEntry, Node, DeletedNodeEntry, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { map, catchError, retry } from 'rxjs/operators';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 interface ProcessedNodeData {
     entry: Node | DeletedNode;

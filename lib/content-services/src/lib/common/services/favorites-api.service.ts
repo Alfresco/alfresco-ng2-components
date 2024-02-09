@@ -18,7 +18,8 @@
 import { Injectable } from '@angular/core';
 import { FavoritesApi, NodePaging, FavoritePaging } from '@alfresco/js-api';
 import { Observable, from, of } from 'rxjs';
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { UserPreferencesService } from '@alfresco/adf-core';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({

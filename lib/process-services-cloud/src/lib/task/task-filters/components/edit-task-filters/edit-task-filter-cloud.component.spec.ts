@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';

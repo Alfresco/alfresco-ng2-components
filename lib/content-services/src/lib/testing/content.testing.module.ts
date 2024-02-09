@@ -20,7 +20,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
     CoreModule,
-    AlfrescoApiService,
     AppConfigService,
     TranslationService,
     CookieService,
@@ -33,6 +32,7 @@ import {
 import { ContentModule } from '../content.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { versionCompatibilityFactory } from '../version-compatibility/version-compatibility-factory';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 

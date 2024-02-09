@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, DataSorting } from '@alfresco/adf-core';
+import { AppConfigService, DataSorting } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { SearchCategory } from '../models/search-category.interface';
@@ -26,6 +26,7 @@ import { Observable } from 'rxjs';
 import { SearchSortingDefinition } from '../models/search-sorting-definition.interface';
 import { FilterSearch } from '../models/filter-search.interface';
 import { NodesApiService } from '../../common/services/nodes-api.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'

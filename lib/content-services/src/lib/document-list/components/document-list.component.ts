@@ -19,7 +19,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-    AlfrescoApiService,
     AppConfigService,
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
@@ -41,6 +40,7 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import {
     AfterContentInit,

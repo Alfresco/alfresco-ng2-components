@@ -22,7 +22,7 @@ import { StorageService } from '../../common/services/storage.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiService } from '../../../../../content-services/src/lib/services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock';
 
 describe('UserPreferencesService', () => {

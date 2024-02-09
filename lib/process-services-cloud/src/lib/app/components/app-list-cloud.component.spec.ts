@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { of, throwError } from 'rxjs';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent, LAYOUT_GRID, LAYOUT_LIST } from './app-list-cloud.component';

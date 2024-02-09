@@ -16,7 +16,8 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { AspectListService } from './aspect-list.service';
 import { AspectPaging, AspectsApi, AspectEntry } from '@alfresco/js-api';
 

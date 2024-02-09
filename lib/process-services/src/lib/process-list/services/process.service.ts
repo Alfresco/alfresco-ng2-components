@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, DateFnsUtils, FormValues } from '@alfresco/adf-core';
+import { DateFnsUtils, FormValues } from '@alfresco/adf-core';
 import { inject, Injectable } from '@angular/core';
 import {
     FormDefinitionRepresentation,
@@ -31,6 +31,7 @@ import {
     ProcessDefinitionRepresentation,
     TaskRepresentation
 } from '@alfresco/js-api';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';

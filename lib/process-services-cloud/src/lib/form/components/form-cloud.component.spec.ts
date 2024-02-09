@@ -17,11 +17,9 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { VersionCompatibilityService } from '@alfresco/adf-content-services';
+import { VersionCompatibilityService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import {
-    AlfrescoApiService,
-    ContentLinkModel,
-    CoreModule,
+    ContentLinkModel, CoreModule,
     FormFieldModel,
     FormFieldTypes,
     FormModel,

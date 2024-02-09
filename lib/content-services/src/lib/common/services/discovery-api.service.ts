@@ -26,7 +26,9 @@ import {
     SystemPropertiesApi
 } from '@alfresco/js-api';
 
-import { AlfrescoApiService, BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
+
 
 @Injectable({
     providedIn: 'root'

@@ -25,10 +25,10 @@ import {
     FormValues,
     ContentLinkModel,
     AppConfigService,
-    AlfrescoApiService,
     UploadWidgetContentLinkModel,
     DestinationFolderPath
 } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';

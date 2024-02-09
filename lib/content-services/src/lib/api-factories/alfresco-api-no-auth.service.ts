@@ -16,10 +16,9 @@
  */
 
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { StorageService } from '../common/services/storage.service';
+import { StorageService, AppConfigService } from '@alfresco/adf-core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../app-config';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Injectable()
