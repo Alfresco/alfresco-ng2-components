@@ -37,26 +37,20 @@
 }
 
 .adf-categories-list {
-    .mat-list-base .mat-list-item,
-    .mat-list-base .mat-list-option {
+    .adf-categories-management-list .adf-category {
         display: flex;
         height: 100%;
         overflow-wrap: anywhere;
         padding: 5px 0;
         font-size: 14px;
 
-        &.mat-list-item-disabled {
-            background-color: inherit;
-            color: inherit;
+        &:hover {
+            cursor: pointer;
+            background: var(--adf-theme-mat-grey-color-a200);
         }
 
-        .mat-list-item-content,
-        .mat-list-item-content-reverse {
+        & span {
             padding: 0;
-
-            .mat-pseudo-checkbox {
-                display: none;
-            }
         }
     }
 
@@ -66,7 +60,7 @@
         margin-bottom: 2px;
     }
 
-    mat-spinner {
+    .adf-categories-management-spinner {
         margin: auto;
     }
 }

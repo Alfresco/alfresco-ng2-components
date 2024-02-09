@@ -1,5 +1,5 @@
-<mat-card *ngIf="node">
-    <mat-card-content>
+<mat-card *ngIf="node" class="adf-content-metadata-card-view">
+    <mat-card-content class="adf-content-metadata-card-view-content">
         <adf-content-metadata
             [displayDefaultProperties]="displayDefaultProperties"
             [expanded]="expanded"
@@ -14,7 +14,7 @@
             [customPanels]="customPanels">
         </adf-content-metadata>
     </mat-card-content>
-    <mat-card-footer class="adf-content-metadata-card-footer">
+    <mat-card-footer class="adf-content-metadata-card-footer adf-content-metadata-card-view-footer">
         <div>
             <button *ngIf="isEditAspectSupported()"
                 mat-icon-button

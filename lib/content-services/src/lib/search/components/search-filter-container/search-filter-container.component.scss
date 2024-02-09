@@ -8,18 +8,15 @@
 
             &-active {
                 color: var(--theme-primary-color);
-            }
 
-            .mat-badge-active {
-                border: 2px solid var(--adf-theme-background-card-color) !important;
+                span {
+                    border: 2px solid var(--adf-theme-background-card-color) !important;
+                    width: 10px;
+                    height: 10px;
+                    top: -3px !important;
+                    right: -6px !important;
+                }
             }
-        }
-
-        .mat-badge-content {
-            width: 10px;
-            height: 10px;
-            top: -3px !important;
-            right: -6px !important;
         }
     }
 
@@ -61,7 +58,10 @@
     }
 }
 
-.mat-menu-panel.adf-filter-menu .mat-menu-content {
+.adf-search-filter-menu.adf-filter-menu {
     min-width: 260px;
-    padding: 0;
+
+    > div:first-child {
+        padding: 0;
+    }
 }

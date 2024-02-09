@@ -89,6 +89,30 @@ describe('Extension Utils', () => {
            });
         });
 
+        it('should correctly merge arrays', () => {
+            const obj1 = { items: ['apple', 'banana'] };
+            const obj2 = { items: ['carrot'] };
+            const obj3 = { items: ['date', 'elderberry'] };
+
+            const result = mergeObjects(obj1, obj2, obj3);
+
+            expect(result).toEqual({
+                items: ['apple', 'banana', 'carrot', 'date', 'elderberry']
+            });
+        });
+
+
+        it('should append string values to existing array in result', () => {
+            const obj1 = { items: ['apple', 'banana'] };
+            const obj2 = { items: 'carrot' };
+
+            const result = mergeObjects(obj1, obj2);
+
+            expect(result).toEqual({
+                items: ['apple', 'banana', 'carrot']
+            });
+        });
+
         it('should replace nested objects', () => {
             const obj1 = { level1: { level2: { name: 'level2' } } };
             const obj2 = { level1: { 'level2.$replace': { name: 'modified', tag: 'node' }  } };

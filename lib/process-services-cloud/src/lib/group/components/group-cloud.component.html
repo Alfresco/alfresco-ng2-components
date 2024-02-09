@@ -36,7 +36,8 @@
             data-automation-id="adf-cloud-group-autocomplete">
             <ng-container *ngIf="(searchGroups$ | async)?.length else noResults">
                 <mat-option *ngFor="let group of searchGroups$ | async; let i = index" [value]="group"
-                            [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name">
+                            [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
+                            class="adf-cloud-group-option-active">
                     <div
                         class="adf-cloud-group-row"
                         id="adf-group-{{i}}"

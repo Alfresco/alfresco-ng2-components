@@ -10,9 +10,9 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <span class="adf-dialog-spacer" data-automation-id="adf-confirm-dialog-spacer"></span>
-    <button id="adf-confirm-accept" mat-button color="primary" data-automation-id="adf-confirm-dialog-confirmation"
+    <button id="adf-confirm-accept" class="adf-confirm-dialog-button" mat-button color="primary" data-automation-id="adf-confirm-dialog-confirmation"
         [mat-dialog-close]="true">{{ yesLabel | translate }}</button>
-    <button id="adf-confirm-all" mat-button *ngIf="thirdOptionLabel" [mat-dialog-close]="thirdOptionLabel" data-automation-id="adf-confirm-dialog-confirm-all">{{ thirdOptionLabel | translate }}</button>
-    <button id="adf-confirm-cancel" mat-button [mat-dialog-close]="false" data-automation-id="adf-confirm-dialog-reject"
+    <button id="adf-confirm-all" class="adf-confirm-dialog-button" mat-button *ngIf="thirdOptionLabel" [mat-dialog-close]="thirdOptionLabel" data-automation-id="adf-confirm-dialog-confirm-all">{{ thirdOptionLabel | translate }}</button>
+    <button id="adf-confirm-cancel" class="adf-confirm-dialog-button" mat-button [mat-dialog-close]="false" data-automation-id="adf-confirm-dialog-reject"
         cdkFocusInitial>{{ noLabel | translate }}</button>
 </mat-dialog-actions>

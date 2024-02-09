@@ -78,7 +78,7 @@ jobs:
   setup:
     timeout-minutes: 20
     name: "Setup"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: set TAG_NPM BRANCH
         shell: bash
@@ -104,7 +104,7 @@ jobs:
   release-npm:
     needs: [setup]
     timeout-minutes: 30
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -150,7 +150,7 @@ jobs:
   npm-check-bundle:
     needs: [release-npm]
     timeout-minutes: 15
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1

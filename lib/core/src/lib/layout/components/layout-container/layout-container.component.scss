@@ -23,19 +23,20 @@ adf-layout-container {
     opacity: 0 !important;
 }
 
-.mat-sidenav-container {
+.adf-layout-container {
     display: block;
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
-.mat-sidenav {
+.adf-layout-container-sidenav {
     overflow: hidden;
     border-right: 1px solid var(--adf-theme-foreground-text-color-007);
     background-color: var(--theme-background-color);
 }
 
+/* stylelint-disable selector-class-pattern */
 mat-sidenav-content.mat-sidenav-content,
 .mat-drawer-transition .mat-drawer-content {
     margin-left: 0 !important;

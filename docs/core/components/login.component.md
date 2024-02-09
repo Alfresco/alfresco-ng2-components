@@ -195,7 +195,6 @@ You can access an external provider to get an auth token for a user:
 {
     "oauth2" : {
       "host": "http://myhost.com",
-      "authPath": "/my-custom-auth/token",
       "clientId": "my-client-id",
       "secret": ""
     }

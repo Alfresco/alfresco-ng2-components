@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { format, parse, parseISO, isValid, isBefore, isAfter } from 'date-fns';
+import { format, parse, parseISO, isValid, isBefore, isAfter, lightFormat } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
+
 
 export class DateFnsUtils {
     static getLocaleFromString(locale: string): Locale {
@@ -201,4 +202,13 @@ export class DateFnsUtils {
     static localToUtc(date: Date): Date {
         return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
+
+    static forceLocal(date: Date): Date {
+        return new Date(lightFormat(date, 'yyyy-MM-dd'));
+    }
+
+    static forceUtc(date: Date): Date {
+        return new Date(lightFormat(date, 'yyyy-MM-dd').concat('T00:00:00.000Z'));
+    }
+
 }

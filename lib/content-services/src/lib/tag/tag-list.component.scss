@@ -12,13 +12,9 @@
             display: block;
             font-size: var(--theme-subheading-2-font-size);
 
-            .mat-chip {
+            .adf-tag-list-chip {
                 color: var(--theme-primary-color-default-contrast);
                 background-color: var(--theme-primary-color);
-
-                .mat-icon {
-                    color: var(--theme-primary-color-default-contrast);
-                }
             }
         }
     }

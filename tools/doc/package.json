@@ -18,7 +18,7 @@
     "remark": "^9.0.0",
     "remark-frontmatter": "^1.2.0",
     "rxjs": "^6.6.6",
-    "typedoc": "^0.15.0",
+    "typedoc": "^0.25.7",
     "typescript": "3.9.8",
     "unist-util-select": "2.0.0"
   },

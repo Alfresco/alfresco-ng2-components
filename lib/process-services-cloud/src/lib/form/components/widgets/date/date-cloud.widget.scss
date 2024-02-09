@@ -1,19 +1,23 @@
 .adf {
     &-date-widget {
+        /* stylelint-disable-next-line */
         .mat-form-field-suffix {
             top: 26px;
         }
 
-        .mat-form-field-label-wrapper {
+        .adf-label {
             top: 20px;
         }
     }
 
     &-left-label-input-datepicker {
+
+        /* stylelint-disable-next-line */
         .mat-form-field-suffix {
             top: 0;
         }
 
+        /* stylelint-disable-next-line */
         .mat-form-field-infix {
             width: 100%;
         }

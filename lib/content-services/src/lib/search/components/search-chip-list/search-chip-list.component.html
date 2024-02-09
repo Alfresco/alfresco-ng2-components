@@ -4,6 +4,7 @@
             data-automation-id="reset-filter"
             color="primary"
             selected
+            class="adf-search-chip-list-item"
             matTooltip="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
             matTooltipPosition="right"
             (click)="facetFiltersService.resetAllSelectedBuckets()">
@@ -12,11 +13,12 @@
 
         <mat-chip
             data-automation-id="chip-list-entry"
+            class="adf-search-chip-list-item"
             *ngFor="let selection of facetFiltersService.selectedBuckets"
             [removable]="true"
             (removed)="facetFiltersService.unselectFacetBucket(selection.field, selection.bucket)">
             {{ (selection.bucket.display || selection.bucket.label) | translate }}
-            <mat-icon matChipRemove>cancel</mat-icon>
+            <mat-icon class="adf-search-chip-list-item-remove" matChipRemove>cancel</mat-icon>
         </mat-chip>
     </ng-container>
 </mat-chip-list>

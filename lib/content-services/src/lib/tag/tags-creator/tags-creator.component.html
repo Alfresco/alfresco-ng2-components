@@ -47,20 +47,20 @@
         {{ (isOnlyCreateMode() ? 'TAG.TAGS_CREATOR.EXISTING_TAGS' : 'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION') | translate }}
     </p>
     <div class="adf-tags-list">
-        <mat-selection-list
+        <mat-list
             *ngIf="!spinnerVisible && existingTags"
-            (selectionChange)="addExistingTagToTagsToAssign($event)"
             [disabled]="isOnlyCreateMode()">
-            <mat-list-option
+            <mat-list-item
                 *ngFor="let tagRow of existingTags"
                 class="adf-tag"
-                [value]="tagRow">
+                (click)='addExistingTagToTagsToAssign(tagRow)'>
                 {{ tagRow.entry.tag }}
-            </mat-list-option>
+            </mat-list-item>
             <p *ngIf="!existingTags?.length">{{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}</p>
-        </mat-selection-list>
+        </mat-list>
         <mat-spinner
             *ngIf="spinnerVisible"
+            class="adf-tags-creator-spinner"
             [diameter]="50"
             [attr.aria-label]="'TAG.TAGS_CREATOR.TAGS_LOADING' | translate">
         </mat-spinner>

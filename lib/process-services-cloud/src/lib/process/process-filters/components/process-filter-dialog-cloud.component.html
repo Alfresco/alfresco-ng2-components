@@ -2,15 +2,15 @@
     <span mat-dialog-title id="adf-process-filter-dialog-title">
          {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.TITLE' | translate}}
     </span>
-    <mat-card>
-        <mat-card-content>
+    <mat-card class="adf-process-filter-dialog-card">
+        <mat-card-content class="adf-process-filter-dialog-card-content">
         <form [formGroup]="filterForm">
             <mat-form-field class="adf-process-filter-name" [floatLabel]="'auto'">
                 <input matInput placeholder="{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.FILTER_NAME' | translate }}" formControlName="name" id="adf-filter-name-id">
             </mat-form-field>
         </form>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions class='adf-process-filter-dialog-actions'>
             <button mat-button (click)="onSaveClick()" id="adf-save-button-id" [disabled]="!isValid()">
                 {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.SAVE' | translate}}
             </button>

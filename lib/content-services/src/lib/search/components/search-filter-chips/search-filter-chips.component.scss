@@ -2,41 +2,27 @@
 
 .adf-search-filter-chip,
 .adf-search-filter-chip-tabbed {
-    &.mat-chip {
-        border: 2px solid transparent;
-        transition: border 500ms ease-in-out;
-        max-width: 320px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        background: var(--adf-theme-background-unselected-chip-color);
-
-        &:focus {
-            color: unset;
-        }
-
-        &.mat-standard-chip::after {
-            background: var(--adf-theme-background-unselected-chip-color);
-            color: unset;
-        }
-
-        &.mat-chip-list-wrapper {
-            margin: 4px 6px;
-        }
-    }
+    border: 2px solid transparent;
+    transition: border 500ms ease-in-out;
+    max-width: 320px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background: var(--adf-theme-background-unselected-chip-color);
 
     &.adf-search-toggle-chip {
         background: var(--adf-theme-background-card-color);
         border: 2px solid var(--theme-primary-color);
-
-        &.mat-chip::after {
-            background: unset;
-        }
     }
 
     .adf-search-filter-placeholder {
         flex: 1 1 auto;
         white-space: nowrap;
         color: var(--adf-theme-foreground-disabled-text-color);
+    }
+
+    &.adf-search-filter-facet-chip::after {
+        background: var(--adf-theme-background-unselected-chip-color);
+        color: unset;
     }
 
     .adf-search-filter-ellipsis {
@@ -50,12 +36,12 @@
         font-weight: 500;
     }
 
-    .mat-icon {
+    .adf-search-filter-chip-icon {
         padding-top: 5px;
         padding-left: 5px;
     }
 
-    &-menu + * .cdk-overlay-pane .mat-menu-panel {
+    &-menu + * .adf-search-filter-chip-menu-panel {
         min-width: 320px;
         border-radius: 12px;
 

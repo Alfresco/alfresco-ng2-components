@@ -1,10 +1,9 @@
 .adf {
     &-start-process {
-        .mat-form-field-label {
+        .adf-start-process-input-label {
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
-        mat-card-actions,
         &-cloud-actions {
             display: flex;
             justify-content: flex-end;
@@ -35,7 +34,7 @@
     }
 
     &-form-container {
-        .mat-card {
+        .adf-form-container-card {
             box-shadow: none !important;
             padding: 0 !important;
         }
