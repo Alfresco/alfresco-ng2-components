@@ -121,35 +121,33 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
 
         if (sorting?.key) {
             this._rows.sort((a: DataRow, b: DataRow) => {
-                let left = a.getValue(sorting.key);
-                let right = b.getValue(sorting.key);
+                let left = a.getValue(sorting.key) ?? '';
+                let right = b.getValue(sorting.key) ?? '';
 
-                if (typeof left === 'number' && typeof right === 'number') {
-                    return sorting.direction === 'asc' ? left - right : right - left;
-                } else {
-                    if (left) {
-                        left = left instanceof Date ? left.valueOf().toString() : left.toString();
-                    } else {
-                        left = '';
-                    }
-
-                    if (right) {
-                        right = right instanceof Date ? right.valueOf().toString() : right.toString();
-                    } else {
-                        right = '';
-                    }
-
-                    return sorting.direction === 'asc' ? left.localeCompare(right) : right.localeCompare(left);
+                if (typeof left !== 'string') {
+                    left = left.valueOf().toString();
                 }
+
+                if (typeof right !== 'string') {
+                    right = right.valueOf().toString();
+                }
+
+                return sorting.direction === 'asc'
+                    ? left.localeCompare(right, undefined, sorting.options)
+                    : right.localeCompare(left, undefined, sorting.options);
             });
         }
     }
 
-    sort(key?: string, direction?: string): void {
+    sort(key?: string, direction?: string, options?: Intl.CollatorOptions): void {
         const sorting = this._sorting || new DataSorting();
         if (key) {
             sorting.key = key;
             sorting.direction = direction || 'asc';
+            sorting.options = {
+                numeric: true,
+                ...options
+            };
         }
         this.setSorting(sorting);
     }

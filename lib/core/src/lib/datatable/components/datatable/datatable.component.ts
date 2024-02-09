@@ -395,7 +395,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     convertToDataSorting(sorting: any[]): DataSorting | null {
         if (sorting && sorting.length > 0) {
-            return new DataSorting(sorting[0], sorting[1]);
+            return new DataSorting(sorting[0], sorting[1], sorting[2]);
         }
         return null;
     }
@@ -639,8 +639,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             if (current && column.key === current.key) {
                 newDirection = current.direction?.toLowerCase() === 'asc' ? 'desc' : 'asc';
             }
-            this.sorting = [column.key, newDirection];
-            this.data.setSorting(new DataSorting(column.key, newDirection));
+            this.sorting = [column.key, newDirection, { numeric: true }];
+            this.data.setSorting(new DataSorting(column.key, newDirection, { numeric: true }));
             this.emitSortingChangedEvent(column.key, column.sortingKey, newDirection);
         }
 

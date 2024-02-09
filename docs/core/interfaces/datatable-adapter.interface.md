@@ -35,10 +35,10 @@ Get the data value from a specific table cell.
 
 `getSorting():`[`DataSorting`](../../../lib/core/src/lib/datatable/data/data-sorting.model.ts)`;`<br/>
 `setSorting(sorting: DataSorting): void;`<br/>
-Get/set the sorting key and direction (ascending or descending).
+Get/set the sorting key, direction (ascending or descending) and options (eg. numeric).
 
-`sort(key?: string, direction?: string): void;`<br/>
-Sort the table with a specified key and direction (ascending or descending).
+`sort(key?: string, direction?: string, options?: Intl.CollatorOptions): void;`<br/>
+Sort the table with a specified key, direction (ascending or descending) and options (eg. numeric).
 
 ## Details
 

@@ -207,7 +207,10 @@ describe('ObjectDataTableAdapter', () => {
         expect(adapter.getSorting()).toEqual(
             jasmine.objectContaining({
                 key: 'id',
-                direction: 'asc'
+                direction: 'asc',
+                options: {
+                    numeric: true
+                }
             })
         );
     });
@@ -224,7 +227,7 @@ describe('ObjectDataTableAdapter', () => {
             ]
         );
 
-        adapter.setSorting(new DataSorting('created', 'asc'));
+        adapter.setSorting(new DataSorting('created', 'asc', { numeric: true }));
 
         const rows = adapter.getRows();
         expect(rows[0].getValue('id')).toBe(2);
@@ -238,7 +241,7 @@ describe('ObjectDataTableAdapter', () => {
             { id: 50 }
         ],[{key: 'id'} as DataColumn]);
 
-        adapter.setSorting(new DataSorting('id', 'asc'));
+        adapter.setSorting(new DataSorting('id', 'asc', { numeric: true }));
 
         const rowsAsc = adapter.getRows();
         expect(rowsAsc[0].getValue('id')).toBe(38);
@@ -272,11 +275,11 @@ describe('ObjectDataTableAdapter', () => {
             ]
         );
 
-        adapter.setSorting(new DataSorting('id', 'asc'));
+        adapter.setSorting(new DataSorting('id', 'asc', { numeric: true }));
         expect(adapter.getRows()[0].getValue('id')).toBe(1);
         expect(adapter.getRows()[1].getValue('id')).toBe(2);
 
-        adapter.setSorting(new DataSorting('id', 'desc'));
+        adapter.setSorting(new DataSorting('id', 'desc', { numeric: true }));
         expect(adapter.getRows()[0].getValue('id')).toBe(2);
         expect(adapter.getRows()[1].getValue('id')).toBe(1);
     });
@@ -290,7 +293,8 @@ describe('ObjectDataTableAdapter', () => {
         expect(adapter.getSorting()).toEqual(
             jasmine.objectContaining({
                 key: 'id',
-                direction: 'asc'
+                direction: 'asc',
+                options: { numeric: true }
             })
         );
     });
@@ -304,7 +308,8 @@ describe('ObjectDataTableAdapter', () => {
         expect(adapter.getSorting()).toEqual(
             jasmine.objectContaining({
                 key: 'id',
-                direction: 'desc'
+                direction: 'desc',
+                options: { numeric: true }
             })
         );
     });
