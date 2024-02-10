@@ -19,7 +19,7 @@ import { Category, CategoryPaging, ResultNode, ResultSetPaging } from '@alfresco
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
-import { MatSelectionList } from '@angular/material/list';
+import { MatList } from '@angular/material/list';
 import { By } from '@angular/platform-browser';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -29,7 +29,6 @@ import { CategoriesManagementComponent } from './categories-management.component
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { MatListOptionHarness } from '@angular/material/list/testing';
 
 describe('CategoriesManagementComponent', () => {
     let loader: HarnessLoader;
@@ -91,8 +90,8 @@ describe('CategoriesManagementComponent', () => {
      *
      * @returns list of material option element
      */
-    function getExistingCategoriesList(): Promise<MatListOptionHarness[]> {
-        return loader.getAllHarnesses(MatListOptionHarness);
+    function getExistingCategoriesList(): HTMLElement[] {
+        return fixture.debugElement.queryAll(By.css('.adf-category'))?.map((debugElem) => debugElem.nativeElement);
     }
 
     /**
@@ -159,7 +158,7 @@ describe('CategoriesManagementComponent', () => {
      * @returns native element
      */
     function getCreateCategoryLabel(): HTMLSpanElement {
-        return fixture.debugElement.query(By.css('.adf-existing-categories-panel span.adf-create-category-label'))?.nativeElement;
+        return fixture.debugElement.query(By.css('.adf-create-category-label'))?.nativeElement;
     }
 
     /**
@@ -321,11 +320,10 @@ describe('CategoriesManagementComponent', () => {
             expect(component.categories).toEqual([]);
         });
 
-        it('should not display create category label', fakeAsync(async () => {
+        it('should not display create category label', fakeAsync(() => {
             typeCategory('test');
             fixture.detectChanges();
             expect(getCreateCategoryLabel()).toBeUndefined();
-
         }));
 
         it('should not disable existing categories', fakeAsync(() => {
@@ -333,12 +331,13 @@ describe('CategoriesManagementComponent', () => {
 
             expect(getSelectionList().disabled).toBeFalse();
         }));
-        // eslint-disable-next-line
-        it('should add selected category to categories list and remove from existing categories', fakeAsync(async () => {
+
+        it('should add selected category to categories list and remove from existing categories', fakeAsync(() => {
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
             typeCategory('test');
-            const options = await getExistingCategoriesList();
-            await options[0].select();
+            const options = getExistingCategoriesList();
+            // eslint-disable-next-line no-underscore-dangle
+            options[0].click();
 
             expect(component.categories.length).toBe(3);
             expect(component.categories[2].name).toBe('testCat');
@@ -348,11 +347,12 @@ describe('CategoriesManagementComponent', () => {
             flush();
         }));
 
-        it('should remove selected category from categories list and add it back to existing categories', fakeAsync(async () => {
+        it('should remove selected category from categories list and add it back to existing categories', fakeAsync(() => {
             typeCategory('test');
-
-            const options = await getExistingCategoriesList();
-            await options[0].select();
+            const options = getExistingCategoriesList();
+            // eslint-disable-next-line no-underscore-dangle
+            options[0].click();
+            fixture.detectChanges();
 
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
             const removeCategoryButtons = getRemoveCategoryButtons();
@@ -454,9 +454,9 @@ describe('CategoriesManagementComponent', () => {
             expect(categoriesChangeSpy).toHaveBeenCalledOnceWith(component.categories);
         }));
 
-        it('should clear input after category is created', fakeAsync(async () => {
+        it('should clear input after category is created', fakeAsync(() => {
             createCategory('test');
-            expect(await getExistingCategoriesList()).toEqual([]);
+            expect(getExistingCategoriesList()).toEqual([]);
             expect(component.categoryNameControl.value).toBe('');
             expect(component.categoryNameControl.untouched).toBeTrue();
         }));
