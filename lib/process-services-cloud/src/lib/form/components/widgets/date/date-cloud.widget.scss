@@ -1,4 +1,6 @@
+/* stylelint-disable selector-class-pattern */
 .adf {
+    // eslint-disable-selector-class-pattern
     &-date-widget {
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-mdc-form-field-text-suffix {
