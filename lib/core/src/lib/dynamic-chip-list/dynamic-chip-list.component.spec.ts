@@ -20,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Chip, CoreTestingModule, DynamicChipListComponent } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 
-fdescribe('DynamicChipListComponent', () => {
+describe('DynamicChipListComponent', () => {
     let chips: Chip[] = [{
         name: 'test1',
         id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
