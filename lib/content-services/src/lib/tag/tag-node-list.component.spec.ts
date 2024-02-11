@@ -18,62 +18,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
-import { of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { Tag, TagEntry, TagPaging } from '@alfresco/js-api';
+import { DynamicChipListComponent } from '@alfresco/adf-core';
+import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { TagEntry } from '@alfresco/js-api';
 
-describe('TagNodeList', () => {
-
-    const dataTag = {
-        list: {
-            pagination: {
-                count: 3,
-                hasMoreItems: false,
-                totalItems: 3,
-                skipCount: 0,
-                maxItems: 100
-            },
-            entries: [
-                {
-                    entry: {tag: 'test1', id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
-                },
-                {
-                    entry: {tag: 'test2', id: 'fcb92659-1f10-41b4-9b17-851b72a3b597'}
-                },
-                {
-                    entry: {tag: 'test3', id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
-                },
-                {
-                    entry: {tag: 'test4', id: 'as4213c0-729d-466c-9a6c-ee2e937273as'}
-                }
-            ]
-        }
-    };
-
+fdescribe('TagNodeList', () => {
     let component: TagNodeListComponent;
     let fixture: ComponentFixture<TagNodeListComponent>;
-    let element: HTMLElement;
-    let tagService: TagService;
-    let resizeCallback: ResizeObserverCallback;
-
-    /**
-     * Find 'More' button
-     *
-     * @returns native element
-     */
-    function findViewMoreButton(): HTMLButtonElement {
-        return element.querySelector('.adf-view-more-button');
-    }
-
-    /**
-     * Get the tag chips
-     *
-     * @returns native element list
-     */
-    function findTagChips(): NodeListOf<Element> {
-        return element.querySelectorAll('.adf-tag-chips');
-    }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -82,218 +36,176 @@ describe('TagNodeList', () => {
                 ContentTestingModule
             ]
         });
-        const resizeObserverSpy = spyOn(window, 'ResizeObserver').and.callThrough();
         fixture = TestBed.createComponent(TagNodeListComponent);
-
-        tagService = TestBed.inject(TagService);
-        spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(dataTag));
-
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
-        component.nodeId = 'fake-node-id';
-        fixture.detectChanges();
-        resizeCallback = resizeObserverSpy.calls.mostRecent().args[0];
     });
 
-    describe('Rendering tests', () => {
-
-        it('Tag list relative a single node should be rendered', async () => {
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
-            expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
-            expect(element.querySelector('#tag_name_2').innerHTML).toBe('test3');
-
-            expect(element.querySelector('#tag_chips_delete_test1')).not.toBe(null);
-            expect(element.querySelector('#tag_chips_delete_test2')).not.toBe(null);
-            expect(element.querySelector('#tag_chips_delete_test3')).not.toBe(null);
-        });
-
-        it('Tag list click on delete button should delete the tag', async () => {
-            spyOn(tagService, 'removeTag').and.returnValue(of(undefined));
-
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
-            deleteButton.click();
-
-            expect(tagService.removeTag).toHaveBeenCalledWith('fake-node-id', '0ee933fa-57fc-4587-8a77-b787e814f1d2');
-        });
-
-        it('Should not show the delete tag button if showDelete is false', async () => {
-            component.showDelete = false;
-
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
-            expect(deleteButton).toBeNull();
-        });
-
-        it('Should show the delete tag button if showDelete is true', async () => {
-            component.showDelete = true;
-
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const deleteButton: any = element.querySelector('#tag_chips_delete_test1');
-            expect(deleteButton).not.toBeNull();
-        });
-
-        it('should not render view more button by default', async () => {
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(findViewMoreButton().hidden).toBeTrue();
-            expect(findTagChips()).toHaveSize(4);
-        });
-    });
-
-    describe('Limit tags display', () => {
-        let initialEntries: TagEntry[];
-
-        /**
-         * Render tags
-         *
-         * @param entries tags to render
-         */
-        async function renderTags(entries?: TagEntry[]) {
-            dataTag.list.entries = entries || initialEntries;
-            component.tagsEntries = dataTag.list.entries;
-            fixture.detectChanges();
-            await fixture.whenStable();
-        }
-
-        beforeAll(() => {
-            initialEntries = dataTag.list.entries;
-        });
+    describe('DynamicChipListComponent', () => {
+        let dynamicChipListComponent: DynamicChipListComponent;
+        let tagService: TagService;
+        let getTagsByNodeIdSpy: jasmine.Spy<(nodeId: string) => Observable<TagPaging>>;
 
         beforeEach(() => {
+            fixture.detectChanges();
+            dynamicChipListComponent = fixture.debugElement.query(By.directive(DynamicChipListComponent)).componentInstance;
+            tagService = TestBed.inject(TagService);
+            getTagsByNodeIdSpy = spyOn(tagService, 'getTagsByNodeId').and.returnValue(new Subject<TagPaging>());
+        });
+
+        it('should have assigned limitChipsDisplayed to true if true is passed to limitTagsDisplayed', () => {
             component.limitTagsDisplayed = true;
-            component.ngOnInit();
-            element.style.maxWidth = '309px';
+
+            fixture.detectChanges();
+            expect(dynamicChipListComponent.limitChipsDisplayed).toBeTrue();
         });
 
-        it('should render view more button when limiting is enabled', async () => {
-            await renderTags();
-            component.ngOnChanges();
+        it('should have assigned limitChipsDisplayed to false if false is passed to limitTagsDisplayed', () => {
+            component.limitTagsDisplayed = true;
             fixture.detectChanges();
-            await fixture.whenStable();
-            expect(findViewMoreButton().hidden).toBeFalse();
-            expect(findTagChips()).toHaveSize(component.tagsEntries.length);
+            component.limitTagsDisplayed = false;
+
+            fixture.detectChanges();
+            expect(dynamicChipListComponent.limitChipsDisplayed).toBeFalse();
         });
 
-        it('should not render view more button when limiting is enabled and all tags fits into container', async () => {
-            await renderTags();
-            element.style.maxWidth = '800px';
-
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(findViewMoreButton().hidden).toBeTrue();
-            expect(findTagChips()).toHaveSize(4);
+        it('should have assigned limitChipsDisplayed to false by default if limitTagsDisplayed is not delivered', () => {
+            expect(dynamicChipListComponent.limitChipsDisplayed).toBeFalse();
         });
 
-        it('should display all tags when view more button is clicked', async () => {
-            await renderTags();
-            component.ngOnChanges();
+        it('should have assigned showDelete to true if true is passed to showDelete of tag node list', () => {
+            component.showDelete = false;
             fixture.detectChanges();
-            await fixture.whenStable();
+            component.showDelete = true;
 
-            let viewMoreButton = findViewMoreButton();
-            viewMoreButton.click();
             fixture.detectChanges();
-            await fixture.whenStable();
-
-            viewMoreButton = findViewMoreButton();
-            expect(viewMoreButton.hidden).toBeTrue();
-            expect(findTagChips()).toHaveSize(4);
+            expect(dynamicChipListComponent.showDelete).toBeTrue();
         });
 
-        it('should not render view more button when tag takes more than one line and there are no more tags', async () => {
-            await renderTags([{
-                entry: {
-                    tag: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
-                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
-                }
-            }]);
-            component.ngOnChanges();
+        it('should have assigned showDelete to false if false is passed to showDelete of tag node list', () => {
+            component.showDelete = false;
+
             fixture.detectChanges();
-            await fixture.whenStable();
-            expect(findViewMoreButton().hidden).toBeTrue();
-            expect(findTagChips()).toHaveSize(component.tagsEntries.length);
+            expect(dynamicChipListComponent.showDelete).toBeFalse();
         });
 
-        it('should render view more button when tag takes more than one line and there are more tags', async () => {
-            await renderTags([{
-                entry: {
-                    tag: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
-                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
-                }
-            }, {
-                entry: {
-                    tag: 'Some other tag',
-                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d3'
-                }
-            }]);
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const viewMoreButton = findViewMoreButton();
-            expect(viewMoreButton.hidden).toBeFalse();
-            expect(viewMoreButton.style.left).toBe('0px');
-            expect(findTagChips()).toHaveSize(component.tagsEntries.length);
+        it('should have assigned showDelete to true by default if showDelete of tag node list is not delivered', () => {
+            expect(dynamicChipListComponent.showDelete).toBeTrue();
         });
 
-        it('should not render view more button when there is enough space after resizing', async () => {
-            await renderTags();
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-            element.style.maxWidth = '800px';
-            resizeCallback([], null);
-            fixture.detectChanges();
-            const viewMoreButton = findViewMoreButton();
-            expect(viewMoreButton.hidden).toBeTrue();
-            expect(findTagChips()).toHaveSize(4);
-        });
+        describe('Assigning chips', () => {
+            let tagEntry: Tag;
+            let tagEntries: TagEntry[];
 
-        it('should render view more button when there is not enough space after resizing', async () => {
-            await renderTags();
-            element.style.maxWidth = '800px';
+            beforeEach(() => {
+                tagEntry = {
+                    id: 'some id',
+                    tag: 'some tag'
+                };
+                tagEntries = [{
+                    entry: tagEntry
+                }];
+                getTagsByNodeIdSpy.and.returnValue(of({
+                    list: {
+                        entries: tagEntries,
+                        pagination: undefined
+                    }
+                }));
+                spyOn(component.results, 'emit');
+            });
 
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-            element.style.maxWidth = '309px';
-            resizeCallback([], null);
-            fixture.detectChanges();
+            it('should have assigned correct chips initially', () => {
+                component.nodeId = 'some node id';
+                tagService.refresh.emit();
 
-            expect(findViewMoreButton().hidden).toBeFalse();
-            expect(findTagChips()).toHaveSize(component.tagsEntries.length);
-        });
+                fixture.detectChanges();
+                expect(dynamicChipListComponent.chips).toEqual([{
+                    id: tagEntry.id,
+                    name: tagEntry.tag
+                }]);
+                expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(component.nodeId);
+                expect(component.results.emit).toHaveBeenCalledWith(tagEntries);
+            });
 
-        it('should not render view more button again resizing when there is not enough space if user requested to see all tags', async () => {
-            await renderTags();
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const viewMoreButton = findViewMoreButton();
-            viewMoreButton.click();
-            fixture.detectChanges();
-            element.style.maxWidth = '309px';
-            resizeCallback([], null);
-            fixture.detectChanges();
-            expect(viewMoreButton.hidden).toBeTrue();
-            expect(findTagChips()).toHaveSize(4);
+            it('should not have assigned chips initially if nodeId is not specified', () => {
+                tagService.refresh.emit();
+
+                fixture.detectChanges();
+                expect(dynamicChipListComponent.chips).toEqual([]);
+                expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
+                expect(component.results.emit).not.toHaveBeenCalled();
+            });
+
+            it('should have assigned correct chips when ngOnChanges is called', () => {
+                component.nodeId = 'some node id';
+                component.ngOnChanges();
+
+                fixture.detectChanges();
+                expect(dynamicChipListComponent.chips).toEqual([{
+                    id: tagEntry.id,
+                    name: tagEntry.tag
+                }]);
+                expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(component.nodeId);
+                expect(component.results.emit).toHaveBeenCalledWith(tagEntries);
+            });
+
+            it('should not have assigned chips when ngOnChanges is called and nodeId is not specified', () => {
+                component.ngOnChanges();
+
+                fixture.detectChanges();
+                expect(dynamicChipListComponent.chips).toEqual([]);
+                expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
+                expect(component.results.emit).not.toHaveBeenCalled();
+            });
+
+            it('should have assigned correct chips when displayNext event from DynamicChipList is triggered', () => {
+                component.nodeId = 'some node id';
+                dynamicChipListComponent.displayNext.emit();
+
+                fixture.detectChanges();
+                expect(dynamicChipListComponent.chips).toEqual([{
+                    id: tagEntry.id,
+                    name: tagEntry.tag
+                }]);
+                expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(component.nodeId);
+                expect(component.results.emit).toHaveBeenCalledWith(tagEntries);
+            });
+
+            it('should not have assigned chips when displayNext event from DynamicChipList is triggered and nodeId is not specified', () => {
+                dynamicChipListComponent.displayNext.emit();
+
+                fixture.detectChanges();
+                expect(dynamicChipListComponent.chips).toEqual([]);
+                expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
+                expect(component.results.emit).not.toHaveBeenCalled();
+            });
+
+            it('should have assigned correct chips when removeTag event from DynamicChipList is triggered', () => {
+                component.nodeId = 'some node id';
+                spyOn(tagService, 'removeTag').and.returnValue(of(undefined));
+                const tag = 'some tag';
+                dynamicChipListComponent.removedChip.emit(tag);
+
+                fixture.detectChanges();
+                expect(dynamicChipListComponent.chips).toEqual([{
+                    id: tagEntry.id,
+                    name: tagEntry.tag
+                }]);
+                expect(tagService.removeTag).toHaveBeenCalledWith(component.nodeId, tag);
+                expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(component.nodeId);
+                expect(component.results.emit).toHaveBeenCalledWith(tagEntries);
+            });
+
+            it('should not have assigned chips when removeTag event from DynamicChipList is triggered and nodeId is not specified', () => {
+                spyOn(tagService, 'removeTag').and.returnValue(of(undefined));
+                const tag = 'some tag';
+                dynamicChipListComponent.removedChip.emit(tag);
+
+                fixture.detectChanges();
+                expect(dynamicChipListComponent.chips).toEqual([]);
+                expect(tagService.removeTag).toHaveBeenCalledWith(component.nodeId, tag);
+                expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
+                expect(component.results.emit).not.toHaveBeenCalled();
+            });
         });
     });
 });
