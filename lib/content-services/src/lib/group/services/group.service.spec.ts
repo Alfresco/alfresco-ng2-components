@@ -82,6 +82,8 @@ describe('GroupService', () => {
                 expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
                     displayName: group.entry.displayName,
                     description: group.entry.description
+                }, {
+                    include: ['description']
                 });
                 done();
             });
@@ -102,6 +104,8 @@ describe('GroupService', () => {
                 expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
                     displayName: group.entry.displayName,
                     description: group.entry.description
+                }, {
+                    include: ['description']
                 });
                 done();
             });

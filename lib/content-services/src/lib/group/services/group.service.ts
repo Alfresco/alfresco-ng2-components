@@ -76,6 +76,8 @@ export class GroupService {
         return from(this.groupsApi.updateGroup(group.id, {
             displayName: group.displayName,
             description: group.description
+        }, {
+            include: ['description']
         })).pipe(map((updatedGroup) => {
             updatedGroup.entry.description ||= '';
             return updatedGroup;
