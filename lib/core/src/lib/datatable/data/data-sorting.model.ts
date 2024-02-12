@@ -18,6 +18,8 @@
 export class DataSorting {
     constructor(
         public key?: string,
-        public direction?: string) {
+        public direction?: string,
+        public options?: Intl.CollatorOptions
+    ) {
     }
 }

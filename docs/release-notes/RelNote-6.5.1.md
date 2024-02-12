@@ -15,11 +15,11 @@ You can find release artifacts on [GitHub](https://github.com/Alfresco/alfresco-
 
 ## Changelog
 
-- [f2df3c414](git@github.com:Alfresco/alfresco-ng2-components/commit/f2df3c414) [AAE-17909][AAE-17964] fix silent-refresh url is not set with the value - fix background image set to undefined  (#9080)
-- [168bb0b6c](git@github.com:Alfresco/alfresco-ng2-components/commit/168bb0b6c) [AAE-17258] Update storybook for datatable and datacolumn (#9052)
-- [c0194029c](git@github.com:Alfresco/alfresco-ng2-components/commit/c0194029c) [AAE-17865] Remove few already covered e2es from ADF (#9078)
-- [625cf2b85](git@github.com:Alfresco/alfresco-ng2-components/commit/625cf2b85) [ADF-5561] Remove unused dep (#9064)
-- [f0a11fdab](git@github.com:Alfresco/alfresco-ng2-components/commit/f0a11fdab) [ACS-6140] migrate tests to harness (#9071)
+- [f2df3c414](https://github.com/Alfresco/alfresco-ng2-components/commit/f2df3c414) [AAE-17909][AAE-17964] fix silent-refresh url is not set with the value - fix background image set to undefined  (#9080)
+- [168bb0b6c](https://github.com/Alfresco/alfresco-ng2-components/commit/168bb0b6c) [AAE-17258] Update storybook for datatable and datacolumn (#9052)
+- [c0194029c](https://github.com/Alfresco/alfresco-ng2-components/commit/c0194029c) [AAE-17865] Remove few already covered e2es from ADF (#9078)
+- [625cf2b85](https://github.com/Alfresco/alfresco-ng2-components/commit/625cf2b85) [ADF-5561] Remove unused dep (#9064)
+- [f0a11fdab](https://github.com/Alfresco/alfresco-ng2-components/commit/f0a11fdab) [ACS-6140] migrate tests to harness (#9071)
 
 ## See Also
 
