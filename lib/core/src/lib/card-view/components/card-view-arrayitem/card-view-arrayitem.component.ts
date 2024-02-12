@@ -27,20 +27,20 @@ import { BaseCardView } from '../base-card-view';
 })
 export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {
     clicked(): void {
-        if (this.isClickable()) {
+        if (this.isClickable) {
             this.cardViewUpdateService.clicked(this.property);
         }
     }
 
-    showClickableIcon(): boolean {
-        return this.hasIcon && this.isClickable();
+    get showClickableIcon(): boolean {
+        return this.hasIcon && this.isClickable;
     }
 
-    displayCount(): number {
+    get displayCount(): number {
         return this.property.noOfItemsToDisplay ? this.property.noOfItemsToDisplay : 0;
     }
 
-    isClickable(): boolean {
+    get isClickable(): boolean {
         return !!this.property.clickable;
     }
 }

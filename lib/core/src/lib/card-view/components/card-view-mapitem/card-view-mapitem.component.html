@@ -1,18 +1,18 @@
 <div [attr.data-automation-id]="'card-mapitem-label-' + property.key"
      class="adf-property-label"
-     *ngIf="showProperty()">{{ property.label | translate }}</div>
+     *ngIf="showProperty">{{ property.label | translate }}</div>
 <div class="adf-property-value adf-map-item-padding">
     <div>
-        <span *ngIf="!isClickable(); else clickableTemplate"
+        <span *ngIf="!isClickable; else clickableTemplate"
               [attr.data-automation-id]="'card-mapitem-value-' + property.key">
-            <span *ngIf="showProperty();">{{ property.displayValue }}</span>
+            <span *ngIf="showProperty;">{{ property.displayValue }}</span>
         </span>
     </div>
     <ng-template #clickableTemplate>
         <span class="adf-mapitem-clickable-value"
               (click)="clicked()"
               [attr.data-automation-id]="'card-mapitem-value-' + property.key">
-            <span *ngIf="showProperty(); else emptyValueTemplate">{{ property.displayValue }}</span>
+            <span *ngIf="showProperty; else emptyValueTemplate">{{ property.displayValue }}</span>
         </span>
     </ng-template>
     <ng-template #emptyValueTemplate>

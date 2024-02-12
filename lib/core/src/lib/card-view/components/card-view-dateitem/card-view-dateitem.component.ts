@@ -84,15 +84,15 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         super.ngOnDestroy();
     }
 
-    showProperty(): boolean {
+    get showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    showClearAction(): boolean {
+    get showClearAction(): boolean {
         return this.displayClearAction && (!this.property.isEmpty() || !!this.property.default);
     }
 
-    showDatePicker() {
+    showDatePicker(): void {
         this.datepicker.open();
     }
 
