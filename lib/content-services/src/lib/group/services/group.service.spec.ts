@@ -23,6 +23,7 @@ import { GroupEntry } from '@alfresco/js-api';
 describe('GroupService', () => {
     let service: GroupService;
     let group: GroupEntry;
+    let returnedGroup: GroupEntry;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -32,18 +33,41 @@ describe('GroupService', () => {
         group = {
             entry: {
                 id: 'some id',
-                displayName: 'some name'
+                displayName: 'some name',
+                description: 'some description'
             }
         };
+        returnedGroup = JSON.parse(JSON.stringify(group));
     });
 
     describe('getGroup', () => {
         it('should return group returned by GroupsApi', (done) => {
-            spyOn(service.groupsApi, 'getGroup').and.returnValue(Promise.resolve(group));
+            spyOn(service.groupsApi, 'getGroup').and.returnValue(Promise.resolve(returnedGroup));
 
             service.getGroup(group.entry.id).subscribe((groupEntry) => {
-                expect(groupEntry).toBe(group);
-                expect(service.groupsApi.getGroup).toHaveBeenCalledWith(group.entry.id);
+                expect(groupEntry).toBe(returnedGroup);
+                expect(service.groupsApi.getGroup).toHaveBeenCalledWith(group.entry.id, {
+                    include: ['description']
+                });
+                done();
+            });
+        });
+
+        it('should return group returned by GroupsApi when description is not supplied', (done) => {
+            returnedGroup.entry.description = undefined;
+            spyOn(service.groupsApi, 'getGroup').and.returnValue(Promise.resolve(returnedGroup));
+
+            service.getGroup(group.entry.id).subscribe((groupEntry) => {
+                expect(groupEntry).toEqual({
+                    entry: {
+                        id: returnedGroup.entry.id,
+                        displayName: returnedGroup.entry.displayName,
+                        description: ''
+                    }
+                });
+                expect(service.groupsApi.getGroup).toHaveBeenCalledWith(group.entry.id, {
+                    include: ['description']
+                });
                 done();
             });
         });
@@ -51,12 +75,33 @@ describe('GroupService', () => {
 
     describe('updateGroup', () => {
         it('should return updated Group', (done) => {
-            spyOn(service.groupsApi, 'updateGroup').and.returnValue(Promise.resolve(group));
+            spyOn(service.groupsApi, 'updateGroup').and.returnValue(Promise.resolve(returnedGroup));
 
             service.updateGroup(group.entry).subscribe((groupEntry) => {
-                expect(groupEntry).toBe(group);
+                expect(groupEntry).toEqual(returnedGroup);
                 expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
-                    displayName: groupEntry.entry.displayName
+                    displayName: group.entry.displayName,
+                    description: group.entry.description
+                });
+                done();
+            });
+        });
+
+        it('should return updated Group when description is not supplied', (done) => {
+            returnedGroup.entry.description = undefined;
+            spyOn(service.groupsApi, 'updateGroup').and.returnValue(Promise.resolve(returnedGroup));
+
+            service.updateGroup(group.entry).subscribe((groupEntry) => {
+                expect(groupEntry).toEqual({
+                    entry: {
+                        id: returnedGroup.entry.id,
+                        displayName: returnedGroup.entry.displayName,
+                        description: ''
+                    }
+                });
+                expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
+                    displayName: group.entry.displayName,
+                    description: group.entry.description
                 });
                 done();
             });

@@ -18,6 +18,7 @@
 export interface Group {
     id?: string;
     displayName?: string;
+    description?: string;
     isRoot?: boolean;
     parentIds?: string[];
     zones?: string[];

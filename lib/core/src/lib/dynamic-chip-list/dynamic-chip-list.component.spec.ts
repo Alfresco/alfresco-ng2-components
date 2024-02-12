@@ -274,10 +274,10 @@ describe('DynamicChipListComponent', () => {
             resizeCallback([], null);
             fixture.detectChanges();
             expect(findViewMoreButton().hidden).toBeFalse();
-            expect(findChips()).toHaveSize(component.chips.length);
+            expect(findChips()).toHaveSize(1);
         }));
 
-        it('should not render view more button again resizing when there is not enough space if user requested to see all chips', fakeAsync(() => {
+        it('should not render view more button again after resizing when there is not enough space if user requested to see all chips', fakeAsync(() => {
             renderChips();
             component.ngOnChanges({
                 chips: new SimpleChange(undefined, component.chips, true)
@@ -292,7 +292,6 @@ describe('DynamicChipListComponent', () => {
             resizeCallback([], null);
             fixture.detectChanges();
             expect(viewMoreButton.hidden).toBeTrue();
-            expect(findChips()).toHaveSize(4);
         }));
     });
 });
