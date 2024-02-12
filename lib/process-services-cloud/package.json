@@ -39,8 +39,8 @@
     "@alfresco/adf-content-services": ">=6.9.0",
     "@apollo/client": "^3.7.2",
     "@ngx-translate/core": ">=14.0.0",
-    "apollo-angular": "^4.0.1",
-    "subscriptions-transport-ws": "^0.11.0"
+    "apollo-angular": ">=4.0.1",
+    "subscriptions-transport-ws": ">=0.11.0"
   },
   "keywords": [
     "process-services-cloud",
