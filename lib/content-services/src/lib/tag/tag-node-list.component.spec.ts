@@ -25,7 +25,7 @@ import { DynamicChipListComponent } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
-fdescribe('TagNodeList', () => {
+describe('TagNodeList', () => {
     let component: TagNodeListComponent;
     let fixture: ComponentFixture<TagNodeListComponent>;
 
