@@ -214,7 +214,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
         },
         security: [
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['processadminuser'] },
-            { role: 'ACTIVITI_USER', groups: [], users: ['hruser', 'salesuser', 'testadmin', 'testuser'] }
+            { role: 'ACTIVITI_USER', groups: ['sales', 'testgroup'], users: ['hruser', 'salesuser', 'testadmin', 'testuser'] }
         ]
     }
 };
