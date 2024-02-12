@@ -24,6 +24,7 @@ export class FormFieldTypes {
     static TEXT: string = 'text';
     static STRING: string = 'string';
     static INTEGER: string = 'integer';
+    static DECIMAL: string = 'bigdecimal';
     static MULTILINE_TEXT: string = 'multi-line-text';
     static DROPDOWN: string = 'dropdown';
     static HYPERLINK: string = 'hyperlink';

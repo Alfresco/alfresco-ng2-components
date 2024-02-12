@@ -18,17 +18,18 @@
 import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
 export class CardViewItemFloatValidator implements CardViewItemValidator {
-
     message = 'CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR';
 
     isValid(value: any | any[]): boolean {
         if (Array.isArray(value)) {
             return value.every(this.isDecimalNumber);
         }
+
         return value === '' || this.isDecimalNumber(value);
     }
 
     isDecimalNumber(value: any): boolean {
-        return !isNaN(parseFloat(value)) && isFinite(value);
+        const isDecimalNumber = !isNaN(parseFloat(value)) && isFinite(value);
+        return isDecimalNumber;
     }
 }

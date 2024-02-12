@@ -431,6 +431,7 @@ export class MinValueFieldValidator implements FormFieldValidator {
 
     private supportedTypes = [
         FormFieldTypes.NUMBER,
+        FormFieldTypes.DECIMAL,
         FormFieldTypes.AMOUNT
     ];
 
@@ -461,6 +462,7 @@ export class MaxValueFieldValidator implements FormFieldValidator {
 
     private supportedTypes = [
         FormFieldTypes.NUMBER,
+        FormFieldTypes.DECIMAL,
         FormFieldTypes.AMOUNT
     ];
 
@@ -553,6 +555,50 @@ export class FixedValueFieldValidator implements FormFieldValidator {
     }
 }
 
+export class DecimalFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DECIMAL
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.value;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        const shouldValidateField = this.isSupported(field) && field.isVisible;
+
+        if (!shouldValidateField) {
+            return true;
+        }
+
+        const precision = field.precision;
+        const rawValue = field.value;
+
+        if (!isNumberValue(rawValue)) {
+            field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DECIMAL_NUMBER';
+            return false;
+        }
+
+        const value = typeof rawValue === 'string' ? rawValue : rawValue.toString();
+        const valueParts = value.split('.');
+        const decimalPart = valueParts[1];
+
+        if (decimalPart === undefined) {
+            return true;
+        }
+
+        if (decimalPart.length > precision) {
+            field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DECIMAL_PRECISION';
+            field.validationSummary.attributes.set('precision', precision.toString());
+
+            return false;
+        }
+
+        return true;
+    }
+}
+
 export const FORM_FIELD_VALIDATORS = [
     new RequiredFieldValidator(),
     new NumberFieldValidator(),
@@ -567,5 +613,6 @@ export const FORM_FIELD_VALIDATORS = [
     new MaxDateFieldValidator(),
     new FixedValueFieldValidator(),
     new MinDateTimeFieldValidator(),
-    new MaxDateTimeFieldValidator()
+    new MaxDateTimeFieldValidator(),
+    new DecimalFieldValidator()
 ];

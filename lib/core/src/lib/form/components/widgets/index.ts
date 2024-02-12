@@ -30,6 +30,7 @@ import { TextWidgetComponent } from './text/text.widget';
 import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
 import { BaseViewerWidgetComponent } from './base-viewer/base-viewer.widget';
+import { DecimalWidgetComponent } from './decimal/decimal.component';
 
 // core
 export * from './widget.component';
@@ -39,6 +40,7 @@ export * from './core';
 export * from './unknown/unknown.widget';
 export * from './text/text.widget';
 export * from './number/number.widget';
+export * from './decimal/decimal.component';
 export * from './checkbox/checkbox.widget';
 export * from './multiline-text/multiline-text.widget';
 export * from './hyperlink/hyperlink.widget';
@@ -55,6 +57,7 @@ export const WIDGET_DIRECTIVES: any[] = [
     UnknownWidgetComponent,
     TextWidgetComponent,
     NumberWidgetComponent,
+    DecimalWidgetComponent,
     CheckboxWidgetComponent,
     MultilineTextWidgetComponentComponent,
     HyperlinkWidgetComponent,

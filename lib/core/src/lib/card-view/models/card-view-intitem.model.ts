@@ -18,17 +18,22 @@
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewTextItemModel } from './card-view-textitem.model';
-import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
-import { CardViewItemIntValidator } from '../validators/card-view.validators';
+import { CardViewIntItemProperties } from '../interfaces/card-view.interfaces';
+import { CardViewItemIntValidator, CardViewItemPositiveIntValidator } from '../validators/card-view.validators';
 
 export class CardViewIntItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'int';
     inputType: string = 'number';
 
-    constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
+    constructor(cardViewTextItemProperties: CardViewIntItemProperties) {
         super(cardViewTextItemProperties);
 
         this.validators.push(new CardViewItemIntValidator());
+
+        if (cardViewTextItemProperties.allowOnlyPositiveNumbers) {
+            this.validators.push(new CardViewItemPositiveIntValidator());
+        }
+
         if (cardViewTextItemProperties.value && !cardViewTextItemProperties.multivalued) {
             this.value = parseInt(cardViewTextItemProperties.value, 10);
         }

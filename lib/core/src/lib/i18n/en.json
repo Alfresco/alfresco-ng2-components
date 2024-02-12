@@ -52,6 +52,8 @@
       "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
         "INVALID_NUMBER": "Use a different number format",
+        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
+        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
         "INVALID_DATE": "Use a different date format",
         "INVALID_VALUE": "Enter a different value",
         "NOT_GREATER_THAN": "Can't be greater than {{ maxValue }}",

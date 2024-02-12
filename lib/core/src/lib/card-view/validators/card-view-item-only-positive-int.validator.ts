@@ -15,20 +15,26 @@
  * limitations under the License.
  */
 
-import { CardViewItemProperties } from './card-view-item-properties.interface';
-import { CardViewTextItemPipeProperty } from './card-view-textitem-pipe-property.interface';
+import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
-export interface CardViewTextItemProperties extends CardViewItemProperties {
-    multiline?: boolean;
-    multivalued?: boolean;
-    pipes?: CardViewTextItemPipeProperty[];
-    clickCallBack?: any;
-}
+export class CardViewItemPositiveIntValidator implements CardViewItemValidator {
 
-export interface CardViewIntItemProperties extends CardViewTextItemProperties {
-    allowOnlyPositiveNumbers?: boolean;
-}
+    message = 'CORE.CARDVIEW.VALIDATORS.ONLY_POSITIVE_NUMBER';
 
-export interface CardViewFloatItemProperties extends CardViewTextItemProperties {
-    precision?: number;
+    isValid(value: any | any[]): boolean {
+        if (Array.isArray(value)) {
+            return value.every(this.isPositiveNumber);
+        }
+
+        const valueIsNotSet = value === '';
+
+        return valueIsNotSet ||
+            !isNaN(value) &&
+            this.isPositiveNumber(value);
+    }
+
+
+    private isPositiveNumber(value: any): boolean {
+        return parseInt(value, 10) >= 0;
+    }
 }
