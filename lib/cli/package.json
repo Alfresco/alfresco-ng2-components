@@ -4,12 +4,12 @@
   "version": "6.9.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "bin": {
-    "adf-cli": "./bin/adf-cli",
-    "adf": "./bin/adf-cli"
+    "adf-cli": "bin/adf-cli",
+    "adf": "bin/adf-cli"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+    "url": "git+https://github.com/Alfresco/alfresco-ng2-components.git"
   },
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
