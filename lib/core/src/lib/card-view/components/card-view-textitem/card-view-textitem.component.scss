@@ -1,4 +1,8 @@
 .adf-card-view-textitem {
+    .adf-property-field {
+        padding-top: 10px;
+    }
+
     .adf-textitem-error {
         font-size: var(--theme-caption-font-size);
         padding-top: 6px;
@@ -24,13 +28,6 @@
         &:hover,
         &:focus {
             color: var(--adf-theme-foreground-text-color);
-        }
-    }
-
-    .adf-textitem-default .adf-property-read-only {
-        .mat-form-field-label-wrapper {
-            top: -9px;
-            padding-top: 0.9375em;
         }
     }
 
