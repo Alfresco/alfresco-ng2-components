@@ -70,11 +70,6 @@
                     transform: translateY(-1.3437em) scale(1);
                 }
             }
-
-            .mat-form-field-label-wrapper {
-                padding-top: 0;
-                top: -1px;
-            }
         }
     }
 
@@ -89,7 +84,7 @@
             &.mat-input-element {
                 color: var(--adf-metadata-action-button-clear-color);
                 padding: 6px 0 6px 12px;
-                margin: 20px 0 0;
+                margin: 5px 0 0;
             }
         }
 
