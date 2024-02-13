@@ -2,4 +2,13 @@ adf-search-filter-tabbed {
     .adf-search-tab-label-active {
         border-bottom: 2px solid var(--theme-primary-color);
     }
+
+    // The important tag is used here as a workaround for a bug in angular material, when MatTabs are used in conjunction with MatMenu
+    // https://github.com/angular/components/issues/27426
+    .adf-search-tab-content-active {
+        & > div {
+            visibility: visible !important;
+            display: block !important;
+        }
+    }
 }
