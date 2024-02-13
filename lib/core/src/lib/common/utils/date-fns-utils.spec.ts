@@ -125,4 +125,11 @@ describe('DateFnsUtils', () => {
         const result = DateFnsUtils.isValidDate('2021-06-09 14:10', 'D-M-YYYY hh:mm A');
         expect(result).toBeFalse();
     });
+
+    it('should return Date when forcing locale or UTC with string date argument', () => {
+        const resultLocal = DateFnsUtils.forceLocal('2014-02-11T11:30:30');
+        const resultUtc = DateFnsUtils.forceUtc('2014-02-11T11:30:30');
+        expect(resultLocal).toBeInstanceOf(Date);
+        expect(resultUtc).toBeInstanceOf(Date);
+    });
 });
