@@ -18,7 +18,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AlfrescoApiNoAuthService } from './alfresco-api-no-auth.service';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from '../api-factories/alfresco-api-v2-loader.service';
-import { AlfrescoApiService } from "../services";
+import { AlfrescoApiService } from '../services';
 
 @NgModule({
     providers :[
