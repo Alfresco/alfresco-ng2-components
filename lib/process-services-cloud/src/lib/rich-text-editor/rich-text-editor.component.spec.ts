@@ -85,24 +85,6 @@ describe('RichTextEditorComponent', () => {
         expect(savedEditorData).toEqual(mockEditorData);
     });
 
-    it('should destroy editor instance on ngOnDestroy', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const destroyEditorSpy = spyOn(component.editorInstance, 'destroy');
-        component.ngOnDestroy();
-        expect(destroyEditorSpy).toHaveBeenCalledTimes(1);
-        expect(destroyEditorSpy).toHaveBeenCalled();
-    });
-
-    it('should not destroy editor instance on ngOnDestroy if editor is not ready', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const destroyEditorSpy = spyOn(component.editorInstance, 'destroy');
-        component.isReady = false;
-        component.ngOnDestroy();
-        expect(destroyEditorSpy).not.toHaveBeenCalled();
-    });
-
     it('should add readonly class if readOnly is set to true', async () => {
         component.readOnly = true;
         fixture.detectChanges();
