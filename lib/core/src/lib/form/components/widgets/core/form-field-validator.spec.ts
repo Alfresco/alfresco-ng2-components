@@ -31,7 +31,8 @@ import {
     MinDateTimeFieldValidator,
     MaxDateFieldValidator,
     MinDateFieldValidator,
-    DateTimeFieldValidator
+    DateTimeFieldValidator,
+    DecimalFieldValidator
 } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
@@ -1116,5 +1117,74 @@ describe('FormFieldValidator', () => {
             expect(field.dateDisplayFormat).toBe('D-M-YYYY hh:mm A');
             expect(validator.validate(field)).toBeFalse();
         });
+    });
+
+    describe('DecimalFieldValidator', () => {
+        let decimalValidator: DecimalFieldValidator;
+
+        beforeEach(() => {
+            decimalValidator = new DecimalFieldValidator();
+        });
+
+        it('should validate decimal with correct precision', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DECIMAL,
+                value: 1.22,
+                precision: 2
+            });
+
+            expect(decimalValidator.validate(field)).toBeTrue();
+        });
+
+        it('should return true when value has smaller precission', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DECIMAL,
+                value: 1.2,
+                precision: 2
+            });
+
+            expect(decimalValidator.validate(field)).toBeTrue();
+        });
+
+        it('should return true when value does has wrong precision', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DECIMAL,
+                value: 1.22,
+                precision: 1
+            });
+
+            expect(decimalValidator.validate(field)).toBeFalse();
+        });
+
+        it('should validate decimal with wrong precision and value is string', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DECIMAL,
+                value: '1.22',
+                precision: 1
+            });
+
+            expect(decimalValidator.validate(field)).toBeFalse();
+        });
+
+        it('should return true, when value is negative number and has correct precission', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DECIMAL,
+                value: -1.22,
+                precision: 1
+            });
+
+            expect(decimalValidator.validate(field)).toBeFalse();
+        });
+
+        it('should return false, when value is positive number and has correct precission', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DECIMAL,
+                value: -1.22,
+                precision: 3
+            });
+
+            expect(decimalValidator.validate(field)).toBeTrue();
+        });
+
     });
 });

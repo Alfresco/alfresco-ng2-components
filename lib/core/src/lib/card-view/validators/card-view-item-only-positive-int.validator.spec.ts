@@ -24,7 +24,7 @@ describe('CardViewItemPositiveIntValidator', () => {
         validator = new CardViewItemPositiveIntValidator();
     });
 
-    it('should return false for NO integer value', () => {
+    it('should return false for invalid integer value', () => {
         expect(validator.isValid('a')).toBeFalse();
     });
 

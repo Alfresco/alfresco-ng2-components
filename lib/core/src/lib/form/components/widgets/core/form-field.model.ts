@@ -58,7 +58,7 @@ export class FormFieldModel extends FormWidgetModel {
     maxValue: string;
     maxDateRangeValue: number = 0;
     minDateRangeValue: number = 0;
-    precision: number = 1;
+    precision: number;
     dynamicDateRangeSelection: boolean;
     regexPattern: string;
     options: FormFieldOption[] = [];
@@ -203,6 +203,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.groupsRestriction = json.groupsRestriction?.groups;
             this.variableConfig = json.variableConfig;
             this.schemaDefinition = json.schemaDefinition;
+            this.precision = json.precision;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
