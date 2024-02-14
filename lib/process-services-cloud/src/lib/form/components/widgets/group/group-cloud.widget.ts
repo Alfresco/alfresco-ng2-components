@@ -89,13 +89,13 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    onChangedGroup(groups) {
-        this.field.value = [...groups];
+    onChangedGroup(groups: IdentityGroupModel[]): void {
+        this.field.value = groups?.length ? [...groups] : null;
         this.onFieldChanged(this.field);
     }
 

@@ -158,6 +158,23 @@ describe('PeopleCloudWidgetComponent', () => {
 
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
+
+        it('should be invalid after deselecting all people', async () => {
+            widget.onChangedUser([{id: 'test-id', username: 'test-name'}]);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-error-text')).toBeFalsy();
+
+            const removeGroupIcon = element.querySelector('[data-automation-id="adf-people-cloud-chip-remove-icon-test-name"]');
+            removeGroupIcon.dispatchEvent(new Event('click'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-error-text')).toBeTruthy();
+            expect(element.querySelector('.adf-error-text').textContent).toContain('ADF_CLOUD_USERS.ERROR.NOT_FOUND');
+        });
     });
 
     describe('when is readOnly', () => {
