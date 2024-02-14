@@ -270,6 +270,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.removeTagFromArray(this.tags, tag);
         this.tagNameControl.updateValueAndValidity();
         this.updateExistingTagsListOnRemoveFromTagsToConfirm(tag);
+        this.exactTagSet$.next();
         this.checkScrollbarVisibility();
         this.tagsChange.emit(this.tags);
     }
