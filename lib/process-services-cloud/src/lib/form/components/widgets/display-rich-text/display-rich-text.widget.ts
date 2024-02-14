@@ -48,7 +48,7 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
 
     ngOnInit(): void {
         /* cspell:disable-next-line */
-        this.parsedHTML = edjsHTML().parseStrict(this.field.value).join('\n');
+        this.parsedHTML = edjsHTML().parseStrict(this.field.value);
     }
 
 }
