@@ -99,13 +99,13 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    onChangedUser(users) {
-        this.field.value = [...users];
+    onChangedUser(users: IdentityUserModel[]): void {
+        this.field.value = users?.length ? [...users] : null;
         this.onFieldChanged(this.field);
     }
 
