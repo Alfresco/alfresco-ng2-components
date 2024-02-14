@@ -18,7 +18,6 @@
 import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
 export class CardViewItemPositiveIntValidator implements CardViewItemValidator {
-
     message = 'CORE.CARDVIEW.VALIDATORS.ONLY_POSITIVE_NUMBER';
 
     isValid(value: any | any[]): boolean {
@@ -29,10 +28,11 @@ export class CardViewItemPositiveIntValidator implements CardViewItemValidator {
         const valueIsNotSet = value === '';
 
         return valueIsNotSet ||
-            !isNaN(value) &&
-            this.isPositiveNumber(value);
+            (
+                !isNaN(value) &&
+                this.isPositiveNumber(value)
+            );
     }
-
 
     private isPositiveNumber(value: any): boolean {
         return parseInt(value, 10) >= 0;

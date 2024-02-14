@@ -573,14 +573,14 @@ export class DecimalFieldValidator implements FormFieldValidator {
         }
 
         const precision = field.precision;
-        const rawValue = field.value;
+        const fieldValue = field.value;
 
-        if (!isNumberValue(rawValue)) {
+        if (!isNumberValue(fieldValue)) {
             field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DECIMAL_NUMBER';
             return false;
         }
 
-        const value = typeof rawValue === 'string' ? rawValue : rawValue.toString();
+        const value = typeof fieldValue === 'string' ? fieldValue : fieldValue.toString();
         const valueParts = value.split('.');
         const decimalPart = valueParts[1];
 
