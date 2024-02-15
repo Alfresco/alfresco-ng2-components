@@ -64,6 +64,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     readOnly = false;
 
+    /** Toggles the 'Full Screen' feature. */
+    @Input()
+    allowFullScreen = false;
+
     /** Emitted when the form is saved. */
     @Output()
     formSaved = new EventEmitter<FormModel>();

@@ -41,7 +41,8 @@ import { ConfirmDialogComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-cloud-form',
-    templateUrl: './form-cloud.component.html'
+    templateUrl: './form-cloud.component.html',
+    styleUrls: ['./form-cloud.component.scss']
 })
 export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnDestroy {
     /** App name to fetch corresponding form and values. */
@@ -75,6 +76,17 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     /** FormFieldValidator allow to override the form field validators provided. */
     @Input()
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
+
+    /**
+     * If `true` then show the Form as a full page over the current content.
+     * Otherwise fit inside the parent div.
+     */
+    @Input()
+    overlayMode = false;
+
+    /** Toggles the 'Full Screen' feature. */
+    @Input()
+    allowFullScreen = false;
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
@@ -128,6 +140,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formService.formFieldValueChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             if (this.disableSaveButton) {
                 this.disableSaveButton = false;
+            }
+        });
+
+        this.formCloudService.fullScreenMode.pipe(takeUntil(this.onDestroy$)).subscribe((overlayMode) => {
+            if (this.allowFullScreen) {
+                this.overlayMode = overlayMode;
             }
         });
     }
@@ -287,6 +305,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     private completeForm(outcome?: string) {
+        this.overlayMode = false;
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
@@ -337,11 +356,14 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private refreshFormData() {
         this.form = this.parseForm(this.formCloudRepresentationJSON);
-        this.onFormLoaded(this.form);
+        this.onFormLoaded(this.form, true);
         this.onFormDataRefreshed(this.form);
     }
 
-    protected onFormLoaded(form: FormModel) {
+    protected onFormLoaded(form: FormModel, refresh = false) {
+        if (!refresh && this.allowFullScreen) {
+            this.overlayMode = this.form.forceFullScreen;
+        }
         this.formLoaded.emit(form);
     }
 
@@ -358,6 +380,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected onTaskCompleted(form: FormModel) {
+        this.overlayMode = false;
         this.formCompleted.emit(form);
     }
 
@@ -376,7 +399,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         return !args.defaultPrevented;
     }
 
-    protected storeFormAsMetadata() {}
+    protected storeFormAsMetadata() { }
 
     ngOnDestroy() {
         this.onDestroy$.next(true);

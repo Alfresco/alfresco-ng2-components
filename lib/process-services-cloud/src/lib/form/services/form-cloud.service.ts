@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { FormValues, FormModel, FormFieldOption } from '@alfresco/adf-core';
-import { Observable, from, EMPTY } from 'rxjs';
+import { Observable, from, EMPTY, Subject } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { CompleteFormRepresentation, UploadApi } from '@alfresco/js-api';
@@ -43,6 +43,8 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
     ) {
         super(adfHttpClient);
     }
+
+    fullScreenMode = new Subject<boolean>();
 
     /**
      * Gets the form definition of a task.

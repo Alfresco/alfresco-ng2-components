@@ -26,6 +26,7 @@ export interface FormRepresentation {
     version?: number;
     formDefinition?: FormDefinition;
     standAlone?: boolean;
+    forceFullScreen?: boolean;
 }
 
 export interface FormTab {
