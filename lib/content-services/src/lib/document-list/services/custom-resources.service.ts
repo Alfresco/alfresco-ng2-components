@@ -139,7 +139,7 @@ export class CustomResourcesService {
                             language: 'afts'
                         },
                         filterQueries,
-                        include: ['path', 'properties', 'allowableOperations', 'aspects'],
+                        include: ['path', 'properties', 'allowableOperations', 'aspectNames'],
                         sort: [
                             {
                                 type: 'FIELD',
