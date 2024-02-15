@@ -31,7 +31,7 @@ export class UploadApi extends NodesApi {
         const nodeBodyRequired = {
             name: fileDefinition.name,
             nodeType: 'cm:content',
-            relativePath
+            relativePath: relativePath ?? null
         };
 
         nodeBody = Object.assign(nodeBodyRequired, nodeBody);
