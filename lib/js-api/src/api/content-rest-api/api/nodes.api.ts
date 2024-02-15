@@ -477,13 +477,18 @@ export class NodesApi extends BaseApi {
         };
 
         const queryParams = {
-            attachment: opts?.attachment
+            attachment: opts?.attachment ?? null
         };
 
-        const headerParams = {
-            'If-Modified-Since': opts?.ifModifiedSince,
-            Range: opts?.range
-        };
+        const headerParams = {};
+
+        if (opts?.ifModifiedSince) {
+            Object.defineProperty(headerParams, 'If-Modified-Since', { value: opts?.ifModifiedSince });
+        }
+
+        if (opts?.range) {
+            Object.defineProperty(headerParams, 'Range', { value: opts?.range });
+        }
 
         const accepts = ['application/octet-stream'];
 
