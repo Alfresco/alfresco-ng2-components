@@ -1136,7 +1136,7 @@ describe('FormFieldValidator', () => {
             expect(decimalValidator.validate(field)).toBeTrue();
         });
 
-        it('should return true when value has smaller precission', () => {
+        it('should return true when value is of lower precision', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DECIMAL,
                 value: 1.2,
@@ -1146,7 +1146,7 @@ describe('FormFieldValidator', () => {
             expect(decimalValidator.validate(field)).toBeTrue();
         });
 
-        it('should return true when value does has wrong precision', () => {
+        it('should return false when value is of higher precision', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DECIMAL,
                 value: 1.22,
@@ -1156,7 +1156,7 @@ describe('FormFieldValidator', () => {
             expect(decimalValidator.validate(field)).toBeFalse();
         });
 
-        it('should validate decimal with wrong precision and value is string', () => {
+        it('should validate decimal of wrong precision when value is of type string', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DECIMAL,
                 value: '1.22',
@@ -1166,7 +1166,7 @@ describe('FormFieldValidator', () => {
             expect(decimalValidator.validate(field)).toBeFalse();
         });
 
-        it('should return true, when value is negative number and has correct precission', () => {
+        it('should return false, when value is a negative number and of correct precission', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DECIMAL,
                 value: -1.22,
@@ -1176,7 +1176,7 @@ describe('FormFieldValidator', () => {
             expect(decimalValidator.validate(field)).toBeFalse();
         });
 
-        it('should return false, when value is positive number and has correct precission', () => {
+        it('should return true, when value is a positive number and of correct precission', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DECIMAL,
                 value: -1.22,

@@ -25,17 +25,17 @@ export class CardViewIntItemModel extends CardViewTextItemModel implements CardV
     type: string = 'int';
     inputType: string = 'number';
 
-    constructor(cardViewTextItemProperties: CardViewIntItemProperties) {
-        super(cardViewTextItemProperties);
+    constructor(cardViewIntItemProperties: CardViewIntItemProperties) {
+        super(cardViewIntItemProperties);
 
         this.validators.push(new CardViewItemIntValidator());
 
-        if (cardViewTextItemProperties.allowOnlyPositiveNumbers) {
+        if (cardViewIntItemProperties.allowOnlyPositiveNumbers) {
             this.validators.push(new CardViewItemPositiveIntValidator());
         }
 
-        if (cardViewTextItemProperties.value && !cardViewTextItemProperties.multivalued) {
-            this.value = parseInt(cardViewTextItemProperties.value, 10);
+        if (cardViewIntItemProperties.value && !cardViewIntItemProperties.multivalued) {
+            this.value = parseInt(cardViewIntItemProperties.value, 10);
         }
     }
 
