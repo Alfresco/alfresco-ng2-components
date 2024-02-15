@@ -63,6 +63,11 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
     }
 
     private prepareDate(date: Date): Date {
-        return this.type === 'date' ? DateFnsUtils.forceLocal(date) : date;
+        if (this.type === 'date') {
+            const dateInstance = date instanceof Date ? date : new Date(date);
+            return DateFnsUtils.forceLocal(dateInstance);
+        } else {
+            return date;
+        }
     }
 }
