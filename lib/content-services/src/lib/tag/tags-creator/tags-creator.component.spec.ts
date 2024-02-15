@@ -396,6 +396,27 @@ describe('TagsCreatorComponent', () => {
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
             }));
 
+            it('should show error when deleting other Tag1 and Tag2 is typed and already existing tag', fakeAsync(() => {
+                const tag1 = 'Some tag';
+                const tag2 = 'Other tag';
+
+                addTagToAddedList(tag1, true, 0);
+                tick();
+
+                spyOn(tagService, 'findTagByName').and.returnValue(of({
+                    entry: {
+                        tag: tag2,
+                        id: 'tag-1'
+                    }
+                }));
+                typeTag(tag2);
+                component.removeTag(tag1);
+                tick();
+                fixture.detectChanges();
+                const error = getFirstError();
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
+            }));
+
             it('should error for required when not typed anything and blur input', fakeAsync(() => {
                 component.tagNameControlVisible = true;
                 component.tagNameControl.markAsTouched();
