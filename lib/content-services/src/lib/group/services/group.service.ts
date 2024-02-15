@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Group, GroupEntry, GroupsApi } from '@alfresco/js-api';
+import { ContentIncludeQuery, Group, GroupEntry, GroupsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -55,12 +55,11 @@ export class GroupService {
      * Returns group for specified id.
      *
      * @param id id of group to return.
+     * @param opts additional query parameters
      * @returns Observable<GroupEntry> group for specified id.
      */
-    getGroup(id: string): Observable<GroupEntry> {
-        return from(this.groupsApi.getGroup(id, {
-            include: ['description']
-        })).pipe(map((group) => {
+    getGroup(id: string, opts?: ContentIncludeQuery): Observable<GroupEntry> {
+        return from(this.groupsApi.getGroup(id, opts)).pipe(map((group) => {
             group.entry.description ||= '';
             return group;
         }));
@@ -70,15 +69,14 @@ export class GroupService {
      * Updates specified group.
      *
      * @param group group to update.
+     * @param opts additional query parameters
      * @returns Observable<GroupEntry> updated group.
      */
-    updateGroup(group: Group): Observable<GroupEntry> {
+    updateGroup(group: Group, opts?: ContentIncludeQuery): Observable<GroupEntry> {
         return from(this.groupsApi.updateGroup(group.id, {
             displayName: group.displayName,
             description: group.description
-        }, {
-            include: ['description']
-        })).pipe(map((updatedGroup) => {
+        }, opts)).pipe(map((updatedGroup) => {
             updatedGroup.entry.description ||= '';
             return updatedGroup;
         }));

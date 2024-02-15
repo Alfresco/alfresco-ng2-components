@@ -18,12 +18,13 @@
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { GroupService } from '@alfresco/adf-content-services';
-import { GroupEntry } from '@alfresco/js-api';
+import { ContentIncludeQuery, GroupEntry } from '@alfresco/js-api';
 
 describe('GroupService', () => {
     let service: GroupService;
     let group: GroupEntry;
     let returnedGroup: GroupEntry;
+    let opts: ContentIncludeQuery;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,13 +39,16 @@ describe('GroupService', () => {
             }
         };
         returnedGroup = JSON.parse(JSON.stringify(group));
+        opts = {
+            include: ['description']
+        };
     });
 
     describe('getGroup', () => {
         it('should return group returned by GroupsApi', (done) => {
             spyOn(service.groupsApi, 'getGroup').and.returnValue(Promise.resolve(returnedGroup));
 
-            service.getGroup(group.entry.id).subscribe((groupEntry) => {
+            service.getGroup(group.entry.id, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toBe(returnedGroup);
                 expect(service.groupsApi.getGroup).toHaveBeenCalledWith(group.entry.id, {
                     include: ['description']
@@ -57,7 +61,7 @@ describe('GroupService', () => {
             returnedGroup.entry.description = undefined;
             spyOn(service.groupsApi, 'getGroup').and.returnValue(Promise.resolve(returnedGroup));
 
-            service.getGroup(group.entry.id).subscribe((groupEntry) => {
+            service.getGroup(group.entry.id, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toEqual({
                     entry: {
                         id: returnedGroup.entry.id,
@@ -77,7 +81,7 @@ describe('GroupService', () => {
         it('should return updated Group', (done) => {
             spyOn(service.groupsApi, 'updateGroup').and.returnValue(Promise.resolve(returnedGroup));
 
-            service.updateGroup(group.entry).subscribe((groupEntry) => {
+            service.updateGroup(group.entry, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toEqual(returnedGroup);
                 expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
                     displayName: group.entry.displayName,
@@ -93,7 +97,7 @@ describe('GroupService', () => {
             returnedGroup.entry.description = undefined;
             spyOn(service.groupsApi, 'updateGroup').and.returnValue(Promise.resolve(returnedGroup));
 
-            service.updateGroup(group.entry).subscribe((groupEntry) => {
+            service.updateGroup(group.entry, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toEqual({
                     entry: {
                         id: returnedGroup.entry.id,
@@ -101,6 +105,22 @@ describe('GroupService', () => {
                         description: ''
                     }
                 });
+                expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
+                    displayName: group.entry.displayName,
+                    description: group.entry.description
+                }, {
+                    include: ['description']
+                });
+                done();
+            });
+        });
+
+        it('should allow to update only description', (done) => {
+            spyOn(service.groupsApi, 'updateGroup').and.returnValue(Promise.resolve(returnedGroup));
+            group.entry.displayName = undefined;
+
+            service.updateGroup(group.entry, opts).subscribe((groupEntry) => {
+                expect(groupEntry).toEqual(returnedGroup);
                 expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
                     displayName: group.entry.displayName,
                     description: group.entry.description

@@ -13,11 +13,13 @@ Manages groups.
 
 ### Methods
 
--   **getGroup**(id: `string`): [`Observable`](https://rxjs.dev/guide/observable)`<`[`GroupEntry`](../../../lib/js-api/src/api/content-rest-api/model/groupEntry.ts)`>`<br/>
-    Returns group for specified id..
+-   **getGroup**(id: `string`, opts?: [`ContentIncludeQuery`](../../../lib/js-api/src/api/content-rest-api/api/types.ts)): [`Observable`](https://rxjs.dev/guide/observable)`<`[`GroupEntry`](../../../lib/js-api/src/api/content-rest-api/model/groupEntry.ts)`>`<br/>
+    Returns group for specified id.
     -   _id:_ `string` - id of group to return.
+    -   _opts:_ [`ContentIncludeQuery`](../../../lib/js-api/src/api/content-rest-api/api/types.ts) - additional query parameters.
     -   **Returns** [`Observable`](https://rxjs.dev/guide/observable)`<`[`GroupEntry`](../../../lib/js-api/src/api/content-rest-api/model/groupEntry.ts)`>` - group for specified id.
--   **updateGroup**(group: [`Group`](../../../lib/js-api/src/api/content-rest-api/docs/Group.md)): [`Observable`](https://rxjs.dev/guide/observable)`<`[`GroupEntry`](../../../lib/js-api/src/api/content-rest-api/model/groupEntry.ts)`>`<br/>
+-   **updateGroup**(group: [`Group`](../../../lib/js-api/src/api/content-rest-api/docs/Group.md), opts?: [`ContentIncludeQuery`](../../../lib/js-api/src/api/content-rest-api/api/types.ts)): [`Observable`](https://rxjs.dev/guide/observable)`<`[`GroupEntry`](../../../lib/js-api/src/api/content-rest-api/model/groupEntry.ts)`>`<br/>
     Updates specified group.
     -   _group:_ [`Group`](../../../lib/js-api/src/api/content-rest-api/docs/Group.md) - group to update.
+    -   _opts:_ [`ContentIncludeQuery`](../../../lib/js-api/src/api/content-rest-api/api/types.ts) - additional query parameters.
     -   **Returns** [`Observable`](https://rxjs.dev/guide/observable)`<`[`GroupEntry`](../../../lib/js-api/src/api/content-rest-api/model/groupEntry.ts)`>` - updated group.
