@@ -203,11 +203,17 @@ export class DateFnsUtils {
         return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
 
-    static forceLocal(date: Date): Date {
+    static forceLocal(date: string | Date): Date {
+        if (typeof date === 'string'){
+            date = parseISO(date);
+        }
         return new Date(lightFormat(date, 'yyyy-MM-dd'));
     }
 
-    static forceUtc(date: Date): Date {
+    static forceUtc(date: string | Date): Date {
+        if (typeof date === 'string'){
+            date = parseISO(date);
+        }
         return new Date(lightFormat(date, 'yyyy-MM-dd').concat('T00:00:00.000Z'));
     }
 

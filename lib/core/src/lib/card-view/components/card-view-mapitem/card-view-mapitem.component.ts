@@ -29,11 +29,11 @@ export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel>
     @Input()
     displayEmpty: boolean = true;
 
-    showProperty() {
+    get showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    isClickable() {
+    get isClickable(): boolean {
         return this.property.clickable;
     }
 
