@@ -48,7 +48,8 @@ export abstract class CardViewBaseItemModel<T = any> {
         if (props?.constraints?.length ?? 0) {
             for (const constraint of props.constraints) {
                 if (constraint.type !== 'LIST') {
-                    this.validators.push(validatorsMap[constraint.type.toLowerCase()](constraint.parameters));
+                    const validatorFactory = validatorsMap[constraint.type.toLowerCase()];
+                    this.validators.push(validatorFactory(constraint.parameters));
                 }
             }
         }

@@ -35,6 +35,7 @@ export class FormRenderingService extends DynamicComponentMapper {
         [FormFieldTypes.TEXT]: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
         [FormFieldTypes.STRING]: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),
         [FormFieldTypes.INTEGER]: DynamicComponentResolver.fromType(widgets.NumberWidgetComponent),
+        [FormFieldTypes.DECIMAL]: DynamicComponentResolver.fromType(widgets.DecimalWidgetComponent),
         [FormFieldTypes.MULTILINE_TEXT]: DynamicComponentResolver.fromType(widgets.MultilineTextWidgetComponentComponent),
         [FormFieldTypes.BOOLEAN]: DynamicComponentResolver.fromType(widgets.CheckboxWidgetComponent),
         [FormFieldTypes.DATE]: DynamicComponentResolver.fromType(widgets.DateWidgetComponent),

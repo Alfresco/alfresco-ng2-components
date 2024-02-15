@@ -91,10 +91,9 @@ export class CardViewItemDispatcherComponent implements OnChanges {
             this.loaded = true;
         }
 
-        Object.keys(changes)
-            .map((changeName) => [changeName, changes[changeName]])
-            .forEach(([inputParamName, simpleChange]: [string, SimpleChange]) => {
-                this.componentReference.instance[inputParamName] = simpleChange.currentValue;
+        Object.entries(changes)
+            .forEach(([changeName, change]: [string, SimpleChange]) => {
+                this.componentReference.instance[changeName] = change.currentValue;
             });
 
         this.proxy('ngOnChanges', changes);

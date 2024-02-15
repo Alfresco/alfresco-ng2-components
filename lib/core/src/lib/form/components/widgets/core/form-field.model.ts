@@ -58,6 +58,7 @@ export class FormFieldModel extends FormWidgetModel {
     maxValue: string;
     maxDateRangeValue: number = 0;
     minDateRangeValue: number = 0;
+    precision: number;
     dynamicDateRangeSelection: boolean;
     regexPattern: string;
     options: FormFieldOption[] = [];
@@ -100,8 +101,10 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     set value(v: any) {
-        this._value = v;
-        this.updateForm();
+        if (v !== this._value) {
+            this._value = v;
+            this.updateForm();
+        }
     }
 
     get readOnly(): boolean {
@@ -200,6 +203,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.groupsRestriction = json.groupsRestriction?.groups;
             this.variableConfig = json.variableConfig;
             this.schemaDefinition = json.schemaDefinition;
+            this.precision = json.precision;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
@@ -459,6 +463,10 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
                 break;
             }
+            case FormFieldTypes.DECIMAL: {
+                this.form.values[this.id] = parseFloat(this.value);
+                break;
+            };
             case FormFieldTypes.BOOLEAN: {
                 this.form.values[this.id] = this.value !== null && this.value !== undefined ? this.value : false;
                 break;
