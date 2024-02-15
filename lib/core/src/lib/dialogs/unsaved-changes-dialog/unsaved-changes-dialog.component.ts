@@ -15,11 +15,15 @@
  * limitations under the License.
  */
 
-export interface Group {
-    id?: string;
-    displayName?: string;
-    description?: string;
-    isRoot?: boolean;
-    parentIds?: string[];
-    zones?: string[];
-}
+import { Component, ViewEncapsulation } from '@angular/core';
+
+/**
+ * Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding.
+ */
+@Component({
+    selector: 'adf-unsaved-changes-dialog',
+    encapsulation: ViewEncapsulation.None,
+    templateUrl: './unsaved-changes-dialog.component.html',
+    styleUrls: ['./unsaved-changes-dialog.component.scss']
+})
+export class UnsavedChangesDialogComponent {}

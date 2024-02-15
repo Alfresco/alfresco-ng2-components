@@ -93,6 +93,7 @@ for more information about installing and using the source code.
 | [Comments Component](core/components/comments.component.md) | Displays comments from users involved in a specified environment and allows an involved user to add a comment to a environment. | [Source](../lib/core/src/lib/comments/comments.component.ts) |
 | [Data Column Component](core/components/data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/src/lib/datatable/data-column/data-column.component.ts) |
 | [DataTable component](core/components/datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/src/lib/datatable/components/datatable/datatable.component.ts) |
+| [Dynamic Chip List component](core/components/dynamic-chip-list.component.md) | This component shows dynamic list of chips which render depending on free space. | [Source](../lib/core/src/lib/dynamic-chip-list/dynamic-chip-list.component.ts) |
 | [Empty Content Component](core/components/empty-content.component.md) | Provides a generic "Empty Content" placeholder for components. | [Source](../lib/core/src/lib/templates/empty-content/empty-content.component.ts) |
 | [Empty list component](core/components/empty-list.component.md) | Displays a message indicating that a list is empty. | [Source](../lib/core/src/lib/datatable/components/empty-list/empty-list.component.ts) |
 | [Error Content Component](core/components/error-content.component.md) | Displays info about a specific error. | [Source](../lib/core/src/lib/templates/error-content/error-content.component.ts) |
@@ -144,6 +145,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Edit JSON Dialog](core/dialogs/edit-json.dialog.md) | Allows a user to preview or edit a JSON content in a dialog. | [Source](../lib/testing/src/lib/core/dialog/edit-json-dialog.ts) |
+| [Unsaved Changes Dialog](core/dialogs/unsaved-changes-dialog.component.md) | Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding. | [Source](../lib/core/src/lib/dialogs/unsaved-changes-dialog/unsaved-changes-dialog.component.ts) | 
 
 ### Interfaces
 
@@ -238,6 +240,7 @@ The model to update the DataTable require the ID of the row you want change and 
 | [Storage service](core/services/storage.service.md) | Stores items in the form of key-value pairs. | [Source](../lib/core/src/lib/common/services/storage.service.ts) |
 | [Thumbnail service](core/services/thumbnail.service.md) | Retrieves an SVG thumbnail image to represent a document type. | [Source](../lib/core/src/lib/common/services/thumbnail.service.ts) |
 | [Translation service](core/services/translation.service.md) | Supports localisation. | [Source](../lib/core/src/lib/translation/translation.service.ts) |
+| [Unsaved Changes guard](core/services/unsaved-changes.guard.md) | This guard prevents deactivating route if page has any unsaved changes. User needs intentionally discard changes through displayed modal to leave actual route. | [Source](../lib/core/src/lib/dialogs/unsaved-changes-dialog/unsaved-changes.guard.ts) |
 | [Upload Service](core/services/upload.service.md) | Provides access to various APIs related to file upload features. | [Source](../lib/content-services/src/lib/common/services/upload.service.ts) |
 | [User access service](core/services/user-access.service.md) | Checks the global and application access of a user | [Source](../lib/core/src/lib/auth/services/user-access.service.ts) |
 | [User Preferences Service](core/services/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/src/lib/common/services/user-preferences.service.ts) |
@@ -387,6 +390,7 @@ for more information about installing and using the source code.
 | [Document Actions service](content-services/services/document-actions.service.md) | Implements the document menu actions for the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/document-actions.service.ts) |
 | [Document List service](content-services/services/document-list.service.md) | Implements node operations used by the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/document-list.service.ts) |
 | [Folder Actions service](content-services/services/folder-actions.service.md) | Implements the folder menu actions for the Document List component. | [Source](../lib/content-services/src/lib/document-list/services/folder-actions.service.ts) |
+| [Group Service](content-services/services/group.service.md) | Manages groups. | [Source](../lib/content-services/src/lib/group/services/group.service.ts) |
 | [New Version Uploader service](content-services/services/new-version-uploader.dialog.service.md) | Display a dialog that allows to upload new file version or to manage the current node versions. | [Source](../lib/content-services/src/lib/new-version-uploader/new-version-uploader.service.ts) |
 | [Node Comments Service](content-services/services/node-comments.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../lib/content-services/src/lib/node-comments/services/node-comments.service.ts) |
 | [Node permission dialog service](content-services/services/node-permission-dialog.service.md) | Displays dialogs to let the user set node permissions. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission-dialog.service.ts) |

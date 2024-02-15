@@ -33,7 +33,7 @@ Shows tags for a node.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| results | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a tag is selected. |
+| results | [`EventEmitter`](https://angular.io/api/core/EventEmitter)[`<TagEntry>`](../../../lib/js-api/src/api/content-rest-api/model/tagEntry.ts)`[]` | Emitted when a tag is selected. |
 
 ## Details
 
@@ -49,3 +49,7 @@ To limit number of tags initially displayed set `limitTagsDisplayed` to `true`.
 ```
 
 Now when tag chips will exceed the size of the container number of displayed chips will be limited to as much as fits together with view more button. At least one tag will always be displayed, when one tag and view more button won't fit into one line the button will be displayed under the tag.
+
+## See Also
+
+-   [Dynamic Chip List component](../../core/components/dynamic-chip-list.component.md)

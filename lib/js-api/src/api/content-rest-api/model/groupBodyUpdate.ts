@@ -17,4 +17,5 @@
 
 export interface GroupBodyUpdate {
     displayName: string;
+    description?: string;
 }

@@ -15,11 +15,6 @@
  * limitations under the License.
  */
 
-export interface Group {
-    id?: string;
-    displayName?: string;
-    description?: string;
-    isRoot?: boolean;
-    parentIds?: string[];
-    zones?: string[];
-}
+export * from './dynamic-chip-list.component';
+export * from './dynamic-chip-list.module';
+export * from './chip';

@@ -1,0 +1,39 @@
+<div
+    class="adf-dynamic-chip-list-container"
+    [class.adf-dynamic-chip-list-flex-column]="limitChipsDisplayed && (!calculationsDone || columnFlexDirection)"
+    [class.adf-dynamic-chip-list-button-in-next-line]="moveLoadMoreButtonToNextRow"
+    [class.adf-dynamic-chip-list-paginated]="paginationData"
+    #nodeListContainer>
+    <mat-chip-list
+        [class.adf-dynamic-chip-list-full-width]="limitChipsDisplayed && !calculationsDone"
+        role="listbox"
+        [attr.aria-label]="'METADATA.BASIC.TAGS' | translate">
+        <mat-chip
+            class="adf-dynamic-chip-list-chip"
+            *ngFor="let chip of chipsToDisplay; let idx = index"
+            (removed)="removedChip.emit(chip.id)">
+            <span id="adf-dynamic-chip-list-chip-name-{{ idx }}">{{ chip.name }}</span>
+            <mat-icon
+                *ngIf="showDelete"
+                id="adf-dynamic-chip-list-delete-{{ chip.name }}"
+                class="adf-dynamic-chip-list-delete-icon"
+                matChipRemove>
+                cancel
+            </mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+    <button
+        data-automation-id="adf-dynamic-chip-list-view-more-button"
+        mat-button
+        [hidden]="!limitChipsDisplayed"
+        [style.left.px]="viewMoreButtonLeftOffset"
+        [style.top.px]="viewMoreButtonTop"
+        class="adf-dynamic-chip-list-view-more-button"
+        [class.adf-dynamic-chip-list-hidden-btn]="!calculationsDone"
+        (click)="displayNextChips($event)">
+        {{
+            paginationData ? ('DYNAMIC_CHIP_LIST.LOAD_MORE' | translate) :
+                ('TAG_NODE_LIST.VIEW_MORE' | translate: { count: undisplayedChipsCount})
+        }}
+    </button>
+</div>

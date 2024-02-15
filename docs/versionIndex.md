@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v6.7.0](#v670)
 -   [v6.4.0](#v640)
 -   [v6.2.0](#v620)
 -   [v6.1.0](#v610)
@@ -43,6 +44,17 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v6.7.0
+
+<!--670 start-->
+
+-   [Dynamic Chip List component](core/components/dynamic-chip-list.component.md)
+-   [Unsaved Changes Dialog component](core/dialogs/unsaved-changes-dialog.component.md)
+-   [Unsaved Changes guard](core/services/unsaved-changes.guard.md)
+-   [Group Service](content-services/services/group.service.md)
+
+<!--670 end-->
 
 ## v6.4.0
 

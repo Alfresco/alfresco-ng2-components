@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-export interface Group {
-    id?: string;
-    displayName?: string;
-    description?: string;
-    isRoot?: boolean;
-    parentIds?: string[];
-    zones?: string[];
+export interface Chip {
+    name: string;
+    id: string;
 }
