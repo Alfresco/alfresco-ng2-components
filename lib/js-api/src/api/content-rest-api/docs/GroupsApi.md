@@ -483,6 +483,7 @@ groupsApi.updateGroup(`<groupId>`, groupBodyUpdate, opts).then((data) => {
 | Name        | Type   |
 |-------------|--------|
 | displayName | string |
+| description | string |
 
 ## GroupPaging
 
