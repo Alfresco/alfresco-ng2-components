@@ -158,7 +158,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         this.undisplayedChipsCount = 0;
         let chipsToDisplay = 1;
         const containerWidth: number = this.containerView.nativeElement.clientWidth;
-        const viewMoreButton = this.containerView.nativeElement.children[1];
+        const viewMoreButton: HTMLButtonElement = this.containerView.nativeElement.children[1];
         const viewMoreBtnWidth: number = viewMoreButton.getBoundingClientRect().width;
         const firstChip = this.matChips.get(0);
         const chipMargin = firstChip ? this.getChipMargin(firstChip) : 0;
@@ -180,6 +180,17 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
             chips.splice(0, lastIndex);
             lastIndex = 0;
         } while ((chips.length || chipsToDisplay < this.matChips.length && this.matChips.length) && this.paginationData);
+        this.arrangeElements(containerWidth, chipsWidth, viewMoreBtnWidth, chipsToDisplay, viewMoreButton);
+        this.calculationsDone = true;
+    }
+
+    private getChipMargin(chip: MatChip): number {
+        const chipStyles = window.getComputedStyle(chip._elementRef.nativeElement);
+        return parseInt(chipStyles.marginLeft, 10) + parseInt(chipStyles.marginRight, 10);
+    }
+
+    private arrangeElements(containerWidth: number, chipsWidth: number, viewMoreBtnWidth: number, chipsToDisplay: number,
+                            viewMoreButton: HTMLButtonElement): void {
         if ((containerWidth - chipsWidth - viewMoreBtnWidth) <= 0) {
             const chip = this.paginationData ? this.matChips.last : this.matChips.first;
             const hasNotEnoughSpaceForMoreButton = (containerWidth < (chip?._elementRef.nativeElement.offsetWidth + chip?._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
@@ -203,11 +214,5 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         } else {
             this.viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
         }
-        this.calculationsDone = true;
-    }
-
-    private getChipMargin(chip: MatChip): number {
-        const chipStyles = window.getComputedStyle(chip._elementRef.nativeElement);
-        return parseInt(chipStyles.marginLeft, 10) + parseInt(chipStyles.marginRight, 10);
     }
 }
