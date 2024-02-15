@@ -23,7 +23,7 @@ import { exampleData } from './mocks/rich-text-editor.mock';
 
 export default {
     component: RichTextEditorComponent,
-    title: 'Core/Rich Text Editor/Rich Text Editor',
+    title: 'Process Services Cloud/Rich Text Editor',
     decorators: [
         moduleMetadata({
             imports: [ProcessServicesCloudStoryModule, RichTextEditorModule]
@@ -51,11 +51,11 @@ export default {
 const template: Story<RichTextEditorComponent> = (args: RichTextEditorComponent) => ({
     props: args,
     template: `
-    <adf-rich-text-editor
+    <adf-cloud-rich-text-editor
         [data]=data
         [readOnly]=readOnly
         #editor >
-    </adf-rich-text-editor>
+    </adf-cloud-rich-text-editor>
     <hr/>
     <h3>Output data from editor:</h3>
     <pre>{{editor.outputData$ | async | json}}</pre>
@@ -65,17 +65,29 @@ const template: Story<RichTextEditorComponent> = (args: RichTextEditorComponent)
 export const defaultRichTextEditor = template.bind({});
 defaultRichTextEditor.args = {
     data: {
-        time: 1663761278752,
-        blocks: [
+        time : 1550476186479,
+        blocks : [
             {
-                id: 'yOV_DfEQhC',
-                type: 'paragraph',
-                data: {
-                    text: 'text'
+                type : 'paragraph',
+                data : {
+                    text : 'The example of text that was written in <b>one of popular</b> text editors.'
+                }
+            },
+            {
+                type : 'header',
+                data : {
+                    text : 'With the header of course',
+                    level : 2
+                }
+            },
+            {
+                type : 'paragraph',
+                data : {
+                    text : 'So what do we have?'
                 }
             }
         ],
-        version: '2.25.0'
+        version : '2.29.0'
     }
 };
 
