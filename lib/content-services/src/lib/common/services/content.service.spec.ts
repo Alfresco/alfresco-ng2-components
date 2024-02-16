@@ -133,23 +133,25 @@ describe('ContentService', () => {
     describe('Node Icons', () => {
         let node: Node;
 
-        node = {
-            isFolder: true,
-            isFile: false,
-            createdByUser: { id: 'admin', displayName: 'Administrator' },
-            modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
-            nodeType: 'cm:content',
-            content: {
-                mimeType: 'application/rtf',
-                mimeTypeName: 'Rich Text Format',
-                sizeInBytes: 14530
-            },
-            createdAt: new Date('2017-05-24T15:08:55.640Z'),
-            modifiedByUser: { id: 'admin', displayName: 'Administrator' },
-            name: 'b_txt_file.rtf',
-            id: 'test node 1',
-            aspectNames: ['']
-        } as Node;
+        beforeEach(() => {
+            node = {
+                isFolder: true,
+                isFile: false,
+                createdByUser: { id: 'admin', displayName: 'Administrator' },
+                modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
+                nodeType: 'cm:content',
+                content: {
+                    mimeType: 'application/rtf',
+                    mimeTypeName: 'Rich Text Format',
+                    sizeInBytes: 14530
+                },
+                createdAt: new Date('2017-05-24T15:08:55.640Z'),
+                modifiedByUser: { id: 'admin', displayName: 'Administrator' },
+                name: 'b_txt_file.rtf',
+                id: 'test node 1',
+                aspectNames: ['']
+            } as Node;
+        });
 
         it('should resolve folder icon', () => {
             expect(contentService.getNodeIcon(node)).toContain('assets/images/ft_ic_folder.svg');

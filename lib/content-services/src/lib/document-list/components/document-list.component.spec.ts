@@ -912,15 +912,15 @@ describe('DocumentList', () => {
         documentList.dataTable.columnsWidthChanged.emit(newColumnWidth as DataColumn[]);
 
         expect(documentList.onColumnsWidthChange).toHaveBeenCalledWith(newColumnWidth);
-        expect(documentList.columnsWidthChanged.emit).toHaveBeenCalledWith({'tag': 65, 'name': 77});
+        expect(documentList.columnsWidthChanged.emit).toHaveBeenCalledWith({tag: 65, name: 77});
     });
 
     it('should emit new columns visibility', () => {
-        const newColumnsVisisbility = [{key: 'key', type: 'text', id: 'tag', isHidden: true}, {key: 'key1', type: 'text', id: 'name'}];
+        const newColumnsVisibility = [{key: 'key', type: 'text', id: 'tag', isHidden: true}, {key: 'key1', type: 'text', id: 'name'}];
         spyOn(documentList.columnsVisibilityChanged, 'emit');
-        documentList.onColumnsVisibilityChange(newColumnsVisisbility as DataColumn[]);
+        documentList.onColumnsVisibilityChange(newColumnsVisibility as DataColumn[]);
 
-        expect(documentList.columnsVisibilityChanged.emit).toHaveBeenCalledWith({'tag': false});
+        expect(documentList.columnsVisibilityChanged.emit).toHaveBeenCalledWith({tag: false});
     });
 
     it('should perform folder navigation on single click', () => {

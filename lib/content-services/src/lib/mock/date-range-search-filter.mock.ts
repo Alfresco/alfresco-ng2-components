@@ -62,7 +62,7 @@ export const mockSearchFilterWithDisplayedLabelsByField: SearchCategory = {
             field: 'test',
             placeholder: 'test placeholder',
             displayedLabelsByField: {
-                'test': 'test-tab-label'
+                test: 'test-tab-label'
             }
         }
     }
