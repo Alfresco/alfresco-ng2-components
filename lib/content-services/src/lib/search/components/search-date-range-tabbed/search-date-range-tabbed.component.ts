@@ -179,6 +179,6 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     }
 
     private getDisplayLabelForField(fieldForDisplayLabel: string): string {
-        return this.settings && this.settings.displayedLabelsByField && this.settings.displayedLabelsByField[fieldForDisplayLabel] ? this.settings.displayedLabelsByField[fieldForDisplayLabel] : fieldForDisplayLabel;
+        return this.settings?.displayedLabelsByField?.[fieldForDisplayLabel] ? this.settings.displayedLabelsByField[fieldForDisplayLabel] : fieldForDisplayLabel;
     }
 }

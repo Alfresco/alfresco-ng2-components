@@ -16,21 +16,14 @@
  */
 
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
-import {
-    LayoutOrientedConfig,
-    Property,
-    OrganisedPropertyGroup,
-    PropertyGroupContainer
-} from '../../interfaces/content-metadata.interfaces';
+import { LayoutOrientedConfig, Property, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 
 describe('LayoutOrientedConfigService', () => {
-
     let configService: LayoutOrientedConfigService;
 
     const createConfigService = (configObj: LayoutOrientedConfig) => new LayoutOrientedConfigService(configObj);
 
     describe('isGroupAllowed', () => {
-
         const testCases = [
             {
                 config: [],
@@ -48,11 +41,15 @@ describe('LayoutOrientedConfigService', () => {
                 groupNameToQuery: 'berseria'
             },
             {
-                config: [{
-                    title: 'Deamons', items: [
-                        { aspect: 'zestiria', properties: '*' }, { aspect: 'berseria', properties: '*' }
-                    ]
-                }],
+                config: [
+                    {
+                        title: 'Deamons',
+                        items: [
+                            { aspect: 'zestiria', properties: '*' },
+                            { aspect: 'berseria', properties: '*' }
+                        ]
+                    }
+                ],
                 expectation: true,
                 groupNameToQuery: 'berseria'
             },
@@ -73,9 +70,7 @@ describe('LayoutOrientedConfigService', () => {
                 groupNameToQuery: 'phantasia'
             },
             {
-                config: [
-                    { title: 'Deamons', includeAll: true, items: [{ aspect: 'zestiria', properties: '*' }] }
-                ],
+                config: [{ title: 'Deamons', includeAll: true, items: [{ aspect: 'zestiria', properties: '*' }] }],
                 expectation: true,
                 groupNameToQuery: 'phantasia'
             }
@@ -93,7 +88,6 @@ describe('LayoutOrientedConfigService', () => {
     });
 
     describe('reorganiseByConfig', () => {
-
         interface TestCase {
             name: string;
             config: LayoutOrientedConfig;
@@ -123,94 +117,81 @@ describe('LayoutOrientedConfigService', () => {
                 name: 'First property of a group in one item',
                 config: [
                     {
-                        title: 'First group', items: [
-                            { aspect: 'berseria', properties: ['property1'] }
-                        ]
+                        title: 'First group',
+                        items: [{ aspect: 'berseria', properties: ['property1'] }]
                     }
                 ],
-                expectations: [
-                    { title: 'First group', properties: [property1] }
-                ]
+                expectations: [{ title: 'First group', properties: [property1] }]
             },
             {
                 name: 'Second property of a group in one item',
                 config: [
                     {
-                        title: 'First group', items: [
-                            { aspect: 'berseria', properties: ['property2'] }
-                        ]
+                        title: 'First group',
+                        items: [{ aspect: 'berseria', properties: ['property2'] }]
                     }
                 ],
-                expectations: [
-                    { title: 'First group', properties: [property2] }
-                ]
+                expectations: [{ title: 'First group', properties: [property2] }]
             },
             {
                 name: 'Properties with editable flag',
                 config: [
                     {
-                        title: 'Editable property', items: [
+                        title: 'Editable property',
+                        items: [
                             { aspect: 'otherTales', properties: ['property5'], editable: true },
                             { aspect: 'otherTales', properties: ['property6'], editable: false }
-
                         ]
                     }
                 ],
-                expectations: [
-                    { title: 'Editable property', properties: [property5, property6] }
-                ]
+                expectations: [{ title: 'Editable property', properties: [property5, property6] }]
             },
             {
                 name: 'More properties from one group in one item',
                 config: [
                     {
-                        title: 'First group', items: [
-                            { aspect: 'berseria', properties: ['property2', 'property1'] }
-                        ]
+                        title: 'First group',
+                        items: [{ aspect: 'berseria', properties: ['property2', 'property1'] }]
                     }
                 ],
-                expectations: [
-                    { title: 'First group', properties: [property2, property1] }
-                ]
+                expectations: [{ title: 'First group', properties: [property2, property1] }]
             },
             {
                 name: 'First property of the second group in one item',
                 config: [
                     {
-                        title: 'First group', items: [
-                            { aspect: 'zestiria', properties: ['property4'] }
-                        ]
+                        title: 'First group',
+                        items: [{ aspect: 'zestiria', properties: ['property4'] }]
                     }
                 ],
-                expectations: [
-                    { title: 'First group', properties: [property4] }
-                ]
+                expectations: [{ title: 'First group', properties: [property4] }]
             },
             {
                 name: 'One-one properties from multiple groups in one item',
                 config: [
                     {
-                        title: 'First group', items: [
+                        title: 'First group',
+                        items: [
                             { aspect: 'zestiria', properties: ['property4'] },
                             { aspect: 'berseria', properties: ['property1'] }
                         ]
                     }
                 ],
-                expectations: [
-                    { title: 'First group', properties: [property4, property1] }
-                ]
+                expectations: [{ title: 'First group', properties: [property4, property1] }]
             },
             {
                 name: 'Multiple properties mixed from multiple groups in multiple items',
                 config: [
                     {
-                        title: 'First group', items: [
+                        title: 'First group',
+                        items: [
                             { aspect: 'zestiria', properties: ['property4'] },
                             { type: 'berseria', properties: ['property1'] }
                         ]
                     },
                     {
-                        title: 'Second group', items: [
+                        title: 'Second group',
+                        items: [
                             { aspect: 'zestiria', properties: ['property3'] },
                             { type: 'berseria', properties: ['property2', 'property1'] },
                             { aspect: 'zestiria', properties: ['property4'] }
@@ -226,15 +207,15 @@ describe('LayoutOrientedConfigService', () => {
                 name: 'Multiple properties mixed from multiple groups in multiple items with "*"',
                 config: [
                     {
-                        title: 'First group', items: [
+                        title: 'First group',
+                        items: [
                             { aspect: 'zestiria', properties: '*' },
                             { type: 'berseria', properties: ['property1'] }
                         ]
                     },
                     {
-                        title: 'Second group', items: [
-                            { type: 'berseria', properties: ['property2', 'property1'] }
-                        ]
+                        title: 'Second group',
+                        items: [{ type: 'berseria', properties: ['property2', 'property1'] }]
                     }
                 ],
                 expectations: [
@@ -246,22 +227,22 @@ describe('LayoutOrientedConfigService', () => {
                 name: 'Not existing property',
                 config: [
                     {
-                        title: 'First group', items: [
+                        title: 'First group',
+                        items: [
                             { aspect: 'zestiria', properties: '*' },
                             { type: 'berseria', properties: ['not-existing-property'] },
                             { type: 'berseria', properties: ['property2'] }
                         ]
                     }
                 ],
-                expectations: [
-                    { title: 'First group', properties: [property3, property4, property2] }
-                ]
+                expectations: [{ title: 'First group', properties: [property3, property4, property2] }]
             },
             {
                 name: 'Not existing group',
                 config: [
                     {
-                        title: 'First group', items: [
+                        title: 'First group',
+                        items: [
                             { aspect: 'zestiria', properties: '*' },
                             { type: 'not-existing-group', properties: '*' },
                             { type: 'berseria', properties: ['property2'] },
@@ -269,9 +250,7 @@ describe('LayoutOrientedConfigService', () => {
                         ]
                     }
                 ],
-                expectations: [
-                    { title: 'First group', properties: [property3, property4, property2] }
-                ]
+                expectations: [{ title: 'First group', properties: [property3, property4, property2] }]
             },
             {
                 name: 'Custom Title',
@@ -297,7 +276,6 @@ describe('LayoutOrientedConfigService', () => {
                     }
                 ]
             }
-
         ];
 
         testCases.forEach((testCase) => {
@@ -308,7 +286,7 @@ describe('LayoutOrientedConfigService', () => {
 
                 expect(organisedPropertyGroups.length).toBe(testCase.expectations.length, 'Group count should match');
                 testCase.expectations.forEach((expectation, i) => {
-                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match');
+                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, "Group's title should match");
                     expect(organisedPropertyGroups[i].properties.length).toBe(
                         expectation.properties.length,
                         `Property count for "${organisedPropertyGroups[i].title}" group should match.`
@@ -322,20 +300,24 @@ describe('LayoutOrientedConfigService', () => {
         });
 
         it('should include all exclusions passed to filterExcludedPreset', () => {
-            let properties: OrganisedPropertyGroup[] = [{ 
-                name: 'propGroup',
-                title: 'propGroup',
-                properties: [ { name: 'property1', title: 'Custom title', editable: true } as Property,
-                    { name: 'property2', title: 'Custom title', editable: true } as Property,
-                    { name: 'property3', title: 'Custom title', editable: true } as Property,
-                    { name: 'property4', title: 'Custom title', editable: true } as Property,
-            ]}];
+            let properties: OrganisedPropertyGroup[] = [
+                {
+                    name: 'propGroup',
+                    title: 'propGroup',
+                    properties: [
+                        { name: 'property1', title: 'Custom title', editable: true } as Property,
+                        { name: 'property2', title: 'Custom title', editable: true } as Property,
+                        { name: 'property3', title: 'Custom title', editable: true } as Property,
+                        { name: 'property4', title: 'Custom title', editable: true } as Property
+                    ]
+                }
+            ];
 
             configService = createConfigService([
-                { title: 'Property group', items: [ { aspect: 'berseria', properties: ['property1', 'property2', 'property3', 'property4'] } ] },
-                { title: 'Exclude group 1', items: [ { exclude: ['property1'],  properties: [] } ] },
-                { title: 'Exclude group 2', items: [ { exclude: ['property2'],  properties: [] } ] },
-                { title: 'Exclude group 3', items: [ { exclude: ['property3'],  properties: [] } ] },
+                { title: 'Property group', items: [{ aspect: 'berseria', properties: ['property1', 'property2', 'property3', 'property4'] }] },
+                { title: 'Exclude group 1', items: [{ exclude: ['property1'], properties: [] }] },
+                { title: 'Exclude group 2', items: [{ exclude: ['property2'], properties: [] }] },
+                { title: 'Exclude group 3', items: [{ exclude: ['property3'], properties: [] }] }
             ]);
 
             let result = configService.filterExcludedPreset(properties);
