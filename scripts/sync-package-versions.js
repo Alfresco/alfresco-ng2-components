@@ -6,7 +6,7 @@ const { execSync } = require('child_process');
 if(process.env.CI) {
 
     // create a list of inner packages that need to be updated
-    fileProcessCloud = './lib/process-services-cloud/package.json'
+    const fileProcessCloud = './lib/process-services-cloud/package.json';
 
     const processCloudContents = readFileSync(fileProcessCloud).toString();
 
