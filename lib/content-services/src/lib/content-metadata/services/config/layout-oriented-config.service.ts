@@ -75,7 +75,8 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         let excludedConfig = this.config
             .map((config) => config.exclude)
-            .find((exclude) => exclude !== undefined);
+            .filter((exclude) => exclude !== undefined)
+            .flat();
 
         if (excludedConfig === undefined) {
             excludedConfig = [];
