@@ -3,8 +3,7 @@ const { join } = require('path');
 const { execSync } = require('child_process');
 // skip the execution of this script if the CI process env variable is true
 
-if(process.env.CI) {
-
+if(!process.env.CI) {
     // create a list of inner packages that need to be updated
     const fileProcessCloud = './lib/process-services-cloud/package.json';
 
