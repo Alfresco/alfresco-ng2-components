@@ -18,10 +18,10 @@
     "@editorjs/list": "1.9.0",
     "@editorjs/marker": "1.4.0",
     "@editorjs/underline": "1.1.0",
-    "@quanzo/change-font-size": "1.0.0",
     "editorjs-text-color-plugin": "2.0.4",
     "editorjs-html": "3.4.3",
-    "editorjs-paragraph-with-alignment": "3.0.0"
+    "editorjs-paragraph-with-alignment": "3.0.0",
+    "@quanzo/change-font-size": "1.0.0"
   },
   "peerDependencies": {
     "@angular/animations": ">=14.1.3",
