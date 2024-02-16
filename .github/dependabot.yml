@@ -25,6 +25,20 @@ updates:
       - dependency-name: "pdfjs-dist"
       - dependency-name: "@types/*"
       - dependency-name: "typescript"
+  - package-ecosystem: npm
+    directory: "/lib/process-services-cloud"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "07:00"
+    open-pull-requests-limit: 5
+    target-branch: develop
+    groups:
+      editorjs:
+        patterns:
+          - "@editorjs/*"
+          - "editorjs*"
+          - "@quanzo/*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
