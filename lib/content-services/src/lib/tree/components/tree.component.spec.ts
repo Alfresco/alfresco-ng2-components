@@ -54,12 +54,12 @@ describe('TreeComponent', () => {
 
     const getNodePadding = (nodeId: string) => parseInt(getComputedStyle(getNode(nodeId).nativeElement).paddingLeft, 10);
 
-    const getNodeSpinner = async (nodeId: string) => await loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: composeNodeSelector(nodeId) }));
+    const getNodeSpinner = async (nodeId: string) => loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: composeNodeSelector(nodeId) }));
 
     const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-icon`);
 
     const tickCheckbox = (index: number) => {
-        const selector = `[data-automation-id="${index === 0 ? 'has-children-node-checkbox' : 'no-children-node-checkbox'}"]`
+        const selector = `[data-automation-id="${index === 0 ? 'has-children-node-checkbox' : 'no-children-node-checkbox'}"]`;
         const nodeCheckboxes = fixture.debugElement.queryAll(By.css(selector));
         nodeCheckboxes[index].nativeElement.dispatchEvent(new Event('change'));
     };

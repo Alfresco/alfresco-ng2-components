@@ -190,7 +190,7 @@ describe('SearchDateRangeComponent', () => {
         await datePicker.openCalendar();
 
         const calendar = await loader.getHarness(MatCalendarHarness);
-        
+
         const afterDate = format(addDays(new Date(), 1), 'MMM d, yyyy');
         const cell = await calendar.getCells({ disabled: true });
         expect(await cell[0].getAriaLabel()).toEqual(afterDate);

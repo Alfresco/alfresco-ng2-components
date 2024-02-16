@@ -358,7 +358,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             await selectTabByIndex(1);
             component.onTabSelectionChange(1);
-            
+
             fixture.detectChanges();
             const adfUploadButton = getUploadButton();
 

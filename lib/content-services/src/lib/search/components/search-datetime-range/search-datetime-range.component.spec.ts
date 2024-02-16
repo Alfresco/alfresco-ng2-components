@@ -163,8 +163,8 @@ describe('SearchDatetimeRangeComponent', () => {
             queryFragments: {},
             update: () => {}
         };
-        const fromInGmt = new Date('2021-02-24T16:00:00+02:00');
-        const toInGmt = new Date('2021-02-28T14:00:00+02:00');
+        const fromInGmt = new Date('2021-02-24T17:00:00+02:00');
+        const toInGmt = new Date('2021-02-28T15:00:00+02:00');
 
         component.id = 'createdDateRange';
         component.context = context;

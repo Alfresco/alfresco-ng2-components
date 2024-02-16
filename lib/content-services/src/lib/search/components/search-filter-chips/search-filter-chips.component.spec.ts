@@ -386,7 +386,7 @@ describe('SearchFilterChipsComponent', () => {
             let filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
             expect(filteredMenu.length).toBe(1);
             expect(await filteredMenu[0].getLabelText()).toEqual('Extra Small (10239)');
-            
+
             inputElement.nativeElement.value = 'my';
             inputElement.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
@@ -395,7 +395,7 @@ describe('SearchFilterChipsComponent', () => {
             filteredResult.forEach(async (item, index) => {
                 expect(await filteredMenu[index].getLabelText()).toEqual(item);
             });
-            
+
             const clearButton = await loader.getHarness(MatButtonHarness.with({selector: '[title="SEARCH.FILTER.BUTTONS.CLEAR"]' }));
             await clearButton.click();
 
