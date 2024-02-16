@@ -199,7 +199,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     }
 
     private handleError(error: any): any {
-        let errorMessage = 'CORE.MESSAGES.ERRORS.GENERIC';
+        const errorMessage = 'CORE.MESSAGES.ERRORS.GENERIC';
 
         try {
             const {
