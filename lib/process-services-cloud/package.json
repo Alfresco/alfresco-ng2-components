@@ -11,16 +11,16 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "dependencies": {
-    "@editorjs/editorjs": "^2.26.5",
+    "@editorjs/editorjs": "^2.29.0",
     "@editorjs/code": "2.7.0",
-    "@editorjs/header": "2.7.0",
+    "@editorjs/header": "2.8.1",
     "@editorjs/inline-code": "1.3.1",
-    "@editorjs/list": "1.8.0",
-    "@editorjs/marker": "1.2.2",
+    "@editorjs/list": "1.9.0",
+    "@editorjs/marker": "1.4.0",
     "@editorjs/underline": "1.0.0",
     "@quanzo/change-font-size": "1.0.0",
-    "editorjs-text-color-plugin": "1.13.1",
-    "editorjs-html": "3.4.2",
+    "editorjs-text-color-plugin": "2.0.3",
+    "editorjs-html": "3.4.3",
     "editorjs-paragraph-with-alignment": "3.0.0"
   },
   "peerDependencies": {
