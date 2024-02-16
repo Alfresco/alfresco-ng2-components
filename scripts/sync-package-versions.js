@@ -1,64 +1,38 @@
 const { readFileSync, writeFileSync } = require('fs');
 const { join } = require('path');
 const { execSync } = require('child_process');
+// skip the execution of this script if the CI process env variable is true
 
-fileProcessCloud = './lib/process-services-cloud/package.json'
+if(process.env.CI) {
 
-const processCloudContents = readFileSync(fileProcessCloud).toString();
+    // create a list of inner packages that need to be updated
+    fileProcessCloud = './lib/process-services-cloud/package.json'
 
+    const processCloudContents = readFileSync(fileProcessCloud).toString();
 
-const packageJson = require(join(__dirname, '../package.json'));
+    // read the package json fileProcessCloud using the require function most probably we need to join the path with __dirname
+    const processCloud = require(join(__dirname, '../lib/process-services-cloud/package.json'));
+    const packageJsonOrigin = require(join(__dirname, '../package.json'));
 
-// pick @editorjs/code
-// pick @editorjs/editorjs
-// pick @editorjs/inline-code
-// @editorjs/header
-// @editorjs/list
-// @editorjs/marker
-// @editorjs/underline
-// editorjs-text-color-plugin
-// editorjs-html
-// editorjs-paragraph-with-alignment
-// @quanzo/change-font-size
-const editorJsVersionRoot = packageJson.devDependencies['@editorjs/editorjs']
-const editorJsCodeVersionRoot = packageJson.devDependencies['@editorjs/code']
-const editorJsHeaderVersionRoot = packageJson.devDependencies['@editorjs/header']
-const editorJsInlineCodeVersionRoot = packageJson.devDependencies['@editorjs/inline-code']
-const editorJsListVersionRoot = packageJson.devDependencies['@editorjs/list']
-const editorJsMarkerVersionRoot = packageJson.devDependencies['@editorjs/marker']
-const editorJsUnderlineVersionRoot = packageJson.devDependencies['@editorjs/underline']
-const editorJsTextColorPluginVersionRoot = packageJson.devDependencies['editorjs-text-color-plugin']
-const editorJsHtmlVersionRoot = packageJson.devDependencies['editorjs-html']
-const editorJsParagraphWithAlignmentVersionRoot = packageJson.devDependencies['editorjs-paragraph-with-alignment']
-const quanzoChangeFontSizeVersionRoot = packageJson.devDependencies['@quanzo/change-font-size']
+    // iterate over the dependencies
+    // for each dependency check pick the value from packageJsonOrigin and override the value in processCloud
+    let fileChanged = false;
+    Array.from(Object.keys(processCloud.dependencies)).forEach((key) => {
+        // if the key exist and the value is different override it
+        if (packageJsonOrigin.devDependencies[key] && packageJsonOrigin.devDependencies[key] !== processCloud.dependencies[key]) {
+            fileChanged = true;
+            processCloud.dependencies[key] = packageJsonOrigin.devDependencies[key]
+        }
+    })
 
-// replace the dependencies with the root version
-// replace @editorjs/code with the root version
-// replace "@editorjs/editorjs": "^2.26.5",
-// @editorjs/header
-const newProcessCloudContents = processCloudContents
-    .replace(/"@editorjs\/editorjs": ".*"/, `"@editorjs/editorjs": "${editorJsVersionRoot}"`)
-    .replace(/"@editorjs\/code": ".*"/, `"@editorjs/code": "${editorJsCodeVersionRoot}"`)
-    .replace(/"@editorjs\/header": ".*"/, `"@editorjs/header": "${editorJsHeaderVersionRoot}"`)
-    .replace(/"@editorjs\/inline-code": ".*"/, `"@editorjs/inline-code": "${editorJsInlineCodeVersionRoot}"`)
-    .replace(/"@editorjs\/list": ".*"/, `"@editorjs/list": "${editorJsListVersionRoot}"`)
-    .replace(/"@editorjs\/marker": ".*"/, `"@editorjs/marker": "${editorJsMarkerVersionRoot}"`)
-    .replace(/"@editorjs\/underline": ".*"/, `"@editorjs/underline": "${editorJsUnderlineVersionRoot}"`)
-    .replace(/"editorjs-text-color-plugin": ".*"/, `"editorjs-text-color-plugin": "${editorJsTextColorPluginVersionRoot}"`)
-    .replace(/"editorjs-html": ".*"/, `"editorjs-html": "${editorJsHtmlVersionRoot}"`)
-    .replace(/"editorjs-paragraph-with-alignment": ".*"/, `"editorjs-paragraph-with-alignment": "${editorJsParagraphWithAlignmentVersionRoot}"`)
-    .replace(/"@quanzo\/change-font-size": ".*"/, `"@quanzo/change-font-size": "${quanzoChangeFontSizeVersionRoot}"`)
-
-
-
-// write the new content to the file
-writeFileSync(fileProcessCloud, newProcessCloudContents);
-
-// regenerate the lock by calling npm i --package-lock-only the lock is under libs/process-services-cloud/package-lock.json
-// regenerate it only if there was a change in the package.json
-if (JSON.stringify(processCloudContents) !== JSON.stringify(newProcessCloudContents)) {
-    console.log('Package changed need to regenerate lock file');
-    execSync('npm i --package-lock-only --legacy-peer-deps ', { cwd: './lib/process-services-cloud' });
-    console.log('Lock file regenerated');
+    if (fileChanged) {
+        writeFileSync(fileProcessCloud, JSON.stringify(processCloud, null, 2));
+        console.log('Package changed need to regenerate lock file');
+        execSync('npm i --package-lock-only --legacy-peer-deps ', { cwd: './lib/process-services-cloud' });
+        console.log('Lock file regenerated');
+    }
+} else {
+    console.log('Running in CI, skipping package sync process');
 }
+
 
