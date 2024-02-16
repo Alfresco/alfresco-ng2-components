@@ -25,13 +25,17 @@ import { SearchService } from '../../../search/services/search.service';
 import { DebugElement } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectionListHarness } from '@angular/material/list/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
 
 describe('AddPermissionPanelComponent', () => {
     let fixture: ComponentFixture<AddPermissionPanelComponent>;
     let component: AddPermissionPanelComponent;
     let element: HTMLElement;
     let searchApiService: SearchService;
-    let debugElement: DebugElement;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -42,9 +46,9 @@ describe('AddPermissionPanelComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(AddPermissionPanelComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         searchApiService = fixture.componentRef.injector.get(SearchService);
 
-        debugElement = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
@@ -55,12 +59,10 @@ describe('AddPermissionPanelComponent', () => {
         fixture.destroy();
     });
 
-    const typeWordIntoSearchInput = (word: string): void => {
-        const inputDebugElement = debugElement.query(By.css('#searchInput'));
-        inputDebugElement.nativeElement.value = word;
-        inputDebugElement.nativeElement.focus();
-        inputDebugElement.nativeElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
+    const typeWordIntoSearchInput = async (word: string): Promise<void> => {
+        const input = await loader.getHarness(MatInputHarness.with({ selector: '#searchInput' }));
+
+        return input.setValue(word);
     };
 
     it('should be able to render the component', () => {
@@ -73,9 +75,7 @@ describe('AddPermissionPanelComponent', () => {
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
 
-        typeWordIntoSearchInput('a');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('a');
 
         expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
         expect(element.querySelector('#result_option_0')).not.toBeNull();
@@ -90,9 +90,7 @@ describe('AddPermissionPanelComponent', () => {
             expect(items[0].entry.id).toBe(fakeAuthorityListResult.list.entries[0].entry.id);
         });
 
-        typeWordIntoSearchInput('a');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('a');
 
         const listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
         expect(listElement).toBeTruthy();
@@ -104,9 +102,7 @@ describe('AddPermissionPanelComponent', () => {
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
 
-        typeWordIntoSearchInput('a');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('a');
 
         expect(element.querySelector('#adf-add-permission-authority-results')).toBeTruthy();
         expect(element.querySelector('#result_option_0')).toBeTruthy();
@@ -118,10 +114,8 @@ describe('AddPermissionPanelComponent', () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         expect(element.querySelector('#adf-add-permission-type-search')).not.toBeNull();
         expect(element.querySelector('#searchInput')).not.toBeNull();
-        typeWordIntoSearchInput('a');
+        await typeWordIntoSearchInput('a');
 
-        await fixture.whenStable();
-        fixture.detectChanges();
         expect(element.querySelector('#result_option_0')).toBeTruthy();
 
         const clearButton = fixture.debugElement.query(By.css('#adf-permission-clear-input'));
@@ -136,9 +130,7 @@ describe('AddPermissionPanelComponent', () => {
     it('should remove element from selection on click when is already selected', async () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
 
-        typeWordIntoSearchInput('a');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('a');
 
         let selectedUserIcon = fixture.debugElement.query(By.css('.adf-people-select-icon'));
         const listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
@@ -162,9 +154,7 @@ describe('AddPermissionPanelComponent', () => {
         spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
         component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
 
-        typeWordIntoSearchInput('a');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('a');
 
         expect(element.querySelector('#adf-add-permission-authority-results')).toBeTruthy();
         expect(element.querySelector('#adf-add-permission-group-everyone')).toBeTruthy();
@@ -177,9 +167,7 @@ describe('AddPermissionPanelComponent', () => {
         spyOn(searchApiService, 'search').and.returnValue(of({ list: { entries: [] } }));
         component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
 
-        typeWordIntoSearchInput('a');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('a');
 
         expect(element.querySelector('#adf-add-permission-authority-results')).not.toBeNull();
         expect(element.querySelector('#adf-add-permission-group-everyone')).toBeDefined();
@@ -191,13 +179,12 @@ describe('AddPermissionPanelComponent', () => {
         component.selectedItems.push(fakeNameListResult.list.entries[0]);
         component.selectedItems.push(fakeNameListResult.list.entries[1]);
 
-        typeWordIntoSearchInput('a');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('a');
 
-        expect(element.querySelector('#result_option_0 .mat-list-text')).toBeTruthy();
-        expect(element.querySelector('#result_option_1 .mat-list-text')).toBeTruthy();
-        expect(element.querySelector('#result_option_0 .mat-list-text').innerHTML).not.toEqual(element.querySelector('#result_option_1 .mat-list-text').innerHTML);
+        const list = await loader.getHarness(MatSelectionListHarness);
+        const items = await list.getItems();
+        expect(items.length).toBe(3);
+        expect(await items[0].getText()).not.toEqual(await items[1].getText());
     });
 
     it('should emit unique element in between multiple search', async () => {
@@ -212,9 +199,7 @@ describe('AddPermissionPanelComponent', () => {
             expect(items[0].entry.id).toBe(fakeAuthorityListResult.list.entries[0].entry.id);
         });
 
-        typeWordIntoSearchInput('a');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('a');
 
         let listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
         expect(listElement).not.toBeNull();
@@ -226,9 +211,7 @@ describe('AddPermissionPanelComponent', () => {
         clearButton.triggerEventHandler('click', {});
         fixture.detectChanges();
 
-        typeWordIntoSearchInput('abc');
-        await fixture.whenStable();
-        fixture.detectChanges();
+        await typeWordIntoSearchInput('abc');
 
         listElement = fixture.debugElement.query(By.css('#result_option_0'));
         expect(listElement).not.toBeNull();

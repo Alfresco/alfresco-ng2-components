@@ -35,6 +35,9 @@ import { NodeAction } from '../document-list/models/node-action.enum';
 import { SitesService } from '../common/services/sites.service';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { ContentService } from '../common/services/content.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTabGroupHarness } from '@angular/material/tabs/testing';
 
 describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
@@ -42,6 +45,7 @@ describe('ContentNodeSelectorComponent', () => {
     let data: any;
     let uploadService: UploadService;
     let dialog: MatDialogRef<ContentNodeSelectorComponent>;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         data = {
@@ -86,6 +90,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
 
         const contentService = TestBed.inject(ContentService);
         spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
@@ -121,13 +126,11 @@ describe('ContentNodeSelectorComponent', () => {
         component.isLoading = false;
     };
 
-    const getTabLabel = (idx: number) => fixture.debugElement.queryAll(By.css('.mat-tab-label'))[idx];
+    const selectTabByIndex = async (tabIndex: number): Promise<void> => {
+        const tabGroup = await loader.getHarness(MatTabGroupHarness.with({ selector: '.adf-content-node-selector-dialog-content' }));
+        const tabToSelect = (await tabGroup.getTabs())[tabIndex];
 
-    const selectTabByIndex = (tabIndex: number) => {
-        const uploadFromLocalTab = getTabLabel(tabIndex);
-        const attributes = uploadFromLocalTab.nativeNode.attributes as NamedNodeMap;
-        const tabPositionInSet = Number(attributes.getNamedItem('aria-posinset').value) - 1;
-        component.onTabSelectionChange(tabPositionInSet);
+        return tabToSelect.select();
     };
 
     describe('Data injecting with the "Material dialog way"', () => {
@@ -260,39 +263,38 @@ describe('ContentNodeSelectorComponent', () => {
     describe('Upload button', () => {
         const getUploadButton = () => fixture.debugElement.query(By.css('adf-upload-button button'))?.nativeElement as HTMLButtonElement;
 
-        it('Should not be able to upload a file whilst a search is still running', () => {
+        it('Should not be able to upload a file whilst a search is still running', async () => {
             enableLocalUpload();
             fixture.detectChanges();
 
+            const tabGroup = await loader.getHarness(MatTabGroupHarness.with({ selector: '.adf-content-node-selector-dialog-content' }));
+            const uploadFromLocalTab = (await tabGroup.getTabs())[1];
             let infoMatIcon = getTabInfoButton();
-            let uploadFromLocalTab = getTabLabel(1);
 
-            expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('false');
+            expect(await uploadFromLocalTab.isDisabled()).toBeFalse();
             expect(infoMatIcon).toBeFalsy();
 
             component.showingSearch = true;
             fixture.detectChanges();
 
-            uploadFromLocalTab = getTabLabel(1);
             infoMatIcon = getTabInfoButton();
 
-            expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('true');
+            expect(await uploadFromLocalTab.isDisabled()).toBeTrue();
             expect(infoMatIcon).toBeTruthy();
             expect(component.getWarningMessage()).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE');
 
             component.showingSearch = false;
             fixture.detectChanges();
 
-            uploadFromLocalTab = getTabLabel(1);
             infoMatIcon = getTabInfoButton();
 
-            expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('false');
+            expect(await uploadFromLocalTab.isDisabled()).toBeFalse();
             expect(infoMatIcon).toBeFalsy();
         });
 
         it('should be able to show upload button if showLocalUploadButton set to true', async () => {
             enableLocalUpload();
-            selectTabByIndex(1);
+            await selectTabByIndex(1);
 
             fixture.detectChanges();
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button'));
@@ -301,8 +303,8 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.nativeElement.textContent).toEqual('file_uploadFORM.FIELD.UPLOAD');
         });
 
-        it('should be able to disable UploadButton if showingSearch set to true', () => {
-            selectTabByIndex(1);
+        it('should be able to disable UploadButton if showingSearch set to true', async () => {
+            await selectTabByIndex(1);
             component.showingSearch = true;
             component.hasAllowableOperations = true;
 
@@ -313,8 +315,8 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.disabled).toBe(true);
         });
 
-        it('should be able to enable UploadButton if showingSearch set to false', () => {
-            selectTabByIndex(1);
+        it('should be able to enable UploadButton if showingSearch set to false', async () => {
+            await selectTabByIndex(1);
             component.showingSearch = false;
             component.hasAllowableOperations = true;
 
@@ -325,11 +327,11 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.disabled).toBe(false);
         });
 
-        it('should be able to show warning message while searching', () => {
+        it('should be able to show warning message while searching', async () => {
             component.data.showLocalUploadButton = true;
             component.showingSearch = true;
             component.hasAllowableOperations = false;
-            selectTabByIndex(1);
+            await selectTabByIndex(1);
 
             fixture.detectChanges();
             const infoMatIcon = getTabInfoButton();
@@ -351,9 +353,11 @@ describe('ContentNodeSelectorComponent', () => {
             expect(warningMessage).toBeNull();
         });
 
-        it('should be able to disable UploadButton if user does not have allowable operations', () => {
+        it('should be able to disable UploadButton if user does not have allowable operations', async () => {
             component.hasAllowableOperations = false;
-            selectTabByIndex(1);
+
+            await selectTabByIndex(1);
+            component.onTabSelectionChange(1);
 
             fixture.detectChanges();
             const adfUploadButton = getUploadButton();
@@ -362,8 +366,8 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.disabled).toBe(true);
         });
 
-        it('should be able to enable UploadButton if user has allowable operations', () => {
-            selectTabByIndex(1);
+        it('should be able to enable UploadButton if user has allowable operations', async () => {
+            await selectTabByIndex(1);
             component.hasAllowableOperations = true;
 
             fixture.detectChanges();
@@ -373,21 +377,21 @@ describe('ContentNodeSelectorComponent', () => {
             expect(adfUploadButton.disabled).toBe(false);
         });
 
-        it('should not be able to show warning message if user has allowable operations', () => {
+        it('should not be able to show warning message if user has allowable operations', async () => {
             enableLocalUpload();
-            selectTabByIndex(1);
+            await selectTabByIndex(1);
             fixture.detectChanges();
             const warningMessage = fixture.debugElement.query(By.css('.adf-content-node-upload-button-warning-message span'));
 
             expect(warningMessage).toBeNull();
         });
 
-        it('should be able to show warning message if user does not have allowable operations', () => {
+        it('should be able to show warning message if user does not have allowable operations', async () => {
             component.data.showLocalUploadButton = true;
             component.hasAllowableOperations = false;
             component.showingSearch = false;
             component.isLoading = false;
-            selectTabByIndex(1);
+            await selectTabByIndex(1);
 
             fixture.detectChanges();
             const infoMatIcon = getTabInfoButton();
@@ -412,15 +416,15 @@ describe('ContentNodeSelectorComponent', () => {
     });
 
     describe('Tabs', () => {
-        it('should isFileServerTabSelected return true when tabIndex 0 is selected', () => {
-            selectTabByIndex(0);
+        it('should isFileServerTabSelected return true when tabIndex 0 is selected', async () => {
+            await selectTabByIndex(0);
 
             expect(component.isFileServerTabSelected()).toEqual(true);
         });
 
-        it('should isLocalUploadTabSelected return true when tabIndex 1 is selected', () => {
+        it('should isLocalUploadTabSelected return true when tabIndex 1 is selected', async () => {
             enableLocalUpload();
-            selectTabByIndex(1);
+            await selectTabByIndex(1);
 
             expect(component.isLocalUploadTabSelected()).toEqual(true);
         });
@@ -460,8 +464,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should show drag and drop area with the empty list template when no upload has started', async () => {
             enableLocalUpload();
-            const uploadFromLocalTab = getTabLabel(1);
-            uploadFromLocalTab.nativeElement.click();
+            await selectTabByIndex(1);
 
             fixture.detectChanges();
             await fixture.whenRenderingDone();
@@ -475,8 +478,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should not show the empty list template when an upload has started', async () => {
             enableLocalUpload();
-            const uploadFromLocalTab = getTabLabel(1);
-            uploadFromLocalTab.nativeElement.click();
+            await selectTabByIndex(1);
 
             component.uploadStarted = true;
             fixture.detectChanges();
