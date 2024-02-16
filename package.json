@@ -5,7 +5,7 @@
   "version": "6.6.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main && node ./scripts/sync-package-versions.js",
     "ng": "nx",
     "00": "echo -------------------------------------------- DOC  -----------------------------------------------",
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
