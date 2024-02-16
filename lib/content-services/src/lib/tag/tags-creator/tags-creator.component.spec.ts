@@ -31,12 +31,16 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
     let component: TagsCreatorComponent;
     let tagService: TagService;
     let notificationService: NotificationService;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -76,6 +80,7 @@ describe('TagsCreatorComponent', () => {
         });
 
         fixture = TestBed.createComponent(TagsCreatorComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
         tagService = TestBed.inject(TagService);
         notificationService = TestBed.inject(NotificationService);
@@ -725,34 +730,37 @@ describe('TagsCreatorComponent', () => {
              *
              * @returns debug element
              */
-            function getSpinner(): DebugElement {
-                return fixture.debugElement.query(By.css(`.mat-progress-spinner`));
+            async function getSpinner(): Promise<MatProgressSpinnerHarness> {
+                const progressSpinner = await loader.getHarnessOrNull(MatProgressSpinnerHarness);
+
+                return progressSpinner;
             }
 
-            it('should be displayed when existing tags are loading', fakeAsync(() => {
+            it('should be displayed when existing tags are loading', fakeAsync(async () => {
                 typeTag('tag', 0);
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
 
-                const spinner = getSpinner();
+                const spinner = await getSpinner();
                 expect(spinner).toBeTruthy();
 
                 discardPeriodicTasks();
                 flush();
             }));
 
-            it('should not be displayed when existing tags stopped loading', fakeAsync(() => {
+            it('should not be displayed when existing tags stopped loading', fakeAsync(async () => {
                 typeTag('tag');
 
-                const spinner = getSpinner();
+                const spinner = await getSpinner();
                 expect(spinner).toBeFalsy();
             }));
 
-            it('should have correct diameter', fakeAsync(() => {
+            it('should have correct diameter', fakeAsync(async () => {
                 typeTag('tag', 0);
 
-                const spinner = getSpinner();
-                expect(spinner.componentInstance.diameter).toBe(50);
+                const spinner = await getSpinner();
+                expect((await (await spinner.host()).getDimensions()).width).toBe(50);
+                expect((await (await spinner.host()).getDimensions()).height).toBe(50);
 
                 discardPeriodicTasks();
                 flush();

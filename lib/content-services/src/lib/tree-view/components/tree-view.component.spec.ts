@@ -134,7 +134,7 @@ describe('TreeViewComponent', () => {
 
             expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
             expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
-            expect(element.querySelectorAll('mat-tree-node').length).toBe(4);
+            expect(element.querySelectorAll('.adf-tree-view-node').length).toBe(4);
         });
 
         it('should throw a nodeClicked event when a node is clicked', (done) => {
@@ -153,13 +153,13 @@ describe('TreeViewComponent', () => {
         it('should change the icon of the opened folders', async () => {
             const rootFolderButton = element.querySelector<HTMLButtonElement>('#button-fake-node-name');
             expect(rootFolderButton).not.toBeNull();
-            expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder');
+            expect(element.querySelector('#button-fake-node-name .adf-tree-view-icon').textContent.trim()).toBe('folder');
             rootFolderButton.click();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder_open');
+            expect(element.querySelector('#button-fake-node-name .adf-tree-view-icon').textContent.trim()).toBe('folder_open');
         });
 
         it('should show the subfolders of a subfolder if there are any', async () => {
@@ -197,7 +197,7 @@ describe('TreeViewComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('#button-fake-node-name .mat-icon').textContent.trim()).toBe('folder');
+            expect(element.querySelector('#button-fake-node-name .adf-tree-view-icon').textContent.trim()).toBe('folder');
             expect(element.querySelector('#fake-child-name-tree-child-node')).toBeNull();
             expect(element.querySelector('#fake-second-name-tree-child-node')).toBeNull();
         });

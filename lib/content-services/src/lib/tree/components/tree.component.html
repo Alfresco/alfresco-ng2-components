@@ -72,14 +72,16 @@
                         [id]="node.id"
                         [checked]="descendantsAllSelected(node)"
                         [indeterminate]="descendantsPartiallySelected(node)"
-                        (change)="onNodeSelected(node)">
+                        (change)="onNodeSelected(node)"
+                        data-automation-id="has-children-node-checkbox">
                     </mat-checkbox>
                     <ng-template #noChildrenNodeCheckbox>
                         <mat-checkbox
                             color="primary"
                             [id]="node.id"
                             [checked]="treeNodesSelection.isSelected(node)"
-                            (change)="onNodeSelected(node)">
+                            (change)="onNodeSelected(node)"
+                            data-automation-id="no-children-node-checkbox">
                         </mat-checkbox>
                     </ng-template>
                 </ng-container>

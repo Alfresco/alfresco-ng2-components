@@ -33,13 +33,18 @@ import { TreeServiceMock } from '../mock/tree-service.service.mock';
 import { By } from '@angular/platform-browser';
 import { SelectionChange } from '@angular/cdk/collections';
 import { DebugElement } from '@angular/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
     let component: TreeComponent<TreeNode>;
     let userPreferenceService: UserPreferencesService;
+    let loader: HarnessLoader;
 
-    const composeNodeSelector = (nodeId: string) => `.mat-tree-node[data-automation-id="node_${nodeId}"]`;
+    const composeNodeSelector = (nodeId: string) => `[data-automation-id="node_${nodeId}"]`;
 
     const getNode = (nodeId: string) => fixture.debugElement.query(By.css(composeNodeSelector(nodeId)));
 
@@ -49,12 +54,13 @@ describe('TreeComponent', () => {
 
     const getNodePadding = (nodeId: string) => parseInt(getComputedStyle(getNode(nodeId).nativeElement).paddingLeft, 10);
 
-    const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .mat-progress-spinner`);
+    const getNodeSpinner = async (nodeId: string) => await loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: composeNodeSelector(nodeId) }));
 
     const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-icon`);
 
     const tickCheckbox = (index: number) => {
-        const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
+        const selector = `[data-automation-id="${index === 0 ? 'has-children-node-checkbox' : 'no-children-node-checkbox'}"]`
+        const nodeCheckboxes = fixture.debugElement.queryAll(By.css(selector));
         nodeCheckboxes[index].nativeElement.dispatchEvent(new Event('change'));
     };
 
@@ -73,6 +79,7 @@ describe('TreeComponent', () => {
         });
 
         fixture = TestBed.createComponent(TreeComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
         userPreferenceService = TestBed.inject(UserPreferencesService);
     });
@@ -126,20 +133,21 @@ describe('TreeComponent', () => {
         expect(nodeLevel1Padding).toBeGreaterThan(nodeLevel0Padding);
     });
 
-    it('should show a spinner for nodes that are loading subnodes', () => {
+    it('should show a spinner for nodes that are loading subnodes', async () => {
         component.treeService.treeNodes = Array.from(treeNodesChildrenMockExpanded);
         fixture.detectChanges();
         component.treeService.treeControl.dataNodes[0].isLoading = true;
         fixture.detectChanges();
-        const nodeSpinner = getNodeSpinner('testId1');
+        const nodeSpinner = await getNodeSpinner('testId1');
         expect(nodeSpinner).not.toBeNull();
     });
 
-    it('should show a spinner while the tree is loading', () => {
+    it('should show a spinner while the tree is loading', async () => {
         fixture.detectChanges();
         component.loadingRoot$ = of(true);
         fixture.detectChanges();
-        const matSpinnerElement = fixture.nativeElement.querySelector('.adf-tree-loading-spinner-container .mat-progress-spinner');
+
+        const matSpinnerElement = await loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: '.adf-tree-loading-spinner-container' }));
         expect(matSpinnerElement).not.toBeNull();
     });
 
@@ -172,13 +180,13 @@ describe('TreeComponent', () => {
         expect(getNodesSpy).toHaveBeenCalledWith('-root-', 0, 25, 'some term');
     });
 
-    it('should not collapse node when loading', () => {
+    it('should not collapse node when loading', async () => {
         component.refreshTree();
         component.treeService.treeNodes[0].isLoading = true;
         fixture.detectChanges();
         const collapseSpy = spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
-        getNodeSpinner(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        await (await ((await getNodeSpinner(component.treeService.treeNodes[0].id)).host())).click();
         expect(collapseSpy).not.toHaveBeenCalled();
     });
 
@@ -192,13 +200,13 @@ describe('TreeComponent', () => {
         expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0]);
     });
 
-    it('should not expand node when loading', () => {
+    it('should not expand node when loading', async () => {
         component.refreshTree();
         component.treeService.treeNodes[0].isLoading = true;
         fixture.detectChanges();
         const expandSpy = spyOn(component.treeService, 'expandNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
-        getNodeSpinner(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        await (await ((await getNodeSpinner(component.treeService.treeNodes[0].id)).host())).click();
         expect(expandSpy).not.toHaveBeenCalled();
     });
 
@@ -292,10 +300,11 @@ describe('TreeComponent', () => {
             .toBeUndefined();
     });
 
-    it('selection should be disabled by default, no checkboxes should be displayed', () => {
+    it('selection should be disabled by default, no checkboxes should be displayed', async () => {
         component.refreshTree();
         fixture.detectChanges();
-        const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
+        const nodeCheckboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+
         expect(nodeCheckboxes.length).toEqual(0);
         expect(component.selectableNodes).toEqual(false);
     });
@@ -305,10 +314,10 @@ describe('TreeComponent', () => {
             component.selectableNodes = true;
         });
 
-        it('should display checkboxes when selection is enabled', () => {
+        it('should display checkboxes when selection is enabled', async () => {
             component.refreshTree();
             fixture.detectChanges();
-            const nodeCheckboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
+            const nodeCheckboxes = await loader.getAllHarnesses(MatCheckboxHarness);
             const selectableNodes = component.treeService.treeNodes.filter((node: TreeNode) => node.nodeType !== TreeNodeType.LoadMoreNode);
             expect(nodeCheckboxes.length).toEqual(selectableNodes.length);
         });
@@ -336,7 +345,7 @@ describe('TreeComponent', () => {
             spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded) }));
             fixture.detectChanges();
             tickCheckbox(0);
-            tickCheckbox(2);
+            tickCheckbox(1);
             expect(component.descendantsPartiallySelected(component.treeService.treeNodes[0])).toBeTrue();
             expect(component.descendantsPartiallySelected(component.treeService.treeNodes[1])).toBeTrue();
         });

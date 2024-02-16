@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { By } from '@angular/platform-browser';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { FacetField } from '../../../models/facet-field.interface';
@@ -26,12 +25,16 @@ import { SearchFacetFiltersService } from '../../../services/search-facet-filter
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
 import { of } from 'rxjs';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
 
 describe('SearchFacetTabbedContentComponent', () => {
     let component: SearchFacetTabbedContentComponent;
     let fixture: ComponentFixture<SearchFacetTabbedContentComponent>;
     let queryBuilder: SearchQueryBuilderService;
     let searchFacetService: SearchFacetFiltersService;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -39,6 +42,7 @@ describe('SearchFacetTabbedContentComponent', () => {
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(SearchFacetTabbedContentComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         searchFacetService = TestBed.inject(SearchFacetFiltersService);
@@ -67,18 +71,10 @@ describe('SearchFacetTabbedContentComponent', () => {
      *
      * @returns list of native elements
      */
-    function getTabs(): HTMLDivElement[] {
-        return fixture.debugElement.queryAll(By.css('.mat-tab-label-content')).map((element) => element.nativeElement);
-    }
+    async function getTabs(): Promise<MatTabHarness[]> {
+        const tabGroup = await loader.getHarness(MatTabGroupHarness);
 
-    /**
-     * Set selected tab
-     *
-     * @param tabIndex index of the tab
-     */
-    function changeTab(tabIndex: number) {
-        getTabs()[tabIndex].click();
-        fixture.detectChanges();
+        return tabGroup.getTabs();
     }
 
     /**
@@ -107,20 +103,22 @@ describe('SearchFacetTabbedContentComponent', () => {
         triggerComponentChanges();
     }
 
-    it('should display 2 tabs with specific labels', () => {
-        const tabLabels = getTabs();
+    it('should display 2 tabs with specific labels', async () => {
+        const tabLabels = await getTabs();
         expect(tabLabels.length).toBe(2);
-        expect(tabLabels[0].innerText).toBe(component.tabbedFacet.facets['field'].label);
-        expect(tabLabels[1].innerText).toBe(component.tabbedFacet.facets['field2'].label);
+        expect(await tabLabels[0].getLabel()).toBe(component.tabbedFacet.facets['field'].label);
+        expect(await tabLabels[1].getLabel()).toBe(component.tabbedFacet.facets['field2'].label);
     });
 
-    it('should display creator tab as active initially and allow navigation', () => {
-        let activeTabLabel = fixture.debugElement.query(By.css('.mat-tab-label-active .mat-tab-label-content')).nativeElement.innerText;
-        expect(activeTabLabel).toBe(component.tabbedFacet.facets['field'].label);
+    it('should display creator tab as active initially and allow navigation', async () => {
+        let tabs = await getTabs();
+        expect(await tabs[0].isSelected()).toBeTrue();
+        expect(await tabs[1].isSelected()).toBeFalse();
 
-        changeTab(1);
-        activeTabLabel = fixture.debugElement.query(By.css('.mat-tab-label-active .mat-tab-label-content')).nativeElement.innerText;
-        expect(activeTabLabel).toBe(component.tabbedFacet.facets['field2'].label);
+        await tabs[1].select();
+
+        expect(await tabs[0].isSelected()).toBeFalse();
+        expect(await tabs[1].isSelected()).toBeTrue();
     });
 
     it('should create empty selected options for each tab initially', () => {

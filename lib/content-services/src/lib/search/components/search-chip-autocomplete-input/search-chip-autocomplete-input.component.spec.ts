@@ -16,17 +16,23 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatChip, MatChipRemove } from '@angular/material/chips';
+import { MatChipRemove } from '@angular/material/chips';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchChipAutocompleteInputComponent } from './search-chip-autocomplete-input.component';
 import { DebugElement } from '@angular/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MatOptionHarness } from '@angular/material/core/testing';
 
 describe('SearchChipAutocompleteInputComponent', () => {
     let component: SearchChipAutocompleteInputComponent;
     let fixture: ComponentFixture<SearchChipAutocompleteInputComponent>;
+    let loader: HarnessLoader;
     const onResetSubject = new Subject<void>();
 
     beforeEach(() => {
@@ -39,6 +45,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
         });
 
         fixture = TestBed.createComponent(SearchChipAutocompleteInputComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
         component.onReset$ = onResetSubject.asObservable();
         component.autocompleteOptions = [{value: 'option1'}, {value: 'option2'}];
@@ -85,8 +92,9 @@ describe('SearchChipAutocompleteInputComponent', () => {
      *
      * @returns list of chips
      */
-    function getChipList(): MatChip[] {
-        return fixture.debugElement.queryAll(By.css('mat-chip')).map((chip) => chip.nativeElement);
+    async function getChipList(): Promise<MatChipHarness[]> {
+        const harness = await loader.getHarness(MatChipListHarness);
+        return harness.getChips();
     }
 
     /**
@@ -95,8 +103,9 @@ describe('SearchChipAutocompleteInputComponent', () => {
      * @param index index of the chip
      * @returns chip value
      */
-    function getChipValue(index: number): string {
-        return fixture.debugElement.queryAll(By.css('mat-chip span')).map((chip) => chip.nativeElement)[index].innerText;
+    async function getChipValue(index: number): Promise<string> {
+        const chipList = await getChipList();
+        return chipList[index].getText();
     }
 
     /**
@@ -104,8 +113,9 @@ describe('SearchChipAutocompleteInputComponent', () => {
      *
      * @returns list of debug elements
      */
-    function getOptionElements(): DebugElement[] {
-        return fixture.debugElement.queryAll(By.css('mat-option'));
+    async function getOptionElements(): Promise<MatOptionHarness[]> {
+        const autocomplete = await loader.getHarness(MatAutocompleteHarness);
+        return autocomplete.getOptions();
     }
 
     /**
@@ -117,29 +127,29 @@ describe('SearchChipAutocompleteInputComponent', () => {
         return fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'));
     }
 
-    it('should add new option only if value is predefined when allowOnlyPredefinedValues = true', () => {
+    it('should add new option only if value is predefined when allowOnlyPredefinedValues = true', async () => {
         addNewOption('test');
         addNewOption('option1');
-        expect(getChipList().length).toBe(1);
-        expect(getChipValue(0)).toBe('option1');
+        expect((await getChipList()).length).toBe(1);
+        expect(await getChipValue(0)).toBe('option1');
     });
 
-    it('should add new option even if value is not predefined when allowOnlyPredefinedValues = false', () => {
+    it('should add new option even if value is not predefined when allowOnlyPredefinedValues = false', async () => {
         component.allowOnlyPredefinedValues = false;
         addNewOption('test');
         addNewOption('option1');
-        expect(getChipList().length).toBe(2);
-        expect(getChipValue(0)).toBe('test');
+        expect((await getChipList()).length).toBe(2);
+        expect(await getChipValue(0)).toBe('test');
     });
 
-    it('should add new formatted option based on formatChipValue', () => {
+    it('should add new formatted option based on formatChipValue', async () => {
         component.allowOnlyPredefinedValues = false;
         const option = 'abc';
         component.formatChipValue = (value) => value.replace('.', '');
 
         addNewOption(`.${option}`);
-        expect(getChipList().length).toBe(1);
-        expect(getChipValue(0)).toBe(option);
+        expect((await getChipList()).length).toBe(1);
+        expect(await getChipValue(0)).toBe(option);
     });
 
     it('should add new option upon clicking on option from autocomplete', async () => {
@@ -148,15 +158,15 @@ describe('SearchChipAutocompleteInputComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const matOptions = getOptionElements();
+        const matOptions = await getOptionElements();
         expect(matOptions.length).toBe(2);
 
-        const optionToClick = matOptions[0].nativeElement as HTMLElement;
-        optionToClick.click();
+        const optionToClick = matOptions[0];
+        await optionToClick.click();
 
         expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{value: 'option1'}]);
         expect(component.selectedOptions).toEqual([{value: 'option1'}]);
-        expect(getChipList().length).toBe(1);
+        expect((await getChipList()).length).toBe(1);
     });
 
     it('should apply class to already selected options', async () => {
@@ -192,20 +202,20 @@ describe('SearchChipAutocompleteInputComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        expect(getOptionElements().length).toBe(15);
+        expect((await getOptionElements()).length).toBe(15);
     });
 
-    it('should not add a value if same value has already been added', () => {
+    it('should not add a value if same value has already been added', async () => {
         addNewOption('option1');
         addNewOption('option1');
-        expect(getChipList().length).toBe(1);
+        expect((await getChipList()).length).toBe(1);
     });
 
     it('should show autocomplete list if similar predefined values exists', async () => {
         enterNewInputValue('op');
         await fixture.whenStable();
         fixture.detectChanges();
-        expect(getOptionElements().length).toBe(2);
+        expect((await getOptionElements()).length).toBe(2);
     });
 
     it('should show autocomplete list based on custom filtering', async () => {
@@ -214,22 +224,23 @@ describe('SearchChipAutocompleteInputComponent', () => {
         enterNewInputValue('test1');
         await fixture.whenStable();
         fixture.detectChanges();
-        expect(getOptionElements().length).toBe(1);
+        expect((await getOptionElements()).length).toBe(1);
     });
 
     it('should not show autocomplete list if there are no similar predefined values', async () => {
         enterNewInputValue('test');
-        await fixture.whenStable();
-        fixture.detectChanges();
-        expect(getOptionElements().length).toBe(0);
+
+        const autocomplete = await loader.getHarness(MatAutocompleteHarness);
+
+        expect(await autocomplete.isOpen()).toBeFalse();
     });
 
-    it('should emit new value when selected options changed', () => {
+    it('should emit new value when selected options changed', async () => {
         const optionsChangedSpy = spyOn(component.optionsChanged, 'emit');
         addNewOption('option1');
         expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{value: 'option1'}]);
-        expect(getChipList().length).toBe(1);
-        expect(getChipValue(0)).toBe('option1');
+        expect((await getChipList()).length).toBe(1);
+        expect(await getChipValue(0)).toBe('option1');
     });
 
     it('should clear the input after a new value is added', () => {
@@ -248,7 +259,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
         expect(getInput().placeholder).toBe(component.placeholder);
     });
 
-    it('should reset all options when onReset$ event is emitted', () => {
+    it('should reset all options when onReset$ event is emitted', async () => {
         addNewOption('option1');
         addNewOption('option2');
         const optionsChangedSpy = spyOn(component.optionsChanged, 'emit');
@@ -256,11 +267,11 @@ describe('SearchChipAutocompleteInputComponent', () => {
         fixture.detectChanges();
 
         expect(optionsChangedSpy).toHaveBeenCalledOnceWith([]);
-        expect(getChipList()).toEqual([]);
+        expect((await getChipList())).toEqual([]);
         expect(component.selectedOptions).toEqual([]);
     });
 
-    it('should remove option upon clicking remove button', () => {
+    it('should remove option upon clicking remove button', async () => {
         addNewOption('option1');
         addNewOption('option2');
         const optionsChangedSpy = spyOn(component.optionsChanged, 'emit');
@@ -269,16 +280,16 @@ describe('SearchChipAutocompleteInputComponent', () => {
         fixture.detectChanges();
 
         expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{value: 'option2'}]);
-        expect(getChipList().length).toEqual(1);
+        expect((await getChipList()).length).toEqual(1);
     });
 
-    it('should show full category path when fullPath provided', () => {
+    it('should show full category path when fullPath provided', async () => {
         component.filteredOptions = [{id: 'test-id', value: 'test-value', fullPath: 'test-full-path'}];
-        enterNewInputValue('test-value');
-        const matOption = fixture.debugElement.query(By.css('.mat-option span')).nativeElement;
-        fixture.detectChanges();
 
-        expect(matOption.innerHTML).toEqual(' test-full-path ');
+        enterNewInputValue('test-value');
+
+        const matOption = fixture.debugElement.query(By.css('.adf-search-chip-autocomplete-added-option')).nativeElement;
+        expect(matOption.textContent).toEqual(' test-full-path ');
     });
 
     it('should emit input value when input changed', async () => {

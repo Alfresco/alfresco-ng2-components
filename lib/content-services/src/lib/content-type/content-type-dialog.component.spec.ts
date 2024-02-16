@@ -24,6 +24,10 @@ import { ContentTypeDialogComponent } from './content-type-dialog.component';
 import { ContentTypeService } from './content-type.service';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
 import { TypeEntry } from '@alfresco/js-api';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
+import { MatTableHarness } from '@angular/material/table/testing';
 
 const elementCustom: TypeEntry = {
     entry: {
@@ -82,6 +86,7 @@ describe('Content Type Dialog Component', () => {
     let fixture: ComponentFixture<ContentTypeDialogComponent>;
     let contentTypeService: ContentTypeService;
     let data: ContentTypeDialogComponentData;
+    let loader: HarnessLoader;
 
     beforeEach(async () => {
         data = {
@@ -116,6 +121,7 @@ describe('Content Type Dialog Component', () => {
         contentTypeService = TestBed.inject(ContentTypeService);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(elementCustom));
         fixture = TestBed.createComponent(ContentTypeDialogComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         fixture.detectChanges();
     });
 
@@ -147,13 +153,11 @@ describe('Content Type Dialog Component', () => {
     });
 
     it('should show the property with the aspect prefix not the inherited ones', async () => {
-        const showPropertyAccordion: HTMLButtonElement = fixture.nativeElement.querySelector('.adf-content-type-accordion .mat-expansion-panel-header');
-        expect(showPropertyAccordion).toBeDefined();
-        showPropertyAccordion.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const propertyShowed: NodeList = fixture.nativeElement.querySelectorAll('.adf-content-type-table .mat-row');
-        expect(propertyShowed.length).toBe(3);
+        await (await loader.getHarness(MatExpansionPanelHarness)).toggle();
+
+        const table = await loader.getHarness(MatTableHarness.with({ selector: '.adf-content-type-table' }));
+
+        expect((await table.getRows()).length).toBe(3);
     });
 
     it('should emit true when apply is clicked', (done) => {
