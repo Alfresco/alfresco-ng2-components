@@ -52,11 +52,11 @@ export class NodesApiMock {
     getNode = (): any => of(zipNode.entry);
 }
 
-class DownloadsApiMock {
+class DownloadsApiMock extends DownloadsApi {
     createDownload = (): Promise<DownloadEntry> => Promise.resolve(downloadEntry);
 
     getDownload = (): Promise<DownloadEntry> => Promise.resolve(downloadEntry);
-    cancelDownload() {}
+    cancelDownload = () => Promise.resolve(true);
 }
 
 export class DownloadZipMockService {
