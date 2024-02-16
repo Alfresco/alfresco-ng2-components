@@ -86,16 +86,15 @@ describe('CardViewTextItemModel', () => {
         });
     });
 
-    it('should validate based on defined constraints', () => {
-        const constrainedProperties = {
+    it('should validate based on defined constraints and require a match to be valid', () => {
+        const constrainedProperties: CardViewTextItemProperties = {
             label: 'Tribe',
             value: 'test',
             key: 'tribe',
-            dataType: 'd:text',
             constraints: [{
                 id: 'constraint-id',
                 type: 'REGEX',
-                parameters: { expression: '^(?=.*test).*' }
+                parameters: { expression: '^(?=.*test).*', requiresMatch: true }
             }]
         };
 
@@ -104,5 +103,24 @@ describe('CardViewTextItemModel', () => {
 
         itemModel.value = 'dummy';
         expect(itemModel.isValid(itemModel.value)).toBe(false, '`dummy` is not a constraint expression pattern');
+    });
+
+    it('should validate based on defined constraints and not require a match to be valid', () => {
+        const constrainedProperties: CardViewTextItemProperties = {
+            label: 'Tribe',
+            value: 'test',
+            key: 'tribe',
+            constraints: [{
+                id: 'constraint-id',
+                type: 'REGEX',
+                parameters: { expression: '^(?=.*test).*', requiresMatch: false }
+            }]
+        };
+
+        const itemModel = new CardViewTextItemModel(constrainedProperties);
+        expect(itemModel.isValid(itemModel.value)).toBe(false);
+
+        itemModel.value = 'dummy';
+        expect(itemModel.isValid(itemModel.value)).toBe(true);
     });
 });
