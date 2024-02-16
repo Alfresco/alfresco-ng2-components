@@ -286,7 +286,7 @@ describe('LayoutOrientedConfigService', () => {
 
                 expect(organisedPropertyGroups.length).toBe(testCase.expectations.length, 'Group count should match');
                 testCase.expectations.forEach((expectation, i) => {
-                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, "Group's title should match");
+                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group title should match');
                     expect(organisedPropertyGroups[i].properties.length).toBe(
                         expectation.properties.length,
                         `Property count for "${organisedPropertyGroups[i].title}" group should match.`
@@ -300,7 +300,7 @@ describe('LayoutOrientedConfigService', () => {
         });
 
         it('should include all exclusions passed to filterExcludedPreset', () => {
-            let properties: OrganisedPropertyGroup[] = [
+            const properties: OrganisedPropertyGroup[] = [
                 {
                     name: 'propGroup',
                     title: 'propGroup',
@@ -320,7 +320,7 @@ describe('LayoutOrientedConfigService', () => {
                 { title: 'Exclude group 3', items: [{ exclude: ['property3'], properties: [] }] }
             ]);
 
-            let result = configService.filterExcludedPreset(properties);
+            const result = configService.filterExcludedPreset(properties);
 
             expect(result.length).toBe(1);
         });
