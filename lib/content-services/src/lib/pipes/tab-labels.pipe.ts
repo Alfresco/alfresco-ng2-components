@@ -24,7 +24,7 @@ import { SearchWidgetSettings } from '../search/models/search-widget-settings.in
 export class TabLabelsPipe implements PipeTransform {
 
   transform(field: string, settings?: SearchWidgetSettings): string {
-    return settings && settings.displayedLabelsByField && settings.displayedLabelsByField[field] ? settings.displayedLabelsByField[field] : field;
+    return settings?.displayedLabelsByField?.[field] ? settings.displayedLabelsByField[field] : field;
   }
 
 }
