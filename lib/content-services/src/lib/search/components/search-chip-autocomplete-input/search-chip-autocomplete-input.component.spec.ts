@@ -24,7 +24,7 @@ import { SearchChipAutocompleteInputComponent } from './search-chip-autocomplete
 import { DebugElement } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatChipHarness, MatChipGridHarness } from '@angular/material/chips/testing';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatOptionHarness } from '@angular/material/core/testing';
 
@@ -89,8 +89,8 @@ describe('SearchChipAutocompleteInputComponent', () => {
      * @returns list of chips
      */
     async function getChipList(): Promise<MatChipHarness[]> {
-        const harness = await loader.getHarness(MatChipListHarness);
-        return harness.getChips();
+        const harness = await loader.getHarness(MatChipGridHarness);
+        return harness.getRows();
     }
 
     /**
