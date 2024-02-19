@@ -74,7 +74,12 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
         const actualLocale = locale || this.defaultLocale;
 
         const decimalPipe: DecimalPipe = new DecimalPipe(actualLocale);
-        return decimalPipe.transform(value, actualDigitsInfo);
+
+        if (value instanceof Array) {
+            return value.map((val) => decimalPipe.transform(val, actualDigitsInfo));
+        } else {
+            return decimalPipe.transform(value, actualDigitsInfo);
+        }
     }
 
     ngOnDestroy(): void {

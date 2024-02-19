@@ -44,6 +44,10 @@ describe('DecimalNumberPipe', () => {
         expect(pipe.transform(1234.567)).toBe('1,234.57');
     });
 
+    it('should properly transform array of values', () => {
+        expect(pipe.transform([1234.567, 22])).toEqual(['1,234.57', '22']);
+    });
+
     it('should return number with at least the minimum of digints in the integer part', () => {
         const decimalValues = {
             minIntegerDigits: 6,

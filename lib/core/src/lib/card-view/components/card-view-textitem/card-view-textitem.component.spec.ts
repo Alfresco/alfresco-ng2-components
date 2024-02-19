@@ -233,6 +233,38 @@ describe('CardViewTextItemComponent', () => {
             renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
         });
 
+        it('should only render new chip when provided value is valid for specified validators set', async () => {
+            const cardViewTextItemObject = {
+                label: 'Text label',
+                value: [1.1, 2.2, 3.3],
+                key: 'textkey',
+                editable: true,
+                multivalued: true,
+                type: 'float'
+            };
+            component.editable = true;
+            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
+            const floatValidator: CardViewItemValidator = new CardViewItemFloatValidator();
+            component.property.validators = [floatValidator];
+            const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-editchipinput-textkey"]')).nativeElement;
+            component.addValueToList({ value: 'abcd', chipInput: inputElement, input: inputElement });
+            fixture.detectChanges();
+
+            let error: HTMLLIElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"] li')).nativeElement;
+            expect(error.innerText).toBe('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
+            let valueChips = await loader.getAllHarnesses(MatChipHarness);
+            expect(valueChips.length).toBe(3);
+
+            component.addValueToList({ value: '22.1', chipInput: inputElement, input: inputElement });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            error = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"]'))?.nativeElement;
+            expect(error).toBe(undefined);
+            valueChips = await loader.getAllHarnesses(MatChipHarness);
+            expect(valueChips.length).toBe(4);
+        });
+
         it('should render string for multivalue properties when chips are disabled', async () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
