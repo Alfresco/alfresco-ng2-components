@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, HostListener } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, HostListener, OnInit } from '@angular/core';
 import { Observable, of, forkJoin, Subject, Subscription } from 'rxjs';
-import { switchMap, takeUntil, map } from 'rxjs/operators';
+import { switchMap, takeUntil, map, filter } from 'rxjs/operators';
 import {
     FormBaseComponent,
     FormFieldModel,
@@ -38,13 +38,16 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@alfresco/adf-content-services';
+import { CloudFormRenderingService } from '../services/cloud-form-rendering.service';
+import { v4 as uuidGeneration } from 'uuid';
+import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
 
 @Component({
     selector: 'adf-cloud-form',
     templateUrl: './form-cloud.component.html',
     styleUrls: ['./form-cloud.component.scss']
 })
-export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnDestroy {
+export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnInit, OnDestroy {
     /** App name to fetch corresponding form and values. */
     @Input()
     appName: string = '';
@@ -78,15 +81,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
 
     /**
-     * If `true` then show the Form as a full page over the current content.
-     * Otherwise fit inside the parent div.
+     * The available display configurations for the form
      */
     @Input()
-    overlayMode = false;
-
-    /** Toggles the 'Full Screen' feature. */
-    @Input()
-    allowFullScreen = false;
+    displayModeConfigurations: FormCloudDisplayModeConfiguration[];
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
@@ -108,19 +106,32 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Output()
     formContentClicked = new EventEmitter<ContentLinkModel>();
 
+    /** Emitted when a display mode configuration is turned on. */
+    @Output()
+    displayModeOn = new EventEmitter<FormCloudDisplayModeConfiguration>();
+
+    /** Emitted when a display mode configuration is turned off. */
+    @Output()
+    displayModeOff = new EventEmitter<FormCloudDisplayModeConfiguration>();
+
     protected subscriptions: Subscription[] = [];
     nodeId: string;
     formCloudRepresentationJSON: any;
 
     protected onDestroy$ = new Subject<boolean>();
 
+    readonly id: string;
+    displayMode: FormCloudDisplayMode;
+
     constructor(
         protected formCloudService: FormCloudService,
         protected formService: FormService,
         private dialog: MatDialog,
-        protected visibilityService: WidgetVisibilityService
+        protected visibilityService: WidgetVisibilityService,
+        private readonly cloudFormRenderingService: CloudFormRenderingService
     ) {
         super();
+        this.id = uuidGeneration();
 
         this.formService.formContentClicked.pipe(takeUntil(this.onDestroy$)).subscribe((content) => {
             if (content instanceof UploadWidgetContentLinkModel) {
@@ -140,12 +151,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formService.formFieldValueChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             if (this.disableSaveButton) {
                 this.disableSaveButton = false;
-            }
-        });
-
-        this.formCloudService.fullScreenMode.pipe(takeUntil(this.onDestroy$)).subscribe((overlayMode) => {
-            if (this.allowFullScreen) {
-                this.overlayMode = overlayMode;
             }
         });
     }
@@ -184,6 +189,32 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             this.refreshFormData();
             return;
         }
+
+        const formRepresentation = changes['form'];
+        if (formRepresentation?.currentValue) {
+            this.form = formRepresentation.currentValue;
+            this.onFormLoaded(this.form);
+            return;
+        }
+    }
+
+    ngOnInit(): void {
+        CloudFormRenderingService.displayMode$.pipe(filter(change => change.id === this.id), takeUntil(this.onDestroy$)).subscribe((displayModeChange) => {
+            const oldDisplayMode = this.displayMode;
+            this.displayMode = displayModeChange.displayMode;
+
+            const oldDisplayModeConfiguration = this.cloudFormRenderingService.findConfiguration(oldDisplayMode, this.displayModeConfigurations);
+            const newDisplayModeConfiguration = this.cloudFormRenderingService.findConfiguration(displayModeChange.displayMode, this.displayModeConfigurations);
+
+            if (oldDisplayModeConfiguration?.displayMode !== newDisplayModeConfiguration?.displayMode) {
+                if (oldDisplayModeConfiguration) {
+                    this.displayModeOff.emit(oldDisplayModeConfiguration);
+                }
+                if (newDisplayModeConfiguration) {
+                    this.displayModeOn.emit(newDisplayModeConfiguration);
+                }
+            }
+        });
     }
 
     /**
@@ -282,6 +313,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     },
                     (error) => this.onTaskSavedError(error)
                 );
+            this.cloudFormRenderingService.onSaveTask(this.id, this.displayMode, this.displayModeConfigurations);
         }
     }
 
@@ -302,10 +334,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         } else {
             this.completeForm(outcome);
         }
+        this.cloudFormRenderingService.onCompleteTask(this.id, this.displayMode, this.displayModeConfigurations);
     }
 
     private completeForm(outcome?: string) {
-        this.overlayMode = false;
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
@@ -356,14 +388,14 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private refreshFormData() {
         this.form = this.parseForm(this.formCloudRepresentationJSON);
-        this.onFormLoaded(this.form, true);
+        this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }
 
-    protected onFormLoaded(form: FormModel, refresh = false) {
-        if (!refresh && this.allowFullScreen) {
-            this.overlayMode = this.form.forceFullScreen;
-        }
+    protected onFormLoaded(form: FormModel) {
+        this.displayModeConfigurations = this.cloudFormRenderingService.getDisplayModeConfigurations(this.displayModeConfigurations);
+        this.displayMode = this.cloudFormRenderingService.switchToDisplayMode(this.id, this.form.displayMode, this.displayMode, this.displayModeConfigurations);
+        this.displayModeOn.emit(this.cloudFormRenderingService.findConfiguration(this.displayMode, this.displayModeConfigurations));
         this.formLoaded.emit(form);
     }
 
@@ -380,7 +412,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected onTaskCompleted(form: FormModel) {
-        this.overlayMode = false;
         this.formCompleted.emit(form);
     }
 
@@ -404,5 +435,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    switchToDisplayMode(newDisplayMode?: string) {
+        this.cloudFormRenderingService.switchToDisplayMode(this.id, FormCloudDisplayMode[newDisplayMode], this.displayMode, this.displayModeConfigurations);
+    }
+
+    findDisplayConfiguration(displayMode?: string): FormCloudDisplayModeConfiguration {
+        return this.cloudFormRenderingService.findConfiguration(FormCloudDisplayMode[displayMode], this.displayModeConfigurations);
     }
 }

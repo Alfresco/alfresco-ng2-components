@@ -1,3 +1,4 @@
+/* cspell: disable-next-line */
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
 .adf-full-screen {
     width: 100%;
@@ -16,7 +17,7 @@
         }
     }
 
-    &-overlay-container {
+    &-fullscreen-container {
         .adf-cloud-form-content {
             position: fixed;
             top: 0;
@@ -30,6 +31,7 @@
     }
 
     &-toolbar {
+        /* stylelint-disable-next-line selector-class-pattern */
         .mat-toolbar {
             background-color: var(--adf-theme-background-card-color-087);
         }

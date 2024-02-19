@@ -43,6 +43,7 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 | showTitle | `boolean` | true | Toggle rendering of the form title. |
 | showValidationIcon | `boolean` | true | Toggle rendering of the `Validation` icon. |
 | taskId | `string` |  | Task id to fetch corresponding form and values. |
+| displayModeConfigurations | [`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`[]` |  | The available display configurations for the form |
 
 ### Events
 
@@ -58,6 +59,51 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 | taskClaimed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is claimed. |
 | taskCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is completed. |
 | taskUnclaimed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the task is unclaimed. |
+| displayModeOn | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` | Emitted when a display mode configuration is turned on. |
+| displayModeOff | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` | Emitted when a display mode configuration is turned off. |
+
+#### Enabling fullscreen display for the form of the task
+
+Provide a `displayModeConfiguration` array object containing the fullscreen configuration. You can use the configuration provided in the [`CloudFormRenderingService`](../../../lib/process-services-cloud/src/lib/form/components/cloud-form-rendering.service.ts) as a static member `CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS`, or configure your own if you want to customise the options for the fullscreen display mode.
+
+**MyView.component.html**
+
+```html
+<button (click)="displayFormInFullscreenMode()">
+
+<adf-cloud-task-form #adfCloudTaskForm
+    [appName]="appName"
+    [taskId]="selectedTask?.id"
+    [showTitle]="false"
+    [showRefreshButton]="false"
+    [showValidationIcon]="false"
+    [displayModeConfigurations]="displayConfigurations">
+</adf-cloud-task-form>
+```
+
+**MyView.component.ts**
+
+```ts
+import { ViewChild } from '@angular/core';
+import { CloudFormRenderingService, TaskFormCloudComponent } from '@alfresco/adf-process-services-cloud';
+
+export class MyView {
+
+    @ViewChild('adfCloudTaskForm', { static: true })
+    adfCloudForm: TaskFormCloudComponent;
+
+    get displayConfigurations() {
+        return CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS;
+    }
+
+    displayFormInFullscreenMode() {
+        this.adfCloudForm.switchToDisplayMode('fullScreen');
+    }
+
+}
+```
+
+When the `displayModeConfigurations` contains the configuration for the fullscreen display, in the header of the form, a button to switch to fullscreen is displayed. Keep in mind that the header of the form is visible only if any of the parameters `showTitle`, `showRefreshButton`or `showValidationIcon` is `true`, but it is also possible to switch to the fullscreen display using a button that you can place wherever you want as shown in the previous example.
 
 ## See also
 

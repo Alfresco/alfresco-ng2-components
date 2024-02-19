@@ -52,10 +52,11 @@ import {
 } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudService } from '../services/form-cloud.service';
-import { CloudFormRenderingService } from './cloud-form-rendering.service';
+import { CloudFormRenderingService } from '../services/cloud-form-rendering.service';
 import { FormCloudComponent } from './form-cloud.component';
 import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -1141,50 +1142,62 @@ describe('FormCloudComponent', () => {
         });
     });
 
-    describe('Full screen', () => {
+    describe('Full screen', async () => {
 
-        beforeEach(() => {
-            const formModel = new FormModel({} as any);
+        let displayModeOnSpy: jasmine.Spy;
+        let displayModeOffSpy: jasmine.Spy;
 
-            formComponent.form = formModel;
-            formComponent.allowFullScreen = true;
-            formComponent.showRefreshButton = false;
-            formComponent.showTitle = false;
-            formComponent.showValidationIcon = false;
+        /**
+         * Helper function for loading the form in the tests
+         *
+         * @param form The form model to be loaded
+         */
+        async function loadForm(form?: any): Promise<void> {
+            formComponent.ngOnChanges({ form: { currentValue: formComponent.parseForm(form || {}), firstChange: true, isFirstChange: () => true, previousValue: undefined } });
+            await fixture.whenStable();
             fixture.detectChanges();
-        });
+        }
 
-        it('should not be in overlay mode by default', () => {
-            const overlayModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-overlay-container'));
-            const inlineModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-inline-container'));
-            expect(overlayModeContainer).toBeNull();
-            expect(inlineModeContainer).not.toBeNull();
-        });
-
-        it('should be in overlay mode if it is forced', async () => {
-            spyOn(formCloudService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
-                observer.next({ taskId: currentTaskId, forceFullScreen: true });
-                observer.complete();
-            }));
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
-            spyOn(formCloudService, 'getTask').and.callFake((currentTaskId) => new Observable((observer) => {
-                observer.next({ taskId: currentTaskId } as any);
-                observer.complete();
-            }));
+        beforeEach(async () => {
+            displayModeOnSpy = spyOn(formComponent.displayModeOn, 'emit').and.stub();
+            displayModeOffSpy = spyOn(formComponent.displayModeOff, 'emit').and.stub();
+            spyOn(formRenderingService, 'getDefaultDisplayModeConfigurations').and.callFake(() => CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
 
             formComponent.taskId = 'any';
             formComponent.appName = 'any';
-            formComponent.loadForm();
-            fixture.detectChanges();
+            formComponent.showRefreshButton = false;
+            formComponent.showTitle = false;
+            formComponent.showValidationIcon = false;
 
+            await loadForm();
 
-            const overlayModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-overlay-container'));
+            displayModeOnSpy.calls.reset();
+            displayModeOffSpy.calls.reset();
+        });
+
+        it('should emit display mode turned on wit the inline configuration', async () => {
+            await loadForm();
+
+            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+        });
+
+        it('should not be in fullScreen mode by default', () => {
+            const fullScreenModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-fullscreen-container'));
             const inlineModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-inline-container'));
-            expect(overlayModeContainer).not.toBeNull();
+            expect(fullScreenModeContainer).toBeNull();
+            expect(inlineModeContainer).not.toBeNull();
+        });
+
+        it('should be in fullScreen mode if it is forced', async () => {
+            await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+
+            const fullScreenModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-fullscreen-container'));
+            const inlineModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-inline-container'));
+            expect(fullScreenModeContainer).not.toBeNull();
             expect(inlineModeContainer).toBeNull();
         });
 
-        it('should display full screen button on header when header is displayed an not in overlay mode', () => {
+        it('should display full screen button on header when header is displayed an not in fullScreen mode', () => {
             formComponent.showTitle = true;
             fixture.detectChanges();
 
@@ -1192,7 +1205,7 @@ describe('FormCloudComponent', () => {
             expect(fullScreenButton).not.toBeNull();
         });
 
-        it('should set overlay model on clicking on the full screen button', async () => {
+        it('should set fullScreen mode on clicking on the full screen button', async () => {
             formComponent.showTitle = true;
             fixture.detectChanges();
 
@@ -1201,13 +1214,16 @@ describe('FormCloudComponent', () => {
             );
             await fullScreenButton.click();
 
-            expect(formComponent.overlayMode).toBeTruthy();
+            await fixture.whenStable();
+
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
+            expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
         });
 
-        it('should not display full screen button on header when header is displayed but in overlay mode', () => {
+        it('should not display full screen button on header when header is displayed but in fullScreen mode', async () => {
             formComponent.showTitle = true;
-            formComponent.overlayMode = true;
-            fixture.detectChanges();
+            await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
 
             const fullScreenButton = fixture.debugElement.query(By.css('.adf-cloud-form-fullscreen-button'));
             expect(fullScreenButton).toBeNull();
@@ -1219,26 +1235,51 @@ describe('FormCloudComponent', () => {
         });
 
         it('should not set the styles for the card', () => {
-            const overlayCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card'));
-            expect(overlayCard).toBeNull();
+            const fullScreenCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card'));
+            expect(fullScreenCard).toBeNull();
         });
 
-        it('should set overlay model from the form service notification', async () => {
-            formCloudService.fullScreenMode.next(true);
-            await fixture.whenStable();
+        fit('should set fullScreen mode from the form service notification', () => {
+            CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
 
-            expect(formComponent.overlayMode).toBeTruthy();
+            expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
 
-            formCloudService.fullScreenMode.next(false);
-            await fixture.whenStable();
+            displayModeOnSpy.calls.reset();
+            displayModeOffSpy.calls.reset();
 
-            expect(formComponent.overlayMode).toBeFalsy();
+            CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: formComponent.id });
+
+            expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.inline);
         });
 
-        describe('Overlay Mode', () => {
-            beforeEach(() => {
-                formComponent.overlayMode = true;
-                fixture.detectChanges();
+        it('should not change the display mode when the notification change is from a different id', () => {
+            CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
+
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
+            expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+
+            displayModeOnSpy.calls.reset();
+            displayModeOffSpy.calls.reset();
+
+            CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: 'otherId' });
+            expect(displayModeOffSpy).not.toHaveBeenCalled();
+            expect(displayModeOnSpy).not.toHaveBeenCalled();
+
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
+        });
+
+        describe('fullScreen Mode', () => {
+            beforeEach(async () => {
+                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+            });
+
+            it('should emit display mode turned on wit the fullScreen configuration', () => {
+                expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
             });
 
             it('should display the toolbar', () => {
@@ -1247,23 +1288,43 @@ describe('FormCloudComponent', () => {
             });
 
             it('should set the styles for the card', () => {
-                const overlayCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card'));
-                expect(overlayCard).not.toBeNull();
+                const fullScreenCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card'));
+                expect(fullScreenCard).not.toBeNull();
             });
 
-            it('should close overlay when close button is clicked', async () => {
+            it('should close fullScreen when close button is clicked', async () => {
+                displayModeOnSpy.calls.reset();
+                displayModeOffSpy.calls.reset();
+
                 const closeButton = await documentRootLoader.getHarness(
                     MatButtonHarness.with({ selector: `[data-automation-id="adf-cloud-form-close-button"]` })
                 );
                 await closeButton.click();
 
-                expect(formComponent.overlayMode).toBeFalsy();
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                expect(formComponent.displayMode).toEqual(FormCloudDisplayMode.inline);
+                expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+                expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
             });
 
-            it('should close overlay when completing the task', async () => {
+            it('should close fullScreen when completing the task', () => {
+                const formRenderingServiceOnCompleteTaskSpy = spyOn(formRenderingService, 'onCompleteTask').and.callThrough();
+                const onCompleteTaskSpy = spyOn(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onCompleteTask').and.callThrough();
+                const formRenderingServiceChangeDisplayModeSpy = spyOn(CloudFormRenderingService, 'changeDisplayMode').and.callThrough();
+
+                displayModeOnSpy.calls.reset();
+                displayModeOffSpy.calls.reset();
+
                 formComponent.completeTaskForm();
 
-                expect(formComponent.overlayMode).toBeFalsy();
+                expect(formRenderingServiceOnCompleteTaskSpy).toHaveBeenCalledOnceWith(formComponent.id, FormCloudDisplayMode.fullScreen, CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+                expect(onCompleteTaskSpy).toHaveBeenCalledOnceWith(formComponent.id);
+                expect(formRenderingServiceChangeDisplayModeSpy).toHaveBeenCalledOnceWith({ id: formComponent.id, displayMode: FormCloudDisplayMode.inline });
+                expect(displayModeOffSpy).toHaveBeenCalledOnceWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+                expect(displayModeOnSpy).toHaveBeenCalledOnceWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+                expect(formComponent.displayMode).toBe(FormCloudDisplayMode.inline);
             });
         });
     });

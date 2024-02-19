@@ -73,7 +73,8 @@ export class FormModel implements ProcessFormModel {
     readonly processDefinitionId: string;
     readonly selectedOutcome: string;
     readonly enableFixedSpace: boolean;
-    readonly forceFullScreen: boolean;
+    readonly displayMode: any;
+    readonly displayModeConfigurations: any[];
 
     fieldsCache: FormFieldModel[] = [];
 
@@ -115,7 +116,8 @@ export class FormModel implements ProcessFormModel {
             this.processVariables = json.processVariables || [];
             this.enableFixedSpace = enableFixedSpace;
             this.confirmMessage = json.confirmMessage || {};
-            this.forceFullScreen = json.forceFullScreen || false;
+            this.displayMode = json.displayMode;
+            this.displayModeConfigurations = json.displayModeConfigurations;
 
             this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));
 

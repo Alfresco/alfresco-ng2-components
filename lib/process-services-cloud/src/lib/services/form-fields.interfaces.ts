@@ -26,7 +26,7 @@ export interface FormRepresentation {
     version?: number;
     formDefinition?: FormDefinition;
     standAlone?: boolean;
-    forceFullScreen?: boolean;
+    displayMode?: FormCloudDisplayMode;
 }
 
 export interface FormTab {
@@ -60,7 +60,7 @@ export interface Container {
 }
 
 export type FormFieldRepresentation = (DateField | DateTimeField | TextField | AttachFileField | DropDownField |
-    RadioField | TypeaheadField | PeopleField | AmountField | NumberField | CheckboxField | HyperlinkField );
+    RadioField | TypeaheadField | PeopleField | AmountField | NumberField | CheckboxField | HyperlinkField);
 
 export interface AttachFileField extends FormField {
     required: boolean;
@@ -234,3 +234,28 @@ export enum FormFieldType {
     displayText = 'readonly-text',
     fileViewer = 'file-viewer'
 }
+
+export interface FormCloudDisplayModeConfigurationOptions {
+    onCompleteTask(id?: string): void;
+    onSaveTask(id?: string): void;
+    onDisplayModeOn(id?: string): void;
+    onDisplayModeOff(id?: string): void;
+    [key: string]: any;
+};
+
+export interface FormCloudDisplayModeConfiguration {
+    displayMode: FormCloudDisplayMode;
+    options?: FormCloudDisplayModeConfigurationOptions;
+    default?: boolean;
+};
+
+// eslint-disable-next-line no-shadow
+export enum FormCloudDisplayMode {
+    inline = 'inline',
+    fullScreen = 'fullScreen'
+};
+
+export interface FormCloudDisplayModeChange {
+    displayMode: FormCloudDisplayMode;
+    id?: string;
+};
