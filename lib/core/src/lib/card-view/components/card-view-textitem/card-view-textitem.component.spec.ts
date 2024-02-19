@@ -734,7 +734,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const errorElement = getErrorElement('textkey');
-            expect(errorElement).toBeNull();
+            expect(errorElement.length).toBe(0);
         });
 
         it('should NOT show validation error for null', async () => {
@@ -746,7 +746,7 @@ describe('CardViewTextItemComponent', () => {
             const errorElement = getErrorElement('textkey');
 
             expect(inputElement.nativeElement.value).toBe('');
-            expect(errorElement).toBeNull();
+            expect(errorElement.length).toBe(0);
         });
 
         it('should show validation error for only spaces string', async () => {
@@ -764,7 +764,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const errorElement = getErrorElement('textkey');
-            expect(errorElement).toBeNull();
+            expect(errorElement.length).toBe(0);
         });
 
         it('should NOT show validation error for null', async () => {
@@ -775,7 +775,7 @@ describe('CardViewTextItemComponent', () => {
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-textkey"]'));
             const errorElement = getErrorElement('textkey');
             expect(inputElement.nativeElement.value).toBe('');
-            expect(errorElement).toBeNull();
+            expect(errorElement.length).toBe(0);
         });
 
         it('should show validation error for float number', async () => {
