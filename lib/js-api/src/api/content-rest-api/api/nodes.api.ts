@@ -366,10 +366,16 @@ export class NodesApi extends BaseApi {
      * Only the owner of the node or an admin can permanently delete the node. (default to false)
      * @returns Promise<[]>
      */
-    deleteNodes(nodeIds: string[], opts?: { permanent?: boolean }): Promise<void[]> {
+    async deleteNodes(nodeIds: string[], opts?: { permanent?: boolean }): Promise<void[]> {
         throwIfNotDefined(nodeIds, 'nodeIds');
 
-        return Promise.all(nodeIds.map((id) => this.deleteNode(id, opts)));
+        const promises = [];
+
+        for (const id of nodeIds) {
+            promises.push(await this.deleteNode(id, opts));
+        }
+
+        return Promise.all(promises);
     }
 
     /**
