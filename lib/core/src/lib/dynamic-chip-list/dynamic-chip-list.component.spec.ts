@@ -289,7 +289,7 @@ describe('DynamicChipListComponent', () => {
             });
             tick();
             fixture.detectChanges();
-            element.style.maxWidth = '309px';
+            element.style.maxWidth = '100px';
 
             resizeCallback([], null);
             fixture.detectChanges();
