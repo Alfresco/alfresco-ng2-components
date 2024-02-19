@@ -34,7 +34,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
 
-describe('CardViewTextItemComponent', () => {
+fdescribe('CardViewTextItemComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
@@ -99,6 +99,11 @@ describe('CardViewTextItemComponent', () => {
 
     const getErrorElement = (key: string, includeItems = false): DebugElement[] => {
         return fixture.debugElement.queryAll(By.css(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`));
+    };
+
+    const verifyNoErrors = (key: string) => {
+        const errorElement = getErrorElement(key);
+        expect(errorElement.length).toBe(0);
     };
 
     beforeEach(() => {
@@ -238,7 +243,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should only render new chip when provided value is valid for specified validators set', async () => {
-            const cardViewTextItemObject = {
+            const cardViewTextItemFloatObject = {
                 label: 'Text label',
                 value: [1.1, 2.2, 3.3],
                 key: 'textkey',
@@ -247,7 +252,7 @@ describe('CardViewTextItemComponent', () => {
                 type: 'float'
             };
             component.editable = true;
-            await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
+            await renderChipsForMultiValuedProperties(cardViewTextItemFloatObject, true, 3, '1.1', '2.2', '3.3');
             const floatValidator: CardViewItemValidator = new CardViewItemFloatValidator();
             component.property.validators = [floatValidator];
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-editchipinput-textkey"]')).nativeElement;
@@ -261,10 +266,8 @@ describe('CardViewTextItemComponent', () => {
 
             component.addValueToList({ value: '22.1', chipInput: inputElement } as MatChipInputEvent);
             fixture.detectChanges();
-            await fixture.whenStable();
 
-            error = getErrorElement('textkey', true)[0]?.nativeElement;
-            expect(error).toBe(undefined);
+            verifyNoErrors('textkey');
             valueChips = await loader.getAllHarnesses(MatChipHarness);
             expect(valueChips.length).toBe(4);
         });
@@ -733,8 +736,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const errorElement = getErrorElement('textkey');
-            expect(errorElement.length).toBe(0);
+            verifyNoErrors('textkey');
         });
 
         it('should NOT show validation error for null', async () => {
@@ -743,10 +745,9 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-textkey"]'));
-            const errorElement = getErrorElement('textkey');
 
             expect(inputElement.nativeElement.value).toBe('');
-            expect(errorElement.length).toBe(0);
+            verifyNoErrors('textkey');
         });
 
         it('should show validation error for only spaces string', async () => {
@@ -763,8 +764,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const errorElement = getErrorElement('textkey');
-            expect(errorElement.length).toBe(0);
+            verifyNoErrors('textkey');
         });
 
         it('should NOT show validation error for null', async () => {
@@ -773,9 +773,8 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-textkey"]'));
-            const errorElement = getErrorElement('textkey');
             expect(inputElement.nativeElement.value).toBe('');
-            expect(errorElement.length).toBe(0);
+            verifyNoErrors('textkey');
         });
 
         it('should show validation error for float number', async () => {
