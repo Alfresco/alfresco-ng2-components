@@ -21,11 +21,11 @@ import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentTypeDialogComponent } from './content-type-dialog.component';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
-import { TypeEntry } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatTableHarness } from '@angular/material/table/testing';
+import { ContentTypeService } from './content-type.service';
 
 const elementCustom: TypeEntry = {
     entry: {
