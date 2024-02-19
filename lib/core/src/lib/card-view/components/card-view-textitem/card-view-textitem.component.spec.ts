@@ -34,7 +34,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
 
-fdescribe('CardViewTextItemComponent', () => {
+describe('CardViewTextItemComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
@@ -244,8 +244,8 @@ fdescribe('CardViewTextItemComponent', () => {
 
         it('should only render new chip when provided value is valid for specified validators set', async () => {
             const cardViewTextItemFloatObject = {
-                label: 'Text label',
-                value: [1.1, 2.2, 3.3],
+                label: 'Test label',
+                value: [10, 20.2, 35.8],
                 key: 'textkey',
                 editable: true,
                 multivalued: true,
