@@ -122,6 +122,8 @@ describe('ContentNodeSelectorComponent', () => {
         fixture.destroy();
     });
 
+    const getTabInfoButton = () => fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
+
     const enableLocalUpload = () => {
         component.data.showLocalUploadButton = true;
         component.hasAllowableOperations = true;
