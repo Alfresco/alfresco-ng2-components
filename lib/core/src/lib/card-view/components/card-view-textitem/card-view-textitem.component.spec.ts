@@ -54,10 +54,19 @@ describe('CardViewTextItemComponent', () => {
         return textItemInput.nativeElement.value;
     };
 
-    const getTextFieldError = (key): string => {
-        const textItemInputError = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${key}"] li`));
-        expect(textItemInputError).not.toBeNull();
-        return textItemInputError.nativeElement.innerText;
+    const getErrorElements = (key: string, includeItems = false): DebugElement[] => {
+        return fixture.debugElement.queryAll(By.css(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`));
+    };
+
+    const getTextFieldError = (key: string): string => {
+        const textItemInputErrors = getErrorElements(key, true);
+        expect(textItemInputErrors.length).not.toBe(0);
+        return textItemInputErrors[0].nativeElement.innerText;
+    };
+
+    const verifyNoErrors = (key: string) => {
+        const errorElement = getErrorElements(key);
+        expect(errorElement.length).toBe(0);
     };
 
     const checkCtrlZActions = (ctrlKeyValue: boolean, codeValue: string, metaKeyValue: boolean, mockTestValue: string, flag: boolean) => {
@@ -95,15 +104,6 @@ describe('CardViewTextItemComponent', () => {
         expect(await valueChips[0].getText()).toBe(param1);
         expect(await valueChips[1].getText()).toBe(param2);
         expect(await valueChips[2].getText()).toBe(param3);
-    };
-
-    const getErrorElement = (key: string, includeItems = false): DebugElement[] => {
-        return fixture.debugElement.queryAll(By.css(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`));
-    };
-
-    const verifyNoErrors = (key: string) => {
-        const errorElement = getErrorElement(key);
-        expect(errorElement.length).toBe(0);
     };
 
     beforeEach(() => {
@@ -252,15 +252,14 @@ describe('CardViewTextItemComponent', () => {
                 type: 'float'
             };
             component.editable = true;
-            await renderChipsForMultiValuedProperties(cardViewTextItemFloatObject, true, 3, '1.1', '2.2', '3.3');
+            await renderChipsForMultiValuedProperties(cardViewTextItemFloatObject, true, 3, '10', '20.2', '35.8');
             const floatValidator: CardViewItemValidator = new CardViewItemFloatValidator();
             component.property.validators = [floatValidator];
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-editchipinput-textkey"]')).nativeElement;
             component.addValueToList({ value: 'abcd', chipInput: inputElement } as MatChipInputEvent);
             fixture.detectChanges();
 
-            let error: HTMLLIElement = getErrorElement('textkey', true)[0].nativeElement;
-            expect(error.innerText).toBe('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
+            expect(getTextFieldError('textkey')).toBe('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
             let valueChips = await loader.getAllHarnesses(MatChipHarness);
             expect(valueChips.length).toBe(3);
 
@@ -802,8 +801,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error).toBeFalsy();
+            verifyNoErrors(component.property.key);
             expect(component.property.value).toBe('2147483647');
         });
 
@@ -822,8 +820,7 @@ describe('CardViewTextItemComponent', () => {
                 }
             });
 
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error).toBeFalsy();
+            verifyNoErrors(component.property.key);
             expect(getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
             expect(component.property.value).toBe(expectedNumber.toString());
         });
@@ -883,8 +880,7 @@ describe('CardViewTextItemComponent', () => {
                 }
             });
 
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error).toBeFalsy();
+            verifyNoErrors(component.property.key);
             expect(getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
             expect(component.property.value).toBe(expectedNumber.toString());
         });
