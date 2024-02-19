@@ -25,9 +25,9 @@ import { CardViewItemFloatValidator } from '../../validators/card-view-item-floa
 import { CardViewItemIntValidator } from '../../validators/card-view-item-int.validator';
 import { CardViewIntItemModel } from '../../models/card-view-intitem.model';
 import { CardViewFloatItemModel } from '../../models/card-view-floatitem.model';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
-import { SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -95,6 +95,10 @@ describe('CardViewTextItemComponent', () => {
         expect(await valueChips[0].getText()).toBe(param1);
         expect(await valueChips[1].getText()).toBe(param2);
         expect(await valueChips[2].getText()).toBe(param3);
+    };
+
+    const getErrorElement = (key: string, includeItems = false): DebugElement[] => {
+        return fixture.debugElement.queryAll(By.css(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`));
     };
 
     beforeEach(() => {
@@ -208,7 +212,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true,
                 multivalued: true
             };
-            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, 'item1', 'item2', 'item3');
+            await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, 'item1', 'item2', 'item3');
         });
 
         it('should render chips for multivalue integers when chips are enabled', async () => {
@@ -219,7 +223,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true,
                 multivalued: true
             };
-            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1', '2', '3');
+            await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1', '2', '3');
         });
 
         it('should render chips for multivalue decimal numbers when chips are enabled', async () => {
@@ -230,7 +234,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true,
                 multivalued: true
             };
-            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
+            await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
         });
 
         it('should only render new chip when provided value is valid for specified validators set', async () => {
@@ -243,23 +247,23 @@ describe('CardViewTextItemComponent', () => {
                 type: 'float'
             };
             component.editable = true;
-            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
+            await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
             const floatValidator: CardViewItemValidator = new CardViewItemFloatValidator();
             component.property.validators = [floatValidator];
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-editchipinput-textkey"]')).nativeElement;
-            component.addValueToList({ value: 'abcd', chipInput: inputElement, input: inputElement });
+            component.addValueToList({ value: 'abcd', chipInput: inputElement } as MatChipInputEvent);
             fixture.detectChanges();
 
-            let error: HTMLLIElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"] li')).nativeElement;
+            let error: HTMLLIElement = getErrorElement('textkey', true)[0].nativeElement;
             expect(error.innerText).toBe('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
             let valueChips = await loader.getAllHarnesses(MatChipHarness);
             expect(valueChips.length).toBe(3);
 
-            component.addValueToList({ value: '22.1', chipInput: inputElement, input: inputElement });
+            component.addValueToList({ value: '22.1', chipInput: inputElement } as MatChipInputEvent);
             fixture.detectChanges();
             await fixture.whenStable();
 
-            error = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"]'))?.nativeElement;
+            error = getErrorElement('textkey', true)[0]?.nativeElement;
             expect(error).toBe(undefined);
             valueChips = await loader.getAllHarnesses(MatChipHarness);
             expect(valueChips.length).toBe(4);
@@ -729,7 +733,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const errorElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"]'));
+            const errorElement = getErrorElement('textkey');
             expect(errorElement).toBeNull();
         });
 
@@ -739,7 +743,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-textkey"]'));
-            const errorElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"]'));
+            const errorElement = getErrorElement('textkey');
 
             expect(inputElement.nativeElement.value).toBe('');
             expect(errorElement).toBeNull();
@@ -759,7 +763,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const errorElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"]'));
+            const errorElement = getErrorElement('textkey');
             expect(errorElement).toBeNull();
         });
 
@@ -769,8 +773,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-textkey"]'));
-            const errorElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-textkey"]'));
-
+            const errorElement = getErrorElement('textkey');
             expect(inputElement.nativeElement.value).toBe('');
             expect(errorElement).toBeNull();
         });
