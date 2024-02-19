@@ -169,7 +169,7 @@ describe('DynamicChipListComponent', () => {
 
         afterEach(() =>{
             fixture.destroy();
-        })
+        });
 
         it('should render view more button when limiting is enabled', fakeAsync(() => {
             renderChips();
