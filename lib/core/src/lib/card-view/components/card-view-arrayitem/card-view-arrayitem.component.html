@@ -2,19 +2,19 @@
 <div class="adf-property-value adf-card-view-array-item-container">
     <ng-container *ngIf="(property.displayValue | async) as items; else elseEmptyValueBlock">
         <mat-chip-listbox *ngIf="items.length > 0; else elseEmptyValueBlock" data-automation-id="card-arrayitem-chip-list-container">
-            <ng-container *ngIf="displayCount() > 0; else withOutDisplayCount" >
+            <ng-container *ngIf="displayCount > 0; else withOutDisplayCount" >
                 <mat-chip-option
-                    *ngFor="let item of items.slice(0, displayCount())"
+                    *ngFor="let item of items.slice(0, displayCount)"
                     (click)="clicked()"
                     [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
                     <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
                     <span>{{item?.value}}</span>
                 </mat-chip-option>
                 <mat-chip-option
-                    *ngIf="items.length > displayCount()"
+                    *ngIf="items.length > displayCount"
                     data-automation-id="card-arrayitem-more-chip"
                     [matMenuTriggerFor]="menu">
-                    <span>{{items.length - displayCount()}} {{'CORE.CARDVIEW.MORE' | translate}}</span>
+                    <span>{{items.length - displayCount}} {{'CORE.CARDVIEW.MORE' | translate}}</span>
                 </mat-chip-option>
             </ng-container>
             <ng-template #withOutDisplayCount>
@@ -32,7 +32,7 @@
                 <mat-card-content>
                     <mat-chip-listbox>
                         <mat-chip-option (click)="clicked()"
-                            *ngFor="let item of items.slice(displayCount(), items.length)"
+                            *ngFor="let item of items.slice(displayCount, items.length)"
                             [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
                         <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
                         <span>{{item?.value}}</span>
