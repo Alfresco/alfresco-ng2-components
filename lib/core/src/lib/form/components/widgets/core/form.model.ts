@@ -57,7 +57,7 @@ export interface FormRepresentationModel {
         [key: string]: any;
         fields?: any[];
     };
-    forceFullScreen?: boolean;
+    displayMode: string;
 }
 export class FormModel implements ProcessFormModel {
     static UNSET_TASK_NAME: string = 'Nameless task';
@@ -74,7 +74,6 @@ export class FormModel implements ProcessFormModel {
     readonly selectedOutcome: string;
     readonly enableFixedSpace: boolean;
     readonly displayMode: any;
-    readonly displayModeConfigurations: any[];
 
     fieldsCache: FormFieldModel[] = [];
 
@@ -117,7 +116,6 @@ export class FormModel implements ProcessFormModel {
             this.enableFixedSpace = enableFixedSpace;
             this.confirmMessage = json.confirmMessage || {};
             this.displayMode = json.displayMode;
-            this.displayModeConfigurations = json.displayModeConfigurations;
 
             this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));
 

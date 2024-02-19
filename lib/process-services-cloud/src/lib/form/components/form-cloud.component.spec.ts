@@ -1239,7 +1239,7 @@ describe('FormCloudComponent', () => {
             expect(fullScreenCard).toBeNull();
         });
 
-        fit('should set fullScreen mode from the form service notification', () => {
+        it('should set fullScreen mode from the form service notification', () => {
             CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
 
             expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
