@@ -37,6 +37,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { CloudFormRenderingService } from '../../../form/services/cloud-form-rendering.service';
+import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -67,7 +68,8 @@ describe('TaskFormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            declarations: [FormCloudComponent]
         });
         taskDetails.status = TASK_ASSIGNED_STATE;
         taskDetails.permissions = [TASK_VIEW_PERMISSION];
@@ -472,5 +474,19 @@ describe('TaskFormCloudComponent', () => {
         const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
 
         expect(noFormTemplateTitle).toBeNull();
+    });
+
+    it('should call children cloud task form change display mode when changing the display mode', () => {
+        const displayMode = 'displayMode';
+        component.taskDetails = { ...taskDetails, formKey: 'some-form' };
+
+        fixture.detectChanges();
+
+        expect(component.adfCloudForm).toBeDefined();
+        const switchToDisplayModeSpy = spyOn(component.adfCloudForm, 'switchToDisplayMode');
+
+        component.switchToDisplayMode(displayMode);
+
+        expect(switchToDisplayModeSpy).toHaveBeenCalledOnceWith(displayMode);
     });
 });

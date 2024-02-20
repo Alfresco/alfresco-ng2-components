@@ -42,7 +42,6 @@ describe('CloudFormRenderingService', () => {
     it('should return the default display mode configurations when no available configurations are provided', () => {
         expect(service.getDisplayModeConfigurations()).toBe(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
         expect(service.getDisplayModeConfigurations(null)).toBe(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
-        expect(service.getDisplayModeConfigurations(undefined)).toBe(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
         expect(service.getDisplayModeConfigurations([])).toBe(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
     });
 
@@ -59,7 +58,6 @@ describe('CloudFormRenderingService', () => {
     it('should return the default display mode when no display mode is provided', () => {
         expect(service.getDisplayMode()).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
         expect(service.getDisplayMode(null)).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
-        expect(service.getDisplayMode(undefined)).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
     });
 
     it('should return the default display mode when no display mode does not exist in the configuration', () => {

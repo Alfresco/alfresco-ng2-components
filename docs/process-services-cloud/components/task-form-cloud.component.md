@@ -90,14 +90,14 @@ import { CloudFormRenderingService, TaskFormCloudComponent } from '@alfresco/adf
 export class MyView {
 
     @ViewChild('adfCloudTaskForm', { static: true })
-    adfCloudForm: TaskFormCloudComponent;
+    adfCloudTaskForm: TaskFormCloudComponent;
 
     get displayConfigurations() {
         return CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS;
     }
 
     displayFormInFullscreenMode() {
-        this.adfCloudForm.switchToDisplayMode('fullScreen');
+        this.adfCloudTaskForm.switchToDisplayMode('fullScreen');
     }
 
 }
