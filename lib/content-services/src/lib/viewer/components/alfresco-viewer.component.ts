@@ -257,8 +257,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                 filter(
                     (node) =>
                         node &&
-                        node.id === this.nodeId &&
-                        (node.name !== this.fileName || this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))
+                        node.id === this.nodeId
+                        // && (node.name !== this.fileName || this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))
                 ),
                 takeUntil(this.onDestroy$)
             )
@@ -273,9 +273,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private getNodeVersionProperty(node: Node): string {
-        return node?.properties['cm:versionLabel'] ?? '';
-    }
+    // private getNodeVersionProperty(node: Node): string {
+    //     return node?.properties['cm:versionLabel'] ?? '';
+    // }
 
     private async setupSharedLink() {
         this.allowGoBack = false;

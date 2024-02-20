@@ -16,9 +16,15 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
+import { ActivatedRoute, PRIMARY_OUTLET, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
-import { ContentService, AllowableOperationsEnum, PermissionsEnum, NodesApiService, FileUploadErrorEvent } from '@alfresco/adf-content-services';
+import {
+    AllowableOperationsEnum,
+    ContentService,
+    FileUploadErrorEvent,
+    NodesApiService,
+    PermissionsEnum
+} from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({
@@ -87,8 +93,7 @@ export class FileViewComponent implements OnInit {
     }
 
     onUploadError(event: FileUploadErrorEvent) {
-        const errorMessage = event.error;
-        this.notificationService.showError(errorMessage);
+        this.notificationService.showError(event.error);
     }
 
     toggleEmptyMetadata() {

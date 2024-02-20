@@ -44,7 +44,10 @@
                     </button>
                 </mat-menu>
 
-                <button mat-icon-button [matMenuTriggerFor]="versionMenu" [id]="'adf-version-list-action-menu-button-'+version.entry.id" title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
+                <button mat-icon-button
+                        [matMenuTriggerFor]="versionMenu"
+                        [id]="'adf-version-list-action-menu-button-'+version.entry.id"
+                        title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
                     <mat-icon>more_vert</mat-icon>
                 </button>
             </div>
