@@ -33,6 +33,7 @@ import { CardViewItemValidator } from '../../interfaces/card-view-item-validator
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
 
 describe('CardViewTextItemComponent', () => {
     let loader: HarnessLoader;
@@ -529,6 +530,17 @@ describe('CardViewTextItemComponent', () => {
             );
         });
 
+        it('should input be readonly if item it NOT editable', async () => {
+            component.editable = false;
+            component.property.clickable = true;
+            component.ngOnChanges({});
+
+            loader = TestbedHarnessEnvironment.loader(fixture);
+            const inputHarness = await loader.getHarness(MatInputHarness.with({selector: `[data-automation-id="card-textitem-value-${component.property.key}"]`}));
+
+            expect(component.isEditable).toBe(false);
+            expect(await inputHarness.isReadonly()).toBe(true);
+        });
     });
 
     describe('Update', () => {
@@ -540,6 +552,7 @@ describe('CardViewTextItemComponent', () => {
                 default: 'FAKE-DEFAULT-KEY',
                 editable: true
             });
+            component.editable = true;
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
             fixture.detectChanges();
         });
@@ -704,6 +717,18 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
             expect(getTextFieldValue(component.property.key)).toEqual(expectedText);
             expect(component.property.value).toBe(expectedText);
+        });
+
+        it('should NOT call cardViewUpdateService if component is NOT editable', () => {
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
+            const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
+            component.editable = false;
+
+            fixture.detectChanges();
+            component.update();
+
+            expect(component.isEditable).toBe(false);
+            expect(itemUpdatedSpy).not.toHaveBeenCalled();
         });
     });
 
