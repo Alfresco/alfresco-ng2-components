@@ -41,17 +41,21 @@ describe('CardViewTextItemComponent', () => {
 
     const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
 
-    const updateTextField = (key, value) => {
-        const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
-        editInput.nativeElement.value = value;
-        editInput.nativeElement.dispatchEvent(new Event('input'));
+    const getTextField = (key: string): HTMLInputElement => {
+        return fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
+    }
+
+    const updateTextField = (key: string, value) => {
+        const editInput = getTextField(key);
+        editInput.value = value;
+        editInput.dispatchEvent(new Event('input'));
         fixture.detectChanges();
     };
 
-    const getTextFieldValue = (key): string => {
-        const textItemInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
+    const getTextFieldValue = (key: string): string => {
+        const textItemInput = getTextField(key);
         expect(textItemInput).not.toBeNull();
-        return textItemInput.nativeElement.value;
+        return textItemInput.value;
     };
 
     const getErrorElements = (key: string, includeItems = false): DebugElement[] => {
@@ -743,9 +747,8 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-textkey"]'));
-
-            expect(inputElement.nativeElement.value).toBe('');
+            const inputElement = getTextField('textkey');
+            expect(inputElement.value).toBe('');
             verifyNoErrors('textkey');
         });
 
@@ -756,24 +759,6 @@ describe('CardViewTextItemComponent', () => {
 
             const errorMessage = getTextFieldError(component.property.key);
             expect(errorMessage).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
-        });
-
-        it('should NOT show validation error for empty string', async () => {
-            updateTextField(component.property.key, '');
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            verifyNoErrors('textkey');
-        });
-
-        it('should NOT show validation error for null', async () => {
-            updateTextField(component.property.key, null);
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-textkey"]'));
-            expect(inputElement.nativeElement.value).toBe('');
-            verifyNoErrors('textkey');
         });
 
         it('should show validation error for float number', async () => {
