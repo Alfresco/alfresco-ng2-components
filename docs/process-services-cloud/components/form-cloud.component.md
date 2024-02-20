@@ -170,7 +170,7 @@ Provide a `displayModeConfiguration` array object containing the fullscreen conf
 **MyView.component.html**
 
 ```html
-<button (click)="displayFormInFullscreenMode()">
+<button (click)="adfCloudForm.switchToDisplayMode('fullScreen')">Full screen</button>
 
 <adf-cloud-form #adfCloudForm
     [appName]="appName"
@@ -185,20 +185,12 @@ Provide a `displayModeConfiguration` array object containing the fullscreen conf
 **MyView.component.ts**
 
 ```ts
-import { ViewChild } from '@angular/core';
-import { CloudFormRenderingService, FormCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { CloudFormRenderingService } from '@alfresco/adf-process-services-cloud';
 
 export class MyView {
 
-    @ViewChild('adfCloudForm', { static: true })
-    adfCloudForm: FormCloudComponent;
-
     get displayConfigurations() {
         return CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS;
-    }
-
-    displayFormInFullscreenMode() {
-        this.adfCloudForm.switchToDisplayMode('fullScreen');
     }
 
 }

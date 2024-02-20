@@ -25,7 +25,7 @@ import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
-import { FormCloudComponent } from '../../../form/public-api';
+import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 
 @Component({
     selector: 'adf-cloud-task-form',
