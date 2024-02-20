@@ -67,10 +67,7 @@
                 flex-direction: column;
                 height: 20px;
 
-                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-                // this class no longer exists, workarounds exist, but may be unreliable
-                // suggest programmatic class for empty inputs
-                &.mat-form-field-empty {
+                &.adf-property-field-label--empty {
                     transform: translateY(-1.3437em) scale(1);
              }
             }

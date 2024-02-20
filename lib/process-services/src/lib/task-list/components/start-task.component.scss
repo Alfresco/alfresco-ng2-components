@@ -1,4 +1,5 @@
 @import 'styles/flex';
+@import 'styles/mat-selectors';
 
 /* stylelint-disable no-descending-specificity */
 .adf-new-task-heading {
@@ -75,8 +76,7 @@ adf-start-task {
     people-widget.adf-people-widget-content {
         width: 100%;
 
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        .mat-form-field-label-wrapper {
+        #{$mat-form-field-label} {
             top: -14px;
         }
     }
@@ -136,8 +136,7 @@ adf-start-task {
                 border-color: var(--theme-warn-color);
             }
 
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mat-form-field-prefix {
+            #{$mat-form-field-prefix} {
                 color: var(--theme-warn-color);
             }
 

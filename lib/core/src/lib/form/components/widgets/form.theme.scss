@@ -1,4 +1,6 @@
 /* stylelint-disable no-descending-specificity */
+@import 'styles/mat-selectors';
+
 ul > li > form-field > .adf-focus {
     .adf-label {
         color: var(--theme-primary-color);
@@ -34,14 +36,12 @@ ul > li > form-field > .adf-focus {
     }
 
     &-invalid {
-        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
-        .mat-mdc-checkbox {
+        #{$mat-checkbox} {
             padding-bottom: 12px;
         }
 
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        .mat-form-field-underline {
-            background-color: var(--theme-warn-color);
+        #{$mat-form-field-underline} {
+            background-color: var(--theme-warn-color) !important;
         }
 
         #{$mat-select} {
@@ -54,8 +54,7 @@ ul > li > form-field > .adf-focus {
             border-color: var(--theme-warn-color);
         }
 
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        .mat-form-field-prefix {
+        #{$mat-form-field-prefix} {
             color: var(--adf-theme-foreground-secondary-text-color);
         }
 

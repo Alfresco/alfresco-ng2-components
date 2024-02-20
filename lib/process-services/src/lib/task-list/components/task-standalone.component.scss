@@ -1,7 +1,10 @@
-.adf-message-card {
-    width: 60%;
-    box-sizing: border-box;
-    margin: 16px auto;
+@import 'styles/mat-selectors';
+
+.adf {
+    &-message-card {
+        width: 60%;
+        box-sizing: border-box;
+        margin: 16px auto;
 
     .adf-no-form-mat-card-actions {
         border-top: solid 1px var(--adf-theme-background-status-bar-color);

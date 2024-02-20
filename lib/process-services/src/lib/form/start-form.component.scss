@@ -2,9 +2,35 @@
     max-width: 100%;
     max-height: 100%;
 
-    & .mat-mdc-card {
-        padding: 16px 24px;
-        overflow: hidden;
+        & #{$mat-card} {
+            padding: 16px 24px;
+            overflow: hidden;
+        }
+
+        & #{$mat-card-header-text}{
+            margin: 0 !important;
+        }
+
+        & #{$mat-tab-body-content} {
+            overflow: hidden;
+        }
+
+        & #{$mat-tab-label-text} {
+            font-size: var(--theme-subheading-2-font-size);
+            line-height: var(--theme-headline-line-height);
+            letter-spacing: -0.4px;
+            text-align: left;
+            color: var(--adf-theme-foreground-text-color-054);
+            text-transform: uppercase;
+        }
+
+        & .mat-ink-bar {
+            height: 4px;
+        }
+
+        & #{$mat-form-field-wrapper} {
+            margin: 0 12px 0 0;
+        }
     }
 
     & .mat-mdc-card-header-text {
@@ -112,7 +138,7 @@
 form-field {
     width: 100%;
 
-    .mat-mdc-input-element {
+    #{$mat-input-element} {
         font-size: var(--theme-body-2-font-size);
         padding-top: 8px;
         line-height: normal;

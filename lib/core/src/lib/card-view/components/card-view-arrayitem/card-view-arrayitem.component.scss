@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-array-item-icon {
         font-size: var(--theme-subheading-2-font-size);
@@ -29,8 +31,7 @@
     }
 
     &-property-value {
-        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
-        .mat-chip-list {
+        #{$mat-chip-list} {
             padding-top: 6px;
         }
     }
