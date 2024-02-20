@@ -1282,9 +1282,20 @@ describe('FormCloudComponent', () => {
                 expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
             });
 
-            it('should display the toolbar', () => {
-                const cloudFormToolbar = fixture.debugElement.query(By.css('.adf-cloud-form-toolbar'));
-                expect(cloudFormToolbar).not.toBeNull();
+            it('should display the toolbar with the nameless task title when the task name is not provided', () => {
+                const cloudFormToolbarDisplayName: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form__display-name');
+                expect(cloudFormToolbarDisplayName).not.toBeNull();
+                expect(cloudFormToolbarDisplayName.textContent.trim()).toEqual('Nameless task');
+            });
+
+            it('should display the toolbar with the task title when the task name is provided', async () => {
+                const taskName = 'task-name';
+
+                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen, taskName });
+
+                const cloudFormToolbarDisplayName: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form__display-name');
+                expect(cloudFormToolbarDisplayName).not.toBeNull();
+                expect(cloudFormToolbarDisplayName.textContent.trim()).toEqual(taskName);
             });
 
             it('should set the styles for the card', () => {

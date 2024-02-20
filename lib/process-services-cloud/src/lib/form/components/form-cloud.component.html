@@ -10,7 +10,7 @@
 
         <adf-toolbar class="adf-cloud-form-toolbar" *ngIf="displayMode === 'fullScreen'">
             <div class="adf-cloud-form__form-title">
-                <span *ngIf="isTitleEnabled()" class="adf-cloud-form__display-name" [matTooltip]="form.taskName">
+                <span class="adf-cloud-form__display-name" [matTooltip]="form.taskName">
                     {{form.taskName}}
                     <ng-container *ngIf="!form.taskName">
                         {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
@@ -23,6 +23,7 @@
                         data-automation-id="adf-toolbar-right-back"
                         [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                         [attr.data-automation-id]="'adf-cloud-form-close-button'"
+                        [matTooltip]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                         mat-icon-button
                         title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                         (click)="switchToDisplayMode()">
