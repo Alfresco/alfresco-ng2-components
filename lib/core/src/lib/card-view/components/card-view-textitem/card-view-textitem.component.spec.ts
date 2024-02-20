@@ -43,7 +43,7 @@ describe('CardViewTextItemComponent', () => {
 
     const getTextField = (key: string): HTMLInputElement => {
         return fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
-    }
+    };
 
     const updateTextField = (key: string, value) => {
         const editInput = getTextField(key);
