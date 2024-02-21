@@ -83,7 +83,7 @@
         }
     }
 
-    .mat-mdc-form-field {
+    #{$mat-form-field} {
         width: 100%;
     }
 
@@ -96,7 +96,7 @@
         top: 1.8em;
     }
 
-    .mat-focused {
+    #{$mat-form-field} {
         label {
             transform: scaleX(1);
             transition: transform 150ms linear;
@@ -110,7 +110,7 @@
         }
     }
 
-    .mat-grid-tile {
+    #{$mat-grid-tile} {
         overflow: visible;
         width: 80%;
     }
@@ -125,23 +125,22 @@
         max-width: 100%;
         max-height: 100%;
 
-        & .mat-mdc-card {
+        & #{$mat-card} {
             padding: 16px 24px;
             overflow: hidden;
         }
-        
-        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
-        & .mat-mdc-card-header-text {
+
+        & #{$mat-card-header-text} {
             margin: 0 !important;
         }
 
-        
+
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & .mat-tab-body-content {
             overflow: hidden;
         }
 
-        
+
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & .mdc-tab__text-label {
             font-size: var(--theme-subheading-2-font-size);
@@ -152,11 +151,11 @@
             text-transform: uppercase;
         }
 
-        & .mat-ink-bar {
+        & #{$mat-tab-ink-bar} {
             height: 4px;
         }
 
-        
+
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         & .mat-mdc-text-field-wrapper {
             margin: 0 12px 0 0;

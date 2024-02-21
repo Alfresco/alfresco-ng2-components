@@ -8,7 +8,7 @@
         padding-right: 25px;
         padding-bottom: 25px;
 
-        & .mat-mdc-button {
+        & #{$mat-button} {
             height: 36px;
             border-radius: 5px;
         }

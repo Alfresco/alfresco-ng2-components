@@ -79,7 +79,7 @@
         max-height: 100px;
         max-width: 300px;
 
-        .mat-mdc-progress-bar {
+        #{$mat-progress-bar} {
             max-width: 300px;
             margin: 0;
             position: absolute;
@@ -98,7 +98,7 @@
         left: 50%;
         transform: translateX(-50%);
 
-        .adf-toolbar .mat-toolbar {
+        .adf-toolbar #{$mat-toolbar} {
             max-height: 48px;
             background-color: var(--adf-theme-background-card-color);
             border-width: 0;

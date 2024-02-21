@@ -49,7 +49,7 @@ $tile-themes: (
     flex-direction: column;
     height: 85vh;
 
-    .mat-mdc-progress-spinner {
+    #{$mat-progress-spinner} {
         margin: 0 auto;
     }
 }

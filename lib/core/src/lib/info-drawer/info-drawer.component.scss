@@ -44,16 +44,16 @@
                     .mdc-tab__text-label {
                         flex-grow: 1;
 
-                        .mat-icon + span {
+                        #{$mat-icon} + span {
                             padding-left: 5px;
                         }
                     }
 
-                    .mat-ink-bar {
+                    #{$mat-tab-ink-bar} {
                         height: 2px;
                     }
 
-                    .mat-mdc-tab-body {
+                    #{$mat-tab-body} {
                         padding: 10px;
                         overflow-y: hidden;
                     }

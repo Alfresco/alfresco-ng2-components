@@ -67,7 +67,7 @@
     }
 
     &-attach-files-row {
-        .mat-line {
+        #{$mat-line} {
             margin-bottom: 0;
         }
 
