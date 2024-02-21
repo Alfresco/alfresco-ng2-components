@@ -78,7 +78,7 @@
         }
     }
 
-    .mat-mdc-form-field {
+    #{$mat-form-field} {
         width: 100%;
     }
 
@@ -90,7 +90,7 @@
         top: 1.8em !important;
     }
 
-    .mat-focused {
+    #{$mat-form-field} {
         label {
             transform: scaleX(1);
             transition: transform 150ms linear;
@@ -103,7 +103,7 @@
         }
     }
 
-    .mat-grid-tile {
+    #{$mat-grid-tile} {
         overflow: visible;
         width: 80%;
     }
@@ -118,12 +118,12 @@
         max-width: 100% !important;
         max-height: 100% !important;
 
-        & .mat-mdc-card {
+        & #{$mat-card} {
             padding: 16px 24px;
             overflow: hidden;
         }
 
-        & .mat-mdc-card-header-text {
+        & #{$mat-card-header-text} {
             margin: 0 !important;
         }
 
@@ -140,7 +140,7 @@
             text-transform: uppercase;
         }
 
-        & .mat-ink-bar {
+        & #{$mat-tab-ink-bar} {
             height: 4px;
         }
 

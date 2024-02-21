@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-card-view-selectitem {
     .adf-property-value {
         width: 100%;
@@ -18,7 +20,7 @@
             margin-top: 0;
             border-radius: 6px;
 
-            .mat-select-value {
+            #{$mat-select-value} {
                 color: var(--adf-metadata-action-button-clear-color);
             }
         }

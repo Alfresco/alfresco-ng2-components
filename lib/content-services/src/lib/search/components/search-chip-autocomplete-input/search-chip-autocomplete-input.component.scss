@@ -4,7 +4,7 @@ adf-search-chip-autocomplete-input {
         width: 100%;
     }
 
-    .mat-mdc-form-field-infix {
+    #{$mat-form-field-infix} {
         border: none;
     }
 

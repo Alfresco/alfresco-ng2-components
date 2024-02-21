@@ -76,7 +76,7 @@ adf-task-details {
                     flex-direction: column;
                     padding: 20px 0;
 
-                    .mat-mdc-slide-toggle {
+                    #{$mat-slide-toggle} {
                         margin-left: auto;
 
                         & + div {

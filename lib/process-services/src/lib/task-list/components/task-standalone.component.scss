@@ -6,7 +6,7 @@
         box-sizing: border-box;
         margin: 16px auto;
 
-        .mat-mdc-card-actions {
+        #{$mat-card-actions} {
             border-top: solid 1px var(--adf-theme-background-status-bar-color);
         }
     }
@@ -40,11 +40,11 @@
         width: fit-content !important;
     }
 
-    &-no-form-mat-card-actions.mat-mdc-card-actions {
+    &-no-form-mat-card-actions#{$mat-card-actions} {
         display: flex;
         justify-content: space-between;
 
-        & .mat-mdc-button {
+        & #{$mat-button} {
             text-transform: uppercase;
             border-radius: 5px;
         }

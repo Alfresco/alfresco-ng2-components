@@ -50,7 +50,7 @@
         display: inline-block;
     }
 
-    &-userinfo-menu_button.mat-mdc-button {
+    &-userinfo-menu_button#{$mat-button} {
         margin-right: 0;
         border-radius: 90%;
         padding: 0;
@@ -58,7 +58,7 @@
         height: 40px;
     }
 
-    &-userinfo-tab .mat-mdc-tab-header {
+    &-userinfo-tab #{$mat-tab-header} {
         align-self: center;
         width: 100%;
         min-width: 250px;
@@ -82,7 +82,7 @@
         box-sizing: border-box;
     }
 
-    &-userinfo-card.mat-mdc-card {
+    &-userinfo-card#{$mat-card} {
         padding: 0;
     }
 
@@ -154,7 +154,7 @@
 }
 
 @media only screen and (min-device-width: 480px) {
-    .mat-mdc-menu-panel.adf-userinfo-menu {
+    #{$mat-menu-panel}.adf-userinfo-menu {
         max-height: 450px;
         min-width: 450px;
         overflow: auto;
@@ -162,6 +162,6 @@
     }
 }
 
-.mat-mdc-menu-panel.adf-userinfo-menu .mat-mdc-menu-content {
+#{$mat-menu-panel}.adf-userinfo-menu #{$mat-menu-content} {
     padding: 0;
 }

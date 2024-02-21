@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-form-container {
         max-width: 100% !important;
@@ -25,7 +27,7 @@
             text-transform: uppercase;
         }
 
-        & .mat-ink-bar {
+        & #{$mat-tab-ink-bar} {
             height: 4px;
         }
 
@@ -90,7 +92,7 @@
         padding-bottom: 25px !important;
         padding-right: 25px !important;
 
-        & .mat-mdc-button {
+        & #{$mat-button} {
             height: 36px;
             border-radius: 5px;
         }

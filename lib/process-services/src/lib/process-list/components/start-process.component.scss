@@ -16,12 +16,12 @@
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
-        .mat-content-actions {
-            text-align: right;
+        #{$mat-button} {
+            text-transform: uppercase !important;
         }
 
-        .mat-mdc-button {
-            text-transform: uppercase !important;
+        &-content-actions {
+            text-align: right;
         }
     }
 
@@ -52,7 +52,7 @@
     }
 
     &-start-form-container {
-        .mat-mdc-card {
+        #{$mat-card} {
             box-shadow: none !important;
             padding: 0 !important;
         }
