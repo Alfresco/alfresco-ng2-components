@@ -719,7 +719,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).toBe(expectedText);
         });
 
-        it('should NOT call cardViewUpdateService if component is NOT editable', () => {
+        it('should NOT propagate update if is NOT editable', () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
             component.editable = false;
