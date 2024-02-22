@@ -100,9 +100,8 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
-    const clickOnGroupSave = () => {
-        fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement.click();
-    };
+    const clickOnGroupSave = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'))
+        .nativeElement.click();
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
@@ -140,7 +139,10 @@ describe('ContentMetadataComponent', () => {
 
     const getGeneralInfoPanel = (): MatExpansionPanel => fixture.debugElement.query(By.css(
         '[data-automation-id="adf-metadata-group-properties"]'
-    )).componentInstance;
+    ))?.componentInstance;
+
+    const queryDom = (properties = 'properties') =>
+        fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
 
     /**
      * Get metadata categories
@@ -718,11 +720,7 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-
-            const firstGroupedPropertiesComponent = fixture.debugElement.query(
-                By.css('.adf-metadata-grouped-properties-container adf-card-view')
-            ).componentInstance;
-            expect(firstGroupedPropertiesComponent.properties).toBe(expectedProperties);
+            expect(getGroupPanelContent().properties).toBe(expectedProperties);
         });
 
         it('should pass through the displayEmpty to the card view of grouped properties', async () => {
@@ -736,11 +734,7 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-
-            const basicPropertiesComponent = fixture.debugElement.query(
-                By.css('.adf-metadata-grouped-properties-container adf-card-view')
-            ).componentInstance;
-            expect(basicPropertiesComponent.displayEmpty).toBe(false);
+            expect(getGroupPanelContent().displayEmpty).toBe(false);
         });
 
         it('should hide card views group when the grouped properties are empty', async () => {
@@ -821,15 +815,15 @@ describe('ContentMetadataComponent', () => {
         it('should hide metadata fields if displayDefaultProperties is set to false', () => {
             component.displayDefaultProperties = false;
             fixture.detectChanges();
-            const metadataContainer = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-group-properties"]'));
+            const metadataContainer = getGeneralInfoPanel();
             fixture.detectChanges();
-            expect(metadataContainer).toBeNull();
+            expect(metadataContainer).toBeUndefined();
         });
 
         it('should display metadata fields if displayDefaultProperties is set to true', () => {
             component.displayDefaultProperties = true;
             fixture.detectChanges();
-            const metadataContainer = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-group-properties"]'));
+            const metadataContainer = getGeneralInfoPanel();
             fixture.detectChanges();
             expect(metadataContainer).toBeDefined();
         });
@@ -947,7 +941,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const verProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom('Versionable');
 
             expect(verProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -987,7 +981,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const verProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom('Versionable');
 
             expect(verProp).toBeNull();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -1008,7 +1002,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const verProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom('Versionable');
 
             expect(verProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -1028,10 +1022,10 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const verProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom('Versionable');
             expect(verProp).toBeNull();
 
-            const auditableProp = queryDom(fixture, 'Auditable');
+            const auditableProp = queryDom('Auditable');
             expect(auditableProp).toBeNull();
 
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -1052,7 +1046,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const exifProp = queryDom(fixture, 'Exif');
+            const exifProp = queryDom('Exif');
 
             expect(exifProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
@@ -1108,7 +1102,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            let defaultProp = queryDom(fixture);
+            let defaultProp = queryDom();
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
 
             component.displayAspect = 'CUSTOM';
@@ -1116,7 +1110,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            defaultProp = queryDom(fixture);
+            defaultProp = queryDom();
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
         });
 
@@ -1128,7 +1122,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const defaultProp = queryDom(fixture);
+            const defaultProp = queryDom();
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
         });
 
@@ -1233,7 +1227,7 @@ describe('ContentMetadataComponent', () => {
                 node: new SimpleChange(undefined, node, false)
             });
 
-            expandTagsPanel()
+            expandTagsPanel();
             fixture.detectChanges();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(0);
@@ -1584,6 +1578,3 @@ describe('ContentMetadataComponent', () => {
         });
     });
 });
-
-const queryDom = (fixture: ComponentFixture<ContentMetadataComponent>, properties: string = 'properties') =>
-    fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));

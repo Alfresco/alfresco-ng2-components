@@ -62,7 +62,8 @@
             [expanded]="currentPanel.panelTitle === 'Tags' && currentPanel.expanded"
             (opened)="expandPanel('Tags')"
             (closed)="closePanel('Tags')"
-            class="adf-content-metadata-panel">
+            class="adf-content-metadata-panel"
+            data-automation-id="adf-content-metadata-tags-panel">
             <mat-expansion-panel-header
                 class="adf-metadata-properties-header"
                 [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === 'Tags' && currentPanel.expanded">
@@ -122,7 +123,8 @@
             [expanded]="currentPanel.panelTitle === 'Categories' && currentPanel.expanded"
             (opened)="expandPanel('Categories')"
             (closed)="closePanel('Categories')"
-            class="adf-content-metadata-panel">
+            class="adf-content-metadata-panel"
+            data-automation-id="adf-content-metadata-categories-panel">
             <mat-expansion-panel-header
                 class="adf-metadata-properties-header"
                 [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === 'Categories' && currentPanel.expanded">
