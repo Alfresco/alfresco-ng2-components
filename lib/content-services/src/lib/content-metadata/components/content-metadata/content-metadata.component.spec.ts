@@ -30,7 +30,6 @@ import { CardViewContentUpdateService } from '../../../common/services/card-view
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import {
-    CardViewGroup,
     CategoriesManagementComponent,
     CategoriesManagementMode,
     CategoryService,
@@ -100,6 +99,10 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
+    const clickOnGroupSave = () => {
+        fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement.click();
+    };
+
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
     const getTagsToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="showing-tag-input-button"]'));
@@ -150,25 +153,6 @@ describe('ContentMetadataComponent', () => {
      */
     function getCategoriesManagementComponent(): CategoriesManagementComponent {
         return fixture.debugElement.query(By.directive(CategoriesManagementComponent))?.componentInstance;
-    }
-
-    /**
-     * Update aspect property
-     *
-     * @param newValue value to set
-     */
-    async function updateAspectProperty(newValue: string): Promise<void> {
-        const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
-        const expectedNode = { ...node, name: 'some-modified-value' };
-        spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
-
-        updateService.update(property, newValue);
-        tick(600);
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-        //component.onSaveGroupChanges({} as any);
-        await fixture.whenStable();
     }
 
     beforeEach(() => {
@@ -282,18 +266,26 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalled();
         }));
 
-        it('should save changedProperties on save click', fakeAsync(async () => {
-            const expectedNode = { ...node, name: 'some-modified-value' };
-            await updateAspectProperty('updated-value');
-            expect(component.node).toEqual(expectedNode);
-            expect(nodesApiService.updateNode).toHaveBeenCalled();
-        }));
+        it('should save changedProperties on save click', fakeAsync(() => {
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
+            updateService.itemUpdated$.next({
+                changed: {}
+            } as UpdateNotification);
+            component.ngOnInit();
+            tick(500);
+            component.readOnly = false;
+            fixture.detectChanges();
+            const expectedNode: Node = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            toggleEditModeForGroup();
 
-        it('should save changedProperties which delete property and update node on save click', fakeAsync(async () => {
-            const expectedNode = { ...node, name: 'some-modified-value' };
-            await updateAspectProperty('');
-            expect(component.node).toEqual({ ...expectedNode, properties: {} });
+            clickOnGroupSave();
             expect(nodesApiService.updateNode).toHaveBeenCalled();
+            expect(component.node).toEqual(expectedNode);
         }));
 
         it('should call removeTag and assignTagsToNode on TagService on save click', fakeAsync(() => {
@@ -528,38 +520,6 @@ describe('ContentMetadataComponent', () => {
         });
     });
 
-    describe('toggleEditMode', () => {
-        it('should toggle general editable', () => {
-            component.isEditingModeGeneralInfo = false;
-            component.onToggleGeneralInfoEdit();
-            expect(component.isEditingModeGeneralInfo).toBe(true);
-        });
-
-        it('should toggle tags editable', () => {
-            component.isEditingModeTags = false;
-            component.onToggleTagsEdit();
-            expect(component.isEditingModeTags).toBe(true);
-        });
-
-        it('should toggle categories editable', () => {
-            component.isEditingModeCategories = false;
-            component.onToggleCategoriesEdit();
-            expect(component.isEditingModeCategories).toBe(true);
-        });
-
-        it('should toggle group editable', () => {
-            const group: CardViewGroup = {
-                editable: false,
-                expanded: false,
-                title: '',
-                properties: []
-            };
-            component.currentGroup = null;
-            component.onToggleGroupEdit(group);
-            expect(group.editable).toBe(true);
-        });
-    });
-
     describe('Permission', () => {
         beforeEach(() => {
             component.readOnly = false;
@@ -601,103 +561,63 @@ describe('ContentMetadataComponent', () => {
         });
     });
 
-    describe('hasToggleEdit', () => {
-        it('should return true when editable is false, readOnly is false, and hasAllowableOperations is true', () => {
-            component.isEditingModeGeneralInfo = false;
+    describe('Resetting', () => {
+        beforeEach(() => {
+            spyOn(nodesApiService, 'updateNode').and.returnValue(EMPTY);
             component.readOnly = false;
-            expect(component.canEditGeneralInfo).toBe(true);
         });
 
-        it('should return false when editable is true', () => {
-            component.isEditingModeGeneralInfo = true;
-            component.readOnly = false;
+        it('should reset general info edit ability on reset click', () => {
             fixture.detectChanges();
-            expect(component.canEditGeneralInfo).toBe(false);
-            expect(component.isEditingGeneralInfo).toBe(true);
-        });
-    });
+            toggleEditModeForGeneralInfo();
 
-    describe('hasTagsToggleEdit', () => {
-        it('should have hasTagsToggleEdit property as expected', () => {
-            component.isEditingModeTags = false;
-            component.readOnly = false;
+            findCancelButton().click();
             fixture.detectChanges();
-            expect(component.canEditTags).toBe(true);
-        });
-
-        it('should return false when editable is true', () => {
-            component.isEditingModeTags = true;
-            component.readOnly = false;
-            fixture.detectChanges();
-            expect(component.canEditTags).toBe(false);
-            expect(component.isEditingTags).toBe(true);
-        });
-    });
-
-    describe('hasGroupToggleEdit', () => {
-        it('should return true when group is not editable, not read-only', () => {
-            component.readOnly = false;
-            const group: CardViewGroup = {
-                title: 'Group Title',
-                properties: [],
-                expanded: true,
-                editable: false
-            };
-            const result = component.hasGroupToggleEdit(group);
-            expect(result).toBe(true);
-        });
-
-        it('should return true when group is editable, not read-only', () => {
-            component.readOnly = false;
-            const group: CardViewGroup = {
-                title: 'Group Title',
-                properties: [],
-                expanded: true,
-                editable: true
-            };
-            const result = component.isGroupToggleEditing(group);
-            expect(result).toBe(true);
-        });
-    });
-
-    describe('hasCategoriesToggleEdit', () => {
-        it('should have hasCategoriesToggleEdit property as expected', () => {
-            component.isEditingModeCategories = false;
-            component.readOnly = false;
-            expect(component.canEditCategories).toBe(true);
-        });
-
-        it('should return false when editable is true', () => {
-            component.isEditingModeCategories = true;
-            component.readOnly = false;
-            fixture.detectChanges();
-            expect(component.canEditCategories).toBe(false);
-            expect(component.isEditingCategories).toBe(true);
-        });
-    });
-
-    describe('Reseting', () => {
-        it('should reset properties on reset click', async () => {
-            component.changedProperties = { properties: { 'property-key': 'updated-value' } };
-            component.hasMetadataChanged = true;
-            component.tagNameControlVisible = true;
-            component.categoryControlVisible = true;
-            component.isEditingModeGeneralInfo = true;
-            component.readOnly = false;
-            const expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
-            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const resetButton = fixture.debugElement.query(By.css('[data-automation-id="reset-metadata"]'));
-            resetButton.nativeElement.click();
-
-            fixture.detectChanges();
-            expect(component.changedProperties).toEqual({});
             expect(nodesApiService.updateNode).not.toHaveBeenCalled();
-            expect(component.hasMetadataChanged).toBeFalse();
-            expect(component.tagNameControlVisible).toBeFalse();
-            expect(component.categoryControlVisible).toBeFalse();
+            expect(getToggleEditButton()).toBeDefined();
+            expect(getGeneralInfoPanelContent().editable).toBeFalse();
+        });
+
+        it('should reset tags edit ability on reset click', () => {
+            component.displayTags = true;
+            fixture.detectChanges();
+            toggleEditModeForTags();
+
+            findCancelTagsButton().click();
+            fixture.detectChanges();
+            expect(nodesApiService.updateNode).not.toHaveBeenCalled();
+            expect(getTagsToggleEditButton()).toBeDefined();
+            expect(findTagsCreator()).toBeUndefined();
+        });
+
+        it('should reset categories edit ability on reset click', () => {
+            component.displayCategories = true;
+            fixture.detectChanges();
+            toggleEditModeForCategories();
+
+            findCancelButton().click();
+            fixture.detectChanges();
+            expect(nodesApiService.updateNode).not.toHaveBeenCalled();
+            expect(getCategoriesToggleEditButton()).toBeDefined();
+            expect(getCategoriesManagementComponent()).toBeUndefined();
+        });
+
+        it('should reset group edit ability on reset click', () => {
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
+            component.ngOnInit();
+            component.readOnly = false;
+            fixture.detectChanges();
+            toggleEditModeForGroup();
+
+            findCancelButton().click();
+            fixture.detectChanges();
+            expect(nodesApiService.updateNode).not.toHaveBeenCalled();
+            expect(getGroupToggleEditButton()).toBeDefined();
+            expect(getGroupPanelContent().editable).toBeFalse();
         });
     });
 
@@ -843,31 +763,52 @@ describe('ContentMetadataComponent', () => {
             expect(basicPropertiesGroup).toBeDefined();
         });
 
-        it('should revert changes for general info panel on cancel', () => {
-            const spy = spyOn(contentMetadataService, 'getBasicProperties');
-            component.onCancelGeneralInfoEdit();
-            expect(spy).toHaveBeenCalled();
+        it('should revert reload properties for general info panel on cancel', () => {
+            component.readOnly = false;
+            fixture.detectChanges();
+            spyOn(contentMetadataService, 'getBasicProperties');
+            toggleEditModeForGeneralInfo();
+
+            findCancelButton().click();
+            expect(contentMetadataService.getBasicProperties).toHaveBeenCalled();
         });
 
-        it('should revert changes for getGroupedProperties panel on cancel', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties');
+        it('should reload properties for group panel on cancel', () => {
+            const getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
-            component.onCancelGroupEdit({} as CardViewGroup);
-            expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
+            component.readOnly = false;
+            fixture.detectChanges();
+            toggleEditModeForGroup();
+            getGroupedPropertiesSpy.calls.reset();
+
+            findCancelButton().click();
+            expect(getGroupedPropertiesSpy).toHaveBeenCalledWith(node, 'custom-preset');
         });
 
-        it('should revert changes for categories panel on cancel', () => {
-            const spy = spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
+        it('should reload categories for categories panel on cancel', () => {
+            spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
             component.displayCategories = true;
-            component.onCancelCategoriesEdit();
-            expect(spy).toHaveBeenCalledWith(expectedNode.id);
+            component.readOnly = false;
+            fixture.detectChanges();
+            toggleEditModeForCategories();
+
+            findCancelButton().click();
+            expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(expectedNode.id);
         });
 
-        it('should revert changes for tags panel on cancel', () => {
-            const spy = spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(mockTagPaging()));
+        it('should reload tags for tags panel on cancel', () => {
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(mockTagPaging()));
             component.displayTags = true;
-            component.onCancelTagsEdit();
-            expect(spy).toHaveBeenCalledWith(expectedNode.id);
+            component.readOnly = false;
+            fixture.detectChanges();
+            toggleEditModeForTags();
+
+            findCancelTagsButton().click();
+            expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(expectedNode.id);
         });
     });
 
