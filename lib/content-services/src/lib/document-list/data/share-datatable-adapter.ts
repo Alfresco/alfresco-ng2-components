@@ -101,7 +101,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
         const dataRow = row as ShareDataRow;
         const value: any = row.getValue(col.key);
-        if (dataRow.cache[col.key] !== undefined) {
+        if (dataRow.cache[col.key]) {
             return dataRow.cache[col.key];
         }
 

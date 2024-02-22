@@ -108,7 +108,7 @@ export class ShareDataRow implements DataRow {
     }
 
     getValue(key: string): any {
-        if (this.cache[key] !== undefined) {
+        if (this.cache[key]) {
             return this.cache[key];
         }
         return ObjectUtils.getValue(this.obj.entry, key);
