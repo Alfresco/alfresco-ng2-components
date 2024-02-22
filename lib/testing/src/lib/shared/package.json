@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "entryFile": "../src/lib/shared/index.ts",
+      "flatModuleFile": "adf-testing-shared"
+    }
+  }
+}

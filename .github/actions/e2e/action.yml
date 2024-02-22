@@ -108,7 +108,7 @@ runs:
       run: |
         echo "Running: Check CS is UP"
         set -u;
-        ./dist/libs/cli/bin/adf-cli \
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli \
           check-cs-env \
           --host "$E2E_HOST" \
           -u "$E2E_USERNAME" \
