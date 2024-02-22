@@ -8,7 +8,7 @@
         [cdkTrapFocus]="displayMode === 'fullScreen'"
         cdkTrapFocusAutoCapture>
 
-        <adf-toolbar class="adf-cloud-form-toolbar" *ngIf="displayMode === 'fullScreen'">
+        <adf-toolbar class="adf-cloud-form-toolbar" *ngIf="displayMode === 'fullScreen' && findDisplayConfiguration('fullScreen')?.options?.displayToolbar">
             <div class="adf-cloud-form__form-title">
                 <span class="adf-cloud-form__display-name" [matTooltip]="form.taskName">
                     {{form.taskName}}

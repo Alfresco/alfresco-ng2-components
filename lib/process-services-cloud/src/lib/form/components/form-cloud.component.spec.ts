@@ -1282,13 +1282,13 @@ describe('FormCloudComponent', () => {
                 expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
             });
 
-            it('should display the toolbar with the nameless task title when the task name is not provided', () => {
+            it('should display the toolbar with the nameless task title when the task name is not provided and toolbar is enabled', () => {
                 const cloudFormToolbarDisplayName: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form__display-name');
                 expect(cloudFormToolbarDisplayName).not.toBeNull();
                 expect(cloudFormToolbarDisplayName.textContent.trim()).toEqual('Nameless task');
             });
 
-            it('should display the toolbar with the task title when the task name is provided', async () => {
+            it('should display the toolbar with the task title when the task name is provided and toolbar is enabled', async () => {
                 const taskName = 'task-name';
 
                 await loadForm({ displayMode: FormCloudDisplayMode.fullScreen, taskName });
@@ -1296,6 +1296,26 @@ describe('FormCloudComponent', () => {
                 const cloudFormToolbarDisplayName: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form__display-name');
                 expect(cloudFormToolbarDisplayName).not.toBeNull();
                 expect(cloudFormToolbarDisplayName.textContent.trim()).toEqual(taskName);
+            });
+
+            it('should not display the toolbar with the task title when the toolbar option is disabled', async () => {
+                formComponent.displayModeConfigurations = [
+                    {
+                        displayMode: FormCloudDisplayMode.fullScreen,
+                        options: {
+                            onCompleteTask: () => { },
+                            onDisplayModeOff: () => { },
+                            onDisplayModeOn: () => { },
+                            onSaveTask: () => { },
+                            displayToolbar: false
+                        }
+                    }
+                ];
+
+                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+
+                const cloudFormToolbar: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form-toolbar');
+                expect(cloudFormToolbar).toBeNull();
             });
 
             it('should set the styles for the card', () => {

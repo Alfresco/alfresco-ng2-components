@@ -49,7 +49,8 @@ export class CloudFormRenderingService extends FormRenderingService {
                 onDisplayModeOn: () => { },
                 onDisplayModeOff: (id: string) => CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
                 onCompleteTask: (id: string) => CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
-                onSaveTask: () => { }
+                onSaveTask: () => { },
+                displayToolbar: true
             }
         }
     ];
