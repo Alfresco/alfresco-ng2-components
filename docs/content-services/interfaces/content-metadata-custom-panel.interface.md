@@ -12,8 +12,7 @@ Specifies required properties for custom metadata panel to be displayed in [Cont
 ## Basic usage
 
 ```ts
-export interface ContentMetadataCustomPanel {
-    panelTitle: string;
+export interface ContentMetadataCustomPanel extends ContentMetadataPanel {
     component: string;
 }
 ```
@@ -22,10 +21,10 @@ export interface ContentMetadataCustomPanel {
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| panelTitle | `string` |  | Title for the panel the will be displayed in expansion panel header. |
 | component | `string` |  | Id of the registered [Dynamic component](../../extensions/components/dynamic.component.md) to be displayed inside expansion panel. |
 
 ## See also
 
 -   [ContentMetadataCardComponent](../components/content-metadata-card.component.md)
 -   [Dynamic Component](../../extensions/components/dynamic.component.md)
+-   [Content Metadata Panel intergace](./content-metadata-panel.interface.md)

@@ -35,7 +35,7 @@ import {
     UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel } from '../../interfaces/content-metadata.interfaces';
+import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel, ContentMetadataPanel } from '../../interfaces/content-metadata.interfaces';
 import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
@@ -135,7 +135,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
     editing = false;
-    currentPanel = {
+    currentPanel: ContentMetadataPanel = {
         expanded: false,
         panelTitle: ''
     };

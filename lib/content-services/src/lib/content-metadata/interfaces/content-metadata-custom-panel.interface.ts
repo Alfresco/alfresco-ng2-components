@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-export interface ContentMetadataCustomPanel {
-    panelTitle: string;
+import { ContentMetadataPanel } from "./content-metadata-panel.interface";
+
+export interface ContentMetadataCustomPanel extends ContentMetadataPanel {
     component: string;
-    expanded?: boolean;
 }
