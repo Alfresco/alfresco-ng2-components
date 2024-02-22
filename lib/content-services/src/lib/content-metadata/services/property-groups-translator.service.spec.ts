@@ -35,7 +35,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { Constraint, Definition, Property as PropertyBase } from '@alfresco/js-api';
 
-fdescribe('PropertyGroupTranslatorService', () => {
+describe('PropertyGroupTranslatorService', () => {
 
     let service: PropertyGroupTranslatorService;
     let propertyGroups: OrganisedPropertyGroup[];
