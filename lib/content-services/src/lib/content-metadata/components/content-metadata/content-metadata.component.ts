@@ -48,7 +48,7 @@ import { ContentService } from '../../../common/services/content.service';
 
 const DEFAULT_SEPARATOR = ', ';
 
-export enum DefaultPanels {
+enum DefaultPanels {
     PROPERTIES = 'Properties',
     TAGS = 'Tags',
     CATEGORIES = 'Categories'
@@ -183,7 +183,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.loadProperties(this.node);
         this.verifyAllowableOperations();
 
-        this.currentPanel.panelTitle = this.displayAspect ?? this.currentPanel.panelTitle;
+        this.currentPanel.panelTitle = this.displayAspect ?? this.DefaultPanels.PROPERTIES;
+        this.currentPanel.expanded = true;
     }
 
     private verifyAllowableOperations() {
@@ -236,10 +237,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             this.loadProperties(changes.node.currentValue);
         }
 
-        if(changes.readOnly?.currentValue) {
+        if (changes.readOnly?.currentValue) {
             this.resetEditing();
             this.loadProperties(this.node);
         }
+
+        if (changes.displayAspect?.currentValue) {
+            this.currentPanel.panelTitle = changes.displayAspect.currentValue;
+            this.currentPanel.expanded = true;
+        }
+
     }
 
     ngOnDestroy() {
@@ -351,10 +358,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
 
         return properties.length > 0;
-    }
-
-    canExpandTheCard(groupTitle: string): boolean {
-        return groupTitle === this.displayAspect;
     }
 
     keyDown(event: KeyboardEvent) {

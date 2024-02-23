@@ -1088,10 +1088,10 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Expand the panel', () => {
-        it('should general info panel be collapsed by default', () => {
+        it('should general info panel be expanded by default if no displayAspect provided', () => {
             fixture.detectChanges();
 
-            expect(getGeneralInfoPanel().expanded).toBeFalse();
+            expect(getGeneralInfoPanel().expanded).toBeTrue();
         });
 
         it('should open and update drawer with expand section dynamically', async () => {
@@ -1103,7 +1103,7 @@ describe('ContentMetadataComponent', () => {
             await fixture.whenStable();
 
             let defaultProp = queryDom();
-            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            expect(defaultProp.nativeElement.expanded).toBeFalsy();
 
             component.displayAspect = 'CUSTOM';
 
@@ -1111,7 +1111,7 @@ describe('ContentMetadataComponent', () => {
             await fixture.whenStable();
 
             defaultProp = queryDom();
-            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            expect(defaultProp.nativeElement.expanded).toBeFalsy();
         });
 
         it('should not expand anything if input is wrong', async () => {
@@ -1123,10 +1123,10 @@ describe('ContentMetadataComponent', () => {
             await fixture.whenStable();
 
             const defaultProp = queryDom();
-            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            expect(defaultProp.nativeElement.expanded).toBeFalsy();
         });
 
-        xit('should expand the section when displayAspect set as Properties', async () => {
+        it('should expand the section when displayAspect set as Properties', async () => {
             component.displayAspect = 'Properties';
 
             component.ngOnInit();
@@ -1361,7 +1361,7 @@ describe('ContentMetadataComponent', () => {
                 component.ngOnInit();
 
                 fixture.detectChanges();
-                expect(tagsCreator.tags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
+                expect(component.assignedTags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
                 expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
             });
 
@@ -1369,7 +1369,7 @@ describe('ContentMetadataComponent', () => {
                 component.ngOnInit();
 
                 fixture.detectChanges();
-                expect(tagsCreator.tags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
+                expect(component.assignedTags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
                 expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
             });
         });
@@ -1553,7 +1553,7 @@ describe('ContentMetadataComponent', () => {
                 component.ngOnInit();
 
                 fixture.detectChanges();
-                expect(categoriesManagementComponent.categories).toEqual([category1, category2]);
+                expect(component.assignedCategories).toEqual([category1, category2]);
                 expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
             });
 
