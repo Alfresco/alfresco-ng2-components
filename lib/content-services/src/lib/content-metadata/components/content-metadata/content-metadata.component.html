@@ -2,32 +2,32 @@
     <mat-expansion-panel
         *ngIf="displayDefaultProperties"
         class="adf-content-metadata-panel"
-        [expanded]="currentPanel.panelTitle === 'Properties' && currentPanel.expanded"
-        (opened)="expandPanel('Properties')"
-        (closed)="closePanel('Properties')"
+        [expanded]="currentPanel.panelTitle === DefaultPanels.PROPERTIES && currentPanel.expanded"
+        (opened)="expandPanel(DefaultPanels.PROPERTIES)"
+        (closed)="closePanel(DefaultPanels.PROPERTIES)"
         [attr.data-automation-id]="'adf-metadata-group-properties'"
         hideToggle>
         <mat-expansion-panel-header
             class="adf-metadata-properties-header"
-            [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === 'Properties' && currentPanel.expanded">
+            [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === DefaultPanels.PROPERTIES && currentPanel.expanded">
             <adf-content-metadata-header
                 [title]="'CORE.METADATA.BASIC.HEADER'"
-                [expanded]="currentPanel.panelTitle === 'Properties' && currentPanel.expanded">
+                [expanded]="currentPanel.panelTitle === DefaultPanels.PROPERTIES && currentPanel.expanded">
                 <button
-                    *ngIf="!readOnly && !(currentPanel.panelTitle === 'Properties' && editing)"
+                    *ngIf="!readOnly && !isPanelEditing(DefaultPanels.PROPERTIES)"
                     mat-icon-button
-                    (click)="toggleGroupEditing('Properties', $event)"
+                    (click)="toggleGroupEditing(DefaultPanels.PROPERTIES, $event)"
                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                     data-automation-id="meta-data-general-info-edit"
                     class="adf-edit-icon-buttons">
                     <mat-icon>mode_edit</mat-icon>
                 </button>
-                <div *ngIf="currentPanel.panelTitle === 'Properties' && editing" class="adf-metadata-action-buttons">
+                <div *ngIf="isPanelEditing(DefaultPanels.PROPERTIES)" class="adf-metadata-action-buttons">
                     <button
                         mat-icon-button
                         [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                        (click)="cancelGroupEditing('Properties', $event)"
+                        (click)="cancelGroupEditing(DefaultPanels.PROPERTIES, $event)"
                         data-automation-id="reset-metadata"
                         class="adf-metadata-action-buttons-clear">
                         <mat-icon>clear</mat-icon>
@@ -48,7 +48,7 @@
             class="adf-metadata-properties-expansion-panel"
             (keydown)="keyDown($event)"
             [properties]="basicProperties$ | async"
-            [editable]="!readOnly && currentPanel.panelTitle === 'Properties' && editing"
+            [editable]="!readOnly && isPanelEditing(DefaultPanels.PROPERTIES)"
             [displayEmpty]="displayEmpty"
             [copyToClipboardAction]="copyToClipboardAction"
             [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
@@ -59,30 +59,30 @@
     <ng-container *ngIf="displayTags">
         <mat-expansion-panel
             hideToggle
-            [expanded]="currentPanel.panelTitle === 'Tags' && currentPanel.expanded"
-            (opened)="expandPanel('Tags')"
-            (closed)="closePanel('Tags')"
+            [expanded]="currentPanel.panelTitle === DefaultPanels.TAGS && currentPanel.expanded"
+            (opened)="expandPanel(DefaultPanels.TAGS)"
+            (closed)="closePanel(DefaultPanels.TAGS)"
             class="adf-content-metadata-panel"
             data-automation-id="adf-content-metadata-tags-panel">
             <mat-expansion-panel-header
                 class="adf-metadata-properties-header"
-                [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === 'Tags' && currentPanel.expanded">
-                <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="currentPanel.panelTitle === 'Tags' && currentPanel.expanded">
+                [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === DefaultPanels.TAGS && currentPanel.expanded">
+                <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="currentPanel.panelTitle === DefaultPanels.TAGS && currentPanel.expanded">
                     <button
-                        *ngIf="!readOnly && !(currentPanel.panelTitle === 'Tags' && editing)"
+                        *ngIf="!readOnly && !isPanelEditing(DefaultPanels.TAGS)"
                         mat-icon-button
-                        (click)="toggleGroupEditing('Tags', $event)"
+                        (click)="toggleGroupEditing(DefaultPanels.TAGS, $event)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                         [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                         data-automation-id="showing-tag-input-button"
                         class="adf-edit-icon-buttons">
                         <mat-icon>mode_edit</mat-icon>
                     </button>
-                    <div *ngIf="currentPanel.panelTitle === 'Tags' && editing" class="adf-metadata-action-buttons">
+                    <div *ngIf="isPanelEditing(DefaultPanels.TAGS)" class="adf-metadata-action-buttons">
                         <button
                             mat-icon-button
                             [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                            (click)="cancelGroupEditing('Tags', $event)"
+                            (click)="cancelGroupEditing(DefaultPanels.TAGS, $event)"
                             data-automation-id="reset-tags-metadata"
                             class="adf-metadata-action-buttons-clear">
                             <mat-icon>clear</mat-icon>
@@ -99,14 +99,14 @@
                     </div>
                 </adf-content-metadata-header>
             </mat-expansion-panel-header>
-            <div *ngIf="currentPanel.panelTitle === 'Tags' && !editing" class="adf-metadata-properties-tags">
+            <div *ngIf="currentPanel.panelTitle === DefaultPanels.TAGS && !editing" class="adf-metadata-properties-tags">
                 <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
             </div>
             <div *ngIf="showEmptyTagMessage" class="adf-metadata-no-item-added">
                 {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
             </div>
             <adf-tags-creator
-                *ngIf="currentPanel.panelTitle === 'Tags' && editing"
+                *ngIf="!readOnly && isPanelEditing(DefaultPanels.TAGS)"
                 class="adf-metadata-properties-tags"
                 [tagNameControlVisible]="editing"
                 (tagsChange)="storeTagsToAssign($event)"
@@ -120,32 +120,32 @@
     <ng-container *ngIf="displayCategories">
         <mat-expansion-panel
             hideToggle
-            [expanded]="currentPanel.panelTitle === 'Categories' && currentPanel.expanded"
-            (opened)="expandPanel('Categories')"
-            (closed)="closePanel('Categories')"
+            [expanded]="currentPanel.panelTitle === DefaultPanels.CATEGORIES && currentPanel.expanded"
+            (opened)="expandPanel(DefaultPanels.CATEGORIES)"
+            (closed)="closePanel(DefaultPanels.CATEGORIES)"
             class="adf-content-metadata-panel"
             data-automation-id="adf-content-metadata-categories-panel">
             <mat-expansion-panel-header
                 class="adf-metadata-properties-header"
-                [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === 'Categories' && currentPanel.expanded">
+                [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === DefaultPanels.CATEGORIES && currentPanel.expanded">
                 <adf-content-metadata-header
                     [title]="'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE'"
-                    [expanded]="currentPanel.panelTitle === 'Categories' && currentPanel.expanded">
+                    [expanded]="currentPanel.panelTitle === DefaultPanels.CATEGORIES && currentPanel.expanded">
                     <button
-                        *ngIf="!readOnly && !(currentPanel.panelTitle === 'Categories' && editing)"
+                        *ngIf="!readOnly && !isPanelEditing(DefaultPanels.CATEGORIES)"
                         mat-icon-button
-                        (click)="toggleGroupEditing('Categories', $event)"
+                        (click)="toggleGroupEditing(DefaultPanels.CATEGORIES, $event)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                         [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                         data-automation-id="meta-data-categories-edit"
                         class="adf-categories-button adf-edit-icon-buttons">
                         <mat-icon>mode_edit</mat-icon>
                     </button>
-                    <div *ngIf="currentPanel.panelTitle === 'Categories' && editing" class="adf-metadata-action-buttons">
+                    <div *ngIf="isPanelEditing(DefaultPanels.CATEGORIES)" class="adf-metadata-action-buttons">
                         <button
                             mat-icon-button
                             [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                            (click)="cancelGroupEditing('Categories', $event)"
+                            (click)="cancelGroupEditing(DefaultPanels.CATEGORIES, $event)"
                             data-automation-id="reset-metadata"
                             class="adf-metadata-action-buttons-clear">
                             <mat-icon>clear</mat-icon>
@@ -162,14 +162,14 @@
                     </div>
                 </adf-content-metadata-header>
             </mat-expansion-panel-header>
-            <div *ngIf="currentPanel.panelTitle === 'Categories' && !editing">
+            <div *ngIf="currentPanel.panelTitle === DefaultPanels.CATEGORIES && !editing">
                 <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
             </div>
             <div *ngIf="showEmptyCategoryMessage" class="adf-metadata-no-item-added">
                 {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
             </div>
             <adf-categories-management
-                *ngIf="currentPanel.panelTitle === 'Categories' && editing"
+                *ngIf="!readOnly && isPanelEditing(DefaultPanels.CATEGORIES)"
                 class="adf-metadata-categories-header"
                 [categoryNameControlVisible]="editing"
                 [disableRemoval]="saving"
@@ -214,7 +214,7 @@
                     [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === group.title && currentPanel.expanded">
                     <adf-content-metadata-header [title]="group.title" [expanded]="currentPanel.panelTitle === group.title && currentPanel.expanded">
                         <button
-                            *ngIf="group.editable && !this.readOnly && !(currentPanel.panelTitle === group.title && editing)"
+                            *ngIf="group.editable && !this.readOnly && !isPanelEditing(group.title)"
                             mat-icon-button
                             [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                             [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
@@ -223,7 +223,7 @@
                             (click)="toggleGroupEditing(group.title, $event)">
                             <mat-icon>mode_edit</mat-icon>
                         </button>
-                        <div class="adf-metadata-action-buttons" *ngIf="group.editable && currentPanel.panelTitle === group.title && editing">
+                        <div class="adf-metadata-action-buttons" *ngIf="group.editable && isPanelEditing(group.title)">
                             <button
                                 mat-icon-button
                                 [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
@@ -250,7 +250,7 @@
                 <adf-card-view
                     (keydown)="keyDown($event)"
                     [properties]="group.properties"
-                    [editable]="group.editable && currentPanel.panelTitle === group.title && editing"
+                    [editable]="!readOnly && group.editable && isPanelEditing(group.title)"
                     [displayEmpty]="displayEmpty"
                     [copyToClipboardAction]="copyToClipboardAction"
                     [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"

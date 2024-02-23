@@ -48,6 +48,12 @@ import { ContentService } from '../../../common/services/content.service';
 
 const DEFAULT_SEPARATOR = ', ';
 
+export enum DefaultPanels {
+    PROPERTIES = 'Properties',
+    TAGS = 'Tags',
+    CATEGORIES = 'Categories'
+}
+
 @Component({
     selector: 'adf-content-metadata',
     templateUrl: './content-metadata.component.html',
@@ -124,6 +130,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private classifiableChangedSubject = new Subject<void>();
     private _saving = false;
 
+    DefaultPanels = DefaultPanels;
     multiValueSeparator: string;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
@@ -135,6 +142,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
     editing = false;
+    editedPanelTitle = '';
     currentPanel: ContentMetadataPanel = {
         expanded: false,
         panelTitle: ''
@@ -200,6 +208,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return this._saving;
     }
 
+    isPanelEditing(panelTitle: string): boolean {
+        return this.editing && ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle);
+    }
+
     protected handleUpdateError(error: Error) {
         let statusCode = 0;
 
@@ -223,8 +235,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.node && !changes.node.firstChange) {
             this.loadProperties(changes.node.currentValue);
         }
+
         if(changes.readOnly?.currentValue) {
-            this.editing = false;
+            this.resetEditing();
             this.loadProperties(this.node);
         }
     }
@@ -249,7 +262,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     saveChanges(event?: MouseEvent) {
         event?.stopPropagation();
-        this.editing = false;
+        this.resetEditing();
         this._saving = true;
 
         if (this.hasContentTypeChanged(this.changedProperties)) {
@@ -303,16 +316,17 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             return;
         }
         this.editing = true;
+        this.editedPanelTitle = panelTitle;
         this.expandPanel(panelTitle);
     }
 
     cancelGroupEditing(panelTitle: string, event?: MouseEvent) {
         event?.stopPropagation();
-        this.editing = false;
+        this.resetEditing();
         this.revertChanges();
-        const loadBasicProps = panelTitle === 'Properties';
-        const loadTags = panelTitle === 'Tags';
-        const loadCategories = panelTitle === 'Categories';
+        const loadBasicProps = panelTitle === this.DefaultPanels.PROPERTIES;
+        const loadTags = panelTitle === this.DefaultPanels.TAGS;
+        const loadCategories = panelTitle === this.DefaultPanels.CATEGORIES;
         const loadGroupedProps = !loadBasicProps && !loadTags && !loadCategories;
         this.loadProperties(this.node, loadBasicProps, loadGroupedProps, loadTags, loadCategories);
     }
@@ -326,6 +340,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (this.currentPanel.panelTitle === panelTitle) {
             this.currentPanel.expanded = false;
         }
+    }
+
+    resetEditing() {
+        this.editing = false;
+        this.editedPanelTitle = '';
     }
 
     showGroup(group: CardViewGroup): boolean {
