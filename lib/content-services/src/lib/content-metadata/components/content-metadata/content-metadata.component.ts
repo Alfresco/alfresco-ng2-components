@@ -35,7 +35,7 @@ import {
     UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel } from '../../interfaces/content-metadata.interfaces';
+import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel, ContentMetadataPanel } from '../../interfaces/content-metadata.interfaces';
 import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
@@ -47,6 +47,12 @@ import { AllowableOperationsEnum } from '../../../common/models/allowable-operat
 import { ContentService } from '../../../common/services/content.service';
 
 const DEFAULT_SEPARATOR = ', ';
+
+enum DefaultPanels {
+    PROPERTIES = 'Properties',
+    TAGS = 'Tags',
+    CATEGORIES = 'Categories'
+}
 
 @Component({
     selector: 'adf-content-metadata',
@@ -124,26 +130,23 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private classifiableChangedSubject = new Subject<void>();
     private _saving = false;
 
+    DefaultPanels = DefaultPanels;
     multiValueSeparator: string;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
     changedProperties = {};
     hasMetadataChanged = false;
-    tagNameControlVisible = false;
     assignedCategories: Category[] = [];
     categories: Category[] = [];
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
-    categoryControlVisible = false;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
-    isGeneralPanelExpanded = true;
-    isTagPanelExpanded: boolean;
-    isCategoriesPanelExpanded: boolean;
-    currentGroup: CardViewGroup;
-
-    isEditingModeGeneralInfo = false;
-    isEditingModeTags = false;
-    isEditingModeCategories = false;
+    editing = false;
+    editedPanelTitle = '';
+    currentPanel: ContentMetadataPanel = {
+        expanded: false,
+        panelTitle: ''
+    };
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -180,9 +183,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.loadProperties(this.node);
         this.verifyAllowableOperations();
 
-        if (this.displayAspect === 'Properties') {
-            this.isGeneralPanelExpanded = true;
-        }
+        this.currentPanel.panelTitle = this.displayAspect ?? this.DefaultPanels.PROPERTIES;
+        this.currentPanel.expanded = true;
     }
 
     private verifyAllowableOperations() {
@@ -205,6 +207,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     get saving(): boolean {
         return this._saving;
+    }
+
+    isPanelEditing(panelTitle: string): boolean {
+        return this.editing && ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle);
     }
 
     protected handleUpdateError(error: Error) {
@@ -230,10 +236,17 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.node && !changes.node.firstChange) {
             this.loadProperties(changes.node.currentValue);
         }
-        if(changes?.readOnly && changes?.readOnly?.currentValue) {
-            this.cancelEditing();
-            this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
+
+        if (changes.readOnly?.currentValue) {
+            this.resetEditing();
+            this.loadProperties(this.node);
         }
+
+        if (changes.displayAspect?.currentValue) {
+            this.currentPanel.panelTitle = changes.displayAspect.currentValue;
+            this.currentPanel.expanded = true;
+        }
+
     }
 
     ngOnDestroy() {
@@ -254,35 +267,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    private onSave(event?: MouseEvent) {
+    saveChanges(event?: MouseEvent) {
         event?.stopPropagation();
-
-        this.onSaveChanges();
-        this.cancelEditing();
-    }
-
-    onSaveGeneralInfoChanges(event?: MouseEvent) {
-        this.onSave(event);
-    }
-
-    onSaveTagsChanges(event?: MouseEvent) {
-        this.onSave(event);
-    }
-
-    onSaveCategoriesChanges(event?: MouseEvent) {
-        this.onSave(event);
-    }
-
-    onSaveGroupChanges(group: CardViewGroup, event?: MouseEvent) {
-        this.onSave(event);
-
-        group.editable = false;
-    }
-
-    private onSaveChanges() {
+        this.resetEditing();
         this._saving = true;
-        this.tagNameControlVisible = false;
-        this.categoryControlVisible = false;
 
         if (this.hasContentTypeChanged(this.changedProperties)) {
             this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
@@ -318,182 +306,58 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     revertChanges() {
         this.changedProperties = {};
         this.hasMetadataChanged = false;
-        this.tagNameControlVisible = false;
-        this.categoryControlVisible = false;
-    }
-
-    // Returns the editing state of the panel
-    isEditingPanel(): boolean {
-        return (
-            (this.isEditingModeGeneralInfo || this.isEditingModeTags || this.isEditingModeCategories || this.currentGroup?.editable) && this.hasMetadataChanged
-        );
-    }
-
-    onToggleGeneralInfoEdit(event?: MouseEvent) {
-        event?.stopPropagation();
-
-        if (this.isEditingPanel()) {
-            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
-            return;
-        }
-
-        const currentMode = this.isEditingModeGeneralInfo;
-        this.cancelEditing();
-        this.isEditingModeGeneralInfo = !currentMode;
-        this.isGeneralPanelExpanded = true;
-        this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
-    }
-
-    onToggleTagsEdit(event?: MouseEvent) {
-        event?.stopPropagation();
-
-        if (this.isEditingPanel()) {
-            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
-            return;
-        }
-
-        const currentValue = this.isEditingModeTags;
-        this.cancelEditing();
-        this.isEditingModeTags = !currentValue;
-        this.isTagPanelExpanded = this.isEditingModeTags;
-        this.tagNameControlVisible = true;
-        this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
-    }
-
-    private cancelEditing() {
-        this.isEditingModeGeneralInfo = false;
-        this.isEditingModeCategories = false;
-        this.isEditingModeTags = false;
-    }
-
-    onCancelGeneralInfoEdit(event?: MouseEvent) {
-        event?.stopPropagation();
-
-        this.cancelEditing();
-        this.revertChanges();
-
-        this.basicProperties$ = this.getProperties(this.node);
-    }
-
-    onCancelCategoriesEdit(event?: MouseEvent) {
-        event?.stopPropagation();
-
-        this.cancelEditing();
-        this.revertChanges();
-
-        this.loadCategoriesForNode(this.node.id);
-
-        const aspectNames = this.node.aspectNames || [];
-        if (!aspectNames.includes('generalclassifiable')) {
-            this.categories = [];
-            this.classifiableChangedSubject.next();
-        }
-    }
-
-    onCancelTagsEdit(event?: MouseEvent) {
-        event?.stopPropagation();
-
-        this.cancelEditing();
-        this.revertChanges();
-
-        this.basicProperties$ = this.getProperties(this.node);
-        this.loadTagsForNode(this.node.id);
-    }
-
-    onCancelGroupEdit(group: CardViewGroup, event?: MouseEvent) {
-        event?.stopPropagation();
-
-        this.cancelEditing();
-        this.revertChanges();
-
-        group.editable = false;
-        this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
-    }
-
-    onToggleCategoriesEdit(event?: MouseEvent) {
-        event?.stopPropagation();
-
-        if (this.isEditingPanel()) {
-            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
-            return;
-        }
-
-        const currentValue = this.isEditingModeCategories;
-        this.cancelEditing();
-        this.isEditingModeCategories = !currentValue;
-        this.isCategoriesPanelExpanded = this.isEditingModeCategories;
-        this.categoryControlVisible = true;
-        this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
-    }
-
-    onToggleGroupEdit(group: CardViewGroup, event?: MouseEvent) {
-        event?.stopPropagation();
-
-        if (this.isEditingPanel()) {
-            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
-            return;
-        }
-        this.cancelEditing();
-
-        if (this.currentGroup && this.currentGroup.title !== group.title) {
-            this.currentGroup.editable = false;
-        }
-
-        group.editable = !group.editable;
-        this.currentGroup = group.editable ? group : null;
-        if (group.editable) {
-            group.expanded = true;
-        }
     }
 
     get showEmptyTagMessage(): boolean {
-        return this.tags?.length === 0 && !this.isEditingModeTags;
+        return this.tags?.length === 0 && this.currentPanel.panelTitle === 'Tags' && !this.editing;
     }
 
     get showEmptyCategoryMessage(): boolean {
-        return this.categories?.length === 0 && !this.isEditingModeCategories;
+        return this.categories?.length === 0 && this.currentPanel.panelTitle === 'Categories' && !this.editing;
     }
 
-    get canEditGeneralInfo(): boolean {
-        return !this.isEditingModeGeneralInfo && !this.readOnly;
+    toggleGroupEditing(panelTitle: string, event?: MouseEvent) {
+        event?.stopPropagation();
+        if (this.editing && this.hasMetadataChanged) {
+            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
+            return;
+        }
+        this.editing = true;
+        this.editedPanelTitle = panelTitle;
+        this.expandPanel(panelTitle);
     }
 
-    get isEditingGeneralInfo(): boolean {
-        return this.isEditingModeGeneralInfo && !this.readOnly;
+    cancelGroupEditing(panelTitle: string, event?: MouseEvent) {
+        event?.stopPropagation();
+        this.resetEditing();
+        this.revertChanges();
+        const loadBasicProps = panelTitle === this.DefaultPanels.PROPERTIES;
+        const loadTags = panelTitle === this.DefaultPanels.TAGS;
+        const loadCategories = panelTitle === this.DefaultPanels.CATEGORIES;
+        const loadGroupedProps = !loadBasicProps && !loadTags && !loadCategories;
+        this.loadProperties(this.node, loadBasicProps, loadGroupedProps, loadTags, loadCategories);
     }
 
-    get canEditTags(): boolean {
-        return !this.isEditingModeTags && !this.readOnly;
+    expandPanel(panelTitle: string) {
+        this.currentPanel.panelTitle = panelTitle;
+        this.currentPanel.expanded = true;
     }
 
-    get isEditingTags(): boolean {
-        return this.isEditingModeTags && !this.readOnly;
+    closePanel(panelTitle: string) {
+        if (this.currentPanel.panelTitle === panelTitle) {
+            this.currentPanel.expanded = false;
+        }
     }
 
-    get canEditCategories(): boolean {
-        return !this.isEditingModeCategories && !this.readOnly;
-    }
-
-    get isEditingCategories(): boolean {
-        return this.isEditingModeCategories && !this.readOnly;
-    }
-
-    hasGroupToggleEdit(group: CardViewGroup): boolean {
-        return !group.editable && !this.readOnly;
-    }
-
-    isGroupToggleEditing(group: CardViewGroup): boolean {
-        return group.editable && !this.readOnly;
+    resetEditing() {
+        this.editing = false;
+        this.editedPanelTitle = '';
     }
 
     showGroup(group: CardViewGroup): boolean {
         const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
 
         return properties.length > 0;
-    }
-
-    canExpandTheCard(groupTitle: string): boolean {
-        return groupTitle === this.displayAspect;
     }
 
     keyDown(event: KeyboardEvent) {
@@ -513,6 +377,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     this.cardViewContentUpdateService.updateElement(this.targetProperty);
                     this.handleUpdateError(err);
                     this._saving = false;
+                    this.loadProperties(this.node);
                     return of(null);
                 })
             )
@@ -548,16 +413,20 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private loadProperties(node: Node) {
+    private loadProperties(node: Node, loadBasicProps = true, loadGroupedProps = true, loadTags = true, loadCategories = true) {
         if (node) {
-            this.basicProperties$ = this.getProperties(node);
-            this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+            if (loadBasicProps) {
+                this.basicProperties$ = this.getProperties(node);
+            }
+            if (loadGroupedProps) {
+                this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+            }
 
-            if (this.displayTags) {
+            if (this.displayTags && loadTags) {
                 this.loadTagsForNode(node.id);
             }
 
-            if (this.displayCategories) {
+            if (this.displayCategories && loadCategories) {
                 this.loadCategoriesForNode(node.id);
 
                 const aspectNames = node.aspectNames || [];

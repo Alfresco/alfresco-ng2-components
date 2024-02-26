@@ -30,7 +30,6 @@ import { CardViewContentUpdateService } from '../../../common/services/card-view
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import {
-    CardViewGroup,
     CategoriesManagementComponent,
     CategoriesManagementMode,
     CategoryService,
@@ -38,6 +37,7 @@ import {
     TagsCreatorMode,
     TagService
 } from '@alfresco/adf-content-services';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -100,11 +100,49 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
+    const clickOnGroupSave = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'))
+        .nativeElement.click();
+
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
     const getTagsToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="showing-tag-input-button"]'));
     const getCategoriesToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-categories-edit"]'));
     const getGroupToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
+
+    const toggleEditModeForTags = (): void => {
+        getTagsToggleEditButton().nativeElement.click();
+        fixture.detectChanges();
+    };
+
+    const toggleEditModeForGeneralInfo = (): void => {
+        getToggleEditButton().nativeElement.click();
+        fixture.detectChanges();
+    };
+
+    const toggleEditModeForCategories = (): void => {
+        getCategoriesToggleEditButton().nativeElement.click();
+        fixture.detectChanges();
+    };
+
+    const toggleEditModeForGroup = (): void => {
+        getGroupToggleEditButton().nativeElement.click();
+        fixture.detectChanges();
+    };
+
+    const getGeneralInfoPanelContent = (): CardViewComponent => fixture.debugElement.query(By.css(
+        '.adf-metadata-properties-expansion-panel'
+    )).componentInstance;
+
+    const getGroupPanelContent = (): CardViewComponent => fixture.debugElement.query(By.css(
+        '.adf-metadata-grouped-properties-container adf-card-view'
+    )).componentInstance;
+
+    const getGeneralInfoPanel = (): MatExpansionPanel => fixture.debugElement.query(By.css(
+        '[data-automation-id="adf-metadata-group-properties"]'
+    ))?.componentInstance;
+
+    const queryDom = (properties = 'properties') =>
+        fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
 
     /**
      * Get metadata categories
@@ -122,25 +160,6 @@ describe('ContentMetadataComponent', () => {
      */
     function getCategoriesManagementComponent(): CategoriesManagementComponent {
         return fixture.debugElement.query(By.directive(CategoriesManagementComponent))?.componentInstance;
-    }
-
-    /**
-     * Update aspect property
-     *
-     * @param newValue value to set
-     */
-    async function updateAspectProperty(newValue: string): Promise<void> {
-        const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
-        const expectedNode = { ...node, name: 'some-modified-value' };
-        spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
-
-        updateService.update(property, newValue);
-        tick(600);
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-        component.onSaveGroupChanges({} as any);
-        await fixture.whenStable();
     }
 
     beforeEach(() => {
@@ -206,16 +225,12 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Default input param values', () => {
-        it('should have editable input param as false by default', () => {
-            expect(component.isEditingModeGeneralInfo).toBe(false);
-        });
-
         it('should have displayEmpty input param as false by default', () => {
-            expect(component.displayEmpty).toBe(false);
+            expect(component.displayEmpty).toBeFalse();
         });
 
         it('should have expanded input param as false by default', () => {
-            expect(component.expanded).toBe(false);
+            expect(component.expanded).toBeFalse();
         });
     });
 
@@ -258,22 +273,29 @@ describe('ContentMetadataComponent', () => {
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalled();
         }));
 
-        it('should save changedProperties on save click', fakeAsync(async () => {
-            const expectedNode = { ...node, name: 'some-modified-value' };
-            await updateAspectProperty('updated-value');
-            expect(component.node).toEqual(expectedNode);
-            expect(nodesApiService.updateNode).toHaveBeenCalled();
-        }));
+        it('should save changedProperties on save click', fakeAsync(() => {
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
+            updateService.itemUpdated$.next({
+                changed: {}
+            } as UpdateNotification);
+            component.ngOnInit();
+            tick(500);
+            component.readOnly = false;
+            fixture.detectChanges();
+            const expectedNode: Node = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            toggleEditModeForGroup();
 
-        it('should save changedProperties which delete property and update node on save click', fakeAsync(async () => {
-            const expectedNode = { ...node, name: 'some-modified-value' };
-            await updateAspectProperty('');
-            expect(component.node).toEqual({ ...expectedNode, properties: {} });
+            clickOnGroupSave();
             expect(nodesApiService.updateNode).toHaveBeenCalled();
+            expect(component.node).toEqual(expectedNode);
         }));
 
         it('should call removeTag and assignTagsToNode on TagService on save click', fakeAsync(() => {
-            component.isEditingModeTags = true;
             component.displayTags = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
@@ -285,10 +307,10 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
             const tagName1 = tagPaging.list.entries[0].entry.tag;
             const tagName2 = 'New tag 3';
-            component.isEditingModeTags = true;
             component.readOnly = false;
             updateService.update(property, 'updated-value');
             fixture.detectChanges();
+            toggleEditModeForTags();
             findTagsCreator().tagsChange.emit([tagName1, tagName2]);
             fixture.detectChanges();
             tick(600);
@@ -304,7 +326,6 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should call getTagsByNodeId on TagService on save click', () => {
-            component.isEditingModeTags = true;
             component.displayTags = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
@@ -312,21 +333,23 @@ describe('ContentMetadataComponent', () => {
             const tagPaging = mockTagPaging();
             const getTagsByNodeIdSpy = spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
+            component.readOnly = false;
             spyOn(tagService, 'removeTag').and.returnValue(of(undefined));
             spyOn(tagService, 'assignTagsToNode').and.returnValue(of({}));
 
             updateService.update(property, 'updated-value');
 
             fixture.detectChanges();
+            toggleEditModeForTags();
             findTagsCreator().tagsChange.emit([tagPaging.list.entries[0].entry.tag, 'New tag 3']);
+            fixture.detectChanges();
             getTagsByNodeIdSpy.calls.reset();
-            component.onSaveTagsChanges();
+            clickOnTagsSave();
 
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
         });
 
         it('should throw error on unsuccessful save', fakeAsync(() => {
-            component.isEditingModeGeneralInfo = true;
             component.readOnly = false;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             updateService.update(property, 'updated-value');
@@ -341,13 +364,13 @@ describe('ContentMetadataComponent', () => {
             spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
 
             fixture.detectChanges();
+            toggleEditModeForGeneralInfo();
             fixture.whenStable().then(() => clickOnGeneralInfoSave());
             discardPeriodicTasks();
             flush();
         }));
 
         it('should open the confirm dialog when content type is changed', fakeAsync(() => {
-            component.isEditingModeGeneralInfo = true;
             component.readOnly = false;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
@@ -358,6 +381,7 @@ describe('ContentMetadataComponent', () => {
             tick(600);
 
             fixture.detectChanges();
+            toggleEditModeForGeneralInfo();
             tick(100);
             clickOnGeneralInfoSave();
 
@@ -382,12 +406,12 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
             const tagName1 = tagPaging.list.entries[0].entry.tag;
             const tagName2 = 'New tag 3';
-            component.isEditingModeTags = true;
             component.readOnly = false;
             updateService.update(property, 'ft:poppoli');
             tick(600);
 
             fixture.detectChanges();
+            toggleEditModeForTags();
             findTagsCreator().tagsChange.emit([tagName1, tagName2]);
             tick(100);
             fixture.detectChanges();
@@ -405,7 +429,6 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should retrigger the load of the properties when the content type has changed', fakeAsync(() => {
-            component.isEditingModeGeneralInfo = true;
             component.readOnly = false;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
@@ -417,6 +440,7 @@ describe('ContentMetadataComponent', () => {
             tick(600);
 
             fixture.detectChanges();
+            toggleEditModeForGeneralInfo();
             tick(100);
             clickOnGeneralInfoSave();
 
@@ -431,87 +455,75 @@ describe('ContentMetadataComponent', () => {
 
     describe('toggleEdit', () => {
         let showErrorSpy: jasmine.Spy;
-        const mockGroup: CardViewGroup = {
-            editable: false,
-            expanded: false,
-            title: '',
-            properties: []
-        };
 
         beforeEach(() => {
-            component.currentGroup = mockGroup;
             showErrorSpy = spyOn(notificationService, 'showError').and.stub();
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
+            component.displayCategories = true;
+            component.displayTags = true;
+            component.ngOnInit();
+            component.readOnly = false;
+            fixture.detectChanges();
         });
 
         it('should toggle General Info editing mode', () => {
-            component.isEditingModeGeneralInfo = false;
-            component.onToggleGeneralInfoEdit();
-            expect(component.isEditingModeTags).toBe(false);
-            expect(component.isEditingModeCategories).toBe(false);
-            expect(component.currentGroup.editable).toBe(false);
+            toggleEditModeForGeneralInfo();
+            expect(getToggleEditButton()).toBeNull();
+            expect(getGeneralInfoPanelContent().editable).toBeTrue();
+            expect(getTagsToggleEditButton()).toBeDefined();
+            expect(findTagsCreator()).toBeUndefined();
+            expect(getCategoriesToggleEditButton()).toBeDefined();
+            expect(getCategoriesManagementComponent()).toBeUndefined();
+            expect(getGroupToggleEditButton()).toBeDefined();
+            expect(getGroupPanelContent().editable).toBeFalse();
         });
 
         it('should toggle Tags editing mode', () => {
-            component.isEditingModeTags = false;
-            component.onToggleTagsEdit();
-            expect(component.isTagPanelExpanded).toBe(component.isEditingModeTags);
-            expect(component.tagNameControlVisible).toBe(true);
-            expect(component.isEditingModeCategories).toBe(false);
-            expect(component.currentGroup.editable).toBe(false);
+            toggleEditModeForTags();
+            expect(getTagsToggleEditButton()).toBeNull();
+            expect(findTagsCreator()).toBeDefined();
+            expect(getToggleEditButton()).toBeDefined();
+            expect(getGeneralInfoPanelContent().editable).toBeFalse();
+            expect(getCategoriesToggleEditButton()).toBeDefined();
+            expect(getCategoriesManagementComponent()).toBeUndefined();
+            expect(getGroupToggleEditButton()).toBeDefined();
+            expect(getGroupPanelContent().editable).toBeFalse();
         });
 
         it('should toggle Categories editing mode', () => {
-            component.isEditingModeCategories = false;
-            component.onToggleCategoriesEdit();
-            expect(component.isCategoriesPanelExpanded).toBe(component.isEditingModeCategories);
-            expect(component.categoryControlVisible).toBe(true);
-            expect(component.isEditingModeTags).toBe(false);
-            expect(component.currentGroup.editable).toBe(false);
+            toggleEditModeForCategories();
+            expect(getCategoriesToggleEditButton()).toBeNull();
+            expect(getCategoriesManagementComponent()).toBeDefined();
+            expect(getTagsToggleEditButton()).toBeDefined();
+            expect(findTagsCreator()).toBeUndefined();
+            expect(getToggleEditButton()).toBeDefined();
+            expect(getGeneralInfoPanelContent().editable).toBeFalse();
+            expect(getGroupToggleEditButton()).toBeDefined();
+            expect(getGroupPanelContent().editable).toBeFalse();
         });
 
         it('should toggle Group editing mode', () => {
-            component.onToggleGroupEdit(mockGroup);
-            expect(component.isEditingModeGeneralInfo).toBe(false);
-            expect(component.currentGroup).toBe(mockGroup);
+            toggleEditModeForGroup();
+            expect(getGroupToggleEditButton()).toBeNull();
+            expect(getGroupPanelContent().editable).toBeTrue();
+            expect(getCategoriesToggleEditButton()).toBeDefined();
+            expect(getCategoriesManagementComponent()).toBeUndefined();
+            expect(getTagsToggleEditButton()).toBeDefined();
+            expect(findTagsCreator()).toBeUndefined();
+            expect(getToggleEditButton()).toBeDefined();
+            expect(getGeneralInfoPanelContent().editable).toBeFalse();
         });
 
-        it('should show Snackbar when Editing Panel is Active', () => {
-            spyOn(component, 'isEditingPanel').and.returnValue(true);
-            component.onToggleGeneralInfoEdit();
-            expect(component.isEditingPanel).toHaveBeenCalled();
+        it('should show Snackbar if trying to edit different panel when other panel has some changes', () => {
+            toggleEditModeForTags();
+            findTagsCreator().tagsChange.emit(['test']);
+
+            toggleEditModeForGeneralInfo();
             expect(showErrorSpy).toHaveBeenCalledWith('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
-        });
-    });
-
-    describe('toggleEditMode', () => {
-        it('should toggle general editable', () => {
-            component.isEditingModeGeneralInfo = false;
-            component.onToggleGeneralInfoEdit();
-            expect(component.isEditingModeGeneralInfo).toBe(true);
-        });
-
-        it('should toggle tags editable', () => {
-            component.isEditingModeTags = false;
-            component.onToggleTagsEdit();
-            expect(component.isEditingModeTags).toBe(true);
-        });
-
-        it('should toggle categories editable', () => {
-            component.isEditingModeCategories = false;
-            component.onToggleCategoriesEdit();
-            expect(component.isEditingModeCategories).toBe(true);
-        });
-
-        it('should toggle group editable', () => {
-            const group: CardViewGroup = {
-                editable: false,
-                expanded: false,
-                title: '',
-                properties: []
-            };
-            component.currentGroup = null;
-            component.onToggleGroupEdit(group);
-            expect(group.editable).toBe(true);
         });
     });
 
@@ -556,103 +568,63 @@ describe('ContentMetadataComponent', () => {
         });
     });
 
-    describe('hasToggleEdit', () => {
-        it('should return true when editable is false, readOnly is false, and hasAllowableOperations is true', () => {
-            component.isEditingModeGeneralInfo = false;
+    describe('Resetting', () => {
+        beforeEach(() => {
+            spyOn(nodesApiService, 'updateNode').and.returnValue(EMPTY);
             component.readOnly = false;
-            expect(component.canEditGeneralInfo).toBe(true);
         });
 
-        it('should return false when editable is true', () => {
-            component.isEditingModeGeneralInfo = true;
-            component.readOnly = false;
+        it('should reset general info edit ability on reset click', () => {
             fixture.detectChanges();
-            expect(component.canEditGeneralInfo).toBe(false);
-            expect(component.isEditingGeneralInfo).toBe(true);
-        });
-    });
+            toggleEditModeForGeneralInfo();
 
-    describe('hasTagsToggleEdit', () => {
-        it('should have hasTagsToggleEdit property as expected', () => {
-            component.isEditingModeTags = false;
-            component.readOnly = false;
+            findCancelButton().click();
             fixture.detectChanges();
-            expect(component.canEditTags).toBe(true);
-        });
-
-        it('should return false when editable is true', () => {
-            component.isEditingModeTags = true;
-            component.readOnly = false;
-            fixture.detectChanges();
-            expect(component.canEditTags).toBe(false);
-            expect(component.isEditingTags).toBe(true);
-        });
-    });
-
-    describe('hasGroupToggleEdit', () => {
-        it('should return true when group is not editable, not read-only', () => {
-            component.readOnly = false;
-            const group: CardViewGroup = {
-                title: 'Group Title',
-                properties: [],
-                expanded: true,
-                editable: false
-            };
-            const result = component.hasGroupToggleEdit(group);
-            expect(result).toBe(true);
-        });
-
-        it('should return true when group is editable, not read-only', () => {
-            component.readOnly = false;
-            const group: CardViewGroup = {
-                title: 'Group Title',
-                properties: [],
-                expanded: true,
-                editable: true
-            };
-            const result = component.isGroupToggleEditing(group);
-            expect(result).toBe(true);
-        });
-    });
-
-    describe('hasCategoriesToggleEdit', () => {
-        it('should have hasCategoriesToggleEdit property as expected', () => {
-            component.isEditingModeCategories = false;
-            component.readOnly = false;
-            expect(component.canEditCategories).toBe(true);
-        });
-
-        it('should return false when editable is true', () => {
-            component.isEditingModeCategories = true;
-            component.readOnly = false;
-            fixture.detectChanges();
-            expect(component.canEditCategories).toBe(false);
-            expect(component.isEditingCategories).toBe(true);
-        });
-    });
-
-    describe('Reseting', () => {
-        it('should reset properties on reset click', async () => {
-            component.changedProperties = { properties: { 'property-key': 'updated-value' } };
-            component.hasMetadataChanged = true;
-            component.tagNameControlVisible = true;
-            component.categoryControlVisible = true;
-            component.isEditingModeGeneralInfo = true;
-            component.readOnly = false;
-            const expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
-            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const resetButton = fixture.debugElement.query(By.css('[data-automation-id="reset-metadata"]'));
-            resetButton.nativeElement.click();
-
-            fixture.detectChanges();
-            expect(component.changedProperties).toEqual({});
             expect(nodesApiService.updateNode).not.toHaveBeenCalled();
-            expect(component.hasMetadataChanged).toBeFalse();
-            expect(component.tagNameControlVisible).toBeFalse();
-            expect(component.categoryControlVisible).toBeFalse();
+            expect(getToggleEditButton()).toBeDefined();
+            expect(getGeneralInfoPanelContent().editable).toBeFalse();
+        });
+
+        it('should reset tags edit ability on reset click', () => {
+            component.displayTags = true;
+            fixture.detectChanges();
+            toggleEditModeForTags();
+
+            findCancelTagsButton().click();
+            fixture.detectChanges();
+            expect(nodesApiService.updateNode).not.toHaveBeenCalled();
+            expect(getTagsToggleEditButton()).toBeDefined();
+            expect(findTagsCreator()).toBeUndefined();
+        });
+
+        it('should reset categories edit ability on reset click', () => {
+            component.displayCategories = true;
+            fixture.detectChanges();
+            toggleEditModeForCategories();
+
+            findCancelButton().click();
+            fixture.detectChanges();
+            expect(nodesApiService.updateNode).not.toHaveBeenCalled();
+            expect(getCategoriesToggleEditButton()).toBeDefined();
+            expect(getCategoriesManagementComponent()).toBeUndefined();
+        });
+
+        it('should reset group edit ability on reset click', () => {
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
+            component.ngOnInit();
+            component.readOnly = false;
+            fixture.detectChanges();
+            toggleEditModeForGroup();
+
+            findCancelButton().click();
+            fixture.detectChanges();
+            expect(nodesApiService.updateNode).not.toHaveBeenCalled();
+            expect(getGroupToggleEditButton()).toBeDefined();
+            expect(getGroupPanelContent().editable).toBeFalse();
         });
     });
 
@@ -748,11 +720,7 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-
-            const firstGroupedPropertiesComponent = fixture.debugElement.query(
-                By.css('.adf-metadata-grouped-properties-container adf-card-view')
-            ).componentInstance;
-            expect(firstGroupedPropertiesComponent.properties).toBe(expectedProperties);
+            expect(getGroupPanelContent().properties).toBe(expectedProperties);
         });
 
         it('should pass through the displayEmpty to the card view of grouped properties', async () => {
@@ -766,11 +734,7 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-
-            const basicPropertiesComponent = fixture.debugElement.query(
-                By.css('.adf-metadata-grouped-properties-container adf-card-view')
-            ).componentInstance;
-            expect(basicPropertiesComponent.displayEmpty).toBe(false);
+            expect(getGroupPanelContent().displayEmpty).toBe(false);
         });
 
         it('should hide card views group when the grouped properties are empty', async () => {
@@ -798,31 +762,52 @@ describe('ContentMetadataComponent', () => {
             expect(basicPropertiesGroup).toBeDefined();
         });
 
-        it('should revert changes for general info panel on cancel', () => {
-            const spy = spyOn(contentMetadataService, 'getBasicProperties');
-            component.onCancelGeneralInfoEdit();
-            expect(spy).toHaveBeenCalled();
+        it('should revert reload properties for general info panel on cancel', () => {
+            component.readOnly = false;
+            fixture.detectChanges();
+            spyOn(contentMetadataService, 'getBasicProperties');
+            toggleEditModeForGeneralInfo();
+
+            findCancelButton().click();
+            expect(contentMetadataService.getBasicProperties).toHaveBeenCalled();
         });
 
-        it('should revert changes for getGroupedProperties panel on cancel', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties');
+        it('should reload properties for group panel on cancel', () => {
+            const getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
-            component.onCancelGroupEdit({} as CardViewGroup);
-            expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
+            component.readOnly = false;
+            fixture.detectChanges();
+            toggleEditModeForGroup();
+            getGroupedPropertiesSpy.calls.reset();
+
+            findCancelButton().click();
+            expect(getGroupedPropertiesSpy).toHaveBeenCalledWith(node, 'custom-preset');
         });
 
-        it('should revert changes for categories panel on cancel', () => {
-            const spy = spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
+        it('should reload categories for categories panel on cancel', () => {
+            spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
             component.displayCategories = true;
-            component.onCancelCategoriesEdit();
-            expect(spy).toHaveBeenCalledWith(expectedNode.id);
+            component.readOnly = false;
+            fixture.detectChanges();
+            toggleEditModeForCategories();
+
+            findCancelButton().click();
+            expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(expectedNode.id);
         });
 
-        it('should revert changes for tags panel on cancel', () => {
-            const spy = spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(mockTagPaging()));
+        it('should reload tags for tags panel on cancel', () => {
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(mockTagPaging()));
             component.displayTags = true;
-            component.onCancelTagsEdit();
-            expect(spy).toHaveBeenCalledWith(expectedNode.id);
+            component.readOnly = false;
+            fixture.detectChanges();
+            toggleEditModeForTags();
+
+            findCancelTagsButton().click();
+            expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(expectedNode.id);
         });
     });
 
@@ -830,15 +815,15 @@ describe('ContentMetadataComponent', () => {
         it('should hide metadata fields if displayDefaultProperties is set to false', () => {
             component.displayDefaultProperties = false;
             fixture.detectChanges();
-            const metadataContainer = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-group-properties"]'));
+            const metadataContainer = getGeneralInfoPanel();
             fixture.detectChanges();
-            expect(metadataContainer).toBeNull();
+            expect(metadataContainer).toBeUndefined();
         });
 
         it('should display metadata fields if displayDefaultProperties is set to true', () => {
             component.displayDefaultProperties = true;
             fixture.detectChanges();
-            const metadataContainer = fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-group-properties"]'));
+            const metadataContainer = getGeneralInfoPanel();
             fixture.detectChanges();
             expect(metadataContainer).toBeDefined();
         });
@@ -956,7 +941,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const verProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom('Versionable');
 
             expect(verProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -996,7 +981,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const verProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom('Versionable');
 
             expect(verProp).toBeNull();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -1017,7 +1002,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const verProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom('Versionable');
 
             expect(verProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -1037,10 +1022,10 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const verProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom('Versionable');
             expect(verProp).toBeNull();
 
-            const auditableProp = queryDom(fixture, 'Auditable');
+            const auditableProp = queryDom('Auditable');
             expect(auditableProp).toBeNull();
 
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
@@ -1061,7 +1046,7 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const exifProp = queryDom(fixture, 'Exif');
+            const exifProp = queryDom('Exif');
 
             expect(exifProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
@@ -1103,9 +1088,10 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Expand the panel', () => {
+        it('should general info panel be expanded by default if no displayAspect provided', () => {
+            fixture.detectChanges();
 
-        beforeEach(() => {
-            component.isGeneralPanelExpanded = false;
+            expect(getGeneralInfoPanel().expanded).toBeTrue();
         });
 
         it('should open and update drawer with expand section dynamically', async () => {
@@ -1116,16 +1102,16 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            let defaultProp = queryDom(fixture);
-            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            let defaultProp = queryDom();
+            expect(defaultProp.nativeElement.expanded).toBeFalsy();
 
             component.displayAspect = 'CUSTOM';
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            defaultProp = queryDom(fixture);
-            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            defaultProp = queryDom();
+            expect(defaultProp.nativeElement.expanded).toBeFalsy();
         });
 
         it('should not expand anything if input is wrong', async () => {
@@ -1136,8 +1122,8 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const defaultProp = queryDom(fixture);
-            expect(defaultProp.componentInstance.expanded).toBeFalsy();
+            const defaultProp = queryDom();
+            expect(defaultProp.nativeElement.expanded).toBeFalsy();
         });
 
         it('should expand the section when displayAspect set as Properties', async () => {
@@ -1146,7 +1132,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
 
-            expect(component.isGeneralPanelExpanded).toBeTruthy();
+            expect(getGeneralInfoPanel().expanded).toBeTrue();
         });
     });
 
@@ -1182,6 +1168,12 @@ describe('ContentMetadataComponent', () => {
     describe('Tags list', () => {
         let tagPaging: TagPaging;
 
+        const expandTagsPanel = (): void => {
+            fixture.debugElement.query(By.css('[data-automation-id="adf-content-metadata-tags-panel"]'))
+                ?.componentInstance.opened.emit();
+            fixture.detectChanges();
+        };
+
         beforeEach(() => {
             tagPaging = mockTagPaging();
             component.displayTags = true;
@@ -1191,6 +1183,8 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
             fixture.detectChanges();
+
+            expandTagsPanel();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(2);
             expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
@@ -1203,6 +1197,8 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
             fixture.detectChanges();
+
+            expandTagsPanel();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(0);
             expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
@@ -1215,6 +1211,8 @@ describe('ContentMetadataComponent', () => {
                 node: new SimpleChange(undefined, node, false)
             });
             fixture.detectChanges();
+
+            expandTagsPanel();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(2);
             expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
@@ -1225,10 +1223,11 @@ describe('ContentMetadataComponent', () => {
         it('should not render tags after loading tags in ngOnChanges if displayTags is false', () => {
             component.displayTags = false;
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
-
             component.ngOnChanges({
                 node: new SimpleChange(undefined, node, false)
             });
+
+            expandTagsPanel();
             fixture.detectChanges();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(0);
@@ -1237,8 +1236,9 @@ describe('ContentMetadataComponent', () => {
 
         it('should not render tags after loading tags in ngOnChanges if node is not changed', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
-
             component.ngOnChanges({});
+
+            expandTagsPanel();
             fixture.detectChanges();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(0);
@@ -1247,10 +1247,11 @@ describe('ContentMetadataComponent', () => {
 
         it('should not render tags after loading tags in ngOnChanges if node is changed first time', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
-
             component.ngOnChanges({
                 node: new SimpleChange(undefined, node, true)
             });
+
+            expandTagsPanel();
             fixture.detectChanges();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(0);
@@ -1258,9 +1259,9 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should render tags after loading tags after clicking on Cancel button', fakeAsync(() => {
-            component.isEditingModeTags = true;
             component.readOnly = false;
             fixture.detectChanges();
+            toggleEditModeForTags();
             TestBed.inject(CardViewContentUpdateService).itemUpdated$.next({
                 changed: {}
             } as UpdateNotification);
@@ -1268,8 +1269,9 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             findCancelTagsButton().click();
-            component.isEditingModeTags = false;
             fixture.detectChanges();
+
+            expandTagsPanel();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(2);
             expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
@@ -1280,9 +1282,10 @@ describe('ContentMetadataComponent', () => {
         it('should be hidden when editable is true', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
+            component.readOnly = false;
             fixture.detectChanges();
 
-            component.isEditingModeTags = true;
+            toggleEditModeForTags();
             fixture.detectChanges();
             expect(findTagElements()).toHaveSize(0);
         });
@@ -1292,14 +1295,15 @@ describe('ContentMetadataComponent', () => {
         let tagsCreator: TagsCreatorComponent;
 
         beforeEach(() => {
-            component.isEditingModeTags = true;
             component.displayTags = true;
+            component.readOnly = false;
             fixture.detectChanges();
+            toggleEditModeForTags();
             tagsCreator = findTagsCreator();
         });
 
-        it('should have assigned false to tagNameControlVisible initially', () => {
-            expect(tagsCreator.tagNameControlVisible).toBeFalse();
+        it('should have assigned true to tagNameControlVisible initially', () => {
+            expect(tagsCreator.tagNameControlVisible).toBeTrue();
         });
 
         it('should load in create and assign mode by default', () => {
@@ -1335,7 +1339,6 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
             const tagName1 = tagPaging.list.entries[0].entry.tag;
             const tagName2 = 'New tag 3';
-            component.isEditingModeTags = true;
             component.readOnly = false;
             updateService.update(property, 'updated-value');
 
@@ -1358,7 +1361,7 @@ describe('ContentMetadataComponent', () => {
                 component.ngOnInit();
 
                 fixture.detectChanges();
-                expect(tagsCreator.tags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
+                expect(component.assignedTags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
                 expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
             });
 
@@ -1366,20 +1369,28 @@ describe('ContentMetadataComponent', () => {
                 component.ngOnInit();
 
                 fixture.detectChanges();
-                expect(tagsCreator.tags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
+                expect(component.assignedTags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
                 expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
             });
         });
     });
 
-    it('should show tags creator if editable is true and displayTags is true', () => {
-        component.isEditingModeTags = true;
+    it('should show tags creator if displayTags is true and edit mode is toggled for tags', () => {
         component.displayTags = true;
+        component.readOnly = false;
         fixture.detectChanges();
+
+        toggleEditModeForTags();
         expect(findTagsCreator()).toBeDefined();
     });
 
     describe('Categories list', () => {
+        const expandCategoriesPanel = (): void => {
+            fixture.debugElement.query(By.css('[data-automation-id="adf-content-metadata-categories-panel"]'))
+                ?.componentInstance.opened.emit();
+            fixture.detectChanges();
+        };
+
         beforeEach(() => {
             component.displayCategories = true;
             component.node.aspectNames.push('generalclassifiable');
@@ -1390,6 +1401,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
 
+            expandCategoriesPanel();
             const categories = getCategories();
             expect(categories.length).toBe(2);
             expect(categories[0].textContent).toBe(category1.name);
@@ -1402,6 +1414,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
 
+            expandCategoriesPanel();
             const categories = getCategories();
             expect(categories).toHaveSize(0);
             expect(categoryService.getCategoryLinksForNode).not.toHaveBeenCalled();
@@ -1411,6 +1424,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({ node: new SimpleChange(undefined, node, false) });
             fixture.detectChanges();
 
+            expandCategoriesPanel();
             const categories = getCategories();
             expect(categories.length).toBe(2);
             expect(categories[0].textContent).toBe(category1.name);
@@ -1424,6 +1438,8 @@ describe('ContentMetadataComponent', () => {
                 node: new SimpleChange(undefined, node, false)
             });
             fixture.detectChanges();
+
+            expandCategoriesPanel();
             const categories = getCategories();
             expect(categories).toHaveSize(0);
             expect(categoryService.getCategoryLinksForNode).not.toHaveBeenCalled();
@@ -1433,11 +1449,11 @@ describe('ContentMetadataComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
 
+            expandCategoriesPanel();
             expect(categoryService.getCategoryLinksForNode).not.toHaveBeenCalled();
         });
 
         it('should render categories after discard changes button is clicked', fakeAsync(() => {
-            component.isEditingModeCategories = true;
             component.readOnly = false;
             fixture.detectChanges();
             TestBed.inject(CardViewContentUpdateService).itemUpdated$.next({
@@ -1445,11 +1461,12 @@ describe('ContentMetadataComponent', () => {
             } as UpdateNotification);
             tick(500);
             fixture.detectChanges();
+            toggleEditModeForCategories();
 
             clickOnCancel();
-            component.isEditingModeGeneralInfo = false;
             fixture.detectChanges();
 
+            expandCategoriesPanel();
             const categories = getCategories();
             expect(categories.length).toBe(2);
             expect(categories[0].textContent).toBe(category1.name);
@@ -1459,9 +1476,11 @@ describe('ContentMetadataComponent', () => {
             flush();
         }));
 
-        it('should be hidden when editable is true', () => {
-            component.isEditingModeCategories = true;
+        it('should be hidden when edit mode for categories is toggled', () => {
+            component.readOnly = false;
             fixture.detectChanges();
+
+            toggleEditModeForCategories();
             expect(getCategories().length).toBe(0);
         });
     });
@@ -1470,16 +1489,17 @@ describe('ContentMetadataComponent', () => {
         let categoriesManagementComponent: CategoriesManagementComponent;
 
         beforeEach(() => {
-            component.isEditingModeCategories = true;
             component.displayCategories = true;
+            component.readOnly = false;
             component.node.aspectNames.push('generalclassifiable');
             spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
             fixture.detectChanges();
+            toggleEditModeForCategories();
             categoriesManagementComponent = getCategoriesManagementComponent();
         });
 
-        it('should set categoryNameControlVisible to false initially', () => {
-            expect(categoriesManagementComponent.categoryNameControlVisible).toBeFalse();
+        it('should set categoryNameControlVisible to true initially', () => {
+            expect(categoriesManagementComponent.categoryNameControlVisible).toBeTrue();
         });
 
         it('should load with assign mode by default', () => {
@@ -1521,7 +1541,6 @@ describe('ContentMetadataComponent', () => {
             updateService.update(property, 'updated-value');
 
             component.readOnly = false;
-            component.isEditingModeCategories = true;
             fixture.detectChanges();
             categoriesManagementComponent.categoriesChange.emit([category1, category2]);
             findSaveCategoriesButton();
@@ -1534,7 +1553,7 @@ describe('ContentMetadataComponent', () => {
                 component.ngOnInit();
 
                 fixture.detectChanges();
-                expect(categoriesManagementComponent.categories).toEqual([category1, category2]);
+                expect(component.assignedCategories).toEqual([category1, category2]);
                 expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
             });
 
@@ -1559,6 +1578,3 @@ describe('ContentMetadataComponent', () => {
         });
     });
 });
-
-const queryDom = (fixture: ComponentFixture<ContentMetadataComponent>, properties: string = 'properties') =>
-    fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
