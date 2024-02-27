@@ -4,7 +4,10 @@
         [selector]="category.component.selector"
         [settings]="category.component.settings">
     </adf-search-widget-container>
-    <div class="adf-search-filter-card-actions">
+    <div
+        *ngIf="!category?.component?.settings?.hideDefaultAction"
+        class="adf-search-filter-card-actions"
+    >
         <button mat-button class="adf-search-action-button" (click)="clear()" id="clear-filter-button">
             {{ 'SEARCH.FILTER.BUTTONS.CLEAR' | translate }}
         </button>
