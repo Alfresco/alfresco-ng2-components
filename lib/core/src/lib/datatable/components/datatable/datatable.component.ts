@@ -971,8 +971,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.updateColumnsWidths();
     }
 
-    getFlexValue({ width = 0 }: DataColumn): string {
-        return `0 1 ${width < DataTableComponent.MINIMUM_COLUMN_SIZE ? DataTableComponent.MINIMUM_COLUMN_SIZE : width}px`;
+    getFlexBasisValue({ width = 0 }: DataColumn): string {
+        return `${width < DataTableComponent.MINIMUM_COLUMN_SIZE ? DataTableComponent.MINIMUM_COLUMN_SIZE : width}px`;
     }
 
     filterDisabledColumns(index: number, _drag: CdkDrag, drop: CdkDropList): boolean {
