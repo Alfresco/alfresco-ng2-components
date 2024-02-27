@@ -9,6 +9,7 @@ The first **General Availability** release was v2.0.0.
 
 ## General Availability
 
+- [6.7.0](RelNote-6.7.0.md)
 - [6.6.0](RelNote-6.6.0.md)
 - [6.5.2](RelNote-6.5.2.md)
 - [6.5.1](RelNote-6.5.1.md)
