@@ -23,7 +23,7 @@ import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
-import { AlfrescoViewerModule, ContentMetadataModule, ContentNodeSelectorModule, UploadModule, AlfrescoApiModule } from '@alfresco/adf-content-services';
+import { AlfrescoViewerModule, ContentMetadataModule, ContentNodeSelectorModule, UploadModule } from '@alfresco/adf-content-services';
 
 import { DateCloudWidgetComponent } from './components/widgets/date/date-cloud.widget';
 import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';

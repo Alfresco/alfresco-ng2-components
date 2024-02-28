@@ -40,7 +40,6 @@ import {
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
-import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import {
     AfterContentInit,
@@ -75,6 +74,7 @@ import { LockService } from '../services/lock.service';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 

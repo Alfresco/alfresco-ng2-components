@@ -18,8 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslationService, ViewUtilService } from '@alfresco/adf-core';
 import { Rendition, RenditionEntry, RenditionPaging, RenditionsApi } from '@alfresco/js-api';
-import { RenditionService } from '@alfresco/adf-content-services';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { RenditionService } from './rendition.service';
 
 const getRenditionEntry = (status: Rendition.StatusEnum): RenditionEntry => ({
     entry: {

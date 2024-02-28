@@ -337,6 +337,16 @@
           },
           "defaultConfiguration": "production"
         },
+        "build-schematics": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx tsc -p lib/core/tsconfig.schematics.json && cp lib/core/schematics/migrations/collection.json dist/libs/core/schematics/migrations/collection.json"
+              }
+            ]
+          }
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -425,32 +435,32 @@
         },
         "stylelint": {
           "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx stylelint lib/core/**/*.scss --config .stylelintrc.json"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx stylelint lib/core/**/*.scss --config .stylelintrc.json"
+              }
+            ]
           }
         },
         "license": {
           "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
+              }
+            ]
           }
         },
         "pretheme": {
           "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
+              }
+            ]
           }
         },
         "npm-publish": {

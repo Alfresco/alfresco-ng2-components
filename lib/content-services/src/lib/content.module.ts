@@ -50,6 +50,7 @@ import { ContentUserInfoModule } from './content-user-info/content-user-info.mod
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
+import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories';
 
 @NgModule({
     imports: [
@@ -130,6 +131,12 @@ export class ContentModule {
                     provide: APP_INITIALIZER,
                     useFactory: contentAuthLoaderFactory,
                     deps: [ContentAuthLoaderService],
+                    multi: true
+                },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: createAlfrescoApiInstance,
+                    deps: [AlfrescoApiLoaderService],
                     multi: true
                 }
             ]

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "move-out-alfresco-api": {
+      "description": "Update alfresco-api imports",
+      "version": "7.0.0",
+      "factory": "./7_0_0/index#updateAlfrescoApiImports"
+    }
+  }
+}

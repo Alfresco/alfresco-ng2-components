@@ -20,6 +20,7 @@
     }
   },
   "dependencies": {
+    "@nrwl/devkit": "14.8.9",
     "cropperjs": "^1.5.13",
     "angular-oauth2-oidc": "^13.0.1",
     "angular-oauth2-oidc-jwks": "^17.0.2"
@@ -37,7 +38,8 @@
     "@alfresco/adf-extensions": ">=6.9.0",
     "@ngx-translate/core": ">=14.0.0",
     "minimatch-browser": ">=1.0.0",
-    "pdfjs-dist": ">=3.3.122"
+    "pdfjs-dist": ">=3.3.122",
+    "ts-morph": "^20.0.0"
   },
   "keywords": [
     "core",
@@ -45,5 +47,11 @@
     "angular",
     "components"
   ],
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "ng-update": {
+    "migrations": "./schematics/migrations/collection.json"
+  },
+  "nx-migrations": {
+    "migrations": "./schematics/migrations/collection.json"
+  }
 }

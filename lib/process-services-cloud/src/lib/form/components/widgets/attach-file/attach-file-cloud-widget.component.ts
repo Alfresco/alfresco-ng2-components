@@ -28,13 +28,13 @@ import {
     UploadWidgetContentLinkModel,
     DestinationFolderPath
 } from '@alfresco/adf-core';
-import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Node, NodesApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import {
+    AlfrescoApiService,
     ContentNodeSelectorPanelService,
     NewVersionUploaderDataAction,
     NewVersionUploaderDialogData,

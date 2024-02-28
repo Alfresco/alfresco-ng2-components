@@ -176,12 +176,6 @@ export class CoreModule {
                     useValue: {
                         duration: 10000
                     }
-                },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: createAlfrescoApiInstance,
-                    deps: [AlfrescoApiLoaderService],
-                    multi: true
                 }
             ]
         };

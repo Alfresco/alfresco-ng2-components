@@ -158,13 +158,14 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
-                appConfigService: AppConfigService,
-                taskCloudService: TaskCloudService,
-                userPreferences: UserPreferencesService,
-                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface,
-                private viewModelCreator: VariableMapperService
-            ) {
+    constructor(
+        @Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
+        appConfigService: AppConfigService,
+        taskCloudService: TaskCloudService,
+        userPreferences: UserPreferencesService,
+        @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface,
+        private viewModelCreator: VariableMapperService
+    ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 

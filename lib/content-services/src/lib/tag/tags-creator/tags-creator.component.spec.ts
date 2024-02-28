@@ -25,7 +25,6 @@ import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { ContentDirectiveModule, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EMPTY, of, throwError } from 'rxjs';
 import { DebugElement } from '@angular/core';
@@ -34,6 +33,9 @@ import { MatListModule } from '@angular/material/list';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { TagService } from '../services/tag.service';
+import { ContentDirectiveModule } from '../../directives/content-directive.module';
+import { TagsCreatorMode } from './tags-creator-mode';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;

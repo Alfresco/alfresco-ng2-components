@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoginDialogPanelComponent, TranslationService, AuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { DocumentListService, SitesService, SearchService } from '@alfresco/adf-content-services';
+import { AlfrescoApiService, DocumentListService, SitesService, SearchService } from '@alfresco/adf-content-services';
 import { ExternalAlfrescoApiService } from '../../services/external-alfresco-api.service';
 import { Node } from '@alfresco/js-api';
 
