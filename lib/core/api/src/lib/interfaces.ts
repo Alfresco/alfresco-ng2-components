@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { Emitters } from '../../../src/lib/models/http-client.interface';
-
 export interface SecurityOptions {
     readonly withCredentials?: boolean;
     readonly authentications?: Authentication;
@@ -54,12 +52,4 @@ export interface RequestOptions {
     contentTypes?: string[];
     readonly accept?: string;
     readonly contentType?: string;
-}
-
-export interface HttpClient {
-    request<T = any>(url: string, options: RequestOptions, security: SecurityOptions, emitters: Emitters): Promise<T>;
-    post<T = any>(url: string, options: RequestOptions, security: SecurityOptions, emitters: Emitters): Promise<T>;
-    put<T = any>(url: string, options: RequestOptions, security: SecurityOptions, emitters: Emitters): Promise<T>;
-    get<T = any>(url: string, options: RequestOptions, security: SecurityOptions, emitters: Emitters): Promise<T>;
-    delete<T = void>(url: string, options: RequestOptions, security: SecurityOptions, emitters: Emitters): Promise<T>;
 }

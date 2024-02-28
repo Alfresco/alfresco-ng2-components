@@ -16,10 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { LogService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import {
+    AlfrescoApiService,
     ContentNodeSelectorComponent,
     ContentNodeSelectorComponentData,
     NodeAction

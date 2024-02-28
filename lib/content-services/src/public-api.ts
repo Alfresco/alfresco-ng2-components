@@ -49,5 +49,6 @@ export * from './lib/security/index';
 export * from './lib/services/index';
 export * from './lib/infinite-scroll-datasource';
 export * from './lib/api-factories';
+export * from './lib/mock/alfresco-api.service.mock';
 
 export * from './lib/content.module';

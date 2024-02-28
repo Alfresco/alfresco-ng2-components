@@ -52,20 +52,12 @@ export class AlfrescoApiService {
 
     async load(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;
-
-        if (config.authType === 'OAUTH') {
-                await this.mapAlfrescoApiOpenIdConfig();
-        }
-
         this.initAlfrescoApiWithConfig();
         this.alfrescoApiInitialized.next(true);
     }
 
     async reset() {
-        this.getCurrentAppConfig();
-        if (this.currentAppConfig.authType === 'OAUTH') {
-            await this.mapAlfrescoApiOpenIdConfig();
-        }
+        this.setCurrentAppConfig();
         this.initAlfrescoApiWithConfig();
     }
 
@@ -79,15 +71,7 @@ export class AlfrescoApiService {
         return oauth;
     }
 
-    private async mapAlfrescoApiOpenIdConfig() {
-        this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
-        this.currentAppConfig.oauth2.tokenUrl = this.idpConfig.token_endpoint;
-        this.currentAppConfig.oauth2.authorizationUrl = this.idpConfig.authorization_endpoint;
-        this.currentAppConfig.oauth2.logoutUrl = this.idpConfig.end_session_endpoint;
-        this.currentAppConfig.oauth2.userinfoEndpoint = this.idpConfig.userinfo_endpoint;
-    }
-
-    private getCurrentAppConfig() {
+    private setCurrentAppConfig() {
         const oauth = this.getAuthWithFixedOriginLocation();
 
         this.currentAppConfig = new AlfrescoApiConfig({
@@ -105,7 +89,7 @@ export class AlfrescoApiService {
     }
 
     protected initAlfrescoApi() {
-        this.getCurrentAppConfig();
+        this.setCurrentAppConfig();
         this.initAlfrescoApiWithConfig();
     }
 
