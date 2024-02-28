@@ -152,7 +152,7 @@ describe('AspectListComponent', () => {
             spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             nodeService = TestBed.inject(NodesApiService);
-            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] } as any));
+            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'stored:aspect'] } as any));
             component.nodeId = 'fake-node-id';
             loader = TestbedHarnessEnvironment.loader(fixture);
         });
@@ -249,6 +249,21 @@ describe('AspectListComponent', () => {
                 expect(component.nodeAspects.length).toBe(1);
                 component.clear();
                 expect(component.nodeAspects.length).toBe(0);
+            });
+
+            it('should store node aspects that are not listed and emit then on value change', async () => {
+                const storedAspect: string[] = ['stored:aspect'];
+
+                expect(component.notDisplayedAspects).toEqual(storedAspect);
+
+                spyOn(component.valueChanged, 'emit');
+                const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
+                await panel[0].expand();
+                const checkbox = await panel[0].getHarness(MatCheckboxHarness);
+                await checkbox.toggle();
+                fixture.detectChanges();
+
+                expect(component.valueChanged.emit).toHaveBeenCalledWith(storedAspect);
             });
         });
 
