@@ -437,14 +437,14 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     .adf-cell-value {
-        padding-left: 10px;
+        padding-left: 5px;
         display: flex;
         min-height: inherit;
         align-items: center;
         word-break: break-all;
         width: 100%;
 
-        img {
+        > img {
             padding-left: 5px;
         }
     }
@@ -662,9 +662,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         display: flex;
         flex-grow: 1;
         align-items: center;
-        margin: 0 2px;
         padding: 0 8px;
-        column-gap: 5px;
 
         .adf-datatable-cell-header-drag-icon-placeholder {
             min-width: 15px;
