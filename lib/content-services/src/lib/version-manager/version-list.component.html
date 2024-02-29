@@ -8,36 +8,39 @@
                 <span class="adf-version-list-item-line adf-version-list-item-version" [id]="'adf-version-list-item-version-' + version.entry.id" >{{version.entry.id}}</span> -
                 <span class="adf-version-list-item-line adf-version-list-item-date" [id]="'adf-version-list-item-date-' + version.entry.id" >{{version.entry.modifiedAt | date}}</span>
             </p>
-            <p mat-line [id]="'adf-version-list-item-comment-'+ version.entry.id" class="adf-version-list-item-comment"
+            <p mat-line [id]="'adf-version-list-item-comment-' + version.entry.id"
+               class="adf-version-list-item-comment"
                *ngIf="showComments">{{version.entry.versionComment}}</p>
 
             <div *ngIf="showActions">
-                <mat-menu [id]="'adf-version-list-action-menu-'+version.entry.id"
-                          #versionMenu="matMenu" yPosition="below" xPosition="before">
+                <mat-menu [id]="'adf-version-list-action-menu-' + version.entry.id"
+                          #versionMenu="matMenu"
+                          yPosition="below"
+                          xPosition="before">
                     <ng-container *adf-acs-version="'7'">
                         <button *ngIf="allowViewVersions"
-                                [id]="'adf-version-list-action-view-'+version.entry.id"
+                                [id]="'adf-version-list-action-view-' + version.entry.id"
                                 mat-menu-item
                                 (click)="onViewVersion(version.entry.id)">
                             {{ 'ADF_VERSION_LIST.ACTIONS.VIEW' | translate }}
                         </button>
                     </ng-container>
                     <button
-                        [id]="'adf-version-list-action-restore-'+version.entry.id"
+                        [id]="'adf-version-list-action-restore-' + version.entry.id"
                         [disabled]="!canUpdate() || latestVersion"
                         mat-menu-item
                         (click)="restore(version.entry.id)">
                         {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
                     </button>
                     <button *ngIf="allowDownload"
-                            [id]="'adf-version-list-action-download-'+version.entry.id"
+                            [id]="'adf-version-list-action-download-' + version.entry.id"
                             mat-menu-item
                             (click)="downloadVersion(version.entry.id)">
                         {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
                     </button>
                     <button
                         [disabled]="!canDelete()"
-                        [id]="'adf-version-list-action-delete-'+version.entry.id"
+                        [id]="'adf-version-list-action-delete-' + version.entry.id"
                         (click)="deleteVersion(version.entry.id)"
                         mat-menu-item>
                         {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
@@ -46,7 +49,7 @@
 
                 <button mat-icon-button
                         [matMenuTriggerFor]="versionMenu"
-                        [id]="'adf-version-list-action-menu-button-'+version.entry.id"
+                        [id]="'adf-version-list-action-menu-button-' + version.entry.id"
                         title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
                     <mat-icon>more_vert</mat-icon>
                 </button>
