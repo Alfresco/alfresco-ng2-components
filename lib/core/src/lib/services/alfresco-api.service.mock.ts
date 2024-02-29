@@ -16,8 +16,8 @@
  */
 
 import { Inject, Injectable, Optional } from '@angular/core';
-import { AppConfigService, AppConfigValues } from '../../../../core/src/lib/app-config/app-config.service';
-import { StorageService } from '../../../../core/src/lib/common/services/storage.service';
+import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { StorageService } from '../common/services/storage.service';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { ALFRESCO_API_FACTORY } from './alfresco-api.service';
 import { AlfrescoApiFactory } from './alfresco-api.interface';
