@@ -199,22 +199,26 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     ngOnInit(): void {
-        CloudFormRenderingService.displayMode$.pipe(filter(change => change.id === this.id), takeUntil(this.onDestroy$)).subscribe((displayModeChange) => {
-            const oldDisplayMode = this.displayMode;
-            this.displayMode = displayModeChange.displayMode;
+        CloudFormRenderingService.displayMode$
+            .pipe(
+                filter(change => change.id === this.id),
+                takeUntil(this.onDestroy$)
+            ).subscribe((displayModeChange) => {
+                const oldDisplayMode = this.displayMode;
+                this.displayMode = displayModeChange.displayMode;
 
-            const oldDisplayModeConfiguration = this.cloudFormRenderingService.findConfiguration(oldDisplayMode, this.displayModeConfigurations);
-            const newDisplayModeConfiguration = this.cloudFormRenderingService.findConfiguration(displayModeChange.displayMode, this.displayModeConfigurations);
+                const oldDisplayModeConfiguration = this.cloudFormRenderingService.findConfiguration(oldDisplayMode, this.displayModeConfigurations);
+                const newDisplayModeConfiguration = this.cloudFormRenderingService.findConfiguration(displayModeChange.displayMode, this.displayModeConfigurations);
 
-            if (oldDisplayModeConfiguration?.displayMode !== newDisplayModeConfiguration?.displayMode) {
-                if (oldDisplayModeConfiguration) {
-                    this.displayModeOff.emit(oldDisplayModeConfiguration);
+                if (oldDisplayModeConfiguration?.displayMode !== newDisplayModeConfiguration?.displayMode) {
+                    if (oldDisplayModeConfiguration) {
+                        this.displayModeOff.emit(oldDisplayModeConfiguration);
+                    }
+                    if (newDisplayModeConfiguration) {
+                        this.displayModeOn.emit(newDisplayModeConfiguration);
+                    }
                 }
-                if (newDisplayModeConfiguration) {
-                    this.displayModeOn.emit(newDisplayModeConfiguration);
-                }
-            }
-        });
+            });
     }
 
     /**
@@ -394,7 +398,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     protected onFormLoaded(form: FormModel) {
         this.displayModeConfigurations = this.cloudFormRenderingService.getDisplayModeConfigurations(this.displayModeConfigurations);
-        this.displayMode = this.cloudFormRenderingService.switchToDisplayMode(this.id, this.form.displayMode, this.displayMode, this.displayModeConfigurations);
+        this.displayMode = this.cloudFormRenderingService.switchToDisplayMode(this.id, this.form.json.displayMode, this.displayMode, this.displayModeConfigurations);
         this.displayModeOn.emit(this.cloudFormRenderingService.findConfiguration(this.displayMode, this.displayModeConfigurations));
         this.formLoaded.emit(form);
     }

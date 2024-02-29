@@ -144,7 +144,12 @@ export class CloudFormRenderingService extends FormRenderingService {
         }
     }
 
-    switchToDisplayMode(id?: string, newDisplayMode?: FormCloudDisplayMode, oldDisplayMode?: FormCloudDisplayMode, availableConfigurations?: FormCloudDisplayModeConfiguration[]): FormCloudDisplayMode {
+    switchToDisplayMode(
+        id?: string,
+        newDisplayMode?: FormCloudDisplayMode,
+        oldDisplayMode?: FormCloudDisplayMode,
+        availableConfigurations?: FormCloudDisplayModeConfiguration[]
+    ): FormCloudDisplayMode {
         const oldConfiguration = this.findConfiguration(oldDisplayMode, availableConfigurations);
         const newConfiguration = this.findConfiguration(newDisplayMode, availableConfigurations);
 
