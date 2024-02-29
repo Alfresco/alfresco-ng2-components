@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
+import { CONTENT_ALFRESCO_API, CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -54,6 +54,7 @@ import { SecurityControlsServiceModule } from './security/services/security-cont
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
+import { AlfrescoApiService } from './services';
 
 @NgModule({
     imports: [
@@ -93,7 +94,11 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         CategoriesModule
     ],
     providers: [
-        provideTranslations('adf-content-services', 'assets/adf-content-services')
+        provideTranslations('adf-content-services', 'assets/adf-content-services'),
+        {
+            provide: CONTENT_ALFRESCO_API,
+            useExisting: AlfrescoApiService
+        }
     ],
     exports: [
         AlfrescoApiModule,

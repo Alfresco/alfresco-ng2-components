@@ -45,7 +45,6 @@ export * from './lib/blank-page/index';
 export * from './lib/search-text/index';
 export * from './lib/snackbar-content/index';
 export * from './lib/translation/index';
-
 export * from './lib/common/utils/index';
 export * from './lib/interface/index';
 export * from './lib/models/index';
@@ -59,3 +58,6 @@ export * from './lib/common';
 export * from './lib/material.module';
 export * from './lib/core.module';
 export { AuthModule } from './lib/auth/oidc/auth.module';
+
+/** @deprecated please use alfresco-api from \@alfresco/adf-content-services */
+export * from './lib/services/index';

@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { AppConfigService, AppConfigValues } from '../../../../core/src/lib/app-config/app-config.service';
+import { StorageService } from '../../../../core/src/lib/common/services/storage.service';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import { AppConfigService, AppConfigValues, OauthConfigModel, StorageService, OpenidConfiguration } from '@alfresco/adf-core';
-import { ReplaySubject } from 'rxjs';
+import { ALFRESCO_API_FACTORY } from './alfresco-api.service';
 import { AlfrescoApiFactory } from './alfresco-api.interface';
+import { OauthConfigModel, OpenidConfiguration } from '../auth';
+import { ReplaySubject } from 'rxjs';
 
-export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
-
-@Injectable({
-    providedIn: 'root'
-})
-export class AlfrescoApiService {
-
+/** @deprecated please use AlfrescoApiServiceMock from \@alfresco/adf-content-services */
+@Injectable()
+export class AlfrescoApiServiceMock {
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected alfrescoApi: AlfrescoApi;
@@ -48,18 +47,16 @@ export class AlfrescoApiService {
         protected storageService: StorageService,
         @Optional()
         @Inject(ALFRESCO_API_FACTORY) private alfrescoApiFactory?: AlfrescoApiFactory
-    ) {}
+    ) {
+        if (!this.alfrescoApi) {
+            this.initAlfrescoApi();
+        }
+    }
 
     async load(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;
         this.initAlfrescoApiWithConfig();
         this.alfrescoApiInitialized.next(true);
-    }
-
-    // Please do not use, for internal use only
-    // With ths method we can mitigate removing `AlfrescoApiService` from `core`
-    _setFactory(factory: AlfrescoApiFactory): void {
-        this.alfrescoApiFactory = factory;
     }
 
     async reset() {
