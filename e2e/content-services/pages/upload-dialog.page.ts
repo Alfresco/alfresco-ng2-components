@@ -16,7 +16,7 @@
  */
 
 import { by, browser, ElementFinder, $, $$ } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, materialLocators } from '@alfresco/adf-testing';
 
 export class UploadDialogPage {
     closeButton = $('#adf-upload-dialog-close');
@@ -24,7 +24,7 @@ export class UploadDialogPage {
     minimizedDialog = $('div[class*="upload-dialog--minimized"]');
     uploadedStatusIcon = '.adf-file-uploading-row__status--done';
     cancelledStatusIcon = 'div[class*="status--cancelled"]';
-    errorStatusIcon = 'div[class*="status--error"] mat-icon';
+    errorStatusIcon = `div[class*="status--error"] ${materialLocators.Icon.root}`;
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
     title = $('span[class*="upload-dialog__title"]');
     toggleMinimizeButton = $(`[data-automation-id='adf-upload-dialog__toggle-minimize']`);

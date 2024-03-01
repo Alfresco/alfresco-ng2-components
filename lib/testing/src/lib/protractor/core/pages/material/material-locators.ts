@@ -49,8 +49,14 @@ export const materialLocators = {
       class: '.mat-card-content',
       root: 'mat-card-content'
     },
-    title: 'mat-card-title',
-    actions: 'mat-card-actions'
+    title: {
+      class: '.mat-card-title',
+      root: 'mat-card-title',
+    },
+    actions: 'mat-card-actions',
+    subtitle: {
+      root: 'mat-card-subtitle'
+    }
   },
   Checkbox: {
     root: 'mat-checkbox',
@@ -166,7 +172,8 @@ export const materialLocators = {
     root: 'mat-error'
   },
   Expanded: {
-    class: '.mat-expanded'
+    class: '.mat-expanded',
+    root: 'mat-expanded'
   },
   Expansion: {
     panel: {
@@ -188,6 +195,9 @@ export const materialLocators = {
   },
   Focus: {
     indicator: '.mat-focus-indicator'
+  },
+  Focused: {
+    root: 'mat-focused'
   },
   Form: {
     field: {
@@ -221,11 +231,15 @@ export const materialLocators = {
   },
   List: {
     class: '.mat-list',
+    root: 'mat-list',
     item: {
       root: 'mat-list-item',
       class: '.mat-list-item'
     },
     option: 'mat-list-option',
+    text: {
+      class: '.mat-list-text'
+    },
     selectionList: 'mat-selection-list'
   },
   Menu: {
