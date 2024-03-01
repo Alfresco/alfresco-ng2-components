@@ -23,13 +23,16 @@ export class ContentAuthLoaderService {
 
     constructor(
         private readonly basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        private readonly authService: AuthenticationService,
+        private readonly authService: AuthenticationService
     ) {
     }
+
     init(): void {
-        this.authService.onLogin.subscribe(async () => {
-            if (this.authService.isOauth() && (this.authService.isALLProvider() || this.authService.isECMProvider())) {
-                await this.basicAlfrescoAuthService.requireAlfTicket();
+        this.authService.onLogin.subscribe({
+            next: async () => {
+                if (this.authService.isOauth() && (this.authService.isALLProvider() || this.authService.isECMProvider())) {
+                    await this.basicAlfrescoAuthService.requireAlfTicket();
+                }
             }
         });
     }

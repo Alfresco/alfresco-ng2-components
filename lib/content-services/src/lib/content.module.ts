@@ -143,7 +143,7 @@ export class ContentModule {
                     deps: [ContentAuthLoaderService],
                     multi: true
                 }
-                ]
+            ]
         };
     }
 
