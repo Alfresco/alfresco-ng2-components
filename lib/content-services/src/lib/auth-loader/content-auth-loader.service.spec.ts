@@ -73,6 +73,6 @@ describe('ContentAuthLoaderService', () => {
         onLoginSubject.next();
         tick();
 
-        expect(basicAlfrescoAuthService.requireAlfTicket).toHaveBeenCalled();
+        expect(basicAlfrescoAuthService.requireAlfTicket).not.toHaveBeenCalled();
     }));
 });

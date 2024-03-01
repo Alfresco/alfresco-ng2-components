@@ -17,6 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AuthenticationService, BasicAlfrescoAuthService } from '@alfresco/adf-core';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class ContentAuthLoaderService {
@@ -28,12 +29,14 @@ export class ContentAuthLoaderService {
     }
 
     init(): void {
-        this.authService.onLogin.subscribe({
-            next: async () => {
-                if (this.authService.isOauth() && (this.authService.isALLProvider() || this.authService.isECMProvider())) {
-                    await this.basicAlfrescoAuthService.requireAlfTicket();
+        this.authService.onLogin
+            .pipe(take(1))
+            .subscribe({
+                next: async () => {
+                    if (this.authService.isOauth() && (this.authService.isALLProvider() || this.authService.isECMProvider())) {
+                        await this.basicAlfrescoAuthService.requireAlfTicket();
+                    }
                 }
-            }
-        });
+            });
     }
 }
