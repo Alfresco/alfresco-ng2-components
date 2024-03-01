@@ -19,6 +19,7 @@ import { browser, by, element, protractor, ElementFinder, ElementArrayFinder, $,
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { Logger } from '../utils/logger';
+import { materialLocators } from './public-api';
 
 const MAX_LOADING_TIME = 120000;
 
@@ -49,7 +50,7 @@ export class DataTableComponentPage {
         this.mainMenuButton = this.rootElement.$('[data-automation-id="adf-datatable-main-menu-button"]');
         this.selectedRowNumber = this.rootElement.$(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
         this.allSelectedRows = this.rootElement.$$(`adf-datatable-row[class*='is-selected']`);
-        this.selectAll = this.rootElement.$(`div[class*='adf-datatable-header'] mat-checkbox`);
+        this.selectAll = this.rootElement.$(`div[class*='adf-datatable-header'] ${materialLocators.Checkbox.root}`);
         this.emptyList = this.rootElement.$(`adf-empty-content`);
         this.emptyListTitle = this.rootElement.$(`.adf-empty-content__title`);
         this.emptyListSubtitle = this.rootElement.$(`.adf-empty-content__subtitle`);
@@ -89,7 +90,7 @@ export class DataTableComponentPage {
     }
 
     getRowCheckbox(columnName: string, columnValue: string): ElementFinder {
-        return this.getRow(columnName, columnValue).$('mat-checkbox');
+        return this.getRow(columnName, columnValue).$(materialLocators.Checkbox.root);
     }
 
     async checkNoRowIsSelected(): Promise<void> {
@@ -349,7 +350,7 @@ export class DataTableComponentPage {
     async waitTillContentLoaded(): Promise<void> {
         if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName(materialLocators.ProgressSpinner.root)), MAX_LOADING_TIME);
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
@@ -362,8 +363,8 @@ export class DataTableComponentPage {
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), 2000);
-                await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
+                await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)), 2000);
+                await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)), MAX_LOADING_TIME);
             } catch (error) {
             }
 
@@ -380,7 +381,7 @@ export class DataTableComponentPage {
 
         if (await this.isInfiniteSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-bar')));
+            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName(materialLocators.Progress.bar.root)));
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
@@ -390,7 +391,7 @@ export class DataTableComponentPage {
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-bar')));
+                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName(materialLocators.Progress.bar.root)));
             } catch (error) {
             }
             if (await this.isEmpty()) {
@@ -460,7 +461,7 @@ export class DataTableComponentPage {
     }
 
     async clickRowByContentCheckbox(name: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first().element(by.xpath(`ancestor::adf-datatable-row/label/mat-checkbox`));
+        const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first().element(by.xpath(`ancestor::adf-datatable-row/label/${materialLocators.Checkbox.root}`));
         browser.actions().mouseMove(resultElement);
         await BrowserActions.click(resultElement);
     }
@@ -506,7 +507,7 @@ export class DataTableComponentPage {
         let isSpinnerPresent;
 
         try {
-            isSpinnerPresent = await this.rootElement.element(by.tagName('mat-progress-spinner')).isDisplayed();
+            isSpinnerPresent = await this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)).isDisplayed();
         } catch (error) {
             isSpinnerPresent = false;
         }
@@ -518,7 +519,7 @@ export class DataTableComponentPage {
         let isSpinnerPresent;
 
         try {
-            isSpinnerPresent = await this.rootElement.element(by.tagName('mat-progress-bar')).isDisplayed();
+            isSpinnerPresent = await this.rootElement.element(by.tagName(materialLocators.Progress.bar.root)).isDisplayed();
         } catch (error) {
             isSpinnerPresent = false;
         }

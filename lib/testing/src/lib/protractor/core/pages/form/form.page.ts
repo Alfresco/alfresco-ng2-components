@@ -18,11 +18,12 @@
 import { element, by, $ } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/public-api';
+import { materialLocators } from '../public-api';
 
 export class FormPage {
 
     errorLog = $('div[class*="console"]');
-    saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
+    saveButton = element(by.cssContainingText(`${materialLocators.Card.actions}[class*="adf-for"] span`, 'SAVE'));
 
     async checkErrorMessageForWidgetIsDisplayed(errorMessage: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
