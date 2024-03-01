@@ -14,7 +14,10 @@ export const materialLocators = {
     root: 'mat-accordion'
   },
   Autocomplete: {
-    class: '.mat-autocomplete-panel'
+    panel: {
+      class: '.mat-autocomplete-panel',
+      root: 'mat-autocomplete-panel'
+    }
   },
   Button: {
     class: '.mat-button',
@@ -172,7 +175,13 @@ export const materialLocators = {
       body: {
         class: '.mat-expansion-panel-body'
       },
-      header: '.mat-expansion-panel-header',
+      content: {
+        class: '.mat-expansion-panel-content'
+      },
+      header: {
+        class: '.mat-expansion-panel-header',
+        root: 'mat-expansion-panel-header',
+      },
       title: '.mat-expansion-panel-header-title'
     },
     indicator: '.mat-expansion-indicator'
@@ -294,6 +303,9 @@ export const materialLocators = {
       wrapper: {
         root: '.mat-select-arrow-wrapper'
       }
+    },
+    placeholder: {
+      class: '.mat-select-placeholder'
     },
     panel: {
       class: '.mat-select-panel',

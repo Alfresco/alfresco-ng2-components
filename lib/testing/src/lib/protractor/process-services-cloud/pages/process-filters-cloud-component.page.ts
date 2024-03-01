@@ -18,6 +18,7 @@
 import { ElementFinder, $ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { materialLocators } from '../../public-api';
 
 const FILTERS = {
     all: 'all-processes',
@@ -27,7 +28,7 @@ const FILTERS = {
 
 export class ProcessFiltersCloudComponentPage {
 
-    processFilters = $(`mat-expansion-panel[data-automation-id='Process Filters']`);
+    processFilters = $(`${materialLocators.Expansion.panel.root}[data-automation-id='Process Filters']`);
     activeFilter = $('.adf-active [data-automation-id="adf-filter-label"]');
     processFiltersList = $('adf-cloud-process-filters');
 

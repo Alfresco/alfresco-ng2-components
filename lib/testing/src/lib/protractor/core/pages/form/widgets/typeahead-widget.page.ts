@@ -24,7 +24,7 @@ export class TypeaheadWidgetPage {
 
     field = $('input[data-automation-id="adf-typeahed-search-input"]');
     firstResult = $('#adf-typeahed-widget-user-0');
-    groupDropDownList = $(materialLocators.Autocomplete.class);
+    groupDropDownList = $(materialLocators.Autocomplete.panel.class);
     formFields = new FormFields();
 
     getFieldLabel(fieldId: string): Promise<string> {

@@ -21,6 +21,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { FormFields } from '../../core/pages/form/form-fields';
 import { Logger } from '../../core/utils/logger';
+import { materialLocators } from '../../public-api';
 
 export class StartProcessPage {
 
@@ -34,10 +35,10 @@ export class StartProcessPage {
     startProcessButtonDisabled = $('button[data-automation-id="btn-start"][disabled]');
     noProcess = $('.adf-empty-content__title');
     processDefinition = $('input[id="processDefinitionName"]');
-    processDefinitionOptionsPanel = $('div[class*="mat-autocomplete-panel"]');
+    processDefinitionOptionsPanel = $(`div[class*="${materialLocators.Autocomplete.panel.root}"]`);
 
     processDefinitionDropdown = new DropdownPage($('#adf-select-process-dropdown'));
-    applicationDropdown = new DropdownPage($('[data-automation-id*="start-process-app"] .mat-select-arrow'));
+    applicationDropdown = new DropdownPage($(`[data-automation-id*="start-process-app"] ${materialLocators.Select.arrow.class}`));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
@@ -77,7 +78,7 @@ export class StartProcessPage {
             }
         }
         try {
-            await BrowserVisibility.waitUntilElementIsVisible($('.mat-card-content'), 2000);
+            await BrowserVisibility.waitUntilElementIsVisible($(materialLocators.Card.content.class), 2000);
         } catch (error) {
             Logger.log(`No start form on process`);
         }
@@ -148,7 +149,7 @@ export class StartProcessPage {
         return BrowserActions.getInputValue(this.processDefinition);
     }
 
-    async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {
+    async checkValidationErrorIsDisplayed(error: string, elementRef = materialLocators.Error.root): Promise<void> {
         const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
