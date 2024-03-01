@@ -51,6 +51,8 @@ import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { ContentUserInfoModule } from './content-user-info/content-user-info.module';
 import { SecurityControlsServiceModule } from './security/services/security-controls-service.module';
 import { CategoriesModule } from './category/category.module';
+import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
+import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 
 @NgModule({
     imports: [
@@ -128,13 +130,20 @@ export class ContentModule {
             ngModule: ContentModule,
             providers: [
                 provideTranslations('adf-content-services', 'assets/adf-content-services'),
+                ContentAuthLoaderService,
                 {
                     provide: APP_INITIALIZER,
                     useFactory: versionCompatibilityFactory,
                     deps: [VersionCompatibilityService],
                     multi: true
+                },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: contentAuthLoaderFactory,
+                    deps: [ContentAuthLoaderService],
+                    multi: true
                 }
-            ]
+                ]
         };
     }
 
