@@ -84,7 +84,8 @@ describe('PropertyGroupTranslatorService', () => {
                 dataType: 'd:text',
                 defaultValue: 'defaultValue',
                 mandatory: false,
-                multiValued: false
+                multiValued: false,
+                editable: true
             },
             {
                 name: 'FAS:ALOY',
@@ -98,10 +99,11 @@ describe('PropertyGroupTranslatorService', () => {
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
-            expect(cardViewGroup[0].properties.length).toBe(2);
-            expect(cardViewGroup[0].properties[0] instanceof CardViewTextItemModel).toBeTruthy('First property should be instance of CardViewTextItemModel');
-            expect(cardViewGroup[0].properties[1] instanceof CardViewTextItemModel).toBeTruthy('Second property should be instance of CardViewTextItemModel');
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null)[0];
+            expect(cardViewGroup.properties.length).toBe(2);
+            expect(cardViewGroup.properties[0] instanceof CardViewTextItemModel).toBeTruthy('First property should be instance of CardViewTextItemModel');
+            expect(cardViewGroup.properties[1] instanceof CardViewTextItemModel).toBeTruthy('Second property should be instance of CardViewTextItemModel');
+            expect(cardViewGroup.editable).toBeTrue();
         });
 
         it('should translate EVERY property in EVERY group properly', () => {
@@ -113,7 +115,8 @@ describe('PropertyGroupTranslatorService', () => {
                         dataType: 'd:text',
                         defaultValue: 'defaultvalue',
                         mandatory: false,
-                        multiValued: false
+                        multiValued: false,
+                        editable: false
                     }]
                 }),
                 Object.assign({}, propertyGroup, {
@@ -123,17 +126,20 @@ describe('PropertyGroupTranslatorService', () => {
                         dataType: 'd:text',
                         defaultValue: 'defaultvalue',
                         mandatory: false,
-                        multiValued: false
+                        multiValued: false,
+                        editable: false
                     }]
                 })
             );
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
-            expect(cardViewGroup.length).toBe(2);
-            expect(cardViewGroup[0].properties[0] instanceof CardViewTextItemModel).toBeTruthy('First group\'s property should be instance of CardViewTextItemModel');
-            expect(cardViewGroup[1].properties[0] instanceof CardViewTextItemModel).toBeTruthy('Second group\'s property should be instance of CardViewTextItemModel');
+            const cardViewGroups = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
+            expect(cardViewGroups.length).toBe(2);
+            const firstCardViewGroup = cardViewGroups[0];
+            expect(firstCardViewGroup.properties[0] instanceof CardViewTextItemModel).toBeTruthy('First group\'s property should be instance of CardViewTextItemModel');
+            expect(cardViewGroups[1].properties[0] instanceof CardViewTextItemModel).toBeTruthy('Second group\'s property should be instance of CardViewTextItemModel');
+            expect(firstCardViewGroup.editable).toBeFalse();
         });
 
         it('should log an error if unrecognised type is found', () => {

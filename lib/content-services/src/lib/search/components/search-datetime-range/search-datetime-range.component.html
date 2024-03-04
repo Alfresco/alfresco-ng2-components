@@ -33,13 +33,4 @@
             {{ getToValidationMessage() | translate: { requiredFormat: datetimePickerFormat } }}
         </mat-error>
     </mat-form-field>
-
-    <div class="adf-facet-buttons adf-facet-buttons--topSpace" *ngIf="!settings?.hideDefaultAction">
-        <button mat-button color="primary" type="button" (click)="clear()" data-automation-id="datetime-range-clear-btn">
-            {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
-        </button>
-        <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="datetime-range-apply-btn">
-            {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
-        </button>
-    </div>
 </form>

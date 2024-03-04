@@ -31,10 +31,13 @@ import { TranslateModule } from '@ngx-translate/core';
             adf-content-metadata-header {
                 display: flex;
                 align-items: center;
-                flex: 1;
+                width: 100%;
             }
 
             .adf-metadata-properties-title {
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 font-weight: 700;
                 font-size: 15px;
                 padding-left: 12px;
@@ -44,7 +47,7 @@ import { TranslateModule } from '@ngx-translate/core';
     template: `
         <ng-container>
             <mat-icon>{{ expanded ? 'expand_more' : 'chevron_right' }}</mat-icon>
-            <mat-panel-title *ngIf="title" class="adf-metadata-properties-title">{{ title | translate }}</mat-panel-title>
+            <mat-panel-title *ngIf="title" class="adf-metadata-properties-title" [title]="title | translate">{{ title | translate }}</mat-panel-title>
             <ng-content></ng-content>
         </ng-container>
     `

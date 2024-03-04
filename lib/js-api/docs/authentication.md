@@ -131,6 +131,7 @@ If your want to redirect to the authorization server and login there, you can us
 | secret                  | Your secret oauth2                                                                                                                                                                                                                                                                                                                                                                                                                                                                | null                            |
 | scope                   | Your scope                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | null                            |
 | implicitFlow            | true/false                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | false                           |
+| codeFlow                | Set to true to enable Authorization Code Flow. PKCE will be used automatically with this flow.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | false                           |
 | redirectUri             | url to be redirect after login                                                                                                                                                                                                                                                                                                                                                                                                                                                    | null                            |
 | redirectLogout          | url to be redirect after logout optional, if is nor present the redirectUri will be used                                                                                                                                                                                                                                                                                                                                                                                          | null                            |
 | refreshTokenTimeout     | millisecond value, after how many millisecond you want refresh the token                                                                                                                                                                                                                                                                                                                                                                                                          | 30000                           |
@@ -186,6 +187,24 @@ const alfrescoApi = new AlfrescoApi({
         redirectUri: 'YOUR_HOME_APP_URL',
         silentRefreshTimeout: '600000', // Optional parameter 10 minutes default value,
         silentLogin: true,
+        publicUrls: ['PUBLIC_URL', 'URL_PATTERN']
+    },
+    authType: 'OAUTH',
+    provider: 'ALL'
+});
+```
+
+**Example: Authorization Code Flow with PKCE**
+```javascript
+const alfrescoApi = new AlfrescoApi({
+    oauth2: {
+        host: 'HOST_OAUTH2_SERVER',
+        clientId: 'YOUR_CLIENT_ID',
+        secret: 'SECRET',
+        scope: 'openid',
+        codeFlow: true,
+        redirectUri: 'YOUR_HOME_APP_URL',
+        silentRefreshTimeout: '600000', // Optional parameter 10 minutes default value,
         publicUrls: ['PUBLIC_URL', 'URL_PATTERN']
     },
     authType: 'OAUTH',

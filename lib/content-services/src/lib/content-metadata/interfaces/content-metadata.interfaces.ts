@@ -25,3 +25,4 @@ export * from './indifferent-config.interface';
 export * from './layout-oriented-config.interface';
 export * from './preset-config.interface';
 export * from './content-metadata-custom-panel.interface';
+export * from './content-metadata-panel.interface';

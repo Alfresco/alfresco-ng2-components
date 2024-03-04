@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-import { ContentMetadataPanel } from './content-metadata-panel.interface';
+import { ContentAuthLoaderService } from './content-auth-loader.service';
 
-export interface ContentMetadataCustomPanel extends ContentMetadataPanel {
-    component: string;
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+/**
+ * Create a content auth factory
+ *
+ * @param authLoaderService service dependency
+ * @returns factory function
+ */
+export function contentAuthLoaderFactory(authLoaderService: ContentAuthLoaderService): () => void {
+    return () => authLoaderService.init();
 }
