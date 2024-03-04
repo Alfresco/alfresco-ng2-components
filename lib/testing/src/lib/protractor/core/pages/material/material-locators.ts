@@ -40,7 +40,7 @@ export const materialLocators = {
         root: 'mat-calendar-body-cell',
         content: {
           class: '.mat-calendar-body-cell-content'
-        },
+        }
       },
       today: {
         class: '.mat-calendar-body-today'
@@ -60,7 +60,7 @@ export const materialLocators = {
     },
     title: {
       class: '.mat-card-title',
-      root: 'mat-card-title',
+      root: 'mat-card-title'
     },
     actions: 'mat-card-actions',
     subtitle: {
@@ -108,12 +108,12 @@ export const materialLocators = {
             class: '.mat-datepicker-calendar-body-cell-content'
           }
         }
-      },
+      }
     },
     toggle: {
       root: 'mat-datepicker-toggle',
       class: '.mat-datepicker-toggle'
-    },
+    }
   },
   DatetimePicker: {
     root: 'mat-datetimepicker-content',
@@ -121,8 +121,8 @@ export const materialLocators = {
     calendar: {
       header: {
         date: {
-        class: '.mat-datetimepicker-calendar-header-date',
-        time: '.mat-datetimepicker-calendar-header-date-time'
+          class: '.mat-datetimepicker-calendar-header-date',
+          time: '.mat-datetimepicker-calendar-header-date-time'
         },
         year: '.mat-datetimepicker-calendar-header-year'
       },
@@ -131,7 +131,7 @@ export const materialLocators = {
         cell: {
           class: '.mat-datetimepicker-calendar-body-cell-content',
           root: 'mat-datetimepicker-calendar-body-cell-content'
-        }, 
+        }
       },
       content: '.mat-datetimepicker-calendar-content',
       nextButton: '.mat-datetimepicker-calendar-next-button'
@@ -139,10 +139,10 @@ export const materialLocators = {
     clock: {
       class: '.mat-datetimepicker-clock',
       hours: {
-        class: '.mat-datetimepicker-clock-hours',
+        class: '.mat-datetimepicker-clock-hours'
       },
       minutes: {
-        class: '.mat-datetimepicker-clock-minutes',
+        class: '.mat-datetimepicker-clock-minutes'
       },
       cell: (attribute?: 'selected' | 'disabled') => attribute ? `mat-datetimepicker-clock-cell-${attribute}` : 'mat-datetimepicker-clock-cell'
     },
@@ -152,7 +152,7 @@ export const materialLocators = {
     toggle: {
       root: 'mat-datetimepicker-toggle',
       class: '.mat-datetimepicker-toggle'
-    },
+    }
   },
   Dialog: {
     container: {
@@ -161,11 +161,11 @@ export const materialLocators = {
     },
     content: {
       root: 'mat-dialog-content',
-      class: '.mat-dialog-content',
+      class: '.mat-dialog-content'
     },
     actions: {
       class: `.mat-dialog-actions`,
-      root: `mat-dialog-actions`,
+      root: `mat-dialog-actions`
     },
     title: '.mat-dialog-title'
   },
@@ -196,7 +196,7 @@ export const materialLocators = {
       },
       header: {
         class: '.mat-expansion-panel-header',
-        root: 'mat-expansion-panel-header',
+        root: 'mat-expansion-panel-header'
       },
       title: '.mat-expansion-panel-header-title'
     },
@@ -230,7 +230,7 @@ export const materialLocators = {
     button: {
       class: '.mat-icon-button',
       root: 'mat-icon-button'
-    },
+    }
   },
   Input: {
     class: '.mat-input-element'
@@ -264,7 +264,7 @@ export const materialLocators = {
           root: `mat-menu-item-submenu-trigger`
         }
       }
-    },
+    }
   },
   Month: {
     content: '.mat-month-content'
@@ -276,12 +276,12 @@ export const materialLocators = {
     text: {
       class: '.mat-option-text',
       root: 'mat-option-text'
-    },
+    }
   },
   Paginator: {
     class: '.mat-paginator',
     range: {
-      label: '.mat-paginator-range-label',
+      label: '.mat-paginator-range-label'
     },
     navigation: (rangeAction: string) => `.mat-paginator-navigation-${rangeAction}`
   },
@@ -305,7 +305,7 @@ export const materialLocators = {
     root: 'mat-radio',
     button: {
       class: '.mat-radio-button',
-      root: 'mat-radio-button',
+      root: 'mat-radio-button'
     },
     group: 'mat-radio-group',
     checked: 'mat-radio-checked',
@@ -316,7 +316,7 @@ export const materialLocators = {
     element: {
       class: '.mat-ripple-element',
       root: 'mat-ripple-element'
-    },
+    }
   },
   Select: {
     root: 'mat-select',
@@ -346,7 +346,7 @@ export const materialLocators = {
       class: '.mat-slide-toggle',
       root: 'mat-slide-toggle',
       input: '.mat-slide-toggle-input'
-    },
+    }
   },
   Selection: {
     list: {
@@ -388,12 +388,12 @@ export const materialLocators = {
       root: 'mat-tab-label',
       active: {
         class: '.mat-tab-label-active',
-        root: 'mat-tab-label-active',
+        root: 'mat-tab-label-active'
       },
       content: {
         class: '.mat-tab-label-content',
         root: 'mat-tab-label-content'
-      },
+      }
     },
     labels: {
       class: '.mat-tab-labels'
@@ -405,7 +405,7 @@ export const materialLocators = {
     root: 'mat-table',
     row: {
       root: 'mat-row',
-      class: '.mat-row',
+      class: '.mat-row'
     },
     cell: {
       class: '.mat-cell',
