@@ -152,7 +152,7 @@ describe('AspectListComponent', () => {
             spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             nodeService = TestBed.inject(NodesApiService);
-            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne'] } as any));
+            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'stored:aspect'] } as any));
             component.nodeId = 'fake-node-id';
             loader = TestbedHarnessEnvironment.loader(fixture);
         });
@@ -187,68 +187,70 @@ describe('AspectListComponent', () => {
                 expect(noNameAspect.innerText).toBe('cst:nonamedAspect');
             });
 
-            it('should show the details when a row is clicked', async () => {
+            it('should show aspect`s properties in expanded aspect panel', async () => {
                 const panel = await loader.getHarness(MatExpansionPanelHarness);
-                await panel.expand();
                 expect(await panel.getDescription()).not.toBeNull();
 
                 const table = await panel.getHarness(MatTableHarness);
                 const [row1, row2] = await table.getRows();
                 const [r1c1, r1c2, r1c3] = await row1.getCells();
+                const [r2c1, r2c2, r2c3] = await row2.getCells();
                 expect(await r1c1.getText()).toBe('channelPassword');
                 expect(await r1c2.getText()).toBe('The authenticated channel password');
                 expect(await r1c3.getText()).toBe('d:propA');
-
-                const [r2c1, r2c2, r2c3] = await row2.getCells();
                 expect(await r2c1.getText()).toBe('channelUsername');
                 expect(await r2c2.getText()).toBe('The authenticated channel username');
                 expect(await r2c3.getText()).toBe('d:propB');
             });
 
-            it('should show as checked the node properties', async () => {
+            it('should show node aspects as checked', async () => {
                 const panel = await loader.getHarness(MatExpansionPanelHarness);
-                await panel.expand();
-
                 const checkbox = await panel.getHarness(MatCheckboxHarness);
                 expect(await checkbox.isChecked()).toBe(true);
             });
 
-            it('should remove aspects unchecked', async () => {
-                const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
-                await panel[1].expand();
-
-                const checkbox = await panel[1].getHarness(MatCheckboxHarness);
+            it('should add checked and remove unchecked aspects', async () => {
+                const panel = (await loader.getAllHarnesses(MatExpansionPanelHarness))[1];
+                const checkbox = await panel.getHarness(MatCheckboxHarness);
                 expect(await checkbox.isChecked()).toBe(false);
 
                 await checkbox.toggle();
-
                 expect(component.nodeAspects.length).toBe(2);
                 expect(component.nodeAspects[1]).toBe('frs:SecondAspect');
 
                 await checkbox.toggle();
-
                 expect(component.nodeAspects.length).toBe(1);
                 expect(component.nodeAspects[0]).toBe('frs:AspectOne');
             });
 
-            it('should reset the properties on reset', async () => {
-                const panel = await loader.getAllHarnesses(MatExpansionPanelHarness);
-                await panel[1].expand();
-
-                const checkbox = await panel[1].getHarness(MatCheckboxHarness);
+            it('should reset aspects on reset', async () => {
+                const panel = (await loader.getAllHarnesses(MatExpansionPanelHarness))[1];
+                const checkbox = await panel.getHarness(MatCheckboxHarness);
                 expect(await checkbox.isChecked()).toBe(false);
 
                 await checkbox.toggle();
-
                 expect(component.nodeAspects.length).toBe(2);
+
                 component.reset();
                 expect(component.nodeAspects.length).toBe(1);
             });
 
-            it('should clear all the properties on clear', async () => {
+            it('should clear all aspects on clear', async () => {
                 expect(component.nodeAspects.length).toBe(1);
                 component.clear();
                 expect(component.nodeAspects.length).toBe(0);
+            });
+
+            it('should store not listed aspects and emit all aspects on value change', async () => {
+                const storedAspect = ['stored:aspect'];
+                expect(component.notDisplayedAspects).toEqual(storedAspect);
+
+                spyOn(component.valueChanged, 'emit');
+                const panel = (await loader.getAllHarnesses(MatExpansionPanelHarness))[1];
+                const checkbox = await panel.getHarness(MatCheckboxHarness);
+                await checkbox.toggle();
+                fixture.detectChanges();
+                expect(component.valueChanged.emit).toHaveBeenCalledWith(['frs:AspectOne', 'frs:SecondAspect', ...storedAspect]);
             });
         });
 
