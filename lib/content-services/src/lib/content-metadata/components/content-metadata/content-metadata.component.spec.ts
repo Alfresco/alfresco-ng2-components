@@ -831,6 +831,18 @@ describe('ContentMetadataComponent', () => {
         it('should have displayDefaultProperties input param as true by default', () => {
             expect(component.displayDefaultProperties).toBe(true);
         });
+
+        it('should set default properties as active panel on displayDefaultProperties toggle', () => {
+            component.displayDefaultProperties = false;
+            component.currentPanel.panelTitle = 'test';
+            component.currentPanel.expanded = false;
+
+            component.ngOnChanges({ displayDefaultProperties: new SimpleChange(false, true, false) });
+
+            fixture.detectChanges();
+            expect(component.currentPanel.panelTitle).toBe(component.DefaultPanels.PROPERTIES);
+            expect(component.currentPanel.expanded).toBe(true);
+        });
     });
 
     describe('Display properties with aspect oriented config', () => {

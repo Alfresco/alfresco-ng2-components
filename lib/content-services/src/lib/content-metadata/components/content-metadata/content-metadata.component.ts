@@ -247,6 +247,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             this.currentPanel.expanded = true;
         }
 
+        if (changes.displayDefaultProperties?.currentValue) {
+            this.currentPanel.panelTitle = this.DefaultPanels.PROPERTIES;
+            this.currentPanel.expanded = true;
+        }
+
     }
 
     ngOnDestroy() {
