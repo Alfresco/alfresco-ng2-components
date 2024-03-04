@@ -15,6 +15,11 @@
  * limitations under the License.
  */
 
-export * from './material';
-export * from './basic';
-export * from './base.component';
+export const materialLocators = {
+  Error: {
+    root: 'mat-error'
+  },
+  Tooltip: {
+    root: 'mat-tooltip-component'
+  }
+};

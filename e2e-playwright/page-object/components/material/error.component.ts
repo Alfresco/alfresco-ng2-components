@@ -15,6 +15,15 @@
  * limitations under the License.
  */
 
-export * from './material';
-export * from './basic';
-export * from './base.component';
+import { Page } from '@playwright/test';
+import { BaseComponent } from '../base.component';
+import { materialLocators } from './material-locators';
+
+export class ErrorComponent extends BaseComponent {
+    private static rootElement = materialLocators.Error.root;
+    public content = this.getChild('');
+
+    constructor(page: Page) {
+        super(page, ErrorComponent.rootElement);
+    }
+}
