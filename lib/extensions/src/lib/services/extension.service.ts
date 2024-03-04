@@ -109,6 +109,11 @@ export class ExtensionService {
         return config;
     }
 
+    appendConfig(partialConfig: ExtensionConfig) {
+        this.config = { ...this.config, ...partialConfig };
+        this.setup(this.config);
+    }
+
     /**
      * Registers extensions from a config object.
      * @param config Object with config data
