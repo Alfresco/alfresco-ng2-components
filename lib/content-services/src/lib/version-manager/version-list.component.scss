@@ -1,10 +1,19 @@
 .adf-version-list {
-    &-viewport {
+    .adf-version-list-viewport {
         height: 100%;
-    }
 
-    .adf-version-list-item {
-        border-bottom: 1px solid #d8d8d8;
+        .adf-version-list-item {
+            height: auto;
+            padding-top: 23.25px;
+            padding-bottom: 23.25px;
+            border-bottom: 1px solid #d8d8d8;
+
+            .adf-version-list-item-comment {
+                width: 100%;
+                word-break: break-word;
+                white-space: break-spaces;
+            }
+        }
     }
 
     &-item-version {
@@ -13,10 +22,6 @@
 
     &-item-date {
         opacity: 0.6;
-    }
-
-    &-item-comment {
-        opacity: 0.5;
     }
 
     &-item-name,
