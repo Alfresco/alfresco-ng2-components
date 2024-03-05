@@ -447,7 +447,7 @@ describe('AlfrescoViewerComponent', () => {
         //
     });
 
-    fdescribe('originalMimeType', () => {
+    describe('originalMimeType', () => {
         it('should set originalMimeType based on nodeData content', async () => {
             const defaultNode: Node = {
                 id: 'mock-id',
