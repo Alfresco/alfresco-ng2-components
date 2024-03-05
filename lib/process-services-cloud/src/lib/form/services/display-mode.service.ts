@@ -16,24 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { FormFieldTypes, FormRenderingService } from '@alfresco/adf-core';
-import { AttachFileCloudWidgetComponent } from '../components/widgets/attach-file/attach-file-cloud-widget.component';
-import { DropdownCloudWidgetComponent } from '../components/widgets/dropdown/dropdown-cloud.widget';
-import { DateCloudWidgetComponent } from '../components/widgets/date/date-cloud.widget';
-import { PeopleCloudWidgetComponent } from '../components/widgets/people/people-cloud.widget';
-import { GroupCloudWidgetComponent } from '../components/widgets/group/group-cloud.widget';
-import { PropertiesViewerWidgetComponent } from '../components/widgets/properties-viewer/properties-viewer.widget';
-import { RadioButtonsCloudWidgetComponent } from '../components/widgets/radio-buttons/radio-buttons-cloud.widget';
-import { FileViewerWidgetComponent } from '../components/widgets/file-viewer/file-viewer.widget';
-import { DisplayRichTextWidgetComponent } from '../components/widgets/display-rich-text/display-rich-text.widget';
-import { DataTableWidgetComponent } from '../components/widgets/data-table/data-table.widget';
 import { Observable, Subject } from 'rxjs';
 import { FormCloudDisplayMode, FormCloudDisplayModeChange, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CloudFormRenderingService extends FormRenderingService {
+export class DisplayModeService {
     public static readonly DEFAULT_DISPLAY_MODE_CONFIGURATIONS: FormCloudDisplayModeConfiguration[] = [
         {
             displayMode: FormCloudDisplayMode.inline,
@@ -42,13 +31,13 @@ export class CloudFormRenderingService extends FormRenderingService {
     ];
 
     public static readonly IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS: FormCloudDisplayModeConfiguration[] = [
-        ...CloudFormRenderingService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS,
+        ...DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS,
         {
             displayMode: FormCloudDisplayMode.fullScreen,
             options: {
                 onDisplayModeOn: () => { },
-                onDisplayModeOff: (id: string) => CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
-                onCompleteTask: (id: string) => CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
+                onDisplayModeOff: (id: string) => DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
+                onCompleteTask: (id: string) => DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
                 onSaveTask: () => { },
                 displayToolbar: true
             }
@@ -59,31 +48,14 @@ export class CloudFormRenderingService extends FormRenderingService {
 
     private static readonly displayMode = new Subject<FormCloudDisplayModeChange>();
 
-    static readonly displayMode$: Observable<FormCloudDisplayModeChange> = CloudFormRenderingService.displayMode.asObservable();
+    static readonly displayMode$: Observable<FormCloudDisplayModeChange> = DisplayModeService.displayMode.asObservable();
 
     static changeDisplayMode(change: FormCloudDisplayModeChange) {
-        CloudFormRenderingService.displayMode.next(change);
-    }
-
-    constructor() {
-        super();
-
-        this.register({
-            [FormFieldTypes.UPLOAD]: () => AttachFileCloudWidgetComponent,
-            [FormFieldTypes.DROPDOWN]: () => DropdownCloudWidgetComponent,
-            [FormFieldTypes.DATE]: () => DateCloudWidgetComponent,
-            [FormFieldTypes.PEOPLE]: () => PeopleCloudWidgetComponent,
-            [FormFieldTypes.FUNCTIONAL_GROUP]: () => GroupCloudWidgetComponent,
-            [FormFieldTypes.PROPERTIES_VIEWER]: () => PropertiesViewerWidgetComponent,
-            [FormFieldTypes.RADIO_BUTTONS]: () => RadioButtonsCloudWidgetComponent,
-            [FormFieldTypes.ALFRESCO_FILE_VIEWER]: () => FileViewerWidgetComponent,
-            [FormFieldTypes.DISPLAY_RICH_TEXT]: () => DisplayRichTextWidgetComponent,
-            [FormFieldTypes.DATA_TABLE]: () => DataTableWidgetComponent
-        }, true);
+        DisplayModeService.displayMode.next(change);
     }
 
     getDefaultDisplayModeConfigurations(): FormCloudDisplayModeConfiguration[] {
-        return CloudFormRenderingService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS;
+        return DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS;
     }
 
     getDisplayModeConfigurations(availableConfigurations?: FormCloudDisplayModeConfiguration[]): FormCloudDisplayModeConfiguration[] {
@@ -104,7 +76,7 @@ export class CloudFormRenderingService extends FormRenderingService {
                 availableConfigurations[0].displayMode :
                 (availableConfigurations.find(config => config.default)?.displayMode || availableConfigurations[0].displayMode);
         } else {
-            return CloudFormRenderingService.DEFAULT_DISPLAY_MODE;
+            return DisplayModeService.DEFAULT_DISPLAY_MODE;
         }
     }
 
@@ -159,12 +131,12 @@ export class CloudFormRenderingService extends FormRenderingService {
             }
 
             if (newConfiguration) {
-                CloudFormRenderingService.changeDisplayMode({ id, displayMode: newConfiguration.displayMode });
+                DisplayModeService.changeDisplayMode({ id, displayMode: newConfiguration.displayMode });
                 this.onDisplayModeOn(id, newDisplayMode, availableConfigurations);
                 return newConfiguration.displayMode;
             } else {
                 const displayMode = this.getDisplayMode(newDisplayMode, availableConfigurations);
-                CloudFormRenderingService.changeDisplayMode({ id, displayMode });
+                DisplayModeService.changeDisplayMode({ id, displayMode });
                 this.onDisplayModeOn(id, displayMode, availableConfigurations);
                 return displayMode;
             }

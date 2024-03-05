@@ -16,11 +16,11 @@
  */
 
 import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
-import { CloudFormRenderingService } from './cloud-form-rendering.service';
+import { DisplayModeService } from './display-mode.service';
 
-describe('CloudFormRenderingService', () => {
+describe('DisplayModeService', () => {
 
-    let service: CloudFormRenderingService;
+    let service: DisplayModeService;
     let displayModeOnSpy: jasmine.Spy;
     let displayModeOffSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
@@ -29,20 +29,20 @@ describe('CloudFormRenderingService', () => {
     const formId = 'id';
 
     beforeEach(() => {
-        service = new CloudFormRenderingService();
+        service = new DisplayModeService();
 
-        spyOn(service, 'getDefaultDisplayModeConfigurations').and.callFake(() => CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
-        displayModeOnSpy = spyOn(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onDisplayModeOn');
-        displayModeOffSpy = spyOn(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onDisplayModeOff');
-        completeTaskSpy = spyOn(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onCompleteTask');
-        saveTaskSpy = spyOn(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onSaveTask');
-        changeDisplayModeSpy = spyOn(CloudFormRenderingService, 'changeDisplayMode');
+        spyOn(service, 'getDefaultDisplayModeConfigurations').and.callFake(() => DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+        displayModeOnSpy = spyOn(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onDisplayModeOn');
+        displayModeOffSpy = spyOn(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onDisplayModeOff');
+        completeTaskSpy = spyOn(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onCompleteTask');
+        saveTaskSpy = spyOn(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onSaveTask');
+        changeDisplayModeSpy = spyOn(DisplayModeService, 'changeDisplayMode');
     });
 
     it('should return the default display mode configurations when no available configurations are provided', () => {
-        expect(service.getDisplayModeConfigurations()).toBe(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
-        expect(service.getDisplayModeConfigurations(null)).toBe(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
-        expect(service.getDisplayModeConfigurations([])).toBe(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+        expect(service.getDisplayModeConfigurations()).toBe(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+        expect(service.getDisplayModeConfigurations(null)).toBe(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+        expect(service.getDisplayModeConfigurations([])).toBe(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
     });
 
     it('should return the provided display mode configurations when available configurations are provided', () => {
@@ -56,13 +56,13 @@ describe('CloudFormRenderingService', () => {
     });
 
     it('should return the default display mode when no display mode is provided', () => {
-        expect(service.getDisplayMode()).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
-        expect(service.getDisplayMode(null)).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
+        expect(service.getDisplayMode()).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
+        expect(service.getDisplayMode(null)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
     });
 
     it('should return the default display mode when no display mode does not exist in the configuration', () => {
-        expect(service.getDisplayMode('notExisting' as any)).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
-        expect(service.getDisplayMode('notExisting' as any, [])).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
+        expect(service.getDisplayMode('notExisting' as any)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
+        expect(service.getDisplayMode('notExisting' as any, [])).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
         expect(service.getDisplayMode('notExisting' as any, [{ displayMode: FormCloudDisplayMode.fullScreen }])).toBe(FormCloudDisplayMode.fullScreen);
         expect(service.getDisplayMode('notExisting' as any, [{ displayMode: FormCloudDisplayMode.fullScreen }, { displayMode: FormCloudDisplayMode.inline }])).toBe(FormCloudDisplayMode.fullScreen);
         expect(service.getDisplayMode('notExisting' as any, [{ displayMode: FormCloudDisplayMode.fullScreen, default: true }, { displayMode: FormCloudDisplayMode.inline }])).toBe(FormCloudDisplayMode.fullScreen);
@@ -74,7 +74,7 @@ describe('CloudFormRenderingService', () => {
 
     it('should find the display configuration', () => {
         expect(service.findConfiguration()).toBeUndefined();
-        expect(service.findConfiguration(FormCloudDisplayMode.fullScreen)).toBe(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+        expect(service.findConfiguration(FormCloudDisplayMode.fullScreen)).toBe(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
         expect(service.findConfiguration('notExisting' as any)).toBeUndefined();
         expect(service.findConfiguration(FormCloudDisplayMode.fullScreen, [{ displayMode: FormCloudDisplayMode.fullScreen }])).toEqual({ displayMode: FormCloudDisplayMode.fullScreen });
         expect(service.findConfiguration(FormCloudDisplayMode.fullScreen, [{ displayMode: FormCloudDisplayMode.inline }])).toBeUndefined();
@@ -134,7 +134,7 @@ describe('CloudFormRenderingService', () => {
     });
 
     it('should return the default display mode when calling the switchToDisplayMode and display does not exist in configuration', () => {
-        expect(service.switchToDisplayMode(formId, 'notExisting' as any)).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
+        expect(service.switchToDisplayMode(formId, 'notExisting' as any)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
     });
 
     it('should not call the change display mode method when switchToDisplayMode and the mode to switch is the same as the old one', () => {
@@ -143,12 +143,12 @@ describe('CloudFormRenderingService', () => {
     });
 
     it('should not call the change display mode method when switchToDisplayMode and the mode to switch does not exist and the previous mode was the default one', () => {
-        expect(service.switchToDisplayMode(formId, 'notExisting' as any, CloudFormRenderingService.DEFAULT_DISPLAY_MODE)).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
+        expect(service.switchToDisplayMode(formId, 'notExisting' as any, DisplayModeService.DEFAULT_DISPLAY_MODE)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
         expect(changeDisplayModeSpy).not.toHaveBeenCalledWith();
     });
 
     it('should not call the change display mode method when switchToDisplayMode and the mode to switch does not exist and the previous mode was not provided', () => {
-        expect(service.switchToDisplayMode(formId, 'notExisting' as any, CloudFormRenderingService.DEFAULT_DISPLAY_MODE)).toBe(CloudFormRenderingService.DEFAULT_DISPLAY_MODE);
+        expect(service.switchToDisplayMode(formId, 'notExisting' as any, DisplayModeService.DEFAULT_DISPLAY_MODE)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
         expect(changeDisplayModeSpy).not.toHaveBeenCalledWith();
     });
 

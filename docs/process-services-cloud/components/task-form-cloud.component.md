@@ -64,7 +64,7 @@ Save and Complete buttons get disabled when at least one of the form's inputs ar
 
 #### Enabling fullscreen display for the form of the task
 
-Provide a `displayModeConfiguration` array object containing the fullscreen configuration. You can use the configuration provided in the [`CloudFormRenderingService`](../../../lib/process-services-cloud/src/lib/form/components/cloud-form-rendering.service.ts) as a static member `CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS`, or configure your own if you want to customise the options for the fullscreen display mode.
+Provide a `displayModeConfiguration` array object containing the fullscreen configuration. You can use the configuration provided in the [`DisplayModeService`](../../../lib/process-services-cloud/src/lib/form/services/display-mode.service.ts) as a static member `DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS`, or configure your own if you want to customise the options for the fullscreen display mode.
 
 **MyView.component.html**
 
@@ -84,12 +84,12 @@ Provide a `displayModeConfiguration` array object containing the fullscreen conf
 **MyView.component.ts**
 
 ```ts
-import { CloudFormRenderingService } from '@alfresco/adf-process-services-cloud';
+import { DisplayModeService } from '@alfresco/adf-process-services-cloud';
 
 export class MyView {
 
     get displayConfigurations() {
-        return CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS;
+        return DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS;
     }
 
 }

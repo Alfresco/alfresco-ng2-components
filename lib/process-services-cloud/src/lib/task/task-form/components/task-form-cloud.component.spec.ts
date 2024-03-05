@@ -36,7 +36,7 @@ import { IdentityUserService } from '../../../people/services/identity-user.serv
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { CloudFormRenderingService } from '../../../form/services/cloud-form-rendering.service';
+import { DisplayModeService } from '../../../form/services/display-mode.service';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 
 const taskDetails: TaskDetailsCloudModel = {
@@ -428,21 +428,21 @@ describe('TaskFormCloudComponent', () => {
         it('should emit displayModeOn when display mode is turned on', async () => {
             spyOn(component.displayModeOn, 'emit').and.stub();
 
-            component.onDisplayModeOn(CloudFormRenderingService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+            component.onDisplayModeOn(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.displayModeOn.emit).toHaveBeenCalledWith(CloudFormRenderingService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(component.displayModeOn.emit).toHaveBeenCalledWith(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
         });
 
         it('should emit displayModeOff when display mode is turned on', async () => {
             spyOn(component.displayModeOff, 'emit').and.stub();
 
-            component.onDisplayModeOff(CloudFormRenderingService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+            component.onDisplayModeOff(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.displayModeOff.emit).toHaveBeenCalledWith(CloudFormRenderingService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(component.displayModeOff.emit).toHaveBeenCalledWith(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
         });
     });
 

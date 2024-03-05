@@ -52,11 +52,12 @@ import {
 } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudService } from '../services/form-cloud.service';
-import { CloudFormRenderingService } from '../services/cloud-form-rendering.service';
+import { DisplayModeService } from '../services/display-mode.service';
 import { FormCloudComponent } from './form-cloud.component';
 import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
+import { CloudFormRenderingService } from './cloud-form-rendering.service';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -73,6 +74,7 @@ describe('FormCloudComponent', () => {
     let matDialog: MatDialog;
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
+    let displayModeService: DisplayModeService;
     let documentRootLoader: HarnessLoader;
 
     @Component({
@@ -113,6 +115,7 @@ describe('FormCloudComponent', () => {
 
         formRenderingService = TestBed.inject(CloudFormRenderingService);
         formCloudService = TestBed.inject(FormCloudService);
+        displayModeService = TestBed.inject(DisplayModeService);
 
         matDialog = TestBed.inject(MatDialog);
 
@@ -1161,7 +1164,7 @@ describe('FormCloudComponent', () => {
         beforeEach(async () => {
             displayModeOnSpy = spyOn(formComponent.displayModeOn, 'emit').and.stub();
             displayModeOffSpy = spyOn(formComponent.displayModeOff, 'emit').and.stub();
-            spyOn(formRenderingService, 'getDefaultDisplayModeConfigurations').and.callFake(() => CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+            spyOn(displayModeService, 'getDefaultDisplayModeConfigurations').and.callFake(() => DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
 
             formComponent.taskId = 'any';
             formComponent.appName = 'any';
@@ -1178,7 +1181,7 @@ describe('FormCloudComponent', () => {
         it('should emit display mode turned on wit the inline configuration', async () => {
             await loadForm();
 
-            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
         });
 
         it('should not be in fullScreen mode by default', () => {
@@ -1217,8 +1220,8 @@ describe('FormCloudComponent', () => {
             await fixture.whenStable();
 
             expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
-            expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
-            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
         });
 
         it('should not display full screen button on header when header is displayed but in fullScreen mode', async () => {
@@ -1240,33 +1243,33 @@ describe('FormCloudComponent', () => {
         });
 
         it('should set fullScreen mode from the form service notification', () => {
-            CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
+            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
 
-            expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
-            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
             expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
 
             displayModeOnSpy.calls.reset();
             displayModeOffSpy.calls.reset();
 
-            CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: formComponent.id });
+            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: formComponent.id });
 
-            expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
-            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
             expect(formComponent.displayMode).toBe(FormCloudDisplayMode.inline);
         });
 
         it('should not change the display mode when the notification change is from a different id', () => {
-            CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
+            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
 
             expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
-            expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
-            expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
 
             displayModeOnSpy.calls.reset();
             displayModeOffSpy.calls.reset();
 
-            CloudFormRenderingService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: 'otherId' });
+            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: 'otherId' });
             expect(displayModeOffSpy).not.toHaveBeenCalled();
             expect(displayModeOnSpy).not.toHaveBeenCalled();
 
@@ -1279,7 +1282,7 @@ describe('FormCloudComponent', () => {
             });
 
             it('should emit display mode turned on wit the fullScreen configuration', () => {
-                expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+                expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
             });
 
             it('should display the toolbar with the nameless task title when the task name is not provided and toolbar is enabled', () => {
@@ -1336,25 +1339,25 @@ describe('FormCloudComponent', () => {
                 fixture.detectChanges();
 
                 expect(formComponent.displayMode).toEqual(FormCloudDisplayMode.inline);
-                expect(displayModeOffSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
-                expect(displayModeOnSpy).toHaveBeenCalledWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+                expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+                expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
             });
 
             it('should close fullScreen when completing the task', () => {
-                const formRenderingServiceOnCompleteTaskSpy = spyOn(formRenderingService, 'onCompleteTask').and.callThrough();
-                const onCompleteTaskSpy = spyOn(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onCompleteTask').and.callThrough();
-                const formRenderingServiceChangeDisplayModeSpy = spyOn(CloudFormRenderingService, 'changeDisplayMode').and.callThrough();
+                const formRenderingServiceOnCompleteTaskSpy = spyOn(displayModeService, 'onCompleteTask').and.callThrough();
+                const onCompleteTaskSpy = spyOn(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onCompleteTask').and.callThrough();
+                const formRenderingServiceChangeDisplayModeSpy = spyOn(DisplayModeService, 'changeDisplayMode').and.callThrough();
 
                 displayModeOnSpy.calls.reset();
                 displayModeOffSpy.calls.reset();
 
                 formComponent.completeTaskForm();
 
-                expect(formRenderingServiceOnCompleteTaskSpy).toHaveBeenCalledOnceWith(formComponent.id, FormCloudDisplayMode.fullScreen, CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+                expect(formRenderingServiceOnCompleteTaskSpy).toHaveBeenCalledOnceWith(formComponent.id, FormCloudDisplayMode.fullScreen, DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
                 expect(onCompleteTaskSpy).toHaveBeenCalledOnceWith(formComponent.id);
                 expect(formRenderingServiceChangeDisplayModeSpy).toHaveBeenCalledOnceWith({ id: formComponent.id, displayMode: FormCloudDisplayMode.inline });
-                expect(displayModeOffSpy).toHaveBeenCalledOnceWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
-                expect(displayModeOnSpy).toHaveBeenCalledOnceWith(CloudFormRenderingService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+                expect(displayModeOffSpy).toHaveBeenCalledOnceWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+                expect(displayModeOnSpy).toHaveBeenCalledOnceWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
                 expect(formComponent.displayMode).toBe(FormCloudDisplayMode.inline);
             });
         });

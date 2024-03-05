@@ -32,7 +32,7 @@ import {
     TASK_LIST_PREFERENCES_SERVICE_TOKEN
 } from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
-import { CloudFormRenderingService } from './form/services/cloud-form-rendering.service';
+import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
 import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-pipe.module';
 import { ApolloModule } from 'apollo-angular';
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
