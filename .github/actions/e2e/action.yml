@@ -33,6 +33,7 @@ inputs:
     description: check ps cloud env
     default: "false"
   e2e-tar-name: #
+    description: tarball name
     required: false
     default: e2e.tar.gz
   apa-proxy: #
@@ -77,7 +78,7 @@ runs:
     - name: download smartrunner test results from s3 bucket if they exist
       shell: bash
       env:
-        REMOTE_PATH: smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz
+        REMOTE_PATH: smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-artifact-id}}/e2e.tar.gz
       run: |
         set -u;
         mkdir -p "${SMART_RUNNER_PATH}"
@@ -186,14 +187,14 @@ runs:
       if: ${{ steps.determine-affected.outputs.isAffected == 'true' }}
       uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       with:
-        name: e2e-artifact-output-${{inputs.e2e-test-id}}
+        name: e2e-artifact-output-${{inputs.e2e-artifact-id}}
         path: /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/e2e-output-*
 
     - name: upload smart-runner tests results on s3 to cache tests
       shell: bash
       if: always()
       env:
-        REMOTE_PATH: "smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{ inputs.e2e-test-id}}/e2e.tar.gz"
+        REMOTE_PATH: "smart-runner/${{ github.run_id}}/${{ inputs.e2e-test-folder }}-${{inputs.e2e-artifact-id}}/e2e.tar.gz"
       # description: always upload newer results
       run: |
         tar czf "${{ inputs.e2e-tar-name }}" "${SMART_RUNNER_PATH}"
