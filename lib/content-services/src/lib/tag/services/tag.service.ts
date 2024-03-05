@@ -183,6 +183,6 @@ export class TagService {
      * @returns boolean true if tags plugin is enabled, false otherwise.
      */
     areTagsEnabled(): boolean {
-        return this.appConfigService.get('plugins.tags', true);
+        return this.appConfigService.get('plugins.tagsEnabled', true);
     }
 }
