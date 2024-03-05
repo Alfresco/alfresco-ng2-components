@@ -187,7 +187,7 @@ describe('CategoryService', () => {
 
         it('should call get on AppConfigService with correct parameters', () => {
             categoryService.areCategoriesEnabled();
-            expect(getSpy).toHaveBeenCalledWith('plugins.categories', true);
+            expect(getSpy).toHaveBeenCalledWith('plugins.categoriesEnabled', true);
         });
 
         it('should return true if get from AppConfigService returns true', () => {

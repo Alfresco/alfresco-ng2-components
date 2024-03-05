@@ -95,6 +95,7 @@ The template defined inside `empty-form` will be shown when no form definition i
 | showTitle | `boolean` | true | Toggle rendering of the form title. |
 | showValidationIcon | `boolean` | true | Toggle rendering of the validation icon next to the form title. |
 | taskId | `string` |  | Task id to fetch corresponding form and values. |
+| displayModeConfigurations | [`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`[]` |  | The available display configurations for the form |
 
 ### Events
 
@@ -108,6 +109,8 @@ The template defined inside `empty-form` will be shown when no form definition i
 | formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/src/lib/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| displayModeOn | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` | Emitted when a display mode configuration is turned on. |
+| displayModeOff | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormCloudDisplayModeConfiguration`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` | Emitted when a display mode configuration is turned off. |
 
 ## Details
 
@@ -159,6 +162,41 @@ For an existing Task both the form and its values will be fetched and displayed.
 ```
 
 In this case, only the form definition will be fetched.
+
+#### Enabling fullscreen display for the form
+
+Provide a `displayModeConfiguration` array object containing the fullscreen configuration. You can use the configuration provided in the [`DisplayModeService`](../../../lib/process-services-cloud/src/lib/form/services/display-mode.service.ts) as a static member `DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS`, or configure your own if you want to customise the options for the fullscreen display mode.
+
+**MyView.component.html**
+
+```html
+<button (click)="adfCloudForm.switchToDisplayMode('fullScreen')">Full screen</button>
+
+<adf-cloud-form #adfCloudForm
+    [appName]="appName"
+    [taskId]="selectedTask?.id"
+    [showTitle]="false"
+    [showRefreshButton]="false"
+    [showValidationIcon]="false"
+    [displayModeConfigurations]="displayConfigurations">
+</adf-cloud-form>
+```
+
+**MyView.component.ts**
+
+```ts
+import { DisplayModeService } from '@alfresco/adf-process-services-cloud';
+
+export class MyView {
+
+    get displayConfigurations() {
+        return DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS;
+    }
+
+}
+```
+
+When the `displayModeConfigurations` contains the configuration for the fullscreen display, in the header of the form, a button to switch to fullscreen is displayed. Keep in mind that the header of the form is visible only if any of the parameters `showTitle`, `showRefreshButton`or `showValidationIcon` is `true`, but it is also possible to switch to the fullscreen display using a button that you can place wherever you want as shown in the previous example.
 
 ### Controlling outcome execution behaviour
 

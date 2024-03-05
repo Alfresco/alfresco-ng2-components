@@ -52,9 +52,12 @@ import {
 } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudService } from '../services/form-cloud.service';
-import { CloudFormRenderingService } from './cloud-form-rendering.service';
+import { DisplayModeService } from '../services/display-mode.service';
 import { FormCloudComponent } from './form-cloud.component';
 import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
+import { CloudFormRenderingService } from './cloud-form-rendering.service';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -71,6 +74,7 @@ describe('FormCloudComponent', () => {
     let matDialog: MatDialog;
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
+    let displayModeService: DisplayModeService;
     let documentRootLoader: HarnessLoader;
 
     @Component({
@@ -111,6 +115,7 @@ describe('FormCloudComponent', () => {
 
         formRenderingService = TestBed.inject(CloudFormRenderingService);
         formCloudService = TestBed.inject(FormCloudService);
+        displayModeService = TestBed.inject(DisplayModeService);
 
         matDialog = TestBed.inject(MatDialog);
 
@@ -1137,6 +1142,224 @@ describe('FormCloudComponent', () => {
 
             outcome = fixture.debugElement.query(By.css(`#adf-form-custom_outcome`));
             expect(outcome.nativeElement.innerText).toEqual('CUSTOM OUTCOME');
+        });
+    });
+
+    describe('Full screen', async () => {
+
+        let displayModeOnSpy: jasmine.Spy;
+        let displayModeOffSpy: jasmine.Spy;
+
+        /**
+         * Helper function for loading the form in the tests
+         *
+         * @param form The form model to be loaded
+         */
+        async function loadForm(form?: any): Promise<void> {
+            formComponent.ngOnChanges({ form: { currentValue: formComponent.parseForm(form || {}), firstChange: true, isFirstChange: () => true, previousValue: undefined } });
+            await fixture.whenStable();
+            fixture.detectChanges();
+        }
+
+        beforeEach(async () => {
+            displayModeOnSpy = spyOn(formComponent.displayModeOn, 'emit').and.stub();
+            displayModeOffSpy = spyOn(formComponent.displayModeOff, 'emit').and.stub();
+            spyOn(displayModeService, 'getDefaultDisplayModeConfigurations').and.callFake(() => DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+
+            formComponent.taskId = 'any';
+            formComponent.appName = 'any';
+            formComponent.showRefreshButton = false;
+            formComponent.showTitle = false;
+            formComponent.showValidationIcon = false;
+
+            await loadForm();
+
+            displayModeOnSpy.calls.reset();
+            displayModeOffSpy.calls.reset();
+        });
+
+        it('should emit display mode turned on wit the inline configuration', async () => {
+            await loadForm();
+
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+        });
+
+        it('should not be in fullScreen mode by default', () => {
+            const fullScreenModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-fullscreen-container'));
+            const inlineModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-inline-container'));
+            expect(fullScreenModeContainer).toBeNull();
+            expect(inlineModeContainer).not.toBeNull();
+        });
+
+        it('should be in fullScreen mode if it is forced', async () => {
+            await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+
+            const fullScreenModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-fullscreen-container'));
+            const inlineModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-inline-container'));
+            expect(fullScreenModeContainer).not.toBeNull();
+            expect(inlineModeContainer).toBeNull();
+        });
+
+        it('should display full screen button on header when header is displayed an not in fullScreen mode', () => {
+            formComponent.showTitle = true;
+            fixture.detectChanges();
+
+            const fullScreenButton = fixture.debugElement.query(By.css('.adf-cloud-form-fullscreen-button'));
+            expect(fullScreenButton).not.toBeNull();
+        });
+
+        it('should set fullScreen mode on clicking on the full screen button', async () => {
+            formComponent.showTitle = true;
+            fixture.detectChanges();
+
+            const fullScreenButton = await documentRootLoader.getHarness(
+                MatButtonHarness.with({ selector: `[data-automation-id="adf-cloud-form-fullscreen-button"]` })
+            );
+            await fullScreenButton.click();
+
+            await fixture.whenStable();
+
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
+            expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+        });
+
+        it('should not display full screen button on header when header is displayed but in fullScreen mode', async () => {
+            formComponent.showTitle = true;
+            await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+
+            const fullScreenButton = fixture.debugElement.query(By.css('.adf-cloud-form-fullscreen-button'));
+            expect(fullScreenButton).toBeNull();
+        });
+
+        it('should not display full screen button when header is not displayed', () => {
+            const fullScreenButton = fixture.debugElement.query(By.css('.adf-cloud-form-fullscreen-button'));
+            expect(fullScreenButton).toBeNull();
+        });
+
+        it('should not set the styles for the card', () => {
+            const fullScreenCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card'));
+            expect(fullScreenCard).toBeNull();
+        });
+
+        it('should set fullScreen mode from the form service notification', () => {
+            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
+
+            expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
+
+            displayModeOnSpy.calls.reset();
+            displayModeOffSpy.calls.reset();
+
+            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: formComponent.id });
+
+            expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.inline);
+        });
+
+        it('should not change the display mode when the notification change is from a different id', () => {
+            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
+
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
+            expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+
+            displayModeOnSpy.calls.reset();
+            displayModeOffSpy.calls.reset();
+
+            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: 'otherId' });
+            expect(displayModeOffSpy).not.toHaveBeenCalled();
+            expect(displayModeOnSpy).not.toHaveBeenCalled();
+
+            expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
+        });
+
+        describe('fullScreen Mode', () => {
+            beforeEach(async () => {
+                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+            });
+
+            it('should emit display mode turned on wit the fullScreen configuration', () => {
+                expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+            });
+
+            it('should display the toolbar with the nameless task title when the task name is not provided and toolbar is enabled', () => {
+                const cloudFormToolbarDisplayName: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form__display-name');
+                expect(cloudFormToolbarDisplayName).not.toBeNull();
+                expect(cloudFormToolbarDisplayName.textContent.trim()).toEqual('Nameless task');
+            });
+
+            it('should display the toolbar with the task title when the task name is provided and toolbar is enabled', async () => {
+                const taskName = 'task-name';
+
+                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen, taskName });
+
+                const cloudFormToolbarDisplayName: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form__display-name');
+                expect(cloudFormToolbarDisplayName).not.toBeNull();
+                expect(cloudFormToolbarDisplayName.textContent.trim()).toEqual(taskName);
+            });
+
+            it('should not display the toolbar with the task title when the toolbar option is disabled', async () => {
+                formComponent.displayModeConfigurations = [
+                    {
+                        displayMode: FormCloudDisplayMode.fullScreen,
+                        options: {
+                            onCompleteTask: () => { },
+                            onDisplayModeOff: () => { },
+                            onDisplayModeOn: () => { },
+                            onSaveTask: () => { },
+                            displayToolbar: false
+                        }
+                    }
+                ];
+
+                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+
+                const cloudFormToolbar: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form-toolbar');
+                expect(cloudFormToolbar).toBeNull();
+            });
+
+            it('should set the styles for the card', () => {
+                const fullScreenCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card'));
+                expect(fullScreenCard).not.toBeNull();
+            });
+
+            it('should close fullScreen when close button is clicked', async () => {
+                displayModeOnSpy.calls.reset();
+                displayModeOffSpy.calls.reset();
+
+                const closeButton = await documentRootLoader.getHarness(
+                    MatButtonHarness.with({ selector: `[data-automation-id="adf-cloud-form-close-button"]` })
+                );
+                await closeButton.click();
+
+                await fixture.whenStable();
+                fixture.detectChanges();
+
+                expect(formComponent.displayMode).toEqual(FormCloudDisplayMode.inline);
+                expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+                expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+            });
+
+            it('should close fullScreen when completing the task', () => {
+                const formRenderingServiceOnCompleteTaskSpy = spyOn(displayModeService, 'onCompleteTask').and.callThrough();
+                const onCompleteTaskSpy = spyOn(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1].options, 'onCompleteTask').and.callThrough();
+                const formRenderingServiceChangeDisplayModeSpy = spyOn(DisplayModeService, 'changeDisplayMode').and.callThrough();
+
+                displayModeOnSpy.calls.reset();
+                displayModeOffSpy.calls.reset();
+
+                formComponent.completeTaskForm();
+
+                expect(formRenderingServiceOnCompleteTaskSpy).toHaveBeenCalledOnceWith(formComponent.id, FormCloudDisplayMode.fullScreen, DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS);
+                expect(onCompleteTaskSpy).toHaveBeenCalledOnceWith(formComponent.id);
+                expect(formRenderingServiceChangeDisplayModeSpy).toHaveBeenCalledOnceWith({ id: formComponent.id, displayMode: FormCloudDisplayMode.inline });
+                expect(displayModeOffSpy).toHaveBeenCalledOnceWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
+                expect(displayModeOnSpy).toHaveBeenCalledOnceWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
+                expect(formComponent.displayMode).toBe(FormCloudDisplayMode.inline);
+            });
         });
     });
 

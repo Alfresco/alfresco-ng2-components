@@ -1,5 +1,5 @@
 <div *ngIf="!loading; else loadingTemplate">
-    <adf-cloud-form *ngIf="hasForm(); else withoutForm"
+    <adf-cloud-form #adfCloudForm *ngIf="hasForm(); else withoutForm"
                     [appName]="appName"
                     [appVersion]="taskDetails.appVersion"
                     [taskId]="taskId"
@@ -10,12 +10,15 @@
                     [showValidationIcon]="showValidationIcon"
                     [showCompleteButton]="canCompleteTask()"
                     [showSaveButton]="canCompleteTask()"
+                    [displayModeConfigurations]="displayModeConfigurations"
                     (formSaved)="onFormSaved($event)"
                     (formCompleted)="onFormCompleted($event)"
                     (formError)="onError($event)"
                     (error)="onError($event)"
                     (formContentClicked)="onFormContentClicked($event)"
-                    (executeOutcome)="onFormExecuteOutcome($event)">
+                    (executeOutcome)="onFormExecuteOutcome($event)"
+                    (displayModeOn)="onDisplayModeOn($event)"
+                    (displayModeOff)="onDisplayModeOff($event)">
         <adf-cloud-form-custom-outcomes>
             <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
             </ng-template>

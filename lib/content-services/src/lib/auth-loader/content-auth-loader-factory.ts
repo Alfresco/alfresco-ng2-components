@@ -15,22 +15,15 @@
  * limitations under the License.
  */
 
-import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
+import { ContentAuthLoaderService } from './content-auth-loader.service';
 
-export interface MatchValidatorParams {
-    expression: string;
-    flags?: string;
-    requiresMatch?: boolean;
-}
-
-export class CardViewItemMatchValidator implements CardViewItemValidator {
-    message = 'CORE.CARDVIEW.VALIDATORS.MATCH_VALIDATION_ERROR';
-
-    constructor(private expression: string, private flags?: string, private requiresMatch?: boolean) {
-    }
-
-    isValid(value: string): boolean {
-        const regex = new RegExp(this.expression, this.flags);
-        return value === '' || this.requiresMatch ? regex.test(value) : !regex.test(value);
-    }
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+/**
+ * Create a content auth factory
+ *
+ * @param authLoaderService service dependency
+ * @returns factory function
+ */
+export function contentAuthLoaderFactory(authLoaderService: ContentAuthLoaderService): () => void {
+    return () => authLoaderService.init();
 }

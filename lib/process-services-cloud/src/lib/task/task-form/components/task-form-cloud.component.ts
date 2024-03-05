@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent } from '@alfresco/adf-core';
@@ -24,6 +24,8 @@ import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/d
 import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
+import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 
 @Component({
     selector: 'adf-cloud-task-form',
@@ -63,6 +65,12 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     /** Toggle readonly state of the task. */
     @Input()
     readOnly = false;
+
+    /**
+     * The available display configurations for the form
+     */
+    @Input()
+    displayModeConfigurations: FormCloudDisplayModeConfiguration[];
 
     /** Emitted when the form is saved. */
     @Output()
@@ -108,6 +116,17 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
      */
     @Output()
     onTaskLoaded = new EventEmitter<TaskDetailsCloudModel>(); /* eslint-disable-line */
+
+    /** Emitted when a display mode configuration is turned on. */
+    @Output()
+    displayModeOn = new EventEmitter<FormCloudDisplayModeConfiguration>();
+
+    /** Emitted when a display mode configuration is turned off. */
+    @Output()
+    displayModeOff = new EventEmitter<FormCloudDisplayModeConfiguration>();
+
+    @ViewChild('adfCloudForm', { static: false })
+    adfCloudForm: FormCloudComponent;
 
     taskDetails: TaskDetailsCloudModel;
 
@@ -229,6 +248,18 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     onFormExecuteOutcome(outcome: FormOutcomeEvent) {
         this.executeOutcome.emit(outcome);
+    }
+
+    switchToDisplayMode(newDisplayMode?: string) {
+        this.adfCloudForm.switchToDisplayMode(newDisplayMode);
+    }
+
+    onDisplayModeOn(displayModeConfiguration: FormCloudDisplayModeConfiguration){
+        this.displayModeOn.emit(displayModeConfiguration);
+    }
+
+    onDisplayModeOff(displayModeConfiguration: FormCloudDisplayModeConfiguration){
+        this.displayModeOff.emit(displayModeConfiguration);
     }
 
     ngOnDestroy() {

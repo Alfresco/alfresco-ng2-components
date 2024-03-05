@@ -163,6 +163,6 @@ export class CategoryService {
      * @returns boolean true if categories plugin is enabled, false otherwise.
      */
     areCategoriesEnabled(): boolean {
-         return this.appConfigService.get('plugins.categories', true);
+         return this.appConfigService.get('plugins.categoriesEnabled', true);
     }
 }
