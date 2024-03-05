@@ -36,6 +36,8 @@ import { IdentityUserService } from '../../../people/services/identity-user.serv
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { DisplayModeService } from '../../../form/services/display-mode.service';
+import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -66,7 +68,8 @@ describe('TaskFormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            declarations: [FormCloudComponent]
         });
         taskDetails.status = TASK_ASSIGNED_STATE;
         taskDetails.permissions = [TASK_VIEW_PERMISSION];
@@ -421,6 +424,26 @@ describe('TaskFormCloudComponent', () => {
             fixture.detectChanges();
             expect(component.onTaskLoaded.emit).toHaveBeenCalledWith(taskDetails);
         });
+
+        it('should emit displayModeOn when display mode is turned on', async () => {
+            spyOn(component.displayModeOn, 'emit').and.stub();
+
+            component.onDisplayModeOn(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.displayModeOn.emit).toHaveBeenCalledWith(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+        });
+
+        it('should emit displayModeOff when display mode is turned on', async () => {
+            spyOn(component.displayModeOff, 'emit').and.stub();
+
+            component.onDisplayModeOff(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.displayModeOff.emit).toHaveBeenCalledWith(DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0]);
+        });
     });
 
     it('should display task name as title on no form template if showTitle is true', () => {
@@ -451,5 +474,19 @@ describe('TaskFormCloudComponent', () => {
         const noFormTemplateTitle = debugElement.query(By.css('.adf-form-title'));
 
         expect(noFormTemplateTitle).toBeNull();
+    });
+
+    it('should call children cloud task form change display mode when changing the display mode', () => {
+        const displayMode = 'displayMode';
+        component.taskDetails = { ...taskDetails, formKey: 'some-form' };
+
+        fixture.detectChanges();
+
+        expect(component.adfCloudForm).toBeDefined();
+        const switchToDisplayModeSpy = spyOn(component.adfCloudForm, 'switchToDisplayMode');
+
+        component.switchToDisplayMode(displayMode);
+
+        expect(switchToDisplayModeSpy).toHaveBeenCalledOnceWith(displayMode);
     });
 });

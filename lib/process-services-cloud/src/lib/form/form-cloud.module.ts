@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, ToolbarModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -41,6 +41,7 @@ import { FilePropertiesTableCloudComponent } from './components/widgets/attach-f
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
 import { RichTextEditorModule } from '../rich-text-editor';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
     imports: [
@@ -55,7 +56,9 @@ import { RichTextEditorModule } from '../rich-text-editor';
         ContentMetadataModule,
         UploadModule,
         AlfrescoViewerModule,
-        RichTextEditorModule
+        RichTextEditorModule,
+        ToolbarModule,
+        A11yModule
     ],
     declarations: [
         FormCloudComponent,
