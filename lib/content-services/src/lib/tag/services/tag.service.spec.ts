@@ -349,7 +349,7 @@ describe('TagService', () => {
 
             it('should call get on AppConfigService with correct parameters', () => {
                 service.areTagsEnabled();
-                expect(getSpy).toHaveBeenCalledWith('plugins.tags', true);
+                expect(getSpy).toHaveBeenCalledWith('plugins.tagsEnabled', true);
             });
 
             it('should return true if get from AppConfigService returns true', () => {
