@@ -257,8 +257,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                 filter(
                     (node) =>
                         node &&
-                        node.id === this.nodeId
-                        && this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node)
+                        node.id === this.nodeId &&
+                        this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node)
                 ),
                 takeUntil(this.onDestroy$)
             )

@@ -132,7 +132,7 @@ describe('Test Img viewer component ', () => {
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
-        it('If  url is passed should not thrown an error', () => {
+        it('If url is passed should not thrown an error', () => {
             component.urlFile = 'fake-url';
             expect(() => {
                 component.ngOnChanges(null);
@@ -146,14 +146,12 @@ describe('Test Img viewer component ', () => {
         });
 
         it('should call replace on cropper with new url if blobFile is null', () => {
-            component.fileName = 'fake-name';
             component.urlFile = 'fake-url';
             spyOn(component.cropper, 'replace').and.stub();
-            const fileName = new SimpleChange('val', 'val2', false);
             const urlFile = new SimpleChange('fake-url', 'fake-url-2', false);
 
             fixture.detectChanges();
-            component.ngOnChanges({ fileName, urlFile });
+            component.ngOnChanges({ urlFile });
 
             expect(component.cropper.replace).toHaveBeenCalledWith('fake-url-2');
         });
