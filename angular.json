@@ -320,6 +320,26 @@
       "prefix": "adf",
       "architect": {
         "build": {
+          "builder": "nx:run-commands",
+          "options": {
+            "commands": [
+              "ng run core:build-lib",
+              "ng run core:build-schematics"
+            ],
+            "parallel": false
+          }
+        },
+        "build-schematics": {
+          "builder": "nx:run-commands",
+          "options": {
+            "commands": [
+              "npx tsc -p lib/core/tsconfig.schematics.json",
+              "cp lib/core/schematics/migrations/collection.json dist/libs/core/schematics/migrations/collection.json"
+            ],
+            "parallel": false
+          }
+        },
+        "build-lib": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/core/tsconfig.lib.json",
