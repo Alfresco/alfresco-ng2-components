@@ -350,7 +350,7 @@ export class DataTableComponentPage {
     async waitTillContentLoaded(): Promise<void> {
         if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName(materialLocators.ProgressSpinner.root)), MAX_LOADING_TIME);
+            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)), MAX_LOADING_TIME);
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
