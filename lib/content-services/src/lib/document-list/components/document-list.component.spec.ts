@@ -531,6 +531,56 @@ describe('DocumentList', () => {
         expect(actions[1].disabled).toBe(false);
     });
 
+    it('should revaluate conditional disabled state for content action after cache clearing', () => {
+        documentList.actions = [
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action1',
+                disabled: (node): boolean => node.entry.name === 'custom'
+            })
+        ];
+
+        let actions = documentList.getNodeActions({ entry: { id: 1, isFile: true, name: 'xyz' } });
+
+        expect(actions.length).toBe(1);
+        expect(actions[0].disabled).toBe(false);
+
+        actions = documentList.getNodeActions({ entry: { id: 1, isFile: true, name: 'custom' } });
+
+        expect(actions.length).toBe(1);
+        expect(actions[0].disabled).toBe(false);
+
+        documentList.clearActionsCache();
+
+        actions = documentList.getNodeActions({ entry: { id: 1, isFile: true, name: 'custom' } });
+        expect(actions.length).toBe(1);
+        expect(actions[0].disabled).toBe(true);
+    });
+
+    it('should revaluate conditional visibility state for content action after cache clearing', () => {
+        documentList.actions = [
+            new ContentActionModel({
+                target: 'document',
+                title: 'Action1',
+                visible: (node): boolean => node.entry.name === 'custom'
+            })
+        ];
+
+        let actions = documentList.getNodeActions({ entry: { id: 1, isFile: true, name: 'xyz' } });
+
+        expect(actions.length).toBe(0);
+
+        actions = documentList.getNodeActions({ entry: { id: 1, isFile: true, name: 'custom' } });
+
+        expect(actions.length).toBe(0);
+
+        documentList.clearActionsCache();
+
+        actions = documentList.getNodeActions({ entry: { id: 1, isFile: true, name: 'custom' } });
+        expect(actions.length).toBe(1);
+        expect(actions[0].visible).toBe(true);
+    });
+
     it('should not disable the action if there is copy permission', () => {
         const documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
