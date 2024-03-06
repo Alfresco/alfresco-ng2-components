@@ -1738,20 +1738,20 @@ describe('Column Resizing', () => {
         });
     });
 
-    it('should display resize handle for each column by default', () => {
+    it('should display resize handle for each column, but not for the last one, by default', () => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
 
-        expect(getResizeHandlersCount()).toBe(2);
+        expect(getResizeHandlersCount()).toBe(1);
     });
 
-    it('should NOT display resize handle for the column when the column has resizable param set to false', () => {
+    it('should NOT display resize handle for the column when the column has resizable param set to false and column is not the last one', () => {
         dataTable.isResizingEnabled = true;
         dataTableSchema[0].resizable = false;
         dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
         fixture.detectChanges();
 
-        expect(getResizeHandlersCount()).toBe(1);
+        expect(getResizeHandlersCount()).toBe(0);
     });
 
     it('should display resize handle when the feature is Enabled [isResizingEnabled=true]', () => {
@@ -1885,7 +1885,7 @@ describe('Column Resizing', () => {
         fixture.detectChanges();
 
         const headerColumns: HTMLElement[] = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
-        expect(headerColumns[0].style.flex).toBe('0 1 125px');
+        expect(headerColumns[0].style.flexBasis).toBe('125px');
     }));
 
     it('should set the column header to 100px on resizing when its width goes below 100', fakeAsync(() => {
@@ -1894,7 +1894,7 @@ describe('Column Resizing', () => {
         fixture.detectChanges();
 
         const headerColumns: HTMLElement[] = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
-        expect(headerColumns[0].style.flex).toBe('0 1 100px');
+        expect(headerColumns[0].style.flexBasis).toBe('100px');
     }));
 
     it('should set the style of all the table cells under the resizing header on resizing', fakeAsync(() => {
@@ -1906,8 +1906,8 @@ describe('Column Resizing', () => {
         const firstCell: HTMLElement = tableBody.querySelector('[data-automation-id="name1"]');
         const secondCell: HTMLElement = tableBody.querySelector('[data-automation-id="name2"]');
 
-        expect(firstCell.style.flex).toBe('0 1 130px');
-        expect(secondCell.style.flex).toBe('0 1 130px');
+        expect(firstCell.style.flexBasis).toBe('130px');
+        expect(secondCell.style.flexBasis).toBe('130px');
     }));
 
     it('should set the style of all the table cells under the resizing header to 100px on resizing when its width goes below 100', fakeAsync(() => {
@@ -1919,8 +1919,8 @@ describe('Column Resizing', () => {
         const firstCell: HTMLElement = tableBody.querySelector('[data-automation-id="name1"]');
         const secondCell: HTMLElement = tableBody.querySelector('[data-automation-id="name2"]');
 
-        expect(firstCell.style.flex).toBe('0 1 100px');
-        expect(secondCell.style.flex).toBe('0 1 100px');
+        expect(firstCell.style.flexBasis).toBe('100px');
+        expect(secondCell.style.flexBasis).toBe('100px');
     }));
 
     it('should unblur the body and set the resizing to false upon resizing ends', () => {
