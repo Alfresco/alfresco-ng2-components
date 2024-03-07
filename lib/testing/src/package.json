@@ -1,8 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "entryFile": "./resources.ts",
-      "flatModuleFile": "adf-testing-resources"
-    }
-  }
-}
