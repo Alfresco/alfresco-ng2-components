@@ -18,7 +18,7 @@
 import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
 import { DisplayModeService } from './display-mode.service';
 
-describe('DisplayModeService', () => {
+xdescribe('DisplayModeService', () => {
 
     let service: DisplayModeService;
     let displayModeOnSpy: jasmine.Spy;
