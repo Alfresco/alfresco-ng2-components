@@ -65,7 +65,7 @@ export class EditTaskFilterCloudComponentPage {
     dataTable = new DataTableComponentPage( $('adf-cloud-task-list'));
 
     private expansionPanelExtended = this.rootElement.$(`${materialLocators.Expansion.panel.header.root}${materialLocators.Expanded.class}`);
-    private content = this.rootElement.$(`div.${materialLocators.Expansion.panel.content.class}[style*="visible"]`);
+    private content = this.rootElement.$(`div${materialLocators.Expansion.panel.content.class}[style*="visible"]`);
 
     async isFilterDisplayed(): Promise<boolean> {
         return BrowserVisibility.waitUntilElementIsVisible(this.filter);

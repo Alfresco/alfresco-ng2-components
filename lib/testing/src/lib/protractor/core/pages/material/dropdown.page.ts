@@ -86,11 +86,11 @@ export class DropdownPage {
     }
 
     async checkOptionIsDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText(`${materialLocators.Option.root} span.${materialLocators.Option.text.class}`, option)).first());
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText(`${materialLocators.Option.root} span${materialLocators.Option.text.class}`, option)).first());
     }
 
     async checkOptionIsNotDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText(`${materialLocators.Option.root} span.${materialLocators.Option.text.class}`, option)).first());
+        await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText(`${materialLocators.Option.root} span${materialLocators.Option.text.class}`, option)).first());
     }
 
     async selectDropdownOption(option: string): Promise<void> {

@@ -27,7 +27,7 @@ export class TabPage {
     public disabledContentNodeSelectorTabInfoIcon = TestElement.byCss('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]');
 
     async clickTabByLabel(tabLabel): Promise<void> {
-        const user = element(by.cssContainingText(materialLocators.Tab.label.content.root, tabLabel));
+        const user = element(by.cssContainingText(materialLocators.Tab.label.content.class, tabLabel));
         await BrowserActions.click(user);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.changeTabAnimation);
     }
