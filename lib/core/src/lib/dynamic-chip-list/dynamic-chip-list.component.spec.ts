@@ -83,9 +83,9 @@ describe('DynamicChipListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-0').innerHTML).toBe('test1');
-            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-1').innerHTML).toBe('test2');
-            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-2').innerHTML).toBe('test3');
+            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-0')?.innerHTML).toBe('test1');
+            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-1')?.innerHTML).toBe('test2');
+            expect(element.querySelector('#adf-dynamic-chip-list-chip-name-2')?.innerHTML).toBe('test3');
 
             expect(element.querySelector('#adf-dynamic-chip-list-delete-test1')).not.toBe(null);
             expect(element.querySelector('#adf-dynamic-chip-list-delete-test2')).not.toBe(null);
@@ -180,6 +180,10 @@ describe('DynamicChipListComponent', () => {
             component.limitChipsDisplayed = true;
             component.ngOnInit();
             element.style.maxWidth = '309px';
+        });
+
+        afterEach(() =>{
+            fixture.destroy();
         });
 
         it('should render view more button when limiting is enabled', fakeAsync(() => {
