@@ -15,15 +15,137 @@
  * limitations under the License.
  */
 
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
+import { Project, NamedImports, SourceFile, ImportSpecifier, ImportDeclaration } from 'ts-morph';
+
+const migrationData = {
+    update: {
+        value: 'AlfrescoApiService',
+        from: '@alfresco/adf-core'
+    },
+    to: {
+        value: 'AlfrescoApiService',
+        from: '@alfresco/adf-content-services'
+    }
+};
 
 /**
- * @param options schema
  * @returns Schematic rule for updating imports
  */
-export function updateAlfrescoApiImports(options: any): Rule {
+export function updateAlfrescoApiImports(): Rule {
+    const project = new Project();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return (tree: Tree, _context: SchematicContext) => {
-        console.log(options, _context);
+
+        tree.visit((filePath: string) => {
+            if (
+                !filePath.includes('/.git/') &&
+                !filePath.includes('/node_modules/') &&
+                !filePath.includes('/.angular/') &&
+                !filePath.includes('/.nxcache/') &&
+                /\.ts$/.test(filePath)
+            ) {
+                const bufferFileContent = tree.read(filePath);
+
+                if (!bufferFileContent) {
+                    throw new SchematicsException(`Could not read file: ${filePath}`);
+                }
+
+                const fileContent = bufferFileContent.toString();
+                const predictImport = fileContent.includes(migrationData.update.value);
+
+                if (predictImport) {
+                    const sourceFile = project.createSourceFile(
+                        `migration-${filePath}`,
+                        fileContent
+                    );
+
+                    const alfrescoApiImportResult = getImportedValueFromSource(
+                        sourceFile,
+                        {
+                            importedIdentifier: migrationData.update.value,
+                            from: migrationData.update.from
+                        }
+                    );
+
+                    if (alfrescoApiImportResult?.importedValue) {
+                        if (alfrescoApiImportResult.allImportedValuesCount === 1) {
+                            // There is only one import e.g. import { A } from 'A';
+                            // Therefore, we need to remove whole import statement
+                            alfrescoApiImportResult.importSource?.remove();
+                        } else {
+                            alfrescoApiImportResult.importedValue?.remove();
+                        }
+
+                        const alfrescoContentServiceImport = getSourceImport(
+                            sourceFile,
+                            migrationData.to.from
+                        );
+
+                        if (alfrescoContentServiceImport) {
+                            alfrescoContentServiceImport.addNamedImport(migrationData.to.value);
+                        } else {
+                            sourceFile.insertStatements(
+                                sourceFile.getImportDeclarations().length + 1,
+                                `import { ${migrationData.to.value} } from '${migrationData.to.from}';`
+                            );
+                        }
+
+                        tree.overwrite(filePath, sourceFile.getFullText());
+                    }
+                }
+            }
+        });
+
         return tree;
     };
 }
+
+const getSourceImport = (sourceFile: SourceFile, from: string): ImportDeclaration | undefined => {
+    const moduleImports = sourceFile.getImportDeclarations();
+
+    const importDeclaration = moduleImports.find((moduleImport) => {
+        const currentImportSource = moduleImport.getModuleSpecifierValue();
+        return currentImportSource === from;
+    });
+
+    return importDeclaration;
+};
+
+const getImportedValueFromSource = (
+    sourceFile: SourceFile,
+    searchedImport: {
+        importedIdentifier: string;
+        from: string;
+    }
+): {
+    importedValue: ImportSpecifier | undefined;
+    importSource: ImportDeclaration | undefined;
+    allImportedValuesCount: number | undefined;
+} => {
+    const importSource = getSourceImport(sourceFile, searchedImport.from);
+
+    if (!importSource) {
+        return {
+            importedValue: undefined,
+            importSource: undefined,
+            allImportedValuesCount: undefined
+        };
+    }
+
+    const importedValues = importSource?.getImportClause();
+    const namedImports = importedValues?.getNamedBindings() as NamedImports;
+    const namedImportsElements = namedImports?.getElements() ?? [];
+
+    const importedValue =
+        namedImportsElements.find(
+            (binding) => binding.getName() === searchedImport.importedIdentifier
+        );
+
+    return {
+        importedValue,
+        importSource,
+        allImportedValuesCount: namedImportsElements.length
+    };
+};
