@@ -16,12 +16,12 @@
  */
 
 import { $, by, element, Key, protractor, ElementFinder } from 'protractor';
-import { BrowserActions, BrowserVisibility, DropdownPage, TestElement, Logger } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DropdownPage, TestElement, Logger, materialLocators } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
     title = $(`div[info-drawer-title]`);
-    expandedAspect = $(`mat-expansion-panel-header[aria-expanded='true']`);
-    aspectTitle = `mat-panel-title`;
+    expandedAspect = $(`${materialLocators.Expansion.panel.header.root}[aria-expanded='true']`);
+    aspectTitle = materialLocators.Panel.title;
     name = $(`[data-automation-id='card-textitem-value-properties.cm:name']`);
     creator = $(`[data-automation-id='card-textitem-value-createdByUser.displayName']`);
     createdDate = $(`span[data-automation-id='card-dateitem-createdAt']`);
@@ -37,9 +37,9 @@ export class MetadataViewPage {
     readonlySwitch = $(`#adf-metadata-readonly`);
     multiSwitch = $(`#adf-metadata-multi`);
     defaultPropertiesSwitch = $('#adf-metadata-default-properties');
-    closeButton = element(by.cssContainingText('button.mat-button span', 'Close'));
+    closeButton = element(by.cssContainingText(`button${materialLocators.Button.class} span`, 'Close'));
     displayAspect = $(`input[data-placeholder='Display Aspect']`);
-    applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
+    applyAspect = element(by.cssContainingText(`button span${materialLocators.Button.wrapper}`, 'Apply Aspect'));
     saveMetadataButton = $(`[data-automation-id='save-metadata']`);
     saveGeneralMetadataButton = $(`[data-automation-id='save-general-info-metadata']`);
     resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
@@ -47,7 +47,7 @@ export class MetadataViewPage {
     private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
         $(`[data-automation-id="adf-metadata-group-${groupName}"]`);
     private getExpandedMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
-        $(`[data-automation-id="adf-metadata-group-${groupName}"] > mat-expansion-panel-header`);
+        $(`[data-automation-id="adf-metadata-group-${groupName}"] > ${materialLocators.Expansion.panel.header.root}`);
 
     async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
@@ -116,7 +116,7 @@ export class MetadataViewPage {
 
     async clickOnPropertiesTab(): Promise<void> {
         const propertiesTab = element(
-            by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`)
+            by.cssContainingText(`.adf-info-drawer-layout-content div${materialLocators.Tab.labels.class} div ${materialLocators.Tab.label.content.class}`, `Properties`)
         );
         await BrowserActions.click(propertiesTab);
     }
@@ -161,12 +161,12 @@ export class MetadataViewPage {
 
     async checkMetadataGroupIsExpand(groupName: string): Promise<void> {
         const group = await this.getExpandedMetadataGroupLocator(groupName);
-        await expect(await BrowserActions.getAttribute(group, 'class')).toContain('mat-expanded');
+        await expect(await BrowserActions.getAttribute(group, 'class')).toContain(materialLocators.Expanded.root);
     }
 
     async checkMetadataGroupIsNotExpand(groupName: string): Promise<void> {
         const group = await this.getExpandedMetadataGroupLocator(groupName);
-        await expect(await BrowserActions.getAttribute(group, 'class')).not.toContain('mat-expanded');
+        await expect(await BrowserActions.getAttribute(group, 'class')).not.toContain(materialLocators.Expanded.root);
     }
 
     async checkPropertyIsVisible(propertyName: string, type: string): Promise<void> {
@@ -208,7 +208,7 @@ export class MetadataViewPage {
     }
 
     async changeContentType(option: string, attempt = 0, maxAttempt = 3): Promise<boolean> {
-        const nodeType = TestElement.byCss('div[data-automation-id="header-nodeType"] .mat-select-trigger');
+        const nodeType = TestElement.byCss(`div[data-automation-id="header-nodeType"] ${materialLocators.Select.trigger}`);
         if (attempt > maxAttempt) {
             Logger.error(`content type select option not found. check acs version may be lesser than 7.0.0`);
             return false;

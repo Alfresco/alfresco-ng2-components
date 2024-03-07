@@ -18,19 +18,20 @@
 import { FormFields } from '../form-fields';
 import { BrowserActions } from '../../../utils/public-api';
 import { $$, $ } from 'protractor';
+import { materialLocators } from '../../public-api';
 
 export class CheckboxWidgetPage {
 
     formFields = new FormFields();
-    checkboxLabel = $('span[class*="mat-checkbox-label"]');
-    checkboxLocator = ('mat-checkbox');
+    checkboxLabel = $(`span[class*="${materialLocators.Checkbox.label.root}"]`);
+    checkboxLocator = materialLocators.Checkbox.root;
 
     getCheckboxLabel(): Promise<string> {
         return BrowserActions.getText(this.checkboxLabel);
     }
 
     async clickCheckboxInput(fieldId: string): Promise<void> {
-        const checkboxInput = $$(`mat-checkbox[id="${fieldId}"] span`).first();
+        const checkboxInput = $$(`${this.checkboxLocator}[id="${fieldId}"] span`).first();
         await BrowserActions.click(checkboxInput);
     }
 
@@ -45,6 +46,6 @@ export class CheckboxWidgetPage {
     async isCheckboxChecked(fieldId: string): Promise<boolean> {
         const checkboxWidget = await (await this.formFields.getWidget(fieldId)).$(this.checkboxLocator);
         const attributeValue =  await BrowserActions.getAttribute(checkboxWidget, 'class');
-        return attributeValue.includes('mat-checkbox-checked');
+        return attributeValue.includes(materialLocators.Checkbox.checked.root);
     }
 }

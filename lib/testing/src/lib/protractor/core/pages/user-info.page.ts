@@ -18,9 +18,10 @@
 import { $, $$ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { materialLocators } from './public-api';
 
 export class UserInfoPage {
-    dialog = $$('mat-card[class*="adf-userinfo-card"]').first();
+    dialog = $$(`${materialLocators.Card.root}[class*="adf-userinfo-card"]`).first();
     userInfoSsoHeaderTitle = this.dialog.$('div[id="identity-username"]');
     userInfoSsoTitle = $('.adf-userinfo__detail-title');
     ssoEmail = $('#identity-email');

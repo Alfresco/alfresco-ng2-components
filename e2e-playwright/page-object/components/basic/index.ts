@@ -15,6 +15,4 @@
  * limitations under the License.
  */
 
-export * from './error.component';
 export * from './listbox.component';
-export * from './validation.component';

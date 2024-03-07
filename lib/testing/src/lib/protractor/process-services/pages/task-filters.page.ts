@@ -17,6 +17,7 @@
 
 import { $ } from 'protractor';
 import { FiltersPage } from './filters.page';
+import { materialLocators } from '../../public-api';
 
 export class TaskFiltersPage {
     defaultTaskFilters = {
@@ -32,7 +33,7 @@ export class TaskFiltersPage {
     queuedTask = $('[data-automation-id="Queued Tasks_filter"]');
     completedTask = $('[data-automation-id="Completed Tasks_filter"]');
     involvedTask = $('[data-automation-id="Involved Tasks_filter"]');
-    accordionMenu = $('.app-processes-menu mat-accordion');
+    accordionMenu = $(`.app-processes-menu ${materialLocators.Accordion.root}`);
 
     async clickMyTasksFilterButton(): Promise<void> {
         await this.filtersPage.clickFilterButton(this.myTasks);

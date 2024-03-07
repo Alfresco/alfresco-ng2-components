@@ -20,6 +20,7 @@ import { TabsPage } from './material/tabs.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by, browser, protractor, $, $$ } from 'protractor';
 import { Logger } from '../utils/logger';
+import { materialLocators } from './public-api';
 
 const MAX_LOADING_TIME = 120000;
 
@@ -48,7 +49,7 @@ export class ViewerPage {
     infoSideBar = $('#adf-right-sidebar');
     viewer = $('adf-viewer');
     imgViewer = $('adf-img-viewer');
-    activeTab = $('div[class*="mat-tab-label-active"]');
+    activeTab = $(`div[class*="${materialLocators.Tab.label.active.root}"]`);
     toolbar = $('#adf-viewer-toolbar');
     canvasLayer = $$('.canvasWrapper > canvas').first();
 
@@ -68,12 +69,12 @@ export class ViewerPage {
 
         if (await this.isSpinnerPresent()) {
             Logger.log('wait spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
+            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName(materialLocators.Progress.spinner.root)), MAX_LOADING_TIME);
         } else {
             try {
                 Logger.log('wait spinner is present');
-                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-spinner')));
-                await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
+                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName(materialLocators.Progress.spinner.root)));
+                await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName(materialLocators.Progress.spinner.root)), MAX_LOADING_TIME);
             } catch (error) {}
         }
     }
@@ -252,8 +253,9 @@ export class ViewerPage {
     }
 
     async checkTabIsActive(tabName: string): Promise<void> {
+        const materialLocatorPart = `div${materialLocators.Tab.labels.class} div${materialLocators.Tab.label.active.class} ${materialLocators.Tab.label.content.class}`;
         const tab = element(
-            by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName)
+            by.cssContainingText(`.adf-info-drawer-layout-content ${materialLocatorPart}`, tabName)
         );
         await BrowserVisibility.waitUntilElementIsVisible(tab);
     }
@@ -335,7 +337,7 @@ export class ViewerPage {
         let isSpinnerPresent;
 
         try {
-            isSpinnerPresent = await element(by.tagName('mat-progress-spinner')).isDisplayed();
+            isSpinnerPresent = await element(by.tagName(materialLocators.Progress.spinner.root)).isDisplayed();
         } catch (error) {
             isSpinnerPresent = false;
         }
