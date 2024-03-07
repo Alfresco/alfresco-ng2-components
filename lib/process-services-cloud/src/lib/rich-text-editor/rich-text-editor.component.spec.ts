@@ -18,9 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { RichTextEditorComponent } from './rich-text-editor.component';
-import { take } from 'rxjs';
 
 describe('RichTextEditorComponent', () => {
     let component: RichTextEditorComponent;
