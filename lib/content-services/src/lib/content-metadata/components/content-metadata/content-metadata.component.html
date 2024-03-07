@@ -56,18 +56,26 @@
         </adf-card-view>
     </mat-expansion-panel>
 
-  <ng-container *ngIf="displayTags">
-        <mat-expansion-panel hideToggle [(expanded)]="isTagPanelExpanded" class="adf-content-metadata-panel">
-            <mat-expansion-panel-header class="adf-metadata-properties-header"
-                                        [class.adf-metadata-properties-header-expanded]='isTagPanelExpanded'>
-                <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="isTagPanelExpanded">
-                    <button *ngIf="canEditTags"
-                            mat-icon-button
-                            (click)="onToggleTagsEdit($event)"
-                            [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                            data-automation-id="showing-tag-input-button"
-                            class="adf-edit-icon-buttons">
+    <ng-container *ngIf="displayTags">
+        <mat-expansion-panel
+            hideToggle
+            [expanded]="currentPanel.panelTitle === DefaultPanels.TAGS && currentPanel.expanded"
+            (opened)="expandPanel(DefaultPanels.TAGS)"
+            (closed)="closePanel(DefaultPanels.TAGS)"
+            class="adf-content-metadata-panel"
+            data-automation-id="adf-content-metadata-tags-panel">
+            <mat-expansion-panel-header
+                class="adf-metadata-properties-header"
+                [class.adf-metadata-properties-header-expanded]="currentPanel.panelTitle === DefaultPanels.TAGS && currentPanel.expanded">
+                <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="currentPanel.panelTitle === DefaultPanels.TAGS && currentPanel.expanded">
+                    <button
+                        *ngIf="!readOnly && !isPanelEditing(DefaultPanels.TAGS)"
+                        mat-icon-button
+                        (click)="toggleGroupEditing(DefaultPanels.TAGS, $event)"
+                        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                        [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                        data-automation-id="showing-tag-input-button"
+                        class="adf-edit-icon-buttons">
                         <mat-icon>mode_edit</mat-icon>
                     </button>
                     <div *ngIf="isPanelEditing(DefaultPanels.TAGS)" class="adf-metadata-action-buttons">
