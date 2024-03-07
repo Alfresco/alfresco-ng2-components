@@ -36,12 +36,13 @@ import {
     TagsCreatorMode,
     TagService
 } from '@alfresco/adf-content-services';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -285,15 +286,11 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should save changedProperties on save click', fakeAsync(() => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
-                of([
-                    {
-                        editable: true,
-                        title: 'test',
-                        properties: []
-                    }
-                ])
-            );
+            getGroupedPropertiesSpy.and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             updateService.itemUpdated$.next({
                 changed: {}
             } as UpdateNotification);
@@ -474,15 +471,11 @@ describe('ContentMetadataComponent', () => {
 
         beforeEach(() => {
             showErrorSpy = spyOn(notificationService, 'showError').and.stub();
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
-                of([
-                    {
-                        editable: true,
-                        title: 'test',
-                        properties: []
-                    }
-                ])
-            );
+            getGroupedPropertiesSpy.and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             component.displayCategories = true;
             component.displayTags = true;
             component.ngOnInit();
@@ -630,15 +623,11 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reset group edit ability on reset click', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
-                of([
-                    {
-                        editable: true,
-                        title: 'test',
-                        properties: []
-                    }
-                ])
-            );
+            getGroupedPropertiesSpy.and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             component.ngOnInit();
             component.readOnly = false;
             fixture.detectChanges();
@@ -702,6 +691,8 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should load the group properties on node change', () => {
+            getGroupedPropertiesSpy.and.stub();
+
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
@@ -724,6 +715,7 @@ describe('ContentMetadataComponent', () => {
                 }
             ];
             component.preset = presetConfig;
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -794,15 +786,11 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reload properties for group panel on cancel', () => {
-            const getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
-                of([
-                    {
-                        editable: true,
-                        title: 'test',
-                        properties: []
-                    }
-                ])
-            );
+            getGroupedPropertiesSpy.and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             component.readOnly = false;
             fixture.detectChanges();
