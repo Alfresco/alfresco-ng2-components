@@ -21,7 +21,10 @@
     "baseUrl": ".",
     "typeRoots": ["node_modules/@types"],
     "types": ["node"],
-    "paths": {}
+    "paths": {
+      "@alfresco/js-api": ["../../dist/libs/js-api"],
+      "@alfresco/js-api/*": ["../../dist/libs/js-api/*"]
+    }
   },
   "exclude": ["dist/**/*", "./build.ts", "node_modules"]
 }
