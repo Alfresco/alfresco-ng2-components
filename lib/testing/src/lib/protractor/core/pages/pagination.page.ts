@@ -19,6 +19,7 @@ import { by, element, browser, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { Logger } from '../utils/logger';
+import { materialLocators } from './public-api';
 
 export class PaginationPage {
 
@@ -26,7 +27,7 @@ export class PaginationPage {
     pageSelectorArrow = $('button[data-automation-id="page-selector"]');
     itemsPerPage = $('.adf-pagination__max-items');
     itemsPerPageOpenDropdown = $('.adf-pagination__perpage-block button');
-    itemsPerPageOptions = $$('.adf-pagination__page-selector .mat-menu-item');
+    itemsPerPageOptions = $$(`.adf-pagination__page-selector ${materialLocators.Menu.item.class}`);
     currentPage = $('.adf-pagination__current-page');
     totalPages = $('.adf-pagination__total-pages');
     paginationRange = $('.adf-pagination__range');
@@ -34,7 +35,7 @@ export class PaginationPage {
     nextButtonDisabled = $('button[class*="adf-pagination__next-button"][disabled]');
     previousButtonDisabled = $('button[class*="adf-pagination__previous-button"][disabled]');
     pageDropDown = $('div[class*="adf-pagination__actualinfo-block"] button');
-    pageDropDownOptions = $$('div[class*="mat-menu-content"] button');
+    pageDropDownOptions = $$(`div[class*="${materialLocators.Menu.content.root}"] button`);
     paginationSection = $('adf-pagination');
     paginationSectionEmpty = $('adf-pagination[class*="adf-pagination__empty"]');
     totalFiles = $('.adf-pagination__range');
@@ -42,7 +43,7 @@ export class PaginationPage {
     async selectItemsPerPage(numberOfItem: string): Promise<void> {
         await BrowserActions.clickExecuteScript(`div[class*="adf-pagination__perpage-block"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
-        const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
+        const itemsPerPage = element.all(by.cssContainingText(materialLocators.Menu.item.class, numberOfItem)).first();
         await BrowserVisibility.waitUntilElementIsPresent(itemsPerPage);
         await BrowserActions.click(itemsPerPage);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.pageSelectorDropDown);
@@ -94,7 +95,7 @@ export class PaginationPage {
 
     async clickOnPageDropdownOption(numberOfItemPerPage: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageDropDownOptions.first());
-        const option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
+        const option = element(by.cssContainingText(`div[class*="${materialLocators.Menu.content.root}"] button`, numberOfItemPerPage));
         await BrowserActions.click(option);
     }
 

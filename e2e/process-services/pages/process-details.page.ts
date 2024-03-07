@@ -16,11 +16,11 @@
  */
 
 import { protractor } from 'protractor';
-import { ProcessInstanceHeaderPage, TestElement } from '@alfresco/adf-testing';
+import { ProcessInstanceHeaderPage, TestElement, materialLocators } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
     processInstanceHeaderPage = new ProcessInstanceHeaderPage();
-    processTitle = TestElement.byCss('.mat-card-title');
+    processTitle = TestElement.byCss(materialLocators.Card.title.class);
     processDetailsMessage = TestElement.byCss('adf-process-instance-details div');
     showDiagramButtonDisabled = TestElement.byCss('button[id="show-diagram-button"][disabled]');
     propertiesList = TestElement.byCss('.adf-property-list');

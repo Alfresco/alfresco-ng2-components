@@ -23,6 +23,7 @@ import { DataTableComponentPage } from '../../core/pages/data-table-component.pa
 import { PeopleCloudComponentPage } from './people-cloud-component.page';
 import { GroupCloudComponentPage } from './group-cloud-component.page';
 import { DatePickerPage } from '../../core/pages/material/date-picker.page';
+import { materialLocators } from '../../public-api';
 
 export type StatusType = 'All' | 'Created' | 'Assigned' | 'Cancelled' | 'Suspended' | 'Completed';
 
@@ -43,28 +44,28 @@ export class EditTaskFilterCloudComponentPage {
     saveButton = $('[data-automation-id="adf-filter-action-save"]');
     saveAsButton = $('[data-automation-id="adf-filter-action-saveAs"]');
     deleteButton = $('[data-automation-id="adf-filter-action-delete"]');
-    filter = $(`adf-cloud-edit-task-filter mat-expansion-panel-header`);
+    filter = $(`adf-cloud-edit-task-filter ${materialLocators.Expansion.panel.header.root}`);
 
-    appNameDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`));
-    statusDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`));
-    sortDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-sort']`));
+    appNameDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-task-property-appName']`));
+    statusDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-task-property-status']`));
+    sortDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-task-property-sort']`));
     priorityDropdown = new DropdownPage(this.priority);
-    orderDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-task-property-order']`));
-    completedDateDropdown = new DropdownPage($(`mat-select[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
+    orderDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-task-property-order']`));
+    completedDateDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
     assignmentDropdown = new DropdownPage($(`.adf-task-assignment-filter`));
-    processDefinitionNameDropdown = new DropdownPage($('mat-select[data-automation-id="adf-cloud-edit-task-property-processDefinitionName"]'));
-    createdDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-createdDateRange']`));
-    createdDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-createdDateRange']`));
-    dueDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-dueDateRange']`));
-    dueDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-picker-date-range-dueDateRange']`));
+    processDefinitionNameDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id="adf-cloud-edit-task-property-processDefinitionName"]`));
+    createdDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-createdDateRange']`));
+    createdDateRangeWithin = new DatePickerPage($(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-process-property-date-range-createdDateRange']`));
+    dueDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-dueDateRange']`));
+    dueDateRangeWithin = new DatePickerPage($(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-picker-date-range-dueDateRange']`));
 
     peopleCloudComponent = new PeopleCloudComponentPage();
     groupCloudComponent = new GroupCloudComponentPage();
 
     dataTable = new DataTableComponentPage( $('adf-cloud-task-list'));
 
-    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
-    private content = this.rootElement.$('div.mat-expansion-panel-content[style*="visible"]');
+    private expansionPanelExtended = this.rootElement.$(`${materialLocators.Expansion.panel.header.root}${materialLocators.Expanded.class}`);
+    private content = this.rootElement.$(`div${materialLocators.Expansion.panel.content.class}[style*="visible"]`);
 
     async isFilterDisplayed(): Promise<boolean> {
         return BrowserVisibility.waitUntilElementIsVisible(this.filter);
