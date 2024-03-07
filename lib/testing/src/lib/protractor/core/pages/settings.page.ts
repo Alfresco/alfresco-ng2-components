@@ -59,7 +59,7 @@ export class SettingsPage {
         await BrowserActions.click(this.ssoRadioButton);
     }
 
-    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout', codeFlow = true) {
+    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout') {
         await this.goToSettingsPage();
         await this.setProvider('ECM');
         await this.clickSsoRadioButton();
@@ -68,7 +68,6 @@ export class SettingsPage {
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
-        await this.setCodeFlow(codeFlow);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
@@ -101,32 +100,22 @@ export class SettingsPage {
     }
 
     async setSilentLogin(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
         const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes(materialLocators.Checked.root);
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            await BrowserActions.click(this.silentLoginToggleButton);
+            await BrowserActions.click(this.silentLoginToggleLabel);
         }
     }
 
     async setImplicitFlow(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
 
         const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes(materialLocators.Checked.root);
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            await BrowserActions.click(this.implicitFlowButton);
-        }
-    }
-
-    async setCodeFlow(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.codeFlowButton);
-
-        const isChecked = (await BrowserActions.getAttribute(this.codeFlowButton, 'aria-checked')) === 'true';
-
-        if (isChecked && !enableToggle || !isChecked && enableToggle) {
-            await BrowserActions.click(this.codeFlowButton);
+            await BrowserActions.click(this.implicitFlowLabel);
         }
     }
 }
