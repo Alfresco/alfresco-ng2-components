@@ -262,7 +262,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         }
 
         if (urlFile?.currentValue) {
-            this.fileName = this.fileName ? this.fileName : this.viewUtilsService.getFilenameFromUrl(urlFile.currentValue);
+            this.fileName ||= this.viewUtilsService.getFilenameFromUrl(urlFile.currentValue);
         }
     }
 

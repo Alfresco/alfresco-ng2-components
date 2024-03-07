@@ -258,7 +258,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                     (node) =>
                         node &&
                         node.id === this.nodeId &&
-                        (node.name !== this.fileName || this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node))
+                        this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node)
                 ),
                 takeUntil(this.onDestroy$)
             )
@@ -323,9 +323,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             : encodeURI('1.0');
 
         urlFileContent = versionData ? this.contentApi.getVersionContentUrl(this.nodeId, versionData.id) : this.contentApi.getContentUrl(this.nodeId);
-        urlFileContent = this.cacheBusterNumber
-            ? urlFileContent + '&' + currentFileVersion + '&' + this.cacheBusterNumber
-            : urlFileContent + '&' + currentFileVersion;
+        urlFileContent = urlFileContent + '&' + currentFileVersion;
 
         const fileExtension = this.viewUtilService.getFileExtension(versionData ? versionData.name : nodeData.name);
         this.fileName = versionData ? versionData.name : nodeData.name;
@@ -348,7 +346,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.mimeType = mimeType;
-        this.urlFileContent = urlFileContent;
+        this.urlFileContent = urlFileContent + (this.cacheBusterNumber ? '&' + this.cacheBusterNumber : '');
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;
     }
