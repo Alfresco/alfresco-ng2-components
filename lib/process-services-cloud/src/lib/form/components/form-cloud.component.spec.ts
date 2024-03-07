@@ -27,7 +27,11 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel, FormRenderingService, FormService,
-    UploadWidgetContentLinkModel, WidgetVisibilityService, provideTranslations, AuthModule, FormFieldEvent
+    UploadWidgetContentLinkModel,
+    WidgetVisibilityService,
+    provideTranslations,
+    AuthModule,
+    FormFieldEvent
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -41,7 +45,6 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, of, throwError } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudModule } from '../form-cloud.module';
 import {
     cloudFormMock,
@@ -60,7 +63,7 @@ import { ProcessServicesCloudModule } from '../../process-services-cloud.module'
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
-import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
