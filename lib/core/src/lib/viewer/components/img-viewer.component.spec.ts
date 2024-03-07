@@ -125,40 +125,38 @@ describe('Test Img viewer component ', () => {
             fixture.detectChanges();
         });
 
-        it('If no url or blob are passed should thrown an error', () => {
+        it('should thrown an error if no url or blob are passed', () => {
             const change = new SimpleChange(null, null, true);
             expect(() => {
                 component.ngOnChanges({ blobFile: change, urlFile: change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
-        it('If  url is passed should not thrown an error', () => {
+        it('should not thrown an error if url is passed ', () => {
             component.urlFile = 'fake-url';
             expect(() => {
                 component.ngOnChanges(null);
             }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
-        it('The file Name should be present in the alt attribute', () => {
+        it('should present file name in the alt attribute', () => {
             component.fileName = 'fake-name';
             fixture.detectChanges();
             expect(element.querySelector('#viewer-image').getAttribute('alt')).toEqual('fake-name');
         });
 
         it('should call replace on cropper with new url if blobFile is null', () => {
-            component.fileName = 'fake-name';
             component.urlFile = 'fake-url';
             spyOn(component.cropper, 'replace').and.stub();
-            const fileName = new SimpleChange('val', 'val2', false);
             const urlFile = new SimpleChange('fake-url', 'fake-url-2', false);
 
             fixture.detectChanges();
-            component.ngOnChanges({ fileName, urlFile });
+            component.ngOnChanges({ urlFile });
 
             expect(component.cropper.replace).toHaveBeenCalledWith('fake-url-2');
         });
 
-        it('If blob is passed should not thrown an error', () => {
+        it('should not thrown an error if blob is passed ', () => {
             const blob = createFakeBlob();
 
             spyOn(urlService, 'createTrustedUrl').and.returnValue('fake-blob-url');
