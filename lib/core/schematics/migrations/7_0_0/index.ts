@@ -18,16 +18,43 @@
 import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { Project, NamedImports, SourceFile, ImportSpecifier, ImportDeclaration } from 'ts-morph';
 
-const migrationData = {
-    update: {
-        value: 'AlfrescoApiService',
-        from: '@alfresco/adf-core'
+interface MigrationData {
+    change: {
+        importedValue: string;
+        importSource: string;
+    };
+    to: {
+        importedValue: string;
+        importSource: string;
+    };
+}
+
+const alfrescoApiServiceMigration: MigrationData = {
+    change: {
+        importedValue: 'AlfrescoApiService',
+        importSource: '@alfresco/adf-core'
     },
     to: {
-        value: 'AlfrescoApiService',
-        from: '@alfresco/adf-content-services'
+        importedValue: 'AlfrescoApiService',
+        importSource: '@alfresco/adf-content-services'
     }
 };
+
+const alfrescoApiMockMigration: MigrationData = {
+    change: {
+        importedValue: 'AlfrescoApiServiceMock',
+        importSource: '@alfresco/adf-core'
+    },
+    to: {
+        importedValue: 'AlfrescoApiServiceMock',
+        importSource: '@alfresco/adf-content-services'
+    }
+};
+
+const migrations: MigrationData[] = [
+    alfrescoApiServiceMigration,
+    alfrescoApiMockMigration
+];
 
 /**
  * @returns Schematic rule for updating imports
@@ -52,55 +79,79 @@ export function updateAlfrescoApiImports(): Rule {
                     throw new SchematicsException(`Could not read file: ${filePath}`);
                 }
 
-                const fileContent = bufferFileContent.toString();
-                const predictImport = fileContent.includes(migrationData.update.value);
-
-                if (predictImport) {
-                    const sourceFile = project.createSourceFile(
-                        `migration-${filePath}`,
-                        fileContent
+                migrations.forEach((migrationData) => {
+                    const fileWithUpdatedImport = moveImport(
+                        filePath,
+                        bufferFileContent,
+                        project,
+                        migrationData
                     );
 
-                    const alfrescoApiImportResult = getImportedValueFromSource(
-                        sourceFile,
-                        {
-                            importedIdentifier: migrationData.update.value,
-                            from: migrationData.update.from
-                        }
-                    );
-
-                    if (alfrescoApiImportResult?.importedValue) {
-                        if (alfrescoApiImportResult.allImportedValuesCount === 1) {
-                            // There is only one import e.g. import { A } from 'A';
-                            // Therefore, we need to remove whole import statement
-                            alfrescoApiImportResult.importSource?.remove();
-                        } else {
-                            alfrescoApiImportResult.importedValue?.remove();
-                        }
-
-                        const alfrescoContentServiceImport = getSourceImport(
-                            sourceFile,
-                            migrationData.to.from
-                        );
-
-                        if (alfrescoContentServiceImport) {
-                            alfrescoContentServiceImport.addNamedImport(migrationData.to.value);
-                        } else {
-                            sourceFile.insertStatements(
-                                sourceFile.getImportDeclarations().length + 1,
-                                `import { ${migrationData.to.value} } from '${migrationData.to.from}';`
-                            );
-                        }
-
-                        tree.overwrite(filePath, sourceFile.getFullText());
+                    if (fileWithUpdatedImport) {
+                        tree.overwrite(filePath, fileWithUpdatedImport);
                     }
-                }
+                });
             }
         });
 
         return tree;
     };
 }
+
+const moveImport = (
+    filePath: string,
+    bufferFileContent: Buffer,
+    project: Project,
+    migrationData: MigrationData
+): string | undefined => {
+    const fileContent = bufferFileContent.toString();
+    const predictImport = fileContent.includes(migrationData.change.importedValue);
+
+    if (predictImport) {
+        const sourceFile =
+            project.getSourceFile(`migration-${filePath}`) ??
+            project.createSourceFile(
+                `migration-${filePath}`,
+                fileContent
+            );
+
+        const alfrescoApiImportResult = getImportedValueFromSource(
+            sourceFile,
+            {
+                importedIdentifier: migrationData.change.importedValue,
+                from: migrationData.change.importSource
+            }
+        );
+
+        if (alfrescoApiImportResult?.importedValue) {
+            if (alfrescoApiImportResult.allImportedValuesCount === 1) {
+                // There is only one import e.g. import { A } from 'A';
+                // Therefore, we need to remove whole import statement
+                alfrescoApiImportResult.importSource?.remove();
+            } else {
+                alfrescoApiImportResult.importedValue?.remove();
+            }
+
+            const alfrescoContentServiceImport = getSourceImport(
+                sourceFile,
+                migrationData.to.importSource
+            );
+
+            if (alfrescoContentServiceImport) {
+                alfrescoContentServiceImport.addNamedImport(migrationData.to.importedValue);
+            } else {
+                sourceFile.insertStatements(
+                    sourceFile.getImportDeclarations().length + 1,
+                    `import { ${migrationData.to.importedValue} } from '${migrationData.to.importSource}';`
+                );
+            }
+
+            return sourceFile.getFullText();
+        }
+    }
+
+    return undefined;
+};
 
 const getSourceImport = (sourceFile: SourceFile, from: string): ImportDeclaration | undefined => {
     const moduleImports = sourceFile.getImportDeclarations();
