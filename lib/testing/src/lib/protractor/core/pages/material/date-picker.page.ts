@@ -18,6 +18,7 @@
 import { $, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { DatePickerCalendarPage } from './date-picker-calendar.page';
+import { materialLocators } from './material-locators';
 
 export class DatePickerPage {
 
@@ -25,7 +26,7 @@ export class DatePickerPage {
     dateTime = new DatePickerCalendarPage();
 
     constructor(datePickerElement?: ElementFinder) {
-        const locator = $('.mat-datepicker-toggle');
+        const locator = $(materialLocators.Datepicker.toggle.class);
         this.datePicker = datePickerElement ? datePickerElement : locator;
     }
 

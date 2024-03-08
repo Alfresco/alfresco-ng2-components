@@ -16,7 +16,7 @@
  */
 
 import { element, by, Key, ElementFinder, $ } from 'protractor';
-import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, DropdownPage, materialLocators } from '@alfresco/adf-testing';
 
 export class StartTaskDialogPage {
 
@@ -28,7 +28,7 @@ export class StartTaskDialogPage {
     startButtonEnabled = $('button[id="button-start"]:not(disabled)');
     cancelButton = $('button[id="button-cancel"]');
 
-    selectFormDropdown = new DropdownPage($('mat-select[id="form_id"]'));
+    selectFormDropdown = new DropdownPage($(`${materialLocators.Select.root}[id="form_id"]`));
     selectAssigneeDropdown = new DropdownPage();
 
     async addName(userName: string): Promise<void> {
@@ -86,7 +86,7 @@ export class StartTaskDialogPage {
         await locator.sendKeys(Key.TAB);
     }
 
-    async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {
+    async checkValidationErrorIsDisplayed(error: string, elementRef = materialLocators.Error.root): Promise<void> {
         const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }

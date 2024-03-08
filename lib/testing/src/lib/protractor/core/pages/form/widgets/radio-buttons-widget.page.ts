@@ -18,10 +18,11 @@
 import { FormFields } from '../form-fields';
 import { $$, by, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { materialLocators } from '../../public-api';
 
 export class RadioButtonsWidgetPage {
 
-    selectedOption: Locator = by.css('mat-radio-button[ng-pristine]');
+    selectedOption: Locator = by.css(`${materialLocators.Radio.button.root}[ng-pristine]`);
 
     formFields: FormFields = new FormFields();
 

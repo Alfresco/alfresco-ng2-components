@@ -18,11 +18,12 @@
 import { ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { materialLocators } from '../../public-api';
 
 export class TaskFiltersCloudComponentPage {
 
     filter: ElementFinder;
-    taskFilters = $(`mat-expansion-panel[data-automation-id='Task Filters']`);
+    taskFilters = $(`${materialLocators.Expansion.panel.root}[data-automation-id='Task Filters']`);
     activeFilter = $('.adf-active [data-automation-id="adf-filter-label"]');
 
     getTaskFilterLocatorByFilterName = async (filterName: string): Promise<ElementFinder> => $$(`button[data-automation-id="${filterName}_filter"]`).first();

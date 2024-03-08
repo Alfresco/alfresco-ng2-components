@@ -19,6 +19,7 @@ import { $, browser, by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { materialLocators } from './public-api';
 
 export class SettingsPage {
     settingsURL: string = browser.baseUrl + '/settings';
@@ -27,13 +28,13 @@ export class SettingsPage {
     authHostText = $('input[id="oauthHost"]');
     logoutUrlText = $('input[id="logout-url"]');
     identityHostText = $('input[id="identityHost"]');
-    ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
-    silentLoginToggleLabel = $('mat-slide-toggle[formcontrolname="silentLogin"] label');
-    silentLoginToggleElement = $('mat-slide-toggle[formcontrolname="silentLogin"]');
-    implicitFlowLabel = $('mat-slide-toggle[formcontrolname="implicitFlow"] label');
-    implicitFlowElement = $('mat-slide-toggle[formcontrolname="implicitFlow"]');
+    ssoRadioButton = element(by.cssContainingText(`[id*="${materialLocators.Radio.root}"]`, 'SSO'));
+    silentLoginToggleLabel = $(`${materialLocators.Slide.toggle.root}[formcontrolname="silentLogin"] label`);
+    silentLoginToggleElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="silentLogin"]`);
+    implicitFlowLabel = $(`${materialLocators.Slide.toggle.root}[formcontrolname="implicitFlow"] label`);
+    implicitFlowElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="implicitFlow"]`);
     applyButton = $('button[data-automation-id="settings-apply-button"]');
-    providerDropdown = new DropdownPage($('mat-select[id="adf-provider-selector"]'));
+    providerDropdown = new DropdownPage($(`${materialLocators.Select.root}[id="adf-provider-selector"]`));
 
     async goToSettingsPage(): Promise<void> {
         let currentUrl;
@@ -101,7 +102,7 @@ export class SettingsPage {
     async setSilentLogin(enableToggle) {
         await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
-        const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes('mat-checked');
+        const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes(materialLocators.Checked.root);
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
             await BrowserActions.click(this.silentLoginToggleLabel);
@@ -111,7 +112,7 @@ export class SettingsPage {
     async setImplicitFlow(enableToggle) {
         await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
 
-        const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes('mat-checked');
+        const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes(materialLocators.Checked.root);
 
         if (isChecked && !enableToggle || !isChecked && enableToggle) {
             await BrowserActions.click(this.implicitFlowLabel);

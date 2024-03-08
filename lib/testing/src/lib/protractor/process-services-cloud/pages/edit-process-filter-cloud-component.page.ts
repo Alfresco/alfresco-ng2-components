@@ -23,6 +23,7 @@ import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { PeopleCloudComponentPage } from './people-cloud-component.page';
 import { DatePickerPage } from '../../core/pages/material/date-picker.page';
 import { TestElement } from '../../core/test-element';
+import { materialLocators } from '../../public-api';
 
 export interface FilterProps {
     name?: string;
@@ -41,23 +42,23 @@ export class EditProcessFilterCloudComponentPage {
     saveButton = $('button[data-automation-id="adf-filter-action-save"]');
     saveAsButton = $('button[data-automation-id="adf-filter-action-saveAs"]');
     deleteButton = $('button[data-automation-id="adf-filter-action-delete"]');
-    filter = $(`adf-cloud-edit-process-filter mat-expansion-panel-header`);
+    filter = $(`adf-cloud-edit-process-filter ${materialLocators.Expansion.panel.header.root}`);
 
-    appNameDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`));
-    statusDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`));
-    sortDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-sort']`));
-    orderDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-order']`));
-    processDefinitionNameDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
-    suspendedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`));
-    startedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`));
-    completedDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`));
-    suspendedDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`));
+    appNameDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-appName']`));
+    statusDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-status']`));
+    sortDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-sort']`));
+    orderDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-order']`));
+    processDefinitionNameDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
+    suspendedDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`));
+    startedDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`));
+    completedDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`));
+    suspendedDateRangeWithin = new DatePickerPage($(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`));
 
     peopleCloudComponent = new PeopleCloudComponentPage();
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
-    private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
-    private content = TestElement.byCss('adf-cloud-edit-process-filter mat-expansion-panel [style*="visible"]');
+    private expansionPanelExtended = this.rootElement.$(`${materialLocators.Expansion.panel.header.root}${materialLocators.Expanded.class}`);
+    private content = TestElement.byCss(`adf-cloud-edit-process-filter ${materialLocators.Expansion.panel.root} [style*="visible"]`);
 
     editProcessFilterDialog(): EditProcessFilterDialogPage {
         return this.editProcessFilterDialogPage;
@@ -97,7 +98,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getStateFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText($(`mat-form-field[data-automation-id='status'] span`));
+        return BrowserActions.getText($(`${materialLocators.Form.field.root}[data-automation-id='status'] span`));
     }
 
     async setSortFilterDropDown(option) {
@@ -106,7 +107,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
-        const sortLocator = $$(`mat-form-field[data-automation-id='sort'] span`).first();
+        const sortLocator = $$(`${materialLocators.Form.field.root}[data-automation-id='sort'] span`).first();
         return BrowserActions.getText(sortLocator);
     }
 
@@ -116,7 +117,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     getOrderFilterDropDownValue(): Promise<string> {
-        return BrowserActions.getText($(`mat-form-field[data-automation-id='order'] span`));
+        return BrowserActions.getText($(`${materialLocators.Form.field.root}[data-automation-id='order'] span`));
     }
 
     async setAppNameDropDown(option: string) {
@@ -153,7 +154,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     async checkAppNamesAreUnique(): Promise<boolean> {
-        const appNameList = $$('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span');
+        const appNameList = $$(`${materialLocators.Option.root}[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span`);
         const appTextList: any = await appNameList.getText();
         const uniqueArray = appTextList.filter((appName) => {
             const sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
@@ -168,7 +169,7 @@ export class EditProcessFilterCloudComponentPage {
     }
 
     isApplicationListLoaded(): Promise<boolean> {
-        const emptyList = $(`[data-automation-id='adf-cloud-edit-process-property-appName'] .mat-select-placeholder`);
+        const emptyList = $(`[data-automation-id='adf-cloud-edit-process-property-appName'] ${materialLocators.Select.placeholder.class}`);
         return BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
     }
 

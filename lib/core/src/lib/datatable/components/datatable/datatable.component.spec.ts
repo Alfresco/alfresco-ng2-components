@@ -1834,6 +1834,19 @@ describe('Column Resizing', () => {
         expect(adapter.setColumns).toHaveBeenCalledWith(columns);
     }));
 
+    it('should stop propagation on resize handler click event', () => {
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        const resizeHandle = getResizeHandler();
+        const clickEvent = new MouseEvent('click');
+        const stopPropagationSpy = spyOn(clickEvent, 'stopPropagation');
+
+        resizeHandle.dispatchEvent(clickEvent);
+
+        expect(stopPropagationSpy).toHaveBeenCalled();
+    });
+
     it('should set column widths while resizing ONLY on visible columns', fakeAsync(() => {
         const adapter = dataTable.data;
         spyOn(adapter, 'getColumns').and.returnValue([

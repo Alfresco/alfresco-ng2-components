@@ -22,18 +22,18 @@ import { FiltersPage } from './filters.page';
 import { ChecklistDialog } from './dialog/create-checklist-dialog.page';
 import { TasksListPage } from './tasks-list.page';
 import { $, by, element } from 'protractor';
-import { BrowserActions, BrowserVisibility, FormFields } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, FormFields, materialLocators } from '@alfresco/adf-testing';
 
 export class TasksPage {
     createButton = $('button[data-automation-id="create-button"');
     addChecklistButton = $('button[class*="adf-add-to-checklist-button"]');
-    rowByRowName = by.xpath('ancestor::mat-chip');
+    rowByRowName = by.xpath(`ancestor::${materialLocators.Chip.root}`);
     checklistContainer = $('div[class*="checklist-menu"]');
     taskTitle = '.adf-activiti-task-details__header span';
     completeButtonNoForm = $('#adf-no-form-complete-button');
     checklistDialog = $('#checklist-dialog');
     checklistNoMessage = $('#checklist-none-message');
-    numberOfChecklists = $('[data-automation-id="checklist-label"] mat-chip');
+    numberOfChecklists = $(`[data-automation-id="checklist-label"] ${materialLocators.Chip.root}`);
 
     async createNewTask(): Promise<StartTaskDialogPage> {
         await this.clickOnCreateButton();
@@ -132,13 +132,13 @@ export class TasksPage {
     async removeChecklists(name: string): Promise<void> {
         const elem = this.getRowsName(name);
         const row = elem.element(this.rowByRowName);
-        await BrowserActions.click(row.$('mat-icon'));
+        await BrowserActions.click(row.$(materialLocators.Icon.root));
     }
 
     async checkChecklistsRemoveButtonIsNotDisplayed(name: string): Promise<void> {
         const elem = this.getRowsName(name);
         const row = elem.element(this.rowByRowName);
-        await BrowserVisibility.waitUntilElementIsNotVisible(row.$('mat-icon'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(row.$(materialLocators.Icon.root));
     }
 
     async clickSortByNameAsc(): Promise<any> {

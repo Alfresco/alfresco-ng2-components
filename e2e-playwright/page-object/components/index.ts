@@ -15,5 +15,6 @@
  * limitations under the License.
  */
 
+export * from './material';
 export * from './basic';
 export * from './base.component';

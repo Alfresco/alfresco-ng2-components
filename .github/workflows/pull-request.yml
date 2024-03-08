@@ -11,7 +11,7 @@ on:
       devel:
         description: 'devel'
         required: false
-        type: string
+        type: boolean
         default: false
       cron-run:
         description: 'disables jobs which should not run when cron runs e2es'
@@ -121,10 +121,10 @@ jobs:
          fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@469ed8f7c8198c4f8476392d944b2568e4043c5a # v5.13.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@2eaedaf6e9f5c28366cbeea22c371cdce6c9c7b3 # v5.17.0
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@469ed8f7c8198c4f8476392d944b2568e4043c5a # v5.13.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@2eaedaf6e9f5c28366cbeea22c371cdce6c9c7b3 # v5.17.0
 
       - name: ci:force flag parser
         shell: bash
@@ -206,6 +206,7 @@ jobs:
       - name: install
         run: |
           npm ci
+          npx nx run js-api:bundle
           npx nx run cli:bundle
           npx nx run testing:bundle
       - run: npx nx print-affected $NX_CALCULATION_FLAGS
@@ -308,6 +309,7 @@ jobs:
         e2e-test:
           - description: "Core"
             test-id: "core"
+            artifact-id: "core"
             folder: "core"
             provider: "ALL"
             auth: "OAUTH"
@@ -315,49 +317,56 @@ jobs:
             check-ps-env: "true"
             deps: "testing"
           - description: "Content: Components"
-            test-id: "content-services-components"
+            test-id: "content-services"
+            artifact-id: "content-services-components"
             folder: "content-services/components"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
             deps: "testing"
           - description: "Content: Directives"
-            test-id: "content-services-directives"
+            test-id: "content-services"
+            artifact-id: "content-services-directives"
             folder: "content-services/directives"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
             deps: "testing"
           - description: "Content: Document List"
-            test-id: "content-services-document-list"
+            test-id: "content-services"
+            artifact-id: "content-services-document-list"
             folder: "content-services/document-list"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
             deps: "testing"
           - description: "Content: Metadata"
-            test-id: "content-services-metadata"
+            test-id: "content-services"
+            artifact-id: "content-services-metadata"
             folder: "content-services/metadata"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
             deps: "testing"
           - description: "Content: Upload and Versioning"
-            test-id: "content-services-upload"
+            test-id: "content-services"
+            artifact-id: "content-services-upload"
             folder: "content-services/upload"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
             deps: "testing"
           - description: "Search"
-            test-id: "content-services-search"
+            test-id: "content-services"
+            artifact-id: "content-services-search"
             folder: "search"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
             deps: "testing"
           - description: "Process: Form"
-            test-id: "process-services-form"
+            test-id: "process-services"
+            artifact-id: "process-services-form"
             folder: "process-services/form"
             provider: "BPM"
             auth: "OAUTH"
@@ -365,7 +374,8 @@ jobs:
             check-external-cs-env: "true"
             deps: "testing"
           - description: "Process: Process"
-            test-id: "process-services-process"
+            test-id: "process-services"
+            artifact-id: "process-services-process"
             folder: "process-services/process"
             provider: "BPM"
             auth: "OAUTH"
@@ -373,7 +383,8 @@ jobs:
             check-external-cs-env: "true"
             deps: "testing"
           - description: "Process: Tasks"
-            test-id: "process-services-tasks"
+            test-id: "process-services"
+            artifact-id: "process-services-tasks"
             folder: "process-services/tasks"
             provider: "BPM"
             auth: "OAUTH"
@@ -381,7 +392,8 @@ jobs:
             check-external-cs-env: "true"
             deps: "testing"
           - description: "Process: Widget"
-            test-id: "process-services-widgets"
+            test-id: "process-services"
+            artifact-id: "process-services-widgets"
             folder: "process-services/widgets"
             provider: "BPM"
             auth: "OAUTH"
@@ -389,7 +401,8 @@ jobs:
             check-external-cs-env: "true"
             deps: "testing"
           - description: "Process Cloud: Form"
-            test-id: "process-services-cloud-form-field"
+            test-id: "process-services-cloud"
+            artifact-id: "process-services-cloud-form-field"
             folder: "process-services-cloud/form-field"
             provider: "ALL"
             auth: "OAUTH"
@@ -398,7 +411,8 @@ jobs:
             check-ps-cloud-env: "true"
             deps: "testing"
           - description: "Process Cloud: Process"
-            test-id: "process-services-cloud-process"
+            test-id: "process-services-cloud"
+            artifact-id: "process-services-cloud-process"
             folder: "process-services-cloud/process"
             provider: "ALL"
             auth: "OAUTH"
@@ -407,7 +421,8 @@ jobs:
             check-ps-cloud-env: "true"
             deps: "testing"
           - description: "Process Cloud: Start Task"
-            test-id: "process-services-cloud-start-task"
+            test-id: "process-services-cloud"
+            artifact-id: "process-services-cloud-start-task"
             folder: "process-services-cloud/start-task"
             provider: "ALL"
             auth: "OAUTH"
@@ -416,7 +431,8 @@ jobs:
             check-ps-cloud-env: "true"
             deps: "testing"
           - description: "Process Cloud: Tasks List"
-            test-id: "process-services-cloud-task-list"
+            test-id: "process-services-cloud"
+            artifact-id: "process-services-cloud-task-list"
             folder: "process-services-cloud/task-list"
             provider: "ALL"
             auth: "OAUTH"
@@ -442,6 +458,7 @@ jobs:
         with:
           e2e-test-id: ${{ matrix.e2e-test.test-id }}
           e2e-test-folder: ${{ matrix.e2e-test.folder }}
+          e2e-artifact-id: ${{matrix.e2e-test.artifact-id}}
           e2e-test-provider: ${{ matrix.e2e-test.provider }}
           e2e-test-auth: ${{ matrix.e2e-test.auth }}
           check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
@@ -515,4 +532,3 @@ jobs:
       - name: workflow success
         run: exit 0
         if: ${{ contains(needs.*.result, 'success') }}
-

@@ -57,6 +57,7 @@ export interface FormRepresentationModel {
         [key: string]: any;
         fields?: any[];
     };
+    displayMode: string;
 }
 export class FormModel implements ProcessFormModel {
     static UNSET_TASK_NAME: string = 'Nameless task';
@@ -72,6 +73,7 @@ export class FormModel implements ProcessFormModel {
     readonly processDefinitionId: string;
     readonly selectedOutcome: string;
     readonly enableFixedSpace: boolean;
+    readonly displayMode: any;
 
     fieldsCache: FormFieldModel[] = [];
 
@@ -113,6 +115,7 @@ export class FormModel implements ProcessFormModel {
             this.processVariables = json.processVariables || [];
             this.enableFixedSpace = enableFixedSpace;
             this.confirmMessage = json.confirmMessage || {};
+            this.displayMode = json.displayMode;
 
             this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));
 
