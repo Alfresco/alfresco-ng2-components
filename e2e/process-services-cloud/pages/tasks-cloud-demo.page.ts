@@ -21,14 +21,13 @@ import {
     TaskListCloudComponentPage,
     BrowserActions,
     TestElement,
-    DataTableComponentPage,
-    materialLocators
+    DataTableComponentPage
 } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
     createButton = TestElement.byCss('button[data-automation-id="create-button"');
     newTaskButton = TestElement.byCss('button[data-automation-id="btn-start-task"]');
-    spinner = TestElement.byTag(materialLocators.Progress.spinner.root);
+    spinner = TestElement.byTag('mat-progress-spinner');
 
     editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
     taskFilterCloudComponent = new TaskFiltersCloudComponentPage();

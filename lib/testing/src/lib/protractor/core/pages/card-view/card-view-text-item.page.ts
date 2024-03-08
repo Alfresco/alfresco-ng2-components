@@ -17,7 +17,6 @@
 
 import { element, by, ElementFinder, Key } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
-import { materialLocators } from '../public-api';
 export class CardTextItemPage {
 
     rootElement: ElementFinder;
@@ -31,7 +30,7 @@ export class CardTextItemPage {
     readOnlyField = '.adf-property-read-only';
 
     constructor(label: string = 'assignee') {
-        this.rootElement = element(by.xpath(`//${materialLocators.Label.root}[contains(@data-automation-id, "card-textitem-label-${label}")]//ancestor::adf-card-view-textitem`));
+        this.rootElement = element(by.xpath(`//mat-label[contains(@data-automation-id, "card-textitem-label-${label}")]//ancestor::adf-card-view-textitem`));
     }
 
     async getFieldValue(): Promise<string> {

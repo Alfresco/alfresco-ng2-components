@@ -19,7 +19,6 @@ import { element, by, ElementFinder, $$ } from 'protractor';
 import { DateTimePickerPage } from '../material/date-time-picker.page';
 import { DatePickerPage } from '../material/date-picker.page';
 import { BrowserVisibility } from '../../utils/browser-visibility';
-import { materialLocators } from '../public-api';
 
 export class CardDateItemPage {
 
@@ -29,7 +28,7 @@ export class CardDateItemPage {
 
     labelLocator = 'label[data-automation-id*="card-dateitem-label"]';
     valueLocator = 'span[data-automation-id*="card-date"]';
-    dateTimePicker = $$(materialLocators.DatetimePicker.toggle.class).first();
+    dateTimePicker = $$('.mat-datetimepicker-toggle').first();
     saveButton = 'button[data-automation-id*="card-dateitem-update"]';
 
     constructor(label: string = 'minDate') {

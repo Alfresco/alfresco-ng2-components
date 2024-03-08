@@ -18,7 +18,6 @@
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 import { DropdownPage } from '../material/dropdown.page';
-import { materialLocators } from '../public-api';
 
 export class CardSelectItemPage {
 
@@ -29,7 +28,7 @@ export class CardSelectItemPage {
 
     constructor(label: string = 'fileSource') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-selectitem`));
-        this.dropdown = new DropdownPage(this.rootElement.$(materialLocators.Select.root));
+        this.dropdown = new DropdownPage(this.rootElement.$('mat-select'));
     }
 
     async checkLabelIsPresent(): Promise<void> {

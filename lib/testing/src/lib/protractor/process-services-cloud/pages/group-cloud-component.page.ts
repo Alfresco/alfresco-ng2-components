@@ -20,14 +20,13 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 import { TestElement } from '../../core/test-element';
-import { materialLocators } from '../../public-api';
 
 export class GroupCloudComponentPage {
     groupCloudSearch = $('input[data-automation-id="adf-cloud-group-search-input"]');
     groupField = $('group-cloud-widget .adf-readonly');
     formFields = new FormFields();
 
-    getGroupRowLocatorByName = async (name: string): Promise<ElementFinder> => $$(`${materialLocators.Option.root}[data-automation-id="adf-cloud-group-chip-${name}"]`).first();
+    getGroupRowLocatorByName = async (name: string): Promise<ElementFinder> => $$(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`).first();
 
     async searchGroups(name: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.groupCloudSearch, name, 100);
@@ -60,7 +59,7 @@ export class GroupCloudComponentPage {
 
     async checkSelectedGroup(group: string): Promise<boolean> {
         try {
-            await TestElement.byText(`${materialLocators.Chip.root}[data-automation-id*="adf-cloud-group-chip-"]`, group).waitVisible();
+            await TestElement.byText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group).waitVisible();
             return true;
         } catch (e) {
             return false;
@@ -68,11 +67,11 @@ export class GroupCloudComponentPage {
     }
 
     async checkGroupNotSelected(group: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText(`${materialLocators.Chip.root}[data-automation-id*="adf-cloud-group-chip-"]`, group)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
     }
 
     async removeSelectedGroup(group: string): Promise<void> {
-        const locator = $(`${materialLocators.Chip.root}[data-automation-id*="adf-cloud-group-chip-${group}"] ${materialLocators.Icon.root}`);
+        const locator = $(`mat-chip[data-automation-id*="adf-cloud-group-chip-${group}"] mat-icon`);
         await BrowserActions.click(locator);
     }
 

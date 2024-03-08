@@ -19,12 +19,11 @@ import { $$, $ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { ConfigEditorPage } from '../../core/pages/config-editor-page';
-import { materialLocators } from '../../public-api';
 
 export class FormCloudComponentPage {
 
-    formCloudEditor = $$(`${materialLocators.Tab.list} ${materialLocators.Tab.label.class}`).get(1);
-    formCloudRender = $$(`${materialLocators.Tab.list} ${materialLocators.Tab.label.class}`).get(0);
+    formCloudEditor = $$('.mat-tab-list .mat-tab-label').get(1);
+    formCloudRender = $$('.mat-tab-list .mat-tab-label').get(0);
 
     configEditorPage = new ConfigEditorPage();
 

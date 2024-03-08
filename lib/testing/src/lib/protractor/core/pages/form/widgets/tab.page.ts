@@ -18,25 +18,24 @@
 import { by, element, $ } from 'protractor';
 import { TestElement } from '../../../test-element';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
-import { materialLocators } from '../../public-api';
 
 export class TabPage {
 
-    changeTabAnimation = $(`${materialLocators.Tab.labels.class} div[class="${materialLocators.Ripple.element.root}"]`);
+    changeTabAnimation = $('.mat-tab-labels div[class="mat-ripple-element"]');
 
     public disabledContentNodeSelectorTabInfoIcon = TestElement.byCss('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]');
 
     async clickTabByLabel(tabLabel): Promise<void> {
-        const user = element(by.cssContainingText(materialLocators.Tab.label.content.class, tabLabel));
+        const user = element(by.cssContainingText('.mat-tab-label-content', tabLabel));
         await BrowserActions.click(user);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.changeTabAnimation);
     }
 
     async checkTabIsDisplayedByLabel(tabLabel): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(materialLocators.Tab.label.content.class, tabLabel)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.mat-tab-label-content', tabLabel)));
     }
 
     async checkTabIsNotDisplayedByLabel(tabLabel): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText(materialLocators.Tab.label.content.class, tabLabel)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('.mat-tab-label-content', tabLabel)));
     }
 }

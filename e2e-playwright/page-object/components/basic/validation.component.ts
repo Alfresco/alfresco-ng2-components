@@ -17,10 +17,9 @@
 
 import { Page } from '@playwright/test';
 import { BaseComponent } from '../base.component';
-import { materialLocators } from './material-locators';
 
 export class TooltipComponent extends BaseComponent {
-    private static rootElement = materialLocators.Tooltip.root;
+    private static rootElement = 'mat-tooltip-component';
     public content = this.getChild('div');
 
     constructor(page: Page) {

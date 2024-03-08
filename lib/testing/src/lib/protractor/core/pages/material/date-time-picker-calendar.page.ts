@@ -18,18 +18,18 @@
 import { element, by, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
-import { materialLocators } from './material-locators';
 
 export class DateTimePickerCalendarPage {
 
     datePicker = $(`[class*='picker-content']`);
     today = $(`[class*='calendar-body-today']`);
-    timePicker = $(materialLocators.DatetimePicker.clock.class);
-    hourTime = $$(`${materialLocators.DatetimePicker.clock.hours.class} .${materialLocators.DatetimePicker.clock.cell()}`).first();
-    minutesTime = $$(`${materialLocators.DatetimePicker.clock.minutes.class} .${materialLocators.DatetimePicker.clock.cell()}`).first();
-    firstEnabledSelector = `.${materialLocators.DatetimePicker.clock.cell()}:not(.${materialLocators.DatetimePicker.clock.cell('disabled')}`;
-    hoursPicker = $(materialLocators.DatetimePicker.clock.hours.class);
-    minutePicker = $(materialLocators.DatetimePicker.clock.minutes.class);
+    timePicker = $('.mat-datetimepicker-clock');
+    hourTime = $$('.mat-datetimepicker-clock-hours .mat-datetimepicker-clock-cell').first();
+    minutesTime = $$('.mat-datetimepicker-clock-minutes .mat-datetimepicker-clock-cell').first();
+    firstEnabledHourSelector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
+    firstEnabledMinutesSelector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
+    hoursPicker = $('.mat-datetimepicker-clock-hours');
+    minutePicker = $('.mat-datetimepicker-clock-minutes');
 
     async waitTillDateDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.datePicker);
@@ -47,7 +47,7 @@ export class DateTimePickerCalendarPage {
     async setDate(date?: string): Promise<boolean> {
         try {
             if (date) {
-                await BrowserActions.clickScript(element.all(by.cssContainingText(materialLocators.Datepicker.calendar.body.cell.content.class, date)).first());
+                await BrowserActions.clickScript(element.all(by.cssContainingText(`.mat-datepicker-calendar-body-cell-content`, date)).first());
             } else {
                 await this.setToday();
             }
@@ -59,15 +59,14 @@ export class DateTimePickerCalendarPage {
     }
 
     async checkCalendarTodayDayIsDisabled(): Promise<void> {
-        const locatorString = materialLocators.Calendar.body.cell.content.class;
-        await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText(locatorString, await BrowserActions.getText(this.today))));
+        await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-calendar-body-cell-content', await BrowserActions.getText(this.today))));
     }
 
     async setDefaultEnabledHour(): Promise<void> {
-        await BrowserActions.click(this.hoursPicker.$$(this.firstEnabledSelector).first());
+        await BrowserActions.click(this.hoursPicker.$$(this.firstEnabledHourSelector).first());
     }
 
     async setDefaultEnabledMinutes() {
-        await BrowserActions.click(this.minutePicker.$$(this.firstEnabledSelector).first());
+        await BrowserActions.click(this.minutePicker.$$(this.firstEnabledMinutesSelector).first());
     }
 }

@@ -20,7 +20,6 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 import { TestElement } from '../../core/test-element';
-import { materialLocators } from '../../public-api';
 
 export class PeopleCloudComponentPage {
     peopleCloudSearch = $('input[data-automation-id="adf-people-cloud-search-input"]');
@@ -29,10 +28,10 @@ export class PeopleCloudComponentPage {
     formFields = new FormFields();
     labelLocator: Locator = by.css(`label[class*='adf-label']`);
     inputLocator: Locator = by.css('input');
-    assigneeChipList = $(`${materialLocators.Chip.list.root}[data-automation-id="adf-cloud-people-chip-list"]`);
-    noOfUsersDisplayed = $$(`${materialLocators.Chip.list.root} span.adf-people-label-name`);
+    assigneeChipList = $('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]');
+    noOfUsersDisplayed = $$('mat-option span.adf-people-label-name');
 
-    getAssigneeRowLocatorByContainingName = async (name: string): Promise<ElementFinder> => element.all(by.cssContainingText(`${materialLocators.Option.root} span.adf-people-label-name`, name)).first();
+    getAssigneeRowLocatorByContainingName = async (name: string): Promise<ElementFinder> => element.all(by.cssContainingText('mat-option span.adf-people-label-name', name)).first();
 
     async clearAssignee(): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
@@ -65,12 +64,12 @@ export class PeopleCloudComponentPage {
 
     async getChipAssignee(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeChipList);
-        return this.assigneeChipList.all(by.css(materialLocators.Chip.root)).first().getText();
+        return this.assigneeChipList.all(by.css('mat-chip')).first().getText();
     }
 
     async getChipAssigneeCount(): Promise<number> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeChipList);
-        return this.assigneeChipList.all(by.css(materialLocators.Chip.root)).count();
+        return this.assigneeChipList.all(by.css('mat-chip')).count();
     }
 
     async checkUserIsDisplayed(name: string): Promise<boolean> {
@@ -105,7 +104,7 @@ export class PeopleCloudComponentPage {
 
     async checkSelectedPeople(person: string): Promise<boolean> {
         try {
-        	await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`${materialLocators.Chip.list.root} ${materialLocators.Chip.root}`, person)));
+        	await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
             return true;
         } catch (e) {
             return false;

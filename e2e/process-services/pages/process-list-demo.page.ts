@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage, materialLocators } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
 import { $, by, element, protractor } from 'protractor';
 
 export class ProcessListDemoPage {
@@ -26,8 +26,8 @@ export class ProcessListDemoPage {
     processDefinitionInput = $('input[data-automation-id="process-definition-id"]');
     processInstanceInput = $('input[data-automation-id="process-instance-id"]');
 
-    stateDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id="state"]`));
-    sortDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id="sort"]`));
+    stateDropdown = new DropdownPage($('mat-select[data-automation-id="state"]'));
+    sortDropdown = new DropdownPage($('mat-select[data-automation-id="sort"]'));
 
     dataTable = new DataTableComponentPage();
 
@@ -55,7 +55,7 @@ export class ProcessListDemoPage {
     }
 
     async checkErrorMessageIsDisplayed(error: string): Promise<void> {
-        const errorMessage = element(by.cssContainingText(materialLocators.Error.root, error));
+        const errorMessage = element(by.cssContainingText('mat-error', error));
         await BrowserVisibility.waitUntilElementIsVisible(errorMessage);
     }
 

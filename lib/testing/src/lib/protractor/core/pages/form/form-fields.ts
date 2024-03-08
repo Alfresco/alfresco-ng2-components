@@ -18,14 +18,13 @@
 import { browser, Locator, by, element, ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../utils/public-api';
 import { DropdownPage } from '../material/dropdown.page';
-import { materialLocators } from '../public-api';
 
 export class FormFields {
 
-    selectFormDropdown = new DropdownPage($$(`.adf-attach-form ${materialLocators.Select.arrow.class}`).first());
+    selectFormDropdown = new DropdownPage($$('.adf-attach-form .mat-select-arrow').first());
     formContent = $('adf-form-renderer');
-    refreshButton = $(`div[class*="form-reload-button"] ${materialLocators.Icon.root}`);
-    saveButton = element(by.cssContainingText(`${materialLocators.Card.actions}[class*="adf-for"] span`, 'SAVE'));
+    refreshButton = $('div[class*="form-reload-button"] mat-icon');
+    saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
     valueLocator: Locator = by.css('input');
     labelLocator: Locator = by.css('label');
     noFormMessage = $('.adf-empty-content__title');

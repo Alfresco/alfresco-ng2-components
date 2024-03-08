@@ -17,13 +17,12 @@
 
 import { ElementFinder } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
-import { materialLocators } from './material-locators';
 
 export class TogglePage {
 
     async enableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
-        if (check.indexOf(materialLocators.Checked.root) < 0) {
+        if (check.indexOf('mat-checked') < 0) {
             const elem = toggle.$$('input').first();
             await BrowserActions.clickScript(elem);
         }
@@ -31,7 +30,7 @@ export class TogglePage {
 
     async disableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
-        if (check.indexOf(materialLocators.Checked.root) >= 0) {
+        if (check.indexOf('mat-checked') >= 0) {
             const elem = toggle.$$('input').first();
             await BrowserActions.clickScript(elem);
         }

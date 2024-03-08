@@ -18,20 +18,19 @@
 import { ElementFinder, $ } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { DateTimePickerCalendarPage } from './date-time-picker-calendar.page';
-import { materialLocators } from './material-locators';
 
 export class DateTimePickerPage {
 
     rootElement: ElementFinder;
-    dateTimePicker = $(materialLocators.DatetimePicker.toggle.class);
-    datePicker = $(materialLocators.Datepicker.toggle.class);
+    dateTimePicker = $('.mat-datetimepicker-toggle');
+    datePicker = $('.mat-datepicker-toggle');
     dateTime = new DateTimePickerCalendarPage();
 
     constructor(rootElement?: ElementFinder) {
         if (rootElement) {
             this.rootElement = rootElement;
-            this.dateTimePicker  = this.rootElement.$(materialLocators.DatetimePicker.toggle.class);
-            this.datePicker  = this.rootElement.$(materialLocators.Datepicker.toggle.class);
+            this.dateTimePicker  = this.rootElement.$('.mat-datetimepicker-toggle');
+            this.datePicker  = this.rootElement.$('.mat-datepicker-toggle');
         }
     }
 

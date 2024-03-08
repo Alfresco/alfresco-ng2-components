@@ -19,7 +19,6 @@ import { by, element, Key, protractor, browser, ElementFinder, $, $$ } from 'pro
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
-import { materialLocators } from '../../public-api';
 
 export class StartProcessCloudPage {
 
@@ -34,7 +33,7 @@ export class StartProcessCloudPage {
     processDefinition = $('input[id="processDefinitionName"]');
     processDefinitionOptionsPanel = $('div[class*="processDefinitionOptions"]');
 
-    getSelectProcessDropdownLocatorByName = (name: string): ElementFinder => element(by.cssContainingText(materialLocators.Option.text.class, name));
+    getSelectProcessDropdownLocatorByName = (name: string): ElementFinder => element(by.cssContainingText('.mat-option-text', name));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);

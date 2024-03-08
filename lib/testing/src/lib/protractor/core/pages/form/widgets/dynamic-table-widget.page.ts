@@ -18,7 +18,6 @@
 import { FormFields } from '../form-fields';
 import { Locator, by, element, protractor, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
-import { materialLocators } from '../../public-api';
 
 export class DynamicTableWidgetPage {
     formFields = new FormFields();
@@ -29,11 +28,11 @@ export class DynamicTableWidgetPage {
     editButton = element(by.cssContainingText('button span', 'edit'));
     columnDateTime = $('#columnDateTime');
     columnDate = $('#columnDate');
-    calendarHeader = $(materialLocators.DatetimePicker.calendar.header.date.time);
-    calendarContent = $(materialLocators.DatetimePicker.calendar.content);
+    calendarHeader = $('.mat-datetimepicker-calendar-header-date-time');
+    calendarContent = $('.mat-datetimepicker-calendar-content');
     saveButton = element(by.cssContainingText('button span', 'Save'));
     errorMessage = $('.adf-error-text');
-    dateWidget = $$(`${materialLocators.DatetimePicker.toggle.root} button`).first();
+    dateWidget = $$('mat-datepicker-toggle button').first();
     tableRow = $$('tbody tr');
 
     getFieldLabel(fieldId: string): Promise<string> {

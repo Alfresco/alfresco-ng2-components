@@ -18,21 +18,20 @@
 import { element, by, protractor, browser, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
-import { materialLocators } from './public-api';
 
 export class HeaderPage {
 
-    checkBox = element(by.cssContainingText(materialLocators.Checkbox.label.class, 'Show menu button'));
+    checkBox = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
     headerColor = $('option[value="primary"]');
     titleInput = $('input[name="title"]');
     iconInput = $('input[placeholder="URL path"]');
     hexColorInput = $('input[placeholder="hex color code"]');
     logoHyperlinkInput = $('input[placeholder="Redirect URL"]');
     logoTooltipInput = $('input[placeholder="Tooltip text"]');
-    positionStart = $$(`${materialLocators.Radio.button.root}[value="start"]`).first();
-    positionEnd = $$(`${materialLocators.Radio.button.root}[value="end"]`).first();
-    sideBarPositionRight = $(`${materialLocators.Sidenav.root}${materialLocators.Drawer.class}${materialLocators.Sidenav.root}${materialLocators.Drawer.end}`);
-    sideBarPositionLeft = $(`${materialLocators.Sidenav.root}${materialLocators.Drawer.class}${materialLocators.Sidenav.root}`);
+    positionStart = $$('mat-radio-button[value="start"]').first();
+    positionEnd = $$('mat-radio-button[value="end"]').first();
+    sideBarPositionRight = $('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end');
+    sideBarPositionLeft = $('mat-sidenav.mat-drawer.mat-sidenav');
 
     async checkShowMenuCheckBoxIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
@@ -51,7 +50,7 @@ export class HeaderPage {
     }
 
     async clickShowMenuButton(): Promise<void> {
-        const checkBox = $$(materialLocators.Checkbox.root).first();
+        const checkBox = $$('mat-checkbox').first();
         await BrowserActions.click(checkBox);
     }
 

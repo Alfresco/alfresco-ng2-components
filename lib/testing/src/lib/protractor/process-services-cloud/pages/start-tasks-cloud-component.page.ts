@@ -19,14 +19,13 @@ import { element, by, Key, ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
-import { materialLocators } from '../../public-api';
 
 export class StartTasksCloudPage {
 
     name = $('input[id="name_id"]');
     dueDate = $('input[id="date_id"]');
     description = $('textarea[id="description_id"]');
-    priority = $(`${materialLocators.Select.root}[formcontrolname="priority"]`);
+    priority = $('mat-select[formcontrolname="priority"]');
     startButton = $('button[id="button-start"]');
     startButtonEnabled = $('button[id="button-start"]:not(disabled)');
     cancelButton = $('button[id="button-cancel"]');
@@ -78,7 +77,7 @@ export class StartTasksCloudPage {
         await locator.sendKeys(Key.TAB);
     }
 
-    async checkValidationErrorIsDisplayed(error: string, elementRef = materialLocators.Error.root): Promise<void> {
+    async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {
         const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
@@ -89,20 +88,20 @@ export class StartTasksCloudPage {
 
     async selectFormDefinition(option: string): Promise<void> {
         await BrowserActions.click(this.formDefinitionSelector);
-        const row = element(by.xpath(`//${materialLocators.Option.root}/child::span [text() = '${option}']`));
+        const row = element(by.xpath(`//mat-option/child::span [text() = '${option}']`));
         await BrowserActions.click(row);
     }
 
     async checkFormDefinitionIsDisplayed(option: string): Promise<void> {
         await BrowserActions.click(this.formDefinitionSelector);
-        const row = element(by.cssContainingText(`${materialLocators.Option.root} span`, option));
+        const row = element(by.cssContainingText('mat-option span', option));
         await BrowserVisibility.waitUntilElementIsVisible(row);
         await BrowserActions.closeMenuAndDialogs();
     }
 
     async checkFormDefinitionIsNotDisplayed(option: string): Promise<void> {
         await BrowserActions.click(this.formDefinitionSelector);
-        const row = element(by.cssContainingText(`${materialLocators.Option.root} span`, option));
+        const row = element(by.cssContainingText('mat-option span', option));
         await BrowserVisibility.waitUntilElementIsNotVisible(row);
         await BrowserActions.closeMenuAndDialogs();
     }

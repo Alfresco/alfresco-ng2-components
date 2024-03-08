@@ -18,19 +18,18 @@
 import { element, by, $$ } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { BrowserVisibility } from '../../utils/browser-visibility';
-import { materialLocators } from './material-locators';
 
 export class TabsPage {
 
-    tabs = $$(`div[id*='${materialLocators.Tab.label.root}']`);
+    tabs = $$(`div[id*='mat-tab-label']`);
 
     async clickTabByTitle(tabTitle): Promise<void> {
-        const tab = element(by.cssContainingText(`div[id*='${materialLocators.Tab.label.root}']`, tabTitle));
+        const tab = element(by.cssContainingText(`div[id*='mat-tab-label']`, tabTitle));
         await BrowserActions.click(tab);
     }
 
     async checkTabIsSelectedByTitle(tabTitle): Promise<void> {
-        const tab = element(by.cssContainingText(`div[id*='${materialLocators.Tab.label.root}']`, tabTitle));
+        const tab = element(by.cssContainingText(`div[id*='mat-tab-label']`, tabTitle));
         const result = await BrowserActions.getAttribute(tab, 'aria-selected');
         await expect(result).toBe('true');
     }

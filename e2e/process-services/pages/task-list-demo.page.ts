@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DropdownPage, PaginationPage, materialLocators } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DropdownPage, PaginationPage } from '@alfresco/adf-testing';
 import { $ } from 'protractor';
 import { TasksListPage } from './tasks-list.page';
 
@@ -24,18 +24,18 @@ export class TaskListDemoPage {
     taskListPage = new TasksListPage();
     appId = $('input[data-automation-id=\'appId input\']');
     itemsPerPage = $('input[data-automation-id=\'items per page\']');
-    itemsPerPageForm = $(`${materialLocators.Form.field.root}[data-automation-id=\'items per page\']`);
+    itemsPerPageForm = $('mat-form-field[data-automation-id=\'items per page\']');
     processDefinitionId = $('input[data-automation-id=\'process definition id\']');
     processInstanceId = $('input[data-automation-id=\'process instance id\']');
     page = $('input[data-automation-id=\'page\']');
-    pageForm = $(`${materialLocators.Form.field.root}[data-automation-id=\'page\']`);
+    pageForm = $('mat-form-field[data-automation-id=\'page\']');
     taskName = $('input[data-automation-id=\'task name\']');
     resetButton = $('.app-reset-button button');
     dueBefore = $('input[data-automation-id=\'due before\']');
     dueAfter = $('input[data-automation-id=\'due after\']');
     taskId = $('input[data-automation-id=\'task id\']');
 
-    stateDropDownArrow = $(`${materialLocators.Form.field.root}[data-automation-id=\'state\']`);
+    stateDropDownArrow = $('mat-form-field[data-automation-id=\'state\']');
     stateDropdown = new DropdownPage(this.stateDropDownArrow);
 
     taskList(): TasksListPage {
@@ -93,7 +93,7 @@ export class TaskListDemoPage {
 
     async getItemsPerPageFieldErrorMessage(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.itemsPerPageForm);
-        const errorMessage = this.itemsPerPageForm.$(materialLocators.Error.root);
+        const errorMessage = this.itemsPerPageForm.$('mat-error');
         return BrowserActions.getText(errorMessage);
     }
 
@@ -103,7 +103,7 @@ export class TaskListDemoPage {
 
     async getPageFieldErrorMessage(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageForm);
-        const errorMessage = this.pageForm.$(materialLocators.Error.root);
+        const errorMessage = this.pageForm.$('mat-error');
         return BrowserActions.getText(errorMessage);
     }
 

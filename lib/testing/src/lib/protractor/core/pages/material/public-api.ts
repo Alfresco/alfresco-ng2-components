@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './material-locators';
 export * from './tabs.page';
 export * from './date-picker-calendar.page';
 export * from './date-time-picker.page';

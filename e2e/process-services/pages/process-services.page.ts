@@ -18,16 +18,16 @@
 import { ProcessServiceTabBarPage } from './process-service-tab-bar.page';
 
 import { browser, $, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions, materialLocators } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { TasksPage } from './tasks.page';
 
 export class ProcessServicesPage {
 
     apsAppsContainer = $('.adf-app-listgrid');
-    iconTypeLocator = `${materialLocators.Icon.root}[class*="card-logo-icon"]`;
-    descriptionLocator = `${materialLocators.Card.subtitle.root}[class*="subtitle"]`;
+    iconTypeLocator = 'mat-icon[class*="card-logo-icon"]';
+    descriptionLocator = 'mat-card-subtitle[class*="subtitle"]';
 
-    getApplicationNameLocator = (name: string): ElementFinder => $(`${materialLocators.Card.root}[title="${name}"]`);
+    getApplicationNameLocator = (name: string): ElementFinder => $(`mat-card[title="${name}"]`);
 
     async checkApsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);

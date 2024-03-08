@@ -18,13 +18,12 @@
 import { FormFields } from '../form-fields';
 import { by, element, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
-import { materialLocators } from '../../public-api';
 
 export class TypeaheadWidgetPage {
 
     field = $('input[data-automation-id="adf-typeahed-search-input"]');
     firstResult = $('#adf-typeahed-widget-user-0');
-    groupDropDownList = $(materialLocators.Autocomplete.panel.class);
+    groupDropDownList = $('.mat-autocomplete-panel');
     formFields = new FormFields();
 
     getFieldLabel(fieldId: string): Promise<string> {

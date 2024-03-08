@@ -16,7 +16,7 @@
  */
 
 import { $ } from 'protractor';
-import { BrowserVisibility, BrowserActions, DropdownPage, materialLocators } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-testing';
 
 export class AttachFormPage {
 
@@ -25,7 +25,7 @@ export class AttachFormPage {
     completeButton = $('#adf-attach-form-complete-button');
     formDropdown = $('#form_id');
     cancelButton = $('#adf-attach-form-cancel-button');
-    defaultTitle = $(materialLocators.Card.title.class);
+    defaultTitle = $('.mat-card-title');
     attachFormDropdown = new DropdownPage($('.adf-attach-form-row'));
 
     async checkAttachFormButtonIsDisplayed(): Promise<void> {

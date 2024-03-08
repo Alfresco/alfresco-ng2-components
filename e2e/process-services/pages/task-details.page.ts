@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage, materialLocators } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
 import { browser, by, element, Key, $, $$ } from 'protractor';
 
 export class TaskDetailsPage {
@@ -201,7 +201,7 @@ export class TaskDetailsPage {
 
     async updateDueDate(): Promise<void> {
         await BrowserActions.click(this.dueDateField);
-        await BrowserActions.click($$(materialLocators.DatetimePicker.calendar.body.cell.class).first());
+        await BrowserActions.click($$('.mat-datetimepicker-calendar-body-cell').first());
         await browser.sleep(1000);
     }
 

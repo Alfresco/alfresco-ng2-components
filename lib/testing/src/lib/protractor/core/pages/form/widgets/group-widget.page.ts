@@ -18,14 +18,13 @@
 import { FormFields } from '../form-fields';
 import { Locator, by, element, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
-import { materialLocators } from '../../public-api';
 
 export class GroupWidgetPage {
 
     groupField = $('input[data-automation-id="adf-group-search-input"]');
     firstResult = $('#adf-group-widget-user-0');
     formFields = new FormFields();
-    groupDropDownList: Locator = by.css(materialLocators.Autocomplete.panel.class);
+    groupDropDownList: Locator = by.css('.mat-autocomplete-panel');
 
     getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId);

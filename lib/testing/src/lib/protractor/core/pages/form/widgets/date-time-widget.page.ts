@@ -18,7 +18,6 @@
 import { FormFields } from '../form-fields';
 import { element, by, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
-import { materialLocators } from '../../public-api';
 
 export class DateTimeWidgetPage {
 
@@ -53,7 +52,7 @@ export class DateTimeWidgetPage {
     }
 
     async selectDay(day: string): Promise<void> {
-        const selectedDay = element(by.cssContainingText(`div[class*="${materialLocators.DatetimePicker.calendar.body.cell.root}"]`, day));
+        const selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
         await BrowserActions.click(selectedDay);
     }
 
@@ -62,7 +61,7 @@ export class DateTimeWidgetPage {
     }
 
     async selectTime(time: string): Promise<void> {
-        const selectedTime = element.all(by.cssContainingText(`div[class*="${materialLocators.DatetimePicker.clock.cell()}"]`, time)).first();
+        const selectedTime = element.all(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time)).first();
         await BrowserActions.click(selectedTime);
     }
 

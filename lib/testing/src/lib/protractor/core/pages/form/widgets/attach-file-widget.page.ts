@@ -19,7 +19,6 @@ import { FormFields } from '../form-fields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { by, browser, $ } from 'protractor';
 import { TestElement } from '../../../test-element';
-import { materialLocators } from '../../public-api';
 
 export class AttachFileWidgetPage {
 
@@ -28,11 +27,11 @@ export class AttachFileWidgetPage {
     localStorageButton = $('input[id="attachfile"]');
     filesListLocator = 'div[data-automation-id="adf-attach-widget-readonly-list"]';
     attachFileWidget = $('#attachfile');
-    attachedFileMenu = $(`${materialLocators.List.item.root} button`);
-    attachedFileOptions = $(`${materialLocators.Menu.panel} ${materialLocators.Menu.content.class}`);
-    viewFileOptionButton = $(`${materialLocators.Menu.panel} ${materialLocators.Menu.content.class} button[id$="show-file"]`);
-    downloadFileOptionButton = $(`${materialLocators.Menu.panel} ${materialLocators.Menu.content.class} button[id$="download-file"]`);
-    removeFileOptionButton = TestElement.byCss(`${materialLocators.Menu.panel} ${materialLocators.Menu.content.class} button[id$="remove"]`);
+    attachedFileMenu = $('mat-list-item button');
+    attachedFileOptions = $('.mat-menu-panel .mat-menu-content');
+    viewFileOptionButton = $(`.mat-menu-panel .mat-menu-content button[id$="show-file"]`);
+    downloadFileOptionButton = $(`.mat-menu-panel .mat-menu-content button[id$="download-file"]`);
+    removeFileOptionButton = TestElement.byCss(`.mat-menu-panel .mat-menu-content button[id$="remove"]`);
 
     async attachFile(fieldId: string, fileLocation: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
@@ -44,7 +43,7 @@ export class AttachFileWidgetPage {
 
     async checkNoFileIsAttached(fieldId: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
-        const fileItem = widget.$(this.filesListLocator).$(materialLocators.List.item.root);
+        const fileItem = widget.$(this.filesListLocator).$('mat-list-item');
         await BrowserVisibility.waitUntilElementIsNotVisible(fileItem);
     }
 
@@ -71,7 +70,7 @@ export class AttachFileWidgetPage {
     }
 
     async viewFile(name: string): Promise<void> {
-        const fileView = $(this.filesListLocator).element(by.cssContainingText(`${materialLocators.List.item.root} span `, name));
+        const fileView = $(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         await BrowserActions.click(fileView);
         await browser.actions().doubleClick(fileView).perform();
     }
@@ -165,6 +164,6 @@ export class AttachFileWidgetPage {
 
     private async getFileAttachedNotAttachedLocator(fieldId: string, name: string) {
         const widget = await this.formFields.getWidget(fieldId);
-        return widget.$(this.filesListLocator).element(by.cssContainingText(`${materialLocators.List.item.root} span span span`, name));
+        return widget.$(this.filesListLocator).element(by.cssContainingText('mat-list-item span span span', name));
     }
 }
