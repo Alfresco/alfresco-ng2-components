@@ -26,10 +26,10 @@ import { SearchWidgetContainerComponent } from '../../search-widget-container/se
   templateUrl: './search-widget-chip.component.html',
   styles: [
       `
-          .adf-search-widget-extra-width {
-            max-width: 500px;
-          }
-        `
+                .adf-search-widget-extra-width {
+                  max-width: 500px;
+                }
+              `
   ],
   encapsulation: ViewEncapsulation.None
 })

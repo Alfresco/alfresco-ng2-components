@@ -87,6 +87,7 @@ adf-task-details {
                         }
                     }
                 }
+
                 /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
                 & .mdc-tab__text-label {
                     flex-grow: 1;
