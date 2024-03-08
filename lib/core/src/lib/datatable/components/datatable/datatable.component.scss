@@ -390,6 +390,17 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         min-width: $data-table-cell-min-width-2;
     }
 
+    .adf-datatable-header, .adf-datatable-body {
+        .adf-datatable-cell-data {
+            flex-grow: 0;
+            flex-shrink: 1;
+
+            &:not(:has(~ .adf-datatable-cell-data)) {
+                flex-grow: 1;
+            }
+        }
+    }
+
     /* stylelint-disable-next-line no-duplicate-selectors */
     .adf-datatable-cell,
     .adf-datatable-cell-header {
@@ -401,11 +412,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         &:first-child {
             margin-left: 15px;
-            box-sizing: content-box;
-        }
-
-        &:last-child {
-            padding-right: 15px;
             box-sizing: content-box;
         }
 
@@ -436,6 +442,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-actions-menu {
         margin-left: auto;
         justify-content: end;
+        padding-right: 15px;
     }
 
     .adf-cell-value {
@@ -626,7 +633,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable__header--sorted-asc,
     .adf-datatable__header--sorted-desc {
         color: var(--adf-theme-foreground-text-color);
-        padding-right: 0.5rem;
+        padding-right: 0.25rem;
 
         &::after {
             @include typo-icon;
@@ -661,10 +668,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         align-items: center;
         margin: 0 2px;
         padding: 0 8px;
-        column-gap: 5px;
 
         .adf-datatable-cell-header-drag-icon-placeholder {
-            min-width: 15px;
+            padding: 0;
+            margin: 0;
         }
 
         &--hovered {
@@ -674,19 +681,15 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 
     .adf-datatable-cell-header-drag-icon {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 10px;
-        margin: auto;
-        color: #ccc;
+        margin-left: auto;
         cursor: move;
-        width: 24px;
-        height: 24px;
+        margin-right: -0.5rem;
+        padding-left: -0.5rem;
     }
 
     .adf-datatable-cell-value {
-        padding: 10px 0 !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
         line-height: 24px;
         word-break: break-word;
     }
