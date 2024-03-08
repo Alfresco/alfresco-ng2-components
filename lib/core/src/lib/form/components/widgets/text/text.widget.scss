@@ -2,7 +2,7 @@
 .adf {
     &-text-widget {
         width: 100%;
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-label-wrapper {
             top: 20px;
