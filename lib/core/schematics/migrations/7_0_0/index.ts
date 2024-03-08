@@ -51,9 +51,21 @@ const alfrescoApiMockMigration: MigrationData = {
     }
 };
 
+const alfrescoApiFactoryMigration: MigrationData = {
+    change: {
+        importedValue: 'AlfrescoApiFactory',
+        importSource: '@alfresco/adf-core'
+    },
+    to: {
+        importedValue: 'AlfrescoApiFactory',
+        importSource: '@alfresco/adf-content-services'
+    }
+};
+
 const migrations: MigrationData[] = [
     alfrescoApiServiceMigration,
-    alfrescoApiMockMigration
+    alfrescoApiMockMigration,
+    alfrescoApiFactoryMigration
 ];
 
 /**
