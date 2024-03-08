@@ -42,18 +42,18 @@ import { RoleModel } from '../../models/role.model';
     host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },
     styles: [
         `.adf-role-selector-field {
-                    width: 100%;
-                }
-
-                .adf-role-selector-field .mat-mdc-form-field {
-                    width: 100%;
-                    max-width: 200px;
-                }
-
-                .adf-readonly-role {
-                    padding-left: 0 !important;
-                }
-                `
+                            width: 100%;
+                        }
+        
+                        .adf-role-selector-field .mat-mdc-form-field {
+                            width: 100%;
+                            max-width: 200px;
+                        }
+        
+                        .adf-readonly-role {
+                            padding-left: 0 !important;
+                        }
+                        `
     ]
 })
 export class UserRoleColumnComponent {
