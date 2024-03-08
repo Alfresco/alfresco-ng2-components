@@ -1,19 +1,12 @@
 .adf-version-list {
     .adf-version-list-viewport {
         height: 100%;
+        overflow-x: hidden;
+    }
 
-        .adf-version-list-item {
-            height: auto;
-            padding-top: 23px;
-            padding-bottom: 23px;
-            border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
-
-            .adf-version-list-item-comment {
-                width: 100%;
-                word-break: break-word;
-                white-space: break-spaces;
-            }
-        }
+    .adf-version-list-item {
+        border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+        width: 100vw;
     }
 
     &-item-version {
@@ -22,6 +15,15 @@
 
     &-item-date {
         opacity: 0.6;
+    }
+
+    &-item-comment {
+        width: 500px;
+        opacity: 0.5;
+
+        @media screen and (max-width: 629px) {
+            width: 97%;
+        }
     }
 
     &-item-name,

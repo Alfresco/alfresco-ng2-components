@@ -8,9 +8,14 @@
                 <span class="adf-version-list-item-line adf-version-list-item-version" [id]="'adf-version-list-item-version-' + version.entry.id" >{{version.entry.id}}</span> -
                 <span class="adf-version-list-item-line adf-version-list-item-date" [id]="'adf-version-list-item-date-' + version.entry.id" >{{version.entry.modifiedAt | date}}</span>
             </p>
-            <p mat-line [id]="'adf-version-list-item-comment-' + version.entry.id"
-               class="adf-version-list-item-comment"
-               *ngIf="showComments">{{version.entry.versionComment}}</p>
+            <p
+                mat-line
+                [id]="'adf-version-list-item-comment-'+ version.entry.id"
+                class="adf-version-list-item-comment"
+                *ngIf="showComments"
+                [title]="version.entry.versionComment">
+                {{ version.entry.versionComment }}
+            </p>
 
             <div *ngIf="showActions">
                 <mat-menu [id]="'adf-version-list-action-menu-' + version.entry.id"
