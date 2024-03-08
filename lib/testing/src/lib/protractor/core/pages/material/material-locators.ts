@@ -17,21 +17,21 @@
 
 export const materialLocators = {
   Accent: {
-    class: '.mat-accent'
+    class: '.mat-mdc-accent'
   },
   Accordion: {
     root: 'mat-accordion'
   },
   Autocomplete: {
     panel: {
-      class: '.mat-autocomplete-panel',
+      class: '.mat-mdc-autocomplete-panel',
       root: 'mat-autocomplete-panel'
     }
   },
   Button: {
-    class: '.mat-button',
+    class: '.mat-mdc-button',
     disabled: 'mat-button-disabled',
-    wrapper: '.mat-button-wrapper'
+    wrapper: '.mat-mdc-button-wrapper'
   },
   Calendar: {
     root: 'mat-calendar',
@@ -39,11 +39,11 @@ export const materialLocators = {
       cell: {
         root: 'mat-calendar-body-cell',
         content: {
-          class: '.mat-calendar-body-cell-content'
+          class: '.mat-mdc-calendar-body-cell-content'
         }
       },
       today: {
-        class: '.mat-calendar-body-today'
+        class: '.mat-mdc-calendar-body-today'
       },
       active: {
         root: 'mat-calendar-body-active'
@@ -53,13 +53,13 @@ export const materialLocators = {
   },
   Card: {
     root: 'mat-card',
-    class: '.mat-card',
+    class: '.mat-mdc-card',
     content: {
-      class: '.mat-card-content',
+      class: '.mat-mdc-card-content',
       root: 'mat-card-content'
     },
     title: {
-      class: '.mat-card-title',
+      class: '.mat-mdc-card-title',
       root: 'mat-card-title'
     },
     actions: 'mat-card-actions',
@@ -69,14 +69,14 @@ export const materialLocators = {
   },
   Checkbox: {
     root: 'mat-checkbox',
-    class: '.mat-checkbox',
-    layout: '.mat-checkbox-layout',
+    class: '.mat-mdc-checkbox',
+    layout: '.mat-mdc-checkbox-layout',
     label: {
-      class: '.mat-checkbox-label',
+      class: '.mat-mdc-checkbox-label',
       root: 'mat-checkbox-label'
     },
     checked: {
-      class: '.mat-checkbox-checked',
+      class: '.mat-mdc-checkbox-checked',
       root: 'mat-checkbox-checked'
     },
     disabled: {
@@ -84,7 +84,7 @@ export const materialLocators = {
     },
     inner: {
       container: {
-        class: '.mat-checkbox-inner-container'
+        class: '.mat-mdc-checkbox-inner-container'
       }
     }
   },
@@ -93,10 +93,10 @@ export const materialLocators = {
   },
   Chip: {
     root: 'mat-chip',
-    class: '.mat-chip',
+    class: '.mat-mdc-chip',
     list: {
       root: 'mat-chip-list',
-      class: '.mat-chip-list'
+      class: '.mat-mdc-chip-list'
     }
   },
   Datepicker: {
@@ -105,7 +105,7 @@ export const materialLocators = {
       body: {
         cell: {
           content: {
-            class: '.mat-datepicker-calendar-body-cell-content'
+            class: '.mat-mdc-datepicker-calendar-body-cell-content'
           }
         }
       }
@@ -157,108 +157,108 @@ export const materialLocators = {
   Dialog: {
     container: {
       root: 'mat-dialog-container',
-      class: '.mat-dialog-container'
+      class: '.mat-mdc-dialog-container'
     },
     content: {
       root: 'mat-dialog-content',
-      class: '.mat-dialog-content'
+      class: '.mat-mdc-dialog-content'
     },
     actions: {
-      class: `.mat-dialog-actions`,
+      class: `.mat-mdc-dialog-actions`,
       root: `mat-dialog-actions`
     },
-    title: '.mat-dialog-title'
+    title: '.mat-mdc-dialog-title'
   },
   Disabled: {
     root: 'mat-disabled'
   },
   Drawer: {
-    class: '.mat-drawer',
-    end: '.mat-drawer-end'
+    class: '.mat-mdc-drawer',
+    end: '.mat-mdc-drawer-end'
   },
   Error: {
-    class: '.mat-error',
+    class: '.mat-mdc-error',
     root: 'mat-error'
   },
   Expanded: {
-    class: '.mat-expanded',
+    class: '.mat-mdc-expanded',
     root: 'mat-expanded'
   },
   Expansion: {
     panel: {
       root: 'mat-expansion-panel',
-      class: '.mat-expansion-panel',
+      class: '.mat-mdc-expansion-panel',
       body: {
-        class: '.mat-expansion-panel-body'
+        class: '.mat-mdc-expansion-panel-body'
       },
       content: {
-        class: '.mat-expansion-panel-content'
+        class: '.mat-mdc-expansion-panel-content'
       },
       header: {
-        class: '.mat-expansion-panel-header',
+        class: '.mat-mdc-expansion-panel-header',
         root: 'mat-expansion-panel-header'
       },
-      title: '.mat-expansion-panel-header-title'
+      title: '.mat-mdc-expansion-panel-header-title'
     },
-    indicator: '.mat-expansion-indicator'
+    indicator: '.mat-mdc-expansion-indicator'
   },
   Focus: {
-    indicator: '.mat-focus-indicator'
+    indicator: '.mat-mdc-focus-indicator'
   },
   Focused: {
     root: 'mat-focused'
   },
   Form: {
     field: {
-      class: '.mat-form-field',
+      class: '.mat-mdc-form-field',
       root: 'mat-form-field',
       label: {
-        wrapper: '.mat-form-field-label-wrapper'
+        wrapper: '.mat-mdc-form-field-label-wrapper'
       }
     },
-    fieldInfix: '.mat-form-field-infix'
+    fieldInfix: '.mat-mdc-form-field-infix'
   },
   Header: {
-    cell: '.mat-header-cell'
+    cell: '.mat-mdc-header-cell'
   },
   Hint: {
     class: 'mat-hint'
   },
   Icon: {
     root: 'mat-icon',
-    class: '.mat-icon',
+    class: '.mat-mdc-icon',
     button: {
-      class: '.mat-icon-button',
+      class: '.mat-mdc-icon-button',
       root: 'mat-icon-button'
     }
   },
   Input: {
-    class: '.mat-input-element'
+    class: '.mat-mdc-input-element'
   },
   Label: {
     root: 'mat-label'
   },
   List: {
-    class: '.mat-list',
+    class: '.mat-mdc-list',
     root: 'mat-list',
     item: {
       root: 'mat-list-item',
-      class: '.mat-list-item'
+      class: '.mat-mdc-list-item'
     },
     option: 'mat-list-option',
     text: {
-      class: '.mat-list-text'
+      class: '.mat-mdc-list-text'
     },
     selectionList: 'mat-selection-list'
   },
   Menu: {
     content: {
-      class: '.mat-menu-content',
+      class: '.mat-mdc-menu-content',
       root: 'mat-menu-content'
     },
-    panel: '.mat-menu-panel',
+    panel: '.mat-mdc-menu-panel',
     item: {
-      class: '.mat-menu-item',
+      class: '.mat-mdc-menu-item',
       submenu: {
         trigger: {
           root: `mat-menu-item-submenu-trigger`
@@ -267,85 +267,85 @@ export const materialLocators = {
     }
   },
   Month: {
-    content: '.mat-month-content'
+    content: '.mat-mdc-month-content'
   },
   Option: {
     root: 'mat-option',
-    class: '.mat-option',
+    class: '.mat-mdc-option',
     group: 'mat-optgroup',
     text: {
-      class: '.mat-option-text',
+      class: '.mat-mdc-option-text',
       root: 'mat-option-text'
     }
   },
   Paginator: {
-    class: '.mat-paginator',
+    class: '.mat-mdc-paginator',
     range: {
-      label: '.mat-paginator-range-label'
+      label: '.mat-mdc-paginator-range-label'
     },
-    navigation: (rangeAction: string) => `.mat-paginator-navigation-${rangeAction}`
+    navigation: (rangeAction: string) => `.mat-mdc-paginator-navigation-${rangeAction}`
   },
   Panel: {
     title: 'mat-panel-title'
   },
   Primary: {
-    class: '.mat-primary'
+    class: '.mat-mdc-primary'
   },
   Progress: {
     bar: {
       root: 'mat-progress-bar',
-      class: '.mat-progress-bar'
+      class: '.mat-mdc-progress-bar'
     },
     spinner: {
       root: 'mat-progress-spinner',
-      class: '.mat-progress-spinner'
+      class: '.mat-mdc-progress-spinner'
     }
   },
   Radio: {
     root: 'mat-radio',
     button: {
-      class: '.mat-radio-button',
+      class: '.mat-mdc-radio-button',
       root: 'mat-radio-button'
     },
     group: 'mat-radio-group',
     checked: 'mat-radio-checked',
-    label: '.mat-radio-label'
+    label: '.mat-mdc-radio-label'
   },
   Ripple: {
-    class: '.mat-ripple',
+    class: '.mat-mdc-ripple',
     element: {
-      class: '.mat-ripple-element',
+      class: '.mat-mdc-ripple-element',
       root: 'mat-ripple-element'
     }
   },
   Select: {
     root: 'mat-select',
-    class: '.mat-select',
+    class: '.mat-mdc-select',
     arrow: {
-      class: '.mat-select-arrow',
+      class: '.mat-mdc-select-arrow',
       wrapper: {
-        root: '.mat-select-arrow-wrapper'
+        root: '.mat-mdc-select-arrow-wrapper'
       }
     },
     placeholder: {
-      class: '.mat-select-placeholder'
+      class: '.mat-mdc-select-placeholder'
     },
     panel: {
-      class: '.mat-select-panel',
-      wrap: '.mat-select-panel-wrap'
+      class: '.mat-mdc-select-panel',
+      wrap: '.mat-mdc-select-panel-wrap'
     },
     value: {
-      class: '.mat-select-value',
-      text: '.mat-select-value-text'
+      class: '.mat-mdc-select-value',
+      text: '.mat-mdc-select-value-text'
     },
-    minLine: '.mat-select-min-line',
-    trigger: '.mat-select-trigger'
+    minLine: '.mat-mdc-select-min-line',
+    trigger: '.mat-mdc-select-trigger'
   },
   Slide: {
     toggle: {
-      class: '.mat-slide-toggle',
+      class: '.mat-mdc-slide-toggle',
       root: 'mat-slide-toggle',
-      input: '.mat-slide-toggle-input'
+      input: '.mat-mdc-slide-toggle-input'
     }
   },
   Selection: {
@@ -358,69 +358,69 @@ export const materialLocators = {
   },
   Snackbar: {
     container: {
-      class: '.mat-snack-bar-container'
+      class: '.mat-mdc-snack-bar-container'
     }
   },
   Sort: {
     header: {
-      container: '.mat-sort-header-container'
+      container: '.mat-mdc-sort-header-container'
     }
   },
   Spinner: {
     root: 'mat-spinner'
   },
   Tab: {
-    disabled: '.mat-tab-disabled',
+    disabled: '.mat-mdc-tab-disabled',
     header: {
-      class: '.mat-tab-header',
+      class: '.mat-mdc-tab-header',
       pagination: {
-        after: '.mat-tab-header-pagination-after',
-        before: '.mat-tab-header-pagination-before',
-        chevron: '.mat-tab-header-pagination-chevron'
+        after: '.mat-mdc-tab-header-pagination-after',
+        before: '.mat-mdc-tab-header-pagination-before',
+        chevron: '.mat-mdc-tab-header-pagination-chevron'
       }
     },
     body: {
-      active: '.mat-tab-body-active',
-      content: '.mat-tab-body-content'
+      active: '.mat-mdc-tab-body-active',
+      content: '.mat-mdc-tab-body-content'
     },
     label: {
-      class: '.mat-tab-label',
+      class: '.mat-mdc-tab-label',
       root: 'mat-tab-label',
       active: {
-        class: '.mat-tab-label-active',
+        class: '.mat-mdc-tab-label-active',
         root: 'mat-tab-label-active'
       },
       content: {
-        class: '.mat-tab-label-content',
+        class: '.mat-mdc-tab-label-content',
         root: 'mat-tab-label-content'
       }
     },
     labels: {
-      class: '.mat-tab-labels'
+      class: '.mat-mdc-tab-labels'
     },
-    list: '.mat-tab-list'
+    list: '.mat-mdc-tab-list'
   },
   Table: {
-    class: '.mat-table',
+    class: '.mat-mdc-table',
     root: 'mat-table',
     row: {
       root: 'mat-row',
-      class: '.mat-row'
+      class: '.mat-mdc-row'
     },
     cell: {
-      class: '.mat-cell',
+      class: '.mat-mdc-cell',
       root: 'mat-cell'
     },
-    column: (matColumn: string) => `.mat-column-${matColumn}`
+    column: (matColumn: string) => `.mat-mdc-column-${matColumn}`
   },
   Toolbar: {
     root: 'mat-toolbar',
-    class: '.mat-toolbar'
+    class: '.mat-mdc-toolbar'
   },
   Tooltip: {
     root: 'mat-tooltip-component',
-    class: '.mat-tooltip',
-    trigger: '.mat-tooltip-trigger'
+    class: '.mat-mdc-tooltip',
+    trigger: '.mat-mdc-tooltip-trigger'
   },
   Tree: {
     root: 'mat-tree',
