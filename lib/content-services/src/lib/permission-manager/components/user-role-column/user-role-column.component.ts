@@ -44,12 +44,12 @@ import { RoleModel } from '../../models/role.model';
         `.adf-role-selector-field {
                             width: 100%;
                         }
-        
+
                         .adf-role-selector-field .mat-mdc-form-field {
                             width: 100%;
                             max-width: 200px;
                         }
-        
+
                         .adf-readonly-role {
                             padding-left: 0 !important;
                         }
