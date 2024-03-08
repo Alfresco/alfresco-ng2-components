@@ -17,7 +17,7 @@
 
 import { Page } from '@playwright/test';
 import { BaseComponent } from '../../page-object/components/base.component';
-import { ErrorComponent, TooltipComponent, ListboxComponent } from '../../page-object/components/basic';
+import { ErrorComponent, TooltipComponent, ListboxComponent } from '../../page-object/components';
 
 export class PeopleComponent extends BaseComponent {
     private static rootElement = 'adf-cloud-people';

@@ -47,6 +47,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
     aspects$: Observable<AspectEntry[]> = null;
     nodeAspects: string[] = [];
     nodeAspectStatus: string[] = [];
+    notDisplayedAspects: string[] = [];
     hasEqualAspect: boolean = true;
 
     private onDestroy$ = new Subject<boolean>();
@@ -71,7 +72,8 @@ export class AspectListComponent implements OnInit, OnDestroy {
                 tap(([node, customAspects]) => {
                     this.nodeAspects = node.aspectNames.filter((aspect) => this.aspectListService.getVisibleAspects().includes(aspect) || customAspects.includes(aspect));
                     this.nodeAspectStatus = [ ...this.nodeAspects ];
-                    this.valueChanged.emit(this.nodeAspects);
+                    this.notDisplayedAspects = node.aspectNames.filter((aspect) => !this.aspectListService.getVisibleAspects().includes(aspect) && !customAspects.includes(aspect));
+                    this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
                 }),
                 concatMap(() => this.aspectListService.getAspects()),
                 takeUntil(this.onDestroy$));
@@ -94,14 +96,14 @@ export class AspectListComponent implements OnInit, OnDestroy {
             this.nodeAspects.splice(this.nodeAspects.indexOf(prefixedName), 1);
         }
         this.updateEqualityOfAspectList();
-        this.valueChanged.emit(this.nodeAspects);
+        this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
     }
 
     reset() {
         if (this.nodeAspectStatus && this.nodeAspectStatus.length > 0) {
             this.nodeAspects.splice(0, this.nodeAspects.length, ...this.nodeAspectStatus);
             this.hasEqualAspect = true;
-            this.valueChanged.emit(this.nodeAspects);
+            this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
         } else {
             this.clear();
         }
@@ -110,7 +112,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
     clear() {
         this.nodeAspects = [];
         this.updateEqualityOfAspectList();
-        this.valueChanged.emit(this.nodeAspects);
+        this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
     }
 
     getId(aspect: any): string {

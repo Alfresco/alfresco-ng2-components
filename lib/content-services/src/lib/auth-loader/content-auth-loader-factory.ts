@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { Page } from '@playwright/test';
-import { BaseComponent } from '../base.component';
+import { ContentAuthLoaderService } from './content-auth-loader.service';
 
-export class TooltipComponent extends BaseComponent {
-    private static rootElement = 'mat-tooltip-component';
-    public content = this.getChild('div');
-
-    constructor(page: Page) {
-        super(page, TooltipComponent.rootElement);
-    }
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+/**
+ * Create a content auth factory
+ *
+ * @param authLoaderService service dependency
+ * @returns factory function
+ */
+export function contentAuthLoaderFactory(authLoaderService: ContentAuthLoaderService): () => void {
+    return () => authLoaderService.init();
 }
