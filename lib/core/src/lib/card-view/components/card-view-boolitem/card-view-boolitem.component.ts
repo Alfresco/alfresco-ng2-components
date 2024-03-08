@@ -25,10 +25,10 @@ import { BaseCardView } from '../base-card-view';
     templateUrl: './card-view-boolitem.component.html',
     styles: [
         `
-            .adf-property-value {
-                padding: 15px 0;
-            }
-        `
+                    .adf-property-value {
+                        padding: 15px 0;
+                    }
+                `
     ]
 })
 
