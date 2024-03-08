@@ -90,7 +90,7 @@
     mat-form-field {
         width: 100%;
     }
-    /* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
+
     /* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
     .mat-input-placeholder {
         top: 1.8em;
@@ -103,7 +103,7 @@
             background-color: 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
             color: var(--theme-primary-color);
         }
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-prefix {
             color: var(--theme-primary-color);
@@ -134,11 +134,13 @@
         & .mat-mdc-card-header-text {
             margin: 0 !important;
         }
+
         
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & .mat-tab-body-content {
             overflow: hidden;
         }
+
         
         /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & .mdc-tab__text-label {
@@ -153,6 +155,7 @@
         & .mat-ink-bar {
             height: 4px;
         }
+
         
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         & .mat-mdc-text-field-wrapper {
@@ -224,7 +227,7 @@
             height: 36px;
             border-radius: 5px;
         }
-        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+
         /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
         & .mdc-button__label {
             width: 58px;
@@ -242,7 +245,7 @@
             flex: 1;
         }
     }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+
     /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     &-left-label-input-container .mat-form-field-label-wrapper {
         top: auto;
