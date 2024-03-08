@@ -23,6 +23,7 @@
     }
 
     &.adf-dynamic-chip-list-paginated {
+        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
         mat-chip-list {
             width: 100%;
 
