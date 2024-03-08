@@ -152,7 +152,7 @@ describe('VersionListComponent', () => {
 
                 expect(versionFileName).toBe('test-file-name');
                 expect(versionIdText).toBe('1.0');
-                expect(versionComment).toBe('test-version-comment');
+                expect(versionComment.trim()).toBe('test-version-comment');
                 done();
             });
         });
