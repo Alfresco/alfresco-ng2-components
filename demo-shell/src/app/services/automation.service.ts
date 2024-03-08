@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
+import { AppConfigService, UserPreferencesService, StorageService, AuthenticationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../../../../lib/core/src/lib/app-config/app-config.service';
-import { AlfrescoApiService } from '../../../../lib/content-services/src/lib/services/alfresco-api.service';
-import { StorageService } from '../../../../lib/core/src/lib/common/services/storage.service';
-import { UserPreferencesService } from '../../../../lib/core/src/lib/common/services/user-preferences.service';
-import { DemoForm } from '../../../../lib/core/src/lib/mock/form/demo-form.mock';
-import { AuthenticationService } from '../../../../lib/core/src/lib/auth/services/authentication.service';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
+import { DemoForm } from 'lib/core/src/lib/mock/form/demo-form.mock';
 
 @Injectable({
     providedIn: 'root'
