@@ -120,6 +120,7 @@ describe('Start Task - Custom App', () => {
         fifteenValue: 15,
         twenty: '20',
         twentyValue: 20,
+        twentyFiveValue: 25,
         default: '25'
     };
 
@@ -551,6 +552,7 @@ describe('Start Task - Custom App', () => {
         });
 
         it('[C286598] Should be able to see all tasks when choosing All from state drop down', async () => {
+            await taskListSinglePage.typeItemsPerPage(itemsPerPage.twentyFiveValue);
             await taskListSinglePage.selectState('All');
             await taskListSinglePage.taskList().getDataTable().waitTillContentLoaded();
 
