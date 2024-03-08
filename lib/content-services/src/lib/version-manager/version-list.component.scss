@@ -1,10 +1,12 @@
 .adf-version-list {
-    &-viewport {
+    .adf-version-list-viewport {
         height: 100%;
+        overflow-x: hidden;
     }
 
     .adf-version-list-item {
-        border-bottom: 1px solid #d8d8d8;
+        border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+        width: 100vw;
     }
 
     &-item-version {
@@ -16,7 +18,12 @@
     }
 
     &-item-comment {
+        width: 500px;
         opacity: 0.5;
+
+        @media screen and (max-width: 629px) {
+            width: 97%;
+        }
     }
 
     &-item-name,
