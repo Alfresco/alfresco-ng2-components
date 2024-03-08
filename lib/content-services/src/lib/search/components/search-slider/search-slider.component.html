@@ -3,7 +3,7 @@
     [max]="max"
     [step]="step"
     class="adf-search-slider"
-    data-automation-id="slider-range" #ngSlider>
+    data-automation-id="slider-range" #ngSlider><input matSliderThumb />
     <input
         matSliderThumb
         (change)="onChangedHandler({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value})"
