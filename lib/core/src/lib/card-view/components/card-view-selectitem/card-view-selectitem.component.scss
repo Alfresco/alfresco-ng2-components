@@ -20,7 +20,7 @@
             border-radius: 6px;
 
             /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
-            .mat-select-value {
+            .mat-mdc-select-value {
                 color: var(--adf-metadata-action-button-clear-color);
             }
         }
