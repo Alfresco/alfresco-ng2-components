@@ -274,8 +274,8 @@ export const materialLocators = {
     class: '.mat-mdc-option',
     group: 'mat-optgroup',
     text: {
-      class: '.mat-mdc-option-text',
-      root: 'mat-option-text'
+      class: '.mdc-list-item__primary-text',
+      root: 'span'
     }
   },
   Paginator: {
