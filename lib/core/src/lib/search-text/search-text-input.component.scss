@@ -20,7 +20,6 @@
     }
 
     &-input-form-field-divider {
-
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-underline {
             background-color: var(--adf-theme-primary-50);
