@@ -21,7 +21,7 @@ import { materialLocators } from './material-locators';
 
 export class TooltipComponent extends BaseComponent {
     private static rootElement = materialLocators.Tooltip.root;
-    public content = this.getChild('div');
+    public content = this.getChild(materialLocators.Tooltip.message);
 
     constructor(page: Page) {
         super(page, TooltipComponent.rootElement);
