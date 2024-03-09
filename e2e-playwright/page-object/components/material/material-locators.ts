@@ -20,6 +20,7 @@ export const materialLocators = {
     root: 'mat-error'
   },
   Tooltip: {
-    root: 'mat-tooltip-component'
+    root: 'mat-tooltip-component',
+    message: '.mdc-tooltip__surface'
   }
 };
