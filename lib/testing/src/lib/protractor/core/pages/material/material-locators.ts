@@ -391,12 +391,12 @@ export const materialLocators = {
         root: 'mat-tab-label-active'
       },
       content: {
-        class: '.mat-mdc-tab-label-content',
+        class: '.mdc-tab__content',
         root: 'mat-tab-label-content'
       }
     },
     labels: {
-      class: '.mat-mdc-tab-labels'
+      class: '.mdc-tab__text-label'
     },
     list: '.mat-mdc-tab-list'
   },
