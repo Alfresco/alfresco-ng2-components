@@ -89,7 +89,7 @@ export const materialLocators = {
     }
   },
   Checked: {
-    root: 'mat-checked'
+    root: 'mdc-switch--checked'
   },
   Chip: {
     root: 'mat-chip',
@@ -345,7 +345,8 @@ export const materialLocators = {
     toggle: {
       class: '.mat-mdc-slide-toggle',
       root: 'mat-slide-toggle',
-      input: '.mat-mdc-slide-toggle-input'
+      input: '.mat-mdc-slide-toggle-input',
+      checked: 'mat-mdc-slide-toggle-checked'
     }
   },
   Selection: {
