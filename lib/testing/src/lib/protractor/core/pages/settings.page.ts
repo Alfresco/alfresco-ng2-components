@@ -136,7 +136,7 @@ export class SettingsPage {
     async setSilentLogin(enableToggle) {
         await BrowserVisibility.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
-        const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes(materialLocators.Checked.root);
+        const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes(materialLocators.Slide.toggle.checked);
 
         if ((isChecked && !enableToggle) || (!isChecked && enableToggle)) {
             await BrowserActions.click(this.silentLoginToggleLabel);
@@ -146,7 +146,7 @@ export class SettingsPage {
     async setImplicitFlow(enableToggle) {
         await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
 
-        const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes(materialLocators.Checked.root);
+        const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes(materialLocators.Slide.toggle.checked);
 
         if ((isChecked && !enableToggle) || (!isChecked && enableToggle)) {
             await BrowserActions.click(this.implicitFlowLabel);
