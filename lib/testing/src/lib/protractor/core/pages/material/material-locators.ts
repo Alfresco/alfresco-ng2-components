@@ -385,10 +385,10 @@ export const materialLocators = {
       content: '.mat-mdc-tab-body-content'
     },
     label: {
-      class: '.mat-mdc-tab-label',
+      class: '.mdc-tab',
       root: 'mat-tab-label',
       active: {
-        class: '.mat-mdc-tab-label-active',
+        class: '.mdc-tab--active',
         root: 'mat-tab-label-active'
       },
       content: {
@@ -397,7 +397,10 @@ export const materialLocators = {
       }
     },
     labels: {
-      class: '.mdc-tab__text-label'
+      class: '.mdc-tab__text-label',
+      container: {
+        class: '.mat-mdc-tab-labels'
+      }
     },
     list: '.mat-mdc-tab-list'
   },
