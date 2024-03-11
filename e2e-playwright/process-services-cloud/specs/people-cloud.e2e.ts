@@ -66,7 +66,7 @@ test.describe('People component stories tests', () => {
         await expect(peopleComponent.listbox.allOptions).not.toContainText(expectedExcludedUsers);
     });
 
-    test('No Users', async ({ processServicesCloud, peopleComponent }) => {
+    test('No Users - change for testing', async ({ processServicesCloud, peopleComponent }) => {
         const expectedInformation = 'No user found with the username user';
 
         await processServicesCloud.navigateTo({moduleNames:['people-cloud'], componentName: 'people-cloud', story: 'no-users' });
