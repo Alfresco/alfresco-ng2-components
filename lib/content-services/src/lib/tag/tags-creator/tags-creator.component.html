@@ -1,19 +1,20 @@
 <div class="adf-tags-creation">
     <div *ngIf="tagNameControlVisible" class="adf-tag-name-field">
         <input #tagNameInput
-                class="adf-tag-search-field"
-                matInput
-                autocomplete="off"
-                [formControl]="tagNameControl"
-                (keyup.enter)="addTag()"
-                adf-auto-focus
-                placeholder="{{'TAG.TAGS_CREATOR.TAG_SEARCH_PLACEHOLDER' | translate}}"
+               class="adf-tag-search-field"
+               matInput
+               autocomplete="off"
+               [formControl]="tagNameControl"
+               (keyup.enter)="addTag()"
+               adf-auto-focus
+               placeholder="{{'TAG.TAGS_CREATOR.TAG_SEARCH_PLACEHOLDER' | translate}}"
         />
-        <mat-error *ngIf="tagNameControl.invalid && tagNameControl.touched">{{ tagNameErrorMessageKey | translate }}</mat-error>
+        <mat-error *ngIf="tagNameControl.invalid && tagNameControl.touched">{{ tagNameErrorMessageKey | translate }}
+        </mat-error>
     </div>
     <p
-       class="adf-no-tags-message"
-       *ngIf="showEmptyTagMessage">
+        class="adf-no-tags-message"
+        *ngIf="showEmptyTagMessage">
         {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
     <div
@@ -38,9 +39,10 @@
     class="adf-existing-tags-panel"
     *ngIf="existingTagsPanelVisible">
     <span *ngIf="!spinnerVisible || existingTags"
-        class="adf-create-tag-label"
-        (click)="addTag()"
-        [hidden]="tagNameControl.invalid || typing">
+          class="adf-create-tag-label"
+          (click)="addTag()"
+          tabindex="0" (keyup.enter)="addTag()"
+          [hidden]="tagNameControl.invalid || typing">
         {{ 'TAG.TAGS_CREATOR.CREATE_TAG' | translate : { tag: tagNameControl.value } }}
     </span>
     <p *ngIf="!spinnerVisible && existingTags" class="adf-existing-tags-label">

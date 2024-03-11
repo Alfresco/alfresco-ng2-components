@@ -30,7 +30,7 @@
                             (click)="onExpanderClicked(currentRootElement)">
                         <mat-icon>{{ currentRootElement?.isExpanded ? 'expand_more' : 'expand_less' }}</mat-icon>
                     </button>
-                    <span (click)="onExpanderClicked(currentRootElement)"
+                    <span (click)="onExpanderClicked(currentRootElement)" tabindex=0 (keyup.enter)="onExpanderClicked(currentRootElement)"
                           [id]="'container-header-label-'+currentRootElement?.id">{{currentRootElement.name | translate }}</span>
                 </h4>
             </div>

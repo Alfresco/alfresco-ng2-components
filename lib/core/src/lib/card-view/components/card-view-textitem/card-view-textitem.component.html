@@ -93,7 +93,9 @@
         class="adf-textitem-clickable"
         [ngClass]="{ 'adf-property-read-only': !isEditable }"
         [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
-        (click)="clicked()">
+         tabindex="0"
+         (keyup.enter)="clicked()"
+         (click)="clicked()">
         <mat-form-field class="adf-property-field adf-card-textitem-field" appearance="standard"
             [floatLabel]="'never'">
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">

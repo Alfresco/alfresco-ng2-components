@@ -1,7 +1,10 @@
 <mat-list>
     <mat-list-item *ngFor="let currentEntry of tagsEntries; let idx = index">
-        <div class="adf-tag-actions-container" id="tag_delete_{{currentEntry.entry.tag}}" (click)="removeTag(currentEntry.entry.id)">
-            <div class="adf-tag-actions-delete-text" id="tag_name_{{currentEntry.entry.tag}}">{{currentEntry.entry.tag}}</div>
+        <div class="adf-tag-actions-container" id="tag_delete_{{currentEntry.entry.tag}}" tabindex="0"
+             (keyup.enter)="removeTag(currentEntry.entry.id)" (click)="removeTag(currentEntry.entry.id)">
+            <div class="adf-tag-actions-delete-text"
+                 id="tag_name_{{currentEntry.entry.tag}}">{{ currentEntry.entry.tag }}
+            </div>
             <mat-icon class="adf-tag-actions-delete-icon">delete</mat-icon>
         </div>
     </mat-list-item>
@@ -17,7 +20,9 @@
                     (keypress)="cleanErrorMsg()"
                     [(ngModel)]="newTagName"
                 />
-                <mat-hint data-automation-id="errorMessage" *ngIf="error" [ngStyle]="{'color': 'red'}" align="start">{{errorMsg}}</mat-hint>
+                <mat-hint data-automation-id="errorMessage" *ngIf="error" [ngStyle]="{'color': 'red'}"
+                          align="start">{{ errorMsg }}
+                </mat-hint>
             </mat-form-field>
         </td>
         <td>
@@ -28,7 +33,8 @@
                 (click)="addTag()"
                 [disabled]="disableAddTag"
                 mat-raised-button
-            >{{'TAG.BUTTON.ADD' | translate }}</button>
+            >{{ 'TAG.BUTTON.ADD' | translate }}
+            </button>
         </td>
     </tr>
 </table>

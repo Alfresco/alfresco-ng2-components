@@ -35,6 +35,8 @@
                 <div class="adf-tree-cell">
                     <span
                         class="adf-tree-cell-value"
+                        tabindex="0"
+                        (keyup.enter)="loadMoreSubnodes(node)"
                         (click)="loadMoreSubnodes(node)">
                         {{ 'ADF-TREE.LOAD-MORE-BUTTON' | translate: { name: loadMoreSuffix } }}
                     </span>
@@ -50,8 +52,8 @@
                 (contextmenu)="contextMenuSource = node">
                 <div class="adf-tree-expand-collapse-container">
                     <button *ngIf="node.hasChildren"
-                        class="adf-tree-expand-collapse-button"
-                        mat-icon-button>
+                            class="adf-tree-expand-collapse-button"
+                            mat-icon-button>
                         <mat-progress-spinner
                             color="primary"
                             mode="indeterminate"
@@ -68,12 +70,12 @@
                 </div>
                 <ng-container *ngIf="selectableNodes">
                     <mat-checkbox *ngIf="node.hasChildren; else noChildrenNodeCheckbox"
-                        color="primary"
-                        [id]="node.id"
-                        [checked]="descendantsAllSelected(node)"
-                        [indeterminate]="descendantsPartiallySelected(node)"
-                        (change)="onNodeSelected(node)"
-                        data-automation-id="has-children-node-checkbox">
+                                  color="primary"
+                                  [id]="node.id"
+                                  [checked]="descendantsAllSelected(node)"
+                                  [indeterminate]="descendantsPartiallySelected(node)"
+                                  (change)="onNodeSelected(node)"
+                                  data-automation-id="has-children-node-checkbox">
                     </mat-checkbox>
                     <ng-template #noChildrenNodeCheckbox>
                         <mat-checkbox
@@ -89,21 +91,23 @@
                     <span
                         class="adf-tree-cell-value"
                         [class.adf-tree-clickable-cell-value]="node.hasChildren"
+                        tabindex="0"
+                        (keyup.enter)="expandCollapseNode(node)"
                         (click)="expandCollapseNode(node)">
                         {{ node.nodeName }}
                     </span>
                 </div>
                 <div class="adf-tree-actions">
                     <button mat-icon-button
-                        [matMenuTriggerFor]="menu"
-                        [attr.id]="'action_menu_right_' + node.id">
+                            [matMenuTriggerFor]="menu"
+                            [attr.id]="'action_menu_right_' + node.id">
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
                         <ng-template
                             [ngTemplateOutlet]="nodeActionsMenuTemplate"
                             [ngTemplateOutletContext]="{ node: node }">
-                    </ng-template>
+                        </ng-template>
                     </mat-menu>
                 </div>
             </mat-tree-node>

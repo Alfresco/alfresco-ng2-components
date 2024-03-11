@@ -19,30 +19,35 @@
                                 />
                             </mat-form-field>
                         </div>
-                        <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()">
+                        <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()" tabindex="0"
+                             (keyup.enter)="editEnable()">
                             <mat-icon class="adf-report-icon">mode_edit</mat-icon>
-                            <h4>{{reportParameters.name}}</h4>
+                            <h4>{{ reportParameters.name }}</h4>
                         </div>
                     </adf-toolbar-title>
                     <adf-buttons-action-menu *ngIf="!isEditable">
                         <button mat-menu-item (click)="toggleParameters()" id="">
-                            <mat-icon>settings</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-SETTING' | translate }}</span>
+                            <mat-icon>settings</mat-icon>
+                            <span>{{ 'ANALYTICS.MESSAGES.ICON-SETTING' | translate }}</span>
                         </button>
                         <button mat-menu-item (click)="deleteReport(reportId)" id="delete-button">
-                            <mat-icon>delete</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-DELETE' | translate }}</span>
+                            <mat-icon>delete</mat-icon>
+                            <span>{{ 'ANALYTICS.MESSAGES.ICON-DELETE' | translate }}</span>
                         </button>
                         <div *ngIf="isFormValid()">
                             <button mat-menu-item (click)="showDialog('Export')" id="export-button">
-                                <mat-icon>file_download</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate }}</span>
+                                <mat-icon>file_download</mat-icon>
+                                <span>{{ 'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate }}</span>
                             </button>
                             <button mat-menu-item (click)="showDialog('Save')" id="save-button">
-                                <mat-icon>save</mat-icon><span>{{ 'ANALYTICS.MESSAGES.ICON-SAVE' | translate }}</span>
+                                <mat-icon>save</mat-icon>
+                                <span>{{ 'ANALYTICS.MESSAGES.ICON-SAVE' | translate }}</span>
                             </button>
                         </div>
                     </adf-buttons-action-menu>
                 </adf-toolbar>
                 <div *ngFor="let field of reportParameters.definition.parameters"
-                        [class.adf-is-hide]="isParametersHide()">
+                     [class.adf-is-hide]="isParametersHide()">
                     <div [ngSwitch]="field.type">
                         <div *ngSwitchCase="'integer'">
                             <br>
@@ -115,40 +120,42 @@
                             </analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchDefault>
-                            <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{field.type}}</span>
+                            <span>{{ 'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate }}: {{ field.type }}</span>
                         </div>
                     </div>
                 </div>
                 <ng-template #reportNameDialog>
                     <div id="report-dialog" class="adf-report-dialog">
-                        <h5 matDialogTitle id="report-dialog-title">{{action}} report</h5>
+                        <h5 matDialogTitle id="report-dialog-title">{{ action }} report</h5>
                         <div mat-dialog-content>
                             <div *ngIf="isSaveAction()" id="save-title-submessage" class="adf-export-message">
-                                {{'DIALOG.SAVE_MESSAGE' | translate}}
+                                {{ 'DIALOG.SAVE_MESSAGE' | translate }}
                             </div>
                             <div class="adf-save-export-input">
                                 <mat-form-field class="adf-example-full-width" floatPlaceholder="always">
                                     <input matInput
-                                        type="text"
-                                        id="repName"
-                                        placeholder="Report Name"
-                                        [value]="reportName"
-                                        [(ngModel)]="reportName"
-                                        [ngModelOptions]="{standalone: true}">
+                                           type="text"
+                                           id="repName"
+                                           placeholder="Report Name"
+                                           [value]="reportName"
+                                           [(ngModel)]="reportName"
+                                           [ngModelOptions]="{standalone: true}">
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="adf-report-dialog-actions" mat-dialog-actions>
                             <button mat-button
-                                color="accent"
-                                type="button"
-                                id="close-dialog-button"
-                                (click)="closeDialog()">Close</button>
+                                    color="accent"
+                                    type="button"
+                                    id="close-dialog-button"
+                                    (click)="closeDialog()">Close
+                            </button>
                             <button mat-button
-                                color="primary"
-                                type="button"
-                                id="action-dialog-button"
-                                (click)="performAction(action, reportParamQuery)">{{action}}</button>
+                                    color="primary"
+                                    type="button"
+                                    id="action-dialog-button"
+                                    (click)="performAction(action, reportParamQuery)">{{ action }}
+                            </button>
                         </div>
                     </div>
                 </ng-template>

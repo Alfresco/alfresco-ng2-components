@@ -52,7 +52,7 @@
                                 <th *ngFor="let label of report.labels">{{label | translate}}</th>
                             </tr>
                             <tr *ngFor="let rows of report.datasets" class="adf-analytics-row__entry">
-                                <td *ngFor="let row of rows" (click)="toggleDetailsTable()">{{row | translate }}</td>
+                                <td *ngFor="let row of rows" (click)="toggleDetailsTable()" tabindex=0 (keyup.enter)="toggleDetailsTable()">{{row | translate }}</td>
                             </tr>
                         </table>
                     </div>

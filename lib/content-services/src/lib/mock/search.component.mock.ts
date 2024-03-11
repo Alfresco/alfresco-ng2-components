@@ -119,7 +119,9 @@ export const errorJson = {
         >
             <ng-template let-data>
                 <ul id="autocomplete-search-result-list">
-                    <li *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked()">
+                    <li *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked()"
+                        tabindex="0"
+                        (keyup.enter)="elementClicked()">
                         <div id="result_option_{{ idx }}">
                             <span>{{ item?.entry.name }}</span>
                         </div>

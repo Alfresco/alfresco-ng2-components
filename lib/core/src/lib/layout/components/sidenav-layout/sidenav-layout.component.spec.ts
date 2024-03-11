@@ -54,7 +54,7 @@ export class DummyLayoutContainerComponent {
 
                 <adf-sidenav-layout-header>
                     <ng-template let-toggleMenu="toggleMenu">
-                        <div id="header-test" (click)="toggleMenu()"></div>
+                        <div id="header-test" (click)="toggleMenu()" tabindex=0 (keyup.enter)="toggleMenu()"></div>
                     </ng-template>
                 </adf-sidenav-layout-header>
 

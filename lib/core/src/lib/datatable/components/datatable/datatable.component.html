@@ -99,7 +99,9 @@
                     *ngIf="isResizingEnabled && col.resizable"
                     [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
                     adf-resize-handle
+                    tabindex="0"
                     (click)="$event.stopPropagation()"
+                    (keyup.enter)="$event.stopPropagation()"
                     class="adf-datatable__resize-handle"
                     [resizableContainer]="resizableElement">
                     <div class="adf-datatable__resize-handle--divider"></div>
@@ -197,8 +199,9 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect" class="adf-datatable-cell adf-datatable-checkbox">
+                <label *ngIf="multiselect" for="select-file" class="adf-datatable-cell adf-datatable-checkbox">
                     <mat-checkbox
+                        id="select-file"
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
                         role="checkbox"
@@ -215,6 +218,7 @@
                      [attr.aria-selected]="row.isSelected"
                      [attr.aria-label]="col.title ? (col.title | translate) : null"
                      (click)="onRowClick(row, $event)"
+                     tabindex="0"
                      (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                      [adf-context-menu]="getContextMenuActions(row, col)"
                      [adf-context-menu-enabled]="contextMenu"

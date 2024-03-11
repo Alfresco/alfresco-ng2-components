@@ -23,7 +23,7 @@ import { SearchFacetFiltersService } from '../services/search-facet-filters.serv
 import { SearchQueryBuilderService } from '../services/search-query-builder.service';
 
 @Component({
-    template: `<button adf-reset-search></button>`
+    template: `<button adf-reset-search aria-label="reset-search"></button>`
 })
 class TestComponent {
 }

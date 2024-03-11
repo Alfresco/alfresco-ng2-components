@@ -38,6 +38,8 @@ import { takeUntil } from 'rxjs/operators';
             class="adf-datatable-cell-value"
             title="{{ displayTooltip$ | async }}"
             (click)="onClick()"
+            tabindex="0"
+            (keyup.enter)="onClick()"
         >
             {{ displayText$ | async }}
         </span>
