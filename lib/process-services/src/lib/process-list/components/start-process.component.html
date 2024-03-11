@@ -45,12 +45,13 @@
                             </mat-autocomplete>
                             <ng-container *ngIf="!isProcessDefinitionsLoading ; else showProcessDefLoadingTemplate">
                                 <button
+                                    class="adf-start-process-button"
                                     id="adf-select-process-dropdown"
                                     *ngIf="showSelectProcessDropdown"
                                     mat-icon-button
                                     (click)="displayDropdown($event)"
                                     [disabled]="disableDropdownButton()"
-                                    [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate">
+                                    [attr.aria-label]="'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate | uppercase">
                                     <mat-icon>arrow_drop_down</mat-icon>
                                 </button>
                             </ng-container>
@@ -89,6 +90,7 @@
                                 (outcomeClick)="onOutcomeClick($event)"
                                 [showRefreshButton]="false">
                                 <button
+                                    class="adf-start-process-button"
                                     adf-form-custom-button
                                     mat-button
                                     (click)="cancelStartProcess()"
@@ -118,6 +120,7 @@
             </div>
             <div class="mat-content-actions" *ngIf="!hasStartForm()">
                 <button
+                    class="adf-start-process-button"
                     mat-button
                     *ngIf="!hasStartForm()"
                     (click)="cancelStartProcess()"
@@ -132,7 +135,7 @@
                     (click)="startProcess()"
                     data-automation-id="btn-start"
                     id="button-start"
-                    class="btn-start">
+                    class="btn-start adf-start-process-button">
                     {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
                 </button>
             </div>

@@ -252,7 +252,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-icon-cell>
                             </div>
-                            <div *ngSwitchCase="'date'" class="adf-cell-value" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
+                            <div *ngSwitchCase="'date'" class="adf-cell-value adf-cell-date" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  [attr.data-automation-id]="'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium') ">
                                 <adf-date-cell class="adf-datatable-center-date-column-ie"
                                     [data]="data"
@@ -401,7 +401,6 @@
         <div *ngIf="!loading && noPermission"
              role="row"
              [class.adf-datatable-row]="display === 'list'"
-             [class.adf-datatable-card-permissions]="display === 'gallery'"
              class="adf-no-permission__row">
             <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="noPermissionTemplate"

@@ -1,11 +1,4 @@
 .adf {
-    &-group-short-name {
-        background: var(--theme-primary-color);
-        width: 40px;
-        height: 40px;
-        box-shadow: none !important;
-    }
-
     &-cloud-group-list {
         margin: 5px 0;
         padding: 10px 0;
@@ -17,6 +10,10 @@
 
             .adf-group-short-name {
                 margin-right: 20px;
+                background: var(--theme-primary-color);
+                width: 40px;
+                height: 40px;
+                box-shadow: none;
             }
         }
     }
@@ -37,7 +34,7 @@
         }
 
         &-option-not-active:not(&:active) {
-            background: inherit !important;
+            background: inherit;
             color: var(--adf-group-cloud-autosuggest-result-disabled-color);
         }
 

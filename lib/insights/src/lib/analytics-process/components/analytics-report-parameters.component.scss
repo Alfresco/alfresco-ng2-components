@@ -18,10 +18,14 @@
     background-color: var(--theme-warn-color);
 }
 
-.adf-edit-report-title {
-    float: left;
-    font-size: var(--theme-title-font-size) !important;
-    padding-top: 19px;
+.adf-full-width-input {
+    width: 100%;
+
+    .adf-edit-report-title[type='text'] {
+        float: left;
+        font-size: var(--theme-title-font-size);
+        padding-top: 19px;
+    }
 }
 
 .adf-report-icon {
@@ -45,10 +49,6 @@
     padding-top: 10px;
 }
 
-.adf-full-width-input {
-    width: 100%;
-}
-
 .adf-is-hide {
     height: 0;
     overflow: hidden;
@@ -59,9 +59,9 @@
     border-bottom: solid 1px var(--adf-theme-foreground-divider-color);
     padding-top: 10px;
 
-    .adf-toolbar-container {
-        border: 0 !important;
-        padding: 0 !important;
+    .adf-toolbar-container.adf-toolbar-container-row {
+        border: 0;
+        padding: 0;
     }
 }
 
