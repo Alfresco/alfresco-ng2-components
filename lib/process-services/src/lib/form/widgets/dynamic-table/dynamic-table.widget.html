@@ -16,6 +16,8 @@
                     <tr *ngFor="let row of content.rows; let idx = index" tabindex="0" id="{{content.id}}-row-{{idx}}"
                         [class.adf-dynamic-table-widget__row-selected]="row.selected" (keyup)="onKeyPressed($event, row)">
                         <td *ngFor="let column of content.visibleColumns"
+                            tabindex="0"
+                            (keyup.enter)="onRowClicked(row)"
                             (click)="onRowClicked(row)">
                             <span *ngIf="column.type !== 'Boolean' else checkbox">
                                 {{ getCellValue(row, column) }}

@@ -7,7 +7,7 @@
                 <div *ngIf="!hasPeople()" class="adf-assignment-count" id="no-people-label">
                     {{ 'ADF_TASK_LIST.DETAILS.PEOPLE.NONE' | translate }}
                 </div>
-                <div *ngIf="isEditMode()" class="adf-add-people" (click)="onAddAssignment()">
+                <div *ngIf="isEditMode()" class="adf-add-people" (click)="onAddAssignment()" tabindex=0 (keyup.enter)="onAddAssignment()">
                     <mat-icon class="adf-add-person-icon">person_add</mat-icon>
                 </div>
             </div>
