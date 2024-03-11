@@ -44,14 +44,6 @@
         align-items: center;
     }
 
-    .adf-show {
-        display: block !important;
-    }
-
-    .adf-hide {
-        display: none !important;
-    }
-
     .adf-icon-inline {
         position: absolute;
         display: block;
@@ -153,10 +145,6 @@
         margin-top: 5px;
     }
 
-    .adf-login-checking-spinner > svg > circle {
-        stroke-width: 16% !important;
-    }
-
     .adf-login-controls {
         padding: 0 0 26px;
         overflow: visible;
@@ -202,7 +190,7 @@
         & input:-webkit-autofill {
             /* stylelint-disable */
             -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
-            -webkit-text-fill-color: var(--adf-theme-foreground-text-color) !important;
+            -webkit-text-fill-color: var(--adf-theme-foreground-text-color);
             /* stylelint-enable */
         }
     }
@@ -240,8 +228,8 @@
         padding-bottom: 18px;
     }
 
-    .adf-login-remember-me {
-        color: var(--adf-theme-foreground-text-color) !important;
+    .adf-login-remember-me:has(.adf-login-remember-me-label) {
+        color: var(--adf-theme-foreground-text-color);
     }
 
     .adf-login-action-container {

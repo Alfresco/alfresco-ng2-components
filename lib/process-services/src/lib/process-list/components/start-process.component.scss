@@ -18,10 +18,6 @@
         .mat-content-actions {
             text-align: right;
         }
-
-        .mat-button {
-            text-transform: uppercase !important;
-        }
     }
 
     &-title {
@@ -51,14 +47,14 @@
     }
 
     &-start-form-container {
-        .mat-card {
-            box-shadow: none !important;
-            padding: 0 !important;
+        .adf-start-form-card:has(.adf-start-form-header) {
+            box-shadow: none;
+            padding: 0;
         }
     }
 
-    &-start-form-actions {
-        text-align: right !important;
+    &-start-form-actions:has(.adf-start-form-actions-button) {
+        text-align: right;
     }
 
     &-start-process-definition-container {

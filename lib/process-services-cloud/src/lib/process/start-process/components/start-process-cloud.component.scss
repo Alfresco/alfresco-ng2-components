@@ -34,14 +34,14 @@
     }
 
     &-form-container {
-        .adf-form-container-card {
-            box-shadow: none !important;
-            padding: 0 !important;
+        .adf-form-container-card:has(.adf-form-container-card-content) {
+            box-shadow: none;
+            padding: 0;
         }
     }
 
     &-start-form-actions {
-        text-align: right !important;
+        text-align: right;
     }
 
     &-loading {

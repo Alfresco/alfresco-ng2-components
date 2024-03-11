@@ -1,9 +1,5 @@
 @import 'styles/flex';
 
-.adf-data-cell {
-    cursor: pointer !important;
-}
-
 .adf-attachment-list-loading-margin {
     margin-left: calc((100% - 100px) / 2);
     margin-right: calc((100% - 100px) / 2);
@@ -11,7 +7,7 @@
 
 .adf-empty-list-header {
     height: 32px;
-    opacity: 0.26 !important;
+    opacity: 0.26;
     font-size: var(--theme-headline-font-size);
     line-height: 1.33;
     letter-spacing: -1px;
@@ -23,7 +19,7 @@
     font-size: 56px;
     line-height: 1;
     letter-spacing: -2px;
-    margin-top: 40px !important;
+    margin-top: 40px;
     word-break: break-all;
     white-space: pre-line;
 }

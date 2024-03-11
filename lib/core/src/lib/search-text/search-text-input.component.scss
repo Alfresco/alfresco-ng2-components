@@ -1,5 +1,5 @@
-.adf-search-container {
-    overflow: hidden !important;
+.adf-search-container:has(.adf-input-form-field-divider) {
+    overflow: hidden;
 }
 
 .adf-search-button {

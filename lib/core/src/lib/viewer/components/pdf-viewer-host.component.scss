@@ -184,8 +184,8 @@
         .adf-loadingIcon {
             width: 100px;
             height: 100px;
-            left: 50% !important;
-            top: 50% !important;
+            left: 50%;
+            top: 50%;
 
             margin-top: -50px;
             margin-left: -50px;
@@ -210,7 +210,7 @@
     }
 
     .adf-hidden, [hidden] {
-        display: none !important;
+        display: none;
     }
 }
 

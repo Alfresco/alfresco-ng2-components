@@ -37,6 +37,7 @@
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
     "shorthand-property-no-redundant-values": true,
+    "declaration-no-important": true,
     "property-case": "lower",
     "no-duplicate-at-import-rules": true,
     "declaration-block-no-duplicate-properties": [
