@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .app-form-container {
     padding: 10px;
 }
@@ -31,7 +33,7 @@
 }
 
 .app-form-editor-buttons {
-    & > .mat-mdc-raised-button {
+    & > #{$mat-raised-button} {
         margin-right: 5px;
     }
 }
