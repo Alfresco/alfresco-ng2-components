@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-message-card {
     width: 60%;
     box-sizing: border-box;
@@ -46,7 +48,7 @@
                 border-radius: 5px;
             }
 
-            & .mdc-button__label {
+            & #{$mat-button-label} {
                 opacity: 0.54;
                 font-size: var(--theme-button-font-size);
                 font-weight: bold;
