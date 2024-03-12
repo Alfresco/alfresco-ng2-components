@@ -16,10 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    CategorySelectorDialogComponent,
-    CategorySelectorDialogOptions
-} from '@alfresco/adf-content-services';
+import { CategorySelectorDialogComponent, CategorySelectorDialogOptions } from './category-selector.dialog';
 import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
