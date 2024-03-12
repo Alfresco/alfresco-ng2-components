@@ -1,8 +1,10 @@
+@import 'styles/mat-selectors';
+
 .app-cloud-layout-overflow {
     overflow: auto;
 }
 
-.app-cloud-layout-tab-body .mat-mdc-tab-body-content {
+.app-cloud-layout-tab-body #{$mat-tab-body-content} {
     height: 100%;
 }
 

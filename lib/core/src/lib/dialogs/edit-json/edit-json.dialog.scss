@@ -1,5 +1,7 @@
+@import 'styles/mat-selectors';
+
 .adf-edit-json-dialog {
-    .mat-mdc-dialog-content {
+    #{$mat-dialog-content} {
         height: 300px;
         overflow: hidden;
     }
