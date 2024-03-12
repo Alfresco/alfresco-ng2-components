@@ -16,7 +16,7 @@
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
-        #{$mat-content-actions} {
+        &-content-actions {
             text-align: right;
         }
         #{$mat-button} {
