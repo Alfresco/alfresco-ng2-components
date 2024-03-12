@@ -187,20 +187,20 @@ export const materialLocators = {
   Expansion: {
     panel: {
       root: 'mat-expansion-panel',
-      class: '.mat-mdc-expansion-panel',
+      class: '.mat-expansion-panel',
       body: {
         class: '.mat-mdc-expansion-panel-body'
       },
       content: {
-        class: '.mat-mdc-expansion-panel-content'
+        class: '.mat-expansion-panel-content'
       },
       header: {
-        class: '.mat-mdc-expansion-panel-header',
+        class: '.mat-expansion-panel-header',
         root: 'mat-expansion-panel-header'
       },
-      title: '.mat-mdc-expansion-panel-header-title'
+      title: '.mat-expansion-panel-header-title'
     },
-    indicator: '.mat-mdc-expansion-indicator'
+    indicator: '.mat-expansion-indicator'
   },
   Focus: {
     indicator: '.mat-mdc-focus-indicator'
