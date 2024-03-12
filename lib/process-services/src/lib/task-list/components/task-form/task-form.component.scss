@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-task-form {
     &-container {
         overflow: hidden;
@@ -8,13 +10,12 @@
         padding-right: 25px;
         padding-bottom: 25px;
 
-        & .mat-mdc-button {
+        & #{$mat-button} {
             height: 36px;
             border-radius: 5px;
         }
 
-        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
-        & .mdc-button__label {
+        & #{$mat-button-label} {
             width: 58px;
             height: 20px;
             opacity: 0.54;

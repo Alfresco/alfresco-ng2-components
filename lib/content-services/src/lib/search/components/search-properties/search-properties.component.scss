@@ -1,4 +1,6 @@
 /* stylelint-disable selector-class-pattern */
+@import 'styles/mat-selectors';
+
 adf-search-properties {
     .adf-search-properties-file-size-label {
         display: block;
@@ -19,14 +21,14 @@ adf-search-properties {
 
     .adf-search-properties-file-size-operator,
     .adf-search-properties-file-size-unit {
-        .mat-mdc-form-field-infix {
+        #{$mat-form-field-infix} {
             border: 1px solid var(--adf-theme-mat-grey-color-a400);
             border-radius: 5px;
             padding: 9px;
         }
 
-        &.mat-focused {
-            .mat-mdc-form-field-infix {
+        &#{$mat-focused} {
+            #{$mat-form-field-infix} {
                 outline: 2px auto -webkit-focus-ring-color;
             }
         }
@@ -39,33 +41,31 @@ adf-search-properties {
     adf-search-chip-autocomplete-input {
         display: block;
 
-        .mdc-text-field--outlined {
-            .mdc-text-field--outlined {
-                &-start,
-                &-end {
-                    border-top: 1px solid var(--adf-theme-mat-grey-color-a400);
-                    border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
-                }
+        #{$mat-text-field-outlined} {
+            &-start,
+            &-end {
+                border-top: 1px solid var(--adf-theme-mat-grey-color-a400);
+                border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
+            }
 
-                &-start {
-                    border-left: 1px solid var(--adf-theme-mat-grey-color-a400);
-                }
+            &-start {
+                border-left: 1px solid var(--adf-theme-mat-grey-color-a400);
+            }
 
-                &-end {
-                    border-right: 1px solid var(--adf-theme-mat-grey-color-a400);
-                }
+            &-end {
+                border-right: 1px solid var(--adf-theme-mat-grey-color-a400);
             }
         }
 
-        .mat-focused {
-            .mdc-text-field--outlined {
+        #{$mat-focused} {
+            #{$mat-text-field-outlined} {
                 outline: 2px auto -webkit-focus-ring-color;
             }
         }
 
-        .mat-form-field-appearance-outline {
-            .mdc-text-field--outlined-thick {
-                .mdc-text-field--outlined {
+        #{$mat-form-field-appearance-outline} {
+            #{$mat-text-field-outlined-thick} {
+                #{$mat-text-field-outlined} {
                     &-start,
                     &-end {
                         border-width: 1px;

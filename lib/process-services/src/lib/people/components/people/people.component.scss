@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-assignment-header {
     border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
     padding: 6px 20px;
@@ -24,7 +26,7 @@
     }
 }
 
-.adf-assignment-top-container.mat-mdc-card {
+.adf-assignment-top-container#{$mat-card} {
     border-top: 1px solid var(--adf-theme-foreground-divider-color);
     margin: 0;
     padding: 0;
