@@ -167,7 +167,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
                 this.classifiableChanged
                     .pipe(takeUntil(this.onDestroy$))
                     .subscribe(() => {
-                        console.log('classifiableChanged');
                         this.categories = [];
                         this.categoryNameControlVisible = false;
                         this.categoryNameControlVisibleChange.emit(false);

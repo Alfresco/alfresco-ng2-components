@@ -15,7 +15,7 @@ Allows the user to select one or multiple categories.
 
 | Name | Type      | Default value | Description |
 | ---- |-----------| ------------- | ----------- |
-| select | [`Subject<Category[]>`](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/js-api/src/api/content-rest-api/docs/CategoriesApi.md)  |  | Emites an array of selected categories when the dialog closes |
+| select | [`Subject<Category[]>`](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/js-api/src/api/content-rest-api/docs/CategoriesApi.md)  |  | Emits an array of selected categories when the dialog closes |
 | multiSelect | `boolean` | `true` | (optional) Toggles multiselect mode |
 
 ## Basic Usage 
