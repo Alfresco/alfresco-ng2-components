@@ -1,4 +1,5 @@
 @import 'styles/flex';
+@import 'styles/mat-selectors';
 
 .adf {
     &-attach-widget-container {
@@ -39,12 +40,11 @@
     &-attach-widget-repo-button {
         padding-left: 10px;
 
-        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
-        .mdc-button__label {
+        #{$mat-button-label} {
             display: inline;
         }
 
-        .mat-mdc-mini-fab.mat-accent {
+        #{$mat-mini-fab}#{$mat-accent} {
             background-color: inherit;
         }
     }
@@ -67,18 +67,17 @@
     }
 
     &-attach-files-row {
-        .mat-line {
+        #{$mat-line} {
             margin-bottom: 0;
         }
 
-        /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
-        .mdc-list-item__primary-text {
+        #{$mat-list-item-primary-text} {
             max-width: 200px;
         }
 
         @include layout-bp(lt-md) {
-            /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
-            .mdc-list-item__primary-text {
+
+            #{$mat-list-item-primary-text} {
                 max-width: 150px;
             }
         }
