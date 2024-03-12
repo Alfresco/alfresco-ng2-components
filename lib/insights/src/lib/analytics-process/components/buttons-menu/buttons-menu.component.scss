@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-buttons-menu {
     margin-right: 10px;
 
@@ -21,8 +23,7 @@
             display: none;
         }
 
-        /* stylelint-disable selector-class-pattern */
-        button > .mat-icon {
+        button > #{$material-icons} {
             color: black;
             margin: 0 10px;
         }

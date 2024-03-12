@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-card-view-dateitem {
     .adf-property-value {
         padding: 6px 0;
@@ -43,13 +45,13 @@
             justify-content: space-between;
             padding-bottom: 6px;
 
-            button.mat-mdc-icon-button {
+            button#{$mat-icon-button} {
                 line-height: 20px;
                 height: 20px;
                 width: 20px;
             }
 
-            mat-icon {
+            #{$mat-icon} {
                 width: 16px;
                 height: 16px;
                 opacity: 0.5;

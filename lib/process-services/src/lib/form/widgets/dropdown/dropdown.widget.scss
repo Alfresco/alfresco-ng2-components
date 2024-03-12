@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-dropdown-widget {
         width: 100%;
@@ -7,7 +9,7 @@
             width: 100%;
         }
 
-        .mat-mdc-select-value-text {
+        #{$mat-select-value-text} {
             font-size: var(--theme-body-1-font-size);
         }
 
