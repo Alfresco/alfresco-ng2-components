@@ -1,4 +1,6 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
+@import 'styles/mat-selectors';
+
 .adf-full-screen {
     width: 100%;
     height: 100%;
@@ -56,7 +58,7 @@
         flex-direction: column;
         height: 85vh;
 
-        .mat-mdc-progress-spinner {
+        #{$mat-progress-spinner} {
             margin: 0 auto;
         }
     }

@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 adf-comments {
     .adf-comments-container {
         height: 100%;
@@ -24,7 +26,7 @@ adf-comments {
             resize: vertical;
         }
 
-        .mat-mdc-form-field {
+        #{$mat-form-field} {
             width: 100%;
         }
     }
