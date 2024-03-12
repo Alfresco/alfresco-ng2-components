@@ -181,7 +181,7 @@ export const materialLocators = {
     root: 'mat-error'
   },
   Expanded: {
-    class: '.mat-mdc-expanded',
+    class: '.mat-expanded',
     root: 'mat-expanded'
   },
   Expansion: {
