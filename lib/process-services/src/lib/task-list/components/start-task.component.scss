@@ -1,11 +1,12 @@
 @import 'styles/flex';
+@import 'styles/mat-selectors';
 
 /* stylelint-disable no-descending-specificity */
 .adf-new-task-heading {
     padding-top: 12px;
     border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
 
-    .mat-mdc-card-title {
+    #{$mat-card-title} {
         font-weight: bold;
         font-size: var(--theme-adf-task-title-font-size);
     }
@@ -68,21 +69,20 @@
 }
 
 adf-start-task {
-    .mat-mdc-button.adf-uppercase {
+    #{$mat-button}.adf-uppercase {
         text-transform: uppercase;
     }
 
     people-widget.adf-people-widget-content {
         width: 100%;
 
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        .mat-form-field-label-wrapper {
+        #{$mat-form-field-label} {
             top: -14px;
         }
     }
 
     .adf-people-widget-content {
-        .mat-mdc-form-field {
+        #{$mat-form-field} {
             width: 100%;
         }
 
@@ -96,7 +96,7 @@ adf-start-task {
     }
 
     .adf {
-        &-start-task-input-container .mat-mdc-text-field-wrapper {
+        &-start-task-input-container #{$mat-form-field-wrapper} {
             padding-top: 8px;
         }
 
@@ -136,8 +136,7 @@ adf-start-task {
                 border-color: var(--theme-warn-color);
             }
 
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mat-form-field-prefix {
+            #{$mat-form-field-prefix} {
                 color: var(--theme-warn-color);
             }
 
