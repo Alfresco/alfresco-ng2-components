@@ -116,6 +116,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     @Input()
     parentId: string;
 
+    /** Toggles multiselect mode */
+    @Input()
+    multiSelect = true;
+
     /** Emits when state of upper categories list changes */
     @Output()
     categoriesChange = new EventEmitter<Category[]>();
@@ -159,13 +163,16 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         if (!this.isCRUDMode) {
             this._categoryNameControl.removeValidators(Validators.required);
             this.categories.forEach((category) => this.initialCategories.push(category));
-            this.classifiableChanged
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                this.categories = [];
-                this.categoryNameControlVisible = false;
-                this.categoryNameControlVisibleChange.emit(false);
-            });
+            if (this.classifiableChanged) {
+                this.classifiableChanged
+                    .pipe(takeUntil(this.onDestroy$))
+                    .subscribe(() => {
+                        console.log('classifiableChanged');
+                        this.categories = [];
+                        this.categoryNameControlVisible = false;
+                        this.categoryNameControlVisibleChange.emit(false);
+                    });
+            }
         }
     }
 

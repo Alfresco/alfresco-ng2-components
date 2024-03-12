@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>
+  {{ 'CATEGORIES_MANAGEMENT.SELECT_EXISTING_CATEGORY' | translate }}
+</h1>
+
+<mat-dialog-content class="adf-dialog-content">
+    <adf-categories-management
+            (categoriesChange)="categories = $event"
+            [categoryNameControlVisible]="true"
+            [managementMode]="categoriesManagementMode"
+            [multiSelect]="multiSelect">
+    </adf-categories-management>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="acc-categories-dialog-actions">
+    <button
+            data-automation-id="category-selector-dialog-cancel-button"
+            mat-button
+            mat-dialog-close>
+        {{ 'NODE_SELECTOR.CANCEL' | translate }}
+    </button>
+    <button
+            (click)="selectCategories()"
+            [disabled]="!categories.length"
+            color="primary"
+            data-automation-id="category-selector-dialog-select-button"
+            mat-button>
+        {{ 'NODE_SELECTOR.CHOOSE' | translate }}
+    </button>
+</mat-dialog-actions>
