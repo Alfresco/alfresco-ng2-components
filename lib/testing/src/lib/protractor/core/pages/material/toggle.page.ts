@@ -30,9 +30,9 @@ export class TogglePage {
     }
 
     async disableToggle(toggle: ElementFinder): Promise<void> {
-        const check = await BrowserActions.getAttribute(toggle, 'class');
-        if (check.indexOf(materialLocators.Checked.root) >= 0) {
-            const elem = toggle.$$('input').first();
+        const slideToggle = await BrowserActions.getAttribute(toggle, 'class');
+        if (slideToggle.indexOf(materialLocators.Slide.toggle.checked) >= 0) {
+            const elem = toggle.$$('button').first();
             await BrowserActions.clickScript(elem);
         }
     }
