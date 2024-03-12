@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-attach-folder-widget-container {
         margin-bottom: 15px;
@@ -26,7 +28,7 @@
     &-attach-folder-files-row {
         padding-left: 8px;
 
-        .mat-line {
+        #{$mat-line} {
             margin-bottom: 0;
         }
     }

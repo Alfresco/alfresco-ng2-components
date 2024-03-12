@@ -1,6 +1,7 @@
 /* stylelint-disable no-descending-specificity */
 @use '@angular/material' as mat;
 @import '../../../styles/mixins';
+@import 'styles/mat-selectors';
 
 $data-table-header-font-size: var(--theme-caption-font-size) !default;
 $data-table-header-sort-icon-size: var(--theme-subheading-2-font-size) !default;
@@ -568,9 +569,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 }
 
 /* [Accessibility] Material checkbox labels */
-
-/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
-.adf-checkbox-sr-only .mat-mdc-checkbox label {
+.adf-checkbox-sr-only #{$mat-checkbox} label {
     position: absolute;
     width: 1px;
     height: 1px;

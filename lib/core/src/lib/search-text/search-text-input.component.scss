@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-search-container:has(.adf-input-form-field-divider) {
     overflow: hidden;
 }
@@ -20,14 +22,8 @@
     }
 
     &-input-form-field-divider {
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        .mat-form-field-underline {
+        #{$mat-form-field-underline} {
             background-color: var(--adf-theme-primary-50);
-
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mdc-line-ripple {
-                background-color: var(--adf-theme-primary-50);
-            }
         }
 
         font-size: var(--theme-subheading-2-font-size);
