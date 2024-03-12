@@ -1,4 +1,5 @@
 @import 'styles/flex';
+@import 'styles/mat-selectors';
 
 /* stylelint-disable scss/no-global-function-names */
 @mixin adf-line-clamp($line-height: 1.25, $lines: 3) {
@@ -48,7 +49,7 @@ $tile-themes: (
     flex-direction: column;
     height: 85vh;
 
-    .mat-mdc-progress-spinner {
+    #{$mat-progress-spinner} {
         margin: 0 auto;
     }
 }

@@ -1,4 +1,5 @@
 @import 'styles/flex';
+@import 'styles/mat-selectors';
 
 .adf {
     &-start-process {
@@ -11,16 +12,14 @@
             width: 100%;
         }
 
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        .mat-form-field-label {
+        #{$mat-form-field-label} {
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
-        .mat-content-actions {
+        #{$mat-content-actions} {
             text-align: right;
         }
-
-        .mat-mdc-button {
+        #{$mat-button} {
             text-transform: uppercase !important;
         }
     }
