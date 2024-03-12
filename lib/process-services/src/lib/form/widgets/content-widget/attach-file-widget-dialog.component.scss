@@ -1,5 +1,7 @@
+@import 'styles/mat-selectors';
+
 .adf-attach-file-widget-dialog {
-    .mat-mdc-dialog-actions {
+    #{$mat-dialog-actions} {
         background-color: var(--theme-background-color);
         display: flex;
         justify-content: flex-end;

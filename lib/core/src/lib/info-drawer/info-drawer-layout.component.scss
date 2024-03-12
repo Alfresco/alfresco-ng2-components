@@ -1,4 +1,5 @@
 @import '../styles/mixins';
+@import 'styles/mat-selectors';
 
 $adf-info-drawer-layout-title-font-size: var(--theme-title-font-size) !default;
 $adf-info-drawer-icon-size: 48px !default;
@@ -68,8 +69,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 margin-bottom: 0;
             }
 
-            /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
-            .adf-info-drawer-tabs .mat-tab-body-content {
+            .adf-info-drawer-tabs #{$mat-tab-body-content} {
                 .adf-manage-versions-empty,
                 .adf-manage-versions-no-permission {
                     margin: 0;

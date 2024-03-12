@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-property-list {
     background: var(--adf-card-view-background);
     border: var(--adf-card-view-border);
@@ -27,13 +29,11 @@
         .adf-property-field {
             width: 100%;
 
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mat-form-field-underline {
+            #{mat-form-field-underline} {
                 display: none;
             }
 
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mat-mdc-input-element {
+            #{mat-input-element} {
                 text-overflow: ellipsis;
                 color: var(--adf-metadata-property-panel-title-color);
                 padding: 6px 0;
@@ -41,37 +41,33 @@
             }
 
             .adf-card-view__key-value-pairs__row {
-                .mat-mdc-input-element {
+                #{$mat-input-element} {
                     margin-top: 0;
                     padding-left: 12px;
                 }
             }
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mat-mdc-form-field-infix {
+
+            #{$mat-form-field-infix} {
                 border-top-width: 0;
                 padding: 0;
             }
 
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mat-form-field-flex {
+            #{$mat-form-field-flex} {
                 padding-top: 0;
             }
 
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mat-form-field-wrapper {
+            #{$mat-form-field-wrapper} {
                 padding-bottom: 0;
             }
 
-            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-            .mat-form-field-label {
+            #{$mat-form-field-label} {
                 padding: 0;
                 justify-content: center;
                 display: flex;
                 flex-direction: column;
                 height: 20px;
 
-                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-                &.mat-form-field-empty {
+                &.adf-property-field-label--empty {
                     transform: translateY(-1.3437em) scale(1);
              }
             }
@@ -86,7 +82,7 @@
             background-color: var(--adf-metadata-buttons-background-color);
             border-radius: 6px;
 
-            &.mat-mdc-input-element {
+            #{$mat-input-element} {
                 color: var(--adf-metadata-action-button-clear-color);
                 padding: 6px 0 6px 12px;
                 margin: 5px 0 0;
@@ -96,7 +92,7 @@
         &.adf-property-readonly-value {
             color: var(--adf-metadata-property-panel-label-color);
 
-            &.mat-mdc-input-element {
+            #{$mat-input-element} {
                 color: var(--adf-metadata-property-panel-label-color);
             }
         }
