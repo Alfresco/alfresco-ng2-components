@@ -1,10 +1,12 @@
 /* stylelint-disable selector-class-pattern */
+@import 'styles/mat-selectors';
+
 adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
     }
 
-    .mat-mdc-form-field-infix {
+    #{$mat-form-field-infix} {
         border: none;
     }
 
