@@ -6,8 +6,7 @@
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
-                    'adf-property-readonly-value': isReadonlyProperty,
-                    'adf-property-field-label--empty': !textInput.value
+                    'adf-property-readonly-value': isReadonlyProperty
                 }">
                 {{ property.label | translate }}
             </mat-label>
@@ -53,10 +52,7 @@
         class="adf-property-field adf-textitem-chip-list-container"
         [ngClass]="{'adf-property-read-only': !isEditable}">
         <mat-label *ngIf="showLabelForChips" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
-            [ngClass]="{
-                'adf-property-value-editable': editable,
-                'adf-property-field-label--empty': chipList.empty
-            }">
+            [ngClass]="{'adf-property-value-editable': editable}">
             {{ property.label | translate }}
         </mat-label>
         <mat-chip-grid #chipList
@@ -96,8 +92,7 @@
         [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
         (click)="clicked()">
         <mat-form-field class="adf-property-field adf-card-textitem-field">
-            <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
-                [ngClass]="{'adf-property-field-label--empty': !editedValue}">
+            <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
                 {{ property.label | translate }}
             </mat-label>
             <input matInput

@@ -9,7 +9,7 @@
         </mat-menu>
     </div>
 
-    <div class="adf-buttons-menu-desktop">
+    <div *ngIf="!isMobile()" class="adf-buttons-menu-desktop">
         <ng-content *ngTemplateOutlet="desktop">
         </ng-content>
     </div>

@@ -16,12 +16,11 @@
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
+        #{$mat-content-actions} {
+            text-align: right;
+        }
         #{$mat-button} {
             text-transform: uppercase !important;
-        }
-
-        &-content-actions {
-            text-align: right;
         }
     }
 

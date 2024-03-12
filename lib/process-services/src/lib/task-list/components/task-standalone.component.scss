@@ -1,59 +1,57 @@
 @import 'styles/mat-selectors';
 
-.adf {
-    &-message-card {
-        width: 60%;
-        box-sizing: border-box;
-        margin: 16px auto;
+.adf-message-card {
+    width: 60%;
+    box-sizing: border-box;
+    margin: 16px auto;
 
-        .adf-no-form-mat-card-actions {
-            border-top: solid 1px var(--adf-theme-background-status-bar-color);
+    .adf-no-form-mat-card-actions {
+        border-top: solid 1px var(--adf-theme-background-status-bar-color);
+    }
+
+    .adf {
+        &-no-form-message-container {
+            height: 256px;
+            width: 100%;
+            display: table;
         }
 
-        .adf {
-            &-no-form-message-container {
-                height: 256px;
-                width: 100%;
-                display: table;
+        &-no-form-message-list {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        &-no-form-message {
+            padding-bottom: 10px;
+            font-size: var(--theme-display-1-font-size);
+            line-height: 36px;
+            letter-spacing: -1.3px;
+            opacity: 0.54;
+            margin: auto;
+            width: fit-content;
+        }
+
+        &-no-form-submessage {
+            font-size: var(--theme-subheading-2-font-size);
+            opacity: 0.54;
+            margin: auto;
+            width: fit-content;
+        }
+
+        &-no-form-mat-card-actions:has(.adf-no-form-mat-card-actions-container) {
+            display: flex;
+            justify-content: space-between;
+
+            & .mat-mdc-button {
+                text-transform: uppercase;
+                border-radius: 5px;
             }
 
-            &-no-form-message-list {
-                display: table-cell;
-                vertical-align: middle;
-                text-align: center;
-            }
-
-            &-no-form-message {
-                padding-bottom: 10px;
-                font-size: var(--theme-display-1-font-size);
-                line-height: 36px;
-                letter-spacing: -1.3px;
+            & #{$mat-button-label} {
                 opacity: 0.54;
-                margin: auto;
-                width: fit-content;
-            }
-
-            &-no-form-submessage {
-                font-size: var(--theme-subheading-2-font-size);
-                opacity: 0.54;
-                margin: auto;
-                width: fit-content;
-            }
-
-            &-no-form-mat-card-actions:has(.adf-no-form-mat-card-actions-container) {
-                display: flex;
-                justify-content: space-between;
-
-                & #{$mat-button} {
-                    text-transform: uppercase;
-                    border-radius: 5px;
-                }
-
-                & #{$mat-button-label} {
-                    opacity: 0.54;
-                    font-size: var(--theme-button-font-size);
-                    font-weight: bold;
-                }
+                font-size: var(--theme-button-font-size);
+                font-weight: bold;
             }
         }
     }
