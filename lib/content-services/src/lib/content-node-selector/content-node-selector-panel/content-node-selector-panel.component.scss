@@ -113,9 +113,9 @@ h2.adf-search-results-label {
                 fill: var(--theme-primary-color);
             }
 
-            .adf-no-content-container {
+            .adf-no-content-container.adf-datatable-cell {
                 text-align: center;
-                border: none !important;
+                border: none;
             }
 
             .adf-datatable-cell {
@@ -167,8 +167,8 @@ h2.adf-search-results-label {
         }
 
         &-searchLayout {
-            .adf-datatable-list .adf-datatable-row {
-                min-height: 65px !important;
+            .adf-datatable-list .adf-datatable-body .adf-datatable-row {
+                min-height: 65px;
 
                     @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
                         padding-top: 15px;
@@ -182,6 +182,9 @@ h2.adf-search-results-label {
                         display: none;
                     }
 
+                    &.adf-content-selector-modifier-cell {
+                        display: none;
+                    }
 
                     &.adf-content-selector-visibility-cell {
                         display: none;
