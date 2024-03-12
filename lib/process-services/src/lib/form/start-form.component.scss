@@ -1,22 +1,23 @@
+@import 'styles/mat-selectors';
+
 .adf-form-container {
     max-width: 100%;
     max-height: 100%;
 
-    & .mat-mdc-card {
+    & #{$mat-card} {
         padding: 16px 24px;
         overflow: hidden;
     }
 
-    & .mat-mdc-card-header-text {
+    & #{$mat-card-header-text} {
         margin: 0;
     }
 
-    & .mat-tab-body-content {
+    & #{$mat-tab-body-content} {
         overflow: hidden;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    & .mdc-tab__text-label {
+    & #{$mat-tab-label-text} {
         font-size: var(--theme-subheading-2-font-size);
         line-height: var(--theme-headline-line-height);
         letter-spacing: -0.4px;
@@ -25,14 +26,14 @@
         text-transform: uppercase;
     }
 
-    & .mat-ink-bar {
+    & #{$mat-tab-ink-bar} {
         height: 4px;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    & .mat-mdc-text-field-wrapper {
+    & #{$mat-form-field-wrapper} {
         margin: 0 12px 0 0;
     }
+}
 
     .adf-form-container-card {
         .adf {
@@ -92,27 +93,27 @@
                 padding-bottom: 25px;
                 padding-right: 25px;
 
-                & .mat-mdc-button {
+                & #{$mat-button} {
                     height: 36px;
                     border-radius: 5px;
                 }
 
-                & .mdc-button__label {
-                    width: 58px;
-                    height: 20px;
-                    opacity: 0.54;
-                    font-size: var(--theme-body-2-font-size);
-                    font-weight: bold;
-                }
+            & #{$mat-button-label} {
+                width: 58px;
+                height: 20px;
+                opacity: 0.54;
+                font-size: var(--theme-body-2-font-size);
+                font-weight: bold;
             }
         }
     }
 }
 
+
 form-field {
     width: 100%;
 
-    .mat-mdc-input-element {
+    #{$mat-input-element} {
         font-size: var(--theme-body-2-font-size);
         padding-top: 8px;
         line-height: normal;

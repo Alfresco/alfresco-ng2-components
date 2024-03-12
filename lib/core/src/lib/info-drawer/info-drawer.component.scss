@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-info-drawer {
         .adf-metadata-properties-panel {
@@ -5,8 +7,7 @@
             margin: 0;
         }
 
-        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
-        .mdc-tab__text-label {
+        #{$mat-tab-label-text} {
             min-width: 0;
         }
 
@@ -30,36 +31,33 @@
                 }
 
                 .adf-info-drawer-tabs {
-                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
-                    & .mat-tab-body-content > * {
+                    & #{$mat-tab-body-content} > * {
                         margin-bottom: 20px;
                         display: block;
                     }
 
-                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
-                    & .mat-tab-body-content > *:last-child {
+                    & #{$mat-tab-body-content} > *:last-child {
                         margin-bottom: 0;
                     }
 
                     .mdc-tab__text-label {
                         flex-grow: 1;
 
-                        .mat-icon + span {
+                        #{$mat-icon} + span {
                             padding-left: 5px;
                         }
                     }
 
-                    .mat-ink-bar {
+                    #{$mat-tab-ink-bar} {
                         height: 2px;
                     }
 
-                    .mat-mdc-tab-body {
+                    #{$mat-tab-body} {
                         padding: 10px;
                         overflow-y: hidden;
                     }
 
-                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
-                    .mat-tab-body-content {
+                    #{$mat-tab-body-content} {
                         /* stylelint-disable */
                         overflow: auto;
                         /* stylelint-enable */
