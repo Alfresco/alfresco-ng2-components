@@ -1,20 +1,19 @@
 /* stylelint-disable selector-class-pattern */
+@import 'styles/mat-selectors';
+
 $adf-inplace-input-padding: 7px;
 
 .adf-inplace-input-container {
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    .mat-form-field-underline {
+    #{$mat-form-field-underline} {
         display: none;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    .mat-mdc-form-field-infix {
+    #{$mat-form-field-infix} {
         display: flex;
         border-top: 0;
     }
 
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    .mat-form-field-label {
+    #{$mat-form-field-label} {
         padding: $adf-inplace-input-padding;
     }
 
