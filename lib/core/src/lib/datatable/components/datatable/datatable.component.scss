@@ -382,17 +382,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         min-height: inherit;
     }
 
-    .adf-datatable-header, .adf-datatable-body {
-        .adf-datatable-cell-data {
-            flex-grow: 0;
-            flex-shrink: 1;
-
-            &:not(:has(~ .adf-datatable-cell-data)) {
-                flex-grow: 1;
-            }
-        }
-    }
-
     /* stylelint-disable-next-line no-duplicate-selectors */
     .adf-datatable-cell,
     .adf-datatable-cell-header {
