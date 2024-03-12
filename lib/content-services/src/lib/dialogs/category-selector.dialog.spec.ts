@@ -23,7 +23,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 
-describe('Confirm Dialog Component', () => {
+describe('Category selector dialog component', () => {
     let fixture: ComponentFixture<CategorySelectorDialogComponent>;
     let component: CategorySelectorDialogComponent;
     let selectButton: HTMLButtonElement;
