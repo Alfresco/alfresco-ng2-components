@@ -49,7 +49,7 @@ export class ViewerPage {
     infoSideBar = $('#adf-right-sidebar');
     viewer = $('adf-viewer');
     imgViewer = $('adf-img-viewer');
-    activeTab = $(`div[class*="${materialLocators.Tab.label.active.root}"]`);
+    activeTab = $(`div${materialLocators.Tab.label.active.class}`);
     toolbar = $('#adf-viewer-toolbar');
     canvasLayer = $$('.canvasWrapper > canvas').first();
 
