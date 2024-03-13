@@ -26,6 +26,7 @@ import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { mergeArrays, mergeObjects } from '../config/extension-utils';
 
 /**
  * The default extensions factory
@@ -110,7 +111,13 @@ export class ExtensionService {
     }
 
     appendConfig(partialConfig: ExtensionConfig) {
-        this.config = { ...this.config, ...partialConfig };
+        this.config = { ...this.config,
+            rules: mergeArrays(this.config.rules, partialConfig.rules),
+            features: mergeObjects(this.config.features, partialConfig.features),
+            routes: mergeArrays(this.config.routes, partialConfig.routes),
+            actions: mergeArrays(this.config.actions, partialConfig.actions),
+            appConfig: mergeObjects(this.config.appConfig, partialConfig.appConfig)
+        };
         this.setup(this.config);
     }
 
