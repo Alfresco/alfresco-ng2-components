@@ -46,6 +46,8 @@ export class MetadataViewPage {
 
     private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
         $(`[data-automation-id="adf-metadata-group-${groupName}"]`);
+    private getMetadataGroupEditIconLocator = async (groupName: string): Promise<ElementFinder> =>
+        $(`[data-automation-id="adf-metadata-group-${groupName}"]`).$(this.editIcon.locator().value);
     private getExpandedMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
         $(`[data-automation-id="adf-metadata-group-${groupName}"] > ${materialLocators.Expansion.panel.header.root}`);
 
@@ -105,10 +107,6 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.editIconGeneral);
     }
 
-    async editIconClick(): Promise<void> {
-        await BrowserActions.clickExecuteScript('button[data-automation-id="meta-data-card-toggle-edit"]');
-    }
-
     async clickEditIconGeneral(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.editIconGeneral);
         await BrowserActions.click(this.editIconGeneral);
@@ -146,6 +144,11 @@ export class MetadataViewPage {
 
     async clickMetadataGroup(groupName: string): Promise<void> {
         const group = await this.getMetadataGroupLocator(groupName);
+        await BrowserActions.click(group);
+    }
+
+    async clickMetadataGroupEditIcon(groupName: string): Promise<void> {
+        const group = await this.getMetadataGroupEditIconLocator(groupName);
         await BrowserActions.click(group);
     }
 
