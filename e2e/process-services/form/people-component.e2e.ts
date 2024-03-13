@@ -20,7 +20,7 @@ import { TasksPage } from './../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { browser } from 'protractor';
-import CONSTANTS = require('../../util/constants');
+import * as CONSTANTS from '../../util/constants';
 
 describe('People component', () => {
 
