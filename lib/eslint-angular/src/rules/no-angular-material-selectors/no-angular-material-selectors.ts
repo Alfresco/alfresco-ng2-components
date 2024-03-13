@@ -28,14 +28,30 @@ const ASTSelectors = [
 const messages = {
     noAngularMaterialSelectors: 'Using Angular Material internal selectors is not allowed',
     useAngularMaterialTestingHarness: 'Use Angular Material testing harness instead of Angular Material selectors',
-    useScssVariables: 'Use SCSS variables instead of Angular Material selectors',
     useE2ELocatorVariables: 'Use locator variables instead of Angular Material selectors'
 };
+
+type MessageIds = keyof typeof messages;
+
+const filetypeErrors: {regexp: RegExp, messageId: MessageIds}[] = [
+    {
+        regexp: /.*\.spec\.ts/,
+        messageId: 'useAngularMaterialTestingHarness'
+    },
+    {
+        regexp: /.*\.e2e\.ts/,
+        messageId: 'useE2ELocatorVariables'
+    },
+    {
+        regexp: /.*\.ts/,
+        messageId: 'noAngularMaterialSelectors'
+    }
+];
 
 /**
  * Custom ESLint rule for detecting the usage of internal Angular Material selectors
  */
-export default createESLintRule<unknown[], keyof typeof messages>({
+export default createESLintRule<unknown[], MessageIds>({
     name: RULE_NAME,
     meta: {
         type: 'suggestion',
@@ -51,9 +67,15 @@ export default createESLintRule<unknown[], keyof typeof messages>({
     create(context) {
         return {
             [ASTSelectors.join(',')](node: TSESTree.Literal | TSESTree.TemplateLiteral) {
+                console.log(context.getFilename());
+
+                const message = filetypeErrors.find((fileTypeError) =>
+                    context.getFilename().match(fileTypeError.regexp)
+                ) || { messageId: messages.noAngularMaterialSelectors };
+
                 context.report({
                     node,
-                    messageId: 'noAngularMaterialSelectors'
+                    messageId: message.messageId as MessageIds
                 });
             }
         };
