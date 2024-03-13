@@ -21,8 +21,8 @@ import type { TSESTree } from '@typescript-eslint/utils';
 export const RULE_NAME = 'no-angular-material-selectors';
 
 const ASTSelectors = [
-    ':not(Property[key=template]) > Literal[value=/mat-(?!datetimepicker)/i]',
-    ':not(Property[key.name="template"]) TemplateLiteral[quasis.value.raw=/mat-(?!datetimepicker)/i]'
+    ':not(Property[key=template]) > Literal[value=/(mat|mdc)-(?!datetimepicker)/i]',
+    ':not(Property[key.name="template"]) TemplateLiteral[quasis.value.raw=/(mat|mdc)-(?!datetimepicker)/i]'
 ];
 
 const messages = {
@@ -41,10 +41,6 @@ const filetypeErrors: {regexp: RegExp, messageId: MessageIds}[] = [
     {
         regexp: /.*\.e2e\.ts/,
         messageId: 'useE2ELocatorVariables'
-    },
-    {
-        regexp: /.*\.ts/,
-        messageId: 'noAngularMaterialSelectors'
     }
 ];
 
