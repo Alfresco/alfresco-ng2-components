@@ -33,7 +33,7 @@ const messages = {
 
 type MessageIds = keyof typeof messages;
 
-const filetypeErrors: {regexp: RegExp, messageId: MessageIds}[] = [
+const filetypeErrors: {regexp: RegExp; messageId: MessageIds}[] = [
     {
         regexp: /.*\.spec\.ts/,
         messageId: 'useAngularMaterialTestingHarness'
