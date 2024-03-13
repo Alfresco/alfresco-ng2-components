@@ -2,4 +2,9 @@ adf-category-selector-dialog {
     .adf-dialog-content {
         height: 400px;
     }
+
+    .adf-list-disabled .adf-categories-list .adf-categories-management-list .adf-category {
+        background-color: var(--adf-theme-mat-grey-color-a200);
+        color: var(--adf-theme-foreground-text-color-040);
+    }
 }
