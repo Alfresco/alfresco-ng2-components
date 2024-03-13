@@ -48,6 +48,7 @@ export class FormFieldTypes {
     static DISPLAY_RICH_TEXT: string = 'display-rich-text';
     static JSON: string = 'json';
     static DATA_TABLE: string = 'data-table';
+    static DISPLAY_EXTERNAL_PROPERTY: string = 'display-external-property';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

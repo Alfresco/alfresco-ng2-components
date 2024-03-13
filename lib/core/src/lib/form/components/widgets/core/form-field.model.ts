@@ -86,6 +86,7 @@ export class FormFieldModel extends FormWidgetModel {
     leftLabels: boolean = false;
     variableConfig: VariableConfig;
     schemaDefinition: DataColumn[];
+    externalProperty: string;
 
     // container model members
     numberOfColumns: number = 1;
@@ -204,6 +205,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.variableConfig = json.variableConfig;
             this.schemaDefinition = json.schemaDefinition;
             this.precision = json.precision;
+            this.externalProperty = json.externalProperty;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
