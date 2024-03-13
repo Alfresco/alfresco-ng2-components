@@ -97,7 +97,15 @@ export const materialLocators = {
     list: {
       root: 'mat-chip-list',
       class: '.mat-mdc-chip-list'
-    }
+    },
+    grid: {
+        root: 'mat-chip-grid',
+        class: '.mat-mdc-chip-grid',
+        row: {
+            root: 'mat-chip-row',
+            class: '.mat-mdc-chip-row'
+        }
+      }
   },
   Datepicker: {
     root: 'mat-datepicker',
