@@ -31,7 +31,7 @@ export const materialLocators = {
   Button: {
     class: '.mat-mdc-button',
     disabled: 'mat-button-disabled',
-    wrapper: '.mat-mdc-button-wrapper'
+    label: '.mdc-button__label'
   },
   Calendar: {
     root: 'mat-calendar',
@@ -394,7 +394,7 @@ export const materialLocators = {
     },
     label: {
       class: '.mdc-tab',
-      root: 'mat-tab-label',
+      root: 'mat-mdc-tab-labels',
       active: {
         class: '.mdc-tab--active',
         root: 'mat-tab-label-active'
