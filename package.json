@@ -234,5 +234,8 @@
     "node": ">=6.0.0"
   },
   "module": "./index.js",
-  "typings": "./index.d.ts"
+  "typings": "./index.d.ts",
+  "workspaces": [
+    "./lib/eslint-angular"
+  ]
 }

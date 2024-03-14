@@ -37,11 +37,13 @@ module.exports = {
                 'eslint-plugin-import',
                 '@angular-eslint/eslint-plugin',
                 '@typescript-eslint',
-                'jsdoc'
+                'jsdoc',
+                '@alfresco/eslint-angular'
             ],
             rules: {
                 // Uncomment this to enable prettier checks as part of the ESLint
                 // 'prettier/prettier': 'error',
+                '@alfresco/eslint-angular/no-angular-material-selectors': 'error',
                 'ban/ban': [
                     'error',
                     { name: 'eval', message: 'Calls to eval is not allowed.' },
