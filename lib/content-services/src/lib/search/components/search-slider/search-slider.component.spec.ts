@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { MatSliderChange } from '@angular/material/slider';
 import { SearchSliderComponent } from './search-slider.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -49,14 +48,6 @@ describe('SearchSliderComponent', () => {
         expect(component.thumbLabel).toEqual(settings.thumbLabel);
     });
 
-    it('should update value on slider change', () => {
-        component.onChangedHandler({ value: 10 } as MatSliderChange);
-        expect(component.value).toEqual(10);
-
-        component.onChangedHandler({ value: 20 } as MatSliderChange);
-        expect(component.value).toEqual(20);
-    });
-
     it('should update its query part on slider change', () => {
         const context: any = {
             queryFragments: {},
@@ -68,13 +59,15 @@ describe('SearchSliderComponent', () => {
         component.context = context;
         component.id = 'contentSize';
         component.settings = { field: 'cm:content.size' };
+        component.value = 10;
         fixture.detectChanges();
 
-        component.onChangedHandler({ value: 10 } as MatSliderChange);
+        component.onChangedHandler();
         expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 10]');
         expect(context.update).toHaveBeenCalled();
 
-        component.onChangedHandler({ value: 20 } as MatSliderChange);
+        component.value = 20;
+        component.onChangedHandler();
         expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 20]');
     });
 
