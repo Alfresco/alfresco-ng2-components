@@ -4,7 +4,6 @@
 
 <mat-dialog-content class="adf-dialog-content">
     <adf-categories-management
-            [ngClass]="{'adf-list-disabled': categories.length && !multiSelect}"
             (categoriesChange)="categories = $event"
             [categoryNameControlVisible]="true"
             [managementMode]="categoriesManagementMode"
