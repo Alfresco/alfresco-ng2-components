@@ -21,14 +21,14 @@ import type { TSESTree } from '@typescript-eslint/utils';
 export const RULE_NAME = 'no-angular-material-selectors';
 
 const ASTSelectors = [
-    ':not(Property[key=template]) > Literal[value=/(mat|mdc)-(?!datetimepicker)/i]',
-    ':not(Property[key.name="template"]) TemplateLiteral[quasis.value.raw=/(mat|mdc)-(?!datetimepicker)/i]'
+    ':not(Property[key=template]) > Literal[value=/^.?(mat|mdc)-(?!datetimepicker)/i]',
+    ':not(Property[key.name="template"]) TemplateLiteral[quasis.value.raw=/^.?(mat|mdc)-(?!datetimepicker)/i]'
 ];
 
 const messages = {
     noAngularMaterialSelectors: 'Using Angular Material internal selectors is not allowed',
-    useAngularMaterialTestingHarness: 'Use testing harness instead of Angular Material internal selectors',
-    useE2ELocatorVariables: 'Use locator variables instead of Angular Material internal selectors'
+    useAngularMaterialTestingHarness: 'Use Angular Material testing harness instead of Angular Material selectors',
+    useE2ELocatorVariables: 'Use locator variables instead of Angular Material selectors'
 };
 
 type MessageIds = keyof typeof messages;
