@@ -20,19 +20,19 @@ import { element, by, browser } from 'protractor';
 
 export class ProcessServiceTabBarPage {
 
-    tasksButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class} div`, 'Tasks')).first();
-    processButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class} div`, 'Process')).first();
-    reportsButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class} div`, 'Reports')).first();
+    tasksButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class}`, 'Tasks')).first();
+    processButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class}`, 'Process')).first();
+    reportsButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class}`, 'Reports')).first();
     reportsButtonSelected = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class} div[aria-selected="true"]`, 'Reports')).first();
 
     async clickTasksButton(): Promise<void> {
         await BrowserActions.click(this.tasksButton);
-        await browser.sleep(500);
+        await browser.sleep(100);
     }
 
     async clickProcessButton(): Promise<void> {
         await BrowserActions.click(this.processButton);
-        await browser.sleep(500);
+        await browser.sleep(100);
     }
 
     async clickReportsButton(): Promise<void> {
