@@ -31,7 +31,7 @@ export class CheckboxWidgetPage {
     }
 
     async clickCheckboxInput(fieldId: string): Promise<void> {
-        const checkboxInput = $$(`${this.checkboxLocator}[id="${fieldId}"] span`).first();
+        const checkboxInput = $$(`${this.checkboxLocator}[id="${fieldId}"] input`).first();
         await BrowserActions.click(checkboxInput);
     }
 
