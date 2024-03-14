@@ -17,6 +17,7 @@
 
 import { DateFnsUtils } from '../../../../common';
 import { FormFieldTypes } from './form-field-types';
+import { RequiredFieldValidator } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 
@@ -880,5 +881,41 @@ describe('FormFieldModel', () => {
             expect(field.value).toBe('default hello');
         });
 
+    });
+
+    it('should validate readOnly field if it is validatable', () => {
+        const form = new FormModel();
+        const type = FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY;
+        const field = new FormFieldModel(form, {
+            id: 'mockDisplayExternalPropertyFieldId',
+            type,
+            readOnly: true,
+            required: true,
+            value: null
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
+        expect(FormFieldTypes.isValidatableType(type)).toBeTrue();
+        expect(field.validate()).toBe(false);
+    });
+
+    it('should NOT validate readOnly field if it is NOT validatable', () => {
+        const form = new FormModel();
+        const type = FormFieldTypes.TEXT;
+        const field = new FormFieldModel(form, {
+            id: 'mockTextFieldId',
+            type,
+            readOnly: true,
+            required: true,
+            value: null
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
+        expect(FormFieldTypes.isValidatableType(type)).toBeFalse();
+        expect(field.validate()).toBe(true);
     });
 });

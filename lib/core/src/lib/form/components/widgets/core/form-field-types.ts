@@ -57,8 +57,16 @@ export class FormFieldTypes {
         FormFieldTypes.GROUP
     ];
 
+    static VALIDATABLE_TYPES: string[] = [
+        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
+    ]
+
     static isReadOnlyType(type: string) {
         return FormFieldTypes.READONLY_TYPES.includes(type);
+    }
+
+    static isValidatableType(type: string) {
+        return FormFieldTypes.VALIDATABLE_TYPES.includes(type);
     }
 
     static isContainerType(type: string) {

@@ -144,7 +144,7 @@ export class FormFieldModel extends FormWidgetModel {
     validate(): boolean {
         this.validationSummary = new ErrorMessageModel();
 
-        if (!this.readOnly) {
+        if (this.isFieldValidatable()) {
             const validators = this.form.fieldValidators || [];
             for (const validator of validators) {
                 if (!validator.validate(this)) {
@@ -155,6 +155,10 @@ export class FormFieldModel extends FormWidgetModel {
         }
         this._isValid = true;
         return this._isValid;
+    }
+
+    private isFieldValidatable(): boolean {
+        return !this.readOnly || FormFieldTypes.isValidatableType(this.type);
     }
 
     constructor(form: any, json?: any) {
@@ -520,4 +524,6 @@ export class FormFieldModel extends FormWidgetModel {
     private isCheckboxField(json: any): boolean {
         return json.params?.field?.type === FormFieldTypes.BOOLEAN || json.type === FormFieldTypes.BOOLEAN;
     }
+
+    // private isValidable(type: FormFieldTypes)
 }
