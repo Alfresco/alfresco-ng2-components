@@ -86,7 +86,7 @@ export class FormFieldModel extends FormWidgetModel {
     leftLabels: boolean = false;
     variableConfig: VariableConfig;
     schemaDefinition: DataColumn[];
-    externalProperty: string;
+    externalProperty?: string;
 
     // container model members
     numberOfColumns: number = 1;
