@@ -19,7 +19,6 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { MatSliderChange } from '@angular/material/slider';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -82,8 +81,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         this.updateQuery(null);
     }
 
-    onChangedHandler(event: MatSliderChange) {
-        this.value = event.value;
+    onChangedHandler() {
         if (this.enableChangeUpdate) {
             this.updateQuery(this.value);
         }
