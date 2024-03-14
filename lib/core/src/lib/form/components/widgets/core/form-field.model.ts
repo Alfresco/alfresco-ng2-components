@@ -524,6 +524,4 @@ export class FormFieldModel extends FormWidgetModel {
     private isCheckboxField(json: any): boolean {
         return json.params?.field?.type === FormFieldTypes.BOOLEAN || json.type === FormFieldTypes.BOOLEAN;
     }
-
-    // private isValidable(type: FormFieldTypes)
 }

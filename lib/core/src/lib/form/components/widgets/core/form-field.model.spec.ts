@@ -885,10 +885,9 @@ describe('FormFieldModel', () => {
 
     it('should validate readOnly field if it is validatable', () => {
         const form = new FormModel();
-        const type = FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY;
         const field = new FormFieldModel(form, {
             id: 'mockDisplayExternalPropertyFieldId',
-            type,
+            type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
             readOnly: true,
             required: true,
             value: null
@@ -897,16 +896,32 @@ describe('FormFieldModel', () => {
         const validator = new RequiredFieldValidator();
         form.fieldValidators = [validator];
 
-        expect(FormFieldTypes.isValidatableType(type)).toBeTrue();
+        expect(FormFieldTypes.isValidatableType(FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY)).toBeTrue();
+        expect(field.validate()).toBe(false);
+    });
+
+    it('should validate NOT readOnly field if it is validatable', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'mockDisplayExternalPropertyFieldId',
+            type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+            readOnly: false,
+            required: true,
+            value: null
+        });
+
+        const validator = new RequiredFieldValidator();
+        form.fieldValidators = [validator];
+
+        expect(FormFieldTypes.isValidatableType(FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY)).toBeTrue();
         expect(field.validate()).toBe(false);
     });
 
     it('should NOT validate readOnly field if it is NOT validatable', () => {
         const form = new FormModel();
-        const type = FormFieldTypes.TEXT;
         const field = new FormFieldModel(form, {
             id: 'mockTextFieldId',
-            type,
+            type: FormFieldTypes.TEXT,
             readOnly: true,
             required: true,
             value: null
@@ -915,7 +930,7 @@ describe('FormFieldModel', () => {
         const validator = new RequiredFieldValidator();
         form.fieldValidators = [validator];
 
-        expect(FormFieldTypes.isValidatableType(type)).toBeFalse();
+        expect(FormFieldTypes.isValidatableType(FormFieldTypes.TEXT)).toBeFalse();
         expect(field.validate()).toBe(true);
     });
 });
