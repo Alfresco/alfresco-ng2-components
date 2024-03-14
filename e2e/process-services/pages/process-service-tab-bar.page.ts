@@ -20,10 +20,10 @@ import { element, by, browser } from 'protractor';
 
 export class ProcessServiceTabBarPage {
 
-    tasksButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class}`, 'Tasks')).first();
-    processButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class}`, 'Process')).first();
-    reportsButton = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class}`, 'Reports')).first();
-    reportsButtonSelected = element.all(by.cssContainingText(`div[class*="${materialLocators.Tab.label.root}"] ${materialLocators.Tab.labels.class} div[aria-selected="true"]`, 'Reports')).first();
+    tasksButton = element.all(by.cssContainingText(`div${materialLocators.Tab.labels.container.class} ${materialLocators.Tab.labels.class}`, 'Tasks')).first();
+    processButton = element.all(by.cssContainingText(`div${materialLocators.Tab.labels.container.class} ${materialLocators.Tab.labels.class}`, 'Process')).first();
+    reportsButton = element.all(by.cssContainingText(`div${materialLocators.Tab.labels.container.class} ${materialLocators.Tab.labels.class}`, 'Reports')).first();
+    reportsButtonSelected = element.all(by.cssContainingText(`div${materialLocators.Tab.labels.container.class} ${materialLocators.Tab.labels.class} div[aria-selected="true"]`, 'Reports')).first();
 
     async clickTasksButton(): Promise<void> {
         await BrowserActions.click(this.tasksButton);
