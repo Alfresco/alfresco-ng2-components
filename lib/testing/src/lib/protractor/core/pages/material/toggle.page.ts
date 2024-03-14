@@ -24,7 +24,7 @@ export class TogglePage {
     async enableToggle(toggle: ElementFinder): Promise<void> {
         const check = await BrowserActions.getAttribute(toggle, 'class');
         if (check.indexOf(materialLocators.Checked.root) < 0) {
-            const elem = toggle.$$('input').first();
+            const elem = toggle.$$('button').first();
             await BrowserActions.clickScript(elem);
         }
     }
