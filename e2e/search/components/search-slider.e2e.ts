@@ -99,7 +99,7 @@ describe('Search Slider Filter', () => {
     });
 
     it('[C276972] Should be keep value when Search Size Slider is collapsed', async () => {
-        const size = 5;
+        const size = 10;
 
         await searchFilters.checkSizeSliderFilterIsDisplayed();
         await searchFilters.clickSizeSliderFilterHeader();

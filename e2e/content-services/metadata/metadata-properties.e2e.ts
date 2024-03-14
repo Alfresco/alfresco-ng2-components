@@ -136,13 +136,13 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await togglePage.disableToggle(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsNotPresent('properties');
         await metadataViewPage.checkMetadataGroupIsPresent('Versionable');
         await metadataViewPage.checkMetadataGroupIsExpand('Versionable');
 
-        await CheckboxPage.check(metadataViewPage.defaultPropertiesSwitch);
+        await togglePage.enableToggle(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
