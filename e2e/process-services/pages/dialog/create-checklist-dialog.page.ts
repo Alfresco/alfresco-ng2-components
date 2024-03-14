@@ -21,8 +21,8 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class ChecklistDialog {
 
     nameField = $('input[data-automation-id="checklist-name"]');
-    addChecklistButton = $('button[id="add-check"] span');
-    closeButton = $('button[id="close-check-dialog"] span');
+    addChecklistButton = $('button[id="add-check"]');
+    closeButton = $('button[id="close-check-dialog"]');
     dialogTitle = $('#add-checklist-title');
 
     async addName(name: string): Promise<void> {
