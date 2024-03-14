@@ -95,8 +95,12 @@ export const materialLocators = {
     root: 'mat-chip',
     class: '.mat-mdc-chip',
     list: {
-      root: 'mat-chip-list',
-      class: '.mat-mdc-chip-list'
+      root: 'mat-chip-listbox',
+      class: '.mat-mdc-chip-list',
+      option: {
+        class: 'mat-chip-option',
+        value: '.mat-mdc-chip-action-label'
+      }
     },
     grid: {
         root: 'mat-chip-grid',
