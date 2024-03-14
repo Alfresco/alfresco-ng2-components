@@ -157,7 +157,7 @@ describe('Search component - Search Bar', () => {
 
     it('[C260256] Should display file/folder in search suggestion when typing first characters', async () => {
         await openSearchBar();
-        await searchBarPage.enterTextAndPressEnter(firstFolderModel.shortName);
+        await searchBarPage.enterText(firstFolderModel.shortName);
 
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
 
