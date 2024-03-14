@@ -262,7 +262,7 @@ export const materialLocators = {
   Menu: {
     content: {
       class: '.mat-mdc-menu-content',
-      root: 'mat-menu-content'
+      root: 'mat-mdc-menu-content'
     },
     panel: '.mat-mdc-menu-panel',
     item: {
@@ -394,7 +394,7 @@ export const materialLocators = {
     },
     label: {
       class: '.mdc-tab',
-      root: 'mat-mdc-tab-labels',
+      root: 'mat-tab-label',
       active: {
         class: '.mdc-tab--active',
         root: 'mat-tab-label-active'
