@@ -18,7 +18,7 @@
 import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
-import CONSTANTS = require('../../util/constants');
+import * as CONSTANTS from '../../util/constants';
 import { ProcessServicesPage } from '../pages/process-services.page';
 import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
@@ -65,17 +65,17 @@ describe('Checkbox Widget', () => {
         await usersActions.deleteTenant(processUserModel.tenantId);
     });
 
+    it('[C272812] Should be able to set visibility settings for Checkbox widget', async () => {
+        await widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
+        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, '2');
+        await widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
+    });
+
     it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {
         await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, '2');
         expect(await widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
         expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_input_id);
         expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
-    });
-
-    it('[C272812] Should be able to set visibility settings for Checkbox widget', async () => {
-        await widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
-        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, '2');
-        await widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
     });
 });
