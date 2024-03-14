@@ -257,6 +257,9 @@ export const materialLocators = {
     text: {
       class: '.mat-mdc-list-text'
     },
+    content: {
+      class: '.mdc-list-item__content'
+    },
     selectionList: 'mat-selection-list'
   },
   Menu: {
