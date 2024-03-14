@@ -26,7 +26,7 @@ import { FormCloudService } from '../../../services/form-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('DisplayExternalPropertyWidgetComponent', () => {
+describe('DisplayExternalPropertyWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: DisplayExternalPropertyWidgetComponent;
     let fixture: ComponentFixture<DisplayExternalPropertyWidgetComponent>;
@@ -61,9 +61,9 @@ fdescribe('DisplayExternalPropertyWidgetComponent', () => {
             type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
             readOnly: true,
             externalProperty: 'fruitName',
-            value: 'banana',
-
+            value: 'banana'
         });
+
         fixture.detectChanges();
 
         const input = await loader.getHarness(MatInputHarness);

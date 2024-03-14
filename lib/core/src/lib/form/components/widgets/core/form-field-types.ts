@@ -59,7 +59,7 @@ export class FormFieldTypes {
 
     static VALIDATABLE_TYPES: string[] = [
         FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
-    ]
+    ];
 
     static isReadOnlyType(type: string) {
         return FormFieldTypes.READONLY_TYPES.includes(type);

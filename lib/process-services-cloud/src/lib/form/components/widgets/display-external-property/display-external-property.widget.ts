@@ -39,7 +39,7 @@ import { MatInputModule } from '@angular/material/input';
         MatInputModule,
         FormBaseModule
     ],
-    selector: 'display-external-property',
+    selector: 'adf-cloud-display-external-property',
     templateUrl: './display-external-property.widget.html',
     styleUrls: ['./display-external-property.widget.scss'],
     host: {
