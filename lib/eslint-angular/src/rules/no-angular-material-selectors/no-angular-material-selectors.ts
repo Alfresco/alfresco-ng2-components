@@ -27,8 +27,8 @@ const ASTSelectors = [
 
 const messages = {
     noAngularMaterialSelectors: 'Using Angular Material internal selectors is not allowed',
-    useAngularMaterialTestingHarness: 'Use Angular Material testing harness instead of Angular Material selectors',
-    useE2ELocatorVariables: 'Use locator variables instead of Angular Material selectors'
+    useAngularMaterialTestingHarness: 'Use testing harness instead of Angular Material internal selectors',
+    useE2ELocatorVariables: 'Use locator variables instead of Angular Material internal selectors'
 };
 
 type MessageIds = keyof typeof messages;
