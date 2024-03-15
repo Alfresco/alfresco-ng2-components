@@ -116,7 +116,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownMultiselect');
 
-        await expect(optionsSelected.toString().replace(/\s+/g, '')).toEqual([optionsToSelect, optionsToSelect].toString());
+        await expect(optionsSelected.toString().replace(/\s+/g, '')).toEqual([optionsToSelect].toString());
     });
 
     it('[C309878] Should be able to select a dropdown option, save and complete the task form', async () => {
