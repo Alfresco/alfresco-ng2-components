@@ -116,8 +116,6 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownMultiselect');
 
-        optionsSelected.push(await dropdown.getSelectedOptionText('DropdownMultiselect'));
-
         await expect(optionsSelected.toString().replace(/\s+/g, '')).toEqual([optionsToSelect, optionsToSelect].toString());
     });
 
