@@ -27,7 +27,7 @@ export class DropdownWidgetPage {
     readonly searchElementLocator = TestElement.byCss('[aria-label="Search options"]');
 
     async getSelectedOptionText(fieldId: string = 'dropdown'): Promise<string> {
-        return this.formFields.getFieldText(fieldId, by.css(`${materialLocators.Select.root}[id="${fieldId}"] ${materialLocators.Select.minLine}`));
+        return this.formFields.getFieldText(fieldId, by.css(`${materialLocators.Select.root}[id="${fieldId}"] ${materialLocators.Select.value.text} span`));
     }
 
     async selectOption(option: string, locator: string = '#dropdown'): Promise<void> {
