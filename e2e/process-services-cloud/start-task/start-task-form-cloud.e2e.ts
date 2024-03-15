@@ -106,6 +106,7 @@ describe('Start Task Form', () => {
         await apiService.login(testUser.username, testUser.password);
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processInstancesService = new ProcessInstancesService(apiService);
+
         processDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.uploadFileProcess, candidateBaseApp);
 
