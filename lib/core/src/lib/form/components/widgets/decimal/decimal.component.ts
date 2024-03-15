@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
@@ -36,14 +36,8 @@ import { WidgetComponent } from '../widget.component';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DecimalWidgetComponent extends WidgetComponent implements OnInit {
-    displayValue: number;
-
+export class DecimalWidgetComponent extends WidgetComponent {
     constructor(public formService: FormService) {
         super(formService);
-    }
-
-    ngOnInit(): void {
-        this.displayValue = this.field.value;
     }
 }
