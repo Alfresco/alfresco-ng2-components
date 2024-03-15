@@ -93,7 +93,7 @@ describe('Start Task - Group Cloud Component', () => {
         await startTask.checkFormIsDisplayed();
     });
 
-    fit('[C291954] Should be able to select/delete an group for a standalone task', async () => {
+    it('[C291954] Should be able to select/delete an group for a standalone task', async () => {
         await peopleCloudComponent.clearAssignee();
 
         await groupCloud.searchGroups(testGroup.name);
