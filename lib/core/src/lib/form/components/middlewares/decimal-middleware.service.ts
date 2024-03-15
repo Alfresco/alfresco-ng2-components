@@ -32,7 +32,7 @@ export class DecimalRenderMiddlewareService implements FormFieldModelRenderMiddl
         return field;
     }
 
-    private forceMaxPrecisionIfNeeded(value: string, allowedMaxPrecision): string {
+    private forceMaxPrecisionIfNeeded(value: string | number, allowedMaxPrecision): string | number {
         let numberOfDecimalDigits = 0;
         const stringValue = typeof value === 'string' ? value : `${value}`;
         const numberChunks = stringValue.split('.');

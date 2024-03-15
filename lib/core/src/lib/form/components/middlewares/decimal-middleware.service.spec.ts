@@ -34,7 +34,7 @@ describe('DecimalRenderMiddlewareService', () => {
         });
     });
 
-    it('should return field with proepr precisison', () => {
+    it('should return field with proper precisison', () => {
         formFieldModel.value = '10.1000000000000';
         formFieldModel.precision = 3;
         const parsedField = decimalMiddlewareService.getParsedField(formFieldModel);
@@ -48,14 +48,14 @@ describe('DecimalRenderMiddlewareService', () => {
         expect(parsedField.value).toBe('10.104');
     });
 
-    it('should round up number, when removed fraction part starts with number 5 ', () => {
+    it('should round up number, when removed fraction part starts with number larger or equal 5', () => {
         formFieldModel.value = '10.1035000';
         formFieldModel.precision = 3;
         const parsedField = decimalMiddlewareService.getParsedField(formFieldModel);
         expect(parsedField.value).toBe('10.104');
     });
 
-    it('should NOT round up number', () => {
+    it('should NOT round up number, when removed fraction part starts with number smaller than 5', () => {
         formFieldModel.value = '10.1034999';
         formFieldModel.precision = 3;
         const parsedField = decimalMiddlewareService.getParsedField(formFieldModel);
