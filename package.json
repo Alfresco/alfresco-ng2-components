@@ -96,7 +96,7 @@
     "@angular-devkit/schematics": "~14.2.12",
     "@angular-eslint/eslint-plugin": "15.2.1",
     "@angular-eslint/eslint-plugin-template": "14.3.0",
-    "@angular-eslint/template-parser": "16.2.0",
+    "@angular-eslint/template-parser": "17.3.0",
     "@angular/cli": "~14.2.12",
     "@angular/compiler-cli": "14.1.3",
     "@editorjs/editorjs": "^2.29.0",
