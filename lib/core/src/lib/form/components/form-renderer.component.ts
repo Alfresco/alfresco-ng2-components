@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnChanges } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnChanges, OnInit, Inject } from '@angular/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormModel } from './widgets/core/form.model';
 import { ContainerModel, FormFieldModel, TabModel } from './widgets';
 import { FormService } from '../services/form.service';
+import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
 
 @Component({
     selector: 'adf-form-renderer',
@@ -31,10 +32,11 @@ import { FormService } from '../services/form.service';
             useFactory: formRulesManagerFactory,
             deps: [Injector]
         }
+
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent<T> implements OnChanges, OnDestroy {
+export class FormRendererComponent<T> implements OnInit, OnChanges, OnDestroy {
     /** Toggle debug options. */
     @Input()
     showDebugButton: boolean = false;
@@ -46,7 +48,16 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     fields: FormFieldModel[];
 
-    constructor(public formService: FormService, private formRulesManager: FormRulesManager<T>) {}
+    constructor(
+        public formService: FormService,
+        private formRulesManager: FormRulesManager<T>,
+        @Inject(FORM_FIELD_MODEL_RENDER_MIDDLEWARE)
+        private middlewareServices: FormFieldModelRenderMiddleware[]
+    ) {}
+
+    ngOnInit(): void {
+        this.runMiddlewareServices();
+    }
 
     ngOnChanges(): void {
         this.formRulesManager.initialize(this.formDefinition);
@@ -122,5 +133,17 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
     getColumnWith(container: ContainerModel): string {
         const colspan = container ? container.field.colspan : 1;
         return (100 / container.field.numberOfColumns) * colspan + '';
+    }
+
+    private runMiddlewareServices(): void {
+        const formFields = this.formDefinition.getFormFields();
+
+        formFields.forEach(field => {
+            this.middlewareServices.forEach((middlewareService) => {
+                if (middlewareService.type === field.type) {
+                    field = middlewareService.getParsedField(field);
+                }
+            });
+        });
     }
 }
