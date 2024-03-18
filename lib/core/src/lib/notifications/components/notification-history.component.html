@@ -1,32 +1,32 @@
 <div (keyup)="onKeyPress($event)" tabindex="-1">
-    <button mat-button
-            [matMenuTriggerFor]="menu"
-            [attr.aria-label]="'NOTIFICATIONS.OPEN_HISTORY' | translate"
-            title="{{ 'NOTIFICATIONS.OPEN_HISTORY' | translate }}"
-            class="adf-notification-history-menu_button"
-            id="adf-notification-history-open-button"
-            (menuOpened)="onMenuOpened()">
-        <mat-icon matBadge="&#8288;"
-                  [matBadgeHidden]="!notifications.length"
-                  matBadgeColor="accent"
-                  matBadgeSize="small">notifications</mat-icon>
+    <button
+        mat-button
+        [matMenuTriggerFor]="menu"
+        [attr.aria-label]="'NOTIFICATIONS.OPEN_HISTORY' | translate"
+        title="{{ 'NOTIFICATIONS.OPEN_HISTORY' | translate }}"
+        class="adf-notification-history-menu_button"
+        id="adf-notification-history-open-button"
+        (menuOpened)="onMenuOpened()"
+    >
+        <mat-icon matBadge="&#8288;" [matBadgeHidden]="!notifications.length" matBadgeColor="accent" matBadgeSize="small">notifications</mat-icon>
     </button>
-    <mat-menu #menu="matMenu"
-              [xPosition]="menuPositionX"
-              [yPosition]="menuPositionY"
-              id="adf-notification-history-menu"
-              class="adf-notification-history-menu">
-
-        <div class="adf-notification-history-list"
-             tabindex="0" (keyup.enter)="$event.stopPropagation()"
-             (click)="$event.stopPropagation()">
+    <mat-menu
+        #menu="matMenu"
+        [xPosition]="menuPositionX"
+        [yPosition]="menuPositionY"
+        id="adf-notification-history-menu"
+        class="adf-notification-history-menu"
+    >
+        <div class="adf-notification-history-list" tabindex="0" (keyup.enter)="$event.stopPropagation()" (click)="$event.stopPropagation()">
             <div mat-subheader role="menuitem">
                 <span>{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
-                <button *ngIf="notifications.length"
-                        id="adf-notification-history-mark-as-read"
-                        mat-icon-button
-                        title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
-                        (click)="markAsRead()">
+                <button
+                    *ngIf="notifications.length"
+                    id="adf-notification-history-mark-as-read"
+                    mat-icon-button
+                    title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
+                    (click)="markAsRead()"
+                >
                     <mat-icon>done_all</mat-icon>
                 </button>
             </div>
@@ -35,27 +35,33 @@
 
             <mat-list role="menuitem">
                 <ng-container *ngIf="notifications.length; else empty_list_template">
-                    <mat-list-item *ngFor="let notification of paginatedNotifications"
-                                   class="adf-notification-history-menu-item"
-                                   (click)="onNotificationClick(notification)">
-                        <div *ngIf="notification.initiator; else no_avatar"
-                             matListAvatar
-                             [outerHTML]="notification.initiator | usernameInitials:'adf-notification-initiator-pic'">
-                        </div>
+                    <mat-list-item
+                        *ngFor="let notification of paginatedNotifications"
+                        class="adf-notification-history-menu-item"
+                        (click)="onNotificationClick(notification)"
+                    >
+                        <div
+                            *ngIf="notification.initiator; else no_avatar"
+                            matListAvatar
+                            [outerHTML]="notification.initiator | usernameInitials : 'adf-notification-initiator-pic'"
+                        ></div>
                         <ng-template #no_avatar>
-                            <mat-icon mat-list-icon
-                                      class="adf-notification-history-menu-initiator">{{notification.icon}}</mat-icon>
+                            <mat-icon mat-list-icon class="adf-notification-history-menu-initiator">{{ notification.icon }}</mat-icon>
                         </ng-template>
-                        <p class="adf-notification-history-menu-message"
-                           *ngFor="let message of notification.messages"
-                           mat-line [matTooltip]="message" matTooltipShowDelay="1000">{{ message }}</p>
-                        <p class="adf-notification-history-menu-date"
-                           mat-line> {{notification.datetime | adfTimeAgo}} </p>
+                        <p
+                            class="adf-notification-history-menu-message"
+                            *ngFor="let message of notification.messages"
+                            mat-line
+                            [matTooltip]="message"
+                            matTooltipShowDelay="1000"
+                        >
+                            {{ message }}
+                        </p>
+                        <p class="adf-notification-history-menu-date" mat-line>{{ notification.datetime | adfTimeAgo }}</p>
                     </mat-list-item>
                 </ng-container>
                 <ng-template #empty_list_template>
-                    <mat-list-item id="adf-notification-history-component-no-message"
-                                   class="adf-notification-history-menu-no-message">
+                    <mat-list-item id="adf-notification-history-component-no-message" class="adf-notification-history-menu-no-message">
                         <p mat-line>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</p>
                     </mat-list-item>
                 </ng-template>
@@ -63,11 +69,8 @@
 
             <mat-divider></mat-divider>
 
-            <div class="adf-notification-history-load-more"
-                 role="menuitem"
-                 *ngIf="hasMoreNotifications()">
-                <button mat-button
-                        (click)="loadMore()">
+            <div class="adf-notification-history-load-more" role="menuitem" *ngIf="hasMoreNotifications()">
+                <button mat-button (click)="loadMore()">
                     {{ 'NOTIFICATIONS.LOAD_MORE' | translate }}
                 </button>
             </div>

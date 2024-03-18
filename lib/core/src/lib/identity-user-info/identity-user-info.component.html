@@ -1,32 +1,37 @@
-<div *ngIf="isLoggedIn"
+<div
+    *ngIf="isLoggedIn"
     id="userinfo_container"
     [class.adf-userinfo-name-right]="showOnRight"
     (keyup)="onKeyPress($event)"
-     tabindex="0"
-    class="adf-userinfo-container">
+    tabindex="0"
+    class="adf-userinfo-container"
+>
     <span *ngIf="showName" id="adf-userinfo-identity-name-display" class="adf-userinfo-name">
-        {{identityUser | fullName}}
+        {{ identityUser | fullName }}
     </span>
-    <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button adf-identity-userinfo-button"
-            data-automation-id="adf-user-profile">
+    <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button adf-identity-userinfo-button" data-automation-id="adf-user-profile">
         <div class="adf-userinfo-button-profile" id="user-profile">
             <div id="identity-user-image">
-                <div [innerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
+                <div [innerHTML]="identityUser | usernameInitials : 'adf-userinfo-pic'"></div>
             </div>
         </div>
     </button>
-    <mat-menu #menu="matMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY"
-              [overlapTrigger]="false" class="adf-userinfo-menu adf-identity-userinfo-menu">
+    <mat-menu
+        #menu="matMenu"
+        id="user-profile-lists"
+        [xPosition]="menuPositionX"
+        [yPosition]="menuPositionY"
+        [overlapTrigger]="false"
+        class="adf-userinfo-menu adf-identity-userinfo-menu"
+    >
         <mat-card class="adf-userinfo-card adf-identity-userinfo-card">
-            <mat-card-header class="adf-userinfo-card-header"
-                             [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                <div class="mat-title" id="identity-username">{{identityUser | fullName}}</div>
+            <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + bpmBackgroundImage + ')'">
+                <div class="mat-title" id="identity-username">{{ identityUser | fullName }}</div>
             </mat-card-header>
             <mat-card-content>
                 <div class="adf-userinfo-supporting-text">
-                    <h2 id="identity-full-name"
-                        class="adf-userinfo__detail-title">{{identityUser | fullName}}</h2>
-                    <span id="identity-email"> {{identityUser.email}} </span>
+                    <h2 id="identity-full-name" class="adf-userinfo__detail-title">{{ identityUser | fullName }}</h2>
+                    <span id="identity-email"> {{ identityUser.email }} </span>
                     <a href="#/profile"> {{ 'USER_PROFILE.LABELS.MY_PROFILE' | translate }}</a>
                 </div>
             </mat-card-content>

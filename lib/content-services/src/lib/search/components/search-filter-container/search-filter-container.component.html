@@ -1,53 +1,57 @@
-<div *ngIf="!!category"
-     class="adf-filter">
-    <button mat-icon-button
-            [matMenuTriggerFor]="filter"
-            data-automation-id="filter-menu-button"
-            #menuTrigger="matMenuTrigger"
-            (click)="$event.stopPropagation()"
-            (menuOpened)="onMenuOpen()"
-            (keyup.enter)="$event.stopPropagation()"
-            class="adf-filter-button"
-            [attr.aria-label]="getTooltipTranslation(col?.title)"
-            [matTooltip]="getTooltipTranslation(col?.title)">
-        <adf-icon value="filter_list"
-                  [ngClass]="{ 'adf-icon-active': isActive() || menuTrigger.menuOpen }"
-                  matBadge="filter"
-                  matBadgeColor="warn"
-                  [matBadgeHidden]="!isActive()">
+<div *ngIf="!!category" class="adf-filter">
+    <button
+        mat-icon-button
+        [matMenuTriggerFor]="filter"
+        data-automation-id="filter-menu-button"
+        #menuTrigger="matMenuTrigger"
+        (click)="$event.stopPropagation()"
+        (menuOpened)="onMenuOpen()"
+        (keyup.enter)="$event.stopPropagation()"
+        class="adf-filter-button"
+        [attr.aria-label]="getTooltipTranslation(col?.title)"
+        [matTooltip]="getTooltipTranslation(col?.title)"
+    >
+        <adf-icon
+            value="filter_list"
+            [ngClass]="{ 'adf-icon-active': isActive() || menuTrigger.menuOpen }"
+            matBadge="filter"
+            matBadgeColor="warn"
+            [matBadgeHidden]="!isActive()"
+        >
         </adf-icon>
     </button>
 
-    <mat-menu #filter="matMenu"
-              class="adf-filter-menu adf-search-filter-menu"
-              (closed)="onClosed()">
-        <div #filterContainer
-              role="menuitem"
-             tabindex="0"
-             (keydown.tab)="$event.stopPropagation();">
-            <div (click)="$event.stopPropagation()"
-                 tabindex="0" (keyup.enter)="$event.stopPropagation()"
-                 class="adf-filter-container">
+    <mat-menu #filter="matMenu" class="adf-filter-menu adf-search-filter-menu" (closed)="onClosed()">
+        <div #filterContainer role="menuitem" tabindex="0" (keydown.tab)="$event.stopPropagation()">
+            <div (click)="$event.stopPropagation()" tabindex="0" (keyup.enter)="$event.stopPropagation()" class="adf-filter-container">
                 <div class="adf-filter-title">{{ category?.name | translate }}</div>
-                <adf-search-widget-container (keypress)="onKeyPressed($event, menuTrigger)"
-                                             [id]="category?.id"
-                                             [selector]="category?.component?.selector"
-                                             [settings]="category?.component?.settings"
-                                             [value]="initialValue">
+                <adf-search-widget-container
+                    (keypress)="onKeyPressed($event, menuTrigger)"
+                    [id]="category?.id"
+                    [selector]="category?.component?.selector"
+                    [settings]="category?.component?.settings"
+                    [value]="initialValue"
+                >
                 </adf-search-widget-container>
             </div>
             <mat-dialog-actions class="adf-filter-actions">
-                <button mat-button
-                        id="clear-filter-button"
-                        [attr.aria-label]="'SEARCH.SEARCH_HEADER.CLEAR' | translate"
-                        (click)="onClearButtonClick($event)">{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
+                <button
+                    mat-button
+                    id="clear-filter-button"
+                    [attr.aria-label]="'SEARCH.SEARCH_HEADER.CLEAR' | translate"
+                    (click)="onClearButtonClick($event)"
+                >
+                    {{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
                 </button>
-                <button mat-button
-                        color="primary"
-                        id="apply-filter-button"
-                        class="adf-filter-apply-button"
-                        [attr.aria-label]="'SEARCH.SEARCH_HEADER.APPLY' | translate"
-                        (click)="onApply()">{{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
+                <button
+                    mat-button
+                    color="primary"
+                    id="apply-filter-button"
+                    class="adf-filter-apply-button"
+                    [attr.aria-label]="'SEARCH.SEARCH_HEADER.APPLY' | translate"
+                    (click)="onApply()"
+                >
+                    {{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
                 </button>
             </mat-dialog-actions>
         </div>
