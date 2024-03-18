@@ -78,7 +78,10 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         return Math.round(this.scale * 100) + '%';
     }
 
-    constructor(private appConfigService: AppConfigService, private urlService: UrlService) {
+    constructor(
+        private appConfigService: AppConfigService,
+        private urlService: UrlService
+    ) {
         this.initializeScaling();
     }
 
@@ -95,7 +98,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
             dragMode: 'move',
             background: false,
             scalable: true,
-            zoomOnWheel: false,
+            zoomOnWheel: true,
             toggleDragModeOnDblclick: false,
             viewMode: 1,
             checkCrossOrigin: false,
@@ -155,8 +158,8 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
             return;
         }
 
-        if (!changes['urlFile'].firstChange && changes['fileName']) {
-            if (changes['fileName'].previousValue !== changes['fileName'].currentValue) {
+        if (!changes['urlFile'].firstChange) {
+            if (changes['urlFile'].previousValue !== changes['urlFile'].currentValue) {
                 this.cropper.replace(changes['urlFile'].currentValue);
             }
         }

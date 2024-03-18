@@ -132,7 +132,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         return this._externalViewer;
     }
 
-    cacheTypeForContent = '';
+    cacheTypeForContent = 'no-cache';
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -143,7 +143,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.cacheTypeForContent = '';
+        this.cacheTypeForContent = 'no-cache';
     }
 
     ngOnDestroy() {

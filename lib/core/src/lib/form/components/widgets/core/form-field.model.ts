@@ -86,6 +86,7 @@ export class FormFieldModel extends FormWidgetModel {
     leftLabels: boolean = false;
     variableConfig: VariableConfig;
     schemaDefinition: DataColumn[];
+    externalProperty?: string;
 
     // container model members
     numberOfColumns: number = 1;
@@ -143,7 +144,7 @@ export class FormFieldModel extends FormWidgetModel {
     validate(): boolean {
         this.validationSummary = new ErrorMessageModel();
 
-        if (!this.readOnly) {
+        if (this.isFieldValidatable()) {
             const validators = this.form.fieldValidators || [];
             for (const validator of validators) {
                 if (!validator.validate(this)) {
@@ -154,6 +155,10 @@ export class FormFieldModel extends FormWidgetModel {
         }
         this._isValid = true;
         return this._isValid;
+    }
+
+    private isFieldValidatable(): boolean {
+        return !this.readOnly || FormFieldTypes.isValidatableType(this.type);
     }
 
     constructor(form: any, json?: any) {
@@ -204,6 +209,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.variableConfig = json.variableConfig;
             this.schemaDefinition = json.schemaDefinition;
             this.precision = json.precision;
+            this.externalProperty = json.externalProperty;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;

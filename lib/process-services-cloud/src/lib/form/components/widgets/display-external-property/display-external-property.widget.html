@@ -1,0 +1,30 @@
+<div
+    class="adf-textfield adf-display-external-property-widget {{ field.className }}"
+    [class.adf-invalid]="!field.isValid && isTouched()"
+    [class.adf-readonly]="field.readOnly"
+    [class.adf-left-label-input-container]="field.leftLabels"
+>
+    <div *ngIf="field.leftLabels">
+        <label class="adf-label adf-left-label" [attr.for]="field.id">
+            {{ field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+        </label>
+    </div>
+
+    <div>
+        <mat-form-field [hideRequiredMarker]="true">
+            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
+                {{ field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+            </label>
+            <input matInput
+                   class="adf-input"
+                   type="text"
+                   data-automation-id="adf-display-external-property-widget"
+                   [id]="field.id"
+                   [formControl]="propertyControl"
+            >
+        </mat-form-field>
+
+        <ng-container *ngIf="!previewState">
+            <error-widget *ngIf="propertyLoadFailed" [required]="'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate"></error-widget>
+        </ng-container>
+</div>

@@ -1,5 +1,14 @@
-<div id="adf-image-container" (keydown)="onKeyDown($event)" class="adf-image-container" tabindex="0" role="img" [attr.aria-label]="fileName" data-automation-id="adf-image-container">
-    <img #image id="viewer-image" [src]="urlFile" [alt]="fileName" (error)="onImageError()" />
+<div id="adf-image-container"
+     (keydown)="onKeyDown($event)"
+     class="adf-image-container"
+     tabindex="0"
+     role="img"
+     [attr.aria-label]="fileName"
+     data-automation-id="adf-image-container">
+    <img #image id="viewer-image"
+         [src]="urlFile"
+         [alt]="fileName"
+         (error)="onImageError()" />
 </div>
 
 <div class="adf-image-viewer__toolbar" *ngIf="showToolbar">

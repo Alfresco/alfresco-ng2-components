@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import { Page } from '@playwright/test';
-import { BaseComponent } from '../base.component';
+import { InjectionToken } from '@angular/core';
+import { FormFieldModel } from '../../components/widgets';
 
-export class ErrorComponent extends BaseComponent {
-    private static rootElement = 'mat-error';
-    public content = this.getChild('');
-
-    constructor(page: Page) {
-        super(page, ErrorComponent.rootElement);
-    }
+export interface FormFieldModelRenderMiddleware {
+    type: string;
+    getParsedField(field: FormFieldModel): FormFieldModel;
 }
+
+export const FORM_FIELD_MODEL_RENDER_MIDDLEWARE = new InjectionToken('RENDER_FORM_FIELD_MODEL_MIDDLEWARE');

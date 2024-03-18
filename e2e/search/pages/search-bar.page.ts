@@ -16,17 +16,17 @@
  */
 
 import { ElementFinder, protractor, $ } from 'protractor';
-import { BrowserVisibility, BrowserActions, TestElement } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, TestElement, materialLocators } from '@alfresco/adf-testing';
 
 export class SearchBarPage {
     searchIcon = $(`button[class*='adf-search-button']`);
     searchBar = $(`adf-search-control input`);
-    searchBarExpanded: TestElement = TestElement.byCss(`adf-search-control mat-form-field[class*="mat-focused"] input`);
+    searchBarExpanded = TestElement.byCss(`adf-search-control ${materialLocators.Form.field.root}[class*="${materialLocators.Focused.root}"] input`);
     noResultMessage = $(`p[class*='adf-search-fixed-text']`);
-    rowsAuthor = `.mat-list-text p[class*='adf-search-fixed-text']`;
+    rowsAuthor = `${materialLocators.List.text.class} p[class*='adf-search-fixed-text']`;
     completeName = `h4[class*='adf-search-fixed-text']`;
     highlightName = `.adf-highlight`;
-    searchBarPage = $(`mat-list[id='autocomplete-search-result-list']`);
+    searchBarPage = $(`${materialLocators.List.root}[id='autocomplete-search-result-list']`);
 
     getRowByRowName = (name: string): ElementFinder => $(`[data-automation-id='autocomplete_for_${name}']`);
 

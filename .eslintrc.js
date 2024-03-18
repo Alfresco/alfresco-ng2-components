@@ -182,8 +182,12 @@ module.exports = {
         {
             files: ['*.html'],
             extends: ['plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility'],
-            excludedFiles: ["*.spec.ts"],
             rules: {}
         },
+        {
+            files: ['*.ts'],
+            extends: ['plugin:@angular-eslint/template/process-inline-templates'],
+            excludedFiles: ['*.spec.ts']
+        }
     ]
 };

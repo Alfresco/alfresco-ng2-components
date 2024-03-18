@@ -204,9 +204,9 @@
         <div *ngFor="let group of groupedProperties; let first = first" class="adf-metadata-grouped-properties-container">
             <mat-expansion-panel
                 [attr.data-automation-id]="'adf-metadata-group-' + group.title"
-                [expanded]="currentPanel.panelTitle === group.title && currentPanel.expanded"
-                (opened)="expandPanel(group.title)"
-                (closed)="closePanel(group.title)"
+                [expanded]="multi ? !displayDefaultProperties && first || group.expanded : !displayDefaultProperties && first || currentPanel.panelTitle === group.title && currentPanel.expanded"
+                (opened)="expandPanel(group.title); group.expanded = true"
+                (closed)="closePanel(group.title); group.expanded = false"
                 class="adf-content-metadata-panel"
                 hideToggle>
                 <mat-expansion-panel-header
@@ -244,7 +244,7 @@
                         </div>
                     </adf-content-metadata-header>
                 </mat-expansion-panel-header>
-                <div *ngIf="!showGroup(group) && !group.editable" class="adf-metadata-no-item-added">
+                <div *ngIf="!showGroup(group) && group.editable && !editing" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate : { groupTitle: group.title | translate } }}
                 </div>
                 <adf-card-view

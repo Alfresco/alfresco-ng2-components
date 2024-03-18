@@ -109,7 +109,7 @@
 
 .adf-empty-list-header {
     height: 32px;
-    opacity: 0.26 !important;
+    opacity: 0.26;
     font-size: var(--theme-headline-font-size);
     line-height: 1.33;
     letter-spacing: -1px;
@@ -179,8 +179,8 @@
 }
 
 .adf-datatable-gallery-thumbnails {
-    .adf-datatable-card .adf-datatable-row {
-        height: 300px !important;
+    .adf-datatable-card .adf-datatable-row:is(adf-datatable-row) {
+        height: 300px;
 
         img {
             height: 130px;

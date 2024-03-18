@@ -3,6 +3,7 @@
     .editorjs {
         &.readonly {
             .codex-editor__redactor {
+                /* stylelint-disable declaration-no-important */
                 padding-bottom: 0 !important;
             }
         }

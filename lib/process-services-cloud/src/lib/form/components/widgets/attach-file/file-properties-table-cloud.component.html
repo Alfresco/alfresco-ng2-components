@@ -1,5 +1,5 @@
-<div class="adf-file-properties-table">
-    <table mat-table [dataSource]="uploadedFiles" class="mat-elevation-z0" *ngIf="hasFile">
+<div class="adf-file-properties-table-container">
+    <table mat-table [dataSource]="uploadedFiles" class="adf-properties-table adf-file-properties-table mat-elevation-z0" *ngIf="hasFile">
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell class="adf-file-properties-table-cell" *matCellDef="let element">

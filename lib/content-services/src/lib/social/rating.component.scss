@@ -32,9 +32,9 @@ $adf-average-star-color: #808080;
         color: $adf-rated-star-color;
     }
 
-    .adf-grey-star,
-    .adf-average-star {
-        color: $adf-average-star-color !important;
+    .adf-colored-star.adf-grey-star,
+    .adf-colored-star.adf-average-star {
+        color: $adf-average-star-color;
     }
 }
 

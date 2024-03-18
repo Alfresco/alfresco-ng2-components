@@ -5,6 +5,7 @@ adf-search-filter-tabbed {
 
     // The important tag is used here as a workaround for a bug in angular material, when MatTabs are used in conjunction with MatMenu
     // https://github.com/angular/components/issues/27426
+    /* stylelint-disable declaration-no-important */
     .adf-search-tab-content-active {
         & > div {
             visibility: visible !important;

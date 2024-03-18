@@ -22,7 +22,7 @@ $select-filter-height: 4em !default;
 }
 
 .mat-select-panel.adf-select-filter {
-    transform: none !important;
-    overflow-x: hidden !important;
+    transform: none;
+    overflow-x: hidden;
     max-height: calc(256px + #{$select-filter-height});
 }

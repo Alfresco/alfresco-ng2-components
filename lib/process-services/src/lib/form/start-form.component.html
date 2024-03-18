@@ -1,11 +1,11 @@
 <div class="adf-start-form-container" *ngIf="hasForm()">
-    <mat-card>
-        <mat-card-header>
+    <mat-card class="adf-start-form-card">
+        <mat-card-header class="adf-start-form-header">
             <mat-card-title>
                 <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>
             </mat-card-title>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content class="adf-start-form-content">
             <adf-form-renderer [formDefinition]="form">
             </adf-form-renderer>
         </mat-card-content>
@@ -15,6 +15,7 @@
 
             <button *ngFor="let outcome of form.outcomes"
                     mat-button
+                    class="adf-start-form-actions-button"
                     [attr.data-automation-id]="'adf-form-' + outcome.name  | lowercase"
                     [disabled]="!isOutcomeButtonEnabled(outcome)"
                     [class.mdl-button--colored]="!outcome.isSystem"

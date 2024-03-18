@@ -18,9 +18,13 @@
 import useNoneEncapsulationRule, {
     RULE_NAME as useNoneEncapsulationRuleName
 } from './src/rules/use-none-component-view-encapsulation/use-none-component-view-encapsulation';
+import noAngularMaterialSelectors, {
+    RULE_NAME as noAngularMaterialSelectorsRuleName
+} from './src/rules/no-angular-material-selectors/no-angular-material-selectors';
 
 export = {
     rules: {
-        [useNoneEncapsulationRuleName]: useNoneEncapsulationRule
+        [useNoneEncapsulationRuleName]: useNoneEncapsulationRule,
+        [noAngularMaterialSelectorsRuleName]: noAngularMaterialSelectors
     }
 };

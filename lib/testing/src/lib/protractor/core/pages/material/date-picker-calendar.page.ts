@@ -20,21 +20,24 @@ import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 import { TestElement } from '../../test-element';
 import { addDays, format, subDays } from 'date-fns';
+import { materialLocators } from './material-locators';
 
 export class DatePickerCalendarPage {
-    datePicker = $('mat-calendar[id*="mat-datepicker"]');
-    nextMonthButton = $('button[class*="mat-calendar-next-button"]');
-    previousMonthButton = $('button[class*="mat-calendar-previous-button"]');
-    todayDate = TestElement.byCss('div.mat-calendar-body-today');
-    periodButton = $('button[class*=mat-calendar-period-button]');
+    datePicker = $(`${materialLocators.Calendar.root}[id*="${materialLocators.Datepicker.root}"]`);
+    nextMonthButton = $(`button[class*="${materialLocators.Calendar.button('next')}"]`);
+    previousMonthButton = $(`button[class*="${materialLocators.Calendar.button('previous')}"]`);
+    todayDate = TestElement.byCss(`div${materialLocators.Calendar.body.today.class}`);
+    periodButton = $(`button[class*=${materialLocators.Calendar.button('period')}]`);
+
+    focusedElement = `div${materialLocators.Calendar.body.cell.content.class}${materialLocators.Focus.indicator}`;
 
     async getSelectedDate(): Promise<string> {
-        return BrowserActions.getAttribute($('button[class*="mat-calendar-body-active"]'), 'aria-label');
+        return BrowserActions.getAttribute($(`button[class*="${materialLocators.Calendar.body.active.root}"]`), 'aria-label');
     }
 
     async checkDatesAfterDateAreDisabled(date: Date): Promise<void> {
         const afterDate = format(addDays(date, 1), 'dd-MM-yy');
-        const afterCalendar = $(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`);
+        const afterCalendar = $(`td[class*="${materialLocators.Calendar.body.cell.root}"][aria-label="${afterDate}"]`);
         if (await afterCalendar.isPresent()) {
             const aria = await BrowserActions.getAttribute(afterCalendar, 'aria-disabled');
             await expect(aria).toBe('true');
@@ -45,7 +48,7 @@ export class DatePickerCalendarPage {
 
     async checkDatesBeforeDateAreDisabled(date: Date): Promise<void> {
         const beforeDate = format(subDays(date, 1), 'dd-MM-yy');
-        const beforeCalendar = $(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`);
+        const beforeCalendar = $(`td[class*="${materialLocators.Calendar.body.cell.root}"][aria-label="${beforeDate}"]`);
         if (await beforeCalendar.isPresent()) {
             const aria = await BrowserActions.getAttribute(beforeCalendar, 'aria-disabled');
             await expect(aria).toBe('true');
@@ -74,8 +77,8 @@ export class DatePickerCalendarPage {
     }
 
     async selectDateRange(startDay: number, endDay: number): Promise<void> {
-        const startDayElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${startDay}`));
-        const endDayElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${endDay}`));
+        const startDayElement = element(by.cssContainingText(this.focusedElement, `${startDay}`));
+        const endDayElement = element(by.cssContainingText(this.focusedElement, `${endDay}`));
         await this.checkDatePickerIsDisplayed();
         await BrowserActions.click(startDayElement);
         await BrowserActions.click(endDayElement);
@@ -100,9 +103,9 @@ export class DatePickerCalendarPage {
         const year = date.getFullYear();
         const month = months[date.getMonth()];
         const day = date.getDate();
-        const yearElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${year}`));
-        const monthElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${month}`));
-        const dayElement = element(by.cssContainingText(`div.mat-calendar-body-cell-content.mat-focus-indicator`, `${day}`));
+        const yearElement = element(by.cssContainingText(this.focusedElement, `${year}`));
+        const monthElement = element(by.cssContainingText(this.focusedElement, `${month}`));
+        const dayElement = element(by.cssContainingText(this.focusedElement, `${day}`));
 
         await BrowserActions.click(this.periodButton);
         await BrowserActions.click(yearElement);

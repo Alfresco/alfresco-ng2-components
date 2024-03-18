@@ -37,6 +37,8 @@ import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.modu
 import { A11yModule } from '@angular/cdk/a11y';
 import { ViewerModule } from '../viewer/viewer.module';
 import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
+import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './components/middlewares/middleware';
+import { DecimalRenderMiddlewareService } from './components/middlewares/decimal-middleware.service';
 
 @NgModule({
     imports: [
@@ -70,7 +72,12 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
         ...WIDGET_DIRECTIVES,
         InplaceFormInputComponent,
         WidgetComponent
-    ]
+    ],
+    providers: [{
+        provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
+        useClass: DecimalRenderMiddlewareService,
+        multi: true
+    }]
 })
 export class FormBaseModule {
 }

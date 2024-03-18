@@ -18,6 +18,7 @@
 import { FormFields } from '../form-fields';
 import { $, by, protractor } from 'protractor';
 import { TestElement } from '../../../test-element';
+import { materialLocators } from '../../public-api';
 
 export class DropdownWidgetPage {
 
@@ -26,12 +27,12 @@ export class DropdownWidgetPage {
     readonly searchElementLocator = TestElement.byCss('[aria-label="Search options"]');
 
     async getSelectedOptionText(fieldId: string = 'dropdown'): Promise<string> {
-        return this.formFields.getFieldText(fieldId, by.css(`mat-select[id="${fieldId}"] span span`));
+        return this.formFields.getFieldText(fieldId, by.css(`${materialLocators.Select.root}[id="${fieldId}"] span span`));
     }
 
     async selectOption(option: string, locator: string = '#dropdown'): Promise<void> {
         await this.openDropdown(locator);
-        const row = TestElement.byText('mat-option span', option);
+        const row = TestElement.byText(`${materialLocators.Option.root} span`, option);
         await row.click();
     }
 
@@ -79,7 +80,7 @@ export class DropdownWidgetPage {
     }
 
     private async clickOption(name: string): Promise<void> {
-        const optionLocator = TestElement.byText('mat-option span', name);
+        const optionLocator = TestElement.byText(`${materialLocators.Option.root} span`, name);
         await optionLocator.click();
     }
 }
