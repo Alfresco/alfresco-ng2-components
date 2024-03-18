@@ -30,6 +30,8 @@ export * from './models/search-form.interface';
 export * from './models/tabbed-facet-field.interface';
 
 export * from './search-query-service.token';
+export * from './search-configuration.token';
+
 export * from './services/search-header-query-builder.service';
 export * from './services/search-facet-filters.service';
 export * from './services/search-filter.service';

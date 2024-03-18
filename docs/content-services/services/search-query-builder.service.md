@@ -131,6 +131,20 @@ constructor(queryBuilder: SearchQueryBuilderService) {
 
 > **Note:** From ADF 3.0.0, the query contains the `"facetFormat": "V2"` parameter so that all the responses have the same structure whether they come from search queries containing facetFields, facetQueries, grouped facetQueries or facetIntervals.
 
+## Runtime Configuration
+
+You can provide search configuration at runtime using the `ADF_SEARCH_CONFIGURATION` injection token.
+The value should expose the [SearchConfiguration](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/content-services/src/lib/search/models/search-configuration.interface.ts#L25) interface.
+
+```ts
+@NgModule({
+    providers: [
+        { provide: ADF_SEARCH_CONFIGURATION, useValue: {/*...*/} }
+    ]
+})
+class AppModule {}
+```
+
 ## See also
 
 -   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
