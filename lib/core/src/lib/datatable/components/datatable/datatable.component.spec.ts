@@ -1738,20 +1738,20 @@ describe('Column Resizing', () => {
         });
     });
 
-    it('should display resize handle for each column by default', () => {
+    it('should display resize handle for each column, but not for the last one, by default', () => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
 
-        expect(getResizeHandlersCount()).toBe(2);
+        expect(getResizeHandlersCount()).toBe(1);
     });
 
-    it('should NOT display resize handle for the column when the column has resizable param set to false', () => {
+    it('should NOT display resize handle for the column when the column has resizable param set to false and column is not the last one', () => {
         dataTable.isResizingEnabled = true;
         dataTableSchema[0].resizable = false;
         dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
         fixture.detectChanges();
 
-        expect(getResizeHandlersCount()).toBe(1);
+        expect(getResizeHandlersCount()).toBe(0);
     });
 
     it('should display resize handle when the feature is Enabled [isResizingEnabled=true]', () => {
