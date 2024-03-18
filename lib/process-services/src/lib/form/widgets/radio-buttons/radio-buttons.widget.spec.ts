@@ -33,6 +33,9 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatRadioGroupHarness } from '@angular/material/radio/testing';
 
 describe('RadioButtonsWidgetComponent', () => {
 
@@ -146,6 +149,8 @@ describe('RadioButtonsWidgetComponent', () => {
         let radioButtonWidget: RadioButtonsWidgetComponent;
         let fixture: ComponentFixture<RadioButtonsWidgetComponent>;
         let element: HTMLElement;
+        let loader: HarnessLoader;
+
         const restOption: FormFieldOption[] = [
             {
                 id: 'opt-1',
@@ -160,6 +165,7 @@ describe('RadioButtonsWidgetComponent', () => {
             fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
             radioButtonWidget = fixture.componentInstance;
             element = fixture.nativeElement;
+            loader = TestbedHarnessEnvironment.loader(fixture);
         });
 
         it('should show radio buttons as text when is readonly', async () => {
@@ -299,11 +305,10 @@ describe('RadioButtonsWidgetComponent', () => {
                     fixture.detectChanges();
                 });
 
-                it('should show radio buttons disabled', () => {
-                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).toBeDefined();
-                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).not.toBeNull();
-                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).toBeDefined();
-                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).not.toBeNull();
+                it('should show radio buttons disabled', async () => {
+                    const radioButtons = await (await loader.getHarness(MatRadioGroupHarness.with({ selector: '.adf-radio-group' }))).getRadioButtons();
+                    expect(await radioButtons[0].isDisabled()).toBe(true);
+                    expect(await radioButtons[1].isDisabled()).toBe(true);
                 });
 
                 describe('and a value is selected', () => {
@@ -313,8 +318,9 @@ describe('RadioButtonsWidgetComponent', () => {
                         fixture.detectChanges();
                     });
 
-                    it('should check the selected value', () => {
-                        expect(element.querySelector('.mat-radio-checked')).toBe(element.querySelector('mat-radio-button[ng-reflect-id="radio-id-opt-1"]'));
+                    it('should check the selected value', async () => {
+                        const checkedRadioButton = await (await loader.getHarness(MatRadioGroupHarness.with({ selector: '.adf-radio-group' }))).getCheckedRadioButton();
+                        expect(await checkedRadioButton.getLabelText()).toBe(restOption[0].name);
                     });
                 });
             });

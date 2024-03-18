@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
@@ -26,18 +26,22 @@ import { ProcessService } from '../services/process.service';
 import { newProcess, taskFormMock, testProcessDef, testMultipleProcessDefs, testProcessDefWithForm, testProcessDefinitions } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { deployedApps } from '../../mock/apps-list.mock';
 import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 describe('StartProcessComponent', () => {
     let appConfig: AppConfigService;
     let activitiContentService: ActivitiContentService;
     let component: StartProcessInstanceComponent;
     let fixture: ComponentFixture<StartProcessInstanceComponent>;
+    let loader: HarnessLoader;
     let processService: ProcessService;
     let appsProcessService: AppsProcessService;
     let getDefinitionsSpy: jasmine.Spy;
@@ -52,16 +56,13 @@ describe('StartProcessComponent', () => {
         });
     });
 
-    const selectOptionByName = (name: string) => {
+    const selectOptionByName = async (name: string) => {
         const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
         selectElement.click();
-        fixture.detectChanges();
-        const options: any = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-        const currentOption = options.find((option: DebugElement) => option.nativeElement.innerHTML.trim() === name);
-
-        if (currentOption) {
-            currentOption.nativeElement.click();
-        }
+        const autocompleteDropdown = await loader.getHarness(MatAutocompleteHarness);
+        const options = await autocompleteDropdown.getOptions({ text: name });
+        expect(options.length).toBe(1);
+        await options[0].click();
     };
 
     /**
@@ -80,6 +81,7 @@ describe('StartProcessComponent', () => {
         activitiContentService = TestBed.inject(ActivitiContentService);
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
         processService = TestBed.inject(ProcessService);
         appsProcessService = TestBed.inject(AppsProcessService);
 
@@ -175,11 +177,8 @@ describe('StartProcessComponent', () => {
                 component.processDefinitionInput.setValue('My Default Name');
                 component.processNameInput.setValue('claim');
 
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container mat-label');
-                expect(inputLabelsNodes.length).toBe(2);
+                const inputLabels = await loader.getAllHarnesses(MatFormFieldHarness.with({ ancestor: '.adf-start-process', selector: '.adf-process-input-container' }));
+                expect(inputLabels.length).toBe(2);
             });
 
             it('should have floating labels for process name and type', async () => {
@@ -313,13 +312,10 @@ describe('StartProcessComponent', () => {
             const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
             selectElement.click();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const options: any = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-
+            const options = await (await loader.getHarness(MatAutocompleteHarness)).getOptions();
             expect(options.length).toBe(2);
-            expect(options[0].nativeElement.innerText).toBe('My Process 1');
-            expect(options[1].nativeElement.innerText).toBe('My Process 2');
+            expect(await options[0].getText()).toBe('My Process 1');
+            expect(await options[1].getText()).toBe('My Process 2');
         });
 
         it('should show no process available message when no process definition is loaded', async () => {
@@ -511,24 +507,21 @@ describe('StartProcessComponent', () => {
             expect(startProcessEmitterSpy).toHaveBeenCalledWith(newProcess);
         });
 
-        it('should emit processDefinitionSelection event when a process definition is selected', () => {
+        it('should emit processDefinitionSelection event when a process definition is selected', async () => {
             const processDefinitionSelectionSpy = spyOn(component.processDefinitionSelection, 'emit');
-            fixture.detectChanges();
-            selectOptionByName(testProcessDef.name);
+            await selectOptionByName(testProcessDef.name);
 
             expect(processDefinitionSelectionSpy).toHaveBeenCalledWith(testProcessDef);
         });
 
-        it('should set the process name using the processName pipe when a process definition gets selected', () => {
+        it('should set the process name using the processName pipe when a process definition gets selected', async () => {
             const processNamePipe = TestBed.inject(ProcessNamePipe);
             const processNamePipeTransformSpy = spyOn(processNamePipe, 'transform').and.returnValue('fake-transformed-name');
             const expectedProcessInstanceDetails = new ProcessInstance({ processDefinitionName: testProcessDef.name });
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
-
             changeAppId(123);
-            fixture.detectChanges();
 
-            selectOptionByName(testProcessDef.name);
+            await selectOptionByName(testProcessDef.name);
 
             expect(processNamePipeTransformSpy).toHaveBeenCalledWith(component.name, expectedProcessInstanceDetails);
             expect(component.nameController.dirty).toBe(true);
@@ -570,16 +563,16 @@ describe('StartProcessComponent', () => {
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
         });
 
-        it('Should be able to show application drop-down if showSelectApplicationDropdown set to true', () => {
+        it('Should be able to show application drop-down if showSelectApplicationDropdown set to true', async () => {
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             changeAppId(3);
             fixture.detectChanges();
 
             const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
-            const labelElement = fixture.nativeElement.querySelector('.adf-start-process-app-list .mat-form-field-label');
+            const labelText = await (await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-start-process-app-list' }))).getLabel();
 
             expect(appsSelector).not.toBeNull();
-            expect(labelElement.innerText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION');
+            expect(labelText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION');
 
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(component.applications.length).toBe(6);

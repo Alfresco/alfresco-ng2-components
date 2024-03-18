@@ -30,6 +30,9 @@ import { DropdownWidgetComponent } from './dropdown.widget';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('DropdownWidgetComponent', () => {
 
@@ -39,11 +42,7 @@ describe('DropdownWidgetComponent', () => {
     let visibilityService: WidgetVisibilityService;
     let fixture: ComponentFixture<DropdownWidgetComponent>;
     let element: HTMLElement;
-
-    const openSelect = () => {
-        const dropdown = fixture.debugElement.nativeElement.querySelector('.mat-select-trigger');
-        dropdown.click();
-    };
+    let loader: HarnessLoader;
 
     const fakeOptionList: FormFieldOption[] = [
         {id: 'opt_1', name: 'option_1'},
@@ -64,6 +63,7 @@ describe('DropdownWidgetComponent', () => {
         visibilityService = TestBed.inject(WidgetVisibilityService);
         processDefinitionService = TestBed.inject(ProcessDefinitionService);
         widget.field = new FormFieldModel(new FormModel());
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should require field with restUrl', () => {
@@ -189,8 +189,7 @@ describe('DropdownWidgetComponent', () => {
                 expect(element.querySelector('#dropdown-id')).toBeDefined();
                 expect(element.querySelector('#dropdown-id')).not.toBeNull();
 
-                openSelect();
-
+                await (await loader.getHarness(MatSelectHarness)).open();
                 const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
                 const optTwo = fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'));
                 const optThree = fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'));
@@ -216,13 +215,7 @@ describe('DropdownWidgetComponent', () => {
                 widget.field.value = 'empty';
                 widget.ngOnInit();
 
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                openSelect();
-
-                fixture.detectChanges();
-                await fixture.whenStable();
+                await (await loader.getHarness(MatSelectHarness)).open();
 
                 const dropDownElement: any = element.querySelector('#dropdown-id');
                 expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
@@ -246,11 +239,11 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('should show visible dropdown widget', () => {
+            it('should show visible dropdown widget', async () => {
                 expect(element.querySelector('#dropdown-id')).toBeDefined();
                 expect(element.querySelector('#dropdown-id')).not.toBeNull();
 
-                openSelect();
+                await (await loader.getHarness(MatSelectHarness)).open();
 
                 const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
                 const optTwo = fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'));
@@ -276,14 +269,7 @@ describe('DropdownWidgetComponent', () => {
             it('should select the empty value when no default is chosen', async () => {
                 widget.field.value = 'empty';
                 widget.ngOnInit();
-
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                openSelect();
-
-                fixture.detectChanges();
-                await fixture.whenStable();
+                await (await loader.getHarness(MatSelectHarness)).open();
 
                 const dropDownElement: any = element.querySelector('#dropdown-id');
                 expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
@@ -316,16 +302,9 @@ describe('DropdownWidgetComponent', () => {
                     params: {field: {name: 'date-name', type: 'dropdown'}}
                 });
 
-                openSelect();
+                const select = await loader.getHarness(MatSelectHarness);
 
-                fixture.detectChanges();
-                await fixture.whenStable();
-
-                const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(options.length).toBe(1);
-
-                const option = options[0].nativeElement;
-                expect(option.innerText).toEqual('FakeValue');
+                expect(await select.getValueText()).toEqual('FakeValue');
             });
         });
     });

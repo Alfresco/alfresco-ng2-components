@@ -33,11 +33,16 @@ import {
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatMenuItemHarness } from '@angular/material/menu/testing';
 
 describe('ProcessInstanceListComponent', () => {
 
     let fixture: ComponentFixture<ProcessInstanceListComponent>;
     let component: ProcessInstanceListComponent;
+    let loader: HarnessLoader;
     let service: ProcessService;
     let getProcessInstancesSpy: jasmine.Spy;
     let appConfig: AppConfigService;
@@ -59,6 +64,7 @@ describe('ProcessInstanceListComponent', () => {
         });
         fixture = TestBed.createComponent(ProcessInstanceListComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
         appConfig = TestBed.inject(AppConfigService);
         service = TestBed.inject(ProcessService);
 
@@ -68,11 +74,9 @@ describe('ProcessInstanceListComponent', () => {
         };
     });
 
-    it('should display loading spinner', () => {
+    it('should display loading spinner', async () => {
         component.isLoading = true;
-
-        const spinner = fixture.debugElement.query(By.css('.mat-progress-spinner'));
-        expect(spinner).toBeDefined();
+        await loader.getHarness(MatProgressSpinnerHarness);
     });
 
     it('should use the default schemaColumn as default', () => {
@@ -619,6 +623,7 @@ describe('ProcessListContextMenuComponent', () => {
     let customComponent: ProcessListContextMenuComponent;
     let processService: ProcessService;
     let element: HTMLElement;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -631,6 +636,7 @@ describe('ProcessListContextMenuComponent', () => {
         fixture = TestBed.createComponent(ProcessListContextMenuComponent);
         customComponent = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         processService = TestBed.inject(ProcessService);
         customComponent.appId = 12345;
         spyOn(processService, 'getProcesses').and.returnValue(of(fakeProcessInstance));
@@ -645,15 +651,13 @@ describe('ProcessListContextMenuComponent', () => {
         const contextMenu =  element.querySelector(`[data-automation-id="text_${fakeProcessInstance.data[0].name}"]`);
         const contextActionSpy = spyOn(customComponent.contextAction, 'emit').and.callThrough();
         contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const contextActions = document.querySelectorAll('.mat-menu-item');
 
+        const contextActions = await loader.getAllHarnesses(MatMenuItemHarness);
         expect(contextActions.length).toBe(2);
-        expect(contextActions[0]['disabled']).toBe(false, 'View Process Details action not enabled');
-        expect(contextActions[1]['disabled']).toBe(false, 'Cancel Process action not enabled');
-        contextActions[0].dispatchEvent(new Event('click'));
-        fixture.detectChanges();
+        expect(await contextActions[0].isDisabled()).toBe(false, 'View Process Details action not enabled');
+        expect(await contextActions[1].isDisabled()).toBe(false, 'Cancel Process action not enabled');
+
+        await contextActions[0].click();
         expect(contextActionSpy).toHaveBeenCalled();
       });
 });
