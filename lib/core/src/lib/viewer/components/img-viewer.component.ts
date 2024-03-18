@@ -98,7 +98,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
             dragMode: 'move',
             background: false,
             scalable: true,
-            zoomOnWheel: false,
+            zoomOnWheel: true,
             toggleDragModeOnDblclick: false,
             viewMode: 1,
             checkCrossOrigin: false,
