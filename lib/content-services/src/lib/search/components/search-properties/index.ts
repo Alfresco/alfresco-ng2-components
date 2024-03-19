@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-export * from './components';
-export * from './forms';
-export * from './mocks';
-export * from './models';
-export * from './services';
-export * from './search-query-service.token';
-export * from './search-configuration.token';
-export * from './search.module';
+export * from './file-size-condition';
+export * from './file-size-operator.enum';
+export * from './file-size-unit.enum';
+export * from './search-properties.component';
+export * from './search-properties';
