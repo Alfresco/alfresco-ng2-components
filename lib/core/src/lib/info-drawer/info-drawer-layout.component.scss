@@ -1,5 +1,5 @@
 @import '../styles/mixins';
-@use 'styles/mat-selectors';
+@import 'styles/mat-selectors';
 
 $adf-info-drawer-layout-title-font-size: var(--theme-title-font-size) !default;
 $adf-info-drawer-icon-size: 48px !default;
