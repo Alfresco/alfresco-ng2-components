@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@use 'styles/mat-selectors';
+@import 'styles/mat-selectors';
 
 ul > li > form-field > .adf-focus {
     .adf-label {
