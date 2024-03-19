@@ -127,6 +127,7 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchFilterChipsComponent,
         SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
+        SearchWidgetChipComponent,
         SearchLogicalFilterComponent,
         SearchFilterTabbedComponent,
         SearchDateRangeComponent,
