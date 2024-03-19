@@ -1,5 +1,5 @@
 @import 'styles/flex';
-@import 'styles/mat-selectors';
+@use 'styles/mat-selectors';
 
 /* stylelint-disable scss/no-global-function-names */
 @mixin adf-line-clamp($line-height: 1.25, $lines: 3) {
