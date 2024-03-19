@@ -283,7 +283,7 @@ describe('Template transclusion', () => {
             expect(innerHeaderElement === null).toBe(false, 'Inner header should be shown');
         });
 
-        it("should call through the layout container's toggleMenu method", () => {
+        it(`should call through the layout container's toggleMenu method`, () => {
             mediaQueryList.matches = false;
             fixture.detectChanges();
             const layoutContainerComponent = fixture.debugElement.query(By.directive(DummyLayoutContainerComponent)).componentInstance;
