@@ -24,7 +24,7 @@
 
     <mat-menu #filter="matMenu" class="adf-filter-menu adf-search-filter-menu" (closed)="onClosed()">
         <div #filterContainer role="menuitem" tabindex="0" (keydown.tab)="$event.stopPropagation()">
-            <div (click)="$event.stopPropagation()" tabindex="0" (keyup.enter)="$event.stopPropagation()" class="adf-filter-container">
+            <div (click)="$event.stopPropagation()" role="button" tabindex="0" (keyup.enter)="$event.stopPropagation()" class="adf-filter-container">
                 <div class="adf-filter-title">{{ category?.name | translate }}</div>
                 <adf-search-widget-container
                     (keypress)="onKeyPressed($event, menuTrigger)"

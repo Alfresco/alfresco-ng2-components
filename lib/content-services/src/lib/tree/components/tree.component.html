@@ -36,6 +36,7 @@
                     <span
                         class="adf-tree-cell-value"
                         tabindex="0"
+                        role="button"
                         (keyup.enter)="loadMoreSubnodes(node)"
                         (click)="loadMoreSubnodes(node)">
                         {{ 'ADF-TREE.LOAD-MORE-BUTTON' | translate: { name: loadMoreSuffix } }}
@@ -92,6 +93,7 @@
                         class="adf-tree-cell-value"
                         [class.adf-tree-clickable-cell-value]="node.hasChildren"
                         tabindex="0"
+                        role="button"
                         (keyup.enter)="expandCollapseNode(node)"
                         (click)="expandCollapseNode(node)">
                         {{ node.nodeName }}

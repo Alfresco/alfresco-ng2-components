@@ -13,14 +13,20 @@
                                     id="reportName"
                                     data-automation-id="reportName"
                                     [value]="reportParameters.name"
-                                    (input)="reportParameters.name=$any($event).target.value"
+                                    (input)="reportParameters.name = $any($event).target.value"
                                     (blur)="editTitle()"
                                     (keyup.enter)="editTitle()"
                                 />
                             </mat-form-field>
                         </div>
-                        <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()" tabindex="0"
-                             (keyup.enter)="editEnable()">
+                        <div
+                            class="adf-report-title"
+                            *ngIf="!isEditable"
+                            (click)="editEnable()"
+                            role="button"
+                            tabindex="0"
+                            (keyup.enter)="editEnable()"
+                        >
                             <mat-icon class="adf-report-icon">mode_edit</mat-icon>
                             <h4>{{ reportParameters.name }}</h4>
                         </div>
@@ -46,77 +52,61 @@
                         </div>
                     </adf-buttons-action-menu>
                 </adf-toolbar>
-                <div *ngFor="let field of reportParameters.definition.parameters"
-                     [class.adf-is-hide]="isParametersHide()">
+                <div *ngFor="let field of reportParameters.definition.parameters" [class.adf-is-hide]="isParametersHide()">
                     <div [ngSwitch]="field.type">
                         <div *ngSwitchCase="'integer'">
-                            <br>
+                            <br />
                             <analytics-number-widget
                                 [field]="field"
                                 [group]="processInstanceGroup"
                                 [controllerName]="'slowProcessInstanceInteger'"
-                                [required]="true">
+                                [required]="true"
+                            >
                             </analytics-number-widget>
                         </div>
                         <div *ngSwitchCase="'duration'">
-                            <br>
-                            <duration-widget
-                                [field]="field"
-                                [group]="durationGroup"
-                                [controllerName]="'duration'">
-                            </duration-widget>
+                            <br />
+                            <duration-widget [field]="field" [group]="durationGroup" [controllerName]="'duration'"> </duration-widget>
                         </div>
                         <div *ngSwitchCase="'boolean'">
-                            <br>
-                            <analytics-checkbox-widget
-                                [field]="field"
-                                [group]="typeFilteringGroup"
-                                [controllerName]="'typeFiltering'">
+                            <br />
+                            <analytics-checkbox-widget [field]="field" [group]="typeFilteringGroup" [controllerName]="'typeFiltering'">
                             </analytics-checkbox-widget>
                         </div>
                         <div *ngSwitchCase="'status'">
-                            <br>
-                            <analytics-dropdown-widget
-                                [field]="field"
-                                [group]="statusGroup"
-                                [controllerName]="'status'"
-                                [required]="true">
+                            <br />
+                            <analytics-dropdown-widget [field]="field" [group]="statusGroup" [controllerName]="'status'" [required]="true">
                             </analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchCase="'processDefinition'">
-                            <br>
+                            <br />
                             <analytics-dropdown-widget
                                 [field]="field"
                                 [group]="processDefGroup"
                                 [controllerName]="'processDefinitionId'"
                                 [required]="true"
-                                (fieldChanged)="onProcessDefinitionChanges(field)">
+                                (fieldChanged)="onProcessDefinitionChanges(field)"
+                            >
                             </analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchCase="'task'">
-                            <br>
-                            <analytics-dropdown-widget
-                                [field]="field"
-                                [group]="taskGroup"
-                                [controllerName]="'taskName'"
-                                [required]="true">
+                            <br />
+                            <analytics-dropdown-widget [field]="field" [group]="taskGroup" [controllerName]="'taskName'" [required]="true">
                             </analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchCase="'dateRange'">
-                            <br>
-                            <adf-date-range-widget
-                                [field]="field"
-                                [group]="dateRange">
-                            </adf-date-range-widget>
+                            <br />
+                            <adf-date-range-widget [field]="field" [group]="dateRange"> </adf-date-range-widget>
                         </div>
                         <div *ngSwitchCase="'dateInterval'">
-                            <br>
+                            <br />
                             <analytics-dropdown-widget
                                 [field]="field"
                                 [group]="dateIntervalGroup"
                                 [controllerName]="'dateRangeInterval'"
                                 [required]="true"
-                                [showDefaultOption]="false">
+                                [showDefaultOption]="false"
+                            >
                             </analytics-dropdown-widget>
                         </div>
                         <div *ngSwitchDefault>
@@ -133,28 +123,28 @@
                             </div>
                             <div class="adf-save-export-input">
                                 <mat-form-field class="adf-example-full-width" floatPlaceholder="always">
-                                    <input matInput
-                                           type="text"
-                                           id="repName"
-                                           placeholder="Report Name"
-                                           [value]="reportName"
-                                           [(ngModel)]="reportName"
-                                           [ngModelOptions]="{standalone: true}">
+                                    <input
+                                        matInput
+                                        type="text"
+                                        id="repName"
+                                        placeholder="Report Name"
+                                        [value]="reportName"
+                                        [(ngModel)]="reportName"
+                                        [ngModelOptions]="{ standalone: true }"
+                                    />
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="adf-report-dialog-actions" mat-dialog-actions>
-                            <button mat-button
-                                    color="accent"
-                                    type="button"
-                                    id="close-dialog-button"
-                                    (click)="closeDialog()">Close
-                            </button>
-                            <button mat-button
-                                    color="primary"
-                                    type="button"
-                                    id="action-dialog-button"
-                                    (click)="performAction(action, reportParamQuery)">{{ action }}
+                            <button mat-button color="accent" type="button" id="close-dialog-button" (click)="closeDialog()">Close</button>
+                            <button
+                                mat-button
+                                color="primary"
+                                type="button"
+                                id="action-dialog-button"
+                                (click)="performAction(action, reportParamQuery)"
+                            >
+                                {{ action }}
                             </button>
                         </div>
                     </div>

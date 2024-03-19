@@ -35,6 +35,7 @@
         <span class="adf-create-category-label"
             (click)="addCategory()"
             tabindex="0"
+            role="button"
             (keyup.enter)="addCategory()"
             [hidden]="categoryNameControl.invalid || typing">
             {{ 'CATEGORIES_MANAGEMENT.GENERIC_CREATE' | translate : { name: categoryNameControl.value } }}

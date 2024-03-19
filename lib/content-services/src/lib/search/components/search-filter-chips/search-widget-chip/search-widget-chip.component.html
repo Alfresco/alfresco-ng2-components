@@ -3,6 +3,7 @@
           class="adf-search-filter-chip"
           [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
           tabIndex="0"
+          role="button"
           [matMenuTriggerFor]="menu"
           (menuOpened)="onMenuOpen()"
           (keydown.enter)="onEnterKeydown()"

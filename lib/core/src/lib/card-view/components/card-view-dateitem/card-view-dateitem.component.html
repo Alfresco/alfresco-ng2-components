@@ -25,6 +25,7 @@
                 [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                 (click)="showDatePicker()"
                 tabindex="0"
+                role="button"
                 (keyup.enter)="showDatePicker()"
             >
                 <span *ngIf="showProperty; else elseEmptyValueBlock" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
@@ -90,6 +91,7 @@
             class="adf-property-field adf-dateitem-editable-controls"
             (click)="showDatePicker()"
             tabindex="0"
+            role="button"
             (keyup.enter)="showDatePicker()"
         >
             <input

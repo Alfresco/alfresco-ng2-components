@@ -1,46 +1,59 @@
-<div
-    id="adf-form-renderer"
-    class="{{formDefinition.className}}"
-    [ngClass]="{'adf-readonly-form': formDefinition.readOnly}"
->
+<div id="adf-form-renderer" class="{{ formDefinition.className }}" [ngClass]="{ 'adf-readonly-form': formDefinition.readOnly }">
     <div *ngIf="formDefinition.hasTabs()">
         <div *ngIf="hasTabs()" class="alfresco-tabs-widget">
             <mat-tab-group>
                 <mat-tab *ngFor="let tab of visibleTabs()" [label]="tab.title | translate">
-                    <ng-template *ngTemplateOutlet="render; context: {fieldToRender : tab.fields}"></ng-template>
+                    <ng-template *ngTemplateOutlet="render; context: { fieldToRender: tab.fields }"></ng-template>
                 </mat-tab>
             </mat-tab-group>
         </div>
     </div>
 
     <div *ngIf="!formDefinition.hasTabs() && formDefinition.hasFields()">
-        <ng-template *ngTemplateOutlet="render; context: {fieldToRender : formDefinition.fields}"></ng-template>
+        <ng-template *ngTemplateOutlet="render; context: { fieldToRender: formDefinition.fields }"></ng-template>
     </div>
 </div>
 
 <ng-template #render let-fieldToRender="fieldToRender">
     <div *ngFor="let currentRootElement of fieldToRender">
-        <div *ngIf="currentRootElement.type === 'container' || currentRootElement.type === 'group'" class="adf-container-widget" [id]="'field-'+currentRootElement?.id+'-container'" [hidden]="!currentRootElement?.isVisible">
+        <div
+            *ngIf="currentRootElement.type === 'container' || currentRootElement.type === 'group'"
+            class="adf-container-widget"
+            [id]="'field-' + currentRootElement?.id + '-container'"
+            [hidden]="!currentRootElement?.isVisible"
+        >
             <div [hidden]="!currentRootElement?.isGroup()" class="adf-container-widget__header">
-                <h4 class="adf-container-widget__header-text" id="container-header"
-                    [class.adf-collapsible]="currentRootElement?.isCollapsible()">
-                    <button *ngIf="currentRootElement?.isCollapsible()"
-                            mat-icon-button
-                            class="mdl-button--icon"
-                            (click)="onExpanderClicked(currentRootElement)">
+                <h4 class="adf-container-widget__header-text" id="container-header" [class.adf-collapsible]="currentRootElement?.isCollapsible()">
+                    <button
+                        *ngIf="currentRootElement?.isCollapsible()"
+                        mat-icon-button
+                        class="mdl-button--icon"
+                        (click)="onExpanderClicked(currentRootElement)"
+                    >
                         <mat-icon>{{ currentRootElement?.isExpanded ? 'expand_more' : 'expand_less' }}</mat-icon>
                     </button>
-                    <span (click)="onExpanderClicked(currentRootElement)" tabindex=0 (keyup.enter)="onExpanderClicked(currentRootElement)"
-                          [id]="'container-header-label-'+currentRootElement?.id">{{currentRootElement.name | translate }}</span>
+                    <span
+                        (click)="onExpanderClicked(currentRootElement)"
+                        role="button"
+                        tabindex="0"
+                        (keyup.enter)="onExpanderClicked(currentRootElement)"
+                        [id]="'container-header-label-' + currentRootElement?.id"
+                        >{{ currentRootElement.name | translate }}</span
+                    >
                 </h4>
             </div>
 
-            <div *ngIf="currentRootElement?.form?.enableFixedSpace else fixingTemplate">
-                <div class="adf-grid-list"
-                     [ngStyle]="{ 'grid-template-columns': 'repeat('+getNumberOfColumns(currentRootElement) +', 1fr)'}"
-                     *ngIf="currentRootElement?.isExpanded">
-                    <div class="adf-grid-list-item" *ngFor="let field of getContainerFields(currentRootElement)"
-                         [ngStyle]="{'grid-area': 'auto / auto / span '+(field?.rowspan || 1)+' / span '+(field?.colspan || 1)}">
+            <div *ngIf="currentRootElement?.form?.enableFixedSpace; else fixingTemplate">
+                <div
+                    class="adf-grid-list"
+                    [ngStyle]="{ 'grid-template-columns': 'repeat(' + getNumberOfColumns(currentRootElement) + ', 1fr)' }"
+                    *ngIf="currentRootElement?.isExpanded"
+                >
+                    <div
+                        class="adf-grid-list-item"
+                        *ngFor="let field of getContainerFields(currentRootElement)"
+                        [ngStyle]="{ 'grid-area': 'auto / auto / span ' + (field?.rowspan || 1) + ' / span ' + (field?.colspan || 1) }"
+                    >
                         <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
                     </div>
                 </div>
@@ -48,8 +61,11 @@
 
             <ng-template #fixingTemplate>
                 <section class="adf-grid-list-column-view" *ngIf="currentRootElement?.isExpanded">
-                    <div class="adf-grid-list-single-column" *ngFor="let column of currentRootElement?.columns"
-                         [style.width.%]="getColumnWith(currentRootElement)">
+                    <div
+                        class="adf-grid-list-single-column"
+                        *ngFor="let column of currentRootElement?.columns"
+                        [style.width.%]="getColumnWith(currentRootElement)"
+                    >
                         <div class="adf-grid-list-column-view-item" *ngFor="let field of column?.fields">
                             <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
                         </div>
@@ -62,10 +78,9 @@
                     <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
                 </div>
             </ng-template>
-
         </div>
-        <div *ngIf="currentRootElement.type === 'dynamic-table'" class="adf-container-widget" >
-           <adf-form-field [field]="currentRootElement"></adf-form-field>
+        <div *ngIf="currentRootElement.type === 'dynamic-table'" class="adf-container-widget">
+            <adf-form-field [field]="currentRootElement"></adf-form-field>
         </div>
     </div>
 </ng-template>
@@ -78,9 +93,9 @@ will be removed during future revisions
     <mat-slide-toggle [(ngModel)]="debugMode">Debug mode</mat-slide-toggle>
     <div *ngIf="debugMode">
         <h4>Values</h4>
-        <pre>{{formDefinition.values | json}}</pre>
+        <pre>{{ formDefinition.values | json }}</pre>
 
         <h4>Form</h4>
-        <pre>{{formDefinition.json | json}}</pre>
+        <pre>{{ formDefinition.json | json }}</pre>
     </div>
 </div>
