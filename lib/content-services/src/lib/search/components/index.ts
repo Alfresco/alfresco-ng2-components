@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-export * from './search-check-list/search-check-list.component';
-export * from './search-chip-autocomplete-input/search-chip-autocomplete-input.component';
+export * from './search-check-list';
+export * from './search-chip-autocomplete-input';
 export * from './search-chip-list/search-chip-list.component';
 export * from './search-date-range-tabbed';
-export * from './search-datetime-range/search-datetime-range.component';
-export * from './search-facet-field/search-facet-field.component';
+export * from './search-datetime-range';
+export * from './search-facet-field';
 export * from './search-filter';
-export * from './search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
+export * from './search-filter-autocomplete-chips';
 export * from './search-filter-chips';
-export * from './search-filter-container/search-filter-container.component';
+export * from './search-filter-container';
 export * from './search-filter-tabbed';
-export * from './search-form/search-form.component';
-export * from './search-logical-filter/search-logical-filter.component';
-export * from './search-number-range/search-number-range.component';
-export * from './search-panel/search-panel.component';
+export * from './search-form';
+export * from './search-logical-filter';
+export * from './search-number-range';
+export * from './search-panel';
 export * from './search-properties';
-export * from './search-radio/search-radio.component';
-export * from './search-slider/search-slider.component';
-export * from './search-sorting-picker/search-sorting-picker.component';
-export * from './search-text/search-text.component';
-export * from './search-widget-container/search-widget-container.component';
+export * from './search-radio';
+export * from './search-slider';
+export * from './search-sorting-picker';
+export * from './search-text';
+export * from './search-widget-container';
 
 export * from './empty-search-result.component';
 export * from './reset-search.directive';
