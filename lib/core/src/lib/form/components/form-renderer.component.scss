@@ -1,6 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 @import 'styles/flex';
-@import 'styles/mat-selectors';
+@use 'styles/mat-selectors';
 
 .adf-hidden {
     display: none;
