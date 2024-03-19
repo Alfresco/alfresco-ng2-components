@@ -63,6 +63,7 @@ export * from './components/search-datetime-range/search-datetime-range.componen
 export * from './components/search-form/search-form.component';
 export * from './components/search-filter-chips/search-filter-chips.component';
 export * from './components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
+export * from './components/search-filter-chips/search-widget-chip/search-widget-chip.component';
 export * from './components/search-facet-field/search-facet-field.component';
 export * from './components/search-logical-filter/search-logical-filter.component';
 export * from './components/search-date-range-tabbed/search-date-range/search-date-range.component';
