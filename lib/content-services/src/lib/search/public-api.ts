@@ -61,9 +61,7 @@ export * from './components/search-text/search-text.component';
 export * from './components/search-widget-container/search-widget-container.component';
 export * from './components/search-datetime-range/search-datetime-range.component';
 export * from './components/search-form/search-form.component';
-export * from './components/search-filter-chips/search-filter-chips.component';
-export * from './components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
-export * from './components/search-filter-chips/search-widget-chip/search-widget-chip.component';
+export * from './components/search-filter-chips';
 export * from './components/search-facet-field/search-facet-field.component';
 export * from './components/search-logical-filter/search-logical-filter.component';
 export * from './components/search-date-range-tabbed/search-date-range/search-date-range.component';
@@ -72,7 +70,5 @@ export * from './components/search-filter-tabbed/search-filter-tabbed.component'
 export * from './components/reset-search.directive';
 export * from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
 export * from './components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
-export * from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
-export * from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
 
 export * from './search.module';
