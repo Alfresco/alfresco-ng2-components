@@ -1,6 +1,6 @@
 @use '../../../styles/flex' as flex;
 @import '../../../styles/mixins';
-@import 'styles/mat-selectors';
+@use 'styles/mat-selectors';
 
 .adf-sidenav-layout {
     &-full-space {
