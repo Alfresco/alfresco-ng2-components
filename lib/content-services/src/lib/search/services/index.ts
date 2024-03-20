@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-export * from './components';
-export * from './forms';
-export * from './mocks';
-export * from './models';
-export * from './services';
-export * from './search-query-service.token';
-export * from './search-configuration.token';
-export * from './search.module';
+export * from './base-query-builder.service';
+export * from './search-configuration.service';
+export * from './search-facet-filters.service';
+export * from './search-filter.service';
+export * from './search-header-query-builder.service';
+export * from './search-query-builder.service';
+export * from './search.service';

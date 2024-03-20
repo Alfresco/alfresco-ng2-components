@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-export * from './components';
-export * from './forms';
-export * from './mocks';
-export * from './models';
-export * from './services';
-export * from './search-query-service.token';
-export * from './search-configuration.token';
-export * from './search.module';
+export * from './search-date-range/date-range-type';
+export * from './search-date-range/in-last-date-type';
+export * from './search-date-range/search-date-range';
+export * from './search-date-range/search-date-range.component';
+export * from './search-date-range-tabbed.component';

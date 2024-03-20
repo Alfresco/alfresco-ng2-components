@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-export * from './components';
-export * from './forms';
-export * from './mocks';
-export * from './models';
-export * from './services';
-export * from './search-query-service.token';
-export * from './search-configuration.token';
-export * from './search.module';
+export * from './search-facet-chip/search-facet-chip.component';
+export * from './search-facet-chip-tabbed/search-facet-chip-tabbed.component';
+export * from './search-facet-chip-tabbed/search-facet-tabbed-content.component';
+export * from './search-filter-menu-card/search-filter-menu-card.component';
+export * from './search-widget-chip/search-widget-chip.component';
+export * from './search-filter-chips.component';
