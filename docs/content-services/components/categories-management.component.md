@@ -19,6 +19,7 @@ Component allows to both assign/unassign categories to content and create multip
     [parentId]="parentId"
     [managementMode]="categoriesManagementMode"
     [classifiableChanged]="classifiableChanged"
+    [multiSelect]="multiSelect"
     (categoriesChange)="storeCategoriesToAssign($event)">
 </adf-categories-management>
 ```
@@ -35,6 +36,7 @@ Component allows to both assign/unassign categories to content and create multip
 | disableRemoval | `boolean` | false | Determines if categories assigned/created can be unassigned/removed from the list. |
 | managementMode | `CategoriesManagementMode` | | Management mode determines if component works in assign/unassign mode or create mode. |
 | parentId | `string` | | (optional) ID of a parent category that new categories will be created under. |
+| multiSelect | `boolean` | true | (optional) Toggles multiselect mode. |
 
 ### Events
 
