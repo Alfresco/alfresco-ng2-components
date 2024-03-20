@@ -76,13 +76,12 @@ jobs:
       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
         with:
           repository: Alfresco/hxp-frontend-apps
-          ref: develop
+          ref: improvement/AAE-21273-gh-action-redeploy-app-fix
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
       - name: Redeploy default apps
         uses: ./.github/actions/redeploy-app
         with:
           gh-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          gh-packages-read-only-token: ${{ secrets.HYLAND_GH_PACKAGES_READ_ONLY_TOKEN }}
           secretsMasterPassword: ${{ secrets.CI_MASTER_PASSWORD }}
           environment: hxpsRc
           system: hxp
