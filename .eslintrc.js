@@ -25,8 +25,6 @@ module.exports = {
                 'plugin:@nx/typescript',
                 'plugin:@nx/angular',
                 'plugin:@cspell/recommended',
-                'plugin:@angular-eslint/ng-cli-compat',
-                'plugin:@angular-eslint/ng-cli-compat--formatting-add-on',
                 'plugin:@angular-eslint/template/process-inline-templates',
                 'plugin:jsdoc/recommended-typescript-error'
             ],
