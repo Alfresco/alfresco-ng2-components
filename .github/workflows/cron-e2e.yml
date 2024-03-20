@@ -82,10 +82,10 @@ jobs:
         uses: ./.github/actions/redeploy-app
         with:
           gh-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          gh-packages-read-only-token: ${{ secrets.HYLAND_GH_PACKAGES_READ_ONLY_TOKEN }}
-          secretsMasterPassword: ${{ secrets.CI_MASTER_PASSWORD }}
+          gh-packages-token: ${{ secrets.HYLAND_GH_PACKAGES_READ_ONLY_TOKEN }}
+          secrets-master-password: ${{ secrets.CI_MASTER_PASSWORD }}
           environment: hxpsRc
-          system: hxp
+          product-flavour: hxp
   init-artifact:
     if: false
     runs-on: ubuntu-latest
