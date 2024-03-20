@@ -88,7 +88,9 @@ adf-task-details {
                         }
                     }
                 }
-
+                /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
                 & #{$mat-tab-label-text} {
                     flex-grow: 1;
                 }

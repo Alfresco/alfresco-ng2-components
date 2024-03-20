@@ -91,7 +91,9 @@
     mat-form-field {
         width: 100%;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
+    /* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
+    /* TODO(mdc-migration): The following rule targets internal classes of input that may no longer apply for the MDC version. */
     #{mat-input-placeholder} {
         top: 1.8em !important;
     }
@@ -128,15 +130,21 @@
             padding: 16px 24px;
             overflow: hidden;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
         & #{$mat-card-header-text} {
             margin: 0 !important;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & #{$mat-tab-body-content} {
             overflow: hidden;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & #{mat-tab-label-text} {
             font-size: var(--theme-subheading-2-font-size);
             line-height: var(--theme-headline-line-height);
@@ -145,7 +153,9 @@
             color: rgba(0, 0, 0, 0.54);
             text-transform: uppercase;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         & #{$mat-tab-ink-bar} {
             height: 4px;
         }
@@ -219,7 +229,9 @@
             height: 36px;
             border-radius: 5px;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
         & #{$mat-button-label} {
             width: 58px;
             height: 20px;

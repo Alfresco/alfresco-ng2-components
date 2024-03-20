@@ -192,7 +192,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["demo-shell/**/*.ts", "demo-shell/**/*.html"]
       }

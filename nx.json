@@ -1,7 +1,7 @@
 {
   "npmScope": "adf",
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nx/angular"
   },
   "defaultProject": "demoshell",
   "targetDependencies": {

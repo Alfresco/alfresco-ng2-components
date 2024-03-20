@@ -6,7 +6,7 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/webpack:webpack",
       "options": {
         "projectRoot": "lib/eslint-angular",
         "outputPath": "dist/libs/eslint-plugin-eslint-angular",
@@ -16,8 +16,8 @@
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         },
-        "target": "node",
-        "compiler": "tsc"
+        "compiler": "tsc",
+        "target": "node"
       },
       "configurations": {
         "production": {
@@ -31,7 +31,7 @@
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["lib/eslint-angular/**/*.ts"]
       }

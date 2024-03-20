@@ -68,7 +68,9 @@ $adf-info-drawer-icon-size-half: 24px !default;
             > *:last-child {
                 margin-bottom: 0;
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+            /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+            /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
             .adf-info-drawer-tabs #{$mat-tab-body-content} {
                 .adf-manage-versions-empty,
                 .adf-manage-versions-no-permission {
