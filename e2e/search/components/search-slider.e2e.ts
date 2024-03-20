@@ -100,7 +100,7 @@ describe('Search Slider Filter', () => {
     });
 
     it('[C276972] Should be keep value when Search Size Slider is collapsed', async () => {
-        const size = 5;
+        const size = 10;
 
         await searchFilters.checkSizeSliderFilterIsDisplayed();
         await searchFilters.clickSizeSliderFilterHeader();
@@ -108,11 +108,13 @@ describe('Search Slider Filter', () => {
         await sizeSliderFilter.setValue(size);
         await searchFilters.clickSizeSliderFilterHeader();
         await searchFilters.checkSizeSliderFilterIsCollapsed();
+        await searchFilters.checkSizeSliderFilterIsDisplayed();
         await searchFilters.clickSizeSliderFilterHeader();
         await searchFilters.checkSizeSliderFilterIsExpanded();
-        await searchFilters.checkSizeSliderFilterIsDisplayed();
 
-        await expect(await sizeSliderFilter.getValue()).toEqual(`${size}`);
+        const currentValue = await sizeSliderFilter.getValue();
+
+        await expect(currentValue).toEqual(`${size}`);
     });
 
     it('[C276981] Should be able to clear value in Search Size Slider', async () => {
@@ -129,7 +131,7 @@ describe('Search Slider Filter', () => {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
+                await expect(parseInt(currentSize, 10) <= 5000).toBe(true,  `${parseInt(currentSize, 10)} is not bigger than 5000`);
             }
         }
 
@@ -143,7 +145,7 @@ describe('Search Slider Filter', () => {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
+                await expect(parseInt(currentSize, 10) >= 5000).toBe(true, `${parseInt(currentSize, 10)} is not bigger than 5000`);
             }
         }
     });

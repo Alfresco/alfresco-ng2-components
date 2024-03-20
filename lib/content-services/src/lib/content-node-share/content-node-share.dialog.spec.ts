@@ -301,7 +301,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-expiration-field"]'))
-            .componentInstance.floatLabel).toBe('never');
+            .componentInstance.floatLabel).toBe('auto');
     });
 
     it('should not display floating label for public link field', () => {
@@ -312,7 +312,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-public-link-field"]'))
-            .componentInstance.floatLabel).toBe('never');
+            .componentInstance.floatLabel).toBe('auto');
     });
 
     describe('datetimepicker type', () => {

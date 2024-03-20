@@ -1,11 +1,15 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-info-drawer {
         .adf-metadata-properties-panel {
             display: block;
             margin: 0;
         }
-
-        .mat-tab-label {
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+        #{$mat-tab-label-text} {
             min-width: 0;
         }
 
@@ -29,32 +33,42 @@
                 }
 
                 .adf-info-drawer-tabs {
-                    & .mat-tab-body-content > * {
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    & #{$mat-tab-body-content} > * {
                         margin-bottom: 20px;
                         display: block;
                     }
-
-                    & .mat-tab-body-content > *:last-child {
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    & #{$mat-tab-body-content} > *:last-child {
                         margin-bottom: 0;
                     }
 
-                    .mat-tab-label {
+                    .mdc-tab__text-label {
                         flex-grow: 1;
 
-                        .mat-icon + span {
+                        #{$mat-icon} + span {
                             padding-left: 5px;
                         }
                     }
-
-                    .mat-ink-bar {
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    #{$mat-tab-ink-bar} {
                         height: 2px;
                     }
 
-                    .mat-tab-body {
+                    #{$mat-tab-body} {
+                        padding: 10px;
                         overflow-y: hidden;
                     }
-
-                    .mat-tab-body-content {
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+                    #{$mat-tab-body-content} {
                         /* stylelint-disable */
                         overflow: auto;
                         /* stylelint-enable */

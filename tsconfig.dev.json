@@ -1,10 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/app"
+    "outDir": "./out-tsc/app",
+    "target": "ES2022",
+    "useDefineForClassFields": false
   },
-  "files": [
-    "demo-shell/src/main.ts",
-    "demo-shell/src/polyfills.ts"
-  ]
+  "files": ["demo-shell/src/main.ts", "demo-shell/src/polyfills.ts"]
 }

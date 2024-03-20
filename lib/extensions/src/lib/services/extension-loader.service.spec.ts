@@ -15,36 +15,18 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
-import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
 
 describe('ExtensionLoaderService', () => {
     let extensionLoaderService: ExtensionLoaderService;
-    let httpClient: HttpClient;
+    let httpMock: HttpTestingController;
     let appExtensionsConfig: ExtensionConfig;
     const pluginConfig1: ExtensionConfig = {
         $id: 'test1',
         $name: 'test.extension.1',
-        $version: '1.0.0',
-        $vendor: 'Alfresco',
-        $license: 'MIT',
-        $runtime: '2.6.1'
-    };
-    const pluginConfig2: ExtensionConfig = {
-        $id: 'test2',
-        $name: 'test.extension.2',
-        $version: '1.0.0',
-        $vendor: 'Alfresco',
-        $license: 'MIT',
-        $runtime: '2.6.1'
-    };
-    const pluginConfig3: ExtensionConfig = {
-        $id: 'test3',
-        $name: 'test.extension.3',
         $version: '1.0.0',
         $vendor: 'Alfresco',
         $license: 'MIT',
@@ -55,12 +37,11 @@ describe('ExtensionLoaderService', () => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
-                HttpClient,
                 ExtensionLoaderService
             ]
         });
         extensionLoaderService = TestBed.inject(ExtensionLoaderService);
-        httpClient = TestBed.inject(HttpClient);
+        httpMock = TestBed.inject(HttpTestingController);
 
         appExtensionsConfig = {
             $id: 'test',
@@ -72,35 +53,22 @@ describe('ExtensionLoaderService', () => {
             $references: [],
             $ignoreReferenceList: []
         };
-
-        spyOn(httpClient, 'get').and.callFake((url: string) => {
-            if (url === 'assets/app.extensions.json') {
-                return of(appExtensionsConfig);
-            }
-
-            if (url === 'assets/plugins/test.extension.1.json') {
-                return of(pluginConfig1);
-            }
-
-            if (url === 'assets/plugins/test.extension.2.json') {
-                return of(pluginConfig2);
-            }
-
-            if (url === 'assets/plugins/test.extension.3.json') {
-                return of(pluginConfig3);
-            }
-
-            return of(null);
-        });
     });
 
-    it('should load default registered app extensions when no custom $references defined', (done) => {
+    afterEach(() => {
+        httpMock.verify();
+    });
+
+    it('should load default registered app extensions when no custom $references defined', fakeAsync(() => {
         extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.1.json']).then((config: ExtensionConfig) => {
             const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
             expect(pluginsReference).toEqual(['test.extension.1']);
-            done();
         });
-    });
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        httpMock.expectOne('assets/plugins/test.extension.1.json').flush(pluginConfig1);
+        flushMicrotasks();
+    }));
 
     it('should ignore default registered app extension if defined in $ignoreReferenceList', (done) => {
         appExtensionsConfig.$ignoreReferenceList = ['test.extension.1.json'];
@@ -110,19 +78,27 @@ describe('ExtensionLoaderService', () => {
             expect(pluginsReference).toEqual([]);
             done();
         });
+
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
     });
 
-    it('should load only extensions defined by $references', (done) => {
+    it('should load only extensions defined by $references', fakeAsync(() => {
         appExtensionsConfig.$references = ['test.extension.1.json'];
 
         extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.2.json, test.extension.3.json']).then((config: ExtensionConfig) => {
             const pluginsReference = config.$references.map((entry: ExtensionConfig) => entry.$name);
             expect(pluginsReference).toEqual(['test.extension.1']);
-            done();
         });
-    });
 
-    it('should load extensions from passed extension value', (done) => {
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        httpMock.expectOne('assets/plugins/test.extension.1.json').flush(pluginConfig1);
+        httpMock.expectNone('assets/plugins/test.extension.2.json');
+        httpMock.expectNone('assets/plugins/test.extension.3.json');
+        flushMicrotasks();
+    }));
+
+    it('should load extensions from passed extension value',fakeAsync(() => {
         appExtensionsConfig.$references = ['test.extension.1.json'];
 
         extensionLoaderService.load(
@@ -138,11 +114,14 @@ describe('ExtensionLoaderService', () => {
             }]).then((config: ExtensionConfig) => {
                 const hasExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id');
                 expect(hasExtensionValue).toBe(true);
-                done();
             });
-    });
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        httpMock.expectOne('assets/plugins/test.extension.1.json').flush(pluginConfig1);
+        flushMicrotasks();
+    }));
 
-    it('should load extensions if only extension value was passed', (done) => {
+    it('should load extensions if only extension value was passed', fakeAsync(() => {
         extensionLoaderService.load(
             'assets/app.extensions.json',
             'assets/plugins',
@@ -156,11 +135,13 @@ describe('ExtensionLoaderService', () => {
             }]).then((config: ExtensionConfig) => {
                 const hasExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id');
                 expect(hasExtensionValue).toBe(true);
-                done();
             });
-    });
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        flushMicrotasks();
+    }));
 
-    it('should load extensions with multiple extension values', (done) => {
+    it('should load extensions with multiple extension values', fakeAsync(() => {
         appExtensionsConfig.$references = ['test.extension.1.json'];
 
         extensionLoaderService.load(
@@ -184,7 +165,10 @@ describe('ExtensionLoaderService', () => {
                 expect(hasFirstExtensionValue).toBe(true);
                 const hasSecondExtensionValue = config.$references.some((entry: ExtensionConfig) => entry.$id === 'extension-value-id-2');
                 expect(hasSecondExtensionValue).toBe(true);
-                done();
             });
-    });
+        httpMock.expectOne('assets/app.extensions.json').flush(appExtensionsConfig);
+        tick();
+        httpMock.expectOne('assets/plugins/test.extension.1.json').flush(pluginConfig1);
+        flushMicrotasks();
+    }));
 });

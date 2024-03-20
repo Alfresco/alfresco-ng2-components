@@ -1,4 +1,5 @@
 @import 'styles/flex';
+@import 'styles/mat-selectors';
 
 .adf {
     &-attach-widget-container {
@@ -38,12 +39,14 @@
 
     &-attach-widget-repo-button {
         padding-left: 10px;
-
-        .mat-button-wrapper {
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
+        #{$mat-button-label} {
             display: inline;
         }
 
-        .mat-mini-fab.mat-accent {
+        #{$mat-mini-fab}#{$mat-accent} {
             background-color: inherit;
         }
     }
@@ -66,16 +69,21 @@
     }
 
     &-attach-files-row {
-        .mat-line {
+        #{$mat-line} {
             margin-bottom: 0;
         }
-
-        .mat-list-text {
+        /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+        #{$mat-list-item-primary-text} {
             max-width: 200px;
         }
 
         @include layout-bp(lt-md) {
-            .mat-list-text {
+            /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+            /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+            /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+            #{$mat-list-item-primary-text} {
                 max-width: 150px;
             }
         }

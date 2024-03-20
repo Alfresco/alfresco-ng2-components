@@ -1,4 +1,7 @@
 /* stylelint-disable selector-class-pattern */
+@import 'styles/mat-selectors';
+
+
 .adf {
     &-amount-widget {
         width: 100%;
@@ -12,11 +15,11 @@
     &-amount-widget__input {
         margin-top: -15px;
 
-        .mat-focused {
+        #{$mat-focused} {
             transition: none;
         }
 
-        &:not(.mat-focused):not(.mat-form-field-invalid) {
+        &:not(#{$mat-focused}):not(#{$mat-form-field-invalid}) {
             .adf-amount-widget__prefix-spacing {
                 color: var(--adf-theme-foreground-secondary-text-color);
             }

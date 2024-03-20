@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-dropdown-widget {
         width: 100%;
@@ -6,8 +8,10 @@
             padding-top: 0;
             width: 100%;
         }
-
-        .mat-select-value-text {
+        /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+        /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+        #{$mat-select-value-text} {
             font-size: var(--theme-body-1-font-size);
         }
 

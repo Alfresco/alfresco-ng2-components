@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @import '~@alfresco/adf-core/theming';
-@include mat.core($alfresco-typography);
+@include mat.all-component-typographies($alfresco-typography);
+@include mat.core;
 
 $primary: mat.define-palette($alfresco-accent-orange);
 $accent: mat.define-palette($alfresco-accent-purple);
@@ -16,17 +17,3 @@ $theme: mat.define-light-theme(
 
 @include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);
-
-body,
-html {
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
-    font-size: mat.font-size($alfresco-typography, body-1);
-    font-family: mat.font-family($alfresco-typography);
-    line-height: mat.line-height($alfresco-typography, body-1);
-}
-
-body {
-    overflow: auto;
-}

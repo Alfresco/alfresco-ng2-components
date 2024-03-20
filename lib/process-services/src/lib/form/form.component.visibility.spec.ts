@@ -43,7 +43,7 @@ describe('FormComponent UI and visibility', () => {
     let fixture: ComponentFixture<FormComponent>;
 
     const openSelect = () => {
-        const dropdown = fixture.debugElement.nativeElement.querySelector('.mat-select-trigger');
+        const dropdown = fixture.debugElement.nativeElement.querySelector('.mat-mdc-select-trigger');
         dropdown.click();
     };
 
@@ -131,7 +131,7 @@ describe('FormComponent UI and visibility', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            const options = fixture.debugElement.queryAll(By.css('.mdc-list-item__primary-text'));
 
             const optOne = options[1];
             const optTwo = options[2];

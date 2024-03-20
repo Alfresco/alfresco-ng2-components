@@ -4,7 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular"],
+      "extends": ["plugin:@nx/angular"],
       "rules": {
         "no-underscore-dangle": ["warn", { "allowAfterThis": true }],
         "@typescript-eslint/dot-notation": "off",

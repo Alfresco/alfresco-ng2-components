@@ -4,11 +4,11 @@
     [class.adf-dynamic-chip-list-button-in-next-line]="moveLoadMoreButtonToNextRow"
     [class.adf-dynamic-chip-list-paginated]="paginationData"
     #nodeListContainer>
-    <mat-chip-list
+    <mat-chip-listbox
         [class.adf-dynamic-chip-list-full-width]="limitChipsDisplayed && !calculationsDone"
         role="listbox"
         [attr.aria-label]="'METADATA.BASIC.TAGS' | translate">
-        <mat-chip
+        <mat-chip-option
             class="adf-dynamic-chip-list-chip"
             *ngFor="let chip of chipsToDisplay; let idx = index"
             (removed)="removedChip.emit(chip.id)">
@@ -20,8 +20,8 @@
                 matChipRemove>
                 cancel
             </mat-icon>
-        </mat-chip>
-    </mat-chip-list>
+        </mat-chip-option>
+    </mat-chip-listbox>
     <button
         data-automation-id="adf-dynamic-chip-list-view-more-button"
         mat-button

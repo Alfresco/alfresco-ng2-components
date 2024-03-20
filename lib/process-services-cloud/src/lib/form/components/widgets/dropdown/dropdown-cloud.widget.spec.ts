@@ -55,7 +55,7 @@ describe('DropdownCloudWidgetComponent', () => {
     let element: HTMLElement;
 
     const openSelect = async (_selector?: string) => {
-        const dropdown: HTMLElement = element.querySelector('.mat-select-trigger');
+        const dropdown: HTMLElement = element.querySelector('.mat-mdc-select-trigger');
         dropdown.click();
         fixture.detectChanges();
         await fixture.whenStable();
@@ -203,7 +203,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             await openSelect();
 
-            const option = fixture.debugElement.query(By.css('.mat-option-text'));
+            const option = fixture.debugElement.query(By.css('.mdc-list-item__primary-text'));
             expect(option.nativeElement.innerText).toBe('default1_value');
         });
 
@@ -227,7 +227,7 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             await openSelect();
-            const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            const options = fixture.debugElement.queryAll(By.css('.mdc-list-item__primary-text'));
             expect(options[0].nativeElement.innerText).toBe('default1_value');
             expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
         });
@@ -286,7 +286,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            let selectedValueElement = fixture.debugElement.query(By.css('.mat-select-value-text'));
+            let selectedValueElement = fixture.debugElement.query(By.css('.mat-mdc-select-value-text'));
 
             expect(selectedValueElement.nativeElement.innerText).toEqual('option_1');
             expect(widget.fieldValue).toEqual('opt_1');
@@ -299,7 +299,7 @@ describe('DropdownCloudWidgetComponent', () => {
             await fixture.whenStable();
 
             const dropdownLabel = fixture.debugElement.query(By.css('.adf-dropdown-widget mat-label'));
-            selectedValueElement = fixture.debugElement.query(By.css('.mat-select-value-text'));
+            selectedValueElement = fixture.debugElement.query(By.css('.mat-mdc-select-value-text'));
 
             expect(dropdownLabel.nativeNode.innerText).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
@@ -323,7 +323,7 @@ describe('DropdownCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component')).nativeElement;
             expect(tooltipElement).toBeTruthy();
             expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
           });
@@ -338,7 +338,7 @@ describe('DropdownCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component'));
             expect(tooltipElement).toBeFalsy();
         });
     });
@@ -447,12 +447,11 @@ describe('DropdownCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-select-value-text span'));
+            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-mdc-select-value-text span'));
             expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_1, option_2');
 
             await openSelect('#dropdown-id');
-
-            const options = fixture.debugElement.queryAll(By.css('.mat-selected span'));
+            const options = fixture.debugElement.queryAll(By.css('.mdc-list-item--selected span'));
             expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
                 .toEqual(['option_1', 'option_2']);
         });
@@ -516,12 +515,12 @@ describe('DropdownCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-select-value-text span'));
+            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-mdc-select-value-text span'));
             expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_3, option_4');
 
             await openSelect('#dropdown-id');
+            const options = fixture.debugElement.queryAll(By.css('.mdc-list-item--selected span'));
 
-            const options = fixture.debugElement.queryAll(By.css('.mat-selected span'));
             expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
                 .toEqual(['option_3', 'option_4']);
         });

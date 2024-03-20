@@ -167,7 +167,7 @@ export class SearchControlComponent implements OnDestroy {
         if (this.listResultElement && this.listResultElement.length > 0) {
             const firstElement = this.listResultElement.first as MatListItem;
             // eslint-disable-next-line no-underscore-dangle
-            firstElement._getHostElement().focus();
+            firstElement._hostElement.focus();
         }
     }
 
