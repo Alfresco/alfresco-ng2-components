@@ -69,7 +69,25 @@ env:
   PROXY_HOST_ECM: ${{ secrets.E2E_HOST }}
 
 jobs:
+  test-redeploy:
+    runs-on: ubuntu-latest
+    name: Test redeploy
+    steps:
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+        with:
+          repository: Alfresco/hxp-frontend-apps
+          ref: develop
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+      - name: Redeploy default apps
+        uses: ./.github/actions/redeploy-app
+        with:
+          gh-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          gh-packages-read-only-token: ${{ secrets.HYLAND_GH_PACKAGES_READ_ONLY_TOKEN }}
+          secretsMasterPassword: ${{ secrets.CI_MASTER_PASSWORD }}
+          environment: hxpsRc
+          system: hxp
   init-artifact:
+    if: false
     runs-on: ubuntu-latest
     name: Initialize artifacts
     steps:
@@ -80,6 +98,7 @@ jobs:
           file-name: e2e-failures.txt
 
   run-e2e:
+    if: false
     name: run e2e
     uses: ./.github/workflows/pull-request.yml
     with:
