@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
-import { EMPTY, Observable, defer } from 'rxjs';
+import { Observable, defer, EMPTY } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
@@ -151,7 +151,8 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     }
 
     logout() {
-        this.oauthService.logOut();
+        const logoutOptions = this.getLogoutOptions();
+        this.oauthService.logOut(logoutOptions);
         return EMPTY;
     }
 
@@ -189,6 +190,34 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         }
 
         return header.set('Authorization', 'bearer ' + token);
+    }
+
+    private getLogoutOptions() {
+        const oauth2Config = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+        const logoutParamsList = oauth2Config?.logoutParameters || [];
+
+        return logoutParamsList.reduce((options, param) => {
+            const value = this.getLogoutParamValue(param);
+            if (value !== undefined) {
+                options[param] = value;
+            }
+            return options;
+        }, {});
+    }
+
+    private getLogoutParamValue(param: string): string | undefined {
+        switch (param) {
+            case 'client_id':
+                return this.oauthService.clientId;
+            case 'returnTo':
+                return this.oauthService.redirectUri;
+            case 'redirect_uri':
+                return this.oauthService.redirectUri;
+            case 'response_type':
+                return 'code';
+            default:
+                return undefined;
+        }
     }
 
 }
