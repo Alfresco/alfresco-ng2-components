@@ -27,6 +27,7 @@ export * from './search-filter-chips';
 export * from './search-filter-container';
 export * from './search-filter-tabbed';
 export * from './search-form';
+export * from './search-input';
 export * from './search-logical-filter';
 export * from './search-number-range';
 export * from './search-panel';
