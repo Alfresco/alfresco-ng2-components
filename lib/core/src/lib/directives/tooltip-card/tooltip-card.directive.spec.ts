@@ -37,7 +37,7 @@ class TestComponent {
     span: ElementRef;
 }
 
-fdescribe('TooltipCardDirective', () => {
+describe('TooltipCardDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let overlay: HTMLElement;
     let overlayService: Overlay;
