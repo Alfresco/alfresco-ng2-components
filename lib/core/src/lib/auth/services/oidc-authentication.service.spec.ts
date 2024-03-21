@@ -1,21 +1,44 @@
+/*!
+ * @license
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { TestBed } from '@angular/core/testing';
 import { OidcAuthenticationService } from './oidc-authentication.service';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { AppConfigService, AuthService } from '@alfresco/adf-core';
 import { AUTH_MODULE_CONFIG } from '../oidc/auth-config';
 
+interface MockAppConfigOAuth2 {
+    oauth2: {
+        logoutParameters: Array<string>;
+    };
+}
+
 class MockAppConfigService {
-    config = {
+    config: MockAppConfigOAuth2 = {
         oauth2: {
-            logoutParameters: ["client_id", "returnTo", "response_type"]
+            logoutParameters: ['client_id', 'returnTo', 'response_type']
         }
     };
 
-    setConfig(newConfig: any) {
+    setConfig(newConfig: { logoutParameters: Array<string> }) {
         this.config.oauth2 = newConfig;
     }
 
-    get(key: any, defaultValue?: any) {
+    get(key: string, defaultValue?: { logoutParameters: Array<string> }) {
         if (key === 'oauth2') {
             return this.config.oauth2;
         }
@@ -30,7 +53,7 @@ class MockOAuthService {
     logOut = jasmine.createSpy();
 }
 
-fdescribe('OidcAuthenticationService', () => {
+describe('OidcAuthenticationService', () => {
     let service: OidcAuthenticationService;
     let oauthService: OAuthService;
 
@@ -42,7 +65,7 @@ fdescribe('OidcAuthenticationService', () => {
                 { provide: OAuthService, useClass: MockOAuthService },
                 { provide: OAuthStorage, useValue: {} },
                 { provide: AUTH_MODULE_CONFIG, useValue: {} },
-                { provide: AuthService, useValue: {} },
+                { provide: AuthService, useValue: {} }
             ]
         });
         service = TestBed.inject(OidcAuthenticationService);
@@ -71,9 +94,8 @@ fdescribe('OidcAuthenticationService', () => {
 
         it('should handle logout with additional parameter redirect_uri', () => {
             mockAppConfigService.setConfig({
-                logoutParameters: ["client_id", "returnTo", "redirect_uri", "response_type"]
+                logoutParameters: ['client_id', 'returnTo', 'redirect_uri', 'response_type']
             });
-
 
             service.logout();
 
@@ -95,7 +117,7 @@ fdescribe('OidcAuthenticationService', () => {
 
         it('should ignore undefined parameters', () => {
             mockAppConfigService.setConfig({
-                logoutParameters: ["client_id", "unknown_param"]
+                logoutParameters: ['client_id', 'unknown_param']
             });
             service.logout();
 

@@ -192,7 +192,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return header.set('Authorization', 'bearer ' + token);
     }
 
-    private getLogoutOptions() {
+    private getLogoutOptions(): object {
         const oauth2Config = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
         const logoutParamsList = oauth2Config?.logoutParameters || [];
 

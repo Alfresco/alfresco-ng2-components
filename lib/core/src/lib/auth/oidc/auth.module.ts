@@ -34,7 +34,7 @@ import { AuthenticationConfirmationComponent } from './view/authentication-confi
  * @param redirectService auth redirect service
  * @returns a factory function
  */
-export function loginFactory(redirectService: RedirectAuthService) {
+export function loginFactory(redirectService: RedirectAuthService): () => Promise<boolean> {
     return () => redirectService.init();
 }
 

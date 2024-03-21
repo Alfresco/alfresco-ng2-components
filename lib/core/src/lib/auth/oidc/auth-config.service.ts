@@ -80,7 +80,7 @@ export class AuthConfigService {
 
         const oauth2 = this.appConfigService.oauth2;
 
-        const directUrl = oauth2.redirectUri && oauth2.redirectUri.startsWith('http')
+        const directUrl = oauth2.redirectUri?.startsWith('http');
         if (directUrl) {
             return oauth2.redirectUri;
         }
