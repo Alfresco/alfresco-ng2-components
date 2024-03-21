@@ -43,7 +43,7 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if(this.overlayRef){
+        if (this.overlayRef) {
             this.hide();
         }
     }
