@@ -83,7 +83,7 @@ jobs:
         with:
           gh-token: ${{ secrets.BOT_GITHUB_TOKEN }}
           gh-packages-token: ${{ secrets.HYLAND_GH_PACKAGES_READ_ONLY_TOKEN }}
-          secrets-master-password: ${{ secrets.CI_MASTER_PASSWORD }}
+          secrets-master-password: ${{ secrets.CI_HXP_FE_APPS_MASTER_PASSWORD }}
           environment: hxpsRc
           product-flavour: hxp
   init-artifact:
