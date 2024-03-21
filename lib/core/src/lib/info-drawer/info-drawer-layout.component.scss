@@ -18,7 +18,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
         background-color: var(--theme-card-background-color);
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
-        & .mdc-tab__text-label {
+        & #{$mat-tab-label-text} {
             font-weight: bold;
             text-align: left;
             opacity: 1;
