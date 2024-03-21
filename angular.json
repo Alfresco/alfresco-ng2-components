@@ -457,7 +457,7 @@
         "npm-publish": {
           "builder": "nx:run-commands",
           "dependsOn": [
-            "build"
+            "build", "pretheme"
           ],
           "options": {
             "cwd": "dist/libs/core",
