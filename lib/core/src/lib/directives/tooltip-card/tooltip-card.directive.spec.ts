@@ -19,7 +19,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TooltipCardDirective } from './tooltip-card.directive';
 import { CommonModule } from '@angular/common';
-import { OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
+import { Overlay, OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { TooltipCardComponent } from './tooltip-card.component';
@@ -40,6 +40,7 @@ class TestComponent {
 describe('TooltipCardDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let overlay: HTMLElement;
+    let overlayService: Overlay;
     let overlayContainer: OverlayContainer;
 
     beforeEach((() => {
@@ -59,7 +60,7 @@ describe('TooltipCardDirective', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
-        fixture.detectChanges();
+        overlayService = TestBed.inject(Overlay);
         overlayContainer = TestBed.inject(OverlayContainer);
         overlay = overlayContainer.getContainerElement();
     });
@@ -69,16 +70,22 @@ describe('TooltipCardDirective', () => {
     });
 
     it('should display tooltip-card on mouse enter', () => {
+        fixture.detectChanges();
         let tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
         expect(tooltipCard).toBeNull();
+
         const span = fixture.debugElement.query(By.css('span.test-component'));
         span.triggerEventHandler('mouseenter', {});
         fixture.detectChanges();
         tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
         expect(tooltipCard).not.toBeNull();
+
         const text = tooltipCard.querySelector<HTMLElement>('p');
         const img = tooltipCard.querySelector<HTMLElement>('img');
         const div = tooltipCard.querySelector<HTMLElement>('div');
+
         expect(tooltipCard.getAttribute('style')).toBe('width: 400px;');
         expect(text.textContent.trim()).toEqual('Sample text');
         expect(img.getAttribute('src')).toEqual(IMAGE_URL);
@@ -87,28 +94,48 @@ describe('TooltipCardDirective', () => {
     });
 
     it('should hide tooltip-card on mouse leave', () => {
+        fixture.detectChanges();
         const span = fixture.debugElement.query(By.css('span.test-component'));
         span.triggerEventHandler('mouseenter', {});
         fixture.detectChanges();
         let tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
         expect(tooltipCard).not.toBeNull();
 
         span.triggerEventHandler('mouseleave', {});
         fixture.detectChanges();
         tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
         expect(tooltipCard).toBeNull();
     });
 
     it('should hide tooltip-card on destroy', () => {
+        fixture.detectChanges();
         const span = fixture.debugElement.query(By.css('span.test-component'));
         span.triggerEventHandler('mouseenter', {});
         fixture.detectChanges();
         let tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
         expect(tooltipCard).not.toBeNull();
 
         fixture.componentInstance.directive.ngOnDestroy();
         fixture.detectChanges();
         tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
         expect(tooltipCard).toBeNull();
+    });
+
+    it('should NOT hide tooltip-card on destroy when overlay reference is undefined', () => {
+        spyOn(overlayService, 'create').and.returnValue(undefined as any);
+        spyOn(fixture.componentInstance.directive, 'hide');
+
+        fixture.detectChanges();
+        const tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
+
+        expect(tooltipCard).toBeNull();
+
+        fixture.componentInstance.directive.ngOnDestroy();
+
+        expect(fixture.componentInstance.directive.hide).toHaveBeenCalledTimes(0);
     });
 });
