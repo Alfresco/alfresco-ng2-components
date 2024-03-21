@@ -132,7 +132,7 @@
     },
     "npm-publish": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build"],
+      "dependsOn": ["build", "pretheme"],
       "options": {
         "cwd": "dist/libs/core",
         "commands": [
