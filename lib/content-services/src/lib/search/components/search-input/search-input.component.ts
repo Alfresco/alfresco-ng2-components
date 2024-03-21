@@ -19,11 +19,12 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-search-input',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatInputModule],
+    imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslateModule],
     templateUrl: `./search-input.component.html`,
     styleUrls: ['./search-input.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -33,10 +34,10 @@ export class SearchInputComponent {
     value = '';
 
     @Input()
-    label = 'Search';
+    label = 'SEARCH.INPUT.LABEL';
 
     @Input()
-    placeholder = 'Search query';
+    placeholder = 'SEARCH.INPUT.PLACEHOLDER';
 
     @Input()
     fields: string[] = ['cm:name'];

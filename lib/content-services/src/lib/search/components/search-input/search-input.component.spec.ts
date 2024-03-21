@@ -20,7 +20,8 @@ import { MatInputHarness } from '@angular/material/input/testing';
 import { SearchInputComponent } from '@alfresco/adf-content-services';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('SearchInputComponent', () => {
     let loader: HarnessLoader;
@@ -43,7 +44,7 @@ describe('SearchInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, SearchInputComponent]
+            imports: [TranslateModule.forRoot(), ContentTestingModule, SearchInputComponent]
         });
 
         fixture = TestBed.createComponent(SearchInputComponent);
