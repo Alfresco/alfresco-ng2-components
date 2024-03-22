@@ -104,6 +104,11 @@ export class SearchInputComponent {
             term = term.substring(1);
         }
 
+        if (term === '*') {
+            prefix = '';
+            suffix = '';
+        }
+
         return '(' + fields.map((field) => `${prefix}${field}:"${term}${suffix}"`).join(' OR ') + ')';
     }
 }

@@ -84,6 +84,15 @@ describe('SearchInputComponent', () => {
         expect(formatted).toBe('(cm:name:"test*")');
     });
 
+    it('should not append asterisk if one is already provided', async () => {
+        let formatted = '';
+        component.changed.subscribe((val) => (formatted = val));
+
+        await setInputValue('*');
+
+        expect(formatted).toBe('(cm:name:"*")');
+    });
+
     it('should format with AND by default', async () => {
         let formatted = '';
         component.changed.subscribe((val) => (formatted = val));
