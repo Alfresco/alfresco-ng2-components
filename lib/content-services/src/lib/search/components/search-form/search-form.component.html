@@ -1,40 +1,39 @@
 <ng-container *ngIf="queryBuilder.searchForms | async as forms">
-
     <ng-container *ngIf="forms.length === 1">
-        <button class="adf-search-form adf-search-form-button"
-                disableRipple mat-button
-                [title]="getSelected(forms) | translate"
-                [attr.aria-label]="getSelected(forms) | translate">
+        <button
+            class="adf-search-form adf-search-form-button"
+            disableRipple
+            mat-button
+            [title]="getSelected(forms) | translate"
+            [attr.aria-label]="getSelected(forms) | translate"
+        >
             <span class="adf-search-form-title">
-                    {{ getSelected(forms) | translate }}
+                {{ getSelected(forms) | translate }}
             </span>
         </button>
     </ng-container>
 
-    <ng-container  *ngIf="forms.length > 1">
-        <button class="adf-search-form adf-search-form-button"
-                [matMenuTriggerFor]="menu"
-                #menuTrigger="matMenuTrigger"
-                disableRipple
-                mat-button
-                [title]="getSelected(forms) | translate"
-                [attr.aria-label]="getSelected(forms) | translate"
-                [matMenuTriggerRestoreFocus]="true">
-
-            <span class="adf-search-form-title" >
-                    {{ getSelected(forms) | translate }}
+    <ng-container *ngIf="forms.length > 1">
+        <button
+            class="adf-search-form adf-search-form-button"
+            [matMenuTriggerFor]="menu"
+            #menuTrigger="matMenuTrigger"
+            disableRipple
+            mat-button
+            [title]="getSelected(forms) | translate"
+            [attr.aria-label]="getSelected(forms) | translate"
+            [matMenuTriggerRestoreFocus]="true"
+        >
+            <span class="adf-search-form-title">
+                {{ getSelected(forms) | translate }}
             </span>
 
             <mat-icon [class.adf-search-form-icon-selected]="menuTrigger.menuOpen" class="adf-search-form-icon">expand_more</mat-icon>
         </button>
 
         <mat-menu #menu="matMenu" class="adf-search-form-menu">
-            <button *ngFor="let form of forms"
-                    mat-menu-item
-                    tabindex="0"
-                    [attr.aria-label]="form.name | translate"
-                    (click)="onSelectionChange(form)">
-                {{form.name | translate}}
+            <button *ngFor="let form of forms" mat-menu-item tabindex="0" [attr.aria-label]="form.name | translate" (click)="onSelectionChange(form)">
+                {{ form.name | translate }}
             </button>
         </mat-menu>
     </ng-container>

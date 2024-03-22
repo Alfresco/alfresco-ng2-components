@@ -4,6 +4,7 @@
           [class.adf-search-toggle-chip]="(facetField.displayValue$ | async) || menuTrigger.menuOpen"
           [disabled]="!isPopulated()"
           tabIndex="0"
+          role="button"
           [matMenuTriggerFor]="menu"
           (menuOpened)="onMenuOpen()"
           (keydown.enter)="onEnterKeydown()"

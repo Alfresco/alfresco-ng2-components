@@ -1,26 +1,50 @@
-<mat-tree class="adf-tree-view-main" [dataSource]="dataSource"
-          [treeControl]="treeControl" *ngIf="nodeId; else missingNodeId">
-    <mat-tree-node class="adf-tree-view adf-tree-view-node"
-        *matTreeNodeDef="let treeNode" id="{{treeNode.name + '-tree-node'}}"
-        matTreeNodePadding [matTreeNodePaddingIndent]="15">
-        {{treeNode.name}}
+<mat-tree class="adf-tree-view-main" [dataSource]="dataSource" [treeControl]="treeControl" *ngIf="nodeId; else missingNodeId">
+    <mat-tree-node
+        class="adf-tree-view adf-tree-view-node"
+        *matTreeNodeDef="let treeNode"
+        id="{{ treeNode.name + '-tree-node' }}"
+        matTreeNodePadding
+        [matTreeNodePaddingIndent]="15"
+    >
+        {{ treeNode.name }}
     </mat-tree-node>
-    <mat-tree-node class="adf-tree-view adf-tree-view-node"
-        id="{{treeNode.name + '-tree-child-node'}}" *matTreeNodeDef="let treeNode; when: hasChild"
-        matTreeNodePadding [matTreeNodePaddingIndent]="15">
-        <button matTreeNodeToggle id="{{'button-'+treeNode.name}}" (click)="onNodeClicked(treeNode.node)"
-                mat-icon-button [attr.aria-label]="'ADF-TREE-VIEW.ACCESSIBILITY.ARIA_LABEL' | translate: {
-                    name:  treeNode.name
-                }">
+    <mat-tree-node
+        class="adf-tree-view adf-tree-view-node"
+        id="{{ treeNode.name + '-tree-child-node' }}"
+        *matTreeNodeDef="let treeNode; when: hasChild"
+        matTreeNodePadding
+        [matTreeNodePaddingIndent]="15"
+    >
+        <button
+            matTreeNodeToggle
+            id="{{ 'button-' + treeNode.name }}"
+            (click)="onNodeClicked(treeNode.node)"
+            mat-icon-button
+            [attr.aria-label]="
+                'ADF-TREE-VIEW.ACCESSIBILITY.ARIA_LABEL'
+                    | translate
+                        : {
+                              name: treeNode.name
+                          }
+            "
+        >
             <mat-icon class="adf-tree-view-icon">
-                {{treeControl.isExpanded(treeNode) ? 'folder_open' : 'folder'}}
+                {{ treeControl.isExpanded(treeNode) ? 'folder_open' : 'folder' }}
             </mat-icon>
         </button>
-        <span class="adf-tree-view-label" matTreeNodeToggle (click)="onNodeClicked(treeNode.node)">{{treeNode.name}}</span>
+        <span
+            class="adf-tree-view-label"
+            matTreeNodeToggle
+            role="button"
+            (click)="onNodeClicked(treeNode.node)"
+            tabindex="0"
+            (keyup.enter)="onNodeClicked(treeNode.node)"
+            >{{ treeNode.name }}</span
+        >
     </mat-tree-node>
 </mat-tree>
 <ng-template #missingNodeId>
     <div id="adf-tree-view-missing-node">
-        {{'ADF-TREE-VIEW.MISSING-ID' | translate}}
+        {{ 'ADF-TREE-VIEW.MISSING-ID' | translate }}
     </div>
 </ng-template>

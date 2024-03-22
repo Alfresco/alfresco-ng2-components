@@ -1,5 +1,5 @@
 <div class="adf-setting-container">
-    <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)" (keydown)="keyDownFunction($event)">
+    <form id="host-form" role="form" tabindex="0" [formGroup]="form" (submit)="onSubmit(form.value)" (keydown)="keyDownFunction($event)">
         <mat-form-field *ngIf="showSelectProviders">
             <mat-select id="adf-provider-selector" [formControl]="providersControl">
                 <mat-option *ngFor="let provider of providers" [value]="provider">

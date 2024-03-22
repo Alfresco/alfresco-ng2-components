@@ -11,6 +11,9 @@
     <ng-template #clickableTemplate>
         <span class="adf-mapitem-clickable-value"
               (click)="clicked()"
+              tabindex="0"
+              role="button"
+              (keyup.enter)="clicked()"
               [attr.data-automation-id]="'card-mapitem-value-' + property.key">
             <span *ngIf="showProperty; else emptyValueTemplate">{{ property.displayValue }}</span>
         </span>
