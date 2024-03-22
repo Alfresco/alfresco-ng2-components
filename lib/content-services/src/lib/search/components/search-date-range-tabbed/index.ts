@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-export * from './folder.dialog';
-export * from './node-lock.dialog';
-export * from './confirm.dialog';
-export * from './category-selector.dialog';
-
-export * from './dialog.module';
-export * from './library/library.dialog';
-
-export * from './download-zip/download-zip.dialog';
-export * from './download-zip/download-zip.dialog.module';
-
-
-export * from './folder-name.validators';
+export * from './search-date-range/date-range-type';
+export * from './search-date-range/in-last-date-type';
+export * from './search-date-range/search-date-range';
+export * from './search-date-range/search-date-range.component';
+export * from './search-date-range-tabbed.component';

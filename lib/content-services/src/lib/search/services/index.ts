@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export * from './folder.dialog';
-export * from './node-lock.dialog';
-export * from './confirm.dialog';
-export * from './category-selector.dialog';
-
-export * from './dialog.module';
-export * from './library/library.dialog';
-
-export * from './download-zip/download-zip.dialog';
-export * from './download-zip/download-zip.dialog.module';
-
-
-export * from './folder-name.validators';
+export * from './base-query-builder.service';
+export * from './search-configuration.service';
+export * from './search-facet-filters.service';
+export * from './search-filter.service';
+export * from './search-header-query-builder.service';
+export * from './search-query-builder.service';
+export * from './search.service';

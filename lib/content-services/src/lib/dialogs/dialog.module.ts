@@ -28,6 +28,8 @@ import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { LibraryDialogComponent } from './library/library.dialog';
 import { ContentDirectiveModule } from '../directives';
 import { DownloadZipDialogModule } from './download-zip/download-zip.dialog.module';
+import { CategorySelectorDialogComponent } from './category-selector.dialog';
+import { CategoriesModule } from '../category';
 
 @NgModule({
     imports: [
@@ -38,19 +40,22 @@ import { DownloadZipDialogModule } from './download-zip/download-zip.dialog.modu
         ReactiveFormsModule,
         MatDatetimepickerModule,
         ContentDirectiveModule,
-        DownloadZipDialogModule
+        DownloadZipDialogModule,
+        CategoriesModule
     ],
     declarations: [
         FolderDialogComponent,
         NodeLockDialogComponent,
         ConfirmDialogComponent,
-        LibraryDialogComponent
+        LibraryDialogComponent,
+        CategorySelectorDialogComponent
     ],
     exports: [
         FolderDialogComponent,
         NodeLockDialogComponent,
         ConfirmDialogComponent,
-        LibraryDialogComponent
+        LibraryDialogComponent,
+        CategorySelectorDialogComponent
     ]
 })
 export class DialogModule {}

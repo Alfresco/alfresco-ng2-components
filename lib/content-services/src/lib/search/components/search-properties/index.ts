@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-export * from './folder.dialog';
-export * from './node-lock.dialog';
-export * from './confirm.dialog';
-export * from './category-selector.dialog';
-
-export * from './dialog.module';
-export * from './library/library.dialog';
-
-export * from './download-zip/download-zip.dialog';
-export * from './download-zip/download-zip.dialog.module';
-
-
-export * from './folder-name.validators';
+export * from './file-size-condition';
+export * from './file-size-operator.enum';
+export * from './file-size-unit.enum';
+export * from './search-properties.component';
+export * from './search-properties';

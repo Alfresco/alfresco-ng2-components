@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v6.8.0](#v680)
 -   [v6.7.0](#v670)
 -   [v6.4.0](#v640)
 -   [v6.2.0](#v620)
@@ -44,6 +45,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v6.8.0
+
+<!--680 start-->
+
+-   [Category selector dialog component](content-services/dialogs/category-selector.dialog.md)
+
+<!--680 end-->
 
 ## v6.7.0
 

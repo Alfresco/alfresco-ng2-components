@@ -47,7 +47,7 @@
                 {{ existingCategoriesMsg | translate }}
             </p>
             <mat-list
-                [disabled]="isCRUDMode"
+                [disabled]="isCRUDMode || !multiSelect && categories.length > 0"
                 class="adf-categories-management-list">
                 <mat-list-item
                     *ngFor="let category of existingCategories"

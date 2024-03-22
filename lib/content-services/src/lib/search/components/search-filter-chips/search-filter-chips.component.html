@@ -9,9 +9,12 @@
             [attr.data-automation-id]="facetChipTabbedId" >
         </adf-search-facet-chip-tabbed>
     </ng-container>
+
     <ng-container *ngIf="facetFiltersService.responseFacets && showContextFacets">
         <ng-container *ngFor="let field of facetFiltersService.responseFacets">
             <adf-search-facet-chip [field]="field" [attr.data-automation-id]="'search-fact-chip-' + field.field" ></adf-search-facet-chip>
         </ng-container>
     </ng-container>
+
+    <ng-content></ng-content>
 </mat-chip-list>

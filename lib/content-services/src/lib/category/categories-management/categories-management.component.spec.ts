@@ -383,6 +383,14 @@ describe('CategoriesManagementComponent', () => {
             discardPeriodicTasks();
             flush();
         }));
+
+        it ('should disable existing categories list if category already selected and multiSelect is false', fakeAsync(() => {
+            component.multiSelect = false;
+            fixture.detectChanges();
+            typeCategory('test');
+
+            expect(getSelectionList().disabled).toBeTrue();
+        }));
     });
 
     describe('CRUD mode', () => {
