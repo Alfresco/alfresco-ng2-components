@@ -40,7 +40,7 @@ export class SearchInputComponent {
     placeholder = 'SEARCH.INPUT.PLACEHOLDER';
 
     @Input()
-    fields: string[] = ['cm:name'];
+    fields = ['cm:name'];
 
     @Output()
     changed = new EventEmitter<string>();
@@ -55,12 +55,12 @@ export class SearchInputComponent {
         }
     }
 
-    private formatSearchQuery(userInput: string, fields = ['cm:name']) {
+    private formatSearchQuery(userInput: string, fields = ['cm:name']): string {
         if (!userInput) {
             return null;
         }
 
-        if (/^http[s]?:\/\//.test(userInput)) {
+        if (/^http?:\/\//.test(userInput)) {
             return this.formatFields(fields, userInput);
         }
 
@@ -74,16 +74,7 @@ export class SearchInputComponent {
 
         if (words.length > 1) {
             const separator = words.some(this.isOperator) ? ' ' : ' AND ';
-
-            return words
-                .map((term) => {
-                    if (this.isOperator(term)) {
-                        return term;
-                    }
-
-                    return this.formatFields(fields, term);
-                })
-                .join(separator);
+            return words.map((term) => (this.isOperator(term) ? term : this.formatFields(fields, term))).join(separator);
         }
 
         return this.formatFields(fields, userInput);
