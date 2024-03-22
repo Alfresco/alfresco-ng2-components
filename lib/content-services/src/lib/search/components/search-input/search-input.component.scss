@@ -1,0 +1,12 @@
+/* stylelint-disable selector-class-pattern */
+.adf-search-input-container {
+    margin: 10px;
+
+    mat-form-field {
+        width: 100%;
+
+        .mat-form-field-wrapper {
+            padding: 0;
+        }
+    }
+}
