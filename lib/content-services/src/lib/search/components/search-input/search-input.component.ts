@@ -60,7 +60,7 @@ export class SearchInputComponent {
             return null;
         }
 
-        if (/^http?:\/\//.test(userInput)) {
+        if (/^https?:\/\//.test(userInput)) {
             return this.formatFields(fields, userInput);
         }
 
