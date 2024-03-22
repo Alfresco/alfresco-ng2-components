@@ -25,6 +25,9 @@ export interface OauthConfigModel {
     silentLogin?: boolean;
     secret?: string;
     redirectUriLogout?: string;
+    logoutUrl?: string;
+    audience?: string;
+    logoutParameters?: Array<string>;
     redirectSilentIframeUri?: string;
     refreshTokenTimeout?: number;
     publicUrls: string[];

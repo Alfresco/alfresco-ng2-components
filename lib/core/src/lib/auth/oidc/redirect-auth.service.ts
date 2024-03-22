@@ -78,7 +78,7 @@ export class RedirectAuthService extends AuthService {
     );
   }
 
-  init() {
+  init(): Promise<boolean> {
     if (isPromise(this.authConfig)) {
         return this.authConfig.then((config) => this.configureAuth(config));
     }
@@ -152,7 +152,7 @@ export class RedirectAuthService extends AuthService {
     return DEFAULT_REDIRECT;
   }
 
-  private configureAuth(config: AuthConfig) {
+  private configureAuth(config: AuthConfig): Promise<boolean> {
     this.oauthService.configure(config);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
