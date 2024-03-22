@@ -66,6 +66,10 @@ export class SearchInputComponent {
 
         userInput = userInput.trim();
 
+        if (userInput === '*') {
+            return userInput;
+        }
+
         if (userInput.includes(':') || userInput.includes('"')) {
             return userInput;
         }
