@@ -18,7 +18,7 @@
 import { AlfrescoApi, SharedlinksApi, FavoritesApi, NodesApi, UploadApi, NodeEntry } from '@alfresco/js-api';
 import { exit, argv } from 'node:process';
 import { Command } from 'commander';
-import * as fs from 'fs';
+import { createReadStream } from 'fs';
 import * as path from 'path';
 import { logger } from './logger';
 
@@ -127,7 +127,7 @@ async function createFolder(folderName: string, parentId: string) {
  */
 async function uploadFile(fileName: string, fileDestination: string): Promise<NodeEntry> {
     const filePath = `../resources/content/${fileName}`;
-    const file = fs.createReadStream(path.join(__dirname, filePath));
+    const file = createReadStream(path.join(__dirname, filePath));
     let uploadedFile: NodeEntry;
     try {
         uploadedFile = await new UploadApi(alfrescoJsApi).uploadFile(file, '', fileDestination, null, {
