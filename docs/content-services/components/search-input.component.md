@@ -5,10 +5,10 @@
 A minimalistic search input component that formats user query according to the provided fields.
 
 ```html
-<app-search-input 
+<adf-search-input 
     [fields]="['cm:name']" 
     (changed)="onSearchQueryChanged($event)">
-</app-search-input>
+</adf-search-input>
 ```
 
 > Notes: this component does not perform search operations.
@@ -28,10 +28,10 @@ A minimalistic search input component that formats user query according to the p
 ## Examples
 
 ```html
-<app-search-input 
+<adf-search-input 
     [fields]="['cm:name', 'cm:title', 'cm:description', 'TEXT', 'TAG']" 
     (changed)="onSearchQueryChanged($event)">
-</app-search-input>
+</adf-search-input>
 ```
 
 In the example above, the search is performed against the following fields:
