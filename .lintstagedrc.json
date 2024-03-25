@@ -1,0 +1,4 @@
+{
+  "*.{ts,js}": ["prettier", "eslint"],
+  "*.{css,scss}": ["prettier --write", "stylelint"]
+}
