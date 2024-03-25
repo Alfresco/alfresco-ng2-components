@@ -1234,6 +1234,83 @@ export const fakeMetadataForm = {
     }
 };
 
+export const mockDisplayExternalPropertyForm = {
+    id: 'form-29483aa4-ebd4-4eab-b024-65ce7b268286',
+    name: 'external-form',
+    description: '',
+    version: 0,
+    key: 'external-form',
+    tabs: [],
+    fields: [
+        {
+            id: '48120e00-e0d5-4d15-be49-ccf328ecb24d',
+            name: 'Label',
+            type: 'container',
+            tab: null,
+            numberOfColumns: 2,
+            fields: {
+                1: [
+                    {
+                        id: 'DisplayExternalProperty02kj65',
+                        name: 'Display External Property',
+                        type: 'display-external-property',
+                        readOnly: true,
+                        required: true,
+                        colspan: 1,
+                        rowspan: 1,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        },
+                        externalProperty: 'firstName',
+                        value: 'hr'
+                    }
+                ],
+                2: [
+                    {
+                        id: 'DisplayExternalProperty0ei65x',
+                        name: 'Display External Property',
+                        type: 'display-external-property',
+                        readOnly: true,
+                        colspan: 1,
+                        rowspan: 1,
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        },
+                        externalProperty: 'username',
+                        required: false,
+                        value: 'hruser'
+                    }
+                ]
+            }
+        }
+    ],
+    outcomes: [],
+    metadata: {},
+    variables: [],
+    taskId: '2764e7b3-eaad-11ee-b14c-86722ede7d5b',
+    taskName: 'widgets',
+    processDefinitionId: 'Process_xQy3Ev89:1:aa78eca9-eaac-11ee-b14c-86722ede7d5b',
+    processInstanceId: '275d94ab-eaad-11ee-b14c-86722ede7d5b',
+    processVariables: [
+        {
+            id: 'DisplayExternalProperty0ei65x',
+            name: 'DisplayExternalProperty0ei65x',
+            value: 'email',
+            type: 'string'
+        },
+        {
+            id: 'DisplayExternalProperty02kj65',
+            name: 'DisplayExternalProperty02kj65',
+            value: 'test',
+            type: 'string'
+        }
+    ]
+};
+
 export const fakeViewerForm = {
     id: 'form-de8895be-d0d7-4434-beef-559b15305d72',
     name: 'StartEventForm',
