@@ -44,8 +44,6 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-
-
         this.queryBuilder.executed
             .asObservable()
             .pipe(takeUntil(this.onDestroy$))
