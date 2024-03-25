@@ -22,7 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-search-input',
+    selector: 'adf-search-input',
     standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslateModule],
     templateUrl: `./search-input.component.html`,
