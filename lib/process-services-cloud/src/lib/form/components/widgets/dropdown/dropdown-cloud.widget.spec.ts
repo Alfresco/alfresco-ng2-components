@@ -298,10 +298,10 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const dropdownLabel = fixture.debugElement.query(By.css('.adf-dropdown-widget mat-label'));
+            const placeholderElement = fixture.debugElement.query(By.css('.mat-mdc-select-placeholder'));
             selectedValueElement = fixture.debugElement.query(By.css('.mat-mdc-select-value-text'));
 
-            expect(dropdownLabel.nativeNode.innerText).toEqual('This is a mock none option');
+            expect(placeholderElement.nativeNode.innerText).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
             expect(selectedValueElement).toBeFalsy();
         });
