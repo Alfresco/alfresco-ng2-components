@@ -17,11 +17,21 @@
 
 import { AlfrescoApi /*, NodesApi, UploadApi*/ } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
-// import { Buffer } from 'node:buffer';
-const program = require('commander');
+import { Command } from 'commander';
 import { logger } from './logger';
+
+interface CheckCsEnvArgs {
+    host?: string;
+    username?: string;
+    password?: string;
+    time?: number;
+    retry?: number;
+}
+
+const program = new Command();
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
+
 let counter = 0;
 let alfrescoJsApi: AlfrescoApi;
 
@@ -40,23 +50,26 @@ export default async function main() {
         .option('-r, --retry [type]', 'retry ')
         .parse(argv);
 
-    await checkEnv();
+    const opts = program.opts<CheckCsEnvArgs>();
+    await checkEnv(opts);
     // TODO: https://alfresco.atlassian.net/browse/ACS-5873
     // await checkDiskSpaceFullEnv();
 }
 
 /**
  * Check environment
+ *
+ * @param opts command options
  */
-async function checkEnv() {
+async function checkEnv(opts?: CheckCsEnvArgs) {
     try {
         alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: program.host,
+            hostEcm: opts.host,
             contextRoot: 'alfresco'
         });
 
-        await alfrescoJsApi.login(program.username, program.password);
+        await alfrescoJsApi.login(opts.username, opts.password);
     } catch (error) {
         if (error?.error?.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
@@ -64,8 +77,8 @@ async function checkEnv() {
         }
         logger.error('Login error environment down or inaccessible');
         counter++;
-        const retry = program.retry || MAX_RETRY;
-        const time = program.time || TIMEOUT;
+        const retry = opts.retry || MAX_RETRY;
+        const time = opts.time || TIMEOUT;
         if (retry === counter) {
             logger.error('Give up');
             exit(1);

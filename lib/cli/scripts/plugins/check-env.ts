@@ -17,7 +17,7 @@
 
 import { AlfrescoApi } from '@alfresco/js-api';
 import { exit } from 'node:process';
-import { logger } from './../logger';
+import { logger } from '../logger';
 
 const TIMEOUT = 6000;
 const MAX_RETRY = 10;
