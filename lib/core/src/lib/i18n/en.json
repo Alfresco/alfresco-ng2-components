@@ -35,7 +35,10 @@
       "TITLE": "Start Form"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Preview not available"
+      "IMAGE_NOT_AVAILABLE": "Preview not available",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "Local storage",
