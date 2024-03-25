@@ -3,12 +3,12 @@
         {{'COMMENTS.HEADER' | translate: { count: comments?.length } }}
     </div>
     <div *ngIf="!readOnly" class="adf-comments-input-container adf-comments-divider">
-            <mat-form-field>
+            <mat-form-field class="adf-comments-form-field" subscriptSizing="dynamic">
+                <mat-label>{{'COMMENTS.ADD' | translate}}</mat-label>
                 <textarea
                     matInput
                     id="comment-input"
                     [attr.aria-label]="'COMMENTS.ADD' | translate"
-                    placeholder="{{'COMMENTS.ADD' | translate}}"
                     [(ngModel)]="message"
                     (keydown.escape)="clearMessage($event)"
                 >

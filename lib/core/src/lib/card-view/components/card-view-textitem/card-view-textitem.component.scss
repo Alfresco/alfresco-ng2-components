@@ -1,10 +1,6 @@
 @import 'styles/mat-selectors';
 
 .adf-card-view-textitem {
-    .adf-property-field {
-        padding-top: 15px;
-    }
-
     .adf-textitem-error {
         font-size: var(--theme-caption-font-size);
         padding-top: 6px;
@@ -59,7 +55,7 @@
         color: var(--adf-theme-foreground-text-color-054);
     }
 
-    .adf-property-read-only {
+    .adf-property-read-only:not(:has(.adf-property-readonly-value)) {
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
     }
 
@@ -69,5 +65,12 @@
 
     .adf-property-value-editable {
         color: var(--adf-metadata-property-panel-title-color);
+    }
+
+    #{$mat-form-field-underline} {
+        &::before,
+        &::after {
+            display: none;
+        }
     }
 }
