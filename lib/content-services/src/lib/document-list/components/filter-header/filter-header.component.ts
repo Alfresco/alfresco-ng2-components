@@ -17,7 +17,6 @@
 
 import { Component, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { PaginationModel, DataSorting } from '@alfresco/adf-core';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search/search-query-service.token';
 import { SearchHeaderQueryBuilderService } from '../../../search/services/search-header-query-builder.service';
 import { FilterSearch } from './../../../search/models/filter-search.interface';
 import { Subject } from 'rxjs';
@@ -26,8 +25,7 @@ import { ADF_DOCUMENT_PARENT_COMPONENT } from '../document-list.token';
 
 @Component({
     selector: 'adf-filter-header',
-    templateUrl: './filter-header.component.html',
-    providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }]
+    templateUrl: './filter-header.component.html'
 })
 export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     /** (optional) Initial filter value to sort . */
@@ -45,10 +43,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     isFilterServiceActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        @Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any,
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService
-    ) {
+    constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any, private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }
 

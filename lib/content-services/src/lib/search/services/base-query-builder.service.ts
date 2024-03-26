@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { Subject, Observable, from, ReplaySubject } from 'rxjs';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import {
@@ -36,10 +35,9 @@ import { SearchSortingDefinition } from '../models/search-sorting-definition.int
 import { FacetField } from '../models/facet-field.interface';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { SearchForm } from '../models/search-form.interface';
+import { Injectable } from '@angular/core';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export abstract class BaseQueryBuilderService {
     private _searchApi: SearchApi;
     get searchApi(): SearchApi {
@@ -109,11 +107,11 @@ export abstract class BaseQueryBuilderService {
     public getDefaultConfiguration(): SearchConfiguration | undefined {
         const configurations = this.loadConfiguration();
 
-        if (this.selectedConfiguration !== undefined) {
-            return configurations[this.selectedConfiguration];
-        }
-
         if (Array.isArray(configurations)) {
+            if (this.selectedConfiguration !== undefined) {
+                return configurations[this.selectedConfiguration];
+            }
+
             return configurations.find((configuration) => configuration.default);
         }
         return configurations;

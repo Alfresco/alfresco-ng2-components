@@ -21,7 +21,7 @@ import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { ADF_SEARCH_CONFIGURATION } from '../search-configuration.token';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SearchQueryBuilderService extends BaseQueryBuilderService {
     public isFilterServiceActive(): boolean {
         return false;
