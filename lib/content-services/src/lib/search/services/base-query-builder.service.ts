@@ -35,9 +35,7 @@ import { SearchSortingDefinition } from '../models/search-sorting-definition.int
 import { FacetField } from '../models/facet-field.interface';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { SearchForm } from '../models/search-form.interface';
-import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
 export abstract class BaseQueryBuilderService {
     private _searchApi: SearchApi;
     get searchApi(): SearchApi {
