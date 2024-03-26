@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
 import { FacetField } from '../../models/facet-field.interface';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { FacetWidget } from '../../models/facet-widget.interface';
@@ -33,16 +32,14 @@ import { Subject } from 'rxjs';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetFieldComponent implements FacetWidget {
+    private queryBuilder = inject(SearchQueryBuilderService);
+    private searchFacetFiltersService = inject(SearchFacetFiltersService);
+    private translationService = inject(TranslationService);
+
     @Input()
     field!: FacetField;
 
     displayValue$: Subject<string> = new Subject<string>();
-
-    constructor(
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
-        private searchFacetFiltersService: SearchFacetFiltersService,
-        private translationService: TranslationService
-    ) {}
 
     get canUpdateOnChange() {
         return this.field.settings?.allowUpdateOnChange ?? true;
