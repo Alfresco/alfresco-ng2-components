@@ -1,4 +1,3 @@
-/* eslint-disable arrow-body-style */
 /*!
  * @license
  * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.

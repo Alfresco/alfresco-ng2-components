@@ -188,6 +188,7 @@ jobs:
           ./scripts/github/build/bumpversion.sh
           npx nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
+          npx nx affected $NX_CALCULATION_FLAGS --target=build-schematics
       - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         name: release libraries GH registry
         with:
