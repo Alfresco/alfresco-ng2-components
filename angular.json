@@ -339,12 +339,12 @@
         },
         "build-schematics": {
           "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              "npx tsc -p lib/core/tsconfig.schematics.json",
-              "cp lib/core/schematics/migrations/collection.json dist/libs/core/schematics/migrations/collection.json"
-            ],
-            "parallel": false
+              "options": {
+              "commands": [
+                  {
+                      "command": "npx tsc -p lib/core/tsconfig.schematics.json && cp lib/core/schematics/migrations/collection.json dist/libs/core/schematics/migrations/collection.json"
+                  }
+              ]
           }
         },
         "test": {

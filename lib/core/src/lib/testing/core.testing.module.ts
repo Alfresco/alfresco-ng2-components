@@ -31,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
 import { DirectionalityConfigService } from '../common/services/directionality-config.service';
 import { AuthModule } from '../auth';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 
 @NgModule({
     imports: [
@@ -43,6 +44,7 @@ import { AuthModule } from '../auth';
     ],
     providers: [
         DatePipe,
+        UserPreferencesService,
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
         { provide: CookieService, useClass: CookieServiceMock },
