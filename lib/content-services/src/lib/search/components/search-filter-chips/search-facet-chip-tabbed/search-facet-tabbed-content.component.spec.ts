@@ -130,9 +130,9 @@ describe('SearchFacetTabbedContentComponent', () => {
         addBucketItem('field', 'test');
         addBucketItem('field2', 'test2');
         expect(component.autocompleteOptions['field'].length).toBe(1);
-        expect(component.autocompleteOptions['field'][0]).toEqual({value: 'test'});
+        expect(component.autocompleteOptions['field'][0]).toEqual({ value: 'test' });
         expect(component.autocompleteOptions['field2'].length).toBe(1);
-        expect(component.autocompleteOptions['field2'][0]).toEqual({value: 'test2'});
+        expect(component.autocompleteOptions['field2'][0]).toEqual({ value: 'test2' });
     });
 
     it('should add buckets when items are selected', () => {
@@ -140,7 +140,7 @@ describe('SearchFacetTabbedContentComponent', () => {
         addBucketItem('field', 'test');
         addBucketItem('field2', 'test2');
         component.onOptionsChange([{ value: 'test' }], 'field');
-        expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith('field',component.tabbedFacet.facets['field'].buckets.items[0]);
+        expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith('field', component.tabbedFacet.facets['field'].buckets.items[0]);
     });
 
     it('should remove buckets when items are unselected', () => {
@@ -148,7 +148,7 @@ describe('SearchFacetTabbedContentComponent', () => {
         addBucketItem('field', 'test');
         addBucketItem('field2', 'test2');
         component.onOptionsChange([], 'field');
-        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith('field',component.tabbedFacet.facets['field'].buckets.items[0]);
+        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith('field', component.tabbedFacet.facets['field'].buckets.items[0]);
     });
 
     it('should update emit new display value when next elements are selected', () => {
@@ -157,10 +157,12 @@ describe('SearchFacetTabbedContentComponent', () => {
         spyOn(component.displayValue$, 'emit');
         addBucketItem('field', selectedOption1);
         addBucketItem('field', selectedOption2);
-        component.onOptionsChange([{ value: selectedOption1 }, { value: selectedOption2 }],'field');
+        component.onOptionsChange([{ value: selectedOption1 }, { value: selectedOption2 }], 'field');
         fixture.detectChanges();
 
-        expect(component.displayValue$.emit).toHaveBeenCalledWith(`${component.tabbedFacet.facets['field'].label}_LABEL: ${selectedOption1}, ${selectedOption2} `);
+        expect(component.displayValue$.emit).toHaveBeenCalledWith(
+            `${component.tabbedFacet.facets['field'].label}_LABEL: ${selectedOption1}, ${selectedOption2} `
+        );
     });
 
     it('should update display value when elements from both tabs are selected', () => {
@@ -169,18 +171,20 @@ describe('SearchFacetTabbedContentComponent', () => {
         const displayValueEmitterSpy = spyOn(component.displayValue$, 'emit');
         addBucketItem('field', selectedOption1);
         addBucketItem('field2', selectedOption2);
-        component.onOptionsChange([{value: selectedOption1}], 'field');
-        component.onOptionsChange([{value: selectedOption2}], 'field2');
+        component.onOptionsChange([{ value: selectedOption1 }], 'field');
+        component.onOptionsChange([{ value: selectedOption2 }], 'field2');
         fixture.detectChanges();
 
         expect(displayValueEmitterSpy).toHaveBeenCalledTimes(2);
         expect(displayValueEmitterSpy.calls.allArgs()).toEqual([
             [`${component.tabbedFacet.facets['field'].label}_LABEL: ${selectedOption1} `],
-            [`${component.tabbedFacet.facets['field'].label}_LABEL: ${selectedOption1} ${component.tabbedFacet.facets['field2'].label}_LABEL: ${selectedOption2} `]
+            [
+                `${component.tabbedFacet.facets['field'].label}_LABEL: ${selectedOption1} ${component.tabbedFacet.facets['field2'].label}_LABEL: ${selectedOption2} `
+            ]
         ]);
     });
 
-    it('should update search query and display value on submit',() => {
+    it('should update search query and display value on submit', () => {
         spyOn(component, 'updateDisplayValue').and.callThrough();
         spyOn(component, 'submitValues').and.callThrough();
         spyOn(searchFacetService, 'updateSelectedBuckets').and.callThrough();
