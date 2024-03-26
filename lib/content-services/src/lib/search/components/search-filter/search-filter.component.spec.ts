@@ -163,7 +163,7 @@ describe('SearchFilterComponent', () => {
                 },
                 { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList([]) }
             ];
-            searchFacetFiltersService.queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
+            queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
 
             const serverResponseFields: any = [
                 {
@@ -221,7 +221,7 @@ describe('SearchFilterComponent', () => {
                 },
                 { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() }
             ];
-            searchFacetFiltersService.queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
+            queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
             const data = {
                 list: {
                     context: {}
