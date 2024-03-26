@@ -15,25 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Inject, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewEncapsulation } from '@angular/core';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchForm } from '../../models/search-form.interface';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
 @Component({
-  selector: 'adf-search-form',
-  templateUrl: './search-form.component.html',
-  styleUrls: ['./search-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-search-form',
+    templateUrl: './search-form.component.html',
+    styleUrls: ['./search-form.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchFormComponent {
+    private queryBuilder = inject(SearchQueryBuilderService);
+
+    searchForms$ = this.queryBuilder.searchForms;
 
     /** Emitted when the form change */
     @Output()
     formChange: EventEmitter<SearchForm> = new EventEmitter<SearchForm>();
-
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService) {
-    }
 
     onSelectionChange(form: SearchForm) {
         this.queryBuilder.updateSelectedConfiguration(form.index);

@@ -1,8 +1,8 @@
-<ng-container *ngIf="queryBuilder.searchForms | async as forms">
+<ng-container *ngIf="searchForms$ | async as forms">
 
     <ng-container *ngIf="forms.length === 1">
         <button class="adf-search-form adf-search-form-button"
-                disableRipple mat-button
+                [disableRipple] mat-button
                 [title]="getSelected(forms) | translate"
                 [attr.aria-label]="getSelected(forms) | translate">
             <span class="adf-search-form-title">
@@ -15,7 +15,7 @@
         <button class="adf-search-form adf-search-form-button"
                 [matMenuTriggerFor]="menu"
                 #menuTrigger="matMenuTrigger"
-                disableRipple
+                [disableRipple]
                 mat-button
                 [title]="getSelected(forms) | translate"
                 [attr.aria-label]="getSelected(forms) | translate"
