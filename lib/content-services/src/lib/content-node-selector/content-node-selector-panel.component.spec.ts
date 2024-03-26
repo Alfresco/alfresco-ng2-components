@@ -71,7 +71,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
     let contentService: ContentService;
 
     const triggerSearchResults = (searchResults: ResultSetPaging) => {
-        component.queryBuilderService.executed.next(searchResults);
+        const service = fixture.debugElement.injector.get(SearchQueryBuilderService);
+        service.executed.next(searchResults);
     };
 
     beforeEach(() => {
@@ -94,8 +95,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
             contentService = TestBed.inject(ContentService);
             thumbnailService = TestBed.inject(ThumbnailService);
 
-            searchQueryBuilderService = component.queryBuilderService;
-            component.queryBuilderService.resetToDefaults();
+            searchQueryBuilderService = fixture.debugElement.injector.get(SearchQueryBuilderService);
+            searchQueryBuilderService.resetToDefaults();
 
             spyOn(nodeService, 'getNode').and.returnValue(
                 of(
