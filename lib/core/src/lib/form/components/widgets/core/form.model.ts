@@ -236,14 +236,14 @@ export class FormModel implements ProcessFormModel {
         for (const field of this.fieldsCache) {
             const variableId = `variables.${field.name}`;
 
-            if (this.canOverrideValue(field, variableId, formValues)) {
+            if (this.canOverrideFieldValueWithProcessValue(field, variableId, formValues)) {
                 field.json.value = formValues[variableId] || formValues[field.id];
                 field.value = field.parseValue(field.json);
             }
         }
     }
 
-    private canOverrideValue(field: FormFieldModel, variableId: string, formValues: FormValues): boolean {
+    private canOverrideFieldValueWithProcessValue(field: FormFieldModel, variableId: string, formValues: FormValues): boolean {
         return !FormFieldTypes.isConstantValueType(field.type) && (this.isDefined(formValues[variableId]) || this.isDefined(formValues[field.id]));
     }
 
