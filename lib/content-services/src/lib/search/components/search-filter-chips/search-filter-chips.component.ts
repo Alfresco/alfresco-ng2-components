@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -37,11 +36,7 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
 
     facetChipTabbedId = '';
 
-    constructor(
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN)
-        public queryBuilder: SearchQueryBuilderService,
-        public facetFiltersService: SearchFacetFiltersService
-    ) {}
+    constructor(public queryBuilder: SearchQueryBuilderService, public facetFiltersService: SearchFacetFiltersService) {}
 
     ngOnInit() {
         this.queryBuilder.executed

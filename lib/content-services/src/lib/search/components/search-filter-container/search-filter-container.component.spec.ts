@@ -21,7 +21,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchService } from '../../services/search.service';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
 import { SearchCategory } from '../../models/search-category.interface';
@@ -62,8 +61,8 @@ describe('SearchFilterContainerComponent', () => {
         TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot(), ContentTestingModule],
             providers: [
-                { provide: SearchService, useValue: searchMock },
-                { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
+                { provide: SearchService, useValue: searchMock }
+                // { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
             ]
         });
         fixture = TestBed.createComponent(SearchFilterContainerComponent);

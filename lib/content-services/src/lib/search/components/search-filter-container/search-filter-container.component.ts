@@ -15,24 +15,12 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    Output,
-    OnInit,
-    EventEmitter,
-    ViewEncapsulation,
-    ViewChild,
-    Inject,
-    OnDestroy,
-    ElementRef
-} from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, ViewEncapsulation, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { SearchCategory } from '../../models/search-category.interface';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { FilterSearch } from '../../models/filter-search.interface';
@@ -69,7 +57,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
+        private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
         private translationService: TranslationService,
         private focusTrapFactory: ConfigurableFocusTrapFactory
     ) {}
