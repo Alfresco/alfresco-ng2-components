@@ -5,5 +5,9 @@
         .adf-label {
             top: 20px;
         }
+
+        &-preview {
+            color: var(--adf-display-external-property-widget-preview-selection-color);
+        }
     }
 }
