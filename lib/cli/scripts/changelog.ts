@@ -22,10 +22,12 @@
 import { argv, exit } from 'node:process';
 import * as shell from 'shelljs';
 import * as path from 'path';
-import program from 'commander';
+import { Command } from 'commander';
 import { logger } from './logger';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
+
+const program = new Command();
 
 interface Commit {
     hash: string;
@@ -167,8 +169,10 @@ export default function main(_args: string[], workingDir: string) {
         exit(0);
     }
 
-    const dir = path.resolve(program.dir || workingDir);
-    const { range, skip, max, format, output, exclude } = program;
+    const options = program.opts();
+
+    const dir = path.resolve(options.dir || workingDir);
+    const { range, skip, max, format, output, exclude } = options;
 
     const remote = getRemote(dir);
 
