@@ -23,8 +23,6 @@ import { fakeAuthorityListResult, fakeNameListResult } from '../../../mock/add-p
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchService } from '../../../search/services/search.service';
 import { DebugElement } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectionListHarness } from '@angular/material/list/testing';
@@ -39,11 +37,7 @@ describe('AddPermissionPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule,
-                MatIconTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(AddPermissionPanelComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);

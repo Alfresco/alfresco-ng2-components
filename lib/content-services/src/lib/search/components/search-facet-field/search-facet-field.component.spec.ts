@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SearchFacetFieldComponent } from './search-facet-field.component';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -24,7 +23,6 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { FacetField } from '../../models/facet-field.interface';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { SearchFilterList } from '../../models/search-filter-list.model';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchFacetFieldComponent', () => {
     let component: SearchFacetFieldComponent;
@@ -34,7 +32,7 @@ describe('SearchFacetFieldComponent', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
         queryBuilder = TestBed.inject(SearchQueryBuilderService);

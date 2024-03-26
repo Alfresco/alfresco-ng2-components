@@ -18,7 +18,6 @@
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { DiscoveryApiService } from '../common/services/discovery-api.service';
 import { VersionCompatibilityService } from './version-compatibility.service';
@@ -39,10 +38,7 @@ describe('VersionCompatibilityService', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             providers: [
                 {
                     provide: DiscoveryApiService,

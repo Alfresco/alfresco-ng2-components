@@ -20,7 +20,6 @@ import { SearchFilterList } from '../../models/search-filter-list.model';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sizeOptions, stepOne, stepThree } from '../../../mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
@@ -33,7 +32,7 @@ describe('SearchCheckListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchCheckListComponent);
         component = fixture.componentInstance;

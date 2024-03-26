@@ -19,22 +19,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '@alfresco/adf-core';
 import { WebscriptComponent } from './webscript.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('WebscriptComponent', () => {
-
     let component: WebscriptComponent;
     let fixture: ComponentFixture<WebscriptComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
@@ -68,7 +63,6 @@ describe('WebscriptComponent', () => {
     });
 
     describe('Content tests', () => {
-
         beforeEach(() => {
             jasmine.Ajax.install();
         });
@@ -99,8 +93,7 @@ describe('WebscriptComponent', () => {
 
             component.ngOnChanges().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('#webscript-data-TEXT').innerHTML)
-                    .toBe('text test');
+                expect(element.querySelector('#webscript-data-TEXT').innerHTML).toBe('text test');
                 done();
             });
 
@@ -125,8 +118,10 @@ describe('WebscriptComponent', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: [{id: 1, name: 'Name 1'},
-                    {id: 2, name: 'Name 2'}]
+                responseText: [
+                    { id: 1, name: 'Name 1' },
+                    { id: 2, name: 'Name 2' }
+                ]
             });
         });
 
@@ -145,20 +140,23 @@ describe('WebscriptComponent', () => {
 
             const dataTable = {
                 data: [
-                    {id: 1, name: 'Name 1'},
-                    {id: 2, name: 'Name 2'}
+                    { id: 1, name: 'Name 1' },
+                    { id: 2, name: 'Name 2' }
                 ],
-                schema: [{
-                    type: 'text',
-                    key: 'id',
-                    title: 'Id',
-                    sortable: true
-                }, {
-                    type: 'text',
-                    key: 'name',
-                    title: 'Name',
-                    sortable: true
-                }]
+                schema: [
+                    {
+                        type: 'text',
+                        key: 'id',
+                        title: 'Id',
+                        sortable: true
+                    },
+                    {
+                        type: 'text',
+                        key: 'name',
+                        title: 'Name',
+                        sortable: true
+                    }
+                ]
             };
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -183,8 +181,8 @@ describe('WebscriptComponent', () => {
 
             const dataTable = {
                 data: [
-                    {id: 1, name: 'Name 1'},
-                    {id: 2, name: 'Name 2'}
+                    { id: 1, name: 'Name 1' },
+                    { id: 2, name: 'Name 2' }
                 ]
             };
 

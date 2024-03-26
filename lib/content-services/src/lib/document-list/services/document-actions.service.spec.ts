@@ -22,20 +22,15 @@ import { DocumentListService } from './document-list.service';
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { PermissionModel } from '../models/permissions.model';
 
 describe('DocumentActionsService', () => {
-
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         documentListService = TestBed.inject(DocumentListService);
         service = TestBed.inject(DocumentActionsService);
@@ -99,7 +94,7 @@ describe('DocumentActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
         let lastValue: PermissionModel;
-        service.permissionEvent.subscribe((permission) => lastValue = permission);
+        service.permissionEvent.subscribe((permission) => (lastValue = permission));
 
         const file = new FileNode();
         service.getHandler('delete')(file);
@@ -107,7 +102,7 @@ describe('DocumentActionsService', () => {
         expect(lastValue).toBeDefined();
         expect(lastValue.type).toEqual('content');
         expect(lastValue.action).toEqual('delete');
-   });
+    });
 
     it('should call the error on the returned Observable if there are no permissions', async () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
@@ -138,7 +133,7 @@ describe('DocumentActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let lastValue: PermissionModel;
-        service.permissionEvent.subscribe((permissionBack) => lastValue = permissionBack);
+        service.permissionEvent.subscribe((permissionBack) => (lastValue = permissionBack));
 
         const permission = 'delete';
         const file = new FileNode();
@@ -207,7 +202,7 @@ describe('DocumentActionsService', () => {
 
     it('should emit success event upon node deletion', () => {
         let lastValue: string;
-        service.success.subscribe((message) => lastValue = message);
+        service.success.subscribe((message) => (lastValue = message));
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
         const target = jasmine.createSpyObj('obj', ['reload']);
@@ -217,5 +212,5 @@ describe('DocumentActionsService', () => {
         fileWithPermission.entry.allowableOperations = [permission];
         service.getHandler('delete')(fileWithPermission, target, permission);
         expect(lastValue).toEqual('CORE.DELETE_NODE.SINGULAR');
-   });
+    });
 });

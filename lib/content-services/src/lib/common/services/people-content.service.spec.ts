@@ -15,20 +15,9 @@
  * limitations under the License.
  */
 
-import {
-    createNewPersonMock,
-    fakeEcmAdminUser,
-    fakeEcmUser,
-    fakeEcmUser2,
-    fakeEcmUserList
-} from '../mocks/ecm-user.service.mock';
-import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    CoreTestingModule
-} from '@alfresco/adf-core';
+import { createNewPersonMock, fakeEcmAdminUser, fakeEcmUser, fakeEcmUser2, fakeEcmUserList } from '../mocks/ecm-user.service.mock';
+import { AlfrescoApiService, AlfrescoApiServiceMock, CoreTestingModule } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 
 describe('PeopleContentService', () => {
@@ -36,13 +25,8 @@ describe('PeopleContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-            ]
+            imports: [CoreTestingModule],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
 
         peopleContentService = TestBed.inject(PeopleContentService);
@@ -68,7 +52,6 @@ describe('PeopleContentService', () => {
         expect(pagination.totalItems).toEqual(2);
         expect(pagination.hasMoreItems).toBeFalsy();
         expect(pagination.skipCount).toEqual(0);
-
     });
 
     it('should call listPeople api with requested sorting params', async () => {
@@ -114,7 +97,9 @@ describe('PeopleContentService', () => {
     });
 
     it('Should make the api call to check if the user is a content admin only once', async () => {
-        const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmAdminUser } as any));
+        const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(
+            Promise.resolve({ entry: fakeEcmAdminUser } as any)
+        );
 
         const user = await peopleContentService.getCurrentUserInfo().toPromise();
         expect(user.id).toEqual('fake-id');
@@ -128,10 +113,12 @@ describe('PeopleContentService', () => {
     });
 
     it('should not change current user on every getPerson call', async () => {
-        const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({entry: fakeEcmAdminUser} as any));
+        const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(
+            Promise.resolve({ entry: fakeEcmAdminUser } as any)
+        );
         await peopleContentService.getCurrentUserInfo().toPromise();
 
-        getCurrentPersonSpy.and.returnValue(Promise.resolve({entry: fakeEcmUser2} as any));
+        getCurrentPersonSpy.and.returnValue(Promise.resolve({ entry: fakeEcmUser2 } as any));
         await peopleContentService.getPerson('fake-id').toPromise();
 
         expect(getCurrentPersonSpy.calls.count()).toEqual(2);

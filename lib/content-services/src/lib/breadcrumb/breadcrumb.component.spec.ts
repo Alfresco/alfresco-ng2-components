@@ -23,26 +23,21 @@ import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('Breadcrumb', () => {
-
     let component: BreadcrumbComponent;
     let fixture: ComponentFixture<BreadcrumbComponent>;
     let documentListService: DocumentListService = jasmine.createSpyObj({
-        loadFolderByNodeId : of(''),
+        loadFolderByNodeId: of(''),
         isCustomSourceService: false
     });
     let documentListComponent: DocumentListComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers : [{ provide: DocumentListService, useValue: documentListService }]
+            providers: [{ provide: DocumentListService, useValue: documentListService }]
         });
         fixture = TestBed.createComponent(BreadcrumbComponent);
         component = fixture.componentInstance;
@@ -80,7 +75,6 @@ describe('Breadcrumb', () => {
     });
 
     describe('target', () => {
-
         let folderNode: Node;
 
         beforeEach(() => {
@@ -115,11 +109,13 @@ describe('Breadcrumb', () => {
 
             component.onRoutePathClick(node, null);
 
-            expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(node.id,
+            expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(
+                node.id,
                 documentListComponent.DEFAULT_PAGINATION,
                 documentListComponent.includeFields,
                 documentListComponent.where,
-                documentListComponent.orderBy);
+                documentListComponent.orderBy
+            );
         });
 
         it('should build the path based on the document list node', () => {
@@ -186,9 +182,7 @@ describe('Breadcrumb', () => {
             id: 'test-id',
             name: 'test-name',
             path: {
-                elements: [
-                    { id: 'element-id', name: 'element-name' }
-                ]
+                elements: [{ id: 'element-id', name: 'element-name' }]
             }
         };
         const route = component.parseRoute(node);
@@ -295,11 +289,11 @@ describe('Breadcrumb', () => {
                 ]
             }
         };
-        component.transform = ((transformNode) => {
+        component.transform = (transformNode) => {
             transformNode.id = 'test-id';
             transformNode.name = 'test-name';
             return transformNode;
-        });
+        };
         component.folderNode = node;
         component.ngOnChanges();
         expect(component.route.length).toBe(4);

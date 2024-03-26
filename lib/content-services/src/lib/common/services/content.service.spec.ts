@@ -19,20 +19,15 @@ import { TestBed } from '@angular/core/testing';
 import { ContentService } from './content.service';
 import { AppConfigService, AuthenticationService, StorageService, CoreTestingModule } from '@alfresco/adf-core';
 import { Node, PermissionsInfo } from '@alfresco/js-api';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentService', () => {
-
     let contentService: ContentService;
     let authService: AuthenticationService;
     let storage: StorageService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         authService = TestBed.inject(AuthenticationService);
         contentService = TestBed.inject(ContentService);
@@ -47,7 +42,6 @@ describe('ContentService', () => {
     });
 
     describe('AllowableOperations', () => {
-
         it('should hasAllowableOperations be false if allowableOperation is not present in the node', () => {
             const permissionNode = new Node({});
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeFalsy();
@@ -59,7 +53,7 @@ describe('ContentService', () => {
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeTruthy();
         });
 
-        it('should hasAllowableOperations be false if allowableOperation is present but you don\'t have the permission for the request operation', () => {
+        it('should hasAllowableOperations be false if allowableOperation is present but you do not have the permission for the request operation', () => {
             const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeFalsy();
         });
@@ -81,30 +75,58 @@ describe('ContentService', () => {
     });
 
     describe('Permissions', () => {
-
         it('should havePermission be false if allowableOperation is not present in the node', () => {
             const permissionNode = new Node({});
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeFalsy();
         });
 
         it('should havePermission be true if permissions is present and you have the permission for the request operation', () => {
-            const permissionNode = new Node({ permissions: { locallySet: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' }, { name: 'consumer', authorityId: 'user3' }] } });
+            const permissionNode = new Node({
+                permissions: {
+                    locallySet: [
+                        { name: 'manager', authorityId: 'user1' },
+                        { name: 'collaborator', authorityId: 'user2' },
+                        { name: 'consumer', authorityId: 'user3' }
+                    ]
+                }
+            });
 
             expect(contentService.hasPermissions(permissionNode, 'manager', 'user1')).toBeTruthy();
         });
 
-        it('should havePermission be false if permissions is present but you don\'t have the permission for the request operation', () => {
-            const permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator', authorityId: 'user1' }, { name: 'consumer', authorityId: 'user2' }] } });
+        it('should havePermission be false if permissions is present but you do not have the permission for the request operation', () => {
+            const permissionNode = new Node({
+                permissions: {
+                    locallySet: [
+                        { name: 'collaborator', authorityId: 'user1' },
+                        { name: 'consumer', authorityId: 'user2' }
+                    ]
+                }
+            });
             expect(contentService.hasPermissions(permissionNode, 'manager', 'user1')).toBeFalsy();
         });
 
         it('should havePermission works in the opposite way with negate value', () => {
-            const permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator', authorityId: 'user1' }, { name: 'consumer', authorityId: 'user2' }] } });
+            const permissionNode = new Node({
+                permissions: {
+                    locallySet: [
+                        { name: 'collaborator', authorityId: 'user1' },
+                        { name: 'consumer', authorityId: 'user2' }
+                    ]
+                }
+            });
             expect(contentService.hasPermissions(permissionNode, '!manager', 'user1')).toBeTruthy();
         });
 
         it('should havePermission return false if no permission parameter are passed', () => {
-            const permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator', authorityId: 'user1' }, { name: 'consumer', authorityId: 'user2' }] } });
+            const permissionNode = new Node({
+                permissions: {
+                    locallySet: [
+                        { name: 'collaborator', authorityId: 'user1' },
+                        { name: 'consumer', authorityId: 'user2' }
+                    ]
+                }
+            });
             expect(contentService.hasPermissions(permissionNode, null, 'user1')).toBeFalsy();
         });
 
@@ -119,13 +141,27 @@ describe('ContentService', () => {
         });
 
         it('should havePermission be true if inherited permissions is present and you have the permission for the request operation', () => {
-            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' } ] } });
+            const permissionNode = new Node({
+                permissions: {
+                    inherited: [
+                        { name: 'manager', authorityId: 'user1' },
+                        { name: 'collaborator', authorityId: 'user2' }
+                    ]
+                }
+            });
             expect(contentService.hasPermissions(permissionNode, 'manager', 'user1')).toBeTruthy();
         });
 
         it('should take current logged user id if userId undefined ', () => {
             spyOn(authService, 'getEcmUsername').and.returnValue('user1');
-            const permissionNode = new Node({ permissions: { inherited: [{ name: 'manager', authorityId: 'user1' }, { name: 'collaborator', authorityId: 'user2' } ] } });
+            const permissionNode = new Node({
+                permissions: {
+                    inherited: [
+                        { name: 'manager', authorityId: 'user1' },
+                        { name: 'collaborator', authorityId: 'user2' }
+                    ]
+                }
+            });
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeTruthy();
         });
     });

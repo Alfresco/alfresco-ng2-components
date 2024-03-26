@@ -16,35 +16,30 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { UserNameColumnComponent } from './user-name-column.component';
 import { NodeEntry } from '@alfresco/js-api';
 
 describe('UserNameColumnComponent', () => {
-
     let fixture: ComponentFixture<UserNameColumnComponent>;
     let component: UserNameColumnComponent;
     let element: HTMLElement;
-    const  person = {
+    const person = {
         firstName: 'fake',
         lastName: 'user',
         email: 'fake@test.com'
     };
 
-    const  group = {
+    const group = {
         id: 'fake-id',
         displayName: 'fake authority'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
-        fixture =  TestBed.createComponent(UserNameColumnComponent);
+        fixture = TestBed.createComponent(UserNameColumnComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         fixture.detectChanges();
@@ -65,7 +60,7 @@ describe('UserNameColumnComponent', () => {
             expect(element.querySelector('[title="fake@test.com"]').textContent).toContain('fake@test.com');
         });
 
-        it('should render person value from node',  (done) => {
+        it('should render person value from node', (done) => {
             component.node = {
                 entry: {
                     nodeType: 'cm:person',
@@ -137,7 +132,7 @@ describe('UserNameColumnComponent', () => {
                 entry: {
                     nodeType: 'cm:authorityContainer',
                     properties: {
-                     'cm:authorityName': 'Fake authority'
+                        'cm:authorityName': 'Fake authority'
                     }
                 }
             } as NodeEntry;

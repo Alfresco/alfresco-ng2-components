@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { FacetField } from '../../../models/facet-field.interface';
@@ -38,7 +37,7 @@ describe('SearchFacetTabbedContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(SearchFacetTabbedContentComponent);
@@ -111,7 +110,7 @@ describe('SearchFacetTabbedContentComponent', () => {
     });
 
     it('should display creator tab as active initially and allow navigation', async () => {
-        let tabs = await getTabs();
+        const tabs = await getTabs();
         expect(await tabs[0].isSelected()).toBeTrue();
         expect(await tabs[1].isSelected()).toBeFalse();
 

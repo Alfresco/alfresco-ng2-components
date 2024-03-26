@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFilterMenuCardComponent } from './search-filter-menu-card.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
 
 describe('SearchFilterMenuComponent', () => {
@@ -26,10 +25,7 @@ describe('SearchFilterMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchFilterMenuCardComponent);
         component = fixture.componentInstance;

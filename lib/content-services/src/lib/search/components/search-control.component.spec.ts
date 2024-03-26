@@ -24,13 +24,12 @@ import { SearchControlComponent } from './search-control.component';
 import { SearchService } from '../services/search.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: `
         <adf-search-control [highlight]="true" #search>
             <adf-empty-search-result>
-                <span id="custom-no-result">{{customMessage}}</span>
+                <span id="custom-no-result">{{ customMessage }}</span>
             </adf-empty-search-result>
         </adf-search-control>
     `
@@ -46,7 +45,6 @@ export class SimpleSearchTestCustomEmptyComponent {
 }
 
 describe('SearchControlComponent', () => {
-
     let fixture: ComponentFixture<SearchControlComponent>;
     let component: SearchControlComponent;
     let element: HTMLElement;
@@ -61,13 +59,8 @@ describe('SearchControlComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            declarations: [
-                SimpleSearchTestCustomEmptyComponent
-            ]
+            imports: [ContentTestingModule],
+            declarations: [SimpleSearchTestCustomEmptyComponent]
         });
         fixture = TestBed.createComponent(SearchControlComponent);
         debugElement = fixture.debugElement;
@@ -94,15 +87,12 @@ describe('SearchControlComponent', () => {
     };
 
     describe('when input values are inserted', () => {
-
         beforeEach(() => {
             fixture.detectChanges();
         });
 
         it('should emit searchChange when search term input changed', (done) => {
-            searchServiceSpy.and.returnValue(
-                of({ entry: { list: [] } })
-            );
+            searchServiceSpy.and.returnValue(of({ entry: { list: [] } }));
 
             const searchDisposable = component.searchChange.subscribe((value) => {
                 expect(value).toBe('customSearchTerm');
@@ -141,7 +131,6 @@ describe('SearchControlComponent', () => {
     });
 
     describe('component rendering', () => {
-
         it('should display a text input field by default', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
@@ -158,10 +147,9 @@ describe('SearchControlComponent', () => {
             const attr = element.querySelector('#adf-control-input').getAttribute('autocomplete');
             expect(attr).toBe('off');
         });
-   });
+    });
 
     describe('autocomplete list', () => {
-
         it('should make autocomplete list control hidden initially', (done) => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -325,10 +313,9 @@ describe('SearchControlComponent', () => {
 
             expect(element.querySelector('#autocomplete-search-result-list')).toBeNull();
         });
-   });
+    });
 
     describe('option click', () => {
-
         it('should emit a option clicked event when item is clicked', (done) => {
             spyOn(component.searchTextInput, 'isSearchBarActive').and.returnValue(true);
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
@@ -389,7 +376,6 @@ describe('SearchControlComponent', () => {
     });
 
     describe('SearchControlComponent - No result custom', () => {
-
         beforeEach(() => {
             fixtureCustom = TestBed.createComponent(SimpleSearchTestCustomEmptyComponent);
             componentCustom = fixtureCustom.componentInstance;

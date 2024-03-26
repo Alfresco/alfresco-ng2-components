@@ -20,7 +20,6 @@ import { TestBed, fakeAsync, tick, flush, ComponentFixture, flushMicrotasks } fr
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { SiteEntry } from '@alfresco/js-api';
@@ -40,13 +39,8 @@ describe('LibraryDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef }
-            ],
+            imports: [ContentTestingModule],
+            providers: [{ provide: MatDialogRef, useValue: dialogRef }],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(LibraryDialogComponent);
@@ -122,9 +116,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should create site when form is valid', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'createSite').and.returnValue(
-            of({entry: {id: 'fake-id'}} as SiteEntry).pipe(delay(100))
-        );
+        spyOn(sitesService, 'createSite').and.returnValue(of({ entry: { id: 'fake-id' } } as SiteEntry).pipe(delay(100)));
         spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
@@ -174,9 +166,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should notify when library title is already used', fakeAsync(() => {
         spyOn(sitesService, 'getSite').and.returnValue(of(null));
-        findSitesSpy.and.returnValue(Promise.resolve(
-            { list: { entries: [{ entry: { title: 'TEST', id: 'library-id' } }] } }
-        ));
+        findSitesSpy.and.returnValue(Promise.resolve({ list: { entries: [{ entry: { title: 'TEST', id: 'library-id' } }] } }));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('test');

@@ -18,11 +18,9 @@
 import { DEFAULT_DATETIME_FORMAT, SearchDatetimeRangeComponent } from './search-datetime-range.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { DateFnsUtils } from '@alfresco/adf-core';
 import { isValid } from 'date-fns';
-
 
 describe('SearchDatetimeRangeComponent', () => {
     let fixture: ComponentFixture<SearchDatetimeRangeComponent>;
@@ -34,10 +32,7 @@ describe('SearchDatetimeRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchDatetimeRangeComponent);
         component = fixture.componentInstance;
@@ -147,10 +142,13 @@ describe('SearchDatetimeRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        component.apply({
-            from: fromDatetime,
-            to: toDatetime
-        }, true);
+        component.apply(
+            {
+                from: fromDatetime,
+                to: toDatetime
+            },
+            true
+        );
 
         const expectedQuery = `cm:created:['2016-10-16T12:30:00.000Z' TO '2017-10-16T20:00:59.000Z']`;
 
@@ -175,10 +173,13 @@ describe('SearchDatetimeRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        component.apply({
-            from: fromInGmt,
-            to: toInGmt
-        }, true);
+        component.apply(
+            {
+                from: fromInGmt,
+                to: toInGmt
+            },
+            true
+        );
 
         const expectedQuery = `cm:created:['2021-02-24T15:00:00.000Z' TO '2021-02-28T13:00:59.000Z']`;
 

@@ -21,20 +21,15 @@ import { ERR_OBJECT_NOT_FOUND, ShareDataRow } from './share-data-row.model';
 import { ERR_COL_NOT_FOUND, ERR_ROW_NOT_FOUND, ShareDataTableAdapter } from './share-datatable-adapter';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentService } from '../../common/services/content.service';
 
 describe('ShareDataTableAdapter', () => {
-
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         const imageUrl: string = 'http://<addresss>';
 
@@ -320,9 +315,9 @@ describe('ShareDataTableAdapter', () => {
         ]);
 
         const sorted = adapter.getRows();
-        expect((sorted[0]).node).toBe(folder);
-        expect((sorted[1]).node).toBe(file1);
-        expect((sorted[2]).node).toBe(file2);
+        expect(sorted[0].node).toBe(folder);
+        expect(sorted[1].node).toBe(file1);
+        expect(sorted[2].node).toBe(file2);
     });
 
     it('should sort by dates up to ms', () => {
@@ -335,20 +330,17 @@ describe('ShareDataTableAdapter', () => {
         const col = { key: 'dateProp' } as DataColumn;
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
 
-        adapter.setRows([
-            new ShareDataRow(file2, contentService, null),
-            new ShareDataRow(file1, contentService, null)
-        ]);
+        adapter.setRows([new ShareDataRow(file2, contentService, null), new ShareDataRow(file1, contentService, null)]);
 
         adapter.sort('dateProp', 'asc');
 
         const rows = adapter.getRows();
-        expect((rows[0]).node).toBe(file1);
-        expect((rows[1]).node).toBe(file2);
+        expect(rows[0].node).toBe(file1);
+        expect(rows[1].node).toBe(file2);
 
         adapter.sort('dateProp', 'desc');
-        expect((rows[0]).node).toBe(file2);
-        expect((rows[1]).node).toBe(file1);
+        expect(rows[0].node).toBe(file2);
+        expect(rows[1].node).toBe(file1);
     });
 
     it('should sort by file size', () => {
@@ -375,16 +367,16 @@ describe('ShareDataTableAdapter', () => {
         adapter.sort('content.sizeInBytes', 'asc');
         const rows = adapter.getRows();
 
-        expect((rows[0]).node).toBe(file1);
-        expect((rows[1]).node).toBe(file2);
-        expect((rows[2]).node).toBe(file3);
-        expect((rows[3]).node).toBe(file4);
+        expect(rows[0].node).toBe(file1);
+        expect(rows[1].node).toBe(file2);
+        expect(rows[2].node).toBe(file3);
+        expect(rows[3].node).toBe(file4);
 
         adapter.sort('content.sizeInBytes', 'desc');
-        expect((rows[0]).node).toBe(file4);
-        expect((rows[1]).node).toBe(file3);
-        expect((rows[2]).node).toBe(file2);
-        expect((rows[3]).node).toBe(file1);
+        expect(rows[0].node).toBe(file4);
+        expect(rows[1].node).toBe(file3);
+        expect(rows[2].node).toBe(file2);
+        expect(rows[3].node).toBe(file1);
     });
 
     it('should sort by name', () => {
@@ -410,24 +402,23 @@ describe('ShareDataTableAdapter', () => {
         adapter.sort('name', 'asc');
         const rows = adapter.getRows();
 
-        expect((rows[0]).node).toBe(file5);
-        expect((rows[1]).node).toBe(file6);
-        expect((rows[2]).node).toBe(file1);
-        expect((rows[3]).node).toBe(file2);
-        expect((rows[4]).node).toBe(file4);
-        expect((rows[5]).node).toBe(file3);
+        expect(rows[0].node).toBe(file5);
+        expect(rows[1].node).toBe(file6);
+        expect(rows[2].node).toBe(file1);
+        expect(rows[3].node).toBe(file2);
+        expect(rows[4].node).toBe(file4);
+        expect(rows[5].node).toBe(file3);
 
         adapter.sort('name', 'desc');
-        expect((rows[0]).node).toBe(file3);
-        expect((rows[1]).node).toBe(file4);
-        expect((rows[2]).node).toBe(file2);
-        expect((rows[3]).node).toBe(file1);
-        expect((rows[4]).node).toBe(file6);
-        expect((rows[5]).node).toBe(file5);
+        expect(rows[0].node).toBe(file3);
+        expect(rows[1].node).toBe(file4);
+        expect(rows[2].node).toBe(file2);
+        expect(rows[3].node).toBe(file1);
+        expect(rows[4].node).toBe(file6);
+        expect(rows[5].node).toBe(file5);
     });
 
     describe('ShareDataRow', () => {
-
         it('should wrap node', () => {
             const file = new FileNode();
             const row = new ShareDataRow(file, contentService, null);
@@ -492,12 +483,15 @@ describe('ShareDataTableAdapter', () => {
 
         it('should return the row of the requested node id', () => {
             const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
-            const fakeFiles = [new FileNode('fake-file-1', 'text/plain', 'fake-node-id-1'), new FileNode('fake-file-2', 'text/plain', 'fake-node-id-2')];
+            const fakeFiles = [
+                new FileNode('fake-file-1', 'text/plain', 'fake-node-id-1'),
+                new FileNode('fake-file-2', 'text/plain', 'fake-node-id-2')
+            ];
             const fakeShareDataRows = [new ShareDataRow(fakeFiles[0], contentService, null), new ShareDataRow(fakeFiles[1], contentService, null)];
             adapter.setRows(fakeShareDataRows);
 
             expect(adapter.getRowByNodeId('fake-node-id-1')).toEqual(fakeShareDataRows[0]);
             expect(adapter.getRowByNodeId('fake-node-id-2')).toEqual(fakeShareDataRows[1]);
         });
-   });
+    });
 });

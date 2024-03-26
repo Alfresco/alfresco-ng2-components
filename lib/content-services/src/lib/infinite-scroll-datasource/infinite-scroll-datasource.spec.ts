@@ -20,7 +20,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Component, OnInit } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { from, Observable } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { InfiniteScrollDatasource } from './infinite-scroll-datasource';
@@ -96,11 +95,11 @@ describe('InfiniteScrollDatasource', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
 
-    const getRenderedItems = (): HTMLDivElement[] => fixture.debugElement.queryAll(By.css('.test-item')).map(element => element.nativeElement);
+    const getRenderedItems = (): HTMLDivElement[] => fixture.debugElement.queryAll(By.css('.test-item')).map((element) => element.nativeElement);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule, ScrollingModule],
+            imports: [ContentTestingModule, ScrollingModule],
             declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);

@@ -17,7 +17,6 @@
 
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { DataTableComponent, DataSorting } from '@alfresco/adf-core';
 import { SearchService } from '../../../search/services/search.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -49,7 +48,7 @@ describe('FilterHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [
                 { provide: ADF_DOCUMENT_PARENT_COMPONENT, useExisting: DocumentListComponent },
                 { provide: SearchService, useValue: searchMock },

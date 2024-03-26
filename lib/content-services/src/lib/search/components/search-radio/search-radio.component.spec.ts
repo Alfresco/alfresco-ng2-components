@@ -19,7 +19,6 @@ import { sizeOptions, stepOne, stepThree } from '../../../mock';
 import { SearchRadioComponent } from './search-radio.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
@@ -31,7 +30,7 @@ describe('SearchRadioComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchRadioComponent);
         component = fixture.componentInstance;

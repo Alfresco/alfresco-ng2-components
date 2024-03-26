@@ -19,11 +19,9 @@ import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testin
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { addMinutes } from 'date-fns';
 
 describe('NodeLockDialogComponent', () => {
-
     let fixture: ComponentFixture<NodeLockDialogComponent>;
     let component: NodeLockDialogComponent;
     let expiryDate: Date;
@@ -34,13 +32,8 @@ describe('NodeLockDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef }
-            ]
+            imports: [ContentTestingModule],
+            providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
         fixture = TestBed.createComponent(NodeLockDialogComponent);
         component = fixture.componentInstance;
@@ -51,7 +44,6 @@ describe('NodeLockDialogComponent', () => {
     });
 
     describe('Node lock dialog component', () => {
-
         beforeEach(() => {
             jasmine.clock().mockDate(new Date());
             expiryDate = addMinutes(new Date(), 1);
@@ -66,8 +58,7 @@ describe('NodeLockDialogComponent', () => {
                         ['cm:expiryDate']: expiryDate
                     }
                 },
-                onError: () => {
-                }
+                onError: () => {}
             };
             fixture.detectChanges();
         });

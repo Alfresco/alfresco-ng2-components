@@ -22,7 +22,6 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { SearchFacetFieldComponent } from '../search-facet-field/search-facet-field.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { disabledCategories, filteredResult, mockSearchResult, searchFilter, simpleCategories, stepOne, stepThree, stepTwo } from '../../../mock';
 import { AppConfigService } from '@alfresco/adf-core';
@@ -41,7 +40,7 @@ describe('SearchFilterChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         appConfigService = TestBed.inject(AppConfigService);
@@ -109,7 +108,7 @@ describe('SearchFilterChipsComponent', () => {
 
         searchFacetFiltersService.onDataLoaded(data);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
-        expect(searchFacetFiltersService.responseFacets[0].buckets.items[0].checked).toEqual(true, 'should show the already checked item');
+        expect(searchFacetFiltersService.responseFacets[0].buckets.items[0].checked).toEqual(true);
     });
 
     it('should fetch facet fields from response payload and show the newly checked items', async () => {
@@ -170,7 +169,7 @@ describe('SearchFilterChipsComponent', () => {
 
         searchFacetFiltersService.onDataLoaded(data);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
-        expect(searchFacetFiltersService.responseFacets[0].buckets.items[1].checked).toEqual(true, 'should show the newly checked item');
+        expect(searchFacetFiltersService.responseFacets[0].buckets.items[1].checked).toEqual(true);
     });
 
     it('should show buckets with 0 values when there are no facet fields on the response payload', async () => {
@@ -310,9 +309,10 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             let sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepOne.forEach(async (item, index) => {
+            for (const item of stepOne) {
+                const index = stepOne.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             let moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             let lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -324,9 +324,10 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepTwo.forEach(async (item, index) => {
+            for (const item of stepTwo) {
+                const index = stepTwo.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -336,9 +337,10 @@ describe('SearchFilterChipsComponent', () => {
             moreButton.triggerEventHandler('click', {});
             fixture.detectChanges();
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepThree.forEach(async (item, index) => {
+            for (const item of stepThree) {
+                const index = stepThree.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -349,9 +351,10 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepTwo.forEach(async (item, index) => {
+            for (const item of stepTwo) {
+                const index = stepTwo.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -362,9 +365,10 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepOne.forEach(async (item, index) => {
+            for (const item of stepOne) {
+                const index = stepOne.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -416,17 +420,19 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            filteredResult.forEach(async (item, index) => {
+            for (const item of filteredResult) {
+                const index = filteredResult.indexOf(item);
                 expect(await filteredMenu[index].getLabelText()).toEqual(item);
-            });
+            }
 
             const clearButton = await loader.getHarness(MatButtonHarness.with({ selector: '[title="SEARCH.FILTER.BUTTONS.CLEAR"]' }));
             await clearButton.click();
 
             filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepOne.forEach(async (item, index) => {
+            for (const item of stepOne) {
+                const index = stepOne.indexOf(item);
                 expect(await filteredMenu[index].getLabelText()).toEqual(item);
-            });
+            }
 
             await filteredMenu[0].check();
 

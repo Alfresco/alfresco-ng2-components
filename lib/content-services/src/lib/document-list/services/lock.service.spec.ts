@@ -19,11 +19,9 @@ import { TestBed } from '@angular/core/testing';
 import { LockService } from './lock.service';
 import { CoreTestingModule, AuthenticationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import { TranslateModule } from '@ngx-translate/core';
 import { addDays, subDays } from 'date-fns';
 
 describe('PeopleProcessService', () => {
-
     let service: LockService;
     let authenticationService: AuthenticationService;
 
@@ -33,10 +31,7 @@ describe('PeopleProcessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(LockService);
         authenticationService = TestBed.inject(AuthenticationService);
@@ -59,37 +54,34 @@ describe('PeopleProcessService', () => {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
-            properties:
-                {
-                    'cm:lockType': 'READ_ONLY_LOCK',
-                    'cm:lockLifetime': 'PERSISTENT'
-                }
+            properties: {
+                'cm:lockType': 'READ_ONLY_LOCK',
+                'cm:lockLifetime': 'PERSISTENT'
+            }
         } as Node;
 
         const nodeReadOnlyWithExpiredDate: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
-            properties:
-                {
-                    'cm:lockType': 'WRITE_LOCK',
-                    'cm:lockLifetime': 'PERSISTENT',
-                    'cm:lockOwner': { id: 'lock-owner-user' },
-                    'cm:expiryDate': subDays(new Date(), 4)
-                }
+            properties: {
+                'cm:lockType': 'WRITE_LOCK',
+                'cm:lockLifetime': 'PERSISTENT',
+                'cm:lockOwner': { id: 'lock-owner-user' },
+                'cm:expiryDate': subDays(new Date(), 4)
+            }
         } as Node;
 
         const nodeReadOnlyWithActiveExpiration: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
-            properties:
-                {
-                    'cm:lockType': 'WRITE_LOCK',
-                    'cm:lockLifetime': 'PERSISTENT',
-                    'cm:lockOwner': { id: 'lock-owner-user' },
-                    'cm:expiryDate': addDays(new Date(), 4)
-                }
+            properties: {
+                'cm:lockType': 'WRITE_LOCK',
+                'cm:lockLifetime': 'PERSISTENT',
+                'cm:lockOwner': { id: 'lock-owner-user' },
+                'cm:expiryDate': addDays(new Date(), 4)
+            }
         } as Node;
 
         it('should return true when readonly lock is active', () => {
@@ -110,38 +102,35 @@ describe('PeopleProcessService', () => {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
-            properties:
-                {
-                    'cm:lockType': 'WRITE_LOCK',
-                    'cm:lockLifetime': 'PERSISTENT',
-                    'cm:lockOwner': { id: 'lock-owner-user' }
-                }
+            properties: {
+                'cm:lockType': 'WRITE_LOCK',
+                'cm:lockLifetime': 'PERSISTENT',
+                'cm:lockOwner': { id: 'lock-owner-user' }
+            }
         } as Node;
 
         const nodeOwnerAllowedLockWithExpiredDate: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
-            properties:
-                {
-                    'cm:lockType': 'WRITE_LOCK',
-                    'cm:lockLifetime': 'PERSISTENT',
-                    'cm:lockOwner': { id: 'lock-owner-user' },
-                    'cm:expiryDate': subDays(new Date(), 4)
-                }
+            properties: {
+                'cm:lockType': 'WRITE_LOCK',
+                'cm:lockLifetime': 'PERSISTENT',
+                'cm:lockOwner': { id: 'lock-owner-user' },
+                'cm:expiryDate': subDays(new Date(), 4)
+            }
         } as Node;
 
         const nodeOwnerAllowedLockWithActiveExpiration: Node = {
             name: 'readonly-lock-node',
             isLocked: true,
             isFile: true,
-            properties:
-                {
-                    'cm:lockType': 'WRITE_LOCK',
-                    'cm:lockLifetime': 'PERSISTENT',
-                    'cm:lockOwner': { id: 'lock-owner-user' },
-                    'cm:expiryDate': addDays(new Date(), 4)
-                }
+            properties: {
+                'cm:lockType': 'WRITE_LOCK',
+                'cm:lockLifetime': 'PERSISTENT',
+                'cm:lockOwner': { id: 'lock-owner-user' },
+                'cm:expiryDate': addDays(new Date(), 4)
+            }
         } as Node;
 
         it('should return false when the user is the lock owner', () => {
@@ -163,5 +152,5 @@ describe('PeopleProcessService', () => {
             spyOn(authenticationService, 'getEcmUsername').and.returnValue('banana-user');
             expect(service.isLocked(nodeOwnerAllowedLockWithActiveExpiration)).toBeTruthy();
         });
-   });
+    });
 });

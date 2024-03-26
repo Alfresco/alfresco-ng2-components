@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomplete-chips.component';
 import { TagService } from '@alfresco/adf-content-services';
 import { EMPTY, of } from 'rxjs';
@@ -32,14 +31,13 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [SearchFilterAutocompleteChipsComponent],
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            providers: [{
-                provide: TagService,
-                useValue: { getAllTheTags: () => EMPTY }
-            }]
+            imports: [ContentTestingModule],
+            providers: [
+                {
+                    provide: TagService,
+                    useValue: { getAllTheTags: () => EMPTY }
+                }
+            ]
         });
 
         fixture = TestBed.createComponent(SearchFilterAutocompleteChipsComponent);
@@ -51,8 +49,11 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
             update: () => EMPTY
         } as any;
         component.settings = {
-            field: 'test', allowUpdateOnChange: true, hideDefaultAction: false, allowOnlyPredefinedValues: false,
-            autocompleteOptions: [{value: 'option1'}, {value: 'option2'}]
+            field: 'test',
+            allowUpdateOnChange: true,
+            hideDefaultAction: false,
+            allowOnlyPredefinedValues: false,
+            autocompleteOptions: [{ value: 'option1' }, { value: 'option2' }]
         };
         fixture.detectChanges();
     });
@@ -65,15 +66,15 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
     function addNewOption(value: string) {
         const inputElement = fixture.debugElement.query(By.css('adf-search-chip-autocomplete-input input')).nativeElement;
         inputElement.value = value;
-        inputElement.dispatchEvent(new KeyboardEvent('keydown', {keyCode: 13}));
+        inputElement.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 13 }));
         fixture.detectChanges();
     }
 
     it('should set autocomplete options on init', (done) => {
-        component.settings.autocompleteOptions = [{value: 'test 1'}, {value: 'test 2'}];
+        component.settings.autocompleteOptions = [{ value: 'test 1' }, { value: 'test 2' }];
         component.ngOnInit();
-        component.autocompleteOptions$.subscribe(result => {
-            expect(result).toEqual([{value: 'test 1'}, {value: 'test 2'}]);
+        component.autocompleteOptions$.subscribe((result) => {
+            expect(result).toEqual([{ value: 'test 1' }, { value: 'test 2' }]);
             done();
         });
     });
@@ -82,15 +83,15 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         const tagPagingMock = {
             list: {
                 pagination: {},
-                entries: [{entry: {tag: 'tag1', id: 'id1'}}, {entry: {tag: 'tag2', id: 'id2'}}]
+                entries: [{ entry: { tag: 'tag1', id: 'id1' } }, { entry: { tag: 'tag2', id: 'id2' } }]
             }
         };
 
         component.settings.field = AutocompleteField.TAG;
         spyOn(tagService, 'getAllTheTags').and.returnValue(of(tagPagingMock));
         component.ngOnInit();
-        component.autocompleteOptions$.subscribe(result => {
-            expect(result).toEqual([{value: 'tag1'},{value: 'tag2'}]);
+        component.autocompleteOptions$.subscribe((result) => {
+            expect(result).toEqual([{ value: 'tag1' }, { value: 'tag2' }]);
             done();
         });
     });
@@ -106,24 +107,28 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
     });
 
     it('should reset value and display value when reset button is clicked', () => {
-        component.setValue([{value: 'option1'}, {value: 'option2'}]);
+        component.setValue([{ value: 'option1' }, { value: 'option2' }]);
         fixture.detectChanges();
-        expect(component.selectedOptions).toEqual([{value: 'option1'}, {value: 'option2'}]);
+        expect(component.selectedOptions).toEqual([{ value: 'option1' }, { value: 'option2' }]);
         spyOn(component.context, 'update');
         spyOn(component.displayValue$, 'next');
-        const clearBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="adf-search-chip-autocomplete-btn-clear"]')).nativeElement;
+        const clearBtn: HTMLButtonElement = fixture.debugElement.query(
+            By.css('[data-automation-id="adf-search-chip-autocomplete-btn-clear"]')
+        ).nativeElement;
         clearBtn.click();
 
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.update).toHaveBeenCalled();
-        expect(component.selectedOptions).toEqual( [] );
+        expect(component.selectedOptions).toEqual([]);
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
     });
 
     it('should correctly compose the search query', () => {
         spyOn(component.context, 'update');
-        component.selectedOptions = [{value: 'option2'}, {value: 'option1'}];
-        const applyBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="adf-search-chip-autocomplete-btn-apply"]')).nativeElement;
+        component.selectedOptions = [{ value: 'option2' }, { value: 'option1' }];
+        const applyBtn: HTMLButtonElement = fixture.debugElement.query(
+            By.css('[data-automation-id="adf-search-chip-autocomplete-btn-apply"]')
+        ).nativeElement;
         applyBtn.click();
         fixture.detectChanges();
 
@@ -131,7 +136,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         expect(component.context.queryFragments[component.id]).toBe('test:"option2" OR test:"option1"');
 
         component.settings.field = AutocompleteField.CATEGORIES;
-        component.selectedOptions = [{id: 'test-id', value: 'test'}];
+        component.selectedOptions = [{ id: 'test-id', value: 'test' }];
         applyBtn.click();
         fixture.detectChanges();
         expect(component.context.queryFragments[component.id]).toBe('cm:categories:"workspace://SpacesStore/test-id"');

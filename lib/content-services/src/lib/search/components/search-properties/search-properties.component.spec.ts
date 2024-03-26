@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchPropertiesComponent } from './search-properties.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { MatOption } from '@angular/material/core';
 import { SearchChipAutocompleteInputComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
@@ -56,14 +55,13 @@ describe('SearchPropertiesComponent', () => {
         return fileSizeElement.nativeElement;
     };
 
-    const getSearchChipAutocompleteInputComponent = (): SearchChipAutocompleteInputComponent => fixture.debugElement.query(
-        By.directive(SearchChipAutocompleteInputComponent)
-    ).componentInstance;
+    const getSearchChipAutocompleteInputComponent = (): SearchChipAutocompleteInputComponent =>
+        fixture.debugElement.query(By.directive(SearchChipAutocompleteInputComponent)).componentInstance;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ SearchPropertiesComponent ],
-            imports: [ ContentTestingModule, TranslateModule.forRoot() ]
+            declarations: [SearchPropertiesComponent],
+            imports: [ContentTestingModule]
         }).compileComponents();
 
         fixture = TestBed.createComponent(SearchPropertiesComponent);
@@ -143,7 +141,7 @@ describe('SearchPropertiesComponent', () => {
             component.ngOnInit();
 
             fixture.detectChanges();
-            expect(searchChipAutocompleteInputComponent.autocompleteOptions).toEqual([{value: 'pdf'}, {value: 'doc'}, {value: 'txt'}]);
+            expect(searchChipAutocompleteInputComponent.autocompleteOptions).toEqual([{ value: 'pdf' }, { value: 'doc' }, { value: 'txt' }]);
         });
 
         it('should set onReset$ for SearchChipAutocompleteInputComponent to correct value', () => {
@@ -155,10 +153,10 @@ describe('SearchPropertiesComponent', () => {
         });
 
         it('should compare file extensions case insensitive after calling compareOption on SearchChipAutocompleteInputComponent', () => {
-            const option1 = {value: 'pdf'};
-            const option2 = {value: 'PdF'};
+            const option1 = { value: 'pdf' };
+            const option2 = { value: 'PdF' };
             expect(searchChipAutocompleteInputComponent.compareOption(option1, option2)).toBeTrue();
-            expect(searchChipAutocompleteInputComponent.compareOption(option1, {value: `${option2.value}1`})).toBeFalse();
+            expect(searchChipAutocompleteInputComponent.compareOption(option1, { value: `${option2.value}1` })).toBeFalse();
         });
 
         it('should remove preceding dot after calling formatChipValue on SearchChipAutocompleteInputComponent', () => {
@@ -168,11 +166,15 @@ describe('SearchPropertiesComponent', () => {
         });
 
         it('should filter file extensions case insensitive without dots after calling filter on SearchChipAutocompleteInputComponent', () => {
-            const extensions = [{value: 'pdf'}, {value: 'jpg'}, {value: 'txt'}, {value: 'png'}];
+            const extensions = [{ value: 'pdf' }, { value: 'jpg' }, { value: 'txt' }, { value: 'png' }];
             const searchValue = 'p';
 
-            expect(searchChipAutocompleteInputComponent.filter(extensions, searchValue)).toEqual([{value:'pdf'}, {value:'jpg'}, {value:'png'}]);
-            expect(searchChipAutocompleteInputComponent.filter(extensions, `.${searchValue}`)).toEqual([{value:'pdf'}, {value:'png'}]);
+            expect(searchChipAutocompleteInputComponent.filter(extensions, searchValue)).toEqual([
+                { value: 'pdf' },
+                { value: 'jpg' },
+                { value: 'png' }
+            ]);
+            expect(searchChipAutocompleteInputComponent.filter(extensions, `.${searchValue}`)).toEqual([{ value: 'pdf' }, { value: 'png' }]);
         });
 
         it('should set placeholder for SearchChipAutocompleteInputComponent to correct value', () => {
@@ -224,7 +226,9 @@ describe('SearchPropertiesComponent', () => {
             typeInFileSizeInput();
 
             component.submitValues();
-            expect(component.displayValue$.next).toHaveBeenCalledWith('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB');
+            expect(component.displayValue$.next).toHaveBeenCalledWith(
+                'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB'
+            );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[328704 TO MAX]`);
             expect(component.context.update).toHaveBeenCalled();
         });
@@ -239,7 +243,9 @@ describe('SearchPropertiesComponent', () => {
             fixture.detectChanges();
 
             component.submitValues();
-            expect(component.displayValue$.next).toHaveBeenCalledWith('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB');
+            expect(component.displayValue$.next).toHaveBeenCalledWith(
+                'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB'
+            );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[0 TO 336592896]`);
             expect(component.context.update).toHaveBeenCalled();
         });
@@ -254,13 +260,15 @@ describe('SearchPropertiesComponent', () => {
             fixture.detectChanges();
 
             component.submitValues();
-            expect(component.displayValue$.next).toHaveBeenCalledWith('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.EXACTLY 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.GB');
+            expect(component.displayValue$.next).toHaveBeenCalledWith(
+                'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.EXACTLY 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.GB'
+            );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[344671125504 TO 344671125504]`);
             expect(component.context.update).toHaveBeenCalled();
         });
 
         it('should search by single file type', () => {
-            const extension = {value: 'pdf'};
+            const extension = { value: 'pdf' };
             getSearchChipAutocompleteInputComponent().optionsChanged.emit([extension]);
 
             component.submitValues();
@@ -270,7 +278,7 @@ describe('SearchPropertiesComponent', () => {
         });
 
         it('should search by multiple file types', () => {
-            getSearchChipAutocompleteInputComponent().optionsChanged.emit([{value:'pdf'}, {value:'txt'}]);
+            getSearchChipAutocompleteInputComponent().optionsChanged.emit([{ value: 'pdf' }, { value: 'txt' }]);
 
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith('pdf, txt');
@@ -280,10 +288,12 @@ describe('SearchPropertiesComponent', () => {
 
         it('should search by file size and type', () => {
             typeInFileSizeInput();
-            getSearchChipAutocompleteInputComponent().optionsChanged.emit([{value:'pdf'}, {value:'txt'}]);
+            getSearchChipAutocompleteInputComponent().optionsChanged.emit([{ value: 'pdf' }, { value: 'txt' }]);
 
             component.submitValues();
-            expect(component.displayValue$.next).toHaveBeenCalledWith('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB, pdf, txt');
+            expect(component.displayValue$.next).toHaveBeenCalledWith(
+                'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB, pdf, txt'
+            );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[328704 TO MAX] AND ${nameField}:("*.pdf" OR "*.txt")`);
             expect(component.context.update).toHaveBeenCalled();
         });
@@ -316,7 +326,7 @@ describe('SearchPropertiesComponent', () => {
             clickFileSizeUnitsSelect();
             getSelectOptions()[1].nativeElement.click();
             fixture.detectChanges();
-            const extensions = [{value: 'pdf'}, {value: 'txt'}];
+            const extensions = [{ value: 'pdf' }, { value: 'txt' }];
             getSearchChipAutocompleteInputComponent().optionsChanged.emit(extensions);
 
             expect(component.getCurrentValue()).toEqual({
@@ -343,7 +353,7 @@ describe('SearchPropertiesComponent', () => {
             getSelectOptions()[1].nativeElement.click();
             fixture.detectChanges();
             searchChipAutocompleteInputComponent = getSearchChipAutocompleteInputComponent();
-            searchChipAutocompleteInputComponent.optionsChanged.emit([{value: 'pdf'}, {value: 'txt'}]);
+            searchChipAutocompleteInputComponent.optionsChanged.emit([{ value: 'pdf' }, { value: 'txt' }]);
         });
 
         it('should reset form', () => {
@@ -411,7 +421,9 @@ describe('SearchPropertiesComponent', () => {
             spyOn(component.context, 'update');
 
             component.setValue(searchProperties);
-            expect(component.displayValue$.next).toHaveBeenCalledWith('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB, pdf, txt');
+            expect(component.displayValue$.next).toHaveBeenCalledWith(
+                'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB, pdf, txt'
+            );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[0 TO 336592896] AND ${nameField}:("*.pdf" OR "*.txt")`);
             expect(component.context.update).toHaveBeenCalled();
         });
@@ -419,27 +431,43 @@ describe('SearchPropertiesComponent', () => {
 
     describe('preventIncorrectNumberCharacters', () => {
         it('should prevent typing - character', () => {
-            expect(component.preventIncorrectNumberCharacters(new KeyboardEvent('keydown', {
-                key: '-'
-            }))).toBeFalse();
+            expect(
+                component.preventIncorrectNumberCharacters(
+                    new KeyboardEvent('keydown', {
+                        key: '-'
+                    })
+                )
+            ).toBeFalse();
         });
 
         it('should prevent typing e character', () => {
-            expect(component.preventIncorrectNumberCharacters(new KeyboardEvent('keydown', {
-                key: 'e'
-            }))).toBeFalse();
+            expect(
+                component.preventIncorrectNumberCharacters(
+                    new KeyboardEvent('keydown', {
+                        key: 'e'
+                    })
+                )
+            ).toBeFalse();
         });
 
         it('should prevent typing + character', () => {
-            expect(component.preventIncorrectNumberCharacters(new KeyboardEvent('keydown', {
-                key: '+'
-            }))).toBeFalse();
+            expect(
+                component.preventIncorrectNumberCharacters(
+                    new KeyboardEvent('keydown', {
+                        key: '+'
+                    })
+                )
+            ).toBeFalse();
         });
 
         it('should allow typing digit', () => {
-            expect(component.preventIncorrectNumberCharacters(new KeyboardEvent('keydown', {
-                key: '1'
-            }))).toBeTrue();
+            expect(
+                component.preventIncorrectNumberCharacters(
+                    new KeyboardEvent('keydown', {
+                        key: '1'
+                    })
+                )
+            ).toBeTrue();
         });
     });
 });

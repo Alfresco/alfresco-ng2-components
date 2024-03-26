@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { LogicalSearchCondition, LogicalSearchFields, SearchLogicalFilterComponent } from './search-logical-filter.component';
 
@@ -28,7 +27,7 @@ describe('SearchLogicalFilterComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [SearchLogicalFilterComponent],
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
 
         fixture = TestBed.createComponent(SearchLogicalFilterComponent);

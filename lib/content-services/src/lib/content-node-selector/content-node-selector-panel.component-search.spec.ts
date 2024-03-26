@@ -26,7 +26,6 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { mockSearchRequest } from '../mock/search-query.mock';
 import { SitesService } from '../common/services/sites.service';
@@ -76,7 +75,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
     });

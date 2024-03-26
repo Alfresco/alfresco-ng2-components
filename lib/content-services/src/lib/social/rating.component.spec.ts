@@ -20,10 +20,8 @@ import { RatingComponent } from './rating.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
 import { RatingService } from './services/rating.service';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('Rating component', () => {
-
     let component: any;
     let fixture: ComponentFixture<RatingComponent>;
     let element: HTMLElement;
@@ -31,10 +29,7 @@ describe('Rating component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(RatingComponent);
         service = TestBed.inject(RatingService);
@@ -51,17 +46,18 @@ describe('Rating component', () => {
     });
 
     describe('Rendering tests', () => {
-
         it('should rating component should be present', async () => {
-            spyOn(service, 'getRating').and.returnValue(of({
-                entry: {
-                    id: 'fiveStar',
-                    aggregate: {
-                        numberOfRatings: 1,
-                        average: 4
+            spyOn(service, 'getRating').and.returnValue(
+                of({
+                    entry: {
+                        id: 'fiveStar',
+                        aggregate: {
+                            numberOfRatings: 1,
+                            average: 4
+                        }
                     }
-                }
-            }));
+                })
+            );
 
             component.ngOnChanges();
 
@@ -72,14 +68,16 @@ describe('Rating component', () => {
         });
 
         it('should the star rating filled with the right grey/colored star', async () => {
-            spyOn(service, 'getRating').and.returnValue(of({
-                entry: {
-                    myRating: 3,
-                    ratedAt: '2017-04-06T14:34:28.061+0000',
-                    id: 'fiveStar',
-                    aggregate: {numberOfRatings: 1, average: 3.0}
-                }
-            }));
+            spyOn(service, 'getRating').and.returnValue(
+                of({
+                    entry: {
+                        myRating: 3,
+                        ratedAt: '2017-04-06T14:34:28.061+0000',
+                        id: 'fiveStar',
+                        aggregate: { numberOfRatings: 1, average: 3.0 }
+                    }
+                })
+            );
 
             component.ngOnChanges();
             fixture.detectChanges();
@@ -91,23 +89,27 @@ describe('Rating component', () => {
     });
 
     it('should click on a star to change your vote', async () => {
-        spyOn(service, 'getRating').and.returnValue(of({
-            entry: {
-                myRating: 1,
-                ratedAt: '2017-04-06T14:34:28.061+0000',
-                id: 'fiveStar',
-                aggregate: {numberOfRatings: 1, average: 1.0}
-            }
-        }));
+        spyOn(service, 'getRating').and.returnValue(
+            of({
+                entry: {
+                    myRating: 1,
+                    ratedAt: '2017-04-06T14:34:28.061+0000',
+                    id: 'fiveStar',
+                    aggregate: { numberOfRatings: 1, average: 1.0 }
+                }
+            })
+        );
 
-        const rateSpy = spyOn(service, 'postRating').and.returnValue(of({
-            entry: {
-                myRating: 3,
-                ratedAt: '2017-04-06T14:36:40.731+0000',
-                id: 'fiveStar',
-                aggregate: {numberOfRatings: 1, average: 3.0}
-            }
-        }));
+        const rateSpy = spyOn(service, 'postRating').and.returnValue(
+            of({
+                entry: {
+                    myRating: 3,
+                    ratedAt: '2017-04-06T14:36:40.731+0000',
+                    id: 'fiveStar',
+                    aggregate: { numberOfRatings: 1, average: 3.0 }
+                }
+            })
+        );
 
         component.ngOnChanges();
         fixture.detectChanges();
@@ -123,18 +125,19 @@ describe('Rating component', () => {
 
         expect(rateSpy).toHaveBeenCalled();
         expect(element.querySelectorAll('.adf-colored-star').length).toBe(3);
-
     });
 
     it('should click on the rated star to remove your vote', () => {
-        spyOn(service, 'getRating').and.returnValue(of({
-            entry: {
-                myRating: 3,
-                ratedAt: '2017-04-06T14:34:28.061+0000',
-                id: 'fiveStar',
-                aggregate: {numberOfRatings: 1, average: 3.0}
-            }
-        }));
+        spyOn(service, 'getRating').and.returnValue(
+            of({
+                entry: {
+                    myRating: 3,
+                    ratedAt: '2017-04-06T14:34:28.061+0000',
+                    id: 'fiveStar',
+                    aggregate: { numberOfRatings: 1, average: 3.0 }
+                }
+            })
+        );
 
         spyOn(service, 'deleteRating').and.returnValue(of({}));
 

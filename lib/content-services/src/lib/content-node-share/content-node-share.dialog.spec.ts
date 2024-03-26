@@ -24,7 +24,6 @@ import { RenditionService } from '../common/services/rendition.service';
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { format, endOfDay } from 'date-fns';
 import { By } from '@angular/platform-browser';
 import { NodeEntry } from '@alfresco/js-api';
@@ -59,7 +58,7 @@ describe('ShareDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [
                 { provide: NotificationService, useValue: notificationServiceMock },
                 {
@@ -300,8 +299,9 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-expiration-field"]'))
-            .componentInstance.floatLabel).toBe('never');
+        expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-expiration-field"]')).componentInstance.floatLabel).toBe(
+            'never'
+        );
     });
 
     it('should not display floating label for public link field', () => {
@@ -311,8 +311,9 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-public-link-field"]'))
-            .componentInstance.floatLabel).toBe('never');
+        expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-public-link-field"]')).componentInstance.floatLabel).toBe(
+            'never'
+        );
     });
 
     describe('datetimepicker type', () => {

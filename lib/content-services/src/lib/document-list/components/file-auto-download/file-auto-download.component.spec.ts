@@ -21,7 +21,6 @@ import { FileAutoDownloadComponent } from './file-auto-download.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 const mockDialog = {
@@ -36,10 +35,7 @@ describe('FileAutoDownloadComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [FileAutoDownloadComponent],
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialog },

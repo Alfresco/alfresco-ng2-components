@@ -20,10 +20,8 @@ import { SearchService } from '../services/search.service';
 import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
 import { of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchComponent', () => {
-
     let fixture: ComponentFixture<SimpleSearchTestComponent>;
     let element: HTMLElement;
     let component: SimpleSearchTestComponent;
@@ -31,10 +29,7 @@ describe('SearchComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             declarations: [SimpleSearchTestComponent]
         });
         fixture = TestBed.createComponent(SimpleSearchTestComponent);
@@ -44,12 +39,8 @@ describe('SearchComponent', () => {
     });
 
     describe('search results', () => {
-
         it('should clear results straight away when a new search term is entered', (done) => {
-            spyOn(searchService, 'search').and.returnValues(
-                of(result),
-                of(differentResult)
-            );
+            spyOn(searchService, 'search').and.returnValues(of(result), of(differentResult));
 
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
@@ -82,8 +73,7 @@ describe('SearchComponent', () => {
         });
 
         it('should emit error event when search call fail', (done) => {
-            spyOn(searchService, 'search')
-                .and.returnValue(throwError({ status: 402 }));
+            spyOn(searchService, 'search').and.returnValue(throwError({ status: 402 }));
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -95,10 +85,7 @@ describe('SearchComponent', () => {
         });
 
         it('should be able to hide the result panel', (done) => {
-            spyOn(searchService, 'search').and.returnValues(
-                of(result),
-                of(differentResult)
-            );
+            spyOn(searchService, 'search').and.returnValues(of(result), of(differentResult));
 
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
@@ -119,7 +106,6 @@ describe('SearchComponent', () => {
     });
 
     describe('search node', () => {
-
         it('should perform a search with a defaultNode if no search node is given', (done) => {
             spyOn(searchService, 'search').and.returnValue(of(result));
             component.setSearchWordTo('searchTerm');

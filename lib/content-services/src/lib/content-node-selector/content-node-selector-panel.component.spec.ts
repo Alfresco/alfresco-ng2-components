@@ -32,7 +32,6 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../document-list';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { mockContentModelTextProperty } from '../mock/content-model.mock';
@@ -77,7 +76,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
     });

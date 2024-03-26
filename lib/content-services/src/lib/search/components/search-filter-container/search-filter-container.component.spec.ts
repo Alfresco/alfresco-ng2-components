@@ -17,7 +17,6 @@
 
 import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchService } from '../../services/search.service';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -59,11 +58,8 @@ describe('SearchFilterContainerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
-            providers: [
-                { provide: SearchService, useValue: searchMock }
-                // { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
-            ]
+            imports: [ContentTestingModule],
+            providers: [{ provide: SearchService, useValue: searchMock }]
         });
         fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;

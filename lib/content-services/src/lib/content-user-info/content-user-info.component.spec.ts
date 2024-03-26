@@ -19,14 +19,12 @@ import { CoreTestingModule, IdentityUserModel, InitialUsernamePipe, UserInfoMode
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By, DomSanitizer } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../common/mocks/ecm-user.service.mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 import { ContentUserInfoComponent } from './content-user-info.component';
 
 class FakeSanitizer extends DomSanitizer {
-
     constructor() {
         super();
     }
@@ -81,12 +79,7 @@ describe('ContentUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                ContentTestingModule,
-                MatMenuModule
-            ]
+            imports: [CoreTestingModule, ContentTestingModule, MatMenuModule]
         });
         fixture = TestBed.createComponent(ContentUserInfoComponent);
         component = fixture.componentInstance;
@@ -111,14 +104,12 @@ describe('ContentUserInfoComponent', () => {
     });
 
     describe('when user is logged on ecm', () => {
-
         beforeEach(() => {
             component.ecmUser = fakeEcmUser as any;
             component.isLoggedIn = true;
         });
 
         describe('ui', () => {
-
             it('should show ecm only last name when user first name is null ', async () => {
                 component.ecmUser = fakeEcmEditedUser as any;
                 await whenFixtureReady();
@@ -156,7 +147,6 @@ describe('ContentUserInfoComponent', () => {
             });
 
             describe('and has image', () => {
-
                 beforeEach(async () => {
                     component.ecmUser = fakeEcmUser as any;
                     component.isLoggedIn = true;
@@ -199,8 +189,7 @@ describe('ContentUserInfoComponent', () => {
             });
 
             describe('and has no image', () => {
-
-                beforeEach( async () => {
+                beforeEach(async () => {
                     component.ecmUser = fakeEcmUserNoImage as any;
                     component.isLoggedIn = true;
                     await whenFixtureReady();
@@ -233,7 +222,6 @@ describe('ContentUserInfoComponent', () => {
         });
 
         describe('when identity user is logged in', () => {
-
             beforeEach(() => {
                 component.ecmUser = fakeEcmUser as any;
                 component.identityUser = identityUserMock as unknown as IdentityUserModel;

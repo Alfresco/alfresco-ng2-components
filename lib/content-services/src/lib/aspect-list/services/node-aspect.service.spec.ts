@@ -17,7 +17,6 @@
 
 import { Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EMPTY, of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -34,7 +33,7 @@ describe('NodeAspectService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         dialogAspectListService = TestBed.inject(DialogAspectListService);
         nodeAspectService = TestBed.inject(NodeAspectService);
@@ -74,7 +73,7 @@ describe('NodeAspectService', () => {
 
     it('should send and update node event once the node has been updated', () => {
         let lastValue: Node;
-        nodeApiService.nodeUpdated.subscribe((nodeUpdated) => lastValue = nodeUpdated);
+        nodeApiService.nodeUpdated.subscribe((nodeUpdated) => (lastValue = nodeUpdated));
         const fakeNode = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
@@ -86,7 +85,7 @@ describe('NodeAspectService', () => {
 
     it('should send and update node aspect once the node has been updated', () => {
         let lastValue: Node;
-        cardViewContentUpdateService.updatedAspect$.subscribe((nodeUpdated) => lastValue = nodeUpdated);
+        cardViewContentUpdateService.updatedAspect$.subscribe((nodeUpdated) => (lastValue = nodeUpdated));
         const fakeNode = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));

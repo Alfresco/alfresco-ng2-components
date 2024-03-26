@@ -37,7 +37,6 @@ import {
     stepThree,
     stepTwo
 } from '../../../mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchFacetFieldComponent } from '../search-facet-field/search-facet-field.component';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -60,7 +59,7 @@ describe('SearchFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [{ provide: SearchService, useValue: searchMock }]
         });
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
