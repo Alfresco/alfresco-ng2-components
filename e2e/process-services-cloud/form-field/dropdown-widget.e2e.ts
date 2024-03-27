@@ -19,7 +19,7 @@ import {
     createApiService, AppListCloudPage, GroupIdentityService, IdentityService,
     LoginPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
     ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
-    TasksService, SnackbarPage
+    TasksService, SnackbarPage, materialLocators
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '.././pages/tasks-cloud-demo.page';
@@ -133,7 +133,7 @@ describe('Form Field Component - Dropdown Widget', () => {
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownOptions');
-        await dropdown.selectOption('option2', 'dropdown-cloud-widget mat-select');
+        await dropdown.selectOption('option2', `dropdown-cloud-widget ${materialLocators.Select.root}`);
 
         await expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
 

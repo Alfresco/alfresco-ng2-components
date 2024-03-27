@@ -18,12 +18,13 @@
 import { $, by, element } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { materialLocators } from '../public-api';
 
 export class EditJsonDialog {
 
     dialog = $(`.adf-edit-json-dialog`);
     closeButton = element(by.cssContainingText(`button span`, 'Close'));
-    dialogContent = this.dialog.$(`mat-dialog-content textarea`);
+    dialogContent = this.dialog.$(`${materialLocators.Dialog.content.root} textarea`);
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);

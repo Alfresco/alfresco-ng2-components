@@ -27,6 +27,7 @@ import { RadioButtonsCloudWidgetComponent } from './widgets/radio-buttons/radio-
 import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './widgets/display-rich-text/display-rich-text.widget';
 import { DataTableWidgetComponent } from './widgets/data-table/data-table.widget';
+import { DisplayExternalPropertyWidgetComponent } from './widgets/display-external-property/display-external-property.widget';
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +46,8 @@ export class CloudFormRenderingService extends FormRenderingService {
             [FormFieldTypes.RADIO_BUTTONS]: () => RadioButtonsCloudWidgetComponent,
             [FormFieldTypes.ALFRESCO_FILE_VIEWER]: () => FileViewerWidgetComponent,
             [FormFieldTypes.DISPLAY_RICH_TEXT]: () => DisplayRichTextWidgetComponent,
-            [FormFieldTypes.DATA_TABLE]: () => DataTableWidgetComponent
+            [FormFieldTypes.DATA_TABLE]: () => DataTableWidgetComponent,
+            [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY]: () => DisplayExternalPropertyWidgetComponent
         }, true);
     }
 }

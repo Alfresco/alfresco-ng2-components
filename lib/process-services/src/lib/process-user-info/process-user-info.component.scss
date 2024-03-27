@@ -147,8 +147,15 @@
         text-align: left;
     }
 
-    &-hide-tab .mat-tab-label-active {
-        display: none !important;
+    &-hide-tab.adf-userinfo-tab#tab-group-env {
+        display: none;
+    }
+
+    &-hide-small.adf-userinfo-profile-initials,
+    &-hide-small.adf-userinfo-profile-container {
+        @include layout-bp(lt-md) {
+            display: none;
+        }
     }
 }
 

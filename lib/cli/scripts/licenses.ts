@@ -23,7 +23,14 @@ import * as fs from 'fs';
 import * as checker from 'license-checker';
 import * as licenseList from 'spdx-license-list';
 import * as ejs from 'ejs';
-import program from 'commander';
+import { Command } from 'commander';
+
+const program = new Command();
+
+interface LicensesCommandArgs {
+    package?: string;
+    outDir?: string;
+}
 
 interface PackageInfo {
     name: string;
@@ -110,10 +117,11 @@ export default function main(_args: string[], workingDir: string) {
         exit(0);
     }
 
+    const options = program.opts<LicensesCommandArgs>();
     let packagePath = path.resolve(workingDir, 'package.json');
 
-    if (program.package) {
-        packagePath = path.resolve(program.package);
+    if (options.package) {
+        packagePath = path.resolve(options.package);
     }
 
     if (!fs.existsSync(packagePath)) {
@@ -183,7 +191,7 @@ export default function main(_args: string[], workingDir: string) {
                                 console.error(ejsError);
                                 reject(ejsError);
                             } else {
-                                const outputPath = path.resolve(program.outDir || workingDir);
+                                const outputPath = path.resolve(options.outDir || workingDir);
                                 const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
 
                                 fs.writeFileSync(outputFile, mdText);

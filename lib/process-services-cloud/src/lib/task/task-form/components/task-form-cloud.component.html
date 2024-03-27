@@ -1,4 +1,4 @@
-<div *ngIf="!loading; else loadingTemplate">
+<div class="adf-task-form-cloud-container" *ngIf="!loading; else loadingTemplate">
     <adf-cloud-form #adfCloudForm *ngIf="hasForm(); else withoutForm"
                     [appName]="appName"
                     [appVersion]="taskDetails.appVersion"

@@ -1524,21 +1524,15 @@ describe('Drag&Drop column header', () => {
         fixture.detectChanges();
 
         let dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-name"]');
-        let dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector(
-            '[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]'
-        );
+
         expect(dragIcon).toBeTruthy();
-        expect(dragIconPlaceholder).toBeTruthy();
 
         headerColumn.dispatchEvent(new MouseEvent('mouseleave'));
         fixture.detectChanges();
 
         dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-name"]');
-        dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector(
-            '[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]'
-        );
+
         expect(dragIcon).toBeFalsy();
-        expect(dragIconPlaceholder).toBeFalsy();
     });
 
     it('should not show drag indicator icon, when drag and drop is disabled', () => {
@@ -1549,12 +1543,8 @@ describe('Drag&Drop column header', () => {
         fixture.detectChanges();
 
         const dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-id"]');
-        const dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector(
-            '[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-id"]'
-        );
 
         expect(dragIcon).toBeFalsy();
-        expect(dragIconPlaceholder).toBeFalsy();
     });
 
     it('should emit on change column order', () => {
@@ -1748,20 +1738,20 @@ describe('Column Resizing', () => {
         });
     });
 
-    it('should display resize handle for each column by default', () => {
+    it('should display resize handle for each column, but not for the last one, by default', () => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
 
-        expect(getResizeHandlersCount()).toBe(2);
+        expect(getResizeHandlersCount()).toBe(1);
     });
 
-    it('should NOT display resize handle for the column when the column has resizable param set to false', () => {
+    it('should NOT display resize handle for the column when the column has resizable param set to false and column is not the last one', () => {
         dataTable.isResizingEnabled = true;
         dataTableSchema[0].resizable = false;
         dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
         fixture.detectChanges();
 
-        expect(getResizeHandlersCount()).toBe(1);
+        expect(getResizeHandlersCount()).toBe(0);
     });
 
     it('should display resize handle when the feature is Enabled [isResizingEnabled=true]', () => {

@@ -38,7 +38,8 @@ import {
     checkboxWidgetFormVisibilityMock,
     dateWidgetFormVisibilityMock,
     multilineWidgetFormVisibilityMock,
-    displayTextWidgetFormVisibilityMock
+    displayTextWidgetFormVisibilityMock,
+    displayBigDecimalWidgetMock
 } from './mock/form-renderer.component.mock';
 import { FormService } from '../services/form.service';
 import { CoreTestingModule } from '../../testing';
@@ -847,6 +848,17 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             displayTextContainer = fixture.nativeElement.querySelector('#field-Displaytext8bac2e-container');
             expectElementToBeHidden(displayTextContainer);
+        });
+    });
+
+    describe('Display Bigdecimal Widget', () => {
+        it('should round decimal field value to correct precision', async () => {
+            formRendererComponent.formDefinition = formService.parseForm(displayBigDecimalWidgetMock.formRepresentation.formDefinition);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const decimalInputElement = fixture.nativeElement.querySelector('#Decimal0tzu53');
+            expect(decimalInputElement.value).toBeTruthy('10.12');
         });
     });
 });

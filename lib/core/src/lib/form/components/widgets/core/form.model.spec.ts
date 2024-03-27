@@ -24,7 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { fakeMetadataForm } from '../../mock/form.mock';
+import { fakeMetadataForm, mockDisplayExternalPropertyForm } from '../../mock/form.mock';
 import { CoreTestingModule } from '../../../../testing';
 import { TestBed } from '@angular/core/testing';
 
@@ -606,5 +606,22 @@ describe('FormModel', () => {
             expect(form.values['pfx_property_eight']).toBeNull();
 
         });
+    });
+
+    it('should NOT override value by provided form values for constant value field type', () => {
+        const mockFormValues = {
+            DisplayExternalProperty0ei65x: 'email',
+            DisplayExternalProperty02kj65: 'test'
+        };
+
+        const formModel = new FormModel(mockDisplayExternalPropertyForm, mockFormValues);
+        const displayExternalPropertyWidget = formModel.fields[0].form.fields[0].field.fields[1][0];
+
+        expect(formModel.processVariables[1].name).toBe('DisplayExternalProperty02kj65');
+        expect(formModel.processVariables[1].value).toBe('test');
+        expect(formModel.values['DisplayExternalProperty02kj65']).toBe('hr');
+
+        expect(FormFieldTypes.isConstantValueType(displayExternalPropertyWidget.type)).toBeTrue();
+        expect(displayExternalPropertyWidget.value).toBe('hr');
     });
 });

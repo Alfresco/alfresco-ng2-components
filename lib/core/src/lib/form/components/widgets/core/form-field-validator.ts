@@ -49,7 +49,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.DATE,
         FormFieldTypes.DATETIME,
         FormFieldTypes.ATTACH_FOLDER,
-        FormFieldTypes.DECIMAL
+        FormFieldTypes.DECIMAL,
+        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
     ];
 
     isSupported(field: FormFieldModel): boolean {

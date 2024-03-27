@@ -15,23 +15,27 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
+import { ADF_SEARCH_CONFIGURATION } from '../search-configuration.token';
 
 @Injectable()
 export class SearchQueryBuilderService extends BaseQueryBuilderService {
-
     public isFilterServiceActive(): boolean {
         return false;
     }
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
+    constructor(
+        appConfig: AppConfigService,
+        alfrescoApiService: AlfrescoApiService,
+        @Optional() @Inject(ADF_SEARCH_CONFIGURATION) private configuration?: SearchConfiguration
+    ) {
         super(appConfig, alfrescoApiService);
     }
 
     public loadConfiguration(): SearchConfiguration {
-        return this.appConfig.get<SearchConfiguration>('search');
+        return this.configuration || this.appConfig.get<SearchConfiguration>('search');
     }
 }

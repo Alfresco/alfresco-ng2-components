@@ -17,19 +17,20 @@
 
 import { ElementFinder } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
+import { materialLocators } from './material-locators';
 
 export class CheckboxPage {
 
     static async uncheck(el: ElementFinder) {
         const classList = await BrowserActions.getAttribute(el, 'class');
-        if (classList && classList.indexOf('mat-checked') > -1) {
+        if (classList && classList.indexOf(materialLocators.Checked.root) > -1) {
             await BrowserActions.click(el);
         }
     }
 
     static async check(el: ElementFinder) {
         const classList = await BrowserActions.getAttribute(el, 'class');
-        if (classList && classList.indexOf('mat-checked') === -1) {
+        if (classList && classList.indexOf(materialLocators.Checked.root) === -1) {
             await BrowserActions.click(el);
         }
     }

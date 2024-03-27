@@ -1579,10 +1579,24 @@
           "description": " Defines whether every url provided by the discovery document has to start with the issuer's url."
         },
         "implicitFlow": {
-          "type": ["boolean", "string"]
+          "type": ["boolean", "string"],
+          "description": "Enables the Implicit Flow for authentication, suitable for client-side apps where the client secret cannot be stored securely. It directly returns the access token."
         },
         "codeFlow": {
-          "type": ["boolean", "string"]
+          "type": ["boolean", "string"],
+          "description": "Activates the Authorization Code Flow, recommended for most applications, including those that can store the client secret securely. It involves an extra step to exchange the authorization code for an access token, enhancing security."
+        },
+        "logoutUrl": {
+          "type": "string",
+          "description": "Identifies the intended recipients of the token, typically the URI of the targeted API. This ensures the token is used only for accessing the specified resources."
+        },
+        "logoutParameters": {
+          "type": "array",
+          "description": "Defines the parameters for the logout request, enabling customization to meet specific identity provider (IdP) requirements. Typical parameters include 'client_id', 'returnTo', and 'response_type'. This allows for adaptable configuration without code changes, ensuring compatibility across different OAuth2/OIDC flows."
+        },
+        "audience": {
+          "type": "string",
+          "description": "The URL where users are redirected after logging out, for example, https://your-auth.auth0.com/v2/logout. It defines the post-logout navigation flow."
         }
       }
     },

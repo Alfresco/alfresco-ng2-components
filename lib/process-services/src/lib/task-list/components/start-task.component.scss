@@ -71,11 +71,11 @@ adf-start-task {
         text-transform: uppercase;
     }
 
-    people-widget {
+    people-widget.adf-people-widget-content {
         width: 100%;
 
         .mat-form-field-label-wrapper {
-            top: -14px !important;
+            top: -14px;
         }
     }
 
@@ -130,10 +130,6 @@ adf-start-task {
         }
 
         &-invalid {
-            .mat-form-field-underline {
-                background-color: #f44336 !important;
-            }
-
             .adf-file {
                 border-color: var(--theme-warn-color);
             }

@@ -19,9 +19,11 @@
 
 import { argv, exit } from 'node:process';
 import { exec } from './exec';
-import program from 'commander';
+import { Command } from 'commander';
 import { logger } from './logger';
 import { resolve } from 'path';
+
+const program = new Command();
 
 // eslint-disable-next-line no-shadow
 enum TARGETS {

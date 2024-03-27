@@ -1,23 +1,25 @@
-.adf-task-form {
-    &-container {
-        overflow: hidden;
-    }
+.adf-task-form-cloud-container {
+    .adf-task-form {
+        &-container {
+            overflow: hidden;
 
-    &-actions {
-        float: right;
-        padding-bottom: 25px !important;
-        padding-right: 25px !important;
+            .adf-task-form-actions:has(button) {
+                float: right;
+                padding-bottom: 25px;
+                padding-right: 25px;
 
-        & .adf-task-form-actions-button {
-            height: 36px;
-            border-radius: 5px;
+                & .adf-task-form-actions-button {
+                    height: 36px;
+                    border-radius: 5px;
 
-            span {
-                width: 58px;
-                height: 20px;
-                opacity: 0.54;
-                font-size: var(--theme-body-2-font-size);
-                font-weight: bold;
+                    span {
+                        width: 58px;
+                        height: 20px;
+                        opacity: 0.54;
+                        font-size: var(--theme-body-2-font-size);
+                        font-weight: bold;
+                    }
+                }
             }
         }
     }
@@ -30,10 +32,10 @@
 }
 
 adf-cloud-task-form {
-    .adf-task-form-spinner {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
+    .adf-task-form-cloud-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: absolute;
         top: 50%;
         left: 50%;

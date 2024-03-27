@@ -58,6 +58,7 @@ import { SearchDateRangeTabbedComponent } from './components/search-date-range-t
 import { SearchFilterTabDirective } from './components/search-filter-tabbed/search-filter-tab.directive';
 import { SearchFacetChipTabbedComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
+import { SearchInputComponent } from './components/search-input';
 
 @NgModule({
     imports: [
@@ -67,7 +68,8 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         ReactiveFormsModule,
         MaterialModule,
         CoreModule,
-        SearchTextModule
+        SearchTextModule,
+        SearchInputComponent
     ],
     declarations: [
         SearchComponent,
@@ -127,6 +129,7 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchFilterChipsComponent,
         SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
+        SearchWidgetChipComponent,
         SearchLogicalFilterComponent,
         SearchFilterTabbedComponent,
         SearchDateRangeComponent,

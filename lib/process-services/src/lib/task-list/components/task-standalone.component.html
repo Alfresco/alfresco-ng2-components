@@ -19,7 +19,7 @@
 
     <mat-card-actions class="adf-no-form-mat-card-actions">
         <button mat-button *ngIf="hasAttachFormButton()" id="adf-no-form-attach-form-button" (click)="onShowAttachForm()">{{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}</button>
-        <div>
+        <div class="adf-no-form-mat-card-actions-container">
             <button mat-button *ngIf="hasCancelButton()" id="adf-no-form-cancel-button" (click)="onCancelButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}</button>
             <button mat-button *ngIf="hasCompleteButton()" id="adf-no-form-complete-button" color="primary" (click)="onCompleteButtonClick()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
         </div>

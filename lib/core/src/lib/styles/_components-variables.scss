@@ -1,3 +1,4 @@
+/* stylelint-disable value-list-max-empty-lines */
 /* stylelint-disable scss/no-global-function-names */
 @use './reference-variables' as *;
 @use '@angular/material' as mat;
@@ -97,7 +98,9 @@
         --adf-header-icon-button-pressed-color: $adf-ref-header-icon-color,
         --adf-header-icon-button-disabled-color: $adf-ref-header-icon-color,
         --adf-danger-button-background: $adf-danger-button-background,
-        --adf-secondary-button-background: $adf-secondary-button-background
+        --adf-secondary-button-background: $adf-secondary-button-background,
+
+        --adf-display-external-property-widget-preview-selection-color: mat.get-color-from-palette($foreground, secondary-text)
     );
 
     // propagates SCSS variables into the CSS variables scope

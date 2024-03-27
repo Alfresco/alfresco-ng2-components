@@ -11,30 +11,30 @@
         justify-content: space-between;
     }
 
-    &-notification-history-menu {
-        &-item {
+    &-notification-history-menu:has(.adf-notification-history-list) {
+        .adf-notification-history-menu-item {
             cursor: pointer;
         }
 
-        &-item:focus {
+        .adf-notification-history-menu-item:focus {
             outline: none;
             background: var(--adf-theme-background-hover-color);
         }
 
-        &-item:hover {
+        .adf-notification-history-menu-item:hover {
             background-color: var(--adf-theme-background-hover-color);
         }
 
-        &-message,
-        &-no-message {
-            font-size: var(--theme-body-1-font-size) !important;
+        .adf-notification-history-menu-message:is(p),
+        .adf-notification-history-menu-no-message:is(p) {
+            font-size: var(--theme-body-1-font-size);
         }
 
-        &-date {
-            font-size: var(--theme-caption-font-size) !important;
+        .adf-notification-history-menu-date.adf-notification-history-menu-text:is(p) {
+            font-size: var(--theme-caption-font-size);
         }
 
-        &-initiator {
+        .adf-notification-history-menu-initiator {
             margin: 4px;
         }
     }

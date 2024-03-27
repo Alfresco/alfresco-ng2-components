@@ -191,8 +191,7 @@ describe('Metadata component', () => {
             await metadataViewPage.clickOnPropertiesTab();
 
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-            await metadataViewPage.clickMetadataGroup('EXIF');
-            await metadataViewPage.editIconClick();
+            await metadataViewPage.clickMetadataGroupEditIcon('EXIF');
 
             await metadataViewPage.enterPropertyText('properties.exif:software', 'test custom text software');
             await metadataViewPage.enterPropertyText('properties.exif:isoSpeedRatings', 'test custom text isoSpeedRatings');

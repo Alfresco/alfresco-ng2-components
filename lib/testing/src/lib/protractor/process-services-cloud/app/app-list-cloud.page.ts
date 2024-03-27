@@ -18,6 +18,7 @@
 import { $$, $, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
+import { materialLocators } from '../../public-api';
 
 export class AppListCloudPage {
 
@@ -26,7 +27,7 @@ export class AppListCloudPage {
     nameOfAllApps = $$('adf-cloud-app-details div[class*="item-card-title"] h1');
     firstApp = $$('adf-cloud-app-details div[class*="item-card-title"] h1').first();
 
-    getAppNameLocatorByAppName = (appName: string): ElementFinder => $(`mat-card[title="${appName}"]`);
+    getAppNameLocatorByAppName = (appName: string): ElementFinder => $(`${materialLocators.Card.root}[title="${appName}"]`);
 
     async checkApsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
@@ -34,7 +35,7 @@ export class AppListCloudPage {
     }
 
     async goToApp(applicationName: string): Promise<void> {
-        await BrowserActions.clickExecuteScript('mat-card[title="' + applicationName + '"]');
+        await BrowserActions.clickExecuteScript(`${materialLocators.Card.root}[title="` + applicationName + `"]`);
     }
 
     async countAllApps(): Promise<number> {

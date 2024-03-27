@@ -4,7 +4,7 @@
 @mixin adf-line-clamp($line-height: 1.25, $lines: 3) {
     position: relative;
     line-height: $line-height;
-    padding: 0 !important;
+    padding: 0;
     overflow: hidden;
     text-overflow: ellipsis;
 
@@ -61,7 +61,7 @@ $tile-themes: (
         flex-flow: row wrap;
         display: flex;
 
-        &-item {
+        .adf-app-listgrid-item {
             outline: none;
             padding: 8px;
             box-sizing: border-box;
@@ -97,7 +97,7 @@ $tile-themes: (
                 transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
                 min-height: 200px;
-                padding: 0 !important;
+                padding: 0;
 
                 &:hover {
                     box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
@@ -107,23 +107,23 @@ $tile-themes: (
                     transform: scale(1.015);
                 }
 
-                &-logo {
+                .adf-app-listgrid-item-card-logo {
                     position: absolute;
                     right: 20px;
                     top: 20px;
                     padding: 16px;
                     z-index: 9;
 
-                    &-icon {
+                    .adf-app-listgrid-item-card-logo-icon {
                         font-size: 70px;
-                        width: 1em !important;
-                        height: 1em !important;
+                        width: 1em;
+                        height: 1em;
                     }
                 }
 
-                &-title {
+                .adf-app-listgrid-item-card-title {
                     padding: 16px;
-                    margin-bottom: 0 !important;
+                    margin-bottom: 0;
                     z-index: 9999;
 
                     h1 {
@@ -138,7 +138,7 @@ $tile-themes: (
                     }
                 }
 
-                &-subtitle {
+                .adf-app-listgrid-item-card-subtitle {
                     color: white;
                     z-index: 9999;
                     padding: 16px;
@@ -149,23 +149,20 @@ $tile-themes: (
                     }
                 }
 
-                &-actions {
-                    padding: 0 16px 16px !important;
+                &-actions:has(.adf-app-listgrid-item-card-actions-icon) {
+                    padding: 0 16px 16px;
                     border-top: 1px solid rgba(0, 0, 0, 0.1);
                     min-height: 48px;
                     box-sizing: border-box;
+                    margin-left: 0;
+                    margin-right: 0;
 
-                    &-icon {
-                        color: #e9f1f3;
+                    &:last-child {
+                        margin-bottom: 0;
                     }
 
-                    &.mat-card-actions {
-                        margin-left: 0;
-                        margin-right: 0;
-
-                        &:last-child {
-                            margin-bottom: 0 !important;
-                        }
+                    .adf-app-listgrid-item-card-actions-icon {
+                        color: #e9f1f3;
                     }
                 }
             }

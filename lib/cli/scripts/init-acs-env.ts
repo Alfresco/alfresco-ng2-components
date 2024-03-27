@@ -17,10 +17,19 @@
 
 import { AlfrescoApi, SharedlinksApi, FavoritesApi, NodesApi, UploadApi, NodeEntry } from '@alfresco/js-api';
 import { exit, argv } from 'node:process';
-const program = require('commander');
-const fs = require('fs');
-const path = require('path');
+import { Command } from 'commander';
+import { createReadStream } from 'fs';
+import * as path from 'path';
 import { logger } from './logger';
+
+interface InitAcsEnvArgs {
+    host?: string;
+    clientId?: string;
+    username?: string;
+    password?: string;
+}
+
+const program = new Command();
 const MAX_RETRY = 10;
 let counter = 0;
 const TIMEOUT = 6000;
@@ -40,7 +49,8 @@ export default async function main() {
         .option('-u, --username [type]', 'username ')
         .parse(argv);
 
-    await checkEnv();
+    const opts = program.opts<InitAcsEnvArgs>();
+    await checkEnv(opts);
 
     logger.info(`***** Step initialize ACS *****`);
     await initializeDefaultFiles();
@@ -117,7 +127,7 @@ async function createFolder(folderName: string, parentId: string) {
  */
 async function uploadFile(fileName: string, fileDestination: string): Promise<NodeEntry> {
     const filePath = `../resources/content/${fileName}`;
-    const file = fs.createReadStream(path.join(__dirname, filePath));
+    const file = createReadStream(path.join(__dirname, filePath));
     let uploadedFile: NodeEntry;
     try {
         uploadedFile = await new UploadApi(alfrescoJsApi).uploadFile(file, '', fileDestination, null, {
@@ -192,23 +202,25 @@ async function favoriteFile(nodeId: string) {
 
 /**
  * Check environment state
+ *
+ * @param opts command options
  */
-async function checkEnv() {
+async function checkEnv(opts: InitAcsEnvArgs) {
     try {
         alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
-            hostBpm: program.host,
-            hostEcm: program.host,
+            hostBpm: opts.host,
+            hostEcm: opts.host,
             authType: 'OAUTH',
             oauth2: {
-                host: `${program.host}/auth/realms/alfresco`,
-                clientId: `${program.clientId}`,
+                host: `${opts.host}/auth/realms/alfresco`,
+                clientId: `${opts.clientId}`,
                 scope: 'openid',
                 redirectUri: '/'
             },
             contextRoot: 'alfresco'
         });
-        await alfrescoJsApi.login(program.username, program.password);
+        await alfrescoJsApi.login(opts.username, opts.password);
     } catch (e) {
         if (e.error.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
@@ -222,11 +234,10 @@ async function checkEnv() {
         } else {
             logger.error(`Retry in 1 minute attempt N ${counter}`);
             sleep(TIMEOUT);
-            await checkEnv();
+            await checkEnv(opts);
         }
     }
 }
-
 
 /**
  * Perform a delay

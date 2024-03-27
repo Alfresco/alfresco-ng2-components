@@ -140,8 +140,8 @@ describe('CardView Component - properties', () => {
         await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsNotPresent('properties');
-        await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
-        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        await metadataViewPage.checkMetadataGroupIsExpand('Versionable');
 
         await CheckboxPage.check(metadataViewPage.defaultPropertiesSwitch);
 

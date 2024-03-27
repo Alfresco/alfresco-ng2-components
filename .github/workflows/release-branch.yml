@@ -87,7 +87,7 @@ jobs:
           echo "Set TAG with name: ${TAG_NPM}"
           echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
@@ -97,6 +97,7 @@ jobs:
       - name: install
         run: |
           npm ci
+          npx nx run js-api:bundle
           npx nx run cli:bundle
           npx nx run testing:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
@@ -110,7 +111,7 @@ jobs:
       packages: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
@@ -153,5 +154,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
       - uses: ./.github/actions/npm-check-bundle

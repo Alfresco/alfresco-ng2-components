@@ -48,6 +48,7 @@ export class FormFieldTypes {
     static DISPLAY_RICH_TEXT: string = 'display-rich-text';
     static JSON: string = 'json';
     static DATA_TABLE: string = 'data-table';
+    static DISPLAY_EXTERNAL_PROPERTY: string = 'display-external-property';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,
@@ -56,8 +57,24 @@ export class FormFieldTypes {
         FormFieldTypes.GROUP
     ];
 
+    static VALIDATABLE_TYPES: string[] = [
+        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
+    ];
+
+    static CONSTANT_VALUE_TYPES: string[] = [
+        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
+    ];
+
     static isReadOnlyType(type: string) {
         return FormFieldTypes.READONLY_TYPES.includes(type);
+    }
+
+    static isValidatableType(type: string) {
+        return FormFieldTypes.VALIDATABLE_TYPES.includes(type);
+    }
+
+    static isConstantValueType(type: string) {
+        return FormFieldTypes.CONSTANT_VALUE_TYPES.includes(type);
     }
 
     static isContainerType(type: string) {
