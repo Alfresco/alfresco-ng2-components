@@ -15,20 +15,32 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, Renderer2 } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation,
+    OnDestroy,
+    ElementRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Renderer2
+} from '@angular/core';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
-export type PaginationAction =
-    | 'NEXT_PAGE'
-    | 'PREV_PAGE'
-    | 'CHANGE_PAGE_SIZE'
-    | 'CHANGE_PAGE_NUMBER';
+export type PaginationAction = 'NEXT_PAGE' | 'PREV_PAGE' | 'CHANGE_PAGE_SIZE' | 'CHANGE_PAGE_NUMBER';
 
 export const DEFAULT_PAGINATION: PaginationModel = {
     skipCount: 0,
@@ -44,7 +56,9 @@ export const DEFAULT_PAGINATION: PaginationModel = {
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatMenuModule]
 })
 export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
     private _pagination: PaginationModel;
@@ -110,14 +124,14 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         private renderer: Renderer2,
         private cdr: ChangeDetectorRef,
         private userPreferencesService: UserPreferencesService,
-        private translate: TranslateService) {
-    }
+        private translate: TranslateService
+    ) {}
 
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(maxItems => {
+            .subscribe((maxItems) => {
                 this.pagination = {
                     ...DEFAULT_PAGINATION,
                     ...this.pagination,
@@ -130,17 +144,15 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         }
 
         if (this.target) {
-            this.target.pagination
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe(pagination => {
-                    if (pagination.count === 0 && !this.isFirstPage) {
-                        this.goPrevious();
-                    }
+            this.target.pagination.pipe(takeUntil(this.onDestroy$)).subscribe((pagination) => {
+                if (pagination.count === 0 && !this.isFirstPage) {
+                    this.goPrevious();
+                }
 
-                    this.pagination = {
-                        ...pagination
-                    };
-                });
+                this.pagination = {
+                    ...pagination
+                };
+            });
         }
 
         if (!this.pagination) {
@@ -153,17 +165,13 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     get lastPage(): number {
         const { maxItems, totalItems } = this.pagination;
 
-        return (totalItems && maxItems)
-            ? Math.ceil(totalItems / maxItems)
-            : 1;
+        return totalItems && maxItems ? Math.ceil(totalItems / maxItems) : 1;
     }
 
     get current(): number {
         const { maxItems, skipCount } = this.pagination;
 
-        return (skipCount && maxItems)
-            ? Math.floor(skipCount / maxItems) + 1
-            : 1;
+        return skipCount && maxItems ? Math.floor(skipCount / maxItems) + 1 : 1;
     }
 
     get isLastPage(): boolean {
@@ -211,7 +219,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     get pages(): number[] {
         return Array(this.lastPage)
             .fill('n')
-            .map((_, index) => (index + 1));
+            .map((_, index) => index + 1);
     }
 
     get limitedPages(): number[] {
