@@ -2,6 +2,7 @@
 
 $adf-pagination-height: 48px !default;
 $adf-pagination-icon-button-size: 32px !default;
+$adf-pagination-icon-button-line-height: 24px !default;
 $adf-pagination-border: none !default;
 $adf-pagination-empty-height: 48px !default;
 $adf-pagination-empty-border: none !default;
@@ -85,6 +86,6 @@ $adf-pagination-empty-border: none !default;
     button[mat-icon-button] {
         width: $adf-pagination-icon-button-size;
         height: $adf-pagination-icon-button-size;
-        line-height: $adf-pagination-icon-button-size;
+        line-height: $adf-pagination-icon-button-line-height;
     }
 }
