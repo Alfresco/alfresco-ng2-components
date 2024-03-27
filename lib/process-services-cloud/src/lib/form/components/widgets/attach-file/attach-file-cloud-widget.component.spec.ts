@@ -154,6 +154,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot()],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
+        notificationService = TestBed.inject(NotificationService);
         downloadService = TestBed.inject(DownloadService);
         fixture = TestBed.createComponent(AttachFileCloudWidgetComponent);
         widget = fixture.componentInstance;
@@ -239,6 +240,17 @@ describe('AttachFileCloudWidgetComponent', () => {
         widget.ngOnDestroy();
 
         expect(contentNodeSelectorPanelService.customModels).toEqual([]);
+    });
+
+    it('should display warning message when is in preview state', () => {
+        spyOn(notificationService, 'showWarning');
+        spyOn(formService, 'getPreviewState').and.returnValue(true);
+        createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam);
+        fixture.detectChanges();
+
+        clickOnAttachFileWidget('attach-file-alfresco');
+
+        expect(notificationService.showWarning).toHaveBeenCalledWith('FORM.PREVIEW.ATTACH_FILE_WIDGET.ON_ATTACH_FILE_CLICK');
     });
 
     describe('when is required', () => {
@@ -874,7 +886,6 @@ describe('AttachFileCloudWidgetComponent', () => {
         let spyOnShowError: jasmine.Spy;
 
         beforeEach(() => {
-            notificationService = TestBed.inject(NotificationService);
             newVersionUploaderService = TestBed.inject(NewVersionUploaderService);
             spyOnOpenUploadNewVersionDialog = spyOn(newVersionUploaderService, 'openUploadNewVersionDialog').and.returnValue(
                 of({ action: NewVersionUploaderDataAction.refresh } as any)

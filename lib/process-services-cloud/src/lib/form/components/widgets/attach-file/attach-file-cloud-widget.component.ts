@@ -65,6 +65,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     rootNodeId = ALIAS_USER_FOLDER;
     selectedNode: Node;
 
+    private previewState = false;
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
@@ -95,6 +96,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         }
         this.field.params.displayableCMProperties = this.field.params.displayableCMProperties ?? [];
         this.displayedColumns.splice(2, 0, ...(this.field.params.displayableCMProperties?.map(property => property?.name) || []));
+        this.setPreviewState();
     }
 
     isPathStaticType(): boolean {
@@ -126,22 +128,26 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     async openSelectDialog() {
-        const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
-        const nodeId = await this.getDestinationFolderNodeId();
-        this.rootNodeId = nodeId ? nodeId : ALIAS_USER_FOLDER;
-        this.contentNodeSelectorPanelService.customModels = this.field.params.customModels;
+        if (this.previewState) {
+            this.notificationService.showWarning('FORM.PREVIEW.ATTACH_FILE_WIDGET.ON_ATTACH_FILE_CLICK');
+        } else {
+            const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
+            const nodeId = await this.getDestinationFolderNodeId();
+            this.rootNodeId = nodeId ? nodeId : ALIAS_USER_FOLDER;
+            this.contentNodeSelectorPanelService.customModels = this.field.params.customModels;
 
-        this.contentNodeSelectorService
-            .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal(), true)
-            .subscribe((selections: Node[]) => {
-                selections.forEach(node => (node['isExternal'] = true));
-                const selectionWithoutDuplication = this.removeExistingSelection(selections);
-                const hadFilesAttached = this.field.value?.length > 0;
-                this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
-                if(!hadFilesAttached) {
-                    this.contentModelFormFileHandler(this.field.value.length > 0 ? this.field.value[0] : null);
-                }
-            });
+            this.contentNodeSelectorService
+                .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal(), true)
+                .subscribe((selections: Node[]) => {
+                    selections.forEach(node => (node['isExternal'] = true));
+                    const selectionWithoutDuplication = this.removeExistingSelection(selections);
+                    const hadFilesAttached = this.field.value?.length > 0;
+                    this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
+                    if (!hadFilesAttached) {
+                        this.contentModelFormFileHandler(this.field.value.length > 0 ? this.field.value[0] : null);
+                    }
+                });
+        }
     }
 
     private async getDestinationFolderNodeId(): Promise<string> {
@@ -273,5 +279,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     ngOnDestroy() {
         this.contentNodeSelectorPanelService.customModels = [];
+    }
+
+    private setPreviewState(): void {
+        this.previewState = this.formService.getPreviewState();
     }
 }
