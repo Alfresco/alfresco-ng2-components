@@ -43,9 +43,13 @@ import {
 } from '../../../mocks/dropdown.mock';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('DropdownCloudWidgetComponent', () => {
 
+    let loader: HarnessLoader;
     let formService: FormService;
     let widget: DropdownCloudWidgetComponent;
     let formCloudService: FormCloudService;
@@ -70,6 +74,7 @@ describe('DropdownCloudWidgetComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
+        loader = TestbedHarnessEnvironment.loader(fixture);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
 
@@ -298,10 +303,10 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const placeholderElement = fixture.debugElement.query(By.css('.mat-mdc-select-placeholder'));
+            const placeholderElement =  await loader.getHarness(MatSelectHarness.with({ ancestor: '.adf-dropdown-widget' }));
             selectedValueElement = fixture.debugElement.query(By.css('.mat-mdc-select-value-text'));
 
-            expect(placeholderElement.nativeNode.innerText).toEqual('This is a mock none option');
+            expect(await placeholderElement.getValueText()).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
             expect(selectedValueElement).toBeFalsy();
         });
