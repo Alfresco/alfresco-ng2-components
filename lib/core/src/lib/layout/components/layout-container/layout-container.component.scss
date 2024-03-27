@@ -6,6 +6,7 @@ adf-layout-container {
 }
 
 .adf-container-full-width {
+    height: 100%;
     width: inherit;
 }
 
@@ -47,7 +48,6 @@ mat-sidenav-content.mat-sidenav-content,
 }
 
 mat-sidenav-content > div {
-    display: flex;
     height: 100%;
 
     > div {
