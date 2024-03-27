@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadSuccessPromise } from '../../../mock/upload.service.mock';
 import { UploadService } from '../../../common/services/upload.service';
 import { FileModel } from '../../../common/models/file.model';
@@ -30,26 +29,19 @@ import { FileUploadErrorEvent } from '../../../common/events/file.event';
     selector: 'adf-upload-button-test',
     template: 'test component'
 })
-export class UploadTestComponent extends UploadBase {
-}
+export class UploadTestComponent extends UploadBase {}
 
 const file = { name: 'bigFile.png', size: 1000 } as File;
 
 describe('UploadBase', () => {
-
     let component: UploadTestComponent;
     let fixture: ComponentFixture<UploadTestComponent>;
     let uploadService: UploadService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            declarations: [
-                UploadTestComponent
-            ]
+            imports: [ContentTestingModule],
+            declarations: [UploadTestComponent]
         });
         fixture = TestBed.createComponent(UploadTestComponent);
         uploadService = TestBed.inject(UploadService);
@@ -64,16 +56,13 @@ describe('UploadBase', () => {
     });
 
     describe('beginUpload', () => {
-
         it('should raise event', () => {
             spyOn(uploadService, 'addToQueue').and.stub();
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
-            component.beginUpload.subscribe(
-                (uploadFilesEvent: UploadFilesEvent) => {
-                    expect(uploadFilesEvent.files[0].file).toEqual(file);
-                }
-            );
+            component.beginUpload.subscribe((uploadFilesEvent: UploadFilesEvent) => {
+                expect(uploadFilesEvent.files[0].file).toEqual(file);
+            });
 
             component.uploadFiles([file]);
             fixture.detectChanges();
@@ -143,16 +132,12 @@ describe('UploadBase', () => {
             component.uploadFiles([file]);
             uploadEvent.resumeUpload();
         });
-   });
+    });
 
     describe('fileSize', () => {
+        const files: File[] = [{ name: 'bigFile.png', size: 1000 } as File, { name: 'smallFile.png', size: 10 } as File];
 
-        const files: File[] = [
-            { name: 'bigFile.png', size: 1000 } as File,
-            { name: 'smallFile.png', size: 10 } as File
-        ];
-
-        let addToQueueSpy: jasmine.Spy;;
+        let addToQueueSpy: jasmine.Spy;
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
@@ -177,9 +162,7 @@ describe('UploadBase', () => {
         });
 
         it('should allow file of 0 size when the max file size is set to 0', () => {
-            const zeroFiles: File[] = [
-                { name: 'zeroFile.png', size: 0 } as File
-            ];
+            const zeroFiles: File[] = [{ name: 'zeroFile.png', size: 0 } as File];
             component.maxFilesSize = 0;
 
             component.uploadFiles(zeroFiles);
@@ -216,14 +199,9 @@ describe('UploadBase', () => {
     });
 
     describe('uploadFiles', () => {
+        const files: File[] = [{ name: 'phobos.jpg' } as File, { name: 'deimos.png' } as File, { name: 'ganymede.bmp' } as File];
 
-        const files: File[] = [
-            { name: 'phobos.jpg' } as File,
-            { name: 'deimos.png' } as File,
-            { name: 'ganymede.bmp' } as File
-        ];
-
-        let addToQueueSpy: jasmine.Spy;;
+        let addToQueueSpy: jasmine.Spy;
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
@@ -325,12 +303,9 @@ describe('UploadBase', () => {
     });
 
     describe('Comments', () => {
+        let addToQueueSpy: jasmine.Spy;
 
-        let addToQueueSpy: jasmine.Spy;;
-
-        const files: File[] = [
-            { name: 'phobos.jpg' } as File
-        ];
+        const files: File[] = [{ name: 'phobos.jpg' } as File];
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
@@ -341,24 +316,23 @@ describe('UploadBase', () => {
 
             component.uploadFiles(files);
 
-            expect(addToQueueSpy).toHaveBeenCalledWith(new FileModel(files[0], {
-                comment: 'example-comment',
-                newVersion: false,
-                majorVersion: false,
-                parentId: '-root-',
-                path: '',
-                nodeType: 'cm:content'
-            }));
+            expect(addToQueueSpy).toHaveBeenCalledWith(
+                new FileModel(files[0], {
+                    comment: 'example-comment',
+                    newVersion: false,
+                    majorVersion: false,
+                    parentId: '-root-',
+                    path: '',
+                    nodeType: 'cm:content'
+                })
+            );
         });
     });
 
     describe('Versions', () => {
+        let addToQueueSpy: jasmine.Spy;
 
-        let addToQueueSpy: jasmine.Spy;;
-
-        const files: File[] = [
-            { name: 'phobos.jpg' } as File
-        ];
+        const files: File[] = [{ name: 'phobos.jpg' } as File];
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
@@ -370,14 +344,16 @@ describe('UploadBase', () => {
 
             component.uploadFiles(files);
 
-            expect(addToQueueSpy).toHaveBeenCalledWith(new FileModel(files[0], {
-                comment: undefined,
-                newVersion: true,
-                majorVersion: true,
-                parentId: '-root-',
-                path: '',
-                nodeType: 'cm:content'
-            }));
+            expect(addToQueueSpy).toHaveBeenCalledWith(
+                new FileModel(files[0], {
+                    comment: undefined,
+                    newVersion: true,
+                    majorVersion: true,
+                    parentId: '-root-',
+                    path: '',
+                    nodeType: 'cm:content'
+                })
+            );
         });
 
         it('should not  be a major version upload if majorVersion is false', () => {
@@ -386,24 +362,23 @@ describe('UploadBase', () => {
 
             component.uploadFiles(files);
 
-            expect(addToQueueSpy).toHaveBeenCalledWith(new FileModel(files[0], {
-                comment: undefined,
-                newVersion: true,
-                majorVersion: false,
-                parentId: '-root-',
-                path: '',
-                nodeType: 'cm:content'
-            }));
+            expect(addToQueueSpy).toHaveBeenCalledWith(
+                new FileModel(files[0], {
+                    comment: undefined,
+                    newVersion: true,
+                    majorVersion: false,
+                    parentId: '-root-',
+                    path: '',
+                    nodeType: 'cm:content'
+                })
+            );
         });
     });
 
     describe('Node Type', () => {
-
         let addToQueueSpy: jasmine.Spy;
 
-        const files: File[] = [
-            { name: 'process.bpmn' } as File
-        ];
+        const files: File[] = [{ name: 'process.bpmn' } as File];
 
         beforeEach(() => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
@@ -414,27 +389,31 @@ describe('UploadBase', () => {
 
             component.uploadFiles(files);
 
-            expect(addToQueueSpy).toHaveBeenCalledWith(new FileModel(files[0], {
-                comment: undefined,
-                newVersion: false,
-                majorVersion: false,
-                parentId: '-root-',
-                path: '',
-                nodeType: 'ama:process'
-            }));
+            expect(addToQueueSpy).toHaveBeenCalledWith(
+                new FileModel(files[0], {
+                    comment: undefined,
+                    newVersion: false,
+                    majorVersion: false,
+                    parentId: '-root-',
+                    path: '',
+                    nodeType: 'ama:process'
+                })
+            );
         });
 
         it('should have default nodeType if it is not set', () => {
             component.uploadFiles(files);
 
-            expect(addToQueueSpy).toHaveBeenCalledWith(new FileModel(files[0], {
-                comment: undefined,
-                newVersion: false,
-                majorVersion: false,
-                parentId: '-root-',
-                path: '',
-                nodeType: 'cm:content'
-            }));
+            expect(addToQueueSpy).toHaveBeenCalledWith(
+                new FileModel(files[0], {
+                    comment: undefined,
+                    newVersion: false,
+                    majorVersion: false,
+                    parentId: '-root-',
+                    path: '',
+                    nodeType: 'cm:content'
+                })
+            );
         });
     });
 });

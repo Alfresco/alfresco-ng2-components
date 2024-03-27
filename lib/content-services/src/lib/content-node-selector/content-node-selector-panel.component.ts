@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import {
     HighlightDirective,
     UserPreferencesService,
@@ -38,7 +38,6 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { Subject } from 'rxjs';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
 import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { NodeEntryEvent } from '../document-list/components/node.event';
@@ -54,12 +53,7 @@ export const defaultValidation = () => true;
     styleUrls: ['./content-node-selector-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-content-node-selector-panel' },
-    providers: [
-        {
-            provide: SEARCH_QUERY_SERVICE_TOKEN,
-            useClass: SearchQueryBuilderService
-        }
-    ]
+    providers: [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -276,7 +270,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     constructor(
         private customResourcesService: CustomResourcesService,
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilderService: SearchQueryBuilderService,
+        private queryBuilderService: SearchQueryBuilderService,
         private userPreferencesService: UserPreferencesService,
         private nodesApiService: NodesApiService,
         private uploadService: UploadService,

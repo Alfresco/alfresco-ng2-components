@@ -19,7 +19,6 @@ import { MatSliderChange } from '@angular/material/slider';
 import { SearchSliderComponent } from './search-slider.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchSliderComponent', () => {
     let fixture: ComponentFixture<SearchSliderComponent>;
@@ -27,10 +26,7 @@ describe('SearchSliderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchSliderComponent);
         component = fixture.componentInstance;

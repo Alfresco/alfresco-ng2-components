@@ -19,7 +19,6 @@ import { Node, PermissionElement } from '@alfresco/js-api';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -64,7 +63,7 @@ describe('AddPermissionDialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: data }

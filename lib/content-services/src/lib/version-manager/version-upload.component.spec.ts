@@ -17,7 +17,6 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { VersionUploadComponent } from './version-upload.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
@@ -49,10 +48,7 @@ describe('VersionUploadComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             providers: [UploadService],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });

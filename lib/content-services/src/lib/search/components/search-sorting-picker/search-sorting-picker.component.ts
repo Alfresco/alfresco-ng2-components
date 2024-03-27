@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchSortingDefinition } from '../../models/search-sorting-definition.interface';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
 @Component({
     selector: 'adf-search-sorting-picker',
@@ -28,12 +27,11 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
     host: { class: 'adf-search-sorting-picker' }
 })
 export class SearchSortingPickerComponent implements OnInit {
-
     options: SearchSortingDefinition[] = [];
     value: string;
     ascending: boolean;
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: SearchQueryBuilderService) {}
+    constructor(private queryBuilder: SearchQueryBuilderService) {}
 
     ngOnInit() {
         this.options = this.queryBuilder.getSortingOptions();
@@ -66,10 +64,12 @@ export class SearchSortingPickerComponent implements OnInit {
     private applySorting() {
         const option = this.findOptionByKey(this.value);
         if (option) {
-            this.queryBuilder.sorting = [{
-                ...option,
-                ascending: this.ascending
-            }];
+            this.queryBuilder.sorting = [
+                {
+                    ...option,
+                    ascending: this.ascending
+                }
+            ];
             this.queryBuilder.update();
         }
     }
@@ -82,5 +82,4 @@ export class SearchSortingPickerComponent implements OnInit {
 
         return this.queryBuilder.getPrimarySorting().ascending;
     }
-
 }

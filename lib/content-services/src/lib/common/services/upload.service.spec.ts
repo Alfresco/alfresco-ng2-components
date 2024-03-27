@@ -20,7 +20,6 @@ import { TestBed } from '@angular/core/testing';
 import { AppConfigModule, AppConfigService, CoreTestingModule } from '@alfresco/adf-core';
 import { UploadService } from './upload.service';
 import { RepositoryInfo } from '@alfresco/js-api';
-import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
@@ -36,11 +35,7 @@ describe('UploadService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                AppConfigModule
-            ],
+            imports: [CoreTestingModule, AppConfigModule],
             providers: [
                 {
                     provide: DiscoveryApiService,
@@ -94,10 +89,7 @@ describe('UploadService', () => {
     });
 
     it('should add two elements in the queue and returns them', () => {
-        const filesFake = [
-            new FileModel({ name: 'fake-name', size: 10 } as File),
-            new FileModel({ name: 'fake-name2', size: 20 } as File)
-        ];
+        const filesFake = [new FileModel({ name: 'fake-name', size: 10 } as File), new FileModel({ name: 'fake-name2', size: 20 } as File)];
         service.addToQueue(...filesFake);
         expect(service.getQueue().length).toEqual(2);
     });
@@ -161,15 +153,14 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
             done();
         });
-        const fileFake = new FileModel(
-            { name: 'fake-name', size: 10 } as File,
-            { parentId: '-root-', path: 'fake-dir' }
-        );
+        const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, { parentId: '-root-', path: 'fake-dir' });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
+        expect(request.url).toBe(
+            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations'
+        );
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -187,14 +178,12 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
             done();
         });
-        const fileFake = new FileModel(
-            { name: 'fake-name', size: 10 } as File,
-            { parentId: '-root-' }
-        );
+        const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, { parentId: '-root-' });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(null, emitter);
-        expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
+        expect(jasmine.Ajax.requests.mostRecent().url).toBe(
+            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations'
+        );
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 404,
@@ -228,14 +217,16 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
 
             const deleteRequest = jasmine.Ajax.requests.mostRecent();
-            expect(deleteRequest.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId?permanent=true');
+            expect(deleteRequest.url).toBe(
+                'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId?permanent=true'
+            );
             expect(deleteRequest.method).toBe('DELETE');
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'text/plain',
                 responseText: 'File deleted'
-        });
+            });
             done();
         });
 
@@ -247,7 +238,9 @@ describe('UploadService', () => {
         service.cancelUpload(...file);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations');
+        expect(request.url).toBe(
+            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true&include=allowableOperations'
+        );
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -280,7 +273,7 @@ describe('UploadService', () => {
             done();
         });
 
-        const fileFake = new FileModel({name: 'fake-name', size: 10} as File, null, 'fakeId');
+        const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, null, 'fakeId');
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -288,7 +281,9 @@ describe('UploadService', () => {
         service.cancelUpload(...file);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fakeId/content?include=allowableOperations');
+        expect(request.url).toBe(
+            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fakeId/content?include=allowableOperations'
+        );
         expect(request.method).toBe('PUT');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -307,10 +302,7 @@ describe('UploadService', () => {
 
     it('If newVersion is set, name should be a param', () => {
         const emitter = new EventEmitter();
-        const filesFake = new FileModel(
-            { name: 'fake-name', size: 10 } as File,
-            { newVersion: true }
-        );
+        const filesFake = new FileModel({ name: 'fake-name', size: 10 } as File, { newVersion: true });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -321,7 +313,7 @@ describe('UploadService', () => {
             },
             undefined,
             undefined,
-            { newVersion: true, name: 'fake-name', nodeType:  undefined },
+            { newVersion: true, name: 'fake-name', nodeType: undefined },
             {
                 renditions: 'doclib',
                 include: ['allowableOperations'],
@@ -341,15 +333,14 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
             done();
         });
-        const filesFake = new FileModel(
-            { name: 'fake-file-name', size: 10 } as File,
-            { parentId: '123', path: 'fake-dir' }
-        );
+        const filesFake = new FileModel({ name: 'fake-file-name', size: 10 } as File, { parentId: '123', path: 'fake-dir' });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations');
+        expect(request.url).toBe(
+            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations'
+        );
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -361,10 +352,7 @@ describe('UploadService', () => {
 
     describe('versioningEnabled', () => {
         it('should upload with "versioningEnabled" parameter taken from file options', () => {
-            const model = new FileModel(
-                { name: 'file-name', size: 10 } as File,
-                { versioningEnabled: true }
-            );
+            const model = new FileModel({ name: 'file-name', size: 10 } as File, { versioningEnabled: true });
 
             service.addToQueue(model);
             service.uploadFilesInTheQueue();
@@ -378,7 +366,7 @@ describe('UploadService', () => {
                 undefined,
                 { newVersion: false, name: 'file-name', nodeType: undefined },
                 {
-                    include: [ 'allowableOperations' ],
+                    include: ['allowableOperations'],
                     renditions: 'doclib',
                     versioningEnabled: true,
                     autoRename: true
@@ -387,10 +375,7 @@ describe('UploadService', () => {
         });
 
         it('should not use "versioningEnabled" if not explicitly provided', () => {
-            const model = new FileModel(
-                { name: 'file-name', size: 10 } as File,
-                {}
-            );
+            const model = new FileModel({ name: 'file-name', size: 10 } as File, {});
 
             service.addToQueue(model);
             service.uploadFilesInTheQueue();
@@ -404,7 +389,7 @@ describe('UploadService', () => {
                 undefined,
                 { newVersion: false, name: 'file-name', nodeType: undefined },
                 {
-                    include: [ 'allowableOperations' ],
+                    include: ['allowableOperations'],
                     renditions: 'doclib',
                     autoRename: true
                 }
@@ -413,15 +398,13 @@ describe('UploadService', () => {
     });
 
     it('should append the extra upload options to the request', () => {
-        const filesFake = new FileModel(
-            { name: 'fake-name', size: 10 } as File,
-            {
-                parentId: '123',
-                path: 'fake-dir',
-                secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
-                association: { assocType: 'fake-assoc' },
-                targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
-            });
+        const filesFake = new FileModel({ name: 'fake-name', size: 10 } as File, {
+            parentId: '123',
+            path: 'fake-dir',
+            secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
+            association: { assocType: 'fake-assoc' },
+            targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+        });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue();
 
@@ -438,7 +421,7 @@ describe('UploadService', () => {
                 nodeType: undefined,
                 parentId: '123',
                 path: 'fake-dir',
-                secondaryChildren: [ { assocType: 'assoc-1', childId: 'child-id' }],
+                secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
                 association: { assocType: 'fake-assoc' },
                 targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
             },
@@ -482,24 +465,24 @@ describe('UploadService', () => {
     });
 
     it('should skip files if they are in an excluded folder', () => {
-        const file1: any = { name: 'readmetoo.md', file : { webkitRelativePath: '/rollingPanda/' }};
-        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
+        const file1: any = { name: 'readmetoo.md', file: { webkitRelativePath: '/rollingPanda/' } };
+        const file2: any = { name: 'readme.md', file: { webkitRelativePath: '/test/' } };
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file2);
     });
 
     it('should match the folder in case insensitive way', () => {
-        const file1: any = { name: 'readmetoo.md', file : { webkitRelativePath: '/rollingPanda/' }};
-        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
+        const file1: any = { name: 'readmetoo.md', file: { webkitRelativePath: '/rollingPanda/' } };
+        const file2: any = { name: 'readme.md', file: { webkitRelativePath: '/test/' } };
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file2);
     });
 
     it('should skip files if they are in an excluded folder when path is in options', () => {
-        const file1: any = { name: 'readmetoo.md', file : {}, options: { path: '/rollingPanda/'}};
-        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
+        const file1: any = { name: 'readmetoo.md', file: {}, options: { path: '/rollingPanda/' } };
+        const file2: any = { name: 'readme.md', file: { webkitRelativePath: '/test/' } };
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file2);
@@ -535,10 +518,7 @@ describe('UploadService', () => {
     it('Should not pass rendition if it is disabled', () => {
         mockProductInfo.next({ status: { isThumbnailGenerationEnabled: false } } as RepositoryInfo);
 
-        const filesFake = new FileModel(
-            { name: 'fake-name', size: 10 } as File,
-            { newVersion: true}
-        );
+        const filesFake = new FileModel({ name: 'fake-name', size: 10 } as File, { newVersion: true });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue();
 

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FacetField, SearchCategory, TabbedFacetField } from '../../models';
 
 @Component({
     selector: 'adf-search-filter-chips',
@@ -29,6 +29,9 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterChipsComponent implements OnInit, OnDestroy {
+    private queryBuilder = inject(SearchQueryBuilderService);
+    private facetFiltersService = inject(SearchFacetFiltersService);
+
     private onDestroy$ = new Subject<void>();
 
     /** Toggles whether to show or not the context facet filters. */
@@ -37,11 +40,17 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
 
     facetChipTabbedId = '';
 
-    constructor(
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN)
-        public queryBuilder: SearchQueryBuilderService,
-        public facetFiltersService: SearchFacetFiltersService
-    ) {}
+    get categories(): SearchCategory[] {
+        return this.queryBuilder.categories || [];
+    }
+
+    get tabbedFacet(): TabbedFacetField | null {
+        return this.facetFiltersService.tabbedFacet;
+    }
+
+    get responseFacets(): FacetField[] {
+        return this.facetFiltersService.responseFacets || [];
+    }
 
     ngOnInit() {
         this.queryBuilder.executed

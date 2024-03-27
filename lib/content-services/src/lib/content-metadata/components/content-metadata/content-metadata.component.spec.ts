@@ -25,7 +25,6 @@ import { AppConfigService, CardViewBaseItemModel, CardViewComponent, Notificatio
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { EMPTY, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
@@ -100,8 +99,7 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
-    const clickOnGroupSave = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'))
-        .nativeElement.click();
+    const clickOnGroupSave = () => fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]')).nativeElement.click();
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
@@ -129,20 +127,16 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
-    const getGeneralInfoPanelContent = (): CardViewComponent => fixture.debugElement.query(By.css(
-        '.adf-metadata-properties-expansion-panel'
-    )).componentInstance;
+    const getGeneralInfoPanelContent = (): CardViewComponent =>
+        fixture.debugElement.query(By.css('.adf-metadata-properties-expansion-panel')).componentInstance;
 
-    const getGroupPanelContent = (): CardViewComponent => fixture.debugElement.query(By.css(
-        '.adf-metadata-grouped-properties-container adf-card-view'
-    )).componentInstance;
+    const getGroupPanelContent = (): CardViewComponent =>
+        fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
 
-    const getGeneralInfoPanel = (): MatExpansionPanel => fixture.debugElement.query(By.css(
-        '[data-automation-id="adf-metadata-group-properties"]'
-    ))?.componentInstance;
+    const getGeneralInfoPanel = (): MatExpansionPanel =>
+        fixture.debugElement.query(By.css('[data-automation-id="adf-metadata-group-properties"]'))?.componentInstance;
 
-    const queryDom = (properties = 'properties') =>
-        fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
+    const queryDom = (properties = 'properties') => fixture.debugElement.query(By.css(`[data-automation-id="adf-metadata-group-${properties}"]`));
 
     /**
      * Get metadata categories
@@ -164,7 +158,7 @@ describe('ContentMetadataComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [
                 {
                     provide: TagService,
@@ -274,11 +268,15 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should save changedProperties on save click', fakeAsync(() => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: []
+                    }
+                ])
+            );
             updateService.itemUpdated$.next({
                 changed: {}
             } as UpdateNotification);
@@ -458,11 +456,15 @@ describe('ContentMetadataComponent', () => {
 
         beforeEach(() => {
             showErrorSpy = spyOn(notificationService, 'showError').and.stub();
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: []
+                    }
+                ])
+            );
             component.displayCategories = true;
             component.displayTags = true;
             component.ngOnInit();
@@ -610,11 +612,15 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reset group edit ability on reset click', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: []
+                    }
+                ])
+            );
             component.ngOnInit();
             component.readOnly = false;
             fixture.detectChanges();
@@ -773,11 +779,15 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reload properties for group panel on cancel', () => {
-            const getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+            const getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: []
+                    }
+                ])
+            );
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             component.readOnly = false;
             fixture.detectChanges();
@@ -1181,8 +1191,7 @@ describe('ContentMetadataComponent', () => {
         let tagPaging: TagPaging;
 
         const expandTagsPanel = (): void => {
-            fixture.debugElement.query(By.css('[data-automation-id="adf-content-metadata-tags-panel"]'))
-                ?.componentInstance.opened.emit();
+            fixture.debugElement.query(By.css('[data-automation-id="adf-content-metadata-tags-panel"]'))?.componentInstance.opened.emit();
             fixture.detectChanges();
         };
 
@@ -1398,8 +1407,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('Categories list', () => {
         const expandCategoriesPanel = (): void => {
-            fixture.debugElement.query(By.css('[data-automation-id="adf-content-metadata-categories-panel"]'))
-                ?.componentInstance.opened.emit();
+            fixture.debugElement.query(By.css('[data-automation-id="adf-content-metadata-categories-panel"]'))?.componentInstance.opened.emit();
             fixture.detectChanges();
         };
 
@@ -1530,7 +1538,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should enable discard and save buttons after emitting categories change event', () => {
             categoriesManagementComponent.categoriesChange.emit([category1, category2]);
-            component.readOnly =false;
+            component.readOnly = false;
             fixture.detectChanges();
             expect(findCancelButton().disabled).toBeFalse();
             expect(findSaveCategoriesButton().disabled).toBeFalse();

@@ -18,9 +18,7 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -140,7 +138,7 @@ describe('AlfrescoViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, TranslateModule.forRoot(), CoreTestingModule, MatButtonModule, MatIconModule],
+            imports: [CoreTestingModule, MatButtonModule, MatIconModule],
             declarations: [
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,

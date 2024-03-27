@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { FacetBucketSortBy, FacetBucketSortDirection, FacetField } from '../models/facet-field.interface';
 import { Subject, throwError } from 'rxjs';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { TranslationService } from '@alfresco/adf-core';
 import { SearchService } from './search.service';
@@ -56,7 +55,7 @@ export class SearchFacetFiltersService implements OnDestroy {
     private readonly onDestroy$ = new Subject<boolean>();
 
     constructor(
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
+        private queryBuilder: SearchQueryBuilderService,
         private searchService: SearchService,
         private translationService: TranslationService,
         private categoryService: CategoryService

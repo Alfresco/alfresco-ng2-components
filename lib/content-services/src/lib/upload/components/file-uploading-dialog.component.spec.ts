@@ -21,7 +21,6 @@ import { UserPreferencesService } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
 import { FileUploadCompleteEvent, FileUploadErrorEvent } from '../../common/events/file.event';
@@ -36,11 +35,7 @@ describe('FileUploadingDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule,
-                UploadModule
-            ]
+            imports: [ContentTestingModule, UploadModule]
         });
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
         component = fixture.componentInstance;
@@ -52,10 +47,7 @@ describe('FileUploadingDialogComponent', () => {
         spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
 
         emitter = new EventEmitter();
-        fileList = [
-            new FileModel({ name: 'fake-name', size: 10 } as File),
-            new FileModel({ name: 'fake-name2', size: 10 } as File)
-        ];
+        fileList = [new FileModel({ name: 'fake-name', size: 10 } as File), new FileModel({ name: 'fake-name2', size: 10 } as File)];
 
         fixture.detectChanges();
     });
@@ -358,7 +350,6 @@ describe('FileUploadingDialogComponent', () => {
     });
 
     describe('Confirmation Dialog', () => {
-
         it('should focus on dialog when coming from confirmation', async () => {
             uploadService.addToQueue(...fileList);
             uploadService.uploadFilesInTheQueue(emitter);

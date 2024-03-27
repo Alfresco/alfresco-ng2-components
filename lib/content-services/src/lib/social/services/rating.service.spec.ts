@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RatingService } from './rating.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ratingOneMock, ratingThreeMock } from '../mock/rating-response.mock';
 
 declare let jasmine: any;
@@ -28,10 +27,7 @@ describe('Rating service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         service = TestBed.inject(RatingService);
     });

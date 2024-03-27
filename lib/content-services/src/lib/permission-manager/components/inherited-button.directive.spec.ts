@@ -19,15 +19,13 @@ import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-per
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 
-const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}, allowableOperations: ['updatePermissions']};
-const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}, allowableOperations: ['updatePermissions']};
-const fakeNodeWithInheritNoPermission: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}};
+const fakeNodeWithInherit: any = { id: 'fake-id', permissions: { isInheritanceEnabled: true }, allowableOperations: ['updatePermissions'] };
+const fakeNodeNoInherit: any = { id: 'fake-id', permissions: { isInheritanceEnabled: false }, allowableOperations: ['updatePermissions'] };
+const fakeNodeWithInheritNoPermission: any = { id: 'fake-id', permissions: { isInheritanceEnabled: true } };
 
 describe('InheritPermissionDirective', () => {
-
     let fixture: ComponentFixture<SimpleInheritedPermissionTestComponent>;
     let element: HTMLElement;
     let component: SimpleInheritedPermissionTestComponent;
@@ -35,13 +33,8 @@ describe('InheritPermissionDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            declarations: [
-                SimpleInheritedPermissionTestComponent
-            ]
+            imports: [ContentTestingModule],
+            declarations: [SimpleInheritedPermissionTestComponent]
         });
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;

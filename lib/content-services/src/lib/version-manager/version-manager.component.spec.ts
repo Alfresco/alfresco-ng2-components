@@ -21,7 +21,6 @@ import { By } from '@angular/platform-browser';
 import { Node, Version, VersionEntry, VersionPaging } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodesApiService } from '../common/services/nodes-api.service';
 
 describe('VersionManagerComponent', () => {
@@ -40,7 +39,7 @@ describe('VersionManagerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(VersionManagerComponent);
@@ -86,7 +85,7 @@ describe('VersionManagerComponent', () => {
 
         const emittedData = { value: { entry: node } };
         let lastValue: Node;
-        component.uploadSuccess.subscribe((event) => lastValue = event);
+        component.uploadSuccess.subscribe((event) => (lastValue = event));
         component.onUploadSuccess(emittedData);
         expect(lastValue).toBe(node);
     });
@@ -95,7 +94,7 @@ describe('VersionManagerComponent', () => {
         fixture.detectChanges();
 
         let lastValue: Node;
-        nodesApiService.nodeUpdated.subscribe((res) => lastValue = res);
+        nodesApiService.nodeUpdated.subscribe((res) => (lastValue = res));
 
         const emittedData = { value: { entry: node } };
         component.onUploadSuccess(emittedData);

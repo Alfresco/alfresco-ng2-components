@@ -18,7 +18,6 @@
 import { NotificationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { PermissionListService } from './permission-list.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -31,19 +30,17 @@ describe('PermissionListService', () => {
     let nodePermissionService: NodePermissionService;
     let notificationService: NotificationService;
     let nodesApiService: NodesApiService;
-    const localPermission = [new PermissionDisplayModel({
-        authorityId: 'GROUP_EVERYONE',
-        name: 'Contributor',
-        accessStatus: 'ALLOWED'
-    })
+    const localPermission = [
+        new PermissionDisplayModel({
+            authorityId: 'GROUP_EVERYONE',
+            name: 'Contributor',
+            accessStatus: 'ALLOWED'
+        })
     ];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         service = TestBed.inject(PermissionListService);
         nodePermissionService = TestBed.inject(NodePermissionService);
@@ -55,7 +52,7 @@ describe('PermissionListService', () => {
     });
 
     it('fetch Permission', (done) => {
-        spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node: fakeNodeWithOnlyLocally , roles: []}));
+        spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node: fakeNodeWithOnlyLocally, roles: [] }));
 
         const subscription = service.data$.subscribe(({ node, inheritedPermissions, localPermissions, roles }) => {
             expect(node).toBe(fakeNodeWithOnlyLocally);
@@ -70,12 +67,11 @@ describe('PermissionListService', () => {
     });
 
     describe('toggle permission', () => {
-
         it('should show error if user does not have permission to update node', () => {
             const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
             const event = { source: { checked: false } };
             node.allowableOperations = [];
-            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
+            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node, roles: [] }));
             spyOn(nodesApiService, 'updateNode').and.stub();
             service.fetchPermission('fetch node');
             service.toggleInherited(event as any);
@@ -86,7 +82,7 @@ describe('PermissionListService', () => {
         it('should include the local permission before toggle', (done) => {
             const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
             const event = { source: { checked: false } };
-            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
+            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node, roles: [] }));
             spyOn(nodePermissionService, 'updatePermissions').and.returnValue(of(null));
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(JSON.parse(JSON.stringify(fakeNodeLocalSiteManager))));
             service.fetchPermission('fetch node');
@@ -109,13 +105,15 @@ describe('PermissionListService', () => {
             const node = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
             const event = { source: { checked: false } };
             const updateNode = JSON.parse(JSON.stringify(fakeNodeInheritedOnly));
-            node.permissions.locallySet = [{
-                authorityId: 'GROUP_site_testsite_SiteManager',
-                name: 'SiteManager',
-                accessStatus: 'ALLOWED'
-            }];
+            node.permissions.locallySet = [
+                {
+                    authorityId: 'GROUP_site_testsite_SiteManager',
+                    name: 'SiteManager',
+                    accessStatus: 'ALLOWED'
+                }
+            ];
             updateNode.permissions.isInheritanceEnabled = false;
-            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
+            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node, roles: [] }));
             spyOn(nodePermissionService, 'updatePermissions').and.returnValue(of(null));
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(updateNode));
             service.fetchPermission('fetch node');
@@ -131,7 +129,7 @@ describe('PermissionListService', () => {
             const event = { source: { checked: false } };
             node.permissions.isInheritanceEnabled = true;
             spyOn(nodesApiService, 'updateNode').and.returnValue(throwError('Failed to update'));
-            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
+            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node, roles: [] }));
             service.fetchPermission('fetch node');
 
             service.toggleInherited(event as any);
@@ -144,14 +142,17 @@ describe('PermissionListService', () => {
     describe('delete permission', () => {
         const node = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
         beforeEach(() => {
-            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
+            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node, roles: [] }));
             service.fetchPermission('fetch node');
         });
 
         it('should be able to delete a permission', () => {
             spyOn(nodePermissionService, 'removePermissions').and.returnValue(of(node));
             service.deletePermissions(localPermission);
-            expect(notificationService.showInfo).toHaveBeenCalledWith('PERMISSION_MANAGER.MESSAGE.PERMISSION-BULK-DELETE-SUCCESS', null, { user: 0, group: 1 });
+            expect(notificationService.showInfo).toHaveBeenCalledWith('PERMISSION_MANAGER.MESSAGE.PERMISSION-BULK-DELETE-SUCCESS', null, {
+                user: 0,
+                group: 1
+            });
         });
 
         it('should show error message for errored delete operation', () => {
@@ -164,14 +165,17 @@ describe('PermissionListService', () => {
     describe('Bulk Role', () => {
         const node = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
         beforeEach(() => {
-            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({node , roles: []}));
+            spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of({ node, roles: [] }));
             service.fetchPermission('fetch node');
         });
 
         it('should be able to update bulk permission', () => {
             spyOn(nodePermissionService, 'updatePermissions').and.returnValue(of(node));
             service.bulkRoleUpdate('fake-role');
-            expect(notificationService.showInfo).toHaveBeenCalledWith('PERMISSION_MANAGER.MESSAGE.PERMISSION-BULK-UPDATE-SUCCESS', null, { user: 0, group: 1 });
+            expect(notificationService.showInfo).toHaveBeenCalledWith('PERMISSION_MANAGER.MESSAGE.PERMISSION-BULK-UPDATE-SUCCESS', null, {
+                user: 0,
+                group: 1
+            });
         });
 
         it('should show error message for errored operation', () => {

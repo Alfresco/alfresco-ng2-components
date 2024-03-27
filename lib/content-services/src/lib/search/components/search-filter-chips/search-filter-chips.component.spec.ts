@@ -22,18 +22,8 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { SearchFacetFieldComponent } from '../search-facet-field/search-facet-field.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchFilterList } from '../../models/search-filter-list.model';
-import {
-    disabledCategories,
-    filteredResult,
-    mockSearchResult,
-    searchFilter,
-    simpleCategories,
-    stepOne,
-    stepThree,
-    stepTwo
-} from '../../../mock';
+import { disabledCategories, filteredResult, mockSearchResult, searchFilter, simpleCategories, stepOne, stepThree, stepTwo } from '../../../mock';
 import { AppConfigService } from '@alfresco/adf-core';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -50,10 +40,7 @@ describe('SearchFilterChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         appConfigService = TestBed.inject(AppConfigService);
@@ -66,27 +53,41 @@ describe('SearchFilterChipsComponent', () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
             categories: [],
-            facetFields: { fields: [
+            facetFields: {
+                fields: [
                     { label: 'f1', field: 'f1' },
                     { label: 'f2', field: 'f2' }
-                ]},
+                ]
+            },
             facetQueries: {
                 queries: []
             }
         };
 
-        searchFacetFiltersService.responseFacets =  [
-            { type: 'field', label: 'f1', field: 'f1', buckets: new SearchFilterList([
-                        { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
-                        { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
-            { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList()}
+        searchFacetFiltersService.responseFacets = [
+            {
+                type: 'field',
+                label: 'f1',
+                field: 'f1',
+                buckets: new SearchFilterList([
+                    { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
+                    { label: 'b2', count: 1, filterQuery: 'filter2' }
+                ])
+            },
+            { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() }
         ];
-        searchFacetFiltersService.queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
+        queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
 
         const serverResponseFields: any = [
-            { type: 'field', label: 'f1', field: 'f1', buckets: [
-                    { label: 'b1', metrics: [{value: {count: 6}}], filterQuery: 'filter' },
-                    { label: 'b2', metrics: [{value: {count: 1}}], filterQuery: 'filter2' }] },
+            {
+                type: 'field',
+                label: 'f1',
+                field: 'f1',
+                buckets: [
+                    { label: 'b1', metrics: [{ value: { count: 6 } }], filterQuery: 'filter' },
+                    { label: 'b2', metrics: [{ value: { count: 1 } }], filterQuery: 'filter2' }
+                ]
+            },
             { type: 'field', label: 'f2', field: 'f2', buckets: [] }
         ];
         const data = {
@@ -107,34 +108,48 @@ describe('SearchFilterChipsComponent', () => {
 
         searchFacetFiltersService.onDataLoaded(data);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
-        expect(searchFacetFiltersService.responseFacets[0].buckets.items[0].checked).toEqual(true, 'should show the already checked item');
+        expect(searchFacetFiltersService.responseFacets[0].buckets.items[0].checked).toEqual(true);
     });
 
     it('should fetch facet fields from response payload and show the newly checked items', async () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
             categories: [],
-            facetFields: { fields: [
+            facetFields: {
+                fields: [
                     { label: 'f1', field: 'f1' },
                     { label: 'f2', field: 'f2' }
-                ]},
+                ]
+            },
             facetQueries: {
                 queries: []
             }
         };
 
         searchFacetFiltersService.responseFacets = [
-            { type: 'field', label: 'f1', field: 'f1', buckets: new SearchFilterList([
-                        { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
-                        { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
-            { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList()}
+            {
+                type: 'field',
+                label: 'f1',
+                field: 'f1',
+                buckets: new SearchFilterList([
+                    { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
+                    { label: 'b2', count: 1, filterQuery: 'filter2' }
+                ])
+            },
+            { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() }
         ];
         queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
 
         const serverResponseFields: any = [
-            { type: 'field', label: 'f1', field: 'f1', buckets: [
-                    { label: 'b1', metrics: [{value: {count: 6}}], filterQuery: 'filter' },
-                    { label: 'b2', metrics: [{value: {count: 1}}], filterQuery: 'filter2' }] },
+            {
+                type: 'field',
+                label: 'f1',
+                field: 'f1',
+                buckets: [
+                    { label: 'b1', metrics: [{ value: { count: 6 } }], filterQuery: 'filter' },
+                    { label: 'b2', metrics: [{ value: { count: 1 } }], filterQuery: 'filter2' }
+                ]
+            },
             { type: 'field', label: 'f2', field: 'f2', buckets: [] }
         ];
         const data = {
@@ -154,26 +169,34 @@ describe('SearchFilterChipsComponent', () => {
 
         searchFacetFiltersService.onDataLoaded(data);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
-        expect(searchFacetFiltersService.responseFacets[0].buckets.items[1].checked).toEqual(true, 'should show the newly checked item');
+        expect(searchFacetFiltersService.responseFacets[0].buckets.items[1].checked).toEqual(true);
     });
 
     it('should show buckets with 0 values when there are no facet fields on the response payload', async () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
             categories: [],
-            facetFields: { fields: [
+            facetFields: {
+                fields: [
                     { label: 'f1', field: 'f1' },
                     { label: 'f2', field: 'f2' }
-                ]},
+                ]
+            },
             facetQueries: {
                 queries: []
             }
         };
 
         searchFacetFiltersService.responseFacets = [
-            { type: 'field', label: 'f1', field: 'f1', buckets: new SearchFilterList( [
-                        { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
-                        { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
+            {
+                type: 'field',
+                label: 'f1',
+                field: 'f1',
+                buckets: new SearchFilterList([
+                    { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
+                    { label: 'b2', count: 1, filterQuery: 'filter2' }
+                ])
+            },
             { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() }
         ];
         queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
@@ -203,10 +226,11 @@ describe('SearchFilterChipsComponent', () => {
             field: 'query-response',
             label: 'query response',
             buckets: new SearchFilterList([
-                    { label: 'q1', query: 'q1', checked: true, metrics: [{value: {count: 1}}] },
-                    { label: 'q2', query: 'q2', checked: false, metrics: [{value: {count: 1}}] },
-                    { label: 'q3', query: 'q3', checked: true, metrics: [{value: {count: 1}}] }])
-            } as any;
+                { label: 'q1', query: 'q1', checked: true, metrics: [{ value: { count: 1 } }] },
+                { label: 'q2', query: 'q2', checked: false, metrics: [{ value: { count: 1 } }] },
+                { label: 'q3', query: 'q3', checked: true, metrics: [{ value: { count: 1 } }] }
+            ])
+        } as any;
         searchFacetFiltersService.responseFacets = [queryResponse];
 
         fixture.detectChanges();
@@ -227,8 +251,7 @@ describe('SearchFilterChipsComponent', () => {
     });
 
     describe('widgets', () => {
-
-        it('should not show the disabled widget',  async () => {
+        it('should not show the disabled widget', async () => {
             appConfigService.config.search = { categories: disabledCategories };
             queryBuilder.resetToDefaults();
 
@@ -237,7 +260,7 @@ describe('SearchFilterChipsComponent', () => {
             expect(chips.length).toBe(0);
         });
 
-        it('should show the widgets only if configured',  async () => {
+        it('should show the widgets only if configured', async () => {
             appConfigService.config.search = { categories: simpleCategories };
             queryBuilder.resetToDefaults();
 
@@ -245,7 +268,7 @@ describe('SearchFilterChipsComponent', () => {
             expect(chips.length).toBe(2);
 
             const titleElements = fixture.debugElement.queryAll(By.css('.adf-search-filter-placeholder'));
-            expect(titleElements.map(title => title.nativeElement.innerText.trim())).toEqual(['Name:', 'Type:']);
+            expect(titleElements.map((title) => title.nativeElement.innerText.trim())).toEqual(['Name:', 'Type:']);
         });
 
         it('should be update the search query when name changed', async () => {
@@ -286,9 +309,10 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             let sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepOne.forEach(async (item, index) => {
+            for (const item of stepOne) {
+                const index = stepOne.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             let moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             let lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -300,9 +324,10 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepTwo.forEach(async (item, index) => {
+            for (const item of stepTwo) {
+                const index = stepTwo.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -312,9 +337,10 @@ describe('SearchFilterChipsComponent', () => {
             moreButton.triggerEventHandler('click', {});
             fixture.detectChanges();
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepThree.forEach(async (item, index) => {
+            for (const item of stepThree) {
+                const index = stepThree.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -325,9 +351,10 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepTwo.forEach(async (item, index) => {
+            for (const item of stepTwo) {
+                const index = stepTwo.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -338,9 +365,10 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepOne.forEach(async (item, index) => {
+            for (const item of stepOne) {
+                const index = stepOne.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
-            });
+            }
 
             moreButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-MORE"]`));
             lessButton = fixture.debugElement.query(By.css(`${field} button[title="SEARCH.FILTER.ACTIONS.SHOW-LESS"]`));
@@ -392,23 +420,24 @@ describe('SearchFilterChipsComponent', () => {
             fixture.detectChanges();
 
             filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            filteredResult.forEach(async (item, index) => {
+            for (const item of filteredResult) {
+                const index = filteredResult.indexOf(item);
                 expect(await filteredMenu[index].getLabelText()).toEqual(item);
-            });
+            }
 
-            const clearButton = await loader.getHarness(MatButtonHarness.with({selector: '[title="SEARCH.FILTER.BUTTONS.CLEAR"]' }));
+            const clearButton = await loader.getHarness(MatButtonHarness.with({ selector: '[title="SEARCH.FILTER.BUTTONS.CLEAR"]' }));
             await clearButton.click();
 
             filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
-            stepOne.forEach(async (item, index) => {
+            for (const item of stepOne) {
+                const index = stepOne.indexOf(item);
                 expect(await filteredMenu[index].getLabelText()).toEqual(item);
-            });
+            }
 
             await filteredMenu[0].check();
 
             expect(await filteredMenu[0].getLabelText()).toEqual('Extra Small (10239)');
             expect(queryBuilder.update).toHaveBeenCalledTimes(1);
         });
-
     });
 });

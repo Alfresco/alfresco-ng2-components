@@ -21,16 +21,18 @@ import { SearchService } from '../../search/services/search.service';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { of, throwError } from 'rxjs';
 import {
-    fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
-    fakeNodeToRemovePermission, fakeNodeWithoutPermissions, fakeNodeWithoutSite
+    fakeNodeWithOnlyLocally,
+    fakeSiteRoles,
+    fakeSiteNodeResponse,
+    fakeNodeToRemovePermission,
+    fakeNodeWithoutPermissions,
+    fakeNodeWithoutSite
 } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 
 describe('NodePermissionService', () => {
-
     let service: NodePermissionService;
     let nodeService: NodesApiService;
     let searchApiService: SearchService;
@@ -54,20 +56,20 @@ describe('NodePermissionService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         service = TestBed.inject(NodePermissionService);
         searchApiService = TestBed.inject(SearchService);
         nodeService = TestBed.inject(NodesApiService);
     });
 
-    const returnUpdatedNode = (nodeBody: Node) => of(new Node({
-        id: 'fake-updated-node',
-        permissions: nodeBody.permissions
-    }));
+    const returnUpdatedNode = (nodeBody: Node) =>
+        of(
+            new Node({
+                id: 'fake-updated-node',
+                permissions: nodeBody.permissions
+            })
+        );
 
     it('should return a list of roles taken from the site groups', (done) => {
         spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
@@ -98,7 +100,7 @@ describe('NodePermissionService', () => {
         const fakePermission: PermissionElement = {
             authorityId: 'GROUP_EVERYONE',
             name: 'Contributor',
-            accessStatus : fakeAccessStatus
+            accessStatus: fakeAccessStatus
         };
 
         spyOn(nodeService, 'updateNode').and.callFake((_, permissionBody) => returnUpdatedNode(permissionBody));
@@ -118,7 +120,7 @@ describe('NodePermissionService', () => {
         const fakePermission = {
             authorityId: 'FAKE_PERSON_1',
             name: 'Contributor',
-            accessStatus : 'ALLOWED'
+            accessStatus: 'ALLOWED'
         } as PermissionElement;
         spyOn(nodeService, 'updateNode').and.callFake((_, permissionBody) => returnUpdatedNode(permissionBody));
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeToRemovePermission));
@@ -182,24 +184,25 @@ describe('NodePermissionService', () => {
     it('should fail when user select the same authority and role to add', (done) => {
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
 
-        const fakeDuplicateAuthority: PermissionElement []  = [{
-            authorityId: 'GROUP_EVERYONE',
-            accessStatus: 'ALLOWED',
-            name: 'Contributor'
-        }];
+        const fakeDuplicateAuthority: PermissionElement[] = [
+            {
+                authorityId: 'GROUP_EVERYONE',
+                accessStatus: 'ALLOWED',
+                name: 'Contributor'
+            }
+        ];
 
-        service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority)
-            .subscribe(
-                () => {
-                    fail('should throw exception');
-                },
-                (errorMessage) => {
-                    expect(errorMessage).not.toBeNull();
-                    expect(errorMessage).toBeDefined();
-                    expect(errorMessage).toBe('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION');
-                    done();
-                }
-            );
+        service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority).subscribe(
+            () => {
+                fail('should throw exception');
+            },
+            (errorMessage) => {
+                expect(errorMessage).not.toBeNull();
+                expect(errorMessage).toBeDefined();
+                expect(errorMessage).toBe('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION');
+                done();
+            }
+        );
     });
 
     it('should be able to remove the locallyset permission', (done) => {

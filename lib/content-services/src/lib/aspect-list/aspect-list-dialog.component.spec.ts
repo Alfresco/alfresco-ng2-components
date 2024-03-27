@@ -18,7 +18,6 @@
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
@@ -114,7 +113,7 @@ describe('AspectListDialogComponent', () => {
             excludedAspects: []
         };
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule, MatDialogModule],
+            imports: [ContentTestingModule, MatDialogModule],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {
@@ -310,8 +309,7 @@ describe('AspectListDialogComponent', () => {
             data.excludedAspects = ['some aspect 1', 'some aspect 2'];
 
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.directive(AspectListComponent)).componentInstance.excludedAspects)
-                .toBe(data.excludedAspects);
+            expect(fixture.debugElement.query(By.directive(AspectListComponent)).componentInstance.excludedAspects).toBe(data.excludedAspects);
         });
     });
 });

@@ -26,7 +26,6 @@ import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentService } from '../../../common/services/content.service';
 
 describe('ContentAction', () => {
@@ -40,10 +39,7 @@ describe('ContentAction', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         contentService = TestBed.inject(ContentService);
@@ -51,7 +47,7 @@ describe('ContentAction', () => {
         documentActions = new DocumentActionsService(nodeActionsService, null, null, null);
         folderActions = new FolderActionsService(nodeActionsService, null, contentService, null);
 
-        documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
+        documentList = TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent;
         actionList = new ContentActionListComponent(documentList);
     });
 
@@ -246,7 +242,7 @@ describe('ContentAction', () => {
         expect(action.getSystemHandler('unknown', 'name')).toBeNull();
         expect(folderActions.getHandler).not.toHaveBeenCalled();
         expect(documentActions.getHandler).not.toHaveBeenCalled();
-   });
+    });
 
     it('should wire model with custom event handler', (done) => {
         const action = new ContentActionComponent(actionList, documentActions, folderActions);

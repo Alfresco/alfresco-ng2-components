@@ -24,14 +24,12 @@ import {
     OnDestroy,
     ComponentRef,
     ComponentFactoryResolver,
-    Inject,
     SimpleChanges,
     OnChanges
 } from '@angular/core';
 import { SearchFilterService } from '../../services/search-filter.service';
-import { BaseQueryBuilderService } from '../../services/base-query-builder.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Observable } from 'rxjs';
+import { SearchQueryBuilderService } from '../../services';
 
 @Component({
     selector: 'adf-search-widget-container',
@@ -60,7 +58,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
 
     constructor(
         private searchFilterService: SearchFilterService,
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: BaseQueryBuilderService,
+        private queryBuilder: SearchQueryBuilderService,
         private componentFactoryResolver: ComponentFactoryResolver
     ) {}
 

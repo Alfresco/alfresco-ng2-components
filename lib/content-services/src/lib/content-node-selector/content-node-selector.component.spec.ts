@@ -28,7 +28,6 @@ import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { NodeAction } from '../document-list/models/node-action.enum';
@@ -61,7 +60,7 @@ describe('ContentNodeSelectorComponent', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule, MatDialogModule, UploadModule],
+            imports: [ContentTestingModule, MatDialogModule, UploadModule],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {

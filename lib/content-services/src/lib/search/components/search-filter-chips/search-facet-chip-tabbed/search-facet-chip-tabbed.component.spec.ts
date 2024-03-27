@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { SearchFacetChipTabbedComponent } from './search-facet-chip-tabbed.component';
@@ -35,7 +34,7 @@ describe('SearchFacetChipTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(SearchFacetChipTabbedComponent);

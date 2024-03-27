@@ -21,10 +21,8 @@ import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { DownloadZipService } from './services/download-zip.service';
 import { Observable } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('DownloadZipDialogComponent', () => {
-
     let fixture: ComponentFixture<DownloadZipDialogComponent>;
     let component: DownloadZipDialogComponent;
     let element: HTMLElement;
@@ -34,17 +32,12 @@ describe('DownloadZipDialogComponent', () => {
     };
 
     const dataMock = {
-        nodeIds: [
-            '123'
-        ]
+        nodeIds: ['123']
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: dataMock }
@@ -91,10 +84,13 @@ describe('DownloadZipDialogComponent', () => {
     });
 
     it('should call cancelDownload when CANCEL button is clicked', () => {
-        spyOn(downloadZipService, 'createDownload').and.callFake(() => new Observable((observer) => {
-            observer.next();
-            observer.complete();
-        }));
+        spyOn(downloadZipService, 'createDownload').and.callFake(
+            () =>
+                new Observable((observer) => {
+                    observer.next();
+                    observer.complete();
+                })
+        );
 
         fixture.detectChanges();
         spyOn(component, 'cancelDownload');
@@ -106,20 +102,26 @@ describe('DownloadZipDialogComponent', () => {
     });
 
     it('should call createDownload when component is initialize', () => {
-        const createDownloadSpy = spyOn(downloadZipService, 'createDownload').and.callFake(() => new Observable((observer) => {
-            observer.next();
-            observer.complete();
-        }));
+        const createDownloadSpy = spyOn(downloadZipService, 'createDownload').and.callFake(
+            () =>
+                new Observable((observer) => {
+                    observer.next();
+                    observer.complete();
+                })
+        );
 
         fixture.detectChanges();
         expect(createDownloadSpy).toHaveBeenCalled();
     });
 
     it('should close dialog when download is completed', () => {
-        spyOn(downloadZipService, 'createDownload').and.callFake(() => new Observable((observer) => {
-            observer.next();
-            observer.complete();
-        }));
+        spyOn(downloadZipService, 'createDownload').and.callFake(
+            () =>
+                new Observable((observer) => {
+                    observer.next();
+                    observer.complete();
+                })
+        );
 
         component.download('fakeUrl', 'fileName');
         spyOn(component, 'cancelDownload');
@@ -128,10 +130,13 @@ describe('DownloadZipDialogComponent', () => {
     });
 
     it('should close dialog when download is cancelled', () => {
-        spyOn(downloadZipService, 'createDownload').and.callFake(() => new Observable((observer) => {
-            observer.next();
-            observer.complete();
-        }));
+        spyOn(downloadZipService, 'createDownload').and.callFake(
+            () =>
+                new Observable((observer) => {
+                    observer.next();
+                    observer.complete();
+                })
+        );
 
         fixture.detectChanges();
         component.download('url', 'filename');

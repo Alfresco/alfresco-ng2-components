@@ -32,7 +32,6 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../document-list';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { mockContentModelTextProperty } from '../mock/content-model.mock';
@@ -71,12 +70,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
     let contentService: ContentService;
 
     const triggerSearchResults = (searchResults: ResultSetPaging) => {
-        component.queryBuilderService.executed.next(searchResults);
+        const service = fixture.debugElement.injector.get(SearchQueryBuilderService);
+        service.executed.next(searchResults);
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
     });
@@ -94,8 +94,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
             contentService = TestBed.inject(ContentService);
             thumbnailService = TestBed.inject(ThumbnailService);
 
-            searchQueryBuilderService = component.queryBuilderService;
-            component.queryBuilderService.resetToDefaults();
+            searchQueryBuilderService = fixture.debugElement.injector.get(SearchQueryBuilderService);
+            searchQueryBuilderService.resetToDefaults();
 
             spyOn(nodeService, 'getNode').and.returnValue(
                 of(

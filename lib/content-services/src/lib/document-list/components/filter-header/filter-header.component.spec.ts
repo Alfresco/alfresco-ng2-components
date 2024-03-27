@@ -17,13 +17,11 @@
 
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { DataTableComponent, DataSorting } from '@alfresco/adf-core';
-import { SearchService  } from '../../../search/services/search.service';
+import { SearchService } from '../../../search/services/search.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { SearchHeaderQueryBuilderService } from './../../../search/services/search-header-query-builder.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from './../../../search/search-query-service.token';
 import { DocumentListComponent } from './../document-list.component';
 import { FilterHeaderComponent } from './filter-header.component';
 import { Pagination } from '@alfresco/js-api';
@@ -50,14 +48,10 @@ describe('FilterHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             providers: [
                 { provide: ADF_DOCUMENT_PARENT_COMPONENT, useExisting: DocumentListComponent },
                 { provide: SearchService, useValue: searchMock },
-                { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService },
                 { provide: DocumentListComponent, useValue: documentListMock },
                 DataTableComponent
             ]
@@ -149,5 +143,4 @@ describe('FilterHeaderComponent', () => {
         fixture.detectChanges();
         fixture.whenStable();
     });
-
 });

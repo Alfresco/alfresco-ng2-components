@@ -20,10 +20,8 @@ import { LikeComponent } from './like.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
 import { RatingService } from './services/rating.service';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('Like component', () => {
-
     let component: any;
     let fixture: ComponentFixture<LikeComponent>;
     let element: HTMLElement;
@@ -31,19 +29,18 @@ describe('Like component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         service = TestBed.inject(RatingService);
 
-        spyOn(service, 'getRating').and.returnValue(of({
-            entry: {
-                id: 'likes',
-                aggregate: { numberOfRatings: 2 }
-            }
-        }));
+        spyOn(service, 'getRating').and.returnValue(
+            of({
+                entry: {
+                    id: 'likes',
+                    aggregate: { numberOfRatings: 2 }
+                }
+            })
+        );
 
         fixture = TestBed.createComponent(LikeComponent);
         element = fixture.nativeElement;
@@ -61,12 +58,14 @@ describe('Like component', () => {
     });
 
     it('should increase the number of likes when clicked', async () => {
-        spyOn(service, 'postRating').and.returnValue(of({
-            entry: {
-                id: 'likes',
-                aggregate: { numberOfRatings: 3 }
-            }
-        }));
+        spyOn(service, 'postRating').and.returnValue(
+            of({
+                entry: {
+                    id: 'likes',
+                    aggregate: { numberOfRatings: 3 }
+                }
+            })
+        );
 
         const likeButton: any = element.querySelector('#adf-like-test-id');
         likeButton.click();

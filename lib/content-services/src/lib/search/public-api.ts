@@ -20,6 +20,5 @@ export * from './forms';
 export * from './mocks';
 export * from './models';
 export * from './services';
-export * from './search-query-service.token';
 export * from './search-configuration.token';
 export * from './search.module';

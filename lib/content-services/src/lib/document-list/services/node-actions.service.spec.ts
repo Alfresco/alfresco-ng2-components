@@ -24,7 +24,6 @@ import { ContentNodeDialogService } from '../../content-node-selector/content-no
 import { of, throwError } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { delay } from 'rxjs/operators';
 
 const fakeNode: Node = {
@@ -32,7 +31,6 @@ const fakeNode: Node = {
 } as Node;
 
 describe('NodeActionsService', () => {
-
     let service: NodeActionsService;
     let documentListService: DocumentListService;
     let contentDialogService: ContentNodeDialogService;
@@ -42,13 +40,8 @@ describe('NodeActionsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef }
-            ]
+            imports: [ContentTestingModule],
+            providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
@@ -103,10 +96,12 @@ describe('NodeActionsService', () => {
     it('should be able to propagate the dialog error', fakeAsync(() => {
         spyOn(documentListService, 'copyNode').and.returnValue(throwError('FAKE-KO'));
 
-        service.copyFolder(fakeNode, '!allowed').subscribe(() => {
-        }, (error) => {
-            expect(error).toBe('FAKE-KO');
-        });
+        service.copyFolder(fakeNode, '!allowed').subscribe(
+            () => {},
+            (error) => {
+                expect(error).toBe('FAKE-KO');
+            }
+        );
 
         tick(100);
     }));

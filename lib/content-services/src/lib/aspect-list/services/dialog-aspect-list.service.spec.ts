@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { DialogAspectListService } from './dialog-aspect-list.service';
 import { AspectListDialogComponent } from '../aspect-list-dialog.component';
@@ -32,10 +31,7 @@ describe('DialogAspectListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         dialogAspectListService = TestBed.inject(DialogAspectListService);
         dialog = TestBed.inject(MatDialog);

@@ -23,7 +23,6 @@ import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodeAction } from '../document-list/models/node-action.enum';
 import { SitesService } from '../common/services/sites.service';
 
@@ -61,7 +60,6 @@ const fakeSiteList: SitePaging = new SitePaging({
 });
 
 describe('ContentNodeDialogService', () => {
-
     let service: ContentNodeDialogService;
     let documentListService: DocumentListService;
     let sitesService: SitesService;
@@ -71,10 +69,7 @@ describe('ContentNodeDialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
@@ -99,10 +94,12 @@ describe('ContentNodeDialogService', () => {
             isFile: false
         } as Node;
 
-        service.openLockNodeDialog(testNode).subscribe(() => {
-        }, (error) => {
-            expect(error).toBe('OPERATION.FAIL.NODE.NO_PERMISSION');
-        });
+        service.openLockNodeDialog(testNode).subscribe(
+            () => {},
+            (error) => {
+                expect(error).toBe('OPERATION.FAIL.NODE.NO_PERMISSION');
+            }
+        );
     });
 
     it('should be able to open the dialog when node has permission', () => {
@@ -116,7 +113,8 @@ describe('ContentNodeDialogService', () => {
             (error) => {
                 expect(spyOnDialogOpen).not.toHaveBeenCalled();
                 expect(JSON.parse(error.message).error.statusCode).toBe(403);
-            });
+            }
+        );
     });
 
     it('should be able to open the dialog using a folder id', fakeAsync(() => {

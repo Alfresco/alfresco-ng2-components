@@ -54,7 +54,6 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { FavoritePaging, NodeEntry, NodePaging, Node, FavoritePagingList } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { DocumentListModule } from '../document-list.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
@@ -89,7 +88,7 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [{ provide: MatDialog, useValue: mockDialog }]
         });
@@ -896,7 +895,10 @@ describe('DocumentList', () => {
     });
 
     it('should emit new columns order on columnOrderChanged', () => {
-        const newColumnsOrder = [{key: 'key', type: 'text', id: 'tag'}, {key: 'key1', type: 'text', id: 'name'}];
+        const newColumnsOrder = [
+            { key: 'key', type: 'text', id: 'tag' },
+            { key: 'key1', type: 'text', id: 'name' }
+        ];
         spyOn(documentList.columnsOrderChanged, 'emit');
         spyOn(documentList, 'onColumnOrderChange').and.callThrough();
         documentList.dataTable.columnOrderChanged.emit(newColumnsOrder as DataColumn[]);
@@ -906,21 +908,27 @@ describe('DocumentList', () => {
     });
 
     it('should emit new columns width on columnsWidthChanged', () => {
-        const newColumnWidth = [{key: 'key', type: 'text', id: 'tag', width: 65}, {key: 'key1', type: 'text', id: 'name', width: 77}];
+        const newColumnWidth = [
+            { key: 'key', type: 'text', id: 'tag', width: 65 },
+            { key: 'key1', type: 'text', id: 'name', width: 77 }
+        ];
         spyOn(documentList.columnsWidthChanged, 'emit');
         spyOn(documentList, 'onColumnsWidthChange').and.callThrough();
         documentList.dataTable.columnsWidthChanged.emit(newColumnWidth as DataColumn[]);
 
         expect(documentList.onColumnsWidthChange).toHaveBeenCalledWith(newColumnWidth);
-        expect(documentList.columnsWidthChanged.emit).toHaveBeenCalledWith({tag: 65, name: 77});
+        expect(documentList.columnsWidthChanged.emit).toHaveBeenCalledWith({ tag: 65, name: 77 });
     });
 
     it('should emit new columns visibility', () => {
-        const newColumnsVisibility = [{key: 'key', type: 'text', id: 'tag', isHidden: true}, {key: 'key1', type: 'text', id: 'name'}];
+        const newColumnsVisibility = [
+            { key: 'key', type: 'text', id: 'tag', isHidden: true },
+            { key: 'key1', type: 'text', id: 'name' }
+        ];
         spyOn(documentList.columnsVisibilityChanged, 'emit');
         documentList.onColumnsVisibilityChange(newColumnsVisibility as DataColumn[]);
 
-        expect(documentList.columnsVisibilityChanged.emit).toHaveBeenCalledWith({tag: false});
+        expect(documentList.columnsVisibilityChanged.emit).toHaveBeenCalledWith({ tag: false });
     });
 
     it('should perform folder navigation on single click', () => {
@@ -1863,7 +1871,7 @@ describe('DocumentListComponent rendering', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [CustomTemplateComponent],
-            imports: [TranslateModule.forRoot(), ContentTestingModule, DataTableModule, DocumentListModule]
+            imports: [ContentTestingModule, DataTableModule, DocumentListModule]
         });
         fixture = TestBed.createComponent(CustomTemplateComponent);
         component = fixture.componentInstance;

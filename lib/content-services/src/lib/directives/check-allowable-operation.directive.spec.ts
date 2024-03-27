@@ -20,7 +20,6 @@ import { CoreTestingModule } from '@alfresco/adf-core';
 import { ContentService } from '../common/services/content.service';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-operation-subject.interface';
 
 @Component({
@@ -36,10 +35,7 @@ describe('CheckAllowableOperationDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         changeDetectorMock = { detectChanges: () => {} } as ChangeDetectorRef;
     });
@@ -126,7 +122,6 @@ describe('CheckAllowableOperationDirective', () => {
     });
 
     describe('Angular component as subject', () => {
-
         it('disables decorated component', () => {
             const contentService = TestBed.inject(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);

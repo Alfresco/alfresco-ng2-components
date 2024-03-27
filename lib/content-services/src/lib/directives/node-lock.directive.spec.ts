@@ -22,7 +22,6 @@ import { NodeLockDirective } from './node-lock.directive';
 import { Node } from '@alfresco/js-api';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 const fakeNode = {
     id: 'fake',
@@ -45,13 +44,8 @@ describe('NodeLock Directive', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [ContentTestingModule],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

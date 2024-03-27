@@ -41,7 +41,7 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
         AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
         RouterTestingModule,
-        TranslateModule,
+        TranslateModule.forRoot(),
         CoreModule,
         ContentModule,
         MatIconTestingModule
@@ -54,15 +54,10 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
         {
             provide: APP_INITIALIZER,
             useFactory: versionCompatibilityFactory,
-            deps: [ VersionCompatibilityService ],
+            deps: [VersionCompatibilityService],
             multi: true
         }
     ],
-    exports: [
-        NoopAnimationsModule,
-        TranslateModule,
-        CoreModule,
-        ContentModule
-    ]
+    exports: [NoopAnimationsModule, TranslateModule, CoreModule, ContentModule]
 })
 export class ContentTestingModule {}

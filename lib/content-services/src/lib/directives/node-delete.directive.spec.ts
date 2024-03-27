@@ -20,14 +20,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentDirectiveModule } from './content-directive.module';
 
 @Component({
-    template: `
-        <div id="delete-component" [adf-delete]="selection"
-             (delete)="onDelete()">
-        </div>`
+    template: ` <div id="delete-component" [adf-delete]="selection" (delete)="onDelete()"></div>`
 })
 class TestComponent {
     selection = [];
@@ -35,16 +31,11 @@ class TestComponent {
     @ViewChild(NodeDeleteDirective, { static: true })
     deleteDirective: NodeDeleteDirective;
 
-    onDelete() {
-    }
+    onDelete() {}
 }
 
 @Component({
-    template: `
-        <div id="delete-component" [adf-check-allowable-operation]="selection"
-             [adf-delete]="selection"
-             (delete)="onDelete($event)">
-        </div>`
+    template: ` <div id="delete-component" [adf-check-allowable-operation]="selection" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
 })
 class TestWithPermissionsComponent {
     selection = [];
@@ -56,13 +47,8 @@ class TestWithPermissionsComponent {
 }
 
 @Component({
-    template: `
-        delete permanent
-        <div id="delete-permanent"
-             [adf-delete]="selection"
-             [permanent]="permanent"
-             (delete)="onDelete($event)">
-        </div>`
+    template: ` delete permanent
+        <div id="delete-permanent" [adf-delete]="selection" [permanent]="permanent" (delete)="onDelete($event)"></div>`
 })
 class TestDeletePermanentComponent {
     selection = [];
@@ -90,16 +76,8 @@ describe('NodeDeleteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                ContentDirectiveModule
-            ],
-            declarations: [
-                TestComponent,
-                TestWithPermissionsComponent,
-                TestDeletePermanentComponent
-            ]
+            imports: [CoreTestingModule, ContentDirectiveModule],
+            declarations: [TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
@@ -114,8 +92,9 @@ describe('NodeDeleteDirective', () => {
         deleteNodeSpy = spyOn(component.deleteDirective.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
 
         deleteNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
-        purgeDeletedNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective.trashcanApi, 'deleteDeletedNode').and.returnValue(Promise.resolve());
-
+        purgeDeletedNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective.trashcanApi, 'deleteDeletedNode').and.returnValue(
+            Promise.resolve()
+        );
     });
 
     afterEach(() => {
@@ -126,7 +105,6 @@ describe('NodeDeleteDirective', () => {
     });
 
     describe('Delete', () => {
-
         it('should do nothing if selection is empty', () => {
             component.selection = [];
 
@@ -141,9 +119,7 @@ describe('NodeDeleteDirective', () => {
             fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
-                expect(message).toBe(
-                    'CORE.DELETE_NODE.SINGULAR'
-                );
+                expect(message).toBe('CORE.DELETE_NODE.SINGULAR');
             });
 
             element.nativeElement.click();
@@ -158,9 +134,7 @@ describe('NodeDeleteDirective', () => {
             fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
-                expect(message).toBe(
-                    'CORE.DELETE_NODE.ERROR_SINGULAR'
-                );
+                expect(message).toBe('CORE.DELETE_NODE.ERROR_SINGULAR');
             });
 
             element.nativeElement.click();
@@ -169,16 +143,11 @@ describe('NodeDeleteDirective', () => {
         });
 
         it('should notify nodes deletion', async () => {
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
+            component.selection = [{ entry: { id: '1', name: 'name1' } }, { entry: { id: '2', name: 'name2' } }];
             fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
-                expect(message).toBe(
-                    'CORE.DELETE_NODE.PLURAL'
-                );
+                expect(message).toBe('CORE.DELETE_NODE.PLURAL');
             });
 
             element.nativeElement.click();
@@ -189,16 +158,11 @@ describe('NodeDeleteDirective', () => {
         it('should notify failed nodes deletion', async () => {
             deleteNodeSpy.and.returnValue(Promise.reject(new Error('error')));
 
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
+            component.selection = [{ entry: { id: '1', name: 'name1' } }, { entry: { id: '2', name: 'name2' } }];
             fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
-                expect(message).toBe(
-                    'CORE.DELETE_NODE.ERROR_PLURAL'
-                );
+                expect(message).toBe('CORE.DELETE_NODE.ERROR_PLURAL');
             });
 
             element.nativeElement.click();
@@ -215,16 +179,11 @@ describe('NodeDeleteDirective', () => {
                 }
             });
 
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
+            component.selection = [{ entry: { id: '1', name: 'name1' } }, { entry: { id: '2', name: 'name2' } }];
             fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
-                expect(message).toBe(
-                    'CORE.DELETE_NODE.PARTIAL_SINGULAR'
-                );
+                expect(message).toBe('CORE.DELETE_NODE.PARTIAL_SINGULAR');
             });
 
             element.nativeElement.click();
@@ -249,9 +208,7 @@ describe('NodeDeleteDirective', () => {
             fixture.detectChanges();
 
             disposableDelete = component.deleteDirective.delete.subscribe((message) => {
-                expect(message).toBe(
-                    'CORE.DELETE_NODE.PARTIAL_PLURAL'
-                );
+                expect(message).toBe('CORE.DELETE_NODE.PARTIAL_PLURAL');
             });
 
             element.nativeElement.click();
@@ -317,13 +274,10 @@ describe('NodeDeleteDirective', () => {
         });
 
         describe('Permanent', () => {
-
             it('should call the api with permanent delete option if permanent directive input is true', () => {
                 fixtureWithPermanentComponent.detectChanges();
 
-                componentWithPermanentDelete.selection = [
-                    { entry: { id: '1', name: 'name1' } }
-                ];
+                componentWithPermanentDelete.selection = [{ entry: { id: '1', name: 'name1' } }];
 
                 fixtureWithPermanentComponent.detectChanges();
                 elementWithPermanentDelete.nativeElement.click();
@@ -334,9 +288,7 @@ describe('NodeDeleteDirective', () => {
             it('should call the trashcan api if permanent directive input is true and the file is already in the trashcan ', () => {
                 fixtureWithPermanentComponent.detectChanges();
 
-                componentWithPermanentDelete.selection = [
-                    { entry: { id: '1', name: 'name1', archivedAt: 'archived' } }
-                ];
+                componentWithPermanentDelete.selection = [{ entry: { id: '1', name: 'name1', archivedAt: 'archived' } }];
 
                 fixtureWithPermanentComponent.detectChanges();
                 elementWithPermanentDelete.nativeElement.click();

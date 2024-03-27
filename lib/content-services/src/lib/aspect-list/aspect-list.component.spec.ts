@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { AspectListComponent } from './aspect-list.component';
 import { AspectListService } from './services/aspect-list.service';
 import { EMPTY, of } from 'rxjs';
@@ -120,7 +119,7 @@ describe('AspectListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [AspectListService]
         });
     });
@@ -176,8 +175,8 @@ describe('AspectListComponent', () => {
             });
 
             it('should show all the aspects', async () => {
-                expect(await loader.hasHarness(MatExpansionPanelHarness.with({selector: '#aspect-list-FirstAspect'}))).toBe(true);
-                expect(await loader.hasHarness(MatExpansionPanelHarness.with({selector: '#aspect-list-SecondAspect'}))).toBe(true);
+                expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBe(true);
+                expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBe(true);
             });
 
             it('should show aspect id when name or title is not set', () => {
@@ -259,8 +258,7 @@ describe('AspectListComponent', () => {
                 component.excludedAspects = ['cst:nonamedAspect'];
 
                 fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector(`#aspect-list-${component.excludedAspects[0].replace(':', '-')}`))
-                    .toBeNull();
+                expect(fixture.nativeElement.querySelector(`#aspect-list-${component.excludedAspects[0].replace(':', '-')}`)).toBeNull();
             });
         });
     });

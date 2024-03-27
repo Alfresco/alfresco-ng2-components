@@ -20,10 +20,8 @@ import { TagActionsComponent } from './tag-actions.component';
 import { TagService } from './services/tag.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('TagActionsComponent', () => {
-
     const dataTag = {
         list: {
             pagination: {
@@ -33,11 +31,15 @@ describe('TagActionsComponent', () => {
                 skipCount: 0,
                 maxItems: 100
             },
-            entries: [{
-                entry: {tag: 'test1', id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
-            }, {entry: {tag: 'test2', id: 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
-                entry: {tag: 'test3', id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
-            }]
+            entries: [
+                {
+                    entry: { tag: 'test1', id: '0ee933fa-57fc-4587-8a77-b787e814f1d2' }
+                },
+                { entry: { tag: 'test2', id: 'fcb92659-1f10-41b4-9b17-851b72a3b597' } },
+                {
+                    entry: { tag: 'test3', id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf' }
+                }
+            ]
         }
     };
 
@@ -48,10 +50,7 @@ describe('TagActionsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(TagActionsComponent);
         tagService = TestBed.inject(TagService);
@@ -66,8 +65,6 @@ describe('TagActionsComponent', () => {
     });
 
     describe('Rendering tests', () => {
-
-
         it('Tag list relative a single node should be rendered', async () => {
             component.nodeId = 'fake-node-id';
 
@@ -82,7 +79,6 @@ describe('TagActionsComponent', () => {
             expect(element.querySelector('#tag_delete_test1')).not.toBe(null);
             expect(element.querySelector('#tag_delete_test2')).not.toBe(null);
             expect(element.querySelector('#tag_delete_test3')).not.toBe(null);
-
         });
 
         it('Tag list click on delete button should delete the tag', async () => {
@@ -114,8 +110,7 @@ describe('TagActionsComponent', () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'test1';
 
-
-            await component.error.subscribe( (res) => {
+            await component.error.subscribe((res) => {
                 expect(res).toEqual('TAG.MESSAGES.EXIST');
             });
 
@@ -130,7 +125,6 @@ describe('TagActionsComponent', () => {
         it('Add tag should be enable if the node id is a correct node', async () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'fake-tag-name';
-
 
             component.ngOnChanges();
             fixture.detectChanges();

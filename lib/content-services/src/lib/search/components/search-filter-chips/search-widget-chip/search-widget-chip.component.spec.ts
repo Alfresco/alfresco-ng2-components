@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchWidgetChipComponent } from './search-widget-chip.component';
 import { simpleCategories } from '../../../../mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
@@ -36,7 +35,7 @@ describe('SearchWidgetChipComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatMenuModule, TranslateModule.forRoot(), ContentTestingModule]
+            imports: [MatMenuModule, ContentTestingModule]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         fixture = TestBed.createComponent(SearchWidgetChipComponent);

@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { PermissionContainerComponent } from './permission-container.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -32,7 +31,7 @@ describe('PermissionContainerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(PermissionContainerComponent);
         component = fixture.componentInstance;
