@@ -29,7 +29,7 @@ import {
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 
 export const DEFAULT_OPTION = {
@@ -66,6 +66,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     restApiHostName: string;
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
+    defaultOption: FormFieldOption;
 
     private readonly defaultVariableOptionId = 'id';
     private readonly defaultVariableOptionLabel = 'name';
@@ -402,6 +403,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                         return items;
                     }
                     return items.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
+                }),
+                tap(items => {
+                    this.defaultOption = this.getDefaultOption(items);
                 }),
                 takeUntil(this.onDestroy$)
             );
