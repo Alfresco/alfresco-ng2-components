@@ -17,17 +17,19 @@
 
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
     selector: 'adf-toolbar',
+    standalone: true,
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    imports: [MatToolbarModule],
     host: { class: 'adf-toolbar' }
 })
 export class ToolbarComponent {
-
     /** Toolbar title. */
     @Input()
     title: string = '';
@@ -35,5 +37,4 @@ export class ToolbarComponent {
     /** Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. */
     @Input()
     color: ThemePalette;
-
 }
