@@ -17,7 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { AlfrescoApiService, GroupModel } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
+import { GroupModel } from '@alfresco/adf-core';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { UserProcessModel } from '../models/user-process.model';
 import { combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';

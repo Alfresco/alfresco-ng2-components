@@ -17,7 +17,8 @@
 
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { SearchConfiguration } from '../models/search-configuration.interface';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { FacetField } from '../models/facet-field.interface';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';

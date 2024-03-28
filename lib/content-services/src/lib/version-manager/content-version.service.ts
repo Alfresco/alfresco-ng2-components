@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { ContentApi } from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 

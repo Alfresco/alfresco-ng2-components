@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, DateFnsUtils, FormValues } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
+import { DateFnsUtils, FormValues } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import {
     TasksApi,

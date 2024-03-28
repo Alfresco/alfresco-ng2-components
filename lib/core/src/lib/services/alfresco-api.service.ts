@@ -17,123 +17,71 @@
 
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { ReplaySubject } from 'rxjs';
-import { OauthConfigModel } from '../auth/models/oauth-config.model';
-import { StorageService } from '../common/services/storage.service';
 import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
-import { AlfrescoApiFactory } from './alfresco-api.interface';
 
+/** @deprecated please use alfresco-api from \@alfresco/adf-content-services */
 export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
 
+/** @deprecated please do not use, it is created for mitigation impact of moving AlfrescoApiService into content lib */
+export const CONTENT_ALFRESCO_API = new InjectionToken('CONTENT_API_FACTORY');
+
+/**
+ * The implementation of AlfrescoApiService was moved to @alfresco/adf-content-services,
+ * to mitigate impact of this change, the core AlfrescoApiService works as a bridge for
+ * \@alfresco/adf-content-services/alfresco-api, this mitigation works only if we have
+ * ContentModule imported int our app (ContentModule provides CONTENT_ALFRESCO_API)
+ * These code is going to be removed with core version 7.0.0
+ */
+
+/** @deprecated please use alfresco-api from \@alfresco/adf-content-services */
 @Injectable({
     providedIn: 'root'
 })
 export class AlfrescoApiService {
-
-    alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
-
-    protected alfrescoApi: AlfrescoApi;
-
+    alfrescoApiInitialized: ReplaySubject<boolean>;
     lastConfig: AlfrescoApiConfig;
     currentAppConfig: AlfrescoApiConfig;
-
     idpConfig: OpenidConfiguration;
 
-    private excludedErrorUrl: string[] = ['api/enterprise/system/properties'];
-
     getInstance(): AlfrescoApi {
-        return this.alfrescoApi;
+        return this.alfrescoApiContentService.getInstance();
     }
 
     constructor(
-        protected appConfig: AppConfigService,
-        protected storageService: StorageService,
-        @Optional()
-        @Inject(ALFRESCO_API_FACTORY) private alfrescoApiFactory?: AlfrescoApiFactory
-    ) {}
+        @Optional() @Inject(CONTENT_ALFRESCO_API) protected alfrescoApiContentService: any,
+        @Optional() @Inject(ALFRESCO_API_FACTORY) private alfrescoApiFactory: any
+    ) {
+        if (this.alfrescoApiContentService) {
+            this.alfrescoApiInitialized = this.alfrescoApiContentService.alfrescoApiInitialized;
+            this.lastConfig = this.alfrescoApiContentService.alfrescoApiInitialized;
+            this.currentAppConfig = this.alfrescoApiContentService.alfrescoApiInitialized;
+            this.idpConfig = this.alfrescoApiContentService.alfrescoApiInitialized;
+
+            if (this.alfrescoApiFactory) {
+                // eslint-disable-next-line no-underscore-dangle
+                this.alfrescoApiContentService._setFactory(this.alfrescoApiFactory);
+            }
+        }
+    }
 
     async load(config: AlfrescoApiConfig): Promise<void> {
-        this.currentAppConfig = config;
-
-        if (config.authType === 'OAUTH') {
-                await this.mapAlfrescoApiOpenIdConfig();
-        }
-
-        this.initAlfrescoApiWithConfig();
-        this.alfrescoApiInitialized.next(true);
+        this.alfrescoApiContentService.load(config);
     }
 
     async reset() {
-        this.getCurrentAppConfig();
-        if (this.currentAppConfig.authType === 'OAUTH') {
-            await this.mapAlfrescoApiOpenIdConfig();
-        }
-        this.initAlfrescoApiWithConfig();
-    }
-
-    private getAuthWithFixedOriginLocation(): OauthConfigModel {
-        const oauth = this.appConfig.oauth2;
-
-        if (oauth) {
-            oauth.redirectUri = window.location.origin + window.location.pathname;
-            oauth.redirectUriLogout = window.location.origin + window.location.pathname;
-        }
-        return oauth;
-    }
-
-    private async mapAlfrescoApiOpenIdConfig() {
-        this.idpConfig = await this.appConfig.loadWellKnown(this.currentAppConfig.oauth2.host);
-        this.currentAppConfig.oauth2.tokenUrl = this.idpConfig.token_endpoint;
-        this.currentAppConfig.oauth2.authorizationUrl = this.idpConfig.authorization_endpoint;
-        this.currentAppConfig.oauth2.logoutUrl = this.idpConfig.end_session_endpoint;
-        this.currentAppConfig.oauth2.userinfoEndpoint = this.idpConfig.userinfo_endpoint;
-    }
-
-    private getCurrentAppConfig() {
-        const oauth = this.getAuthWithFixedOriginLocation();
-
-        this.currentAppConfig = new AlfrescoApiConfig({
-            provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
-            hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
-            hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
-            authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
-            contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
-            contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
-            disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
-            withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
-            domainPrefix: this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX),
-            oauth2: oauth
-        });
-    }
-
-    protected initAlfrescoApi() {
-        this.getCurrentAppConfig();
-        this.initAlfrescoApiWithConfig();
-    }
-
-    private initAlfrescoApiWithConfig() {
-        if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, this.currentAppConfig)) {
-            this.alfrescoApi.setConfig(this.currentAppConfig);
-        } else {
-            this.alfrescoApi = this.createInstance(this.currentAppConfig);
-        }
-        this.lastConfig = this.currentAppConfig;
+        this.alfrescoApiContentService.reset();
     }
 
     createInstance(config: AlfrescoApiConfig): AlfrescoApi {
-        if (this.alfrescoApiFactory) {
-            return this.alfrescoApiFactory.createAlfrescoApi(config);
-        }
-        return new AlfrescoApi(config);
+        return this.alfrescoApiContentService.createInstance(config);
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
-        return JSON.stringify(lastConfig) !== JSON.stringify(newConfig);
+        return this.alfrescoApiContentService.isDifferentConfig(lastConfig, newConfig);
     }
 
     isExcludedErrorListener(currentFullPath: string): boolean {
-        const formattedPath = currentFullPath.replace(this.lastConfig.hostBpm + '/' + this.lastConfig.contextRootBpm, '');
-        return this.excludedErrorUrl.includes(formattedPath);
+        return this.alfrescoApiContentService.isExcludedErrorListener(currentFullPath);
     }
 }

@@ -18,8 +18,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../common/utils/object-utils';
-import { Observable, ReplaySubject } from 'rxjs';
-import { map, distinctUntilChanged, take } from 'rxjs/operators';
+import { Observable, ReplaySubject, combineLatest, of } from 'rxjs';
+import { map, distinctUntilChanged, take, catchError, tap, switchMap } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
 import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
 import { OauthConfigModel } from '../auth/models/oauth-config.model';
@@ -76,6 +76,9 @@ export class AppConfigService {
     status: Status = Status.INIT;
     protected onLoadSubject: ReplaySubject<any>;
     onLoad: Observable<any>;
+
+    private loadSubject$ = new ReplaySubject();
+    private loadConfigPromise = this.loadSubject$.toPromise();
 
     get isLoaded() {
         return this.status === Status.LOADED;
@@ -192,33 +195,56 @@ export class AppConfigService {
      * @returns Notification when loading is complete
      */
     load(callback?: (...args: any[]) => any): Promise<any> {
-        return new Promise((resolve) => {
+        if (this.status === Status.INIT) {
+            this.status = Status.LOADING;
             const configUrl = `app.config.json?v=${Date.now()}`;
 
-            if (this.status === Status.INIT) {
-                this.status = Status.LOADING;
-                this.http.get(configUrl).subscribe(
-                    (data: any) => {
-                        this.status = Status.LOADED;
-                        this.config = Object.assign({}, this.config, data || {});
-                        callback?.();
-                        resolve(data);
-                        this.onDataLoaded();
-                    },
-                    () => {
-                        // eslint-disable-next-line no-console
-                        console.error('app.config.json contains validation errors');
-                        resolve(this.config);
+            const configRequest$ = this.http.get(configUrl).pipe(
+                catchError(() => {
+                    console.error('app.config.json contains validation errors');
+                    return this.config;
+                }),
+                switchMap((config: any) => {
+                    if (config?.authType === 'OAUTH') {
+                        return combineLatest([
+                            of(config),
+                            this.http.get<OpenidConfiguration>(`${config?.oauth2.host}/.well-known/openid-configuration`)
+                        ]);
+                    } else {
+                        return of([config]);
                     }
-                );
-            } else if (this.status === Status.LOADED) {
-                resolve(this.config);
-            } else if (this.status === Status.LOADING) {
-                this.onLoad.subscribe(() => {
-                    resolve(this.config);
-                });
-            }
-        });
+                }),
+                catchError(() => {
+                    console.error('app.config.json contains validation errors');
+                    return [this.config];
+                }),
+                tap(([appConfig, idpConfig]: [any, any]) => {
+                    const config =  Object.assign({}, this.config, appConfig || {});
+
+                    if (idpConfig) {
+                        config.oauth2.tokenUrl = idpConfig.token_endpoint;
+                        config.oauth2.authorizationUrl = idpConfig.authorization_endpoint;
+                        config.oauth2.logoutUrl = idpConfig.end_session_endpoint;
+                        config.oauth2.userinfoEndpoint = idpConfig.userinfo_endpoint;
+                    }
+
+                    this.status = Status.LOADED;
+                    this.config = config;
+                    callback?.();
+                    this.onDataLoaded();
+                })
+            );
+
+            this.loadConfigPromise = configRequest$.toPromise();
+
+            return this.loadConfigPromise;
+        } else if (this.status === Status.LOADED) {
+            return Promise.resolve(this.config);
+        } else if (this.status === Status.LOADING) {
+            return this.loadConfigPromise;
+        }
+
+        return this.loadConfigPromise;
     }
 
     /**

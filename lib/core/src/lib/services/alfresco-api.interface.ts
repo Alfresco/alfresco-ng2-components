@@ -17,10 +17,12 @@
 
 import { AlfrescoApiConfig, AlfrescoApi } from '@alfresco/js-api';
 
+/** @deprecated please use alfresco-api from \@alfresco/adf-content-services */
 export interface AlfrescoApiInterface {
     load(): Promise<void> ;
 }
 
+/** @deprecated please use alfresco-api from \@alfresco/adf-content-services */
 export interface AlfrescoApiFactory {
     createAlfrescoApi(config: AlfrescoApiConfig): AlfrescoApi;
 }

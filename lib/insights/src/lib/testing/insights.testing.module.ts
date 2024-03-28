@@ -19,8 +19,8 @@ import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { InsightsModule } from '../insights.module';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import {
-    AlfrescoApiService,
     AlfrescoApiServiceMock,
     AppConfigService,
     AppConfigServiceMock,

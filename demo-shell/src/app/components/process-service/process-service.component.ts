@@ -30,9 +30,10 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi } from '@alfresco/js-api';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, NotificationService
+    UserPreferencesService, NotificationService
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,

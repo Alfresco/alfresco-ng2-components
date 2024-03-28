@@ -16,7 +16,7 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { MatButtonModule } from '@angular/material/button';
 import { DownloadZipDialogStorybookComponent } from './download-zip.dialog.stories.component';
 import {

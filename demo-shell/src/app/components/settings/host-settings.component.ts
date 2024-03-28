@@ -17,9 +17,10 @@
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
-import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, StorageService, AuthenticationService } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
 export const HOST_REGEX = '^(http|https)://.*[^/]$';
 

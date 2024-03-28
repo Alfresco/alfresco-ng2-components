@@ -20,7 +20,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { differenceInSeconds } from 'date-fns';
 import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Component({
     selector: 'adf-node-lock',

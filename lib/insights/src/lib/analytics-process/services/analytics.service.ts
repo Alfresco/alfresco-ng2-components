@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';

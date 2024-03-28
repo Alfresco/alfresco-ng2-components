@@ -16,9 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { StorageService } from '../common/services/storage.service';
+import { AppConfigService, StorageService } from '@alfresco/adf-core';
 
 @Injectable()
 export class AlfrescoApiServiceMock extends AlfrescoApiService {

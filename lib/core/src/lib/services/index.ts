@@ -15,4 +15,5 @@
  * limitations under the License.
  */
 
+/** @deprecated please use alfresco-api from \@alfresco/adf-content-services */
 export * from './public-api';

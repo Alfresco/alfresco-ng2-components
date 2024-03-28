@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, ExternalContent } from '@alfresco/adf-core';
-import { SitesService } from '@alfresco/adf-content-services';
+import { LogService, ExternalContent } from '@alfresco/adf-core';
+import { SitesService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
 import { IntegrationAlfrescoOnPremiseApi, Node, RelatedContentRepresentation, ActivitiContentApi, AlfrescoEndpointRepresentation, AlfrescoContentRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';

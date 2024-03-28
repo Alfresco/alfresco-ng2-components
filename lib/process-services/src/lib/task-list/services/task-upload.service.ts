@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
+import { AppConfigService } from '@alfresco/adf-core';
+import { DiscoveryApiService, UploadService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
 import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
 

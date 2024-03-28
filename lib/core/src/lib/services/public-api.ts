@@ -15,5 +15,7 @@
  * limitations under the License.
  */
 
+/** @deprecated please use services from \@alfresco/adf-content-services */
 export * from './alfresco-api.service';
+export * from './alfresco-api.service.mock';
 export { AlfrescoApiFactory } from './alfresco-api.interface';

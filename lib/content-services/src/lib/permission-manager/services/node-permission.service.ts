@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { TranslationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EcmUserModel } from '../../common/models/ecm-user.model';
 import { Group, GroupMemberPaging, GroupsApi, Node, PathElement, PermissionElement, SearchRequest } from '@alfresco/js-api';
