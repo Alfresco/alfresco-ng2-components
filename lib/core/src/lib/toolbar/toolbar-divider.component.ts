@@ -19,17 +19,20 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
 
 @Component({
     selector: 'adf-toolbar-divider',
+    standalone: true,
     template: '<div></div>',
     host: { class: 'adf-toolbar-divider' },
-    styles: [`
-        .adf-toolbar-divider > div {
-            height: 24px;
-            width: 1px;
-            background: rgba(0, 0, 0, 0.26);
-            margin-left: 5px;
-            margin-right: 5px;
-        }
-    `],
+    styles: [
+        `
+            .adf-toolbar-divider > div {
+                height: 24px;
+                width: 1px;
+                background: rgba(0, 0, 0, 0.26);
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+        `
+    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
