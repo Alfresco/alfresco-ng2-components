@@ -15,13 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-about-server-settings',
     templateUrl: './about-server-settings.component.html',
-    styleUrls: ['./about-server-settings.component.scss']
+    styleUrls: ['./about-server-settings.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatCardModule]
 })
 export class AboutServerSettingsComponent implements OnInit {
     ecmHost = '';

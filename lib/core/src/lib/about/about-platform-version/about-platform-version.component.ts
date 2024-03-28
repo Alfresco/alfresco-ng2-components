@@ -21,6 +21,8 @@ import { Observable } from 'rxjs';
 import { BpmProductVersionModel } from '../../models/product-version.model';
 import { AaeInfoService, ActivitiDependencyInfo } from '../services/aae-info.service';
 import { AppConfigService } from '../../app-config/app-config.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface VersionInfo {
     display: string;
@@ -34,10 +36,11 @@ interface RepositoryInfo {
 @Component({
     selector: 'adf-about-platform-version',
     templateUrl: './about-platform-version.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [CommonModule, TranslateModule]
 })
 export class AboutPlatformVersionComponent {
-
     /** repository info. */
     @Input()
     repository: RepositoryInfo = null;
@@ -51,10 +54,7 @@ export class AboutPlatformVersionComponent {
     rb$: Observable<ActivitiDependencyInfo>;
     query$: Observable<ActivitiDependencyInfo>;
 
-    constructor(
-        private aaeInfoService: AaeInfoService,
-        private appConfigService: AppConfigService
-    ) {
+    constructor(private aaeInfoService: AaeInfoService, private appConfigService: AppConfigService) {
         this.modelingInfo();
         this.deploymentInfo();
         this.rbInfo();
