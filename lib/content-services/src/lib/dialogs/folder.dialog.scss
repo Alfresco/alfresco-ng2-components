@@ -18,7 +18,7 @@
     color: var(--adf-theme-foreground-text-color-054);
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (width <= 380px) {
     .adf-folder-dialog-title {
         margin: 0;
     }
