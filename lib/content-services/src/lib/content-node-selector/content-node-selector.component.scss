@@ -81,7 +81,7 @@ adf-content-node-selector {
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
     .adf-content-node-selector-dialog {
         height: 100vh;
     }
