@@ -22,9 +22,9 @@
   "css.validate": false,
   "scss.validate": false,
   "stylelint.config": {
-      "extends": "./stylelint-config"
+      "extends": "./.stylelintrc.json"
   },
-  "stylelint.configFile": "stylelint-config.json",
+  "stylelint.configFile": ".stylelintrc.json",
   "stylelint.validate": [
     "css",
     "less",
