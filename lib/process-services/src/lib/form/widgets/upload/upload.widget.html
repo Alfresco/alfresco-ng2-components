@@ -6,7 +6,7 @@
         <div>
             <mat-list *ngIf="hasFile">
                 <mat-list-item class="adf-upload-files-row" *ngFor="let file of field.value">
-                    <img mat-list-icon class="adf-upload-widget__icon"
+                    <img matListItemLine class="adf-upload-widget__icon"
                          [id]="'file-'+file.id+'-icon'"
                          [src]="getIcon(file.mimeType)"
                          [alt]="mimeTypeIcon"

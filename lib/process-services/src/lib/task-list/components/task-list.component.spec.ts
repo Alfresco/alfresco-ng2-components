@@ -18,7 +18,7 @@
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
+import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn, DataTableModule, AppConfigServiceMock, AlfrescoApiServiceMock, AlfrescoApiService } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -30,6 +30,9 @@ import {
 } from '../../mock';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 declare let jasmine: any;
 
@@ -74,11 +77,11 @@ describe('TaskListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-mdc-checkbox-touch-target');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-mdc-checkbox-touch-target');
+        selectTask1.dispatchEvent(new MouseEvent('click'));
+        selectTask1.dispatchEvent(new MouseEvent('click'));
+        selectTask2.dispatchEvent(new MouseEvent('click'));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -88,7 +91,7 @@ describe('TaskListComponent', () => {
         expect(selectRow1).toBeDefined();
         expect(selectRow2).toBeDefined();
         expect(component.selectedInstances.length).toBe(2);
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask2.dispatchEvent(new MouseEvent('click'));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -104,7 +107,16 @@ describe('TaskListComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                ProcessTestingModule
+                DataTableModule,
+                NoopAnimationsModule,
+                MatProgressSpinnerModule,
+                HttpClientTestingModule
+            ],
+            declarations: [TaskListComponent],
+            providers:[
+                TaskListService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         });
         appConfig = TestBed.inject(AppConfigService);
@@ -582,7 +594,7 @@ describe('TaskListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const selectAllCheckbox = fixture.nativeElement.querySelector('div[class*="adf-datatable-cell-header adf-datatable-checkbox"] .mat-checkbox-inner-container');
+        const selectAllCheckbox = fixture.nativeElement.querySelector('div[class*="adf-datatable-cell-header adf-datatable-checkbox"] .mat-mdc-checkbox-touch-target');
         selectAllCheckbox.click();
 
         fixture.detectChanges();
@@ -624,11 +636,11 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ sort: state });
         fixture.detectChanges();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-mdc-checkbox-touch-target');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-mdc-checkbox-touch-target');
+        selectTask1.dispatchEvent(new MouseEvent('click'));
+        selectTask1.dispatchEvent(new MouseEvent('click'));
+        selectTask2.dispatchEvent(new MouseEvent('click'));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -832,6 +844,7 @@ describe('TaskListContextMenuComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
+                MatProgressSpinnerModule,
                 ProcessTestingModule
             ],
             declarations: [
@@ -856,7 +869,7 @@ describe('TaskListContextMenuComponent', () => {
         contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
         fixture.detectChanges();
         await fixture.whenStable();
-        const contextActions = document.querySelectorAll('.mat-menu-item');
+        const contextActions = document.querySelectorAll('.mat-mdc-menu-item');
 
         expect(contextActions.length).toBe(2);
         expect(contextActions[0]['disabled']).toBe(false, 'View Task Details action not enabled');

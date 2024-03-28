@@ -1,0 +1,111 @@
+{
+  "name": "content-services",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/content-services/src",
+  "projectType": "library",
+  "prefix": "adf",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "lib/content-services/tsconfig.lib.json",
+        "project": "lib/content-services/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "project": "lib/content-services/ng-package.json",
+          "tsConfig": "lib/content-services/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "lib/content-services/src/test.ts",
+        "tsConfig": "lib/content-services/tsconfig.spec.json",
+        "karmaConfig": "lib/content-services/karma.conf.js",
+        "sourceMap": true,
+        "codeCoverage": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["lib/content-services/**/*.ts", "lib/content-services/**/*.html"]
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "browserTarget": "content-services:storybook",
+        "configDir": "lib/content-services/.storybook",
+        "compodoc": false,
+        "styles": [
+          "demo-shell/src/styles.scss",
+          "demo-shell/src/custom-style-dev.scss",
+          "node_modules/cropperjs/dist/cropper.min.css",
+          "node_modules/pdfjs-dist/web/pdf_viewer.css"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "options": {
+        "browserTarget": "content-services:build-storybook",
+        "configDir": "lib/content-services/.storybook",
+        "outputDir": "dist/storybook/content-services",
+        "compodoc": false,
+        "styles": [
+          "demo-shell/src/styles.scss",
+          "demo-shell/src/custom-style-dev.scss",
+          "node_modules/cropperjs/dist/cropper.min.css",
+          "node_modules/pdfjs-dist/web/pdf_viewer.css"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "stylelint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx stylelint lib/content-services/**/*.scss --config stylelint-config.json"
+          }
+        ]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/libs/content-services",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    }
+  }
+}

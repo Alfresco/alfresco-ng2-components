@@ -79,7 +79,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
+        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-mdc-card-title '));
         expect(headerEl).not.toBeNull();
         expect(headerEl.nativeElement.innerText).toBe('Process 123');
     });
@@ -93,7 +93,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
+        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-mdc-card-title '));
         expect(headerEl).not.toBeNull();
         expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
     });

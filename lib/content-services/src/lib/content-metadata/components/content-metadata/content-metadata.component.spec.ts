@@ -21,10 +21,10 @@ import { By } from '@angular/platform-browser';
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { AppConfigService, CardViewBaseItemModel, CardViewComponent, NotificationService, UpdateNotification } from '@alfresco/adf-core';
+import { AppConfigService, AuthModule, CardViewBaseItemModel, CardViewComponent, NotificationService, PipeModule, TranslationMock, TranslationService, UpdateNotification } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { EMPTY, of, throwError } from 'rxjs';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
@@ -37,6 +37,12 @@ import {
     TagService
 } from '@alfresco/adf-content-services';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -50,6 +56,7 @@ describe('ContentMetadataComponent', () => {
     let categoryService: CategoryService;
     let getClassSpy: jasmine.Spy;
     let notificationService: NotificationService;
+    let getGroupedPropertiesSpy: jasmine.Spy;
 
     const preset = 'custom-preset';
 
@@ -158,8 +165,17 @@ describe('ContentMetadataComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [TranslateModule.forRoot(),
+                      NoopAnimationsModule,
+                      AuthModule.forRoot({ useHash: true }),
+                      HttpClientModule,
+                      MatDialogModule,
+                      MatSnackBarModule,
+                      MatProgressBarModule,
+                      MatTooltipModule,
+                      PipeModule],
             providers: [
+                { provide: TranslationService, useClass: TranslationMock },
                 {
                     provide: TagService,
                     useValue: {
@@ -210,6 +226,7 @@ describe('ContentMetadataComponent', () => {
         component.node = node;
         component.preset = preset;
         spyOn(contentMetadataService, 'getContentTypeProperty').and.returnValue(of([]));
+        getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties');
         getClassSpy = spyOn(classesApi, 'getClass');
         fixture.detectChanges();
     });
@@ -231,6 +248,7 @@ describe('ContentMetadataComponent', () => {
     describe('Folder', () => {
         it('should show the folder node', (done) => {
             component.expanded = false;
+            getGroupedPropertiesSpy.and.returnValue(of([]));
             fixture.detectChanges();
 
             component.basicProperties$.subscribe(() => {
@@ -258,7 +276,7 @@ describe('ContentMetadataComponent', () => {
 
         it('nodeAspectUpdate', fakeAsync(() => {
             const fakeNode = { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node' } as Node;
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            getGroupedPropertiesSpy.and.stub();
             spyOn(contentMetadataService, 'getBasicProperties').and.stub();
             updateService.updateNodeAspect(fakeNode);
 
@@ -268,15 +286,11 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should save changedProperties on save click', fakeAsync(() => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
-                of([
-                    {
-                        editable: true,
-                        title: 'test',
-                        properties: []
-                    }
-                ])
-            );
+            getGroupedPropertiesSpy.and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             updateService.itemUpdated$.next({
                 changed: {}
             } as UpdateNotification);
@@ -350,6 +364,8 @@ describe('ContentMetadataComponent', () => {
         it('should throw error on unsuccessful save', fakeAsync(() => {
             component.readOnly = false;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
+
             updateService.update(property, 'updated-value');
             tick(600);
 
@@ -359,7 +375,6 @@ describe('ContentMetadataComponent', () => {
                 sub.unsubscribe();
             });
 
-            spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
 
             fixture.detectChanges();
             toggleEditModeForGeneralInfo();
@@ -456,15 +471,11 @@ describe('ContentMetadataComponent', () => {
 
         beforeEach(() => {
             showErrorSpy = spyOn(notificationService, 'showError').and.stub();
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
-                of([
-                    {
-                        editable: true,
-                        title: 'test',
-                        properties: []
-                    }
-                ])
-            );
+            getGroupedPropertiesSpy.and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             component.displayCategories = true;
             component.displayTags = true;
             component.ngOnInit();
@@ -612,15 +623,11 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reset group edit ability on reset click', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
-                of([
-                    {
-                        editable: true,
-                        title: 'test',
-                        properties: []
-                    }
-                ])
-            );
+            getGroupedPropertiesSpy.and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             component.ngOnInit();
             component.readOnly = false;
             fixture.detectChanges();
@@ -684,7 +691,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should load the group properties on node change', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties');
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -708,7 +715,7 @@ describe('ContentMetadataComponent', () => {
                 }
             ];
             component.preset = presetConfig;
-            spyOn(contentMetadataService, 'getGroupedProperties');
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -719,7 +726,7 @@ describe('ContentMetadataComponent', () => {
             const expectedProperties = [];
             component.expanded = true;
 
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: expectedProperties } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: expectedProperties } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -733,7 +740,7 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = false;
 
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [] } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -744,7 +751,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should hide card views group when the grouped properties are empty', async () => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -757,7 +764,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should display card views group when there is at least one property that is not empty', async () => {
             component.expanded = true;
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -779,15 +786,11 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reload properties for group panel on cancel', () => {
-            const getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
-                of([
-                    {
-                        editable: true,
-                        title: 'test',
-                        properties: []
-                    }
-                ])
-            );
+            getGroupedPropertiesSpy.and.returnValue(of([{
+                editable: true,
+                title: 'test',
+                properties: []
+            }]));
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             component.readOnly = false;
             fixture.detectChanges();
@@ -947,6 +950,7 @@ describe('ContentMetadataComponent', () => {
 
             component.expanded = true;
             component.preset = 'default';
+            getGroupedPropertiesSpy.and.callThrough();
         });
 
         it('should show Versionable with given content-metadata config', async () => {

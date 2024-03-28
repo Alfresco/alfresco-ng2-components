@@ -318,6 +318,7 @@ describe('Search Number Range Filter', () => {
         await expect(await sizeRangeFilter.getFromNumber()).toEqual('');
         await expect(await sizeRangeFilter.getToNumber()).toEqual('');
 
+        await dataTable.waitTillContentLoaded();
         const resultsSize = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of resultsSize) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');

@@ -24,7 +24,13 @@ import {
     FormFieldOption,
     FormFieldModel,
     FormModel,
-    CoreTestingModule
+    TranslationService,
+    TranslationMock,
+    AlfrescoApiService,
+    AlfrescoApiServiceMock,
+    AppConfigService,
+    AppConfigServiceMock,
+    ErrorWidgetComponent
 } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,6 +39,9 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('RadioButtonsWidgetComponent', () => {
 
@@ -45,10 +54,18 @@ describe('RadioButtonsWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                CoreTestingModule,
                 MatRadioModule,
+                MatTooltipModule,
+                MatButtonModule,
                 FormsModule,
+                HttpClientTestingModule,
                 MatIconModule
+            ],
+            declarations:[RadioButtonsWidgetComponent, ErrorWidgetComponent],
+            providers:[
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         });
         taskFormService = TestBed.inject(TaskFormService);
@@ -201,8 +218,8 @@ describe('RadioButtonsWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
-            const widgetLabel = element.querySelector('label');
-            expect(widgetLabel.innerText).toBe('radio-name-label*');
+            const widgetLabel = element.querySelector('.adf-label');
+            expect(widgetLabel.textContent).toBe('radio-name-label*');
             expect(radioButtonWidget.field.isValid).toBe(false);
 
             const option = element.querySelector<HTMLElement>('#radio-id-opt-1 label');
@@ -211,7 +228,7 @@ describe('RadioButtonsWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
-            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
+            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-mdc-radio-checked"]');
             expect(selectedOption.innerText).toBe('opt-name-1');
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
@@ -230,7 +247,7 @@ describe('RadioButtonsWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
+            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-mdc-radio-checked"]');
             expect(selectedOption.innerText).toBe('opt-name-2');
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
@@ -300,10 +317,10 @@ describe('RadioButtonsWidgetComponent', () => {
                 });
 
                 it('should show radio buttons disabled', () => {
-                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).toBeDefined();
-                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-1"]')).not.toBeNull();
-                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).toBeDefined();
-                    expect(element.querySelector('.mat-radio-disabled[ng-reflect-id="radio-id-opt-2"]')).not.toBeNull();
+                    expect(element.querySelector('.mdc-radio--disabled #radio-id-opt-1-input')).toBeDefined();
+                    expect(element.querySelector('.mdc-radio--disabled #radio-id-opt-1-input')).not.toBeNull();
+                    expect(element.querySelector('.mdc-radio--disabled #radio-id-opt-2-input')).toBeDefined();
+                    expect(element.querySelector('.mdc-radio--disabled #radio-id-opt-2-input')).not.toBeNull();
                 });
 
                 describe('and a value is selected', () => {
@@ -314,7 +331,7 @@ describe('RadioButtonsWidgetComponent', () => {
                     });
 
                     it('should check the selected value', () => {
-                        expect(element.querySelector('.mat-radio-checked')).toBe(element.querySelector('mat-radio-button[ng-reflect-id="radio-id-opt-1"]'));
+                        expect(element.querySelector('.mat-mdc-radio-checked')).toBe(element.querySelector('mat-radio-button[ng-reflect-id="radio-id-opt-1"]'));
                     });
                 });
             });

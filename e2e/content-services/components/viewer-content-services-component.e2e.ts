@@ -397,6 +397,11 @@ describe('Content Services Viewer', () => {
         });
     });
 
+    /**
+     *
+     * @param originalFileName
+     * @param newVersionLocation
+     */
     async function uploadNewVersion(originalFileName: string, newVersionLocation: string): Promise<void> {
         await contentServicesPage.doubleClickRow(originalFileName);
         await viewerPage.waitTillContentLoaded();
@@ -410,14 +415,23 @@ describe('Content Services Viewer', () => {
         await browser.refresh();
     }
 
+    /**
+     *
+     * @param unsupportedFileName
+     */
     async function previewUnsupportedFile(unsupportedFileName: string): Promise<void> {
         await contentServicesPage.doubleClickRow(unsupportedFileName);
         await viewerPage.waitTillContentLoaded();
         await viewerPage.checkUnknownFormatIsDisplayed();
-        await expect(await viewerPage.getUnknownFormatMessage()).toBe("Couldn't load preview. Unknown format.");
+        await expect(await viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
         await viewerPage.clickCloseButton();
     }
 
+    /**
+     *
+     * @param fileName
+     * @param newName
+     */
     async function changeFileNameInViewer(fileName: string, newName: string): Promise<void> {
         await contentServicesPage.doubleClickRow(fileName);
         await viewerPage.waitTillContentLoaded();

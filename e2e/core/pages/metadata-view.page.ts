@@ -38,11 +38,12 @@ export class MetadataViewPage {
     multiSwitch = $(`#adf-metadata-multi`);
     defaultPropertiesSwitch = $('#adf-metadata-default-properties');
     closeButton = element(by.cssContainingText(`button${materialLocators.Button.class} span`, 'Close'));
-    displayAspect = $(`input[data-placeholder='Display Aspect']`);
-    applyAspect = element(by.cssContainingText(`button span${materialLocators.Button.wrapper}`, 'Apply Aspect'));
+    displayAspect = $(`input[placeholder='Display Aspect']`);
+    applyAspect = element(by.cssContainingText(`button span${materialLocators.Button.label}`, 'Apply Aspect'));
     saveMetadataButton = $(`[data-automation-id='save-metadata']`);
     saveGeneralMetadataButton = $(`[data-automation-id='save-general-info-metadata']`);
     resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
+    informationButton = $(`button[data-automation-id='meta-data-card-toggle-expand']`);
 
     private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
         $(`[data-automation-id="adf-metadata-group-${groupName}"]`);
@@ -114,7 +115,7 @@ export class MetadataViewPage {
 
     async clickOnPropertiesTab(): Promise<void> {
         const propertiesTab = element(
-            by.cssContainingText(`.adf-info-drawer-layout-content div${materialLocators.Tab.labels.class} div ${materialLocators.Tab.label.content.class}`, `Properties`)
+            by.cssContainingText(`.adf-info-drawer-layout-content div${materialLocators.Tab.labels.container.class} div ${materialLocators.Tab.label.content.class}`, `Properties`)
         );
         await BrowserActions.click(propertiesTab);
     }
@@ -270,5 +271,13 @@ export class MetadataViewPage {
 
     async clickSaveGeneralMetadata(): Promise<void> {
         await BrowserActions.click(this.saveGeneralMetadataButton);
+    }
+
+    async informationButtonIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsClickable(this.informationButton);
+    }
+
+    async informationButtonIsNotDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.informationButton);
     }
 }

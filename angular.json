@@ -20,7 +20,8 @@
               "zen-observable",
               "subscriptions-transport-ws",
               "d",
-              "chart.js"
+              "chart.js",
+              "cropperjs"
             ],
             "outputPath": "dist/demo-shell",
             "index": "demo-shell/src/index.html",
@@ -283,7 +284,7 @@
           ]
         },
         "test": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "commands": ["TS_NODE_PROJECT=lib/js-api/test/tsconfig.json mocha --full-trace --config lib/js-api/.mocharc.json"]
           }
@@ -297,7 +298,7 @@
           }
         },
         "npm-publish": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "dependsOn": [
             "build"
           ],
@@ -433,7 +434,7 @@
           }
         },
         "license": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
               "options": {
               "commands": [
                   {
@@ -443,7 +444,7 @@
           }
         },
         "pretheme": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
               "options": {
               "commands": [
                   {
@@ -453,9 +454,9 @@
           }
         },
         "npm-publish": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "dependsOn": [
-            "build"
+            "build", "pretheme"
           ],
           "options": {
             "cwd": "dist/libs/core",
@@ -569,7 +570,7 @@
           }
         },
         "stylelint": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
               "options": {
               "commands": [
                   {
@@ -640,7 +641,7 @@
           }
         },
         "stylelint": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
               "options": {
               "commands": [
                   {
@@ -782,7 +783,7 @@
           }
         },
         "npm-publish": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "dependsOn": [
             "build"
           ],
@@ -843,7 +844,7 @@
           }
         },
         "stylelint": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
               "options": {
               "commands": [
                   {
@@ -853,7 +854,7 @@
           }
         },
         "npm-publish": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "dependsOn": [
             "build"
           ],
@@ -943,12 +944,6 @@
             "main": "lib/testing/index.ts",
             "generatePackageJson" : true,
             "tsConfig": "lib/testing/tsconfig.lib.prod.json",
-            "additionalEntryPoints": [
-              {
-                "entryName": "shared",
-                "entryPath": "/lib/testing/src/lib/shared/index.ts"
-              }
-            ],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "lib", "lib/core/src/lib"
@@ -976,7 +971,7 @@
           }
         },
         "bundle": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "commands": [
               {
@@ -989,7 +984,7 @@
           ]
         },
         "copyToNodeModules": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "commands": [
               {
@@ -1005,7 +1000,7 @@
           ]
         },
         "npm-publish": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "dependsOn": [
             "build"
           ],
@@ -1071,7 +1066,7 @@
           }
         },
         "npm-publish": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "dependsOn": [
             "build"
           ],
@@ -1112,7 +1107,7 @@
           "defaultConfiguration": "production"
         },
         "bundle": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "commands": [
               {
@@ -1125,7 +1120,7 @@
           ]
         },
         "copyToNodeModules": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "commands": [
               {
@@ -1150,7 +1145,7 @@
           }
         },
         "npm-publish": {
-          "executor": "nx:run-commands",
+          "builder": "nx:run-commands",
           "dependsOn": [
             "build"
           ],

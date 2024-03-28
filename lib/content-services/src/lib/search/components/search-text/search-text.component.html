@@ -4,7 +4,7 @@
         placeholder="{{ settings?.placeholder | translate }}"
         [(ngModel)]="value"
         (change)="onChangedHandler($event)">
-    <button mat-button *ngIf="value" matSuffix mat-icon-button (click)="clear()">
+    <button mat-button *ngIf="value" matSuffix (click)="clear()">
         <mat-icon>close</mat-icon>
     </button>
 </mat-form-field>

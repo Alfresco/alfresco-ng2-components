@@ -21,6 +21,8 @@ import { browser, $, $$ } from 'protractor';
 export class TasksListPage {
 
     taskList = $('adf-tasklist');
+    selectedTab = $('[data-automation-id="navigation-bar"] .mdc-tab--active .mdc-tab__text-label');
+    taskTab = $$('[data-automation-id="navigation-bar"] .mdc-tab__text-label').first();
     noTasksFound = $$('.adf-empty-content__title').first();
     dataTable = new DataTableComponentPage(this.taskList);
 
@@ -59,6 +61,13 @@ export class TasksListPage {
 
     getNoTasksFoundMessage(): Promise<string> {
         return BrowserActions.getText(this.noTasksFound);
+    }
+
+    async selectTaskTab() {
+        const currentTab = await BrowserActions.getText(this.selectedTab);
+        if(currentTab && currentTab.toLowerCase().trim() !== 'tasks') {
+            await BrowserActions.click(this.taskTab);
+        }
     }
 
 }

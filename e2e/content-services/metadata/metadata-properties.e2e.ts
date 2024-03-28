@@ -21,7 +21,8 @@ import { createApiService,
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage
+    ViewerPage,
+    TogglePage
 } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -45,6 +46,7 @@ describe('CardView Component - properties', () => {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const contentServicesPage = new ContentServicesPage();
+    const togglePage = new TogglePage();
 
     let acsUser: UserModel;
 
@@ -137,13 +139,13 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await togglePage.disableToggle(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsNotPresent('properties');
         await metadataViewPage.checkMetadataGroupIsPresent('Versionable');
         await metadataViewPage.checkMetadataGroupIsExpand('Versionable');
 
-        await CheckboxPage.check(metadataViewPage.defaultPropertiesSwitch);
+        await togglePage.enableToggle(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
@@ -155,7 +157,11 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await metadataViewPage.checkMetadataGroupIsPresent('properties');
+
+        await togglePage.disableToggle(metadataViewPage.defaultPropertiesSwitch);
+
+        await metadataViewPage.checkMetadataGroupIsNotPresent('properties');
     });
 
     it('[C307975] Should be able to choose which aspect to show expanded in the info-drawer', async () => {

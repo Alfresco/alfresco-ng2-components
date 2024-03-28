@@ -32,27 +32,32 @@
 
         <div *ngIf="!readOnly">
             <button mat-button
+                    data-automation-id="dynamic-table-button-move-up"
                     [disabled]="!hasSelection()"
                     (click)="moveSelectionUp()">
                 <mat-icon>arrow_upward</mat-icon>
             </button>
             <button mat-button
+                    data-automation-id="dynamic-table-button-move-down"
                     [disabled]="!hasSelection()"
                     (click)="moveSelectionDown()">
                 <mat-icon>arrow_downward</mat-icon>
             </button>
             <button mat-button
+                    data-automation-id="dynamic-table-button-add-row"
                     [disabled]="field.readOnly"
                     id="{{content.id}}-add-row"
                     (click)="addNewRow()">
                 <mat-icon>add_circle_outline</mat-icon>
             </button>
             <button mat-button
+                    data-automation-id="dynamic-table-button-remove"
                     [disabled]="!hasSelection()"
                     (click)="deleteSelection()">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
             <button mat-button
+                    data-automation-id="dynamic-table-button-edit"
                     [disabled]="!hasSelection()"
                     (click)="editSelection()">
                 <mat-icon>edit</mat-icon>

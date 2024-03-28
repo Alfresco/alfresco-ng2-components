@@ -23,7 +23,7 @@ export class SearchBarPage {
     searchBar = $(`adf-search-control input`);
     searchBarExpanded = TestElement.byCss(`adf-search-control ${materialLocators.Form.field.root}[class*="${materialLocators.Focused.root}"] input`);
     noResultMessage = $(`p[class*='adf-search-fixed-text']`);
-    rowsAuthor = `${materialLocators.List.text.class} p[class*='adf-search-fixed-text']`;
+    rowsAuthor = `${materialLocators.List.content.class} p[class*='adf-search-fixed-text']`;
     completeName = `h4[class*='adf-search-fixed-text']`;
     highlightName = `.adf-highlight`;
     searchBarPage = $(`${materialLocators.List.root}[id='autocomplete-search-result-list']`);

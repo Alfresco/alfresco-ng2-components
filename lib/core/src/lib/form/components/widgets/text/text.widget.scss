@@ -1,9 +1,11 @@
 /* stylelint-disable selector-class-pattern */
+@import 'styles/mat-selectors';
+
 .adf {
     &-text-widget {
         width: 100%;
 
-        .mat-form-field-label-wrapper {
+        #{$mat-form-field-label} {
             top: 20px;
         }
     }

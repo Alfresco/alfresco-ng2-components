@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-card-view-textitem {
     .adf-property-field {
         padding-top: 15px;
@@ -32,7 +34,7 @@
     }
 
     .adf-textitem-chip-list-container {
-        .mat-form-field-label {
+        #{$mat-form-field-label} {
             margin-top: 6px;
         }
     }
@@ -46,7 +48,7 @@
         }
 
         .adf-property-field {
-            .mat-input-element {
+            #{$mat-input-element} {
                 color: var(--theme-primary-color);
                 cursor: pointer;
             }

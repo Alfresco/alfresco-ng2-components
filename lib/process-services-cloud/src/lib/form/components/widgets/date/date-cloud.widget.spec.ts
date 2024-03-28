@@ -502,7 +502,7 @@ describe('DateWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component')).nativeElement;
             expect(tooltipElement).toBeTruthy();
             expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
           });
@@ -517,7 +517,7 @@ describe('DateWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+            const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component'));
             expect(tooltipElement).toBeFalsy();
         });
     });

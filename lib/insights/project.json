@@ -1,0 +1,65 @@
+{
+  "name": "insights",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/insights/src",
+  "projectType": "library",
+  "prefix": "adf",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "lib/insights/tsconfig.lib.json",
+        "project": "lib/insights/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "project": "lib/insights/ng-package.json",
+          "tsConfig": "lib/insights/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "lib/insights/src/test.ts",
+        "tsConfig": "lib/insights/tsconfig.spec.json",
+        "karmaConfig": "lib/insights/karma.conf.js",
+        "sourceMap": true,
+        "codeCoverage": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["lib/insights/**/*.ts", "lib/insights/**/*.html"]
+      }
+    },
+    "stylelint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx stylelint lib/insights/**/*.scss --config stylelint-config.json"
+          }
+        ]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/libs/insights",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    }
+  }
+}
