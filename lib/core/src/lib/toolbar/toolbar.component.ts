@@ -18,6 +18,8 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'adf-toolbar',
@@ -26,7 +28,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    imports: [MatToolbarModule],
+    imports: [MatToolbarModule, TranslateModule, NgIf],
     host: { class: 'adf-toolbar' }
 })
 export class ToolbarComponent {

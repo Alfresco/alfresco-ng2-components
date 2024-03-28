@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-
 import { ToolbarDividerComponent } from './toolbar-divider.component';
 import { ToolbarTitleComponent } from './toolbar-title.component';
 import { ToolbarComponent } from './toolbar.component';
 
 @NgModule({
-    imports: [CommonModule, ToolbarComponent, ToolbarTitleComponent, ToolbarDividerComponent, TranslateModule],
+    imports: [ToolbarComponent, ToolbarTitleComponent, ToolbarDividerComponent],
     exports: [ToolbarComponent, ToolbarTitleComponent, ToolbarDividerComponent]
 })
 export class ToolbarModule {}
