@@ -76,8 +76,7 @@
 
             mat-card-content {
                 height: 100%;
-                overflow-x: hidden;
-                overflow-y: auto;
+                overflow: hidden auto;
             }
 
             mat-card-actions {
