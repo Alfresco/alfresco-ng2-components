@@ -17,19 +17,22 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { FileSizePipe } from '../../../pipes';
 
 @Component({
     selector: 'adf-filesize-cell',
+    standalone: true,
     template: `
         <ng-container *ngIf="value$ | async | adfFileSize as fileSize">
             <span [title]="tooltip">{{ fileSize }}</span>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
+    imports: [NgIf, AsyncPipe, FileSizePipe],
     host: { class: 'adf-filesize-cell' }
 })
 export class FileSizeCellComponent extends DataTableCellComponent implements OnInit {
-
     ngOnInit(): void {
         super.ngOnInit();
     }

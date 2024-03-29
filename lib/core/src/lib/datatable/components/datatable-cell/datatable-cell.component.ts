@@ -15,34 +15,23 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, OnDestroy, inject } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ClipboardModule } from '../../../clipboard';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { DataTableService } from '../../services/datatable.service';
 
 @Component({
     selector: 'adf-datatable-cell',
+    standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-        <ng-container>
-            <span
-                *ngIf="copyContent; else defaultCell"
-                adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
-                [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
-                [attr.aria-label]="value$ | async"
-                [title]="tooltip"
-                class="adf-datatable-cell-value"
-                >{{ value$ | async }}</span
-            >
-        </ng-container>
-        <ng-template #defaultCell>
-            <span [title]="tooltip" class="adf-datatable-cell-value">{{ value$ | async }}</span>
-        </ng-template>
-    `,
+    templateUrl: './datatable-cell.component.html',
     encapsulation: ViewEncapsulation.None,
+    imports: [ClipboardModule, AsyncPipe, NgIf],
     host: { class: 'adf-datatable-content-cell' }
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {

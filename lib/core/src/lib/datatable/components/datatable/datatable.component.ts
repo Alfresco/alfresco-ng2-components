@@ -17,6 +17,9 @@
 
 /* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 
+import { FocusKeyManager } from '@angular/cdk/a11y';
+import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 import {
     AfterContentInit,
     AfterViewInit,
@@ -39,28 +42,46 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
-import { FocusKeyManager } from '@angular/cdk/a11y';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable, Observer, Subscription } from 'rxjs';
-import { DataColumnListComponent } from '../../data-column/data-column-list.component';
+import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
+import { ContextMenuModule } from '../../../context-menu';
+import { DirectiveModule } from '../../../directives';
+import { IconModule } from '../../../icon';
+import { FileTypePipe, FilterOutArrayObjectsByPropPipe, LocalizedDatePipe } from '../../../pipes';
+import { DataColumnListComponent } from '../../data-column';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
-import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { DropZoneDirective } from '../../directives/drop-zone.directive';
+import { ResizableModule } from '../../directives/resizable/resizable.module';
+import { ResizeEvent } from '../../directives/resizable/types';
+import { AmountCellComponent } from '../amount-cell/amount-cell.component';
+import { BooleanCellComponent } from '../boolean-cell/boolean-cell.component';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
-import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ResizeEvent } from '../../directives/resizable/types';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
+import { DateCellComponent } from '../date-cell/date-cell.component';
+import { FileSizeCellComponent } from '../filesize-cell/filesize-cell.component';
+import { IconCellComponent } from '../icon-cell/icon-cell.component';
+import { JsonCellComponent } from '../json-cell/json-cell.component';
+import { LocationCellComponent } from '../location-cell/location-cell.component';
+import { NumberCellComponent } from '../number-cell/number-cell.component';
 
 // eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
@@ -71,9 +92,40 @@ export enum ShowHeaderMode {
 
 @Component({
     selector: 'adf-datatable',
+    standalone: true,
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    imports: [
+        CommonModule,
+        DragDropModule,
+        DataTableRowComponent,
+        TranslateModule,
+        MatCheckboxModule,
+        ResizableModule,
+        DropZoneDirective,
+        MatTooltipModule,
+        IconModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        DirectiveModule,
+        ContextMenuModule,
+        IconCellComponent,
+        DateCellComponent,
+        LocationCellComponent,
+        FileSizeCellComponent,
+        DataTableCellComponent,
+        BooleanCellComponent,
+        JsonCellComponent,
+        AmountCellComponent,
+        NumberCellComponent,
+        LocalizedDatePipe,
+        FileTypePipe,
+        FilterOutArrayObjectsByPropPipe
+    ],
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {

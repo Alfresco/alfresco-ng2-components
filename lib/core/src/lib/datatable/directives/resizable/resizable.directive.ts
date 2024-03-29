@@ -22,6 +22,7 @@ import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, Ev
 
 @Directive({
     selector: '[adf-resizable]',
+    standalone: true,
     exportAs: 'adf-resizable'
 })
 export class ResizableDirective implements OnInit, OnDestroy {

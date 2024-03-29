@@ -41,13 +41,21 @@
         <ng-template>
             <adf-empty-list *ngIf="!customNoContentTemplate">
                 <div class="adf-empty-list_template adf-empty-folder">
-                    <div class="adf-empty-folder-this-space-is-empty">{{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}}</div>
-                    <div class="adf-empty-folder-drag-drop">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate }}</div>
-                    <div class="adf-empty-folder-any-files-here-to-add">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate }}</div>
-                    <img [alt]="'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate" class="adf-empty-folder-image" [src]="emptyFolderImageUrl">
+                    <div class="adf-empty-folder-this-space-is-empty">
+                        {{ 'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate }}
+                    </div>
+                    <div class="adf-empty-folder-drag-drop">
+                        {{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate }}
+                    </div>
+                    <div class="adf-empty-folder-any-files-here-to-add">
+                        {{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate }}
+                    </div>
+                    <img [alt]="'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate"
+                         class="adf-empty-folder-image"
+                         [src]="emptyFolderImageUrl">
                 </div>
             </adf-empty-list>
-            <ng-content select="adf-custom-empty-content-template, empty-folder-content"></ng-content>
+            <ng-content select="adf-custom-empty-content-template"></ng-content>
         </ng-template>
     </adf-no-content-template>
 
@@ -57,7 +65,7 @@
                 <mat-icon>error</mat-icon>
                 <p class="adf-no-permission__template--text">{{ 'ADF-DOCUMENT-LIST.NO_PERMISSION' | translate }}</p>
             </div>
-            <ng-content select="adf-custom-no-permission-template, no-permission-content"></ng-content>
+            <ng-content select="adf-custom-no-permission-template"></ng-content>
         </ng-template>
     </adf-no-permission-template>
 
@@ -79,11 +87,11 @@
     <adf-main-menu-datatable-template>
         <ng-template let-mainMenuTrigger>
             <adf-datatable-column-selector
-              [columns]="columns"
-              [mainMenuTrigger]="mainMenuTrigger"
-              [columnsSorting]="false"
-              [maxColumnsVisible]="maxColumnsVisible"
-              (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
+                [columns]="columns"
+                [mainMenuTrigger]="mainMenuTrigger"
+                [columnsSorting]="false"
+                [maxColumnsVisible]="maxColumnsVisible"
+                (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
             </adf-datatable-column-selector>
         </ng-template>
     </adf-main-menu-datatable-template>
