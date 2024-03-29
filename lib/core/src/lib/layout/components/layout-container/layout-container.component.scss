@@ -15,6 +15,7 @@ adf-layout-container {
 }
 
 .adf-container-full-width {
+    height: 100%;
     width: inherit;
     overflow: hidden;
 }
@@ -45,7 +46,6 @@ adf-layout-container {
 }
 
 mat-sidenav-content > div {
-    display: flex;
     height: 100%;
 
     > div {
