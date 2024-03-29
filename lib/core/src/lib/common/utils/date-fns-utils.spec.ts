@@ -114,20 +114,20 @@ describe('DateFnsUtils', () => {
         expect(resultUtc).toBeInstanceOf(Date);
     });
 
-    it('should convert UTC dates to have the same day, month, year displayed in different timezone', () => {
-        const dateUTC = new Date('Wed Jan 01 2020 00:00:00 GMT+0000');
+    it('should force UTC and local dates to display the same day, month and year in different timezones', () => {
+        const dateUtc = new Date('Wed Jan 01 2020 00:00:00 GMT+0000');
         const dateUSA = new Date('Tue Dec 31 2019 16:00:00 GMT-0800');
         const dateJapan = new Date('Wed Jan 01 2020 09:00:00 GMT+0900');
-        const forceUtcDateUTC = DateFnsUtils.forceUtc(dateUTC);
+        const forceUtcDateUtc = DateFnsUtils.forceUtc(dateUtc);
         const forceUtcDateUSA = DateFnsUtils.forceUtc(dateUSA);
         const forceUtcDateJapan = DateFnsUtils.forceUtc(dateJapan);
-        const forceLocalDateUTC = DateFnsUtils.forceUtc(forceUtcDateUTC);
-        const forceLocalDateUSA = DateFnsUtils.forceUtc(forceUtcDateUSA);
-        const forceLocalDateJapan = DateFnsUtils.forceUtc(forceUtcDateJapan);
+        const forceLocalDateUtc = DateFnsUtils.forceLocal(forceUtcDateUtc);
+        const forceLocalDateUSA = DateFnsUtils.forceLocal(forceUtcDateUSA);
+        const forceLocalDateJapan = DateFnsUtils.forceLocal(forceUtcDateJapan);
 
-        expect(forceUtcDateUTC).toEqual(forceUtcDateUSA);
+        expect(forceUtcDateUtc).toEqual(forceUtcDateUSA);
         expect(forceUtcDateUSA).toEqual(forceUtcDateJapan);
-        expect(forceLocalDateUTC).toEqual(forceLocalDateUSA);
+        expect(forceLocalDateUtc).toEqual(forceLocalDateUSA);
         expect(forceLocalDateUSA).toEqual(forceLocalDateJapan);
         expect(forceUtcDateUSA.getDate()).toBe(1);
         expect(forceUtcDateUSA.getMonth()).toBe(0);
