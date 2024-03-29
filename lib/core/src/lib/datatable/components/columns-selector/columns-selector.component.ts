@@ -15,16 +15,26 @@
  * limitations under the License.
  */
 
+import { NgForOf, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { DataColumn } from '../../data/data-column.model';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { PipeModule } from '../../../pipes';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 @Component({
     selector: 'adf-datatable-column-selector',
+    standalone: true,
     templateUrl: './columns-selector.component.html',
     styleUrls: ['./columns-selector.component.scss'],
+    imports: [MatButtonModule, TranslateModule, MatIconModule, MatDividerModule, ReactiveFormsModule, PipeModule, MatCheckboxModule, NgIf, NgForOf],
     encapsulation: ViewEncapsulation.None
 })
 export class ColumnsSelectorComponent implements OnInit, OnDestroy {
@@ -49,23 +59,16 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     searchQuery = '';
 
     ngOnInit(): void {
-        this.mainMenuTrigger.menuOpened.pipe(
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => {
-            const columns = this.columns.map(column => ({...column}));
+        this.mainMenuTrigger.menuOpened.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            const columns = this.columns.map((column) => ({ ...column }));
             this.columnItems = this.columnsSorting ? this.sortColumns(columns) : columns;
         });
 
-        this.mainMenuTrigger.menuClosed.pipe(
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => {
+        this.mainMenuTrigger.menuClosed.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             this.searchInputControl.setValue('');
         });
 
-        this.searchInputControl.valueChanges.pipe(
-            debounceTime(300),
-            takeUntil(this.onDestroy$)
-        ).subscribe((searchQuery) => {
+        this.searchInputControl.valueChanges.pipe(debounceTime(300), takeUntil(this.onDestroy$)).subscribe((searchQuery) => {
             this.searchQuery = searchQuery;
         });
     }
@@ -89,12 +92,16 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     }
 
     isCheckboxDisabled(column: DataColumn): boolean {
-        return this.maxColumnsVisible && column.isHidden && this.maxColumnsVisible === this.columnItems.filter(dataColumn => !dataColumn.isHidden).length;
+        return (
+            this.maxColumnsVisible &&
+            column.isHidden &&
+            this.maxColumnsVisible === this.columnItems.filter((dataColumn) => !dataColumn.isHidden).length
+        );
     }
 
     private sortColumns(columns: DataColumn[]): DataColumn[] {
-        const shownColumns = columns.filter(column => !column.isHidden);
-        const hiddenColumns = columns.filter(column => column.isHidden);
+        const shownColumns = columns.filter((column) => !column.isHidden);
+        const hiddenColumns = columns.filter((column) => column.isHidden);
 
         return [...shownColumns, ...hiddenColumns];
     }

@@ -15,20 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ViewEncapsulation,
-    Input,
-    OnInit
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { DecimalConfig } from '../../data/data-column.model';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [AsyncPipe, DecimalPipe, NgIf],
     selector: 'adf-number-cell',
     templateUrl: './number-cell.component.html',
     host: { class: 'adf-datatable-content-cell' },
@@ -36,7 +30,6 @@ import { CommonModule } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NumberCellComponent extends DataTableCellComponent implements OnInit {
-
     @Input()
     decimalConfig: DecimalConfig;
 
