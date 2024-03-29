@@ -29,7 +29,7 @@ import { FacetField, SearchCategory, TabbedFacetField } from '../../models';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterChipsComponent implements OnInit, OnDestroy {
-    private queryBuilder = inject(SearchQueryBuilderService);
+    public queryBuilder = inject(SearchQueryBuilderService);
     private facetFiltersService = inject(SearchFacetFiltersService);
 
     private onDestroy$ = new Subject<void>();

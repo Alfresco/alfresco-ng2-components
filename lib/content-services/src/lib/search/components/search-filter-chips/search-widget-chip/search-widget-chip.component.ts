@@ -22,19 +22,26 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';
 
 @Component({
-  selector: 'adf-search-widget-chip',
-  templateUrl: './search-widget-chip.component.html',
-  styles: [
-      `
-                .adf-search-widget-extra-width {
-                  max-width: 500px;
-                }
-              `
-  ],
-  encapsulation: ViewEncapsulation.None
-})
-export class SearchWidgetChipComponent  {
+    selector: 'adf-search-widget-chip',
+    templateUrl: './search-widget-chip.component.html',
+    styles: [
+        `
+            .adf-search-widget-extra-width {
+                max-width: 500px;
+            }
 
+            .mdc-evolution-chip__checkmark {
+                display: none;
+            }
+
+            .mat-mdc-chip-graphic {
+                width: 0 !important;
+            }
+        `
+    ],
+    encapsulation: ViewEncapsulation.None
+})
+export class SearchWidgetChipComponent {
     @Input()
     category: SearchCategory;
 
