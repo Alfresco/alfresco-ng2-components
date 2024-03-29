@@ -114,24 +114,26 @@ describe('DateFnsUtils', () => {
         expect(resultUtc).toBeInstanceOf(Date);
     });
 
-    it('should force UTC and local dates to display the same day, month and year in different timezones', () => {
-        const dateUtc = new Date('Wed Jan 01 2020 00:00:00 GMT+0000');
+    it('should force local and UTC dates to display the same day, month and year in different timezones', () => {
+        const dateEngland = new Date('Wed Jan 01 2020 00:00:00 GMT+0000');
         const dateUSA = new Date('Tue Dec 31 2019 16:00:00 GMT-0800');
         const dateJapan = new Date('Wed Jan 01 2020 09:00:00 GMT+0900');
-        const forceUtcDateUtc = DateFnsUtils.forceUtc(dateUtc);
+        const forceUtcDateEngland = DateFnsUtils.forceUtc(dateEngland);
         const forceUtcDateUSA = DateFnsUtils.forceUtc(dateUSA);
         const forceUtcDateJapan = DateFnsUtils.forceUtc(dateJapan);
-        const forceLocalDateUtc = DateFnsUtils.forceLocal(forceUtcDateUtc);
+
+        expect(forceUtcDateEngland).toEqual(forceUtcDateUSA);
+        expect(forceUtcDateUSA).toEqual(forceUtcDateJapan);
+        expect(forceUtcDateJapan.getDate()).toBe(1);
+        expect(forceUtcDateJapan.getMonth()).toBe(0);
+        expect(forceUtcDateJapan.getFullYear()).toBe(2020);
+
+        const forceLocalDateEngland = DateFnsUtils.forceLocal(forceUtcDateEngland);
         const forceLocalDateUSA = DateFnsUtils.forceLocal(forceUtcDateUSA);
         const forceLocalDateJapan = DateFnsUtils.forceLocal(forceUtcDateJapan);
 
-        expect(forceUtcDateUtc).toEqual(forceUtcDateUSA);
-        expect(forceUtcDateUSA).toEqual(forceUtcDateJapan);
-        expect(forceLocalDateUtc).toEqual(forceLocalDateUSA);
+        expect(forceLocalDateEngland).toEqual(forceLocalDateUSA);
         expect(forceLocalDateUSA).toEqual(forceLocalDateJapan);
-        expect(forceUtcDateUSA.getDate()).toBe(1);
-        expect(forceUtcDateUSA.getMonth()).toBe(0);
-        expect(forceUtcDateUSA.getFullYear()).toBe(2020);
         expect(forceLocalDateJapan.getDate()).toBe(1);
         expect(forceLocalDateJapan.getMonth()).toBe(0);
         expect(forceLocalDateJapan.getFullYear()).toBe(2020);
