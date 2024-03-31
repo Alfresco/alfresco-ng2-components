@@ -66,8 +66,12 @@ describe('PeopleContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            imports: [HttpClientTestingModule],
+            providers: [
+                PeopleContentService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+            ]
         });
 
         peopleContentService = TestBed.inject(PeopleContentService);

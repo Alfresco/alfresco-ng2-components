@@ -18,10 +18,13 @@
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { CoreTestingModule } from '@alfresco/adf-core';
+
 import { VersionCompatibilityService } from './version-compatibility.service';
 import { VersionInfo } from '@alfresco/js-api';
 import { VersionCompatibilityModule } from './version-compatibility.module';
+import { RedirectAuthService } from '@alfresco/adf-core';
+import { EMPTY } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
     template: `
@@ -48,8 +51,9 @@ describe('VersionCompatibilityDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, VersionCompatibilityModule],
-            declarations: [TestComponent]
+            imports: [VersionCompatibilityModule, HttpClientTestingModule],
+            declarations: [TestComponent],
+            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY } }]
         });
         fixture = TestBed.createComponent(TestComponent);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
