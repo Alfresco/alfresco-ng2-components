@@ -24,7 +24,6 @@ import { By } from '@angular/platform-browser';
 import { FileModel } from '../common/models/file.model';
 import { FileUploadEvent } from '../common/events/file.event';
 import { UploadService } from '../common/services/upload.service';
-
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
@@ -61,12 +60,7 @@ describe('ContentNodeSelectorComponent', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule,
-                MatDialogModule,
-                UploadModule
-            ],
+            imports: [ContentTestingModule, MatDialogModule, UploadModule],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {
@@ -139,7 +133,6 @@ describe('ContentNodeSelectorComponent', () => {
     };
 
     describe('Data injecting with the "Material dialog way"', () => {
-
         it('should show the INJECTED title', () => {
             const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
             expect(titleElement).not.toBeNull();
@@ -162,22 +155,25 @@ describe('ContentNodeSelectorComponent', () => {
         it('should pass through the injected rowFilter to the documentList', () => {
             const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
             expect(documentList).not.toBeNull('Document list should be shown');
-            expect(documentList.componentInstance.rowFilter({
-                node: {
-                    entry: new Node({
-                        name: 'impossible-name',
-                        id: 'name'
-                    })
-                }
-            }))
-                .toBe(data.rowFilter({
+            expect(
+                documentList.componentInstance.rowFilter({
                     node: {
                         entry: new Node({
                             name: 'impossible-name',
                             id: 'name'
                         })
                     }
-                }));
+                })
+            ).toBe(
+                data.rowFilter({
+                    node: {
+                        entry: new Node({
+                            name: 'impossible-name',
+                            id: 'name'
+                        })
+                    }
+                })
+            );
         });
 
         it('should pass through the injected imageResolver to the documentList', () => {
@@ -185,7 +181,7 @@ describe('ContentNodeSelectorComponent', () => {
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.imageResolver).toBe(data.imageResolver);
         });
-   });
+    });
 
     describe('Cancel button', () => {
         it('should not be shown if dialogRef is NOT injected', () => {
@@ -205,7 +201,6 @@ describe('ContentNodeSelectorComponent', () => {
     });
 
     describe('Action button for the chosen node', () => {
-
         it('should be disabled by default', () => {
             fixture.detectChanges();
 
@@ -249,7 +244,6 @@ describe('ContentNodeSelectorComponent', () => {
     });
 
     describe('Title', () => {
-
         it('should be updated when a site is chosen', () => {
             const fakeSiteTitle = 'My fake site';
             const contentNodePanel = fixture.debugElement.query(By.directive(ContentNodeSelectorPanelComponent));
@@ -259,11 +253,10 @@ describe('ContentNodeSelectorComponent', () => {
             const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
             expect(titleElement).not.toBeNull();
             expect(titleElement.nativeElement.innerText).toBe('NODE_SELECTOR.CHOOSE_ITEM');
-       });
-   });
+        });
+    });
 
     describe('Upload button', () => {
-
         it('Should not be able to upload a file whilst a search is still running', async () => {
             enableLocalUpload();
             fixture.detectChanges();
@@ -455,7 +448,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should uploadStarted become true when the first upload gets started', () => {
-            const fileUploadEvent  = new FileUploadEvent(new FileModel({ name: 'fake-name', size: 100 } as File));
+            const fileUploadEvent = new FileUploadEvent(new FileModel({ name: 'fake-name', size: 100 } as File));
             uploadService.fileUploadStarting.next(fileUploadEvent);
 
             expect(component.uploadStarted).toBe(true);

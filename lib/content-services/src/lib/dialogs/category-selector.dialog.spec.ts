@@ -19,9 +19,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategorySelectorDialogComponent, CategorySelectorDialogOptions } from './category-selector.dialog';
 import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CoreTestingModule } from '@alfresco/adf-core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
+import { AppConfigService, AppConfigServiceMock, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { CategoriesManagementComponent } from '../category';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 describe('Category selector dialog component', () => {
     let fixture: ComponentFixture<CategorySelectorDialogComponent>;
@@ -36,7 +40,10 @@ describe('Category selector dialog component', () => {
         select: new Subject<Category[]>()
     };
 
-    const categories: Category[] = [{id: 'id1', name: 'cat1'}, {id: 'id2', name: 'cat3'}];
+    const categories: Category[] = [
+        { id: 'id1', name: 'cat1' },
+        { id: 'id2', name: 'cat3' }
+    ];
 
     const setCategories = () => {
         component.categories = categories;
@@ -45,11 +52,14 @@ describe('Category selector dialog component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [MatFormFieldModule, TranslateModule.forRoot(), MatDialogModule, HttpClientTestingModule],
             providers: [
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
                 { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: options }
-            ]
+                { provide: MAT_DIALOG_DATA, useValue: options },
+                { provide: TranslationService, useClass: TranslationMock }
+            ],
+            declarations: [CategoriesManagementComponent, CategorySelectorDialogComponent]
         });
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(CategorySelectorDialogComponent);
