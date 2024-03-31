@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CategoryService } from '../services/category.service';
 import { CategoryNode, CategoryTreeDatasourceService } from '@alfresco/adf-content-services';
@@ -25,17 +24,12 @@ import { EMPTY, of } from 'rxjs';
 import { Pagination } from '@alfresco/js-api';
 
 describe('CategoryTreeDatasourceService', () => {
-  let categoryTreeDatasourceService: CategoryTreeDatasourceService;
-  let categoryService: CategoryService;
+    let categoryTreeDatasourceService: CategoryTreeDatasourceService;
+    let categoryService: CategoryService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: CategoryService, useClass: CategoryServiceMock }
-            ]
+            providers: [CategoryTreeDatasourceService, { provide: CategoryService, useClass: CategoryServiceMock }]
         });
 
         categoryTreeDatasourceService = TestBed.inject(CategoryTreeDatasourceService);
@@ -44,7 +38,7 @@ describe('CategoryTreeDatasourceService', () => {
 
     it('should get root level categories', fakeAsync(() => {
         spyOn(categoryTreeDatasourceService, 'getParentNode').and.returnValue(undefined);
-        categoryTreeDatasourceService.getSubNodes(null, 0 , 100).subscribe((treeResponse: TreeResponse<CategoryNode>) => {
+        categoryTreeDatasourceService.getSubNodes(null, 0, 100).subscribe((treeResponse: TreeResponse<CategoryNode>) => {
             expect(treeResponse.entries.length).toBe(1);
             expect(treeResponse.entries[0].level).toBe(0);
             expect(treeResponse.entries[0].nodeType).toBe(TreeNodeType.RegularNode);
@@ -62,7 +56,7 @@ describe('CategoryTreeDatasourceService', () => {
             nodeType: TreeNodeType.RegularNode
         };
         spyOn(categoryTreeDatasourceService, 'getParentNode').and.returnValue(parentNode);
-        categoryTreeDatasourceService.getSubNodes(parentNode.id, 0 , 100).subscribe((treeResponse: TreeResponse<CategoryNode>) => {
+        categoryTreeDatasourceService.getSubNodes(parentNode.id, 0, 100).subscribe((treeResponse: TreeResponse<CategoryNode>) => {
             expect(treeResponse.entries.length).toBe(2);
             expect(treeResponse.entries[0].parentId).toBe(parentNode.id);
             expect(treeResponse.entries[0].level).toBe(1);
@@ -84,7 +78,8 @@ describe('CategoryTreeDatasourceService', () => {
     });
 
     it('should call getCategory for every instance if value of name parameter is defined', (done) => {
-        spyOn(categoryService, 'getCategory').and.returnValues(of({
+        spyOn(categoryService, 'getCategory').and.returnValues(
+            of({
                 entry: {
                     name: 'name',
                     id: 'some id 1',
@@ -97,18 +92,18 @@ describe('CategoryTreeDatasourceService', () => {
                     id: 'some id 2',
                     hasChildren: false
                 }
-            }));
-        categoryTreeDatasourceService.getSubNodes('id', undefined, undefined, 'name')
-            .subscribe(() => {
-
-                expect(categoryService.getCategory).toHaveBeenCalledWith('some id 1');
-                expect(categoryService.getCategory).toHaveBeenCalledWith('some id 2');
-                done();
-            });
+            })
+        );
+        categoryTreeDatasourceService.getSubNodes('id', undefined, undefined, 'name').subscribe(() => {
+            expect(categoryService.getCategory).toHaveBeenCalledWith('some id 1');
+            expect(categoryService.getCategory).toHaveBeenCalledWith('some id 2');
+            done();
+        });
     });
 
     it('should return observable which emits correct categories', (done) => {
-        spyOn(categoryService, 'getCategory').and.returnValues(of({
+        spyOn(categoryService, 'getCategory').and.returnValues(
+            of({
                 entry: {
                     name: 'some name',
                     id: 'some id 1',
@@ -121,14 +116,15 @@ describe('CategoryTreeDatasourceService', () => {
                     id: 'some id 2',
                     hasChildren: false
                 }
-            }));
-        categoryTreeDatasourceService.getSubNodes('id', undefined, undefined, 'name')
-            .subscribe((response) => {
-                const pagination = new Pagination();
-                pagination.count = 2;
-                expect(response).toEqual({
-                    pagination,
-                    entries: [{
+            })
+        );
+        categoryTreeDatasourceService.getSubNodes('id', undefined, undefined, 'name').subscribe((response) => {
+            const pagination = new Pagination();
+            pagination.count = 2;
+            expect(response).toEqual({
+                pagination,
+                entries: [
+                    {
                         id: 'some id 1',
                         nodeName: 'some name',
                         parentId: 'parent id 1',
@@ -136,7 +132,8 @@ describe('CategoryTreeDatasourceService', () => {
                         nodeType: TreeNodeType.RegularNode,
                         hasChildren: true,
                         isLoading: false
-                    }, {
+                    },
+                    {
                         id: 'some id 2',
                         nodeName: 'Language/some other name',
                         parentId: 'parent id 2',
@@ -144,9 +141,10 @@ describe('CategoryTreeDatasourceService', () => {
                         nodeType: TreeNodeType.RegularNode,
                         hasChildren: false,
                         isLoading: false
-                    }]
-                });
-                done();
+                    }
+                ]
             });
+            done();
+        });
     });
 });

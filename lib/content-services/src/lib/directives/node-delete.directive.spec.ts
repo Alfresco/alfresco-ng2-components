@@ -19,8 +19,11 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from './content-directive.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { RedirectAuthService, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { EMPTY } from 'rxjs';
 
 @Component({
     template: `<div id="delete-component" [adf-delete]="selection" (delete)="onDelete()"></div>`
@@ -76,7 +79,11 @@ describe('NodeDeleteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ContentDirectiveModule],
+            imports: [ContentDirectiveModule, HttpClientTestingModule, TranslateModule.forRoot()],
+            providers: [
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+            ],
             declarations: [TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
