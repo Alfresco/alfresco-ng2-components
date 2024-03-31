@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppConfigService, CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigService, TranslationMock, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
 import {
     CategoryBody,
     CategoryEntry,
@@ -29,6 +29,8 @@ import {
 } from '@alfresco/js-api';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CategoryService } from './category.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CategoryService', () => {
     let categoryService: CategoryService;
@@ -44,7 +46,8 @@ describe('CategoryService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [HttpClientTestingModule, TranslateModule.forRoot()],
+            providers: [CategoryService, UserPreferencesService, { provide: TranslationService, useClass: TranslationMock }]
         });
 
         categoryService = TestBed.inject(CategoryService);
