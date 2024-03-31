@@ -17,16 +17,10 @@
 
 import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContextMenuDirective, CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
+import { ContextMenuDirective, ContextMenuModule, DataTableModule, IconModule, UserPreferencesService } from '@alfresco/adf-core';
 import { MatTreeModule } from '@angular/material/tree';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
-import {
-    singleNode,
-    treeNodesChildrenMockExpanded,
-    treeNodesMock,
-    treeNodesMockExpanded,
-    treeNodesNoChildrenMock
-} from '../mock/tree-node.mock';
+import { singleNode, treeNodesChildrenMockExpanded, treeNodesMock, treeNodesMockExpanded, treeNodesNoChildrenMock } from '../mock/tree-node.mock';
 import { of, Subject } from 'rxjs';
 import { TreeService } from '../services/tree.service';
 import { TreeServiceMock } from '../mock/tree-service.service.mock';
@@ -37,6 +31,13 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
@@ -54,7 +55,8 @@ describe('TreeComponent', () => {
 
     const getNodePadding = (nodeId: string) => parseInt(getComputedStyle(getNode(nodeId).nativeElement).paddingLeft, 10);
 
-    const getNodeSpinner = async (nodeId: string) => loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: composeNodeSelector(nodeId) }));
+    const getNodeSpinner = async (nodeId: string) =>
+        loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: composeNodeSelector(nodeId) }));
 
     const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-icon`);
 
@@ -67,15 +69,21 @@ describe('TreeComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreTestingModule,
-                MatTreeModule
+                NoopAnimationsModule,
+                HttpClientTestingModule,
+                TranslateModule.forRoot(),
+                MatTreeModule,
+                MatIconModule,
+                MatMenuModule,
+                MatTreeModule,
+                DataTableModule,
+                ContextMenuModule,
+                MatCheckboxModule,
+                MatProgressSpinnerModule,
+                IconModule
             ],
-            declarations: [
-                TreeComponent
-            ],
-            providers: [
-                { provide: TreeService, useClass: TreeServiceMock }
-            ]
+            declarations: [TreeComponent],
+            providers: [UserPreferencesService, { provide: TreeService, useClass: TreeServiceMock }]
         });
 
         fixture = TestBed.createComponent(TreeComponent);
@@ -95,9 +103,12 @@ describe('TreeComponent', () => {
     });
 
     it('should emit pagination when tree is refreshed', (done) => {
-        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({
-            pagination: {skipCount: 0, maxItems: userPreferenceService.paginationSize}, entries: []
-        }));
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(
+            of({
+                pagination: { skipCount: 0, maxItems: userPreferenceService.paginationSize },
+                entries: []
+            })
+        );
         component.paginationChanged.subscribe((pagination) => {
             expect(pagination.skipCount).toBe(0);
             expect(pagination.maxItems).toBe(userPreferenceService.paginationSize);
@@ -186,7 +197,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         const collapseSpy = spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
-        await (await ((await getNodeSpinner(component.treeService.treeNodes[0].id)).host())).click();
+        await (await (await getNodeSpinner(component.treeService.treeNodes[0].id)).host()).click();
         expect(collapseSpy).not.toHaveBeenCalled();
     });
 
@@ -206,7 +217,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         const expandSpy = spyOn(component.treeService, 'expandNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
-        await (await ((await getNodeSpinner(component.treeService.treeNodes[0].id)).host())).click();
+        await (await (await getNodeSpinner(component.treeService.treeNodes[0].id)).host()).click();
         expect(expandSpy).not.toHaveBeenCalled();
     });
 
@@ -239,13 +250,15 @@ describe('TreeComponent', () => {
     });
 
     it('should not call collapseNode on TreeService when collapsing node and node has not children', () => {
-        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({
-            pagination: {
-                skipCount: 0,
-                maxItems: 25
-            },
-            entries: Array.from(treeNodesNoChildrenMock)
-        }));
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(
+            of({
+                pagination: {
+                    skipCount: 0,
+                    maxItems: 25
+                },
+                entries: Array.from(treeNodesNoChildrenMock)
+            })
+        );
         component.refreshTree();
         fixture.detectChanges();
         spyOn(component.treeService, 'collapseNode');
@@ -255,13 +268,15 @@ describe('TreeComponent', () => {
     });
 
     it('should not call expandNode on TreeService when expanding node by clicking at node label and node has not children', () => {
-        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({
-            pagination: {
-                skipCount: 0,
-                maxItems: 25
-            },
-            entries: Array.from(treeNodesNoChildrenMock)
-        }));
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(
+            of({
+                pagination: {
+                    skipCount: 0,
+                    maxItems: 25
+                },
+                entries: Array.from(treeNodesNoChildrenMock)
+            })
+        );
         component.refreshTree();
         fixture.detectChanges();
         spyOn(component.treeService, 'expandNode');
@@ -273,7 +288,7 @@ describe('TreeComponent', () => {
     it('should load more subnodes and remove load more button when load more button is clicked', () => {
         component.refreshTree();
         fixture.detectChanges();
-        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({pagination: {}, entries: Array.from(singleNode)}));
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(singleNode) }));
         const loadMoreBtn = fixture.debugElement.query(By.css('.adf-tree-load-more-button adf-icon')).nativeElement;
         const appendSpy = spyOn(component.treeService, 'appendNodes').and.callThrough();
         loadMoreBtn.dispatchEvent(new Event('click'));
@@ -287,17 +302,18 @@ describe('TreeComponent', () => {
     it('should load more subnodes and remove load more button when label of load more button is clicked', () => {
         component.refreshTree();
         fixture.detectChanges();
-        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({
-            pagination: {},
-            entries: Array.from(singleNode)
-        }));
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(
+            of({
+                pagination: {},
+                entries: Array.from(singleNode)
+            })
+        );
         spyOn(component.treeService, 'appendNodes');
         fixture.debugElement.query(By.css('.adf-tree-load-more-row .adf-tree-cell-value')).nativeElement.click();
         fixture.whenStable();
         fixture.detectChanges();
         expect(component.treeService.appendNodes).toHaveBeenCalledWith(component.treeService.treeNodes[0], Array.from(singleNode));
-        expect(component.treeService.treeNodes.find((node) => node.nodeType === TreeNodeType.LoadMoreNode))
-            .toBeUndefined();
+        expect(component.treeService.treeNodes.find((node) => node.nodeType === TreeNodeType.LoadMoreNode)).toBeUndefined();
     });
 
     it('selection should be disabled by default, no checkboxes should be displayed', async () => {
@@ -402,13 +418,16 @@ describe('TreeComponent', () => {
             component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
 
             fixture.detectChanges();
-            expect(contextMenu.links).toEqual([{
-                title: optionTitle1,
-                subject: jasmine.any(Subject)
-            }, {
-                title: optionTitle2,
-                subject: jasmine.any(Subject)
-            }]);
+            expect(contextMenu.links).toEqual([
+                {
+                    title: optionTitle1,
+                    subject: jasmine.any(Subject)
+                },
+                {
+                    title: optionTitle2,
+                    subject: jasmine.any(Subject)
+                }
+            ]);
         });
 
         it('should have assigned false to enabled property of context menu for row by default', () => {
