@@ -18,10 +18,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FileAutoDownloadComponent } from './file-auto-download.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { CoreTestingModule } from '@alfresco/adf-core';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { MatButtonModule } from '@angular/material/button';
+import { NodeDownloadDirective } from '../../../directives';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 const mockDialog = {
     close: jasmine.createSpy('close')
@@ -34,12 +37,12 @@ describe('FileAutoDownloadComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [FileAutoDownloadComponent],
-            imports: [CoreTestingModule],
-            schemas: [NO_ERRORS_SCHEMA],
+            imports: [HttpClientTestingModule, TranslateModule.forRoot(), MatDialogModule, MatButtonModule],
+            declarations: [FileAutoDownloadComponent, NodeDownloadDirective],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialog },
-                { provide: MAT_DIALOG_DATA, useValue: null }
+                { provide: MAT_DIALOG_DATA, useValue: null },
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         });
 
