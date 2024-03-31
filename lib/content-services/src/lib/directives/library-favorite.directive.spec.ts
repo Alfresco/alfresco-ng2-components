@@ -18,8 +18,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
     selector: 'app-test-component',
@@ -39,7 +39,7 @@ describe('LibraryFavoriteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [HttpClientTestingModule],
             declarations: [TestComponent, LibraryFavoriteDirective]
         });
         fixture = TestBed.createComponent(TestComponent);
