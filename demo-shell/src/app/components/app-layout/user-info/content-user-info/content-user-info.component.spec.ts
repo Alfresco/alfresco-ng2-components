@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, IdentityUserModel, InitialUsernamePipe, UserInfoMode } from '@alfresco/adf-core';
+import { IdentityUserModel, InitialUsernamePipe, UserInfoMode } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By, DomSanitizer } from '@angular/platform-browser';
@@ -119,7 +119,7 @@ describe('ContentUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ContentTestingModule, MatMenuModule]
+            imports: [ContentTestingModule, MatMenuModule]
         });
         fixture = TestBed.createComponent(ContentUserInfoComponent);
         component = fixture.componentInstance;
