@@ -16,17 +16,23 @@
  */
 
 import { createNewPersonMock, fakeEcmAdminUser, fakeEcmUser, fakeEcmUser2, fakeEcmUserList } from '../mocks/ecm-user.service.mock';
-import { AlfrescoApiService, AlfrescoApiServiceMock, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EMPTY } from 'rxjs';
 
 describe('PeopleContentService', () => {
     let peopleContentService: PeopleContentService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            imports: [HttpClientTestingModule],
+            providers: [
+                PeopleContentService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+            ]
         });
 
         peopleContentService = TestBed.inject(PeopleContentService);
