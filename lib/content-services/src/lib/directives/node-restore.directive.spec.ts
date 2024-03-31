@@ -19,8 +19,10 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeRestoreDirective } from './node-restore.directive';
-import { TranslationService, CoreTestingModule } from '@alfresco/adf-core';
+import { TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from './content-directive.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: ` <div [adf-restore]="selection" (restore)="doneSpy()"></div>`
@@ -42,7 +44,8 @@ describe('NodeRestoreDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ContentDirectiveModule],
+            imports: [ContentDirectiveModule, HttpClientTestingModule, TranslateModule.forRoot()],
+            providers: [{ provide: TranslationService, useClass: TranslationMock }],
             declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
