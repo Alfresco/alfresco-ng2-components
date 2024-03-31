@@ -17,11 +17,13 @@
 
 import { TestBed } from '@angular/core/testing';
 import { LockService } from './lock.service';
-import { CoreTestingModule, AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService, RedirectAuthService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { addDays, subDays } from 'date-fns';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EMPTY } from 'rxjs';
 
-describe('PeopleProcessService', () => {
+describe('LockService', () => {
     let service: LockService;
     let authenticationService: AuthenticationService;
 
@@ -31,7 +33,8 @@ describe('PeopleProcessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [HttpClientTestingModule],
+            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY } }]
         });
         service = TestBed.inject(LockService);
         authenticationService = TestBed.inject(AuthenticationService);

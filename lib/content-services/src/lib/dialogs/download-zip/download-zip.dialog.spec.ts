@@ -16,11 +16,14 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { DownloadZipService } from './services/download-zip.service';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
+import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DownloadZipDialogComponent', () => {
     let fixture: ComponentFixture<DownloadZipDialogComponent>;
@@ -37,10 +40,14 @@ describe('DownloadZipDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [HttpClientTestingModule, TranslateModule.forRoot(), MatDialogModule, NoopAnimationsModule],
             providers: [
+                DownloadZipService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: TranslationService, useClass: TranslationMock },
                 { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: dataMock }
+                { provide: MAT_DIALOG_DATA, useValue: dataMock },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
             ]
         });
         dialogRef.close.calls.reset();
