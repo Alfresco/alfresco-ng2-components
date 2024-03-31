@@ -17,11 +17,12 @@
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { LibraryMembershipDirective } from './library-membership.directive';
-import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { of, throwError, Subject } from 'rxjs';
-import { AlfrescoApiService, CoreModule, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from './content-directive.module';
 import { SitesService } from '../common/services/sites.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LibraryMembershipDirective', () => {
     let alfrescoApiService: AlfrescoApiService;
@@ -37,8 +38,8 @@ describe('LibraryMembershipDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentDirectiveModule, CoreModule.forRoot(), CoreTestingModule],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [HttpClientTestingModule, ContentDirectiveModule],
+            providers: [SitesService, { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
 
         testSiteEntry = {
