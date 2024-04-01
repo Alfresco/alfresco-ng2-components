@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-aspect-list-spinner {
         display: flex;
@@ -19,6 +21,7 @@
         }
 
         .adf-aspect-list-element-title {
+            font-size: smaller;
             display: flex;
             align-items: center;
         }
@@ -26,8 +29,14 @@
         .adf-accordion-aspect-list-expansion-panel {
             margin: 0;
 
+            #{$mat-checkbox-background} {
+                height: 16px;
+                width: 16px;
+            }
+
             &-header {
                 font-size: smaller;
+                padding-left: 16px;
             }
 
             &-header-title {
@@ -47,6 +56,13 @@
 
     &-aspect-property-table {
         width: 100%;
+
+        .adf-aspect-property-table-column-name,
+        .adf-aspect-property-table-column-title,
+        .adf-aspect-property-table-column-data-type {
+            font-size: 12px;
+            color: var(--adf-theme-foreground-text-color-054);
+        }
 
         .adf-aspect-property-table-column {
             &-name {
