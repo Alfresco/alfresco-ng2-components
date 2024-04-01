@@ -1,3 +1,4 @@
+@import 'styles/mat-selectors';
 $dialog-title-height: 100px;
 $dialog-information-height: 44px;
 $dialog-buttons-height: 68px;
@@ -30,6 +31,7 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
         }
 
         .adf-aspect-list-element-title {
+            font-size: smaller;
             display: flex;
             align-items: center;
         }
@@ -37,8 +39,14 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
         .adf-accordion-aspect-list-expansion-panel {
             margin: 0;
 
+            #{$mat-checkbox-background} {
+                height: 16px;
+                width: 16px;
+            }
+
             &-header {
                 font-size: smaller;
+                padding-left: 16px;
             }
 
             &-header-title {
@@ -58,6 +66,13 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
 
     &-aspect-property-table {
         width: 100%;
+
+        .adf-aspect-property-table-column-name,
+        .adf-aspect-property-table-column-title,
+        .adf-aspect-property-table-column-data-type {
+            font-size: 12px;
+            color: var(--adf-theme-foreground-text-color-054);
+        }
 
         .adf-aspect-property-table-column {
             &-name {
