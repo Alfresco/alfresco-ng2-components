@@ -1,3 +1,10 @@
+@import 'styles/mat-selectors';
+
+adf-aspect-list-dialog {
+    display: block;
+    padding: 24px 24px 8px 24px;
+}
+
 .adf {
     &-aspect-list-dialog-title {
         font-size: large;
@@ -13,21 +20,35 @@
     &-aspect-list-dialog-information {
         display: flex;
         justify-content: space-between;
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-top: 10px;
+        padding-left: 4px;
+        padding-right: 4px;
         font-size: small;
     }
 
     &-aspect-list-dialog {
         justify-content: space-between;
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 0;
+
+        #{$mat-dialog-content} {
+            padding: 0;
+        }
+
+        &::before {
+            display: none;
+        }
     }
 
     &-aspect-dialog-content {
         padding-top: 3px;
+        margin-bottom: 8px;
 
         .adf-aspect-property-table {
             .adf-aspect-property-table-cell {
                 font-size: smaller;
+                color: var(--adf-theme-foreground-text-color-087);
             }
 
             .adf-aspect-property-table-column {
