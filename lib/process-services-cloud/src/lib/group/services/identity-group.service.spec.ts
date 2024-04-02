@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { IdentityGroupService } from './identity-group.service';
 import {
     mockHttpErrorResponse,
@@ -27,19 +26,17 @@ import {
 } from '../mock/identity-group.service.mock';
 import { mockFoodGroups } from '../mock/group-cloud.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('IdentityGroupService', () => {
-
     let service: IdentityGroupService;
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            providers: [IdentityGroupService]
         });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
@@ -47,21 +44,18 @@ describe('IdentityGroupService', () => {
     });
 
     describe('Search', () => {
-
         it('should fetch groups', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodGroups));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake').subscribe(
-                res => {
-                    expect(res).toBeDefined();
-                    expect(searchSpy).toHaveBeenCalled();
-                    expect(service.queryParams).toEqual({
-                        search: 'fake'
-                    });
-                    done();
-                }
-            );
+            service.search('fake').subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(searchSpy).toHaveBeenCalled();
+                expect(service.queryParams).toEqual({
+                    search: 'fake'
+                });
+                done();
+            });
         });
 
         it('should not fetch groups if error occurred', (done) => {
@@ -69,113 +63,104 @@ describe('IdentityGroupService', () => {
 
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake')
-                .subscribe(
-                    () => {
-                        fail('expected an error, not groups');
-                    },
-                    (error) => {
-                        expect(searchSpy).toHaveBeenCalled();
-                        expect(error.status).toEqual(404);
-                        expect(error.statusText).toEqual('Not Found');
-                        expect(error.error).toEqual('Mock Error');
-                        done();
-                    }
-                );
+            service.search('fake').subscribe(
+                () => {
+                    fail('expected an error, not groups');
+                },
+                (error) => {
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
         });
 
         it('should fetch groups by roles', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodGroups));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake', mockSearchGroupByRoles).subscribe(
-                res => {
-                    expect(res).toBeDefined();
-                    expect(searchSpy).toHaveBeenCalled();
-                    expect(service.queryParams).toEqual({
-                        search: 'fake',
-                        role: 'fake-role-1,fake-role-2'
-                    });
-                    done();
-                }
-            );
+            service.search('fake', mockSearchGroupByRoles).subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(searchSpy).toHaveBeenCalled();
+                expect(service.queryParams).toEqual({
+                    search: 'fake',
+                    role: 'fake-role-1,fake-role-2'
+                });
+                done();
+            });
         });
 
         it('should not fetch groups by roles if error occurred', (done) => {
             requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake', mockSearchGroupByRoles)
-                .subscribe(
-                    () => {
-                        fail('expected an error, not groups');
-                    },
-                    (error) => {
-                        expect(searchSpy).toHaveBeenCalled();
-                        expect(service.queryParams).toEqual({
-                            search: 'fake',
-                            role: 'fake-role-1,fake-role-2'
-                        });
-                        expect(error.status).toEqual(404);
-                        expect(error.statusText).toEqual('Not Found');
-                        expect(error.error).toEqual('Mock Error');
-                        done();
-                    }
-                );
+            service.search('fake', mockSearchGroupByRoles).subscribe(
+                () => {
+                    fail('expected an error, not groups');
+                },
+                (error) => {
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        role: 'fake-role-1,fake-role-2'
+                    });
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
         });
 
         it('should fetch groups within app', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodGroups));
 
-            service.search('fake', mockSearchGroupByApp).subscribe(
-                res => {
-                    expect(res).toBeDefined();
-                    expect(service.queryParams).toEqual({
-                        search: 'fake',
-                        application: 'fake-app-name'
-                    });
-                    done();
-                }
-            );
+            service.search('fake', mockSearchGroupByApp).subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(service.queryParams).toEqual({
+                    search: 'fake',
+                    application: 'fake-app-name'
+                });
+                done();
+            });
         });
 
         it('should fetch groups within app with roles', (done) => {
             requestSpy.and.returnValue(Promise.resolve(mockFoodGroups));
 
-            service.search('fake', mockSearchGroupByRolesAndApp).subscribe(
-                res => {
-                    expect(res).toBeDefined();
-                    expect(service.queryParams).toEqual({
-                        search: 'fake',
-                        application: 'fake-app-name',
-                        role: 'fake-role-1,fake-role-2'
-                    });
-                    done();
-                }
-            );
+            service.search('fake', mockSearchGroupByRolesAndApp).subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(service.queryParams).toEqual({
+                    search: 'fake',
+                    application: 'fake-app-name',
+                    role: 'fake-role-1,fake-role-2'
+                });
+                done();
+            });
         });
 
         it('should not fetch groups within app if error occurred', (done) => {
             requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
-            service.search('fake', mockSearchGroupByApp)
-                .subscribe(
-                    () => {
-                        fail('expected an error, not groups');
-                    },
-                    (error) => {
-                        expect(searchSpy).toHaveBeenCalled();
-                        expect(service.queryParams).toEqual({
-                            search: 'fake',
-                            application: 'fake-app-name'
-                        });
-                        expect(error.status).toEqual(404);
-                        expect(error.statusText).toEqual('Not Found');
-                        expect(error.error).toEqual('Mock Error');
-                        done();
-                    }
-                );
+            service.search('fake', mockSearchGroupByApp).subscribe(
+                () => {
+                    fail('expected an error, not groups');
+                },
+                (error) => {
+                    expect(searchSpy).toHaveBeenCalled();
+                    expect(service.queryParams).toEqual({
+                        search: 'fake',
+                        application: 'fake-app-name'
+                    });
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
         });
     });
 });
