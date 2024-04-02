@@ -20,6 +20,9 @@ import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testi
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
 import {  MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 @Component({
     template: `
@@ -47,6 +50,7 @@ class TestComponent {
 describe('InfiniteSelectScrollDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -67,14 +71,16 @@ describe('InfiniteSelectScrollDirective', () => {
         fixture.detectChanges();
         component.open();
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
         flush();
     }));
 
-    it('should call an action on scrollEnd event', fakeAsync(() => {
-        const panel = document.querySelector('.mat-select-panel')  as HTMLElement;
-        panel.scrollTop = panel.scrollHeight;
-        panel.dispatchEvent(new Event('scroll'));
-        fixture.detectChanges();
+    it('should call an action on scrollEnd event', async () => {
+        const select = await loader.getHarness(MatSelectHarness);
+        const panel = (await select.host());
+
+        await panel.dispatchEvent('scrollEnd');
+
         expect(component.options.length).toBe(60);
-    }));
+    });
 });
