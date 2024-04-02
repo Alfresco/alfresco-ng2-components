@@ -712,10 +712,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return null;
     }
 
-    iconAltTextKey(value: string): string {
-        return value ? 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '') : '';
-    }
-
     isColumnSorted(col: DataColumn, direction: string): boolean {
         if (col && direction) {
             const sorting = this.data.getSorting();
