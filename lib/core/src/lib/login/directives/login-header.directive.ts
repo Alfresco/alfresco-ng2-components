@@ -21,13 +21,14 @@ import {
     Directive,
     TemplateRef
 } from '@angular/core';
-import { LoginComponent } from '../components/login.component';
+import { LoginComponent } from '../components/login/login.component';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: 'adf-login-header, login-header'
+    selector: 'adf-login-header, login-header',
+    standalone: true
 })
 export class LoginHeaderDirective implements AfterContentInit {
 

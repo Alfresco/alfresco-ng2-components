@@ -18,10 +18,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { of } from 'rxjs';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
+import { BasicAlfrescoAuthService } from '../../../auth/basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
 
 describe('LoginDialogPanelComponent', () => {
     let component: LoginDialogPanelComponent;

@@ -21,13 +21,14 @@ import {
     Directive,
     TemplateRef
 } from '@angular/core';
-import { LoginComponent } from '../components/login.component';
+import { LoginComponent } from '../components/login/login.component';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    selector: 'adf-login-footer, login-footer'
+    selector: 'adf-login-footer, login-footer',
+    standalone: true
 })
 export class LoginFooterDirective implements AfterContentInit {
 

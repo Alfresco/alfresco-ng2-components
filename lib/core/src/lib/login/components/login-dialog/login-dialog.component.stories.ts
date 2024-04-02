@@ -16,13 +16,13 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreStoryModule } from '../../testing/core.story.module';
+import { CoreStoryModule } from '../../../testing/core.story.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoginModule } from './../login.module';
+import { LoginModule } from '../../login.module';
 import { LoginDialogStorybookComponent } from './login-dialog.stories.component';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthenticationService } from '../../auth/services/authentication.service';
-import { AuthenticationMock } from '../../auth/mock/authentication.service.mock';
+import { AuthenticationService } from '../../../auth/services/authentication.service';
+import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
 
 export default {
     component: LoginDialogStorybookComponent,

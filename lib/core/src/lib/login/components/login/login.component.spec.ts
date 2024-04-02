@@ -19,17 +19,17 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { UserPreferencesService } from '../../common/services/user-preferences.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthenticationService } from '../../auth/services/authentication.service';
-import { LoginErrorEvent } from '../models/login-error.event';
-import { LoginSuccessEvent } from '../models/login-success.event';
+import { UserPreferencesService } from '../../../common/services/user-preferences.service';
+import { AppConfigService } from '../../../app-config/app-config.service';
+import { AuthenticationService } from '../../../auth/services/authentication.service';
+import { LoginErrorEvent } from '../../models/login-error.event';
+import { LoginSuccessEvent } from '../../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { EMPTY, of, throwError } from 'rxjs';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { LogService } from '../../common/services/log.service';
-import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { LogService } from '../../../common/services/log.service';
+import { BasicAlfrescoAuthService } from '../../../auth/basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;

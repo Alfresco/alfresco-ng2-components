@@ -16,13 +16,21 @@
  */
 
 import { Component, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
-import { LoginComponent } from './login.component';
-import { LoginSuccessEvent } from '../models/login-success.event';
+import { LoginFooterDirective } from '../../directives/login-footer.directive';
+import { LoginHeaderDirective } from '../../directives/login-header.directive';
+import { LoginComponent } from '../login/login.component';
+import { LoginSuccessEvent } from '../../models/login-success.event';
 
 @Component({
     selector: 'adf-login-dialog-panel',
+    standalone: true,
     templateUrl: './login-dialog-panel.component.html',
     styleUrls: ['./login-dialog-panel.component.scss'],
+    imports: [
+        LoginComponent,
+        LoginHeaderDirective,
+        LoginFooterDirective
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogPanelComponent {

@@ -16,13 +16,22 @@
  */
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
-import { LoginDialogPanelComponent } from './login-dialog-panel.component';
+import { LoginDialogPanelComponent } from '../login-dialog-panel/login-dialog-panel.component';
 @Component({
     selector: 'adf-login-dialog',
+    standalone: true,
     templateUrl: './login-dialog.component.html',
     styleUrls: ['./login-dialog.component.scss'],
+    imports: [
+        MatDialogModule,
+        LoginDialogPanelComponent,
+        TranslateModule,
+        MatButtonModule
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogComponent {

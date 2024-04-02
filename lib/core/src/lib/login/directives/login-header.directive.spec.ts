@@ -16,7 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { LoginComponent } from '../components/login.component';
+import { LoginComponent } from '../components/login/login.component';
 import { LoginHeaderDirective } from './login-header.directive';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
