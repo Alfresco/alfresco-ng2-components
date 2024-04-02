@@ -60,7 +60,6 @@ import {
     DataColumn
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
-
 import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
