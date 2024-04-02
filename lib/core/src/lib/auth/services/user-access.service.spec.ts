@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule } from '../../testing';
 import { TestBed } from '@angular/core/testing';
 import { UserAccessService } from './user-access.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { AppConfigService } from '../../app-config';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('UserAccessService', () => {
     let userAccessService: UserAccessService;
@@ -28,7 +28,7 @@ describe('UserAccessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [HttpClientTestingModule],
             providers: [UserAccessService]
         });
         userAccessService = TestBed.inject(UserAccessService);
@@ -83,7 +83,6 @@ describe('UserAccessService', () => {
     });
 
     describe('Access present in realm_access', () => {
-
         it('should return true when the user has one of the global roles', () => {
             spyRealmAccess(['MOCK_USER_ROLE', 'MOCK_USER_ROLE_2'], {});
             userAccessService.fetchUserAccess();
@@ -118,7 +117,6 @@ describe('UserAccessService', () => {
     });
 
     describe('Access present in hxp_authorization', () => {
-
         it('should return true when the user has one of the global roles', () => {
             spyHxpAuthorization('mockApp1', ['MOCK_GLOBAL_USER_ROLE']);
             appConfigService.config = { application: { key: 'mockApp1' } };
