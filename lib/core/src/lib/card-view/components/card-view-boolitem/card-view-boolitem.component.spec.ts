@@ -21,20 +21,15 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewBoolItemComponent', () => {
-
     let fixture: ComponentFixture<CardViewBoolItemComponent>;
     let component: CardViewBoolItemComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot()]
         });
         fixture = TestBed.createComponent(CardViewBoolItemComponent);
         component = fixture.componentInstance;
@@ -52,7 +47,6 @@ describe('CardViewBoolItemComponent', () => {
     });
 
     describe('Rendering', () => {
-
         it('should render the label and value if the property is editable', () => {
             component.editable = true;
             component.property.editable = true;
@@ -169,7 +163,6 @@ describe('CardViewBoolItemComponent', () => {
     });
 
     describe('Update', () => {
-
         beforeEach(() => {
             component.editable = true;
             component.property.editable = true;
@@ -180,7 +173,7 @@ describe('CardViewBoolItemComponent', () => {
         it('should trigger the update event when changing the checkbox', () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
-            const property = { ... component.property };
+            const property = { ...component.property };
 
             component.changed({ checked: true } as MatCheckboxChange);
 
@@ -204,14 +197,12 @@ describe('CardViewBoolItemComponent', () => {
             fixture.detectChanges();
             const property = { ...component.property };
 
-            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
-                (updateNotification) => {
-                    expect(updateNotification.target).toEqual(property);
-                    expect(updateNotification.changed).toEqual({ boolKey: true });
-                    disposableUpdate.unsubscribe();
-                    done();
-                }
-            );
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toEqual(property);
+                expect(updateNotification.changed).toEqual({ boolKey: true });
+                disposableUpdate.unsubscribe();
+                done();
+            });
 
             const labelElement = fixture.debugElement.query(By.directive(MatCheckbox)).nativeElement.querySelector('label');
             labelElement.click();

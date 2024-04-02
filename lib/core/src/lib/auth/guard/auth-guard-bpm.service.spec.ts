@@ -20,14 +20,15 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../services/oidc-authentication.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
+import { EMPTY } from 'rxjs';
 
 describe('AuthGuardService BPM', () => {
-
     let authGuard: AuthGuardBpm;
     let authService: AuthenticationService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
@@ -38,14 +39,13 @@ describe('AuthGuardService BPM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule],
             providers: [
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } },
                 {
-                    provide: OidcAuthenticationService, useValue: {
-                        ssoLogin: () => { },
+                    provide: OidcAuthenticationService,
+                    useValue: {
+                        ssoLogin: () => {},
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -154,7 +154,8 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', url: 'some-url'
+            provider: 'BPM',
+            url: 'some-url'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
     });
@@ -167,7 +168,8 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', url: 'some-url;q=123'
+            provider: 'BPM',
+            url: 'some-url;q=123'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url;q=123');
     });
@@ -180,7 +182,8 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', url: '/'
+            provider: 'BPM',
+            url: '/'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('/');
     });
@@ -194,7 +197,8 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', url: 'some-url'
+            provider: 'BPM',
+            url: 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     });
@@ -211,7 +215,8 @@ describe('AuthGuardService BPM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'BPM', url: 'some-url'
+            provider: 'BPM',
+            url: 'some-url'
         });
 
         expect(materialDialog.closeAll).toHaveBeenCalled();
