@@ -17,12 +17,16 @@
 
 import { Component, ContentChildren, QueryList, ViewEncapsulation } from '@angular/core';
 import { AboutPanelDirective } from './about-panel.directive';
+import { CommonModule } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
     selector: 'adf-about',
     templateUrl: './about.component.html',
     styleUrls: ['about.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [CommonModule, MatExpansionModule]
 })
 export class AboutComponent {
     @ContentChildren(AboutPanelDirective)

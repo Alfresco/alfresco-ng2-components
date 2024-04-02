@@ -15,14 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { ObjectUtils, StringUtils } from '../../common/utils';
 import { LicenseData, StatusData } from '../interfaces';
 import { RepositoryInfo } from './repository-info.interface';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { AboutLicenseListComponent } from '../about-license-list/about-license-list.component';
+import { ModuleListComponent } from '../about-module-list/module-list.component';
+import { AboutStatusListComponent } from '../about-status-list/about-status-list.component';
 
 @Component({
     selector: 'adf-about-repository-info',
-    templateUrl: './about-repository-info.component.html'
+    templateUrl: './about-repository-info.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [CommonModule, TranslateModule, AboutLicenseListComponent, ModuleListComponent, AboutStatusListComponent]
 })
 export class AboutRepositoryInfoComponent implements OnInit {
     @Input()
@@ -47,13 +55,13 @@ export class AboutRepositoryInfoComponent implements OnInit {
                             property: key,
                             value: ObjectUtils.booleanPrettify(repository.license[key], StringUtils.prettifyBooleanEnabled)
                         };
-                    };
+                    }
 
                     return {
                         property: key,
                         value: repository.license[key]
                     };
-            });
+                });
             }
         }
     }
