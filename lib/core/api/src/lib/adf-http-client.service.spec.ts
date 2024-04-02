@@ -42,7 +42,7 @@ const emitters: Emitters = {
     apiClientEmitter: emitter
 };
 
-const mockResponse =  {
+const mockResponse = {
     data: [
         {
             id: 14,
@@ -58,23 +58,19 @@ describe('AdfHttpClient', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule
-            ]
+            imports: [HttpClientTestingModule],
+            providers: [AdfHttpClient]
         });
         angularHttpClient = TestBed.inject(AdfHttpClient);
         controller = TestBed.inject(HttpTestingController);
     });
 
-
     describe('deserialize', () => {
-
         afterEach(() => {
             controller.verify();
         });
 
         it('should deserialize incoming request based on return type', (done) => {
-
             const options: RequestOptions = {
                 path: '',
                 httpMethod: 'POST',
@@ -85,38 +81,41 @@ describe('AdfHttpClient', () => {
                 accepts: ['application/json']
             };
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res: ResultListDataRepresentationTaskRepresentation) => {
-                expect(res instanceof ResultListDataRepresentationTaskRepresentation).toBeTruthy();
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                expect(res.data![0].created instanceof Date).toBeTruthy();
-                done();
-            }).catch(error=> fail(error));
+            angularHttpClient
+                .request('http://example.com', options, securityOptions, emitters)
+                .then((res: ResultListDataRepresentationTaskRepresentation) => {
+                    expect(res instanceof ResultListDataRepresentationTaskRepresentation).toBeTruthy();
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    expect(res.data![0].created instanceof Date).toBeTruthy();
+                    done();
+                })
+                .catch((error) => fail(error));
 
             const req = controller.expectOne('http://example.com');
             expect(req.request.method).toEqual('POST');
 
             req.flush(mockResponse);
-
         });
 
         it('should return parsed json object when responseType is json', (done) => {
-
             const options: RequestOptions = {
                 path: '',
                 httpMethod: 'POST',
                 responseType: 'json'
             };
 
-            angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res) => {
-                expect(res).toEqual(mockResponse);
-                done();
-            }).catch(error=> fail(error));
+            angularHttpClient
+                .request('http://example.com', options, securityOptions, emitters)
+                .then((res) => {
+                    expect(res).toEqual(mockResponse);
+                    done();
+                })
+                .catch((error) => fail(error));
 
             const req = controller.expectOne('http://example.com');
             expect(req.request.method).toEqual('POST');
 
             req.flush(mockResponse);
-
         });
 
         it('should emit unauthorized message for 401 request', (done) => {
@@ -135,13 +134,11 @@ describe('AdfHttpClient', () => {
             const req = controller.expectOne('http://example.com');
             expect(req.request.method).toEqual('POST');
 
-            req.flush('<div></div>', { status: 401, statusText: 'unauthorized'});
+            req.flush('<div></div>', { status: 401, statusText: 'unauthorized' });
         });
-
     });
 
     describe('upload', () => {
-
         afterEach(() => {
             controller.verify();
         });
@@ -177,9 +174,7 @@ describe('AdfHttpClient', () => {
                 returnType: null
             };
 
-            angularHttpClient.request('http://example.com', requestOptions, securityOptions, emitters).catch(error =>
-                fail(error)
-            );
+            angularHttpClient.request('http://example.com', requestOptions, securityOptions, emitters).catch((error) => fail(error));
             const req = controller.expectOne('http://example.com?autoRename=true&include=allowableOperations');
             expect(req.request.method).toEqual('POST');
 
@@ -251,19 +246,18 @@ describe('AdfHttpClient', () => {
             httpMethod: 'POST',
             queryParams: {
                 skipCount: 0,
-                status: [
-                    'RUNNING',
-                    'SUSPENDED'
-                ],
+                status: ['RUNNING', 'SUSPENDED'],
                 sort: 'startDate,DESC'
             }
         };
 
-        angularHttpClient.request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
+        angularHttpClient
+            .request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitters)
+            .catch((error) => fail(error));
 
-        const req = controller.expectOne('http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate%2CDESC');
+        const req = controller.expectOne(
+            'http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate%2CDESC'
+        );
         expect(req.request.method).toEqual('POST');
 
         req.flush(null, { status: 200, statusText: 'Ok' });
@@ -275,10 +269,13 @@ describe('AdfHttpClient', () => {
             httpMethod: 'GET'
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res) => {
-            expect(res).toEqual('');
-            done();
-        }).catch(error=> fail(error));
+        angularHttpClient
+            .request('http://example.com', options, securityOptions, emitters)
+            .then((res) => {
+                expect(res).toEqual('');
+                done();
+            })
+            .catch((error) => fail(error));
 
         const req = controller.expectOne('http://example.com');
 
@@ -294,9 +291,7 @@ describe('AdfHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((error) => fail(error));
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000%2B02%3A00');
 
@@ -312,9 +307,7 @@ describe('AdfHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((error) => fail(error));
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
 
@@ -331,9 +324,7 @@ describe('AdfHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((error) => fail(error));
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
 
@@ -352,9 +343,7 @@ describe('AdfHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((error) => fail(error));
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
 
@@ -372,9 +361,7 @@ describe('AdfHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((error) => fail(error));
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
 
@@ -392,9 +379,7 @@ describe('AdfHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((error) => fail(error));
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
 
@@ -402,5 +387,4 @@ describe('AdfHttpClient', () => {
 
         req.flush(null, { status: 200, statusText: 'Ok' });
     });
-
 });
