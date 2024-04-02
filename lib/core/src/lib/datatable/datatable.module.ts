@@ -73,9 +73,11 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
         LocationCellComponent,
         DateCellComponent,
         LocalizedDatePipe,
-        IconCellComponent
+        IconCellComponent,
+        EmptyListHeaderDirective,
+        EmptyListBodyDirective,
+        EmptyListFooterDirective
     ],
-    declarations: [EmptyListHeaderDirective, EmptyListBodyDirective, EmptyListFooterDirective],
     exports: [
         DataTableComponent,
         EmptyListComponent,
