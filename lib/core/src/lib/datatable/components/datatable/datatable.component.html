@@ -1,8 +1,7 @@
 <div
     role="grid"
-    *ngIf="data" class="adf-full-width"
-    [class.adf-datatable-card]="display === 'gallery'"
-    [class.adf-datatable-list]="display === 'list'"
+    *ngIf="data"
+    class="adf-full-width adf-datatable-list"
     [class.adf-sticky-header]="isStickyHeaderEnabled()"
     [class.adf-datatable--empty]="(isEmpty() && !isHeaderVisible()) || loading"
     [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
@@ -14,7 +13,6 @@
             data-automation-id="datatable-row-header"
             [disabled]="!isHeaderVisible()"
             class="adf-datatable-row"
-            *ngIf="display === 'list'"
             role="row">
 
             <!-- Actions (left) -->
@@ -143,17 +141,6 @@
             </div>
 
         </adf-datatable-row>
-        <mat-form-field *ngIf="display === 'gallery' && isHeaderVisible()">
-            <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
-                <mat-option *ngFor="let col of getSortableColumns()"
-                            [value]="col.key"
-                            [attr.data-automation-id]="'grid-view-sorting-'+col.title"
-                            (click)="onColumnHeaderClick(col, $event)"
-                            (keyup.enter)="onColumnHeaderClick(col, $event)">
-                    {{ col.title | translate}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
     </div>
 
     <div
@@ -382,10 +369,7 @@
                     </ng-container>
                 </div>
             </adf-datatable-row>
-            <div *ngIf="isEmpty()"
-                 role="row"
-                 [class.adf-datatable-row]="display === 'list'"
-                 [class.adf-datatable-card-empty]="display === 'gallery'">
+            <div *ngIf="isEmpty()" role="row" class="adf-datatable-row">
                 <div class="adf-no-content-container adf-datatable-cell" role="gridcell">
                     <ng-template *ngIf="noContentTemplate"
                                  ngFor [ngForOf]="[data]"
@@ -400,8 +384,7 @@
         </ng-container>
         <div *ngIf="!loading && noPermission"
              role="row"
-             [class.adf-datatable-row]="display === 'list'"
-             class="adf-no-permission__row">
+             class="adf-datatable-row adf-no-permission__row">
             <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="noPermissionTemplate"
                              ngFor [ngForOf]="[data]"
@@ -409,9 +392,7 @@
                 </ng-template>
             </div>
         </div>
-        <div *ngIf="loading"
-             [class.adf-datatable-row]="display === 'list'"
-             [class.adf-datatable-card-loading]="display === 'gallery'">
+        <div *ngIf="loading" class="adf-datatable-row">
             <div class="adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"

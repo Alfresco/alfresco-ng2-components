@@ -364,23 +364,6 @@ describe('DocumentList', () => {
         expect(documentList.resetSelection).toHaveBeenCalled();
     });
 
-    it('should use the cardview style if cardview is true', () => {
-        documentList.display = 'gallery';
-
-        fixture.detectChanges();
-
-        expect(element.querySelector('.adf-datatable-card')).toBeDefined();
-    });
-
-    it('should use the base document list style if cardview is false', () => {
-        documentList.display = 'list';
-
-        fixture.detectChanges();
-
-        expect(element.querySelector('.adf-datatable-card')).toBe(null);
-        expect(element.querySelector('.adf-datatable')).toBeDefined();
-    });
-
     it('should reset selection upon reload', () => {
         documentList.currentFolderId = 'id-folder';
         spyOn(documentList, 'resetSelection').and.callThrough();

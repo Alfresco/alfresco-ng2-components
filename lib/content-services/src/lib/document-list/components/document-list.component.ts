@@ -41,7 +41,6 @@ import {
     DataRowActionEvent,
     DataSorting,
     DataTableComponent,
-    DisplayMode,
     ShowHeaderMode,
     PaginatedComponent,
     AppConfigService,
@@ -70,7 +69,6 @@ import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { FilterSearch } from './../../search/models/filter-search.interface';
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
@@ -97,7 +95,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
-export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
+export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent {
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
@@ -133,10 +131,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     where: string;
 
-    /** Change the display mode of the table. Can be "list" or "gallery". */
-    @Input()
-    display: string = DisplayMode.List;
-
     /**
      * Define a set of CSS styles to apply depending on the permission
      * of the user on that node. See the Permission Style model
@@ -163,10 +157,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
      */
     @Input()
     navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
-
-    /** Show document thumbnails rather than icons */
-    @Input()
-    thumbnails: boolean = false;
 
     /**
      * Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode,
@@ -479,7 +469,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return defaultSorting;
     }
 
-
     isMobile(): boolean {
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
@@ -499,7 +488,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.sortingMode,
             this.allowDropFiles
         );
-        this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
         if (this._rowFilter) {
@@ -541,10 +529,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.orderBy = this.buildOrderByArray(key, direction);
         } else {
             this.orderBy = this.buildOrderByArray(this.sorting.key, this.sorting.direction);
-        }
-
-        if (this.data) {
-            this.data.thumbnails = this.thumbnails;
         }
 
         if (changes.sortingMode && !changes.sortingMode.firstChange && this.data) {
@@ -975,7 +959,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
         return canNavigateFolder;
     }
-
 
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);

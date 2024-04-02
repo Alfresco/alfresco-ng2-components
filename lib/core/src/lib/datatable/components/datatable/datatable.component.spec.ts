@@ -183,20 +183,6 @@ describe('DataTable', () => {
         expect(dataTable.data.setColumns).toHaveBeenCalled();
     }));
 
-    it('should use the cardview style if cardview is true', () => {
-        const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
-
-        dataTable.display = 'gallery';
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
-        });
-
-        fixture.detectChanges();
-
-        expect(element.querySelector('.adf-datatable-card')).not.toBeNull();
-        expect(element.querySelector('.adf-datatable')).toBeNull();
-    });
-
     it('should use the cardview style if cardview is false', () => {
         const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
 
@@ -299,22 +285,28 @@ describe('DataTable', () => {
 
         it('should sortPredicate from CdkDropList return true if column is enabled', () => {
             const dropList = getDropList();
-            spyOn(dropList, 'getSortedItems').and.returnValue([{
-                disabled: true
-            }, {
-                disabled: false
-            }] as CdkDrag[]);
+            spyOn(dropList, 'getSortedItems').and.returnValue([
+                {
+                    disabled: true
+                },
+                {
+                    disabled: false
+                }
+            ] as CdkDrag[]);
 
             expect(dropList.sortPredicate(1, undefined, dropList)).toBeTrue();
         });
 
         it('should sortPredicate from CdkDropList return false if column is disabled', () => {
             const dropList = getDropList();
-            spyOn(dropList, 'getSortedItems').and.returnValue([{
-                disabled: true
-            }, {
-                disabled: true
-            }] as CdkDrag[]);
+            spyOn(dropList, 'getSortedItems').and.returnValue([
+                {
+                    disabled: true
+                },
+                {
+                    disabled: true
+                }
+            ] as CdkDrag[]);
 
             expect(dropList.sortPredicate(1, undefined, dropList)).toBeFalse();
         });

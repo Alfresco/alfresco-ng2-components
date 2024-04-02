@@ -571,19 +571,6 @@ onRowClick(event) {
 
 ![](../../docassets/images/datatable-dom-events.png)
 
-### Card view
-
-Set the `display` property to "gallery" to enable Card View mode:
-
-```html
-<adf-datatable
-    [data]="data"
-    [display]="'gallery'">
-</adf-datatable
-```
-
-![card-view](../../docassets/images/document-list-card-view.png)
-
 ### Using events
 
 #### row-keyup DOM event

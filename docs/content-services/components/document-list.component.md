@@ -90,7 +90,6 @@ Displays the documents from a repository.
 | sorting | `string[] \| `[`DataSorting`](../../../lib/core/src/lib/datatable/data/data-sorting.model.ts) | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `"server" \| "client"` | "server" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
-| thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 | where | `string` |  | Filters the Node list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
 | setColumnsVisibility | `{ [columnId: string]: boolean } \| undefined` |  | Sets columns visibility for DataTableSchema. |
@@ -173,22 +172,6 @@ You can use `ngIf` directives to provide conditional visibility support for the 
     key="name"
     title="MY.RESOURCE.KEY">
 </data-column>
-```
-
-### Card view
-
-The Document List has an option to display items as "cards" instead of the
-standard view:
-
-![card-view](../../docassets/images/document-list-card-view.png)
-
-Set the `[display]` property to "gallery" to enable card view mode:
-
-```html
-<adf-document-list
-    [currentFolderId]="'-my-'"
-    [display]="'gallery'">
-</adf-document-list>
 ```
 
 ### Pagination strategy
