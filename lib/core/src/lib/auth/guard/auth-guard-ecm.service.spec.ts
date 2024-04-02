@@ -20,14 +20,16 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { OidcAuthenticationService } from '../services/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
+import { EMPTY } from 'rxjs';
 
 describe('AuthGuardService ECM', () => {
-
     let authGuard: AuthGuardEcm;
     let authService: AuthenticationService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
@@ -37,19 +39,20 @@ describe('AuthGuardService ECM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, RouterTestingModule, MatDialogModule],
             providers: [
+                BasicAlfrescoAuthService,
+                AppConfigService,
                 {
-                    provide: OidcAuthenticationService, useValue: {
-                        ssoLogin: () => { },
+                    provide: OidcAuthenticationService,
+                    useValue: {
+                        ssoLogin: () => {},
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
                     }
-                }
+                },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
             ]
         });
         localStorage.clear();
@@ -67,7 +70,7 @@ describe('AuthGuardService ECM', () => {
 
     it('if the alfresco js api is logged in should canActivate be true', async () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = { url: 'some-url' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeTruthy();
     });
@@ -76,7 +79,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
 
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = { url: 'some-url' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeTruthy();
     });
@@ -94,7 +97,7 @@ describe('AuthGuardService ECM', () => {
 
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = { url: 'some-url' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
@@ -105,7 +108,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = { url: 'some-url' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
@@ -126,7 +129,7 @@ describe('AuthGuardService ECM', () => {
             scope: 'openid'
         };
 
-        const route = {url : 'abc'} as RouterStateSnapshot;
+        const route = { url: 'abc' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(oidcAuthenticationService.ssoLogin).toHaveBeenCalledTimes(1);
@@ -137,7 +140,7 @@ describe('AuthGuardService ECM', () => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = undefined;
-        const route = {url : 'some-url'} as RouterStateSnapshot;
+        const route = { url: 'some-url' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
@@ -151,7 +154,8 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url'
+            provider: 'ECM',
+            url: 'some-url'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
     });
@@ -164,7 +168,8 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url;q=123'
+            provider: 'ECM',
+            url: 'some-url;q=123'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url;q=123');
     });
@@ -177,7 +182,8 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: '/'
+            provider: 'ECM',
+            url: '/'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('/');
     });
@@ -191,7 +197,8 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url'
+            provider: 'ECM',
+            url: 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     });
@@ -208,7 +215,8 @@ describe('AuthGuardService ECM', () => {
         authGuard.canActivate(null, route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM', url: 'some-url'
+            provider: 'ECM',
+            url: 'some-url'
         });
 
         expect(materialDialog.closeAll).toHaveBeenCalled();
