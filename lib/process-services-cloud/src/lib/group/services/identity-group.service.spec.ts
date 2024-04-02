@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupService } from './identity-group.service';
 import {
     mockHttpErrorResponse,
@@ -26,6 +26,7 @@ import {
 } from '../mock/identity-group.service.mock';
 import { mockFoodGroups } from '../mock/group-cloud.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
@@ -34,7 +35,8 @@ describe('IdentityGroupService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            providers: [IdentityGroupService]
         });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
