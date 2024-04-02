@@ -15,29 +15,18 @@
  * limitations under the License.
  */
 
-import {
-    AfterContentInit,
-    ContentChild,
-    Directive,
-    TemplateRef
-} from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
 import { LoginComponent } from '../components/login/login.component';
 
-/**
- * Directive selectors without adf- prefix will be deprecated on 3.0.0
- */
 @Directive({
-    selector: 'adf-login-header, login-header',
+    selector: 'adf-login-header',
     standalone: true
 })
 export class LoginHeaderDirective implements AfterContentInit {
-
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(
-        private alfrescoLoginComponent: LoginComponent) {
-    }
+    constructor(private alfrescoLoginComponent: LoginComponent) {}
 
     ngAfterContentInit() {
         this.alfrescoLoginComponent.headerTemplate = this.template;
