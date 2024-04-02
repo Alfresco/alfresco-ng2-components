@@ -20,10 +20,13 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { OidcAuthenticationService } from '../services/oidc-authentication.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
+import { EMPTY } from 'rxjs';
 
 describe('AuthGuardService BPM', () => {
     let authGuard: AuthGuardBpm;
@@ -36,8 +39,9 @@ describe('AuthGuardService BPM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule],
             providers: [
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } },
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
