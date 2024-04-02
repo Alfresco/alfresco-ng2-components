@@ -20,7 +20,6 @@ import { By } from '@angular/platform-browser';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,6 +28,14 @@ import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslationMock } from '../../../mock';
+import { TranslationService } from '../../../translation';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -38,7 +45,16 @@ describe('CardViewDateItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [
+                TranslateModule.forRoot(),
+                NoopAnimationsModule,
+                HttpClientTestingModule,
+                MatSnackBarModule,
+                MatDatepickerModule,
+                MatDialogModule,
+                MatTooltipModule
+            ],
+            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {
