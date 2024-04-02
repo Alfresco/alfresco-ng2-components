@@ -24,6 +24,9 @@ import { of } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ESCAPE } from '@angular/cdk/keycodes';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTabGroupHarness } from '@angular/material/tabs/testing';
 
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
@@ -106,6 +109,8 @@ describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
     let translateService: TranslateService;
+    let loader: HarnessLoader;
+
     const getNodeIcon = () =>
     fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
 
@@ -125,6 +130,7 @@ describe('Custom InfoDrawer', () => {
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -138,27 +144,31 @@ describe('Custom InfoDrawer', () => {
         expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
     });
 
-    it('should select the tab 1 (index 0) as default', () => {
+    it('should select the tab 1 (index 0) as default', async () => {
         fixture.detectChanges();
-        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
-        expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('Tab1');
+        const tabs = await loader.getHarness(MatTabGroupHarness);
+        const selectedTab = await tabs.getSelectedTab();
+
+        expect(await selectedTab.getLabel()).toEqual('Tab1');
     });
 
-    it('should select the tab 2 (index 1)', () => {
+    it('should select the tab 2 (index 1)', async () => {
         component.tabIndex = 1;
         fixture.detectChanges();
-        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
-        expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('Tab2');
+        const tabs = await loader.getHarness(MatTabGroupHarness);
+        const selectedTab = await tabs.getSelectedTab();
+
+        expect(await selectedTab.getLabel()).toEqual('Tab2');
     });
 
-    it('should render a tab with icon', () => {
+    it('should render a tab with icon', async () => {
         component.tabIndex = 2;
         fixture.detectChanges();
-        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
-        expect(tab[0].nativeElement.innerText).not.toBe('TAB3');
-        expect(tab[0].nativeElement.innerText).toContain('tab-icon');
+        const tabs = await loader.getHarness(MatTabGroupHarness);
+        const selectedTab = await tabs.getSelectedTab();
+
+        expect(await selectedTab.getLabel()).toContain('Tab3');
+        expect(await selectedTab.getLabel()).toContain('tab-icon');
     });
 
     it('should render a icon with title', () => {
