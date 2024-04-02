@@ -17,12 +17,17 @@
 
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 import { StatusData } from '../interfaces';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
     selector: 'adf-about-status-list',
     templateUrl: './about-status-list.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatTableModule]
 })
 export class AboutStatusListComponent {
     columns = [

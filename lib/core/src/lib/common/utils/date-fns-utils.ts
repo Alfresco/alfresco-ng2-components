@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-import { format, parse, parseISO, isValid, isBefore, isAfter, lightFormat } from 'date-fns';
+import { format, parse, parseISO, isValid, isBefore, isAfter } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
+const panDate = (num: number = 1): string => {
+    let text = num.toString();
+    while (text.length < 2) {
+        text = '0' + text;
+    }
+    return text;
+};
 
 export class DateFnsUtils {
     static getLocaleFromString(locale: string): Locale {
@@ -203,18 +210,19 @@ export class DateFnsUtils {
         return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
 
-    static forceLocal(date: string | Date): Date {
-        if (typeof date === 'string'){
+    static forceLocal(date: Date | string): Date {
+        if (typeof date === 'string') {
             date = parseISO(date);
         }
-        return new Date(lightFormat(date, 'yyyy-MM-dd'));
+        const localDate = `${date.getUTCFullYear()}-${panDate(date.getUTCMonth() + 1)}-${panDate(date.getUTCDate())}T00:00:00.000`;
+        return new Date(localDate);
     }
 
-    static forceUtc(date: string | Date): Date {
-        if (typeof date === 'string'){
+    static forceUtc(date: Date | string): Date {
+        if (typeof date === 'string') {
             date = parseISO(date);
         }
-        return new Date(lightFormat(date, 'yyyy-MM-dd').concat('T00:00:00.000Z'));
+        const utcDate = `${date.getFullYear()}-${panDate(date.getMonth() + 1)}-${panDate(date.getDate())}T00:00:00.000Z`;
+        return new Date(utcDate);
     }
-
 }

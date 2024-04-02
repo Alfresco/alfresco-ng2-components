@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
-
 import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
 import { AboutServerSettingsComponent } from './about-server-settings/about-server-settings.component';
 import { AboutExtensionListComponent } from './about-extension-list/about-extension-list.component';
@@ -29,29 +25,22 @@ import { AboutStatusListComponent } from './about-status-list/about-status-list.
 import { ModuleListComponent } from './about-module-list/module-list.component';
 import { AboutPlatformVersionComponent } from './about-platform-version/about-platform-version.component';
 import { AboutComponent } from './about.component';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { AboutPanelDirective } from './about-panel.directive';
 import { AboutRepositoryInfoComponent } from './about-repository-info/about-repository-info.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule,
-        MatExpansionModule
-    ],
-    declarations: [
-        AboutComponent,
-        AboutPanelDirective,
+        AboutExtensionListComponent,
+        AboutGithubLinkComponent,
+        AboutLicenseListComponent,
+        ModuleListComponent,
         AboutRepositoryInfoComponent,
         AboutPlatformVersionComponent,
-        AboutGithubLinkComponent,
-        AboutServerSettingsComponent,
-        AboutExtensionListComponent,
-        AboutLicenseListComponent,
         PackageListComponent,
         AboutStatusListComponent,
-        ModuleListComponent
+        AboutServerSettingsComponent,
+        AboutPanelDirective,
+        AboutComponent
     ],
     exports: [
         AboutComponent,

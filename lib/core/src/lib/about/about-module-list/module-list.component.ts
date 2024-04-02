@@ -16,34 +16,39 @@
  */
 
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTableModule } from '@angular/material/table';
 
 interface ModuleInfo {
-  title: string;
-  version: string;
+    title: string;
+    version: string;
 }
 
 @Component({
-  selector: 'adf-about-module-list',
-  templateUrl: './module-list.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'adf-about-module-list',
+    templateUrl: './module-list.component.html',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatTableModule]
 })
 export class ModuleListComponent {
-  columns = [
-    {
-      columnDef: 'title',
-      header: 'ABOUT.MODULES.NAME',
-      cell: (row: ModuleInfo) => `${row.title}`
-    },
-    {
-      columnDef: 'version',
-      header: 'ABOUT.MODULES.VERSION',
-      cell: (row: ModuleInfo) => `${row.version}`
-    }
-  ];
+    columns = [
+        {
+            columnDef: 'title',
+            header: 'ABOUT.MODULES.NAME',
+            cell: (row: ModuleInfo) => `${row.title}`
+        },
+        {
+            columnDef: 'version',
+            header: 'ABOUT.MODULES.VERSION',
+            cell: (row: ModuleInfo) => `${row.version}`
+        }
+    ];
 
-  displayedColumns = this.columns.map((x) => x.columnDef);
+    displayedColumns = this.columns.map((x) => x.columnDef);
 
-  @Input()
-  data: Array<ModuleInfo> = [];
+    @Input()
+    data: Array<ModuleInfo> = [];
 }
