@@ -17,7 +17,6 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 
 @Component({
@@ -50,7 +49,7 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, MaterialModule],
+                imports: [TranslateModule.forRoot()],
                 declarations: [CustomContainerComponent],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA]
             });
@@ -93,7 +92,7 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, MaterialModule],
+                imports: [TranslateModule.forRoot(), MaterialModule],
                 declarations: [CustomEmptyContainerComponent],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA]
             });
