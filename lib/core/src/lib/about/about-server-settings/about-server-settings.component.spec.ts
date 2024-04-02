@@ -16,11 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { aboutGithubDetails } from '../about.mock';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AppConfigServiceMock } from '../../common';
 
 describe('AboutServerSettingsComponent', () => {
     let fixture: ComponentFixture<AboutServerSettingsComponent>;
@@ -29,10 +30,8 @@ describe('AboutServerSettingsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }]
         });
         fixture = TestBed.createComponent(AboutServerSettingsComponent);
         component = fixture.componentInstance;
