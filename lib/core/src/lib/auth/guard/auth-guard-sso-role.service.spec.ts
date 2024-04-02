@@ -17,10 +17,11 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('Auth Guard SSO role service', () => {
     let authGuard: AuthGuardSsoRoleService;
@@ -29,7 +30,7 @@ describe('Auth Guard SSO role service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule]
         });
         localStorage.clear();
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
