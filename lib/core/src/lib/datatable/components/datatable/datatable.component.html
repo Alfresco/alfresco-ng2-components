@@ -378,9 +378,6 @@
                     <ng-content select="adf-empty-list"></ng-content>
                 </div>
             </div>
-            <div *ngFor="let row of fakeRows"
-                 class="adf-datatable-row adf-datatable-row-empty-card">
-            </div>
         </ng-container>
         <div *ngIf="!loading && noPermission"
              role="row"

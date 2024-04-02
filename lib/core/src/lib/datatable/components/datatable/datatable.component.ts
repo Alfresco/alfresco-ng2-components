@@ -249,9 +249,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     hoveredHeaderColumnIndex = -1;
     resizingColumnIndex = -1;
 
-    /** This array of fake rows fix the flex layout for the gallery view */
-    fakeRows = [];
-
     private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
@@ -289,7 +286,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 })
             );
         }
-        this.fakeRows = [];
         this.setTableSchema();
     }
 
@@ -336,10 +332,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (this.isPropertyChanged(changes['sorting'])) {
             this.setTableSorting(changes['sorting'].currentValue);
-        }
-
-        if (this.isPropertyChanged(changes['display'])) {
-            this.fakeRows = [];
         }
     }
 
@@ -761,10 +753,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return row.isDropTarget === true;
     }
 
-    hasSelectionMode(): boolean {
-        return this.isSingleSelectionMode() || this.isMultiSelectionMode();
-    }
-
     isSingleSelectionMode(): boolean {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'single';
     }
@@ -791,14 +779,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (selectedRow) {
             selectedRow.isContextMenuSource = true;
         }
-    }
-
-    getSortingKey(): string | null {
-        if (this.data.getSorting()) {
-            return this.data.getSorting().key;
-        }
-
-        return null;
     }
 
     selectRow(row: DataRow, value: boolean) {
