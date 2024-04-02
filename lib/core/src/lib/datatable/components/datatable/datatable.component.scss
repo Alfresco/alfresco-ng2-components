@@ -536,7 +536,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 .adf-drop-header-cell-placeholder {
     display: flex;
     flex: 1;
-    flex-grow: 1;
     background: var(--adf-theme-background-hover-color);
     border: dotted 1px rgba(0, 0, 0, 0.25);
     min-height: 55px;
