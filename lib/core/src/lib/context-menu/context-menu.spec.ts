@@ -20,6 +20,9 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ContextMenuModule } from './context-menu.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatIconHarness } from '@angular/material/icon/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
     selector: 'adf-test-component',
@@ -96,7 +99,7 @@ describe('ContextMenuDirective', () => {
 
     describe('Events', () => {
         let targetElement: HTMLElement;
-        let contextMenu: HTMLElement;
+        let contextMenu: HTMLElement | null;
 
         beforeEach(() => {
             targetElement = fixture.debugElement.nativeElement.querySelector('#target');
@@ -110,7 +113,7 @@ describe('ContextMenuDirective', () => {
         });
 
         it('should set DOM element reference on  menu open event', () => {
-            expect(contextMenu.className).toContain('adf-context-menu');
+            expect(contextMenu?.className).toContain('adf-context-menu');
         });
 
         it('should reset DOM element reference on Escape event', () => {
@@ -118,7 +121,7 @@ describe('ContextMenuDirective', () => {
                 bubbles : true, cancelable : true, key : 'Escape'
             });
 
-            document.querySelector('.cdk-overlay-backdrop').dispatchEvent(event);
+            document.querySelector('.cdk-overlay-backdrop')?.dispatchEvent(event);
             fixture.detectChanges();
             expect(document.querySelector('.adf-context-menu')).toBe(null);
         });
@@ -126,43 +129,49 @@ describe('ContextMenuDirective', () => {
 
     describe('Contextmenu list', () => {
         let targetElement: HTMLElement;
-        let contextMenu: HTMLElement;
+        let contextMenu: HTMLElement | null;
+        let loader: HarnessLoader;
 
         beforeEach(() => {
             targetElement = fixture.debugElement.nativeElement.querySelector('#target');
             targetElement.dispatchEvent(new CustomEvent('contextmenu'));
             fixture.detectChanges();
             contextMenu = document.querySelector('.adf-context-menu');
+            loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         });
 
         it('should not render item with visibility property set to false', () => {
-            expect(contextMenu.querySelectorAll('button').length).toBe(3);
+            expect(contextMenu?.querySelectorAll('button').length).toBe(3);
         });
 
-        it('should render item as disabled when `disabled` property is set to true', () => {
-            expect(contextMenu.querySelectorAll('button')[0].disabled).toBe(true);
+        it('should render item as disabled when `disabled` property is set to true', async () => {
+            expect(contextMenu?.querySelectorAll('button')[0].disabled).toBe(true);
         });
 
-        it('should set first not disabled item as active', () => {
-            expect(document.activeElement.querySelector('mat-icon').innerHTML).toContain('action-icon-3');
+        it('should set first not disabled item as active', async () => {
+            const icon = await loader.getHarness(MatIconHarness.with({ ancestor: 'adf-context-menu' }));
+
+            expect(await icon.getName()).toEqual('action-icon-3');
         });
 
         it('should not allow action event when item is disabled', () => {
-            contextMenu.querySelectorAll('button')[0].click();
+            contextMenu?.querySelectorAll('button')[0].click();
             fixture.detectChanges();
 
             expect(fixture.componentInstance.actions[1].subject.next).not.toHaveBeenCalled();
         });
 
         it('should perform action when item is not disabled', () => {
-            contextMenu.querySelectorAll('button')[1].click();
+            contextMenu?.querySelectorAll('button')[1].click();
             fixture.detectChanges();
 
             expect(fixture.componentInstance.actions[2].subject.next).toHaveBeenCalled();
         });
 
-        it('should not render item icon if not set', () => {
-            expect(contextMenu.querySelectorAll('button')[0].querySelector('mat-icon')).toBe(null);
+        it('should not render item icon if not set', async () => {
+            expect((await loader.getAllHarnesses(MatIconHarness.with({
+                ancestor: 'adf-context-menu', name: 'Action 1'
+            }))).length).toBe(0);
         });
     });
 });
