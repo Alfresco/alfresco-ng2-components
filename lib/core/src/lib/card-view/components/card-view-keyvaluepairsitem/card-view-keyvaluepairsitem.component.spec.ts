@@ -19,12 +19,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluepairs.model';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 describe('CardViewKeyValuePairsItemComponent', () => {
-
     let fixture: ComponentFixture<CardViewKeyValuePairsItemComponent>;
     let component: CardViewKeyValuePairsItemComponent;
     let cardViewUpdateService: CardViewUpdateService;
@@ -33,10 +35,9 @@ describe('CardViewKeyValuePairsItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [NoopAnimationsModule, TranslateModule.forRoot(), MatIconModule, MatTableModule, FormsModule],
+            providers: [CardViewUpdateService],
+            declarations: [CardViewKeyValuePairsItemComponent]
         });
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);
@@ -55,7 +56,6 @@ describe('CardViewKeyValuePairsItemComponent', () => {
     });
 
     describe('Component', () => {
-
         it('should render the label', () => {
             fixture.detectChanges();
 
@@ -122,5 +122,5 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             expect(cardViewUpdateService.update).toHaveBeenCalled();
             expect(component.property.value.length).toBe(0);
         });
-   });
+    });
 });
