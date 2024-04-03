@@ -66,7 +66,6 @@ Displays the documents from a repository.
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
 | currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
-| display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
 | filterValue | `any` |  | Initial value for filter. |
 | headerFilters | `boolean` | false | Toggles the header filters mode. |
@@ -90,6 +89,7 @@ Displays the documents from a repository.
 | sorting | `string[] \| `[`DataSorting`](../../../lib/core/src/lib/datatable/data/data-sorting.model.ts) | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `"server" \| "client"` | "server" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 | where | `string` |  | Filters the Node list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
 | setColumnsVisibility | `{ [columnId: string]: boolean } \| undefined` |  | Sets columns visibility for DataTableSchema. |

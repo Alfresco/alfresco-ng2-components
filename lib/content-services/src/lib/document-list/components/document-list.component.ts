@@ -157,6 +157,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
+    /** Show document thumbnails rather than icons */
+    @Input()
+    thumbnails: boolean = false;
+
     /**
      * Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
@@ -487,6 +491,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.sortingMode,
             this.allowDropFiles
         );
+        this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
         if (this._rowFilter) {
@@ -528,6 +533,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.orderBy = this.buildOrderByArray(key, direction);
         } else {
             this.orderBy = this.buildOrderByArray(this.sorting.key, this.sorting.direction);
+        }
+
+        if (this.data) {
+            this.data.thumbnails = this.thumbnails;
         }
 
         if (changes.sortingMode && !changes.sortingMode.firstChange && this.data) {
