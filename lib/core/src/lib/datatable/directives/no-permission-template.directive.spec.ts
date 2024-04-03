@@ -15,24 +15,18 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { DataTableComponent } from '../components/datatable/datatable.component';
-import { NoPermissionTemplateDirective } from './no-permission-template.directive';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { CoreTestingModule, DataTableComponent, NoPermissionTemplateDirective } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('NoPermissionTemplateDirective', () => {
-
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let directive: NoPermissionTemplateDirective;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;

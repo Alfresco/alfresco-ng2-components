@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
+import { CoreTestingModule, EmptyListComponent } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EmptyListComponent } from './empty-list.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('EmptyListComponentComponent', () => {
@@ -25,10 +24,7 @@ describe('EmptyListComponentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(EmptyListComponent);
     });

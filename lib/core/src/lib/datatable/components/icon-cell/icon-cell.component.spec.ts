@@ -18,8 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IconCellComponent } from './icon-cell.component';
-import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
-import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { ObjectDataTableAdapter, ObjectDataColumn } from '@alfresco/adf-core';
 
 describe('IconCellComponent', () => {
     let component: IconCellComponent;
