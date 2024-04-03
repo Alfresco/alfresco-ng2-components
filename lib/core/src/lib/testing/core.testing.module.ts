@@ -53,16 +53,11 @@ import { EMPTY } from 'rxjs';
         {
             provide: APP_INITIALIZER,
             useFactory: directionalityConfigFactory,
-            deps: [ DirectionalityConfigService ],
+            deps: [DirectionalityConfigService],
             multi: true
         },
-        { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {} } }
     ],
-    exports: [
-        NoopAnimationsModule,
-        CoreModule,
-        TranslateModule,
-        RouterTestingModule
-    ]
+    exports: [NoopAnimationsModule, CoreModule, TranslateModule, RouterTestingModule]
 })
 export class CoreTestingModule {}
