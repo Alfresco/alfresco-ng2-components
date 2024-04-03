@@ -18,11 +18,13 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentsComponent } from './comments.component';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { CommentsServiceMock, commentsResponseMock } from './mocks/comments.service.mock';
 import { of, throwError } from 'rxjs';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -33,7 +35,7 @@ describe('CommentsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot()],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,
