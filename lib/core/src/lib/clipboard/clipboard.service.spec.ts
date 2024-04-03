@@ -19,7 +19,10 @@ import { NotificationService } from '../notifications/services/notification.serv
 import { TestBed } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CoreTestingModule } from '../testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslationService } from '../translation';
+import { TranslationMock } from '../mock';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
@@ -28,7 +31,8 @@ describe('ClipboardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatSnackBarModule]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule],
+            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }]
         });
         clipboardService = TestBed.inject(ClipboardService);
         notificationService = TestBed.inject(NotificationService);
