@@ -502,13 +502,6 @@ jobs:
     needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
     steps:
       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
-      - name: Log e2e result
-        id: e2e-result
-        if: ${{ github.event_name == 'schedule' }}
-        uses: ./.github/actions/artifact-extract
-        with:
-          artifact-name: "global-e2e-result-${{ matrix.e2e-test.test-id }}"
-          file-name: e2e-failures.txt
       - name: identify-slack-group
         id: groups
         if: ${{ github.event_name == 'schedule' }}
