@@ -16,20 +16,27 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { UserPreferencesService } from './user-preferences.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule } from '../../core.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { DirectionalityConfigService } from './directionality-config.service';
+import { directionalityConfigFactory } from './directionality-config-factory';
+import { APP_INITIALIZER } from '@angular/core';
 
 describe('DirectionalityConfigService', () => {
     let userPreferencesService: UserPreferencesService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreModule.forRoot(),
-                CoreTestingModule
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            providers: [
+                UserPreferencesService,
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: directionalityConfigFactory,
+                    deps: [DirectionalityConfigService],
+                    multi: true
+                }
             ]
         });
         userPreferencesService = TestBed.inject(UserPreferencesService);
