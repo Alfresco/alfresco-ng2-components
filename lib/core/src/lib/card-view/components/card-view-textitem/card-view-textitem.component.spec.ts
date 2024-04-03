@@ -20,7 +20,6 @@ import { By } from '@angular/platform-browser';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewItemFloatValidator } from '../../validators/card-view-item-float.validator';
 import { CardViewItemIntValidator } from '../../validators/card-view-item-int.validator';
 import { CardViewIntItemModel } from '../../models/card-view-intitem.model';
@@ -33,6 +32,12 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslationService } from '../../../translation';
+import { TranslationMock } from '../../../mock';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CardViewTextItemComponent', () => {
     let loader: HarnessLoader;
@@ -110,7 +115,8 @@ describe('CardViewTextItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatChipsModule]
+            imports: [HttpClientTestingModule, NoopAnimationsModule, TranslateModule.forRoot(), MatSnackBarModule, MatTooltipModule, MatChipsModule],
+            providers: [{ provide: TranslationService, useClass: TranslationMock }]
         });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
