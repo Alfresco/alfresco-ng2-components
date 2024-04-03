@@ -18,7 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { HeaderFilterTemplateDirective } from './header-filter-template.directive';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { CoreTestingModule } from '../../testing';
 
 describe('HeaderFilterTemplateDirective', () => {
     let fixture: ComponentFixture<DataTableComponent>;
