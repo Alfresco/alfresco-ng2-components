@@ -35,8 +35,8 @@
                                  class="adf-error  adf-error-message">
                                 <mat-icon class="adf-error-icon">warning</mat-icon>
                                 <span class="adf-login-error-message">
-                  {{ errorMsg | translate }}
-                </span>
+                                    {{ errorMsg | translate }}
+                                </span>
                             </div>
                         </div>
 
@@ -61,12 +61,12 @@
                                 <span *ngIf="formError['username']"
                                       class="adf-login-validation"
                                       for="username">
-                  <span id="username-error"
-                        class="adf-login-error"
-                        data-automation-id="username-error">
-                    {{ formError['username'] | translate }}
-                  </span>
-                </span>
+                                    <span id="username-error"
+                                          class="adf-login-error"
+                                          data-automation-id="username-error">
+                                        {{ formError['username'] | translate }}
+                                    </span>
+                                </span>
                             </div>
 
                             <!--PASSWORD FIELD-->
@@ -95,12 +95,12 @@
                                 <span class="adf-login-validation"
                                       for="password"
                                       *ngIf="formError['password']">
-                  <span id="password-required"
-                        class="adf-login-error"
-                        data-automation-id="password-required">
-                    {{ formError['password'] | translate }}
-                  </span>
-                </span>
+                                    <span id="password-required"
+                                          class="adf-login-error"
+                                          data-automation-id="password-required">
+                                        {{ formError['password'] | translate }}
+                                    </span>
+                                </span>
                             </div>
 
                             <!--CUSTOM CONTENT-->
@@ -117,15 +117,15 @@
                                     data-automation-id="login-button"
                                     [disabled]="!form.valid"
                                     [attr.aria-label]="'LOGIN.BUTTON.LOGIN' | translate">
-                  <span *ngIf="actualLoginStep === LoginSteps.Landing"
-                        class="adf-login-button-label">
-                    {{ 'LOGIN.BUTTON.LOGIN' | translate }}
-                  </span>
+                                <span *ngIf="actualLoginStep === LoginSteps.Landing"
+                                      class="adf-login-button-label">
+                                    {{ 'LOGIN.BUTTON.LOGIN' | translate }}
+                                </span>
                                 <div *ngIf="actualLoginStep === LoginSteps.Checking"
                                      class="adf-interactive-login-label">
-                  <span class="adf-login-button-label">
-                      {{ 'LOGIN.BUTTON.CHECKING' | translate }}
-                  </span>
+                                    <span class="adf-login-button-label">
+                                        {{ 'LOGIN.BUTTON.CHECKING' | translate }}
+                                    </span>
                                     <div class="adf-login-spinner-container">
                                         <mat-spinner id="checking-spinner"
                                                      class="adf-login-checking-spinner"
@@ -136,9 +136,9 @@
                                 </div>
                                 <div *ngIf="actualLoginStep === LoginSteps.Welcome"
                                      class="adf-interactive-login-label">
-                  <span class="adf-login-button-label">
-                    {{ 'LOGIN.BUTTON.WELCOME' | translate }}
-                  </span>
+                                    <span class="adf-login-button-label">
+                                        {{ 'LOGIN.BUTTON.WELCOME' | translate }}
+                                    </span>
                                     <mat-icon class="adf-welcome-icon">done</mat-icon>
                                 </div>
                             </button>
@@ -162,9 +162,9 @@
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
                                     data-automation-id="login-button-sso">
-                <span class="adf-login-button-label">
-                  {{ 'LOGIN.BUTTON.SSO' | translate }}
-                </span>
+                                <span class="adf-login-button-label">
+                                  {{ 'LOGIN.BUTTON.SSO' | translate }}
+                                </span>
                             </button>
                         </div>
                     </mat-card-content>
