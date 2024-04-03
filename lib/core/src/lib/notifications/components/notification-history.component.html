@@ -47,11 +47,13 @@
                             <mat-icon matListItemLine
                                       class="adf-notification-history-menu-initiator">{{notification.icon}}</mat-icon>
                         </ng-template>
-                        <p class="adf-notification-history-menu-text adf-notification-history-menu-message"
-                           *ngFor="let message of notification.messages"
-                           matListItemLine [matTooltip]="message" matTooltipShowDelay="1000">{{ message }}</p>
-                        <p class="adf-notification-history-menu-text adf-notification-history-menu-date"
-                           matListItemLine> {{notification.datetime | adfTimeAgo}} </p>
+                        <div class="adf-notification-history-menu-item-content">
+                            <p class="adf-notification-history-menu-text adf-notification-history-menu-message"
+                               *ngFor="let message of notification.messages"
+                               matListItemLine [matTooltip]="message" matTooltipShowDelay="1000">{{ message }}</p>
+                            <p class="adf-notification-history-menu-text adf-notification-history-menu-date"
+                               matListItemLine> {{notification.datetime | adfTimeAgo}} </p>
+                        </div>
                     </mat-list-item>
                 </ng-container>
                 <ng-template #empty_list_template>
