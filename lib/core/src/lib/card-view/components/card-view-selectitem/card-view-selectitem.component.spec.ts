@@ -19,13 +19,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { of } from 'rxjs';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSelectModule } from '@angular/material/select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -59,7 +61,7 @@ describe('CardViewSelectItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [NoopAnimationsModule, TranslateModule.forRoot(), HttpClientTestingModule, MatSelectModule]
         });
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;
