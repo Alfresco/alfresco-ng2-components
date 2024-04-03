@@ -639,9 +639,21 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientModule, NoopAnimationsModule, DataTableModule, MatProgressSpinnerModule],
-            providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
-            declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
+            imports: [
+                TranslateModule.forRoot(),
+                HttpClientModule,
+                CustomEmptyContentTemplateDirective,
+                NoopAnimationsModule,
+                DataTableModule,
+                MatProgressSpinnerModule
+            ],
+            providers: [
+                {
+                    provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
+                    useValue: preferencesService
+                }
+            ],
+            declarations: [EmptyTemplateComponent, ProcessListCloudComponent]
         });
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
         fixtureEmpty.detectChanges();
