@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { LoginFooterDirective } from '../../directives/login-footer.directive';
 import { LoginHeaderDirective } from '../../directives/login-header.directive';
-import { LoginComponent } from '../login/login.component';
 import { LoginSuccessEvent } from '../../models/login-success.event';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
     selector: 'adf-login-dialog-panel',

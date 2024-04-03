@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
+import { RouterModule } from '@angular/router';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { AuthenticationService } from '../../../auth';
+import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
 import { CoreStoryModule } from '../../../testing/core.story.module';
 import { LoginModule } from '../../login.module';
 import { LoginComponent } from './login.component';
-import { RouterModule } from '@angular/router';
-import { AuthenticationService } from '../../../auth/services/authentication.service';
-import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
 
 export default {
     component: LoginComponent,

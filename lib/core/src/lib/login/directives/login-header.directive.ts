@@ -26,7 +26,8 @@ export class LoginHeaderDirective implements AfterContentInit {
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private alfrescoLoginComponent: LoginComponent) {}
+    constructor(private alfrescoLoginComponent: LoginComponent) {
+    }
 
     ngAfterContentInit() {
         this.alfrescoLoginComponent.headerTemplate = this.template;

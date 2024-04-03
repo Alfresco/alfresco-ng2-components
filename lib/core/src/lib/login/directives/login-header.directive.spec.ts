@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { LoginComponent } from '../components/login/login.component';
-import { LoginHeaderDirective } from './login-header.directive';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { CoreTestingModule, LoginComponent, LoginHeaderDirective } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 

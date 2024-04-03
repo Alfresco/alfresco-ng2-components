@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoginDialogComponentData } from './login-dialog-component-data.interface';
 import { LoginDialogPanelComponent } from '../login-dialog-panel/login-dialog-panel.component';
+import { LoginDialogComponentData } from './login-dialog-component-data.interface';
+
 @Component({
     selector: 'adf-login-dialog',
     standalone: true,
