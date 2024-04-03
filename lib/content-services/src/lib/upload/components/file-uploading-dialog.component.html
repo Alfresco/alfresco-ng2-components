@@ -7,7 +7,7 @@
      [class.adf-upload-dialog--minimized]="isDialogMinimized">
     <header class="adf-upload-dialog__header">
         <button
-            mat-button
+            mat-icon-button
             class="adf-upload-dialog__header-button"
             [attr.data-automation-id]="'adf-upload-dialog__toggle-minimize'"
             [attr.aria-label]="(isDialogMinimized ?
@@ -17,9 +17,7 @@
             [attr.aria-expanded]="!isDialogMinimized"
             (click)="toggleMinimized()">
             <mat-icon
-                matListItemLine
-                class="adf-upload-dialog__header-button-icon"
-                title="{{ (isDialogMinimized ? 'ADF_FILE_UPLOAD.BUTTON.MAXIMIZE': 'ADF_FILE_UPLOAD.BUTTON.MINIMIZE') | translate }}">
+                class="adf-upload-dialog__header-button-icon">
                     {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
             </mat-icon>
         </button>
