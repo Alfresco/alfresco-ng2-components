@@ -19,7 +19,12 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslationService } from '../translation';
+import { TranslationMock } from '../mock';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-test-component',
@@ -37,8 +42,9 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [TestTargetClipboardComponent]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule, MatButtonModule],
+            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }],
+            declarations: [TestTargetClipboardComponent, ClipboardDirective]
         });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
@@ -80,8 +86,9 @@ describe('CopyClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [TestCopyClipboardComponent]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule],
+            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }],
+            declarations: [TestCopyClipboardComponent, ClipboardDirective]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
         element = fixture.debugElement.nativeElement;
