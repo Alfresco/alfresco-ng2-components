@@ -16,16 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -34,7 +25,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
@@ -167,10 +157,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         private router: Router,
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
-        private route: ActivatedRoute,
-        private sanitizer: DomSanitizer
-    ) {
-    }
+        private route: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.initFormError();
@@ -274,30 +262,29 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     performLogin(values: { username: string; password: string }) {
-        this.authService.login(values.username, values.password, this.rememberMe)
-            .subscribe(
-                async (token: any) => {
-                    const redirectUrl = this.basicAlfrescoAuthService.getRedirect();
+        this.authService.login(values.username, values.password, this.rememberMe).subscribe(
+            async (token: any) => {
+                const redirectUrl = this.basicAlfrescoAuthService.getRedirect();
 
-                    this.actualLoginStep = LoginSteps.Welcome;
-                    this.userPreferences.setStoragePrefix(values.username);
-                    values.password = null;
-                    this.success.emit(new LoginSuccessEvent(token, values.username, null));
+                this.actualLoginStep = LoginSteps.Welcome;
+                this.userPreferences.setStoragePrefix(values.username);
+                values.password = null;
+                this.success.emit(new LoginSuccessEvent(token, values.username, null));
 
-                    if (redirectUrl) {
-                        this.basicAlfrescoAuthService.setRedirect(null);
-                        await this.router.navigateByUrl(redirectUrl);
-                    } else if (this.successRoute) {
-                        await this.router.navigate([this.successRoute]);
-                    }
-                },
-                (err: any) => {
-                    this.actualLoginStep = LoginSteps.Landing;
-                    this.displayErrorMessage(err);
-                    this.isError = true;
-                    this.error.emit(new LoginErrorEvent(err));
+                if (redirectUrl) {
+                    this.basicAlfrescoAuthService.setRedirect(null);
+                    await this.router.navigateByUrl(redirectUrl);
+                } else if (this.successRoute) {
+                    await this.router.navigate([this.successRoute]);
                 }
-            );
+            },
+            (err: any) => {
+                this.actualLoginStep = LoginSteps.Landing;
+                this.displayErrorMessage(err);
+                this.isError = true;
+                this.error.emit(new LoginErrorEvent(err));
+            }
+        );
     }
 
     /**
@@ -371,10 +358,6 @@ export class LoginComponent implements OnInit, OnDestroy {
      */
     trimUsername(event: any) {
         event.target.value = event.target.value.trim();
-    }
-
-    getBackgroundUrlImageUrl(): SafeStyle {
-        return this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
     }
 
     /**
