@@ -41,7 +41,6 @@ describe('DateFnsUtils', () => {
         });
     });
 
-
     it('should format a date correctly', () => {
         const date = new Date('2023-09-22T12:00:00Z');
         const dateFormat = 'yyyy-MM-dd';
@@ -53,27 +52,18 @@ describe('DateFnsUtils', () => {
     });
 
     it('should parse datetime', () => {
-        const parsed = DateFnsUtils.parseDate(
-            '09-02-9999 09:10 AM',
-            'dd-MM-yyyy hh:mm aa'
-        );
+        const parsed = DateFnsUtils.parseDate('09-02-9999 09:10 AM', 'dd-MM-yyyy hh:mm aa');
         expect(isValid(parsed));
         expect(parsed.toISOString()).toBe('9999-02-09T09:10:00.000Z');
     });
 
     it('should format datetime with custom moment format', () => {
-        const parsed = DateFnsUtils.formatDate(
-            new Date('9999-12-30T10:30:00.000Z'),
-            'MM-DD-YYYY HH:mm A'
-        );
+        const parsed = DateFnsUtils.formatDate(new Date('9999-12-30T10:30:00.000Z'), 'MM-DD-YYYY HH:mm A');
         expect(parsed).toBe('12-30-9999 10:30 AM');
     });
 
     it('should parse moment datetime ISO', () => {
-        const parsed = DateFnsUtils.parseDate(
-            '1982-03-13T10:00:00Z',
-            'YYYY-MM-DDTHH:mm:ssZ'
-        );
+        const parsed = DateFnsUtils.parseDate('1982-03-13T10:00:00Z', 'YYYY-MM-DDTHH:mm:ssZ');
         expect(parsed.toISOString()).toBe('1982-03-13T10:00:00.000Z');
     });
 
@@ -87,27 +77,18 @@ describe('DateFnsUtils', () => {
     });
 
     it('should parse alternative ISO datetime', () => {
-        const result = DateFnsUtils.parseDate(
-            '1982-03-13T10:00:000Z',
-            `yyyy-MM-dd'T'HH:mm:sssXXX`
-        );
+        const result = DateFnsUtils.parseDate('1982-03-13T10:00:000Z', `yyyy-MM-dd'T'HH:mm:sssXXX`);
 
         expect(result.toISOString()).toBe('1982-03-13T10:00:00.000Z');
     });
 
     it('should parse the datetime with zone', () => {
-        const result = DateFnsUtils.parseDate(
-            '1982-03-13T10:00:000+01:00',
-            `yyyy-MM-dd'T'HH:mm:sssXXX`
-        );
+        const result = DateFnsUtils.parseDate('1982-03-13T10:00:000+01:00', `yyyy-MM-dd'T'HH:mm:sssXXX`);
         expect(result.toISOString()).toBe('1982-03-13T09:00:00.000Z');
     });
 
     it('should parse datetime with zone in moment format', () => {
-        const result = DateFnsUtils.parseDate(
-            '1982-03-13T10:00:00+0100',
-            `YYYY-MM-DDTHH:mm:ssZZ`
-        );
+        const result = DateFnsUtils.parseDate('1982-03-13T10:00:00+0100', `YYYY-MM-DDTHH:mm:ssZZ`);
         expect(result.toISOString()).toBe('1982-03-13T09:00:00.000Z');
     });
 
@@ -131,5 +112,30 @@ describe('DateFnsUtils', () => {
         const resultUtc = DateFnsUtils.forceUtc('2014-02-11T11:30:30');
         expect(resultLocal).toBeInstanceOf(Date);
         expect(resultUtc).toBeInstanceOf(Date);
+    });
+
+    it('should force local and UTC dates to display the same day, month and year in different timezones', () => {
+        const dateEngland = new Date('Wed Jan 01 2020 00:00:00 GMT+0000');
+        const dateUSA = new Date('Tue Dec 31 2019 16:00:00 GMT-0800');
+        const dateJapan = new Date('Wed Jan 01 2020 09:00:00 GMT+0900');
+        const forceUtcDateEngland = DateFnsUtils.forceUtc(dateEngland);
+        const forceUtcDateUSA = DateFnsUtils.forceUtc(dateUSA);
+        const forceUtcDateJapan = DateFnsUtils.forceUtc(dateJapan);
+
+        expect(forceUtcDateEngland).toEqual(forceUtcDateUSA);
+        expect(forceUtcDateUSA).toEqual(forceUtcDateJapan);
+        expect(forceUtcDateJapan.getDate()).toBe(1);
+        expect(forceUtcDateJapan.getMonth()).toBe(0);
+        expect(forceUtcDateJapan.getFullYear()).toBe(2020);
+
+        const forceLocalDateEngland = DateFnsUtils.forceLocal(forceUtcDateEngland);
+        const forceLocalDateUSA = DateFnsUtils.forceLocal(forceUtcDateUSA);
+        const forceLocalDateJapan = DateFnsUtils.forceLocal(forceUtcDateJapan);
+
+        expect(forceLocalDateEngland).toEqual(forceLocalDateUSA);
+        expect(forceLocalDateUSA).toEqual(forceLocalDateJapan);
+        expect(forceLocalDateJapan.getDate()).toBe(1);
+        expect(forceLocalDateJapan.getMonth()).toBe(0);
+        expect(forceLocalDateJapan.getFullYear()).toBe(2020);
     });
 });
