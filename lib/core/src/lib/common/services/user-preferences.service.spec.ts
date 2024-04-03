@@ -20,10 +20,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../../mock';
+import { AlfrescoApiServiceMock, TranslationMock } from '../../mock';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslationService } from '../../translation';
 
 describe('UserPreferencesService', () => {
     const supportedPaginationSize = [5, 10, 15, 20];
@@ -35,7 +36,14 @@ describe('UserPreferencesService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            providers: [
+                UserPreferencesService,
+                StorageService,
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
+            ]
         });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config = {
