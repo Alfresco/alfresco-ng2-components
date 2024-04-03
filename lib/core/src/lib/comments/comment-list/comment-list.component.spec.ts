@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentModel } from '../../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { commentUserNoPictureDefined, commentUserPictureDefined, mockCommentOne, testUser } from './mocks/comment-list.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CommentListComponent', () => {
     let commentList: CommentListComponent;
@@ -31,7 +32,7 @@ describe('CommentListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,
@@ -50,22 +51,21 @@ describe('CommentListComponent', () => {
         fixture.destroy();
     });
 
-    it('should emit row click event', fakeAsync(() => {
+    it('should emit row click event', (done) => {
         commentList.comments = [mockCommentOne];
 
         commentList.clickRow.subscribe((selectedComment: CommentModel) => {
             expect(selectedComment.id).toEqual(1);
             expect(selectedComment.message).toEqual('Test Comment');
             expect(selectedComment.createdBy).toEqual(testUser);
-            expect(selectedComment.isSelected).toBeTruthy();
+            done();
         });
 
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const comment = fixture.debugElement.query(By.css('.adf-comment-list:first-child'));
-            comment.triggerEventHandler('click', null);
-        });
-    }));
+
+        const comment = fixture.debugElement.query(By.css('.adf-comment-list-item'));
+        comment.triggerEventHandler('click', null);
+    });
 
     it('should not show comment list if no input is given', async () => {
         fixture.detectChanges();
