@@ -1,8 +1,9 @@
 /* stylelint-disable selector-class-pattern */
+/* stylelint-disable no-descending-specificity */
+
 @import 'styles/mat-selectors';
 
 .adf-version-list {
-    &-viewport {
         height: 100%;
         overflow-x: hidden;
         display: flex;
@@ -28,6 +29,7 @@
     &-item-comment {
         width: 100%;
         opacity: 0.5;
+        margin: 0;
 
         @media screen and (width <= 629px) {
             width: 97%;
