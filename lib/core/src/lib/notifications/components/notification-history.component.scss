@@ -4,17 +4,15 @@ $notification-item-height: 72px;
 
 .adf {
     &-notification-history-list {
-        /* stylelint-disable */
-        .mat-mdc-list-item-unscoped-content {
+        .adf-notification-history-menu-item-content-wrapper {
             height: 100%;
-            display: flex !important;
-            align-items: center !important;
+            display: flex;
+            align-items: center;
         }
 
         .mdc-list-item__secondary-text::before {
             height: auto;
         }
-        /* stylelint-enable */
     }
 
     &-notification-history-menu-item-content {
