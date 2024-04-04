@@ -16,7 +16,7 @@
  */
 
 import { every, not, some } from './core.evaluators';
-import { RuleParameter } from '../config/rule.extensions';
+import { RuleParameter } from '@alfresco/js-api';
 
 describe('Core Evaluators', () => {
 
