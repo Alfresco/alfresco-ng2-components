@@ -10,6 +10,7 @@ $notification-item-height: 72px;
             align-items: center;
         }
 
+        /* stylelint-disable selector-class-pattern */
         .mdc-list-item__secondary-text::before {
             height: auto;
         }
