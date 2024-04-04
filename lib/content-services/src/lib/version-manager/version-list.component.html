@@ -30,38 +30,25 @@
                         <button *ngIf="allowViewVersions"
                                 [id]="'adf-version-list-action-view-' + version.entry.id"
                                 mat-menu-item
-                                (click)="onViewVersion(version.entry.id)">
-                            {{ 'ADF_VERSION_LIST.ACTIONS.VIEW' | translate }}
+                                (click)="downloadVersion(version.entry.id)">
+                            {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
                         </button>
-                    </ng-container>
-                    <button
-                        [id]="'adf-version-list-action-restore-' + version.entry.id"
-                        [disabled]="!canUpdate() || latestVersion"
-                        mat-menu-item
-                        (click)="restore(version.entry.id)">
-                        {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
-                    </button>
-                    <button *ngIf="allowDownload"
-                            [id]="'adf-version-list-action-download-' + version.entry.id"
-                            mat-menu-item
-                            (click)="downloadVersion(version.entry.id)">
-                        {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
-                    </button>
-                    <button
-                        [disabled]="!canDelete()"
-                        [id]="'adf-version-list-action-delete-' + version.entry.id"
-                        (click)="deleteVersion(version.entry.id)"
-                        mat-menu-item>
-                        {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
-                    </button>
-                </mat-menu>
+                        <button
+                            [disabled]="!canDelete()"
+                            [id]="'adf-version-list-action-delete-' + version.entry.id"
+                            (click)="deleteVersion(version.entry.id)"
+                            mat-menu-item>
+                            {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
+                        </button>
+                    </mat-menu>
 
-                <button mat-icon-button
-                        [matMenuTriggerFor]="versionMenu"
-                        [id]="'adf-version-list-action-menu-button-' + version.entry.id"
-                        title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
+                    <button mat-icon-button
+                            [matMenuTriggerFor]="versionMenu"
+                            [id]="'adf-version-list-action-menu-button-' + version.entry.id"
+                            title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
             </div>
         </mat-list-item>
     </cdk-virtual-scroll-viewport>
