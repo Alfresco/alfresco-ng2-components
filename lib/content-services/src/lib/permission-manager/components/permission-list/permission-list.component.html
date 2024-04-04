@@ -1,4 +1,4 @@
-<mat-card appearance="outlined" class="adf-permission-card" id="adf-permission-manager-card">
+<mat-card class="adf-permission-card" id="adf-permission-manager-card">
     <div *ngIf="(permissionList.data$ | async) === null && permissionList.loading$ | async" class="adf-permission-loader">
         <mat-progress-spinner [color]="'primary'"
                               [mode]="'indeterminate'">
@@ -40,15 +40,15 @@
             </div>
 
             <button
-                mat-button
+                mat-flat-button
                 data-automation-id="permission-info-button"
                 [adf-pop-over]="inheritedPermission"
                 [target]="target"
                 #popOver="adfPopOver"
                 *ngIf="model.node.permissions.isInheritanceEnabled">
                 {{ (popOver.open ? 'PERMISSION_MANAGER.LABELS.HIDE' : 'PERMISSION_MANAGER.LABELS.SHOW') | translate }}
-                <mat-icon *ngIf="popOver.open"> keyboard_arrow_up </mat-icon>
-                <mat-icon *ngIf="!popOver.open"> keyboard_arrow_down </mat-icon>
+                <mat-icon *ngIf="popOver.open" iconPositionEnd> keyboard_arrow_up </mat-icon>
+                <mat-icon *ngIf="!popOver.open" iconPositionEnd> keyboard_arrow_down </mat-icon>
             </button>
         </div>
 
