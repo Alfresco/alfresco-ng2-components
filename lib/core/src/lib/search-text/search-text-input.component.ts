@@ -15,26 +15,34 @@
  * limitations under the License.
  */
 
-import { ViewEncapsulation, Component, Input, OnDestroy, ViewChild, ElementRef, Output, EventEmitter, OnInit } from '@angular/core';
-import { Subject, Observable, Subscription } from 'rxjs';
-import { debounceTime, takeUntil, filter } from 'rxjs/operators';
 import { Direction } from '@angular/cdk/bidi';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { UserPreferencesService } from '../common';
 import { searchAnimation } from './animations';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
-import { SearchTextStateEnum, SearchAnimationState, SearchAnimationDirection } from './models/search-text-input.model';
+import { SearchAnimationDirection, SearchAnimationState, SearchTextStateEnum } from './models/search-text-input.model';
+import { SearchTriggerDirective } from './search-trigger.directive';
 
 @Component({
     selector: 'adf-search-text-input',
+    standalone: true,
     templateUrl: './search-text-input.component.html',
     styleUrls: ['./search-text-input.component.scss'],
     animations: [searchAnimation],
     encapsulation: ViewEncapsulation.None,
+    imports: [MatButtonModule, MatIconModule, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, SearchTriggerDirective],
     host: {
         class: 'adf-search-text-input'
     }
 })
 export class SearchTextInputComponent implements OnInit, OnDestroy {
-
     /** Toggles auto-completion of the search input field. */
     @Input()
     autocomplete: boolean = false;
@@ -66,7 +74,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Input()
     debounceTime: number = 0;
 
-     /** Listener for results-list events (focus, blur and focusout). */
+    /** Listener for results-list events (focus, blur and focusout). */
     @Input()
     focusListener: Observable<FocusEvent>;
 
@@ -128,12 +136,12 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     subscriptAnimationState: any;
 
     animationStates: SearchAnimationDirection = {
-        ltr : {
+        ltr: {
             active: { value: 'active', params: { 'margin-left': 13 } },
             inactive: { value: 'inactive', params: { transform: 'translateX(82%)' } }
         },
         rtl: {
-            active:  { value: 'active', params: { 'margin-right': 13 } },
+            active: { value: 'active', params: { 'margin-right': 13 } },
             inactive: { value: 'inactive', params: { transform: 'translateX(-82%)' } }
         }
     };
@@ -144,27 +152,20 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private focusSubscription: Subscription;
     private valueChange = new Subject<string>();
 
-    constructor(
-        private userPreferencesService: UserPreferencesService
-    ) {
-        this.toggleSearch
-            .pipe(
-                debounceTime(200),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(() => {
-                if (this.expandable) {
-                    this.subscriptAnimationState = this.toggleAnimation();
-                    if (this.subscriptAnimationState.value === 'inactive') {
-                        this.searchTerm = '';
-                        this.reset.emit(true);
-                        if (document.activeElement.id === this.searchInput.nativeElement.id) {
-                            this.searchInput.nativeElement.blur();
-                        }
+    constructor(private userPreferencesService: UserPreferencesService) {
+        this.toggleSearch.pipe(debounceTime(200), takeUntil(this.onDestroy$)).subscribe(() => {
+            if (this.expandable) {
+                this.subscriptAnimationState = this.toggleAnimation();
+                if (this.subscriptAnimationState.value === 'inactive') {
+                    this.searchTerm = '';
+                    this.reset.emit(true);
+                    if (document.activeElement.id === this.searchInput.nativeElement.id) {
+                        this.searchInput.nativeElement.blur();
                     }
-                    this.emitVisibilitySearch();
                 }
-            });
+                this.emitVisibilitySearch();
+            }
+        });
     }
 
     ngOnInit() {
@@ -193,13 +194,13 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     private toggleAnimation() {
         if (this.dir === 'ltr') {
-            return this.subscriptAnimationState.value === 'inactive' ?
-                { value: 'active', params: { 'margin-left': 13 } } :
-                { value: 'inactive', params: { transform: 'translateX(82%)' } };
+            return this.subscriptAnimationState.value === 'inactive'
+                ? { value: 'active', params: { 'margin-left': 13 } }
+                : { value: 'inactive', params: { transform: 'translateX(82%)' } };
         } else {
-            return this.subscriptAnimationState.value === 'inactive' ?
-                { value: 'active', params: { 'margin-right': 13 } } :
-                { value: 'inactive', params: { transform: 'translateX(-82%)' } };
+            return this.subscriptAnimationState.value === 'inactive'
+                ? { value: 'active', params: { 'margin-right': 13 } }
+                : { value: 'inactive', params: { transform: 'translateX(-82%)' } };
         }
     }
 
@@ -213,7 +214,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private getAnimationState(dir: string): SearchAnimationState {
         if (this.expandable && this.isDefaultStateExpanded()) {
             return this.animationStates[dir].active;
-        } else if ( this.expandable ) {
+        } else if (this.expandable) {
             return this.animationStates[dir].inactive;
         } else {
             return { value: 'no-animation' };
@@ -221,16 +222,17 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     private setupFocusEventHandlers() {
-        if ( this.focusListener ) {
-            const focusEvents: Observable<FocusEvent> = this.focusListener
-            .pipe(
+        if (this.focusListener) {
+            const focusEvents: Observable<FocusEvent> = this.focusListener.pipe(
                 debounceTime(50),
-                filter(($event: any) => this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus')),
+                filter(
+                    ($event: any) => this.isSearchBarActive() && ($event.type === 'blur' || $event.type === 'focusout' || $event.type === 'focus')
+                ),
                 takeUntil(this.onDestroy$)
             );
 
-            this.focusSubscription = focusEvents.subscribe( (event: FocusEvent) => {
-                if ( event.type === 'focus') {
+            this.focusSubscription = focusEvents.subscribe((event: FocusEvent) => {
+                if (event.type === 'focus') {
                     this.searchInput.nativeElement.focus();
                 } else {
                     this.toggleSearchBar();
@@ -240,10 +242,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     }
 
     private setValueChangeHandler() {
-        this.valueChange.pipe(
-            debounceTime(this.debounceTime),
-            takeUntil(this.onDestroy$)
-        ).subscribe( (value: string) => {
+        this.valueChange.pipe(debounceTime(this.debounceTime), takeUntil(this.onDestroy$)).subscribe((value: string) => {
             this.searchChange.emit(value);
         });
     }
