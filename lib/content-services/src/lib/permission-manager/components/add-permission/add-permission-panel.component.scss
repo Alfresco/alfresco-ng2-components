@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 $search-result-height: calc(100% - 75px);
 
 .adf {
@@ -7,7 +9,7 @@ $search-result-height: calc(100% - 75px);
         overflow: auto;
         border: 2px solid var(--adf-theme-foreground-text-color-007);
 
-        mat-pseudo-checkbox {
+        #{$mat-list-item-end} {
             display: none;
         }
 
