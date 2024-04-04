@@ -49,6 +49,10 @@
         }
     }
 
+    .adf-datatable-cell .adf-cell-value adf-user-role-column {
+        position: unset;
+    }
+
     .adf {
         &-search-user-button {
             width: 100%;
