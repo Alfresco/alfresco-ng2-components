@@ -375,6 +375,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             }
             return form;
         }
+
         return null;
     }
 
@@ -396,8 +397,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private refreshFormData() {
         this.form = this.parseForm(this.formCloudRepresentationJSON);
-        this.onFormLoaded(this.form);
-        this.onFormDataRefreshed(this.form);
+        if (this.form) {
+            this.onFormLoaded(this.form);
+            this.onFormDataRefreshed(this.form);
+        }
     }
 
     protected onFormLoaded(form: FormModel) {

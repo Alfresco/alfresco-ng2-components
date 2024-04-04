@@ -100,6 +100,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     }
 
     getToken(): string {
+        debugger;
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getToken();
         } else {

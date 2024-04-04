@@ -114,6 +114,7 @@ export class UserPreferencesService {
      * @param value New value for the property
      */
     set(property: string, value: any) {
+        console.trace();
         if (!property) {
             return;
         }
@@ -132,6 +133,7 @@ export class UserPreferencesService {
      * @param value New value for the property
      */
     setWithoutStore(property: string, value: any) {
+        // debugger;
         if (!property) {
             return;
         }

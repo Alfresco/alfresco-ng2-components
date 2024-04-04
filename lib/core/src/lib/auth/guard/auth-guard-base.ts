@@ -55,7 +55,11 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (this.authenticationService.isLoggedIn() && this.authenticationService.isOauth() && this.isLoginFragmentPresent()) {
+        if (
+            this.authenticationService.isLoggedIn() &&
+            this.authenticationService.isOauth() &&
+            this.isLoginFragmentPresent()
+        ) {
             return this.redirectSSOSuccessURL();
         }
 
