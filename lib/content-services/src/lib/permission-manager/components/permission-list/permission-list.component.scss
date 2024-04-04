@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-permission-card {
         height: 100%;
@@ -5,6 +7,7 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        padding: 16px;
     }
 
     &-permission-loader {
@@ -66,9 +69,10 @@
         height: calc(100% - 63px);
     }
 
-    &-local-permission-container {
+    &-local-permission-container#{$mat-card-content} {
         overflow: hidden;
         flex: 1 1 auto;
+        padding: 0;
     }
 }
 
