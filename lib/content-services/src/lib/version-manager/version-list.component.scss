@@ -1,15 +1,51 @@
 /* stylelint-disable selector-class-pattern */
+/* stylelint-disable no-descending-specificity */
+
 @import 'styles/mat-selectors';
 
 .adf-version-list {
+    .adf-version-list-element {
+        .adf-version-list-item {
+            border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+            height: 88px;
+            padding: 0 16px;
+
+            .adf-version-list-item-details {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+            }
+
+            .adf-version-list-item-line {
+                margin: 0;
+                line-height: 20px;
+            }
+
+            .adf-version-list-item-name {
+                font-weight: normal;
+                color: var(--adf-theme-foreground-text-color-087);
+                font-size: 16px;
+            }
+
+            .adf-version-list-content {
+                display: flex;
+                padding-left: 16px;
+            }
+
+            .adf-version-list-item-icon {
+                color: var(--adf-theme-foreground-text-color-087);
+                margin: 4px;
+            }
+
+            .adf-version-list-item-version {
+                color: var(--adf-theme-foreground-text-color-087);
+            }
+        }
+    }
+
     .adf-version-list-viewport {
         height: 100%;
         overflow-x: hidden;
-    }
-
-    .adf-version-list-item {
-        border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
-        width: 100vw;
     }
 
     &-item-version {
@@ -21,8 +57,8 @@
     }
 
     &-item-comment {
-        width: 500px;
         opacity: 0.5;
+        margin: 0;
 
         @media screen and (width <= 629px) {
             width: 97%;
