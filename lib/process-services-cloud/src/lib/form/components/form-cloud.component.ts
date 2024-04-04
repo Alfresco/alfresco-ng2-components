@@ -295,7 +295,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.formCloudRepresentationJSON = form;
                     const parsedForm = this.parseForm(form);
                     this.visibilityService.refreshVisibility(parsedForm);
-                    parsedForm.validateForm();
+                    parsedForm?.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
                     this.onFormLoaded(this.form);
@@ -355,7 +355,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    parseForm(formCloudRepresentationJSON: any): FormModel {
+    parseForm(formCloudRepresentationJSON?: any): FormModel | null {
         if (formCloudRepresentationJSON) {
             const formValues: FormValues = {};
             (this.data || []).forEach((variable) => {
@@ -392,8 +392,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     private refreshFormData() {
         this.form = this.parseForm(this.formCloudRepresentationJSON);
-        this.onFormLoaded(this.form);
-        this.onFormDataRefreshed(this.form);
+
+        if (this.form) {
+            this.onFormLoaded(this.form);
+            this.onFormDataRefreshed(this.form);
+        }
     }
 
     protected onFormLoaded(form: FormModel) {

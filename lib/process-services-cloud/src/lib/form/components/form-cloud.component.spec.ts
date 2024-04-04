@@ -1011,6 +1011,19 @@ describe('FormCloudComponent', () => {
         formComponent.ngOnChanges({ data: change });
     });
 
+    it('should work with empty form JSON representaiton when refreashing form', () => {
+        formComponent.form = new FormModel(JSON.parse(JSON.stringify(cloudFormMock)));
+        formComponent.formCloudRepresentationJSON = undefined;
+        formComponent.appName = 'appName';
+
+        const ngOnChangesSpy = spyOn(formComponent, 'ngOnChanges').and.callThrough();
+        const formValues: any[] = [{ name: 'text1', value: 'test' }, { name: 'number1', value: 99 }];
+        const change = new SimpleChange(null, formValues, false);
+        formComponent.ngOnChanges({ data: change });
+
+        expect(ngOnChangesSpy).not.toThrow();
+    });
+
     it('should refresh radio buttons value when id is given to data', () => {
         formComponent.form = new FormModel(JSON.parse(JSON.stringify(cloudFormMock)));
         formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(JSON.parse(JSON.stringify(cloudFormMock)));
