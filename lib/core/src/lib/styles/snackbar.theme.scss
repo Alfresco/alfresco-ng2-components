@@ -1,13 +1,24 @@
 @mixin adf-snackbar-theme() {
-    .adf-error-snackbar {
-        background-color: var(--theme-warn-color);
-    }
+    /* stylelint-disable selector-class-pattern */
+    .mat-mdc-snack-bar-container {
+        &.adf-warning-snackbar,
+        &.adf-info-snackbar,
+        &.adf-error-snackbar {
+            --mat-mdc-snack-bar-button-color: #fff;
+            --mdc-snackbar-supporting-text-color: #fff;
+            --mdc-text-button-label-text-color: #fff;
+        }
 
-    .adf-warning-snackbar {
-        background-color: var(--theme-accent-color);
-    }
+        &.adf-warning-snackbar {
+            --mdc-snackbar-container-color: var(--theme-accent-color);
+        }
 
-    .adf-info-snackbar {
-        background-color: var(--theme-primary-color);
+        &.adf-info-snackbar {
+            --mdc-snackbar-container-color: var(--theme-primary-color);
+        }
+
+        &.adf-error-snackbar {
+            --mdc-snackbar-container-color: var(--theme-warn-color);
+        }
     }
 }
