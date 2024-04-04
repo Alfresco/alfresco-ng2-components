@@ -24,7 +24,7 @@
         height: 500px;
     }
 
-    &-title {
+    .adf-new-version-uploader-dialog-title {
         flex: 0 0 auto;
         font-size: 20px;
         font-weight: 600;
@@ -36,12 +36,12 @@
         color: var(--adf-theme-foreground-text-color-087);
     }
 
-    &-content {
+    .adf-new-version-uploader-dialog-content {
+        padding: 0;
         flex: 1 1 auto;
         position: relative;
         max-height: 100vh;
         overflow: hidden;
-        padding: 2px 26px;
     }
 
     &-actions {
