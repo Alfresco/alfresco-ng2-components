@@ -34,6 +34,7 @@ export * from './queries.api';
 export * from './ratings.api';
 export * from './renditions.api';
 export * from './search-ai.api';
+export * from './settings.api';
 export * from './sharedlinks.api';
 export * from './sites.api';
 export * from './tags.api';

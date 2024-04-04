@@ -17,12 +17,11 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActionRef, ContentActionRef, ContentActionType } from '../config/action.extensions';
+import { ContentActionRef, ContentActionType } from '../config/action.extensions';
 import { ExtensionElement } from '../config/extension-element';
 import { filterEnabled, getValue, mergeObjects, sortByOrder } from '../config/extension-utils';
 import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
-import { RouteRef } from '../config/routing.extensions';
-import { RuleRef } from '../config/rule.extensions';
+import { ActionRef, RouteRef, RuleRef } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'

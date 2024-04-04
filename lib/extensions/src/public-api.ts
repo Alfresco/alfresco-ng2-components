@@ -23,7 +23,6 @@ export * from './lib/config/extension.config';
 export * from './lib/config/icon.extensions';
 export * from './lib/config/navbar.extensions';
 export * from './lib/config/permission.extensions';
-export * from './lib/config/routing.extensions';
 export * from './lib/config/rule.extensions';
 export * from './lib/config/sidebar.extensions';
 export * from './lib/config/viewer.extensions';

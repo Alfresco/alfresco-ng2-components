@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { RuleContext, RuleParameter } from '../config/rule.extensions';
+import { RuleContext } from '../config/rule.extensions';
+import { RuleParameter } from '@alfresco/js-api';
 
 export const not = (context: RuleContext, ...args: RuleParameter[]): boolean => {
     if (!args || args.length === 0) {

@@ -33,15 +33,3 @@ export interface RuleContext {
 
     getEvaluator(key: string): RuleEvaluator;
 }
-
-export class RuleRef {
-    type: string;
-    id?: string;
-    parameters?: Array<RuleParameter>;
-}
-
-export interface RuleParameter {
-    type: string;
-    value: any;
-    parameters?: Array<RuleParameter>;
-}
