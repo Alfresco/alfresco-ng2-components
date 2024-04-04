@@ -32,7 +32,7 @@ import {
 import { ContentLinkModel, FormModel } from '@alfresco/adf-core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, takeUntil, switchMap, tap } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
@@ -86,6 +86,17 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     @Input()
     showTitle: boolean = true;
 
+    /** Show/hide cancel button. */
+    @Input()
+    showCancelButton: boolean = true;
+
+    /**
+     * You can manually force to show spinner
+     * e.g. in case you would like to postpone showing form until some data are loading
+     */
+    @Input()
+    showSpinner = false;
+
     /** Emitted when the process is successfully started. */
     @Output()
     success = new EventEmitter<ProcessInstanceCloud>();
@@ -121,6 +132,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     protected onDestroy$ = new Subject<boolean>();
     processDefinitionLoaded = false;
     loading$ = new BehaviorSubject<boolean>(!this.processDefinitionLoaded);
+    forceLoading = false;
 
     constructor(
         private startProcessCloudService: StartProcessCloudService,
@@ -187,20 +199,24 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
-        this.processDefinitionCurrent = this.filteredProcesses.find(
+        const processDefinitionCurrent = this.filteredProcesses.find(
             (process: ProcessDefinitionCloud) => process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName
         );
 
-        this.startProcessCloudService.getStartEventFormStaticValuesMapping(this.appName, this.processDefinitionCurrent.id).subscribe(
+        this.startProcessCloudService.getStartEventFormStaticValuesMapping(this.appName, processDefinitionCurrent.id).subscribe(
             (staticMappings) => {
                 this.staticMappings = staticMappings;
                 this.resolvedValues = this.staticMappings.concat(this.values || []);
+                this.processDefinitionCurrent = processDefinitionCurrent;
             },
-            () => (this.resolvedValues = this.values)
+            () => {
+                this.resolvedValues = this.values;
+                this.processDefinitionCurrent = processDefinitionCurrent;
+            }
         );
 
         this.isFormCloudLoaded = false;
-        this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
+        this.processPayloadCloud.processDefinitionKey = processDefinitionCurrent.key;
     }
 
     private getProcessDefinitionListByNameOrKey(processDefinitionName: string): ProcessDefinitionCloud[] {

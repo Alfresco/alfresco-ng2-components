@@ -32,20 +32,22 @@ import { AdfHttpClient } from '@alfresco/adf-core/api';
 export class NotificationCloudService extends BaseCloudService {
     appsListening = [];
 
-    constructor(
-        public apollo: Apollo,
-        private http: HttpLink,
-        private authService: AuthenticationService,
-        protected adfHttpClient: AdfHttpClient) {
+    constructor(public apollo: Apollo, private http: HttpLink, private authService: AuthenticationService, protected adfHttpClient: AdfHttpClient) {
         super(adfHttpClient);
     }
 
     private get webSocketHost() {
-        return this.contextRoot.split('://')[1];
+        // return this.contextRoot.split('://')[1];
+        // wss://aae-alpha-apa.envalfresco.com/process-centr/notifications/ws/graphql
+
+        // return 'hxps-alpha.studio.dev.experience.hyland.com';
+        return 'hxps-rc.studio.dev.experience.hyland.com';
+        // return 'aae-alpha-apa.envalfresco.com';
     }
 
     private get protocol() {
-        return this.contextRoot.split('://')[0] === 'https' ? 'wss' : 'ws';
+        // return this.contextRoot.split('://')[0] === 'https' ? 'wss' : 'ws';
+        return 'wss';
     }
 
     initNotificationsForApp(appName: string) {
@@ -55,8 +57,10 @@ export class NotificationCloudService extends BaseCloudService {
                 uri: `${this.getBasePath(appName)}/notifications/graphql`
             });
 
+            const webSocketUri = `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`;
+
             const webSocketLink = new WebSocketLink({
-                uri: `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`,
+                uri: webSocketUri,
                 options: {
                     reconnect: true,
                     lazy: true,

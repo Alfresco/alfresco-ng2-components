@@ -38,8 +38,10 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public userPreferenceService: UserPreferencesService,
-                public appConfig: AppConfigService) {
+    constructor(
+        public userPreferenceService: UserPreferencesService,
+        public appConfig: AppConfigService
+    ) {
         this.userPreferenceService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
