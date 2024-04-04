@@ -115,7 +115,7 @@ settingsApi.publishExtensionConfig(`<instanceId>`, extensionConfig).then(() => {
 | Name       | Type                              |
 |------------|-----------------------------------|
 | **type**   | string                            |
-| **value**  | any                               |
+| **value**  | string                            |
 | parameters | [RuleParameter[]](#RuleParameter) |
 
 ## ActionRef
@@ -126,4 +126,4 @@ settingsApi.publishExtensionConfig(`<instanceId>`, extensionConfig).then(() => {
 |-------------|--------|
 | **id**      | string |
 | **type**    | string |
-| **payload** | any    |
+| **payload** | string |

@@ -18,5 +18,5 @@
 export interface ActionRef {
     id: string;
     type: string;
-    payload?: any;
+    payload?: string;
 }

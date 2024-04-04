@@ -17,7 +17,7 @@
 
 export interface RuleParameter {
     type: string;
-    value: any;
+    value: string;
     parameters?: Array<RuleParameter>;
 }
 
