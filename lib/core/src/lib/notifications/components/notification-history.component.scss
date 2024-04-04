@@ -47,6 +47,7 @@ $notification-item-height: 72px;
     &-notification-history-list #{$mat-subheader} {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     &-notification-history-menu:has(.adf-notification-history-list) {
