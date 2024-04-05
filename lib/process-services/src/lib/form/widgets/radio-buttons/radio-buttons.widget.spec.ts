@@ -17,15 +17,7 @@
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
-import {
-    FormService,
-    ContainerModel,
-    FormFieldTypes,
-    FormFieldOption,
-    FormFieldModel,
-    FormModel,
-    CoreTestingModule
-} from '@alfresco/adf-core';
+import { FormService, ContainerModel, FormFieldTypes, FormFieldOption, FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
@@ -35,10 +27,10 @@ import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('RadioButtonsWidgetComponent', () => {
-
     let formService: FormService;
     let widget: RadioButtonsWidgetComponent;
     let taskFormService: TaskFormService;
@@ -46,20 +38,14 @@ describe('RadioButtonsWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatRadioModule,
-                FormsModule,
-                MatIconModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatRadioModule, FormsModule, MatIconModule]
         });
         taskFormService = TestBed.inject(TaskFormService);
         processDefinitionService = TestBed.inject(ProcessDefinitionService);
 
         formService = new FormService();
         widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService, null);
-        widget.field = new FormFieldModel(new FormModel(), {restUrl: '<url>'});
+        widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 
     it('should request field values from service', () => {
@@ -75,10 +61,12 @@ describe('RadioButtonsWidgetComponent', () => {
             restUrl: '<url>'
         });
 
-        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
-            observer.next(null);
-            observer.complete();
-        }));
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(
+            new Observable((observer) => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
         widget.ngOnInit();
         expect(taskFormService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
     });
@@ -98,10 +86,12 @@ describe('RadioButtonsWidgetComponent', () => {
         const field = widget.field;
         spyOn(field, 'updateForm').and.stub();
 
-        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
-            observer.next(null);
-            observer.complete();
-        }));
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(
+            new Observable((observer) => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
         widget.ngOnInit();
         expect(field.updateForm).toHaveBeenCalled();
     });
@@ -118,10 +108,12 @@ describe('RadioButtonsWidgetComponent', () => {
             id: fieldId,
             restUrl: '<url>'
         });
-        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
-            observer.next(null);
-            observer.complete();
-        }));
+        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(
+            new Observable((observer) => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
 
         const field = widget.field;
         widget.field = null;
@@ -159,7 +151,8 @@ describe('RadioButtonsWidgetComponent', () => {
             {
                 id: 'opt-2',
                 name: 'opt-name-2'
-            }];
+            }
+        ];
 
         beforeEach(() => {
             fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
@@ -176,8 +169,7 @@ describe('RadioButtonsWidgetComponent', () => {
                 readOnly: true
             });
             fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
+
             expect(element.querySelector('display-text-widget')).toBeDefined();
         });
 
@@ -203,26 +195,21 @@ describe('RadioButtonsWidgetComponent', () => {
                 options: restOption,
                 restUrl: null
             });
+            fixture.detectChanges();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
             const widgetLabel = element.querySelector('label');
             expect(widgetLabel.innerText).toBe('radio-name-label*');
             expect(radioButtonWidget.field.isValid).toBe(false);
 
-            const option = element.querySelector<HTMLElement>('#radio-id-opt-1 label');
-            option.click();
+            const option = await loader.getHarness(MatRadioButtonHarness.with({ selector: '#radio-id-opt-1' }));
+            await option.check();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
-            expect(selectedOption.innerText).toBe('opt-name-1');
+            const selectedOption = await loader.getHarness(MatRadioButtonHarness.with({ checked: true }));
+            expect(await selectedOption.getLabelText()).toBe('opt-name-1');
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
 
-        it('should be able to set another Radio Button widget as required', () => {
+        it('should be able to set another Radio Button widget as required', async () => {
             radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
                 id: 'radio-id',
                 name: 'radio-name-label',
@@ -234,10 +221,10 @@ describe('RadioButtonsWidgetComponent', () => {
                 restUrl: null,
                 value: 'opt-name-2'
             });
-
             fixture.detectChanges();
-            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
-            expect(selectedOption.innerText).toBe('opt-name-2');
+
+            const selectedOption = await loader.getHarness(MatRadioButtonHarness.with({ checked: true }));
+            expect(await selectedOption.getLabelText()).toBe('opt-name-2');
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
 
@@ -255,19 +242,15 @@ describe('RadioButtonsWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
-            const radioButtonsElement: any = element.querySelector('#radio-id-opt-1');
-            const tooltip = radioButtonsElement.getAttribute('ng-reflect-message');
-
+            const tooltip = await loader.getHarness(MatTooltipHarness.with({ selector: '#radio-i' }));
             expect(tooltip).toEqual(radioButtonWidget.field.tooltip);
         });
 
         describe('and radioButton is populated via taskId', () => {
-
             beforeEach(() => {
                 spyOn(taskFormService, 'getRestFieldValues').and.returnValue(of(restOption));
-                radioButtonWidget.field = new FormFieldModel(new FormModel({taskId: 'task-id'}), {
+                radioButtonWidget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }), {
                     id: 'radio-id',
                     name: 'radio-name',
                     type: FormFieldTypes.RADIO_BUTTONS,
@@ -299,27 +282,29 @@ describe('RadioButtonsWidgetComponent', () => {
             }));
 
             describe('and radioButton is readonly', () => {
-
                 beforeEach(() => {
                     radioButtonWidget.field.readOnly = true;
                     fixture.detectChanges();
                 });
 
                 it('should show radio buttons disabled', async () => {
-                    const radioButtons = await (await loader.getHarness(MatRadioGroupHarness.with({ selector: '.adf-radio-group' }))).getRadioButtons();
+                    const radioButtons = await (
+                        await loader.getHarness(MatRadioGroupHarness.with({ selector: '.adf-radio-group' }))
+                    ).getRadioButtons();
                     expect(await radioButtons[0].isDisabled()).toBe(true);
                     expect(await radioButtons[1].isDisabled()).toBe(true);
                 });
 
                 describe('and a value is selected', () => {
-
                     beforeEach(() => {
                         radioButtonWidget.field.value = restOption[0].id;
                         fixture.detectChanges();
                     });
 
                     it('should check the selected value', async () => {
-                        const checkedRadioButton = await (await loader.getHarness(MatRadioGroupHarness.with({ selector: '.adf-radio-group' }))).getCheckedRadioButton();
+                        const checkedRadioButton = await (
+                            await loader.getHarness(MatRadioGroupHarness.with({ selector: '.adf-radio-group' }))
+                        ).getCheckedRadioButton();
                         expect(await checkedRadioButton.getLabelText()).toBe(restOption[0].name);
                     });
                 });
@@ -327,9 +312,8 @@ describe('RadioButtonsWidgetComponent', () => {
         });
 
         describe('and radioButton is populated via processDefinitionId', () => {
-
             beforeEach(() => {
-                radioButtonWidget.field = new FormFieldModel(new FormModel({processDefinitionId: 'proc-id'}), {
+                radioButtonWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'proc-id' }), {
                     id: 'radio-id',
                     name: 'radio-name',
                     type: FormFieldTypes.RADIO_BUTTONS,
