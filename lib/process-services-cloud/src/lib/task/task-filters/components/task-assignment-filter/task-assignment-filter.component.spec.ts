@@ -28,11 +28,16 @@ import { By } from '@angular/platform-browser';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { mockFoodUsers } from '../../../../people/mock/people-cloud.mock';
 import { mockFoodGroups } from '../../../../group/mock/group-cloud.mock';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('TaskAssignmentFilterComponent', () => {
     let component: TaskAssignmentFilterCloudComponent;
     let fixture: ComponentFixture<TaskAssignmentFilterCloudComponent>;
     let identityUserService: IdentityUserService;
+    let loader: HarnessLoader;
 
     /**
      * select the assignment type
@@ -79,24 +84,24 @@ describe('TaskAssignmentFilterComponent', () => {
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
             };
+            loader = TestbedHarnessEnvironment.loader(fixture);
             fixture.detectChanges();
         });
 
         afterEach(() => fixture.destroy());
 
-        it('should display all available assignment types', () => {
-            const assignmentTypeSelect: DebugElement = fixture.debugElement.query(By.css(`[data-automation-id="adf-task-assignment-filter-select"]`));
-            assignmentTypeSelect.nativeElement.click();
-            fixture.detectChanges();
+        it('should display all available assignment types', async () => {
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-task-assignment-filter-select"]' }));
+            await dropdown.open();
 
-            const assignmentTypeOptions: DebugElement[] = fixture.debugElement.queryAll(By.css('mat-option'));
+            const assignmentTypeOptions = await dropdown.getOptions();
 
             expect(assignmentTypeOptions.length).toEqual(5);
-            expect(assignmentTypeOptions[0].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.NONE');
-            expect(assignmentTypeOptions[1].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.UNASSIGNED');
-            expect(assignmentTypeOptions[2].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.ASSIGNED_TO');
-            expect(assignmentTypeOptions[3].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.CURRENT_USER');
-            expect(assignmentTypeOptions[4].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.CANDIDATE_GROUPS');
+            expect(await assignmentTypeOptions[0].getText()).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.NONE');
+            expect(await assignmentTypeOptions[1].getText()).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.UNASSIGNED');
+            expect(await assignmentTypeOptions[2].getText()).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.ASSIGNED_TO');
+            expect(await assignmentTypeOptions[3].getText()).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.CURRENT_USER');
+            expect(await assignmentTypeOptions[4].getText()).toEqual('ADF_CLOUD_TASK_ASSIGNMENT_FILTER.CANDIDATE_GROUPS');
         });
 
         it('should emit the current user info when assignment is the current user', () => {
@@ -124,11 +129,11 @@ describe('TaskAssignmentFilterComponent', () => {
             expect(candidateGroups).toBeTruthy();
         });
 
-        it('should have floating labels when values are present', () => {
-            const inputLabelsNodes = document.querySelectorAll('mat-form-field');
+        it('should have floating labels when values are present', async () => {
+            const inputLabelsNodes = await loader.getAllHarnesses(MatFormFieldHarness);
 
-            inputLabelsNodes.forEach(labelNode => {
-                expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('auto');
+            inputLabelsNodes.forEach(async labelNode => {
+                expect(await labelNode.isLabelFloating()).toBeTruthy();
             });
         });
     });

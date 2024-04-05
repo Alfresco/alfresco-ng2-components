@@ -23,13 +23,18 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/people-cloud.mock';
-import { By } from '@angular/platform-browser';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
 
 describe('PeopleCloudWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleCloudWidgetComponent>;
     let widget: PeopleCloudWidgetComponent;
     let element: HTMLElement;
     let identityUserService: IdentityUserService;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -49,6 +54,7 @@ describe('PeopleCloudWidgetComponent', () => {
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(mockShepherdsPie);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -105,9 +111,9 @@ describe('PeopleCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeTruthy();
+            expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');
           });
 
         it('should hide tooltip', async () => {
@@ -120,8 +126,8 @@ describe('PeopleCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeFalsy();
         });
     });
 
@@ -194,16 +200,12 @@ describe('PeopleCloudWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
-            const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
-            expect(disabledFormField).toBeTruthy();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            expect(await formField.isDisabled()).toBeTrue();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const disabledPeopleChip: HTMLElement = element.querySelector('.mat-chip-disabled');
-            expect(disabledPeopleChip).toBeTruthy();
+            const peopleChip = await loader.getHarness(MatChipHarness);
+            expect(await peopleChip.isDisabled()).toBeTrue();
         });
 
         it('should multi chips be disabled', async () => {
@@ -218,17 +220,12 @@ describe('PeopleCloudWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            expect(await formField.isDisabled()).toBeTrue();
 
-            const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
-            expect(disabledFormField).toBeTruthy();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const disabledPeopleChips = element.querySelectorAll('.mat-chip-disabled');
-            expect(disabledPeopleChips.item(0)).toBeTruthy();
-            expect(disabledPeopleChips.item(1)).toBeTruthy();
+            const peopleChip = await loader.getAllHarnesses(MatChipHarness);
+            expect(await peopleChip[0].isDisabled()).toBeTrue();
+            expect(await peopleChip[1].isDisabled()).toBeTrue();
         });
 
         it('should have disabled validation', () => {

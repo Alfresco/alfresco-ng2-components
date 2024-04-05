@@ -21,12 +21,17 @@ import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('GroupCloudWidgetComponent', () => {
     let fixture: ComponentFixture<GroupCloudWidgetComponent>;
     let widget: GroupCloudWidgetComponent;
     let element: HTMLElement;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,6 +49,7 @@ describe('GroupCloudWidgetComponent', () => {
         fixture = TestBed.createComponent(GroupCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -77,9 +83,9 @@ describe('GroupCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeTruthy();
+            expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');
           });
 
         it('should hide tooltip', async () => {
@@ -92,8 +98,8 @@ describe('GroupCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeFalsy();
         });
     });
 
@@ -167,14 +173,11 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
-            expect(disabledFormField).toBeTruthy();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            expect(await formField.isDisabled()).toBeTrue();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const disabledGroupChip: HTMLElement = element.querySelector('.mat-chip-disabled');
-            expect(disabledGroupChip).toBeTruthy();
+            const gtoupChip = await loader.getHarness(MatChipHarness);
+            expect(await gtoupChip.isDisabled()).toBeTrue();
         });
 
         it('should multi chips be disabled', async () => {
@@ -191,15 +194,12 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
-            expect(disabledFormField).toBeTruthy();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            expect(await formField.isDisabled()).toBeTrue();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const disabledGroupChips = element.querySelectorAll('.mat-chip-disabled');
-            expect(disabledGroupChips.item(0)).toBeTruthy();
-            expect(disabledGroupChips.item(1)).toBeTruthy();
+            const groupChips = await loader.getAllHarnesses(MatChipHarness);
+            expect(await groupChips[0].isDisabled()).toBeTrue();
+            expect(await groupChips[1].isDisabled()).toBeTrue();
         });
 
         it('should have disabled validation', () => {

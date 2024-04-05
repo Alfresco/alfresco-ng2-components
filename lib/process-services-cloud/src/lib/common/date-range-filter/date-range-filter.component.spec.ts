@@ -24,11 +24,17 @@ import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
 import { add, endOfDay } from 'date-fns';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatDateRangeInputHarness } from '@angular/material/datepicker/testing';
 
 describe('DateRangeFilterComponent', () => {
     let component: DateRangeFilterComponent;
     let fixture: ComponentFixture<DateRangeFilterComponent>;
     let service: DateRangeFilterService;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -48,6 +54,7 @@ describe('DateRangeFilterComponent', () => {
             type: 'dateRange',
             options: null
         };
+        loader = TestbedHarnessEnvironment.loader(fixture);
         fixture.detectChanges();
     });
 
@@ -58,27 +65,21 @@ describe('DateRangeFilterComponent', () => {
     it('should get on option change', async () => {
         spyOn(service, 'getDateRange');
         spyOn(component.dateTypeChange, 'emit');
-        const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-select-trigger');
-        stateElement.click();
-        fixture.detectChanges();
+        
+        const stateElement = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' }));
 
-        const weekOption = document.querySelector('[data-automation-id="adf-cloud-edit-process-property-options-WEEK"]') as HTMLElement;
-        weekOption.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
+        await stateElement.clickOptions({ selector: '[data-automation-id="adf-cloud-edit-process-property-options-WEEK"]'});
+
         expect(service.getDateRange).not.toHaveBeenCalled();
         expect(component.dateTypeChange.emit).toHaveBeenCalled();
     });
 
     it('should not emit event on `RANGE` option change', async () => {
         spyOn(component.dateTypeChange, 'emit');
-        const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-select-trigger');
-        stateElement.click();
-        fixture.detectChanges();
-        const rangeOption = document.querySelector('[data-automation-id="adf-cloud-edit-process-property-options-RANGE"]') as HTMLElement;
-        rangeOption.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const stateElement = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' }));
+
+        await stateElement.clickOptions({ selector: '[data-automation-id="adf-cloud-edit-process-property-options-RANGE"]'});
+
         expect(component.dateTypeChange.emit).not.toHaveBeenCalled();
     });
 
@@ -131,11 +132,22 @@ describe('DateRangeFilterComponent', () => {
         expect(component.dateRangeForm.get('to').value).toEqual(mockFilterProperty.value._startTo);
     });
 
-    it('should have floating labels when values are present', () => {
+    it('should have floating labels when values are present', async () => {
+        const stateElement = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' }));
+        
+        await stateElement.open();
+        const selectField = await loader.getHarness(MatFormFieldHarness.with({ selector: '[data-automation-id="createdDate"]' }));
+        
+        expect(await selectField.isLabelFloating()).toBeTrue();
+        await stateElement.close();
+
+        component.type = DateCloudFilterType.RANGE;
         fixture.detectChanges();
-        const inputLabelsNodes = document.querySelectorAll('mat-form-field');
-        inputLabelsNodes.forEach(labelNode => {
-            expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('auto');
-        });
+        const dateRangeElement = await loader.getHarness(MatDateRangeInputHarness);
+        await dateRangeElement.openCalendar();
+        const dateRangeField = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-cloud-date-range-picker' }));
+        
+        expect(await dateRangeField.isLabelFloating()).toBeTrue();
+        await dateRangeElement.closeCalendar();
     });
 });
