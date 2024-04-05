@@ -1,12 +1,14 @@
 <h1 mat-dialog-title data-automation-id="adf-confirm-dialog-title">{{ title | translate }}</h1>
 <mat-dialog-content>
-    <p *ngIf="!htmlContent; else cutomContent" data-automation-id="adf-confirm-dialog-base-message">
-        {{ message | translate }}
-    </p>
-    <ng-template #cutomContent>
+    <div class="adf-confirm-dialog-content">
+        <p *ngIf="!htmlContent; else cutomContent" data-automation-id="adf-confirm-dialog-base-message">
+            {{ message | translate }}
+        </p>
+        <ng-template #cutomContent>
         <span [innerHTML]="sanitizedHtmlContent()" data-automation-id="adf-confirm-dialog-custom-content">
         </span>
-    </ng-template>
+        </ng-template>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions>
     <span class="adf-dialog-spacer" data-automation-id="adf-confirm-dialog-spacer"></span>
