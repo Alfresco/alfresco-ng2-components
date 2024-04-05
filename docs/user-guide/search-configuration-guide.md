@@ -290,11 +290,9 @@ The interface above also describes entries in the `search.query.categories` sect
 > **Note:** you must provide at least one category field in order to execute the query,
 > so that filters and selected facets are applied.
 
-The Search Filter supports a number of widgets out of the box, each implemented
-by an ADF component. The `selector` property specifies which [widget](../../lib/content-services/src/lib/search/models/search-widget.interface.ts) is used for
-a category:
+The Search Filter supports a number of components out of the box, each implementing an ADF [search widget interface](../../lib/content-services/src/lib/search/models/search-widget.interface.ts). The `selector` property specifies which widget is used for a category:
 
-| [`Widget`](../../lib/content-services/src/lib/search/models/search-widget.interface.ts) name | Selector | Description                                                                  |
+| Widget name | Selector | Description                                                                  |
 |----------------------------------------------------------------------------------------------| -------- |------------------------------------------------------------------------------|
 | [Check List](../content-services/components/search-check-list.component.md) | `check-list` | Toggles individual query fragments for the search |
 | [Date Range](../content-services/components/search-date-range.component.md) | `date-range` | Specifies a varities of options for selecting dates that a field may contain |
@@ -303,14 +301,11 @@ a category:
 | [Slider](../content-services/components/search-slider.component.md) | `slider` | Selects a single numeric value in a given range that a field may contain |
 | [Text](../content-services/components/search-text.component.md) | `text` | Specifies a text value that a field may contain |
 
-See the individual [Search Widget](../interfaces/search-widget.interface.md) pages for full details of their usage and settings.
-
-You can also implement your own custom search widgets. See the [Search Widget Interface](../interfaces/search-widget.interface.md) interface
-page for full details of how to do this.
+You can also implement your own custom search widgets. See the [Search Widget Interface](../content-services/interfaces/search-widget.interface.md) page for full details of how to do this.
 
 #### Widget settings
 
-Each type of [widget](../../lib/content-services/src/lib/search/models/search-widget.interface.ts) has its own settings.
+Each type of widget has its own settings.
 For example Number editors may parse minimum and maximum values, while Text editors can support value formats or length constraints.
 
 You can use `component.settings` to pass any information to a widget using the [`SearchWidgetSettings`](../../lib/content-services/src/lib/search/models/search-widget-settings.interface.ts) interface:
@@ -326,6 +321,11 @@ export interface SearchWidgetSettings {
     unit?: string;
     /* describes query format */
     format?: string;
+    /* allow the user to search only within predefined options */
+    allowOnlyPredefinedValues?: boolean;
+    /* allow the user to predefine autocomplete options */
+    autocompleteOptions?: AutocompleteOption[];
+
     [indexer: string]: any;
 }
 ```
