@@ -243,8 +243,9 @@ describe('RadioButtonsWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            const tooltip = await loader.getHarness(MatTooltipHarness.with({ selector: '#radio-i' }));
-            expect(tooltip).toEqual(radioButtonWidget.field.tooltip);
+            const tooltip = await loader.getHarness(MatTooltipHarness.with({ selector: '#radio-id-opt-1' }));
+            await tooltip.show();
+            expect(await tooltip.getTooltipText()).toEqual(radioButtonWidget.field.tooltip);
         });
 
         describe('and radioButton is populated via taskId', () => {
