@@ -313,8 +313,7 @@ page for full details of how to do this.
 Each type of [widget](../../lib/content-services/src/lib/search/models/search-widget.interface.ts) has its own settings.
 For example Number editors may parse minimum and maximum values, while Text editors can support value formats or length constraints.
 
-You can use `component.settings` to pass any information to a [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) using the
-[`SearchWidgetSettings`](../../lib/content-services/src/lib/search/models/search-widget-settings.interface.ts) interface:
+You can use `component.settings` to pass any information to a widget using the [`SearchWidgetSettings`](../../lib/content-services/src/lib/search/models/search-widget-settings.interface.ts) interface:
 
 ```ts
 export interface SearchWidgetSettings {
