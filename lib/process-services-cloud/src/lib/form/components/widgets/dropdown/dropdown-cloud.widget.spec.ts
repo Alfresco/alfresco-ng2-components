@@ -217,9 +217,7 @@ describe('DropdownCloudWidgetComponent', () => {
             await dropdown.open();
             await dropdown.clickOptions({ selector: '[id="empty"]' });
 
-            // const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
             widget.touched = true;
-            // defaultOption.triggerEventHandler('click', null);
             fixture.detectChanges();
 
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
