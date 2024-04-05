@@ -28,6 +28,7 @@ import { AboutStatusListComponent } from '../about-status-list/about-status-list
 @Component({
     selector: 'adf-about-repository-info',
     templateUrl: './about-repository-info.component.html',
+    styleUrls: ['./about-repository-info.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [CommonModule, TranslateModule, AboutLicenseListComponent, ModuleListComponent, AboutStatusListComponent]
