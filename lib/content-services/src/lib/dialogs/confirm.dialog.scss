@@ -6,4 +6,12 @@
     & .adf-confirm-dialog-button {
         text-transform: uppercase;
     }
+
+    & .adf-confirm-dialog-content {
+        margin: 0 -24px;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
 }
