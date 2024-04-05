@@ -57,7 +57,7 @@ This configuration considered for searching in the application.
             ]
         }, 
         {
-          "name": "Customer payout", 
+            "name": "Customer payout", 
             "query": [
               { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" }
               { "query": "-TYPE:'st:site' AND -ASPECT:'st:siteContainer' AND -ASPECT:'sys:hidden'" }
@@ -593,3 +593,4 @@ then be added in each node entry response. An example partial response is shown 
 -   [Search radio component](../content-services/components/search-radio.component.md)
 -   [Search slider component](../content-services/components/search-slider.component.md)
 -   [Search text component](../content-services/components/search-text.component.md)
+-   [Search input component](../components/search-input.component.md)
