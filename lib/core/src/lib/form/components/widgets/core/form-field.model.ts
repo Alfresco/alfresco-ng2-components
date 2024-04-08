@@ -451,7 +451,7 @@ export class FormFieldModel extends FormWidgetModel {
                     this.value = DateFnsUtils.formatDate(new Date(), this.dateDisplayFormat);
                 }
 
-                const dateTimeValue = new Date(this.value);
+                const dateTimeValue = this.value !== null ? new Date(this.value) : null;
 
                 if (isValidDate(dateTimeValue)) {
                     this.form.values[this.id] = dateTimeValue.toISOString();

@@ -313,6 +313,33 @@ describe('FormFieldModel', () => {
         expect(form.values['datetime']).toEqual(expectedDateTimeFormat);
     });
 
+    it('should set the value to null when the value is null', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'datetime',
+            name: 'date and time',
+            type: 'datetime',
+            value: null,
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'datetime',
+                    name: 'date and time',
+                    type: 'datetime',
+                    value: 'now',
+                    required: false,
+                    readOnly: false
+                }
+            },
+            dateDisplayFormat: 'YYYY-MM-DD HH:mm'
+        });
+
+        expect(field.value).toBe(null);
+        expect(form.values['datetime']).toEqual(null);
+    });
+
     it('should parse the checkbox set to "true" when it is readonly', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
