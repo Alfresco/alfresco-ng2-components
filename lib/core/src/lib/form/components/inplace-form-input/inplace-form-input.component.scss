@@ -8,7 +8,7 @@ $adf-inplace-input-padding: 7px;
         display: none;
     }
 
-    #{$mat-form-field-infix} {
+    #{$mat-form--text-field-infix} {
         display: flex;
         border-top: 0;
     }
