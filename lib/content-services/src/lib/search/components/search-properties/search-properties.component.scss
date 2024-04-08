@@ -21,14 +21,14 @@ adf-search-properties {
 
     .adf-search-properties-file-size-operator,
     .adf-search-properties-file-size-unit {
-        #{$mat-form-field-infix} {
+        #{$mat-form--text-field-infix} {
             border: 1px solid var(--adf-theme-mat-grey-color-a400);
             border-radius: 5px;
             padding: 9px;
         }
 
         &#{$mat-focused} {
-            #{$mat-form-field-infix} {
+            #{$mat-form--text-field-infix} {
                 outline: 2px auto -webkit-focus-ring-color;
             }
         }
