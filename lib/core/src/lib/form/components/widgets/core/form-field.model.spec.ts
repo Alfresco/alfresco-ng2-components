@@ -328,7 +328,7 @@ describe('FormFieldModel', () => {
                     id: 'datetime',
                     name: 'date and time',
                     type: 'datetime',
-                    value: 'now',
+                    value: null,
                     required: false,
                     readOnly: false
                 }
