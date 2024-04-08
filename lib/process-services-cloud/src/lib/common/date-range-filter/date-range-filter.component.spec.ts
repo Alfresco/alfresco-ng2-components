@@ -65,7 +65,7 @@ describe('DateRangeFilterComponent', () => {
     it('should get on option change', async () => {
         spyOn(service, 'getDateRange');
         spyOn(component.dateTypeChange, 'emit');
-        
+
         const stateElement = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' }));
 
         await stateElement.clickOptions({ selector: '[data-automation-id="adf-cloud-edit-process-property-options-WEEK"]'});
@@ -134,10 +134,10 @@ describe('DateRangeFilterComponent', () => {
 
     it('should have floating labels when values are present', async () => {
         const stateElement = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' }));
-        
+
         await stateElement.open();
         const selectField = await loader.getHarness(MatFormFieldHarness.with({ selector: '[data-automation-id="createdDate"]' }));
-        
+
         expect(await selectField.isLabelFloating()).toBeTrue();
         await stateElement.close();
 
@@ -146,7 +146,7 @@ describe('DateRangeFilterComponent', () => {
         const dateRangeElement = await loader.getHarness(MatDateRangeInputHarness);
         await dateRangeElement.openCalendar();
         const dateRangeField = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-cloud-date-range-picker' }));
-        
+
         expect(await dateRangeField.isLabelFloating()).toBeTrue();
         await dateRangeElement.closeCalendar();
     });

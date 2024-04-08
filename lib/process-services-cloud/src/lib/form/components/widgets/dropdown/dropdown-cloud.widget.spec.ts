@@ -124,7 +124,7 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.restIdProperty = 'name';
 
             widget.ngOnInit();
-    
+
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
 
@@ -262,7 +262,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             const formField = await loader.getHarness(MatFormFieldHarness);
             const dropdownLabel = await formField.getLabel();
-            
+
             expect(dropdownLabel).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
             expect(await dropdown.getValueText()).toEqual('');
@@ -870,7 +870,7 @@ describe('DropdownCloudWidgetComponent', () => {
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
             const allOptions = await dropdown.getOptions();
-            
+
             expect(widget.field.options.length).toEqual(3);
             expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('player-1');
             expect(await allOptions[0].getText()).toEqual('Lionel Messi');
@@ -886,7 +886,7 @@ describe('DropdownCloudWidgetComponent', () => {
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
             const allOptions = await dropdown.getOptions();
-            
+
             expect(widget.field.options.length).toEqual(3);
             expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('PL');
             expect(await allOptions[0].getText()).toEqual('Poland');
@@ -902,7 +902,7 @@ describe('DropdownCloudWidgetComponent', () => {
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
             const allOptions = await dropdown.getOptions();
-            
+
             expect(widget.field.options.length).toEqual(3);
             expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('default-pet-1');
             expect(await allOptions[0].getText()).toEqual('Dog');

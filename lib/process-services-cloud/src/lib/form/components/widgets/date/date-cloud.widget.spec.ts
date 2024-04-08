@@ -504,7 +504,7 @@ describe('DateWidgetComponent', () => {
         it('should show tooltip', async () => {
             const dateCloudInput = await loader.getHarness(MatInputHarness);
             await (await dateCloudInput.host()).dispatchEvent('mouseenter');
-            
+
             const tooltipElement = await loader.getHarness(MatTooltipHarness);
             expect(await tooltipElement.isOpen()).toBeTruthy();
             expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');

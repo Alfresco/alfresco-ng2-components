@@ -951,7 +951,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             const attachButton = fixture.nativeElement.querySelector('.adf-attach-widget__menu-upload__button');
             attachButton.dispatchEvent(new Event('mouseenter'));
             fixture.detectChanges();
-            
+
             attachButton.dispatchEvent(new Event('mouseleave'));
             fixture.detectChanges();
 
