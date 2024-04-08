@@ -1,6 +1,6 @@
 <div class="adf-share-link__dialog-content">
     <div class="adf-share-link__dialog-container">
-        <div class="adf-share-link--row">
+        <div class="adf-share-link--header adf-share-link--row">
             <div
                 data-automation-id="adf-share-dialog-title"
                 class="adf-share-link__title adf-share-link__label adf-share-link__heading"
@@ -10,10 +10,10 @@
             </div>
             <mat-icon mat-dialog-close class="adf-share-link__close adf-share-link__icon">close</mat-icon>
         </div>
-        <mat-dialog-content>
+        <mat-dialog-content class="adf-share-link--dialog-content">
             <hr class="adf-share-link__separation-line" />
             <form [formGroup]="form" class="adf-share-link__form">
-                <div class="adf-share-link--row">
+                <div class="adf-share-link--row adf-share-link--row-sharable">
                     <mat-icon class="adf-share-link__icon">timer</mat-icon>
                     <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.LINK-EXPIRY-DATE' | translate }}
                     </div>
@@ -31,7 +31,7 @@
                     [style.display]="isExpiryDateToggleChecked ? 'block' : 'none'"
                     data-automation-id="adf-slide-toggle-checked"
                     class="adf-share-link__date-time-container">
-                    <mat-form-field class="adf-full-width" data-automation-id="adf-content-share-expiration-field" floatLabel="always">
+                    <mat-form-field class="adf-full-width" subscriptSizing="dynamic" data-automation-id="adf-content-share-expiration-field">
                         <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
                         <mat-datepicker-toggle
                             [disabled]="time.disabled"
@@ -47,7 +47,6 @@
                             class="adf-share-link__input"
                             #datePickerInput
                             matInput
-                            placeholder="{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}"
                             [attr.aria-label]="'SHARE.EXPIRATION-LABEL' | translate"
                             [min]="minDate"
                             formControlName="time"
@@ -60,10 +59,11 @@
                     </mat-form-field>
                 </div>
                 <p class="adf-share-link__info adf-share-link__para">{{ 'SHARE.SHARE-LINK' | translate }}</p>
-                <div class="adf-share-link--row">
+                <div class="adf-share-link--row adf-share-link--sharable-container">
                     <mat-slide-toggle
                         color="primary"
                         data-automation-id="adf-share-toggle"
+                        class="adf-share-link--row__slide-toggle"
                         aria-label="{{ 'SHARE.TITLE' | translate }}"
                         [checked]="isFileShared"
                         [disabled]="!canUpdate || isDisabled"
@@ -73,8 +73,9 @@
                     </div>
                 </div>
                 <mat-form-field
+                    subscriptSizing="dynamic"
                     floatLabel="always"
-                    class="adf-full-width"
+                    class="adf-full-width adf-share-link__form--field"
                     data-automation-id="adf-content-share-public-link-field"
                     [ngClass]="isLinkWithExpiryDate? 'adf-share-link__border-color' : ''">
                     <input
