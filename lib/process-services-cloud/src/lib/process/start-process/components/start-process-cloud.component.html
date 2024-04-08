@@ -100,10 +100,12 @@
 <ng-template #taskFormCloudButtons>
     <div class="adf-start-process-cloud-actions">
         <button
+            *ngIf="showCancelButton"
             mat-button
             (click)="cancelStartProcess()"
-            id="cancel_process">
-                {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
+            id="cancel_process"
+        >
+            {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
         </button>
         <button
             color="primary"
@@ -112,7 +114,8 @@
             (click)="startProcess()"
             data-automation-id="btn-start"
             id="button-start"
-            class="adf-btn-start">
+            class="adf-btn-start"
+        >
                 {{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
         </button>
     </div>
