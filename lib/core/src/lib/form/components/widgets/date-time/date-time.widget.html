@@ -13,6 +13,7 @@
                 [disabled]="field.readOnly"
                 (change)="onValueChanged($event)"
                 (dateChange)="onDateChanged($event)"
+                (keydown.enter)="datetimePicker.open()"
                 [placeholder]="field.placeholder"
                 [matTooltip]="field.tooltip"
                 (blur)="markAsTouched()"
@@ -25,9 +26,9 @@
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
         <mat-datetimepicker #datetimePicker
+            data-automation-id="adf-date-time-widget-picker"
             type="datetime"
             [touchUi]="true"
-            [openOnFocus]="true"
             [timeInterval]="5"
             [disabled]="field.readOnly">
         </mat-datetimepicker>

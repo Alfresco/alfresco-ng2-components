@@ -2,7 +2,7 @@
   "name": "alfresco-ng2-components",
   "commit": "b644b39d17396330d2a67509f58c5b9e890b9b13",
   "description": "Alfresco Angular components",
-  "version": "6.7.1",
+  "version": "6.8.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
     "prepare": "husky install",
@@ -189,7 +189,7 @@
     "selenium-webdriver": "4.1.0",
     "shelljs": "^0.8.5",
     "shx": "^0.3.4",
-    "spdx-license-list": "^6.8.0",
+    "spdx-license-list": "^6.9.0",
     "stylelint": "^16.3.1",
     "stylelint-config-standard-scss": "^13.0.0",
     "ts-node": "^10.9.1",

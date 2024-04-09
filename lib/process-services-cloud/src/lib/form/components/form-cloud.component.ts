@@ -201,14 +201,18 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     ngOnInit(): void {
         DisplayModeService.displayMode$
             .pipe(
-                filter(change => change.id === this.id),
+                filter((change) => change.id === this.id),
                 takeUntil(this.onDestroy$)
-            ).subscribe((displayModeChange) => {
+            )
+            .subscribe((displayModeChange) => {
                 const oldDisplayMode = this.displayMode;
                 this.displayMode = displayModeChange.displayMode;
 
                 const oldDisplayModeConfiguration = this.displayModeService.findConfiguration(oldDisplayMode, this.displayModeConfigurations);
-                const newDisplayModeConfiguration = this.displayModeService.findConfiguration(displayModeChange.displayMode, this.displayModeConfigurations);
+                const newDisplayModeConfiguration = this.displayModeService.findConfiguration(
+                    displayModeChange.displayMode,
+                    this.displayModeConfigurations
+                );
 
                 if (oldDisplayModeConfiguration?.displayMode !== newDisplayModeConfiguration?.displayMode) {
                     if (oldDisplayModeConfiguration) {
@@ -295,7 +299,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.formCloudRepresentationJSON = form;
                     const parsedForm = this.parseForm(form);
                     this.visibilityService.refreshVisibility(parsedForm);
-                    parsedForm.validateForm();
+                    parsedForm?.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
                     this.onFormLoaded(this.form);
@@ -355,7 +359,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    parseForm(formCloudRepresentationJSON: any): FormModel {
+    parseForm(formCloudRepresentationJSON?: any): FormModel | null {
         if (formCloudRepresentationJSON) {
             const formValues: FormValues = {};
             (this.data || []).forEach((variable) => {
@@ -397,9 +401,17 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected onFormLoaded(form: FormModel) {
-        this.displayModeConfigurations = this.displayModeService.getDisplayModeConfigurations(this.displayModeConfigurations);
-        this.displayMode = this.displayModeService.switchToDisplayMode(this.id, this.form.json.displayMode, this.displayMode, this.displayModeConfigurations);
-        this.displayModeOn.emit(this.displayModeService.findConfiguration(this.displayMode, this.displayModeConfigurations));
+        if (form) {
+            this.displayModeConfigurations = this.displayModeService.getDisplayModeConfigurations(this.displayModeConfigurations);
+            this.displayMode = this.displayModeService.switchToDisplayMode(
+                this.id,
+                this.form.json.displayMode,
+                this.displayMode,
+                this.displayModeConfigurations
+            );
+            this.displayModeOn.emit(this.displayModeService.findConfiguration(this.displayMode, this.displayModeConfigurations));
+        }
+
         this.formLoaded.emit(form);
     }
 
@@ -434,7 +446,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         return !args.defaultPrevented;
     }
 
-    protected storeFormAsMetadata() { }
+    protected storeFormAsMetadata() {}
 
     ngOnDestroy() {
         this.onDestroy$.next(true);
