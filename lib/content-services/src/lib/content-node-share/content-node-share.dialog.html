@@ -31,7 +31,7 @@
                     [style.display]="isExpiryDateToggleChecked ? 'block' : 'none'"
                     data-automation-id="adf-slide-toggle-checked"
                     class="adf-share-link__date-time-container">
-                    <mat-form-field class="adf-full-width" subscriptSizing="dynamic" data-automation-id="adf-content-share-expiration-field">
+                    <mat-form-field class="adf-full-width" subscriptSizing="dynamic" data-automation-id="adf-content-share-expiration-field" floatLabel="always">
                         <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
                         <mat-datepicker-toggle
                             [disabled]="time.disabled"
