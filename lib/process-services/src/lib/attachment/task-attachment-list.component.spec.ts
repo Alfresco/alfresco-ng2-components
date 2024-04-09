@@ -24,6 +24,9 @@ import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockEmittedTaskAttachments, mockTaskAttachments } from '../mock/task/task-attachments.mock';
 import { ProcessContentService } from '../form/services/process-content.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatMenuItemHarness } from '@angular/material/menu/testing';
 
 describe('TaskAttachmentList', () => {
 
@@ -35,6 +38,7 @@ describe('TaskAttachmentList', () => {
     let getFileRawContentSpy: jasmine.Spy;
     let getContentPreviewSpy: jasmine.Spy;
     let disposableSuccess: any;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -46,6 +50,7 @@ describe('TaskAttachmentList', () => {
         });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
 
         service = TestBed.inject(ProcessContentService);
 
@@ -146,11 +151,12 @@ describe('TaskAttachmentList', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+
+        const actionMenuItems = await loader.getAllHarnesses(MatMenuItemHarness);
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
-        expect(actionMenu).toBe(3);
+        expect(actionMenuItems.length).toBe(3);
     });
 
     it('should not display remove action if attachments are read only', async () => {
@@ -166,11 +172,11 @@ describe('TaskAttachmentList', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        const actionMenuItems = await loader.getAllHarnesses(MatMenuItemHarness);
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
-        expect(actionMenu).toBe(2);
+        expect(actionMenuItems.length).toBe(2);
     });
 
     it('should show the empty list component when the attachments list is empty', async () => {

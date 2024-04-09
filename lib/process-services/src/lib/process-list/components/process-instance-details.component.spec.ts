@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
+import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -28,12 +28,16 @@ import { ProcessInstanceDetailsComponent } from './process-instance-details.comp
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { FormModule } from '../../form';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatCardHarness } from '@angular/material/card/testing';
 
 describe('ProcessInstanceDetailsComponent', () => {
 
     let service: ProcessService;
     let component: ProcessInstanceDetailsComponent;
     let fixture: ComponentFixture<ProcessInstanceDetailsComponent>;
+    let loader: HarnessLoader;
     let getProcessSpy: jasmine.Spy;
 
     beforeEach(() => {
@@ -48,6 +52,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         });
         fixture = TestBed.createComponent(ProcessInstanceDetailsComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
         service = fixture.debugElement.injector.get(ProcessService);
         const commentService = fixture.debugElement.injector.get(CommentProcessService);
 
@@ -76,12 +81,8 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
-        expect(headerEl).not.toBeNull();
-        expect(headerEl.nativeElement.innerText).toBe('Process 123');
+        const headerEl = await loader.getHarness(MatCardHarness);
+        expect(await headerEl.getTitleText()).toBe('Process 123');
     });
 
     it('should display default details when the process instance has no name', async () => {
@@ -90,12 +91,8 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
-        expect(headerEl).not.toBeNull();
-        expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
+        const headerEl = await loader.getHarness(MatCardHarness);
+        expect(await headerEl.getTitleText()).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
     });
 
     it('should enable diagram button if the process is running', async () => {

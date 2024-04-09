@@ -29,6 +29,11 @@ import { WidgetVisibilityService, FormModel, FormOutcomeModel } from '@alfresco/
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { ProcessService } from '../process-list/services/process.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatCardHarness } from '@angular/material/card/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('StartFormComponent', () => {
 
@@ -38,6 +43,7 @@ describe('StartFormComponent', () => {
     let visibilityService: WidgetVisibilityService;
     let translate: TranslateService;
     let processService: ProcessService;
+    let loader: HarnessLoader;
 
     const exampleId1 = 'my:process1';
     const exampleId2 = 'my:process2';
@@ -52,6 +58,7 @@ describe('StartFormComponent', () => {
         });
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
         processService = TestBed.inject(ProcessService);
         visibilityService = TestBed.inject(WidgetVisibilityService);
         translate = TestBed.inject(TranslateService);
@@ -243,8 +250,8 @@ describe('StartFormComponent', () => {
             const dropdownField = formFields.find((field) => field.id === 'mockTypeDropDown');
             const dropdownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
             const dropdownLabel = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget .adf-label');
-            const selectElement = fixture.debugElement.nativeElement.querySelector('.adf-select .mat-select-trigger');
-            selectElement.click();
+            const selectElement = await loader.getHarness(MatSelectHarness);
+            await selectElement.open();
 
             expect(selectElement).toBeTruthy();
             expect(dropdownWidget).toBeTruthy();
@@ -300,7 +307,7 @@ describe('StartFormComponent', () => {
 
             const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
             const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
-            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix > .adf-label');
+            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-label');
             const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
             const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#billdate-label');
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
@@ -322,14 +329,9 @@ describe('StartFormComponent', () => {
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
-            fixture.detectChanges();
-            await fixture.whenStable();
 
-            const refreshElement = fixture.debugElement.nativeElement.querySelector('.mat-card-actions>button');
-            refreshElement.click();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
+            const refreshElement = await (await loader.getHarness(MatCardHarness)).getHarness(MatButtonHarness);
+            await refreshElement.click();
 
             /* cspell:disable-next-line */
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
@@ -370,17 +372,17 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const titleElement = fixture.debugElement.nativeElement.querySelector('mat-card-title>h2');
-            const actionButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-button');
+            const cardTitle = await loader.getHarness(MatCardHarness);
+            const actionButtons = await loader.getAllHarnesses(MatButtonHarness);
 
-            expect(titleElement.innerText.trim()).toEqual('Mock Title');
+            expect(await cardTitle.getTitleText()).toEqual('Mock Title');
             expect(actionButtons.length).toBe(4);
-            expect(actionButtons[0].innerText.trim()).toBe('SAVE');
-            expect(actionButtons[0].disabled).toBeFalsy();
-            expect(actionButtons[1].innerText.trim()).toBe('APPROVE');
-            expect(actionButtons[1].disabled).toBeTruthy();
-            expect(actionButtons[2].innerText.trim()).toBe('COMPLETE');
-            expect(actionButtons[2].disabled).toBeTruthy();
+            expect(await actionButtons[0].getText()).toBe('SAVE');
+            expect(await actionButtons[0].isDisabled()).toBeFalsy();
+            expect(await actionButtons[1].getText()).toBe('APPROVE');
+            expect(await actionButtons[1].isDisabled()).toBeTruthy();
+            expect(await actionButtons[2].getText()).toBe('COMPLETE');
+            expect(await actionButtons[2].isDisabled()).toBeTruthy();
         });
     });
 
