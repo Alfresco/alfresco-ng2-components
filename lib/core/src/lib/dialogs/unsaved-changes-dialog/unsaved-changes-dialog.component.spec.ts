@@ -36,12 +36,10 @@ describe('UnsavedChangesDialog', () => {
         let closeIconButton: DebugElement;
 
         beforeEach(() => {
-           closeIconButton = fixture.debugElement.query(By.css(
-               '[data-automation-id="adf-unsaved-changes-dialog-close-button"]'
-           ));
+            closeIconButton = fixture.debugElement.query(By.css('[data-automation-id="adf-unsaved-changes-dialog-close-button"]'));
         });
 
-        it('should have assigned mat-dialog-close with false as result', () => {
+        it('should have assigned dialog close button with false as result', () => {
             expect(closeIconButton.injector.get(MatDialogClose).dialogResult).toBeFalse();
         });
 
@@ -51,18 +49,21 @@ describe('UnsavedChangesDialog', () => {
     });
 
     describe('Cancel button', () => {
-        it('should have assigned mat-dialog-close with false as result', () => {
-            expect(fixture.debugElement.query(By.css(
-                '[data-automation-id="adf-unsaved-changes-dialog-cancel-button"]'
-            )).injector.get(MatDialogClose).dialogResult).toBeFalse();
+        it('should have assigned dialog close button with false as result', () => {
+            expect(
+                fixture.debugElement.query(By.css('[data-automation-id="adf-unsaved-changes-dialog-cancel-button"]')).injector.get(MatDialogClose)
+                    .dialogResult
+            ).toBeFalse();
         });
     });
 
     describe('Discard changes button', () => {
-        it('should have assigned mat-dialog-close with true as result', () => {
-            expect(fixture.debugElement.query(By.css(
-                '[data-automation-id="adf-unsaved-changes-dialog-discard-changes-button"]'
-            )).injector.get(MatDialogClose).dialogResult).toBeTrue();
+        it('should have assigned dialog close button with true as result', () => {
+            expect(
+                fixture.debugElement
+                    .query(By.css('[data-automation-id="adf-unsaved-changes-dialog-discard-changes-button"]'))
+                    .injector.get(MatDialogClose).dialogResult
+            ).toBeTrue();
         });
     });
 });

@@ -183,6 +183,13 @@ module.exports = {
             files: ['*.html'],
             extends: ['plugin:@angular-eslint/template/recommended'],
             rules: {}
+        },
+        {
+            files: ['*.spec.ts'],
+            plugins: ['@alfresco/eslint-angular'],
+            rules: {
+                '@alfresco/eslint-angular/no-angular-material-selectors': 'error'
+            }
         }
     ]
 };
