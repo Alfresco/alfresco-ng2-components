@@ -15,22 +15,29 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { AuthenticationService } from '../../auth/services/authentication.service';
-import { TranslationService } from '../../translation/translation.service';
-import { UserPreferencesService } from '../../common/services/user-preferences.service';
-
-import { LoginErrorEvent } from '../models/login-error.event';
-import { LoginSubmitEvent } from '../models/login-submit.event';
-import { LoginSuccessEvent } from '../models/login-success.event';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
+import { AppConfigService, AppConfigValues } from '../../../app-config';
+import { AuthenticationService, BasicAlfrescoAuthService } from '../../../auth';
+import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
+import { UserPreferencesService } from '../../../common';
+import { TranslationService } from '../../../translation';
+
+import { LoginErrorEvent } from '../../models/login-error.event';
+import { LoginSubmitEvent } from '../../models/login-submit.event';
+import { LoginSuccessEvent } from '../../models/login-success.event';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -47,14 +54,27 @@ interface ValidationMessage {
 interface LoginFormValues {
     username: string;
     password: string;
-};
+}
 
 @Component({
     selector: 'adf-login',
+    standalone: true,
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: {class: 'adf-login'}
+    imports: [
+        CommonModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        TranslateModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatCheckboxModule
+    ],
+    host: { class: 'adf-login' }
 })
 export class LoginComponent implements OnInit, OnDestroy {
     isPasswordShow: boolean = false;
@@ -137,8 +157,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private router: Router,
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
-        private route: ActivatedRoute,
-        private sanitizer: DomSanitizer
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit() {
@@ -164,7 +183,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 const url = params['redirectUrl'];
                 const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
 
-                this.basicAlfrescoAuthService.setRedirect({provider, url});
+                this.basicAlfrescoAuthService.setRedirect({ provider, url });
             });
         }
 
@@ -197,7 +216,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.disableError();
 
         const args = new LoginSubmitEvent({
-            controls: {username: this.form.controls.username}
+            controls: { username: this.form.controls.username }
         });
         this.executeSubmit.emit(args);
 
@@ -243,30 +262,29 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     performLogin(values: { username: string; password: string }) {
-        this.authService.login(values.username, values.password, this.rememberMe)
-            .subscribe(
-                async (token: any) => {
-                    const redirectUrl = this.basicAlfrescoAuthService.getRedirect();
+        this.authService.login(values.username, values.password, this.rememberMe).subscribe(
+            async (token: any) => {
+                const redirectUrl = this.basicAlfrescoAuthService.getRedirect();
 
-                    this.actualLoginStep = LoginSteps.Welcome;
-                    this.userPreferences.setStoragePrefix(values.username);
-                    values.password = null;
-                    this.success.emit(new LoginSuccessEvent(token, values.username, null));
+                this.actualLoginStep = LoginSteps.Welcome;
+                this.userPreferences.setStoragePrefix(values.username);
+                values.password = null;
+                this.success.emit(new LoginSuccessEvent(token, values.username, null));
 
-                    if (redirectUrl) {
-                        this.basicAlfrescoAuthService.setRedirect(null);
-                        await this.router.navigateByUrl(redirectUrl);
-                    } else if (this.successRoute) {
-                        await this.router.navigate([this.successRoute]);
-                    }
-                },
-                (err: any) => {
-                    this.actualLoginStep = LoginSteps.Landing;
-                    this.displayErrorMessage(err);
-                    this.isError = true;
-                    this.error.emit(new LoginErrorEvent(err));
+                if (redirectUrl) {
+                    this.basicAlfrescoAuthService.setRedirect(null);
+                    await this.router.navigateByUrl(redirectUrl);
+                } else if (this.successRoute) {
+                    await this.router.navigate([this.successRoute]);
                 }
-            );
+            },
+            (err: any) => {
+                this.actualLoginStep = LoginSteps.Landing;
+                this.displayErrorMessage(err);
+                this.isError = true;
+                this.error.emit(new LoginErrorEvent(err));
+            }
+        );
     }
 
     /**
@@ -340,10 +358,6 @@ export class LoginComponent implements OnInit, OnDestroy {
      */
     trimUsername(event: any) {
         event.target.value = event.target.value.trim();
-    }
-
-    getBackgroundUrlImageUrl(): SafeStyle {
-        return this.sanitizer.bypassSecurityTrustStyle(`url(${this.backgroundImageUrl})`);
     }
 
     /**

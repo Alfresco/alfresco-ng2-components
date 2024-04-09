@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
+import {
+    AppConfigService,
+    AuthenticationService,
+    BasicAlfrescoAuthService,
+    CoreTestingModule,
+    LoginErrorEvent,
+    LoginSuccessEvent,
+    LogService,
+    UserPreferencesService
+} from '@alfresco/adf-core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { UserPreferencesService } from '../../common/services/user-preferences.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthenticationService } from '../../auth/services/authentication.service';
-import { LoginErrorEvent } from '../models/login-error.event';
-import { LoginSuccessEvent } from '../models/login-success.event';
-import { LoginComponent } from './login.component';
 import { EMPTY, of, throwError } from 'rxjs';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { LogService } from '../../common/services/log.service';
-import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
+import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -65,7 +67,8 @@ describe('LoginComponent', () => {
             providers: [
                 {
                     provide: OidcAuthenticationService, useValue: {
-                        ssoLogin: () => { },
+                        ssoLogin: () => {
+                        },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -581,7 +584,7 @@ describe('LoginComponent', () => {
 
             loginWithCredentials('fake-username-ECM-access-error', 'fake-password');
         }));
-   });
+    });
 
     it('should trim the username value', () => {
         usernameInput.value = 'username ';
@@ -623,7 +626,7 @@ describe('LoginComponent', () => {
         });
 
         loginWithCredentials('fake-username', 'fake-password');
-   });
+    });
 
     it('should emit success event after the login has succeeded and discard password', fakeAsync(() => {
         spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));

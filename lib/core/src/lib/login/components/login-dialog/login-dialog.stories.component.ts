@@ -16,6 +16,7 @@
  */
 
 import { Component, Output, EventEmitter } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { LoginDialogComponent } from './login-dialog.component';
@@ -23,9 +24,14 @@ import { LoginDialogComponentData } from './login-dialog-component-data.interfac
 
 @Component({
     selector: 'adf-login-dialog-storybook',
-    template: `<button mat-raised-button (click)="openLoginDialog()">
-        Open dialog
-    </button>`
+    standalone: true,
+    imports: [
+        MatButtonModule
+    ],
+    template: `
+        <button mat-raised-button (click)="openLoginDialog()">
+            Open dialog
+        </button>`
 })
 export class LoginDialogStorybookComponent {
 
