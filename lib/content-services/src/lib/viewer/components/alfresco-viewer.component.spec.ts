@@ -33,7 +33,8 @@ import {
     TranslationMock,
     TranslationService,
     ViewUtilService,
-    ViewerComponent
+    ViewerComponent,
+    ViewerSidebarComponent
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -163,7 +164,8 @@ describe('AlfrescoViewerComponent', () => {
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
                 ViewerWithCustomMoreActionsComponent,
-                ViewerWithCustomToolbarActionsComponent
+                ViewerWithCustomToolbarActionsComponent,
+                ViewerSidebarComponent
             ],
             providers: [
                 ContentService,
@@ -389,8 +391,8 @@ describe('AlfrescoViewerComponent', () => {
                 done();
             });
         });
-        // eslint-disable-next-line
-        xit('should stop propagation on sidebar keydown event [keydown]', fakeAsync(() => {
+
+        it('should stop propagation on sidebar keydown event [keydown]', fakeAsync(() => {
             const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
             const customElement: HTMLElement = customFixture.nativeElement;
             const escapeKeyboardEvent = new KeyboardEvent('keydown', { key: ESCAPE.toString() });
@@ -403,8 +405,8 @@ describe('AlfrescoViewerComponent', () => {
 
             expect(stopPropagationSpy).toHaveBeenCalled();
         }));
-        // eslint-disable-next-line
-        xit('should stop propagation on sidebar keyup event [keyup]', fakeAsync(() => {
+
+        it('should stop propagation on sidebar keyup event [keyup]', fakeAsync(() => {
             const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
             const customElement: HTMLElement = customFixture.nativeElement;
             const escapeKeyboardEvent = new KeyboardEvent('keyup', { key: ESCAPE.toString() });
@@ -769,21 +771,22 @@ describe('AlfrescoViewerComponent', () => {
                     component.overlayMode = true;
                     component.fileName = 'fake-test-file.pdf';
                     fixture.detectChanges();
-                    spyOn(component.nodesApi, 'getNode').and.callFake(() => Promise.resolve(new NodeEntry({ entry: new Node() })));
+                    spyOn(component.nodesApi, 'getNode').and.callFake(() =>
+                        Promise.resolve(new NodeEntry({ entry: new Node({ name: 'fake-test-file.pdf' }) }))
+                    );
                 });
 
                 it('should header be present if is overlay mode', () => {
                     expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
                 });
-                // eslint-disable-next-line
-                xit('should Name File be present if is overlay mode ', (done) => {
+
+                it('should Name File be present if is overlay mode ', async () => {
                     component.ngOnChanges();
                     fixture.detectChanges();
-                    fixture.whenStable().then(() => {
-                        fixture.detectChanges();
-                        expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
-                        done();
-                    });
+                    await fixture.whenStable();
+                    fixture.detectChanges();
+
+                    expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
                 });
 
                 it('should Close button be present if overlay mode', (done) => {
