@@ -15,19 +15,16 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel } from '../core/form-field.model';
-import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
-import { FormBaseModule } from '../../../form-base.module';
-import { FormFieldTypes } from '../core/form-field-types';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormModel } from '../core/form.model';
+import { CoreTestingModule, FormBaseModule, FormFieldModel, FormFieldTypes } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
-import { MatInputHarness } from '@angular/material/input/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormModel } from '../core/form.model';
+import { ADF_AMOUNT_SETTINGS, AmountWidgetComponent } from './amount.widget';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -135,201 +132,186 @@ describe('AmountWidgetComponent', () => {
             expect(asterisk.textContent).toEqual('*');
         });
     });
-});
 
-describe('AmountWidgetComponent - rendering', () => {
-    let loader: HarnessLoader;
-    let widget: AmountWidgetComponent;
-    let fixture: ComponentFixture<AmountWidgetComponent>;
-    let element: HTMLElement;
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
-        });
-        fixture = TestBed.createComponent(AmountWidgetComponent);
-        widget = fixture.componentInstance;
-        element = fixture.nativeElement;
-        loader = TestbedHarnessEnvironment.loader(fixture);
-    });
-
-    it('[C289915] - Should be able to display different currency icons', async () => {
-        widget.field = new FormFieldModel(new FormModel(), {
-            id: 'TestAmount1',
-            name: 'Test Amount',
-            type: 'amount',
-            currency: '$'
-        });
-        fixture.detectChanges();
-
-        const field = await loader.getHarness(MatFormFieldHarness);
-        expect(await field.getPrefixText()).toBe('$');
-
-        widget.field.currency = '£';
-        widget.ngOnInit();
-        fixture.detectChanges();
-
-        expect(await field.getPrefixText()).toBe('£');
-
-        widget.field.currency = '€';
-        widget.ngOnInit();
-        fixture.detectChanges();
-
-        expect(await field.getPrefixText()).toBe('€');
-    });
-
-    it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () => {
-        widget.field = new FormFieldModel(new FormModel(), {
-            id: 'TestAmount1',
-            name: 'Test Amount',
-            type: 'amount',
-            required: true,
-            colspan: 2,
-            placeholder: 'Check Placeholder Text',
-            minValue: null,
-            maxValue: null,
-            visibilityCondition: null,
-            params: {
-                existingColspan: 1,
-                maxColspan: 2
-            },
-            enableFractions: false,
-            currency: '$'
-        });
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const field = await loader.getHarness(MatFormFieldHarness);
-        expect(await field.getLabel()).toBe('Check Placeholder Text');
-        expect(await field.getPrefixText()).toBe('$');
-
-        const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
-        expect(widgetLabel.textContent).toBe('Test Amount*');
-        expect(widget.field.isValid).toBe(false);
-
-        const input = await loader.getHarness(MatInputHarness);
-        await input.setValue('90');
-        expect(widget.field.isValid).toBe(true);
-
-        await input.setValue('gdfgdf');
-        expect(widget.field.isValid).toBe(false);
-
-        const errorWidget = fixture.nativeElement.querySelector('error-widget .adf-error-text');
-        expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
-    });
-
-    it('[C309693] - Should be possible to set the Advanced Properties for Amount Widget', async () => {
-        widget.field = new FormFieldModel(new FormModel(), {
-            id: 'TestAmount1',
-            name: 'Test Amount',
-            type: 'amount',
-            required: true,
-            colspan: 2,
-            placeholder: 'Check Placeholder Text',
-            minValue: 10,
-            maxValue: 90,
-            visibilityCondition: null,
-            params: {
-                existingColspan: 1,
-                maxColspan: 2
-            },
-            enableFractions: true,
-            currency: '£'
-        });
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
-        expect(widgetLabel.textContent).toBe('Test Amount*');
-
-        const field = await loader.getHarness(MatFormFieldHarness);
-        expect(await field.getPrefixText()).toBe('£');
-
-        expect(widget.field.isValid).toBe(false);
-
-        const input = await loader.getHarness(MatInputHarness);
-        await input.setValue('8');
-        expect(widget.field.isValid).toBe(false);
-
-        let errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
-        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
-
-        await input.setValue('99');
-        expect(widget.field.isValid).toBe(false);
-        errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
-        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
-
-        await input.setValue('80');
-        expect(widget.field.isValid).toBe(true);
-
-        await input.setValue('80.67');
-        expect(widget.field.isValid).toBe(true);
-
-        await input.setValue('incorrect format');
-        expect(widget.field.isValid).toBe(false);
-        errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
-        expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
-    });
-
-    describe('when form model has left labels', () => {
-        it('should have left labels classes on leftLabels true', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                id: 'amount-id',
-                name: 'amount-name',
-                value: '',
-                type: FormFieldTypes.AMOUNT,
-                readOnly: false,
-                required: true
+    describe('AmountWidgetComponent - rendering', () => {
+        it('[C289915] - Should be able to display different currency icons', async () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'TestAmount1',
+                name: 'Test Amount',
+                type: 'amount',
+                currency: '$'
             });
+            fixture.detectChanges();
 
+            const field = await loader.getHarness(MatFormFieldHarness);
+            expect(await field.getPrefixText()).toBe('$');
+
+            widget.field.currency = '£';
+            widget.ngOnInit();
+            fixture.detectChanges();
+
+            expect(await field.getPrefixText()).toBe('£');
+
+            widget.field.currency = '€';
+            widget.ngOnInit();
+            fixture.detectChanges();
+
+            expect(await field.getPrefixText()).toBe('€');
+        });
+
+        it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'TestAmount1',
+                name: 'Test Amount',
+                type: 'amount',
+                required: true,
+                colspan: 2,
+                placeholder: 'Check Placeholder Text',
+                minValue: null,
+                maxValue: null,
+                visibilityCondition: null,
+                params: {
+                    existingColspan: 1,
+                    maxColspan: 2
+                },
+                enableFractions: false,
+                currency: '$'
+            });
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
-            expect(widgetContainer).not.toBeNull();
+            const field = await loader.getHarness(MatFormFieldHarness);
+            expect(await field.getLabel()).toBe('Check Placeholder Text');
+            expect(await field.getPrefixText()).toBe('$');
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
-            expect(adfLeftLabel).not.toBeNull();
+            const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
+            expect(widgetLabel.textContent).toBe('Test Amount*');
+            expect(widget.field.isValid).toBe(false);
+
+            const input = await loader.getHarness(MatInputHarness);
+            await input.setValue('90');
+            expect(widget.field.isValid).toBe(true);
+
+            await input.setValue('gdfgdf');
+            expect(widget.field.isValid).toBe(false);
+
+            const errorWidget = fixture.nativeElement.querySelector('error-widget .adf-error-text');
+            expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
         });
 
-        it('should not have left labels classes on leftLabels false', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                id: 'amount-id',
-                name: 'amount-name',
-                value: '',
-                type: FormFieldTypes.AMOUNT,
-                readOnly: false,
-                required: true
+        it('[C309693] - Should be possible to set the Advanced Properties for Amount Widget', async () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'TestAmount1',
+                name: 'Test Amount',
+                type: 'amount',
+                required: true,
+                colspan: 2,
+                placeholder: 'Check Placeholder Text',
+                minValue: 10,
+                maxValue: 90,
+                visibilityCondition: null,
+                params: {
+                    existingColspan: 1,
+                    maxColspan: 2
+                },
+                enableFractions: true,
+                currency: '£'
             });
-
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
-            expect(widgetContainer).toBeNull();
+            const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
+            expect(widgetLabel.textContent).toBe('Test Amount*');
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
-            expect(adfLeftLabel).toBeNull();
+            const field = await loader.getHarness(MatFormFieldHarness);
+            expect(await field.getPrefixText()).toBe('£');
+
+            expect(widget.field.isValid).toBe(false);
+
+            const input = await loader.getHarness(MatInputHarness);
+            await input.setValue('8');
+            expect(widget.field.isValid).toBe(false);
+
+            let errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
+            expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+
+            await input.setValue('99');
+            expect(widget.field.isValid).toBe(false);
+            errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
+            expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
+
+            await input.setValue('80');
+            expect(widget.field.isValid).toBe(true);
+
+            await input.setValue('80.67');
+            expect(widget.field.isValid).toBe(true);
+
+            await input.setValue('incorrect format');
+            expect(widget.field.isValid).toBe(false);
+            errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
+            expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
         });
 
-        it('should not have left labels classes on leftLabels not present', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'amount-id',
-                name: 'amount-name',
-                value: '',
-                type: FormFieldTypes.AMOUNT,
-                readOnly: false,
-                required: true
+        describe('when form model has left labels', () => {
+            it('should have left labels classes on leftLabels true', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                    id: 'amount-id',
+                    name: 'amount-name',
+                    value: '',
+                    type: FormFieldTypes.AMOUNT,
+                    readOnly: false,
+                    required: true
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).not.toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).not.toBeNull();
             });
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            it('should not have left labels classes on leftLabels false', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                    id: 'amount-id',
+                    name: 'amount-name',
+                    value: '',
+                    type: FormFieldTypes.AMOUNT,
+                    readOnly: false,
+                    required: true
+                });
 
-            const widgetContainer = element.querySelector('.adf-left-label-input-container');
-            expect(widgetContainer).toBeNull();
+                fixture.detectChanges();
+                await fixture.whenStable();
 
-            const adfLeftLabel = element.querySelector('.adf-left-label');
-            expect(adfLeftLabel).toBeNull();
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).toBeNull();
+            });
+
+            it('should not have left labels classes on leftLabels not present', async () => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'amount-id',
+                    name: 'amount-name',
+                    value: '',
+                    type: FormFieldTypes.AMOUNT,
+                    readOnly: false,
+                    required: true
+                });
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                const widgetContainer = element.querySelector('.adf-left-label-input-container');
+                expect(widgetContainer).toBeNull();
+
+                const adfLeftLabel = element.querySelector('.adf-left-label');
+                expect(adfLeftLabel).toBeNull();
+            });
         });
     });
 });

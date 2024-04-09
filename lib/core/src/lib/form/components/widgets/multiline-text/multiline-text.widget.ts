@@ -17,12 +17,20 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
+import { NgIf } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'multiline-text-widget',
+    standalone: true,
     templateUrl: './multiline-text.widget.html',
     styleUrls: ['./multiline-text.widget.scss'],
     host: {
@@ -36,12 +44,11 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [MatFormFieldModule, TranslateModule, MatInputModule, FormsModule, MatTooltipModule, ErrorWidgetComponent, NgIf],
     encapsulation: ViewEncapsulation.None
 })
-export class MultilineTextWidgetComponentComponent extends WidgetComponent  {
-
+export class MultilineTextWidgetComponentComponent extends WidgetComponent {
     constructor(public formService: FormService) {
         super(formService);
     }
-
 }

@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-import { FormModel } from '../core/form.model';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormService } from '../../../services/form.service';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { BaseViewerWidgetComponent } from './base-viewer.widget';
+import { BaseViewerWidgetComponent, CoreTestingModule, FormFieldModel, FormService } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormModel } from '../core/form.model';
 
 describe('BaseViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -46,13 +43,10 @@ describe('BaseViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule,
-                TranslateModule.forRoot()
-            ],
-            declarations: [ BaseViewerWidgetComponent ],
-            providers: [ { provide: FormService, useValue: formServiceStub } ]
-          });
+            imports: [CoreTestingModule, TranslateModule.forRoot()],
+            declarations: [BaseViewerWidgetComponent],
+            providers: [{ provide: FormService, useValue: formServiceStub }]
+        });
 
         formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(BaseViewerWidgetComponent);
@@ -82,7 +76,14 @@ describe('BaseViewerWidgetComponent', () => {
  * @param fixture test fixture
  * @param done callback
  */
-function assertFileId(value: any, expectedFileId: string, fakeForm: FormModel, widget: BaseViewerWidgetComponent, fixture: ComponentFixture<BaseViewerWidgetComponent>, done: DoneFn) {
+function assertFileId(
+    value: any,
+    expectedFileId: string,
+    fakeForm: FormModel,
+    widget: BaseViewerWidgetComponent,
+    fixture: ComponentFixture<BaseViewerWidgetComponent>,
+    done: DoneFn
+) {
     const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value });
     widget.field = fakeField;
 
@@ -93,4 +94,3 @@ function assertFileId(value: any, expectedFileId: string, fakeForm: FormModel, w
         done();
     });
 }
-

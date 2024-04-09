@@ -17,26 +17,42 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
+import { NgIf } from '@angular/common';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
-import { FormService } from '../../../services/form.service';
-import { WidgetComponent } from '../widget.component';
-import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/date-fns-adapter';
-import { ADF_DATETIME_FORMATS, AdfDateTimeFnsAdapter } from '../../../../common/utils/datetime-fns-adapter';
-import { DateFnsUtils } from '../../../../common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { isValid } from 'date-fns';
+import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '../../../../common';
+import { FormService } from '../../../services/form.service';
+import { ErrorWidgetComponent } from '../error/error.component';
+import { WidgetComponent } from '../widget.component';
 
 @Component({
+    selector: 'date-time-widget',
+    standalone: true,
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter },
         { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
     ],
-    selector: 'date-time-widget',
     templateUrl: './date-time.widget.html',
     styleUrls: ['./date-time.widget.scss'],
+    imports: [
+        NgIf,
+        MatFormFieldModule,
+        TranslateModule,
+        MatInputModule,
+        MatDatetimepickerModule,
+        FormsModule,
+        MatTooltipModule,
+        ErrorWidgetComponent
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
@@ -46,9 +62,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
     @Input()
     value: any = null;
 
-    constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Date>,
-                private dateTimeAdapter: DatetimeAdapter<Date>) {
+    constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {
         super(formService);
     }
 

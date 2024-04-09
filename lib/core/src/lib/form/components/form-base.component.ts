@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { FormOutcomeModel, FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormModel } from './widgets';
-import { EventEmitter, Input, Output, Directive } from '@angular/core';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
@@ -210,10 +210,14 @@ export abstract class FormBaseComponent {
     }
 
     abstract onRefreshClicked(): void;
+
     abstract saveTaskForm(): void;
+
     abstract completeTaskForm(outcome?: string): void;
 
     protected abstract onTaskSaved(form: FormModel): void;
+
     protected abstract storeFormAsMetadata(): void;
+
     protected abstract onExecuteOutcome(outcome: FormOutcomeModel): boolean;
 }

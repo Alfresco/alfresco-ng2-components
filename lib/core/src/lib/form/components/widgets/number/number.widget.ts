@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { DecimalNumberPipe } from '../../../../pipes';
 import { FormService } from '../../../services/form.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
-import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
 
 @Component({
     selector: 'number-widget',
+    standalone: true,
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.scss'],
     host: {
@@ -37,15 +45,14 @@ import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatTooltipModule, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
-
     displayValue: number;
 
-    constructor(public formService: FormService,
-                private decimalNumberPipe: DecimalNumberPipe) {
-         super(formService);
+    constructor(public formService: FormService, private decimalNumberPipe: DecimalNumberPipe) {
+        super(formService);
     }
 
     ngOnInit() {
@@ -55,5 +62,4 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
             this.displayValue = this.field.value;
         }
     }
-
 }

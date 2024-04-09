@@ -17,16 +17,23 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { FormService } from '../../../services/form.service';
-import { WidgetComponent } from '../widget.component';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/date-fns-adapter';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common';
+import { FormService } from '../../../services/form.service';
+import { ErrorWidgetComponent } from '../error/error.component';
+import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'date-widget',
+    standalone: true,
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
@@ -43,6 +50,7 @@ import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/da
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [MatFormFieldModule, TranslateModule, MatDatepickerModule, MatInputModule, FormsModule, ErrorWidgetComponent, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {

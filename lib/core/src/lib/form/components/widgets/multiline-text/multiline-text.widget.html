@@ -1,7 +1,11 @@
-<div class="adf-multiline-text-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly">
+<div class="adf-multiline-text-widget {{ field.className }}"
+     [class.adf-invalid]="!field.isValid && isTouched()"
+     [class.adf-readonly]="field.readOnly">
     <mat-form-field floatPlaceholder="never" [hideRequiredMarker]="true">
-        <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+        <label class="adf-label" [attr.for]="field.id">
+            {{ field.name | translate }}
+            <span class="adf-asterisk" *ngIf="isRequired()">*</span>
+        </label>
         <textarea matInput class="adf-input"
                   [cdkTextareaAutosize]="true"
                   type="text"
@@ -19,10 +23,12 @@
         </textarea>
     </mat-form-field>
     <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">
-        <span class="adf-multiline-word-counter-value">{{field?.value?.length || 0}}/{{field.maxLength}}</span>
+        <span class="adf-multiline-word-counter-value">{{ field?.value?.length || 0 }}/{{ field.maxLength }}</span>
     </div>
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget class="adf-multiline-required-message" *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}">
+    <error-widget class="adf-multiline-required-message"
+                  *ngIf="isInvalidFieldRequired() && isTouched()"
+                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}">
     </error-widget>
 </div>
 

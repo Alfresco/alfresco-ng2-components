@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
+import { CoreTestingModule } from '@alfresco/adf-core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
-import { CoreTestingModule } from '../../../../testing';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
-import { NumberWidgetComponent } from './number.widget';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { NumberWidgetComponent } from './number.widget';
 
 describe('NumberWidgetComponent', () => {
     let loader: HarnessLoader;

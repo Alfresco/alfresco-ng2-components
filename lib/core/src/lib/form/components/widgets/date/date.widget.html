@@ -1,25 +1,29 @@
-<div class="{{field.className}}" id="data-widget" [class.adf-invalid]="!field.isValid && isTouched()">
+<div class="{{ field.className }}"
+     id="data-widget"
+     [class.adf-invalid]="!field.isValid && isTouched()">
     <mat-form-field [floatLabel]="'always'" class="adf-date-widget">
         <mat-label class="adf-label"
-            [id]="field.id + '-label'"
-            [attr.for]="field.id"
-            >{{field.name | translate }} ({{field.dateDisplayFormat}})</mat-label>
+                   [id]="field.id + '-label'"
+                   [attr.for]="field.id">
+            {{ field.name | translate }} ({{ field.dateDisplayFormat }})
+        </mat-label>
         <input matInput [matDatepicker]="datePicker"
-            [id]="field.id"
-            [(ngModel)]="value"
-            [required]="field.required"
-            [placeholder]="field.placeholder"
-            [min]="minDate"
-            [max]="maxDate"
-            [disabled]="field.readOnly"
-            (dateChange)="onDateChange($event)"
-            (blur)="markAsTouched()">
+               [id]="field.id"
+               [(ngModel)]="value"
+               [required]="field.required"
+               [placeholder]="field.placeholder"
+               [min]="minDate"
+               [max]="maxDate"
+               [disabled]="field.readOnly"
+               (dateChange)="onDateChange($event)"
+               (blur)="markAsTouched()">
         <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly"></mat-datepicker-toggle>
         <mat-datepicker #datePicker
-            [startAt]="startAt"
-            [disabled]="field.readOnly">
+                        [startAt]="startAt"
+                        [disabled]="field.readOnly">
         </mat-datepicker>
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
+                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

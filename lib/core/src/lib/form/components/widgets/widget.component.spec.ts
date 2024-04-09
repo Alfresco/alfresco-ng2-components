@@ -15,27 +15,22 @@
  * limitations under the License.
  */
 
+import { FormFieldModel, FormRulesEvent } from '@alfresco/adf-core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { FormFieldModel } from './core/form-field.model';
-import { FormModel } from './core/form.model';
-import { WidgetComponent } from './widget.component';
-import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
-import { FormRulesEvent } from '../../events/form-rules.event';
+import { CoreTestingModule } from '../../../testing';
+import { FormModel } from './core/form.model';
+import { WidgetComponent } from './widget.component';
 
 describe('WidgetComponent', () => {
-
     let widget: WidgetComponent;
     let fixture: ComponentFixture<WidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(WidgetComponent);
 
@@ -46,7 +41,6 @@ describe('WidgetComponent', () => {
     });
 
     describe('Events', () => {
-
         it('should click event be redirect on the form event service', fakeAsync(() => {
             widget.formService.formEvents.subscribe((event) => {
                 expect(event).toBeTruthy();
@@ -56,7 +50,7 @@ describe('WidgetComponent', () => {
         }));
 
         it('should click event be redirect on the form rules event service', fakeAsync(() => {
-            widget.formService.formRulesEvent.pipe(filter(event => event.type === 'click')).subscribe((event) => {
+            widget.formService.formRulesEvent.pipe(filter((event) => event.type === 'click')).subscribe((event) => {
                 expect(event).toBeTruthy();
             });
 
@@ -77,7 +71,7 @@ describe('WidgetComponent', () => {
 
         let lastValue: FormFieldModel;
 
-        widget.fieldChanged.subscribe((field) => lastValue = field);
+        widget.fieldChanged.subscribe((field) => (lastValue = field));
         widget.ngAfterViewInit();
 
         expect(lastValue).not.toBe(null);
@@ -90,7 +84,7 @@ describe('WidgetComponent', () => {
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
 
         let lastValue: FormFieldModel;
-        widget.fieldChanged.subscribe((field) => lastValue = field);
+        widget.fieldChanged.subscribe((field) => (lastValue = field));
         widget.onFieldChanged(fakeField);
 
         expect(lastValue).not.toBe(null);
@@ -103,7 +97,7 @@ describe('WidgetComponent', () => {
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
 
         let lastValue: FormRulesEvent;
-        widget.formService.formRulesEvent.subscribe((event) => lastValue = event);
+        widget.formService.formRulesEvent.subscribe((event) => (lastValue = event));
 
         widget.onFieldChanged(fakeField);
         expect(lastValue.type).toEqual('fieldValueChanged');

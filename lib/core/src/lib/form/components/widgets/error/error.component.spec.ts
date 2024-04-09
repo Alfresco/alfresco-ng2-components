@@ -15,30 +15,27 @@
  * limitations under the License.
  */
 
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ErrorWidgetComponent } from './error.component';
-import { CoreTestingModule } from '../../../../testing';
 import { ErrorMessageModel } from '../index';
+import { ErrorWidgetComponent } from './error.component';
 
 describe('ErrorWidgetComponent', () => {
-
     let widget: ErrorWidgetComponent;
     let fixture: ComponentFixture<ErrorWidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(ErrorWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
     });
     const errorMessage: string = 'fake-error';
-    const errorMessageModel: ErrorMessageModel = new ErrorMessageModel({message: errorMessage});
+    const errorMessageModel: ErrorMessageModel = new ErrorMessageModel({ message: errorMessage });
     const errorChanges: SimpleChanges = {
         error: new SimpleChange(errorMessageModel, errorMessageModel, false)
     };

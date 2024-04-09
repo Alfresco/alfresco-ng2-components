@@ -15,48 +15,17 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { DataTableModule } from '../datatable/datatable.module';
-import { PipeModule } from '../pipes/pipe.module';
-import { HttpClientModule } from '@angular/common/http';
-
-import { MaterialModule } from '../material.module';
-
-import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './components/widgets';
-
 import { StartFormCustomButtonDirective } from './components/form-custom-button.directive';
-
 import { FormFieldComponent } from './components/form-field/form-field.component';
-import { WidgetComponent } from './components/widgets/widget.component';
-import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FormRendererComponent } from './components/form-renderer.component';
-import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.module';
-import { A11yModule } from '@angular/cdk/a11y';
-import { ViewerModule } from '../viewer/viewer.module';
 import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
-import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './components/middlewares/middleware';
 import { DecimalRenderMiddlewareService } from './components/middlewares/decimal-middleware.service';
+import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './components/middlewares/middleware';
+import { MASK_DIRECTIVE, WIDGET_DIRECTIVES, WidgetComponent } from './components/widgets';
 
 @NgModule({
     imports: [
-        CommonModule,
-        A11yModule,
-        DataTableModule,
-        HttpClientModule,
-        MaterialModule,
-        TranslateModule,
-        FormsModule,
-        ReactiveFormsModule,
-        PipeModule,
-        MatDatetimepickerModule,
-        MatNativeDatetimeModule,
-        EditJsonDialogModule,
-        ViewerModule
-    ],
-    declarations: [
         FormFieldComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,
@@ -70,14 +39,16 @@ import { DecimalRenderMiddlewareService } from './components/middlewares/decimal
         FormRendererComponent,
         StartFormCustomButtonDirective,
         ...WIDGET_DIRECTIVES,
+        ...MASK_DIRECTIVE,
         InplaceFormInputComponent,
         WidgetComponent
     ],
-    providers: [{
-        provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
-        useClass: DecimalRenderMiddlewareService,
-        multi: true
-    }]
+    providers: [
+        {
+            provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
+            useClass: DecimalRenderMiddlewareService,
+            multi: true
+        }
+    ]
 })
-export class FormBaseModule {
-}
+export class FormBaseModule {}
