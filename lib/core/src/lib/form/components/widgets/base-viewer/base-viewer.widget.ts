@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 
+import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { ViewerModule } from '../../../../viewer';
 import { FormService } from '../../../services/form.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'base-viewer-widget',
+    standalone: true,
     templateUrl: './base-viewer.widget.html',
     styleUrls: ['./base-viewer.widget.scss'],
     host: {
@@ -36,6 +41,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [ViewerModule, TranslateModule, NgIf, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit {

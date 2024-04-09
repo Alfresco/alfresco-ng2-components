@@ -1,28 +1,36 @@
-<div class="adf-textfield adf-text-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly" [class.adf-left-label-input-container]="field.leftLabels">
-     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
-     </div>
-     <div>
-         <mat-form-field [hideRequiredMarker]="true">
-             <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
-             <input matInput
-                    class="adf-input"
-                    type="text"
-                    [id]="field.id"
-                    [required]="isRequired()"
-                    [value]="field.value"
-                    [(ngModel)]="field.value"
-                    (ngModelChange)="onFieldChanged(field)"
-                    [disabled]="field.readOnly || readOnly"
-                    [textMask]="{mask: mask, isReversed: isMaskReversed}"
-                    [placeholder]="placeholder"
-                    [matTooltip]="field.tooltip"
-                    (blur)="markAsTouched()"
-                     matTooltipPosition="above"
-                     matTooltipShowDelay="1000">
-         </mat-form-field>
-         <error-widget [error]="field.validationSummary"></error-widget>
-         <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-     </div>
- </div>
+<div class="adf-textfield adf-text-widget {{ field.className }}"
+     [class.adf-invalid]="!field.isValid && isTouched()"
+     [class.adf-readonly]="field.readOnly"
+     [class.adf-left-label-input-container]="field.leftLabels">
+    <div *ngIf="field.leftLabels">
+        <label class="adf-label adf-left-label"
+               [attr.for]="field.id">{{ field.name | translate }}<span
+            class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+    </div>
+    <div>
+        <mat-form-field [hideRequiredMarker]="true">
+            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
+                {{ field.name | translate }}
+                <span class="adf-asterisk" *ngIf="isRequired()">*</span>
+            </label>
+            <input matInput
+                   class="adf-input"
+                   type="text"
+                   [id]="field.id"
+                   [required]="isRequired()"
+                   [value]="field.value"
+                   [(ngModel)]="field.value"
+                   (ngModelChange)="onFieldChanged(field)"
+                   [disabled]="field.readOnly || readOnly"
+                   [textMask]="{mask: mask, isReversed: isMaskReversed}"
+                   [placeholder]="placeholder"
+                   [matTooltip]="field.tooltip"
+                   (blur)="markAsTouched()"
+                   matTooltipPosition="above"
+                   matTooltipShowDelay="1000">
+        </mat-form-field>
+        <error-widget [error]="field.validationSummary"></error-widget>
+        <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
+                      required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    </div>
+</div>

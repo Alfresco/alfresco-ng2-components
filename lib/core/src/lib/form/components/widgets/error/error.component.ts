@@ -18,19 +18,29 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ErrorMessageModel } from '../core';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
+import { ErrorMessageModel } from '../core';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'error-widget',
+    standalone: true,
     templateUrl: './error.component.html',
     styleUrls: ['./error.component.scss'],
     animations: [
         trigger('transitionMessages', [
             state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),
-            transition('void => enter', [style({ opacity: 0, transform: 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
+            transition('void => enter', [
+                style({
+                    opacity: 0,
+                    transform: 'translateY(-100%)'
+                }),
+                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')
+            ])
         ])
     ],
     host: {
@@ -44,6 +54,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [MatIconModule, TranslateModule, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {

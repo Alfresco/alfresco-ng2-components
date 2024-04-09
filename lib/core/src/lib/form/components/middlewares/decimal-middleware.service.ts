@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { FormFieldModelRenderMiddleware } from './middleware';
 import { FormFieldModel, FormFieldTypes } from '../widgets';
+import { FormFieldModelRenderMiddleware } from './middleware';
 
 @Injectable()
 export class DecimalRenderMiddlewareService implements FormFieldModelRenderMiddleware {
@@ -42,12 +42,9 @@ export class DecimalRenderMiddlewareService implements FormFieldModelRenderMiddl
         }
 
         if (numberOfDecimalDigits > allowedMaxPrecision) {
-            const valueWithCorrectPrecision = parseFloat(value.toString())
-                .toFixed(allowedMaxPrecision);
-
-            return valueWithCorrectPrecision;
+            return parseFloat(value.toString()).toFixed(allowedMaxPrecision);
         }
 
         return value;
     }
-};
+}

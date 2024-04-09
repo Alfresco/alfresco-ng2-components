@@ -1,19 +1,19 @@
 <div [ngClass]="field.className"
      [class.adf-invalid]="!field.isValid && isTouched()">
-    <mat-checkbox
-        [id]="field.id"
-        color="primary"
-        [required]="isRequired()"
-        [disabled]="field.readOnly || readOnly"
-        [(ngModel)]="field.value"
-        (ngModelChange)="onFieldChanged(field)"
-        [matTooltip]="field.tooltip"
-        (click)="markAsTouched()"
-        matTooltipPosition="right"
-        matTooltipShowDelay="1000">
-        {{field.name | translate }}
-        <span class="adf-asterisk" *ngIf="isRequired()" >*</span>
+    <mat-checkbox [id]="field.id"
+                  color="primary"
+                  [required]="isRequired()"
+                  [disabled]="field.readOnly || readOnly"
+                  [(ngModel)]="field.value"
+                  (ngModelChange)="onFieldChanged(field)"
+                  [matTooltip]="field.tooltip"
+                  (click)="markAsTouched()"
+                  matTooltipPosition="right"
+                  matTooltipShowDelay="1000">
+        {{ field.name | translate }}
+        <span class="adf-asterisk" *ngIf="isRequired()">*</span>
     </mat-checkbox>
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
+                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

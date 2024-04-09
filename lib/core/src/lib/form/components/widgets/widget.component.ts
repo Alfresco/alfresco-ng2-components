@@ -18,8 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormFieldEvent } from '../../events/form-field.event';
-import { FormRulesEvent } from '../../events/form-rules.event';
+import { FormFieldEvent, FormRulesEvent } from '../../events';
 import { FormService } from '../../services/form.service';
 import { FormFieldModel } from './core';
 
@@ -28,6 +27,7 @@ import { FormFieldModel } from './core';
  */
 @Component({
     selector: 'base-widget',
+    standalone: true,
     template: '',
     host: {
         '(click)': 'event($event)',

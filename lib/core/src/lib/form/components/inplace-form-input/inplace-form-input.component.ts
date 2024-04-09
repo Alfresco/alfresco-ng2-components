@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ViewEncapsulation
-} from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'adf-inplace-form-input',
+    standalone: true,
     templateUrl: './inplace-form-input.component.html',
     styleUrls: ['./inplace-form-input.component.scss'],
+    imports: [MatFormFieldModule, ReactiveFormsModule, NgClass, MatInputModule],
     encapsulation: ViewEncapsulation.None
 })
 export class InplaceFormInputComponent {

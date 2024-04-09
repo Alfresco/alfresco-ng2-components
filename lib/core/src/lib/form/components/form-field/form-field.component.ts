@@ -37,6 +37,7 @@ declare const adf: any;
 
 @Component({
     selector: 'adf-form-field',
+    standalone: true,
     template: `
         <div
             [id]="'field-' + field?.id + '-container'"

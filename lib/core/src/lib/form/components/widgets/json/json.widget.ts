@@ -16,15 +16,15 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
+import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs';
 
 @Component({
-    template: `
-        <button mat-raised-button color="primary" (click)="view()">json</button>
-    `,
+    standalone: true,
+    template: ` <button mat-raised-button color="primary" (click)="view()">json</button> `,
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
@@ -36,6 +36,7 @@ import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dia
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {
@@ -45,10 +46,7 @@ export class JsonWidgetComponent extends WidgetComponent {
 
     view() {
         const rawValue = this.field.value;
-        const value =
-            typeof rawValue === 'object'
-                ? JSON.stringify(rawValue || {}, null, 2)
-                : rawValue;
+        const value = typeof rawValue === 'object' ? JSON.stringify(rawValue || {}, null, 2) : rawValue;
 
         const settings: EditJsonDialogSettings = {
             title: this.field.name,
@@ -56,11 +54,10 @@ export class JsonWidgetComponent extends WidgetComponent {
             value
         };
 
-        this.dialog
-            .open(EditJsonDialogComponent, {
-                data: settings,
-                minWidth: '50%',
-                minHeight: '50%'
-            });
+        this.dialog.open(EditJsonDialogComponent, {
+            data: settings,
+            minWidth: '50%',
+            minHeight: '50%'
+        });
     }
 }
