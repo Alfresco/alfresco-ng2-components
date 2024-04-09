@@ -437,5 +437,23 @@ describe('DateTimeWidgetComponent', () => {
             const adfLeftLabel = element.querySelector('.adf-left-label');
             expect(adfLeftLabel).toBeNull();
         });
+
+        it('should open date-time picker when enter key is pressed', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task' }), {
+                id: 'datetime-id',
+                name: 'datetime-name',
+                value: '',
+                type: FormFieldTypes.DATETIME,
+                readOnly: false,
+                required: true
+            });
+
+            const input = await loader.getHarness(MatInputHarness);
+            await input.focus();
+            await (await input.host()).sendKeys('Enter');
+
+            const picker = element.querySelector('[data-automation-id="adf-date-time-widget-picker"]');
+            expect(picker).toBeTruthy();
+        });
     });
 });
