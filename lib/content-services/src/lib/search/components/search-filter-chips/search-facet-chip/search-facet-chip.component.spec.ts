@@ -25,6 +25,7 @@ import { MatMenuHarness } from '@angular/material/menu/testing';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
+import { MatChipOptionHarness } from '@angular/material/chips/testing';
 
 describe('SearchFacetChipComponent', () => {
     let loader: HarnessLoader;
@@ -85,14 +86,15 @@ describe('SearchFacetChipComponent', () => {
         const icon = await loader.getHarness(MatIconHarness);
         expect(await icon.getName()).toBe('keyboard_arrow_up');
     });
-    // This test is failing to get the disabled from the chip/menu even though the chip is correctly disabled
-    // eslint-disable-next-line
-    xit('should display remove icon and disable facet when no items are loaded', async () => {
-        const menu = await loader.getHarness(MatMenuHarness);
-        expect(await menu.isDisabled()).toBe(true);
+
+    it('should display remove icon and disable facet when no items are loaded', async () => {
+        const menu = await loader.getHarness(MatChipOptionHarness);
+        const disabled = await menu.isDisabled();
+        expect(disabled).toBe(true);
 
         const icon = await loader.getHarness(MatIconHarness);
-        expect(await icon.getName()).toBe('remove');
+        const iconName = await icon.getName();
+        expect(iconName).toBe('remove');
     });
 
     it('should not open context menu when no items are loaded', async () => {
