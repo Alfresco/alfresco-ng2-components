@@ -63,12 +63,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 
 // eslint-disable-next-line no-shadow
-export enum DisplayMode {
-    List = 'list',
-    Gallery = 'gallery'
-}
-
-// eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
     Never = 'never',
     Always = 'always',
@@ -94,10 +88,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     /** Data source for the table */
     @Input()
     data: DataTableAdapter;
-
-    /** Selects the display mode of the table. Can be "list" or "gallery". */
-    @Input()
-    display: string = DisplayMode.List;
 
     /** The rows that the datatable will show. */
     @Input()
@@ -241,8 +231,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     /**
      * Flag that indicates if the datatable should be blurred when resizing.
      */
-     @Input()
-     blurOnResize = true;
+    @Input()
+    blurOnResize = true;
 
     headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
@@ -258,9 +248,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     isDraggingHeaderColumn = false;
     hoveredHeaderColumnIndex = -1;
     resizingColumnIndex = -1;
-
-    /** This array of fake rows fix the flex layout for the gallery view */
-    fakeRows = [];
 
     private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
@@ -299,7 +286,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 })
             );
         }
-        this.datatableLayoutFix();
         this.setTableSchema();
     }
 
@@ -346,10 +332,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (this.isPropertyChanged(changes['sorting'])) {
             this.setTableSorting(changes['sorting'].currentValue);
-        }
-
-        if (this.isPropertyChanged(changes['display'])) {
-            this.datatableLayoutFix();
         }
     }
 
@@ -514,7 +496,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
 
         if (row) {
-            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderListVisible() ? 1 : 0);
+            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderVisible() ? 1 : 0);
             this.keyManager.setActiveItem(rowIndex);
 
             const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
@@ -526,10 +508,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (row) {
             this.handleRowSelection(row, e);
         }
-    }
-
-    private isHeaderListVisible(): boolean {
-        return this.isHeaderVisible() && this.display === DisplayMode.List;
     }
 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
@@ -726,10 +704,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return null;
     }
 
-    iconAltTextKey(value: string): string {
-        return value ? 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '') : '';
-    }
-
     isColumnSorted(col: DataColumn, direction: string): boolean {
         if (col && direction) {
             const sorting = this.data.getSorting();
@@ -779,10 +753,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return row.isDropTarget === true;
     }
 
-    hasSelectionMode(): boolean {
-        return this.isSingleSelectionMode() || this.isMultiSelectionMode();
-    }
-
     isSingleSelectionMode(): boolean {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'single';
     }
@@ -809,14 +779,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (selectedRow) {
             selectedRow.isContextMenuSource = true;
         }
-    }
-
-    getSortingKey(): string | null {
-        if (this.data.getSorting()) {
-            return this.data.getSorting().key;
-        }
-
-        return null;
     }
 
     selectRow(row: DataRow, value: boolean) {
@@ -909,18 +871,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
     }
 
-    private datatableLayoutFix() {
-        const maxGalleryRows = 25;
-
-        if (this.display === 'gallery') {
-            for (let i = 0; i < maxGalleryRows; i++) {
-                this.fakeRows.push('');
-            }
-        } else {
-            this.fakeRows = [];
-        }
-    }
-
     getNameColumnValue() {
         return this.data.getColumns().find((el: any) => el.key.includes('name'));
     }
@@ -1005,10 +955,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     private isSortingEqual(col: DataColumn, direction: string, sorting: DataSorting): boolean {
-        return sorting &&
-        (sorting.key === col.key || sorting.key === col.sortingKey) &&
-        sorting.direction?.toLocaleLowerCase() === direction;
-    };
+        return sorting && (sorting.key === col.key || sorting.key === col.sortingKey) && sorting.direction?.toLocaleLowerCase() === direction;
+    }
 
     get isResizing(): boolean {
         return this.resizingColumnIndex >= 0;
