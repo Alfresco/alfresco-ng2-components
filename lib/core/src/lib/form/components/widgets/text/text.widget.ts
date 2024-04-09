@@ -27,6 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
+import { InputMaskDirective } from './text-mask.component';
 
 @Component({
     selector: 'text-widget',
@@ -44,7 +45,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatTooltipModule, ErrorWidgetComponent],
+    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatTooltipModule, ErrorWidgetComponent, InputMaskDirective],
     encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {

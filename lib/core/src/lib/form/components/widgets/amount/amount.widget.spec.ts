@@ -185,7 +185,7 @@ describe('AmountWidgetComponent', () => {
             expect(await field.getPrefixText()).toBe('$');
 
             const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
-            expect(widgetLabel.textContent).toBe('Test Amount*');
+            expect(widgetLabel.textContent).toBe(' Test Amount*');
             expect(widget.field.isValid).toBe(false);
 
             const input = await loader.getHarness(MatInputHarness);
@@ -221,7 +221,7 @@ describe('AmountWidgetComponent', () => {
             await fixture.whenStable();
 
             const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
-            expect(widgetLabel.textContent).toBe('Test Amount*');
+            expect(widgetLabel.textContent).toBe(' Test Amount*');
 
             const field = await loader.getHarness(MatFormFieldHarness);
             expect(await field.getPrefixText()).toBe('£');

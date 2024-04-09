@@ -27,8 +27,7 @@ describe('InplaceFormInputComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
-            declarations: [InplaceFormInputComponent]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, InplaceFormInputComponent]
         }).compileComponents();
     });
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
+import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { Component, Inject, Injector, Input, OnChanges, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,6 +46,7 @@ import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
         MatTabsModule,
         NgIf,
         NgForOf,
+        NgTemplateOutlet,
         TranslateModule,
         MatButtonModule,
         MatIconModule,

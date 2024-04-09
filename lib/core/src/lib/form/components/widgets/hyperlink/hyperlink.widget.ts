@@ -17,6 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
+import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
@@ -40,7 +41,7 @@ import { FormFieldModel } from '../core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [TranslateModule, MatTooltipModule],
+    imports: [TranslateModule, MatTooltipModule, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {

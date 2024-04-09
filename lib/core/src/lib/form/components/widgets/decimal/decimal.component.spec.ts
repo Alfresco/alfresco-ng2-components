@@ -34,8 +34,7 @@ describe('DecimalComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule],
-            declarations: [DecimalWidgetComponent],
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, DecimalWidgetComponent],
             providers: [FormService]
         }).compileComponents();
 
