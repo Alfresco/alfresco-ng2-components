@@ -44,7 +44,9 @@ describe('InplaceFormInputComponent', () => {
         formControl.setValue('New Value');
         fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector('[data-automation-id="adf-inplace-input"]');
+        const input = fixture.nativeElement.querySelector(
+            '[data-automation-id="adf-inplace-input"]'
+        );
 
         expect(input.value).toBe('New Value');
     });
@@ -57,7 +59,9 @@ describe('InplaceFormInputComponent', () => {
 
         fixture.detectChanges();
 
-        const error = fixture.nativeElement.querySelector('[data-automation-id="adf-inplace-input-error"]');
+        const error = fixture.nativeElement.querySelector(
+            '[data-automation-id="adf-inplace-input-error"]'
+        );
 
         expect(error).toBeTruthy();
     });
@@ -67,7 +71,9 @@ describe('InplaceFormInputComponent', () => {
 
         fixture.detectChanges();
 
-        const error = fixture.nativeElement.querySelector('[data-automation-id="adf-inplace-input-label"]');
+        const error = fixture.nativeElement.querySelector(
+            '[data-automation-id="adf-inplace-input-label"]'
+        );
 
         expect(error).toBeTruthy();
     });
