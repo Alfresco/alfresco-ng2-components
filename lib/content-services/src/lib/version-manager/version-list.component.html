@@ -18,7 +18,7 @@
                         {{ version.entry.versionComment }}
                     </p>
                 </div>
-                <div *ngIf="true">
+                <div *ngIf="showActions">
                     <mat-menu [id]="'adf-version-list-action-menu-' + version.entry.id"
                               #versionMenu="matMenu"
                               yPosition="below"
