@@ -20,20 +20,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IconCellComponent } from './icon-cell.component';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('IconCellComponent', () => {
     let component: IconCellComponent;
     let fixture: ComponentFixture<IconCellComponent>;
-    const getIconElement = () => fixture.debugElement.nativeElement.querySelector('mat-icon');
-    const renderAndCheckResult = (value: any, expectedOccurrence: boolean, expectedIconName?: string) => {
+    let loader: HarnessLoader;
+    const renderAndCheckResult = async (value: any, expectedOccurrence: boolean, expectedIconName?: string) => {
         component.value$.next(value);
         fixture.detectChanges();
 
-        const iconElement = getIconElement();
+        const icon = await loader.getHarnessOrNull(MatIconHarness);
 
-        expectedOccurrence ? expect(iconElement).toBeTruthy() : expect(iconElement).toBeFalsy();
+        expectedOccurrence ? expect(icon).not.toBeNull() : expect(icon).toBeNull();
         if (expectedIconName) {
-            expect(iconElement.textContent.trim()).toBe(expectedIconName);
+            expect(await icon?.getName()).toBe(expectedIconName);
         }
     };
 
@@ -44,6 +47,7 @@ describe('IconCellComponent', () => {
 
         fixture = TestBed.createComponent(IconCellComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     describe('Initialization', () => {
@@ -80,23 +84,23 @@ describe('IconCellComponent', () => {
     });
 
     describe('UI', () => {
-        it('should render icon element in case of non-empty string (icon name validation NOT included)', () => {
-            renderAndCheckResult('group', true, 'group');
-            renderAndCheckResult('groupe', true, 'groupe');
-            renderAndCheckResult('0', true, '0');
-            renderAndCheckResult('false', true, 'false');
+        it('should render icon element in case of non-empty string (icon name validation NOT included)', async () => {
+            await renderAndCheckResult('group', true, 'group');
+            await renderAndCheckResult('groupe', true, 'groupe');
+            await renderAndCheckResult('0', true, '0');
+            await renderAndCheckResult('false', true, 'false');
         });
 
-        it('should NOT render icon element in case of empty string', () => {
-            renderAndCheckResult('', false);
+        it('should NOT render icon element in case of empty string', async () => {
+            await renderAndCheckResult('', false);
         });
 
-        it('should NOT render icon element in case of type different than string', () => {
-            renderAndCheckResult(0, false);
-            renderAndCheckResult({}, false);
-            renderAndCheckResult(null, false);
-            renderAndCheckResult(undefined, false);
-            renderAndCheckResult(NaN, false);
+        it('should NOT render icon element in case of type different than string', async () => {
+            await renderAndCheckResult(0, false);
+            await renderAndCheckResult({}, false);
+            await renderAndCheckResult(null, false);
+            await renderAndCheckResult(undefined, false);
+            await renderAndCheckResult(NaN, false);
         });
     });
 });

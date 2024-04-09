@@ -116,7 +116,7 @@ describe('UserIconColumnComponent', () => {
         component.selected = true;
         component.ngOnInit();
         fixture.detectChanges();
-        expect(element.querySelector('mat-icon[svgIcon="selected"]')).toBeDefined();
+        expect(element.querySelector('.adf-people-select-icon[svgIcon="selected"]')).toBeDefined();
         expect(component.isSelected).toBe(true);
     });
 });
