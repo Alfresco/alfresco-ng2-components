@@ -17,7 +17,21 @@
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
-import { FormService, ContainerModel, FormFieldTypes, FormFieldOption, FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
+import {
+    FormService,
+    ContainerModel,
+    FormFieldTypes,
+    FormFieldOption,
+    FormFieldModel,
+    FormModel,
+    ErrorWidgetComponent,
+    TranslationMock,
+    AlfrescoApiServiceMock,
+    AppConfigServiceMock,
+    AppConfigService,
+    AlfrescoApiService,
+    TranslationService
+} from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
@@ -28,6 +42,10 @@ import { ProcessDefinitionService } from '../../services/process-definition.serv
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RadioButtonsWidgetComponent', () => {
     let formService: FormService;
@@ -46,8 +64,8 @@ describe('RadioButtonsWidgetComponent', () => {
                 HttpClientTestingModule,
                 MatIconModule
             ],
-            declarations:[RadioButtonsWidgetComponent, ErrorWidgetComponent],
-            providers:[
+            declarations: [RadioButtonsWidgetComponent, ErrorWidgetComponent],
+            providers: [
                 { provide: TranslationService, useClass: TranslationMock },
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
