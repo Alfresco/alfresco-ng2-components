@@ -29,7 +29,7 @@ import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.t
 import { mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding, mockPreselectedFoodUsers } from '../mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 
 describe('PeopleCloudComponent', () => {
@@ -407,7 +407,7 @@ describe('PeopleCloudComponent', () => {
                 const chips = await loader.getAllHarnesses(MatChipHarness);
                 expect(chips.length).toBe(1);
 
-                const chipList = await loader.getHarness(MatChipListHarness);
+                const chipList = await loader.getHarness(MatChipGridHarness);
                 expect(await chipList.isDisabled()).toBe(true);
             });
 
@@ -422,7 +422,7 @@ describe('PeopleCloudComponent', () => {
                 const chips = await loader.getAllHarnesses(MatChipHarness);
                 expect(chips.length).toBe(2);
 
-                const chipList = await loader.getHarness(MatChipListHarness);
+                const chipList = await loader.getHarness(MatChipGridHarness);
                 expect(await chipList.isDisabled()).toBe(true);
             });
         });
