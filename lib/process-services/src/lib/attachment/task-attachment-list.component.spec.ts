@@ -27,9 +27,14 @@ import { ProcessContentService } from '../form/services/process-content.service'
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatMenuModule } from '@angular/material/menu';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 
 describe('TaskAttachmentList', () => {
-
     let component: TaskAttachmentListComponent;
     let fixture: ComponentFixture<TaskAttachmentListComponent>;
     let service: ProcessContentService;
@@ -44,15 +49,13 @@ describe('TaskAttachmentList', () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                HttpClientModule,
+                HttpClientTestingModule,
                 MatMenuModule,
                 NoopAnimationsModule,
                 MatProgressSpinnerModule,
                 MatTooltipModule
             ],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-            ]
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
@@ -129,12 +132,14 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should show the empty default message when has no custom template', async () => {
-        getTaskRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getTaskRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
         component.hasCustomTemplate = false;
@@ -186,12 +191,14 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should show the empty list component when the attachments list is empty', async () => {
-        getTaskRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getTaskRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
 
@@ -202,19 +209,23 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should show the empty list component when the attachments list is empty for completed task', async () => {
-        getTaskRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getTaskRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
         component.disabled = true;
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual(
+                'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER'
+            );
         });
     });
 
@@ -235,7 +246,6 @@ describe('TaskAttachmentList', () => {
     });
 
     describe('change detection', () => {
-
         let change: SimpleChange;
         let nullChange: SimpleChange;
 
@@ -269,7 +279,6 @@ describe('TaskAttachmentList', () => {
     });
 
     describe('Delete attachments', () => {
-
         beforeEach(() => {
             component.taskId = '123';
             fixture.whenStable();
@@ -295,18 +304,14 @@ describe('TaskAttachmentList', () => {
         </adf-task-attachment-list>
     `
 })
-class CustomEmptyTemplateComponent {
-}
+class CustomEmptyTemplateComponent {}
 
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessTestingModule],
             declarations: [CustomEmptyTemplateComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
