@@ -18,31 +18,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
+import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { IdentityGroupService } from '../services/identity-group.service';
 import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
-import { TranslationMock, TranslationService } from '@alfresco/adf-core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatIconHarness } from '@angular/material/icon/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
 
 describe('GroupCloudComponent', () => {
+    let loader: HarnessLoader;
     let component: GroupCloudComponent;
     let fixture: ComponentFixture<GroupCloudComponent>;
     let element: HTMLElement;
     let identityGroupService: IdentityGroupService;
-    let findGroupsByNameSpy;
-
-    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-    /**
-     * get the native element for the selector
-     *
-     * @param selector selector
-     * @returns native element
-     */
-    function getElement<T = HTMLElement>(selector: string): T {
-        return fixture.nativeElement.querySelector(selector);
-    }
+    let findGroupsByNameSpy: jasmine.Spy;
 
     /**
      * search group by value
@@ -50,14 +45,9 @@ describe('GroupCloudComponent', () => {
      * @param value element input value
      */
     async function searchGroup(value: string) {
-        const input = getElement<HTMLInputElement>('input');
-        input.focus();
-        input.value = value;
-        input.dispatchEvent(new Event('keyup'));
-        input.dispatchEvent(new Event('input'));
-
-        await fixture.whenStable();
-        fixture.detectChanges();
+        const input = await loader.getHarness(MatInputHarness);
+        await input.focus();
+        await input.setValue(value);
     }
 
     /**
@@ -66,17 +56,10 @@ describe('GroupCloudComponent', () => {
      * @param value value
      */
     async function searchGroupsAndBlur(value: string) {
-        const input = getElement<HTMLInputElement>('input');
-        input.focus();
-        input.value = value;
-        input.dispatchEvent(new Event('keyup'));
-        input.dispatchEvent(new Event('input'));
-
-        await fixture.whenStable();
-        fixture.detectChanges();
-
-        input.blur();
-        fixture.detectChanges();
+        const input = await loader.getHarness(MatInputHarness);
+        await input.focus();
+        await input.setValue(value);
+        await input.blur();
     }
 
     /**
@@ -90,20 +73,14 @@ describe('GroupCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                NoopAnimationsModule,
-                GroupCloudModule
-            ],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, ProcessServiceCloudTestingModule, GroupCloudModule]
         });
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
         identityGroupService = TestBed.inject(IdentityGroupService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should populate placeholder when title is present', () => {
@@ -116,7 +93,6 @@ describe('GroupCloudComponent', () => {
     });
 
     describe('Search group', () => {
-
         beforeEach(() => {
             fixture.detectChanges();
             findGroupsByNameSpy = spyOn(identityGroupService, 'search').and.returnValue(of(mockFoodGroups));
@@ -209,19 +185,19 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should not pre-select any group when preSelectGroups is empty - single mode', () => {
+        it('should not pre-select any group when preSelectGroups is empty - single mode', async () => {
             component.mode = 'single';
             fixture.detectChanges();
 
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toEqual(0);
         });
 
-        it('should not pre-select any group when preSelectGroups is empty - multiple mode', () => {
+        it('should not pre-select any group when preSelectGroups is empty - multiple mode', async () => {
             component.mode = 'multiple';
             fixture.detectChanges();
 
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toEqual(0);
         });
     });
@@ -236,10 +212,11 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should show only one mat chip with the first preSelectedGroup', () => {
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip-row'));
+        it('should show only one mat chip with the first preSelectedGroup', async () => {
+            const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toEqual(1);
-            expect(chips[0].attributes['data-automation-id']).toEqual(`adf-cloud-group-chip-${mockVegetableAubergine.name}`);
+            const testId = await (await chips[0].host()).getAttribute('data-automation-id');
+            expect(testId).toEqual(`adf-cloud-group-chip-${mockVegetableAubergine.name}`);
         });
     });
 
@@ -253,12 +230,13 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should render all preselected groups', () => {
+        it('should render all preselected groups', async () => {
             component.mode = 'multiple';
             fixture.detectChanges();
             component.ngOnChanges({ preSelectGroups: change });
             fixture.detectChanges();
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip-row'));
+
+            const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toBe(2);
         });
 
@@ -267,42 +245,40 @@ describe('GroupCloudComponent', () => {
             const changedGroupsEmitterSpy = spyOn(component.changedGroups, 'emit');
             component.mode = 'multiple';
 
-            const removeIcon = fixture.debugElement.query(By.css('mat-chip-row mat-icon'));
-            removeIcon.nativeElement.click();
-            fixture.detectChanges();
+            const chip = await loader.getHarness(MatChipHarness);
+            const icon = await chip.getHarness(MatIconHarness);
+            await (await icon.host()).click();
 
             await fixture.whenStable();
             expect(removeGroupEmitterSpy).toHaveBeenCalledWith(mockVegetableAubergine);
             expect(changedGroupsEmitterSpy).toHaveBeenCalledWith([mockMeatChicken]);
-            expect(component.selectedGroups.indexOf({
-                id: mockMeatChicken.id,
-                name: mockMeatChicken.name
-            })).toEqual(-1);
+            expect(
+                component.selectedGroups.indexOf({
+                    id: mockMeatChicken.id,
+                    name: mockMeatChicken.name
+                })
+            ).toEqual(-1);
         });
     });
 
     describe('Multiple Mode with read-only', () => {
-
         it('Should not show remove icon for pre-selected groups if readonly property set to true', async () => {
             component.mode = 'multiple';
-            component.preSelectGroups = [
-                { id: mockVegetableAubergine.id, name: mockVegetableAubergine.name, readonly: true },
-                mockMeatChicken
-            ];
+            component.preSelectGroups = [{ id: mockVegetableAubergine.id, name: mockVegetableAubergine.name, readonly: true }, mockMeatChicken];
             const changes = new SimpleChange(null, [{ name: mockVegetableAubergine.name }], false);
             component.ngOnChanges({ preSelectGroups: changes });
             fixture.detectChanges();
-
             await fixture.whenStable();
 
-            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-grid mat-chip-row');
+            const chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toBe(2);
 
-            expect(chipList.length).toBe(2);
-            const removeIconAubergine = getElement(`[data-automation-id="adf-cloud-group-chip-remove-icon-${mockVegetableAubergine.name}"]`);
+            const removeIconAubergine = element.querySelector(
+                `[data-automation-id="adf-cloud-group-chip-remove-icon-${mockVegetableAubergine.name}"]`
+            );
             expect(removeIconAubergine).toBeNull();
-            const removeIconPepper = getElement(`[data-automation-id="adf-cloud-group-chip-remove-icon-${mockMeatChicken.name}"]`);
+            const removeIconPepper = element.querySelector(`[data-automation-id="adf-cloud-group-chip-remove-icon-${mockMeatChicken.name}"]`);
             expect(removeIconPepper).not.toBeNull();
-
         });
 
         it('Should be able to remove preselected groups if readonly property set to false', async () => {
@@ -315,28 +291,26 @@ describe('GroupCloudComponent', () => {
             const removeGroupSpy = spyOn(component.removeGroup, 'emit');
             fixture.detectChanges();
 
-            fixture.whenStable();
-            fixture.detectChanges();
+            let chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toBe(2);
 
-            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-grid mat-chip-row');
-            expect(chipList.length).toBe(2);
-
-            const removeIcon = getElement(`[data-automation-id="adf-cloud-group-chip-remove-icon-${mockMeatChicken.name}"]`);
+            const removeIcon = element.querySelector<HTMLElement>(`[data-automation-id="adf-cloud-group-chip-remove-icon-${mockMeatChicken.name}"]`);
             removeIcon.click();
             fixture.detectChanges();
 
             expect(removeGroupSpy).toHaveBeenCalled();
-            expect(fixture.nativeElement.querySelectorAll('mat-chip-grid mat-chip-row').length).toBe(1);
+
+            chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toBe(1);
         });
 
         it('should removeDuplicatedGroups return only unique groups', () => {
-            const duplicatedGroups = [ mockMeatChicken, mockMeatChicken];
+            const duplicatedGroups = [mockMeatChicken, mockMeatChicken];
             expect(component.removeDuplicatedGroups(duplicatedGroups)).toEqual([mockMeatChicken]);
         });
     });
 
     describe('Preselected groups and validation enabled', () => {
-
         beforeEach(() => {
             spyOn(identityGroupService, 'search').and.throwError('Invalid group');
             component.validate = true;
@@ -365,7 +339,7 @@ describe('GroupCloudComponent', () => {
     describe('Component readonly mode', () => {
         const change = new SimpleChange(null, mockFoodGroups, false);
 
-        it('should chip list be disabled and show one single chip - single mode', () => {
+        it('should chip list be disabled and show one single chip - single mode', async () => {
             component.mode = 'single';
             component.readOnly = true;
             component.preSelectGroups = mockFoodGroups;
@@ -373,16 +347,14 @@ describe('GroupCloudComponent', () => {
 
             fixture.detectChanges();
 
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip-row'));
-            const chipList = getElement('mat-chip-grid');
-
-            expect(chips).toBeDefined();
-            expect(chipList).toBeDefined();
+            const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toBe(1);
-            expect(chipList.attributes['ng-reflect-disabled']?.value).toEqual('true');
+
+            const chipList = await loader.getHarness(MatChipListHarness);
+            expect(await chipList.isDisabled()).toBe(true);
         });
 
-        it('should chip list be disabled and show all the chips - multiple mode', () => {
+        it('should chip list be disabled and show all the chips - multiple mode', async () => {
             component.mode = 'multiple';
             component.readOnly = true;
             component.preSelectGroups = mockFoodGroups;
@@ -390,14 +362,11 @@ describe('GroupCloudComponent', () => {
 
             fixture.detectChanges();
 
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip-row'));
-            const chipList = getElement('mat-chip-grid');
-
-            expect(chips).toBeDefined();
-            expect(chipList).toBeDefined();
+            const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toBe(2);
-            expect(chipList.attributes['ng-reflect-disabled']?.value).toEqual('true');
+
+            const chipList = await loader.getHarness(MatChipListHarness);
+            expect(await chipList.isDisabled()).toBe(true);
         });
     });
-
 });
