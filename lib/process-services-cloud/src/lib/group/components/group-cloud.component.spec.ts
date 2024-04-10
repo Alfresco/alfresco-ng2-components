@@ -86,11 +86,18 @@ describe('GroupCloudComponent', () => {
 
     it('should populate placeholder when title is present', () => {
         component.title = 'TITLE_KEY';
-
         fixture.detectChanges();
 
-        const matLabel = element.querySelector<HTMLInputElement>('#adf-group-cloud-title-id');
-        expect(matLabel.textContent).toEqual('TITLE_KEY');
+        const inputElement = element.querySelector<HTMLInputElement>('[data-automation-id="adf-cloud-group-search-input"]');
+
+        expect(inputElement.placeholder).toEqual('TITLE_KEY');
+    });
+
+    it('should not populate placeholder when title is not present', () => {
+        fixture.detectChanges();
+
+        const inputElement = element.querySelector<HTMLInputElement>('[data-automation-id="adf-cloud-group-search-input"]');
+        expect(inputElement.placeholder).toEqual('');
     });
 
     describe('Search group', () => {
