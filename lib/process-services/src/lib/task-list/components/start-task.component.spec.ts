@@ -24,11 +24,14 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { taskDetailsMock } from '../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('StartTaskComponent', () => {
-
     let component: StartTaskComponent;
     let fixture: ComponentFixture<StartTaskComponent>;
+    let loader: HarnessLoader;
     let service: TaskListService;
     let logService: LogService;
     let element: HTMLElement;
@@ -51,14 +54,12 @@ describe('StartTaskComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule]
         });
         fixture = TestBed.createComponent(StartTaskComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
 
         service = TestBed.inject(TaskListService);
         logService = TestBed.inject(LogService);
@@ -81,16 +82,15 @@ describe('StartTaskComponent', () => {
     });
 
     describe('create task', () => {
-
         beforeEach(() => {
-            createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(
-                {
+            createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(
+                of({
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                } as any
-            ));
+                } as any)
+            );
         });
 
         it('should create new task when start is clicked', () => {
@@ -140,25 +140,25 @@ describe('StartTaskComponent', () => {
 
     describe('attach form', () => {
         beforeEach(() => {
-            spyOn(service, 'createNewTask').and.returnValue(of(
-                {
+            spyOn(service, 'createNewTask').and.returnValue(
+                of({
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                } as any
-            ));
+                } as any)
+            );
         });
 
         it('should attach form to the task when a form is selected', () => {
-            spyOn(service, 'attachFormToATask').and.returnValue(of(
-                {
+            spyOn(service, 'attachFormToATask').and.returnValue(
+                of({
                     id: 91,
                     name: 'fakeName',
                     formKey: 1204,
                     assignee: null
-                }
-            ));
+                })
+            );
             const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(1204);
@@ -176,14 +176,14 @@ describe('StartTaskComponent', () => {
         });
 
         it('should not attach form to the task when a no form is selected', () => {
-            spyOn(service, 'attachFormToATask').and.returnValue(of(
-                {
+            spyOn(service, 'attachFormToATask').and.returnValue(
+                of({
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                }
-            ));
+                })
+            );
             const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(null);
@@ -203,30 +203,30 @@ describe('StartTaskComponent', () => {
 
     describe('assign user', () => {
         beforeEach(() => {
-            spyOn(service, 'createNewTask').and.returnValue(of(
-                {
+            spyOn(service, 'createNewTask').and.returnValue(
+                of({
                     id: 91,
                     name: 'fakeName',
                     formKey: null,
                     assignee: null
-                } as any
-            ));
-            spyOn(service, 'attachFormToATask').and.returnValue(of(
-                {
+                } as any)
+            );
+            spyOn(service, 'attachFormToATask').and.returnValue(
+                of({
                     id: 91,
                     name: 'fakeName',
                     formKey: 1204,
                     assignee: null
-                }
-            ));
-            spyOn(service, 'assignTaskByUserId').and.returnValue(of(
-                {
+                })
+            );
+            spyOn(service, 'assignTaskByUserId').and.returnValue(
+                of({
                     id: 91,
                     name: 'fakeName',
                     formKey: 1204,
                     assignee: testUser
-                } as any
-            ));
+                } as any)
+            );
         });
 
         it('should assign task when an assignee is selected', () => {
@@ -285,7 +285,7 @@ describe('StartTaskComponent', () => {
 
     it('should not attach a form when a form id is not selected', () => {
         const attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(of([]));
-        spyOn(service, 'createNewTask').and.returnValue(of(new TaskDetailsModel({ id: 'task-id'})));
+        spyOn(service, 'createNewTask').and.returnValue(of(new TaskDetailsModel({ id: 'task-id' })));
         component.taskForm.controls['name'].setValue('fakeName');
         fixture.detectChanges();
         const createTaskButton = element.querySelector<HTMLElement>('#button-start');
@@ -301,9 +301,11 @@ describe('StartTaskComponent', () => {
         expect(element.querySelector('#button-start').textContent).toContain('ADF_TASK_LIST.START_TASK.FORM.ACTION.START');
     });
 
-    it('should render start task button with primary color', () => {
+    it('should render start task button with primary color', async () => {
         fixture.detectChanges();
-        expect(element.querySelector('#button-start').classList.contains('mat-primary')).toBeTruthy();
+
+        const buttonEl = await (await loader.getHarness(MatButtonHarness.with({ selector: '#button-start' }))).host();
+        expect(await buttonEl.getAttribute('color')).toBe('primary');
     });
 
     it('should render task buttons with uppercase text', () => {

@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ViewChild,
-    ViewContainerRef,
-    OnInit,
-    OnDestroy,
-    ComponentRef,
-    ComponentFactoryResolver,
-    SimpleChanges,
-    OnChanges
-} from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, SimpleChanges, OnChanges } from '@angular/core';
 import { SearchFilterService } from '../../services/search-filter.service';
 import { Observable } from 'rxjs';
 import { SearchQueryBuilderService } from '../../services';
@@ -56,21 +45,14 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
 
     componentRef: ComponentRef<any>;
 
-    constructor(
-        private searchFilterService: SearchFilterService,
-        private queryBuilder: SearchQueryBuilderService,
-        private componentFactoryResolver: ComponentFactoryResolver
-    ) {}
+    constructor(private searchFilterService: SearchFilterService, private queryBuilder: SearchQueryBuilderService) {}
 
     ngOnInit() {
         const componentType = this.searchFilterService.widgets[this.selector];
         if (componentType) {
-            const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-            if (factory) {
-                this.content.clear();
-                this.componentRef = this.content.createComponent(factory, 0);
-                this.setupWidget(this.componentRef);
-            }
+            this.content.clear();
+            this.componentRef = this.content.createComponent(componentType, { index: 0 });
+            this.setupWidget(this.componentRef);
         }
     }
 

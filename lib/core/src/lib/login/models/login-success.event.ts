@@ -19,6 +19,6 @@ export class LoginSuccessEvent {
     constructor(
         public token: any,
         public username: string,
-        public password: string) {
-    }
+        public password: string
+    ) {}
 }

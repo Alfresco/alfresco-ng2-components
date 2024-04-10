@@ -66,7 +66,6 @@ Displays the documents from a repository.
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
 | currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
-| display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
 | filterValue | `any` |  | Initial value for filter. |
 | headerFilters | `boolean` | false | Toggles the header filters mode. |
@@ -173,22 +172,6 @@ You can use `ngIf` directives to provide conditional visibility support for the 
     key="name"
     title="MY.RESOURCE.KEY">
 </data-column>
-```
-
-### Card view
-
-The Document List has an option to display items as "cards" instead of the
-standard view:
-
-![card-view](../../docassets/images/document-list-card-view.png)
-
-Set the `[display]` property to "gallery" to enable card view mode:
-
-```html
-<adf-document-list
-    [currentFolderId]="'-my-'"
-    [display]="'gallery'">
-</adf-document-list>
 ```
 
 ### Pagination strategy

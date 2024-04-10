@@ -21,13 +21,7 @@ import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, CommentModel, User } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import {
-    noDataMock,
-    taskDetailsMock,
-    taskFormMock,
-    tasksMock,
-    taskDetailsWithOutAssigneeMock
-} from '../../mock';
+import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -37,6 +31,9 @@ import { TaskFormService } from '../../form/services/task-form.service';
 import { TaskCommentsService } from '../../task-comments/services/task-comments.service';
 import { UserProcessModel } from '../../common/models/user-process.model';
 import { PeopleProcessService } from '../../common/services/people-process.service';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
 
 const fakeUser = new UserProcessModel({
     id: 'fake-id',
@@ -58,6 +55,7 @@ describe('TaskDetailsComponent', () => {
     let taskFormService: TaskFormService;
     let component: TaskDetailsComponent;
     let fixture: ComponentFixture<TaskDetailsComponent>;
+    let loader: HarnessLoader;
     let getTaskDetailsSpy: jasmine.Spy;
     let getCommentsSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
@@ -67,10 +65,7 @@ describe('TaskDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessTestingModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);
@@ -92,15 +87,18 @@ describe('TaskDetailsComponent', () => {
         assignTaskSpy = spyOn(taskListService, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
         taskCommentsService = TestBed.inject(TaskCommentsService);
 
-        getCommentsSpy = spyOn(taskCommentsService, 'get').and.returnValue(of([
-            new CommentModel({ message: 'Test1', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
-            new CommentModel({ message: 'Test2', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
-            new CommentModel({ message: 'Test3', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) })
-        ]));
+        getCommentsSpy = spyOn(taskCommentsService, 'get').and.returnValue(
+            of([
+                new CommentModel({ message: 'Test1', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
+                new CommentModel({ message: 'Test2', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
+                new CommentModel({ message: 'Test3', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) })
+            ])
+        );
 
         fixture = TestBed.createComponent(TaskDetailsComponent);
         peopleProcessService = TestBed.inject(PeopleProcessService);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
     });
 
     afterEach(() => {
@@ -122,7 +120,7 @@ describe('TaskDetailsComponent', () => {
 
     it('should send a claim task event when a task is claimed', () => {
         let lastValue: string;
-        component.claimedTask.subscribe((taskId) => lastValue = taskId);
+        component.claimedTask.subscribe((taskId) => (lastValue = taskId));
         component.onClaimAction('FAKE-TASK-CLAIM');
         expect(lastValue).toBe('FAKE-TASK-CLAIM');
     });
@@ -182,7 +180,6 @@ describe('TaskDetailsComponent', () => {
     }));
 
     describe('change detection', () => {
-
         let change;
         let nullChange;
 
@@ -209,7 +206,6 @@ describe('TaskDetailsComponent', () => {
     });
 
     describe('Form events', () => {
-
         beforeEach(() => {
             component.taskId = '123';
             fixture.detectChanges();
@@ -289,15 +285,13 @@ describe('TaskDetailsComponent', () => {
             expect(emitSpy).toHaveBeenCalled();
         });
 
-        it('should display a dialog to the user when a form error occurs', () => {
-            let dialogEl = window.document.querySelector('mat-dialog-content');
+        it('should display a dialog to the user when a form error occurs', async () => {
+            const dialogEl = await loader.getHarnessOrNull(MatDialogHarness);
             expect(dialogEl).toBeNull();
 
             component.onFormError({});
-            fixture.detectChanges();
 
-            dialogEl = window.document.querySelector('mat-dialog-content');
-            expect(dialogEl).not.toBeNull();
+            await loader.getHarness(MatDialogHarness);
         });
 
         it('should emit a task created event when checklist task is created', () => {
@@ -306,10 +300,9 @@ describe('TaskDetailsComponent', () => {
             component.onChecklistTaskCreated(mockTask);
             expect(emitSpy).toHaveBeenCalled();
         });
-   });
+    });
 
     describe('Comments', () => {
-
         it('should comments be readonly if the task is complete and no user are involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
@@ -381,27 +374,31 @@ describe('TaskDetailsComponent', () => {
     });
 
     describe('assign task to user', () => {
-
         beforeEach(() => {
             component.taskId = '123';
             fixture.detectChanges();
         });
 
         it('should return an observable with user search results', () => {
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([{
-                id: 1,
-                firstName: 'fake-test-1',
-                lastName: 'fake-last-1',
-                email: 'fake-test-1@test.com'
-            }, {
-                id: 2,
-                firstName: 'fake-test-2',
-                lastName: 'fake-last-2',
-                email: 'fake-test-2@test.com'
-            }]));
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(
+                of([
+                    {
+                        id: 1,
+                        firstName: 'fake-test-1',
+                        lastName: 'fake-last-1',
+                        email: 'fake-test-1@test.com'
+                    },
+                    {
+                        id: 2,
+                        firstName: 'fake-test-2',
+                        lastName: 'fake-last-2',
+                        email: 'fake-test-2@test.com'
+                    }
+                ])
+            );
 
             let lastValue: UserProcessModel[];
-            component.peopleSearch.subscribe((users) => lastValue = users);
+            component.peopleSearch.subscribe((users) => (lastValue = users));
             component.searchUser('fake-search-word');
 
             expect(lastValue.length).toBe(2);
@@ -415,7 +412,7 @@ describe('TaskDetailsComponent', () => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
             let lastValue: UserProcessModel[];
-            component.peopleSearch.subscribe((users) => lastValue = users);
+            component.peopleSearch.subscribe((users) => (lastValue = users));
             component.searchUser('fake-search-word');
 
             expect(lastValue.length).toBe(0);

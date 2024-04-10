@@ -15,24 +15,12 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ComponentRef,
-    OnInit,
-    ComponentFactoryResolver,
-    ViewChild,
-    ViewContainerRef,
-    OnDestroy,
-    OnChanges
-} from '@angular/core';
+import { Component, Input, ComponentRef, OnInit, ViewChild, ViewContainerRef, OnDestroy, OnChanges } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 
 @Component({
     selector: 'adf-preview-extension',
-    template: `
-    <div #content></div>
-  `
+    template: ` <div #content></div> `
 })
 export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('content', { read: ViewContainerRef, static: true })
@@ -52,10 +40,7 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
 
     private componentRef: ComponentRef<any>;
 
-    constructor(
-        private extensionService: ExtensionService,
-        private componentFactoryResolver: ComponentFactoryResolver
-    ) {}
+    constructor(private extensionService: ExtensionService) {}
 
     ngOnInit() {
         if (!this.id) {
@@ -64,14 +49,9 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
 
         const componentType = this.extensionService.getComponentById(this.id);
         if (componentType) {
-            const factory = this.componentFactoryResolver.resolveComponentFactory(
-                componentType
-            );
-            if (factory) {
-                this.content.clear();
-                this.componentRef = this.content.createComponent(factory, 0);
-                this.updateInstance();
-            }
+            this.content.clear();
+            this.componentRef = this.content.createComponent(componentType, { index: 0 });
+            this.updateInstance();
         }
     }
 

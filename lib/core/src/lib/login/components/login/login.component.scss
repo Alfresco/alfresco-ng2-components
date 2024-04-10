@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@import '../../../styles/mixins';
 
 .adf-login {
     @include flex-column;
@@ -63,7 +63,7 @@
         box-sizing: border-box;
     }
 
-    @media (max-width: 482px) {
+    @media screen and (width <= 482px) {
         .adf-login-card-wide {
             width: calc(100% - 32px);
         }
@@ -185,6 +185,8 @@
 
     .adf-login__field {
         margin: 1em 0 0;
+        display: block;
+        padding-bottom: 18px;
         font-size: var(--theme-subheading-2-font-size);
 
         & input:-webkit-autofill {
@@ -219,13 +221,6 @@
 
     .adf-login__remember-me .adf-login-remember-me-label {
         opacity: 0.87;
-    }
-
-    .adf-login__field {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        padding-bottom: 18px;
     }
 
     .adf-login-remember-me:has(.adf-login-remember-me-label) {

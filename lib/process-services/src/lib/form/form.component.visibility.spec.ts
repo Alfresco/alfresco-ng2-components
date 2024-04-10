@@ -35,17 +35,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';
 import { TaskRepresentation } from '@alfresco/js-api';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('FormComponent UI and visibility', () => {
     let component: FormComponent;
     let taskService: TaskService;
     let taskFormService: TaskFormService;
     let fixture: ComponentFixture<FormComponent>;
-
-    const openSelect = () => {
-        const dropdown = fixture.debugElement.nativeElement.querySelector('.mat-select-trigger');
-        dropdown.click();
-    };
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -54,6 +53,7 @@ describe('FormComponent UI and visibility', () => {
         });
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
         taskService = TestBed.inject(TaskService);
         taskFormService = TestBed.inject(TaskFormService);
     });
@@ -124,30 +124,23 @@ describe('FormComponent UI and visibility', () => {
 
             const change = new SimpleChange(null, 1, true);
             component.ngOnChanges({ taskId: change });
-            fixture.detectChanges();
-            await fixture.whenStable();
 
-            openSelect();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            const dropdown = await loader.getHarness(MatSelectHarness);
+            await dropdown.open();
+            const options = await dropdown.getOptions();
 
             const optOne = options[1];
             const optTwo = options[2];
             const optThree = options[3];
 
-            expect(optOne.nativeElement.innerText.trim()).toEqual('united kingdom');
-            expect(optTwo.nativeElement.innerText.trim()).toEqual('italy');
-            expect(optThree.nativeElement.innerText.trim()).toEqual('france');
+            expect((await optOne.getText()).trim()).toEqual('united kingdom');
+            expect((await optTwo.getText()).trim()).toEqual('italy');
+            expect((await optThree.getText()).trim()).toEqual('france');
 
-            optTwo.nativeElement.click();
+            await optTwo.click();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const dropdown = fixture.debugElement.queryAll(By.css('#country'));
-            expect(dropdown[0].nativeElement.innerText.trim()).toEqual('italy');
+            const dropdownCountries = fixture.debugElement.queryAll(By.css('#country'));
+            expect(dropdownCountries[0].nativeElement.innerText.trim()).toEqual('italy');
         });
 
         describe('Visibility conditions', () => {

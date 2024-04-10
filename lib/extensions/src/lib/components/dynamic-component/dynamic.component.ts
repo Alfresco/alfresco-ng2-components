@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ComponentRef,
-    ComponentFactoryResolver,
-    ViewChild,
-    ViewContainerRef,
-    OnDestroy,
-    OnChanges,
-    SimpleChanges
-} from '@angular/core';
+import { Component, Input, ComponentRef, ViewChild, ViewContainerRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 import { ExtensionComponent } from '../../services/component-register.service';
 
@@ -47,7 +37,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     private componentRef: ComponentRef<ExtensionComponent>;
     private loaded: boolean = false;
 
-    constructor(private extensions: ExtensionService, private componentFactoryResolver: ComponentFactoryResolver) {}
+    constructor(private extensions: ExtensionService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (!this.loaded) {
@@ -73,13 +63,8 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     private loadComponent() {
         const componentType = this.extensions.getComponentById<ExtensionComponent>(this.id);
         if (componentType) {
-            const factory = this.componentFactoryResolver.resolveComponentFactory(
-                componentType
-            );
-            if (factory) {
-                this.content.clear();
-                this.componentRef = this.content.createComponent(factory, 0);
-            }
+            this.content.clear();
+            this.componentRef = this.content.createComponent(componentType, { index: 0 });
         }
     }
 
@@ -97,7 +82,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     }
 
     private componentCreated(): boolean {
-        return !!this.componentRef  && !!this.componentRef.instance;
+        return !!this.componentRef && !!this.componentRef.instance;
     }
 
     private lifecycleHookIsImplemented(lifecycleMethod: string): boolean {

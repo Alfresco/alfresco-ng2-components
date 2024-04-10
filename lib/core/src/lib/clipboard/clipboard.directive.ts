@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, Component, ViewContainerRef, ComponentFactoryResolver, ViewEncapsulation, OnInit } from '@angular/core';
+import { Directive, Input, HostListener, Component, ViewContainerRef, ViewEncapsulation, OnInit } from '@angular/core';
 import { ClipboardService } from './clipboard.service';
 
 @Directive({
@@ -36,16 +36,12 @@ export class ClipboardDirective {
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('clipboard-notification') message: string;
 
-    constructor(private clipboardService: ClipboardService,
-                public viewContainerRef: ViewContainerRef,
-                private resolver: ComponentFactoryResolver) {}
-
+    constructor(private clipboardService: ClipboardService, public viewContainerRef: ViewContainerRef) {}
 
     @HostListener('mouseenter')
     showTooltip() {
         if (this.placeholder) {
-            const componentFactory = this.resolver.resolveComponentFactory(ClipboardComponent);
-            const componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
+            const componentRef = this.viewContainerRef.createComponent(ClipboardComponent).instance;
             componentRef.placeholder = this.placeholder;
         }
     }
@@ -70,14 +66,14 @@ export class ClipboardDirective {
         }
     }
 
-    private copyContentToClipboard(content) {
+    private copyContentToClipboard(content: string) {
         this.clipboardService.copyContentToClipboard(content, this.message);
     }
 }
 
 @Component({
     selector: 'adf-copy-content-tooltip',
-    template: `<span class='adf-copy-tooltip'>{{ placeholder | translate }} </span>`,
+    template: `<span class="adf-copy-tooltip">{{ placeholder | translate }} </span>`,
     encapsulation: ViewEncapsulation.None
 })
 export class ClipboardComponent implements OnInit {

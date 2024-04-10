@@ -92,6 +92,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@alfresco/eslint-plugin-eslint-angular": "file:lib/eslint-angular",
     "@angular-devkit/build-angular": "14.1.3",
     "@angular-devkit/schematics": "~14.2.12",
     "@angular-eslint/eslint-plugin": "15.2.1",

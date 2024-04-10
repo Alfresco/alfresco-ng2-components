@@ -33,6 +33,9 @@ import {
 } from '../mocks/task-details-cloud.mock';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -44,6 +47,7 @@ describe('TaskHeaderCloudComponent', () => {
     let getCandidateUsersSpy: jasmine.Spy;
     let isTaskEditableSpy: jasmine.Spy;
     let alfrescoApiService: AlfrescoApiService;
+    let loader: HarnessLoader;
 
     const mockCandidateUsers = ['mockuser1', 'mockuser2', 'mockuser3'];
     const mockCandidateGroups = ['mockgroup1', 'mockgroup2', 'mockgroup3'];
@@ -82,6 +86,7 @@ describe('TaskHeaderCloudComponent', () => {
         isTaskEditableSpy = spyOn(taskCloudService, 'isTaskEditable').and.returnValue(true);
         getCandidateUsersSpy = spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of(mockCandidateUsers));
         getCandidateGroupsSpy = spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of(mockCandidateGroups));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -130,19 +135,14 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should display priority with default values', async () => {
             fixture.detectChanges();
+            const dropdown = await loader.getHarness(MatSelectHarness);
+            await dropdown.open();
 
-            const priorityEl = fixture.debugElement.nativeElement.querySelector('[data-automation-id="header-priority"] .mat-select-trigger');
-            expect(priorityEl).toBeDefined();
-            expect(priorityEl).not.toBeNull();
-
-            priorityEl.click();
-            fixture.detectChanges();
-
-            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(options[0].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE');
-            expect(options[1].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
-            expect(options[2].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL');
-            expect(options[3].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH');
+            const options = await dropdown.getOptions();
+            expect(await options[0].getText()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE');
+            expect(await options[1].getText()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+            expect(await options[2].getText()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL');
+            expect(await options[3].getText()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH');
         });
 
         it('should display due date', async () => {

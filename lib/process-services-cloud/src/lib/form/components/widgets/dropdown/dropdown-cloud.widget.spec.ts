@@ -41,8 +41,12 @@ import {
     mockVariablesWithDefaultJson,
     mockProcessVariablesWithJson
 } from '../../../mocks/dropdown.mock';
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('DropdownCloudWidgetComponent', () => {
 
@@ -50,17 +54,9 @@ describe('DropdownCloudWidgetComponent', () => {
     let widget: DropdownCloudWidgetComponent;
     let formCloudService: FormCloudService;
     let logService: LogService;
-    let overlayContainer: OverlayContainer;
     let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
     let element: HTMLElement;
-
-    const openSelect = async (_selector?: string) => {
-        const dropdown: HTMLElement = element.querySelector('.mat-select-trigger');
-        dropdown.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-    };
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -75,8 +71,8 @@ describe('DropdownCloudWidgetComponent', () => {
 
         formService = TestBed.inject(FormService);
         formCloudService = TestBed.inject(FormCloudService);
-        overlayContainer = TestBed.inject(OverlayContainer);
         logService = TestBed.inject(LogService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => fixture.destroy());
@@ -89,9 +85,9 @@ describe('DropdownCloudWidgetComponent', () => {
                 name: 'date-name',
                 type: 'dropdown',
                 readOnly: false,
-                restUrl: 'https://fake-rest-url'
+                restUrl: 'https://fake-rest-url',
+                options: [{ id: 'empty', name: 'Choose one...' }]
             });
-            widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
             widget.field.isVisible = true;
             fixture.detectChanges();
         });
@@ -109,25 +105,16 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should select the default value when an option is chosen as default', async () => {
             widget.field.value = 'option_2';
-            widget.ngOnInit();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const dropDownElement: any = element.querySelector('#dropdown-id');
-            expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
-            expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
+            expect(widget.fieldValue).toEqual('option_2');
         });
 
         it('should select the empty value when no default is chosen', async () => {
             widget.field.value = 'empty';
-            widget.ngOnInit();
-            fixture.detectChanges();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
 
-            await openSelect('#dropdown-id');
-
-            const dropDownElement = element.querySelector('#dropdown-id');
-            expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
+            expect(widget.fieldValue).toEqual('empty');
         });
 
         it('should load data from restUrl and populate options', async () => {
@@ -137,24 +124,16 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.restIdProperty = 'name';
 
             widget.ngOnInit();
-            fixture.detectChanges();
-            await fixture.whenStable();
 
-            const dropdown = fixture.debugElement.query(By.css('mat-select'));
-            dropdown.nativeElement.click();
-            fixture.detectChanges();
-            await fixture.whenStable();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
 
-            const optOne = fixture.debugElement.query(By.css('[id="opt_1"]'));
-            const optTwo = fixture.debugElement.query(By.css('[id="opt_2"]'));
-            const optThree = fixture.debugElement.query(By.css('[id="opt_3"]'));
-            const allOptions = fixture.debugElement.queryAll(By.css('mat-option'));
-
+            const allOptions = await dropdown.getOptions();
             expect(jsonDataSpy).toHaveBeenCalled();
             expect(allOptions.length).toEqual(3);
-            expect(optOne.nativeElement.innerText).toEqual('option_1');
-            expect(optTwo.nativeElement.innerText).toEqual('option_2');
-            expect(optThree.nativeElement.innerText).toEqual('option_3');
+            expect(await allOptions[0].getText()).toEqual('option_1');
+            expect(await allOptions[1].getText()).toEqual('option_2');
+            expect(await allOptions[2].getText()).toEqual('option_3');
         });
 
         it('should show error message if the restUrl failed to fetch options', async () => {
@@ -165,13 +144,10 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.restIdProperty = 'name';
 
             widget.ngOnInit();
-            fixture.detectChanges();
-            await fixture.whenStable();
 
-            const dropdown = fixture.debugElement.query(By.css('mat-select'));
-            dropdown.nativeElement.click();
-            fixture.detectChanges();
-            await fixture.whenStable();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
             expect(jsonDataSpy).toHaveBeenCalled();
             expect(widget.isRestApiFailed).toBe(true);
@@ -199,12 +175,11 @@ describe('DropdownCloudWidgetComponent', () => {
             ] as any));
 
             widget.ngOnInit();
-            fixture.detectChanges();
 
-            await openSelect();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
 
-            const option = fixture.debugElement.query(By.css('.mat-option-text'));
-            expect(option.nativeElement.innerText).toBe('default1_value');
+            expect((await (await dropdown.getOptions())[0].getText())).toEqual('default1_value');
         });
 
         it('should preselect dropdown widget value when String (defined value) passed ', async () => {
@@ -224,11 +199,10 @@ describe('DropdownCloudWidgetComponent', () => {
             ] as any));
 
             widget.ngOnInit();
-            fixture.detectChanges();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
 
-            await openSelect();
-            const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-            expect(options[0].nativeElement.innerText).toBe('default1_value');
+            expect((await (await dropdown.getOptions())[0].getText())).toEqual('default1_value');
             expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
         });
 
@@ -239,12 +213,11 @@ describe('DropdownCloudWidgetComponent', () => {
             ];
 
             widget.ngOnInit();
-            fixture.detectChanges();
-            await openSelect();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+            await dropdown.clickOptions({ selector: '[id="empty"]' });
 
-            const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
             widget.touched = true;
-            defaultOption.triggerEventHandler('click', null);
             fixture.detectChanges();
 
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
@@ -259,13 +232,11 @@ describe('DropdownCloudWidgetComponent', () => {
             ];
 
             widget.ngOnInit();
-            fixture.detectChanges();
-            await openSelect();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
 
-            const optionOne: any = fixture.debugElement.query(By.css('[id="opt_1"]'));
             widget.touched = true;
-            optionOne.triggerEventHandler('click', null);
-            fixture.detectChanges();
+            await dropdown.clickOptions({ selector: '[id="opt_1"]' });
 
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
             expect(requiredErrorElement).toBeFalsy();
@@ -278,32 +249,23 @@ describe('DropdownCloudWidgetComponent', () => {
             ];
 
             widget.ngOnInit();
-            fixture.detectChanges();
-            await openSelect();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
 
-            const optionOne = fixture.debugElement.query(By.css('[id="opt_1"]'));
-            optionOne.triggerEventHandler('click', null);
+            await dropdown.clickOptions({ selector: '[id="opt_1"]' });
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            let selectedValueElement = fixture.debugElement.query(By.css('.mat-select-value-text'));
-
-            expect(selectedValueElement.nativeElement.innerText).toEqual('option_1');
+            expect(await dropdown.getValueText()).toEqual('option_1');
             expect(widget.fieldValue).toEqual('opt_1');
 
-            await openSelect();
-            const defaultOption: any = fixture.debugElement.query(By.css('[id="empty"]'));
-            defaultOption.triggerEventHandler('click', null);
+            await dropdown.open();
+            await dropdown.clickOptions({ selector: '[id="empty"]' });
 
-            fixture.detectChanges();
-            await fixture.whenStable();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            const dropdownLabel = await formField.getLabel();
 
-            const dropdownLabel = fixture.debugElement.query(By.css('.adf-dropdown-widget mat-label'));
-            selectedValueElement = fixture.debugElement.query(By.css('.mat-select-value-text'));
-
-            expect(dropdownLabel.nativeNode.innerText).toEqual('This is a mock none option');
+            expect(dropdownLabel).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
-            expect(selectedValueElement).toBeFalsy();
+            expect(await dropdown.getValueText()).toEqual('');
         });
     });
 
@@ -318,28 +280,25 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const dropdownInput = fixture.debugElement.query(By.css('mat-select')).nativeElement;
-            dropdownInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdownInput = await dropdown.host();
+            dropdownInput.dispatchEvent('mouseenter');
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
             expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+            expect(await tooltipElement.getTooltipText()).toBe('my custom tooltip');
+            expect(await tooltipElement.isOpen()).toBeTruthy();
           });
 
         it('should hide tooltip', async () => {
-            const dropdownInput = fixture.debugElement.query(By.css('mat-select')).nativeElement;
-            dropdownInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdownInput = await dropdown.host();
+            await dropdownInput.dispatchEvent('mouseenter');
 
-            dropdownInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            await dropdownInput.dispatchEvent('mouseleave');
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeFalsy();
         });
     });
 
@@ -396,15 +355,18 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should show filter if more than 5 options found', async () => {
-            await openSelect();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+
             const filter = fixture.debugElement.query(By.css('.adf-select-filter-input input'));
             expect(filter.nativeElement).toBeDefined('Filter is not visible');
         });
 
         it('should be able to filter the options by search', async () => {
-            await openSelect();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
 
-            let options: HTMLElement[] = Array.from(overlayContainer.getContainerElement().querySelectorAll('mat-option'));
+            let options = await dropdown.getOptions();
             expect(options.length).toBe(6);
 
             const filter = fixture.debugElement.query(By.css('.adf-select-filter-input input'));
@@ -412,17 +374,19 @@ describe('DropdownCloudWidgetComponent', () => {
             filter.nativeElement.dispatchEvent(new Event('input'));
 
             fixture.detectChanges();
-            options = Array.from(overlayContainer.getContainerElement().querySelectorAll('mat-option'));
+            options = await dropdown.getOptions();
             expect(options.length).toBe(1);
-            expect(options[0].innerText).toEqual('option_1');
+            expect(await options[0].getText()).toEqual('option_1');
         });
 
         it('should be able to select the options if filter present', async () => {
-            await openSelect();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
 
-            const options: HTMLElement[] = Array.from(overlayContainer.getContainerElement().querySelectorAll('mat-option'));
+            const options = await dropdown.getOptions();
             expect(options.length).toBe(6);
-            options[0].click();
+
+            await options[0].click();
             expect(widget.field.value).toEqual('opt_1');
             expect(widget.field.form.values['dropdown-id']).toEqual(filterOptionList[0]);
         });
@@ -443,18 +407,10 @@ describe('DropdownCloudWidgetComponent', () => {
                     { id: 'opt_2', name: 'option_2' }
                 ]
             });
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
 
-            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-select-value-text span'));
-            expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_1, option_2');
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
 
-            await openSelect('#dropdown-id');
-
-            const options = fixture.debugElement.queryAll(By.css('.mat-selected span'));
-            expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
-                .toEqual(['option_1', 'option_2']);
+            expect(await dropdown.getValueText()).toEqual('option_1, option_2');
         });
 
         it('should support multiple options', async () => {
@@ -466,13 +422,10 @@ describe('DropdownCloudWidgetComponent', () => {
                 selectionType: 'multiple',
                 options: fakeOptionList
             });
-            fixture.detectChanges();
-            await openSelect('#dropdown-id');
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.clickOptions({ selector: '[id="opt_1"]' });
+            await dropdown.clickOptions({ selector: '[id="opt_2"]' });
 
-            const optionOne = fixture.debugElement.query(By.css('[id="opt_1"]'));
-            const optionTwo = fixture.debugElement.query(By.css('[id="opt_2"]'));
-            optionOne.triggerEventHandler('click', null);
-            optionTwo.triggerEventHandler('click', null);
             expect(widget.field.value).toEqual([
                 { id: 'opt_1', name: 'option_1' },
                 { id: 'opt_2', name: 'option_2' }
@@ -512,18 +465,9 @@ describe('DropdownCloudWidgetComponent', () => {
                 }
             ] as any));
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
 
-            const selectedPlaceHolder = fixture.debugElement.query(By.css('.mat-select-value-text span'));
-            expect(selectedPlaceHolder.nativeElement.getInnerHTML()).toEqual('option_3, option_4');
-
-            await openSelect('#dropdown-id');
-
-            const options = fixture.debugElement.queryAll(By.css('.mat-selected span'));
-            expect(Array.from(options).map(({ nativeElement }) => nativeElement.getInnerHTML().trim()))
-                .toEqual(['option_3', 'option_4']);
+            expect(await dropdown.getValueText()).toEqual('option_3, option_4');
         });
 
         it('should support multiple options for rest options', async () => {
@@ -556,13 +500,10 @@ describe('DropdownCloudWidgetComponent', () => {
                 }
             ] as any));
 
-            fixture.detectChanges();
-            await openSelect('#dropdown-id');
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.clickOptions({ selector: '[id="opt_2"]' });
+            await dropdown.clickOptions({ selector: '[id="opt_4"]' });
 
-            const optionOne = fixture.debugElement.query(By.css('[id="opt_2"]'));
-            const optionTwo = fixture.debugElement.query(By.css('[id="opt_4"]'));
-            optionOne.triggerEventHandler('click', null);
-            optionTwo.triggerEventHandler('click', null);
             expect(widget.field.value).toEqual([
                 { id: 'opt_2', name: 'option_2' },
                 { id: 'opt_4', name: 'option_4' }
@@ -596,13 +537,12 @@ describe('DropdownCloudWidgetComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('should reset the options for a linked dropdown with restUrl when the parent dropdown selection changes to empty', async () => {
+            it('should reset the options for a linked dropdown with restUrl when the parent dropdown selection changes to empty', () => {
                 widget.field.options = mockConditionalEntries[1].options;
                 parentDropdown.value = undefined;
                 widget.selectionChangedForField(parentDropdown);
 
                 fixture.detectChanges();
-                await openSelect('child-dropdown-id');
 
                 expect(widget.field.options).toEqual([]);
             });
@@ -615,16 +555,15 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.selectionChangedForField(parentDropdown);
 
                 fixture.detectChanges();
-                await openSelect('child-dropdown-id');
-
-                const optOne: any = fixture.debugElement.query(By.css('[id="LO"]'));
-                const optTwo: any = fixture.debugElement.query(By.css('[id="MA"]'));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+                await dropdown.open();
+                const allOptions = await dropdown.getOptions();
 
                 expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { parentDropdown: 'mock-value' });
-                expect(optOne.context.value).toBe('LO');
-                expect(optOne.context.viewValue).toBe('LONDON');
-                expect(optTwo.context.value).toBe('MA');
-                expect(optTwo.context.viewValue).toBe('MANCHESTER');
+                expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('LO');
+                expect(await allOptions[0].getText()).toEqual('LONDON');
+                expect(await (await allOptions[1].host()).getAttribute('id')).toEqual('MA');
+                expect(await allOptions[1].getText()).toEqual('MANCHESTER');
             });
 
             it('should reset previous child options if the rest url failed for a linked dropdown', async () => {
@@ -640,7 +579,8 @@ describe('DropdownCloudWidgetComponent', () => {
                 };
 
                 selectParentOption('UK');
-                await openSelect('child-dropdown-id');
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+                await dropdown.open();
                 const failedErrorMsgElement1 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
 
                 expect(widget.isRestApiFailed).toBe(false);
@@ -649,7 +589,6 @@ describe('DropdownCloudWidgetComponent', () => {
 
                 jsonDataSpy.and.returnValue(throwError('Failed to fetch options'));
                 selectParentOption('GR');
-                await openSelect('child-dropdown-id');
                 const failedErrorMsgElement2 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
 
                 expect(widget.isRestApiFailed).toBe(true);
@@ -658,7 +597,6 @@ describe('DropdownCloudWidgetComponent', () => {
 
                 jsonDataSpy.and.returnValue(of(mockSecondRestDropdownOptions));
                 selectParentOption('IT');
-                await openSelect('child-dropdown-id');
                 const failedErrorMsgElement3 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
 
                 expect(widget.isRestApiFailed).toBe(false);
@@ -708,28 +646,27 @@ describe('DropdownCloudWidgetComponent', () => {
                 parentDropdown.value = 'GR';
                 widget.selectionChangedForField(parentDropdown);
                 fixture.detectChanges();
-                await openSelect('child-dropdown-id');
 
-                const optOne: any = fixture.debugElement.query(By.css('[id="empty"]'));
-                const optTwo: any = fixture.debugElement.query(By.css('[id="ATH"]'));
-                const optThree: any = fixture.debugElement.query(By.css('[id="SKG"]'));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+                await dropdown.open();
+                const allOptions = await dropdown.getOptions();
 
                 expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
-                expect(optOne.context.value).toBe(undefined);
-                expect(optOne.context.viewValue).toBe('Choose one...');
-                expect(optTwo.context.value).toBe('ATH');
-                expect(optTwo.context.viewValue).toBe('Athens');
-                expect(optThree.context.value).toBe('SKG');
-                expect(optThree.context.viewValue).toBe('Thessaloniki');
+
+                expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('empty');
+                expect(await allOptions[0].getText()).toEqual('Choose one...');
+                expect(await (await allOptions[1].host()).getAttribute('id')).toEqual('ATH');
+                expect(await allOptions[1].getText()).toEqual('Athens');
+                expect(await (await allOptions[2].host()).getAttribute('id')).toEqual('SKG');
+                expect(await allOptions[2].getText()).toEqual('Thessaloniki');
             });
 
-            it('should reset the options for a linked dropdown when the parent dropdown selection changes to empty', async () => {
+            it('should reset the options for a linked dropdown when the parent dropdown selection changes to empty', () => {
                 widget.field.options = mockConditionalEntries[1].options;
                 parentDropdown.value = undefined;
                 widget.selectionChangedForField(parentDropdown);
 
                 fixture.detectChanges();
-                await openSelect('child-dropdown-id');
 
                 expect(widget.field.options).toEqual([]);
             });
@@ -930,55 +867,49 @@ describe('DropdownCloudWidgetComponent', () => {
         it('should display options persisted from process variable', async () => {
             widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
             fixture.detectChanges();
-            await openSelect('variable-dropdown-id');
-
-            const optOne: any = fixture.debugElement.query(By.css('[id="player-1"]'));
-            const optTwo: any = fixture.debugElement.query(By.css('[id="player-2"]'));
-            const optThree: any = fixture.debugElement.query(By.css('[id="player-3"]'));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+            const allOptions = await dropdown.getOptions();
 
             expect(widget.field.options.length).toEqual(3);
-            expect(optOne.context.value).toBe('player-1');
-            expect(optOne.context.viewValue).toBe('Lionel Messi');
-            expect(optTwo.context.value).toBe('player-2');
-            expect(optTwo.context.viewValue).toBe('Cristiano Ronaldo');
-            expect(optThree.context.value).toBe('player-3');
-            expect(optThree.context.viewValue).toBe('Robert Lewandowski');
+            expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('player-1');
+            expect(await allOptions[0].getText()).toEqual('Lionel Messi');
+            expect(await (await allOptions[1].host()).getAttribute('id')).toEqual('player-2');
+            expect(await allOptions[1].getText()).toEqual('Cristiano Ronaldo');
+            expect(await (await allOptions[2].host()).getAttribute('id')).toEqual('player-3');
+            expect(await allOptions[2].getText()).toEqual('Robert Lewandowski');
         });
 
         it('should display options persisted from form variable if there are NO process variables', async () => {
             widget.field = getVariableDropdownWidget('json-form-variable', 'countries', 'id', 'name', [], mockFormVariableWithJson);
             fixture.detectChanges();
-            await openSelect('variable-dropdown-id');
-
-            const optOne: any = fixture.debugElement.query(By.css('[id="PL"]'));
-            const optTwo: any = fixture.debugElement.query(By.css('[id="UK"]'));
-            const optThree: any = fixture.debugElement.query(By.css('[id="GR"]'));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+            const allOptions = await dropdown.getOptions();
 
             expect(widget.field.options.length).toEqual(3);
-            expect(optOne.context.value).toBe('PL');
-            expect(optOne.context.viewValue).toBe('Poland');
-            expect(optTwo.context.value).toBe('UK');
-            expect(optTwo.context.viewValue).toBe('United Kingdom');
-            expect(optThree.context.value).toBe('GR');
-            expect(optThree.context.viewValue).toBe('Greece');
+            expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('PL');
+            expect(await allOptions[0].getText()).toEqual('Poland');
+            expect(await (await allOptions[1].host()).getAttribute('id')).toEqual('UK');
+            expect(await allOptions[1].getText()).toEqual('United Kingdom');
+            expect(await (await allOptions[2].host()).getAttribute('id')).toEqual('GR');
+            expect(await allOptions[2].getText()).toEqual('Greece');
         });
 
         it('should display default options if config options are NOT provided', async () => {
             widget.field = getVariableDropdownWidget('variables.json-default-variable', null, null, null, mockVariablesWithDefaultJson);
             fixture.detectChanges();
-            await openSelect('variable-dropdown-id');
-
-            const optOne: any = fixture.debugElement.query(By.css('[id="default-pet-1"]'));
-            const optTwo: any = fixture.debugElement.query(By.css('[id="default-pet-2"]'));
-            const optThree: any = fixture.debugElement.query(By.css('[id="default-pet-3"]'));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+            const allOptions = await dropdown.getOptions();
 
             expect(widget.field.options.length).toEqual(3);
-            expect(optOne.context.value).toBe('default-pet-1');
-            expect(optOne.context.viewValue).toBe('Dog');
-            expect(optTwo.context.value).toBe('default-pet-2');
-            expect(optTwo.context.viewValue).toBe('Cat');
-            expect(optThree.context.value).toBe('default-pet-3');
-            expect(optThree.context.viewValue).toBe('Parrot');
+            expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('default-pet-1');
+            expect(await allOptions[0].getText()).toEqual('Dog');
+            expect(await (await allOptions[1].host()).getAttribute('id')).toEqual('default-pet-2');
+            expect(await allOptions[1].getText()).toEqual('Cat');
+            expect(await (await allOptions[2].host()).getAttribute('id')).toEqual('default-pet-3');
+            expect(await allOptions[2].getText()).toEqual('Parrot');
         });
 
         it('should return empty array and display error when path is incorrect', () => {
