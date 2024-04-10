@@ -1,12 +1,12 @@
 .adf-version-list {
-    .cdk-virtual-scroll-content-wrapper {
-        max-width: 100%;
-    }
-
     &-viewport {
         height: 100%;
         overflow-x: hidden;
         display: flex;
+
+        :first-child {
+            max-width: 100%;
+        }
     }
 
     &-item {
