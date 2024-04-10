@@ -38,7 +38,13 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
-import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
+import { FormModule } from '../../form';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 describe('StartProcessComponent', () => {
     let appConfig: AppConfigService;
@@ -67,15 +73,18 @@ describe('StartProcessComponent', () => {
                 MatInputModule,
                 MatIconModule,
                 MatSelectModule,
-                MatAutocompleteModule],
+                MatAutocompleteModule
+            ],
             declarations: [StartProcessInstanceComponent],
-            providers:[ ProcessNamePipe,
-                        LocalizedDatePipe,
-                        ActivitiContentService,
-                        ProcessService,
-                        AppsProcessService,
-                        { provide: AppConfigService, useClass: AppConfigServiceMock },
-                        { provide: TranslationService, useClass: TranslationMock } ]
+            providers: [
+                ProcessNamePipe,
+                LocalizedDatePipe,
+                ActivitiContentService,
+                ProcessService,
+                AppsProcessService,
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
+            ]
         });
     });
 

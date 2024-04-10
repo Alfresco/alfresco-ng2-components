@@ -18,7 +18,17 @@
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn, DataTableModule, AppConfigServiceMock, AlfrescoApiServiceMock, AlfrescoApiService } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    DataRowEvent,
+    ObjectDataRow,
+    DataCellEvent,
+    ObjectDataColumn,
+    DataTableModule,
+    AppConfigServiceMock,
+    AlfrescoApiServiceMock,
+    AlfrescoApiService
+} from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
@@ -29,6 +39,9 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 declare let jasmine: any;
 
@@ -93,16 +106,9 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                DataTableModule,
-                NoopAnimationsModule,
-                MatProgressSpinnerModule,
-                HttpClientTestingModule,
-                TaskListComponent
-            ],
+            imports: [TranslateModule.forRoot(), DataTableModule, NoopAnimationsModule, MatProgressSpinnerModule, HttpClientTestingModule, TaskListComponent],
             declarations: [TaskListComponent],
-            providers:[
+            providers: [
                 TaskListService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
@@ -792,14 +798,8 @@ describe('TaskListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                MatProgressSpinnerModule,
-                ProcessTestingModule
-            ],
-            declarations: [
-                TaskListContextMenuComponent
-            ]
+            imports: [TranslateModule.forRoot(), MatProgressSpinnerModule, ProcessTestingModule],
+            declarations: [TaskListContextMenuComponent]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
