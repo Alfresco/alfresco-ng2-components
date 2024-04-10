@@ -1,5 +1,6 @@
 
-<mat-form-field [floatLabel]="'auto'" [attr.data-automation-id]="processFilterProperty.key">
+<mat-form-field floatLabel="auto" [attr.data-automation-id]="processFilterProperty.key">
+    <mat-label>{{ processFilterProperty.label | translate }}</mat-label>
     <mat-select
         placeholder="{{ processFilterProperty.label | translate }}"
         [value]="type"
@@ -12,7 +13,7 @@
 </mat-form-field>
 
 <ng-container *ngIf="isDateRangeType()">
-    <mat-form-field [floatLabel]="'auto'" class="adf-cloud-date-range-picker">
+    <mat-form-field floatLabel="auto" class="adf-cloud-date-range-picker">
         <mat-label>{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE_TITLE' | translate }}</mat-label>
         <mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="picker">
           <input matStartDate formControlName="from" placeholder="{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.START_DATE' | translate }}">
