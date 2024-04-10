@@ -96,6 +96,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@alfresco/eslint-plugin-eslint-angular": "file:lib/eslint-angular",
     "@angular-devkit/architect": "^0.1502.10",
     "@angular-devkit/build-angular": "15.2.10",
     "@angular-devkit/core": "15.2.10",
@@ -112,9 +113,6 @@
     "@editorjs/list": "1.9.0",
     "@editorjs/marker": "1.4.0",
     "@editorjs/underline": "1.1.0",
-    "editorjs-text-color-plugin": "2.0.4",
-    "editorjs-html": "3.4.3",
-    "editorjs-paragraph-with-alignment": "3.0.0",
     "@quanzo/change-font-size": "1.0.0",
     "@nrwl/angular": "15.9.3",
     "@nrwl/cli": "15.9.3",
