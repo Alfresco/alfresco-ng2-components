@@ -16,27 +16,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { SearchTextInputComponent } from './search-text-input.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchTriggerDirective } from './search-trigger.directive';
-import { MaterialModule } from '../material.module';
 
 @NgModule({
-    declarations: [
-        SearchTextInputComponent,
-        SearchTriggerDirective
-    ],
-    imports: [
-        CommonModule,
-        TranslateModule,
-        MaterialModule,
-        FormsModule
-    ],
-    exports: [
-        SearchTextInputComponent,
-        SearchTriggerDirective
-    ]
+    imports: [SearchTextInputComponent, SearchTriggerDirective],
+    exports: [SearchTextInputComponent, SearchTriggerDirective]
 })
 export class SearchTextModule {}
