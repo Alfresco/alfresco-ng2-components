@@ -61,12 +61,20 @@ export class FormFieldTypes {
         FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
     ];
 
+    static CONSTANT_VALUE_TYPES: string[] = [
+        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
+    ];
+
     static isReadOnlyType(type: string) {
         return FormFieldTypes.READONLY_TYPES.includes(type);
     }
 
     static isValidatableType(type: string) {
         return FormFieldTypes.VALIDATABLE_TYPES.includes(type);
+    }
+
+    static isConstantValueType(type: string) {
+        return FormFieldTypes.CONSTANT_VALUE_TYPES.includes(type);
     }
 
     static isContainerType(type: string) {

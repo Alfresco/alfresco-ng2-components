@@ -28,6 +28,11 @@ if [ -n "${APP_CONFIG_OAUTH2_CLIENTID}" ]; then
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
 fi
 
+if [ -n "${APP_CONFIG_OAUTH2_CLIENT_SECRET}" ]; then
+  sed -e "s/\"secret\": \".*\"/\"secret\": \"${APP_CONFIG_OAUTH2_CLIENT_SECRET}\"/g" \
+    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
+fi
+
 if [ -n "${APP_CONFIG_OAUTH2_IMPLICIT_FLOW}" ]; then
   sed -e "s/\"implicitFlow\": [^,]*/\"implicitFlow\": ${APP_CONFIG_OAUTH2_IMPLICIT_FLOW}/g" \
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
@@ -35,6 +40,26 @@ fi
 
 if [ -n "${APP_CONFIG_OAUTH2_CODE_FLOW}" ]; then
   sed -e "s/\"codeFlow\": [^,]*/\"codeFlow\": ${APP_CONFIG_OAUTH2_CODE_FLOW}/g" \
+    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
+fi
+
+if [ -n "${APP_CONFIG_OAUTH2_LOGOUT_URL}" ]; then
+  sed -e "s/\"logoutUrl\": [^,]*/\"logoutUrl\": ${APP_CONFIG_OAUTH2_LOGOUT_URL}/g" \
+    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
+fi
+
+if [ -n "${APP_CONFIG_OAUTH2_LOGOUT_PARAMETERS}" ]; then
+  sed -e "s/\"logoutParameters\": [^,]*/\"logoutParameters\": ${APP_CONFIG_OAUTH2_LOGOUT_PARAMETERS}/g" \
+    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
+fi
+
+if [ -n "${APP_CONFIG_OAUTH2_AUDIENCE}" ]; then
+  sed -e "s/\"audience\": [^,]*/\"audience\": ${APP_CONFIG_OAUTH2_AUDIENCE}/g" \
+    -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
+fi
+
+if [ -n "${APP_CONFIG_OAUTH2_SCOPE}" ]; then
+  sed -e "s/\"scope\": [^,]*/\"scope\": ${APP_CONFIG_OAUTH2_SCOPE}/g" \
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
 fi
 

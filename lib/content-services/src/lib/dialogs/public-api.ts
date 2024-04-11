@@ -18,6 +18,7 @@
 export * from './folder.dialog';
 export * from './node-lock.dialog';
 export * from './confirm.dialog';
+export * from './category-selector.dialog';
 
 export * from './dialog.module';
 export * from './library/library.dialog';

@@ -15,23 +15,10 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ViewChild,
-    ViewContainerRef,
-    OnInit,
-    OnDestroy,
-    ComponentRef,
-    ComponentFactoryResolver,
-    Inject,
-    SimpleChanges,
-    OnChanges
-} from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, SimpleChanges, OnChanges } from '@angular/core';
 import { SearchFilterService } from '../../services/search-filter.service';
-import { BaseQueryBuilderService } from '../../services/base-query-builder.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Observable } from 'rxjs';
+import { SearchQueryBuilderService } from '../../services';
 
 @Component({
     selector: 'adf-search-widget-container',
@@ -58,21 +45,14 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
 
     componentRef: ComponentRef<any>;
 
-    constructor(
-        private searchFilterService: SearchFilterService,
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: BaseQueryBuilderService,
-        private componentFactoryResolver: ComponentFactoryResolver
-    ) {}
+    constructor(private searchFilterService: SearchFilterService, private queryBuilder: SearchQueryBuilderService) {}
 
     ngOnInit() {
         const componentType = this.searchFilterService.widgets[this.selector];
         if (componentType) {
-            const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-            if (factory) {
-                this.content.clear();
-                this.componentRef = this.content.createComponent(factory, 0);
-                this.setupWidget(this.componentRef);
-            }
+            this.content.clear();
+            this.componentRef = this.content.createComponent(componentType, { index: 0 });
+            this.setupWidget(this.componentRef);
         }
     }
 

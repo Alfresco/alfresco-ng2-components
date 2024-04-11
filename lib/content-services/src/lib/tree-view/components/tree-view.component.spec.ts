@@ -23,10 +23,8 @@ import { of, throwError } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { NodeEntry } from '@alfresco/js-api';
 import { SimpleChange } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('TreeViewComponent', () => {
-
     let fixture: ComponentFixture<TreeViewComponent>;
     let element: HTMLElement;
     let treeService: TreeViewService;
@@ -34,7 +32,10 @@ describe('TreeViewComponent', () => {
 
     const fakeNodeList: TreeBaseNode[] = [
         {
-            nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true,
+            nodeId: 'fake-node-id',
+            name: 'fake-node-name',
+            level: 0,
+            expandable: true,
             node: { entry: { name: 'fake-node-name', id: 'fake-node-id' } } as any
         }
     ];
@@ -73,15 +74,11 @@ describe('TreeViewComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
     });
 
     describe('When there is a nodeId', () => {
-
         beforeEach(() => {
             treeService = TestBed.inject(TreeViewService);
             fixture = TestBed.createComponent(TreeViewComponent);
@@ -215,7 +212,6 @@ describe('TreeViewComponent', () => {
     });
 
     describe('When no nodeId is given', () => {
-
         let emptyElement: HTMLElement;
 
         beforeEach(() => {
@@ -237,7 +233,6 @@ describe('TreeViewComponent', () => {
     });
 
     describe('When invalid nodeId is given', () => {
-
         beforeEach(() => {
             fixture = TestBed.createComponent(TreeViewComponent);
             treeService = TestBed.inject(TreeViewService);

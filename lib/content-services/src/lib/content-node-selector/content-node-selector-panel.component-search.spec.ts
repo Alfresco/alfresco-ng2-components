@@ -26,7 +26,6 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
 import { mockSearchRequest } from '../mock/search-query.mock';
 import { SitesService } from '../common/services/sites.service';
@@ -70,12 +69,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
     };
 
     const triggerSearchResults = (searchResults: ResultSetPaging) => {
-        component.queryBuilderService.executed.next(searchResults);
+        const service = fixture.debugElement.injector.get(SearchQueryBuilderService);
+        service.executed.next(searchResults);
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
     });
@@ -89,8 +89,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
             nodeService = TestBed.inject(NodesApiService);
             sitesService = TestBed.inject(SitesService);
 
-            searchQueryBuilderService = component.queryBuilderService;
-            component.queryBuilderService.resetToDefaults();
+            searchQueryBuilderService = fixture.debugElement.injector.get(SearchQueryBuilderService);
+            searchQueryBuilderService.resetToDefaults();
 
             spyOn(nodeService, 'getNode').and.returnValue(
                 of(
@@ -416,7 +416,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(customResourcesService, 'hasCorrespondingNodeIds').and.returnValue(true);
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
 
-                await component.queryBuilderService.execute({ query: { query: 'search' } });
+                await searchQueryBuilderService.execute({ query: { query: 'search' } });
 
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
@@ -460,7 +460,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 getCorrespondingNodeIdsSpy.and.throwError('Failed');
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
-                await component.queryBuilderService.execute({ query: { query: 'search' } });
+                await searchQueryBuilderService.execute({ query: { query: 'search' } });
 
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
@@ -471,7 +471,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should the query restrict the search to the site and not to the currentFolderId in case is changed', async () => {
-                component.queryBuilderService.userQuery = 'search-term*';
+                searchQueryBuilderService.userQuery = 'search-term*';
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
                 component.siteChanged({ entry: { guid: 'my-site-id' } } as SiteEntry);
@@ -730,7 +730,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     expect(component.searchTerm).toBe('');
 
                     expect(component.infiniteScroll).toBeTruthy();
-                    expect(component.queryBuilderService.paging.maxItems).toBe(45);
+                    expect(searchQueryBuilderService.paging.maxItems).toBe(45);
                     expect(searchSpy).not.toHaveBeenCalled();
                 });
 
@@ -771,7 +771,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('Should set the scope to nodes when the component inits', () => {
                     const expectedScope: RequestScope = { locations: 'nodes' };
-                    const setScopeSpy = spyOn(component.queryBuilderService, 'setScope');
+                    const setScopeSpy = spyOn(searchQueryBuilderService, 'setScope');
                     component.ngOnInit();
 
                     expect(setScopeSpy).toHaveBeenCalledWith(expectedScope);

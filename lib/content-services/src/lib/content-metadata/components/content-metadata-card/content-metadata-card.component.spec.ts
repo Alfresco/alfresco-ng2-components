@@ -22,14 +22,12 @@ import { ContentMetadataCardComponent } from './content-metadata-card.component'
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { of } from 'rxjs';
 
 describe('ContentMetadataCardComponent', () => {
-
     let component: ContentMetadataCardComponent;
     let fixture: ComponentFixture<ContentMetadataCardComponent>;
     let contentMetadataService: ContentMetadataService;
@@ -41,10 +39,7 @@ describe('ContentMetadataCardComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         contentMetadataService = TestBed.inject(ContentMetadataService);
@@ -157,11 +152,11 @@ describe('ContentMetadataCardComponent', () => {
     it('should expand the card when custom display aspect is valid', () => {
         expect(component.expanded).toBeFalsy();
 
-        let displayAspect = new SimpleChange(null , 'EXIF', true);
+        let displayAspect = new SimpleChange(null, 'EXIF', true);
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
 
-        displayAspect = new SimpleChange('EXIF' , null, false);
+        displayAspect = new SimpleChange('EXIF', null, false);
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
     });

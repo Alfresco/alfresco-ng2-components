@@ -22,7 +22,6 @@ import { DOCUMENT } from '@angular/common';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { ContentNodeShareModule } from './content-node-share.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-node-share-test-component',
@@ -32,8 +31,8 @@ import { TranslateModule } from '@ngx-translate/core';
             #shareRef="adfShare"
             [baseShareUrl]="baseShareUrl"
             [adf-share]="documentList.selection[0]"
-            [title]="shareRef.isShared ? 'Shared' : 'Not Shared'">
-        </button>
+            [title]="shareRef.isShared ? 'Shared' : 'Not Shared'"
+        ></button>
     `
 })
 class NodeShareTestComponent {
@@ -52,15 +51,8 @@ describe('NodeSharedDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreModule.forRoot(),
-                ContentTestingModule,
-                ContentNodeShareModule
-            ],
-            declarations: [
-                NodeShareTestComponent
-            ]
+            imports: [CoreModule.forRoot(), ContentTestingModule, ContentNodeShareModule],
+            declarations: [NodeShareTestComponent]
         });
         fixture = TestBed.createComponent(NodeShareTestComponent);
         document = TestBed.inject(DOCUMENT);

@@ -1,0 +1,65 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "color-function-notation": "legacy",
+    "alpha-value-notation": "number",
+    "color-no-invalid-hex": true,
+    "function-calc-no-unspaced-operator": true,
+    "function-name-case": "lower",
+    "function-url-quotes": "always",
+    "function-url-scheme-disallowed-list": [
+      "data"
+    ],
+    "length-zero-no-unit": true,
+    "string-no-newline": true,
+    "unit-no-unknown": true,
+    "unit-allowed-list": [
+      "px",
+      "%",
+      "deg",
+      "ms",
+      "em",
+      "vh",
+      "vw",
+      "vmin",
+      "s",
+      "rem"
+    ],
+    "shorthand-property-no-redundant-values": true,
+    "declaration-no-important": true,
+    "no-duplicate-at-import-rules": true,
+    "declaration-block-no-duplicate-properties": [
+      true,
+      {
+        "ignore": [
+          "consecutive-duplicates-with-different-values"
+        ]
+      }
+    ],
+    "declaration-block-single-line-max-declarations": 1,
+    "declaration-property-value-disallowed-list": [
+      {
+        "/.*/": [
+          "initial"
+        ]
+      },
+      {
+        "message": "The `initial` value is not supported in IE."
+      }
+    ],
+    "selector-pseudo-element-colon-notation": "double",
+    "selector-pseudo-element-no-unknown": [true, {
+      "ignorePseudoElements": ["ng-deep"]
+    }],
+    "selector-type-case": "lower",
+    "selector-max-id": 0,
+    "selector-class-pattern": [
+      "^_?(adf|adf-|app|app-|example-|demo-|textLayer|canvasWrapper|page)",
+      {
+        "resolveNestedSelectors": true
+      }
+    ],
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/at-rule-conditional-no-parentheses": null
+  }
+}

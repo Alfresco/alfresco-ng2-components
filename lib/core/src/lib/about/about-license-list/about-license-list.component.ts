@@ -17,13 +17,18 @@
 
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 import { LicenseData } from '../interfaces';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
     selector: 'adf-about-license-list',
     templateUrl: './about-license-list.component.html',
     styleUrls: ['./about-license-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatTableModule]
 })
 export class AboutLicenseListComponent {
     columns = [

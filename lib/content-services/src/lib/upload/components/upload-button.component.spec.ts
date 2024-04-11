@@ -21,7 +21,6 @@ import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadErrorPromise } from '../../mock/upload.service.mock';
 import { UploadService } from '../../common/services/upload.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
@@ -47,7 +46,7 @@ describe('UploadButtonComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(UploadButtonComponent);
         uploadService = TestBed.inject(UploadService);
@@ -155,7 +154,7 @@ describe('UploadButtonComponent', () => {
         fixture.detectChanges();
 
         let lastValue: any;
-        component.success.subscribe((res) => lastValue = res);
+        component.success.subscribe((res) => (lastValue = res));
 
         spyOn(component, 'uploadFiles').and.callFake(() => {
             component.success.emit({
@@ -249,7 +248,7 @@ describe('UploadButtonComponent', () => {
             component.maxFilesSize = 100;
 
             let lastValue: FileUploadErrorEvent;
-            component.error.subscribe((res) => lastValue = res);
+            component.error.subscribe((res) => (lastValue = res));
 
             component.uploadFiles(files);
             expect(lastValue).toBeDefined();
@@ -352,7 +351,7 @@ describe('UploadButtonComponent', () => {
             spyOn(nodesApiService, 'getNode').and.returnValue(throwError('error'));
 
             let lastValue: FileUploadErrorEvent;
-            component.error.subscribe((value) => lastValue = value);
+            component.error.subscribe((value) => (lastValue = value));
 
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
             fixture.detectChanges();
@@ -398,7 +397,7 @@ describe('UploadButtonComponent', () => {
             spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadErrorPromise);
 
             let lastValue: FileUploadErrorEvent;
-            component.error.subscribe((error) => lastValue = error);
+            component.error.subscribe((error) => (lastValue = error));
             component.onFilesAdded(fakeEvent);
             expect(lastValue).not.toBeNull();
         });

@@ -27,7 +27,6 @@ import {
     getFakeSitePagingWithMembers
 } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { SitesService } from '../common/services/sites.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -63,7 +62,7 @@ describe('DropdownSitesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
     });
 

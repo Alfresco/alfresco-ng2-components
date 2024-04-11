@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { UserIconColumnComponent } from './user-icon-column.component';
 import { NodeEntry } from '@alfresco/js-api';
@@ -38,7 +37,7 @@ describe('UserIconColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(UserIconColumnComponent);
         component = fixture.componentInstance;
@@ -117,7 +116,7 @@ describe('UserIconColumnComponent', () => {
         component.selected = true;
         component.ngOnInit();
         fixture.detectChanges();
-        expect(element.querySelector('mat-icon[svgIcon="selected"]')).toBeDefined();
+        expect(element.querySelector('.adf-people-select-icon[svgIcon="selected"]')).toBeDefined();
         expect(component.isSelected).toBe(true);
     });
 });

@@ -17,9 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFormComponent } from './search-form.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchForm } from '../../models/search-form.interface';
 import { By } from '@angular/platform-browser';
@@ -41,12 +39,11 @@ describe('SearchFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
-            providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchFormComponent);
         component = fixture.componentInstance;
-        queryBuilder = TestBed.inject<SearchQueryBuilderService>(SEARCH_QUERY_SERVICE_TOKEN);
+        queryBuilder = TestBed.inject(SearchQueryBuilderService);
         queryBuilder.searchForms.next(mockSearchForms);
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);

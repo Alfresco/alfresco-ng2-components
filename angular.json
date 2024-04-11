@@ -427,7 +427,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "npx stylelint lib/core/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/core/**/*.scss --config .stylelintrc.json"
                   }
               ]
           }
@@ -573,7 +573,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "npx stylelint lib/content-services/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/content-services/**/*.scss --config .stylelintrc.json"
                   }
               ]
           }
@@ -644,7 +644,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/process-services-cloud/**/*.scss --config .stylelintrc.json"
                   }
               ]
           }
@@ -776,7 +776,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/process-services-cloud/**/*.scss --config .stylelintrc.json"
                   }
               ]
           }
@@ -847,7 +847,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "npx stylelint lib/insights/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/insights/**/*.scss --config .stylelintrc.json"
                   }
               ]
           }

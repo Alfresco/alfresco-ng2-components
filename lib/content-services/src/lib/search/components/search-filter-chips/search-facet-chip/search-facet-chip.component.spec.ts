@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFacetChipComponent } from './search-facet-chip.component';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -35,7 +34,7 @@ describe('SearchFacetChipComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchFacetChipComponent);
         component = fixture.componentInstance;

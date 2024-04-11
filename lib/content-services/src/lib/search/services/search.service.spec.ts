@@ -19,7 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { mockError, fakeSearch } from '../mocks/search.service.mock';
 import { SearchService } from './search.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodePaging } from '@alfresco/js-api';
 
 describe('SearchService', () => {
@@ -27,10 +26,7 @@ describe('SearchService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(SearchService);
     });
@@ -38,28 +34,24 @@ describe('SearchService', () => {
     it('should call search API with no additional options', (done) => {
         const searchTerm = 'searchTerm63688';
         spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(new NodePaging(fakeSearch)));
-        service.getNodeQueryResults(searchTerm).subscribe(
-            () => {
-                expect(service.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
-                done();
-            }
-        );
+        service.getNodeQueryResults(searchTerm).subscribe(() => {
+            expect(service.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
+            done();
+        });
     });
 
     it('should call search API with additional options', (done) => {
         const searchTerm = 'searchTerm63688';
         const options = {
-            include: [ 'path' ],
+            include: ['path'],
             rootNodeId: '-root-',
             nodeType: 'cm:content'
         };
         spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(new NodePaging(fakeSearch)));
-        service.getNodeQueryResults(searchTerm, options).subscribe(
-            () => {
-                expect(service.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
-                done();
-            }
-        );
+        service.getNodeQueryResults(searchTerm, options).subscribe(() => {
+            expect(service.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
+            done();
+        });
     });
 
     it('should notify errors returned from the API', (done) => {

@@ -25,6 +25,7 @@ import { DisplayExternalPropertyWidgetComponent } from './display-external-prope
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 describe('DisplayExternalPropertyWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -71,6 +72,20 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         expect(await input.getValue()).toBe('banana');
     });
 
+    it('should NOT display external property name in NO preview state', () => {
+        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+            type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+            readOnly: true,
+            externalProperty: 'fruitName',
+            value: 'banana'
+        });
+
+        fixture.detectChanges();
+
+        const externalPropertyPreview = fixture.debugElement.query(By.css('[data-automation-id="adf-display-external-property-widget-preview"]'));
+        expect(externalPropertyPreview).toBeFalsy();
+    });
+
     describe('when property load fails', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
@@ -96,7 +111,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
-                externalProperty: true,
+                externalProperty: 'fruitName',
                 value: null
             });
 
@@ -111,6 +126,11 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
         it('should NOT log the error', () => {
             expect(logServiceSpy).not.toHaveBeenCalled();
+        });
+
+        it('should display external property name', () => {
+            const externalPropertyPreview = fixture.debugElement.query(By.css('[data-automation-id="adf-display-external-property-widget-preview"]'));
+            expect(externalPropertyPreview.nativeElement.textContent.trim()).toBe('fruitName');
         });
     });
 

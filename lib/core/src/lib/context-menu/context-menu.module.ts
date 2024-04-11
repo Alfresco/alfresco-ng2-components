@@ -15,26 +15,12 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { TranslateModule } from '@ngx-translate/core';
-
 import { ContextMenuDirective } from './context-menu.directive';
 import { ContextMenuListComponent } from './context-menu-list.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule
-    ],
-    declarations: [
-        ContextMenuDirective,
-        ContextMenuListComponent
-    ],
-    exports: [
-        ContextMenuDirective
-    ]
+    imports: [ContextMenuListComponent, ContextMenuDirective],
+    exports: [ContextMenuListComponent, ContextMenuDirective]
 })
 export class ContextMenuModule {}

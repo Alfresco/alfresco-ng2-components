@@ -80,10 +80,15 @@
     }
 }
 
-[adfUploadDialogLeft] .adf-upload-dialog { left: 25px; }
-[adfUploadDialogRight] .adf-upload-dialog { right: 25px; }
+[adfUploadDialogLeft] .adf-upload-dialog {
+    left: 25px;
+}
 
-@media screen and (min-width: 380px) and (max-width: 768px) {
+[adfUploadDialogRight] .adf-upload-dialog {
+    right: 25px;
+}
+
+@media screen and (width >= 380px) and (width <= 768px) {
     .adf-upload-dialog {
         width: 60%;
     }
@@ -93,7 +98,7 @@
     }
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (width <= 380px) {
     .adf-upload-dialog {
         width: 85%;
     }

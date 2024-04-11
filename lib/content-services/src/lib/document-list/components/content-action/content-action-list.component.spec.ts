@@ -21,22 +21,17 @@ import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentColumnList', () => {
-
     let documentList: DocumentListComponent;
     let actionList: ContentActionListComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
-        documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
+        documentList = TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent;
         actionList = new ContentActionListComponent(documentList);
     });
 

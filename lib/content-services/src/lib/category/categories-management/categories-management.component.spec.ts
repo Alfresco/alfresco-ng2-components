@@ -21,7 +21,6 @@ import { Validators } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
 import { MatList } from '@angular/material/list';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { CategoriesManagementMode } from './categories-management-mode';
@@ -49,7 +48,7 @@ describe('CategoriesManagementComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [CategoriesManagementComponent],
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [
                 {
                     provide: CategoryService,
@@ -382,6 +381,14 @@ describe('CategoriesManagementComponent', () => {
             expect(component.existingCategories.length).toBe(2);
             discardPeriodicTasks();
             flush();
+        }));
+
+        it('should disable existing categories list if category already selected and multiSelect is false', fakeAsync(() => {
+            component.multiSelect = false;
+            fixture.detectChanges();
+            typeCategory('test');
+
+            expect(getSelectionList().disabled).toBeTrue();
         }));
     });
 

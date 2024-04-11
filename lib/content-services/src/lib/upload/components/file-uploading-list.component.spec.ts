@@ -20,7 +20,6 @@ import { TranslationService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { UploadService } from '../../common/services/upload.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
@@ -39,10 +38,7 @@ describe('FileUploadingListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         nodesApiService = TestBed.inject(NodesApiService);
 
@@ -123,46 +119,31 @@ describe('FileUploadingListComponent', () => {
 
     describe('isUploadCompleted()', () => {
         it('should return false when at least one file is in progress', () => {
-            component.files = [
-                { status: FileUploadStatus.Progress } as FileModel,
-                { status: FileUploadStatus.Complete } as FileModel
-            ];
+            component.files = [{ status: FileUploadStatus.Progress } as FileModel, { status: FileUploadStatus.Complete } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(false);
         });
 
         it('should return false when at least one file is in pending', () => {
-            component.files = [
-                { status: FileUploadStatus.Pending } as FileModel,
-                { status: FileUploadStatus.Complete } as FileModel
-            ];
+            component.files = [{ status: FileUploadStatus.Pending } as FileModel, { status: FileUploadStatus.Complete } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(false);
         });
 
         it('should return false when at least one file is in starting state', () => {
-            component.files = [
-                { status: FileUploadStatus.Starting } as FileModel,
-                { status: FileUploadStatus.Complete } as FileModel
-            ];
+            component.files = [{ status: FileUploadStatus.Starting } as FileModel, { status: FileUploadStatus.Complete } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(false);
         });
 
         it('should return false when files are cancelled', () => {
-            component.files = [
-                { status: FileUploadStatus.Cancelled } as FileModel,
-                { status: FileUploadStatus.Cancelled } as FileModel
-            ];
+            component.files = [{ status: FileUploadStatus.Cancelled } as FileModel, { status: FileUploadStatus.Cancelled } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(false);
         });
 
         it('should return true when there are deleted files', () => {
-            component.files = [
-                { status: FileUploadStatus.Complete } as FileModel,
-                { status: FileUploadStatus.Deleted } as FileModel
-            ];
+            component.files = [{ status: FileUploadStatus.Complete } as FileModel, { status: FileUploadStatus.Deleted } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(true);
         });
@@ -220,9 +201,7 @@ describe('FileUploadingListComponent', () => {
         });
 
         it('should return true when all files are aborted', () => {
-            component.files = [
-                { status: FileUploadStatus.Aborted } as FileModel
-            ];
+            component.files = [{ status: FileUploadStatus.Aborted } as FileModel];
 
             expect(component.isUploadCancelled()).toBe(true);
         });

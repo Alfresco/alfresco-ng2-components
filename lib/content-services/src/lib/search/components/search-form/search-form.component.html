@@ -1,33 +1,26 @@
-<ng-container *ngIf="queryBuilder.searchForms | async as forms">
+<ng-container *ngIf="searchForms$ | async as forms">
+
     <ng-container *ngIf="forms.length === 1">
-        <button
-            class="adf-search-form adf-search-form-button"
-            disableRipple
-            mat-button
-            [title]="getSelected(forms) | translate"
-            [attr.aria-label]="getSelected(forms) | translate"
-        >
-            <span class="adf-search-form-title">
-                {{ getSelected(forms) | translate }}
-            </span>
+        <button class="adf-search-form adf-search-form-button"
+                [disableRipple]="true"
+                mat-button
+                [title]="getSelected(forms) | translate"
+                [attr.aria-label]="getSelected(forms) | translate">
+            <span class="adf-search-form-title">{{ getSelected(forms) | translate }}</span>
         </button>
     </ng-container>
 
-    <ng-container *ngIf="forms.length > 1">
-        <button
-            class="adf-search-form adf-search-form-button"
-            [matMenuTriggerFor]="menu"
-            #menuTrigger="matMenuTrigger"
-            disableRipple
-            mat-button
-            [title]="getSelected(forms) | translate"
-            [attr.aria-label]="getSelected(forms) | translate"
-            [matMenuTriggerRestoreFocus]="true"
-        >
-            <span class="adf-search-form-title">
-                {{ getSelected(forms) | translate }}
-            </span>
+    <ng-container  *ngIf="forms.length > 1">
+        <button class="adf-search-form adf-search-form-button"
+                [matMenuTriggerFor]="menu"
+                #menuTrigger="matMenuTrigger"
+                [disableRipple]="true"
+                mat-button
+                [title]="getSelected(forms) | translate"
+                [attr.aria-label]="getSelected(forms) | translate"
+                [matMenuTriggerRestoreFocus]="true">
 
+            <span class="adf-search-form-title">{{ getSelected(forms) | translate }}</span>
             <mat-icon [class.adf-search-form-icon-selected]="menuTrigger.menuOpen" class="adf-search-form-icon">expand_more</mat-icon>
         </button>
 

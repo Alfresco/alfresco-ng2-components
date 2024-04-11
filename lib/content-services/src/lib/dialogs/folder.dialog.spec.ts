@@ -23,7 +23,6 @@ import { FolderDialogComponent } from './folder.dialog';
 import { of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('FolderDialogComponent', () => {
     let fixture: ComponentFixture<FolderDialogComponent>;
@@ -35,7 +34,7 @@ describe('FolderDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
         dialogRef.close.calls.reset();

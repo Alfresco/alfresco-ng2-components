@@ -18,7 +18,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { mockFile, mockNewVersionUploaderData, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -44,7 +43,6 @@ class TestDialogComponent {
     uploadError = new EventEmitter<any>();
 
     afterClosed = () => of({ action: 'refresh', node: mockNode });
-
 }
 
 describe('NewVersionUploaderService', () => {
@@ -56,10 +54,7 @@ describe('NewVersionUploaderService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             declarations: [TestDialogComponent]
         });
     });
@@ -83,9 +78,11 @@ describe('NewVersionUploaderService', () => {
         describe('Mat Dialog configuration', () => {
             let mockNewVersionUploaderDialogData: NewVersionUploaderDialogData;
             beforeEach(() => {
-                spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({
-                    list: { entries: [{ entry: '2' }] }
-                } as any));
+                spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(
+                    Promise.resolve({
+                        list: { entries: [{ entry: '2' }] }
+                    } as any)
+                );
                 mockNewVersionUploaderDialogData = {
                     node: mockNode,
                     file: mockFile
@@ -190,16 +187,17 @@ describe('NewVersionUploaderService', () => {
                     width: '630px'
                 } as any);
             }));
-
         });
 
         describe('Subscribe events from Dialog', () => {
             let mockNewVersionUploaderDialogData: NewVersionUploaderDialogData;
 
             beforeEach(() => {
-                spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({
-                    list: { entries: [{ entry: '2' }] }
-                }) as any);
+                spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(
+                    Promise.resolve({
+                        list: { entries: [{ entry: '2' }] }
+                    }) as any
+                );
                 mockNewVersionUploaderDialogData = {
                     node: mockNode,
                     file: mockFile
@@ -251,13 +249,15 @@ describe('NewVersionUploaderService', () => {
                     uploadError: new BehaviorSubject<any>({ value: 'Upload error' })
                 };
                 spyOnDialogOpen.and.returnValue(dialogRefSpyObj);
-                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).subscribe(() => {
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).subscribe(
+                    () => {
                         fail('An error should have been thrown');
                     },
-                    error => {
+                    (error) => {
                         expect(error).toEqual({ value: 'Upload error' });
                         done();
-                    });
+                    }
+                );
             });
 
             it('should focus element indicated by passed selector after closing modal', (done) => {
@@ -271,11 +271,8 @@ describe('NewVersionUploaderService', () => {
                     done();
                 });
                 spyOn(document, 'querySelector').and.returnValue(elementToFocus);
-                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, undefined, elementToFocusSelector)
-                    .subscribe();
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, undefined, elementToFocusSelector).subscribe();
             });
-
         });
-
     });
 });

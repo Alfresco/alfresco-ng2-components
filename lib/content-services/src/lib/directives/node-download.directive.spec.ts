@@ -21,7 +21,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
 import { NodeDownloadDirective } from './node-download.directive';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentDirectiveModule } from '@alfresco/adf-content-services';
 
 @Component({
@@ -53,14 +52,8 @@ describe('NodeDownloadDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ContentDirectiveModule,
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [ContentDirectiveModule, CoreTestingModule],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -108,7 +101,7 @@ describe('NodeDownloadDirective', () => {
             }
         };
         spyOn(contentService, 'getVersionContentUrl');
-        const node = {entry: {id: 'node-id', isFile: true}};
+        const node = { entry: { id: 'node-id', isFile: true } };
         component.selection = [node];
 
         fixture.detectChanges();
@@ -136,7 +129,7 @@ describe('NodeDownloadDirective', () => {
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: [ 'node-1', 'node-2' ] });
+        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: ['node-1', 'node-2'] });
     });
 
     it('should download selected shared files nodes as zip', () => {
@@ -147,7 +140,7 @@ describe('NodeDownloadDirective', () => {
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: [ 'shared-node-1', 'shared-node-2' ] });
+        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: ['shared-node-1', 'shared-node-2'] });
     });
 
     it('should download selected folder node as zip', () => {
@@ -157,7 +150,7 @@ describe('NodeDownloadDirective', () => {
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: [ 'node-id' ] });
+        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: ['node-id'] });
     });
 
     it('should create link element to download file node', () => {

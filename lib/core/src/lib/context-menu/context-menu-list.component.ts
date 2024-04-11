@@ -15,40 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, HostListener, AfterViewInit, Optional, Inject, QueryList, ViewChildren } from '@angular/core';
 import { trigger } from '@angular/animations';
-import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { MatMenuItem } from '@angular/material/menu';
-import { ContextMenuOverlayRef } from './context-menu-overlay';
+import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
+import { NgForOf, NgIf } from '@angular/common';
+import { AfterViewInit, Component, HostListener, Inject, Optional, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngx-translate/core';
 import { contextMenuAnimation } from './animations';
+import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
 
 @Component({
     selector: 'adf-context-menu',
-    template: `
-        <div mat-menu class="mat-menu-panel" @panelAnimation>
-            <div id="adf-context-menu-content" class="mat-menu-content">
-                <ng-container *ngFor="let link of links">
-                    <button
-                        *ngIf="link.model?.visible"
-                        [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"
-                        mat-menu-item
-                        [disabled]="link.model?.disabled"
-                        (click)="onMenuItemClick($event, link)"
-                    >
-                        <mat-icon *ngIf="link.model?.icon">{{ link.model.icon }}</mat-icon>
-                        <span>{{ link.title || link.model?.title | translate }}</span>
-                    </button>
-                </ng-container>
-            </div>
-        </div>
-    `,
+    standalone: true,
+    templateUrl: './context-menu-list.component.html',
     host: {
         role: 'menu',
         class: 'adf-context-menu'
     },
     encapsulation: ViewEncapsulation.None,
+    imports: [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslateModule],
     animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {

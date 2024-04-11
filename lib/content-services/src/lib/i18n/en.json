@@ -278,6 +278,8 @@
       "ARIA-LABEL": "Search button"
     },
     "INPUT": {
+      "LABEL": "Search",
+      "PLACEHOLDER": "Search Query",
       "ARIA-LABEL": "Search input"
     },
     "RESULTS": {

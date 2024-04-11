@@ -17,18 +17,21 @@
  * limitations under the License.
  */
 
-import program from 'commander';
+import { Command } from 'commander';
 import fetch from 'node-fetch';
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
+
+const program = new Command();
 const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
 
 let alfrescoJsApiModeler: AlfrescoApi;
 let alfrescoJsApiDevops: AlfrescoApi;
 let args: ConfigArgs;
 let isValid = true;
+
 export interface ConfigArgs {
     modelerUsername: string;
     modelerPassword: string;
@@ -424,7 +427,7 @@ function deploy(model: any) {
  * @param options token options
  * @returns options
  */
-function initializeDefaultToken(options: any): any {
+function initializeDefaultToken(options: ConfigArgs): any {
     options.tokenEndpoint = options.tokenEndpoint.replace('${clientId}', options.clientId);
     return options;
 }
@@ -680,18 +683,21 @@ async function getFileFromRemote(url: string, name: string): Promise<void> {
             }
             return response;
         })
-        .then((response) => new Promise<void>((resolve, reject) => {
-            const outputFile = fs.createWriteStream(`${name}.zip`);
-            response.body.pipe(outputFile);
-            outputFile.on('finish', () => {
-                logger.info(`The file is finished downloading.`);
-                resolve();
-            });
-            outputFile.on('error', (error) => {
-                logger.error(`Not possible to download the project form remote`);
-                reject(error);
-            });
-        }))
+        .then(
+            (response) =>
+                new Promise<void>((resolve, reject) => {
+                    const outputFile = fs.createWriteStream(`${name}.zip`);
+                    response.body.pipe(outputFile);
+                    outputFile.on('finish', () => {
+                        logger.info(`The file is finished downloading.`);
+                        resolve();
+                    });
+                    outputFile.on('error', (error) => {
+                        logger.error(`Not possible to download the project form remote`);
+                        reject(error);
+                    });
+                })
+        )
         .catch((error) => {
             logger.error(`Failed to fetch file from remote: ${error.message}`);
             throw error;

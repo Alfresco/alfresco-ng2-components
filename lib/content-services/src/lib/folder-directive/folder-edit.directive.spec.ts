@@ -23,7 +23,6 @@ import { Subject, of } from 'rxjs';
 import { FolderEditDirective } from './folder-edit.directive';
 import { Node } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentService } from '../common/services/content.service';
 
 @Component({
@@ -52,13 +51,8 @@ describe('FolderEditDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [ContentTestingModule],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderEditDirective));
@@ -66,7 +60,7 @@ describe('FolderEditDirective', () => {
         contentService = TestBed.inject(ContentService);
 
         dialogRefMock = {
-            afterClosed: (val) =>  of(val),
+            afterClosed: (val) => of(val),
             componentInstance: {
                 error: new Subject<any>(),
                 success: new Subject<Node>()

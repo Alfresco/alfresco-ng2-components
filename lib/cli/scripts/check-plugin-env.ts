@@ -16,14 +16,24 @@
  */
 
 import { argv } from 'node:process';
-import { PluginTarget } from './plugins/plugin-model';
 import { CheckEnv } from './plugins/check-env';
-import program = require('commander');
+import { Command } from 'commander';
 import { ProcessServiceCheckPlugin } from './plugins/process-service-check-plugin';
 import { ProcessAutomationCheckPlugin } from './plugins/process-automation-check-plugin';
 import { GovernanceCheckPlugin } from './plugins/governance-check-plugin';
 
+const program = new Command();
 let pluginEnv: CheckEnv;
+
+interface CheckPluginArgs {
+    host?: string;
+    pluginName?: 'processService' | 'processAutomation' | 'governance';
+    clientId?: string;
+    appName?: string;
+    username?: string;
+    password?: string;
+    uiName?: string;
+}
 
 /**
  * Check environment plugin
@@ -40,30 +50,34 @@ export default async function main() {
         .option('--ui, --uiName [type]', 'uiName', 'Deployed app UI type on activiti-cloud')
         .parse(argv);
 
-    pluginEnv = new CheckEnv(program.host, program.username, program.password, program.clientId);
+    const options = program.opts<CheckPluginArgs>();
+
+    pluginEnv = new CheckEnv(options.host, options.username, options.password, options.clientId);
     await pluginEnv.checkEnv();
 
-    if (program.pluginName === PluginTarget.processService) {
-        await checkProcessServicesPlugin();
+    if (options.pluginName === 'processService') {
+        await checkProcessServicesPlugin(options);
     }
 
-    if (program.pluginName === PluginTarget.processAutomation) {
-        await checkProcessAutomationPlugin();
+    if (options.pluginName === 'processAutomation') {
+        await checkProcessAutomationPlugin(options);
     }
 
-    if (program.pluginName === PluginTarget.governance) {
-        await checkGovernancePlugin();
+    if (options.pluginName === 'governance') {
+        await checkGovernancePlugin(options);
     }
 }
 
 /**
  * Check PS plugin
+ *
+ * @param options program arguments
  */
-async function checkProcessServicesPlugin() {
+async function checkProcessServicesPlugin(options: CheckPluginArgs) {
     const processServiceCheckPlugin = new ProcessServiceCheckPlugin(
         {
-            host: program.host,
-            name: PluginTarget.processService
+            host: options.host,
+            name: 'processService'
         },
         pluginEnv.alfrescoJsApi
     );
@@ -72,14 +86,16 @@ async function checkProcessServicesPlugin() {
 
 /**
  * Check APA plugin
+ *
+ * @param options program arguments
  */
-async function checkProcessAutomationPlugin() {
+async function checkProcessAutomationPlugin(options: CheckPluginArgs) {
     const processAutomationCheckPlugin = new ProcessAutomationCheckPlugin(
         {
-            host: program.host,
-            name: PluginTarget.processAutomation,
-            appName: program.appName,
-            uiName: program.uiName
+            host: options.host,
+            name: 'processAutomation',
+            appName: options.appName,
+            uiName: options.uiName
         },
         pluginEnv.alfrescoJsApi
     );
@@ -88,12 +104,14 @@ async function checkProcessAutomationPlugin() {
 
 /**
  * Check AGS plugin
+ *
+ * @param options program arguments
  */
-async function checkGovernancePlugin() {
+async function checkGovernancePlugin(options: CheckPluginArgs) {
     const governancePluginCheck = new GovernanceCheckPlugin(
         {
-            host: program.host,
-            name: PluginTarget.governance
+            host: options.host,
+            name: 'governance'
         },
         pluginEnv.alfrescoJsApi
     );

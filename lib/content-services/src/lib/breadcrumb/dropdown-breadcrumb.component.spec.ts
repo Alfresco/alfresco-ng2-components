@@ -23,7 +23,6 @@ import { DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('DropdownBreadcrumb', () => {
     let component: DropdownBreadcrumbComponent;
@@ -33,7 +32,7 @@ describe('DropdownBreadcrumb', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [{ provide: DocumentListService, useValue: documentListService }]
         });

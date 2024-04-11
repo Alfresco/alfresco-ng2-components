@@ -18,21 +18,16 @@
 import { TestBed } from '@angular/core/testing';
 import { CommentModel, CoreTestingModule } from '@alfresco/adf-core';
 import { fakeContentComment, fakeContentComments } from '../mocks/node-comments.mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { NodeCommentsService } from './node-comments.service';
 
 declare let jasmine: any;
 
 describe('NodeCommentsService', () => {
-
     let service: NodeCommentsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(NodeCommentsService);
 
@@ -44,20 +39,17 @@ describe('NodeCommentsService', () => {
     });
 
     describe('Node  comments', () => {
-
         it('should add a comment node ', (done) => {
-            service.add('999', 'fake-comment-message').subscribe(
-                (res: CommentModel) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).not.toEqual(null);
-                    expect(res.message).toEqual('fake-comment-message');
-                    expect(res.created).not.toEqual(null);
-                    expect(res.createdBy.email).toEqual('fake-email@dom.com');
-                    expect(res.createdBy.firstName).toEqual('firstName');
-                    expect(res.createdBy.lastName).toEqual('lastName');
-                    done();
-                }
-            );
+            service.add('999', 'fake-comment-message').subscribe((res: CommentModel) => {
+                expect(res).toBeDefined();
+                expect(res.id).not.toEqual(null);
+                expect(res.message).toEqual('fake-comment-message');
+                expect(res.created).not.toEqual(null);
+                expect(res.createdBy.email).toEqual('fake-email@dom.com');
+                expect(res.createdBy.firstName).toEqual('firstName');
+                expect(res.createdBy.lastName).toEqual('lastName');
+                done();
+            });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -67,15 +59,13 @@ describe('NodeCommentsService', () => {
         });
 
         it('should return the nodes comments ', (done) => {
-            service.get('999').subscribe(
-                (res: CommentModel[]) => {
-                    expect(res).toBeDefined();
-                    expect(res.length).toEqual(2);
-                    expect(res[0].message).toEqual('fake-message-1');
-                    expect(res[1].message).toEqual('fake-message-2');
-                    done();
-                }
-            );
+            service.get('999').subscribe((res: CommentModel[]) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(2);
+                expect(res[0].message).toEqual('fake-message-1');
+                expect(res[1].message).toEqual('fake-message-2');
+                done();
+            });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,

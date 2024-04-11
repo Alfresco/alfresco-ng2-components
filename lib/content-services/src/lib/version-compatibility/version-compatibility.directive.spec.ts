@@ -17,7 +17,6 @@
 
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { VersionCompatibilityService } from './version-compatibility.service';
@@ -26,27 +25,15 @@ import { VersionCompatibilityModule } from './version-compatibility.module';
 
 @Component({
     template: `
-        <div *adf-acs-version="'8'" class="hidden-content-1">
-            My hidden content 1
-        </div>
-        <div *adf-acs-version="'7.1'" class="hidden-content-2">
-            My hidden content 2
-        </div>
-        <div *adf-acs-version="'7.0.2'" class="hidden-content-3">
-            My hidden content 3
-        </div>
-        <div *adf-acs-version="'6.1.5'" class="visible-content-1">
-            My visible content 1
-        </div>
-        <div *adf-acs-version="'6.1'" class="visible-content-2">
-            My visible content 2
-        </div>
-        <div *adf-acs-version="'6'" class="visible-content-3">
-            My visible content 3
-        </div>
-        `
+        <div *adf-acs-version="'8'" class="hidden-content-1">My hidden content 1</div>
+        <div *adf-acs-version="'7.1'" class="hidden-content-2">My hidden content 2</div>
+        <div *adf-acs-version="'7.0.2'" class="hidden-content-3">My hidden content 3</div>
+        <div *adf-acs-version="'6.1.5'" class="visible-content-1">My visible content 1</div>
+        <div *adf-acs-version="'6.1'" class="visible-content-2">My visible content 2</div>
+        <div *adf-acs-version="'6'" class="visible-content-3">My visible content 3</div>
+    `
 })
-class TestComponent { }
+class TestComponent {}
 
 describe('VersionCompatibilityDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
@@ -61,11 +48,7 @@ describe('VersionCompatibilityDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                VersionCompatibilityModule
-            ],
+            imports: [CoreTestingModule, VersionCompatibilityModule],
             declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);

@@ -45,6 +45,12 @@ export interface Descriptor {
     version?: string;
     runtimeBundleVersion?: string;
     enableLocalDevelopment?: boolean;
+    customUIAuthFlowType?: DescriptorCustomUIAuthFlowType;
+}
+
+export enum DescriptorCustomUIAuthFlowType {
+    CODE = 'CODE',
+    IMPLICIT = 'IMPLICIT'
 }
 
 export interface DescriptorSecurity {

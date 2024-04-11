@@ -19,15 +19,11 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeRestoreDirective } from './node-restore.directive';
-import { TranslateModule } from '@ngx-translate/core';
 import { TranslationService, CoreTestingModule } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from './content-directive.module';
 
 @Component({
-    template: `
-        <div [adf-restore]="selection"
-             (restore)="doneSpy()">
-        </div>`
+    template: ` <div [adf-restore]="selection" (restore)="doneSpy()"></div>`
 })
 class TestComponent {
     selection = [];
@@ -46,14 +42,8 @@ describe('NodeRestoreDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                ContentDirectiveModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [CoreTestingModule, ContentDirectiveModule],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -63,9 +53,11 @@ describe('NodeRestoreDirective', () => {
         trashcanApi = directiveInstance['trashcanApi'];
 
         restoreNodeSpy = spyOn(trashcanApi, 'restoreDeletedNode').and.returnValue(Promise.resolve());
-        spyOn(trashcanApi, 'listDeletedNodes').and.returnValue(Promise.resolve({
-            list: { entries: [] }
-        }));
+        spyOn(trashcanApi, 'listDeletedNodes').and.returnValue(
+            Promise.resolve({
+                list: { entries: [] }
+            })
+        );
 
         translationService = TestBed.inject(TranslationService);
         spyOn(translationService, 'instant').and.callFake((key) => key);
@@ -146,7 +138,6 @@ describe('NodeRestoreDirective', () => {
     });
 
     describe('notification', () => {
-
         it('should notify on multiple fails', (done) => {
             const error = { message: '{ "error": {} }' };
 
@@ -184,9 +175,7 @@ describe('NodeRestoreDirective', () => {
 
             restoreNodeSpy.and.returnValue(Promise.reject(error));
 
-            component.selection = [
-                { entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }
-            ];
+            component.selection = [{ entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
@@ -203,9 +192,7 @@ describe('NodeRestoreDirective', () => {
                 done();
             });
 
-            component.selection = [
-                { entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }
-            ];
+            component.selection = [{ entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
@@ -221,16 +208,13 @@ describe('NodeRestoreDirective', () => {
                 done();
             });
 
-            component.selection = [
-                { entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }
-            ];
+            component.selection = [{ entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
         });
 
         it('should notify success when restore multiple nodes', (done) => {
-
             directiveInstance.restore.subscribe((event: any) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.PLURAL');
 
@@ -246,7 +230,6 @@ describe('NodeRestoreDirective', () => {
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
-
         });
 
         it('should notify success on restore selected node', (done) => {
@@ -256,13 +239,10 @@ describe('NodeRestoreDirective', () => {
                 done();
             });
 
-            component.selection = [
-                { entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }
-            ];
+            component.selection = [{ entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
-
         });
-   });
+    });
 });

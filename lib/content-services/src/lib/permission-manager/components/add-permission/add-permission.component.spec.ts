@@ -20,27 +20,22 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionComponent } from './add-permission.component';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('AddPermissionComponent', () => {
-
     let fixture: ComponentFixture<AddPermissionComponent>;
     let element: HTMLElement;
     let nodePermissionService: NodePermissionService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         nodePermissionService = TestBed.inject(NodePermissionService);
-        const response: any = { node: { id: 'fake-node', allowableOperations: ['updatePermissions']}, roles: [{ label: 'Test' , role: 'test'}] };
+        const response: any = { node: { id: 'fake-node', allowableOperations: ['updatePermissions'] }, roles: [{ label: 'Test', role: 'test' }] };
         spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of(response));
         fixture = TestBed.createComponent(AddPermissionComponent);
         element = fixture.nativeElement;
@@ -60,7 +55,9 @@ describe('AddPermissionComponent', () => {
     });
 
     it('should enable the ADD button when a selection is sent', async () => {
-        const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
+        const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(
+            By.directive(AddPermissionPanelComponent)
+        ).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
 
         fixture.detectChanges();
@@ -71,9 +68,11 @@ describe('AddPermissionComponent', () => {
     });
 
     it('should NOT enable the ADD button when a selection is sent but the user does not have the permissions', async () => {
-        const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
+        const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(
+            By.directive(AddPermissionPanelComponent)
+        ).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
-        fixture.componentInstance.currentNode = new Node({id: 'fake-node-id'});
+        fixture.componentInstance.currentNode = new Node({ id: 'fake-node-id' });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -84,10 +83,10 @@ describe('AddPermissionComponent', () => {
 
     it('should emit a success event when the node is updated', async () => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
-        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of(new Node({ id: 'fake-node-id'})));
+        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of(new Node({ id: 'fake-node-id' })));
 
         let lastValue: Node;
-        fixture.componentInstance.success.subscribe((node) => lastValue = node);
+        fixture.componentInstance.success.subscribe((node) => (lastValue = node));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -109,10 +108,10 @@ describe('AddPermissionComponent', () => {
 
     it('should emit an error event when the node update fail', async () => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
-        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(throwError({ error: 'err'}));
+        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(throwError({ error: 'err' }));
 
         let lastValue: any;
-        fixture.componentInstance.error.subscribe((error) => lastValue = error);
+        fixture.componentInstance.error.subscribe((error) => (lastValue = error));
 
         fixture.detectChanges();
         await fixture.whenStable();

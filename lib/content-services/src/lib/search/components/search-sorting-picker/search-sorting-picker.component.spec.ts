@@ -23,7 +23,6 @@ import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('SearchSortingPickerComponent', () => {
-
     let queryBuilder: SearchQueryBuilderService;
     let component: SearchSortingPickerComponent;
 
@@ -45,13 +44,9 @@ describe('SearchSortingPickerComponent', () => {
                     { key: 'content.sizeInBytes', label: 'Size', type: 'FIELD', field: 'content.size', ascending: true },
                     { key: 'description', label: 'Description', type: 'FIELD', field: 'cm:description', ascending: true }
                 ],
-                defaults: [
-                    { key: 'name', type: 'FIELD', field: 'cm:name', ascending: false } as any
-                ]
+                defaults: [{ key: 'name', type: 'FIELD', field: 'cm:name', ascending: false } as any]
             },
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 

@@ -22,7 +22,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
-import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
 
 @Component({
@@ -35,7 +34,6 @@ export class CardViewShinyCustomElementItemComponent {
 }
 
 describe('CardViewItemDispatcherComponent', () => {
-
     let fixture: ComponentFixture<CardViewItemDispatcherComponent>;
     let cardItemTypeService: CardItemTypeService;
     let component: CardViewItemDispatcherComponent;
@@ -45,12 +43,8 @@ describe('CardViewItemDispatcherComponent', () => {
         cardItemTypeService.setComponentTypeResolver('shiny-custom-element', () => CardViewShinyCustomElementItemComponent);
 
         TestBed.configureTestingModule({
-            declarations: [
-                CardViewItemDispatcherComponent,
-                CardViewShinyCustomElementItemComponent,
-                CardViewContentProxyDirective
-            ],
-            providers: [ { provide: CardItemTypeService, useValue: cardItemTypeService } ]
+            declarations: [CardViewItemDispatcherComponent, CardViewShinyCustomElementItemComponent],
+            providers: [{ provide: CardItemTypeService, useValue: cardItemTypeService }]
         });
 
         TestBed.compileComponents();
@@ -83,7 +77,6 @@ describe('CardViewItemDispatcherComponent', () => {
     });
 
     describe('Sub-component creation', () => {
-
         it('should load the CardViewShinyCustomElementItemComponent', () => {
             const innerElement = fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
             expect(innerElement).not.toBeNull();
@@ -108,7 +101,7 @@ describe('CardViewItemDispatcherComponent', () => {
             expect(shinyCustomElementItemComponent.displayEmpty).toBe(component.displayEmpty);
         });
 
-        it('should update the subcomponent\'s input parameters', () => {
+        it('should update the subcomponent input parameters', () => {
             const expectedEditable = false;
             const expectedDisplayEmpty = true;
             const expectedProperty = {};
@@ -139,8 +132,7 @@ describe('CardViewItemDispatcherComponent', () => {
     });
 
     describe('Angular life-cycle methods', () => {
-
-        let shinyCustomElementItemComponent;
+        let shinyCustomElementItemComponent: any;
 
         const lifeCycleMethods = [
             'ngOnChanges',

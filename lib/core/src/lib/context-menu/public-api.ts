@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
+export * from './context-menu-list.component';
 export * from './context-menu.directive';
 export * from './context-menu-overlay.service';
-
 export * from './context-menu.module';

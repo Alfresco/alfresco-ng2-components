@@ -19,7 +19,6 @@ import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { throwError } from 'rxjs';
 import { Pagination, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 
@@ -42,7 +41,7 @@ describe('TagService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         service = TestBed.inject(TagService);
         userPreferencesService = TestBed.inject(UserPreferencesService);
@@ -74,7 +73,7 @@ describe('TagService', () => {
 
         it('should trigger a refresh event on addTag() call', async () => {
             let lastValue: any;
-            service.refresh.subscribe((res) => lastValue = res);
+            service.refresh.subscribe((res) => (lastValue = res));
 
             await service.addTag('fake-node-id', 'fake-tag').toPromise();
             expect(lastValue).toBe(tagEntry);
@@ -82,7 +81,7 @@ describe('TagService', () => {
 
         it('should trigger a refresh event on deleteTag() call', async () => {
             let lastValue = false;
-            service.refresh.subscribe(() => lastValue = true);
+            service.refresh.subscribe(() => (lastValue = true));
 
             await service.deleteTag('fake-tag-id').toPromise();
             expect(lastValue).toBeTrue();
@@ -248,7 +247,7 @@ describe('TagService', () => {
                 expect(service.tagsApi.updateTag).toHaveBeenCalledWith(tag.entry.id, tagBody);
             });
 
-            it('should emit refresh when tag updated successfully',  async () => {
+            it('should emit refresh when tag updated successfully', async () => {
                 spyOn(service.refresh, 'emit');
                 spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.resolve(updatedTag));
                 await service.updateTag(tag.entry.id, tagBody).toPromise();

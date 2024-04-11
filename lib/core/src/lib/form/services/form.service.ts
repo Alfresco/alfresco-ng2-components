@@ -83,4 +83,8 @@ export class FormService implements FormValidationService {
         }
         return null;
     }
+
+    getPreviewState(): boolean {
+        return false;
+    }
 }

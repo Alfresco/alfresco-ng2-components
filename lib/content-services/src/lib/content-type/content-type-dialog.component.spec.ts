@@ -17,7 +17,6 @@
 
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentTypeDialogComponent } from './content-type-dialog.component';
@@ -98,11 +97,7 @@ describe('Content Type Dialog Component', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule,
-                MatDialogModule
-            ],
+            imports: [ContentTestingModule, MatDialogModule],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {
@@ -141,11 +136,14 @@ describe('Content Type Dialog Component', () => {
         const confirmMessage = fixture.nativeElement.querySelector('[data-automation-id="content-type-dialog-confirm-message"]');
         expect(confirmMessage).not.toBeNull();
         expect(confirmMessage.innerText).toBe(data.confirmMessage);
-
     });
 
     it('should complete the select stream Cancel button is clicked', (done) => {
-        data.select.subscribe(() => { }, () => { }, () => done());
+        data.select.subscribe(
+            () => {},
+            () => {},
+            () => done()
+        );
         const cancelButton: HTMLButtonElement = fixture.nativeElement.querySelector('#content-type-dialog-actions-cancel');
         expect(cancelButton).toBeDefined();
         cancelButton.click();
@@ -161,13 +159,16 @@ describe('Content Type Dialog Component', () => {
     });
 
     it('should emit true when apply is clicked', (done) => {
-        data.select.subscribe((value) => {
-            expect(value).toBe(true);
-         }, () => { }, () => done());
+        data.select.subscribe(
+            (value) => {
+                expect(value).toBe(true);
+            },
+            () => {},
+            () => done()
+        );
         const applyButton: HTMLButtonElement = fixture.nativeElement.querySelector('#content-type-dialog-apply-button');
         expect(applyButton).toBeDefined();
         applyButton.click();
         fixture.detectChanges();
     });
-
 });

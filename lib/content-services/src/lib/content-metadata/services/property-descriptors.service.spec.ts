@@ -20,19 +20,14 @@ import { PropertyDescriptorsService } from './property-descriptors.service';
 import { ClassesApi } from '@alfresco/js-api';
 import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('PropertyDescriptorLoaderService', () => {
-
     let service: PropertyDescriptorsService;
     let classesApi: ClassesApi;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         service = TestBed.inject(PropertyDescriptorsService);
         classesApi = service['classesApi'];
@@ -41,8 +36,7 @@ describe('PropertyDescriptorLoaderService', () => {
     it('should load the groups passed by paramter', () => {
         spyOn(classesApi, 'getClass');
 
-        service.load(['exif:exif', 'cm:content', 'custom:custom'])
-            .subscribe(() => {});
+        service.load(['exif:exif', 'cm:content', 'custom:custom']).subscribe(() => {});
 
         expect(classesApi.getClass).toHaveBeenCalledTimes(3);
         expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
@@ -51,7 +45,6 @@ describe('PropertyDescriptorLoaderService', () => {
     });
 
     it('should merge the forked values', (done) => {
-
         const exifResponse: PropertyGroup = {
             name: 'exif:exif',
             title: '',
@@ -69,18 +62,17 @@ describe('PropertyDescriptorLoaderService', () => {
             }
         };
 
-        const apiResponses = [ exifResponse, contentResponse ];
+        const apiResponses = [exifResponse, contentResponse];
         let counter = 0;
 
         spyOn(classesApi, 'getClass').and.callFake(() => Promise.resolve(apiResponses[counter++]));
 
-        service.load(['exif:exif', 'cm:content'])
-            .subscribe({
-                next: (data) => {
-                    expect(data['exif:exif']).toBe(exifResponse);
-                    expect(data['cm:content']).toBe(contentResponse);
-                },
-                complete: () => done()
-            });
+        service.load(['exif:exif', 'cm:content']).subscribe({
+            next: (data) => {
+                expect(data['exif:exif']).toBe(exifResponse);
+                expect(data['cm:content']).toBe(contentResponse);
+            },
+            complete: () => done()
+        });
     });
 });

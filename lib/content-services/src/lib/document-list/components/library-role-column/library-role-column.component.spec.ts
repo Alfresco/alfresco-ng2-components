@@ -19,7 +19,6 @@ import { LibraryRoleColumnComponent } from './library-role-column.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('LibraryRoleColumnComponent', () => {
     let fixture: ComponentFixture<LibraryRoleColumnComponent>;
@@ -27,10 +26,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(LibraryRoleColumnComponent);
@@ -43,7 +39,7 @@ describe('LibraryRoleColumnComponent', () => {
         };
 
         let value = '';
-        component.displayText$.subscribe((val) => value = val);
+        component.displayText$.subscribe((val) => (value = val));
 
         fixture.detectChanges();
         expect(value).toBe('LIBRARY.ROLE.MANAGER');
@@ -55,7 +51,7 @@ describe('LibraryRoleColumnComponent', () => {
         };
 
         let value = '';
-        component.displayText$.subscribe((val) => value = val);
+        component.displayText$.subscribe((val) => (value = val));
 
         fixture.detectChanges();
         expect(value).toBe('LIBRARY.ROLE.COLLABORATOR');
@@ -67,7 +63,7 @@ describe('LibraryRoleColumnComponent', () => {
         };
 
         let value = '';
-        component.displayText$.subscribe((val) => value = val);
+        component.displayText$.subscribe((val) => (value = val));
 
         fixture.detectChanges();
         expect(value).toBe('LIBRARY.ROLE.CONTRIBUTOR');
@@ -79,7 +75,7 @@ describe('LibraryRoleColumnComponent', () => {
         };
 
         let value = '';
-        component.displayText$.subscribe((val) => value = val);
+        component.displayText$.subscribe((val) => (value = val));
 
         fixture.detectChanges();
         expect(value).toBe('LIBRARY.ROLE.CONSUMER');
@@ -91,7 +87,7 @@ describe('LibraryRoleColumnComponent', () => {
         };
 
         let value = '';
-        component.displayText$.subscribe((val) => value = val);
+        component.displayText$.subscribe((val) => (value = val));
 
         fixture.detectChanges();
         expect(value).toBe('LIBRARY.ROLE.NONE');

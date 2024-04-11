@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search-query-service.token';
 import { FacetWidget } from '../../../models/facet-widget.interface';
 import { TranslationService } from '@alfresco/adf-core';
 import { AutocompleteOption } from '../../../models/autocomplete-option.interface';
@@ -32,6 +31,10 @@ import { SearchFacetFiltersService } from '../../../services/search-facet-filter
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnChanges, FacetWidget {
+    private queryBuilder = inject(SearchQueryBuilderService);
+    private translationService = inject(TranslationService);
+    private searchFacetFiltersService = inject(SearchFacetFiltersService);
+
     @Input()
     tabbedFacet: TabbedFacetField;
 
@@ -54,11 +57,6 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnC
     chipIcon = 'keyboard_arrow_down';
     autocompleteOptions = {};
     selectedOptions = {};
-
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: SearchQueryBuilderService,
-                private translationService: TranslationService,
-                private searchFacetFiltersService: SearchFacetFiltersService) {
-    }
 
     ngOnInit() {
         this.tabbedFacet.fields.forEach((field) => {

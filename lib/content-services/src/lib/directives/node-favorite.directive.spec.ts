@@ -18,23 +18,18 @@
 import { SimpleChange } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
-import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
 
 describe('NodeFavoriteDirective', () => {
-
     let directive: NodeFavoriteDirective;
     let alfrescoApiService: AlfrescoApiService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
-        directive = new NodeFavoriteDirective( alfrescoApiService);
+        directive = new NodeFavoriteDirective(alfrescoApiService);
     });
 
     describe('selection input change event', () => {
@@ -42,7 +37,7 @@ describe('NodeFavoriteDirective', () => {
             spyOn(directive, 'markFavoritesNodes');
 
             const change = new SimpleChange(null, [], true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
 
             expect(directive.markFavoritesNodes).not.toHaveBeenCalledWith();
         });
@@ -53,17 +48,14 @@ describe('NodeFavoriteDirective', () => {
             let selection = [{ entry: { id: '1', name: 'name1' } }];
 
             let change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
 
             expect(directive.markFavoritesNodes).toHaveBeenCalledWith(selection);
 
-            selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
+            selection = [{ entry: { id: '1', name: 'name1' } }, { entry: { id: '2', name: 'name2' } }];
 
             change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
 
             expect(directive.markFavoritesNodes).toHaveBeenCalledWith(selection);
         });
@@ -71,18 +63,16 @@ describe('NodeFavoriteDirective', () => {
         it('should reset favorites if selection is empty', fakeAsync(() => {
             spyOn(directive.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(null));
 
-            const selection = [
-                { entry: { id: '1', name: 'name1' } }
-            ];
+            const selection = [{ entry: { id: '1', name: 'name1' } }];
 
             let change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
             tick();
 
             expect(directive.hasFavorites()).toBe(true);
 
             change = new SimpleChange(null, [], true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
             tick();
 
             expect(directive.hasFavorites()).toBe(false);
@@ -97,26 +87,20 @@ describe('NodeFavoriteDirective', () => {
         });
 
         it('should check each selected node if it is a favorite', fakeAsync(() => {
-            const selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
+            const selection = [{ entry: { id: '1', name: 'name1' } }, { entry: { id: '2', name: 'name2' } }];
 
             const change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
 
             tick();
             expect(favoritesApiSpy.calls.count()).toBe(2);
         }));
 
         it('should not check processed node when another is unselected', fakeAsync(() => {
-            let selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
+            let selection = [{ entry: { id: '1', name: 'name1' } }, { entry: { id: '2', name: 'name2' } }];
 
             let change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
 
             tick();
             expect(directive.favorites.length).toBe(2);
@@ -124,12 +108,10 @@ describe('NodeFavoriteDirective', () => {
 
             favoritesApiSpy.calls.reset();
 
-            selection = [
-                { entry: { id: '2', name: 'name2' } }
-            ];
+            selection = [{ entry: { id: '2', name: 'name2' } }];
 
             change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
 
             tick();
             expect(directive.favorites.length).toBe(1);
@@ -137,13 +119,10 @@ describe('NodeFavoriteDirective', () => {
         }));
 
         it('should not check processed nodes when another is selected', fakeAsync(() => {
-            let selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
+            let selection = [{ entry: { id: '1', name: 'name1' } }, { entry: { id: '2', name: 'name2' } }];
 
             let change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
 
             tick();
 
@@ -152,14 +131,10 @@ describe('NodeFavoriteDirective', () => {
 
             favoritesApiSpy.calls.reset();
 
-            selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } },
-                { entry: { id: '3', name: 'name3' } }
-            ];
+            selection = [{ entry: { id: '1', name: 'name1' } }, { entry: { id: '2', name: 'name2' } }, { entry: { id: '3', name: 'name3' } }];
 
             change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
             tick();
 
             expect(directive.favorites.length).toBe(3);
@@ -183,7 +158,7 @@ describe('NodeFavoriteDirective', () => {
 
         it('should not perform action if favorites collection is empty', fakeAsync(() => {
             const change = new SimpleChange(null, [], true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
             tick();
 
             directive.toggleFavorite();
@@ -225,10 +200,7 @@ describe('NodeFavoriteDirective', () => {
         it('should call removeFavoriteSite() if all are favorites', () => {
             removeFavoriteSpy.and.returnValue(Promise.resolve());
 
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: true } },
-                { entry: { id: '2', name: 'name2', isFavorite: true } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }, { entry: { id: '2', name: 'name2', isFavorite: true } }];
 
             directive.toggleFavorite();
 
@@ -239,9 +211,7 @@ describe('NodeFavoriteDirective', () => {
             removeFavoriteSpy.and.returnValue(Promise.resolve());
             spyOn(directive.toggle, 'emit');
 
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: true } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }];
 
             directive.toggleFavorite();
             tick();
@@ -253,9 +223,7 @@ describe('NodeFavoriteDirective', () => {
             addFavoriteSpy.and.returnValue(Promise.resolve());
             spyOn(directive.toggle, 'emit');
 
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: false } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: false } }];
 
             directive.toggleFavorite();
             tick();
@@ -268,9 +236,7 @@ describe('NodeFavoriteDirective', () => {
             removeFavoriteSpy.and.returnValue(Promise.reject(error));
             spyOn(directive.error, 'emit');
 
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: true } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }];
 
             directive.toggleFavorite();
             tick();
@@ -283,9 +249,7 @@ describe('NodeFavoriteDirective', () => {
             addFavoriteSpy.and.returnValue(Promise.reject(error));
             spyOn(directive.error, 'emit');
 
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: false } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: false } }];
 
             directive.toggleFavorite();
             tick();
@@ -296,9 +260,7 @@ describe('NodeFavoriteDirective', () => {
         it('should set isFavorites items to false', fakeAsync(() => {
             removeFavoriteSpy.and.returnValue(Promise.resolve());
 
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: true } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }];
 
             directive.toggleFavorite();
             tick();
@@ -309,9 +271,7 @@ describe('NodeFavoriteDirective', () => {
         it('should set isFavorites items to true', fakeAsync(() => {
             addFavoriteSpy.and.returnValue(Promise.resolve());
 
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: false } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: false } }];
 
             directive.toggleFavorite();
             tick();
@@ -321,16 +281,13 @@ describe('NodeFavoriteDirective', () => {
     });
 
     describe('getFavorite()', () => {
-
         it('should not hit server when using 6.x api', fakeAsync(() => {
             spyOn(directive.favoritesApi, 'getFavorite').and.callThrough();
 
-            const selection = [
-                { entry: { id: '1', name: 'name1', isFavorite: true } }
-            ];
+            const selection = [{ entry: { id: '1', name: 'name1', isFavorite: true } }];
 
             const change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
             tick();
 
             expect(directive.favorites[0].entry.isFavorite).toBe(true);
@@ -340,12 +297,10 @@ describe('NodeFavoriteDirective', () => {
         it('should process node as favorite', fakeAsync(() => {
             spyOn(directive.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(null));
 
-            const selection = [
-                { entry: { id: '1', name: 'name1' } }
-            ];
+            const selection = [{ entry: { id: '1', name: 'name1' } }];
 
             const change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
             tick();
 
             expect(directive.favorites[0].entry.isFavorite).toBe(true);
@@ -354,12 +309,10 @@ describe('NodeFavoriteDirective', () => {
         it('should not process node as favorite', fakeAsync(() => {
             spyOn(directive.favoritesApi, 'getFavorite').and.returnValue(Promise.reject(new Error('error')));
 
-            const selection = [
-                { entry: { id: '1', name: 'name1' } }
-            ];
+            const selection = [{ entry: { id: '1', name: 'name1' } }];
 
             const change = new SimpleChange(null, selection, true);
-            directive.ngOnChanges({selection: change});
+            directive.ngOnChanges({ selection: change });
             tick();
 
             expect(directive.favorites[0].entry.isFavorite).toBe(false);
@@ -376,10 +329,7 @@ describe('NodeFavoriteDirective', () => {
         });
 
         it('should return false when some are not favorite', () => {
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: true } },
-                { entry: { id: '2', name: 'name2', isFavorite: false } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }, { entry: { id: '2', name: 'name2', isFavorite: false } }];
 
             const hasFavorites = directive.hasFavorites();
 
@@ -387,10 +337,7 @@ describe('NodeFavoriteDirective', () => {
         });
 
         it('return true when all are favorite', () => {
-            directive.favorites = [
-                { entry: { id: '1', name: 'name1', isFavorite: true } },
-                { entry: { id: '2', name: 'name2', isFavorite: true } }
-            ];
+            directive.favorites = [{ entry: { id: '1', name: 'name1', isFavorite: true } }, { entry: { id: '2', name: 'name2', isFavorite: true } }];
 
             const hasFavorites = directive.hasFavorites();
 

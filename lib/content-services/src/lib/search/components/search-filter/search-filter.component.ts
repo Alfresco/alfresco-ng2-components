@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { FacetField } from '../../models/facet-field.interface';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 
 @Component({
@@ -40,10 +39,7 @@ export class SearchFilterComponent {
     };
     displayResetButton: boolean;
 
-    constructor(
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
-        public facetFiltersService: SearchFacetFiltersService
-    ) {
+    constructor(public queryBuilder: SearchQueryBuilderService, public facetFiltersService: SearchFacetFiltersService) {
         if (queryBuilder.config?.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetExpanded['query'] = queryBuilder.config.facetQueries.expanded;

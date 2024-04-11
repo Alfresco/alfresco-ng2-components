@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchDateRange } from './search-date-range/search-date-range';
@@ -25,17 +24,7 @@ import { SearchDateRangeComponent } from './search-date-range/search-date-range.
 import { SearchDateRangeTabbedComponent } from './search-date-range-tabbed.component';
 import { DateRangeType } from './search-date-range/date-range-type';
 import { InLastDateType } from './search-date-range/in-last-date-type';
-import {
-    endOfDay,
-    endOfToday,
-    formatISO,
-    parse,
-    startOfDay, startOfMonth,
-    startOfWeek,
-    subDays,
-    subMonths,
-    subWeeks
-} from 'date-fns';
+import { endOfDay, endOfToday, formatISO, parse, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from 'date-fns';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
@@ -72,10 +61,7 @@ describe('SearchDateRangeTabbedComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [SearchDateRangeTabbedComponent, SearchFilterTabbedComponent, SearchDateRangeComponent],
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             providers: [
                 { provide: SearchFilterTabbedComponent, useClass: MockSearchFilterTabbedComponent },
                 { provide: SearchDateRangeComponent, useClass: MockSearchDateRangeComponent }
@@ -157,7 +143,9 @@ describe('SearchDateRangeTabbedComponent', () => {
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
         component.submitValues();
-        expect(component.displayValue$.next).toHaveBeenCalledWith('CREATED DATE: 05-Jun-23 - 07-Jun-23 MODIFIED DATE: SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.WEEKS');
+        expect(component.displayValue$.next).toHaveBeenCalledWith(
+            'CREATED DATE: 05-Jun-23 - 07-Jun-23 MODIFIED DATE: SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.WEEKS'
+        );
 
         component.onDateRangedValueChanged(anyMockDate, 'createdDate');
         component.onDateRangedValueChanged(anyMockDate, 'modifiedDate');
@@ -171,8 +159,9 @@ describe('SearchDateRangeTabbedComponent', () => {
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
         let inLastStartDate = startOfWeek(subWeeks(new Date(), 5));
-        let query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
-         ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
+        let query =
+            `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
+            ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.combinedQuery).toEqual(query);
 
         inLastMockData = {
@@ -185,8 +174,9 @@ describe('SearchDateRangeTabbedComponent', () => {
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
         inLastStartDate = startOfDay(subDays(new Date(), 9));
-        query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
-         ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
+        query =
+            `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
+            ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.combinedQuery).toEqual(query);
 
         inLastMockData = {
@@ -199,8 +189,9 @@ describe('SearchDateRangeTabbedComponent', () => {
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
         inLastStartDate = startOfMonth(subMonths(new Date(), 7));
-        query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
-         ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
+        query =
+            `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
+            ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.combinedQuery).toEqual(query);
         expect(component.combinedQuery).toEqual(query);
 
@@ -217,8 +208,9 @@ describe('SearchDateRangeTabbedComponent', () => {
         component.submitValues();
         fixture.detectChanges();
         const inLastStartDate = startOfWeek(subWeeks(new Date(), 5));
-        const query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
-         ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
+        const query =
+            `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
+            ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.context.queryFragments['dateRange']).toEqual(query);
         expect(component.context.update).toHaveBeenCalled();
     });

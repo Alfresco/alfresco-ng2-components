@@ -39,8 +39,6 @@ import { SearchNumberRangeComponent } from './components/search-number-range/sea
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
-import { SEARCH_QUERY_SERVICE_TOKEN } from './search-query-service.token';
-import { SearchQueryBuilderService } from './services/search-query-builder.service';
 import { SearchFilterContainerComponent } from './components/search-filter-container/search-filter-container.component';
 import { SearchDatetimeRangeComponent } from './components/search-datetime-range/search-datetime-range.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
@@ -58,17 +56,10 @@ import { SearchDateRangeTabbedComponent } from './components/search-date-range-t
 import { SearchFilterTabDirective } from './components/search-filter-tabbed/search-filter-tab.directive';
 import { SearchFacetChipTabbedComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
+import { SearchInputComponent } from './components/search-input';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ContentPipeModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        CoreModule,
-        SearchTextModule
-    ],
+    imports: [CommonModule, ContentPipeModule, FormsModule, ReactiveFormsModule, MaterialModule, CoreModule, SearchTextModule, SearchInputComponent],
     declarations: [
         SearchComponent,
         SearchControlComponent,
@@ -127,6 +118,7 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchFilterChipsComponent,
         SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
+        SearchWidgetChipComponent,
         SearchLogicalFilterComponent,
         SearchFilterTabbedComponent,
         SearchDateRangeComponent,
@@ -134,9 +126,6 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         ResetSearchDirective,
         SearchFacetChipTabbedComponent,
         SearchFacetTabbedContentComponent
-    ],
-    providers: [
-        { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }
     ]
 })
 export class SearchModule {}

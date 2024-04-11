@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { SearchDateRangeComponent } from './search-date-range.component';
 import { addDays, endOfToday, format, parse, startOfYesterday, subDays } from 'date-fns';
@@ -38,10 +37,7 @@ describe('SearchDateRangeComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [SearchDateRangeComponent],
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
 
         fixture = TestBed.createComponent(SearchDateRangeComponent);
@@ -234,7 +230,7 @@ describe('SearchDateRangeComponent', () => {
             betweenStartDate: undefined,
             betweenEndDate: undefined
         };
-        let dateRangeTypeRadioButton =  await loader.getHarness(MatRadioButtonHarness.with({ selector: '[data-automation-id="date-range-in-last"]' }));
+        let dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ selector: '[data-automation-id="date-range-in-last"]' }));
         await dateRangeTypeRadioButton.check();
         selectDropdownOption('date-range-in-last-option-weeks');
         enterValueInInputFieldAndTriggerEvent('date-range-in-last-input', '');

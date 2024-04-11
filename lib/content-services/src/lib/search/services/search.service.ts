@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NodePaging, QueriesApi, SearchRequest, ResultSetPaging, SearchApi } from '@alfresco/js-api';
 import { Observable, Subject, from } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
@@ -25,6 +25,9 @@ import { SearchConfigurationService } from './search-configuration.service';
     providedIn: 'root'
 })
 export class SearchService {
+    private apiService = inject(AlfrescoApiService);
+    private searchConfigurationService = inject(SearchConfigurationService);
+
     dataLoaded = new Subject<ResultSetPaging>();
 
     private _queriesApi: QueriesApi;
@@ -39,8 +42,6 @@ export class SearchService {
         return this._searchApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private searchConfigurationService: SearchConfigurationService) {}
-
     /**
      * Gets a list of nodes that match the given search criteria.
      *
@@ -51,10 +52,9 @@ export class SearchService {
     getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
         const promise = this.queriesApi.findNodes(term, options);
 
-        promise
-            .then((nodePaging) => {
-                this.dataLoaded.next(nodePaging);
-            });
+        promise.then((nodePaging) => {
+            this.dataLoaded.next(nodePaging);
+        });
 
         return from(promise);
     }
@@ -71,10 +71,9 @@ export class SearchService {
         const searchQuery = this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount);
         const promise = this.searchApi.search(searchQuery);
 
-        promise
-            .then((nodePaging) => {
-                this.dataLoaded.next(nodePaging);
-            });
+        promise.then((nodePaging) => {
+            this.dataLoaded.next(nodePaging);
+        });
 
         return from(promise);
     }
@@ -88,10 +87,9 @@ export class SearchService {
     searchByQueryBody(queryBody: SearchRequest): Observable<ResultSetPaging> {
         const promise = this.searchApi.search(queryBody);
 
-        promise
-            .then((nodePaging) => {
-                this.dataLoaded.next(nodePaging);
-            });
+        promise.then((nodePaging) => {
+            this.dataLoaded.next(nodePaging);
+        });
 
         return from(promise);
     }

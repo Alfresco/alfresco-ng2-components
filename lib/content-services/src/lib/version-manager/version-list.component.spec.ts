@@ -23,7 +23,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { Node, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentVersionService } from './content-version.service';
 import { take } from 'rxjs/operators';
 
@@ -48,7 +47,7 @@ describe('VersionListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(VersionListComponent);

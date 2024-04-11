@@ -17,7 +17,6 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchFacetFiltersService } from '../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../services/search-query-builder.service';
@@ -25,8 +24,7 @@ import { SearchQueryBuilderService } from '../services/search-query-builder.serv
 @Component({
     template: `<button adf-reset-search></button>`
 })
-class TestComponent {
-}
+class TestComponent {}
 
 describe('Directive: ResetSearchDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
@@ -35,10 +33,7 @@ describe('Directive: ResetSearchDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [ContentTestingModule],
             declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
@@ -48,7 +43,7 @@ describe('Directive: ResetSearchDirective', () => {
 
     it('should reset the search on click', () => {
         spyOn(queryBuilder, 'resetToDefaults');
-        searchFacetFiltersService.responseFacets = [ { type: 'field', label: 'f1' } ] as any;
+        searchFacetFiltersService.responseFacets = [{ type: 'field', label: 'f1' }] as any;
         fixture.nativeElement.querySelector('button').click();
         expect(searchFacetFiltersService.responseFacets).toEqual([]);
         expect(queryBuilder.resetToDefaults).toHaveBeenCalled();

@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { SearchService } from '../../../search/services/search.service';
 import { PermissionListComponent } from './permission-list.component';
@@ -54,7 +53,7 @@ describe('PermissionListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(PermissionListComponent);
         component = fixture.componentInstance;

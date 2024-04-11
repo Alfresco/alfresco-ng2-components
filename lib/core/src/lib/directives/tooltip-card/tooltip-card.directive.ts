@@ -43,7 +43,9 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.hide();
+        if (this.overlayRef) {
+            this.hide();
+        }
     }
 
     ngOnInit(): void {
@@ -64,7 +66,7 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
     @HostListener('mouseenter')
     show() {
         const tooltipRef: ComponentRef<TooltipCardComponent>
-            = this.overlayRef.attach(new ComponentPortal(TooltipCardComponent));
+            = this.overlayRef?.attach(new ComponentPortal(TooltipCardComponent));
         tooltipRef.instance.text = this.text;
         tooltipRef.instance.image = this.image;
         tooltipRef.instance.width = this.width;
@@ -73,6 +75,6 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
 
     @HostListener('mouseleave')
     hide() {
-        this.overlayRef.detach();
+        this.overlayRef?.detach();
     }
 }

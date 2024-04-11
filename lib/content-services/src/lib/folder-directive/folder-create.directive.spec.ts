@@ -23,17 +23,10 @@ import { Subject, of } from 'rxjs';
 import { FolderCreateDirective } from './folder-create.directive';
 import { Node } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentService } from '../common/services/content.service';
 
 @Component({
-    template: `
-        <div
-            [adf-create-folder]="parentNode"
-            (success)="success($event)"
-            title="create-title"
-            [nodeType]="'cm:my-little-pony'">
-        </div>`
+    template: ` <div [adf-create-folder]="parentNode" (success)="success($event)" title="create-title" [nodeType]="'cm:my-little-pony'"></div>`
 })
 class TestTypeComponent {
     parentNode = '';
@@ -63,14 +56,8 @@ describe('FolderCreateDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            declarations: [
-                TestTypeComponent,
-                TestComponent
-            ]
+            imports: [ContentTestingModule],
+            declarations: [TestTypeComponent, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderCreateDirective));
@@ -78,7 +65,7 @@ describe('FolderCreateDirective', () => {
         contentService = TestBed.inject(ContentService);
 
         dialogRefMock = {
-            afterClosed: (val) =>  of(val),
+            afterClosed: (val) => of(val),
             componentInstance: {
                 error: new Subject<any>(),
                 success: new Subject<Node>()
@@ -134,7 +121,6 @@ describe('FolderCreateDirective', () => {
     });
 
     describe('Without overrides', () => {
-
         beforeEach(() => {
             fixture = TestBed.createComponent(TestComponent);
             element = fixture.debugElement.query(By.directive(FolderCreateDirective));

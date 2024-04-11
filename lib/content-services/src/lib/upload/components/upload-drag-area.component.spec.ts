@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadSuccessPromise, mockUploadErrorPromise } from '../../mock/upload.service.mock';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
@@ -100,17 +99,13 @@ const fakeItem = {
 };
 
 describe('UploadDragAreaComponent', () => {
-
     let component: UploadDragAreaComponent;
     let fixture: ComponentFixture<UploadDragAreaComponent>;
     let uploadService: UploadService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(UploadDragAreaComponent);
         uploadService = TestBed.inject(UploadService);
@@ -125,7 +120,6 @@ describe('UploadDragAreaComponent', () => {
     });
 
     describe('When disabled', () => {
-
         it('should NOT upload the list of files dropped', () => {
             component.disabled = true;
             spyOn(uploadService, 'addToQueue');
@@ -220,11 +214,7 @@ describe('UploadDragAreaComponent', () => {
             component.error = null;
             component.acceptedFilesType = '.jpg,.pdf';
             fixture.detectChanges();
-            const files: File[] = [
-                { name: 'phobos.jpg' } as File,
-                { name: 'deimos.pdf' } as File,
-                { name: 'ganymede.bmp' } as File
-            ];
+            const files: File[] = [{ name: 'phobos.jpg' } as File, { name: 'deimos.pdf' } as File, { name: 'ganymede.bmp' } as File];
             component.onFilesDropped(files);
 
             await fixture.whenStable();
@@ -250,7 +240,6 @@ describe('UploadDragAreaComponent', () => {
         });
 
         it('should NOT upload the file if it is dropped on another file', () => {
-
             addToQueueSpy.and.callFake((fileList) => {
                 expect(fileList.name).toBe('file');
                 expect(fileList.options.path).toBe('pippo/');
@@ -294,7 +283,6 @@ describe('UploadDragAreaComponent', () => {
         });
 
         it('should upload a file when user has create permission on target folder', () => {
-
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
@@ -385,7 +373,6 @@ describe('UploadDragAreaComponent', () => {
     });
 
     describe('Events', () => {
-
         it('should raise an error if upload a file goes wrong', async () => {
             spyOn(uploadService, 'getUploadPromise').and.callThrough();
 
@@ -397,7 +384,7 @@ describe('UploadDragAreaComponent', () => {
             });
 
             let lastValue: FileUploadErrorEvent;
-            component.error.subscribe((error) => lastValue = error);
+            component.error.subscribe((error) => (lastValue = error));
 
             component.onUploadFiles(fakeCustomEvent);
 
@@ -413,7 +400,7 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
 
             let lastValue: any;
-            component.success.subscribe((success) => lastValue = success);
+            component.success.subscribe((success) => (lastValue = success));
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
@@ -432,7 +419,7 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
 
             let lastValue: FileUploadErrorEvent;
-            component.error.subscribe((error) => lastValue = error);
+            component.error.subscribe((error) => (lastValue = error));
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {

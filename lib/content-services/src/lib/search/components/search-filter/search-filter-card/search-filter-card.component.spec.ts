@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { SearchFilterCardComponent } from './search-filter-card.component';
 
@@ -41,10 +40,7 @@ describe('SearchFilterCardComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchFilterCardComponent);
         component = fixture.componentInstance;

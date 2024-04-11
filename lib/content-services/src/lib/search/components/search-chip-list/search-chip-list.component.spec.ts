@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipRemoveHarness } from '@angular/material/chips/testing';
@@ -45,7 +44,7 @@ describe('SearchChipListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            imports: [ContentTestingModule],
             declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);

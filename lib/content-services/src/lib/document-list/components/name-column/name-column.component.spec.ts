@@ -17,7 +17,6 @@
 
 import { NameColumnComponent } from './name-column.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { skip } from 'rxjs/operators';
 
@@ -28,17 +27,14 @@ describe('NameColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
 
         fixture = TestBed.createComponent(NameColumnComponent);
 
         context = {
             row: {
-                node: {entry: {}},
+                node: { entry: {} },
                 getValue: (key) => key
             }
         };
@@ -48,24 +44,20 @@ describe('NameColumnComponent', () => {
     });
 
     it('should set the display value based on default key', (done) => {
-        component.displayText$
-            .pipe(skip(1))
-            .subscribe(value => {
-                expect(value).toBe('name');
-                done();
-            });
+        component.displayText$.pipe(skip(1)).subscribe((value) => {
+            expect(value).toBe('name');
+            done();
+        });
 
         component.ngOnInit();
     });
 
     it('should set the display value based on the custom key', (done) => {
         component.key = 'title';
-        component.displayText$
-            .pipe(skip(1))
-            .subscribe(value => {
-                expect(value).toBe('title');
-                done();
-            });
+        component.displayText$.pipe(skip(1)).subscribe((value) => {
+            expect(value).toBe('title');
+            done();
+        });
 
         component.ngOnInit();
     });

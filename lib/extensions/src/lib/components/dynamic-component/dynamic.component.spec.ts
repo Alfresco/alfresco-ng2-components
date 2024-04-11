@@ -17,13 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import {
-    Component,
-    Input,
-    OnChanges,
-    SimpleChange,
-    ComponentFactoryResolver
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DynamicExtensionComponent } from './dynamic.component';
@@ -44,11 +38,9 @@ export class TestComponent implements OnChanges {
 }
 
 describe('DynamicExtensionComponent', () => {
-
     let fixture: ComponentFixture<DynamicExtensionComponent>;
     let componentRegister: ComponentRegisterService;
     let component: DynamicExtensionComponent;
-    let componentFactoryResolver: ComponentFactoryResolver;
 
     beforeEach(() => {
         componentRegister = new ComponentRegisterService();
@@ -64,11 +56,8 @@ describe('DynamicExtensionComponent', () => {
     });
 
     describe('Sub-component creation', () => {
-
         beforeEach(() => {
             fixture = TestBed.createComponent(DynamicExtensionComponent);
-            componentFactoryResolver = TestBed.inject(ComponentFactoryResolver);
-            spyOn(componentFactoryResolver, 'resolveComponentFactory').and.callThrough();
             component = fixture.componentInstance;
             component.id = 'test-component';
             component.data = { foo: 'bar' };
@@ -87,22 +76,13 @@ describe('DynamicExtensionComponent', () => {
             expect(innerElement).not.toBeNull();
         });
 
-        it('should load the TestComponent only ONCE', () => {
-            component.ngOnChanges({});
-            fixture.detectChanges();
-            component.ngOnChanges({});
-            fixture.detectChanges();
-
-            expect((componentFactoryResolver.resolveComponentFactory as any).calls.count()).toBe(1);
-        });
-
         it('should pass through the data', () => {
             const testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
 
             expect(testComponent.data).toBe(component.data);
         });
 
-        it('should update the subcomponent\'s input parameters', () => {
+        it('should update the subcomponent input parameters', () => {
             const data = { foo: 'baz' };
 
             component.ngOnChanges({ data: new SimpleChange(component.data, data, false) });
@@ -113,7 +93,6 @@ describe('DynamicExtensionComponent', () => {
     });
 
     describe('Angular life-cycle methods in sub-component', () => {
-
         let testComponent;
 
         beforeEach(() => {

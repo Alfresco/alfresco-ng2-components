@@ -19,21 +19,18 @@ import { TestBed } from '@angular/core/testing';
 import { ContentTypePropertiesService } from './content-type-property.service';
 import { CardViewItem, CardViewSelectItemModel, CardViewTextItemModel } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypeService } from '../../content-type';
 import { of } from 'rxjs';
 import { Node, TypeEntry } from '@alfresco/js-api';
 import { VersionCompatibilityService } from '../../version-compatibility/version-compatibility.service';
 
 describe('ContentTypePropertyService', () => {
-
     let service: ContentTypePropertiesService;
     let versionCompatibilityService: VersionCompatibilityService;
     let contentTypeService: ContentTypeService;
 
     const mockContent: any = {
-        entry:
-        {
+        entry: {
             associations: [],
             isArchive: true,
             includedInSupertypeQuery: true,
@@ -42,14 +39,24 @@ describe('ContentTypePropertyService', () => {
             id: 'fk:nodeType',
             title: 'Content',
             model: { namespacePrefix: 'fk' },
-            properties: [{ id: 'cm:name', title: 'Name', description: 'Name', dataType: 'd:text', isMultiValued: false, isMandatory: true, isMandatoryEnforced: true, isProtected: false }],
+            properties: [
+                {
+                    id: 'cm:name',
+                    title: 'Name',
+                    description: 'Name',
+                    dataType: 'd:text',
+                    isMultiValued: false,
+                    isMandatory: true,
+                    isMandatoryEnforced: true,
+                    isProtected: false
+                }
+            ],
             parentId: 'cm:cmobject'
         }
     };
 
     const mockContentWithProperties: any = {
-        entry:
-        {
+        entry: {
             associations: [],
             isArchive: true,
             includedInSupertypeQuery: true,
@@ -79,7 +86,8 @@ describe('ContentTypePropertyService', () => {
                     defaultValue: 'default',
                     isMandatoryEnforced: true,
                     isProtected: false
-                }],
+                }
+            ],
             parentId: 'cm:cmobject'
         }
     };
@@ -99,16 +107,18 @@ describe('ContentTypePropertyService', () => {
                 },
                 id: 'e2e:test',
                 title: 'Test type',
-                properties: [{
-                    id: 'cm:name',
-                    title: 'Name',
-                    description: 'Name',
-                    dataType: 'd:text',
-                    isMultiValued: false,
-                    isMandatory: true,
-                    isMandatoryEnforced: true,
-                    isProtected: false
-                }],
+                properties: [
+                    {
+                        id: 'cm:name',
+                        title: 'Name',
+                        description: 'Name',
+                        dataType: 'd:text',
+                        isMultiValued: false,
+                        isMandatory: true,
+                        isMandatoryEnforced: true,
+                        isProtected: false
+                    }
+                ],
                 parentId: 'cm:content'
             }
         }
@@ -116,10 +126,7 @@ describe('ContentTypePropertyService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [ContentTestingModule]
         });
         service = TestBed.inject(ContentTypePropertiesService);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
@@ -214,7 +221,7 @@ describe('ContentTypePropertyService', () => {
             nodeType: 'fn:fakenode',
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
-            properties: {'fk:brendonstare': 'i keep staring i do not know why'}
+            properties: { 'fk:brendonstare': 'i keep staring i do not know why' }
         } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContentWithProperties));
@@ -235,5 +242,4 @@ describe('ContentTypePropertyService', () => {
             done();
         });
     });
-
 });

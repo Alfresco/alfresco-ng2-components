@@ -32,6 +32,4 @@ export * from './interfaces/card-view.interfaces';
 export * from './validators/card-view.validators';
 export * from './models/card-view.models';
 export * from './services/card-view.services';
-export * from './directives/card-view-content-proxy.directive';
-
 export * from './card-view.module';

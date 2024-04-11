@@ -22,7 +22,14 @@ import * as ejs from 'ejs';
 import * as path from 'path';
 import * as fs from 'fs';
 import { argv, exit } from 'node:process';
-import program from 'commander';
+import { Command } from 'commander';
+
+const program = new Command();
+
+interface AuditCommandArgs {
+    package?: string;
+    outDir?: string;
+}
 
 /**
  * Audit report command
@@ -44,10 +51,12 @@ export default function main(_args: string[], workingDir: string) {
         exit(0);
     }
 
+    const options = program.opts<AuditCommandArgs>();
+
     let packagePath = path.resolve(workingDir, 'package.json');
 
-    if (program.package) {
-        packagePath = path.resolve(program.package);
+    if (options.package) {
+        packagePath = path.resolve(options.package);
     }
 
     if (!fs.existsSync(packagePath)) {
@@ -82,7 +91,7 @@ export default function main(_args: string[], workingDir: string) {
                     console.error(err);
                     reject(err);
                 } else {
-                    const outputPath = path.resolve(program.outDir || workingDir);
+                    const outputPath = path.resolve(options.outDir || workingDir);
                     const outputFile = path.join(outputPath, `audit-info-${packageJson.version}.md`);
 
                     fs.writeFileSync(outputFile, mdText);

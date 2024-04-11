@@ -29,13 +29,7 @@ export default {
     title: 'Core/Datatable/Datatable',
     decorators: [
         moduleMetadata({
-            imports: [
-                CoreStoryModule,
-                DataTableModule,
-                MatProgressSpinnerModule,
-                BrowserAnimationsModule,
-                RouterTestingModule
-            ]
+            imports: [CoreStoryModule, DataTableModule, MatProgressSpinnerModule, BrowserAnimationsModule, RouterTestingModule]
         })
     ],
     argTypes: {
@@ -136,9 +130,7 @@ export default {
         sorting: {
             control: 'object',
             defaultValue: ['id', 'asc'],
-            description: 'A string array.\n\n' +
-                'First element describes the key to sort by.\n\n' +
-                'Second element describes the sorting order.',
+            description: 'A string array.\n\n' + 'First element describes the key to sort by.\n\n' + 'Second element describes the sorting order.',
             table: {
                 type: { summary: 'any[]' },
                 defaultValue: { summary: '[]' }
@@ -149,11 +141,27 @@ export default {
             description: 'The columns that the datatable will show.',
             defaultValue: [
                 { type: 'text', key: 'id', title: 'Id', sortable: true },
-                { type: 'text', key: 'textCol', title: 'Text Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell', copyContent: true },
+                {
+                    type: 'text',
+                    key: 'textCol',
+                    title: 'Text Column',
+                    sortable: true,
+                    draggable: true,
+                    cssClass: 'adf-ellipsis-cell',
+                    copyContent: true
+                },
                 { type: 'image', key: 'imageCol', title: 'Image Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'icon', key: 'iconCol', title: 'Icon Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'date', key: 'dateCol', title: 'Date Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'date', key: 'dateCol', title: 'Date Time Ago Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell', dateConfig: { format: 'timeAgo' } },
+                {
+                    type: 'date',
+                    key: 'dateCol',
+                    title: 'Date Time Ago Column',
+                    sortable: true,
+                    draggable: true,
+                    cssClass: 'adf-ellipsis-cell',
+                    dateConfig: { format: 'timeAgo' }
+                },
                 { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
@@ -257,7 +265,8 @@ export default {
         },
         rowStyle: {
             control: 'object',
-            description: 'The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples.',
+            description:
+                'The inline style to apply to every row. See [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples.',
             table: {
                 category: 'Custom Row Styles',
                 type: { summary: '{ [key: string]: any }' }
@@ -365,9 +374,8 @@ export default {
     }
 } as Meta<DataTableComponent>;
 
-const insertContentToTemplate = (content: string): string => (
+const insertContentToTemplate = (content: string): string =>
     `<adf-datatable
-    [display]=display
     [rows]=rows
     [sorting]=sorting
     [columns]=columns
@@ -392,8 +400,7 @@ const insertContentToTemplate = (content: string): string => (
     (columnOrderChanged)=columnOrderChanged($event)
     >
     ${content}
-  </adf-datatable>`
-);
+  </adf-datatable>`;
 
 export const defaultDatatable: Story<DataTableComponent> = (args: DataTableComponent) => ({
     props: args,

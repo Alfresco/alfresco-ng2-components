@@ -21,7 +21,6 @@ import { TestBed } from '@angular/core/testing';
 import { ContentMetadataService } from './content-metadata.service';
 import { of } from 'rxjs';
 import { PropertyGroup } from '../interfaces/property-group.interface';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContentTypePropertiesService } from './content-type-property.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { PropertyDescriptorsService } from './property-descriptors.service';
@@ -42,14 +41,7 @@ const fakeContentNode: Node = {
     id: 'fake-id',
     nodeType: 'cm:content',
     isFile: true,
-    aspectNames: [
-        'rn:renditioned',
-        'cm:versionable',
-        'cm:titled',
-        'cm:auditable',
-        'cm:author',
-        'cm:thumbnailModification'
-    ],
+    aspectNames: ['rn:renditioned', 'cm:versionable', 'cm:titled', 'cm:auditable', 'cm:author', 'cm:thumbnailModification'],
     createdByUser: { displayName: 'test-user' },
     modifiedByUser: { displayName: 'test-user-modified' },
     properties: []
@@ -148,13 +140,11 @@ describe('ContentMetaDataService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ContentTestingModule]
+            imports: [ContentTestingModule]
         });
         service = TestBed.inject(ContentMetadataService);
         contentPropertyService = TestBed.inject(ContentTypePropertiesService);
-        const propertyDescriptorsService = TestBed.inject(
-            PropertyDescriptorsService
-        );
+        const propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
         classesApi = propertyDescriptorsService['classesApi'];
         appConfig = TestBed.inject(AppConfigService);
     });
@@ -169,9 +159,7 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should return the content type property', () => {
-        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(
-            of({ label: 'hello i am a weird content type' } as any)
-        );
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type' } as any));
 
         service.getContentTypeProperty(fakeNode).subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -181,15 +169,10 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should trigger the opening of the content type dialog', () => {
-        spyOn(
-            contentPropertyService,
-            'openContentTypeDialogConfirm'
-        ).and.returnValue(of(true));
+        spyOn(contentPropertyService, 'openContentTypeDialogConfirm').and.returnValue(of(true));
 
         service.openConfirmDialog(fakeNode).subscribe(() => {
-            expect(
-                contentPropertyService.openContentTypeDialogConfirm
-            ).toHaveBeenCalledWith('fn:fakenode');
+            expect(contentPropertyService.openContentTypeDialogConfirm).toHaveBeenCalledWith('fn:fakenode');
         });
     });
 
@@ -197,9 +180,7 @@ describe('ContentMetaDataService', () => {
         it('should return response with exif property', async () => {
             setConfig('default', { 'exif:exif': '*' });
 
-            spyOn(classesApi, 'getClass').and.returnValue(
-                Promise.resolve(exifResponse)
-            );
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
 
@@ -213,9 +194,7 @@ describe('ContentMetaDataService', () => {
         it('should filter the record options for node ', async () => {
             setConfig('default', { 'exif:exif': '*', 'rma:record': '*' });
 
-            spyOn(classesApi, 'getClass').and.returnValue(
-                Promise.resolve(exifResponse)
-            );
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
 
@@ -315,9 +294,7 @@ describe('ContentMetaDataService', () => {
                 'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(
-                Promise.resolve(exifResponse)
-            );
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
 
@@ -337,9 +314,7 @@ describe('ContentMetaDataService', () => {
                 'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(
-                Promise.resolve(exifResponse)
-            );
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(exifResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeNode).toPromise();
 
@@ -379,17 +354,13 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.returnValue(
-                Promise.resolve(contentResponse)
-            );
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
-            service
-                .getGroupedProperties(fakeContentNode, 'custom')
-                .subscribe((res) => {
-                    expect(res.length).toEqual(1);
-                    expect(res[0].title).toEqual('Properties');
-                    done();
-                });
+            service.getGroupedProperties(fakeContentNode, 'custom').subscribe((res) => {
+                expect(res.length).toEqual(1);
+                expect(res[0].title).toEqual('Properties');
+                done();
+            });
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
@@ -422,17 +393,13 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.returnValue(
-                Promise.resolve(contentResponse)
-            );
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
-            service
-                .getGroupedProperties(fakeContentNode, 'custom')
-                .subscribe((res) => {
-                    expect(res.length).toEqual(1);
-                    expect(res[0].title).toEqual('Properties');
-                    done();
-                });
+            service.getGroupedProperties(fakeContentNode, 'custom').subscribe((res) => {
+                expect(res.length).toEqual(1);
+                expect(res[0].title).toEqual('Properties');
+                done();
+            });
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
@@ -456,16 +423,12 @@ describe('ContentMetaDataService', () => {
             ];
 
             setConfig('custom', customLayoutOrientedScheme);
-            spyOn(classesApi, 'getClass').and.returnValue(
-                Promise.resolve(contentResponse)
-            );
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
-            service
-                .getGroupedProperties(fakeContentNode, 'custom')
-                .subscribe((res) => {
-                    expect(res.length).toEqual(0);
-                    done();
-                });
+            service.getGroupedProperties(fakeContentNode, 'custom').subscribe((res) => {
+                expect(res.length).toEqual(0);
+                done();
+            });
 
             expect(classesApi.getClass).toHaveBeenCalledTimes(1 + fakeContentNode.aspectNames.length);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
@@ -499,24 +462,15 @@ describe('ContentMetaDataService', () => {
                 }
             ];
 
-            spyOn(classesApi, 'getClass').and.returnValue(
-                Promise.resolve(contentResponse)
-            );
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(contentResponse));
 
-            service
-                .getGroupedProperties(
-                    fakeContentNode,
-                    customLayoutOrientedScheme
-                )
-                .subscribe((res) => {
-                    expect(res.length).toEqual(1);
-                    expect(res[0].title).toEqual('Properties');
-                    expect(classesApi.getClass).toHaveBeenCalledTimes(1);
-                    expect(classesApi.getClass).toHaveBeenCalledWith(
-                        'cm_content'
-                    );
-                    done();
-                });
+            service.getGroupedProperties(fakeContentNode, customLayoutOrientedScheme).subscribe((res) => {
+                expect(res.length).toEqual(1);
+                expect(res[0].title).toEqual('Properties');
+                expect(classesApi.getClass).toHaveBeenCalledTimes(1);
+                expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+                done();
+            });
         });
     });
 });

@@ -17,49 +17,53 @@
 
 import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core';
 import { PackageInfo } from '../interfaces';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
-  selector: 'adf-about-package-list',
-  templateUrl: './package-list.component.html',
-  styleUrls: ['./package-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'adf-about-package-list',
+    templateUrl: './package-list.component.html',
+    styleUrls: ['./package-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatTableModule]
 })
 export class PackageListComponent implements OnInit {
+    @Input()
+    dependencies: any;
 
-  @Input()
-  dependencies: any;
+    columns = [
+        {
+            columnDef: 'title',
+            header: 'ABOUT.PACKAGES.NAME',
+            cell: (row: PackageInfo) => `${row.name}`
+        },
+        {
+            columnDef: 'version',
+            header: 'ABOUT.PACKAGES.VERSION',
+            cell: (row: PackageInfo) => `${row.version}`
+        }
+    ];
 
-  columns = [
-    {
-      columnDef: 'title',
-      header: 'ABOUT.PACKAGES.NAME',
-      cell: (row: PackageInfo) => `${row.name}`
-    },
-    {
-      columnDef: 'version',
-      header: 'ABOUT.PACKAGES.VERSION',
-      cell: (row: PackageInfo) => `${row.version}`
-    }
-  ];
+    displayedColumns = this.columns.map((x) => x.columnDef);
 
-  displayedColumns = this.columns.map((x) => x.columnDef);
+    @Input()
+    data: Array<PackageInfo> = [];
 
-  @Input()
-  data: Array<PackageInfo> = [];
+    ngOnInit() {
+        const regexp = new RegExp('^(@alfresco)');
 
-  ngOnInit() {
-    const regexp = new RegExp('^(@alfresco)');
+        if (this.dependencies) {
+            const libs = Object.keys(this.dependencies).filter((val) => regexp.test(val));
+            this.data = [];
 
-    if (this.dependencies) {
-        const libs = Object.keys(this.dependencies).filter((val) => regexp.test(val));
-        this.data = [];
-
-        libs.forEach((val) => {
-            this.data.push({
-                name: val,
-                version: (this.dependencies[val])
+            libs.forEach((val) => {
+                this.data.push({
+                    name: val,
+                    version: this.dependencies[val]
+                });
             });
-        });
+        }
     }
-  }
 }

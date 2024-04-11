@@ -16,7 +16,7 @@
  */
 
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
-import { AuthConfig, AUTH_CONFIG, OAuthModule, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { AUTH_CONFIG, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { AlfrescoApiNoAuthService } from '../../api-factories/alfresco-api-no-auth.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AuthenticationService } from '../services/authentication.service';
@@ -31,14 +31,11 @@ import { AuthenticationConfirmationComponent } from './view/authentication-confi
 /**
  * Create a Login Factory function
  *
- * @param oAuthService auth service
- * @param storage storage service
- * @param config auth configuration
+ * @param redirectService auth redirect service
  * @returns a factory function
  */
-export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, config: AuthConfig) {
-    const service = new RedirectAuthService(oAuthService, storage, config);
-    return () => service.init();
+export function loginFactory(redirectService: RedirectAuthService): () => Promise<boolean> {
+    return () => redirectService.init();
 }
 
 @NgModule({
@@ -58,7 +55,7 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
         {
             provide: APP_INITIALIZER,
             useFactory: loginFactory,
-            deps: [OAuthService, OAuthStorage, AUTH_CONFIG],
+            deps: [RedirectAuthService],
             multi: true
         }
     ]
