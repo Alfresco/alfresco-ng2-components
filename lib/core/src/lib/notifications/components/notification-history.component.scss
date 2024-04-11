@@ -3,6 +3,10 @@
 $notification-item-height: 72px;
 
 .adf {
+    &-notification-history-container {
+        margin-top: 1px;
+    }
+
     &-notification-history-list {
         .adf-notification-history-menu-item-content-wrapper {
             height: 100%;
@@ -30,7 +34,7 @@ $notification-item-height: 72px;
     }
 
     &-notification-history-menu_button#{$mat-button} {
-        margin-right: 8px;
+        margin-right: 6px;
         border-radius: 90%;
         padding: 0;
         min-width: 40px;
