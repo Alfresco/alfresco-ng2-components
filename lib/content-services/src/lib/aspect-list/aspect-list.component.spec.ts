@@ -240,7 +240,7 @@ describe('AspectListComponent', () => {
                 expect(component.nodeAspects.length).toBe(0);
             });
 
-            fit('should store not listed aspects and emit all aspects and count of only visible aspects on change', async () => {
+            it('should store not listed aspects and emit all aspects and count of only visible aspects on change', async () => {
                 const storedAspect = ['stored:aspect'];
                 expect(component.notDisplayedAspects).toEqual(storedAspect);
 
