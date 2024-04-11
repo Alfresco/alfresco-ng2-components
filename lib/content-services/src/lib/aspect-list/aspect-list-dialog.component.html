@@ -5,11 +5,11 @@
 
 <div class="adf-aspect-list-dialog-information">
     <p id="aspect-list-dialog-over-table-message">{{overTableMessage | translate}}</p>
-    <p id="aspect-list-dialog-counter">{{currentAspectSelection ? currentAspectSelection.length : 0}}
+    <p id="aspect-list-dialog-counter">{{counter}}
         {{'ADF-ASPECT-LIST.DIALOG.SELECTED' | translate}}</p>
 </div>
 <mat-dialog-content class="adf-aspect-dialog-content">
-    <adf-aspect-list #aspectList (valueChanged)="onValueChanged($event)" [nodeId]="currentNodeId" [excludedAspects]="data.excludedAspects">
+    <adf-aspect-list #aspectList (valueChanged)="onValueChanged($event)" (updateCounter)="onUpdateCounter($event)" [nodeId]="currentNodeId" [excludedAspects]="data.excludedAspects">
     </adf-aspect-list>
 </mat-dialog-content>
 

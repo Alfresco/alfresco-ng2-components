@@ -43,6 +43,10 @@ export class AspectListComponent implements OnInit, OnDestroy {
     @Output()
     valueChanged: EventEmitter<string[]> = new EventEmitter<string[]>();
 
+    /** Emitted every time the number of selected aspects changes */
+    @Output()
+    updateCounter: EventEmitter<number> = new EventEmitter<number>();
+
     propertyColumns: string[] = ['name', 'title', 'dataType'];
     aspects$: Observable<AspectEntry[]> = null;
     nodeAspects: string[] = [];
@@ -74,6 +78,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
                     this.nodeAspectStatus = [ ...this.nodeAspects ];
                     this.notDisplayedAspects = node.aspectNames.filter((aspect) => !this.aspectListService.getVisibleAspects().includes(aspect) && !customAspects.includes(aspect));
                     this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
+                    this.updateCounter.emit(this.nodeAspects.length);
                 }),
                 concatMap(() => this.aspectListService.getAspects()),
                 takeUntil(this.onDestroy$));
@@ -97,6 +102,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
         }
         this.updateEqualityOfAspectList();
         this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
+        this.updateCounter.emit(this.nodeAspects.length);
     }
 
     reset() {
@@ -104,6 +110,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
             this.nodeAspects.splice(0, this.nodeAspects.length, ...this.nodeAspectStatus);
             this.hasEqualAspect = true;
             this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
+            this.updateCounter.emit(this.nodeAspects.length);
         } else {
             this.clear();
         }
@@ -113,6 +120,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
         this.nodeAspects = [];
         this.updateEqualityOfAspectList();
         this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
+        this.updateCounter.emit(this.nodeAspects.length);
     }
 
     getId(aspect: any): string {
