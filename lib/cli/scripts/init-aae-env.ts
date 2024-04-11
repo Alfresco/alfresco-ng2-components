@@ -579,8 +579,7 @@ async function deployWithPayload(currentAbsentApp: any, projectRelease: any, env
         infrastructure: currentAbsentApp.infrastructure,
         variables: currentAbsentApp.variables,
         enableLocalDevelopment: currentAbsentApp.enableLocalDevelopment,
-        environmentId: envId,
-        enableTaskEmail: currentAbsentApp.enableTaskEmail
+        environmentId: envId
     };
 
     logger.info(`Deploying ${currentAbsentApp.name} ${envId ? 'on env: ' + envId : ''}`);
