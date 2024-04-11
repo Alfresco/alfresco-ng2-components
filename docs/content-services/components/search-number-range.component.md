@@ -2,12 +2,12 @@
 Title: Search number range component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-06-11
+Last reviewed: 2024-04-05
 ---
 
 # [Search number range component](../../../lib/content-services/src/lib/search/components/search-number-range/search-number-range.component.ts "Defined in search-number-range.component.ts")
 
-Implements a number range [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) for the [Search Filter component](search-filter.component.md).
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 4 inputs representing logical conditions to form search query from.
 
 ![Number Range Widget](../../docassets/images/search-number-range.png)
 
@@ -40,7 +40,7 @@ Implements a number range [widget](../../../lib/testing/src/lib/core/pages/form/
 | ---- | ---- | ----------- |
 | field | string | Field to to use |
 | format | string | Value format. Uses string substitution to allow all sorts of [range queries](https://docs.alfresco.com/5.2/concepts/rm-searchsyntax-ranges.html). |
-| hideDefaultAction | boolean | Show/hide the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) actions. By default is false. |
+| hideDefaultAction | boolean | Show/hide the widget actions. By default is false. |
 
 ## Details
 

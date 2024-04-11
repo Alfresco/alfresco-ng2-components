@@ -2,7 +2,7 @@
 Title: Search Logical Filter component
 Added: v6.1.0
 Status: Active
-Last reviewed: 2023-06-01
+Last reviewed: 2024-04-05
 ---
 
 # [Search Logical Filter component](../../../lib/content-services/src/lib/search/components/search-logical-filter/search-logical-filter.component.ts "Defined in search-logical-filter.component.ts")
@@ -40,7 +40,7 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | field | string | Field/fields to apply the query to. Required value |
-| hideDefaultAction | boolean | Show/hide the [widget](../../../lib/testing/src/lib/protractor/core/pages/form/widgets/widget.ts) actions. By default is false. |
+| hideDefaultAction | boolean | Show/hide the widget actions. By default is false. |
 
 ## Details
 
