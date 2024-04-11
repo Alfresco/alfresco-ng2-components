@@ -4,10 +4,6 @@ FROM node:18.16-alpine3.17 AS builder
 WORKDIR /usr/src/alfresco
 COPY package.json package.json
 
-RUN mkdir -p ./licenses && \
-  yarn licenses list > ./licenses/licenses.txt && \
-  yarn licenses generate-disclaimer > ./licenses/disclaimer.txt
-
 # 2. Generate image
 
 FROM nginxinc/nginx-unprivileged:1.21-alpine
