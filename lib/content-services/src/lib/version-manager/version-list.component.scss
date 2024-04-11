@@ -1,16 +1,14 @@
 /* stylelint-disable selector-class-pattern */
 /* stylelint-disable no-descending-specificity */
-
 @import 'styles/mat-selectors';
 
 .adf-version-list {
-        height: 100%;
-        overflow-x: hidden;
-        display: flex;
+    height: 100%;
+    overflow-x: hidden;
+    display: flex;
 
-        :first-child {
-            max-width: 100%;
-        }
+    :first-child {
+        max-width: 100%;
     }
 
     &-item {
