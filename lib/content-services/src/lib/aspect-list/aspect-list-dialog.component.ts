@@ -31,6 +31,7 @@ export class AspectListDialogComponent implements OnInit {
     description: string;
     currentNodeId: string;
     overTableMessage: string;
+    counter = 0;
 
     currentAspectSelection: string[] = [];
 
@@ -57,7 +58,11 @@ export class AspectListDialogComponent implements OnInit {
     }
 
     onValueChanged(aspectList: string[]) {
-       this.currentAspectSelection = aspectList;
+        this.currentAspectSelection = aspectList;
+    }
+
+    onUpdateCounter(count: number) {
+        this.counter = count;
     }
 
     close() {
