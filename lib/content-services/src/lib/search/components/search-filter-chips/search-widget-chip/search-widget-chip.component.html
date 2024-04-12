@@ -1,4 +1,4 @@
-<mat-chip-option [attr.data-automation-id]="'search-filter-chip-' + category.name"
+<mat-chip [attr.data-automation-id]="'search-filter-chip-' + category.name"
           disableRipple
           class="adf-search-filter-chip"
           [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
@@ -18,7 +18,7 @@
     </span>
     <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
     <mat-icon class="adf-search-filter-chip-icon">{{ chipIcon }}</mat-icon>
-</mat-chip-option>
+</mat-chip>
 
 <mat-menu #menu="matMenu" class="adf-search-widget-extra-width" backdropClass="adf-search-filter-chip-menu" [class]="'adf-search-filter-chip-menu-panel adf-search-filter-chip-menu-panel-' + category.id" (closed)="onClosed()">
     <div #menuContainer [attr.data-automation-id]="'search-field-' + category.name">
