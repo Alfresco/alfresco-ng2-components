@@ -16,12 +16,12 @@
               [xPosition]="menuPositionX"
               [yPosition]="menuPositionY"
               id="adf-notification-history-menu"
-              class="adf-notification-history-menu">
+              class="adf-notification-history-menu adf-notification-history-menu-panel">
 
         <div class="adf-notification-history-list"
              (click)="$event.stopPropagation()">
             <div mat-subheader role="menuitem">
-                <span>{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
+                <span class="adf-notification-history-menu-title">{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
                 <button *ngIf="notifications.length"
                         id="adf-notification-history-mark-as-read"
                         mat-icon-button
@@ -51,7 +51,7 @@
                             <div class="adf-notification-history-menu-item-content">
                                 <p class="adf-notification-history-menu-text adf-notification-history-menu-message"
                                    *ngFor="let message of notification.messages"
-                                   matListItemLine [matTooltip]="message" matTooltipShowDelay="1000">{{ message }}</p>
+                                   matListItemLine [matTooltip]="message" matTooltipShowDelay="1000">&nbsp;{{ message }}</p>
                                 <p class="adf-notification-history-menu-text adf-notification-history-menu-date"
                                    matListItemLine> {{notification.datetime | adfTimeAgo}} </p>
                             </div>
@@ -61,7 +61,7 @@
                 <ng-template #empty_list_template>
                     <mat-list-item id="adf-notification-history-component-no-message"
                                    class="adf-notification-history-menu-no-message">
-                        <p matListItemLine>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</p>
+                        <p class="adf-notification-history-menu-no-message-text" matListItemLine>{{ 'NOTIFICATIONS.NO_MESSAGE' | translate }}</p>
                     </mat-list-item>
                 </ng-template>
             </mat-list>
