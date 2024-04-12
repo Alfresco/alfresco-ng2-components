@@ -30,7 +30,12 @@ $notification-item-height: 72px;
         p {
             line-height: 16px;
             margin-bottom: 0;
+            color: var(--theme-sidenav-user-menu-color);
         }
+    }
+
+    &-notification-history-menu-title {
+        font-size: 14px;
     }
 
     &-notification-history-menu_button#{$mat-button} {
@@ -73,6 +78,12 @@ $notification-item-height: 72px;
             font-size: var(--theme-body-1-font-size);
         }
 
+        .adf-notification-history-menu-no-message-text {
+            font-size: 16px;
+            color: var(--theme-sidenav-user-menu-color);
+            margin-bottom: 0;
+        }
+
         .adf-notification-history-menu-date.adf-notification-history-menu-text:is(p) {
             font-size: var(--theme-caption-font-size);
         }
@@ -108,7 +119,7 @@ $notification-item-height: 72px;
     }
 }
 
-#{$mat-menu-panel}.adf-notification-history-menu {
+#{$mat-menu-panel}.adf-notification-history-menu.adf-notification-history-menu-panel {
     min-width: 320px;
     max-height: 500px;
 
