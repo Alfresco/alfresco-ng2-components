@@ -46,7 +46,7 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
 
             &-header {
                 font-size: smaller;
-                padding-left: 16px;
+                padding-left: 12px;
             }
 
             &-header-title {
@@ -77,14 +77,18 @@ $dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-hei
         .adf-aspect-property-table-column {
             &-name {
                 width: 15%;
+                padding-left: 24px;
+                padding-right: 0;
             }
 
             &-title {
                 width: 65%;
+                padding: 0;
             }
 
             &-data-type {
                 width: 20%;
+                padding-right: 24px;
                 padding-left: 10px;
             }
         }
