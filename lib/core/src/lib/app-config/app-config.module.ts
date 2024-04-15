@@ -15,20 +15,12 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AppConfigPipe } from './app-config.pipe';
 
 @NgModule({
-    imports: [
-        HttpClientModule
-    ],
-    declarations: [
-        AppConfigPipe
-    ],
-    exports: [
-        AppConfigPipe
-    ]
+    imports: [AppConfigPipe],
+    exports: [AppConfigPipe]
 })
-export class AppConfigModule {
-}
+/** @deprecated This module is deprecated, consider importing AppConfigPipe directly */
+export class AppConfigModule {}

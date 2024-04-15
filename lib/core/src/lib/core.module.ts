@@ -22,7 +22,6 @@ import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } fr
 
 import { MaterialModule } from './material.module';
 import { AboutModule } from './about/about.module';
-import { AppConfigModule } from './app-config/app-config.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
 import { DataTableModule } from './datatable/datatable.module';
@@ -66,7 +65,7 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
 import { AdfDateFnsAdapter } from './common/utils/date-fns-adapter';
 import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
-import { StoragePrefixFactory } from './app-config';
+import { AppConfigPipe, StoragePrefixFactory } from './app-config';
 import { UnsavedChangesDialogModule } from './dialogs';
 import { DynamicChipListModule } from './dynamic-chip-list';
 
@@ -84,7 +83,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        AppConfigModule,
+        AppConfigPipe,
         PaginationModule,
         ToolbarModule,
         ContextMenuModule,
@@ -123,7 +122,6 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         IdentityUserInfoModule,
         ReactiveFormsModule,
         MaterialModule,
-        AppConfigModule,
         PaginationModule,
         ToolbarModule,
         ContextMenuModule,
@@ -162,12 +160,7 @@ export class CoreModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: loadAppConfig,
-                    deps: [
-                        AppConfigService,
-                        StorageService,
-                        AdfHttpClient,
-                        StoragePrefixFactory
-                    ],
+                    deps: [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
                     multi: true
                 },
                 {
@@ -187,7 +180,7 @@ export class CoreModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: createAlfrescoApiInstance,
-                    deps: [ AlfrescoApiLoaderService ],
+                    deps: [AlfrescoApiLoaderService],
                     multi: true
                 }
             ]
