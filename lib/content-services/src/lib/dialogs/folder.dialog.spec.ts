@@ -20,7 +20,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { NodesApiService } from '../common/services/nodes-api.service';
 
 import { FolderDialogComponent } from './folder.dialog';
-import { of, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 
@@ -28,9 +28,16 @@ describe('FolderDialogComponent', () => {
     let fixture: ComponentFixture<FolderDialogComponent>;
     let component: FolderDialogComponent;
     let nodesApi: NodesApiService;
+
+    let submitButton: HTMLButtonElement;
     const dialogRef = {
         close: jasmine.createSpy('close')
     };
+    let updateNodeSpy: jasmine.Spy;
+    let createFolderSpy: jasmine.Spy;
+
+    const updateNode$ = new BehaviorSubject(null);
+    const createFolderNode$ = new BehaviorSubject(null);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,6 +48,10 @@ describe('FolderDialogComponent', () => {
         fixture = TestBed.createComponent(FolderDialogComponent);
         component = fixture.componentInstance;
         nodesApi = TestBed.inject(NodesApiService);
+
+        createFolderSpy = spyOn(nodesApi, 'createFolder').and.returnValue(createFolderNode$);
+        updateNodeSpy = spyOn(nodesApi, 'updateNode').and.returnValue(updateNode$);
+        submitButton = fixture.nativeElement.querySelector('#adf-folder-create-button');
     });
 
     afterEach(() => {
@@ -87,14 +98,19 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should submit updated values if form is valid', () => {
-            spyOn(nodesApi, 'updateNode').and.returnValue(of(null));
+            updateNode$.next(null);
 
             component.form.controls['name'].setValue('folder-name-update');
             component.form.controls['title'].setValue('folder-title-update');
             component.form.controls['description'].setValue('folder-description-update');
 
-            component.submit();
+            fixture.detectChanges();
+            submitButton.click();
+            fixture.detectChanges();
 
+            expect(component.form.valid).toBeTrue();
+            expect(submitButton.disabled).toBeTrue();
+            expect(component.disableSubmitButton).toBeTrue();
             expect(nodesApi.updateNode).toHaveBeenCalledWith('node-id', {
                 name: 'folder-name-update',
                 properties: {
@@ -104,49 +120,49 @@ describe('FolderDialogComponent', () => {
             });
         });
 
-        it('should call dialog to close with form data when submit is successfully', () => {
-            const folder: any = {
-                data: 'folder-data'
-            };
-
-            spyOn(nodesApi, 'updateNode').and.returnValue(of(folder));
-
-            component.submit();
-
-            expect(dialogRef.close).toHaveBeenCalledWith(folder);
-        });
-
-        it('should emit success output event with folder when submit is successful', async () => {
-            const folder: any = { data: 'folder-data' };
-            let expectedNode = null;
-
-            spyOn(nodesApi, 'updateNode').and.returnValue(of(folder));
-
-            component.success.subscribe((node) => {
-                expectedNode = node;
-            });
-            component.submit();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(expectedNode).toBe(folder);
-        });
-
         it('should not submit if form is invalid', () => {
-            spyOn(nodesApi, 'updateNode');
-
             component.form.controls['name'].setValue('');
             component.form.controls['description'].setValue('');
 
-            component.submit();
+            fixture.detectChanges();
+            submitButton.click();
+            fixture.detectChanges();
 
-            expect(component.form.valid).toBe(false);
-            expect(nodesApi.updateNode).not.toHaveBeenCalled();
+            expect(submitButton.disabled).toBeTrue();
+            expect(component.form.valid).toBeFalse();
+            expect(updateNodeSpy).not.toHaveBeenCalled();
+        });
+
+        describe('when submit is successfully', () => {
+            const folder: any = { data: 'folder-data' };
+
+            beforeAll(() => {
+                updateNode$.next(folder);
+            });
+
+            it('should call dialog to close with form data', () => {
+                component.submit();
+
+                expect(dialogRef.close).toHaveBeenCalledWith(folder);
+            });
+
+            it('should emit success output event with folder', async () => {
+                let expectedNode = null;
+
+                component.success.subscribe((node) => {
+                    expectedNode = node;
+                });
+                component.submit();
+
+                fixture.detectChanges();
+                await fixture.whenStable();
+
+                expect(expectedNode).toBe(folder);
+            });
         });
 
         it('should not call dialog to close if submit fails', () => {
-            spyOn(nodesApi, 'updateNode').and.returnValue(throwError('error'));
+            updateNode$.error(throwError('error'));
             spyOn(component, 'handleError').and.callFake((val) => val);
 
             component.submit();
@@ -184,42 +200,47 @@ describe('FolderDialogComponent', () => {
             expect(component.description).toBe('folder-description-update');
         });
 
-        it('should submit updated values if form is valid', () => {
-            spyOn(nodesApi, 'createFolder').and.returnValue(of(null));
+        describe('when form is valid', () => {
+            beforeEach(() => {
+                createFolderNode$.next(null);
 
-            component.form.controls['name'].setValue('folder-name-update');
-            component.form.controls['title'].setValue('folder-title-update');
-            component.form.controls['description'].setValue('folder-description-update');
-
-            component.submit();
-
-            expect(nodesApi.createFolder).toHaveBeenCalledWith('parentNodeId', {
-                name: 'folder-name-update',
-                properties: {
-                    'cm:title': 'folder-title-update',
-                    'cm:description': 'folder-description-update'
-                },
-                nodeType: 'cm:folder'
+                component.form.controls['name'].setValue('folder-name-update');
+                component.form.controls['title'].setValue('folder-title-update');
+                component.form.controls['description'].setValue('folder-description-update');
             });
-        });
 
-        it('should submit updated values if form is valid (with custom nodeType)', () => {
-            spyOn(nodesApi, 'createFolder').and.returnValue(of(null));
+            it('should submit updated values', () => {
+                component.submit();
 
-            component.form.controls['name'].setValue('folder-name-update');
-            component.form.controls['title'].setValue('folder-title-update');
-            component.form.controls['description'].setValue('folder-description-update');
-            component.nodeType = 'cm:sushi';
+                expect(component.disableSubmitButton).toBeTrue();
+                expect(createFolderSpy).toHaveBeenCalledWith('parentNodeId', {
+                    name: 'folder-name-update',
+                    properties: {
+                        'cm:title': 'folder-title-update',
+                        'cm:description': 'folder-description-update'
+                    },
+                    nodeType: 'cm:folder'
+                });
+            });
 
-            component.submit();
+            it('should submit updated values (with custom nodeType)', () => {
+                component.nodeType = 'cm:sushi';
 
-            expect(nodesApi.createFolder).toHaveBeenCalledWith('parentNodeId', {
-                name: 'folder-name-update',
-                properties: {
-                    'cm:title': 'folder-title-update',
-                    'cm:description': 'folder-description-update'
-                },
-                nodeType: 'cm:sushi'
+                fixture.detectChanges();
+                submitButton.click();
+                fixture.detectChanges();
+
+                expect(component.form.valid).toBeTrue();
+                expect(submitButton.disabled).toBeTrue();
+                expect(component.disableSubmitButton).toBeTrue();
+                expect(createFolderSpy).toHaveBeenCalledWith('parentNodeId', {
+                    name: 'folder-name-update',
+                    properties: {
+                        'cm:title': 'folder-title-update',
+                        'cm:description': 'folder-description-update'
+                    },
+                    nodeType: 'cm:sushi'
+                });
             });
         });
 
@@ -232,7 +253,7 @@ describe('FolderDialogComponent', () => {
             component.form.controls['title'].setValue('title');
             component.form.controls['description'].setValue('description');
 
-            spyOn(nodesApi, 'createFolder').and.returnValue(of(folder));
+            createFolderNode$.next(folder);
 
             component.submit();
 
@@ -240,19 +261,16 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should not submit if form is invalid', () => {
-            spyOn(nodesApi, 'createFolder');
-
             component.form.controls['name'].setValue('');
             component.form.controls['description'].setValue('');
 
-            component.submit();
-
-            expect(component.form.valid).toBe(false);
-            expect(nodesApi.createFolder).not.toHaveBeenCalled();
+            expect(submitButton.disabled).toBeTrue();
+            expect(component.form.valid).toBeFalse();
+            expect(createFolderSpy).not.toHaveBeenCalled();
         });
 
         it('should not call dialog to close if submit fails', () => {
-            spyOn(nodesApi, 'createFolder').and.returnValue(throwError('error'));
+            createFolderNode$.error(throwError('error'));
             spyOn(component, 'handleError').and.callFake((val) => val);
 
             component.form.controls['name'].setValue('name');
@@ -264,18 +282,21 @@ describe('FolderDialogComponent', () => {
             expect(dialogRef.close).not.toHaveBeenCalled();
         });
 
-        describe('Error events ', () => {
+        describe('Error events', () => {
+            afterEach(() => {
+                createFolderNode$.next(null);
+            });
+
             it('should raise error for 409', (done) => {
                 const error = {
                     message: '{ "error": {  "statusCode" : 409 } }'
                 };
+                createFolderNode$.error(error);
 
                 component.error.subscribe((message) => {
                     expect(message).toBe('CORE.MESSAGES.ERRORS.EXISTENT_FOLDER');
                     done();
                 });
-
-                spyOn(nodesApi, 'createFolder').and.returnValue(throwError(error));
 
                 component.form.controls['name'].setValue('name');
                 component.form.controls['description'].setValue('description');
@@ -287,13 +308,12 @@ describe('FolderDialogComponent', () => {
                 const error = {
                     message: '{ "error": {  "statusCode" : 123 } }'
                 };
+                createFolderNode$.error(error);
 
                 component.error.subscribe((message) => {
                     expect(message).toBe('CORE.MESSAGES.ERRORS.GENERIC');
                     done();
                 });
-
-                spyOn(nodesApi, 'createFolder').and.returnValue(throwError(error));
 
                 component.form.controls['name'].setValue('name');
                 component.form.controls['description'].setValue('description');
@@ -301,19 +321,5 @@ describe('FolderDialogComponent', () => {
                 component.submit();
             });
         });
-    });
-
-    it('should disable the submit button after submitting the form', () => {
-        const submitButton = fixture.nativeElement.querySelector('#adf-folder-create-button');
-        component.data = {
-            parentNodeId: 'parentNodeId',
-            folder: null
-        };
-        fixture.detectChanges();
-
-        component.submit();
-
-        expect(component.disableSubmitButton).toBeTrue();
-        expect(submitButton.disabled).toBeTrue();
     });
 });

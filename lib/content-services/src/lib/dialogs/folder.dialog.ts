@@ -26,7 +26,6 @@ import { TranslationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../common/services/nodes-api.service';
 
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-folder-dialog',
@@ -35,10 +34,6 @@ import { finalize } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class FolderDialogComponent implements OnInit {
-    form: UntypedFormGroup;
-
-    folder: Node = null;
-
     /**
      * Emitted when the edit/create folder give error for example a folder with same name already exist
      */
@@ -49,13 +44,39 @@ export class FolderDialogComponent implements OnInit {
      * Emitted when the edit/create folder is successfully created/modified
      */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<Node>();
+    success: EventEmitter<Node> = new EventEmitter<Node>();
+
+    form: UntypedFormGroup;
+    folder: Node = null;
 
     editTitle = 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE';
     createTitle = 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE';
     nodeType = 'cm:folder';
 
     disableSubmitButton = false;
+
+    get editing(): boolean {
+        return !!this.data.folder;
+    }
+
+    get name(): string {
+        return this.getTrimmedValue(this.form.value.name);
+    }
+
+    get title(): string {
+        return this.getTrimmedValue(this.form.value.title);
+    }
+
+    get description(): string {
+        return this.getTrimmedValue(this.form.value.description);
+    }
+
+    private get properties(): { [key: string]: string } {
+        return {
+            'cm:title': this.title,
+            'cm:description': this.description
+        };
+    }
 
     constructor(
         private formBuilder: UntypedFormBuilder,
@@ -71,10 +92,6 @@ export class FolderDialogComponent implements OnInit {
             this.createTitle = data.createTitle || this.createTitle;
             this.nodeType = data.nodeType || this.nodeType;
         }
-    }
-
-    get editing(): boolean {
-        return !!this.data.folder;
     }
 
     ngOnInit() {
@@ -102,68 +119,13 @@ export class FolderDialogComponent implements OnInit {
         });
     }
 
-    get name(): string {
-        const { name } = this.form.value;
-
-        return (name || '').trim();
-    }
-
-    get title(): string {
-        const { title } = this.form.value;
-
-        return (title || '').trim();
-    }
-
-    get description(): string {
-        const { description } = this.form.value;
-
-        return (description || '').trim();
-    }
-
-    private get properties(): any {
-        const { title, description } = this;
-
-        return {
-            'cm:title': title,
-            'cm:description': description
-        };
-    }
-
-    private create(): Observable<Node> {
-        const {
-            name,
-            properties,
-            nodeType,
-            nodesApi,
-            data: { parentNodeId }
-        } = this;
-        return nodesApi.createFolder(parentNodeId, { name, properties, nodeType });
-    }
-
-    private edit(): Observable<Node> {
-        const {
-            name,
-            properties,
-            nodesApi,
-            data: {
-                folder: { id: nodeId }
-            }
-        } = this;
-        return nodesApi.updateNode(nodeId, { name, properties });
-    }
-
     submit() {
         this.disableSubmitButton = true;
-        const { form, dialog, editing } = this;
 
-        if (!form.valid) {
-            return;
-        }
-
-        (editing ? this.edit() : this.create()).pipe(finalize(() => (this.disableSubmitButton = false))).subscribe(
+        (this.editing ? this.edit() : this.create()).subscribe(
             (folder: Node) => {
                 this.success.emit(folder);
-                dialog.close(folder);
+                this.dialog.close(folder);
             },
             (error) => this.handleError(error)
         );
@@ -187,5 +149,21 @@ export class FolderDialogComponent implements OnInit {
         this.error.emit(this.translation.instant(errorMessage));
 
         return error;
+    }
+
+    private create(): Observable<Node> {
+        const parentNodeId = this.data.parentNodeId;
+
+        return this.nodesApi.createFolder(parentNodeId, { name: this.name, properties: this.properties, nodeType: this.nodeType });
+    }
+
+    private edit(): Observable<Node> {
+        const nodeId = this.data.folder.id;
+
+        return this.nodesApi.updateNode(nodeId, { name: this.name, properties: this.properties });
+    }
+
+    private getTrimmedValue(value: string): string {
+        return (value || '').trim();
     }
 }
