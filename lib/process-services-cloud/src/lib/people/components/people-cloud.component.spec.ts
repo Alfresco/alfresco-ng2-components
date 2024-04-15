@@ -96,17 +96,17 @@ describe('PeopleCloudComponent', () => {
         component.title = 'TITLE_KEY';
         fixture.detectChanges();
 
-        const matLabel = element.querySelector<HTMLInputElement>('#adf-people-cloud-title-id');
+        const inputElement = element.querySelector<HTMLInputElement>('[data-automation-id="adf-people-cloud-search-input"]');
 
-        expect(matLabel.textContent).toEqual('TITLE_KEY');
+        expect(inputElement.placeholder).toEqual('TITLE_KEY');
     });
 
     it('should not populate placeholder when title is not present', () => {
         fixture.detectChanges();
 
-        const matLabel = element.querySelector<HTMLInputElement>('#adf-people-cloud-title-id');
+        const inputElement = element.querySelector<HTMLInputElement>('[data-automation-id="adf-people-cloud-search-input"]');
 
-        expect(matLabel.textContent).toEqual('');
+        expect(inputElement.placeholder).toEqual('');
     });
 
     describe('Search user', () => {
