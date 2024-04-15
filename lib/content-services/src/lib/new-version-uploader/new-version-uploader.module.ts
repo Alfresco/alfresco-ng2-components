@@ -21,12 +21,12 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
 import { UploadModule } from '../upload/upload.module';
-import { AppConfigPipe, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { VersionManagerModule } from '../version-manager';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 
 @NgModule({
-    imports: [CommonModule, MaterialModule, CoreModule, UploadModule, FormsModule, VersionManagerModule, AppConfigPipe],
+    imports: [CommonModule, MaterialModule, CoreModule, UploadModule, FormsModule, VersionManagerModule],
     declarations: [NewVersionUploaderDialogComponent],
     exports: [NewVersionUploaderDialogComponent, FormsModule]
 })

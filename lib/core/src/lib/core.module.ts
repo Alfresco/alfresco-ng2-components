@@ -122,6 +122,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         IdentityUserInfoModule,
         ReactiveFormsModule,
         MaterialModule,
+        AppConfigPipe,
         PaginationModule,
         ToolbarModule,
         ContextMenuModule,
