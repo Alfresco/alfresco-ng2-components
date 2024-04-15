@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { FileSizePipe } from './file-size.pipe';
@@ -30,73 +29,39 @@ import { MultiValuePipe } from './multi-value.pipe';
 import { LocalizedDatePipe } from './localized-date.pipe';
 import { DecimalNumberPipe } from './decimal-number.pipe';
 import { LocalizedRolePipe } from './localized-role.pipe';
-import { TranslateModule } from '@ngx-translate/core';
 import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
 import { FilterStringPipe } from './filter-string.pipe';
 import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-prop.pipe';
 import { DateTimePipe } from './date-time.pipe';
 
+export const CORE_PIPES = [
+    LocalizedDatePipe,
+    TimeAgoPipe,
+    FileSizePipe,
+    HighlightPipe,
+    MimeTypeIconPipe,
+    FullNamePipe,
+    FormatSpacePipe,
+    FileTypePipe,
+    MultiValuePipe,
+    DecimalNumberPipe,
+    LocalizedRolePipe,
+    MomentDatePipe,
+    MomentDateTimePipe,
+    DateTimePipe,
+    FilterStringPipe,
+    FilterOutArrayObjectsByPropPipe,
+    InitialUsernamePipe
+] as const;
+
+/**
+ * @deprecated this Module is deprecated and should no longer be used.
+ * Consider importing CORE_PIPES or individual pipes directly.
+ */
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        LocalizedDatePipe,
-        TimeAgoPipe
-    ],
-    declarations: [
-        FileSizePipe,
-        HighlightPipe,
-        MimeTypeIconPipe,
-        InitialUsernamePipe,
-        FullNamePipe,
-        FormatSpacePipe,
-        FileTypePipe,
-        MultiValuePipe,
-        DecimalNumberPipe,
-        LocalizedRolePipe,
-        MomentDatePipe,
-        MomentDateTimePipe,
-        DateTimePipe,
-        FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe
-    ],
-    providers: [
-        FileSizePipe,
-        HighlightPipe,
-        TimeAgoPipe,
-        MimeTypeIconPipe,
-        InitialUsernamePipe,
-        FormatSpacePipe,
-        FileTypePipe,
-        MultiValuePipe,
-        DecimalNumberPipe,
-        LocalizedRolePipe,
-        MomentDatePipe,
-        MomentDateTimePipe,
-        DateTimePipe,
-        FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe,
-        LocalizedDatePipe
-    ],
-    exports: [
-        FileSizePipe,
-        HighlightPipe,
-        TimeAgoPipe,
-        MimeTypeIconPipe,
-        InitialUsernamePipe,
-        FullNamePipe,
-        FormatSpacePipe,
-        FileTypePipe,
-        MultiValuePipe,
-        DecimalNumberPipe,
-        LocalizedRolePipe,
-        MomentDatePipe,
-        MomentDateTimePipe,
-        DateTimePipe,
-        FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe
-    ]
+    imports: [...CORE_PIPES],
+    providers: [...CORE_PIPES],
+    exports: [...CORE_PIPES]
 })
-export class PipeModule {
-}
+export class PipeModule {}

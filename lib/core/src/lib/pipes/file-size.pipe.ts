@@ -20,12 +20,11 @@ import { TranslationService } from '../translation/translation.service';
 
 @Pipe({
     name: 'adfFileSize',
-    pure: false
+    pure: false,
+    standalone: true
 })
 export class FileSizePipe implements PipeTransform {
-
-    constructor(private translation: TranslationService) {
-    }
+    constructor(private translation: TranslationService) {}
 
     transform(paramByte: any, decimals: number = 2): string {
         if (paramByte == null) {
@@ -49,5 +48,4 @@ export class FileSizePipe implements PipeTransform {
 
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + i18nSize;
     }
-
 }
