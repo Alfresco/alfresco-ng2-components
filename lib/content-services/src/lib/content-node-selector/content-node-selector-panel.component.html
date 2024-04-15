@@ -1,10 +1,13 @@
 <div class="adf-content-node-selector-content">
-    <mat-form-field floatPlaceholder="never" class="adf-content-node-selector-content-input" *ngIf="showSearch">
+    <mat-form-field floatPlaceholder="never"
+                    class="adf-content-node-selector-content-input"
+                    subscriptSizing="dynamic"
+                    *ngIf="showSearch">
+        <mat-label>{{'NODE_SELECTOR.SEARCH' | translate}}</mat-label>
         <input matInput
             id="searchInput"
             [formControl]="searchInput"
             type="text"
-            placeholder="{{'NODE_SELECTOR.SEARCH' | translate}}"
             [value]="searchTerm"
             adf-auto-focus
             data-automation-id="content-node-selector-search-input">
