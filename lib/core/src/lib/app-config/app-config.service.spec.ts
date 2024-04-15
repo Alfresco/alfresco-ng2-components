@@ -18,21 +18,18 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from './app-config.service';
-import { AppConfigModule } from './app-config.module';
 import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 class TestExtensionService extends ExtensionService {
-
     onSetup(config: ExtensionConfig) {
         this.onSetup$.next(config);
     }
 }
 
 describe('AppConfigService', () => {
-
     let appConfigService: AppConfigService;
     let extensionService: ExtensionService;
     let httpClient: HttpClient;
@@ -52,13 +49,8 @@ describe('AppConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                AppConfigModule
-            ],
-            providers: [
-                { provide: ExtensionService, useClass: TestExtensionService }
-            ]
+            imports: [HttpClientModule],
+            providers: [{ provide: ExtensionService, useClass: TestExtensionService }]
         });
     });
 
@@ -191,7 +183,7 @@ describe('AppConfigService', () => {
 
     it('should execute callback function if is passed to the load method', async () => {
         const fakeCallBack = jasmine.createSpy('fakeCallBack');
-        fakeCallBack.and.returnValue(()=>{});
+        fakeCallBack.and.returnValue(() => {});
 
         await appConfigService.load(fakeCallBack);
 
@@ -212,6 +204,4 @@ describe('AppConfigService', () => {
         expect(appConfigService.get<any>('objectKey').secondUrl).toEqual('http://localhost:8080');
         expect(appConfigService.get<any>('objectKey').thirdUrl).toEqual('http://localhost:8080');
     });
-
-
 });
