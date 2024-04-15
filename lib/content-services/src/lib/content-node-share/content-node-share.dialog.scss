@@ -73,7 +73,7 @@
         }
 
         &--header {
-            padding: 16px 24px 0;
+            padding: 16px 24px 0 24px;
         }
 
         &--dialog-content {
@@ -98,6 +98,7 @@
         &__icon {
             color: var(--adf-theme-foreground-icon-color-054);
             padding-bottom: 0;
+            padding-right: 0;
         }
 
         &__para {
@@ -110,9 +111,20 @@
             font-size: var(--theme-subheading-2-font-size);
         }
 
+        &__copy-icon {
+            padding-top: 18px;
+            font-size: 22px;
+        }
+
         &__calender-icon {
             top: 12px;
             position: relative;
+            right: -6px;
+
+            svg {
+                height: 18px;
+                width: 18px;
+            }
         }
 
         &__date-time-container {
@@ -131,6 +143,7 @@
     .adf-full-width {
         width: 100%;
         border-radius: 6px;
+        margin-top: -6px;
     }
 
     .adf-sharable-link {
