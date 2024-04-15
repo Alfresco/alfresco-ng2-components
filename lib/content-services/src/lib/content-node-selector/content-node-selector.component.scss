@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 adf-content-node-selector {
     .adf-upload-dialog {
         box-shadow: none;
@@ -40,7 +42,48 @@ adf-content-node-selector {
 }
 
 .adf-content-node-selector-dialog {
+    #{$mat-form-field} {
+        width: 100%;
+
+        #{$mat-select-arrow-wrapper} {
+            transform: translateY(2px);
+            padding-right: 4px;
+        }
+
+        #{$mat-form-field-infix} {
+            border-top: 0.85em solid transparent;
+            padding-bottom: 6px;
+            padding-top: 20px;
+        }
+
+        #{$mat-floating-label} {
+            padding-top: 8px;
+        }
+    }
+
+    .adf-content-node-selector-content-input-icon {
+        font-size: 21px;
+        padding: 18px 0 0 0;
+        margin-right: -4px;
+    }
+
+    .adf-dropdown-breadcrumb-icon {
+        color: var(--adf-theme-foreground-base-color-045);
+    }
+
+    #{$mat-dialog-title} {
+        margin-bottom: 0;
+        padding: 0;
+
+        &::before {
+            display: none
+        }
+    }
+
     .adf-content-node-selector-dialog-title {
+        padding-bottom: 4px;
+        padding-left: 0;
+        padding-right: 0;
         font-size: var(--theme-title-font-size);
         font-weight: 600;
         font-style: normal;
@@ -57,7 +100,8 @@ adf-content-node-selector {
 
     .adf-content-node-selector-dialog-actions {
         padding: 8px;
-        height: 61px;
+        height: 77px;
+        background-color: var(--theme-background-color);
         display: flex;
         flex-direction: row;
         justify-content: space-between;
