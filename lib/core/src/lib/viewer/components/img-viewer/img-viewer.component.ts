@@ -15,29 +15,36 @@
  * limitations under the License.
  */
 
+import { NgIf } from '@angular/common';
 import {
+    AfterViewInit,
     Component,
+    ElementRef,
+    EventEmitter,
+    HostListener,
     Input,
     OnChanges,
-    SimpleChanges,
-    ViewEncapsulation,
-    ElementRef,
+    OnDestroy,
     Output,
-    EventEmitter,
-    AfterViewInit,
+    SimpleChanges,
     ViewChild,
-    HostListener,
-    OnDestroy
+    ViewEncapsulation
 } from '@angular/core';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { UrlService } from '../../common/services/url.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 import Cropper from 'cropperjs';
+import { AppConfigService } from '../../../app-config';
+import { UrlService } from '../../../common';
+import { ToolbarComponent } from '../../../toolbar';
 
 @Component({
     selector: 'adf-img-viewer',
+    standalone: true,
     templateUrl: './img-viewer.component.html',
     styleUrls: ['./img-viewer.component.scss'],
     host: { class: 'adf-image-viewer' },
+    imports: [ToolbarComponent, TranslateModule, MatIconModule, MatButtonModule, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -78,10 +85,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         return Math.round(this.scale * 100) + '%';
     }
 
-    constructor(
-        private appConfigService: AppConfigService,
-        private urlService: UrlService
-    ) {
+    constructor(private appConfigService: AppConfigService, private urlService: UrlService) {
         this.initializeScaling();
     }
 

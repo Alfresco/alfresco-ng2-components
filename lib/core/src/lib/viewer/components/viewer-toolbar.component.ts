@@ -19,10 +19,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 @Component({
     selector: 'adf-viewer-toolbar',
+    standalone: true,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-viewer-toolbar' },
     template: `<ng-content></ng-content>`
 })
-export class ViewerToolbarComponent {
-}
+export class ViewerToolbarComponent {}

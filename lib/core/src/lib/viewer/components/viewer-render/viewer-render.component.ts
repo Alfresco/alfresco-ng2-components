@@ -15,27 +15,47 @@
  * limitations under the License.
  */
 
-import {
-    Component, EventEmitter,
-    Input, OnChanges, Output, TemplateRef,
-    ViewEncapsulation, OnInit, OnDestroy, Injector
-} from '@angular/core';
-import { Subject } from 'rxjs';
-import { ViewUtilService } from '../services/view-util.service';
-import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { AppExtensionService, ViewerExtensionRef, ExtensionsModule } from '@alfresco/adf-extensions';
+import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from '@angular/common';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Track } from '../models/viewer.model';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
+import { Track } from '../../models/viewer.model';
+import { ViewUtilService } from '../../services/view-util.service';
+import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
+import { MediaPlayerComponent } from '../media-player/media-player.component';
+import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
+import { TxtViewerComponent } from '../txt-viewer/txt-viewer.component';
+import { UnknownFormatComponent } from '../unknown-format/unknown-format.component';
 
 @Component({
     selector: 'adf-viewer-render',
+    standalone: true,
     templateUrl: './viewer-render.component.html',
     styleUrls: ['./viewer-render.component.scss'],
-    host: {class: 'adf-viewer-render'},
+    host: { class: 'adf-viewer-render' },
     encapsulation: ViewEncapsulation.None,
+    imports: [
+        TranslateModule,
+        MatProgressSpinnerModule,
+        NgSwitch,
+        NgSwitchCase,
+        NgIf,
+        PdfViewerComponent,
+        ImgViewerComponent,
+        MediaPlayerComponent,
+        TxtViewerComponent,
+        NgTemplateOutlet,
+        UnknownFormatComponent,
+        ExtensionsModule,
+        NgForOf,
+        NgSwitchDefault
+    ],
     providers: [ViewUtilService]
 })
 export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
-
     /**
      * If you want to load an external file that does not come from ACS you
      * can use this URL to specify where to load the file from.
@@ -120,13 +140,13 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
      * @returns list of extensions
      */
     get externalExtensions(): string[] {
-        return this.viewerExtensions.map(ext => ext.fileExtension);
+        return this.viewerExtensions.map((ext) => ext.fileExtension);
     }
 
     private _externalViewer: ViewerExtensionRef;
     get externalViewer(): ViewerExtensionRef {
         if (!this._externalViewer) {
-            this._externalViewer = this.viewerExtensions.find(ext => ext.fileExtension === '*');
+            this._externalViewer = this.viewerExtensions.find((ext) => ext.fileExtension === '*');
         }
 
         return this._externalViewer;
@@ -136,11 +156,12 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private viewUtilService: ViewUtilService,
-                private extensionService: AppExtensionService,
-                public dialog: MatDialog,
-                public readonly injector: Injector) {
-    }
+    constructor(
+        private viewUtilService: ViewUtilService,
+        private extensionService: AppExtensionService,
+        public dialog: MatDialog,
+        public readonly injector: Injector
+    ) {}
 
     ngOnInit() {
         this.cacheTypeForContent = 'no-cache';
@@ -201,5 +222,4 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     onClose() {
         this.close.next(true);
     }
-
 }

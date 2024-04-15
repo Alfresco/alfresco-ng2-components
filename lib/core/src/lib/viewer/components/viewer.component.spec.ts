@@ -15,41 +15,39 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-
-import { TranslateModule } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import {
+    AppConfigService,
+    CloseButtonPosition,
     CoreTestingModule,
+    DownloadPromptActions,
+    DownloadPromptDialogComponent,
     EventMock,
     ViewerComponent,
-    ViewUtilService,
-    AppConfigService,
-    DownloadPromptDialogComponent,
-    DownloadPromptActions,
-    CloseButtonPosition
+    ViewUtilService
 } from '@alfresco/adf-core';
+import { Component } from '@angular/core';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { ViewerWithCustomMoreActionsComponent } from './mock/adf-viewer-container-more-actions.component.mock';
-import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
-import { ViewerWithCustomSidebarComponent } from './mock/adf-viewer-container-sidebar.component.mock';
 import { ViewerWithCustomOpenWithComponent } from './mock/adf-viewer-container-open-with.component.mock';
+import { ViewerWithCustomSidebarComponent } from './mock/adf-viewer-container-sidebar.component.mock';
 import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-container-toolbar-actions.component.mock';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
 
 @Component({
     selector: 'adf-dialog-dummy',
     template: ``
 })
-class DummyDialogComponent {
-}
+class DummyDialogComponent {}
 
 describe('ViewerComponent', () => {
-
     let component: ViewerComponent<any>;
     let fixture: ComponentFixture<ViewerComponent<any>>;
     let element: HTMLElement;
@@ -59,13 +57,7 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatButtonModule,
-                MatIconModule
-            ],
+            imports: [NoopAnimationsModule, TranslateModule.forRoot(), CoreTestingModule, MatButtonModule, MatIconModule],
             declarations: [
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
@@ -73,10 +65,7 @@ describe('ViewerComponent', () => {
                 ViewerWithCustomMoreActionsComponent,
                 ViewerWithCustomToolbarActionsComponent
             ],
-            providers: [
-                MatDialog,
-                { provide: DownloadPromptDialogComponent, useClass: DummyDialogComponent}
-            ]
+            providers: [MatDialog, { provide: DownloadPromptDialogComponent, useClass: DummyDialogComponent }]
         });
 
         fixture = TestBed.createComponent(ViewerComponent);
@@ -91,7 +80,7 @@ describe('ViewerComponent', () => {
         appConfigService.config = {
             ...appConfigService.config,
             viewer: {
-                enableDownloadPrompt:  false,
+                enableDownloadPrompt: false,
                 enableDownloadPromptReminder: false,
                 downloadPromptDelay: 3,
                 downloadPromptReminderDelay: 2
@@ -103,17 +92,14 @@ describe('ViewerComponent', () => {
         fixture.destroy();
     });
 
-
     describe('Mime Type Test', () => {
-
         it('should mimeType change when blobFile changes', () => {
-            const mockSimpleChanges: any = {  blobFile: {currentValue: { type: 'image/png'}}};
+            const mockSimpleChanges: any = { blobFile: { currentValue: { type: 'image/png' } } };
 
             component.ngOnChanges(mockSimpleChanges);
 
             expect(component.mimeType).toBe('image/png');
         });
-
     });
 
     describe('originalMimeType', () => {
@@ -149,11 +135,10 @@ describe('ViewerComponent', () => {
     });
 
     describe('File Name Test', () => {
-
         it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
             component.fileName = '';
             spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-            const mockSimpleChanges: any = {  urlFile: {currentValue: 'https://fakefile.url/fakeFileName.jpeg'}};
+            const mockSimpleChanges: any = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } };
 
             component.ngOnChanges(mockSimpleChanges);
             fixture.detectChanges();
@@ -164,18 +149,17 @@ describe('ViewerComponent', () => {
         it('should set fileName providing fileName input', () => {
             component.fileName = 'testFileName.jpg';
             spyOn(viewUtilService, 'getFilenameFromUrl').and.returnValue('fakeFileName.jpeg');
-            const mockSimpleChanges: any = {  urlFile: {currentValue: 'https://fakefile.url/fakeFileName.jpeg'}};
+            const mockSimpleChanges: any = { urlFile: { currentValue: 'https://fakefile.url/fakeFileName.jpeg' } };
 
             component.ngOnChanges(mockSimpleChanges);
-            fixture.detectChanges();fixture.detectChanges();
+            fixture.detectChanges();
+            fixture.detectChanges();
 
             expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('testFileName.jpg');
         });
-
     });
 
     describe('Viewer Example Component Rendering', () => {
-
         it('should use custom toolbar', (done) => {
             const customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
             const customElement: HTMLElement = customFixture.nativeElement;
@@ -232,12 +216,10 @@ describe('ViewerComponent', () => {
                 expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
                 done();
             });
-
         });
     });
 
     describe('Toolbar', () => {
-
         it('should show only next file button', async () => {
             component.allowNavigate = true;
             component.canNavigateBefore = false;
@@ -360,11 +342,9 @@ describe('ViewerComponent', () => {
                 done();
             });
         });
-
     });
 
     describe('Base component', () => {
-
         beforeEach(() => {
             component.mimeType = 'application/pdf';
 
@@ -372,7 +352,6 @@ describe('ViewerComponent', () => {
         });
 
         describe('SideBar Test', () => {
-
             it('should NOT display sidebar if is not allowed', (done) => {
                 component.showRightSidebar = true;
                 component.allowRightSidebar = false;
@@ -407,7 +386,6 @@ describe('ViewerComponent', () => {
                     expect(sidebar).toBeNull();
                     done();
                 });
-
             });
 
             it('should display sidebar on the left side', (done) => {
@@ -444,9 +422,7 @@ describe('ViewerComponent', () => {
         });
 
         describe('View', () => {
-
             describe('Overlay mode true', () => {
-
                 beforeEach(() => {
                     component.overlayMode = true;
                     component.fileName = 'fake-test-file.pdf';
@@ -458,7 +434,7 @@ describe('ViewerComponent', () => {
                 });
 
                 it('should file name be present if is overlay mode ', async () => {
-                    const mockSimpleChanges: any = { blobFile: {currentValue: { type: 'image/png'}}};
+                    const mockSimpleChanges: any = { blobFile: { currentValue: { type: 'image/png' } } };
                     component.ngOnChanges(mockSimpleChanges);
                     fixture.detectChanges();
                     await fixture.whenStable();
@@ -513,7 +489,6 @@ describe('ViewerComponent', () => {
             });
 
             describe('Overlay mode false', () => {
-
                 beforeEach(() => {
                     component.overlayMode = false;
                     fixture.detectChanges();
@@ -533,7 +508,6 @@ describe('ViewerComponent', () => {
         });
 
         describe('Attribute', () => {
-
             it('should showViewer default value  be true', () => {
                 expect(component.showViewer).toBe(true);
             });
@@ -547,7 +521,6 @@ describe('ViewerComponent', () => {
         });
 
         describe('Close Button', () => {
-
             const getRightCloseButton = () => element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-right-back"]');
             const getLeftCloseButton = () => element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-left-back"]');
 
@@ -562,7 +535,7 @@ describe('ViewerComponent', () => {
 
             it('should show close button on right side when closeButtonPosition is right and allowGoBack is true', () => {
                 component.allowGoBack = true;
-                component.closeButtonPosition =  CloseButtonPosition.Right;
+                component.closeButtonPosition = CloseButtonPosition.Right;
                 fixture.detectChanges();
 
                 expect(getRightCloseButton()).not.toBeNull();
@@ -579,7 +552,6 @@ describe('ViewerComponent', () => {
         });
 
         describe('Viewer component - Full Screen Mode - Mocking fixture element', () => {
-
             beforeEach(() => {
                 fixture = TestBed.createComponent(ViewerComponent);
                 element = fixture.nativeElement;
@@ -634,31 +606,30 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('Download Prompt Dialog',() => {
-
+    describe('Download Prompt Dialog', () => {
         let dialogOpenSpy: jasmine.Spy;
 
         beforeEach(() => {
             appConfigService.config = {
                 ...appConfigService.config,
                 viewer: {
-                    enableDownloadPrompt:  true,
+                    enableDownloadPrompt: true,
                     enableDownloadPromptReminder: true,
                     downloadPromptDelay: 3,
                     downloadPromptReminderDelay: 2
                 }
             };
-            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({afterClosed: () => of(null)} as any);
+            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as any);
             component.urlFile = undefined;
             component.clearDownloadPromptTimeouts();
         });
 
-        it('should configure initial timeout to display non responsive dialog when initialising component', (() => {
+        it('should configure initial timeout to display non responsive dialog when initialising component', () => {
             fixture.detectChanges();
             expect(component.downloadPromptTimer).toBeDefined();
-        }));
+        });
 
-        it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync( () => {
+        it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync(() => {
             dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
             fixture.detectChanges();
             tick(3000);
@@ -668,14 +639,14 @@ describe('ViewerComponent', () => {
             discardPeriodicTasks();
         }));
 
-        it('should show initial non responsive dialog after initial timeout', fakeAsync(  () => {
+        it('should show initial non responsive dialog after initial timeout', fakeAsync(() => {
             fixture.detectChanges();
             tick(3000);
             fixture.detectChanges();
             expect(dialogOpenSpy).toHaveBeenCalled();
         }));
 
-        it('should show reminder non responsive dialog after initial dialog', fakeAsync( () => {
+        it('should show reminder non responsive dialog after initial dialog', fakeAsync(() => {
             dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
             fixture.detectChanges();
             tick(3000);
@@ -689,7 +660,7 @@ describe('ViewerComponent', () => {
             discardPeriodicTasks();
         }));
 
-        it('should emit downloadFileEvent when DownloadPromptDialog return DownloadPromptActions.DOWNLOAD on close', fakeAsync( () => {
+        it('should emit downloadFileEvent when DownloadPromptDialog return DownloadPromptActions.DOWNLOAD on close', fakeAsync(() => {
             dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as any);
             spyOn(component.downloadFile, 'emit');
             fixture.detectChanges();

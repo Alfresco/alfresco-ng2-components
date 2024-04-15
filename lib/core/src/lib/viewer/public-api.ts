@@ -16,14 +16,14 @@
  */
 
 export * from './services/view-util.service';
-export * from './components/img-viewer.component';
-export * from './components/media-player.component';
-export * from './components/pdf-viewer-password-dialog';
-export * from './components/pdf-viewer.component';
-export * from './components/pdf-viewer-thumbnails.component';
-export * from './components/pdf-viewer-thumb.component';
-export * from './components/pdf-viewer-thumbnails.component';
-export * from './components/txt-viewer.component';
+export * from './components/img-viewer/img-viewer.component';
+export * from './components/media-player/media-player.component';
+export * from './components/pdf-viewer-password-dialog/pdf-viewer-password-dialog';
+export * from './components/pdf-viewer/pdf-viewer.component';
+export * from './components/pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
+export * from './components/pdf-viewer-thumb/pdf-viewer-thumb.component';
+export * from './components/pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
+export * from './components/txt-viewer/txt-viewer.component';
 export * from './components/unknown-format/unknown-format.component';
 export * from './components/viewer-more-actions.component';
 export * from './components/viewer-open-with.component';
@@ -31,7 +31,7 @@ export * from './components/viewer-sidebar.component';
 export * from './components/viewer-toolbar.component';
 export * from './components/viewer-toolbar-actions.component';
 export * from './components/viewer-toolbar-custom-actions.component';
-export * from './components/viewer-render.component';
+export * from './components/viewer-render/viewer-render.component';
 export * from './components/viewer.component';
 export * from './components/download-prompt-dialog/download-prompt-dialog.component';
 

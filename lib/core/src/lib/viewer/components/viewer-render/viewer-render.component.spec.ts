@@ -19,9 +19,9 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -61,12 +61,9 @@ class DoubleViewerComponent {
 
     urlFileViewer1: string;
     urlFileViewer2: string;
-
 }
 
-
 describe('ViewerComponent', () => {
-
     let component: ViewerRenderComponent;
     let fixture: ComponentFixture<ViewerRenderComponent>;
     let element: HTMLElement;
@@ -75,21 +72,9 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatButtonModule,
-                MatIconModule
-            ],
-            declarations: [
-                DoubleViewerComponent
-            ],
-            providers: [
-                RenderingQueueServices,
-                {provide: Location, useClass: SpyLocation},
-                MatDialog
-            ]
+            imports: [NoopAnimationsModule, TranslateModule.forRoot(), CoreTestingModule, MatButtonModule, MatIconModule],
+            declarations: [DoubleViewerComponent],
+            providers: [RenderingQueueServices, { provide: Location, useClass: SpyLocation }, MatDialog]
         });
         fixture = TestBed.createComponent(ViewerRenderComponent);
         element = fixture.nativeElement;
@@ -103,7 +88,6 @@ describe('ViewerComponent', () => {
     });
 
     describe('Double viewer Test', () => {
-
         it('should not reload the content of all the viewer after type change', async () => {
             const fixtureDouble = TestBed.createComponent(DoubleViewerComponent);
 
@@ -405,7 +389,6 @@ describe('ViewerComponent', () => {
     });
 
     describe('Base component', () => {
-
         beforeEach(() => {
             component.urlFile = 'fake-test-file.pdf';
             component.mimeType = 'application/pdf';
@@ -426,17 +409,14 @@ describe('ViewerComponent', () => {
         });
 
         describe('Attribute', () => {
-
             it('should  urlFile present not thrown any error ', () => {
                 expect(() => {
                     component.ngOnChanges();
                 }).not.toThrow();
             });
-
         });
 
         describe('error handling', () => {
-
             it('should switch to the unknown template if the type specific viewers throw an error', (done) => {
                 component.urlFile = 'fake-url-file.icns';
                 component.mimeType = 'image/png';
@@ -454,9 +434,7 @@ describe('ViewerComponent', () => {
         });
 
         describe('Events', () => {
-
             it('should if the extension change extension Change event be fired ', (done) => {
-
                 component.extensionChange.subscribe((fileExtension) => {
                     expect(fileExtension).toEqual('png');
                     done();
@@ -469,7 +447,6 @@ describe('ViewerComponent', () => {
         });
 
         describe('display name property override by urlFile', () => {
-
             it('should fileName override the default name if is present and urlFile is set', () => {
                 component.urlFile = 'fake-test-file.pdf';
                 component.fileName = 'test name';
@@ -490,16 +467,14 @@ describe('ViewerComponent', () => {
         });
 
         describe('display name property override by blobFile', () => {
-
             it('should fileName override the name if is present and blobFile is set', () => {
                 component.fileName = 'blob file display name';
-                component.blobFile = new Blob(['This is my blob content'], {type: 'text/plain'});
+                component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
                 fixture.detectChanges();
                 component.ngOnChanges();
 
                 expect(component.internalFileName).toEqual('blob file display name');
             });
-
         });
     });
 });

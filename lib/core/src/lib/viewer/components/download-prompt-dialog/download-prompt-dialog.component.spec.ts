@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
+import { CoreTestingModule, DownloadPromptActions, DownloadPromptDialogComponent } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { By } from '@angular/platform-browser';
 import { MatDialogRef } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { DownloadPromptDialogComponent } from './download-prompt-dialog.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { DownloadPromptActions } from '../../models/download-prompt.actions';
 
 const mockDialog = {
     close: jasmine.createSpy('close')
@@ -36,14 +33,8 @@ describe('DownloadPromptDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [DownloadPromptDialogComponent],
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: mockDialog }
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, DownloadPromptDialogComponent],
+            providers: [{ provide: MatDialogRef, useValue: mockDialog }]
         });
         matDialogRef = TestBed.inject(MatDialogRef);
 

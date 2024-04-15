@@ -16,11 +16,12 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnChanges, ViewEncapsulation, SimpleChanges } from '@angular/core';
-import { AppConfigService } from '../../app-config/app-config.service';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { AppConfigService } from '../../../app-config';
 
 @Component({
     selector: 'adf-txt-viewer',
+    standalone: true,
     templateUrl: './txt-viewer.component.html',
     styleUrls: ['./txt-viewer.component.scss'],
     host: { class: 'adf-txt-viewer' },

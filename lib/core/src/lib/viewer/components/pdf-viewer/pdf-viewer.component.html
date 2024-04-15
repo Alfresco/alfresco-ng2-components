@@ -3,12 +3,11 @@
         <div class="adf-pdf-viewer__thumbnails">
             <div class="adf-thumbnails-template__container">
                 <div class="adf-thumbnails-template__buttons">
-                    <button
-                        mat-icon-button
-                        data-automation-id='adf-thumbnails-close'
-                        (click)="toggleThumbnails()"
-                        [attr.aria-label]="'ADF_VIEWER.ARIA.THUMBNAILS_PANLEL_CLOSE' | translate"
-                        title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}">
+                    <button mat-icon-button
+                            data-automation-id='adf-thumbnails-close'
+                            (click)="toggleThumbnails()"
+                            [attr.aria-label]="'ADF_VIEWER.ARIA.THUMBNAILS_PANLEL_CLOSE' | translate"
+                            title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}">
                         <mat-icon>close</mat-icon>
                     </button>
                 </div>
@@ -16,18 +15,26 @@
                 <ng-container *ngIf="thumbnailsTemplate">
                     <ng-container *ngTemplateOutlet="thumbnailsTemplate;context:pdfThumbnailsContext"></ng-container>
                 </ng-container>
-                <adf-pdf-thumbnails *ngIf="!thumbnailsTemplate && !isPanelDisabled" (close)="toggleThumbnails()" [pdfViewer]="pdfViewer">
+                <adf-pdf-thumbnails *ngIf="!thumbnailsTemplate && !isPanelDisabled"
+                                    (close)="toggleThumbnails()"
+                                    [pdfViewer]="pdfViewer">
                 </adf-pdf-thumbnails>
             </div>
         </div>
     </ng-container>
 
     <div class="adf-pdf-viewer__content">
-        <div [id]="randomPdfId+'-viewer-pdf-viewer'" class="adf-viewer-pdf-viewer" (window:resize)="onResize()">
-            <div [id]="randomPdfId+'-viewer-viewerPdf'" class="adf-pdfViewer" role="document" tabindex="0" aria-expanded="true">
+        <div [id]="randomPdfId + '-viewer-pdf-viewer'"
+             class="adf-viewer-pdf-viewer"
+             (window:resize)="onResize()">
+            <div [id]="randomPdfId + '-viewer-viewerPdf'"
+                 class="adf-pdfViewer"
+                 role="document"
+                 tabindex="0"
+                 aria-expanded="true">
                 <div id="loader-container" class="adf-loader-container">
                     <div class="adf-loader-item">
-                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                        <mat-progress-bar class="adf-loader-item-progress-bar" mode="indeterminate"></mat-progress-bar>
                     </div>
                 </div>
             </div>
@@ -50,21 +57,19 @@
             <adf-toolbar-divider></adf-toolbar-divider>
         </ng-container>
 
-        <button
-            id="viewer-previous-page-button"
-            title="{{ 'ADF_VIEWER.ARIA.PREVIOUS_PAGE' | translate }}"
-            attr.aria-label="{{ 'ADF_VIEWER.ARIA.PREVIOUS_PAGE' | translate }}"
-            mat-icon-button
-            (click)="previousPage()">
+        <button id="viewer-previous-page-button"
+                title="{{ 'ADF_VIEWER.ARIA.PREVIOUS_PAGE' | translate }}"
+                attr.aria-label="{{ 'ADF_VIEWER.ARIA.PREVIOUS_PAGE' | translate }}"
+                mat-icon-button
+                (click)="previousPage()">
             <mat-icon>keyboard_arrow_up</mat-icon>
         </button>
 
-        <button
-            id="viewer-next-page-button"
-            title="{{ 'ADF_VIEWER.ARIA.NEXT_PAGE' | translate }}"
-            attr.aria-label="{{ 'ADF_VIEWER.ARIA.NEXT_PAGE' | translate }}"
-            mat-icon-button
-            (click)="nextPage()">
+        <button id="viewer-next-page-button"
+                title="{{ 'ADF_VIEWER.ARIA.NEXT_PAGE' | translate }}"
+                attr.aria-label="{{ 'ADF_VIEWER.ARIA.NEXT_PAGE' | translate }}"
+                mat-icon-button
+                (click)="nextPage()">
             <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
 
@@ -85,31 +90,28 @@
             {{ currentScaleText }}
         </div>
 
-        <button
-            id="viewer-zoom-in-button"
-            title="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
-            attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
-            mat-icon-button
-            (click)="zoomIn()">
+        <button id="viewer-zoom-in-button"
+                title="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
+                attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
+                mat-icon-button
+                (click)="zoomIn()">
             <mat-icon>zoom_in</mat-icon>
         </button>
 
-        <button
-            id="viewer-zoom-out-button"
-            title="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
-            attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
-            mat-icon-button
-            (click)="zoomOut()">
+        <button id="viewer-zoom-out-button"
+                title="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
+                attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
+                mat-icon-button
+                (click)="zoomOut()">
             <mat-icon>zoom_out</mat-icon>
         </button>
 
-        <button
-            id="viewer-scale-page-button"
-            role="button" aria-pressed="true"
-            title="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
-            attr.aria-label="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
-            mat-icon-button
-            (click)="pageFit()">
+        <button id="viewer-scale-page-button"
+                role="button" aria-pressed="true"
+                title="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
+                attr.aria-label="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
+                mat-icon-button
+                (click)="pageFit()">
             <mat-icon>zoom_out_map</mat-icon>
         </button>
 

@@ -15,21 +15,36 @@
  * limitations under the License.
  */
 
-import {
-    Component, Input, ContentChild, TemplateRef, HostListener, OnInit,
-    AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation, EventEmitter, Output, Inject, ViewChildren, QueryList
-} from '@angular/core';
-import { ESCAPE, UP_ARROW, DOWN_ARROW, TAB } from '@angular/cdk/keycodes';
-import { DOCUMENT } from '@angular/common';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { PdfThumbComponent } from './pdf-viewer-thumb.component';
+import { DOWN_ARROW, ESCAPE, TAB, UP_ARROW } from '@angular/cdk/keycodes';
+import { DOCUMENT, NgClass, NgForOf } from '@angular/common';
+import {
+    AfterViewInit,
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    QueryList,
+    TemplateRef,
+    ViewChildren,
+    ViewEncapsulation
+} from '@angular/core';
 import { delay } from 'rxjs/operators';
+import { PdfThumbComponent } from '../pdf-viewer-thumb/pdf-viewer-thumb.component';
 
 @Component({
     selector: 'adf-pdf-thumbnails',
+    standalone: true,
     templateUrl: './pdf-viewer-thumbnails.component.html',
     styleUrls: ['./pdf-viewer-thumbnails.component.scss'],
     host: { class: 'adf-pdf-thumbnails' },
+    imports: [PdfThumbComponent, NgClass, NgForOf],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -68,7 +83,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
             this.pdfViewer.currentPageNumber += 1;
         }
 
-        if (keyCode ===  TAB) {
+        if (keyCode === TAB) {
             if (this.canSelectNextItem()) {
                 this.pdfViewer.currentPageNumber += 1;
             } else {
@@ -109,9 +124,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this.keyManager = new FocusKeyManager(this.thumbsList);
 
-        this.thumbsList.changes
-            .pipe(delay(0))
-            .subscribe(() => this.keyManager.setActiveItem(this.getPageIndex(this.pdfViewer.currentPageNumber)));
+        this.thumbsList.changes.pipe(delay(0)).subscribe(() => this.keyManager.setActiveItem(this.getPageIndex(this.pdfViewer.currentPageNumber)));
 
         setTimeout(() => {
             this.scrollInto(this.pdfViewer.currentPageNumber);
@@ -183,11 +196,11 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     private calculateItems() {
         const { element, viewPort, itemsInView } = this.getContainerSetup();
 
-        const indexByScrollTop = element.scrollTop / viewPort * this.items.length / itemsInView;
+        const indexByScrollTop = ((element.scrollTop / viewPort) * this.items.length) / itemsInView;
 
         const start = Math.floor(indexByScrollTop);
 
-        const end = Math.ceil(indexByScrollTop) + (itemsInView);
+        const end = Math.ceil(indexByScrollTop) + itemsInView;
 
         this.translateY = this.itemHeight * Math.ceil(start);
         this.virtualHeight = this.itemHeight * this.items.length - this.translateY;
@@ -223,7 +236,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private getPageIndex(pageNumber: number): number {
         const thumbsListArray = this.thumbsList.toArray();
-        return thumbsListArray.findIndex(el => el.page.id === pageNumber);
+        return thumbsListArray.findIndex((el) => el.page.id === pageNumber);
     }
 
     private canSelectNextItem(): boolean {

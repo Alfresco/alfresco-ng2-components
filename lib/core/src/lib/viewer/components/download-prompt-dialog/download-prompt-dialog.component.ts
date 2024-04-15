@@ -16,10 +16,15 @@
  */
 
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 import { DownloadPromptActions } from '../../models/download-prompt.actions';
 
 @Component({
     selector: 'adf-download-prompt-dialog',
+    standalone: true,
+    imports: [MatDialogModule, TranslateModule, MatButtonModule],
     templateUrl: './download-prompt-dialog.component.html'
 })
 export class DownloadPromptDialogComponent {
