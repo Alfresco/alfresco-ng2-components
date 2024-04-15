@@ -21,10 +21,10 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from '../auth/services/authentication.service';
 
 @Directive({
-    selector: '[adf-logout]'
+    selector: '[adf-logout]',
+    standalone: true
 })
 export class LogoutDirective implements OnInit {
-
     /** URI to redirect to after logging out. */
     @Input()
     redirectUri: string;
@@ -33,15 +33,15 @@ export class LogoutDirective implements OnInit {
     @Input()
     enableRedirect: boolean = true;
 
-    constructor(private elementRef: ElementRef,
-                private renderer: Renderer2,
-                private router: Router,
-                private appConfig: AppConfigService,
-                private authenticationService: AuthenticationService) {
-    }
+    constructor(
+        private elementRef: ElementRef,
+        private renderer: Renderer2,
+        private router: Router,
+        private appConfig: AppConfigService,
+        private authenticationService: AuthenticationService
+    ) {}
 
     ngOnInit() {
-
         if (this.elementRef.nativeElement) {
             this.renderer.listen(this.elementRef.nativeElement, 'click', (evt) => {
                 evt.preventDefault();
@@ -51,7 +51,7 @@ export class LogoutDirective implements OnInit {
     }
 
     getRedirectUri() {
-        if (this.redirectUri === undefined ) {
+        if (this.redirectUri === undefined) {
             return this.appConfig.get<string>('loginRoute', '/login');
         }
         return this.redirectUri;
