@@ -63,7 +63,7 @@
             id="adf-folder-create-button"
             mat-button
             (click)="submit()"
-            [disabled]="!form.valid">
+            [disabled]="!form.valid || disableSubmitButton">
         {{
         (editing
         ? 'CORE.FOLDER_DIALOG.UPDATE_BUTTON.LABEL'
