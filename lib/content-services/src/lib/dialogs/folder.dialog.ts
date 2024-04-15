@@ -26,6 +26,7 @@ import { TranslationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../common/services/nodes-api.service';
 
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-folder-dialog',
@@ -34,7 +35,6 @@ import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './fo
     encapsulation: ViewEncapsulation.None
 })
 export class FolderDialogComponent implements OnInit {
-
     form: UntypedFormGroup;
 
     folder: Node = null;
@@ -54,6 +54,8 @@ export class FolderDialogComponent implements OnInit {
     editTitle = 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE';
     createTitle = 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE';
     nodeType = 'cm:folder';
+
+    disableSubmitButton = false;
 
     constructor(
         private formBuilder: UntypedFormBuilder,
@@ -90,18 +92,13 @@ export class FolderDialogComponent implements OnInit {
         }
 
         const validators = {
-            name: [
-                Validators.required,
-                forbidSpecialCharacters,
-                forbidEndingDot,
-                forbidOnlySpaces
-            ]
+            name: [Validators.required, forbidSpecialCharacters, forbidEndingDot, forbidOnlySpaces]
         };
 
         this.form = this.formBuilder.group({
-            name: [ name, validators.name ],
-            title: [ title ],
-            description: [ description ]
+            name: [name, validators.name],
+            title: [title],
+            description: [description]
         });
     }
 
@@ -133,42 +130,59 @@ export class FolderDialogComponent implements OnInit {
     }
 
     private create(): Observable<Node> {
-        const { name, properties, nodeType, nodesApi, data: { parentNodeId} } = this;
+        const {
+            name,
+            properties,
+            nodeType,
+            nodesApi,
+            data: { parentNodeId }
+        } = this;
         return nodesApi.createFolder(parentNodeId, { name, properties, nodeType });
     }
 
     private edit(): Observable<Node> {
-        const { name, properties, nodesApi, data: { folder: { id: nodeId }} } = this;
+        const {
+            name,
+            properties,
+            nodesApi,
+            data: {
+                folder: { id: nodeId }
+            }
+        } = this;
         return nodesApi.updateNode(nodeId, { name, properties });
     }
 
     submit() {
+        this.disableSubmitButton = true;
         const { form, dialog, editing } = this;
 
         if (!form.valid) {
             return;
         }
 
-        (editing ? this.edit() : this.create())
-            .subscribe(
-                (folder: Node) => {
-                    this.success.emit(folder);
-                    dialog.close(folder);
-                },
-                (error) => this.handleError(error)
-            );
+        (editing ? this.edit() : this.create()).pipe(finalize(() => (this.disableSubmitButton = false))).subscribe(
+            (folder: Node) => {
+                this.success.emit(folder);
+                dialog.close(folder);
+            },
+            (error) => this.handleError(error)
+        );
     }
 
     handleError(error: any): any {
         let errorMessage = 'CORE.MESSAGES.ERRORS.GENERIC';
 
         try {
-            const { error: { statusCode } } = JSON.parse(error.message);
+            const {
+                error: { statusCode }
+            } = JSON.parse(error.message);
 
             if (statusCode === 409) {
                 errorMessage = 'CORE.MESSAGES.ERRORS.EXISTENT_FOLDER';
             }
-        } catch (err) { /* Do nothing, keep the original message */ }
+        } catch (err) {
+            /* Do nothing, keep the original message */
+        }
 
         this.error.emit(this.translation.instant(errorMessage));
 

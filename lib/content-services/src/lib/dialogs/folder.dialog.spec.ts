@@ -302,4 +302,18 @@ describe('FolderDialogComponent', () => {
             });
         });
     });
+
+    it('should disable the submit button after submitting the form', () => {
+        const submitButton = fixture.nativeElement.querySelector('#adf-folder-create-button');
+        component.data = {
+            parentNodeId: 'parentNodeId',
+            folder: null
+        };
+        fixture.detectChanges();
+
+        component.submit();
+
+        expect(component.disableSubmitButton).toBeTrue();
+        expect(submitButton.disabled).toBeTrue();
+    });
 });
