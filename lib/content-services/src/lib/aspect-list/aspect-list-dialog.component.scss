@@ -2,7 +2,10 @@
 
 adf-aspect-list-dialog {
     display: block;
-    padding: 24px 24px 8px;
+
+    #{$mat-expansion-panel-body} {
+        margin-top: -2px;
+    }
 }
 
 .adf {
@@ -20,7 +23,7 @@ adf-aspect-list-dialog {
     &-aspect-list-dialog-information {
         display: flex;
         justify-content: space-between;
-        padding-top: 10px;
+        padding-bottom: 4px;
         padding-left: 4px;
         padding-right: 4px;
         font-size: small;
@@ -42,7 +45,6 @@ adf-aspect-list-dialog {
     }
 
     &-aspect-dialog-content {
-        padding-top: 3px;
         margin-bottom: 8px;
 
         .adf-aspect-property-table {
