@@ -21,7 +21,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,7 +33,8 @@ import { By } from '@angular/platform-browser';
 @Component({
     selector: 'adf-double-viewer',
     template: `
-        <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions" #viewer1></adf-viewer-render>
+        <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions"
+                           #viewer1></adf-viewer-render>
         <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2></adf-viewer-render>
         <ng-template #viewerExtension>
             <adf-viewer-extension [supportedExtensions]="['json']">
