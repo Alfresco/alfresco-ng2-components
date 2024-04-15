@@ -88,9 +88,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should update form input', () => {
-            component.form.controls['name'].setValue('folder-name-update');
-            component.form.controls['title'].setValue('folder-title-update');
-            component.form.controls['description'].setValue('folder-description-update');
+            setFormValues();
 
             expect(component.name).toBe('folder-name-update');
             expect(component.title).toBe('folder-title-update');
@@ -100,9 +98,7 @@ describe('FolderDialogComponent', () => {
         it('should submit updated values if form is valid', () => {
             updateNode$.next(null);
 
-            component.form.controls['name'].setValue('folder-name-update');
-            component.form.controls['title'].setValue('folder-title-update');
-            component.form.controls['description'].setValue('folder-description-update');
+            setFormValues();
 
             fixture.detectChanges();
             submitButton.click();
@@ -193,8 +189,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should update form input', () => {
-            component.form.controls['name'].setValue('folder-name-update');
-            component.form.controls['description'].setValue('folder-description-update');
+            setFormValues();
 
             expect(component.name).toBe('folder-name-update');
             expect(component.description).toBe('folder-description-update');
@@ -203,10 +198,7 @@ describe('FolderDialogComponent', () => {
         describe('when form is valid', () => {
             beforeEach(() => {
                 createFolderNode$.next(null);
-
-                component.form.controls['name'].setValue('folder-name-update');
-                component.form.controls['title'].setValue('folder-title-update');
-                component.form.controls['description'].setValue('folder-description-update');
+                setFormValues();
             });
 
             it('should submit updated values', () => {
@@ -249,9 +241,7 @@ describe('FolderDialogComponent', () => {
                 data: 'folder-data'
             };
 
-            component.form.controls['name'].setValue('name');
-            component.form.controls['title'].setValue('title');
-            component.form.controls['description'].setValue('description');
+            setFormValues();
 
             createFolderNode$.next(folder);
 
@@ -322,4 +312,13 @@ describe('FolderDialogComponent', () => {
             });
         });
     });
+
+    /**
+     * Set mock values to form
+     */
+    function setFormValues() {
+        component.form.controls['name'].setValue('folder-name-update');
+        component.form.controls['title'].setValue('folder-title-update');
+        component.form.controls['description'].setValue('folder-description-update');
+    }
 });
