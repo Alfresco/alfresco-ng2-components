@@ -23,7 +23,6 @@ import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf
 import { MaterialModule } from './material.module';
 
 import { TagModule } from './tag/tag.module';
-import { WebScriptModule } from './webscript/webscript.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
@@ -59,7 +58,6 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         CoreModule,
         TagModule,
         CommonModule,
-        WebScriptModule,
         FormsModule,
         ReactiveFormsModule,
         DialogModule,
@@ -94,7 +92,6 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
     exports: [
         ContentPipeModule,
         TagModule,
-        WebScriptModule,
         DocumentListModule,
         ContentUserInfoModule,
         UploadModule,

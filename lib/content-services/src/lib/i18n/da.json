@@ -268,9 +268,6 @@
       "ERROR": "Uploadfejl"
     }
   },
-  "WEBSCRIPT": {
-    "ERROR": "Handlingen kunne ikke fuldføres. Giv følgende meddelelse til din it-afdeling: Fejl under deserialisering af {{data}} som {{contentType}}"
-  },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {

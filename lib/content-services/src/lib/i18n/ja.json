@@ -268,9 +268,6 @@
       "ERROR": "アップロードエラー"
     }
   },
-  "WEBSCRIPT": {
-    "ERROR": "処理を完了できませんでした。次のメッセージを IT 担当者に伝えてください: {{data}} を {{contentType}} としてシリアル化解除中にエラーが発生しました"
-  },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {
