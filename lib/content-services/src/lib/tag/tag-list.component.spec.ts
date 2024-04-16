@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
 import { TagService } from './services/tag.service';
 import { TagListComponent } from '././tag-list.component';
 import { of } from 'rxjs';
@@ -53,8 +52,6 @@ describe('TagList', () => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule]
         });
-        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
         tagService = TestBed.inject(TagService);
         spyOn(tagService, 'getAllTheTags').and.returnValue(of(dataTag));
