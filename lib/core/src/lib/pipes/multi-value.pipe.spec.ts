@@ -18,21 +18,16 @@
 import { MultiValuePipe } from './multi-value.pipe';
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
-describe('FullNamePipe', () => {
-
+describe('MultiValuePipe', () => {
     let pipe: MultiValuePipe;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule, MultiValuePipe]
         });
         pipe = TestBed.inject(MultiValuePipe);
-   });
+    });
 
     it('should add the separator when a string list is provided', () => {
         const values = ['cat', 'house', 'dog'];

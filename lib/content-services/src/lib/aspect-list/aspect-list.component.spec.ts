@@ -240,16 +240,18 @@ describe('AspectListComponent', () => {
                 expect(component.nodeAspects.length).toBe(0);
             });
 
-            it('should store not listed aspects and emit all aspects on value change', async () => {
+            it('should store not listed aspects and emit all aspects and count of only visible aspects on change', async () => {
                 const storedAspect = ['stored:aspect'];
                 expect(component.notDisplayedAspects).toEqual(storedAspect);
 
                 spyOn(component.valueChanged, 'emit');
+                spyOn(component.updateCounter, 'emit');
                 const panel = (await loader.getAllHarnesses(MatExpansionPanelHarness))[1];
                 const checkbox = await panel.getHarness(MatCheckboxHarness);
                 await checkbox.toggle();
                 fixture.detectChanges();
                 expect(component.valueChanged.emit).toHaveBeenCalledWith(['frs:AspectOne', 'frs:SecondAspect', ...storedAspect]);
+                expect(component.updateCounter.emit).toHaveBeenCalledWith(2);
             });
         });
 

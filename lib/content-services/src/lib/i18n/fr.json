@@ -268,9 +268,6 @@
       "ERROR": "Erreur d'importation"
     }
   },
-  "WEBSCRIPT": {
-    "ERROR": "Impossible de terminer l'action. Transférez le message suivant au service informatique : erreur pendant la désérialisation de {{data}} en tant que {{contentType}}"
-  },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {

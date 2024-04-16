@@ -158,3 +158,4 @@ class AppModule {}
 -   [Search radio component](../components/search-radio.component.md)
 -   [Search slider component](../components/search-slider.component.md)
 -   [Search text component](../components/search-text.component.md)
+-   [Search input component](../components/search-input.component.md)

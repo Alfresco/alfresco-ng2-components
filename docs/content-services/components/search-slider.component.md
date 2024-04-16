@@ -2,12 +2,12 @@
 Title: Search slider component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-06-11
+Last reviewed: 2024-04-05
 ---
 
 # [Search slider component](../../../lib/content-services/src/lib/search/components/search-slider/search-slider.component.ts "Defined in search-slider.component.ts")
 
-Implements a numeric slider [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) for the [Search Filter component](search-filter.component.md).
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 4 inputs representing logical conditions to form search query from.
 
 ![Slider Widget](../../docassets/images/search-slider.png)
 
@@ -47,7 +47,7 @@ Implements a numeric slider [widget](../../../lib/testing/src/lib/core/pages/for
 | step | number | The step between adjacent positions on the slider |
 | thumbLabel | boolean | Toggles whether the "thumb" of the slider should show the current value |
 | allowUpdateOnChange | boolean | Enable/Disable the update fire event when text has been changed. By default is true. |
-| hideDefaultAction | boolean | Show/hide the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) actions. By default is false. |
+| hideDefaultAction | boolean | Show/hide the widget actions. By default is false. |
 
 ## Details
 

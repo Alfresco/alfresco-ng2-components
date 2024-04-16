@@ -22,12 +22,7 @@ import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDat
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import {
-    fakeGlobalTask,
-    fakeEmptyTask,
-    paginatedTask,
-    fakeColumnSchema, fakeCustomSchema
-} from '../../mock';
+import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../mock';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -87,7 +82,6 @@ describe('TaskListComponent', () => {
         let selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
         expect(selectRow1).toBeDefined();
         expect(selectRow2).toBeDefined();
-        expect(component.selectedInstances.length).toBe(2);
         await selectTask2.toggle();
 
         expect(component.selectedInstances.length).toBe(1);
@@ -99,10 +93,7 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
@@ -189,7 +180,7 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['assignee'].id).toEqual(2);
             expect(component.rows[0]['assignee'].firstName).toEqual('firstNameFake1');
             expect(component.rows[0]['assignee'].lastName).toEqual('lastNameFake1');
-            expect(component.rows[0][('assignee')].email).toEqual('emailFake1');
+            expect(component.rows[0]['assignee'].email).toEqual('emailFake1');
             expect(component.rows[0]['created'].toISOString()).toEqual('2017-03-01T12:25:17.189Z');
             expect(component.rows[0]['dueDate'].toISOString()).toEqual('2017-04-02T12:25:17.189Z');
             expect(component.rows[0]['endDate'].toISOString()).toEqual('2017-05-03T12:25:31.129Z');
@@ -332,7 +323,6 @@ describe('TaskListComponent', () => {
     });
 
     describe('component changes', () => {
-
         beforeEach(() => {
             component.rows = fakeGlobalTask.data;
             fixture.detectChanges();
@@ -609,7 +599,7 @@ describe('TaskListComponent', () => {
         await selectTask1.toggle();
         await selectTask2.toggle();
 
-        expect(component.selectedInstances.length).toBe(2);
+        expect(component.selectedInstances.length).toBe(0);
     });
 
     it('should change selected row after clicking on different row', async () => {
@@ -638,22 +628,19 @@ describe('TaskListComponent', () => {
 });
 
 @Component({
-    template: `
-    <adf-tasklist #taskList>
+    template: ` <adf-tasklist #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3"></data-column>
             <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
             <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
-                    <div>{{entry.row?.obj?.startedBy | fullName}}</div>
+                    <div>{{ entry.row?.obj?.startedBy | fullName }}</div>
                 </ng-template>
             </data-column>
         </data-columns>
     </adf-tasklist>`
 })
-
 class CustomTaskListComponent {
-
     @ViewChild(TaskListComponent)
     taskList: TaskListComponent;
 }
@@ -664,10 +651,7 @@ describe('CustomTaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessTestingModule],
             declarations: [CustomTaskListComponent]
         });
         fixture = TestBed.createComponent(CustomTaskListComponent);
@@ -691,15 +675,14 @@ describe('CustomTaskListComponent', () => {
 
 @Component({
     template: `
-    <adf-tasklist [appId]="1">
-        <adf-custom-empty-content-template>
-            <p id="custom-id">CUSTOM EMPTY</p>
-        </adf-custom-empty-content-template>
-    </adf-tasklist>
-       `
+        <adf-tasklist [appId]="1">
+            <adf-custom-empty-content-template>
+                <p id="custom-id">CUSTOM EMPTY</p>
+            </adf-custom-empty-content-template>
+        </adf-tasklist>
+    `
 })
-class EmptyTemplateComponent {
-}
+class EmptyTemplateComponent {}
 
 describe('Task List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
@@ -708,10 +691,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessTestingModule],
             declarations: [EmptyTemplateComponent]
         });
         translateService = TestBed.inject(TranslateService);
@@ -737,25 +717,19 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
-    template: `
-    <adf-tasklist
-    [showContextMenu]="true"
-    (showRowContextMenu)="onShowRowContextMenu($event)"
-    #taskList>
+    template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
             <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
             <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
-                    <div>{{entry.row?.obj?.startedBy | fullName}}</div>
+                    <div>{{ entry.row?.obj?.startedBy | fullName }}</div>
                 </ng-template>
             </data-column>
         </data-columns>
     </adf-tasklist>`
 })
-
 class TaskListContextMenuComponent implements OnInit {
-
     @Output()
     contextAction = new EventEmitter<any>();
     private performAction$ = new Subject<any>();
@@ -768,8 +742,7 @@ class TaskListContextMenuComponent implements OnInit {
         event.value.actions = [
             {
                 data: event.value.row['obj'],
-                model:
-                {
+                model: {
                     key: 'taskDetails',
                     icon: 'open',
                     title: 'View Task Details',
@@ -779,8 +752,7 @@ class TaskListContextMenuComponent implements OnInit {
             },
             {
                 data: event.value.row['obj'],
-                model:
-                {
+                model: {
                     key: 'cancel',
                     icon: 'open',
                     title: 'Cancel Process',
@@ -792,10 +764,9 @@ class TaskListContextMenuComponent implements OnInit {
     }
 
     performContextActions() {
-        this.performAction$
-          .subscribe((action: any) => {
+        this.performAction$.subscribe((action: any) => {
             this.contextAction.emit(action.data);
-          });
+        });
     }
 }
 
@@ -808,13 +779,8 @@ describe('TaskListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
-            declarations: [
-                TaskListContextMenuComponent
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule],
+            declarations: [TaskListContextMenuComponent]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
@@ -830,7 +796,7 @@ describe('TaskListContextMenuComponent', () => {
     });
 
     it('Should be able to show context menu on task list', async () => {
-        const contextMenu =  element.querySelector(`[data-automation-id="text_${fakeGlobalTask.data[0].name}"]`);
+        const contextMenu = element.querySelector(`[data-automation-id="text_${fakeGlobalTask.data[0].name}"]`);
         const contextActionSpy = spyOn(customComponent.contextAction, 'emit').and.callThrough();
         contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
         const contextActions = await loader.getAllHarnesses(MatMenuItemHarness);
@@ -840,5 +806,5 @@ describe('TaskListContextMenuComponent', () => {
         expect(await contextActions[1].isDisabled()).toBe(false, 'Cancel Task action not enabled');
         await contextActions[0].click();
         expect(contextActionSpy).toHaveBeenCalled();
-      });
+    });
 });

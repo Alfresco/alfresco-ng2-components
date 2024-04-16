@@ -2,7 +2,7 @@
 Title: Search widget interface
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-06-12
+Last reviewed: 2024-04-05
 ---
 
 # [Search widget interface](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts "Defined in search-widget.interface.ts")
@@ -34,7 +34,7 @@ export interface SearchWidget {
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` |  | Unique identifying value for the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) |
+| id | `string` |  | Unique identifying value for the widget |
 | settings | [`SearchWidgetSettings`](../../../lib/content-services/src/lib/search/models/search-widget-settings.interface.ts) |  | Settings for component properties |
 | context | [`SearchQueryBuilderService`](../../content-services/services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
 
@@ -60,9 +60,8 @@ export interface SearchWidget {
 }
 ```
 
-Every [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) implementation must have an `id`, and may also support external `settings`.
-At runtime, every time a new instance of the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) is created, it also receives a reference to the [Search Query Builder Service](../services/search-query-builder.service.md)
-so that you component can access query related information, events and methods.
+Every widget implementation must have an `id`, and may also support external `settings`.
+At runtime, every time a new instance of the widget is created, it also receives a reference to the [Search Query Builder Service](../services/search-query-builder.service.md) so that you component can access query related information, events and methods.
 
 ```ts
 @Component({...})
@@ -79,9 +78,8 @@ export class MyComponent implements SearchWidget, OnInit {
 
 ### Reading external settings
 
-At runtime, ADF provides every search filter [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a `settings` instance,
-based on the JSON data that the administrator has provided for your [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) in the
-`app.config.json` file.
+At runtime, ADF provides every search filter widget with a `settings` instance,
+based on the JSON data that the administrator has provided for your widget in the `app.config.json` file.
 
 It is your responsibility to parse the `settings` property values and also to
 convert types and set up defaults as necessary. ADF does not provide any validation
@@ -114,7 +112,7 @@ The [Search Query Builder Service](../services/search-query-builder.service.md) 
 When the query is complete, it composes the fragments together alongside other settings
 that will be used when performing the actual query.
 
-Every query fragment is stored and retrieved using its [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) `id`.
+Every query fragment is stored and retrieved using its widget `id`.
 It is your responsibility to format the query correctly.
 
 Once your change to the query is finished, update the context and call the `update` method
@@ -157,7 +155,7 @@ export class MyAppOrComponent {
 }
 ```
 
-When you have done this, you can declare your [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) in `app.config.json`
+When you have done this, you can declare your widget in `app.config.json`
 and pass custom attributes, if your component supports them:
 
 ```json

@@ -25,7 +25,8 @@ import { takeUntil } from 'rxjs/operators';
 
 @Pipe({
     name: 'adfDecimalNumber',
-    pure: false
+    pure: false,
+    standalone: true
 })
 export class DecimalNumberPipe implements PipeTransform, OnDestroy {
     static DEFAULT_LOCALE = 'en-US';

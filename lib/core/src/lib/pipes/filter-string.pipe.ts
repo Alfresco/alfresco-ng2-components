@@ -17,13 +17,13 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'filterString' })
+@Pipe({
+    name: 'filterString',
+    standalone: true
+})
 export class FilterStringPipe implements PipeTransform {
-
     transform(value: string = '', filterBy: string = ''): string {
-        const testResult = filterBy ?
-            value.toLowerCase().indexOf(filterBy.toLowerCase()) > -1 :
-            true;
+        const testResult = filterBy ? value.toLowerCase().indexOf(filterBy.toLowerCase()) > -1 : true;
 
         return testResult ? value : '';
     }

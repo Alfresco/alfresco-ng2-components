@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
+export * from './tooltip-card/tooltip-card.directive';
+export * from './tooltip-card/tooltip-card.component';
+
 export * from './highlight.directive';
+export * from './infinite-select-scroll.directive';
 export * from './logout.directive';
 export * from './upload.directive';
-export * from './tooltip-card/tooltip-card.directive';
-export * from './infinite-select-scroll.directive';
 
 export * from './directive.module';
