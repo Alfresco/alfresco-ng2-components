@@ -53,14 +53,8 @@ describe('InfiniteSelectScrollDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MatSelectModule,
-                NoopAnimationsModule
-            ],
-            declarations: [
-                TestComponent,
-                InfiniteSelectScrollDirective
-            ]
+            imports: [MatSelectModule, NoopAnimationsModule, InfiniteSelectScrollDirective],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
