@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
 import { NodePermissionDialogService } from './node-permission-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { of, Subject, throwError } from 'rxjs';
@@ -35,8 +34,6 @@ describe('NodePermissionDialogService', () => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule]
         });
-        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
         service = TestBed.inject(NodePermissionDialogService);
         materialDialog = TestBed.inject(MatDialog);
         afterOpenObservable = new Subject<any>();
