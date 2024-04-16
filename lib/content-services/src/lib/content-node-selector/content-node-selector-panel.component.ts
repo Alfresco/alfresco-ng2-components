@@ -28,7 +28,12 @@ import {
 import { NodesApiService, UploadService, FileUploadCompleteEvent, FileUploadDeleteEvent, SitesService } from '../common';
 import { UntypedFormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, SearchRequest, RequestScope } from '@alfresco/js-api';
-import { DocumentListComponent, RowFilter, ImageResolver, CustomResourcesService, ShareDataRow, NodeEntryEvent } from '../document-list';
+import { DocumentListComponent } from '../document-list/components/document-list.component';
+import { RowFilter } from '../document-list/data/row-filter.model';
+import { ImageResolver } from '../document-list/data/image-resolver.model';
+import { CustomResourcesService } from '../document-list/services/custom-resources.service';
+import { ShareDataRow } from '../document-list/data/share-data-row.model';
+import { NodeEntryEvent } from '../document-list/components/node.event';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SearchQueryBuilderService } from '../search';
