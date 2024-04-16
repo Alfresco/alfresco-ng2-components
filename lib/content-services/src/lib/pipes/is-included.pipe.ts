@@ -18,7 +18,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'adfIsIncluded'
+    name: 'adfIsIncluded',
+    standalone: true
 })
 export class IsIncludedPipe<T> implements PipeTransform {
     transform(value: T, array: T[], compare?: (value1: T, value2: T) => boolean): boolean {
