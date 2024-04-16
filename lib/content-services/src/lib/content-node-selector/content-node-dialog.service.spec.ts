@@ -17,14 +17,12 @@
 
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NodeEntry, Node, SitePaging, Site } from '@alfresco/js-api';
-import { AppConfigService } from '@alfresco/adf-core';
-import { DocumentListService } from '../document-list/services/document-list.service';
+import { DocumentListService, NodeAction } from '../document-list';
 import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { NodeAction } from '../document-list/models/node-action.enum';
-import { SitesService } from '../common/services/sites.service';
+import { SitesService } from '../common';
 
 const fakeNodeEntry = {
     entry: {
@@ -71,9 +69,6 @@ describe('ContentNodeDialogService', () => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule]
         });
-        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
-
         service = TestBed.inject(ContentNodeDialogService);
         documentListService = TestBed.inject(DocumentListService);
         materialDialog = TestBed.inject(MatDialog);
