@@ -19,16 +19,16 @@
                    class="adf-input"
                    type="text"
                    data-automation-id="adf-display-external-property-widget"
-                   [attr.id]="field.id"
+                   [id]="field.id"
                    [formControl]="propertyControl"
             >
 
             <ng-container *ngIf="previewState">
-                <label class="adf-display-external-property-widget-preview"
+                <span class="adf-display-external-property-widget-preview"
                        data-automation-id="adf-display-external-property-widget-preview"
                 >
                     {{ field.externalProperty }}
-                </label>
+                </span>
             </ng-container>
         </mat-form-field>
 
