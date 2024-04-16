@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
-import { ContentPipeModule } from '../pipes/content-pipe.module';
 
 import { CoreModule, SearchTextModule } from '@alfresco/adf-core';
 
@@ -57,9 +56,20 @@ import { SearchFilterTabDirective } from './components/search-filter-tabbed/sear
 import { SearchFacetChipTabbedComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
 import { SearchInputComponent } from './components/search-input';
+import { IsIncludedPipe, TabLabelsPipe } from '../pipes';
 
 @NgModule({
-    imports: [CommonModule, ContentPipeModule, FormsModule, ReactiveFormsModule, MaterialModule, CoreModule, SearchTextModule, SearchInputComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        CoreModule,
+        SearchTextModule,
+        SearchInputComponent,
+        IsIncludedPipe,
+        TabLabelsPipe
+    ],
     declarations: [
         SearchComponent,
         SearchControlComponent,

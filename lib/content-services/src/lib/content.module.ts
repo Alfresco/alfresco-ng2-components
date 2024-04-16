@@ -42,7 +42,7 @@ import { AspectListModule } from './aspect-list/aspect-list.module';
 import { VersionCompatibilityModule } from './version-compatibility/version-compatibility.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
-import { ContentPipeModule } from './pipes/content-pipe.module';
+import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
@@ -53,7 +53,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
 
 @NgModule({
     imports: [
-        ContentPipeModule,
+        ...CONTENT_PIPES,
         CoreModule,
         TagModule,
         CommonModule,
@@ -86,7 +86,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
-        ContentPipeModule,
+        ...CONTENT_PIPES,
         TagModule,
         DocumentListModule,
         ContentUserInfoModule,
