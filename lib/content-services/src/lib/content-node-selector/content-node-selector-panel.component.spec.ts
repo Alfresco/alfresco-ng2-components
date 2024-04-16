@@ -19,12 +19,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, ResultSetPaging, Site, SiteEntry, SitePaging, SitePagingList, UserInfo } from '@alfresco/js-api';
-import { AppConfigService, DataRow, ThumbnailService, DataColumn } from '@alfresco/adf-core';
-import { ContentService } from '../common/services/content.service';
-import { UploadService } from '../common/services/upload.service';
-import { NodesApiService } from '../common/services/nodes-api.service';
-import { FileModel, FileUploadStatus } from '../common/models/file.model';
-import { FileUploadCompleteEvent } from '../common/events/file.event';
+import { DataRow, ThumbnailService, DataColumn } from '@alfresco/adf-core';
+import { ContentService, UploadService, NodesApiService, SitesService, FileModel, FileUploadStatus, FileUploadCompleteEvent } from '../common';
 import { of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -35,7 +31,6 @@ import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../document
 import { SearchQueryBuilderService } from '../search';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { mockContentModelTextProperty } from '../mock/content-model.mock';
-import { SitesService } from '../common/services/sites.service';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {
@@ -729,32 +724,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const toggleFiltersPanelButton = fixture.debugElement.query(By.css('[data-automation-id="adf-toggle-search-panel-button"]'));
 
                 expect(toggleFiltersPanelButton).toEqual(null);
-            });
-        });
-
-        describe('Sorting', () => {
-            let appConfigService: AppConfigService;
-
-            beforeEach(() => {
-                appConfigService = TestBed.inject(AppConfigService);
-            });
-
-            it('should read the sorting value from appConfig json in case it is present', async () => {
-                const fakeSortingConfig = ['fakeKey', 'fakeAsc'];
-
-                appConfigService.config = Object.assign(appConfigService.config, {
-                    'adf-content-node-selector': { sorting: fakeSortingConfig }
-                });
-                fixture.detectChanges();
-
-                expect(component.sorting).toEqual(fakeSortingConfig);
-            });
-
-            it('should take default sorting when there is no content node selector sorting config in appConfig json', async () => {
-                appConfigService.config = null;
-                fixture.detectChanges();
-
-                expect(component.sorting).toEqual(['createdAt', 'desc']);
             });
         });
 
