@@ -19,18 +19,16 @@ import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({
     name: 'fileType',
-    pure: true
+    pure: true,
+    standalone: true
 })
 export class FileTypePipe implements PipeTransform {
-
     transform(value: string) {
-
-        if ( value == null ) {
+        if (value == null) {
             return '';
         } else {
             const fileInfo = value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '');
             return fileInfo.split('_').pop();
         }
     }
-
 }
