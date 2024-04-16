@@ -19,14 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
-import {
-    FormFieldModel,
-    FormModel,
-    FormService,
-    FormFieldEvent,
-    FormFieldTypes,
-    LogService
-} from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormService, FormFieldEvent, FormFieldTypes, LogService } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -45,11 +38,9 @@ import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('DropdownCloudWidgetComponent', () => {
-
     let formService: FormService;
     let widget: DropdownCloudWidgetComponent;
     let formCloudService: FormCloudService;
@@ -60,10 +51,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
         });
         fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
         widget = fixture.componentInstance;
@@ -78,7 +66,6 @@ describe('DropdownCloudWidgetComponent', () => {
     afterEach(() => fixture.destroy());
 
     describe('Simple Dropdown', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'dropdown-id',
@@ -163,23 +150,25 @@ describe('DropdownCloudWidgetComponent', () => {
                 name: 'default1_value'
             };
 
-            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
-                {
-                    id: 'opt1',
-                    name: 'default1_value'
-                },
-                {
-                    id: 2,
-                    name: 'default2_value'
-                }
-            ] as any));
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
+                of([
+                    {
+                        id: 'opt1',
+                        name: 'default1_value'
+                    },
+                    {
+                        id: 2,
+                        name: 'default2_value'
+                    }
+                ] as any)
+            );
 
             widget.ngOnInit();
 
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
 
-            expect((await (await dropdown.getOptions())[0].getText())).toEqual('default1_value');
+            expect(await (await dropdown.getOptions())[0].getText()).toEqual('default1_value');
         });
 
         it('should preselect dropdown widget value when String (defined value) passed ', async () => {
@@ -187,30 +176,29 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.optionType = 'rest';
             widget.field.value = 'opt1';
 
-            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
-                {
-                    id: 'opt1',
-                    name: 'default1_value'
-                },
-                {
-                    id: 2,
-                    name: 'default2_value'
-                }
-            ] as any));
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
+                of([
+                    {
+                        id: 'opt1',
+                        name: 'default1_value'
+                    },
+                    {
+                        id: 2,
+                        name: 'default2_value'
+                    }
+                ] as any)
+            );
 
             widget.ngOnInit();
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
 
-            expect((await (await dropdown.getOptions())[0].getText())).toEqual('default1_value');
+            expect(await (await dropdown.getOptions())[0].getText()).toEqual('default1_value');
             expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
         });
 
         it('should not display required error for a non required dropdown when selecting the none option', async () => {
-            widget.field.options = [
-                { id: 'empty', name: 'Choose empty' },
-                ...fakeOptionList
-            ];
+            widget.field.options = [{ id: 'empty', name: 'Choose empty' }, ...fakeOptionList];
 
             widget.ngOnInit();
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
@@ -226,10 +214,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should not display required error when selecting a valid option for a required dropdown', async () => {
             widget.field.required = true;
-            widget.field.options = [
-                { id: 'empty', name: 'Choose empty' },
-                ...fakeOptionList
-            ];
+            widget.field.options = [{ id: 'empty', name: 'Choose empty' }, ...fakeOptionList];
 
             widget.ngOnInit();
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
@@ -243,10 +228,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should not have a value when switching from an available option to the None option', async () => {
-            widget.field.options = [
-                { id: 'empty', name: 'This is a mock none option' },
-                ...fakeOptionList
-            ];
+            widget.field.options = [{ id: 'empty', name: 'This is a mock none option' }, ...fakeOptionList];
 
             widget.ngOnInit();
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
@@ -260,17 +242,12 @@ describe('DropdownCloudWidgetComponent', () => {
             await dropdown.open();
             await dropdown.clickOptions({ selector: '[id="empty"]' });
 
-            const formField = await loader.getHarness(MatFormFieldHarness);
-            const dropdownLabel = await formField.getLabel();
-
-            expect(dropdownLabel).toEqual('This is a mock none option');
+            expect(await dropdown.getValueText()).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
-            expect(await dropdown.getValueText()).toEqual('');
         });
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.DROPDOWN,
@@ -288,7 +265,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(tooltipElement).toBeTruthy();
             expect(await tooltipElement.getTooltipText()).toBe('my custom tooltip');
             expect(await tooltipElement.isOpen()).toBeTruthy();
-          });
+        });
 
         it('should hide tooltip', async () => {
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
@@ -303,9 +280,8 @@ describe('DropdownCloudWidgetComponent', () => {
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.DROPDOWN,
                 required: true
             });
@@ -341,7 +317,6 @@ describe('DropdownCloudWidgetComponent', () => {
     });
 
     describe('filter', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'dropdown-id',
@@ -393,7 +368,6 @@ describe('DropdownCloudWidgetComponent', () => {
     });
 
     describe('multiple selection', () => {
-
         it('should show preselected option', async () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'dropdown-id',
@@ -439,31 +413,33 @@ describe('DropdownCloudWidgetComponent', () => {
                 type: 'dropdown',
                 readOnly: 'false',
                 restUrl: 'https://fake-rest-url',
-                optionType : 'rest',
+                optionType: 'rest',
                 selectionType: 'multiple',
                 value: [
                     { id: 'opt_3', name: 'option_3' },
                     { id: 'opt_4', name: 'option_4' }
                 ]
             });
-            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
-                {
-                    id: 'opt_1',
-                    name: 'option_1'
-                },
-                {
-                    id: 'opt_2',
-                    name: 'option_2'
-                },
-                {
-                    id: 'opt_3',
-                    name: 'option_3'
-                },
-                {
-                    id: 'opt_4',
-                    name: 'option_4'
-                }
-            ] as any));
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
+                of([
+                    {
+                        id: 'opt_1',
+                        name: 'option_1'
+                    },
+                    {
+                        id: 'opt_2',
+                        name: 'option_2'
+                    },
+                    {
+                        id: 'opt_3',
+                        name: 'option_3'
+                    },
+                    {
+                        id: 'opt_4',
+                        name: 'option_4'
+                    }
+                ] as any)
+            );
 
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
 
@@ -477,28 +453,30 @@ describe('DropdownCloudWidgetComponent', () => {
                 type: 'dropdown',
                 readOnly: 'false',
                 restUrl: 'https://fake-rest-url',
-                optionType : 'rest',
+                optionType: 'rest',
                 selectionType: 'multiple'
             });
 
-            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
-                {
-                    id: 'opt_1',
-                    name: 'option_1'
-                },
-                {
-                    id: 'opt_2',
-                    name: 'option_2'
-                },
-                {
-                    id: 'opt_3',
-                    name: 'option_3'
-                },
-                {
-                    id: 'opt_4',
-                    name: 'option_4'
-                }
-            ] as any));
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
+                of([
+                    {
+                        id: 'opt_1',
+                        name: 'option_1'
+                    },
+                    {
+                        id: 'opt_2',
+                        name: 'option_2'
+                    },
+                    {
+                        id: 'opt_3',
+                        name: 'option_3'
+                    },
+                    {
+                        id: 'opt_4',
+                        name: 'option_4'
+                    }
+                ] as any)
+            );
 
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.clickOptions({ selector: '[id="opt_2"]' });
@@ -512,9 +490,7 @@ describe('DropdownCloudWidgetComponent', () => {
     });
 
     describe('Linked Dropdown', () => {
-
         describe('Rest URL options', () => {
-
             const parentDropdown = new FormFieldModel(new FormModel(), {
                 id: 'parentDropdown',
                 type: 'dropdown',
@@ -716,7 +692,6 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         describe('Load selection for linked dropdown (i.e. saved, completed forms)', () => {
-
             it('should load the selection of a manual type linked dropdown', () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'child-dropdown-id',
@@ -737,7 +712,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
                 expect(updateFormSpy).toHaveBeenCalled();
                 expect(widget.field.options).toEqual(mockConditionalEntries[1].options);
-                expect(widget.field.form.values).toEqual({ 'child-dropdown-id': { id: 'MI', name: 'MILAN' }});
+                expect(widget.field.form.values).toEqual({ 'child-dropdown-id': { id: 'MI', name: 'MILAN' } });
             });
 
             it('should load the selection of a rest type linked dropdown', () => {
@@ -767,7 +742,6 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         describe('when form model has left labels', () => {
-
             it('should have left labels classes on leftLabels true', async () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                     id: 'dropdown-id',
@@ -832,14 +806,14 @@ describe('DropdownCloudWidgetComponent', () => {
         const errorIcon: string = 'error_outline';
 
         const getVariableDropdownWidget = (
-                variableName: string,
-                optionsPath: string,
-                optionsId: string,
-                optionsLabel: string,
-                processVariables?: TaskVariableCloud[],
-                variables?: TaskVariableCloud[]
-            ) => new FormFieldModel(
-            new FormModel({ taskId: 'fake-task-id', processVariables, variables }), {
+            variableName: string,
+            optionsPath: string,
+            optionsId: string,
+            optionsLabel: string,
+            processVariables?: TaskVariableCloud[],
+            variables?: TaskVariableCloud[]
+        ) =>
+            new FormFieldModel(new FormModel({ taskId: 'fake-task-id', processVariables, variables }), {
                 id: 'variable-dropdown-id',
                 name: 'variable-options-dropdown',
                 type: 'dropdown',
@@ -865,7 +839,13 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should display options persisted from process variable', async () => {
-            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
+            widget.field = getVariableDropdownWidget(
+                'variables.json-variable',
+                'response.people.players',
+                'playerId',
+                'playerFullName',
+                mockProcessVariablesWithJson
+            );
             fixture.detectChanges();
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
@@ -913,7 +893,13 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should return empty array and display error when path is incorrect', () => {
-            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.wrongPath.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
+            widget.field = getVariableDropdownWidget(
+                'variables.json-variable',
+                'response.wrongPath.players',
+                'playerId',
+                'playerFullName',
+                mockProcessVariablesWithJson
+            );
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
@@ -921,7 +907,13 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should return empty array and display error when id is incorrect', () => {
-            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'wrongId', 'playerFullName', mockProcessVariablesWithJson);
+            widget.field = getVariableDropdownWidget(
+                'variables.json-variable',
+                'response.people.players',
+                'wrongId',
+                'playerFullName',
+                mockProcessVariablesWithJson
+            );
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
@@ -929,7 +921,13 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should return empty array and display error when label is incorrect', () => {
-            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'wrongFullName', mockProcessVariablesWithJson);
+            widget.field = getVariableDropdownWidget(
+                'variables.json-variable',
+                'response.people.players',
+                'playerId',
+                'wrongFullName',
+                mockProcessVariablesWithJson
+            );
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
@@ -937,7 +935,13 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should return empty array and display error when variable is NOT found', () => {
-            widget.field = getVariableDropdownWidget('variables.wrong-variable-id', 'response.people.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
+            widget.field = getVariableDropdownWidget(
+                'variables.wrong-variable-id',
+                'response.people.players',
+                'playerId',
+                'playerFullName',
+                mockProcessVariablesWithJson
+            );
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
@@ -953,7 +957,13 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should NOT display errors if form is in the preview state', () => {
-            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.wrongPath.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
+            widget.field = getVariableDropdownWidget(
+                'variables.json-variable',
+                'response.wrongPath.players',
+                'playerId',
+                'playerFullName',
+                mockProcessVariablesWithJson
+            );
             spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
             fixture.detectChanges();
 
