@@ -17,12 +17,13 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigModule, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigModule, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { UploadService } from './upload.service';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 declare let jasmine: any;
 
@@ -35,10 +36,11 @@ describe('UploadService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AppConfigModule],
+            imports: [AppConfigModule, HttpClientTestingModule],
             providers: [
                 UploadService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
                 {
                     provide: DiscoveryApiService,
                     useValue: {
