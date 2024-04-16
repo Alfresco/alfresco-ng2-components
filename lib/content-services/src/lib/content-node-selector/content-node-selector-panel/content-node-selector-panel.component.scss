@@ -21,7 +21,6 @@ h2.adf-search-results-label {
     }
 }
 
-
 .adf-content-node-selector-panel {
     .adf-toolbar .adf-toolbar-container.adf-toolbar-container-row {
         max-height: 48px;
@@ -128,6 +127,10 @@ h2.adf-search-results-label {
         .adf-datatable-list {
             border: none;
 
+            .adf-name-location-cell-location {
+                display: none;
+            }
+
             .adf-datatable-selected {
                 height: 100%;
                 width: 100%;
@@ -186,12 +189,6 @@ h2.adf-search-results-label {
                         border-bottom: none;
                     }
                 }
-            }
-        }
-
-        .adf-datatable-list {
-            .adf-name-location-cell-location {
-                display: none;
             }
         }
 
