@@ -58,7 +58,7 @@ export class WidgetComponent implements AfterViewInit {
     fieldChanged = new EventEmitter<FormFieldModel>();
 
     @Output()
-    error = new EventEmitter<any>();
+    widgetError = new EventEmitter<any>();
 
     touched: boolean = false;
 

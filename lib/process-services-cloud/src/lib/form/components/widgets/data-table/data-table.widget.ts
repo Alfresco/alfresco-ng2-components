@@ -121,7 +121,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private handleError(error: any) {
         if (!this.previewState) {
             this.dataTableLoadFailed = true;
-            this.error.emit(error);
+            this.widgetError.emit(error);
         }
     }
 }

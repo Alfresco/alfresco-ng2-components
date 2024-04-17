@@ -82,7 +82,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
         this.restApiError = new ErrorMessageModel({
             message: this.translateService.instant('FORM.FIELD.REST_API_FAILED', { hostname: this.getRestUrlHostName() })
         });
-        this.error.emit(error);
+        this.widgetError.emit(error);
     }
 
     isChecked(option: FormFieldOption): boolean {

@@ -86,7 +86,7 @@ export class DisplayExternalPropertyWidgetComponent extends WidgetComponent impl
     private handleError(error: any): void {
         if (!this.previewState) {
             this.propertyLoadFailed = true;
-            this.error.next(error);
+            this.widgetError.emit(error);
         }
     }
 }

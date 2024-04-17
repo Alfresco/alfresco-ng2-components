@@ -386,7 +386,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private handleError(error: any) {
         if (!this.previewState) {
-            this.error.emit(error);
+            this.widgetError.emit(error);
         }
     }
 
