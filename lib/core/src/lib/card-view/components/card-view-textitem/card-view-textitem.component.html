@@ -1,6 +1,6 @@
 <div [ngSwitch]="templateType">
     <div *ngSwitchDefault>
-        <mat-form-field class="adf-property-field adf-card-textitem-field"
+        <mat-form-field subscriptSizing="dynamic" class="adf-property-field adf-card-textitem-field"
             [ngClass]="{'adf-property-read-only': !isEditable }"
             [floatLabel]="'always'">
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
@@ -37,9 +37,9 @@
                 *ngIf="property.multiline"
                 title="{{ property.label | translate }}"
                 [cdkTextareaAutosize]="true"
-                [cdkAutosizeMaxRows]="1"
-                [cdkAutosizeMaxRows]="5"
                 class="adf-property-value"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
                     'adf-property-readonly-value': isReadonlyProperty
@@ -77,7 +77,7 @@
             </mat-chip-row>
         </mat-chip-grid>
 
-        <mat-form-field [hidden]="!isEditable"
+        <mat-form-field subscriptSizing="dynamic" [hidden]="!isEditable"
             class="adf-property-field adf-textitem-chip-list-input"
             [ngClass]="{ 'adf-property-read-only': !isEditable }">
             <input matInput
@@ -104,7 +104,7 @@
         [ngClass]="{ 'adf-property-read-only': !isEditable }"
         [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
         (click)="clicked()">
-        <mat-form-field class="adf-property-field adf-card-textitem-field">
+        <mat-form-field subscriptSizing="dynamic" class="adf-property-field adf-card-textitem-field">
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
                 {{ property.label | translate }}
             </mat-label>
