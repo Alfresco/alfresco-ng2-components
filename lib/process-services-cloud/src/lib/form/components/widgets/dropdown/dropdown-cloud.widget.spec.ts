@@ -22,7 +22,6 @@ import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
 import { FormFieldModel, FormModel, FormService, FormFieldEvent, FormFieldTypes } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import {
     fakeOptionList,
     filterOptionList,
@@ -50,7 +49,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule]
         });
         fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
         widget = fixture.componentInstance;

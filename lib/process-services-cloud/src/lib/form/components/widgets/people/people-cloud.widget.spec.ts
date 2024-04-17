@@ -16,7 +16,6 @@
  */
 
 import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -38,16 +37,9 @@ describe('PeopleCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [
-                PeopleCloudWidgetComponent
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
+            imports: [ProcessServiceCloudTestingModule],
+            declarations: [PeopleCloudWidgetComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         identityUserService = TestBed.inject(IdentityUserService);
         fixture = TestBed.createComponent(PeopleCloudWidgetComponent);
@@ -85,7 +77,7 @@ describe('PeopleCloudWidgetComponent', () => {
 
     it('should have enabled validation if field is NOT readOnly', () => {
         const readOnly = false;
-        widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
             type: FormFieldTypes.PEOPLE,
             value: []
         });
@@ -95,7 +87,6 @@ describe('PeopleCloudWidgetComponent', () => {
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.PEOPLE,
@@ -114,7 +105,7 @@ describe('PeopleCloudWidgetComponent', () => {
             const tooltipElement = await loader.getHarness(MatTooltipHarness);
             expect(await tooltipElement.isOpen()).toBeTruthy();
             expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');
-          });
+        });
 
         it('should hide tooltip', async () => {
             const cloudPeopleInput = element.querySelector('adf-cloud-people');
@@ -132,9 +123,8 @@ describe('PeopleCloudWidgetComponent', () => {
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.PEOPLE,
                 required: true
             });
@@ -166,7 +156,7 @@ describe('PeopleCloudWidgetComponent', () => {
         });
 
         it('should be invalid after deselecting all people', async () => {
-            widget.onChangedUser([{id: 'test-id', username: 'test-name'}]);
+            widget.onChangedUser([{ id: 'test-id', username: 'test-name' }]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -184,17 +174,18 @@ describe('PeopleCloudWidgetComponent', () => {
     });
 
     describe('when is readOnly', () => {
-
         const readOnly = true;
 
         it('should single chip be disabled', async () => {
-            const mockSpaghetti: IdentityUserModel[] = [{
-                id: 'bolognese',
-                username: 'Bolognese',
-                email: 'bolognese@example.com'
-            }];
+            const mockSpaghetti: IdentityUserModel[] = [
+                {
+                    id: 'bolognese',
+                    username: 'Bolognese',
+                    email: 'bolognese@example.com'
+                }
+            ];
 
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
                 type: FormFieldTypes.PEOPLE,
                 value: mockSpaghetti
             });
@@ -214,7 +205,7 @@ describe('PeopleCloudWidgetComponent', () => {
                 { id: 'carbonara', username: 'Carbonara', email: 'carbonara@example.com' }
             ];
 
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
                 type: FormFieldTypes.PEOPLE,
                 value: mockSpaghetti
             });
@@ -229,7 +220,7 @@ describe('PeopleCloudWidgetComponent', () => {
         });
 
         it('should have disabled validation', () => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
                 type: FormFieldTypes.PEOPLE,
                 value: []
             });
@@ -240,7 +231,6 @@ describe('PeopleCloudWidgetComponent', () => {
     });
 
     describe('when form model has left labels', () => {
-
         it('should have left labels classes on leftLabels true', async () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                 id: 'people-id',

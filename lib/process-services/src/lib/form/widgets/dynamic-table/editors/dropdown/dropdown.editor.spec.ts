@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
-import { FormFieldModel, FormModel, FormService, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormService } from '@alfresco/adf-core';
 import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
@@ -29,12 +29,10 @@ import { MatSelectHarness } from '@angular/material/select/testing';
 import { FormModule } from '../../../../form.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { ProcessTestingModule } from '../../../../../testing/process.testing.module';
 
 describe('DropdownEditorComponent', () => {
     let fixture: ComponentFixture<DropdownEditorComponent>;
@@ -50,16 +48,7 @@ describe('DropdownEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CommonModule,
-                NoopAnimationsModule,
-                MatFormFieldModule,
-                MatSelectModule,
-                MatOptionModule,
-                FormModule
-            ],
-            providers: [{ provide: TranslationService, useClass: TranslationMock }]
+            imports: [ProcessTestingModule, MatFormFieldModule, MatSelectModule, MatOptionModule, FormModule]
         });
         formService = TestBed.inject(FormService);
         taskFormService = TestBed.inject(TaskFormService);

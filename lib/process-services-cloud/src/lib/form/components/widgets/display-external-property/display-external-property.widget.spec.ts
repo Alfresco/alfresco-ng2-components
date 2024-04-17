@@ -23,9 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { DisplayExternalPropertyWidgetComponent } from './display-external-property.widget';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 
 describe('DisplayExternalPropertyWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -36,7 +35,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, ReactiveFormsModule, DisplayExternalPropertyWidgetComponent],
+            imports: [ProcessServiceCloudTestingModule, ReactiveFormsModule, DisplayExternalPropertyWidgetComponent],
             providers: [FormService]
         }).compileComponents();
 

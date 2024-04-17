@@ -16,13 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, TranslationMock } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskAssignmentFilterCloudComponent } from './task-assignment-filter.component';
 import { GroupCloudModule } from '../../../../group/group-cloud.module';
 import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { AssignmentType, TaskStatusFilter } from '../../models/filter-cloud.model';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement, SimpleChange } from '@angular/core';
@@ -32,6 +29,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 
 describe('TaskAssignmentFilterComponent', () => {
     let component: TaskAssignmentFilterCloudComponent;
@@ -60,15 +58,7 @@ describe('TaskAssignmentFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                GroupCloudModule,
-                TaskFiltersCloudModule,
-                NoopAnimationsModule
-            ],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
+            imports: [ProcessServiceCloudTestingModule, GroupCloudModule, TaskFiltersCloudModule]
         });
     });
 
@@ -132,7 +122,7 @@ describe('TaskAssignmentFilterComponent', () => {
         it('should have floating labels when values are present', async () => {
             const inputLabelsNodes = await loader.getAllHarnesses(MatFormFieldHarness);
 
-            inputLabelsNodes.forEach(async labelNode => {
+            inputLabelsNodes.forEach(async (labelNode) => {
                 expect(await labelNode.isLabelFloating()).toBeTruthy();
             });
         });
@@ -148,21 +138,21 @@ describe('TaskAssignmentFilterComponent', () => {
 
         it('should CREATED status set assignment type to UNASSIGNED', () => {
             const createdStatusChange = new SimpleChange(null, TaskStatusFilter.CREATED, true);
-            component.ngOnChanges({status: createdStatusChange});
+            component.ngOnChanges({ status: createdStatusChange });
 
             expect(component.assignmentType).toEqual(AssignmentType.UNASSIGNED);
         });
 
         it('should ASSIGNED status set assignment type to ASSIGNED_TO', () => {
             const createdStatusChange = new SimpleChange(null, TaskStatusFilter.ASSIGNED, true);
-            component.ngOnChanges({status: createdStatusChange});
+            component.ngOnChanges({ status: createdStatusChange });
 
             expect(component.assignmentType).toEqual(AssignmentType.ASSIGNED_TO);
         });
 
         it('should ALL status set assignment type to NONE', () => {
             const createdStatusChange = new SimpleChange(null, TaskStatusFilter.ALL, true);
-            component.ngOnChanges({status: createdStatusChange});
+            component.ngOnChanges({ status: createdStatusChange });
 
             expect(component.assignmentType).toEqual(AssignmentType.NONE);
         });
@@ -182,7 +172,7 @@ describe('TaskAssignmentFilterComponent', () => {
                 label: 'mock-filter',
                 value: { assignedUsers: mockFoodUsers },
                 type: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
+                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
             };
             fixture.detectChanges();
 
@@ -195,7 +185,7 @@ describe('TaskAssignmentFilterComponent', () => {
                 label: 'mock-filter',
                 value: { candidateGroups: mockFoodGroups },
                 type: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
+                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
             };
             fixture.detectChanges();
 
@@ -208,7 +198,7 @@ describe('TaskAssignmentFilterComponent', () => {
                 label: 'mock-filter',
                 value: {},
                 type: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'}
+                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
             };
             fixture.detectChanges();
 

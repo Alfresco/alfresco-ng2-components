@@ -23,7 +23,6 @@ import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupService } from '../services/identity-group.service';
 import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -74,7 +73,7 @@ describe('GroupCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, ProcessServiceCloudTestingModule, GroupCloudModule]
+            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, GroupCloudModule]
         });
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;

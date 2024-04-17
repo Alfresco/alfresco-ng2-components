@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel, FormModel } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
@@ -48,15 +47,9 @@ describe('PropertiesViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [PropertiesViewerWrapperComponent],
-            providers: [
-                NodesApiService,
-                { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }
-            ]
+            providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
         });
         fixture = TestBed.createComponent(PropertiesViewerWidgetComponent);
         nodesApiService = TestBed.inject(NodesApiService);
