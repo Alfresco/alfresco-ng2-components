@@ -24,6 +24,12 @@ $adf-info-drawer-icon-size-half: 24px !default;
             opacity: 1;
         }
 
+        #{$mat-tab-label}#{$mat-tab-label-active} {
+            & #{$mat-tab-label-text} {
+                color: inherit;
+            }
+        }
+
         &-header {
             padding: 8px 0 0 24px;
             display: flex;
