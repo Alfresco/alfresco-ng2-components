@@ -20,7 +20,6 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { SnackbarContentComponent } from './snackbar-content.component';
 
 describe('SnackbarContentComponent', () => {
@@ -30,24 +29,20 @@ describe('SnackbarContentComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [SnackbarContentComponent],
-            imports: [
-                MatIconModule,
-                MatSnackBarModule,
-                MatButtonModule,
-                TranslateModule.forRoot()
-            ],
-            providers: [{
-                provide: MatSnackBarRef,
-                useValue: {
-                    dismissWithAction() {
+            imports: [MatIconModule, MatSnackBarModule, MatButtonModule],
+            providers: [
+                {
+                    provide: MatSnackBarRef,
+                    useValue: {
+                        dismissWithAction() {}
                     }
+                },
+                {
+                    provide: MAT_SNACK_BAR_DATA,
+                    useValue: {}
                 }
-            }, {
-                provide: MAT_SNACK_BAR_DATA,
-                useValue: {}
-            }]
-        })
-            .compileComponents();
+            ]
+        }).compileComponents();
 
         fixture = TestBed.createComponent(SnackbarContentComponent);
         component = fixture.componentInstance;

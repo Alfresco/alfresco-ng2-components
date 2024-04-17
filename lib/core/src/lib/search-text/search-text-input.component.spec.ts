@@ -21,11 +21,9 @@ import { SearchTextInputComponent } from './search-text-input.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 
 describe('SearchTextInputComponent', () => {
-
     let fixture: ComponentFixture<SearchTextInputComponent>;
     let component: SearchTextInputComponent;
     let debugElement: DebugElement;
@@ -34,10 +32,7 @@ describe('SearchTextInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(SearchTextInputComponent);
         component = fixture.componentInstance;
@@ -52,7 +47,6 @@ describe('SearchTextInputComponent', () => {
     });
 
     describe('component rendering', () => {
-
         it('should display a search input field when specified', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
@@ -67,7 +61,6 @@ describe('SearchTextInputComponent', () => {
     });
 
     describe('expandable option false', () => {
-
         beforeEach(() => {
             component.expandable = false;
         });
@@ -86,7 +79,6 @@ describe('SearchTextInputComponent', () => {
     });
 
     describe('search button', () => {
-
         it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
             fixture.detectChanges();
 
@@ -345,7 +337,6 @@ describe('SearchTextInputComponent', () => {
                 expect(component.subscriptAnimationState.value).toEqual('inactive');
                 expect(component.searchTerm).toEqual('');
             });
-
         });
 
         describe('Collapse on blur', () => {
@@ -355,7 +346,7 @@ describe('SearchTextInputComponent', () => {
                 tick(200);
             }));
 
-            it('should collapse search on blur when the collapseOnBlur is set to true', fakeAsync (() => {
+            it('should collapse search on blur when the collapseOnBlur is set to true', fakeAsync(() => {
                 const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
                 const resetEmitSpy = spyOn(component.reset, 'emit');
                 component.collapseOnBlur = true;

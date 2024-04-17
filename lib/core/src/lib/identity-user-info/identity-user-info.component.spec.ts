@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
@@ -28,9 +27,21 @@ describe('IdentityUserInfoComponent', () => {
     let fixture: ComponentFixture<IdentityUserInfoComponent>;
     let element: HTMLElement;
 
-    const identityUserMock = { firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
-    const identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
-    const identityUserWithOutLastNameMock = { firstName: 'fake-identity-first-name', lastName: null, email: 'fakeIdentity@email.com' } as unknown as IdentityUserModel;
+    const identityUserMock = {
+        firstName: 'fake-identity-first-name',
+        lastName: 'fake-identity-last-name',
+        email: 'fakeIdentity@email.com'
+    } as unknown as IdentityUserModel;
+    const identityUserWithOutFirstNameMock = {
+        firstName: null,
+        lastName: 'fake-identity-last-name',
+        email: 'fakeIdentity@email.com'
+    } as unknown as IdentityUserModel;
+    const identityUserWithOutLastNameMock = {
+        firstName: 'fake-identity-first-name',
+        lastName: null,
+        email: 'fakeIdentity@email.com'
+    } as unknown as IdentityUserModel;
 
     const whenFixtureReady = async () => {
         fixture.detectChanges();
@@ -40,11 +51,7 @@ describe('IdentityUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatMenuModule
-            ]
+            imports: [CoreTestingModule, MatMenuModule]
         });
         fixture = TestBed.createComponent(IdentityUserInfoComponent);
         component = fixture.componentInstance;
@@ -70,7 +77,6 @@ describe('IdentityUserInfoComponent', () => {
     });
 
     describe('when identity user is logged in', () => {
-
         beforeEach(() => {
             component.identityUser = identityUserMock;
             component.isLoggedIn = true;

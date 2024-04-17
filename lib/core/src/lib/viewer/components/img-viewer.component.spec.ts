@@ -21,11 +21,9 @@ import { UrlService } from '../../common/services/url.service';
 import { ImgViewerComponent } from './img-viewer.component';
 import { CoreTestingModule } from '../../testing';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 
 describe('Test Img viewer component ', () => {
-
     let component: ImgViewerComponent;
     let urlService: UrlService;
     let fixture: ComponentFixture<ImgViewerComponent>;
@@ -38,15 +36,11 @@ describe('Test Img viewer component ', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
     });
 
     describe('Zoom customization', () => {
-
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
@@ -58,16 +52,13 @@ describe('Test Img viewer component ', () => {
         });
 
         describe('default value', () => {
-
             it('should use default zoom if is not present a custom zoom in the app.config', () => {
                 fixture.detectChanges();
                 expect(component.scale).toBe(1.0);
             });
-
         });
 
         describe('custom value', () => {
-
             beforeEach(() => {
                 const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer-render.image-viewer-scaling'] = 70;
@@ -78,7 +69,7 @@ describe('Test Img viewer component ', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    expect(component.scale).toBe(0.70);
+                    expect(component.scale).toBe(0.7);
                     done();
                 });
             });
@@ -86,14 +77,14 @@ describe('Test Img viewer component ', () => {
     });
 
     describe('Url', () => {
-
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
 
             element = fixture.nativeElement;
             component = fixture.componentInstance;
-            component.urlFile = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
+            component.urlFile =
+                'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
             fixture.detectChanges();
             fixture.componentInstance.ngAfterViewInit();
             component.ngAfterViewInit();
@@ -115,7 +106,6 @@ describe('Test Img viewer component ', () => {
     });
 
     describe('Blob', () => {
-
         beforeEach(() => {
             urlService = TestBed.inject(UrlService);
             fixture = TestBed.createComponent(ImgViewerComponent);
@@ -169,7 +159,6 @@ describe('Test Img viewer component ', () => {
     });
 
     describe('toolbar actions', () => {
-
         beforeEach(() => {
             fixture = TestBed.createComponent(ImgViewerComponent);
             element = fixture.nativeElement;
@@ -193,7 +182,7 @@ describe('Test Img viewer component ', () => {
             component.zoomIn();
             expect(component.scale).toBe(1.4);
             expect(component.cropper.zoom).toHaveBeenCalledWith(0.2);
-            }));
+        }));
 
         it('should update scales on zoom out', fakeAsync(() => {
             spyOn(component, 'zoomOut').and.callThrough();
@@ -381,5 +370,4 @@ describe('Test Img viewer component ', () => {
             expect(component.reset).toHaveBeenCalled();
         });
     });
-
 });

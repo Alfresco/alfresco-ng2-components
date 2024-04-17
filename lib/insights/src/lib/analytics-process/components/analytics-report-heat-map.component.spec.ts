@@ -18,12 +18,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('AnalyticsReportHeatMapComponent', () => {
-
     let component: AnalyticsReportHeatMapComponent;
     let fixture: ComponentFixture<AnalyticsReportHeatMapComponent>;
     let element: HTMLElement;
@@ -38,10 +36,7 @@ describe('AnalyticsReportHeatMapComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(AnalyticsReportHeatMapComponent);
         component = fixture.componentInstance;
@@ -58,7 +53,6 @@ describe('AnalyticsReportHeatMapComponent', () => {
     });
 
     describe('Rendering tests: Heat Map', () => {
-
         beforeEach(() => {
             jasmine.Ajax.install();
         });
@@ -110,5 +104,5 @@ describe('AnalyticsReportHeatMapComponent', () => {
             expect(component.currentMetric).toEqual(avgTimeValues);
             expect(component.currentMetricColors).toEqual(avgTimePercentages);
         });
-   });
+    });
 });

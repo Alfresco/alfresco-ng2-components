@@ -21,7 +21,6 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateWidgetComponent } from './date.widget';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldTypes } from '../core/form-field-types';
 import { DateFieldValidator, MaxDateFieldValidator, MinDateFieldValidator } from '../core/form-field-validator';
 
@@ -34,10 +33,7 @@ describe('DateWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
 
         form = new FormModel();
@@ -168,9 +164,8 @@ describe('DateWidgetComponent', () => {
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.DATE,
                 required: true
             });
@@ -190,7 +185,6 @@ describe('DateWidgetComponent', () => {
     });
 
     describe('template check', () => {
-
         afterEach(() => {
             fixture.destroy();
             TestBed.resetTestingModule();
@@ -217,7 +211,7 @@ describe('DateWidgetComponent', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
-                value:  '30-12-9999',
+                value: '30-12-9999',
                 type: 'date',
                 dateDisplayFormat: 'MM-DD-YYYY'
             });

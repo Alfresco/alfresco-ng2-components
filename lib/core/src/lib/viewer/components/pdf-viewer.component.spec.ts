@@ -26,7 +26,6 @@ import { of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { PdfThumbListComponent } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 
@@ -36,19 +35,12 @@ declare const pdfjsLib: any;
     selector: 'adf-test-dialog-component',
     template: ''
 })
-class TestDialogComponent {
-}
+class TestDialogComponent {}
 
 @Component({
-    template: `
-        <adf-pdf-viewer [allowThumbnails]="true"
-                        [showToolbar]="true"
-                        [urlFile]="urlFile">
-        </adf-pdf-viewer>
-    `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"> </adf-pdf-viewer> `
 })
 class UrlTestComponent {
-
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
@@ -60,15 +52,9 @@ class UrlTestComponent {
 }
 
 @Component({
-    template: `
-        <adf-pdf-viewer [allowThumbnails]="true"
-                        [showToolbar]="true"
-                        [urlFile]="urlFile">
-        </adf-pdf-viewer>
-    `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"> </adf-pdf-viewer> `
 })
 class UrlTestPasswordComponent {
-
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
@@ -80,15 +66,9 @@ class UrlTestPasswordComponent {
 }
 
 @Component({
-    template: `
-        <adf-pdf-viewer [allowThumbnails]="true"
-                        [showToolbar]="true"
-                        [blobFile]="blobFile">
-        </adf-pdf-viewer>
-    `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile"> </adf-pdf-viewer> `
 })
 class BlobTestComponent {
-
     @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
@@ -101,25 +81,24 @@ class BlobTestComponent {
     createFakeBlob(): Blob {
         const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
-            'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
-            'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
-            'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
-            'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
-            'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
-            'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
-            'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
-            'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
-            'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
-            'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
-            'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
-            'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
+                'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
+                'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
+                'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
+                'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
+                'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
+                'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
+                'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
+                'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
+                'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
+                'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
+                'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
+                'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G'
+        );
         return new Blob([pdfData], { type: 'application/pdf' });
     }
-
 }
 
 describe('Test PdfViewer component', () => {
-
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
     let element: HTMLElement;
@@ -128,21 +107,13 @@ describe('Test PdfViewer component', () => {
 
     beforeEach((done) => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                TestDialogComponent,
-                UrlTestComponent,
-                UrlTestPasswordComponent,
-                BlobTestComponent
-            ],
+            imports: [CoreTestingModule],
+            declarations: [TestDialogComponent, UrlTestComponent, UrlTestPasswordComponent, BlobTestComponent],
             providers: [
                 {
-                    provide: MatDialog, useValue: {
-                        open: () => {
-                        }
+                    provide: MatDialog,
+                    useValue: {
+                        open: () => {}
                     }
                 },
                 RenderingQueueServices
@@ -164,7 +135,6 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('User interaction', () => {
-
         let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
         let componentUrlTestComponent: UrlTestComponent;
         let elementUrlTestComponent: HTMLElement;
@@ -176,11 +146,9 @@ describe('Test PdfViewer component', () => {
 
             fixtureUrlTestComponent.detectChanges();
 
-            componentUrlTestComponent.pdfViewerComponent.rendered
-                .pipe(take(1))
-                .subscribe(() => {
-                    done();
-                });
+            componentUrlTestComponent.pdfViewerComponent.rendered.pipe(take(1)).subscribe(() => {
+                done();
+            });
         });
 
         afterEach(() => {
@@ -271,10 +239,8 @@ describe('Test PdfViewer component', () => {
         }, 55000);
 
         describe('Zoom', () => {
-
             it('should zoom in increment the scale value', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
                 const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
 
@@ -288,8 +254,7 @@ describe('Test PdfViewer component', () => {
             }), 55000);
 
             it('should zoom out decrement the scale value', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
                 const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
                 tick(250);
@@ -302,8 +267,7 @@ describe('Test PdfViewer component', () => {
             }), 55000);
 
             it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
                 const itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
 
@@ -320,7 +284,6 @@ describe('Test PdfViewer component', () => {
         });
 
         describe('Resize interaction', () => {
-
             it('should resize event trigger setScaleUpdatePages', (done) => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent, 'onResize');
                 EventMock.resizeMobileView();
@@ -329,12 +292,10 @@ describe('Test PdfViewer component', () => {
                     expect(componentUrlTestComponent.pdfViewerComponent.onResize).toHaveBeenCalled();
                     done();
                 });
-
             }, 55000);
         });
 
         describe('Thumbnails', () => {
-
             it('should have own context', (done) => {
                 fixtureUrlTestComponent.detectChanges();
 
@@ -366,7 +327,6 @@ describe('Test PdfViewer component', () => {
         });
 
         describe('Viewer events', () => {
-
             it('should react on the emit of pageChange event', (done) => {
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
@@ -441,9 +401,7 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('Zoom customization', () => {
-
         describe('custom value', () => {
-
             let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
             let componentUrlTestComponent: UrlTestComponent;
             let elementUrlTestComponent: HTMLElement;
@@ -458,11 +416,9 @@ describe('Test PdfViewer component', () => {
 
                 fixtureUrlTestComponent.detectChanges();
 
-                componentUrlTestComponent.pdfViewerComponent.rendered
-                    .pipe(take(1))
-                    .subscribe(() => {
-                        done();
-                    });
+                componentUrlTestComponent.pdfViewerComponent.rendered.pipe(take(1)).subscribe(() => {
+                    done();
+                });
             });
 
             afterEach(() => {
@@ -470,8 +426,7 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should use the custom zoom if it is present in the app.config', (done) => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
@@ -482,7 +437,6 @@ describe('Test PdfViewer component', () => {
         });
 
         describe('less than the minimum allowed value', () => {
-
             let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
             let componentUrlTestComponent: UrlTestComponent;
             let elementUrlTestComponent: HTMLElement;
@@ -497,11 +451,9 @@ describe('Test PdfViewer component', () => {
 
                 fixtureUrlTestComponent.detectChanges();
 
-                componentUrlTestComponent.pdfViewerComponent.rendered
-                    .pipe(take(1))
-                    .subscribe(() => {
-                        done();
-                    });
+                componentUrlTestComponent.pdfViewerComponent.rendered.pipe(take(1)).subscribe(() => {
+                    done();
+                });
             });
 
             afterEach(() => {
@@ -509,8 +461,7 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', (done) => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
                 fixtureUrlTestComponent.detectChanges();
 
@@ -519,12 +470,10 @@ describe('Test PdfViewer component', () => {
                     done();
                 });
             });
-
         });
         // TODO: https://alfresco.atlassian.net/browse/ACS-6061
         // eslint-disable-next-line
         xdescribe('greater than the maximum allowed value', () => {
-
             let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
             let componentUrlTestComponent: UrlTestComponent;
             let elementUrlTestComponent: HTMLElement;
@@ -539,11 +488,9 @@ describe('Test PdfViewer component', () => {
 
                 fixtureUrlTestComponent.detectChanges();
 
-                componentUrlTestComponent.pdfViewerComponent.rendered
-                    .pipe(take(1))
-                    .subscribe(() => {
-                        done();
-                    });
+                componentUrlTestComponent.pdfViewerComponent.rendered.pipe(take(1)).subscribe(() => {
+                    done();
+                });
             });
 
             afterEach(() => {
@@ -551,8 +498,7 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should use the maximum scale zoom if the value given in app.config is greater than the maximum allowed scale', (done) => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
-                });
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
@@ -582,7 +528,6 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('View with url file', () => {
-
         let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
         let elementUrlTestComponent: HTMLElement;
 
@@ -613,7 +558,6 @@ describe('Test PdfViewer component', () => {
         }, 55000);
 
         it('should Input Page elements be present', (done) => {
-
             fixtureUrlTestComponent.detectChanges();
             fixtureUrlTestComponent.whenStable().then(() => {
                 /* cspell:disable-next-line */
@@ -639,7 +583,6 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('View with blob file', () => {
-
         let fixtureBlobTestComponent: ComponentFixture<BlobTestComponent>;
         let elementBlobTestComponent: HTMLElement;
 
@@ -706,12 +649,11 @@ describe('Test PdfViewer component', () => {
     });
 
     describe('Password protection dialog', () => {
-
         let fixtureUrlTestPasswordComponent: ComponentFixture<UrlTestPasswordComponent>;
         let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
 
         describe('Open password dialog', () => {
-            beforeEach( async () => {
+            beforeEach(async () => {
                 fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
@@ -780,9 +722,12 @@ describe('Test PdfViewer component', () => {
                 fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
-                spyOn(dialog, 'open').and.callFake(() => ({
-                    afterClosed: () => of('')
-                } as any));
+                spyOn(dialog, 'open').and.callFake(
+                    () =>
+                        ({
+                            afterClosed: () => of('')
+                        } as any)
+                );
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
 

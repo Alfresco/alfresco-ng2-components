@@ -21,7 +21,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { By } from '@angular/platform-browser';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { of } from 'rxjs';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -36,10 +36,7 @@ describe('InfoDrawerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         translateService = TestBed.inject(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => of(key));
@@ -56,7 +53,7 @@ describe('InfoDrawerComponent', () => {
 
     it('should emit when tab is changed', () => {
         const tabEmitSpy = spyOn(component.currentTab, 'emit');
-        const event = {index: 1, tab: {textLabel: 'DETAILS'}} as MatTabChangeEvent;
+        const event = { index: 1, tab: { textLabel: 'DETAILS' } } as MatTabChangeEvent;
         component.onTabChange(event);
         expect(tabEmitSpy).toHaveBeenCalledWith(1);
     });
@@ -91,12 +88,9 @@ describe('InfoDrawerComponent', () => {
 @Component({
     template: `
         <adf-info-drawer [selectedIndex]="tabIndex" [icon]="icon" title="Fake Title Custom">
-            <adf-info-drawer-tab label="Tab1">
-            </adf-info-drawer-tab>
-            <adf-info-drawer-tab label="Tab2">
-            </adf-info-drawer-tab>
-            <adf-info-drawer-tab label="Tab3" icon="tab-icon">
-            </adf-info-drawer-tab>
+            <adf-info-drawer-tab label="Tab1"> </adf-info-drawer-tab>
+            <adf-info-drawer-tab label="Tab2"> </adf-info-drawer-tab>
+            <adf-info-drawer-tab label="Tab3" icon="tab-icon"> </adf-info-drawer-tab>
         </adf-info-drawer>
     `
 })
@@ -111,18 +105,12 @@ describe('Custom InfoDrawer', () => {
     let translateService: TranslateService;
     let loader: HarnessLoader;
 
-    const getNodeIcon = () =>
-    fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+    const getNodeIcon = () => fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                CustomInfoDrawerComponent
-            ]
+            imports: [CoreTestingModule],
+            declarations: [CustomInfoDrawerComponent]
         });
         translateService = TestBed.inject(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => of(key));
@@ -174,7 +162,7 @@ describe('Custom InfoDrawer', () => {
     it('should render a icon with title', () => {
         component.icon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
-        const icon =  getNodeIcon();
+        const icon = getNodeIcon();
         const srcAttribute = icon[0].nativeElement.getAttribute('src');
         expect(icon.length).toBe(1);
         expect(srcAttribute).toContain('/assets/images/ft_ic_miscellaneous.svg');
@@ -182,10 +170,7 @@ describe('Custom InfoDrawer', () => {
 });
 
 @Component({
-    template: `
-    <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title">
-    </adf-info-drawer>
-        `
+    template: ` <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title"> </adf-info-drawer> `
 })
 class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
     showHeader: boolean;
@@ -195,18 +180,12 @@ class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
 describe('Header visibility InfoDrawer', () => {
     let fixture: ComponentFixture<VisibilityInfoDrawerComponent>;
     let component: VisibilityInfoDrawerComponent;
-    const getNodeIcon = () =>
-    fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+    const getNodeIcon = () => fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                VisibilityInfoDrawerComponent
-            ]
+            imports: [CoreTestingModule],
+            declarations: [VisibilityInfoDrawerComponent]
         });
         fixture = TestBed.createComponent(VisibilityInfoDrawerComponent);
         fixture.detectChanges();

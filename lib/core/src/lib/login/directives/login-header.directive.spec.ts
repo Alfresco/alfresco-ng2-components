@@ -17,7 +17,6 @@
 
 import { CoreTestingModule, LoginComponent, LoginHeaderDirective } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 describe('LoginHeaderDirective', () => {
@@ -27,13 +26,8 @@ describe('LoginHeaderDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: OidcAuthenticationService, useValue: {} }
-            ]
+            imports: [CoreTestingModule],
+            providers: [{ provide: OidcAuthenticationService, useValue: {} }]
         });
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;

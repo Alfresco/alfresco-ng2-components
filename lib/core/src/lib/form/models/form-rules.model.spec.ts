@@ -17,7 +17,6 @@
 
 import { FormBaseModule } from '../form-base.module';
 import { CoreTestingModule } from '../../testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ByPassFormRuleManager, FormRulesManager, formRulesManagerFactory, FORM_RULES_MANAGER } from './form-rules.model';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -34,11 +33,9 @@ class CustomRuleManager extends FormRulesManager<any> {
     protected handleRuleEvent(): void {
         return;
     }
-
 }
 
 describe('Form Rules', () => {
-
     let injector: Injector;
     const customRuleManager = new CustomRuleManager(null);
     let formService: FormService;
@@ -46,11 +43,7 @@ describe('Form Rules', () => {
     describe('Injection token provided', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule,
-                    FormBaseModule
-                ],
+                imports: [CoreTestingModule, FormBaseModule],
                 providers: [
                     {
                         provide: FORM_RULES_MANAGER,
@@ -115,11 +108,7 @@ describe('Form Rules', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule,
-                    FormBaseModule
-                ]
+                imports: [CoreTestingModule, FormBaseModule]
             });
             injector = TestBed.inject(Injector);
             rulesManager = formRulesManagerFactory<any>(injector);

@@ -23,12 +23,9 @@ import { AuthenticationService } from '../auth/services/authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { LogoutDirective } from './logout.directive';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('LogoutDirective', () => {
-
     describe('No input', () => {
-
         @Component({
             selector: 'adf-test-component',
             template: '<button adf-logout></button>'
@@ -45,13 +42,8 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule
-                ],
-                declarations: [
-                    TestComponent
-                ]
+                imports: [CoreTestingModule],
+                declarations: [TestComponent]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
@@ -107,10 +99,9 @@ describe('LogoutDirective', () => {
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/login']);
         });
-   });
+    });
 
     describe('redirectUri', () => {
-
         @Component({
             selector: 'adf-test-component',
             template: '<button adf-logout redirectUri="/myCustomUri"></button>'
@@ -126,13 +117,8 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule
-                ],
-                declarations: [
-                    TestComponent
-                ]
+                imports: [CoreTestingModule],
+                declarations: [TestComponent]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
@@ -150,10 +136,9 @@ describe('LogoutDirective', () => {
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).toHaveBeenCalledWith(['/myCustomUri']);
         });
-   });
+    });
 
     describe('enableRedirect', () => {
-
         @Component({
             selector: 'adf-test-component',
             template: '<button adf-logout [enableRedirect]="false"></button>'
@@ -169,13 +154,8 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule
-                ],
-                declarations: [
-                    TestComponent
-                ]
+                imports: [CoreTestingModule],
+                declarations: [TestComponent]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
@@ -192,6 +172,5 @@ describe('LogoutDirective', () => {
             expect(authService.logout).toHaveBeenCalled();
             expect(router.navigate).not.toHaveBeenCalled();
         });
-
     });
 });

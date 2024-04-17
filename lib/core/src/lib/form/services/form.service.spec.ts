@@ -19,28 +19,22 @@ import { TestBed } from '@angular/core/testing';
 import { formModelTabs } from '../../mock';
 import { FormService } from './form.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('Form service', () => {
     let service: FormService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(FormService);
     });
 
     describe('parseForm', () => {
-
         it('should parse a Form Definition with tabs', () => {
             expect(formModelTabs.formRepresentation.formDefinition).toBeDefined();
             const formParsed = service.parseForm(formModelTabs);
             expect(formParsed).toBeDefined();
         });
-
     });
 });
