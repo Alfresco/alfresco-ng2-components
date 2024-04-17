@@ -25,8 +25,9 @@ import { SecurityGroupBody, SecurityMarkBody, SecurityMarkEntry } from '@alfresc
 
 describe('SecurityControlsService', () => {
     let service: SecurityControlsService;
-    let securityGroupId;
-    let securityMarkId;
+    let securityGroupId: string;
+    let securityMarkId: string;
+
     const securityGroupBody: SecurityGroupBody = {
         groupName: 'TestGroup',
         groupType: 'HIERARCHICAL'

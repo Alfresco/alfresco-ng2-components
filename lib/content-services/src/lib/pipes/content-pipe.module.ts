@@ -15,33 +15,19 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NodeNameTooltipPipe } from './node-name-tooltip.pipe';
-import { TranslateModule } from '@ngx-translate/core';
 import { IsIncludedPipe } from './is-included.pipe';
 import { TabLabelsPipe } from './tab-labels.pipe';
 
+export const CONTENT_PIPES = [NodeNameTooltipPipe, IsIncludedPipe, TabLabelsPipe] as const;
+
+/**
+ * @deprecated Use the individual pipe modules instead.
+ */
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule
-    ],
-    declarations: [
-        NodeNameTooltipPipe,
-        IsIncludedPipe,
-        TabLabelsPipe
-    ],
-    providers: [
-        NodeNameTooltipPipe,
-        IsIncludedPipe,
-        TabLabelsPipe
-    ],
-    exports: [
-        NodeNameTooltipPipe,
-        IsIncludedPipe,
-        TabLabelsPipe
-    ]
+    imports: [...CONTENT_PIPES],
+    providers: [...CONTENT_PIPES],
+    exports: [...CONTENT_PIPES]
 })
-export class ContentPipeModule {
-}
+export class ContentPipeModule {}

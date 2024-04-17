@@ -16,4 +16,3 @@
  */
 
 export * from './services/security-controls-groups-marks-security.service';
-export * from './services/security-controls-service.module';

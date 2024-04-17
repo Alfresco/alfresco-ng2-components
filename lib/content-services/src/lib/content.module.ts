@@ -42,19 +42,18 @@ import { AspectListModule } from './aspect-list/aspect-list.module';
 import { VersionCompatibilityModule } from './version-compatibility/version-compatibility.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
-import { ContentPipeModule } from './pipes/content-pipe.module';
+import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { ContentUserInfoModule } from './content-user-info/content-user-info.module';
-import { SecurityControlsServiceModule } from './security/services/security-controls-service.module';
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 
 @NgModule({
     imports: [
-        ContentPipeModule,
+        ...CONTENT_PIPES,
         CoreModule,
         TagModule,
         CommonModule,
@@ -83,12 +82,11 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        SecurityControlsServiceModule,
         CategoriesModule
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
-        ContentPipeModule,
+        ...CONTENT_PIPES,
         TagModule,
         DocumentListModule,
         ContentUserInfoModule,
@@ -112,7 +110,6 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        SecurityControlsServiceModule,
         CategoriesModule
     ]
 })

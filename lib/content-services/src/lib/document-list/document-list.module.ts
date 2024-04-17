@@ -21,7 +21,6 @@ import { CoreModule, EditJsonDialogModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload/upload.module';
-import { ContentPipeModule } from '../pipes/content-pipe.module';
 import { SearchModule } from './../search/search.module';
 
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';
@@ -36,17 +35,18 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
 import { FilterHeaderComponent } from './components/filter-header/filter-header.component';
 import { FileAutoDownloadComponent } from './components/file-auto-download/file-auto-download.component';
 import { ContentDirectiveModule } from '../directives/content-directive.module';
+import { NodeNameTooltipPipe } from '../pipes';
 
 @NgModule({
     imports: [
         CoreModule,
         CommonModule,
-        ContentPipeModule,
         MaterialModule,
         UploadModule,
         EditJsonDialogModule,
         SearchModule,
-        ContentDirectiveModule
+        ContentDirectiveModule,
+        NodeNameTooltipPipe
     ],
     declarations: [
         DocumentListComponent,
@@ -72,5 +72,4 @@ import { ContentDirectiveModule } from '../directives/content-directive.module';
         FilterHeaderComponent
     ]
 })
-export class DocumentListModule {
-}
+export class DocumentListModule {}
