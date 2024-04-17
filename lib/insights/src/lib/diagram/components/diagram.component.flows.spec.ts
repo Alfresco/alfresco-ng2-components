@@ -20,22 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as flowsMock from '../../mock/diagram/diagram-flows.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Diagrams flows', () => {
-
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
@@ -54,7 +49,7 @@ describe('Diagrams flows', () => {
         jasmine.Ajax.uninstall();
     });
 
-    const ajaxReply =  (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -63,7 +58,6 @@ describe('Diagrams flows', () => {
     };
 
     describe('Diagrams component Flows with process instance id: ', () => {
-
         it('Should render the flow', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -85,7 +79,6 @@ describe('Diagrams flows', () => {
     });
 
     describe('Diagrams component Flows: ', () => {
-
         it('Should render the flow', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();

@@ -25,7 +25,6 @@ import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatListItemHarness } from '@angular/material/list/testing';
@@ -40,7 +39,7 @@ describe('ProcessInstanceTasksComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
         processService = TestBed.inject(ProcessService);

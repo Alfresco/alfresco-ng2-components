@@ -25,13 +25,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { fakeProcessFilters } from '../../mock/process/process-filters.mock';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { NavigationStart, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 describe('ProcessFiltersComponent', () => {
-
     let filterList: ProcessFiltersComponent;
     let fixture: ComponentFixture<ProcessFiltersComponent>;
     let processFilterService: ProcessFilterService;
@@ -40,11 +38,7 @@ describe('ProcessFiltersComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule,
-                RouterTestingModule
-            ],
+            imports: [ProcessTestingModule, RouterTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(ProcessFiltersComponent);
@@ -64,7 +58,7 @@ describe('ProcessFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
 
         let lastValue: ProcessInstanceFilterRepresentation[];
-        filterList.success.subscribe((res) => lastValue = res);
+        filterList.success.subscribe((res) => (lastValue = res));
 
         spyOn(filterList, 'getFiltersByAppId').and.callThrough();
 
@@ -106,7 +100,7 @@ describe('ProcessFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
 
         let lastValue: UserProcessInstanceFilterRepresentation;
-        filterList.filterSelected.subscribe((filter) => lastValue = filter);
+        filterList.filterSelected.subscribe((filter) => (lastValue = filter));
 
         filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
@@ -115,7 +109,7 @@ describe('ProcessFiltersComponent', () => {
         expect(lastValue.name).toEqual('FakeCompleted');
     });
 
-    it('should filterClicked emit when a filter is clicked from the UI', async  () => {
+    it('should filterClicked emit when a filter is clicked from the UI', async () => {
         filterList.filters = fakeProcessFilters;
         spyOn(filterList.filterClicked, 'emit');
 
@@ -163,7 +157,7 @@ describe('ProcessFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
 
         let lastValue: any;
-        filterList.error.subscribe((err) => lastValue = err);
+        filterList.error.subscribe((err) => (lastValue = err));
 
         filterList.ngOnChanges({ appId: change });
 
@@ -177,7 +171,7 @@ describe('ProcessFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
 
         let lastValue: any;
-        filterList.error.subscribe((err) => lastValue = err);
+        filterList.error.subscribe((err) => (lastValue = err));
 
         filterList.ngOnChanges({ appName: change });
 
@@ -193,7 +187,7 @@ describe('ProcessFiltersComponent', () => {
         });
 
         let lastValue: UserProcessInstanceFilterRepresentation;
-        filterList.filterClicked.subscribe((filter) => lastValue = filter);
+        filterList.filterClicked.subscribe((filter) => (lastValue = filter));
 
         filterList.selectFilter(currentFilter);
         expect(lastValue).toBeDefined();

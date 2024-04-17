@@ -21,19 +21,20 @@ import { of, throwError } from 'rxjs';
 import { ProcessService } from './../services/process.service';
 import { DownloadService } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-basic-button',
-    template: `
-    <button id="auditButton"
+    template: ` <button
+        id="auditButton"
         adf-process-audit
         [process-id]="1234"
         [download]="download"
         [fileName]="fileName"
         [format]="format"
         (error)="onAuditError($event)"
-        (clicked)="onAuditClick($event)">My button
+        (clicked)="onAuditClick($event)"
+    >
+        My button
     </button>`
 })
 class BasicButtonComponent {
@@ -46,7 +47,6 @@ class BasicButtonComponent {
 }
 
 describe('ProcessAuditDirective', () => {
-
     let fixture: ComponentFixture<BasicButtonComponent>;
     let component: BasicButtonComponent;
     let service: ProcessService;
@@ -54,32 +54,28 @@ describe('ProcessAuditDirective', () => {
     const createFakePdfBlob = (): Blob => {
         const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
-            'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
-            'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
-            'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
-            'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
-            'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
-            'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
-            'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
-            'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
-            'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
-            'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
-            'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
-            'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-        return new Blob([pdfData], {type: 'application/pdf'});
+                'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
+                'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
+                'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
+                'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
+                'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
+                'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
+                'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
+                'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
+                'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
+                'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
+                'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
+                'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G'
+        );
+        return new Blob([pdfData], { type: 'application/pdf' });
     };
 
     const blob = createFakePdfBlob();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
-            declarations: [
-                BasicButtonComponent
-            ]
+            imports: [ProcessTestingModule],
+            declarations: [BasicButtonComponent]
         });
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
@@ -145,22 +141,40 @@ describe('ProcessAuditDirective', () => {
         component.format = 'json';
         component.download = true;
         const auditJson = {
-            processInstanceId: 42516, processInstanceName: 'Fake Process - August 3rd 2017',
-            processDefinitionName: 'Claim Approval Process', processDefinitionVersion: 1, processInstanceStartTime: 'Thu Aug 03 15:32:47 UTC 2017', processInstanceEndTime: null,
+            processInstanceId: 42516,
+            processInstanceName: 'Fake Process - August 3rd 2017',
+            processDefinitionName: 'Claim Approval Process',
+            processDefinitionVersion: 1,
+            processInstanceStartTime: 'Thu Aug 03 15:32:47 UTC 2017',
+            processInstanceEndTime: null,
             // eslint-disable-next-line @cspell/spellchecker
             processInstanceDurationInMillis: null,
             processInstanceInitiator: 'MyName MyLastname',
-            entries: [{
-                index: 1, type: 'startForm',
-                selectedOutcome: null, formData: [{
-                    fieldName: 'User Name',
-                    fieldId: 'username', value: 'dsassd'
-                },
-                { fieldName: 'Claim Amount', fieldId: 'claimamount', value: '22' }], taskName: null, taskAssignee: null, activityId: null,
-                // eslint-disable-next-line @cspell/spellchecker
-                activityName: null, activityType: null, startTime: null, endTime: null, durationInMillis: null
-            }
-            ], decisionInfo: { calculatedValues: [], appliedRules: [] }
+            entries: [
+                {
+                    index: 1,
+                    type: 'startForm',
+                    selectedOutcome: null,
+                    formData: [
+                        {
+                            fieldName: 'User Name',
+                            fieldId: 'username',
+                            value: 'dsassd'
+                        },
+                        { fieldName: 'Claim Amount', fieldId: 'claimamount', value: '22' }
+                    ],
+                    taskName: null,
+                    taskAssignee: null,
+                    activityId: null,
+                    // eslint-disable-next-line @cspell/spellchecker
+                    activityName: null,
+                    activityType: null,
+                    startTime: null,
+                    endTime: null,
+                    durationInMillis: null
+                }
+            ],
+            decisionInfo: { calculatedValues: [], appliedRules: [] }
         };
         spyOn(service, 'fetchProcessAuditJsonById').and.returnValue(of(auditJson));
         spyOn(component, 'onAuditClick').and.callThrough();

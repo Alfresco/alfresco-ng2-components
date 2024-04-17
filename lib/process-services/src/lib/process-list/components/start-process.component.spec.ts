@@ -26,7 +26,6 @@ import { ProcessService } from '../services/process.service';
 import { newProcess, taskFormMock, testProcessDef, testMultipleProcessDefs, testProcessDefWithForm, testProcessDefinitions } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { deployedApps } from '../../mock/apps-list.mock';
 import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 import { ProcessInstance } from '../models/process-instance.model';
@@ -52,7 +51,7 @@ describe('StartProcessComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule]
+            imports: [ProcessTestingModule]
         });
     });
 
@@ -177,7 +176,9 @@ describe('StartProcessComponent', () => {
                 component.processDefinitionInput.setValue('My Default Name');
                 component.processNameInput.setValue('claim');
 
-                const inputLabels = await loader.getAllHarnesses(MatFormFieldHarness.with({ ancestor: '.adf-start-process', selector: '.adf-process-input-container' }));
+                const inputLabels = await loader.getAllHarnesses(
+                    MatFormFieldHarness.with({ ancestor: '.adf-start-process', selector: '.adf-process-input-container' })
+                );
                 expect(inputLabels.length).toBe(2);
             });
 

@@ -20,7 +20,6 @@ import { fakeEcmUser, fakeEcmUserNoImage } from '@alfresco/adf-content-services'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { BpmUserModel } from '../common/models/bpm-user.model';
 import { ProcessUserInfoComponent } from './process-user-info.component';
 import { fakeBpmUser } from './mocks/bpm-user.service.mock';
@@ -51,11 +50,7 @@ describe('ProcessUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatMenuModule
-            ]
+            imports: [CoreTestingModule, MatMenuModule]
         });
         fixture = TestBed.createComponent(ProcessUserInfoComponent);
         component = fixture.componentInstance;
@@ -82,7 +77,6 @@ describe('ProcessUserInfoComponent', () => {
     });
 
     describe('when user is logged on bpm', () => {
-
         beforeEach(async () => {
             component.bpmUser = fakeBpmUser;
             component.isLoggedIn = true;
@@ -113,7 +107,7 @@ describe('ProcessUserInfoComponent', () => {
             });
             component.bpmUser = wrongBpmUser;
             await whenFixtureReady();
-            const fullNameElement = (element.querySelector('#adf-userinfo-bpm-name-display'));
+            const fullNameElement = element.querySelector('#adf-userinfo-bpm-name-display');
             fixture.detectChanges();
             expect(element.querySelector('#userinfo_container')).toBeDefined();
             expect(element.querySelector('#adf-userinfo-bpm-name-display')).not.toBeNull();
@@ -130,7 +124,6 @@ describe('ProcessUserInfoComponent', () => {
     });
 
     describe('when user is logged on bpm and ecm', () => {
-
         beforeEach(async () => {
             component.bpmUser = fakeBpmUser;
             component.ecmUser = fakeEcmUser as any;
@@ -174,7 +167,9 @@ describe('ProcessUserInfoComponent', () => {
             expect(ecmUsername).not.toBeNull();
             expect(ecmImage).not.toBeNull();
             expect(ecmImage.properties.src).toContain(profilePictureUrl);
-            expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
+            expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain(
+                'fake-ecm-first-name fake-ecm-last-name'
+            );
             expect(fixture.debugElement.query(By.css('#ecm-job-title')).nativeElement.textContent).toContain('job-ecm-test');
         });
 

@@ -22,10 +22,8 @@ import { CommentProcessService } from './services/comment-process.service';
 import { ProcessCommentsComponent } from './process-comments.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { mockProcessInstanceComments } from '../mock/process/process-comments.mock';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessCommentsComponent', () => {
-
     let component: ProcessCommentsComponent;
     let fixture: ComponentFixture<ProcessCommentsComponent>;
     let getCommentsSpy: jasmine.Spy;
@@ -33,10 +31,7 @@ describe('ProcessCommentsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(ProcessCommentsComponent);
         component = fixture.componentInstance;
@@ -121,7 +116,7 @@ describe('ProcessCommentsComponent', () => {
         expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
     });
 
-    it('should display comments input when the process isn\'t readonly', async () => {
+    it('should display comments input when the process is not readonly', async () => {
         component.readOnly = false;
 
         fixture.detectChanges();

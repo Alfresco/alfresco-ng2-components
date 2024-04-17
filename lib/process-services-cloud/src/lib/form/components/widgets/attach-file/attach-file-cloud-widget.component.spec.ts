@@ -71,7 +71,6 @@ import {
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormCloudModule } from '../../../form-cloud.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
@@ -155,7 +154,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot()],
+            imports: [ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot()],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         notificationService = TestBed.inject(NotificationService);
@@ -599,7 +598,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         it('should preview file when show is clicked', () => {
             spyOn(processCloudContentService, 'getRawContentNode').and.returnValue(of(new Blob()));
             let lastValue: ContentLinkModel;
-            formService.formContentClicked.subscribe((fileClicked) => lastValue = fileClicked);
+            formService.formContentClicked.subscribe((fileClicked) => (lastValue = fileClicked));
 
             fixture.detectChanges();
             const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;

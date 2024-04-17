@@ -27,13 +27,11 @@ import { ProcessService } from './../services/process.service';
 import { ProcessInstanceDetailsComponent } from './process-instance-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { FormModule } from '../../form';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
 
 describe('ProcessInstanceDetailsComponent', () => {
-
     let service: ProcessService;
     let component: ProcessInstanceDetailsComponent;
     let fixture: ComponentFixture<ProcessInstanceDetailsComponent>;
@@ -42,12 +40,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule,
-                FormModule,
-                TaskListModule
-            ],
+            imports: [ProcessTestingModule, FormModule, TaskListModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(ProcessInstanceDetailsComponent);
@@ -124,7 +117,6 @@ describe('ProcessInstanceDetailsComponent', () => {
     });
 
     describe('change detection', () => {
-
         const change = new SimpleChange('123', '456', true);
         const nullChange = new SimpleChange('123', null, true);
 
