@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FormFieldModel, FormModel, FormService, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
@@ -164,31 +164,6 @@ describe('DropdownEditorComponent', () => {
             expect(column.options).toEqual([]);
             expect(component.options).toEqual([]);
             expect(component.value).toBe(row.value[column.id]);
-        });
-
-        it('should handle REST error getting options with task id', () => {
-            column.optionType = 'rest';
-            const error = 'error';
-
-            spyOn(taskFormService, 'getRestFieldValuesColumn').and.returnValue(throwError(error));
-            spyOn(component, 'handleError').and.stub();
-
-            component.ngOnInit();
-            expect(component.handleError).toHaveBeenCalledWith(error);
-        });
-
-        it('should handle REST error getting option with processDefinitionId', () => {
-            column.optionType = 'rest';
-            const procForm = new FormModel({ processDefinitionId: '<process-definition-id>' });
-            const procTable = new DynamicTableModel(new FormFieldModel(procForm, { id: '<field-id>' }), formService);
-            component.table = procTable;
-            const error = 'error';
-
-            spyOn(processDefinitionService, 'getRestFieldValuesColumnByProcessId').and.returnValue(throwError(error));
-            spyOn(component, 'handleError').and.stub();
-
-            fixture.detectChanges();
-            expect(component.handleError).toHaveBeenCalledWith(error);
         });
 
         it('should update row on value change', () => {

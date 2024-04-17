@@ -44,7 +44,7 @@ describe('RadioButtonsWidgetComponent', () => {
         processDefinitionService = TestBed.inject(ProcessDefinitionService);
 
         formService = new FormService();
-        widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService, null);
+        widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 
