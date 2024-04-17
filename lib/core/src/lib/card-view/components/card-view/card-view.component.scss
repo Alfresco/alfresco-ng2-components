@@ -22,10 +22,16 @@
     }
 
     .adf-property-container {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .adf-property {
+        .adf-card-view-textitem {
+            .adf-property-field {
+                padding-top: 0;
+            }
+        }
+
         .adf-property-field {
             width: 100%;
 
@@ -49,7 +55,6 @@
 
             #{$mat-form--text-field-infix} {
                 border-top-width: 0;
-                padding: 0;
             }
 
             #{$mat-form-field-flex} {
@@ -57,7 +62,10 @@
             }
 
             #{$mat-form-field-wrapper} {
+                background-color: inherit;
                 padding-bottom: 0;
+                padding-left: 0;
+                padding-right: 0;
             }
 
             #{$mat-form-field-label} {
@@ -75,16 +83,18 @@
     }
 
     .adf-property-value {
-        color: var(--adf-metadata-property-panel-text-color);
+        color: var(--adf-metadata-property-panel-title-color);
 
         &.adf-property-value-editable {
             color: var(--adf-metadata-property-panel-title-color);
             background-color: var(--adf-metadata-buttons-background-color);
             border-radius: 6px;
+            height: 32px;
+            padding-left: 10px;
 
             #{$mat-input-element} {
                 color: var(--adf-metadata-action-button-clear-color);
-                padding: 6px 0 6px 12px;
+                padding: 5px 0 6px 12px;
                 margin: 5px 0 0;
             }
         }
