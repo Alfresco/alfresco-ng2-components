@@ -19,12 +19,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDe
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Observable, Subject } from 'rxjs';
 import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import {
-    DateFnsUtils,
-    LogService,
-    UserPreferencesService,
-    UserPreferenceValues
-} from '@alfresco/adf-core';
+import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
 import { GroupCloudComponent } from '../../../group/components/group-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -45,7 +40,8 @@ const DATE_FORMAT: string = 'dd/MM/yyyy';
     styleUrls: ['./start-task-cloud.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: DateFnsAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }],
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskCloudComponent implements OnInit, OnDestroy {
@@ -105,19 +101,19 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     private groupForm = new UntypedFormControl('');
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private taskService: TaskCloudService,
-                private dateAdapter: DateAdapter<DateFnsAdapter>,
-                private userPreferencesService: UserPreferencesService,
-                private formBuilder: UntypedFormBuilder,
-                private identityUserService: IdentityUserService,
-                private logService: LogService) {
-    }
+    constructor(
+        private taskService: TaskCloudService,
+        private dateAdapter: DateAdapter<DateFnsAdapter>,
+        private userPreferencesService: UserPreferencesService,
+        private formBuilder: UntypedFormBuilder,
+        private identityUserService: IdentityUserService
+    ) {}
 
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
+            .subscribe((locale) => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
         this.loadCurrentUser();
         this.buildForm();
         this.loadDefaultPriorities();
@@ -162,17 +158,16 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     }
 
     private createNewTask(newTask: StartTaskCloudRequestModel) {
-        this.taskService.createNewTask(newTask, this.appName)
-            .subscribe(
-                (res: any) => {
-                    this.submitted = false;
-                    this.success.emit(res);
-                },
-                (err) => {
-                    this.submitted = false;
-                    this.error.emit(err);
-                    this.logService.error('An error occurred while creating new task');
-                });
+        this.taskService.createNewTask(newTask, this.appName).subscribe(
+            (res: any) => {
+                this.submitted = false;
+                this.success.emit(res);
+            },
+            (err) => {
+                this.submitted = false;
+                this.error.emit(err);
+            }
+        );
     }
 
     public onCancel() {
@@ -212,11 +207,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     }
 
     canStartTask(): boolean {
-        return !(this.dateError ||
-                !this.taskForm.valid ||
-                this.submitted ||
-                this.assignee.hasError() ||
-                this.candidateGroups.hasError());
+        return !(this.dateError || !this.taskForm.valid || this.submitted || this.assignee.hasError() || this.candidateGroups.hasError());
     }
 
     public whitespaceValidator(control: UntypedFormControl) {

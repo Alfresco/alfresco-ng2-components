@@ -17,16 +17,11 @@
 
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { LogService } from '../common/services/log.service';
 import { NotificationService } from '../notifications/services/notification.service';
 
 @Injectable({ providedIn: 'root' })
 export class ClipboardService {
-
-    constructor(
-        @Inject(DOCUMENT) private document: any,
-        private logService: LogService,
-        private notificationService: NotificationService) { }
+    constructor(@Inject(DOCUMENT) private document: any, private notificationService: NotificationService) {}
 
     /**
      * Checks if the target element can have its text copied.
@@ -58,9 +53,7 @@ export class ClipboardService {
                     this.document.execCommand('copy');
                 }
                 this.notify(message);
-            } catch (error) {
-                this.logService.error(error);
-            }
+            } catch {}
         }
     }
 
@@ -76,16 +69,14 @@ export class ClipboardService {
                 navigator.clipboard.writeText(content);
             } else {
                 document.addEventListener('copy', (e: ClipboardEvent) => {
-                    e.clipboardData.setData('text/plain', (content));
+                    e.clipboardData.setData('text/plain', content);
                     e.preventDefault();
                     document.removeEventListener('copy', null);
                 });
                 document.execCommand('copy');
             }
             this.notify(message);
-        } catch (error) {
-            this.logService.error(error);
-        }
+        } catch {}
     }
 
     private notify(message) {
@@ -93,5 +84,4 @@ export class ClipboardService {
             this.notificationService.openSnackMessage(message);
         }
     }
-
 }

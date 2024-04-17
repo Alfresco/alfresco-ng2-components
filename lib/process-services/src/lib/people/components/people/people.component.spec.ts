@@ -16,13 +16,10 @@
  */
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { LogService } from '@alfresco/adf-core';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { throwError } from 'rxjs';
 import { UserProcessModel } from '../../../common/models/user-process.model';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 declare let jasmine: any;
 
@@ -41,23 +38,15 @@ const fakeSecondUser = new UserProcessModel({
 });
 
 describe('PeopleComponent', () => {
-
     let activitiPeopleComponent: PeopleComponent;
     let fixture: ComponentFixture<PeopleComponent>;
     let element: HTMLElement;
     const userArray = [fakeUser, fakeSecondUser];
-    let logService: LogService;
-    let peopleProcessService: PeopleProcessService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule]
         });
-        logService = TestBed.inject(LogService);
-        peopleProcessService = TestBed.inject(PeopleProcessService);
         fixture = TestBed.createComponent(PeopleComponent);
         activitiPeopleComponent = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -88,7 +77,6 @@ describe('PeopleComponent', () => {
     });
 
     describe('when there are involved people', () => {
-
         beforeEach(() => {
             activitiPeopleComponent.taskId = 'fake-task-id';
             activitiPeopleComponent.people.push(...userArray);
@@ -117,13 +105,12 @@ describe('PeopleComponent', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
-            fixture.whenStable()
-                .then(() => {
-                    fixture.detectChanges();
-                    const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
-                    expect(gatewayElement).not.toBeNull();
-                    expect(gatewayElement.children.length).toBe(1);
-                });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
+                expect(gatewayElement).not.toBeNull();
+                expect(gatewayElement.children.length).toBe(1);
+            });
         }));
 
         it('should involve people', fakeAsync(() => {
@@ -131,13 +118,12 @@ describe('PeopleComponent', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
-            fixture.whenStable()
-                .then(() => {
-                    fixture.detectChanges();
-                    const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
-                    expect(gatewayElement).not.toBeNull();
-                    expect(gatewayElement.children.length).toBe(3);
-                });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
+                expect(gatewayElement).not.toBeNull();
+                expect(gatewayElement.children.length).toBe(3);
+            });
         }));
 
         it('should return an observable with user search results', (done) => {
@@ -154,17 +140,20 @@ describe('PeopleComponent', () => {
                 status: 200,
                 contentType: 'json',
                 responseText: {
-                    data: [{
-                        id: 1,
-                        firstName: 'fake-test-1',
-                        lastName: 'fake-last-1',
-                        email: 'fake-test-1@test.com'
-                    }, {
-                        id: 2,
-                        firstName: 'fake-test-2',
-                        lastName: 'fake-last-2',
-                        email: 'fake-test-2@test.com'
-                    }]
+                    data: [
+                        {
+                            id: 1,
+                            firstName: 'fake-test-1',
+                            lastName: 'fake-last-1',
+                            email: 'fake-test-1@test.com'
+                        },
+                        {
+                            id: 2,
+                            firstName: 'fake-test-2',
+                            lastName: 'fake-last-2',
+                            email: 'fake-test-2@test.com'
+                        }
+                    ]
                 }
             });
         });
@@ -184,7 +173,6 @@ describe('PeopleComponent', () => {
     });
 
     describe('when there are errors on service call', () => {
-
         beforeEach(() => {
             jasmine.Ajax.install();
             activitiPeopleComponent.people.push(...userArray);
@@ -193,16 +181,6 @@ describe('PeopleComponent', () => {
 
         afterEach(() => {
             jasmine.Ajax.uninstall();
-        });
-
-        it('should log error message when search fails', async () => {
-            const logServiceErrorSpy = spyOn(logService, 'error');
-            const mockThrownError = { error: 'Could not load users'};
-
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(mockThrownError));
-            activitiPeopleComponent.searchUser('fake-search');
-
-            expect(logServiceErrorSpy).toHaveBeenCalledWith(mockThrownError);
         });
 
         it('should not remove user if remove involved user fail', async () => {

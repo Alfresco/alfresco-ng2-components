@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { EXTENDIBLE_COMPONENT, FileUtils, LogService } from '@alfresco/adf-core';
+import { EXTENDIBLE_COMPONENT, FileUtils } from '@alfresco/adf-core';
 import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { ContentService } from '../../common/services/content.service';
@@ -36,7 +36,6 @@ import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-o
 export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodeAllowableOperationSubject {
     private contentService = inject(ContentService);
     private nodesApiService = inject(NodesApiService);
-    protected logService = inject(LogService);
 
     /** Allows/disallows upload folders (only for Chrome). */
     @Input()

@@ -52,7 +52,6 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
                 })
             );
         } else {
-            this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, FormFieldOption, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, FormFieldOption } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { ProcessDefinitionsApi } from '@alfresco/js-api';
@@ -35,7 +35,7 @@ export class ProcessDefinitionService {
         return this._processDefinitionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.
@@ -90,7 +90,6 @@ export class ProcessDefinitionService {
                 ? `${error.status} - ${error.statusText}`
                 : ProcessDefinitionService.GENERIC_ERROR_MESSAGE;
         }
-        this.logService.error(errMsg);
         return throwError(errMsg);
     }
 }

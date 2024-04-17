@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService, WidgetVisibilityService, WidgetComponent, FormService } from '@alfresco/adf-core';
+import { WidgetVisibilityService, WidgetComponent, FormService } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
 import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
@@ -54,7 +54,6 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         public formService: FormService,
         public elementRef: ElementRef,
         private visibilityService: WidgetVisibilityService,
-        private logService: LogService,
         private cd: ChangeDetectorRef
     ) {
         super(formService);
@@ -179,8 +178,6 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
                 this.content.selectedRow.value = this.copyObject(this.editRow.value);
             }
             this.content.flushValue();
-        } else {
-            this.logService.error(this.ERROR_MODEL_NOT_FOUND);
         }
         this.editMode = false;
         this.forceFocusOnAddButton();

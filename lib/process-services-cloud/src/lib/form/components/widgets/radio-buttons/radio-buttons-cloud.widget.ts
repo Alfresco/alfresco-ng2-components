@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, LogService, FormFieldOption, ErrorMessageModel } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, FormFieldOption, ErrorMessageModel } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -47,12 +47,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        public formService: FormService,
-        private formCloudService: FormCloudService,
-        private logService: LogService,
-        private translateService: TranslateService
-    ) {
+    constructor(public formService: FormService, private formCloudService: FormCloudService, private translateService: TranslateService) {
         super(formService);
     }
 
@@ -87,7 +82,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
         this.restApiError = new ErrorMessageModel({
             message: this.translateService.instant('FORM.FIELD.REST_API_FAILED', { hostname: this.getRestUrlHostName() })
         });
-        this.logService.error(error);
+        this.error.emit(error);
     }
 
     isChecked(option: FormFieldOption): boolean {

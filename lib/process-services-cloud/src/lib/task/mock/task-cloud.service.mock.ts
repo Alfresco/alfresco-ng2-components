@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, CardViewArrayItem, LogService } from '@alfresco/adf-core';
+import { AppConfigService, CardViewArrayItem } from '@alfresco/adf-core';
 import { from, Observable, of, Subject, throwError } from 'rxjs';
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
 import { TaskDetailsCloudModel, TASK_ASSIGNED_STATE, TASK_CREATED_STATE } from '../start-task/models/task-details-cloud.model';
@@ -29,11 +29,10 @@ import { TaskCloudServiceInterface } from '../services/task-cloud.service.interf
     providedIn: 'root'
 })
 export class TaskCloudServiceMock implements TaskCloudServiceInterface {
-
     currentUserMock = 'AssignedTaskUser';
     dataChangesDetected$ = new Subject();
 
-    constructor(private appConfigService: AppConfigService, private logService: LogService) { }
+    constructor(private appConfigService: AppConfigService) {}
 
     getTaskById(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
@@ -68,7 +67,11 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         return taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
-    isAssigneePropertyClickable(taskDetails: TaskDetailsCloudModel, candidateUsers: CardViewArrayItem[], candidateGroups: CardViewArrayItem[]): boolean {
+    isAssigneePropertyClickable(
+        taskDetails: TaskDetailsCloudModel,
+        candidateUsers: CardViewArrayItem[],
+        candidateGroups: CardViewArrayItem[]
+    ): boolean {
         let isClickable = false;
         const states = [TASK_ASSIGNED_STATE];
         if (candidateUsers?.length || candidateGroups?.length) {
@@ -103,7 +106,6 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
             return from([]);
         } else {
-            this.logService.error('AppName and TaskId are mandatory for complete a task');
             return throwError('AppName/TaskId not configured');
         }
     }
@@ -119,7 +121,6 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
             return from([]);
         } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
             return throwError('AppName/TaskId not configured');
         }
     }
@@ -130,7 +131,6 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
             return from([]);
         } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
             return throwError('AppName/TaskId not configured');
         }
     }
@@ -147,7 +147,6 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
             return from([]);
         } else {
-            this.logService.error('AppName is mandatory for querying task');
             return throwError('AppName not configured');
         }
     }
@@ -158,7 +157,6 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
 
             return from([]);
         } else {
-            this.logService.error('AppName and TaskId are mandatory to change/update the task assignee');
             return throwError('AppName/TaskId not configured');
         }
     }

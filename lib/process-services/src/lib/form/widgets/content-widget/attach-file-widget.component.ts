@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AppConfigService, AppConfigValues, DownloadService, FormService, LogService, ThumbnailService } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, DownloadService, FormService, ThumbnailService } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, of, Subject, zip } from 'rxjs';
@@ -53,7 +53,6 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     constructor(
         public formService: FormService,
-        private logger: LogService,
         public thumbnails: ThumbnailService,
         public processContentService: ProcessContentService,
         private activitiContentService: ActivitiContentService,
@@ -63,7 +62,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         private downloadService: DownloadService,
         private attachDialogService: AttachFileWidgetDialogService
     ) {
-        super(formService, logger, thumbnails, processContentService);
+        super(formService, thumbnails, processContentService);
     }
 
     ngOnInit() {
@@ -152,7 +151,6 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     onAttachFileClicked(file: any) {
         if (file.isExternal || !file.contentAvailable) {
-            this.logger.info(`The file ${file.name} comes from an external source and cannot be showed at this moment`);
             return;
         }
         if (this.isTemporaryFile(file)) {
@@ -188,9 +186,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 (blob: Blob) => {
                     this.downloadService.downloadBlob(blob, file.name);
                 },
-                () => {
-                    this.logger.error('Impossible retrieve content for download');
-                }
+                () => {}
             );
         }
     }
@@ -248,9 +244,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                     res['isExternal'] = isExternal;
                     filesSaved.push(res);
                 },
-                (error) => {
-                    this.logger.error(error);
-                },
+                () => {},
                 () => {
                     const previousFiles = this.field.value ? this.field.value : [];
                     this.field.value = [...previousFiles, ...filesSaved];

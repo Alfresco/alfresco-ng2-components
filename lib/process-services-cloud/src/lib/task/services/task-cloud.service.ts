@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
     TaskDetailsCloudModel,
     StartTaskCloudResponseModel,
@@ -39,14 +39,9 @@ import { AdfHttpClient } from '@alfresco/adf-core/api';
     providedIn: 'root'
 })
 export class TaskCloudService extends BaseCloudService implements TaskCloudServiceInterface {
-
     dataChangesDetected$ = new Subject();
 
-    constructor(
-        private translateService: TranslationService,
-        private identityUserService: IdentityUserService,
-        adfHttpClient: AdfHttpClient
-    ) {
+    constructor(private translateService: TranslationService, private identityUserService: IdentityUserService, adfHttpClient: AdfHttpClient) {
         super(adfHttpClient);
     }
 
@@ -64,7 +59,6 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
             return this.post<any, TaskDetailsCloudModel>(url, payload);
         } else {
-            this.logService.error('AppName and TaskId are mandatory for complete a task');
             return throwError('AppName/TaskId not configured');
         }
     }
@@ -89,7 +83,11 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
         return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
-    isAssigneePropertyClickable(taskDetails: TaskDetailsCloudModel, candidateUsers: CardViewArrayItem[], candidateGroups: CardViewArrayItem[]): boolean {
+    isAssigneePropertyClickable(
+        taskDetails: TaskDetailsCloudModel,
+        candidateUsers: CardViewArrayItem[],
+        candidateGroups: CardViewArrayItem[]
+    ): boolean {
         let isClickable = false;
         const states = [TASK_ASSIGNED_STATE];
         if (candidateUsers?.length || candidateGroups?.length) {
@@ -105,9 +103,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      * @returns Boolean value if the task can be completed
      */
     canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails?.status === TASK_CREATED_STATE &&
-               taskDetails?.permissions.includes(TASK_CLAIM_PERMISSION) &&
-               !taskDetails?.standalone;
+        return taskDetails?.status === TASK_CREATED_STATE && taskDetails?.permissions.includes(TASK_CLAIM_PERMISSION) && !taskDetails?.standalone;
     }
 
     /**
@@ -118,10 +114,12 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails?.status === TASK_ASSIGNED_STATE &&
-               taskDetails?.assignee === currentUser &&
-               taskDetails?.permissions.includes(TASK_RELEASE_PERMISSION) &&
-               !taskDetails?.standalone;
+        return (
+            taskDetails?.status === TASK_ASSIGNED_STATE &&
+            taskDetails?.assignee === currentUser &&
+            taskDetails?.permissions.includes(TASK_RELEASE_PERMISSION) &&
+            !taskDetails?.standalone
+        );
     }
 
     /**
@@ -143,7 +141,6 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
                 })
             );
         } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
             return throwError('AppName/TaskId not configured');
         }
     }
@@ -166,7 +163,6 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
                 })
             );
         } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
             return throwError('AppName/TaskId not configured');
         }
     }
@@ -182,30 +178,24 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
-            return this.get(queryUrl).pipe(
-                map((res: any) => res.entry)
-            );
+            return this.get(queryUrl).pipe(map((res: any) => res.entry));
         } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
             return throwError('AppName/TaskId not configured');
         }
     }
 
-     /**
-      * Creates a new standalone task.
-      *
-      * @param startTaskRequest request model
-      * @param appName application name
-      * @returns Details of the newly created task
-      */
+    /**
+     * Creates a new standalone task.
+     *
+     * @param startTaskRequest request model
+     * @param appName application name
+     * @returns Details of the newly created task
+     */
     createNewTask(startTaskRequest: StartTaskCloudRequestModel, appName: string): Observable<TaskDetailsCloudModel> {
         const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks`;
         const payload = JSON.stringify(new StartTaskCloudRequestModel(startTaskRequest));
 
-        return this.post<any, StartTaskCloudResponseModel>(queryUrl, payload)
-            .pipe(
-                map(response => response.entry)
-            );
+        return this.post<any, StartTaskCloudResponseModel>(queryUrl, payload).pipe(map((response) => response.entry));
     }
 
     /**
@@ -221,11 +211,8 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
             payload.payloadType = 'UpdateTaskPayload';
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
 
-            return this.put(queryUrl, payload).pipe(
-                map((res: any) => res.entry)
-            );
+            return this.put(queryUrl, payload).pipe(map((res: any) => res.entry));
         } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
             return throwError('AppName/TaskId not configured');
         }
     }
@@ -240,11 +227,8 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
     getCandidateUsers(appName: string, taskId: string): Observable<string[]> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-users`;
-            return this.get<string[]>(queryUrl).pipe(
-                catchError((err) => this.handleError(err))
-            );
+            return this.get<string[]>(queryUrl);
         } else {
-            this.logService.error('AppName and TaskId are mandatory to get candidate user');
             return of([]);
         }
     }
@@ -261,7 +245,6 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-groups`;
             return this.get<string[]>(queryUrl);
         } else {
-            this.logService.error('AppName and TaskId are mandatory to get candidate groups');
             return of([]);
         }
     }
@@ -276,11 +259,8 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
         if (appName || appName === '') {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
-            return this.get(url).pipe(
-                map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry)))
-            );
+            return this.get(url).pipe(map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry))));
         } else {
-            this.logService.error('AppName is mandatory for querying task');
             return throwError('AppName not configured');
         }
     }
@@ -298,17 +278,14 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
             const payLoad = { assignee, taskId, payloadType: 'AssignTaskPayload' };
             const url = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/assign`;
 
-            return this.post(url, payLoad).pipe(
-                map((res: any) => res.entry)
-            );
+            return this.post(url, payLoad).pipe(map((res: any) => res.entry));
         } else {
-            this.logService.error('AppName and TaskId are mandatory to change/update the task assignee');
             return throwError('AppName/TaskId not configured');
         }
-      }
+    }
 
     getPriorityLabel(priority: number): string {
-        const priorityItem = this.priorities.find(item => item.value === priority.toString()) || this.priorities[0];
+        const priorityItem = this.priorities.find((item) => item.value === priority.toString()) || this.priorities[0];
         return this.translateService.instant(priorityItem.label);
     }
 
@@ -319,10 +296,5 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
     private isAssignedToMe(assignee: string): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return assignee === currentUser;
-    }
-
-    private handleError(error?: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

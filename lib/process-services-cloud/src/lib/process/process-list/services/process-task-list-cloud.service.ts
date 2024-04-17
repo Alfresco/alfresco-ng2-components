@@ -52,7 +52,6 @@ export class ProcessTaskListCloudService extends BaseCloudService implements Tas
                 })
             );
         } else {
-            this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
     }
@@ -60,7 +59,11 @@ export class ProcessTaskListCloudService extends BaseCloudService implements Tas
     protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const property in requestNode) {
-            if (Object.prototype.hasOwnProperty.call(requestNode, property) && !this.isExcludedField(property) && this.isPropertyValueValid(requestNode, property)) {
+            if (
+                Object.prototype.hasOwnProperty.call(requestNode, property) &&
+                !this.isExcludedField(property) &&
+                this.isPropertyValueValid(requestNode, property)
+            ) {
                 queryParam[property] = requestNode[property];
             }
         }

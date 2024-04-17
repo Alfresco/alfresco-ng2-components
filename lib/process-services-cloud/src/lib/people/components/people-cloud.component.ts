@@ -32,7 +32,7 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, takeUntil } from 'rxjs/operators';
-import { FullNamePipe, LogService } from '@alfresco/adf-core';
+import { FullNamePipe } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
@@ -162,8 +162,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         @Inject(IDENTITY_USER_SERVICE_TOKEN)
-        private identityUserService: IdentityUserServiceInterface,
-        private logService: LogService
+        private identityUserService: IdentityUserServiceInterface
     ) {}
 
     ngOnInit(): void {
@@ -300,7 +299,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
                 }
             } catch (error) {
                 this.invalidUsers.push(user);
-                this.logService.error(error);
             }
         }
 

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { LogService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Form } from '../models/form.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -28,9 +27,7 @@ import { TaskFormService } from '../../form/services/task-form.service';
     templateUrl: './attach-form.component.html',
     styleUrls: ['./attach-form.component.scss']
 })
-
 export class AttachFormComponent implements OnInit, OnChanges {
-
     /** Id of the task. */
     @Input()
     taskId: any;
@@ -59,14 +56,11 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     attachFormControl: UntypedFormControl;
 
-    constructor(private taskService: TaskListService,
-        private logService: LogService,
-        private modelService: ModelService,
-        private taskFormService: TaskFormService) { }
+    constructor(private taskService: TaskListService, private modelService: ModelService, private taskFormService: TaskFormService) {}
 
     ngOnInit() {
         this.attachFormControl = new UntypedFormControl('', Validators.required);
-        this.attachFormControl.valueChanges.subscribe( (currentValue) => {
+        this.attachFormControl.valueChanges.subscribe((currentValue) => {
             if (this.attachFormControl.valid) {
                 this.disableSubmit = this.formId === currentValue;
             }
@@ -95,8 +89,8 @@ export class AttachFormComponent implements OnInit, OnChanges {
             },
             (err) => {
                 this.error.emit(err);
-                this.logService.error('An error occurred while trying to delete the form');
-            });
+            }
+        );
     }
 
     onAttachFormButtonClick(): void {
@@ -104,36 +98,39 @@ export class AttachFormComponent implements OnInit, OnChanges {
     }
 
     private loadFormsTask(): void {
-        this.taskService.getFormList().subscribe((form: Form[]) => {
+        this.taskService.getFormList().subscribe(
+            (form: Form[]) => {
                 this.forms = form;
             },
             (err) => {
                 this.error.emit(err);
-                this.logService.error('An error occurred while trying to get the forms');
-            });
+            }
+        );
     }
 
     private onFormAttached() {
-        this.taskFormService.getTaskForm(this.taskId)
-            .subscribe((res) => {
+        this.taskFormService.getTaskForm(this.taskId).subscribe(
+            (res) => {
                 this.modelService.getFormDefinitionByName(res.name).subscribe((formDef) => {
                     this.formId = this.selectedFormId = formDef;
                 });
-            }, (err) => {
+            },
+            (err) => {
                 this.error.emit(err);
-                this.logService.error('Could not load forms');
-            });
+            }
+        );
     }
 
     private attachForm(taskId: string, formId: number) {
         if (taskId && formId) {
-            this.taskService.attachFormToATask(taskId, formId)
-                .subscribe(() => {
+            this.taskService.attachFormToATask(taskId, formId).subscribe(
+                () => {
                     this.success.emit();
-                }, (err) => {
+                },
+                (err) => {
                     this.error.emit(err);
-                    this.logService.error('Could not attach form');
-                });
+                }
+            );
         }
     }
 }

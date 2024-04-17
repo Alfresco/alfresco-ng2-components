@@ -17,11 +17,11 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { WidgetComponent, LogService, FormService, ThumbnailService, NotificationService } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, ThumbnailService, NotificationService } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { FileSourceTypes, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
 import { VersionManagerUploadData } from '@alfresco/adf-content-services';
@@ -49,6 +49,9 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     multipleOption: string = '';
     mimeTypeIcon: string;
 
+    @Output()
+    error = new EventEmitter<any>();
+
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
@@ -56,8 +59,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         formService: FormService,
         private thumbnailService: ThumbnailService,
         protected processCloudContentService: ProcessCloudContentService,
-        protected notificationService: NotificationService,
-        protected logService: LogService
+        protected notificationService: NotificationService
     ) {
         super(formService);
     }
@@ -103,7 +105,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
                     (res) => {
                         filesSaved.push(res);
                     },
-                    (error) => this.logService.error(`Error uploading file. See console output for more details. ${error}`),
+                    (error) => this.error.emit(`Error uploading file. See console output for more details. ${error}`),
                     () => {
                         this.fixIncompatibilityFromPreviousAndNewForm(filesSaved);
                         this.hasFile = true;

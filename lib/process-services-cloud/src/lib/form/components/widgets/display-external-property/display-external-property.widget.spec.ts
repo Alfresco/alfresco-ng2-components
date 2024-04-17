@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormService, FormFieldModel, FormModel, FormFieldTypes, LogService } from '@alfresco/adf-core';
+import { FormService, FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -32,18 +32,12 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
     let widget: DisplayExternalPropertyWidgetComponent;
     let fixture: ComponentFixture<DisplayExternalPropertyWidgetComponent>;
     let element: HTMLElement;
-    let logService: LogService;
     let logServiceSpy: jasmine.Spy;
     let formCloudService: FormCloudService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                NoopAnimationsModule,
-                ReactiveFormsModule,
-                DisplayExternalPropertyWidgetComponent
-            ],
+            imports: [TranslateModule.forRoot(), NoopAnimationsModule, ReactiveFormsModule, DisplayExternalPropertyWidgetComponent],
             providers: [FormService]
         }).compileComponents();
 
@@ -51,10 +45,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
-        logService = TestBed.inject(LogService);
         formCloudService = TestBed.inject(FormCloudService);
-
-        logServiceSpy = spyOn(logService, 'error');
     });
 
     it('should display initial value', async () => {

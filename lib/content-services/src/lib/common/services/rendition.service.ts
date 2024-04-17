@@ -17,13 +17,12 @@
 
 import { Injectable } from '@angular/core';
 import { ContentApi, RenditionEntry, RenditionPaging, RenditionsApi, VersionsApi } from '@alfresco/js-api';
-import { AlfrescoApiService , LogService, Track,TranslationService, ViewUtilService } from '@alfresco/adf-core';
+import { AlfrescoApiService, Track, TranslationService, ViewUtilService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RenditionService {
-
     static TARGET = '_new';
 
     /**
@@ -53,7 +52,6 @@ export class RenditionService {
      */
     private TRY_TIMEOUT: number = 10000;
 
-
     _renditionsApi: RenditionsApi;
     get renditionsApi(): RenditionsApi {
         this._renditionsApi = this._renditionsApi ?? new RenditionsApi(this.apiService.getInstance());
@@ -74,17 +72,12 @@ export class RenditionService {
         return this._versionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private translateService: TranslationService,
-                private viewUtilsService: ViewUtilService) {
-    }
-
+    constructor(private apiService: AlfrescoApiService, private translateService: TranslationService, private viewUtilsService: ViewUtilService) {}
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
-        return (renditionExists && type !== RenditionService.ContentGroup.IMAGE) ?
-            this.contentApi.getRenditionUrl(nodeId, RenditionService.ContentGroup.PDF) :
-            this.contentApi.getContentUrl(nodeId, false);
+        return renditionExists && type !== RenditionService.ContentGroup.IMAGE
+            ? this.contentApi.getRenditionUrl(nodeId, RenditionService.ContentGroup.PDF)
+            : this.contentApi.getContentUrl(nodeId, false);
     }
 
     private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
@@ -110,18 +103,18 @@ export class RenditionService {
 
     async getRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
         const renditionPaging: RenditionPaging = await this.renditionsApi.listRenditions(nodeId);
-        let rendition: RenditionEntry = renditionPaging.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
+        let rendition: RenditionEntry = renditionPaging.list.entries.find(
+            (renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId
+        );
 
         if (rendition) {
             const status = rendition.entry.status.toString();
 
             if (status === 'NOT_CREATED') {
                 try {
-                    await this.renditionsApi.createRendition(nodeId, {id: renditionId});
+                    await this.renditionsApi.createRendition(nodeId, { id: renditionId });
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
-                } catch (err) {
-                    this.logService.error(err);
-                }
+                } catch {}
             }
         }
         return new Promise<RenditionEntry>((resolve) => resolve(rendition));
@@ -129,10 +122,8 @@ export class RenditionService {
 
     async getNodeRendition(nodeId: string, versionId?: string): Promise<{ url: string; mimeType: string }> {
         try {
-            return versionId ? await this.resolveNodeRendition(nodeId, 'pdf', versionId) :
-                await this.resolveNodeRendition(nodeId, 'pdf');
-        } catch (err) {
-            this.logService.error(err);
+            return versionId ? await this.resolveNodeRendition(nodeId, 'pdf', versionId) : await this.resolveNodeRendition(nodeId, 'pdf');
+        } catch {
             return null;
         }
     }
@@ -140,8 +131,9 @@ export class RenditionService {
     private async resolveNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string; mimeType: string }> {
         renditionId = renditionId.toLowerCase();
 
-        const supportedRendition: RenditionPaging = versionId ? await this.versionsApi.listVersionRenditions(nodeId, versionId) :
-            await this.renditionsApi.listRenditions(nodeId);
+        const supportedRendition: RenditionPaging = versionId
+            ? await this.versionsApi.listVersionRenditions(nodeId, versionId)
+            : await this.renditionsApi.listRenditions(nodeId);
 
         let rendition = this.findRenditionById(supportedRendition, renditionId);
         if (!rendition) {
@@ -154,9 +146,9 @@ export class RenditionService {
             const mimeType: string = rendition.entry.content.mimeType;
 
             if (status === 'NOT_CREATED') {
-                return {url: await this.requestCreateRendition(nodeId, renditionId, versionId), mimeType};
+                return { url: await this.requestCreateRendition(nodeId, renditionId, versionId), mimeType };
             } else {
-                return {url: await this.handleNodeRendition(nodeId, renditionId, versionId), mimeType};
+                return { url: await this.handleNodeRendition(nodeId, renditionId, versionId), mimeType };
             }
         }
 
@@ -166,25 +158,22 @@ export class RenditionService {
     private async requestCreateRendition(nodeId: string, renditionId: string, versionId: string): Promise<string> {
         try {
             if (versionId) {
-                await this.versionsApi.createVersionRendition(nodeId, versionId, {id: renditionId});
+                await this.versionsApi.createVersionRendition(nodeId, versionId, { id: renditionId });
             } else {
-                await this.renditionsApi.createRendition(nodeId, {id: renditionId});
+                await this.renditionsApi.createRendition(nodeId, { id: renditionId });
             }
             try {
                 return versionId ? await this.waitNodeRendition(nodeId, renditionId, versionId) : await this.waitNodeRendition(nodeId, renditionId);
             } catch (e) {
                 return null;
             }
-
-        } catch (err) {
-            this.logService.error(err);
+        } catch {
             return null;
         }
     }
 
     private findRenditionById(supportedRendition: RenditionPaging, renditionId: string) {
-        const rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
-        return rendition;
+        return supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
     }
 
     private async waitNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<string> {
@@ -194,23 +183,29 @@ export class RenditionService {
                 currentRetry++;
                 if (this.maxRetries >= currentRetry) {
                     if (versionId) {
-                        this.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((rendition: RenditionEntry) => {
-                            const status: string = rendition.entry.status.toString();
+                        this.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then(
+                            (rendition: RenditionEntry) => {
+                                const status: string = rendition.entry.status.toString();
 
-                            if (status === 'CREATED') {
-                                clearInterval(intervalId);
-                                return resolve(this.handleNodeRendition(nodeId, rendition.entry.content.mimeType, versionId));
-                            }
-                        }, () => reject(new Error('Error geting version rendition')));
+                                if (status === 'CREATED') {
+                                    clearInterval(intervalId);
+                                    return resolve(this.handleNodeRendition(nodeId, rendition.entry.content.mimeType, versionId));
+                                }
+                            },
+                            () => reject(new Error('Error geting version rendition'))
+                        );
                     } else {
-                        this.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
-                            const status: string = rendition.entry.status.toString();
+                        this.renditionsApi.getRendition(nodeId, renditionId).then(
+                            (rendition: RenditionEntry) => {
+                                const status: string = rendition.entry.status.toString();
 
-                            if (status === 'CREATED') {
-                                clearInterval(intervalId);
-                                return resolve(this.handleNodeRendition(nodeId, renditionId, versionId));
-                            }
-                        }, () => reject(new Error('Error getting rendition')));
+                                if (status === 'CREATED') {
+                                    clearInterval(intervalId);
+                                    return resolve(this.handleNodeRendition(nodeId, renditionId, versionId));
+                                }
+                            },
+                            () => reject(new Error('Error getting rendition'))
+                        );
                     }
                 } else {
                     clearInterval(intervalId);
@@ -221,11 +216,9 @@ export class RenditionService {
     }
 
     private async handleNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<string> {
-
-        const url = versionId ? this.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
-            this.contentApi.getRenditionUrl(nodeId, renditionId);
-
-        return url;
+        return versionId
+            ? this.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId)
+            : this.contentApi.getRenditionUrl(nodeId, renditionId);
     }
 
     async generateMediaTracksRendition(nodeId: string): Promise<Track[]> {
@@ -241,16 +234,14 @@ export class RenditionService {
                 }
                 return tracks;
             })
-            .catch((err) => {
-                this.logService.error('Error while retrieving ' + RenditionService.SUBTITLES_RENDITION_NAME + ' rendition');
-                this.logService.error(err);
-                return [];
-            });
+            .catch(() => []);
     }
 
     private async isRenditionAvailable(nodeId: string, renditionId: string): Promise<boolean> {
         const renditionPaging: RenditionPaging = await this.renditionsApi.listRenditions(nodeId);
-        const rendition: RenditionEntry = renditionPaging.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
+        const rendition: RenditionEntry = renditionPaging.list.entries.find(
+            (renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId
+        );
 
         return rendition?.entry?.status?.toString() === 'CREATED' || false;
     }
@@ -297,15 +288,13 @@ export class RenditionService {
 
         this.getRendition(nodeId, RenditionService.ContentGroup.PDF)
             .then((value) => {
-                const url: string = this.getRenditionUrl(nodeId, type, (!!value));
-                const printType = (type === RenditionService.ContentGroup.PDF
-                    || type === RenditionService.ContentGroup.TEXT)
-                    ? RenditionService.ContentGroup.PDF : type;
+                const url: string = this.getRenditionUrl(nodeId, type, !!value);
+                const printType =
+                    type === RenditionService.ContentGroup.PDF || type === RenditionService.ContentGroup.TEXT
+                        ? RenditionService.ContentGroup.PDF
+                        : type;
                 this.printFile(url, printType);
             })
-            .catch((err) => {
-                this.logService.error('Error with Printing');
-                this.logService.error(err);
-            });
+            .catch(() => {});
     }
 }

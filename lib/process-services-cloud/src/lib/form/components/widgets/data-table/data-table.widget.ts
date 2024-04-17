@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, DataTableModule, LogService, FormBaseModule, DataRow, DataColumn } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, DataTableModule, FormBaseModule, DataRow, DataColumn } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
@@ -46,6 +46,7 @@ import { DataTablePathParserHelper } from './helpers/data-table-path-parser.help
     encapsulation: ViewEncapsulation.None
 })
 export class DataTableWidgetComponent extends WidgetComponent implements OnInit {
+
     dataSource: WidgetDataTableAdapter;
     dataTableLoadFailed = false;
     previewState = false;
@@ -56,7 +57,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private defaultResponseProperty = 'data';
     private pathParserHelper = new DataTablePathParserHelper();
 
-    constructor(public formService: FormService, private formCloudService: FormCloudService, private logService: LogService) {
+    constructor(public formService: FormService, private formCloudService: FormCloudService) {
         super(formService);
     }
 
@@ -120,7 +121,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private handleError(error: any) {
         if (!this.previewState) {
             this.dataTableLoadFailed = true;
-            this.logService.error(error);
+            this.error.emit(error);
         }
     }
 }

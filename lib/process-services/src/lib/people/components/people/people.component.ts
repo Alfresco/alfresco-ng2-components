@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService } from '@alfresco/adf-core';
-import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleSearchComponent } from '../people-search/people-search.component';
@@ -31,7 +30,6 @@ import { PeopleProcessService } from '../../../common/services/people-process.se
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleComponent {
-
     /** The array of User objects to display. */
     @Input()
     people: UserProcessModel[] = [];
@@ -47,16 +45,16 @@ export class PeopleComponent {
     @ViewChild('peopleSearch')
     peopleSearch: PeopleSearchComponent;
 
+    @Output()
+    error = new EventEmitter<any>();
+
     showAssignment: boolean = false;
     peopleSearch$: Observable<UserProcessModel[]>;
 
     private peopleSearchObserver: Observer<UserProcessModel[]>;
 
-    constructor(private logService: LogService, public peopleProcessService: PeopleProcessService) {
-        this.peopleSearch$ = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer)
-            .pipe(
-                share()
-            );
+    constructor(public peopleProcessService: PeopleProcessService) {
+        this.peopleSearch$ = new Observable<UserProcessModel[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
     }
 
     involveUserAndCloseSearch() {
@@ -72,42 +70,41 @@ export class PeopleComponent {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleProcessService.getWorkflowUsers(this.taskId, searchedWord)
-            .subscribe((users) => {
+        this.peopleProcessService.getWorkflowUsers(this.taskId, searchedWord).subscribe(
+            (users) => {
                 this.peopleSearchObserver.next(users);
-            }, (error) => this.logService.error(error));
+            },
+            (error) => this.error.emit(error)
+        );
     }
 
     involveUser(user: UserProcessModel) {
         if (user?.id) {
-            this.peopleProcessService
-                .involveUserWithTask(this.taskId, user.id.toString())
-                .subscribe(
-                    () => this.people = [...this.people, user],
-                    () => this.logService.error('Impossible to involve user with task')
-                );
+            this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString()).subscribe(
+                () => (this.people = [...this.people, user]),
+                () => this.error.emit('Impossible to involve user with task')
+            );
         }
     }
 
     removeInvolvedUser(user: UserProcessModel) {
-        this.peopleProcessService
-            .removeInvolvedUser(this.taskId, user.id.toString())
-            .subscribe(
-                () => {
-                    this.people = this.people.filter(involvedUser => involvedUser.id !== user.id);
-                },
-                () => this.logService.error('Impossible to remove involved user from task'));
+        this.peopleProcessService.removeInvolvedUser(this.taskId, user.id.toString()).subscribe(
+            () => {
+                this.people = this.people.filter((involvedUser) => involvedUser.id !== user.id);
+            },
+            () => this.error.emit('Impossible to remove involved user from task')
+        );
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
-        firstName = (firstName !== null ? firstName : '');
-        lastName = (lastName !== null ? lastName : '');
+        firstName = firstName !== null ? firstName : '';
+        lastName = lastName !== null ? lastName : '';
         return firstName + delimiter + lastName;
     }
 
     getInitialUserName(firstName: string, lastName: string) {
-        firstName = (firstName !== null && firstName !== '' ? firstName[0] : '');
-        lastName = (lastName !== null && lastName !== '' ? lastName[0] : '');
+        firstName = firstName !== null && firstName !== '' ? firstName[0] : '';
+        lastName = lastName !== null && lastName !== '' ? lastName[0] : '';
         return this.getDisplayUser(firstName, lastName, '');
     }
 

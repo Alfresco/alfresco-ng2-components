@@ -25,7 +25,6 @@ import { catchError, map } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { RedirectionModel } from '../models/redirection.model';
 import { BaseAuthenticationService } from '../services/base-authentication.service';
-import { LogService } from '../../common';
 import { HttpHeaders } from '@angular/common/http';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
@@ -35,7 +34,6 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
     providedIn: 'root'
 })
 export class BasicAlfrescoAuthService extends BaseAuthenticationService {
-
     protected redirectUrl: RedirectionModel = null;
 
     authentications: Authentication = {
@@ -45,45 +43,52 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         type: 'basic'
     };
 
-    constructor(
-        logService: LogService,
-        appConfig: AppConfigService,
-        cookie: CookieService,
-        private contentAuth: ContentAuth,
-        private processAuth: ProcessAuth
-    ) {
-        super(appConfig, cookie, logService);
+    constructor(appConfig: AppConfigService, cookie: CookieService, private contentAuth: ContentAuth, private processAuth: ProcessAuth) {
+        super(appConfig, cookie);
 
-        this.appConfig.onLoad
-            .subscribe(() => {
-                if (!this.isOauth() && this.isLoggedIn()) {
-                    this.requireAlfTicket().then(() => {
+        this.appConfig.onLoad.subscribe(() => {
+            if (!this.isOauth() && this.isLoggedIn()) {
+                this.requireAlfTicket()
+                    .then(() => {
                         this.onLogin.next('logged-in');
-                    }).catch(() => {
+                    })
+                    .catch(() => {
                         this.contentAuth.invalidateSession();
                         this.onLogout.next('logout');
                     });
-                }
-            });
+            }
+        });
 
-        this.contentAuth.onLogout.pipe(map((event) => {
-            this.onLogout.next(event);
-        }));
-        this.contentAuth.onLogin.pipe(map((event) => {
-            this.onLogin.next(event);
-        }));
-        this.contentAuth.onError.pipe(map((event) => {
-            this.onError.next(event);
-        }));
-        this.processAuth.onLogout.pipe(map((event) => {
-            this.onLogout.next(event);
-        }));
-        this.processAuth.onLogin.pipe(map((event) => {
-            this.onLogin.next(event);
-        }));
-        this.processAuth.onError.pipe(map((event) => {
-            this.onError.next(event);
-        }));
+        this.contentAuth.onLogout.pipe(
+            map((event) => {
+                this.onLogout.next(event);
+            })
+        );
+        this.contentAuth.onLogin.pipe(
+            map((event) => {
+                this.onLogin.next(event);
+            })
+        );
+        this.contentAuth.onError.pipe(
+            map((event) => {
+                this.onError.next(event);
+            })
+        );
+        this.processAuth.onLogout.pipe(
+            map((event) => {
+                this.onLogout.next(event);
+            })
+        );
+        this.processAuth.onLogin.pipe(
+            map((event) => {
+                this.onLogin.next(event);
+            })
+        );
+        this.processAuth.onError.pipe(
+            map((event) => {
+                this.onError.next(event);
+            })
+        );
     }
 
     /**
@@ -130,20 +135,17 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
             } catch (e) {
                 return Promise.reject(e);
             }
-
         } else if (this.isECMProvider()) {
             try {
                 return await this.contentAuth.login(username, password);
             } catch (e) {
                 return Promise.reject(e);
             }
-
         } else if (this.isALLProvider()) {
             return this.loginBPMECM(username, password);
         } else {
             return Promise.reject(new Error('Unknown configuration'));
         }
-
     }
 
     private loginBPMECM(username: string, password: string): Promise<any> {
@@ -165,7 +167,8 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
                     }
                     this.onError.next('error');
                     reject(error);
-                });
+                }
+            );
         });
     }
 
@@ -243,7 +246,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         } else if (this.isECMProvider()) {
             return authWithCredentials ? true : this.contentAuth.isLoggedIn();
         } else if (this.isALLProvider()) {
-            return authWithCredentials ? true : (this.contentAuth.isLoggedIn() && this.processAuth.isLoggedIn());
+            return authWithCredentials ? true : this.contentAuth.isLoggedIn() && this.processAuth.isLoggedIn();
         } else {
             return false;
         }
@@ -281,13 +284,12 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
                     }
                     this.onError.next('error');
                     reject(error);
-                });
+                }
+            );
         });
-
     }
 
-    reset(): void {
-    }
+    reset(): void {}
 
     /**
      * Gets the URL to redirect to after login.

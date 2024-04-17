@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { TaskRepresentation, TasksApi } from '@alfresco/js-api';
@@ -25,7 +25,6 @@ import { catchError, map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class TaskService {
-
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
@@ -35,9 +34,7 @@ export class TaskService {
         return this._taskApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
-
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets a task.
@@ -46,11 +43,10 @@ export class TaskService {
      * @returns Task info
      */
     getTask(taskId: string): Observable<TaskRepresentation> {
-        return from(this.taskApi.getTask(taskId))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.taskApi.getTask(taskId)).pipe(
+            map(this.toJson),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -75,11 +71,8 @@ export class TaskService {
     private handleError(error: any): Observable<any> {
         let errMsg = TaskService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
-            errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : TaskService.GENERIC_ERROR_MESSAGE;
+            errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : TaskService.GENERIC_ERROR_MESSAGE;
         }
-        this.logService.error(errMsg);
         return throwError(errMsg);
     }
-
 }
