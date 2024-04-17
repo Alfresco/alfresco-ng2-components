@@ -85,6 +85,22 @@ export const mockJsonNestedResponseEuropeCountriesData = {
     }
 };
 
+export const mockJsonNestedResponseEuropeCountriesDataWithSeparatorInPropertyName = {
+    response: {
+        empty: [],
+        'my.data': {
+            'country[data].country': mockEuropeCountriesData
+        },
+        data: [
+            {
+                id: 'HR',
+                name: 'Croatia'
+            }
+        ],
+        'no-array': {}
+    }
+};
+
 export const mockAmericaCountriesData = [
     {
         id: 'CA',

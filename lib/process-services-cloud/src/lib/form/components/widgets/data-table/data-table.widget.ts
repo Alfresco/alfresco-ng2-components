@@ -18,15 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    WidgetComponent,
-    FormService,
-    DataTableModule,
-    LogService,
-    FormBaseModule,
-    DataRow,
-    DataColumn
-} from '@alfresco/adf-core';
+import { WidgetComponent, FormService, DataTableModule, LogService, FormBaseModule, DataRow, DataColumn } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
@@ -35,12 +27,7 @@ import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 
 @Component({
     standalone: true,
-    imports: [
-        CommonModule,
-        TranslateModule,
-        DataTableModule,
-        FormBaseModule
-    ],
+    imports: [CommonModule, TranslateModule, DataTableModule, FormBaseModule],
     selector: 'data-table',
     templateUrl: './data-table.widget.html',
     styleUrls: ['./data-table.widget.scss'],
@@ -58,7 +45,6 @@ import { WidgetDataTableAdapter } from './data-table-adapter.widget';
     encapsulation: ViewEncapsulation.None
 })
 export class DataTableWidgetComponent extends WidgetComponent implements OnInit {
-
     dataSource: WidgetDataTableAdapter;
     dataTableLoadFailed = false;
     previewState = false;
@@ -68,11 +54,10 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private variableName: string;
     private defaultResponseProperty = 'data';
 
-    constructor(
-        public formService: FormService,
-        private formCloudService: FormCloudService,
-        private logService: LogService
-    ) {
+    private readonly splitPathRegEx = /\.(?![^[]*\])/g;
+    private readonly removeSquareBracketsRegEx = /^\[(.*)\]$/;
+
+    constructor(public formService: FormService, private formCloudService: FormCloudService, private logService: LogService) {
         super(formService);
     }
 
@@ -110,7 +95,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
 
         if (rowsData) {
             const dataFromPath = this.getOptionsFromPath(rowsData, optionsPath);
-            this.rowsData = dataFromPath?.length ? dataFromPath : rowsData as DataRow[];
+            this.rowsData = dataFromPath?.length ? dataFromPath : (rowsData as DataRow[]);
         }
     }
 
@@ -125,8 +110,8 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     private getOptionsFromPath(data: any, path: string): DataRow[] {
-        const properties = path.split('.');
-        const currentProperty = properties.shift();
+        const properties = path.split(this.splitPathRegEx);
+        const currentProperty = properties.shift().replace(this.removeSquareBracketsRegEx, '$1');
 
         if (!Object.prototype.hasOwnProperty.call(data, currentProperty)) {
             return [];
@@ -142,7 +127,8 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
-        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)?.value;
+        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)
+            ?.value;
     }
 
     private setPreviewState(): void {
