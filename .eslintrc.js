@@ -181,7 +181,7 @@ module.exports = {
         },
         {
             files: ['*.html'],
-            extends: ['plugin:@angular-eslint/template/recommended'],
+            extends: ['plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility'],
             rules: {}
         },
         {
@@ -190,6 +190,11 @@ module.exports = {
             rules: {
                 '@alfresco/eslint-angular/no-angular-material-selectors': 'error'
             }
+        },
+        {
+            files: ['*.ts'],
+            extends: ['plugin:@angular-eslint/template/process-inline-templates'],
+            excludedFiles: ['*.spec.ts']
         }
     ]
 };

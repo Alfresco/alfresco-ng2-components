@@ -21,7 +21,8 @@
 export const ACTIVITI_CLOUD_APPS: any = {
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/subprocessapp.zip?raw=true`,
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/subprocessapp.zip?raw=true`,
         processes: {
             processchild: 'processchild',
             processparent: 'processparent'
@@ -33,13 +34,14 @@ export const ACTIVITI_CLOUD_APPS: any = {
         ],
         variables: {
             'process-runtime-service': {
-                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false,
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
             }
         }
     },
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/candidatebaseapp.zip?raw=true`,
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/candidatebaseapp.zip?raw=true`,
         processes: {
             candidateUserProcess: 'candidateuserprocess',
             candidateGroupProcess: 'candidategroupprocess',
@@ -82,13 +84,14 @@ export const ACTIVITI_CLOUD_APPS: any = {
         },
         variables: {
             'process-runtime-service': {
-                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false,
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
             }
         }
     },
     SIMPLE_APP: {
         name: 'simpleapp',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/simpleapp.zip?raw=true`,
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/simpleapp.zip?raw=true`,
         processes: {
             processwithvariables: 'processwithvariables',
             simpleProcess: 'simpleprocess',
@@ -217,13 +220,14 @@ export const ACTIVITI_CLOUD_APPS: any = {
         enableLocalDevelopment: true,
         variables: {
             'process-runtime-service': {
-                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false,
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
             }
         }
     },
     UAT_BE_DEFAULT_APP: {
         name: 'uat-be-default-app',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/uat-be-default-app.zip?raw=true`,
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/uat-be-default-app.zip?raw=true`,
         processes: {
             'script-acs-process': 'script-acs-process'
         },
@@ -233,7 +237,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
         ],
         variables: {
             'process-runtime-service': {
-                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false,
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
             }
         }
     }

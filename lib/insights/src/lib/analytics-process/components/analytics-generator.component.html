@@ -1,68 +1,82 @@
 <div *ngIf="reports">
     <div class="adf-report-icons">
-        <button mat-icon-button
-                *ngFor="let report of reports; let idx = index"
-                [matTooltip]="report.title"
-                [color]="isCurrent(idx) ? 'primary' : null"
-                (click)="selectCurrent(idx)">
-            <mat-icon>{{report.icon}}</mat-icon>
+        <button
+            mat-icon-button
+            *ngFor="let report of reports; let idx = index"
+            [matTooltip]="report.title"
+            [color]="isCurrent(idx) ? 'primary' : null"
+            (click)="selectCurrent(idx)"
+        >
+            <mat-icon>{{ report.icon }}</mat-icon>
         </button>
     </div>
-    <div class="adf-clear-both"> </div>
+    <div class="adf-clear-both"></div>
     <div *ngFor="let report of reports; let idx = index">
         <div [ngSwitch]="report.type">
             <div *ngSwitchCase="'pie'">
                 <div *ngIf="isCurrent(idx)">
-                    <h4>{{report.title}}</h4>
-                    <div *ngIf="!report.hasData()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <h4>{{ report.title }}</h4>
+                    <div *ngIf="!report.hasData()">{{ 'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate }}</div>
                     <div *ngIf="report.hasData()">
-                        <div *ngIf="report.hasZeroValues()">{{'ANALYTICS.MESSAGES.ZERO-DATA-FOUND' | translate}}</div>
-                        <canvas baseChart *ngIf="!report.hasZeroValues()" class="adf-chart"
-                                [datasets]="report.datasets"
-                                [labels]="report.labels"
-                                [type]="'pie'"
-                                [options]="report.options">
+                        <div *ngIf="report.hasZeroValues()">{{ 'ANALYTICS.MESSAGES.ZERO-DATA-FOUND' | translate }}</div>
+                        <canvas
+                            baseChart
+                            *ngIf="!report.hasZeroValues()"
+                            class="adf-chart"
+                            [datasets]="report.datasets"
+                            [labels]="report.labels"
+                            [type]="'pie'"
+                            [options]="report.options"
+                        >
                         </canvas>
                     </div>
                 </div>
             </div>
-            <div *ngSwitchCase="'table'" >
+            <div *ngSwitchCase="'table'">
                 <div *ngIf="isCurrent(idx)">
-                    <h4>{{report.title}}</h4>
-                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <h4>{{ report.title }}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{ 'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate }}</div>
                     <div [attr.id]="'chart-table-' + report.id" *ngIf="report.hasDatasets()">
                         <table class="adf-table adf-table-responsive adf-table-condensed" class="adf-partial-width">
                             <tr>
-                                <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                                <th *ngFor="let label of report.labels">{{ label | translate }}</th>
                             </tr>
                             <tr *ngFor="let rows of report.datasets">
-                                <td *ngFor="let row of rows">{{row | translate }}</td>
+                                <td *ngFor="let row of rows">{{ row | translate }}</td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </div>
-            <div *ngSwitchCase="'masterDetailTable'" >
+            <div *ngSwitchCase="'masterDetailTable'">
                 <div *ngIf="isCurrent(idx)">
-                    <h4>{{report.title}}</h4>
-                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <h4>{{ report.title }}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{ 'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate }}</div>
                     <div [attr.id]="'chart-master-detail-table-' + report.id" *ngIf="report.hasDatasets()">
                         <table class="adf-table adf-table-responsive adf-table-condensed adf-full-width">
                             <tr>
-                                <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                                <th *ngFor="let label of report.labels">{{ label | translate }}</th>
                             </tr>
                             <tr *ngFor="let rows of report.datasets" class="adf-analytics-row__entry">
-                                <td *ngFor="let row of rows" (click)="toggleDetailsTable()">{{row | translate }}</td>
+                                <td
+                                    *ngFor="let row of rows"
+                                    (click)="toggleDetailsTable()"
+                                    role="button"
+                                    tabindex="0"
+                                    (keyup.enter)="toggleDetailsTable()"
+                                >
+                                    {{ row | translate }}
+                                </td>
                             </tr>
                         </table>
                     </div>
                     <div [attr.id]="'chart-master-detail-' + report.id" *ngIf="isShowDetails()">
                         <table class="adf-table adf-table-responsive adf-table-condensed adf-full-width">
                             <tr>
-                                <th *ngFor="let label of report.detailsTable.labels">{{label | translate}}</th>
+                                <th *ngFor="let label of report.detailsTable.labels">{{ label | translate }}</th>
                             </tr>
                             <tr *ngFor="let rows of report.detailsTable.datasets">
-                                <td *ngFor="let row of rows">{{row | translate }}</td>
+                                <td *ngFor="let row of rows">{{ row | translate }}</td>
                             </tr>
                         </table>
                     </div>
@@ -70,48 +84,57 @@
             </div>
             <div *ngSwitchCase="'bar'">
                 <div *ngIf="isCurrent(idx)">
-                    <h4>{{report.title}}</h4>
-                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
-                    <canvas baseChart *ngIf="report.hasDatasets()" class="adf-chart"
-                            [datasets]="report.datasets"
-                            [labels]="report.labels"
-                            [options]="report.options"
-                            [type]="'bar'">
+                    <h4>{{ report.title }}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{ 'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate }}</div>
+                    <canvas
+                        baseChart
+                        *ngIf="report.hasDatasets()"
+                        class="adf-chart"
+                        [datasets]="report.datasets"
+                        [labels]="report.labels"
+                        [options]="report.options"
+                        [type]="'bar'"
+                    >
                     </canvas>
                 </div>
             </div>
             <div *ngSwitchCase="'multiBar'">
                 <div *ngIf="isCurrent(idx)">
-                    <h4>{{report.title}}</h4>
-                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <h4>{{ report.title }}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{ 'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate }}</div>
                     <div *ngIf="report.hasDatasets()">
                         <mat-checkbox
                             color="primary"
                             [id]="'stacked-id'"
                             [checked]="report.options.scales.xAxes[0].stacked"
                             [(ngModel)]="report.options.scales.xAxes[0].stacked"
-                            (change)="refresh(report)">Stacked</mat-checkbox>
+                            (change)="refresh(report)"
+                            >Stacked</mat-checkbox
+                        >
 
-                        <canvas baseChart class="adf-chart"
-                                [datasets]="report.datasets"
-                                [labels]="report.labels"
-                                [options]="report.options"
-                                [type]="'bar'">
+                        <canvas
+                            baseChart
+                            class="adf-chart"
+                            [datasets]="report.datasets"
+                            [labels]="report.labels"
+                            [options]="report.options"
+                            [type]="'bar'"
+                        >
                         </canvas>
                     </div>
                 </div>
             </div>
             <div *ngSwitchCase="'HeatMap'">
                 <div *ngIf="isCurrent(idx)">
-                    <h4>{{report.title}}</h4>
+                    <h4>{{ report.title }}</h4>
                     <analytics-report-heat-map [report]="report"></analytics-report-heat-map>
                 </div>
             </div>
             <div *ngSwitchDefault>
-                <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{report.type}}</span>
+                <span>{{ 'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate }}: {{ report.type }}</span>
             </div>
         </div>
     </div>
 </div>
-<br><br><br>
-<div *ngIf="!reports">{{'ANALYTICS.MESSAGES.FILL-PARAMETER' | translate}}</div>
+<br /><br /><br />
+<div *ngIf="!reports">{{ 'ANALYTICS.MESSAGES.FILL-PARAMETER' | translate }}</div>

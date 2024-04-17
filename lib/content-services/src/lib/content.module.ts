@@ -86,9 +86,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         SecurityControlsServiceModule,
         CategoriesModule
     ],
-    providers: [
-        provideTranslations('adf-content-services', 'assets/adf-content-services')
-    ],
+    providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
         ContentPipeModule,
         TagModule,

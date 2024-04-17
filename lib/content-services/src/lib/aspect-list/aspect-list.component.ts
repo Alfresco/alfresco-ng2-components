@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { NodesApiService } from  '../common/services/nodes-api.service';
+import { NodesApiService } from '../common/services/nodes-api.service';
 import { Observable, Subject, zip } from 'rxjs';
 import { concatMap, map, takeUntil, tap } from 'rxjs/operators';
 import { AspectListService } from './services/aspect-list.service';
@@ -28,9 +28,7 @@ import { AspectEntry } from '@alfresco/js-api';
     styleUrls: ['./aspect-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-
 export class AspectListComponent implements OnInit, OnDestroy {
-
     /** Node Id of the node that we want to update */
     @Input()
     nodeId: string = '';
@@ -56,8 +54,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) {
-    }
+    constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) {}
 
     ngOnDestroy(): void {
         this.onDestroy$.next(true);
@@ -68,26 +65,28 @@ export class AspectListComponent implements OnInit, OnDestroy {
         let aspects$: Observable<AspectEntry[]>;
         if (this.nodeId) {
             const node$ = this.nodeApiService.getNode(this.nodeId);
-            const customAspect$ = this.aspectListService.getCustomAspects(this.aspectListService.getVisibleAspects())
-            .pipe(map(
-                (customAspects) => customAspects.flatMap((customAspect) => customAspect.entry.id)
-            ));
+            const customAspect$ = this.aspectListService
+                .getCustomAspects(this.aspectListService.getVisibleAspects())
+                .pipe(map((customAspects) => customAspects.flatMap((customAspect) => customAspect.entry.id)));
             aspects$ = zip(node$, customAspect$).pipe(
                 tap(([node, customAspects]) => {
-                    this.nodeAspects = node.aspectNames.filter((aspect) => this.aspectListService.getVisibleAspects().includes(aspect) || customAspects.includes(aspect));
-                    this.nodeAspectStatus = [ ...this.nodeAspects ];
-                    this.notDisplayedAspects = node.aspectNames.filter((aspect) => !this.aspectListService.getVisibleAspects().includes(aspect) && !customAspects.includes(aspect));
+                    this.nodeAspects = node.aspectNames.filter(
+                        (aspect) => this.aspectListService.getVisibleAspects().includes(aspect) || customAspects.includes(aspect)
+                    );
+                    this.nodeAspectStatus = [...this.nodeAspects];
+                    this.notDisplayedAspects = node.aspectNames.filter(
+                        (aspect) => !this.aspectListService.getVisibleAspects().includes(aspect) && !customAspects.includes(aspect)
+                    );
                     this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
                     this.updateCounter.emit(this.nodeAspects.length);
                 }),
                 concatMap(() => this.aspectListService.getAspects()),
-                takeUntil(this.onDestroy$));
+                takeUntil(this.onDestroy$)
+            );
         } else {
-            aspects$ = this.aspectListService.getAspects()
-                .pipe(takeUntil(this.onDestroy$));
+            aspects$ = this.aspectListService.getAspects().pipe(takeUntil(this.onDestroy$));
         }
-        this.aspects$ = aspects$.pipe(map((aspects) =>
-            aspects.filter((aspect) => !this.excludedAspects.includes(aspect.entry.id))));
+        this.aspects$ = aspects$.pipe(map((aspects) => aspects.filter((aspect) => !this.excludedAspects.includes(aspect.entry.id))));
     }
 
     onCheckBoxClick(event: Event) {
@@ -133,7 +132,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
 
     private updateEqualityOfAspectList() {
         if (this.nodeAspectStatus.length !== this.nodeAspects.length) {
-            this.hasEqualAspect =  false;
+            this.hasEqualAspect = false;
         } else {
             this.hasEqualAspect = this.nodeAspects.every((aspect) => this.nodeAspectStatus.includes(aspect));
         }
