@@ -192,8 +192,9 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.ngOnInit();
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
+            const options = await dropdown.getOptions();
 
-            expect(await (await dropdown.getOptions())[0].getText()).toEqual('default1_value');
+            expect(await options[0].getText()).toEqual('default1_value');
             expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
         });
 
