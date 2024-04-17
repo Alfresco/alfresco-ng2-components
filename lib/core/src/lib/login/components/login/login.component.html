@@ -43,18 +43,20 @@
                         <div *ngIf="!ssoLogin">
 
                             <!--USERNAME FIELD-->
-                            <div class="adf-login__field"
+                            <div class="adf-login__field adf-login-container"
                                  [ngClass]="{'adf-is-invalid': isErrorStyle(form.controls.username)}">
                                 <mat-form-field class="adf-full-width adf-login-form-field"
                                                 floatPlaceholder="never"
                                                 color="primary">
+                                    <mat-label class="adf-login-form-input-label">
+                                        {{'LOGIN.LABEL.USERNAME' | translate }}
+                                    </mat-label>
                                     <input matInput
                                            type="text"
-                                           class="adf-full-width"
+                                           class="adf-login-input"
                                            formControlName="username"
                                            id="username"
                                            data-automation-id="username"
-                                           placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
                                            autocapitalize="none"
                                            (blur)="trimUsername($event)">
                                 </mat-form-field>
@@ -74,10 +76,13 @@
                                 <mat-form-field class="adf-full-width adf-login-form-field"
                                                 floatPlaceholder="never"
                                                 color="primary">
+                                    <mat-label class="adf-login-form-input-label">
+                                        {{'LOGIN.LABEL.PASSWORD' | translate }}
+                                    </mat-label>
                                     <input matInput
-                                           placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
                                            [type]="isPasswordShow ? 'text' : 'password'"
                                            formControlName="password"
+                                           class="adf-login-input"
                                            id="password"
                                            data-automation-id="password">
                                     <button matSuffix
