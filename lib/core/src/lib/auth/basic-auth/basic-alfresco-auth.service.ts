@@ -289,7 +289,9 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         });
     }
 
-    reset(): void {}
+    reset(): void {
+        // do nothing
+    }
 
     /**
      * Gets the URL to redirect to after login.
