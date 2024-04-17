@@ -32,7 +32,6 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
     let widget: DisplayExternalPropertyWidgetComponent;
     let fixture: ComponentFixture<DisplayExternalPropertyWidgetComponent>;
     let element: HTMLElement;
-    let logServiceSpy: jasmine.Spy;
     let formCloudService: FormCloudService;
 
     beforeEach(() => {
@@ -92,10 +91,6 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
             const errorElement = element.querySelector('error-widget');
             expect(errorElement.textContent.trim()).toContain('FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED');
         });
-
-        it('should log the error', () => {
-            expect(logServiceSpy).toHaveBeenCalledWith('External property not found');
-        });
     });
 
     describe('when property is in preview state', () => {
@@ -113,10 +108,6 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         it('should NOT display the error message', () => {
             const errorElement = element.querySelector('error-widget');
             expect(errorElement).toBeFalsy();
-        });
-
-        it('should NOT log the error', () => {
-            expect(logServiceSpy).not.toHaveBeenCalled();
         });
 
         it('should display external property name', () => {

@@ -28,7 +28,6 @@ import {
     filterOptionList,
     mockConditionalEntries,
     mockFormVariableWithJson,
-    mockPlayersResponse,
     mockRestDropdownOptions,
     mockSecondRestDropdownOptions,
     mockVariablesWithDefaultJson,
@@ -805,7 +804,6 @@ describe('DropdownCloudWidgetComponent', () => {
     });
 
     describe('variable options', () => {
-        let logServiceSpy: jasmine.Spy;
         const errorIcon: string = 'error_outline';
 
         const getVariableDropdownWidget = (
@@ -902,7 +900,6 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(`wrongPath not found in ${JSON.stringify(mockPlayersResponse.response)}`);
         });
 
         it('should return empty array and display error when id is incorrect', () => {
@@ -916,7 +913,6 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined`);
         });
 
         it('should return empty array and display error when label is incorrect', () => {
@@ -930,7 +926,6 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined`);
         });
 
         it('should return empty array and display error when variable is NOT found', () => {
@@ -944,7 +939,6 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(`variables.wrong-variable-id not found`);
         });
 
         it('should return empty array and display error if there are NO process and form variables', () => {
@@ -952,7 +946,6 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith('variables.json-variable not found');
         });
 
         it('should NOT display errors if form is in the preview state', () => {

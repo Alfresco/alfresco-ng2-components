@@ -97,8 +97,6 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
     });
 
     describe('run replayServiceTaskRequest method', () => {
-        let logServiceErrorSpy: jasmine.Spy;
-
         beforeEach(() => {
             spyOn(service, 'getBasePath').and.returnValue('http://localhost/fakeName');
             requestSpy.and.callFake(returnCallUrl);
@@ -116,7 +114,6 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
             const params = ['fakeName', 'executionId_1', 'flowNodeId_1'] as const;
             await service.replayServiceTaskRequest(...params).toPromise();
             expect(spyOnPost).toHaveBeenCalledWith(expected.expectedQueryUrl, expected.expectedPayload);
-            expect(logServiceErrorSpy).not.toHaveBeenCalled();
         });
 
         it('should throw an exeption and execute logService error if appName is null', (done) => {
@@ -127,7 +124,6 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
                 .toPromise()
                 .catch((error) => {
                     expect(error).toEqual(expectedErrorMessage);
-                    expect(logServiceErrorSpy).toHaveBeenCalled();
                     done();
                 });
         });
@@ -140,7 +136,6 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
                 .toPromise()
                 .catch((error) => {
                     expect(error).toEqual(expectedErrorMessage);
-                    expect(logServiceErrorSpy).toHaveBeenCalled();
                     done();
                 });
         });
@@ -153,7 +148,6 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
                 .toPromise()
                 .catch((error) => {
                     expect(error).toEqual(expectedErrorMessage);
-                    expect(logServiceErrorSpy).toHaveBeenCalled();
                     done();
                 });
         });
@@ -166,7 +160,6 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
                 .toPromise()
                 .catch((error) => {
                     expect(error).toEqual(expectedErrorMessage);
-                    expect(logServiceErrorSpy).toHaveBeenCalled();
                     done();
                 });
         });
