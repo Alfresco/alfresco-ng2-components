@@ -21,53 +21,46 @@ import { taskDetailsMock } from '../mock/task-details.mock';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
 
 describe('StartTaskCloudService', () => {
-
     let service: TaskCloudService;
     const fakeAppName: string = 'fake-app';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(TaskCloudService);
     });
 
     it('should able to create a new task ', (done) => {
-        spyOn(service, 'createNewTask').and.returnValue(of({id: 'fake-id', name: 'fake-name'}));
-        service.createNewTask(taskDetailsMock, fakeAppName).subscribe(
-            (res: TaskDetailsCloudModel) => {
-                expect(res).toBeDefined();
-                expect(res.id).toEqual('fake-id');
-                expect(res.name).toEqual('fake-name');
-                done();
-            }
-        );
+        spyOn(service, 'createNewTask').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
+        service.createNewTask(taskDetailsMock, fakeAppName).subscribe((res: TaskDetailsCloudModel) => {
+            expect(res).toBeDefined();
+            expect(res.id).toEqual('fake-id');
+            expect(res.name).toEqual('fake-name');
+            done();
+        });
     });
 
     it('Should not able to create a task if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
             error: 'Mock Error',
-            status: 404, statusText: 'Not Found'
+            status: 404,
+            statusText: 'Not Found'
         });
 
         spyOn(service, 'createNewTask').and.returnValue(throwError(errorResponse));
-        service.createNewTask(taskDetailsMock, fakeAppName)
-            .subscribe(
-                () => {
-                    fail('expected an error, not applications');
-                },
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('Mock Error');
-                }
-            );
+        service.createNewTask(taskDetailsMock, fakeAppName).subscribe(
+            () => {
+                fail('expected an error, not applications');
+            },
+            (error) => {
+                expect(error.status).toEqual(404);
+                expect(error.statusText).toEqual('Not Found');
+                expect(error.error).toEqual('Mock Error');
+            }
+        );
     });
 });

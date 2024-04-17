@@ -25,7 +25,6 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
 
 describe('ProcessFiltersCloudComponent', () => {
@@ -36,14 +35,8 @@ describe('ProcessFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                ProcessFiltersCloudModule
-            ],
-            providers: [
-                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-            ]
+            imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
+            providers: [{ provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(ProcessFiltersCloudComponent);
         component = fixture.componentInstance;
@@ -58,7 +51,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
     it('should attach specific icon for each filter if hasIcon is true', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({appName: change});
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -90,7 +83,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
     it('should display the filters', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({appName: change});
+        component.ngOnChanges({ appName: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -115,9 +108,9 @@ describe('ProcessFiltersCloudComponent', () => {
         const change = new SimpleChange(null, appName, true);
 
         let lastValue: any;
-        component.error.subscribe((err) => lastValue = err);
+        component.error.subscribe((err) => (lastValue = err));
 
-        component.ngOnChanges({appName: change});
+        component.ngOnChanges({ appName: change });
         fixture.detectChanges();
         expect(lastValue).toBeDefined();
     });
@@ -168,7 +161,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         expect(component.currentFilter).toEqual(mockProcessFilters[1]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(mockProcessFilters[1]);
-   });
+    });
 
     it('should select the filter based on the input by key param', async () => {
         const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
@@ -180,7 +173,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         expect(component.currentFilter).toEqual(mockProcessFilters[2]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(mockProcessFilters[2]);
-   });
+    });
 
     it('should select the filter based on the input by index param', async () => {
         const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
@@ -192,7 +185,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         expect(component.currentFilter).toEqual(mockProcessFilters[2]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(mockProcessFilters[2]);
-   });
+    });
 
     it('should select the filter based on the input by id param', async () => {
         const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
@@ -285,7 +278,6 @@ describe('ProcessFiltersCloudComponent', () => {
     });
 
     describe('Highlight Selected Filter', () => {
-
         const allProcessesFilterKey = mockProcessFilters[0].key;
         const runningProcessesFilterKey = mockProcessFilters[1].key;
         const completedProcessesFilterKey = mockProcessFilters[2].key;

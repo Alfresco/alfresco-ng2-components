@@ -22,10 +22,8 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppsProcessService } from './services/apps-process.service';
 import { deployedApps } from '../mock/apps-list.mock';
 import { of } from 'rxjs';
-
 import { SelectAppsDialogComponent } from './select-apps-dialog.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-dialog-test',
@@ -59,10 +57,7 @@ describe('Select app dialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ProcessTestingModule],
             declarations: [DialogSelectAppTestComponent],
             providers: [
                 {
@@ -89,9 +84,7 @@ describe('Select app dialog', () => {
 
         service = TestBed.inject(AppsProcessService);
 
-        spyOn(service, 'getDeployedApplications').and.returnValue(
-            of(deployedApps)
-        );
+        spyOn(service, 'getDeployedApplications').and.returnValue(of(deployedApps));
     });
 
     describe('Dialog', () => {
@@ -102,16 +95,8 @@ describe('Select app dialog', () => {
         it('should init title and dropdown', () => {
             component.startProcessAction();
 
-            expect(
-                overlayContainerElement.querySelector(
-                    '.adf-select-app-dialog-title'
-                )
-            ).toBeDefined();
-            expect(
-                overlayContainerElement.querySelector(
-                    '.adf-select-app-dialog-dropdown'
-                )
-            ).toBeDefined();
+            expect(overlayContainerElement.querySelector('.adf-select-app-dialog-title')).toBeDefined();
+            expect(overlayContainerElement.querySelector('.adf-select-app-dialog-dropdown')).toBeDefined();
         });
     });
 });

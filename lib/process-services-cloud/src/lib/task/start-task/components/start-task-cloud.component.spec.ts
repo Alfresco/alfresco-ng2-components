@@ -25,12 +25,10 @@ import { ProcessServiceCloudTestingModule } from './../../../testing/process-ser
 import { FormDefinitionSelectorCloudService } from '../../../form/services/form-definition-selector-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
-import { TranslateModule } from '@ngx-translate/core';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 
 describe('StartTaskCloudComponent', () => {
-
     let component: StartTaskCloudComponent;
     let fixture: ComponentFixture<StartTaskCloudComponent>;
     let service: TaskCloudService;
@@ -48,15 +46,12 @@ describe('StartTaskCloudComponent', () => {
         reply: jasmine.createSpy('reply')
     };
 
-    const mockUser: IdentityUserModel = {username: 'currentUser', firstName: 'Test', lastName: 'User', email: 'currentUser@test.com'};
+    const mockUser: IdentityUserModel = { username: 'currentUser', firstName: 'Test', lastName: 'User', email: 'currentUser@test.com' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+            imports: [ProcessServiceCloudTestingModule],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(StartTaskCloudComponent);
         component = fixture.componentInstance;
@@ -74,7 +69,6 @@ describe('StartTaskCloudComponent', () => {
     });
 
     describe('create task', () => {
-
         it('should create new task when start button is clicked', async () => {
             const successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
@@ -143,7 +137,7 @@ describe('StartTaskCloudComponent', () => {
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
+                const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: [] });
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
                 done();
             });
@@ -157,7 +151,7 @@ describe('StartTaskCloudComponent', () => {
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
+                const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: [] });
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
                 done();
             });

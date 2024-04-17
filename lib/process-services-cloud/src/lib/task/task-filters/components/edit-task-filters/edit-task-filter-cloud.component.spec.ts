@@ -30,7 +30,6 @@ import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeFilter } from '../../mock/task-filters-cloud.mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { AssignmentType, TaskFilterCloudModel, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { PeopleCloudModule } from '../../../../people/people-cloud.module';
@@ -75,7 +74,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, TaskFiltersCloudModule, PeopleCloudModule, MatIconTestingModule],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, PeopleCloudModule, MatIconTestingModule],
             providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
