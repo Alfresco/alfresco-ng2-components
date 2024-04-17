@@ -17,20 +17,14 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    FormFieldTypes,
-    FormFieldModel,
-    FormModel,
-    CoreTestingModule
-} from '@alfresco/adf-core';
+import { FormFieldTypes, FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 import { PeopleWidgetComponent } from './people.widget';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
 import { UserProcessModel } from '../../../common/models/user-process.model';
 
 describe('PeopleWidgetComponent', () => {
-
     let widget: PeopleWidgetComponent;
     let fixture: ComponentFixture<PeopleWidgetComponent>;
     let element: HTMLElement;
@@ -39,10 +33,7 @@ describe('PeopleWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(PeopleWidgetComponent);
         peopleProcessService = TestBed.inject(PeopleProcessService);
@@ -70,12 +61,12 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should skip first name for display name', () => {
-        const model = new UserProcessModel({firstName: null, lastName: 'Doe'});
+        const model = new UserProcessModel({ firstName: null, lastName: 'Doe' });
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
     it('should skip last name for display name', () => {
-        const model = new UserProcessModel({firstName: 'John', lastName: null});
+        const model = new UserProcessModel({ firstName: 'John', lastName: null });
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
@@ -127,7 +118,7 @@ describe('PeopleWidgetComponent', () => {
         widget.ngOnInit();
         expect(widget.groupId).toBeUndefined();
 
-        widget.field.params = {restrictWithGroup: {id: '<id>'}};
+        widget.field.params = { restrictWithGroup: { id: '<id>' } };
         widget.ngOnInit();
         expect(widget.groupId).toBe('<id>');
     });
@@ -157,9 +148,8 @@ describe('PeopleWidgetComponent', () => {
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({taskId: '<id>'}), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.PEOPLE,
                 required: true
             });
@@ -189,17 +179,19 @@ describe('PeopleWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-
         const fakeUserResult = [
-            {id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test'},
-            {id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2'}];
+            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
+            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }
+        ];
 
         beforeEach(() => {
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(new Observable((observer) => {
-                observer.next(fakeUserResult);
-                observer.complete();
-            }));
-            widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(
+                new Observable((observer) => {
+                    observer.next(fakeUserResult);
+                    observer.complete();
+                })
+            );
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'people-id',
                 name: 'people-name',
                 type: FormFieldTypes.PEOPLE,

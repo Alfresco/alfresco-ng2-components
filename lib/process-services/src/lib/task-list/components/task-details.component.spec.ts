@@ -25,7 +25,6 @@ import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOu
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskService } from '../../form/services/task.service';
 import { TaskFormService } from '../../form/services/task-form.service';
 import { TaskCommentsService } from '../../task-comments/services/task-comments.service';
@@ -65,7 +64,7 @@ describe('TaskDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule],
+            imports: [ProcessTestingModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);

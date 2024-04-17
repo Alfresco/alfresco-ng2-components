@@ -43,7 +43,6 @@ import {
 } from '../../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { TaskFormService } from '../../../form/services/task-form.service';
 import { TaskService } from '../../../form/services/task.service';
@@ -63,7 +62,7 @@ describe('TaskFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule],
+            imports: [ProcessTestingModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(TaskFormComponent);

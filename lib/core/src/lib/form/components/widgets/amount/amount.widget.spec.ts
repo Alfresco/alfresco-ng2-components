@@ -21,7 +21,6 @@ import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { FormBaseModule } from '../../../form-base.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -37,7 +36,7 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -145,7 +144,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -340,7 +339,7 @@ describe('AmountWidgetComponent settings', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule],
+            imports: [CoreTestingModule, FormBaseModule],
             providers: [
                 {
                     provide: ADF_AMOUNT_SETTINGS,

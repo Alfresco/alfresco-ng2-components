@@ -18,7 +18,6 @@
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { UserProcessModel } from '../../../common/models/user-process.model';
 
 declare let jasmine: any;
@@ -45,7 +44,7 @@ describe('PeopleComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(PeopleComponent);
         activitiPeopleComponent = fixture.componentInstance;

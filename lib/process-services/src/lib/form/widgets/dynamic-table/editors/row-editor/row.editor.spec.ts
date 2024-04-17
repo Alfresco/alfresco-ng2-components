@@ -15,17 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    FormFieldModel,
-    FormModel,
-    FormService,
-    CoreTestingModule
-} from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormService, CoreTestingModule } from '@alfresco/adf-core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { RowEditorComponent } from './row.editor';
-import { TranslateModule } from '@ngx-translate/core';
 import { DynamicRowValidationSummary } from '../models/dynamic-row-validation-summary.model';
 import { TestBed } from '@angular/core/testing';
 
@@ -34,10 +28,7 @@ describe('RowEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
@@ -68,9 +59,7 @@ describe('RowEditorComponent', () => {
     });
 
     it('should emit [save] event', (done) => {
-        spyOn(component.table, 'validateRow').and.returnValue(
-            new DynamicRowValidationSummary({isValid: true, message: null})
-        );
+        spyOn(component.table, 'validateRow').and.returnValue(new DynamicRowValidationSummary({ isValid: true, message: null }));
         component.save.subscribe((event) => {
             expect(event.table).toBe(component.table);
             expect(event.row).toBe(component.row);
@@ -81,11 +70,9 @@ describe('RowEditorComponent', () => {
     });
 
     it('should not emit [save] event for invalid row', () => {
-        spyOn(component.table, 'validateRow').and.returnValue(
-            new DynamicRowValidationSummary({isValid: false, message: 'error'})
-        );
+        spyOn(component.table, 'validateRow').and.returnValue(new DynamicRowValidationSummary({ isValid: false, message: 'error' }));
         let raised = false;
-        component.save.subscribe(() => raised = true);
+        component.save.subscribe(() => (raised = true));
         component.onSaveChanges();
         expect(raised).toBeFalsy();
     });
