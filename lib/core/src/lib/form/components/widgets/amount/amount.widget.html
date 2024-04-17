@@ -7,12 +7,12 @@
        <div>
               <mat-form-field class="adf-amount-widget__input" [hideRequiredMarker]="true">
                      <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+                     <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }} &nbsp;</span>
                      <input matInput [matTooltip]="field.tooltip" matTooltipPosition="above" matTooltipShowDelay="1000"
                             class="adf-input" type="text" [id]="field.id" [required]="isRequired()"
                             [placeholder]="placeholder" [value]="field.value" [(ngModel)]="field.value"
                             (ngModelChange)="onFieldChanged(field)" [disabled]="field.readOnly"
                             (blur)="markAsTouched()">
-                     <span matTextPrefix class="adf-amount-widget__prefix-spacing">{{ currency }} &nbsp;</span>
               </mat-form-field>
               <error-widget [error]="field.validationSummary"></error-widget>
               <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
