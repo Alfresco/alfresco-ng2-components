@@ -5,6 +5,24 @@ adf-comments {
         height: 100%;
         width: 100%;
         overflow: auto;
+
+        .adf-comments-input-container {
+            width: 100%;
+            padding-bottom: 8px;
+
+            textarea {
+                resize: vertical;
+            }
+
+            #{$mat-form-field} {
+                padding-bottom: 12px;
+                width: 100%;
+            }
+
+            #{$mat-form-field-infix} {
+                padding-bottom: 0;
+            }
+        }
     }
 
     .adf-comments-divider {
@@ -15,24 +33,16 @@ adf-comments {
         padding: 10px 0;
         font-size: var(--theme-body-1-font-size);
         font-weight: 600;
-        margin: 0;
-    }
-
-    .adf-comments-input-container {
-        width: 100%;
-        padding: 8px 0;
-
-        textarea {
-            resize: vertical;
-        }
-
-        #{$mat-form-field} {
-            width: 100%;
-        }
     }
 
     .adf-comments-input-actions {
+        padding-top: 4px;
         display: flex;
         justify-content: flex-end;
+    }
+
+    #{$mat-list-item-unscoped-content} {
+        display: flex;
+        padding: 0 16px;
     }
 }
