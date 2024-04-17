@@ -21,7 +21,6 @@ import { DynamicTableColumn } from './editors/models/dynamic-table-column.model'
 import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
 import { DynamicTableWidgetComponent } from './dynamic-table.widget';
 import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
-import { TranslateModule } from '@ngx-translate/core';
 
 const fakeFormField = {
     id: 'fake-dynamic-table',
@@ -73,7 +72,7 @@ describe('DynamicTableWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         const field = new FormFieldModel(new FormModel());
         formService = TestBed.inject(FormService);

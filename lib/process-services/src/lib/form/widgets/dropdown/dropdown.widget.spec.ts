@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import { WidgetVisibilityService, FormFieldOption, FormFieldModel, FormModel, FormFieldTypes, CoreTestingModule } from '@alfresco/adf-core';
 import { DropdownWidgetComponent } from './dropdown.widget';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -43,7 +42,7 @@ describe('DropdownWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(DropdownWidgetComponent);
         widget = fixture.componentInstance;

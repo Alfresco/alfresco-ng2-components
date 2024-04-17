@@ -21,7 +21,6 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-view-arrayitem.model';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -52,7 +51,7 @@ describe('CardViewArrayItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(CardViewArrayItemComponent);
         service = TestBed.inject(CardViewUpdateService);
