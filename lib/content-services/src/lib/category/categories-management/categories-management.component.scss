@@ -1,6 +1,4 @@
 .adf-categories-management {
-    padding-top: 12px;
-
     .adf-category-name-field {
         justify-content: space-between;
         width: 100%;
@@ -11,7 +9,9 @@
         align-items: center;
 
         input {
-            padding: 7px 8px;
+            background-color: transparent;
+            padding: 7px 8px 8px 8px;
+            width: 100%;
         }
     }
 
