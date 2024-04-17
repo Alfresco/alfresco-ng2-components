@@ -21,6 +21,7 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef } from '@angular/
 import { MatButtonModule } from '@angular/material/button';
 import { By } from '@angular/platform-browser';
 import { SnackbarContentComponent } from './snackbar-content.component';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 describe('SnackbarContentComponent', () => {
     let component: SnackbarContentComponent;
@@ -29,7 +30,7 @@ describe('SnackbarContentComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [SnackbarContentComponent],
-            imports: [MatIconModule, MatSnackBarModule, MatButtonModule],
+            imports: [CoreTestingModule, MatIconModule, MatSnackBarModule, MatButtonModule],
             providers: [
                 {
                     provide: MatSnackBarRef,
