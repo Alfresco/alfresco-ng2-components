@@ -1,4 +1,5 @@
 @import '../../../styles/mixins';
+@import 'styles/mat-selectors';
 
 .adf-login {
     @include flex-column;
@@ -88,6 +89,8 @@
     }
 
     .adf-login-card-header-text {
+        padding-bottom: 42px;
+        padding-top: 0;
         margin: 0 auto;
     }
 
@@ -98,7 +101,7 @@
     }
 
     .adf-alfresco-logo {
-        padding: 24px 16px;
+        padding: 24px 16px 24px;
     }
 
     .adf-alfresco-logo img {
@@ -114,6 +117,7 @@
 
     .adf-login-button-label {
         color: var(--theme-accent-color-default-contrast);
+        font-weight: bolder;
     }
 
     .adf-login-button.adf-isChecking {
@@ -145,12 +149,6 @@
         margin-top: 5px;
     }
 
-    .adf-login-controls {
-        padding: 0 0 26px;
-        overflow: visible;
-        width: 100%;
-    }
-
     .adf-login-action {
         margin-top: 20px;
         display: flex;
@@ -179,21 +177,59 @@
         opacity: 0.54;
     }
 
-    .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
-        color: var(--adf-theme-foreground-text-color);
+    .adf-login-input:is(input) {
+        font-size: var(--theme-subheading-2-font-size);
     }
 
-    .adf-login__field {
-        margin: 1em 0 0;
-        display: block;
-        padding-bottom: 18px;
+    .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
+        color: var(--adf-theme-foreground-text-color);
         font-size: var(--theme-subheading-2-font-size);
+        top: 9px;
+        position: relative;
+        left: 7px;
+    }
 
-        & input:-webkit-autofill {
-            /* stylelint-disable */
-            -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
-            -webkit-text-fill-color: var(--adf-theme-foreground-text-color);
-            /* stylelint-enable */
+    .adf-login-controls:has(div) {
+        padding: 0 0 26px;
+        overflow: visible;
+        width: 100%;
+        margin-bottom: 16px;
+
+        .adf-login-container {
+            margin-bottom: 20px;
+        }
+
+        .adf-login__field {
+            display: block;
+            padding-bottom: 16px;
+            font-size: var(--theme-subheading-2-font-size);
+
+            #{$mat-form-field-infix} {
+                min-height: 0;
+                padding-bottom: 3px;
+                padding-top: 20px;
+
+                .adf-login-form-input-label {
+                    font-size: var(--theme-subheading-2-font-size);
+                }
+
+                #{$mat-floating-label-float-above} {
+                    padding-bottom: 6px;
+                }
+
+                #{$mat-floating-label--required} {
+                    &::after {
+                        font-size: var(--theme-subheading-2-font-size);
+                    }
+                }
+            }
+
+            & input:-webkit-autofill {
+                /* stylelint-disable */
+                -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
+                -webkit-text-fill-color: var(--adf-theme-foreground-text-color);
+                /* stylelint-enable */
+            }
         }
     }
 
