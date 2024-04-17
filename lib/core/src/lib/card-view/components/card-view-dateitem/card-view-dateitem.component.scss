@@ -2,18 +2,23 @@
 
 .adf-card-view-dateitem {
     .adf-property-value {
-        padding: 6px 0;
+        padding-top: 6px;
+        padding-bottom: 6px;
         line-height: 20px;
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
         color: var(--adf-metadata-property-panel-title-color);
+        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+        margin-top: 10px;
 
         &.adf-property-value-editable {
+            display: flex;
+            align-items: center;
             border-radius: 6px;
             border-bottom: inherit;
+            margin-bottom: 18px;
         }
 
         &.adf-property-readonly-value {
-            padding-left: 12px;
+            padding: 0 0 0 12px;
         }
     }
 
