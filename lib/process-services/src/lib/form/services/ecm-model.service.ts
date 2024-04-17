@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService, FormModel } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { CustomModelApi } from '@alfresco/js-api';
@@ -28,6 +28,8 @@ export class EcmModelService {
     public static MODEL_NAMESPACE: string = 'activitiForms';
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
+
+    error = new EventEmitter<any>();
 
     private _customModelApi: CustomModelApi;
     get customModelApi(): CustomModelApi {
@@ -200,5 +202,7 @@ export class EcmModelService {
         return res || {};
     }
 
-    private handleError(_err: any): any {}
+    private handleError(err: any): any {
+        this.error.next(err);
+    }
 }
