@@ -19,20 +19,16 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-custom-container',
     template: `
         <adf-buttons-action-menu>
-            <button mat-menu-item (click)="assignValue()">
-                <mat-icon>settings</mat-icon><span> Button </span>
-            </button>
+            <button mat-menu-item (click)="assignValue()"><mat-icon>settings</mat-icon><span> Button </span></button>
         </adf-buttons-action-menu>
     `
 })
 export class CustomContainerComponent {
-
     value: number;
 
     assignValue() {
@@ -42,35 +38,21 @@ export class CustomContainerComponent {
 
 @Component({
     selector: 'adf-custom-empty-container',
-    template: `
-        <adf-buttons-action-menu>
-        </adf-buttons-action-menu>
-    `
+    template: ` <adf-buttons-action-menu> </adf-buttons-action-menu> `
 })
-export class CustomEmptyContainerComponent {
-}
+export class CustomEmptyContainerComponent {}
 
 describe('ButtonsMenuComponent', () => {
-
     describe('When Buttons are injected', () => {
-
         let fixture: ComponentFixture<CustomContainerComponent>;
         let component: CustomContainerComponent;
         let element: HTMLElement;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule,
-                    MaterialModule
-                ],
-                declarations: [
-                    CustomContainerComponent
-                ],
-                schemas: [
-                    CUSTOM_ELEMENTS_SCHEMA
-                ]
+                imports: [CoreTestingModule, MaterialModule],
+                declarations: [CustomContainerComponent],
+                schemas: [CUSTOM_ELEMENTS_SCHEMA]
             });
             fixture = TestBed.createComponent(CustomContainerComponent);
             element = fixture.debugElement.nativeElement;
@@ -111,17 +93,9 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule,
-                    MaterialModule
-                ],
-                declarations: [
-                    CustomEmptyContainerComponent
-                ],
-                schemas: [
-                    CUSTOM_ELEMENTS_SCHEMA
-                ]
+                imports: [CoreTestingModule, MaterialModule],
+                declarations: [CustomEmptyContainerComponent],
+                schemas: [CUSTOM_ELEMENTS_SCHEMA]
             });
             fixture = TestBed.createComponent(CustomEmptyContainerComponent);
             element = fixture.nativeElement;

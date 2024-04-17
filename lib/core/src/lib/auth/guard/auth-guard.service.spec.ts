@@ -21,7 +21,6 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { StorageService } from '../../common/services/storage.service';
 import { OidcAuthenticationService } from '../services/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
@@ -38,14 +37,12 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             providers: [
                 {
-                    provide: OidcAuthenticationService, useValue: {
-                        ssoLogin: () => { },
+                    provide: OidcAuthenticationService,
+                    useValue: {
+                        ssoLogin: () => {},
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false
                     }
@@ -144,7 +141,8 @@ describe('AuthGuardService', () => {
         await authGuard.canActivate(null, state);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', url: 'some-url'
+            provider: 'ALL',
+            url: 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
     });
@@ -160,7 +158,8 @@ describe('AuthGuardService', () => {
         await authGuard.canActivate(null, state);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', url: 'some-url;q=query'
+            provider: 'ALL',
+            url: 'some-url;q=query'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url;q=query'));
     });
@@ -175,7 +174,8 @@ describe('AuthGuardService', () => {
         await authGuard.canActivate(null, state);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', url: 'some-url'
+            provider: 'ALL',
+            url: 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     });
@@ -189,7 +189,8 @@ describe('AuthGuardService', () => {
         await authGuard.canActivate(null, state);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL', url: '/'
+            provider: 'ALL',
+            url: '/'
         });
     });
 });

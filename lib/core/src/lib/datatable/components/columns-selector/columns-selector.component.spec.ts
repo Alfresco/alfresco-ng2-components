@@ -21,7 +21,6 @@ import { DataColumn } from '../../data/data-column.model';
 import { Observable, Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { CoreTestingModule } from '../../../testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -41,10 +40,7 @@ describe('ColumnsSelectorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             declarations: [ColumnsSelectorComponent]
         }).compileComponents();
 
@@ -52,32 +48,38 @@ describe('ColumnsSelectorComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
 
         component = fixture.componentInstance;
-        inputColumns = [{
-            id: 'id0',
-            key: 'key0',
-            title: 'title0',
-            type: 'text'
-        }, {
-            id: 'id1',
-            key: 'key1',
-            title: 'title1',
-            type: 'text'
-        }, {
-            id: 'id2',
-            key: 'key2',
-            title: 'title2',
-            type: 'text'
-        }, {
-            id: 'id3',
-            key: 'NoTitle',
-            type: 'text'
-        }, {
-            id: 'id4',
-            key: 'IsHidden',
-            type: 'text',
-            title: 'title4',
-            isHidden: true
-        }];
+        inputColumns = [
+            {
+                id: 'id0',
+                key: 'key0',
+                title: 'title0',
+                type: 'text'
+            },
+            {
+                id: 'id1',
+                key: 'key1',
+                title: 'title1',
+                type: 'text'
+            },
+            {
+                id: 'id2',
+                key: 'key2',
+                title: 'title2',
+                type: 'text'
+            },
+            {
+                id: 'id3',
+                key: 'NoTitle',
+                type: 'text'
+            },
+            {
+                id: 'id4',
+                key: 'IsHidden',
+                type: 'text',
+                title: 'title4',
+                isHidden: true
+            }
+        ];
 
         mainMenuTrigger = {
             menuOpened: menuOpenedTrigger.asObservable(),
@@ -114,13 +116,13 @@ describe('ColumnsSelectorComponent', () => {
 
         const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
 
-        const inputColumnsWithTitle = inputColumns.filter(column => !!column.title);
+        const inputColumnsWithTitle = inputColumns.filter((column) => !!column.title);
         expect(checkboxes.length).toBe(inputColumnsWithTitle.length);
 
         for await (const checkbox of checkboxes) {
             const checkboxLabel = await checkbox.getLabelText();
 
-            const inputColumn = inputColumnsWithTitle.find(inputColumnWithTitle => inputColumnWithTitle.title === checkboxLabel);
+            const inputColumn = inputColumnsWithTitle.find((inputColumnWithTitle) => inputColumnWithTitle.title === checkboxLabel);
             expect(inputColumn).toBeTruthy('Should have all columns with title');
         }
     });
@@ -149,13 +151,12 @@ describe('ColumnsSelectorComponent', () => {
         const firstColumnCheckbox = await loader.getHarness(MatCheckboxHarness);
         const checkBoxName = await firstColumnCheckbox.getLabelText();
 
-        const toggledColumnItem = component.columnItems.find(item => item.title === checkBoxName);
+        const toggledColumnItem = component.columnItems.find((item) => item.title === checkBoxName);
         expect(toggledColumnItem.isHidden).toBeFalsy();
 
         await firstColumnCheckbox.toggle();
         expect(toggledColumnItem.isHidden).toBe(true);
     });
-
 
     describe('checkboxes', () => {
         it('should have set proper default state', async () => {

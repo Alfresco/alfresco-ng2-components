@@ -20,7 +20,6 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { aboutGithubDetails } from '../about.mock';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('AboutServerSettingsComponent', () => {
     let fixture: ComponentFixture<AboutServerSettingsComponent>;
@@ -29,10 +28,7 @@ describe('AboutServerSettingsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(AboutServerSettingsComponent);
         component = fixture.componentInstance;
