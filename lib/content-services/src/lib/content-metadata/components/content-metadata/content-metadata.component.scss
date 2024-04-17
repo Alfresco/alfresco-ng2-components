@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 $panel-properties-height: 56px !default;
 
 .adf {
@@ -10,7 +12,12 @@ $panel-properties-height: 56px !default;
 
             .adf-property-list .adf-property .adf-property-field {
                 .adf-property-value:not(.adf-card-view-selectitem .adf-property-value) {
-                    margin-top: 20px;
+                    margin-top: 10px;
+                    height: 32px;
+
+                    &:is(textarea) {
+                        padding-top: 6px;
+                    }
                 }
 
                 label {
@@ -30,6 +37,19 @@ $panel-properties-height: 56px !default;
             }
         }
 
+        #{$mat-expansion-panel-body} {
+            padding-top: 16px;
+
+            input {
+                border-color: transparent;
+                width: 100%;
+
+                &:focus-visible {
+                    outline: none;
+                }
+            }
+        }
+
         .adf-edit-icon-buttons {
             color: var(--adf-theme-foreground-text-color-054);
         }
@@ -41,7 +61,6 @@ $panel-properties-height: 56px !default;
             border-radius: 16px;
             width: fit-content;
             background: var(--adf-metadata-buttons-background-color);
-            margin-top: 12px;
             padding: 6px 12px;
             justify-content: center;
             margin-left: 8px;
@@ -51,7 +70,7 @@ $panel-properties-height: 56px !default;
         .adf-metadata-no-item-added {
             word-break: break-all;
             font-size: 15px;
-            padding: 16px 0 0 12px;
+            padding: 0 0 0 12px;
         }
 
         &-tags {
