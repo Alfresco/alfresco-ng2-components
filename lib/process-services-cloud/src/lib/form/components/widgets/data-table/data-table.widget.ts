@@ -24,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
+import { DataTablePathParserHelper } from './helpers/data-table-path-parser.helper';
 
 @Component({
     standalone: true,
@@ -53,9 +54,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private columnsSchema: DataColumn[];
     private variableName: string;
     private defaultResponseProperty = 'data';
-
-    private readonly splitPathRegEx = /\.(?![^[]*\])/g;
-    private readonly removeSquareBracketsRegEx = /^\[(.*)\]$/;
+    private pathParserHelper = new DataTablePathParserHelper();
 
     constructor(public formService: FormService, private formCloudService: FormCloudService, private logService: LogService) {
         super(formService);
@@ -94,8 +93,8 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         const rowsData = fieldValue || this.getDataFromVariable();
 
         if (rowsData) {
-            const dataFromPath = this.getOptionsFromPath(rowsData, optionsPath);
-            this.rowsData = dataFromPath?.length ? dataFromPath : (rowsData as DataRow[]);
+            const dataFromPath = this.pathParserHelper.retrieveDataFromPath(rowsData, optionsPath);
+            this.rowsData = (dataFromPath?.length ? dataFromPath : rowsData) as DataRow[];
         }
     }
 
@@ -107,23 +106,6 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         const formVariableDropdownOptions = this.getVariableValueByName(formVariables, this.variableName);
 
         return processVariableDropdownOptions ?? formVariableDropdownOptions;
-    }
-
-    private getOptionsFromPath(data: any, path: string): DataRow[] {
-        const properties = path.split(this.splitPathRegEx);
-        const currentProperty = properties.shift().replace(this.removeSquareBracketsRegEx, '$1');
-
-        if (!Object.prototype.hasOwnProperty.call(data, currentProperty)) {
-            return [];
-        }
-
-        const nestedData = data[currentProperty];
-
-        if (Array.isArray(nestedData)) {
-            return nestedData;
-        }
-
-        return this.getOptionsFromPath(nestedData, properties.join('.'));
     }
 
     private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
