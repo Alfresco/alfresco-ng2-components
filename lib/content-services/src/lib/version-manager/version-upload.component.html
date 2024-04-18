@@ -7,10 +7,10 @@
             {{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.MAJOR' | translate: { version: majorVersion } }}
         </mat-radio-button>
     </mat-radio-group>
-    <mat-form-field class="adf-new-version-max-width">
+    <mat-form-field class="adf-new-version-max-width" subscriptSizing="dynamic">
+                    <mat-label>{{'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate}}</mat-label>
                     <textarea matInput [(ngModel)]="comment" class="adf-new-version-text-area" id="adf-new-version-text-area"
-                              (change)="onCommentChange()"
-                              placeholder="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate }}"></textarea>
+                              (change)="onCommentChange()"></textarea>
     </mat-form-field>
 
 </div>
