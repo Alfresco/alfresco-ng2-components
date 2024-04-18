@@ -57,7 +57,8 @@ import {
     DataRow,
     DataTableService,
     DataTableSchema,
-    DataColumn
+    DataColumn,
+    ViewerComponentConfig
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
@@ -789,9 +790,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     onPreviewFile(node: NodeEntry) {
         if (node) {
             const sizeInMB = node.entry?.content?.sizeInBytes / BYTES_TO_MB_CONVERSION_VALUE;
+            const config = this.appConfig.get<ViewerComponentConfig>('viewer');
 
-            const fileAutoDownloadFlag: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
-            const sizeThreshold: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
+            const fileAutoDownloadFlag = config?.enableFileAutoDownload ?? true;
+            const sizeThreshold = config?.fileAutoDownloadSizeThresholdInMB ?? 15;
 
             if (fileAutoDownloadFlag && sizeInMB && sizeInMB > sizeThreshold) {
                 this.dialog.open(FileAutoDownloadComponent, { disableClose: true, data: node });

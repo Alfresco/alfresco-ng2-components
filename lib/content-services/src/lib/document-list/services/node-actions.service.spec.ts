@@ -17,7 +17,6 @@
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Node, NodeEntry } from '@alfresco/js-api';
-import { AppConfigService } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
@@ -43,9 +42,6 @@ describe('NodeActionsService', () => {
             imports: [ContentTestingModule],
             providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
-        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
-
         service = TestBed.inject(NodeActionsService);
         documentListService = TestBed.inject(DocumentListService);
         contentDialogService = TestBed.inject(ContentNodeDialogService);
