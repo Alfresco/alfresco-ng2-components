@@ -73,6 +73,11 @@ describe('DataTableWidgetComponent', () => {
 
     const getPreview = () => fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget-preview"]');
 
+    const assertDataRows = (expectedData: WidgetDataTableAdapter) => {
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
+        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+    };
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule]
@@ -123,9 +128,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize data source based on field value', () => {
@@ -134,9 +137,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize default json response data source based on field value if path is NOT provided', () => {
@@ -145,9 +146,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize default json response data source based on variable if path is NOT provided', () => {
@@ -155,9 +154,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize json response data source based on field value if path is provided', () => {
@@ -166,9 +163,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize json response data source based on variable if path is provided', () => {
@@ -181,9 +176,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize data source based on form variable', () => {
@@ -191,9 +184,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize data source based on process variable', () => {
@@ -201,9 +192,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should NOT display error if form is in preview state', () => {
