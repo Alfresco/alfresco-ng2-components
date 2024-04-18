@@ -101,6 +101,12 @@ export const mockJsonNestedResponseEuropeCountriesDataWithSeparatorInPropertyNam
     }
 };
 
+export const mockJsonNestedResponseEuropeCountriesDataWithMultipleSpecialCharacters = {
+    response: {
+        'xyz:abc,xyz-abc,xyz_abc,abc+xyz': mockEuropeCountriesData
+    }
+};
+
 export const mockAmericaCountriesData = [
     {
         id: 'CA',

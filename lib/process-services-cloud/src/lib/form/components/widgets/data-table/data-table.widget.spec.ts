@@ -35,7 +35,8 @@ import {
     mockJsonResponseFormVariable,
     mockJsonNestedResponseFormVariable,
     mockJsonNestedResponseEuropeCountriesData,
-    mockJsonNestedResponseEuropeCountriesDataWithSeparatorInPropertyName
+    mockJsonNestedResponseEuropeCountriesDataWithSeparatorInPropertyName,
+    mockJsonNestedResponseEuropeCountriesDataWithMultipleSpecialCharacters
 } from '../../../mocks/data-table-widget.mock';
 
 describe('DataTableWidgetComponent', () => {
@@ -175,6 +176,20 @@ describe('DataTableWidgetComponent', () => {
             []
         );
         widget.field.value = mockJsonNestedResponseEuropeCountriesDataWithSeparatorInPropertyName;
+        fixture.detectChanges();
+
+        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
+        assertDataRows(expectedData);
+    });
+
+    it('should properly initialize json response data source based on field value if path with special characters in brackets is provided', () => {
+        widget.field = getDataVariable(
+            { ...mockVariableConfig, optionsPath: 'response.[xyz:abc,xyz-abc,xyz_abc,abc+xyz]' },
+            mockSchemaDefinition,
+            [],
+            []
+        );
+        widget.field.value = mockJsonNestedResponseEuropeCountriesDataWithMultipleSpecialCharacters;
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
