@@ -19,22 +19,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as structuralMock from '../../mock/diagram/diagram-structural.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Diagrams structural', () => {
-
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
@@ -53,7 +48,7 @@ describe('Diagrams structural', () => {
         jasmine.Ajax.uninstall();
     });
 
-    const ajaxReply =  (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -62,7 +57,6 @@ describe('Diagrams structural', () => {
     };
 
     describe('Diagrams component Structural: ', () => {
-
         it('Should render the Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -103,7 +97,6 @@ describe('Diagrams structural', () => {
     });
 
     describe('Diagrams component Structural with process instance id: ', () => {
-
         it('Should render the Subprocess', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();

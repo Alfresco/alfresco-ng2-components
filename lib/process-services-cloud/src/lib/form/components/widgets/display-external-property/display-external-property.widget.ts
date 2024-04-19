@@ -16,12 +16,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    WidgetComponent,
-    FormService,
-    LogService,
-    FormBaseModule
-} from '@alfresco/adf-core';
+import { WidgetComponent, FormService, FormBaseModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
@@ -31,14 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
     standalone: true,
-    imports: [
-        CommonModule,
-        TranslateModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FormBaseModule
-    ],
+    imports: [CommonModule, TranslateModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule],
     selector: 'adf-cloud-display-external-property',
     templateUrl: './display-external-property.widget.html',
     styleUrls: ['./display-external-property.widget.scss'],
@@ -57,16 +45,11 @@ import { MatInputModule } from '@angular/material/input';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DisplayExternalPropertyWidgetComponent extends WidgetComponent implements OnInit {
-
     propertyLoadFailed = false;
     previewState = false;
     propertyControl: FormControl;
 
-    constructor(
-        public readonly formService: FormService,
-        private readonly formCloudService: FormCloudService,
-        private readonly logService: LogService
-    ) {
+    constructor(public readonly formService: FormService, private readonly formCloudService: FormCloudService) {
         super(formService);
     }
 
@@ -103,7 +86,7 @@ export class DisplayExternalPropertyWidgetComponent extends WidgetComponent impl
     private handleError(error: any): void {
         if (!this.previewState) {
             this.propertyLoadFailed = true;
-            this.logService.error(error);
+            this.widgetError.emit(error);
         }
     }
 }

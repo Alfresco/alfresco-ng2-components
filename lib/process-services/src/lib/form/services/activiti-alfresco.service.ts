@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, ExternalContent } from '@alfresco/adf-core';
+import { AlfrescoApiService, ExternalContent } from '@alfresco/adf-core';
 import { SitesService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
-import { IntegrationAlfrescoOnPremiseApi, Node, RelatedContentRepresentation, ActivitiContentApi, AlfrescoEndpointRepresentation, AlfrescoContentRepresentation } from '@alfresco/js-api';
+import {
+    IntegrationAlfrescoOnPremiseApi,
+    Node,
+    RelatedContentRepresentation,
+    ActivitiContentApi,
+    AlfrescoEndpointRepresentation,
+    AlfrescoContentRepresentation
+} from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -42,7 +49,7 @@ export class ActivitiContentService {
         return this._contentApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService, private sitesService: SitesService) {}
+    constructor(private apiService: AlfrescoApiService, private sitesService: SitesService) {}
 
     /**
      * Returns a list of child nodes below the specified folder
@@ -54,7 +61,7 @@ export class ActivitiContentService {
     getAlfrescoNodes(accountId: string, folderId: string): Observable<AlfrescoContentRepresentation[]> {
         const accountShortId = accountId.replace('alfresco-', '');
         return from(this.integrationAlfrescoOnPremiseApi.getContentInFolder(accountShortId, folderId)).pipe(
-            map(res => res?.data || []),
+            map((res) => res?.data || []),
             catchError((err) => this.handleError(err))
         );
     }
@@ -72,7 +79,7 @@ export class ActivitiContentService {
             includeAccounts: includeAccount ? includeAccount : true
         };
         return from(this.integrationAlfrescoOnPremiseApi.getRepositories(opts)).pipe(
-            map(res => res?.data || []),
+            map((res) => res?.data || []),
             catchError((err) => this.handleError(err))
         );
     }
@@ -95,7 +102,7 @@ export class ActivitiContentService {
                 sourceId: node.id + '@' + siteId
             })
         ).pipe(
-            map(res => res || {}),
+            map((res) => res || {}),
             catchError((err) => this.handleError(err))
         );
     }
@@ -110,7 +117,7 @@ export class ActivitiContentService {
             link: node.isLink
         };
         return from(this.contentApi.createTemporaryRelatedContent(params)).pipe(
-            map(res => res || {}),
+            map((res) => res || {}),
             catchError((err) => this.handleError(err))
         );
     }
@@ -124,7 +131,6 @@ export class ActivitiContentService {
                 ? `${error.status} - ${error.statusText}`
                 : ActivitiContentService.GENERIC_ERROR_MESSAGE;
         }
-        this.logService.error(errMsg);
         return throwError(errMsg);
     }
 }

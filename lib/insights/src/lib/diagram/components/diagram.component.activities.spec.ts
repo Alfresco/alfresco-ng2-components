@@ -20,22 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as diagramsActivitiesMock from '../../mock/diagram/diagram-activities.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Diagrams activities', () => {
-
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
@@ -57,7 +52,7 @@ describe('Diagrams activities', () => {
         jasmine.Ajax.uninstall();
     });
 
-    const ajaxReply =  (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -66,7 +61,6 @@ describe('Diagrams activities', () => {
     };
 
     describe('Diagrams component Activities: ', () => {
-
         it('Should render the User Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -203,8 +197,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Alfresco Publish task');
 
-                    const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
-                        ' raphael-icon-alfresco-publish');
+                    const iconTask: any = element.querySelector(
+                        'adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' + ' raphael-icon-alfresco-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -230,8 +225,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Google Drive Publish task');
 
-                    const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
-                        ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
+                    const iconTask: any = element.querySelector(
+                        'diagram-google-drive-publish-task >' + ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -257,8 +253,7 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Rest Call task');
 
-                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
-                        ' raphael-icon-rest-call');
+                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' + ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -284,8 +279,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Box Publish task');
 
-                    const iconTask: any = element.querySelector('diagram-box-publish-task >' +
-                        ' diagram-icon-box-publish-task > raphael-icon-box-publish');
+                    const iconTask: any = element.querySelector(
+                        'diagram-box-publish-task >' + ' diagram-icon-box-publish-task > raphael-icon-box-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -363,7 +359,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake BusinessRule task');
 
-                    const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    const iconTask: any = element.querySelector(
+                        'diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -376,10 +374,9 @@ describe('Diagrams activities', () => {
             const resp = { elements: [diagramsActivitiesMock.businessRuleTask] };
             ajaxReply(resp);
         });
-   });
+    });
 
     describe('Diagrams component Activities with process instance id: ', () => {
-
         it('Should render the User Task', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -772,8 +769,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Alfresco Publish task');
 
-                    const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
-                        ' raphael-icon-alfresco-publish');
+                    const iconTask: any = element.querySelector(
+                        'adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' + ' raphael-icon-alfresco-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -799,8 +797,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Alfresco Publish task');
 
-                    const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
-                        ' raphael-icon-alfresco-publish');
+                    const iconTask: any = element.querySelector(
+                        'adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' + ' raphael-icon-alfresco-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -826,8 +825,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Alfresco Publish task');
 
-                    const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
-                        ' raphael-icon-alfresco-publish');
+                    const iconTask: any = element.querySelector(
+                        'adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' + ' raphael-icon-alfresco-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -853,8 +853,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Google Drive Publish task');
 
-                    const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
-                        ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
+                    const iconTask: any = element.querySelector(
+                        'diagram-google-drive-publish-task >' + ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -873,15 +874,18 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    const task: any = element.querySelector(
+                        'diagram-google-drive-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]'
+                    );
                     expect(task).not.toBeNull();
 
                     const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Google Drive Publish task');
 
-                    const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
-                        ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
+                    const iconTask: any = element.querySelector(
+                        'diagram-google-drive-publish-task >' + ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -900,15 +904,18 @@ describe('Diagrams activities', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    const task: any = element.querySelector(
+                        'diagram-google-drive-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(task).not.toBeNull();
 
                     const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Google Drive Publish task');
 
-                    const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
-                        ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
+                    const iconTask: any = element.querySelector(
+                        'diagram-google-drive-publish-task >' + ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -934,8 +941,7 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Rest Call task');
 
-                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
-                        ' raphael-icon-rest-call');
+                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' + ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -961,8 +967,7 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Rest Call task');
 
-                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
-                        ' raphael-icon-rest-call');
+                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' + ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -988,8 +993,7 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Rest Call task');
 
-                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
-                        ' raphael-icon-rest-call');
+                    const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' + ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -1015,8 +1019,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Box Publish task');
 
-                    const iconTask: any = element.querySelector('diagram-box-publish-task >' +
-                        ' diagram-icon-box-publish-task > raphael-icon-box-publish');
+                    const iconTask: any = element.querySelector(
+                        'diagram-box-publish-task >' + ' diagram-icon-box-publish-task > raphael-icon-box-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -1042,8 +1047,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Box Publish task');
 
-                    const iconTask: any = element.querySelector('diagram-box-publish-task >' +
-                        ' diagram-icon-box-publish-task > raphael-icon-box-publish');
+                    const iconTask: any = element.querySelector(
+                        'diagram-box-publish-task >' + ' diagram-icon-box-publish-task > raphael-icon-box-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -1069,8 +1075,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Box Publish task');
 
-                    const iconTask: any = element.querySelector('diagram-box-publish-task >' +
-                        ' diagram-icon-box-publish-task > raphael-icon-box-publish');
+                    const iconTask: any = element.querySelector(
+                        'diagram-box-publish-task >' + ' diagram-icon-box-publish-task > raphael-icon-box-publish'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -1252,7 +1259,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake BusinessRule task');
 
-                    const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    const iconTask: any = element.querySelector(
+                        'diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -1278,7 +1287,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake BusinessRule task');
 
-                    const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    const iconTask: any = element.querySelector(
+                        'diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -1304,7 +1315,9 @@ describe('Diagrams activities', () => {
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake BusinessRule task');
 
-                    const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    const iconTask: any = element.querySelector(
+                        'diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule'
+                    );
                     expect(iconTask).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -1317,5 +1330,5 @@ describe('Diagrams activities', () => {
             const resp = { elements: [diagramsActivitiesMock.businessRuleTaskCompleted] };
             ajaxReply(resp);
         });
-   });
+    });
 });

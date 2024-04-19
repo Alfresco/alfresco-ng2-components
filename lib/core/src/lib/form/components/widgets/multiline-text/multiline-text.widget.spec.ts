@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { FormFieldModel } from '../core/form-field.model';
@@ -35,7 +34,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;

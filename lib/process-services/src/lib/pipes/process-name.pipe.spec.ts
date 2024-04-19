@@ -17,12 +17,10 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ProcessNamePipe } from './process-name.pipe';
-import { TranslateModule } from '@ngx-translate/core';
 import { LocalizedDatePipe, CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstance } from '../process-list';
 
 describe('ProcessNamePipe', () => {
-
     let processNamePipe: ProcessNamePipe;
     const defaultName = 'default-name';
     const datetimeIdentifier = '%{datetime}';
@@ -32,14 +30,11 @@ describe('ProcessNamePipe', () => {
     const nameWithProcessDefinitionIdentifier = `${defaultName} - ${processDefinitionIdentifier}`;
     const nameWithDatetimeIdentifier = `${defaultName} - ${datetimeIdentifier}`;
     const nameWithAllIdentifiers = `${defaultName} ${processDefinitionIdentifier} - ${datetimeIdentifier}`;
-    const fakeProcessInstanceDetails = new ProcessInstance({ processDefinitionName: 'fake-process-def-name'});
+    const fakeProcessInstanceDetails = new ProcessInstance({ processDefinitionName: 'fake-process-def-name' });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNamePipe(localizedDatePipe);
@@ -71,5 +66,4 @@ describe('ProcessNamePipe', () => {
         const transformResult = processNamePipe.transform(nameWithProcessDefinitionIdentifier);
         expect(transformResult).toEqual(`${defaultName} - `);
     });
-
 });

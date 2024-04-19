@@ -19,22 +19,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as swimLanesMock from '../../mock/diagram/diagram-swimlanes.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Diagrams swim', () => {
-
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
@@ -53,7 +48,7 @@ describe('Diagrams swim', () => {
         jasmine.Ajax.uninstall();
     });
 
-    const ajaxReply =  (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -62,7 +57,6 @@ describe('Diagrams swim', () => {
     };
 
     describe('Diagrams component Swim lane: ', () => {
-
         it('Should render the Pool', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -106,7 +100,6 @@ describe('Diagrams swim', () => {
     });
 
     describe('Diagrams component Swim lane with process instance id: ', () => {
-
         it('Should render the Pool', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();

@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
 import { FormFieldModel, FormModel, FormFieldTypes, DateFieldValidator, MinDateFieldValidator, MaxDateFieldValidator } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material/core';
 import { isEqual, subDays, addDays } from 'date-fns';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -37,7 +36,7 @@ describe('DateWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule]
         });
 
         form = new FormModel();

@@ -16,25 +16,19 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogService } from '@alfresco/adf-core';
 import { PeopleSelectorComponent } from './people-selector.component';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
 
 describe('PeopleSelectorComponent', () => {
-
     let component: PeopleSelectorComponent;
     let fixture: ComponentFixture<PeopleSelectorComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(PeopleSelectorComponent);
         component = fixture.componentInstance;
@@ -45,7 +39,7 @@ describe('PeopleSelectorComponent', () => {
         expect(component.placeholder).toBe('ADF_TASK_LIST.PEOPLE.ASSIGNEE');
     });
 
-    it('should have the selected user\'s details as placeholder if one is set', () => {
+    it('should have the selected user details as placeholder if one is set', () => {
         component.selectedUser = {
             firstName: 'Max',
             lastName: 'CaulField'
@@ -53,7 +47,7 @@ describe('PeopleSelectorComponent', () => {
         expect(component.placeholder).toBe('Max CaulField');
     });
 
-    it('should call the PeopleProcessService\'s getWorkflowUsers method on search', () => {
+    it('should call the PeopleProcessService getWorkflowUsers method on search', () => {
         const peopleProcessService = TestBed.inject(PeopleProcessService);
         spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
@@ -62,27 +56,13 @@ describe('PeopleSelectorComponent', () => {
         expect(peopleProcessService.getWorkflowUsers).toHaveBeenCalledWith(undefined, 'Chloe Price');
     });
 
-    it('should log error on getWorkflowUsers error', () => {
-        const peopleProcessService = TestBed.inject(PeopleProcessService);
-        const logService = TestBed.inject(LogService);
-        spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(new Error()));
-        spyOn(logService, 'error');
-
-        component.performSearch('Chloe Price')
-            .subscribe((people) => {
-                expect(people).toEqual([]);
-                expect(logService.error).toHaveBeenCalledWith('getWorkflowUsers threw error');
-            });
-    });
-
     it('should emit an event with the selected users id when userSelected method is invoked', (done) => {
-
         component.peopleIdChange.subscribe((userId) => {
             expect(userId).toBe(789);
             done();
         });
 
-        component.userSelected({id: 789});
+        component.userSelected({ id: 789 });
     });
 
     it('should emit an event with undefined when reset button is clicked', (done) => {

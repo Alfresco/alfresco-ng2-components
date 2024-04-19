@@ -16,8 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, of, throwError } from 'rxjs';
-import { FormFieldModel, FormModel, FormService, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { Observable, of } from 'rxjs';
+import { FormFieldModel, FormModel, FormService } from '@alfresco/adf-core';
 import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
@@ -29,12 +29,10 @@ import { MatSelectHarness } from '@angular/material/select/testing';
 import { FormModule } from '../../../../form.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { ProcessTestingModule } from '../../../../../testing/process.testing.module';
 
 describe('DropdownEditorComponent', () => {
     let fixture: ComponentFixture<DropdownEditorComponent>;
@@ -50,16 +48,7 @@ describe('DropdownEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CommonModule,
-                NoopAnimationsModule,
-                MatFormFieldModule,
-                MatSelectModule,
-                MatOptionModule,
-                FormModule
-            ],
-            providers: [{ provide: TranslationService, useClass: TranslationMock }]
+            imports: [ProcessTestingModule, MatFormFieldModule, MatSelectModule, MatOptionModule, FormModule]
         });
         formService = TestBed.inject(FormService);
         taskFormService = TestBed.inject(TaskFormService);
@@ -164,31 +153,6 @@ describe('DropdownEditorComponent', () => {
             expect(column.options).toEqual([]);
             expect(component.options).toEqual([]);
             expect(component.value).toBe(row.value[column.id]);
-        });
-
-        it('should handle REST error getting options with task id', () => {
-            column.optionType = 'rest';
-            const error = 'error';
-
-            spyOn(taskFormService, 'getRestFieldValuesColumn').and.returnValue(throwError(error));
-            spyOn(component, 'handleError').and.stub();
-
-            component.ngOnInit();
-            expect(component.handleError).toHaveBeenCalledWith(error);
-        });
-
-        it('should handle REST error getting option with processDefinitionId', () => {
-            column.optionType = 'rest';
-            const procForm = new FormModel({ processDefinitionId: '<process-definition-id>' });
-            const procTable = new DynamicTableModel(new FormFieldModel(procForm, { id: '<field-id>' }), formService);
-            component.table = procTable;
-            const error = 'error';
-
-            spyOn(processDefinitionService, 'getRestFieldValuesColumnByProcessId').and.returnValue(throwError(error));
-            spyOn(component, 'handleError').and.stub();
-
-            fixture.detectChanges();
-            expect(component.handleError).toHaveBeenCalledWith(error);
         });
 
         it('should update row on value change', () => {

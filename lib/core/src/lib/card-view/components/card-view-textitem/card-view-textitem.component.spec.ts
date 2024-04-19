@@ -28,7 +28,6 @@ import { CardViewFloatItemModel } from '../../models/card-view-floatitem.model';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -113,7 +112,7 @@ describe('CardViewTextItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatChipsModule]
+            imports: [CoreTestingModule, MatChipsModule]
         });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
@@ -536,7 +535,9 @@ describe('CardViewTextItemComponent', () => {
             component.ngOnChanges({});
 
             loader = TestbedHarnessEnvironment.loader(fixture);
-            const inputHarness = await loader.getHarness(MatInputHarness.with({selector: `[data-automation-id="card-textitem-value-${component.property.key}"]`}));
+            const inputHarness = await loader.getHarness(
+                MatInputHarness.with({ selector: `[data-automation-id="card-textitem-value-${component.property.key}"]` })
+            );
 
             expect(component.isEditable).toBe(false);
             expect(await inputHarness.isReadonly()).toBe(true);

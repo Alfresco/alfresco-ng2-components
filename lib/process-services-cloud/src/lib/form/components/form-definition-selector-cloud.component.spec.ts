@@ -21,13 +21,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormDefinitionSelectorCloudComponent } from './form-definition-selector-cloud.component';
 import { of } from 'rxjs';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('FormDefinitionCloudComponent', () => {
-
     let fixture: ComponentFixture<FormDefinitionSelectorCloudComponent>;
     let service: FormDefinitionSelectorCloudService;
     let getFormsSpy: jasmine.Spy;
@@ -35,10 +33,7 @@ describe('FormDefinitionCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
+            imports: [ProcessServiceCloudTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(FormDefinitionSelectorCloudComponent);
@@ -65,7 +60,7 @@ describe('FormDefinitionCloudComponent', () => {
 
         const options = await selectElement.getOptions();
 
-        expect((options).length).toBe(1);
+        expect(options.length).toBe(1);
     });
 
     it('should not preselect any form by default', async () => {

@@ -31,7 +31,6 @@ import {
 } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';
 import { TaskRepresentation } from '@alfresco/js-api';
@@ -48,7 +47,7 @@ describe('FormComponent UI and visibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule],
+            imports: [ProcessTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(FormComponent);

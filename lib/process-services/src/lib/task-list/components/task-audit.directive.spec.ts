@@ -20,26 +20,25 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from './../services/tasklist.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('TaskAuditDirective', () => {
-
     @Component({
         selector: 'adf-basic-button',
-        template: `
-        <button id="auditButton"
+        template: ` <button
+            id="auditButton"
             adf-task-audit
             [task-id]="currentTaskId"
             [download]="download"
             [fileName]="fileName"
             [format]="format"
-            (clicked)="onAuditClick($event)">My button
+            (clicked)="onAuditClick($event)"
+        >
+            My button
         </button>`
     })
     class BasicButtonComponent {
-
         download: boolean = false;
         fileName: string;
         format: string;
@@ -54,27 +53,25 @@ describe('TaskAuditDirective', () => {
     const createFakePdfBlob = (): Blob => {
         const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
-            'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
-            'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
-            'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
-            'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
-            'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
-            'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
-            'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
-            'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
-            'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
-            'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
-            'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
-            'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-        return new Blob([pdfData], {type: 'application/pdf'});
+                'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
+                'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
+                'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
+                'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
+                'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
+                'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
+                'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
+                'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
+                'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
+                'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
+                'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
+                'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G'
+        );
+        return new Blob([pdfData], { type: 'application/pdf' });
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ProcessTestingModule],
             declarations: [BasicButtonComponent]
         });
         fixture = TestBed.createComponent(BasicButtonComponent);
@@ -105,7 +102,6 @@ describe('TaskAuditDirective', () => {
         });
 
         button.click();
-
     }));
 
     it('should fetch the json info when the format is json', fakeAsync(() => {
@@ -113,7 +109,14 @@ describe('TaskAuditDirective', () => {
         component.format = 'json';
         component.download = true;
 
-        const auditJson = { taskId: '77', taskName: 'Fake Task Name', assignee: 'FirstName LastName', formData: [], selectedOutcome: null, comments: [] };
+        const auditJson = {
+            taskId: '77',
+            taskName: 'Fake Task Name',
+            assignee: 'FirstName LastName',
+            formData: [],
+            selectedOutcome: null,
+            comments: []
+        };
         spyOn(service, 'fetchTaskAuditJsonById').and.returnValue(of(auditJson));
         spyOn(component, 'onAuditClick').and.callThrough();
 
@@ -127,7 +130,6 @@ describe('TaskAuditDirective', () => {
         });
 
         button.click();
-
     }));
 
     it('should fetch the pdf Blob as default when the format is UNKNOWN', fakeAsync(() => {
@@ -147,6 +149,5 @@ describe('TaskAuditDirective', () => {
         });
 
         button.click();
-
     }));
 });

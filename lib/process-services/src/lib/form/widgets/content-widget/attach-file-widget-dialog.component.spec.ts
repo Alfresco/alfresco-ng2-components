@@ -26,11 +26,9 @@ import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Node, SiteEntry, NodeEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
-import { TranslateModule } from '@ngx-translate/core';
 import { OidcAuthenticationService } from 'lib/core/src/lib/auth/services/oidc-authentication.service';
 
 describe('AttachFileWidgetDialogComponent', () => {
-
     let widget: AttachFileWidgetDialogComponent;
     let fixture: ComponentFixture<AttachFileWidgetDialogComponent>;
     const data: AttachFileWidgetDialogComponentData = {
@@ -54,11 +52,7 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ContentModule.forRoot(), ProcessTestingModule],
             providers: [
                 { provide: OidcAuthenticationService, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: data },
@@ -78,7 +72,9 @@ describe('AttachFileWidgetDialogComponent', () => {
 
         spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { path: { elements: [] } } } as NodeEntry));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
-        spyOn(nodeService, 'getNode').and.returnValue(of(new Node({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } })));
+        spyOn(nodeService, 'getNode').and.returnValue(
+            of(new Node({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] } }))
+        );
 
         spyOn(siteService, 'getSite').and.returnValue(of(fakeSite));
         spyOn(siteService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
@@ -95,7 +91,6 @@ describe('AttachFileWidgetDialogComponent', () => {
     });
 
     describe('When is not logged in', () => {
-
         beforeEach(() => {
             fixture.detectChanges();
             isLogged = false;
@@ -109,7 +104,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         });
 
         it('should be able to login', (done) => {
-            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
             isLogged = true;
             let loginButton: HTMLButtonElement = element.querySelector('[data-automation-id="attach-file-dialog-actions-login"]');
             const usernameInput: HTMLInputElement = element.querySelector('#username');
@@ -129,10 +124,9 @@ describe('AttachFileWidgetDialogComponent', () => {
                 done();
             });
         });
-   });
+    });
 
     describe('When is logged in', () => {
-
         let contentNodePanel;
 
         beforeEach(() => {
@@ -154,7 +148,7 @@ describe('AttachFileWidgetDialogComponent', () => {
                 expect(nodeList[0].isFile).toBeTruthy();
                 done();
             });
-            const fakeNode: Node = new Node({ id: 'fake', isFile: true});
+            const fakeNode: Node = new Node({ id: 'fake', isFile: true });
             contentNodePanel.componentInstance.select.emit([fakeNode]);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -164,10 +158,10 @@ describe('AttachFileWidgetDialogComponent', () => {
         });
 
         it('[C594015] should not be able to choose a folder', () => {
-            spyOn(widget,'onSelect');
-            const fakeFolderNode: Node = new Node({ id: 'fakeFolder', isFile: false, isFolder: true});
+            spyOn(widget, 'onSelect');
+            const fakeFolderNode: Node = new Node({ id: 'fakeFolder', isFile: false, isFolder: true });
 
-            contentNodePanel.componentInstance.onCurrentSelection([ { entry: fakeFolderNode }]);
+            contentNodePanel.componentInstance.onCurrentSelection([{ entry: fakeFolderNode }]);
             fixture.detectChanges();
 
             const chooseButton: HTMLButtonElement = element.querySelector('[data-automation-id="attach-file-dialog-actions-choose"]');
@@ -184,11 +178,11 @@ describe('AttachFileWidgetDialogComponent', () => {
             expect(titleElement).not.toBeNull();
             expect(titleElement.nativeElement.innerText).toBe('ATTACH-FILE.ACTIONS.CHOOSE_ITEM');
         });
-   });
+    });
 
     describe('login only', () => {
         beforeEach(() => {
-            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
             spyOn(matDialogRef, 'close').and.callThrough();
             fixture.detectChanges();
             widget.data.loginOnly = true;
@@ -223,9 +217,8 @@ describe('AttachFileWidgetDialogComponent', () => {
     });
 
     describe('Attach button', () => {
-
         beforeEach(() => {
-           isLogged = true;
+            isLogged = true;
         });
 
         it('should be disabled by default', () => {

@@ -27,7 +27,6 @@ import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../data-column/data-column.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
 import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
@@ -140,7 +139,7 @@ describe('DataTable', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnHeaderComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -1280,7 +1279,7 @@ describe('Accesibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1483,7 +1482,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1584,7 +1583,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1691,7 +1690,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });

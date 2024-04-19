@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService, ThumbnailService, FormService, ContentLinkModel, WidgetComponent } from '@alfresco/adf-core';
+import { ThumbnailService, FormService, ContentLinkModel, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -49,12 +49,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(
-        public formService: FormService,
-        private logService: LogService,
-        private thumbnailService: ThumbnailService,
-        public processContentService: ProcessContentService
-    ) {
+    constructor(public formService: FormService, private thumbnailService: ThumbnailService, public processContentService: ProcessContentService) {
         super(formService);
     }
 
@@ -84,7 +79,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
                 .pipe(mergeMap((file) => this.uploadRawContent(file)))
                 .subscribe(
                     (res) => filesSaved.push(res),
-                    () => this.logService.error('Error uploading file. See console output for more details.'),
+                    () => {},
                     () => {
                         this.field.value = filesSaved;
                         this.field.json.value = filesSaved;
@@ -97,7 +92,6 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     private uploadRawContent(file): Observable<any> {
         return this.processContentService.createTemporaryRawRelatedContent(file).pipe(
             map((response: any) => {
-                this.logService.info(response);
                 response.contentBlob = file;
                 return response;
             })
@@ -137,14 +131,9 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         if (file.isTypeImage() || file.isTypePdf()) {
             fetch = this.processContentService.getFileRawContent(file.id);
         }
-        fetch.subscribe(
-            (blob: Blob) => {
-                file.contentBlob = blob;
-                this.formService.formContentClicked.next(file);
-            },
-            () => {
-                this.logService.error('Unable to send event for file ' + file.name);
-            }
-        );
+        fetch.subscribe((blob: Blob) => {
+            file.contentBlob = blob;
+            this.formService.formContentClicked.next(file);
+        });
     }
 }

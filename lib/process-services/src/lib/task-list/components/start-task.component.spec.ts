@@ -16,14 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { TaskListService } from '../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { taskDetailsMock } from '../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
@@ -33,11 +31,9 @@ describe('StartTaskComponent', () => {
     let fixture: ComponentFixture<StartTaskComponent>;
     let loader: HarnessLoader;
     let service: TaskListService;
-    let logService: LogService;
     let element: HTMLElement;
     let getFormListSpy: jasmine.Spy;
     let createNewTaskSpy: jasmine.Spy;
-    let logSpy: jasmine.Spy;
 
     const fakeForms$ = [
         {
@@ -54,7 +50,7 @@ describe('StartTaskComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(StartTaskComponent);
         component = fixture.componentInstance;
@@ -62,7 +58,6 @@ describe('StartTaskComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
 
         service = TestBed.inject(TaskListService);
-        logService = TestBed.inject(LogService);
 
         getFormListSpy = spyOn(service, 'getFormList').and.returnValue(of(fakeForms$));
 
@@ -404,14 +399,6 @@ describe('StartTaskComponent', () => {
         name.setValue('task');
         fixture.detectChanges();
         expect(name.valid).toBeTruthy();
-    });
-
-    it('should call logService when task name exceeds maximum length', () => {
-        logSpy = spyOn(logService, 'log').and.callThrough();
-        component.maxTaskNameLength = 300;
-        component.ngOnInit();
-        fixture.detectChanges();
-        expect(logSpy).toHaveBeenCalled();
     });
 
     it('should emit error when description have only white spaces', () => {

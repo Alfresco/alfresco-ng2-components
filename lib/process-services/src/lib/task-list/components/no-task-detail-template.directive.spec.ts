@@ -19,12 +19,11 @@ import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.direct
 import { TaskDetailsComponent } from './task-details.component';
 
 describe('NoTaskDetailsTemplateDirective', () => {
-
     let component: NoTaskDetailsTemplateDirective;
     let detailsComponent: TaskDetailsComponent;
 
     beforeEach(() => {
-        detailsComponent = new TaskDetailsComponent(null, null, null, null, null);
+        detailsComponent = new TaskDetailsComponent(null, null, null, null);
         component = new NoTaskDetailsTemplateDirective(detailsComponent);
     });
 

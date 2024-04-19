@@ -22,7 +22,6 @@ import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -32,7 +31,7 @@ describe('AnalyticsGeneratorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), InsightsTestingModule]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(AnalyticsGeneratorComponent);
         component = fixture.componentInstance;

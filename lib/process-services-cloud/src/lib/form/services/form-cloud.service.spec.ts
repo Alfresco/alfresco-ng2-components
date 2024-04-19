@@ -19,18 +19,15 @@ import { TestBed } from '@angular/core/testing';
 import { FormCloudService } from './form-cloud.service';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 const mockTaskResponseBody = {
-    entry:
-        { id: 'id', name: 'name', formKey: 'form-key' }
+    entry: { id: 'id', name: 'name', formKey: 'form-key' }
 };
 
 const mockFormResponseBody = { formRepresentation: { id: 'form-id', name: 'task-form', taskId: 'task-id' } };
 
 describe('Form Cloud service', () => {
-
     let service: FormCloudService;
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
@@ -40,10 +37,7 @@ describe('Form Cloud service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(FormCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
@@ -88,44 +82,45 @@ describe('Form Cloud service', () => {
                 expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
                 done();
             });
-
         });
 
         it('should fetch task variables', (done) => {
-            requestSpy.and.returnValue(Promise.resolve({
-                list: {
-                    entries: [
-                        {
-                            entry: {
-                                serviceName: 'fake-rb',
-                                serviceFullName: 'fake-rb',
-                                serviceVersion: '',
-                                appName: 'fake',
-                                appVersion: '',
-                                serviceType: null,
-                                id: 25,
-                                type: 'string',
-                                name: 'fakeProperty',
-                                createTime: 1556112661342,
-                                lastUpdatedTime: 1556112661342,
-                                executionId: null,
-                                value: 'fakeValue',
-                                markedAsDeleted: false,
-                                processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
-                                taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
-                                taskVariable: true
+            requestSpy.and.returnValue(
+                Promise.resolve({
+                    list: {
+                        entries: [
+                            {
+                                entry: {
+                                    serviceName: 'fake-rb',
+                                    serviceFullName: 'fake-rb',
+                                    serviceVersion: '',
+                                    appName: 'fake',
+                                    appVersion: '',
+                                    serviceType: null,
+                                    id: 25,
+                                    type: 'string',
+                                    name: 'fakeProperty',
+                                    createTime: 1556112661342,
+                                    lastUpdatedTime: 1556112661342,
+                                    executionId: null,
+                                    value: 'fakeValue',
+                                    markedAsDeleted: false,
+                                    processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
+                                    taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
+                                    taskVariable: true
+                                }
                             }
+                        ],
+                        pagination: {
+                            skipCount: 0,
+                            maxItems: 100,
+                            count: 1,
+                            hasMoreItems: false,
+                            totalItems: 1
                         }
-                    ],
-                    pagination: {
-                        skipCount: 0,
-                        maxItems: 100,
-                        count: 1,
-                        hasMoreItems: false,
-                        totalItems: 1
                     }
-                }
-            }));
+                })
+            );
 
             service.getTaskVariables(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
@@ -139,40 +134,42 @@ describe('Form Cloud service', () => {
         });
 
         it('should fetch result if the variable value is 0', (done) => {
-            requestSpy.and.returnValue(Promise.resolve({
-                list: {
-                    entries: [
-                        {
-                            entry: {
-                                serviceName: 'fake-rb',
-                                serviceFullName: 'fake-rb',
-                                serviceVersion: '',
-                                appName: 'fake',
-                                appVersion: '',
-                                serviceType: null,
-                                id: 25,
-                                type: 'string',
-                                name: 'fakeProperty',
-                                createTime: 1556112661342,
-                                lastUpdatedTime: 1556112661342,
-                                executionId: null,
-                                value: 0,
-                                markedAsDeleted: false,
-                                processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
-                                taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
-                                taskVariable: true
+            requestSpy.and.returnValue(
+                Promise.resolve({
+                    list: {
+                        entries: [
+                            {
+                                entry: {
+                                    serviceName: 'fake-rb',
+                                    serviceFullName: 'fake-rb',
+                                    serviceVersion: '',
+                                    appName: 'fake',
+                                    appVersion: '',
+                                    serviceType: null,
+                                    id: 25,
+                                    type: 'string',
+                                    name: 'fakeProperty',
+                                    createTime: 1556112661342,
+                                    lastUpdatedTime: 1556112661342,
+                                    executionId: null,
+                                    value: 0,
+                                    markedAsDeleted: false,
+                                    processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
+                                    taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
+                                    taskVariable: true
+                                }
                             }
+                        ],
+                        pagination: {
+                            skipCount: 0,
+                            maxItems: 100,
+                            count: 1,
+                            hasMoreItems: false,
+                            totalItems: 1
                         }
-                    ],
-                    pagination: {
-                        skipCount: 0,
-                        maxItems: 100,
-                        count: 1,
-                        hasMoreItems: false,
-                        totalItems: 1
                     }
-                }
-            }));
+                })
+            );
 
             service.getTaskVariables(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
@@ -185,12 +182,14 @@ describe('Form Cloud service', () => {
 
         it('should fetch task form flattened', (done) => {
             spyOn(service, 'getTask').and.returnValue(of(mockTaskResponseBody.entry));
-            spyOn(service, 'getForm').and.returnValue(of({
-                formRepresentation: {
-                    name: 'task-form',
-                    formDefinition: {}
-                }
-            } as any));
+            spyOn(service, 'getForm').and.returnValue(
+                of({
+                    formRepresentation: {
+                        name: 'task-form',
+                        formDefinition: {}
+                    }
+                } as any)
+            );
 
             service.getTaskForm(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
@@ -199,7 +198,6 @@ describe('Form Cloud service', () => {
                 expect(result.taskName).toBe('name');
                 done();
             });
-
         });
 
         it('should save task form', (done) => {
@@ -214,7 +212,6 @@ describe('Form Cloud service', () => {
                 expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('POST');
                 done();
             });
-
         });
 
         it('should complete task form', (done) => {

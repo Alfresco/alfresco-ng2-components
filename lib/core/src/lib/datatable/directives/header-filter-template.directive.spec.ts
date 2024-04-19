@@ -19,20 +19,15 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { HeaderFilterTemplateDirective } from './header-filter-template.directive';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('HeaderFilterTemplateDirective', () => {
-
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let directive: HeaderFilterTemplateDirective;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;

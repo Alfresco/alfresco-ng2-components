@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
@@ -36,7 +35,7 @@ describe('NumberWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
+            imports: [CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
         });
         fixture = TestBed.createComponent(NumberWidgetComponent);
         widget = fixture.componentInstance;

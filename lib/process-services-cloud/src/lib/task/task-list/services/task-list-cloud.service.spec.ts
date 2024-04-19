@@ -19,11 +19,9 @@ import { TestBed } from '@angular/core/testing';
 import { TaskListCloudService } from './task-list-cloud.service';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('TaskListCloudService', () => {
-
     let service: TaskListCloudService;
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
@@ -34,10 +32,7 @@ describe('TaskListCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(TaskListCloudService);
@@ -69,8 +64,16 @@ describe('TaskListCloudService', () => {
     });
 
     it('should concat the sorting to append as parameters', (done) => {
-        const taskRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
-            sorting: [{ orderBy: 'NAME', direction: 'DESC'}, { orderBy: 'TITLE', direction: 'ASC'}] } as TaskQueryCloudRequestModel;
+        const taskRequest = {
+            appName: 'fakeName',
+            skipCount: 0,
+            maxItems: 20,
+            service: 'fake-service',
+            sorting: [
+                { orderBy: 'NAME', direction: 'DESC' },
+                { orderBy: 'TITLE', direction: 'ASC' }
+            ]
+        } as TaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallQueryParameters);
         service.getTaskByRequest(taskRequest).subscribe((res) => {
             expect(res).toBeDefined();
@@ -84,7 +87,7 @@ describe('TaskListCloudService', () => {
         const taskRequest = { appName: null } as TaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallUrl);
         service.getTaskByRequest(taskRequest).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('Appname not configured');
                 done();

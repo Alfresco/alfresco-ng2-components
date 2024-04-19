@@ -20,7 +20,6 @@ import { TestBed } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CoreTestingModule } from '../testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
@@ -29,11 +28,7 @@ describe('ClipboardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatSnackBarModule
-            ]
+            imports: [CoreTestingModule, MatSnackBarModule]
         });
         clipboardService = TestBed.inject(ClipboardService);
         notificationService = TestBed.inject(NotificationService);
@@ -61,8 +56,7 @@ describe('ClipboardService', () => {
         clipboardService.copyToClipboard(inputElement);
 
         expect(inputElement.select).toHaveBeenCalledWith();
-        expect(inputElement.setSelectionRange)
-            .toHaveBeenCalledWith(0, inputElement.value.length);
+        expect(inputElement.setSelectionRange).toHaveBeenCalledWith(0, inputElement.value.length);
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('some text');
     });
 

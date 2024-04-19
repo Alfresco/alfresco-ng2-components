@@ -16,24 +16,19 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import {
-    ContainerModel,
-    FormFieldModel,
-    FormFieldTypes,
-    FormModel,
-    TabModel,
-    FormOutcomeModel
-} from '../components/widgets/core';
+import { ContainerModel, FormFieldModel, FormFieldTypes, FormModel, TabModel, FormOutcomeModel } from '../components/widgets/core';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { WidgetVisibilityService } from './widget-visibility.service';
 import {
     fakeFormJson,
-    formTest, formValues, complexVisibilityJsonVisible,
-    nextConditionForm, complexVisibilityJsonNotVisible,
+    formTest,
+    formValues,
+    complexVisibilityJsonVisible,
+    nextConditionForm,
+    complexVisibilityJsonNotVisible,
     headerVisibilityCond
 } from '../../mock/form/widget-visibility-cloud.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -45,10 +40,7 @@ describe('WidgetVisibilityCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(WidgetVisibilityService);
         jasmine.Ajax.install();
@@ -59,7 +51,6 @@ describe('WidgetVisibilityCloudService', () => {
     });
 
     describe('should be able to evaluate next condition operations', () => {
-
         it('using == and return true', () => {
             booleanResult = service.evaluateCondition('test', 'test', '==');
             expect(booleanResult).toBeTruthy();
@@ -167,7 +158,8 @@ describe('WidgetVisibilityCloudService', () => {
                     name: 'FORM_VARIABLE_TEST',
                     type: 'string',
                     value: 'form_value_test'
-                }]
+                }
+            ]
         });
 
         beforeEach(() => {
@@ -484,7 +476,6 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should use the process variables when they are passed to check the visibility', () => {
-
             visibilityObjTest.leftType = WidgetTypeEnum.field;
             visibilityObjTest.leftValue = 'FIELD_FORM_EMPTY';
             visibilityObjTest.operator = '==';
@@ -560,13 +551,15 @@ describe('WidgetVisibilityCloudService', () => {
             visibilityObjTest.leftType = 'FIELD_TEST';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightType = 'LEFT_FORM_FIELD_ID';
-            const contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
-                id: 'fake-container-id',
-                type: FormFieldTypes.GROUP,
-                name: 'fake-container-name',
-                isVisible: true,
-                visibilityCondition: visibilityObjTest
-            }));
+            const contModel = new ContainerModel(
+                new FormFieldModel(fakeFormWithField, {
+                    id: 'fake-container-id',
+                    type: FormFieldTypes.GROUP,
+                    name: 'fake-container-name',
+                    isVisible: true,
+                    visibilityCondition: visibilityObjTest
+                })
+            );
 
             fakeFormWithField.fieldsCache.push(contModel.field);
             service.refreshVisibility(fakeFormWithField);
@@ -579,13 +572,15 @@ describe('WidgetVisibilityCloudService', () => {
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightType = WidgetTypeEnum.field;
             visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
-            const contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
-                id: 'fake-container-id',
-                type: FormFieldTypes.GROUP,
-                name: 'fake-container-name',
-                isVisible: true,
-                visibilityCondition: visibilityObjTest
-            }));
+            const contModel = new ContainerModel(
+                new FormFieldModel(fakeFormWithField, {
+                    id: 'fake-container-id',
+                    type: FormFieldTypes.GROUP,
+                    name: 'fake-container-name',
+                    isVisible: true,
+                    visibilityCondition: visibilityObjTest
+                })
+            );
             service.refreshEntityVisibility(contModel.field);
             expect(contModel.isVisible).toBeFalsy();
         });
@@ -633,7 +628,8 @@ describe('WidgetVisibilityCloudService', () => {
                                             name: 'No'
                                         }
                                     ]
-                                }, {
+                                },
+                                {
                                     id: 'textBoxTest',
                                     name: 'textbox test',
                                     type: 'people',
@@ -661,7 +657,6 @@ describe('WidgetVisibilityCloudService', () => {
     });
 
     describe('Visibility based on form variables', () => {
-
         const fakeFormWithVariables = new FormModel(fakeFormJson);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
         const complexVisibilityJsonNotVisibleModel = new FormModel(complexVisibilityJsonNotVisible);
@@ -682,15 +677,19 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should be able to analyze a complex visibility JSON truthy', () => {
-            const isVisible = service.isFieldVisible(complexVisibilityModel,
-                complexVisibilityJsonVisible.formDefinition.fields[2].fields[2][0].visibilityCondition);
+            const isVisible = service.isFieldVisible(
+                complexVisibilityModel,
+                complexVisibilityJsonVisible.formDefinition.fields[2].fields[2][0].visibilityCondition
+            );
 
             expect(isVisible).toBe(true);
         });
 
         it('should be able to analyze a complex visibility JSON false', () => {
-            const isVisible = service.isFieldVisible(complexVisibilityJsonNotVisibleModel,
-                complexVisibilityJsonNotVisible.formDefinition.fields[2].fields[2][0].visibilityCondition);
+            const isVisible = service.isFieldVisible(
+                complexVisibilityJsonNotVisibleModel,
+                complexVisibilityJsonNotVisible.formDefinition.fields[2].fields[2][0].visibilityCondition
+            );
 
             expect(isVisible).toBe(false);
         });

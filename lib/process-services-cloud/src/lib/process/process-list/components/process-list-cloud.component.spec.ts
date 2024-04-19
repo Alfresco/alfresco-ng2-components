@@ -35,13 +35,10 @@ import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '.
 import { of } from 'rxjs';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
-import { HttpClientModule } from '@angular/common/http';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -82,7 +79,7 @@ describe('ProcessListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -594,7 +591,7 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [CustomTaskListComponent]
         });
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
@@ -639,7 +636,7 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientModule, NoopAnimationsModule, DataTableModule, MatProgressSpinnerModule],
+            imports: [ProcessServiceCloudTestingModule, DataTableModule, MatProgressSpinnerModule],
             providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
             declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
         });

@@ -21,19 +21,14 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('TimeAgoPipe', () => {
-
     let pipe: TimeAgoPipe;
     let userPreferences: UserPreferencesService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
@@ -56,10 +51,9 @@ describe('TimeAgoPipe', () => {
     });
 
     describe('When a locale is given', () => {
-
         it('should return a localised message', () => {
             const date = new Date();
-            const transformedDate  = pipe.transform(date, 'de');
+            const transformedDate = pipe.transform(date, 'de');
             /* cspell:disable-next-line */
             expect(transformedDate).toBe('vor weniger als 1 Minute');
         });

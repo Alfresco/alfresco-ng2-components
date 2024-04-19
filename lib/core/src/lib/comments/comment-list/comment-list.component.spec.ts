@@ -20,28 +20,18 @@ import { CommentModel } from '../../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
-import {
-    commentUserNoPictureDefined,
-    commentUserPictureDefined,
-    mockCommentOne,
-    testUser
-} from './mocks/comment-list.mock';
+import { commentUserNoPictureDefined, commentUserPictureDefined, mockCommentOne, testUser } from './mocks/comment-list.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 describe('CommentListComponent', () => {
-
     let commentList: CommentListComponent;
     let fixture: ComponentFixture<CommentListComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,
@@ -123,7 +113,7 @@ describe('CommentListComponent', () => {
 
     it('comment date time should start with Yesterday when comment date is yesterday', async () => {
         const commentOld = new CommentModel(mockCommentOne);
-        commentOld.created = new Date((Date.now() - 24 * 3600 * 1000));
+        commentOld.created = new Date(Date.now() - 24 * 3600 * 1000);
         commentList.comments = [commentOld];
 
         fixture.detectChanges();
@@ -135,7 +125,7 @@ describe('CommentListComponent', () => {
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async () => {
         const commentOld = new CommentModel(mockCommentOne);
-        commentOld.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
+        commentOld.created = new Date(Date.now() - 24 * 3600 * 1000 * 2);
         commentList.comments = [commentOld];
 
         fixture.detectChanges();

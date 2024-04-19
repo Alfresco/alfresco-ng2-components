@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService, FormFieldModel, FormModel, DateFnsUtils, AdfDateFnsAdapter, ADF_DATE_FORMATS } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, DateFnsUtils, AdfDateFnsAdapter, ADF_DATE_FORMATS } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { EMPTY, Observable, Subject } from 'rxjs';
@@ -36,7 +36,8 @@ const MAX_LENGTH = 255;
     styleUrls: ['./start-task.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: AdfDateFnsAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }],
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit, OnDestroy {
@@ -71,10 +72,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private taskService: TaskListService,
-                private formBuilder: UntypedFormBuilder,
-                private logService: LogService) {
-    }
+    constructor(private taskService: TaskListService, private formBuilder: UntypedFormBuilder) {}
 
     ngOnInit() {
         if (this.name) {
@@ -96,20 +94,22 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     buildForm(): void {
         this.taskForm = this.formBuilder.group({
-            name: new UntypedFormControl(this.taskDetailsModel.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength), this.whitespaceValidator]),
+            name: new UntypedFormControl(this.taskDetailsModel.name, [
+                Validators.required,
+                Validators.maxLength(this.maxTaskNameLength),
+                this.whitespaceValidator
+            ]),
             description: new UntypedFormControl('', [this.whitespaceValidator]),
             formKey: new UntypedFormControl('')
         });
 
-        this.taskForm.valueChanges
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(taskFormValues => this.setTaskDetails(taskFormValues));
+        this.taskForm.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
     }
 
     whitespaceValidator(control: UntypedFormControl): any {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
-            const isControlValid =  control.value.length === 0 || !isWhitespace;
+            const isControlValid = control.value.length === 0 || !isWhitespace;
             return isControlValid ? null : { whitespace: true };
         }
         return null;
@@ -130,15 +130,14 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         if (this.appId) {
             this.taskDetailsModel.category = this.appId.toString();
         }
-        this.taskService.createNewTask(this.taskDetailsModel)
+        this.taskService
+            .createNewTask(this.taskDetailsModel)
             .pipe(
                 switchMap((createRes) =>
                     this.attachForm(createRes.id, this.taskDetailsModel.formKey).pipe(
                         defaultIfEmpty(createRes),
                         switchMap((attachRes) =>
-                            this.assignTaskByUserId(createRes.id, this.assigneeId).pipe(
-                                defaultIfEmpty(attachRes ? attachRes : createRes)
-                            )
+                            this.assignTaskByUserId(createRes.id, this.assigneeId).pipe(defaultIfEmpty(attachRes ? attachRes : createRes))
                         )
                     )
                 )
@@ -151,8 +150,8 @@ export class StartTaskComponent implements OnInit, OnDestroy {
                 (err) => {
                     this.loading = false;
                     this.error.emit(err);
-                    this.logService.error('An error occurred while creating new task');
-                });
+                }
+            );
     }
 
     getAssigneeId(userId: number): void {
@@ -168,8 +167,8 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
-        firstName = (firstName !== null ? firstName : '');
-        lastName = (lastName !== null ? lastName : '');
+        firstName = firstName !== null ? firstName : '';
+        lastName = lastName !== null ? lastName : '';
         return firstName + delimiter + lastName;
     }
 
@@ -199,7 +198,6 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     private validateMaxTaskNameLength() {
         if (this.maxTaskNameLength > MAX_LENGTH) {
             this.maxTaskNameLength = MAX_LENGTH;
-            this.logService.log(`the task name length cannot be greater than ${MAX_LENGTH}`);
         }
     }
 

@@ -17,7 +17,6 @@
 
 import { BasicAlfrescoAuthService, CoreTestingModule, LoginDialogPanelComponent } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
 
@@ -31,13 +30,8 @@ describe('LoginDialogPanelComponent', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: OidcAuthenticationService, useValue: {} }
-            ]
+            imports: [CoreTestingModule],
+            providers: [{ provide: OidcAuthenticationService, useValue: {} }]
         });
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);

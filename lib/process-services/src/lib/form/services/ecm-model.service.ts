@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, FormModel } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { AlfrescoApiService, FormModel } from '@alfresco/adf-core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { CustomModelApi } from '@alfresco/js-api';
@@ -29,13 +29,15 @@ export class EcmModelService {
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
 
+    error = new EventEmitter<any>();
+
     private _customModelApi: CustomModelApi;
     get customModelApi(): CustomModelApi {
         this._customModelApi = this._customModelApi ?? new CustomModelApi(this.apiService.getInstance());
         return this._customModelApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
+    constructor(private apiService: AlfrescoApiService) {}
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {
@@ -67,11 +69,9 @@ export class EcmModelService {
     createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {
             this.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(
-                (model) => {
-                    this.logService.info('model created', model);
+                () => {
                     this.activeEcmModel(EcmModelService.MODEL_NAME).subscribe(
-                        (modelActive) => {
-                            this.logService.info('model active', modelActive);
+                        () => {
                             this.createEcmTypeWithProperties(formName, form).subscribe((typeCreated) => {
                                 observer.next(typeCreated);
                                 observer.complete();
@@ -89,7 +89,6 @@ export class EcmModelService {
         return new Observable((observer) => {
             this.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                 (ecmType) => {
-                    this.logService.info('custom types', ecmType);
                     if (!ecmType) {
                         this.createEcmTypeWithProperties(formName, form).subscribe((typeCreated) => {
                             observer.next(typeCreated);
@@ -109,10 +108,8 @@ export class EcmModelService {
         return new Observable((observer) => {
             this.createEcmType(formName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(
                 (typeCreated) => {
-                    this.logService.info('type Created', typeCreated);
                     this.addPropertyToAType(EcmModelService.MODEL_NAME, formName, form).subscribe(
-                        (propertyAdded) => {
-                            this.logService.info('property Added', propertyAdded);
+                        () => {
                             observer.next(typeCreated);
                             observer.complete();
                         },
@@ -206,6 +203,6 @@ export class EcmModelService {
     }
 
     private handleError(err: any): any {
-        this.logService.error(err);
+        this.error.next(err);
     }
 }

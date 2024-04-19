@@ -21,20 +21,15 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('Auth Guard SSO role service', () => {
-
     let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         localStorage.clear();
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
@@ -192,6 +187,5 @@ describe('Auth Guard SSO role service', () => {
             router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], excludedRoles: ['MOCK_ROOT_USER_ROLE'] };
             expect(authGuard.canActivate(router)).toBeTruthy();
         });
-
     });
 });

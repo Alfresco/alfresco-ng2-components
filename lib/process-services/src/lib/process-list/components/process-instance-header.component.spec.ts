@@ -21,20 +21,15 @@ import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess } from '../../mock';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessInstanceHeaderComponent', () => {
-
     let component: ProcessInstanceHeaderComponent;
     let fixture: ComponentFixture<ProcessInstanceHeaderComponent>;
     let appConfigService: AppConfigService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(ProcessInstanceHeaderComponent);
         component = fixture.componentInstance;
@@ -112,7 +107,7 @@ describe('ProcessInstanceHeaderComponent', () => {
     });
 
     it('should display started by', async () => {
-        component.processInstance.startedBy = {firstName:  'Admin', lastName: 'User'};
+        component.processInstance.startedBy = { firstName: 'Admin', lastName: 'User' };
         component.ngOnChanges();
         fixture.detectChanges();
         await fixture.whenStable();
@@ -166,7 +161,6 @@ describe('ProcessInstanceHeaderComponent', () => {
     });
 
     describe('Config Filtering', () => {
-
         it('should show only the properties from the configuration file', () => {
             appConfigService.config['adf-process-instance-header'] = {
                 presets: {
@@ -196,5 +190,5 @@ describe('ProcessInstanceHeaderComponent', () => {
             expect(propertyList[0].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.STATUS');
             expect(propertyList[2].innerText).toContain('ADF_PROCESS_LIST.PROPERTIES.CATEGORY');
         });
-   });
+    });
 });

@@ -19,60 +19,43 @@ import { FormModel } from '@alfresco/adf-core';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudComponent } from './form-cloud.component';
 
 @Component({
     selector: 'adf-cloud-form-with-custom-outcomes',
-    template: `
-        <adf-cloud-form #adfCloudForm>
-            <adf-cloud-form-custom-outcomes>
-                <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
-                    CUSTOM-BUTTON-1
-                </button>
-                <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
-                    CUSTOM-BUTTON-2
-                </button>
-            </adf-cloud-form-custom-outcomes>
-        </adf-cloud-form>`
+    template: ` <adf-cloud-form #adfCloudForm>
+        <adf-cloud-form-custom-outcomes>
+            <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">CUSTOM-BUTTON-1</button>
+            <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">CUSTOM-BUTTON-2</button>
+        </adf-cloud-form-custom-outcomes>
+    </adf-cloud-form>`
 })
 class FormCloudWithCustomOutComesComponent {
-
     @ViewChild('adfCloudForm', { static: true })
     adfCloudForm: FormCloudComponent;
 
-    onCustomButtonOneClick() {
-    }
+    onCustomButtonOneClick() {}
 
-    onCustomButtonTwoClick() {
-    }
+    onCustomButtonTwoClick() {}
 }
 
 describe('FormCloudWithCustomOutComesComponent', () => {
-
     let fixture: ComponentFixture<FormCloudWithCustomOutComesComponent>;
     let customComponent: FormCloudWithCustomOutComesComponent;
     let debugElement: DebugElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [FormCloudWithCustomOutComesComponent]
         });
         fixture = TestBed.createComponent(FormCloudWithCustomOutComesComponent);
         customComponent = fixture.componentInstance;
         debugElement = fixture.debugElement;
         const formRepresentation = {
-            fields: [
-                { id: 'container1' }
-            ],
-            outcomes: [
-                { id: 'outcome-1', name: 'outcome 1' }
-            ]
+            fields: [{ id: 'container1' }],
+            outcomes: [{ id: 'outcome-1', name: 'outcome 1' }]
         };
 
         const form = new FormModel(formRepresentation);

@@ -20,22 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as diagramsEventsMock from '../../mock/diagram/diagram-events.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Diagrams events', () => {
-
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
@@ -54,7 +49,7 @@ describe('Diagrams events', () => {
         jasmine.Ajax.uninstall();
     });
 
-    const ajaxReply =  (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -63,7 +58,6 @@ describe('Diagrams events', () => {
     };
 
     describe('Diagrams component Events: ', () => {
-
         it('Should render the Start Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -90,8 +84,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -113,8 +109,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -135,8 +133,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -157,8 +157,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -197,8 +199,9 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-end-event > diagram-event >' + ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -213,7 +216,6 @@ describe('Diagrams events', () => {
     });
 
     describe('Diagrams component Events with process instance id: ', () => {
-
         it('Should render the Start Event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -276,8 +278,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -299,8 +303,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -322,8 +328,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -345,8 +353,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -367,8 +377,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -389,8 +401,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -411,8 +425,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -433,8 +449,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -455,8 +473,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -477,8 +497,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -499,8 +521,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -521,8 +545,10 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-start-event > diagram-event >' +
+                            ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -597,8 +623,9 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-end-event > diagram-event >' + ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -619,8 +646,9 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-end-event > diagram-event >' + ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
@@ -641,8 +669,9 @@ describe('Diagrams events', () => {
                     const event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(event).not.toBeNull();
 
-                    const iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
-                        ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
+                    const iconEvent: any = element.querySelector(
+                        'diagram-end-event > diagram-event >' + ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error'
+                    );
                     expect(iconEvent).not.toBeNull();
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);

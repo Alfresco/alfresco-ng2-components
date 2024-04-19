@@ -17,10 +17,9 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {
     FormService,
-    LogService,
     ThumbnailService,
     NotificationService,
     FormValues,
@@ -35,13 +34,19 @@ import { ContentCloudNodeSelectorService } from '../../../services/content-cloud
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel, DestinationFolderPathType } from '../../../models/form-cloud-representation.model';
-import { ContentNodeSelectorPanelService, NewVersionUploaderDataAction, NewVersionUploaderDialogData, NewVersionUploaderService, VersionManagerUploadData } from '@alfresco/adf-content-services';
+import {
+    ContentNodeSelectorPanelService,
+    NewVersionUploaderDataAction,
+    NewVersionUploaderDialogData,
+    NewVersionUploaderService,
+    VersionManagerUploadData
+} from '@alfresco/adf-content-services';
 
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 export const ALIAS_ROOT_FOLDER = '-root-';
 export const ALIAS_USER_FOLDER = '-my-';
 export const APP_NAME = '-appname-';
-export const VALID_ALIAS = [ ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-' ];
+export const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
@@ -65,6 +70,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     rootNodeId = ALIAS_USER_FOLDER;
     selectedNode: Node;
 
+    @Output()
+    error = new EventEmitter<any>();
+
     private previewState = false;
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
@@ -75,7 +83,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     constructor(
         formService: FormService,
-        logger: LogService,
         thumbnails: ThumbnailService,
         processCloudContentService: ProcessCloudContentService,
         notificationService: NotificationService,
@@ -85,7 +92,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService,
         private newVersionUploaderService: NewVersionUploaderService
     ) {
-        super(formService, thumbnails, processCloudContentService, notificationService, logger);
+        super(formService, thumbnails, processCloudContentService, notificationService);
     }
 
     ngOnInit() {
@@ -95,7 +102,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             this.contentModelFormFileHandler(files[0]);
         }
         this.field.params.displayableCMProperties = this.field.params.displayableCMProperties ?? [];
-        this.displayedColumns.splice(2, 0, ...(this.field.params.displayableCMProperties?.map(property => property?.name) || []));
+        this.displayedColumns.splice(2, 0, ...(this.field.params.displayableCMProperties?.map((property) => property?.name) || []));
         this.setPreviewState();
     }
 
@@ -139,7 +146,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             this.contentNodeSelectorService
                 .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal(), true)
                 .subscribe((selections: Node[]) => {
-                    selections.forEach(node => (node['isExternal'] = true));
+                    selections.forEach((node) => (node['isExternal'] = true));
                     const selectionWithoutDuplication = this.removeExistingSelection(selections);
                     const hadFilesAttached = this.field.value?.length > 0;
                     this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
@@ -171,14 +178,14 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return rootNodeId;
     }
 
-   async getNodeIdFromPath(destinationFolderPath: DestinationFolderPath): Promise<string> {
+    async getNodeIdFromPath(destinationFolderPath: DestinationFolderPath): Promise<string> {
         let nodeId: string;
-        const destinationPath =  this.getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath.value);
+        const destinationPath = this.getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath.value);
         destinationPath.path = this.replaceAppNameAliasWithValue(destinationPath.path);
         try {
             nodeId = await this.contentNodeSelectorService.getNodeIdFromPath(destinationPath);
         } catch (error) {
-            this.logService.error(error);
+            this.error.emit(error);
         }
 
         return nodeId;
@@ -189,14 +196,15 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         try {
             nodeId = await this.contentNodeSelectorService.getNodeIdFromFolderVariableValue(destinationFolderPath.value, ALIAS_USER_FOLDER);
         } catch (error) {
-            this.logService.error(error);
+            this.error.emit(error);
         }
 
         return nodeId;
     }
 
     getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {
-        let alias: string; let path: string;
+        let alias: string;
+        let path: string;
         if (destinationFolderPath) {
             const startOfRelativePathIndex = destinationFolderPath.indexOf('/');
             if (startOfRelativePathIndex >= 0) {
@@ -211,8 +219,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     removeExistingSelection(selections: Node[]) {
-        const existingNode: Node[] = [...this.field.value || []];
-        return selections.filter(opt => !existingNode.some((node) => node.id === opt.id));
+        const existingNode: Node[] = [...(this.field.value || [])];
+        return selections.filter((opt) => !existingNode.some((node) => node.id === opt.id));
     }
 
     downloadContent(file: Node): void {
@@ -220,12 +228,13 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     onUploadNewFileVersion(node: NewVersionUploaderDialogData): void {
-        this.newVersionUploaderService.openUploadNewVersionDialog(node).subscribe((newVersionUploaderData) => {
-            if (newVersionUploaderData.action === NewVersionUploaderDataAction.upload) {
-                this.replaceOldFileVersionWithNew(newVersionUploaderData as VersionManagerUploadData);
-            }
-        },
-            error => this.notificationService.showError(error.value)
+        this.newVersionUploaderService.openUploadNewVersionDialog(node).subscribe(
+            (newVersionUploaderData) => {
+                if (newVersionUploaderData.action === NewVersionUploaderDataAction.upload) {
+                    this.replaceOldFileVersionWithNew(newVersionUploaderData as VersionManagerUploadData);
+                }
+            },
+            (error) => this.notificationService.showError(error.value)
         );
     }
 
@@ -250,11 +259,11 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     contentModelFormFileHandler(file?: any) {
         if (file?.id && this.isRetrieveMetadataOptionEnabled()) {
             const values: FormValues = {};
-            this.nodesApi.getNode(file.id).then(acsNode => {
+            this.nodesApi.getNode(file.id).then((acsNode) => {
                 const metadata = acsNode?.entry?.properties;
                 if (metadata) {
                     const keys = Object.keys(metadata);
-                    keys.forEach(key => {
+                    keys.forEach((key) => {
                         const sanitizedKey = key.replace(':', '_');
                         values[sanitizedKey] = metadata[key];
                     });

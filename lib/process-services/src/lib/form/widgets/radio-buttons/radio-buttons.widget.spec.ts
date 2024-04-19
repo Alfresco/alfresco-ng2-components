@@ -22,7 +22,6 @@ import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -38,13 +37,13 @@ describe('RadioButtonsWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatRadioModule, FormsModule, MatIconModule]
+            imports: [CoreTestingModule, MatRadioModule, FormsModule, MatIconModule]
         });
         taskFormService = TestBed.inject(TaskFormService);
         processDefinitionService = TestBed.inject(ProcessDefinitionService);
 
         formService = new FormService();
-        widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService, null);
+        widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 

@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CommentModel, CoreTestingModule } from '@alfresco/adf-core';
 import { fakeTasksComment, fakeUser1 } from '../mocks/task-comments.mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskCommentsService } from './task-comments.service';
 
 declare let jasmine: any;
@@ -28,10 +27,7 @@ describe('TaskCommentsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(TaskCommentsService);
     });
@@ -45,26 +41,24 @@ describe('TaskCommentsService', () => {
     });
 
     describe('Task comments', () => {
-
         it('should add a comment task ', (done) => {
-            service.add('999', 'fake-comment-message').subscribe(
-                (res: CommentModel) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).not.toEqual(null);
-                    expect(res.message).toEqual('fake-comment-message');
-                    expect(res.created).not.toEqual(null);
-                    expect(res.createdBy.email).toEqual('fake-email@dom.com');
-                    expect(res.createdBy.firstName).toEqual('firstName');
-                    expect(res.createdBy.lastName).toEqual('lastName');
-                    done();
-                }
-            );
+            service.add('999', 'fake-comment-message').subscribe((res: CommentModel) => {
+                expect(res).toBeDefined();
+                expect(res.id).not.toEqual(null);
+                expect(res.message).toEqual('fake-comment-message');
+                expect(res.created).not.toEqual(null);
+                expect(res.createdBy.email).toEqual('fake-email@dom.com');
+                expect(res.createdBy.firstName).toEqual('firstName');
+                expect(res.createdBy.lastName).toEqual('lastName');
+                done();
+            });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    id: '111', message: 'fake-comment-message',
+                    id: '111',
+                    message: 'fake-comment-message',
                     createdBy: fakeUser1,
                     created: '2016-07-15T11:19:17.440+0000'
                 })
@@ -72,15 +66,13 @@ describe('TaskCommentsService', () => {
         });
 
         it('should return the tasks comments ', (done) => {
-            service.get('999').subscribe(
-                (res: CommentModel[]) => {
-                    expect(res).toBeDefined();
-                    expect(res.length).toEqual(2);
-                    expect(res[0].message).toEqual('fake-message-1');
-                    expect(res[1].message).toEqual('fake-message-2');
-                    done();
-                }
-            );
+            service.get('999').subscribe((res: CommentModel[]) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(2);
+                expect(res[0].message).toEqual('fake-message-1');
+                expect(res[1].message).toEqual('fake-message-2');
+                done();
+            });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,

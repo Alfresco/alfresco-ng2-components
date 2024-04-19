@@ -21,8 +21,13 @@ import { ProcessFilterCloudService } from './process-filter-cloud.service';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { fakeEmptyProcessCloudFilterEntries, fakeProcessCloudFilterEntries, fakeProcessCloudFilters, fakeProcessCloudFilterWithDifferentEntries, fakeProcessFilter } from '../mock/process-filters-cloud.mock';
+import {
+    fakeEmptyProcessCloudFilterEntries,
+    fakeProcessCloudFilterEntries,
+    fakeProcessCloudFilters,
+    fakeProcessCloudFilterWithDifferentEntries,
+    fakeProcessFilter
+} from '../mock/process-filters-cloud.mock';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 
@@ -43,13 +48,8 @@ describe('ProcessFilterCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            providers: [
-                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-            ]
+            imports: [ProcessServiceCloudTestingModule],
+            providers: [{ provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         service = TestBed.inject(ProcessFilterCloudService);
 

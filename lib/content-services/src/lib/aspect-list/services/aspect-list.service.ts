@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { from, Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
@@ -25,17 +25,13 @@ import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class AspectListService {
-
     private _aspectsApi: AspectsApi;
     get aspectsApi(): AspectsApi {
         this._aspectsApi = this._aspectsApi ?? new AspectsApi(this.alfrescoApiService.getInstance());
         return this._aspectsApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private appConfigService: AppConfigService,
-                private logService: LogService) {
-    }
+    constructor(private alfrescoApiService: AlfrescoApiService, private appConfigService: AppConfigService) {}
 
     getAspects(): Observable<AspectEntry[]> {
         const visibleAspectList = this.getVisibleAspects();
@@ -52,14 +48,11 @@ export class AspectListService {
             where,
             include: ['properties']
         };
-        return from(this.aspectsApi.listAspects(opts))
-            .pipe(
-                map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
-                catchError((error) => {
-                    this.logService.error(error);
-                    return of([]);
-                })
-            );
+
+        return from(this.aspectsApi.listAspects(opts)).pipe(
+            map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
+            catchError(() => of([]))
+        );
     }
 
     getCustomAspects(whiteList?: string[]): Observable<AspectEntry[]> {
@@ -68,14 +61,10 @@ export class AspectListService {
             where,
             include: ['properties']
         };
-        return from(this.aspectsApi.listAspects(opts))
-            .pipe(
-                map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
-                catchError((error) => {
-                    this.logService.error(error);
-                    return of([]);
-                })
-            );
+        return from(this.aspectsApi.listAspects(opts)).pipe(
+            map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
+            catchError(() => of([]))
+        );
     }
 
     private filterAspectByConfig(visibleAspectList: string[], aspectEntries: AspectEntry[]): AspectEntry[] {
@@ -96,5 +85,4 @@ export class AspectListService {
         }
         return visibleAspectList;
     }
-
 }

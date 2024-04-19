@@ -33,7 +33,6 @@ import { UntypedFormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
-import { LogService } from '@alfresco/adf-core';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
@@ -140,8 +139,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         @Inject(IDENTITY_GROUP_SERVICE_TOKEN)
-        private identityGroupService: IdentityGroupServiceInterface,
-        private logService: LogService
+        private identityGroupService: IdentityGroupServiceInterface
     ) {}
 
     ngOnInit(): void {
@@ -247,7 +245,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 }
             } catch (error) {
                 this.invalidGroups.push(group);
-                this.logService.error(error);
             }
         }
 

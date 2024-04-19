@@ -18,17 +18,14 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
 @Component({
     selector: 'adf-test-component',
     template: `
-        <adf-empty-content
-            icon="delete"
-            [title]="'CUSTOM_TITLE'"
-            [subtitle]="'CUSTOM_SUBTITLE'">
+        <adf-empty-content icon="delete" [title]="'CUSTOM_TITLE'" [subtitle]="'CUSTOM_SUBTITLE'">
             <div class="adf-empty-content__text">SUBTITLE-1</div>
             <div class="adf-empty-content__text">SUBTITLE-2</div>
             <div class="adf-empty-content__text">SUBTITLE-3</div>
@@ -38,19 +35,13 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 class TestComponent {}
 
 describe('EmptyContentComponent', () => {
-
     let fixture: ComponentFixture<TestComponent>;
     let translateService: TranslateService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [CoreTestingModule],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         translateService = TestBed.inject(TranslateService);

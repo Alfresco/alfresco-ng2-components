@@ -19,14 +19,22 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import {
-    startFormDateWidgetMock, startFormDropdownDefinitionMock,
-    startFormTextDefinitionMock, startMockForm, startMockFormWithTab,
-    startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock,
-    taskFormSingleUploadMock, taskFormMultipleUploadMock, preselectedSingleNode, preselectedMultipleNodes
+    startFormDateWidgetMock,
+    startFormDropdownDefinitionMock,
+    startFormTextDefinitionMock,
+    startMockForm,
+    startMockFormWithTab,
+    startFormAmountWidgetMock,
+    startFormNumberWidgetMock,
+    startFormRadioButtonWidgetMock,
+    taskFormSingleUploadMock,
+    taskFormMultipleUploadMock,
+    preselectedSingleNode,
+    preselectedMultipleNodes
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
 import { WidgetVisibilityService, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { ProcessService } from '../process-list/services/process.service';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -36,7 +44,6 @@ import { MatCardHarness } from '@angular/material/card/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('StartFormComponent', () => {
-
     let component: StartFormComponent;
     let fixture: ComponentFixture<StartFormComponent>;
     let getStartFormSpy: jasmine.Spy;
@@ -50,10 +57,7 @@ describe('StartFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ProcessTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(StartFormComponent);
@@ -63,9 +67,11 @@ describe('StartFormComponent', () => {
         visibilityService = TestBed.inject(WidgetVisibilityService);
         translate = TestBed.inject(TranslateService);
 
-        getStartFormSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(of({
-            processDefinitionName: 'my:process'
-        }));
+        getStartFormSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(
+            of({
+                processDefinitionName: 'my:process'
+            })
+        );
 
         spyOn(translate, 'instant').and.callFake((key) => key);
         spyOn(translate, 'get').and.callFake((key) => of(key));
@@ -122,14 +128,18 @@ describe('StartFormComponent', () => {
     });
 
     it('should show outcome buttons by default', () => {
-        getStartFormSpy.and.returnValue(of({
-            id: '1',
-            processDefinitionName: 'my:process',
-            outcomes: [{
-                id: 'approve',
-                name: 'Approve'
-            }]
-        }));
+        getStartFormSpy.and.returnValue(
+            of({
+                id: '1',
+                processDefinitionName: 'my:process',
+                outcomes: [
+                    {
+                        id: 'approve',
+                        name: 'Approve'
+                    }
+                ]
+            })
+        );
         component.processDefinitionId = exampleId1;
         component.ngOnInit();
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -138,14 +148,18 @@ describe('StartFormComponent', () => {
     });
 
     it('should show outcome buttons if showOutcomeButtons is true', () => {
-        getStartFormSpy.and.returnValue(of({
-            id: '1',
-            processDefinitionName: 'my:process',
-            outcomes: [{
-                id: 'approve',
-                name: 'Approve'
-            }]
-        }));
+        getStartFormSpy.and.returnValue(
+            of({
+                id: '1',
+                processDefinitionName: 'my:process',
+                outcomes: [
+                    {
+                        id: 'approve',
+                        name: 'Approve'
+                    }
+                ]
+            })
+        );
         component.processDefinitionId = exampleId1;
         component.showOutcomeButtons = true;
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -164,7 +178,6 @@ describe('StartFormComponent', () => {
     });
 
     describe('Display widgets', () => {
-
         it('should be able to display a textWidget from a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormTextDefinitionMock));
             component.processDefinitionId = exampleId1;
@@ -387,7 +400,6 @@ describe('StartFormComponent', () => {
     });
 
     describe('OutCome Actions', () => {
-
         it('should not enable outcome button when model missing', () => {
             expect(component.isOutcomeButtonVisible(null, false)).toBeFalsy();
         });

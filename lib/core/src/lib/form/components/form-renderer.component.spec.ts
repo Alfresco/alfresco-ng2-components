@@ -43,7 +43,6 @@ import {
 } from './mock/form-renderer.component.mock';
 import { FormService } from '../services/form.service';
 import { CoreTestingModule } from '../../testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
 import { FormRulesManager } from '../models/form-rules.model';
@@ -88,7 +87,7 @@ describe('Form Renderer Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;
@@ -430,9 +429,7 @@ describe('Form Renderer Component', () => {
             const twoSpanTextWidgetContainerId = '#field-1ff21afc-7df4-4607-8363-1dc8576e1c8e-container';
             const oneSpanTextWidgetContainerId = '#field-f4285ad-g123-1a73-521d-7nm4a7231aul0-container';
 
-            const formSizedElement = fixture.nativeElement.querySelector(
-                `${oneSpanTextWidgetContainerId} section.adf-grid-list-column-view`
-            );
+            const formSizedElement = fixture.nativeElement.querySelector(`${oneSpanTextWidgetContainerId} section.adf-grid-list-column-view`);
             expectElementToBeVisible(formSizedElement);
             const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll(
                 `${oneSpanTextWidgetContainerId} section .adf-grid-list-single-column`

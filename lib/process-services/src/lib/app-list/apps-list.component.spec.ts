@@ -23,7 +23,6 @@ import { of, throwError } from 'rxjs';
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent, APP_LIST_LAYOUT_GRID, APP_LIST_LAYOUT_LIST } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -50,7 +49,7 @@ describe('AppsListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule],
+            imports: [ProcessTestingModule],
             declarations: [CustomEmptyAppListTemplateComponent]
         });
         fixture = TestBed.createComponent(AppsListComponent);

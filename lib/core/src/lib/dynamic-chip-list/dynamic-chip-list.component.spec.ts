@@ -16,24 +16,28 @@
  */
 
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { Chip, CoreTestingModule, DynamicChipListComponent } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 
 describe('DynamicChipListComponent', () => {
-    let chips: Chip[] = [{
-        name: 'test1',
-        id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
-    }, {
-        name: 'test2',
-        id: 'fcb92659-1f10-41b4-9b17-851b72a3b597'
-    }, {
-        name: 'test3',
-        id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf'
-    }, {
-        name: 'test4',
-        id: 'as4213c0-729d-466c-9a6c-ee2e937273as'
-    }];
+    let chips: Chip[] = [
+        {
+            name: 'test1',
+            id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
+        },
+        {
+            name: 'test2',
+            id: 'fcb92659-1f10-41b4-9b17-851b72a3b597'
+        },
+        {
+            name: 'test3',
+            id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf'
+        },
+        {
+            name: 'test4',
+            id: 'as4213c0-729d-466c-9a6c-ee2e937273as'
+        }
+    ];
     let component: DynamicChipListComponent;
     let fixture: ComponentFixture<DynamicChipListComponent>;
     let element: HTMLElement;
@@ -59,10 +63,7 @@ describe('DynamicChipListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         const resizeObserverSpy = spyOn(window, 'ResizeObserver').and.callThrough();
         fixture = TestBed.createComponent(DynamicChipListComponent);
@@ -210,10 +211,12 @@ describe('DynamicChipListComponent', () => {
         }));
 
         it('should not render view more button when chip takes more than one line and there are no more chips', fakeAsync(() => {
-            renderChips([{
-                name: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
-                id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
-            }]);
+            renderChips([
+                {
+                    name: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
+                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
+                }
+            ]);
             component.ngOnChanges({
                 chips: new SimpleChange(undefined, component.chips, true)
             });
@@ -225,13 +228,16 @@ describe('DynamicChipListComponent', () => {
         }));
 
         it('should render view more button when chip takes more than one line and there are more chips', fakeAsync(() => {
-            renderChips([{
-                name: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
-                id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
-            }, {
-                name: 'Some other tag',
-                id: '0ee933fa-57fc-4587-8a77-b787e814f1d3'
-            }]);
+            renderChips([
+                {
+                    name: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
+                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
+                },
+                {
+                    name: 'Some other tag',
+                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d3'
+                }
+            ]);
             component.ngOnChanges({
                 chips: new SimpleChange(undefined, component.chips, true)
             });

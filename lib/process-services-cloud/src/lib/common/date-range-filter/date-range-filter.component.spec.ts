@@ -17,7 +17,6 @@
 
 import { DateRangeFilterComponent } from './date-range-filter.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
@@ -38,10 +37,7 @@ describe('DateRangeFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         fixture = TestBed.createComponent(DateRangeFilterComponent);
         component = fixture.componentInstance;
@@ -66,9 +62,11 @@ describe('DateRangeFilterComponent', () => {
         spyOn(service, 'getDateRange');
         spyOn(component.dateTypeChange, 'emit');
 
-        const stateElement = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' }));
+        const stateElement = await loader.getHarness(
+            MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' })
+        );
 
-        await stateElement.clickOptions({ selector: '[data-automation-id="adf-cloud-edit-process-property-options-WEEK"]'});
+        await stateElement.clickOptions({ selector: '[data-automation-id="adf-cloud-edit-process-property-options-WEEK"]' });
 
         expect(service.getDateRange).not.toHaveBeenCalled();
         expect(component.dateTypeChange.emit).toHaveBeenCalled();
@@ -76,9 +74,11 @@ describe('DateRangeFilterComponent', () => {
 
     it('should not emit event on `RANGE` option change', async () => {
         spyOn(component.dateTypeChange, 'emit');
-        const stateElement = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' }));
+        const stateElement = await loader.getHarness(
+            MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' })
+        );
 
-        await stateElement.clickOptions({ selector: '[data-automation-id="adf-cloud-edit-process-property-options-RANGE"]'});
+        await stateElement.clickOptions({ selector: '[data-automation-id="adf-cloud-edit-process-property-options-RANGE"]' });
 
         expect(component.dateTypeChange.emit).not.toHaveBeenCalled();
     });
@@ -133,7 +133,9 @@ describe('DateRangeFilterComponent', () => {
     });
 
     it('should have floating labels when values are present', async () => {
-        const stateElement = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' }));
+        const stateElement = await loader.getHarness(
+            MatSelectHarness.with({ selector: '[data-automation-id="adf-cloud-edit-process-property-createdDate"]' })
+        );
 
         await stateElement.open();
         const selectField = await loader.getHarness(MatFormFieldHarness.with({ selector: '[data-automation-id="createdDate"]' }));

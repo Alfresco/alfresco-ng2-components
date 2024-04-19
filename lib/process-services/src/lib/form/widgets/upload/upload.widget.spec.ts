@@ -19,15 +19,8 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import {
-    FormService,
-    FormFieldTypes,
-    FormModel,
-    FormFieldModel,
-    CoreTestingModule
-} from '@alfresco/adf-core';
+import { FormService, FormFieldTypes, FormModel, FormFieldModel, CoreTestingModule } from '@alfresco/adf-core';
 import { UploadWidgetComponent } from './upload.widget';
-import { TranslateModule } from '@ngx-translate/core';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { ProcessContentService } from '../../services/process-content.service';
 
@@ -35,7 +28,7 @@ const fakePngAnswer = new RelatedContentRepresentation({
     id: 1155,
     name: 'a_png_file.png',
     created: new Date('2017-07-25T17:17:37.099Z'),
-    createdBy: {id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin'},
+    createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin' },
     relatedContent: false,
     contentAvailable: true,
     link: false,
@@ -49,7 +42,7 @@ const fakeJpgAnswer = new RelatedContentRepresentation({
     id: 1156,
     name: 'a_jpg_file.jpg',
     created: new Date('2017-07-25T17:17:37.118Z'),
-    createdBy: {id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin'},
+    createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin' },
     relatedContent: false,
     contentAvailable: true,
     link: false,
@@ -60,12 +53,11 @@ const fakeJpgAnswer = new RelatedContentRepresentation({
 });
 
 describe('UploadWidgetComponent', () => {
-
     const fakeCreationFile = (name: string, id: string | number) => ({
         id,
         name,
         created: '2017-07-25T17:17:37.118Z',
-        createdBy: {id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin'},
+        createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin' },
         relatedContent: false,
         contentAvailable: true,
         link: false,
@@ -77,15 +69,12 @@ describe('UploadWidgetComponent', () => {
 
     let contentService: ProcessContentService;
 
-    const filePngFake = new File(['fakePng'], 'file-fake.png', {type: 'image/png'});
-    const filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', {type: 'image/jpg'});
+    const filePngFake = new File(['fakePng'], 'file-fake.png', { type: 'image/png' });
+    const filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', { type: 'image/jpg' });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
     });
 
@@ -111,9 +100,7 @@ describe('UploadWidgetComponent', () => {
 
             uploadWidgetComponent.field = new FormFieldModel(null, {
                 type: FormFieldTypes.UPLOAD,
-                value: [
-                    {name: encodedFileName}
-                ]
+                value: [{ name: encodedFileName }]
             });
 
             uploadWidgetComponent.ngOnInit();
@@ -130,9 +117,7 @@ describe('UploadWidgetComponent', () => {
         it('should reset field value', () => {
             uploadWidgetComponent.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
-                value: [
-                    {name: 'filename'}
-                ]
+                value: [{ name: 'filename' }]
             });
 
             uploadWidgetComponent.removeFile(uploadWidgetComponent.field.value[0]);
@@ -142,7 +127,7 @@ describe('UploadWidgetComponent', () => {
         });
 
         beforeEach(() => {
-            uploadWidgetComponent.field = new FormFieldModel(new FormModel({taskId: 'fake-upload-id'}), {
+            uploadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-upload-id' }), {
                 id: 'upload-id',
                 name: 'upload-name',
                 value: '',
@@ -199,11 +184,10 @@ describe('UploadWidgetComponent', () => {
             await fixture.whenStable();
 
             const inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
-            inputDebugElement.triggerEventHandler('change', {target: {files: [filJpgFake]}});
+            inputDebugElement.triggerEventHandler('change', { target: { files: [filJpgFake] } });
 
             const filesList = fixture.debugElement.query(By.css('#file-1156'));
             expect(filesList).toBeDefined();
-
         });
 
         it('should update the form after deleted a file', async () => {
@@ -217,7 +201,7 @@ describe('UploadWidgetComponent', () => {
             await fixture.whenStable();
 
             const inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
-            inputDebugElement.triggerEventHandler('change', {target: {files: [filePngFake, filJpgFake]}});
+            inputDebugElement.triggerEventHandler('change', { target: { files: [filePngFake, filJpgFake] } });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -247,7 +231,7 @@ describe('UploadWidgetComponent', () => {
             await fixture.whenStable();
 
             const inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
-            inputDebugElement.triggerEventHandler('change', {target: {files: [filePngFake, filJpgFake]}});
+            inputDebugElement.triggerEventHandler('change', { target: { files: [filePngFake, filJpgFake] } });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -398,7 +382,6 @@ describe('UploadWidgetComponent', () => {
                 const fileJpegIcon = debugElement.query(By.css('#file-1156-icon'));
                 fileJpegIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
             });
-
         });
     });
 });

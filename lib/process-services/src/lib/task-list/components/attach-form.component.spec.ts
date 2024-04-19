@@ -21,7 +21,6 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachFormComponent', () => {
     let component: AttachFormComponent;
@@ -31,10 +30,7 @@ describe('AttachFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(AttachFormComponent);
         component = fixture.componentInstance;
@@ -160,14 +156,14 @@ describe('AttachFormComponent', () => {
         component.taskId = 1;
         component.attachFormControl.setValue(10);
 
-        spyOn(taskService, 'attachFormToATask').and.returnValue(of(
-            {
+        spyOn(taskService, 'attachFormToATask').and.returnValue(
+            of({
                 id: 91,
                 name: 'fakeName',
                 formKey: 1204,
                 assignee: null
-            }
-        ));
+            })
+        );
 
         fixture.detectChanges();
         await fixture.whenStable();

@@ -28,7 +28,6 @@ import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeServiceFilter } from '../../mock/task-filters-cloud.mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { EditServiceTaskFilterCloudComponent } from './edit-service-task-filter-cloud.component';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
@@ -55,7 +54,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, TaskFiltersCloudModule, MatIconTestingModule],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, MatIconTestingModule],
             providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditServiceTaskFilterCloudComponent);

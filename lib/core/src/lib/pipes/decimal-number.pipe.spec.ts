@@ -21,19 +21,14 @@ import { UserPreferencesService } from '../common/services/user-preferences.serv
 import { of } from 'rxjs';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { DecimalNumberPipe } from './decimal-number.pipe';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('DecimalNumberPipe', () => {
-
     let pipe: DecimalNumberPipe;
     let userPreferences: UserPreferencesService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));

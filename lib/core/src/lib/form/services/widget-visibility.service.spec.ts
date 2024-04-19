@@ -16,25 +16,21 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import {
-    ContainerModel,
-    FormFieldModel,
-    FormFieldTypes,
-    FormModel,
-    TabModel
-} from '../components/widgets/core';
+import { ContainerModel, FormFieldModel, FormFieldTypes, FormModel, TabModel } from '../components/widgets/core';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { WidgetVisibilityService } from './widget-visibility.service';
 import {
-    fakeFormJson, formTest,
-    formValues, complexVisibilityJsonVisible,
-    complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
+    fakeFormJson,
+    formTest,
+    formValues,
+    complexVisibilityJsonVisible,
+    complexVisibilityJsonNotVisible,
+    tabVisibilityJsonMock,
     tabInvalidFormVisibility,
     fakeFormChainedVisibilityJson,
     fakeFormCheckBoxVisibilityJson
 } from '../../mock/form/widget-visibility.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('WidgetVisibilityService', () => {
     let service: WidgetVisibilityService;
@@ -42,7 +38,7 @@ describe('WidgetVisibilityService', () => {
 
     const stubFormWithFields = new FormModel(fakeFormJson);
 
-    const evaluateConditions = (conditionsArgs: [leftValue: any, rightValue: any][], operator: string ): (boolean | undefined)[] => {
+    const evaluateConditions = (conditionsArgs: [leftValue: any, rightValue: any][], operator: string): (boolean | undefined)[] => {
         const resultsArray: (boolean | undefined)[] = [];
 
         conditionsArgs.forEach(([leftValue, rightValue]) => {
@@ -53,27 +49,26 @@ describe('WidgetVisibilityService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(WidgetVisibilityService);
     });
 
     describe('should be able to evaluate next condition operations', () => {
-
         it('using == and return true', () => {
-            const resultsArray = evaluateConditions([
-                [true, true],
-                [false, false],
-                ['true', true],
-                [true, 'true'],
-                ['true', 'true'],
-                ['test', 'test'],
-                ['4', 4],
-                [0, 0]
-            ], '==');
+            const resultsArray = evaluateConditions(
+                [
+                    [true, true],
+                    [false, false],
+                    ['true', true],
+                    [true, 'true'],
+                    ['true', 'true'],
+                    ['test', 'test'],
+                    ['4', 4],
+                    [0, 0]
+                ],
+                '=='
+            );
 
             resultsArray.forEach((result) => {
                 expect(result).toBe(true);
@@ -81,16 +76,19 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('using == and return false', () => {
-            const resultsArray = evaluateConditions([
-                [true, false],
-                [false, true],
-                ['false', true],
-                [false, 'true'],
-                ['false', 'true'],
-                ['test', 'testt'],
-                ['2', 3],
-                [0, 1]
-            ], '==');
+            const resultsArray = evaluateConditions(
+                [
+                    [true, false],
+                    [false, true],
+                    ['false', true],
+                    [false, 'true'],
+                    ['false', 'true'],
+                    ['test', 'testt'],
+                    ['2', 3],
+                    [0, 1]
+                ],
+                '=='
+            );
 
             resultsArray.forEach((result) => {
                 expect(result).toBe(false);
@@ -98,16 +96,19 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('using != and return true', () => {
-            const resultsArray = evaluateConditions([
-                ['test', 'te'],
-                ['4', 123],
-                [0, 1],
-                [true, false],
-                [false, true],
-                ['false', true],
-                [false, 'true'],
-                ['false', 'true']
-            ], '!=');
+            const resultsArray = evaluateConditions(
+                [
+                    ['test', 'te'],
+                    ['4', 123],
+                    [0, 1],
+                    [true, false],
+                    [false, true],
+                    ['false', true],
+                    [false, 'true'],
+                    ['false', 'true']
+                ],
+                '!='
+            );
 
             resultsArray.forEach((result) => {
                 expect(result).toBe(true);
@@ -115,16 +116,19 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('using != and return false', () => {
-            const resultsArray = evaluateConditions([
-                ['testtest', 'testtest'],
-                ['7', 7],
-                [0, 0],
-                [true, true],
-                [false, false],
-                ['true', true],
-                [true, 'true'],
-                ['true', 'true']
-            ], '!=');
+            const resultsArray = evaluateConditions(
+                [
+                    ['testtest', 'testtest'],
+                    ['7', 7],
+                    [0, 0],
+                    [true, true],
+                    [false, false],
+                    ['true', true],
+                    [true, 'true'],
+                    ['true', 'true']
+                ],
+                '!='
+            );
 
             resultsArray.forEach((result) => {
                 expect(result).toBe(false);
@@ -132,11 +136,14 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('using < and return false', () => {
-            const resultsArray = evaluateConditions([
-                [2, 1],
-                [1, 0],
-                [0, -1]
-            ], '<');
+            const resultsArray = evaluateConditions(
+                [
+                    [2, 1],
+                    [1, 0],
+                    [0, -1]
+                ],
+                '<'
+            );
 
             resultsArray.forEach((result) => {
                 expect(result).toBe(false);
@@ -144,12 +151,15 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('using <= and return true', () => {
-            const resultsArray = evaluateConditions([
-                [3, 4],
-                [0, 1],
-                [0, 0],
-                [1, 1]
-            ], '<=');
+            const resultsArray = evaluateConditions(
+                [
+                    [3, 4],
+                    [0, 1],
+                    [0, 0],
+                    [1, 1]
+                ],
+                '<='
+            );
 
             resultsArray.forEach((result) => {
                 expect(result).toBe(true);
@@ -157,12 +167,15 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('using > and return false', () => {
-            const resultsArray = evaluateConditions([
-                [0, 1],
-                [0, 141],
-                [-144, 0],
-                [32, 44]
-            ], '>');
+            const resultsArray = evaluateConditions(
+                [
+                    [0, 1],
+                    [0, 141],
+                    [-144, 0],
+                    [32, 44]
+                ],
+                '>'
+            );
 
             resultsArray.forEach((result) => {
                 expect(result).toBe(false);
@@ -170,13 +183,16 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('using >= and return true', () => {
-            const resultsArray = evaluateConditions([
-                [12, 2],
-                [2, 2],
-                [1, 0],
-                [0, 0],
-                [0, -10]
-            ], '>=');
+            const resultsArray = evaluateConditions(
+                [
+                    [12, 2],
+                    [2, 2],
+                    [1, 0],
+                    [0, 0],
+                    [0, -10]
+                ],
+                '>='
+            );
 
             resultsArray.forEach((result) => {
                 expect(result).toBe(true);
@@ -249,7 +265,8 @@ describe('WidgetVisibilityService', () => {
                     name: 'FORM_VARIABLE_TEST',
                     type: 'string',
                     value: 'form_value_test'
-                }]
+                }
+            ]
         });
 
         beforeEach(() => {
@@ -414,7 +431,6 @@ describe('WidgetVisibilityService', () => {
 
             expect(isVisible).toBeTruthy();
         });
-
 
         it('should return true when left field value is equal to true and rigth value is equal to "true"', () => {
             spyOn(service, 'getFieldValue').and.returnValue(true);
@@ -670,13 +686,15 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightFormFieldId = 'LEFT_FORM_FIELD_ID';
-            const contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
-                id: 'fake-container-id',
-                type: FormFieldTypes.GROUP,
-                name: 'fake-container-name',
-                isVisible: true,
-                visibilityCondition: visibilityObjTest
-            }));
+            const contModel = new ContainerModel(
+                new FormFieldModel(fakeFormWithField, {
+                    id: 'fake-container-id',
+                    type: FormFieldTypes.GROUP,
+                    name: 'fake-container-name',
+                    isVisible: true,
+                    visibilityCondition: visibilityObjTest
+                })
+            );
 
             fakeFormWithField.fieldsCache.push(contModel.field);
             service.refreshVisibility(fakeFormWithField);
@@ -687,13 +705,15 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
-            const contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
-                id: 'fake-container-id',
-                type: FormFieldTypes.GROUP,
-                name: 'fake-container-name',
-                isVisible: true,
-                visibilityCondition: visibilityObjTest
-            }));
+            const contModel = new ContainerModel(
+                new FormFieldModel(fakeFormWithField, {
+                    id: 'fake-container-id',
+                    type: FormFieldTypes.GROUP,
+                    name: 'fake-container-name',
+                    isVisible: true,
+                    visibilityCondition: visibilityObjTest
+                })
+            );
             service.refreshEntityVisibility(contModel.field);
             expect(contModel.isVisible).toBeFalsy();
         });
@@ -752,7 +772,8 @@ describe('WidgetVisibilityService', () => {
                                             name: 'No'
                                         }
                                     ]
-                                }, {
+                                },
+                                {
                                     id: 'textBoxTest',
                                     name: 'textbox test',
                                     type: 'people',
@@ -780,7 +801,6 @@ describe('WidgetVisibilityService', () => {
     });
 
     describe('Visibility based on form variables', () => {
-
         let fakeFormWithVariables = new FormModel(fakeFormJson);
         const fakeTabVisibilityModel = new FormModel(tabVisibilityJsonMock);
         const complexVisibilityModel = new FormModel(complexVisibilityJsonVisible);
@@ -804,14 +824,19 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should be able to analyze a complex visibility JSON truthy', () => {
-            const isVisible = service.isFieldVisible(complexVisibilityModel,
-                complexVisibilityJsonVisible.formDefinition.fields[2].fields[2][0].visibilityCondition);
+            const isVisible = service.isFieldVisible(
+                complexVisibilityModel,
+                complexVisibilityJsonVisible.formDefinition.fields[2].fields[2][0].visibilityCondition
+            );
 
             expect(isVisible).toBe(true);
         });
 
         it('should be able to analyze a complex visibility JSON false', () => {
-            const formField = new FormFieldModel(complexVisibilityJsonNotVisibleModel, complexVisibilityJsonNotVisible.formDefinition.fields[2].fields[2][0]);
+            const formField = new FormFieldModel(
+                complexVisibilityJsonNotVisibleModel,
+                complexVisibilityJsonNotVisible.formDefinition.fields[2].fields[2][0]
+            );
             const isVisible = service.isFieldVisible(complexVisibilityJsonNotVisibleModel, new WidgetVisibilityModel(formField.visibilityCondition));
             expect(isVisible).toBe(false);
         });
@@ -899,7 +924,6 @@ describe('WidgetVisibilityService', () => {
     });
 
     describe('Visibility calculation in complex forms', () => {
-
         const fakeFormWithVariables = new FormModel(fakeFormChainedVisibilityJson);
 
         it('Should be able to validate correctly the visibility for the text field for complex expressions', () => {
@@ -927,7 +951,6 @@ describe('WidgetVisibilityService', () => {
     });
 
     describe('Visibility calculation in checkbox forms', () => {
-
         const fakeFormWithValues = new FormModel(fakeFormCheckBoxVisibilityJson);
 
         it('Should be able to validate correctly the visibility for the checkbox expression', () => {

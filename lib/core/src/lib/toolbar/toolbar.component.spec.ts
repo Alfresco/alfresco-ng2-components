@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ToolbarComponent } from './toolbar.component';
 import { ToolbarModule } from './toolbar.module';
@@ -26,11 +25,7 @@ describe('ToolbarComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                ToolbarModule
-            ]
+            imports: [CoreTestingModule, ToolbarModule]
         });
 
         fixture = TestBed.createComponent(ToolbarComponent);

@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ProcessContentService } from './process-content.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
@@ -67,10 +66,7 @@ describe('ProcessContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(ProcessContentService);
     });
@@ -108,7 +104,7 @@ describe('ProcessContentService', () => {
                         id: 8,
                         name: 'fake.zip',
                         created: 1494595697381,
-                        createdBy: {id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com'},
+                        createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
                         relatedContent: true,
                         contentAvailable: true,
                         link: false,
@@ -121,7 +117,7 @@ describe('ProcessContentService', () => {
                         id: 9,
                         name: 'fake.jpg',
                         created: 1494595655381,
-                        createdBy: {id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com'},
+                        createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
                         relatedContent: true,
                         contentAvailable: true,
                         link: false,

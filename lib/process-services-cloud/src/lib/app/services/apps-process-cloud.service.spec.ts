@@ -22,29 +22,22 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from '../mock/app-model.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { fakeEnvironmentList } from '../../common/mock/environment.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('AppsProcessCloudService', () => {
-
     let service: AppsProcessCloudService;
     let appConfigService: AppConfigService;
     let adfHttpClient: AdfHttpClient;
 
-    const apiMockResponse: any = Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }});
+    const apiMockResponse: any = Promise.resolve({
+        list: { entries: [{ entry: fakeApplicationInstance[0] }, { entry: fakeApplicationInstance[1] }] }
+    });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                ProcessServiceCloudTestingModule
-            ],
-            providers: [
-                AlfrescoApiService,
-                AppConfigService
-            ]
+            imports: [CoreTestingModule, ProcessServiceCloudTestingModule],
+            providers: [AlfrescoApiService, AppConfigService]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         spyOn(adfHttpClient, 'request').and.returnValue(apiMockResponse);
@@ -56,49 +49,44 @@ describe('AppsProcessCloudService', () => {
     it('should get the deployed applications no apps are specified in app.config', (done) => {
         spyOn(appConfigService, 'get').and.returnValue([]);
         service.loadApps();
-        service.getDeployedApplicationsByStatus('fake').subscribe(
-            (res) => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(2);
-                expect(res[0].name).toEqual('application-new-1');
-                expect(res[1].name).toEqual('application-new-2');
-                done();
-            }
-        );
+        service.getDeployedApplicationsByStatus('fake').subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res.length).toEqual(2);
+            expect(res[0].name).toEqual('application-new-1');
+            expect(res[1].name).toEqual('application-new-2');
+            done();
+        });
     });
 
     it('should get apps from app.config when apps are specified in app.config', (done) => {
         spyOn(appConfigService, 'get').and.returnValue([fakeApplicationInstance[0]]);
         service.loadApps();
-        service.getDeployedApplicationsByStatus('fake').subscribe(
-            (res) => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(1);
-                expect(res[0]).toEqual(fakeApplicationInstance[0]);
-                expect(res[0].name).toEqual('application-new-1');
-                done();
-            }
-        );
+        service.getDeployedApplicationsByStatus('fake').subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res.length).toEqual(1);
+            expect(res[0]).toEqual(fakeApplicationInstance[0]);
+            expect(res[0].name).toEqual('application-new-1');
+            done();
+        });
     });
 
     it('Should not fetch deployed applications if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
             error: 'Mock Error',
-            status: 404, statusText: 'Not Found'
+            status: 404,
+            statusText: 'Not Found'
         });
 
         spyOn(service, 'getDeployedApplicationsByStatus').and.returnValue(throwError(errorResponse));
-        service.getDeployedApplicationsByStatus('fake')
-            .subscribe(
-                () => fail('expected an error, not applications'),
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('Mock Error');
-                }
-            );
+        service.getDeployedApplicationsByStatus('fake').subscribe(
+            () => fail('expected an error, not applications'),
+            (error) => {
+                expect(error.status).toEqual(404);
+                expect(error.statusText).toEqual('Not Found');
+                expect(error.error).toEqual('Mock Error');
+            }
+        );
     });
-
 
     it('should return label with application name', () => {
         const applicationLabel = service.getApplicationLabel(fakeApplicationInstance[0]);

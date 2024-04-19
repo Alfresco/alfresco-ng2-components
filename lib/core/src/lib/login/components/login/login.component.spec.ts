@@ -22,7 +22,6 @@ import {
     CoreTestingModule,
     LoginErrorEvent,
     LoginSuccessEvent,
-    LogService,
     UserPreferencesService
 } from '@alfresco/adf-core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
@@ -61,14 +60,12 @@ describe('LoginComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             providers: [
                 {
-                    provide: OidcAuthenticationService, useValue: {
-                        ssoLogin: () => {
-                        },
+                    provide: OidcAuthenticationService,
+                    useValue: {
+                        ssoLogin: () => {},
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -88,9 +85,6 @@ describe('LoginComponent', () => {
         router = TestBed.inject(Router);
         userPreferences = TestBed.inject(UserPreferencesService);
         appConfigService = TestBed.inject(AppConfigService);
-
-        const logService = TestBed.inject(LogService);
-        spyOn(logService, 'error');
 
         fixture.detectChanges();
 
@@ -117,17 +111,11 @@ describe('LoginComponent', () => {
     };
 
     it('should be autocomplete off', () => {
-        expect(
-            element
-                .querySelector('#adf-login-form')
-                .getAttribute('autocomplete')
-        ).toBe('off');
+        expect(element.querySelector('#adf-login-form').getAttribute('autocomplete')).toBe('off');
     });
 
     it('should redirect to route on successful login', () => {
-        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(
-            of({ type: 'type', ticket: 'ticket' })
-        );
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
         spyOn(router, 'navigate');
@@ -200,7 +188,6 @@ describe('LoginComponent', () => {
     });
 
     describe('Login button', () => {
-
         const getLoginButton = () => element.querySelector('#login-button');
         const getLoginButtonText = () => element.querySelector('#login-button span.adf-login-button-label').innerText;
 
@@ -290,12 +277,11 @@ describe('LoginComponent', () => {
     });
 
     describe('Remember me', () => {
-
         it('should be checked by default', () => {
             expect(element.querySelector('#adf-login-remember input[type="checkbox"]').checked).toBe(true);
         });
 
-        it('should set the component\'s rememberMe property properly', () => {
+        it('should set the component rememberMe property properly', () => {
             element.querySelector('#adf-login-remember').dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
@@ -335,10 +321,11 @@ describe('LoginComponent', () => {
     });
 
     describe('Copyright text', () => {
-
         it('should render the default copyright text', () => {
             expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('\u00A9 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.');
+            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual(
+                '\u00A9 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.'
+            );
         });
 
         it('should render the customised copyright text', () => {
@@ -376,7 +363,6 @@ describe('LoginComponent', () => {
     });
 
     describe('Error', () => {
-
         it('should render validation min-length error when the username is just 1 character with a custom validation Validators.minLength(3)', () => {
             component.fieldsValidation = {
                 username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -529,12 +515,14 @@ describe('LoginComponent', () => {
         });
 
         it('should return CORS error when server CORS error occurs', (done) => {
-            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError({
-                error: {
-                    crossDomain: true,
-                    message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
-                }
-            }));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(
+                throwError({
+                    error: {
+                        crossDomain: true,
+                        message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
+                    }
+                })
+            );
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -550,8 +538,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return CSRF error when server CSRF error occurs', fakeAsync(() => {
-            spyOn(basicAlfrescoAuthService, 'login')
-                .and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -565,14 +552,12 @@ describe('LoginComponent', () => {
         }));
 
         it('should return ECM read-only error when error occurs', fakeAsync(() => {
-            spyOn(basicAlfrescoAuthService, 'login')
-                .and.returnValue(
-                throwError(
-                    {
-                        message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
-                        status: 403
-                    }
-                ));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(
+                throwError({
+                    message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
+                    status: 403
+                })
+            );
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -635,9 +620,7 @@ describe('LoginComponent', () => {
             fixture.detectChanges();
 
             expect(component.isError).toBe(false);
-            expect(event).toEqual(
-                new LoginSuccessEvent({ type: 'type', ticket: 'ticket' }, 'fake-username', null)
-            );
+            expect(event).toEqual(new LoginSuccessEvent({ type: 'type', ticket: 'ticket' }, 'fake-username', null));
         });
 
         loginWithCredentials('fake-username', 'fake-password');
@@ -652,9 +635,7 @@ describe('LoginComponent', () => {
             expect(component.isError).toBe(true);
             expect(getLoginErrorElement()).toBeDefined();
             expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-            expect(error).toEqual(
-                new LoginErrorEvent('Fake server error')
-            );
+            expect(error).toEqual(new LoginErrorEvent('Fake server error'));
         });
 
         loginWithCredentials('fake-username', 'fake-wrong-password');
@@ -695,9 +676,7 @@ describe('LoginComponent', () => {
     }));
 
     describe('SSO ', () => {
-
         describe('implicitFlow ', () => {
-
             beforeEach(() => {
                 appConfigService.config.oauth2 = { implicitFlow: true, silentLogin: false };
                 appConfigService.load();
@@ -727,7 +706,6 @@ describe('LoginComponent', () => {
                     expect(component.ssoLogin).toBe(false);
                     expect(component.redirectToSSOLogin).toHaveBeenCalled();
                 });
-
             }));
 
             it('should render the implicitFlow button in case silentLogin is disabled', fakeAsync(() => {
@@ -739,7 +717,6 @@ describe('LoginComponent', () => {
                 fixture.whenStable().then(() => {
                     expect(component.ssoLogin).toBe(true);
                 });
-
             }));
 
             it('should not show the login base auth button', fakeAsync(() => {

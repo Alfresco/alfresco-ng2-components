@@ -21,22 +21,16 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
 import { CoreTestingModule } from '../../../../testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('HyperlinkWidgetComponent', () => {
-
     let widget: HyperlinkWidgetComponent;
     let fixture: ComponentFixture<HyperlinkWidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatTooltipModule
-            ]
+            imports: [CoreTestingModule, MatTooltipModule]
         });
         fixture = TestBed.createComponent(HyperlinkWidgetComponent);
         widget = fixture.componentInstance;
@@ -134,8 +128,8 @@ describe('HyperlinkWidgetComponent', () => {
         const url = 'www.alfresco.com';
 
         widget.field = new FormFieldModel(new FormModel(), {
-            value:  url,
-            hyperlinkUrl:  'www.alfresco-test.com'
+            value: url,
+            hyperlinkUrl: 'www.alfresco-test.com'
         });
         widget.ngOnInit();
 
@@ -146,7 +140,7 @@ describe('HyperlinkWidgetComponent', () => {
         const url = 'www.alfresco.com';
 
         widget.field = new FormFieldModel(new FormModel(), {
-            displayText:  url
+            displayText: url
         });
         widget.ngOnInit();
 

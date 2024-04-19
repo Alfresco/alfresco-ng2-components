@@ -17,7 +17,6 @@
 
 import { CoreTestingModule, LoginComponent, LoginFooterDirective } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 describe('LoginFooterDirective', () => {
@@ -27,13 +26,11 @@ describe('LoginFooterDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             providers: [
                 {
-                    provide: OidcAuthenticationService, useValue: {}
+                    provide: OidcAuthenticationService,
+                    useValue: {}
                 }
             ]
         });

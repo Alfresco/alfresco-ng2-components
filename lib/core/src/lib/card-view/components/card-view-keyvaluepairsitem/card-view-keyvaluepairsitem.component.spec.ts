@@ -21,10 +21,8 @@ import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluep
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewKeyValuePairsItemComponent', () => {
-
     let fixture: ComponentFixture<CardViewKeyValuePairsItemComponent>;
     let component: CardViewKeyValuePairsItemComponent;
     let cardViewUpdateService: CardViewUpdateService;
@@ -33,10 +31,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);
@@ -55,7 +50,6 @@ describe('CardViewKeyValuePairsItemComponent', () => {
     });
 
     describe('Component', () => {
-
         it('should render the label', () => {
             fixture.detectChanges();
 
@@ -122,5 +116,5 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             expect(cardViewUpdateService.update).toHaveBeenCalled();
             expect(component.property.value.length).toBe(0);
         });
-   });
+    });
 });

@@ -31,7 +31,6 @@ import {
     TASK_VIEW_PERMISSION
 } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -68,7 +67,7 @@ describe('TaskFormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [FormCloudComponent]
         });
         taskDetails.status = TASK_ASSIGNED_STATE;

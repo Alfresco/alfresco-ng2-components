@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService, FormService, WidgetComponent } from '@alfresco/adf-core';
+import { FormService, WidgetComponent } from '@alfresco/adf-core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
@@ -43,8 +43,7 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
     constructor(
         public formService: FormService,
         private taskFormService: TaskFormService,
-        private processDefinitionService: ProcessDefinitionService,
-        private logService: LogService
+        private processDefinitionService: ProcessDefinitionService
     ) {
         super(formService);
     }
@@ -60,31 +59,23 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
     }
 
     getOptionsByTaskId() {
-        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe(
-            (formFieldOption) => {
-                this.field.options = formFieldOption || [];
-                this.field.updateForm();
-            },
-            (err) => this.handleError(err)
-        );
+        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe((formFieldOption) => {
+            this.field.options = formFieldOption || [];
+            this.field.updateForm();
+        });
     }
 
     getOptionsByProcessDefinitionId() {
-        this.processDefinitionService.getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id).subscribe(
-            (formFieldOption) => {
+        this.processDefinitionService
+            .getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id)
+            .subscribe((formFieldOption) => {
                 this.field.options = formFieldOption || [];
                 this.field.updateForm();
-            },
-            (err) => this.handleError(err)
-        );
+            });
     }
 
     onOptionClick(optionSelected: any) {
         this.field.value = optionSelected;
         this.fieldChanged.emit(this.field);
-    }
-
-    handleError(error: any) {
-        this.logService.error(error);
     }
 }

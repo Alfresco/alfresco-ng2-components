@@ -26,13 +26,11 @@ import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { fakeTaskFilters } from '../../mock/task/task-filters.mock';
 import { NavigationStart, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TaskFiltersComponent', () => {
-
     let taskListService: TaskListService;
     let taskFilterService: TaskFilterService;
     let appsProcessService: AppsProcessService;
@@ -42,11 +40,7 @@ describe('TaskFiltersComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule,
-                RouterTestingModule
-            ]
+            imports: [ProcessTestingModule, RouterTestingModule]
         });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
@@ -67,11 +61,11 @@ describe('TaskFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
 
         let lastError: any;
-        component.error.subscribe((err) => lastError = err);
+        component.error.subscribe((err) => (lastError = err));
 
         component.ngOnChanges({ appId: change });
         expect(lastError).toBeDefined();
-   });
+    });
 
     it('should return the filter task list', () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
@@ -79,7 +73,7 @@ describe('TaskFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
 
         let lastValue: any;
-        component.success.subscribe((res) => lastValue = res);
+        component.success.subscribe((res) => (lastValue = res));
 
         component.ngOnChanges({ appId: change });
 
@@ -93,7 +87,7 @@ describe('TaskFiltersComponent', () => {
 
     it('Should call the API to create the default task filters when no task filters exist', async () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of([]));
-        const filtersMock: any[] = [{ name: 'default-task-filter-1'}, { name: 'default-task-filter-2'}];
+        const filtersMock: any[] = [{ name: 'default-task-filter-1' }, { name: 'default-task-filter-2' }];
         const createDefaultFiltersSpy = spyOn(taskFilterService, 'createDefaultFilters').and.returnValue(of(filtersMock));
         const appId = '2';
         const change = new SimpleChange(null, appId, true);
@@ -110,7 +104,7 @@ describe('TaskFiltersComponent', () => {
         const change = new SimpleChange(null, 'test', true);
 
         let lastValue: any;
-        component.success.subscribe((res) => lastValue = res);
+        component.success.subscribe((res) => (lastValue = res));
 
         component.ngOnChanges({ appName: change });
 
@@ -123,7 +117,7 @@ describe('TaskFiltersComponent', () => {
         component.filterParam = new FilterParamsModel({ name: 'FakeMyTasks1' });
 
         let lastValue: any;
-        component.success.subscribe((res) => lastValue = res);
+        component.success.subscribe((res) => (lastValue = res));
 
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
@@ -132,14 +126,14 @@ describe('TaskFiltersComponent', () => {
         expect(lastValue).toBeDefined();
         expect(component.currentFilter).toBeDefined();
         expect(component.currentFilter.name).toEqual('FakeMyTasks1');
-   });
+    });
 
     it('should select the task filter based on the input by index param', () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
         component.filterParam = new FilterParamsModel({ index: 2 });
 
         let lastValue: any;
-        component.success.subscribe((res) => lastValue = res);
+        component.success.subscribe((res) => (lastValue = res));
 
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
@@ -148,7 +142,7 @@ describe('TaskFiltersComponent', () => {
         expect(lastValue).toBeDefined();
         expect(component.currentFilter).toBeDefined();
         expect(component.currentFilter.name).toEqual('FakeMyTasks2');
-   });
+    });
 
     it('should select the task filter based on the input by id param', () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
@@ -159,14 +153,14 @@ describe('TaskFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
 
         let lastValue: any;
-        component.success.subscribe((res) => lastValue = res);
+        component.success.subscribe((res) => (lastValue = res));
 
         component.ngOnChanges({ appId: change });
 
         expect(lastValue).toBeDefined();
         expect(component.currentFilter).toBeDefined();
         expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
-   });
+    });
 
     it('should emit the selected filter based on the filterParam input', () => {
         spyOn(component.filterSelected, 'emit');
@@ -181,7 +175,7 @@ describe('TaskFiltersComponent', () => {
         expect(component.filterSelected.emit).toHaveBeenCalledWith(fakeTaskFilters[0]);
     });
 
-    it('should filterClicked emit when a filter is clicked from the UI', async  () => {
+    it('should filterClicked emit when a filter is clicked from the UI', async () => {
         component.filters = fakeTaskFilters;
         spyOn(component.filterClicked, 'emit');
 
@@ -306,7 +300,7 @@ describe('TaskFiltersComponent', () => {
     it('should reset selection when filterParam is a filter that does not exist', async () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
         component.currentFilter = fakeTaskFilters[0];
-        component.filterParam = new FilterRepresentationModel( {name: 'non-existing-filter'});
+        component.filterParam = new FilterRepresentationModel({ name: 'non-existing-filter' });
         const appId = '1';
 
         const change = new SimpleChange(null, appId, true);
@@ -319,8 +313,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     describe('Display Task Filters', () => {
-
-        it('Should be able to display default task filters', async  () => {
+        it('Should be able to display default task filters', async () => {
             spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of([]));
             const defaultTaskFiltersMock: any = [
                 { name: 'default-my-filter' },
@@ -349,7 +342,7 @@ describe('TaskFiltersComponent', () => {
             spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
             fixture.detectChanges();
             expect(component.isTaskActive).toBe(true);
-          });
+        });
 
         it('should set isTaskActive to false when activeRoute does not include "tasks"', () => {
             const navigationStartEvent = new NavigationStart(1, 'other-route');

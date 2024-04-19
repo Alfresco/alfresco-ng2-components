@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
@@ -48,7 +48,6 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
                 })
             );
         } else {
-            this.logService.error('AppName and ProcessInstanceId are mandatory for querying a process');
             return throwError('AppName/ProcessInstanceId not configured');
         }
     }
@@ -63,11 +62,8 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
         if (appName || appName === '') {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
-            return this.get(url).pipe(
-                map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry)))
-            );
+            return this.get(url).pipe(map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry))));
         } else {
-            this.logService.error('AppName is mandatory for querying task');
             return throwError('AppName not configured');
         }
     }
@@ -82,12 +78,8 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
         if (appName) {
             const url = `${this.getBasePath(appName)}/query/v1/applications`;
 
-            return this.get<any>(url).pipe(
-                map((appEntities: ApplicationVersionResponseModel) => appEntities.list.entries),
-                catchError((err) => this.handleError(err))
-            );
+            return this.get(url).pipe(map((appEntities: ApplicationVersionResponseModel) => appEntities.list.entries));
         } else {
-            this.logService.error('AppName is mandatory for querying the versions of an application');
             return throwError('AppName not configured');
         }
     }
@@ -104,18 +96,12 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
             return this.delete(queryUrl).pipe(
                 map((res: any) => {
-                   this.dataChangesDetected.next(res.entry);
-                   return res.entry;
+                    this.dataChangesDetected.next(res.entry);
+                    return res.entry;
                 })
             );
         } else {
-            this.logService.error('App name and Process id are mandatory for deleting a process');
             return throwError('App name and process id not configured');
         }
-    }
-
-    private handleError(error?: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { SelectFilterInputComponent } from './select-filter-input.component';
 import { MatSelect } from '@angular/material/select';
 
@@ -28,7 +27,7 @@ describe('SelectFilterInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             providers: [MatSelect]
         });
 

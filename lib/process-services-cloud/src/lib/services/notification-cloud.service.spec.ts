@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { NotificationCloudService } from './notification-cloud.service';
 import { Apollo } from 'apollo-angular';
 
@@ -44,10 +43,7 @@ describe('NotificationCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(NotificationCloudService);
         apollo = TestBed.inject(Apollo);
