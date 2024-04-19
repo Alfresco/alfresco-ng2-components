@@ -78,7 +78,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
         if (appName) {
             const url = `${this.getBasePath(appName)}/query/v1/applications`;
 
-            return this.get<any>(url).pipe(map((appEntities: ApplicationVersionResponseModel) => appEntities.list.entries));
+            return this.get(url).pipe(map((appEntities: ApplicationVersionResponseModel) => appEntities.list.entries));
         } else {
             return throwError('AppName not configured');
         }

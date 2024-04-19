@@ -41,8 +41,6 @@ import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
-    ERROR_MODEL_NOT_FOUND = 'Table model not found';
-
     content: DynamicTableModel;
 
     editMode: boolean = false;
@@ -102,7 +100,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    private isEnterOrSpacePressed(keyCode) {
+    private isEnterOrSpacePressed(keyCode: number) {
         return this.selectArrayCode.indexOf(keyCode) !== -1;
     }
 
