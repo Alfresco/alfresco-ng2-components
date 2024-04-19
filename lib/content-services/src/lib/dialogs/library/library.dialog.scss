@@ -1,8 +1,13 @@
 .adf-library-dialog {
+    .adf-library-dialog-content {
+        padding: 0;
+        overflow: unset;
+    }
+
     .adf-library-dialog-radio-group {
         display: flex;
         flex-direction: column;
-        margin: 0 0 20px;
+        margin: 0;
     }
 
     .adf-library-dialog-radio-group .adf-library-dialog-radio-group-button {
@@ -21,6 +26,10 @@
 
         .adf-action-button {
             text-transform: uppercase;
+
+            span {
+                font-weight: 500;
+            }
         }
     }
 }
