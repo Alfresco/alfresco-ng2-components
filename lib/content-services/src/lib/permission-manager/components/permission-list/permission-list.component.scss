@@ -48,6 +48,11 @@
         flex-direction: row;
         align-items: center;
         padding: 5px 15px;
+
+        .adf-add-permission-button {
+            margin-left: 12px;
+            margin-right: 24px;
+        }
     }
 
     &-permission-role-column-header {
