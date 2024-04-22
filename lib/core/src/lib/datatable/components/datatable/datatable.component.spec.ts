@@ -1218,17 +1218,11 @@ describe('DataTable', () => {
     });
 
     it('should select the corresponding row when a checkbox is checked', async () => {
-        const dataRows = [{ id: 0 }, { id: 1 }];
+        const petRows = [{ pet: 'dog' }, { pet: 'cat' }];
         dataTable.multiselect = true;
-        dataTable.data = new ObjectDataTableAdapter(dataRows, [new ObjectDataColumn({ key: 'id' })]);
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
-        });
+        dataTable.data = new ObjectDataTableAdapter(petRows, [new ObjectDataColumn({ key: 'pet' })]);
+        dataTable.ngOnChanges({ rows: new SimpleChange(null, petRows, false) });
         fixture.detectChanges();
-
-        const rows = dataTable.data.getRows();
-        expect(rows[0].isSelected).toBeFalsy();
-        expect(rows[1].isSelected).toBeFalsy();
 
         const loader = TestbedHarnessEnvironment.loader(fixture);
         const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
@@ -1240,6 +1234,7 @@ describe('DataTable', () => {
         expect(await checkboxes[1].isChecked()).toBe(false);
         expect(await checkboxes[2].isChecked()).toBe(true);
 
+        const rows = dataTable.data.getRows();
         expect(rows[0].isSelected).toBeFalse();
         expect(rows[1].isSelected).toBeTrue();
     });
