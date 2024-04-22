@@ -23,12 +23,13 @@ import { By } from '@angular/platform-browser';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListboxHarness} from '@angular/material/chips/testing';
+import { MatChipHarness, MatChipListboxHarness } from '@angular/material/chips/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewArrayItemComponent', () => {
     let loader: HarnessLoader;

@@ -18,6 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-custom-container',
