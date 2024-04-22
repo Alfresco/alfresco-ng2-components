@@ -20,6 +20,7 @@ import { By } from '@angular/platform-browser';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewItemFloatValidator } from '../../validators/card-view-item-float.validator';
 import { CardViewItemIntValidator } from '../../validators/card-view-item-int.validator';
 import { CardViewIntItemModel } from '../../models/card-view-intitem.model';
@@ -30,15 +31,8 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
+import { MatChipHarness, MatChipGridHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslateModule } from '@ngx-translate/core';
-import { TranslationService } from '../../../translation';
-import { TranslationMock } from '../../../mock';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CardViewTextItemComponent', () => {
     let loader: HarnessLoader;
@@ -47,8 +41,9 @@ describe('CardViewTextItemComponent', () => {
 
     const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
 
-    const getTextField = (key: string): HTMLInputElement =>
-        fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
+    const getTextField = (key: string): HTMLInputElement => {
+        return fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
+    };
 
     const updateTextField = (key: string, value) => {
         const editInput = getTextField(key);
@@ -63,8 +58,9 @@ describe('CardViewTextItemComponent', () => {
         return textItemInput.value;
     };
 
-    const getErrorElements = (key: string, includeItems = false): DebugElement[] =>
-        fixture.debugElement.queryAll(By.css(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`));
+    const getErrorElements = (key: string, includeItems = false): DebugElement[] => {
+        return fixture.debugElement.queryAll(By.css(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`));
+    };
 
     const getTextFieldError = (key: string): string => {
         const textItemInputErrors = getErrorElements(key, true);
@@ -116,8 +112,7 @@ describe('CardViewTextItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, NoopAnimationsModule, TranslateModule.forRoot(), MatSnackBarModule, MatTooltipModule, MatChipsModule],
-            providers: [{ provide: TranslationService, useClass: TranslationMock }]
+            imports: [CoreTestingModule, MatChipsModule]
         });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
