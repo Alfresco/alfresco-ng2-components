@@ -71,7 +71,7 @@
         >
             {{ property.label | translate }}
         </mat-label>
-        <mat-chip-grid #chipList class="adf-textitem-chip-list">
+        <mat-chip-grid #chipElement class="adf-textitem-chip-list">
             <mat-chip-row *ngFor="let propertyValue of editedValue; let idx = index" [removable]="isEditable" (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
                 <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
@@ -93,7 +93,7 @@
                 title="{{ property.label | translate }}"
                 [placeholder]="editedValue ? '' : (property.default | translate)"
                 [attr.aria-label]="property.label | translate"
-                [matChipInputFor]="chipList"
+                [matChipInputFor]="chipElement"
                 [matChipInputAddOnBlur]="true"
                 (matChipInputTokenEnd)="addValueToList($event)"
                 [attr.data-automation-id]="'card-textitem-editchipinput-' + property.key"
