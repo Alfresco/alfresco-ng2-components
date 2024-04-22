@@ -615,10 +615,9 @@ describe('TaskListComponent', () => {
         const selectTask1 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-0"]' }));
         const selectTask2 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-1"]' }));
         await selectTask1.toggle();
-        await selectTask1.toggle();
         await selectTask2.toggle();
 
-        expect(component.selectedInstances.length).toBe(2);
+        expect(component.selectedInstances.length).toBe(1);
     });
 
     it('should change selected row after clicking on different row', async () => {

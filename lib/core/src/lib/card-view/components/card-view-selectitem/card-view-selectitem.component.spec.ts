@@ -28,6 +28,7 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
