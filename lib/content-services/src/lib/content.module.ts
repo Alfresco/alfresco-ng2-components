@@ -33,6 +33,7 @@ import { ContentNodeSelectorModule } from './content-node-selector/content-node-
 import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
 import { ContentDirectiveModule } from './directives/content-directive.module';
 import { DialogModule } from './dialogs/dialog.module';
+import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { TreeViewModule } from './tree-view/tree-view.module';
@@ -69,6 +70,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         ContentNodeSelectorModule,
         ContentNodeShareModule,
         ContentMetadataModule,
+        FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,
@@ -96,6 +98,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         ContentNodeShareModule,
         ContentMetadataModule,
         DialogModule,
+        FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,

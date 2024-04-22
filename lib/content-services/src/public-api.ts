@@ -26,6 +26,7 @@ export * from './lib/breadcrumb/index';
 export * from './lib/version-manager/index';
 export * from './lib/content-node-selector/index';
 export * from './lib/dialogs/index';
+export * from './lib/folder-directive/index';
 export * from './lib/content-metadata/index';
 export * from './lib/permission-manager/index';
 export * from './lib/content-node-share/index';
