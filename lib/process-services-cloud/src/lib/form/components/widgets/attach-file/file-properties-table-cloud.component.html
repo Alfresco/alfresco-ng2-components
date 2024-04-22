@@ -10,6 +10,7 @@
                 <img matListItemLine class="adf-attach-widget__icon"
                     *ngIf="!selectedNode || element.id !== selectedNode.id" [id]="'file-'+element?.id+'-icon'"
                     (click)="onRowClicked(element)"
+                    (keyup.enter)="onRowClicked(element)"
                     [src]="element.content ? getIcon(element.content.mimeType) : getIcon(element['mimeType'])"
                     [alt]="mimeTypeIcon" role="button" tabindex="0" />
             </td>

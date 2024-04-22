@@ -34,6 +34,7 @@ import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/test
 import { MatInputHarness } from '@angular/material/input/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
 import { TranslationService } from '../../../translation';
 import { TranslationMock } from '../../../mock';
 import { MatTooltipModule } from '@angular/material/tooltip';
