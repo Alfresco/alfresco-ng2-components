@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
-export * from './public-api';
+export * from './folder-create.directive';
+export * from './folder-edit.directive';
+
+export * from './folder-directive.module';
