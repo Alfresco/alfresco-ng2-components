@@ -20,11 +20,10 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
 import { FolderCreateDirective } from './folder-create.directive';
-import { FolderEditDirective } from './folder-edit.directive';
 
 @NgModule({
     imports: [CommonModule, MaterialModule],
-    declarations: [FolderCreateDirective, FolderEditDirective],
-    exports: [FolderCreateDirective, FolderEditDirective]
+    declarations: [FolderCreateDirective],
+    exports: [FolderCreateDirective]
 })
 export class FolderDirectiveModule {}
