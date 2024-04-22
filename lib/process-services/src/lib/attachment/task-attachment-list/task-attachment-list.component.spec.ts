@@ -32,6 +32,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskAttachmentList', () => {
     let component: TaskAttachmentListComponent;
@@ -310,7 +311,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule],
+            imports: [ProcessTestingModule],
             declarations: [CustomEmptyTemplateComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
