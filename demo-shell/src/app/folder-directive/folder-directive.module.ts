@@ -23,17 +23,8 @@ import { FolderCreateDirective } from './folder-create.directive';
 import { FolderEditDirective } from './folder-edit.directive';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule
-    ],
-    declarations: [
-        FolderCreateDirective,
-        FolderEditDirective
-    ],
-    exports: [
-        FolderCreateDirective,
-        FolderEditDirective
-    ]
+    imports: [CommonModule, MaterialModule],
+    declarations: [FolderCreateDirective, FolderEditDirective],
+    exports: [FolderCreateDirective, FolderEditDirective]
 })
 export class FolderDirectiveModule {}

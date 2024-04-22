@@ -15,58 +15,53 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
+/* eslint-disable */
 
-import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
-import { FolderDialogComponent } from '../dialogs/folder.dialog';
-import { ContentService } from '../common/services/content.service';
+import { ContentService, FolderDialogComponent } from '@alfresco/adf-content-services';
 
+const DEFAULT_FOLDER_PARENT_ID = '-my-';
 const DIALOG_WIDTH: number = 400;
 
 @Directive({
-    selector: '[adf-edit-folder]'
+    selector: '[adf-create-folder]'
 })
-export class FolderEditDirective {
-    /** Folder node to edit. */
-    @Input('adf-edit-folder')
-    folder: Node;
+export class FolderCreateDirective {
+    /** Parent folder where the new folder will be located after creation. */
+    @Input('adf-create-folder')
+    parentNodeId: string = DEFAULT_FOLDER_PARENT_ID;
 
-    /** Emitted when an error occurs (eg, a folder with same name already exists). */
-    @Output()
-    error = new EventEmitter<any>();
-
-    /** Title of folder edit dialog. */
+    /** Title of folder creation dialog. */
     @Input()
     title: string = null;
 
-    /** Emitted when the folder has been edited successfully. */
-    @Output()
-    success = new EventEmitter<Node>();
+    /** Type of node to create. */
+    @Input()
+    nodeType = 'cm:folder';
 
-    @HostListener('click', [ '$event' ])
+    /** Emitted when an error occurs (eg, a folder with same name already exists). */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
+    /** Emitted when the folder is created successfully. */
+    @Output()
+    success: EventEmitter<Node> = new EventEmitter<Node>();
+
+    @HostListener('click', ['$event'])
     onClick(event) {
         event.preventDefault();
-        if (this.folder) {
-            this.openDialog();
-        }
+        this.openDialog();
     }
 
-    constructor(
-        public dialogRef: MatDialog,
-        public elementRef: ElementRef,
-        public content: ContentService
-    ) {}
+    constructor(public dialogRef: MatDialog, public content: ContentService) {}
 
     private get dialogConfig() {
-        const { folder } = this;
+        const { parentNodeId, title: createTitle, nodeType } = this;
 
         return {
-            data: {
-                folder,
-                editTitle: this.title
-            },
+            data: { parentNodeId, createTitle, nodeType },
             width: `${DIALOG_WIDTH}px`
         };
     }
@@ -85,7 +80,7 @@ export class FolderEditDirective {
 
         dialogInstance.afterClosed().subscribe((node: Node) => {
             if (node) {
-                content.folderEdit.next(node);
+                content.folderCreate.next(node);
             }
         });
     }

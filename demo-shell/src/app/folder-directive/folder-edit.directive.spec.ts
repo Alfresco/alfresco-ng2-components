@@ -22,8 +22,8 @@ import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
 import { FolderEditDirective } from './folder-edit.directive';
 import { Node } from '@alfresco/js-api';
-import { ContentTestingModule } from '../testing/content.testing.module';
-import { ContentService } from '../common/services/content.service';
+import { ContentService } from '@alfresco/adf-content-services';
+import { ContentTestingModule } from 'lib/content-services/src/lib/testing/content.testing.module';
 
 @Component({
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
