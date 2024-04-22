@@ -160,7 +160,7 @@
     "jasmine-reporters": "^2.5.2",
     "jasmine-spec-reporter": "7.0.0",
     "js-yaml": "^4.0.0",
-    "jsdom": "^22.1.0",
+    "jsdom": "^24.0.0",
     "karma": "^6.4.1",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
