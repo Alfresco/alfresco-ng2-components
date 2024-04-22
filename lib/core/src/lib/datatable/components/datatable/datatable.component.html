@@ -182,9 +182,9 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect" for="select-file" class="adf-datatable-cell adf-datatable-checkbox">
+                <label *ngIf="multiselect" [for]="'select-file-' + idx" class="adf-datatable-cell adf-datatable-checkbox">
                     <mat-checkbox
-                        id="select-file"
+                        [id]="'select-file-' + idx"
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
                         role="checkbox"
