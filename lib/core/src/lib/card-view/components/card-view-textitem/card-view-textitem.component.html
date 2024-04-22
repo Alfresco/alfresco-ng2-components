@@ -1,9 +1,16 @@
 <div [ngSwitch]="templateType">
     <div *ngSwitchDefault>
-        <mat-form-field subscriptSizing="dynamic" class="adf-property-field adf-card-textitem-field"
-            [ngClass]="{'adf-property-read-only': !isEditable }"
-            [floatLabel]="'always'">
-            <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
+        <mat-form-field
+            class="adf-property-field adf-card-textitem-field"
+            [ngClass]="{
+                'adf-property-read-only': !isEditable
+            }"
+            [floatLabel]="'always'"
+        >
+            <mat-label
+                *ngIf="showProperty || isEditable"
+                [attr.data-automation-id]="'card-textitem-label-' + property.key"
+                class="adf-property-label"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
                     'adf-property-readonly-value': isReadonlyProperty
@@ -37,9 +44,9 @@
                 *ngIf="property.multiline"
                 title="{{ property.label | translate }}"
                 [cdkTextareaAutosize]="true"
+                [cdkAutosizeMaxRows]="1"
+                [cdkAutosizeMaxRows]="5"
                 class="adf-property-value"
-                cdkAutosizeMinRows="1"
-                cdkAutosizeMaxRows="5"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
                     'adf-property-readonly-value': isReadonlyProperty
@@ -66,21 +73,20 @@
         >
             {{ property.label | translate }}
         </mat-label>
-        <mat-chip-grid #chipList
-            class="adf-textitem-chip-list">
-            <mat-chip-row *ngFor="let propertyValue of editedValue; let idx = index"
-                [removable]="isEditable"
-                (removed)="removeValueFromList(idx)">
+        <mat-chip-grid #chipList class="adf-textitem-chip-list">
+            <mat-chip-row *ngFor="let propertyValue of editedValue; let idx = index" [removable]="isEditable" (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
-                <mat-icon *ngIf="isEditable"
-                    matChipRemove>cancel</mat-icon>
+                <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
             </mat-chip-row>
         </mat-chip-grid>
 
-        <mat-form-field subscriptSizing="dynamic" [hidden]="!isEditable"
+        <mat-form-field
+            *ngIf="isEditable"
             class="adf-property-field adf-textitem-chip-list-input"
-            [ngClass]="{ 'adf-property-read-only': !isEditable }">
-            <input matInput
+            [ngClass]="{ 'adf-property-read-only': !isEditable }"
+        >
+            <input
+                matInput
                 class="adf-property-value"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
@@ -103,9 +109,16 @@
         class="adf-textitem-clickable"
         [ngClass]="{ 'adf-property-read-only': !isEditable }"
         [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
-        (click)="clicked()">
-        <mat-form-field subscriptSizing="dynamic" class="adf-property-field adf-card-textitem-field">
-            <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
+        tabindex="0"
+        (keyup.enter)="clicked()"
+        (click)="clicked()"
+    >
+        <mat-form-field class="adf-property-field adf-card-textitem-field">
+            <mat-label
+                *ngIf="showProperty || isEditable"
+                [attr.data-automation-id]="'card-textitem-label-' + property.key"
+                class="adf-property-label"
+            >
                 {{ property.label | translate }}
             </mat-label>
             <input
