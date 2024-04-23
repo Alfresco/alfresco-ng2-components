@@ -39,13 +39,14 @@ $notification-item-height: 72px;
     }
 
     &-notification-history-menu_button#{$mat-button} {
-        margin-right: 6px;
+        margin-right: 10px;
         border-radius: 90%;
         padding: 0;
         min-width: 40px;
         height: 40px;
 
         .adf-notification-history-menu_button-icon {
+            margin-right: 0;
             font-size: 24px;
             height: 24px;
             width: 24px;
