@@ -261,7 +261,6 @@ describe('Document List - Pagination', () => {
 
     it('[C260107] Should not display pagination bar when a folder is empty', async () => {
         await paginationPage.selectItemsPerPage('5');
-        await paginationPage.selectItemsPerPage('5');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
@@ -375,18 +374,23 @@ describe('Document List - Pagination', () => {
         }
         await browser.refresh();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-5 of ${numberOfSubFolders}`);
+
         await paginationPage.clickOnNextPage();
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 6-${numberOfSubFolders} of ${numberOfSubFolders}`);
         const nodeIdSubFolder6 = await contentServicesPage.getAttributeValueForElement('subfolder6', 'Node id');
+
         for (let i = 0; i < numberOfSubFolders; i++) {
             await uploadActions.createFolder('subfolder' + (i + 1), nodeIdSubFolder6);
         }
         await browser.refresh();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-5 of ${numberOfSubFolders}`);
         await expect(await paginationPage.getCurrentPage()).toEqual('Page 1');
         await expect(await paginationPage.getTotalPages()).toEqual('of 2');
+
         await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
     });
 
