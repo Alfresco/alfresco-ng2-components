@@ -41,9 +41,7 @@ describe('CardViewTextItemComponent', () => {
 
     const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
 
-    const getTextField = (key: string): HTMLInputElement => {
-        return fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
-    };
+    const getTextField = (key: string): HTMLInputElement => fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
 
     const updateTextField = (key: string, value) => {
         const editInput = getTextField(key);
@@ -97,6 +95,7 @@ describe('CardViewTextItemComponent', () => {
         param3: string
     ) => {
         component.property = new CardViewTextItemModel(cardViewTextItemObject);
+        component.editable = cardViewTextItemObject.editable;
         component.useChipsForMultiValueProperty = flag;
         component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
@@ -305,6 +304,7 @@ describe('CardViewTextItemComponent', () => {
                 multivalued: true
             };
 
+            component.editable = true;
             component.property = new CardViewTextItemModel(cardViewTextItemObject);
             component.displayLabelForChips = true;
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
@@ -327,6 +327,7 @@ describe('CardViewTextItemComponent', () => {
                 multivalued: true
             };
 
+            component.editable =true;
             component.property = new CardViewTextItemModel(cardViewTextItemObject);
             component.displayLabelForChips = false;
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
