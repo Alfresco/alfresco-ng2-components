@@ -1,6 +1,6 @@
 @import 'styles/mat-selectors';
 
-$search-result-height: calc(100% - 75px);
+$search-result-height: calc(100% - 60px);
 
 .adf {
     &-permission-result-list {
@@ -52,8 +52,7 @@ $search-result-height: calc(100% - 75px);
         &-input {
             width: 100%;
 
-            &-icon {
-                color: var(--adf-theme-background-selected-button-color);
+            .adf-permission-search-icon {
                 cursor: pointer;
 
                 &:hover {
