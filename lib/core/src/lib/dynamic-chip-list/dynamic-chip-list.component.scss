@@ -8,6 +8,8 @@
     .adf-dynamic-chip-list-view-more-button {
         margin-left: 5px;
         position: absolute;
+        width: auto;
+        padding: 0 16px;
 
         &[hidden] {
             visibility: hidden;
@@ -51,7 +53,8 @@
 
         &:not(.adf-dynamic-chip-list-flex-column) {
             .adf-dynamic-chip-list-view-more-button {
-                margin-top: 10px;
+                margin-top: 13px;
+                margin-left: 4px;
             }
         }
     }
