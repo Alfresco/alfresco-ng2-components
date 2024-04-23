@@ -37,7 +37,7 @@ describe('PeopleCloudComponent', () => {
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
     let identityUserService: IdentityUserServiceInterface;
-    let searchSpy;
+    let searchSpy: jasmine.Spy;
 
     /**
      * Search users by value
