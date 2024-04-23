@@ -1,7 +1,15 @@
+@import 'styles/mat-selectors';
+
+#{$mdc-dialog} {
+    #{$mat-dialog-surface}:is(div) {
+        padding-bottom: 0;
+    }
+}
+
 .adf-add-permission-dialog {
     .adf-add-permission-dialog-title {
-        margin-left: 24px;
-        margin-right: 24px;
+        margin-left: 20px;
+        margin-right: 20px;
         font-size: var(--theme-title-font-size);
         font-weight: 600;
         font-style: normal;
@@ -16,6 +24,28 @@
         overflow: hidden;
         flex-grow: 1;
         height: 80vh;
+
+        .adf {
+            &-search-user-button {
+                width: 100%;
+                justify-content: unset;
+
+                #{$mat-button-label} {
+                    padding-right: 0;
+                }
+
+                #{$mat-icon} {
+                    font-size: 24px;
+                    width: 24px;
+                    height: 24px;
+                    margin-left: 0;
+                }
+            }
+
+            &-add-member-action {
+                padding: 0 15px;
+            }
+        }
 
         .adf-new-permission-table {
             height: 90%;
@@ -51,20 +81,5 @@
 
     .adf-datatable-cell .adf-cell-value adf-user-role-column {
         position: unset;
-    }
-
-    .adf {
-        &-search-user-button {
-            width: 100%;
-
-            span {
-                display: flex;
-                align-items: center;
-            }
-        }
-
-        &-add-member-action {
-            padding: 0 15px;
-        }
     }
 }
