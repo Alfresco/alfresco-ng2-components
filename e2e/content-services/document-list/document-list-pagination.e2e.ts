@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/await-thenable */
-
-import {
-    createApiService,
+import { createApiService,
     ArrayUtil,
     FileBrowserUtil,
     LocalStorageUtil,
@@ -268,10 +265,11 @@ describe('Document List - Pagination', () => {
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
-        await uploadActions.createFolder(folderTwoModel.name, '-my-');
+        await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
 
         await contentServicesPage.checkPaginationIsNotDisplayed();
         await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
+
     });
 
     it('[C260071] Should be able to change pagination when having 25 files', async () => {
@@ -366,7 +364,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
         await apiService.login(acsUser.username, acsUser.password);
-        await uploadActions.createFolder(folderTwoModel.name, '-my-');
+        await contentServicesPage.createNewFolder(folderTwoModel.name);
         const nodeIdSubFolderTwo = await contentServicesPage.getAttributeValueForElement(folderTwoModel.name, 'Node id');
         await contentServicesPage.openFolder(folderTwoModel.name);
 
@@ -399,7 +397,10 @@ describe('Document List - Pagination', () => {
         await paginationPage.selectItemsPerPage('5');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
-        await uploadActions.createFolder(folderTwoModel.name, '-my-');
+        await contentServicesPage.openFolder(newFolderModel.name);
+        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
+
+        await contentServicesPage.createNewFolder(folderTwoModel.name);
         const nodeIdSubFolderTwo = await contentServicesPage.getAttributeValueForElement(folderTwoModel.name, 'Node id');
         await contentServicesPage.openFolder(folderTwoModel.name);
 
