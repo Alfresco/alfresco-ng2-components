@@ -17,6 +17,11 @@
     }
 }
 
+.adf-container-widget__header-text, .adf-label {
+    font-family: var(--theme-font-family);
+    color: var(--theme-primary-color);
+}
+
 .adf-field-list {
     padding: 0;
     list-style-type: none;
