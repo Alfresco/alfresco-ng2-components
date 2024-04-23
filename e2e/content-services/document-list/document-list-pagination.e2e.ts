@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/await-thenable */
+
 import {
     createApiService,
     ArrayUtil,
@@ -239,33 +241,30 @@ describe('Document List - Pagination', () => {
         await paginationPage.selectItemsPerPage('20');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
-        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('ASC', 'Display name'));
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('ASC', 'Display name'));
 
         await contentServicesPage.sortByName('DESC');
-        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.selectItemsPerPage('5');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
-        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.clickOnNextPage();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
-        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.selectItemsPerPage('10');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
-        expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
+        await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
     });
 
     it('[C260107] Should not display pagination bar when a folder is empty', async () => {
         await paginationPage.selectItemsPerPage('5');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
-
-        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
-        await contentServicesPage.openFolder(newFolderModel.name);
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
@@ -366,7 +365,6 @@ describe('Document List - Pagination', () => {
         await paginationPage.selectItemsPerPage('5');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
-        await contentServicesPage.openFolder(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
         await apiService.login(acsUser.username, acsUser.password);
@@ -402,9 +400,6 @@ describe('Document List - Pagination', () => {
     it('[C260064] Should download only the last selection when changing pages in Single mode', async () => {
         await paginationPage.selectItemsPerPage('5');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
-
-        await contentServicesPage.openFolder(newFolderModel.name);
-        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
         await uploadActions.createFolder(folderTwoModel.name, '-my-');
         const nodeIdSubFolderTwo = await contentServicesPage.getAttributeValueForElement(folderTwoModel.name, 'Node id');

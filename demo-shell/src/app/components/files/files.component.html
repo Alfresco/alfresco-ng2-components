@@ -25,16 +25,6 @@
                 </adf-toolbar-title>
 
                 <div class="app-document-action-buttons">
-                    <button
-                        data-automation-id="create-new-folder"
-                        mat-icon-button
-                        [disabled]="!canCreateContent(documentList.folderNode)"
-                        title="New folder"
-                        (error)="openSnackMessageError($event)"
-                        (success)="documentList.reload()"
-                        [adf-create-folder]="currentFolderId">
-                        <mat-icon>create_new_folder</mat-icon>
-                    </button>
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
                             title="Download"
@@ -64,12 +54,6 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item
-                            (error)="openSnackMessageError($event)"
-                            [adf-create-folder]="currentFolderId">
-                        <mat-icon>create_new_folder</mat-icon>
-                        <span>New folder</span>
-                    </button>
                     <button mat-menu-item
                             adf-check-allowable-operation="delete"
                             [adf-nodes]="documentList.selection"
