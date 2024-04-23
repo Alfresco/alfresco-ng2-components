@@ -270,8 +270,6 @@ describe('Document List - Pagination', () => {
 
         await uploadActions.createFolder(folderTwoModel.name, '-my-');
 
-        await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
-
         await contentServicesPage.checkPaginationIsNotDisplayed();
         await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
     });
