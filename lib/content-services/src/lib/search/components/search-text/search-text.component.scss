@@ -1,5 +1,18 @@
 .adf-search-text {
     .adf-search-text-form-field {
         width: 100%;
+        height: 58.5px;
+
+        &-clear-button {
+            min-width: unset;
+            border-radius: 50%;
+            height: 1.5em;
+            width: 1.5em;
+            margin-right: 8px;
+
+            mat-icon {
+                margin-right: 0;
+            }
+        }
     }
 }
