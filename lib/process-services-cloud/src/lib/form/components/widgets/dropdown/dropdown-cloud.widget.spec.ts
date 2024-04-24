@@ -249,12 +249,8 @@ describe('DropdownCloudWidgetComponent', () => {
             await dropdown.open();
             await dropdown.clickOptions({ selector: '[id="empty"]' });
 
-            const formField = await loader.getHarness(MatFormFieldHarness);
-            const dropdownLabel = await formField.getLabel();
-
-            expect(dropdownLabel).toEqual('This is a mock none option');
+            expect(await dropdown.getValueText()).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
-            expect(await dropdown.getValueText()).toEqual('');
         });
     });
 
