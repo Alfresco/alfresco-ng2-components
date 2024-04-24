@@ -36,7 +36,6 @@ import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('DropdownCloudWidgetComponent', () => {
@@ -250,12 +249,8 @@ describe('DropdownCloudWidgetComponent', () => {
             await dropdown.open();
             await dropdown.clickOptions({ selector: '[id="empty"]' });
 
-            const formField = await loader.getHarness(MatFormFieldHarness);
-            const dropdownLabel = await formField.getLabel();
-
-            expect(dropdownLabel).toEqual('This is a mock none option');
+            expect(await dropdown.getValueText()).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
-            expect(await dropdown.getValueText()).toEqual('');
         });
     });
 
