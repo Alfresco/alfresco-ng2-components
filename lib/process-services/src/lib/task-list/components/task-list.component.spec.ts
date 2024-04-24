@@ -599,7 +599,7 @@ describe('TaskListComponent', () => {
         await selectTask1.toggle();
         await selectTask2.toggle();
 
-        expect(component.selectedInstances.length).toBe(0);
+        expect(component.selectedInstances.length).toBe(2);
     });
 
     it('should change selected row after clicking on different row', async () => {

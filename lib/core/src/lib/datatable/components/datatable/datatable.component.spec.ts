@@ -33,6 +33,8 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({ selector: 'adf-custom-column-template-component', template: ` <ng-template #tmplRef></ng-template> ` })
 class CustomColumnTemplateComponent {
@@ -1213,6 +1215,28 @@ describe('DataTable', () => {
         const rows3 = dataTable.data.getRows();
         expect(rows3[0].isSelected).toBeFalsy();
         expect(rows3[1].isSelected).toBeTruthy();
+    });
+
+    it('should select the corresponding row when a checkbox is checked', async () => {
+        const petRows = [{ pet: 'dog' }, { pet: 'cat' }];
+        dataTable.multiselect = true;
+        dataTable.data = new ObjectDataTableAdapter(petRows, [new ObjectDataColumn({ key: 'pet' })]);
+        dataTable.ngOnChanges({ rows: new SimpleChange(null, petRows, false) });
+        fixture.detectChanges();
+
+        const loader = TestbedHarnessEnvironment.loader(fixture);
+        const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+
+        await checkboxes[2].check();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(await checkboxes[1].isChecked()).toBe(false);
+        expect(await checkboxes[2].isChecked()).toBe(true);
+
+        const rows = dataTable.data.getRows();
+        expect(rows[0].isSelected).toBeFalse();
+        expect(rows[1].isSelected).toBeTrue();
     });
 
     it('should be able to display column of type boolean', () => {
