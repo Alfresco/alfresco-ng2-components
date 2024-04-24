@@ -1,7 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 @import 'styles/mat-selectors';
 
-
 .adf {
     &-amount-widget {
         width: 100%;
@@ -17,6 +16,12 @@
 
         #{$mat-focused} {
             transition: none;
+        }
+
+        #{$mat-form-field-prefix} {
+            padding-top: 16px;
+            padding-bottom: 16px;
+            align-self: flex-end;
         }
 
         &:not(#{$mat-focused}):not(#{$mat-form-field-invalid}) {
