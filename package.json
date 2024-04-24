@@ -87,7 +87,7 @@
     "raphael": "2.3.0",
     "rxjs": "6.6.6",
     "subscriptions-transport-ws": "^0.11.0",
-    "superagent": "^8.1.2",
+    "superagent": "^9.0.1",
     "tslib": "^2.6.2",
     "zone.js": "~0.11.4"
   },
