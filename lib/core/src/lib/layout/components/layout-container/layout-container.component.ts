@@ -16,15 +16,17 @@
  */
 
 import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
 import { Direction } from '@angular/cdk/bidi';
 
 @Component({
     selector: 'adf-layout-container',
+    standalone: true,
     templateUrl: './layout-container.component.html',
     styleUrls: ['./layout-container.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    imports: [MatSidenavModule],
     animations: [sidenavAnimation, contentAnimation]
 })
 export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {

@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'adf-layout-header',
+    standalone: true,
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    imports: [MatToolbarModule, NgIf, MatButtonModule, TranslateModule, MatIconModule, RouterModule],
     host: { class: 'adf-layout-header' }
 })
 export class HeaderLayoutComponent implements OnInit {
@@ -69,10 +77,7 @@ export class HeaderLayoutComponent implements OnInit {
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */
     @Input() position = 'start';
 
-    constructor(
-        private appConfigService: AppConfigService
-    ) {
-    }
+    constructor(private appConfigService: AppConfigService) {}
 
     toggleMenu() {
         this.clicked.emit(true);
