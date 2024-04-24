@@ -21,7 +21,6 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
 import { SidenavLayoutModule } from '../../layout.module';
 import { Component } from '@angular/core';
-import { MaterialModule } from '../../../material.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatToolbarHarness } from '@angular/material/toolbar/testing';
@@ -262,7 +261,7 @@ describe('HeaderLayoutComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, SidenavLayoutModule, MaterialModule],
+                imports: [CoreTestingModule, SidenavLayoutModule],
                 declarations: [HeaderLayoutTesterComponent]
             });
         });

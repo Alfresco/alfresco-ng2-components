@@ -1,11 +1,10 @@
 <mat-sidenav-container class="adf-layout-container">
-    <mat-sidenav
-        class="adf-layout-container-sidenav"
-        [position]="position"
-        [disableClose]="!isMobileScreenSize"
-        [@sidenavAnimation]="sidenavAnimationState"
-        [opened]="!isMobileScreenSize || !hideSidenav"
-        [mode]="isMobileScreenSize ? 'over' : 'side'">
+    <mat-sidenav class="adf-layout-container-sidenav"
+                 [position]="position"
+                 [disableClose]="!isMobileScreenSize"
+                 [@sidenavAnimation]="sidenavAnimationState"
+                 [opened]="!isMobileScreenSize || !hideSidenav"
+                 [mode]="isMobileScreenSize ? 'over' : 'side'">
         <ng-content sidenav select="[app-layout-navigation]"></ng-content>
     </mat-sidenav>
 

@@ -141,8 +141,7 @@ const template: Story<SidenavLayoutModule> = (args: SidenavLayoutComponent) => (
         [stepOver]="stepOver"
         [position]="position"
         [hideSidenav]="hideSidenav"
-        [expandedSidenav]="expandedSidenav"
-        >
+        [expandedSidenav]="expandedSidenav">
         <div class="adf-sidenav-layout-full-space">
             <adf-sidenav-layout-header>
                 <ng-template>
