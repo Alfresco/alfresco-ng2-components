@@ -19,9 +19,9 @@ Gets the extension configuration saved on the backend
 |----------------|--------|----------------------------------------------|-------|
 | **instanceId** | string | The identifier of a running instance of ADW. |       |
 
-**Return type**: [ExtensionConfigEntry](#ExtensionConfigEntry)
+**Return type**: [ExtensionCompositionEntry](#ExtensionCompositionEntry)
 
-## publishExtensionConfig
+## publishExtensionComposition
 
 Saves an extension configuration on the backend
 
@@ -30,7 +30,7 @@ Saves an extension configuration on the backend
 | Name                | Type                                | Description                                  |
 |---------------------|-------------------------------------|----------------------------------------------|
 | **instanceId**      | string                              | The identifier of a running instance of ADW. |
-| **extensionConfig** | [ExtensionConfig](#ExtensionConfig) | The extension configuration to be saved.     |
+| **extensionConfig** | [ExtensionComposition](#ExtensionComposition) | The extension configuration to be saved.     |
 
 **Example**
 
@@ -40,7 +40,7 @@ import {AlfrescoApi, SitesApi} from '@alfresco/js-api';
 const alfrescoApi = new AlfrescoApi(/*..*/);
 const settingsApi = new SettingsApi(alfrescoApi);
 
-const extensionConfig = new ExtensionConfig();
+const extensionConfig = new ExtensionComposition();
 extensionConfig = {
     appConfig: {},
     features: {},
@@ -56,15 +56,15 @@ settingsApi.publishExtensionConfig(`<instanceId>`, extensionConfig).then(() => {
 
 # Models
 
-## ExtensionConfigEntry
+## ExtensionCompositionEntry
 
 **Properties**
 
 | Name      | Type                                |
 |-----------|-------------------------------------|
-| **entry** | [ExtensionConfig](#ExtensionConfig) |
+| **entry** | [ExtensionComposition](#ExtensionComposition) |
 
-## ExtensionConfig
+## ExtensionComposition
 
 **Properties**
 

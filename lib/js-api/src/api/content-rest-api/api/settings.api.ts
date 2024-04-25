@@ -17,10 +17,9 @@
 
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
-import { ExtensionConfig } from '../model/extensionConfig';
-import { ExtensionConfigEntry } from '../model/extensionConfigEntry';
+import { ExtensionComposition } from '../model/extensionComposition';
+import { ExtensionCompositionEntry } from '../model/extensionCompositionEntry';
 export class SettingsApi extends BaseApi {
-
     /**
      * Gets the published extension configuration from
      * the database
@@ -28,7 +27,7 @@ export class SettingsApi extends BaseApi {
      * @param instanceId Unique ID for a running instance of ADW
      * for which configuration is to be fetched
      */
-    getSavedExtensionState(instanceId: string): Promise<ExtensionConfigEntry> {
+    getSavedExtensionState(instanceId: string): Promise<ExtensionCompositionEntry> {
         throwIfNotDefined(instanceId, 'instanceId');
 
         const pathParams = {
@@ -50,7 +49,7 @@ export class SettingsApi extends BaseApi {
      * @param extensionConfig Extension configuration that is to
      * be saved
      */
-    publishExtensionConfig(instanceId: string, extensionConfig: ExtensionConfig): Promise<void> {
+    publishExtensionConfig(instanceId: string, extensionConfig: ExtensionComposition): Promise<void> {
         throwIfNotDefined(instanceId, 'instanceId');
         throwIfNotDefined(extensionConfig, 'extensionConfig');
 

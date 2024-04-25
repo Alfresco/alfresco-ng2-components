@@ -15,17 +15,8 @@
  * limitations under the License.
  */
 
-import { AppConfigPluginRef } from './appConfigPluginRef';
-import { RuleRef } from './ruleRef';
-import { RouteRef } from './routeRef';
-import { ActionRef } from './actionRef';
+import { ExtensionComposition } from './extensionComposition';
 
-export class ExtensionConfig {
-    appConfig: AppConfigPluginRef;
-    rules?: Array<RuleRef>;
-    routes?: Array<RouteRef>;
-    actions?: Array<ActionRef>;
-    features?: {
-        [key: string]: any;
-    };
+export class ExtensionCompositionEntry {
+    entry: ExtensionComposition;
 }
