@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, TxtViewerComponent } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TxtViewerComponent } from './txt-viewer.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('Text View component', () => {
     let component: TxtViewerComponent;
@@ -27,7 +27,7 @@ describe('Text View component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(TxtViewerComponent);
 

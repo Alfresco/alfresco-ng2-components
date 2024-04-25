@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, PdfThumbListComponent } from '@alfresco/adf-core';
-import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
+import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 
 declare const pdfjsViewer: any;
 
@@ -72,7 +72,7 @@ describe('PdfThumbListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(PdfThumbListComponent);
         component = fixture.componentInstance;

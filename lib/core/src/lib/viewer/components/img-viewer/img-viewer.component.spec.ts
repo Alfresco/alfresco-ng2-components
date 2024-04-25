@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { AppConfigService, ImgViewerComponent, UrlService } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
+import { AppConfigService } from '../../../app-config';
+import { UrlService } from '../../../common';
 import { CoreTestingModule } from '../../../testing';
+import { ImgViewerComponent } from './img-viewer.component';
 
 describe('Test Img viewer component ', () => {
     let component: ImgViewerComponent;
@@ -35,7 +36,7 @@ describe('Test Img viewer component ', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
     });
 

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, PdfPasswordDialogComponent } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 declare const pdfjsLib: any;
 
@@ -29,7 +29,7 @@ describe('PdfPasswordDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             providers: [
                 {
                     provide: MAT_DIALOG_DATA,

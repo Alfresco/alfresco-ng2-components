@@ -15,16 +15,19 @@
  * limitations under the License.
  */
 
-import { AppConfigService, CoreTestingModule, EventMock, PdfThumbListComponent, PdfViewerComponent } from '@alfresco/adf-core';
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { AppConfigService } from '../../../app-config';
+import { EventMock } from '../../../mock';
+import { CoreTestingModule } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
+import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
+import { PdfViewerComponent } from './pdf-viewer.component';
 
 declare const pdfjsLib: any;
 
@@ -104,7 +107,7 @@ describe('Test PdfViewer component', () => {
 
     beforeEach((done) => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [TestDialogComponent, UrlTestComponent, UrlTestPasswordComponent, BlobTestComponent],
             providers: [
                 {

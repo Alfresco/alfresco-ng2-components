@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, PdfThumbComponent } from '@alfresco/adf-core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PdfThumbComponent } from './pdf-viewer-thumb.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('PdfThumbComponent', () => {
     let fixture: ComponentFixture<PdfThumbComponent>;
@@ -42,8 +42,13 @@ describe('PdfThumbComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
-            providers: [{ provide: DomSanitizer, useValue: domSanitizer }]
+            imports: [CoreTestingModule],
+            providers: [
+                {
+                    provide: DomSanitizer,
+                    useValue: domSanitizer
+                }
+            ]
         });
         fixture = TestBed.createComponent(PdfThumbComponent);
         component = fixture.componentInstance;
