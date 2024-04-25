@@ -17,87 +17,87 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CoreTestingModule } from '../../../testing';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 declare const pdfjsLib: any;
 
 describe('PdfPasswordDialogComponent', () => {
-    let component: PdfPasswordDialogComponent;
-    let fixture: ComponentFixture<PdfPasswordDialogComponent>;
-    let dialogRef: MatDialogRef<PdfPasswordDialogComponent>;
+  let component: PdfPasswordDialogComponent;
+  let fixture: ComponentFixture<PdfPasswordDialogComponent>;
+  let dialogRef: MatDialogRef<PdfPasswordDialogComponent>;
 
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [CoreTestingModule],
+      providers: [
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            reason: null
+          }
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: jasmine.createSpy('open')
+          }
+        }
+      ]
+    });
+    fixture = TestBed.createComponent(PdfPasswordDialogComponent);
+    component = fixture.componentInstance;
+    dialogRef = TestBed.inject(MatDialogRef);
+  });
+
+  it('should have empty default value', () => {
+    fixture.detectChanges();
+
+    expect(component.passwordFormControl.value).toBe('');
+  });
+
+  describe('isError', () => {
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [
-                {
-                    provide: MAT_DIALOG_DATA,
-                    useValue: {
-                        reason: null
-                    }
-                },
-                {
-                    provide: MatDialogRef,
-                    useValue: {
-                        close: jasmine.createSpy('open')
-                    }
-                }
-            ]
-        });
-        fixture = TestBed.createComponent(PdfPasswordDialogComponent);
-        component = fixture.componentInstance;
-        dialogRef = TestBed.inject(MatDialogRef);
+      fixture.detectChanges();
     });
 
-    it('should have empty default value', () => {
-        fixture.detectChanges();
+    it('should return false', () => {
+      component.data.reason = pdfjsLib.PasswordResponses.NEED_PASSWORD;
 
-        expect(component.passwordFormControl.value).toBe('');
+      expect(component.isError()).toBe(false);
     });
 
-    describe('isError', () => {
-        beforeEach(() => {
-            fixture.detectChanges();
-        });
+    it('should return true', () => {
+      component.data.reason = pdfjsLib.PasswordResponses.INCORRECT_PASSWORD;
 
-        it('should return false', () => {
-            component.data.reason = pdfjsLib.PasswordResponses.NEED_PASSWORD;
+      expect(component.isError()).toBe(true);
+    });
+  });
 
-            expect(component.isError()).toBe(false);
-        });
-
-        it('should return true', () => {
-            component.data.reason = pdfjsLib.PasswordResponses.INCORRECT_PASSWORD;
-
-            expect(component.isError()).toBe(true);
-        });
+  describe('isValid', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
     });
 
-    describe('isValid', () => {
-        beforeEach(() => {
-            fixture.detectChanges();
-        });
+    it('should return false when input has no value', () => {
+      component.passwordFormControl.setValue('');
 
-        it('should return false when input has no value', () => {
-            component.passwordFormControl.setValue('');
-
-            expect(component.isValid()).toBe(false);
-        });
-
-        it('should return true when input has a valid value', () => {
-            component.passwordFormControl.setValue('some-text');
-
-            expect(component.isValid()).toBe(true);
-        });
+      expect(component.isValid()).toBe(false);
     });
 
-    it('should close dialog with input value', () => {
-        fixture.detectChanges();
+    it('should return true when input has a valid value', () => {
+      component.passwordFormControl.setValue('some-text');
 
-        component.passwordFormControl.setValue('some-value');
-        component.submit();
-
-        expect(dialogRef.close).toHaveBeenCalledWith('some-value');
+      expect(component.isValid()).toBe(true);
     });
+  });
+
+  it('should close dialog with input value', () => {
+    fixture.detectChanges();
+
+    component.passwordFormControl.setValue('some-value');
+    component.submit();
+
+    expect(dialogRef.close).toHaveBeenCalledWith('some-value');
+  });
 });
