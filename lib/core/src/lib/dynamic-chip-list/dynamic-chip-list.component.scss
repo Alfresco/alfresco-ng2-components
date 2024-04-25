@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-dynamic-chip-list-container {
     display: flex;
     flex-direction: row;
@@ -72,6 +74,16 @@
         background-color: var(--theme-primary-color);
         height: auto;
         word-break: break-word;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        #{$mat-evolution-chip-action} {
+            padding: 2px 12px;
+
+            #{$mat-evolution-chip-text-label} {
+                color: var(--adf-theme-foreground-text-color-054);
+            }
+        }
     }
 
     .adf-dynamic-chip-list-delete-icon {
