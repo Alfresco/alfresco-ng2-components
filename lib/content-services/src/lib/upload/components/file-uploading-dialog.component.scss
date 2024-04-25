@@ -77,7 +77,10 @@
         padding: 1em;
 
         & > button {
+            width: auto;
+            min-width: 40px;
             text-transform: uppercase;
+            padding: 0 16px;
         }
     }
 }
