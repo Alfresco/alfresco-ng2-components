@@ -7,6 +7,7 @@
             class="adf-search-chip-list-item"
             matTooltip="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
             matTooltipPosition="right"
+            (keyup.enter)="facetFiltersService.resetAllSelectedBuckets()"
             (click)="facetFiltersService.resetAllSelectedBuckets()">
             {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
         </mat-chip-option>
