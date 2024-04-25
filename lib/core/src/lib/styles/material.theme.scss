@@ -58,4 +58,10 @@
             }
         }
     }
+
+    #{$mat-snackbar} {
+        &#{$mat-snack-bar-container} {
+            margin: 24px;
+        }
+    }
 }
