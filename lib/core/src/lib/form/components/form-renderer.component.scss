@@ -17,7 +17,8 @@
     }
 }
 
-.adf-container-widget__header-text, .adf-label {
+.adf-container-widget__header-text,
+.adf-label {
     font-family: var(--theme-font-family);
     color: var(--theme-primary-color);
 }
@@ -89,19 +90,13 @@
         }
     }
 
-    #{$mat-form-field} {
-        width: 100%;
-    }
-
-    mat-form-field {
-        width: 100%;
-    }
-
     #{mat-input-placeholder} {
-        top: 1.8em !important;
+        top: 1.8em;
     }
 
     #{$mat-form-field} {
+        width: 100%;
+
         label {
             transform: scaleX(1);
             transition: transform 150ms linear;
@@ -135,7 +130,7 @@
         }
 
         & #{$mat-card-header-text} {
-            margin: 0 !important;
+            margin: 0;
         }
 
         & #{$mat-tab-body-content} {
