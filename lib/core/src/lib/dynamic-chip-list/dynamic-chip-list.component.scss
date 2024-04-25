@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-dynamic-chip-list-container {
     display: flex;
     flex-direction: row;
@@ -70,6 +72,26 @@
     .adf-dynamic-chip-list-chip {
         height: auto;
         word-break: break-word;
+        margin-top: 0;
+        margin-bottom: 0;
         padding: 6px 11px;
+
+        #{$mat-evolution-chip-action} {
+            padding: 2px 12px;
+
+            #{$mat-evolution-chip-text-label} {
+                color: var(--adf-theme-foreground-text-color-054);
+            }
+        }
+    }
+
+    .adf-dynamic-chip-list-delete-icon {
+        font-size: var(--theme-title-font-size);
+        background-repeat: no-repeat;
+        display: inline-block;
+        fill: currentcolor;
+        height: 20px;
+        width: 20px;
+        color: var(--theme-primary-color-default-contrast);
     }
 }
