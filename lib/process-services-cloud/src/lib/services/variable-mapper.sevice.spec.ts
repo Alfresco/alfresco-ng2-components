@@ -32,12 +32,11 @@ describe('VariableMapperService', () => {
 
         const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
 
-        expect(viewModel[0].variablesMap[column.title].type).toEqual(expectedColumnType);
+        expect(viewModel[0].variablesMap[column.id].type).toEqual(expectedColumnType);
     };
 
     beforeEach(() => {
         service = new VariableMapperService();
-
         variable = getProcessInstanceVariableMock({
             processDefinitionKey: 'processKey',
             name: 'variableName'
@@ -45,6 +44,7 @@ describe('VariableMapperService', () => {
 
         column = getDataColumnMock<ProcessListDataColumnCustomData>({
             title: 'Column Name',
+            id: 'columnId',
             key: '',
             customData: {
                 variableDefinitionsPayload: ['processKey/variableName'],
@@ -58,11 +58,11 @@ describe('VariableMapperService', () => {
         };
     });
 
-    it('should map variables by column title', () => {
+    it('should map variables by column id', () => {
         const expectedObjectWithVariableMap = {
             ...objectWithVariables,
             variablesMap: {
-                [column.title]: variable
+                [column.id]: variable
             }
         };
 
