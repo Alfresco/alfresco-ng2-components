@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserModule, By } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { LayoutModule, MediaMatcher } from '@angular/cdk/layout';
@@ -28,7 +28,7 @@ import { UserPreferencesService } from '../../../common/services/user-preference
 import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-layout-container',
@@ -81,13 +81,10 @@ describe('SidenavLayoutComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
-                BrowserModule,
-                BrowserAnimationsModule,
-                // MatSidenavModule,
+                NoopAnimationsModule,
                 PlatformModule,
                 LayoutModule,
                 SidenavLayoutComponent,
-                SidenavLayoutContentDirective,
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
