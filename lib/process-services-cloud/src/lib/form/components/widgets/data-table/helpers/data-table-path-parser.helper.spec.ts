@@ -77,8 +77,7 @@ describe('DataTablePathParserHelper', () => {
         expect(result).toEqual(mockResultData);
     });
 
-    it('should return the correct data for path with separator before and no separator after single bracket in property name', () => {
-        //
+    it('should return the correct data for path with separator before and no separator after nested brackets in property name', () => {
         const propertyName = 'file.[data]';
         const path = `response.[${propertyName}]`;
         const data = mockResponseResultData(propertyName);
