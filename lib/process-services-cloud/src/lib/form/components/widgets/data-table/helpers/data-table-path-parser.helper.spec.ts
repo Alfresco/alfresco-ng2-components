@@ -25,105 +25,89 @@ describe('DataTablePathParserHelper', () => {
         helper = new DataTablePathParserHelper();
     });
 
-    it('should return an empty array if the path does not exist in the data', () => {
-        const data = {};
-        const path = 'nonexistent.path';
-        const result = helper.retrieveDataFromPath(data, path);
-        expect(result).toEqual([]);
-    });
-
     describe('should return the correct data for path', () => {
-        it('nested', () => {
-            const data = { level1: { level2: { level3: { level4: ['parrot', 'fish'] } } } };
-            const path = 'level1.level2.level3.level4';
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(['parrot', 'fish']);
-        });
+        const testCases = [
+            {
+                description: 'not existent',
+                data: {},
+                path: 'nonexistent.path',
+                expected: []
+            },
+            {
+                description: 'nested',
+                data: { level1: { level2: { level3: { level4: ['parrot', 'fish'] } } } },
+                propertyName: 'level4',
+                path: 'level1.level2.level3.level4',
+                expected: ['parrot', 'fish']
+            },
+            {
+                description: 'NOT nested',
+                data: { pets: ['cat', 'dog'] },
+                propertyName: 'pets',
+                path: 'pets',
+                expected: ['cat', 'dog']
+            },
+            {
+                description: 'NOT nested with separator (.) in property name',
+                data: { 'my.pets': ['cat', 'dog'] },
+                propertyName: 'my.pets',
+                path: '[my.pets]',
+                expected: ['cat', 'dog']
+            },
+            {
+                description: 'with nested brackets followed by an additional part of property name',
+                propertyName: 'file.file[data]file',
+                path: 'response.[file.file[data]file]'
+            },
+            {
+                description: 'with nested brackets',
+                propertyName: 'file.file[data]',
+                path: 'response.[file.file[data]]'
+            },
+            {
+                description: 'with separator before nested brackets in property name',
+                propertyName: 'file.[data]file',
+                path: 'response.[file.[data]file]'
+            },
+            {
+                description: 'with separator before and no separator after nested brackets in property name',
+                propertyName: 'file.[data]',
+                path: 'response.[file.[data]]'
+            },
+            {
+                description: 'with separator after nested brackets',
+                propertyName: 'file[data].file',
+                path: 'response.[file[data].file]'
+            },
+            {
+                description: 'with multiple brackets in property name',
+                propertyName: 'file.file[data]file[data]',
+                path: 'response.[file.file[data]file[data]]'
+            },
+            {
+                description: 'with special characters except separator (.) in brackets',
+                propertyName: 'xyz:abc,xyz-abc,xyz_abc,abc+xyz',
+                path: 'response.[xyz:abc,xyz-abc,xyz_abc,abc+xyz]'
+            },
+            {
+                description: 'with special characters except separator (.) without brackets',
+                propertyName: 'xyz:abc,xyz-abc,xyz_abc,abc+xyz',
+                path: 'response.xyz:abc,xyz-abc,xyz_abc,abc+xyz'
+            },
+            {
+                description: 'without separator in brackets',
+                propertyName: 'my-data',
+                path: '[response].[my-data]'
+            }
+        ];
 
-        it('NOT nested', () => {
-            const data = { pets: ['cat', 'dog'] };
-            const path = 'pets';
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(['cat', 'dog']);
-        });
-
-        it('NOT nested with separator (.) in property name', () => {
-            const data = { 'my.pets': ['cat', 'dog'] };
-            const path = '[my.pets]';
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(['cat', 'dog']);
-        });
-
-        it('with nested brackets followed by an additional part of property name', () => {
-            const propertyName = 'file.file[data]file';
-            const path = `response.[${propertyName}]`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
-        });
-
-        it('with nested brackets', () => {
-            const propertyName = 'file.file[data]';
-            const path = `response.[${propertyName}]`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
-        });
-
-        it('with separator before nested brackets in property name', () => {
-            const propertyName = 'file.[data]file';
-            const path = `response.[${propertyName}]`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
-        });
-
-        it('with separator before and no separator after nested brackets in property name', () => {
-            const propertyName = 'file.[data]';
-            const path = `response.[${propertyName}]`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
-        });
-
-        it('with separator after nested brackets', () => {
-            const propertyName = 'file[data].file';
-            const path = `response.[${propertyName}]`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
-        });
-
-        it('with multiple brackets in property name', () => {
-            const propertyName = 'file.file[data]file[data]';
-            const path = `response.[${propertyName}]`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
-        });
-
-        it('with special characters except separator (.) in brackets', () => {
-            const propertyName = 'xyz:abc,xyz-abc,xyz_abc,abc+xyz';
-            const path = `response.[${propertyName}]`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
-        });
-
-        it('with special characters except separator (.) without brackets', () => {
-            const propertyName = 'xyz:abc,xyz-abc,xyz_abc,abc+xyz';
-            const path = `response.${propertyName}`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
-        });
-
-        it('without separator in brackets', () => {
-            const propertyName = 'my-data';
-            const path = `[response].[${propertyName}]`;
-            const data = mockResponseResultData(propertyName);
-            const result = helper.retrieveDataFromPath(data, path);
-            expect(result).toEqual(mockResultData);
+        testCases.forEach((testCase) => {
+            it(testCase.description, () => {
+                const data = testCase.data ?? mockResponseResultData(testCase.propertyName);
+                const result = helper.retrieveDataFromPath(data, testCase.path);
+                const expectedResult = testCase.expected ?? mockResultData;
+                expect(result).toEqual(expectedResult);
+            });
         });
     });
 });
