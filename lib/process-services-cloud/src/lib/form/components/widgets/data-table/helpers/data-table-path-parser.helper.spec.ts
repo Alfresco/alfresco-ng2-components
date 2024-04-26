@@ -16,46 +16,13 @@
  */
 
 import { DataTablePathParserHelper } from './data-table-path-parser.helper';
-import {
-    mockEuropeCountriesData,
-    mockJsonNestedResponseEuropeCountriesDataWithSeparatorInPropertyName,
-    mockJsonNestedResponseEuropeCountriesDataWithMultipleSpecialCharacters,
-    mockJsonNestedResponseEuropeCountriesData
-} from '../../../../mocks/data-table-widget.mock';
+import { mockResponseResultData, mockResultData } from '../mocks/data-table-path-parser.helper.mock';
 
 describe('DataTablePathParserHelper', () => {
     let helper: DataTablePathParserHelper;
 
     beforeEach(() => {
         helper = new DataTablePathParserHelper();
-    });
-
-    it('should return the correct data for path with separator in nested brackets', () => {
-        const data = mockJsonNestedResponseEuropeCountriesDataWithSeparatorInPropertyName;
-        const path = 'response.[my.data].[country[data].country]';
-        const result = helper.retrieveDataFromPath(data, path);
-        expect(result).toEqual(mockEuropeCountriesData);
-    });
-
-    it('should return the correct data for path with special characters except separator (.) in brackets', () => {
-        const data = mockJsonNestedResponseEuropeCountriesDataWithMultipleSpecialCharacters;
-        const path = 'response.[xyz:abc,xyz-abc,xyz_abc,abc+xyz]';
-        const result = helper.retrieveDataFromPath(data, path);
-        expect(result).toEqual(mockEuropeCountriesData);
-    });
-
-    it('should return the correct data for path with special characters except separator (.) without brackets', () => {
-        const data = mockJsonNestedResponseEuropeCountriesDataWithMultipleSpecialCharacters;
-        const path = 'response.xyz:abc,xyz-abc,xyz_abc,abc+xyz';
-        const result = helper.retrieveDataFromPath(data, path);
-        expect(result).toEqual(mockEuropeCountriesData);
-    });
-
-    it('should return the correct data for path without separator in brackets', () => {
-        const data = mockJsonNestedResponseEuropeCountriesData;
-        const path = '[response].[my-data]';
-        const result = helper.retrieveDataFromPath(data, path);
-        expect(result).toEqual(mockEuropeCountriesData);
     });
 
     it('should return an empty array if the path does not exist in the data', () => {
@@ -84,5 +51,78 @@ describe('DataTablePathParserHelper', () => {
         const path = '[my.pets]';
         const result = helper.retrieveDataFromPath(data, path);
         expect(result).toEqual(['cat', 'dog']);
+    });
+
+    it('should return the correct data for path with nested brackets followed by an additional part of property name', () => {
+        const propertyName = 'file.file[data]file';
+        const path = `response.[${propertyName}]`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
+    });
+
+    it('should return the correct data for path with nested brackets', () => {
+        const propertyName = 'file.file[data]';
+        const path = `response.[${propertyName}]`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
+    });
+
+    it('should return the correct data for path with separator before nested brackets in property name', () => {
+        const propertyName = 'file.[data]file';
+        const path = `response.[${propertyName}]`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
+    });
+
+    it('should return the correct data for path with separator before and no separator after single bracket in property name', () => {
+        //
+        const propertyName = 'file.[data]';
+        const path = `response.[${propertyName}]`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
+    });
+
+    it('should return the correct data for path with separator after nested brackets', () => {
+        const propertyName = 'file[data].file';
+        const path = `response.[${propertyName}]`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
+    });
+
+    it('should return the correct data for path with multiple brackets in property name', () => {
+        const propertyName = 'file.file[data]file[data]';
+        const path = `response.[${propertyName}]`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
+    });
+
+    it('should return the correct data for path with special characters except separator (.) in brackets', () => {
+        const propertyName = 'xyz:abc,xyz-abc,xyz_abc,abc+xyz';
+        const path = `response.[${propertyName}]`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
+    });
+
+    it('should return the correct data for path with special characters except separator (.) without brackets', () => {
+        const propertyName = 'xyz:abc,xyz-abc,xyz_abc,abc+xyz';
+        const path = `response.${propertyName}`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
+    });
+
+    it('should return the correct data for path without separator in brackets', () => {
+        const propertyName = 'my-data';
+        const path = `[response].[${propertyName}]`;
+        const data = mockResponseResultData(propertyName);
+        const result = helper.retrieveDataFromPath(data, path);
+        expect(result).toEqual(mockResultData);
     });
 });
