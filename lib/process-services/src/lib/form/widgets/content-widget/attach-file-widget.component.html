@@ -62,7 +62,6 @@
                  [alt]="mimeTypeIcon"
                  (click)="onAttachFileClicked(file)"
                  (keyup.enter)="onAttachFileClicked(file)"
-                 role="img"
                  [attr.aria-label]="file.name"
                  [tabindex]="i"/>
             <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [matTooltip]="file.name" (keyup.enter)="onAttachFileClicked(file)"
