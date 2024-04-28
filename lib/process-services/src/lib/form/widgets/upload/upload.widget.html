@@ -12,7 +12,7 @@
                          (keyup.enter)="fileClicked(file)"
                          role="button"
                          tabindex="0"/>
-                    <span matLine id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)"
+                    <span matListItemLine id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)"
                           role="button" tabindex="0" class="adf-file">{{file.name}}</span>
                     <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file.id+'-remove'"
                             (click)="removeFile(file);" (keyup.enter)="removeFile(file);">
