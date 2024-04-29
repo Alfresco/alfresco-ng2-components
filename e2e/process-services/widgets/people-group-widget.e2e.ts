@@ -75,8 +75,8 @@ describe('People and Group widget', () => {
 
         await widget.groupWidget().insertGroup(groupVisibilityForm.FIELD.widget_id, groupVisibilityForm.searchTerm);
         await widget.groupWidget().checkDropDownListIsDisplayed();
-        const suggestions = await widget.groupWidget().getDropDownList();
-        expect(suggestions.sort((a, b) => a.localeCompare(b))).toEqual(['Heros', 'Users']);
+        const suggestions = (await widget.groupWidget().getDropDownList()).sort((a, b) => a.localeCompare(b));
+        expect(suggestions).toEqual(['Heros', 'Users']);
         await widget.groupWidget().selectGroupFromDropDown('Users');
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -118,8 +118,8 @@ describe('People and Group widget', () => {
 
         await widget.peopleWidget().insertUser(peopleWidget.FIELD.widget_id, peopleWidget.searchTerm);
         await widget.peopleWidget().checkDropDownListIsDisplayed();
-        const suggestions = await widget.peopleWidget().getDropDownList();
-        expect(suggestions.sort()).toEqual(getGroupMembers().sort());
+        const suggestions = (await widget.peopleWidget().getDropDownList()).sort((a, b) => a.localeCompare(b));
+        expect(suggestions).toEqual(getGroupMembers().sort());
         await widget.peopleWidget().selectUserFromDropDown(getGroupMembers()[0]);
         await taskPage.taskDetails().clickCompleteFormTask();
     });
