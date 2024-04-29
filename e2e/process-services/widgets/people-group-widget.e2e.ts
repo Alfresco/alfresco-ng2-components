@@ -22,6 +22,15 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 import { AdminGroupsApi } from '@alfresco/js-api';
 
+interface AppGroupUser {
+    firstName: string;
+    lastName: string;
+}
+
+interface AppSubGroup {
+    name: string;
+}
+
 describe('People and Group widget', () => {
     const app = browser.params.resources.Files.MORE_WIDGETS;
 
@@ -124,7 +133,7 @@ describe('People and Group widget', () => {
         await apiService.loginWithProfile('admin');
 
         const userCreated = await Promise.all(
-            app.groupUser.map((usersToCreate) =>
+            app.groupUser.map((usersToCreate: AppGroupUser) =>
                 usersActions.createUser(
                     new UserModel({
                         tenantId,
@@ -151,7 +160,7 @@ describe('People and Group widget', () => {
 
         await Promise.all(userCreated.map((userToAddGroup: UserModel) => adminGroupsApi.addGroupMember(group.id, userToAddGroup.id)));
 
-        const subgroups: any[] = await Promise.all(
+        const subgroups = await Promise.all(
             getSubGroupsName().map((name) =>
                 adminGroupsApi.createNewGroup({
                     name,
@@ -171,7 +180,7 @@ describe('People and Group widget', () => {
      * @returns list of subgroup names
      */
     function getSubGroupsName(): string[] {
-        return app.group.subgroup.map((subgroup) => subgroup.name);
+        return app.group.subgroup.map((subgroup: AppSubGroup) => subgroup.name);
     }
 
     /**
@@ -180,6 +189,6 @@ describe('People and Group widget', () => {
      * @returns list of group member full names
      */
     function getGroupMembers(): string[] {
-        return app.groupUser.map((groupUser) => `${groupUser.firstName} ${groupUser.lastName}`);
+        return app.groupUser.map((groupUser: AppGroupUser) => `${groupUser.firstName} ${groupUser.lastName}`);
     }
 });
