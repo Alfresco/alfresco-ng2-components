@@ -24,6 +24,7 @@
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [attr.aria-label]="placeholder | translate"
+            class="adf-search-properties-file-input"
             (matChipInputTokenEnd)="add($event)"
             (blur)="activeAnyOption = false"
             data-automation-id="adf-search-chip-autocomplete-input">
