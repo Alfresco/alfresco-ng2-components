@@ -20,9 +20,11 @@ import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overla
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TooltipCardComponent } from './tooltip-card.component';
 
-@Directive({ selector: '[adf-tooltip-card]' })
+@Directive({
+    selector: '[adf-tooltip-card]',
+    standalone: true
+})
 export class TooltipCardDirective implements OnInit, OnDestroy {
-
     @Input('adf-tooltip-card') text = '';
     @Input() image = '';
     @Input() width = '300';
@@ -36,11 +38,7 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
 
     private overlayRef: OverlayRef;
 
-    constructor(
-        private overlay: Overlay,
-        private overlayPositionBuilder: OverlayPositionBuilder,
-        private elementRef: ElementRef) {
-    }
+    constructor(private overlay: Overlay, private overlayPositionBuilder: OverlayPositionBuilder, private elementRef: ElementRef) {}
 
     ngOnDestroy(): void {
         if (this.overlayRef) {
@@ -49,24 +47,23 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        const positionStrategy = this.overlayPositionBuilder
-            .flexibleConnectedTo(this.elementRef)
-            .withPositions([{
+        const positionStrategy = this.overlayPositionBuilder.flexibleConnectedTo(this.elementRef).withPositions([
+            {
                 originX: this.originX,
                 originY: this.originY,
                 overlayX: this.overlayX,
                 overlayY: this.overlayY,
                 offsetY: this.offsetY,
                 offsetX: this.offsetX
-            }]);
+            }
+        ]);
 
         this.overlayRef = this.overlay.create({ positionStrategy });
     }
 
     @HostListener('mouseenter')
     show() {
-        const tooltipRef: ComponentRef<TooltipCardComponent>
-            = this.overlayRef?.attach(new ComponentPortal(TooltipCardComponent));
+        const tooltipRef: ComponentRef<TooltipCardComponent> = this.overlayRef?.attach(new ComponentPortal(TooltipCardComponent));
         tooltipRef.instance.text = this.text;
         tooltipRef.instance.image = this.image;
         tooltipRef.instance.width = this.width;

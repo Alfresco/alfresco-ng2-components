@@ -15,38 +15,17 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-
 import { HighlightDirective } from './highlight.directive';
 import { LogoutDirective } from './logout.directive';
 import { UploadDirective } from './upload.directive';
 import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        OverlayModule
-    ],
-    declarations: [
-        HighlightDirective,
-        LogoutDirective,
-        UploadDirective,
-        TooltipCardDirective,
-        TooltipCardComponent,
-        InfiniteSelectScrollDirective
-    ],
-    exports: [
-        HighlightDirective,
-        LogoutDirective,
-        UploadDirective,
-        TooltipCardDirective,
-        InfiniteSelectScrollDirective
-    ]
+    imports: [HighlightDirective, LogoutDirective, UploadDirective, TooltipCardDirective, TooltipCardComponent, InfiniteSelectScrollDirective],
+    exports: [HighlightDirective, LogoutDirective, UploadDirective, TooltipCardDirective, TooltipCardComponent, InfiniteSelectScrollDirective]
 })
+/** @deprecated This module is deprecated and will be removed in a future release. Please consider importing standalone components and directives directly. */
 export class DirectiveModule {}

@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, LogService, TranslationService, ViewUtilService } from '@alfresco/adf-core';
+import { AlfrescoApiService, TranslationService, ViewUtilService } from '@alfresco/adf-core';
 import { Rendition, RenditionEntry, RenditionPaging, RenditionsApi } from '@alfresco/js-api';
 import { RenditionService } from '@alfresco/adf-content-services';
 
@@ -28,7 +28,7 @@ const getRenditionEntry = (status: Rendition.StatusEnum): RenditionEntry => ({
     }
 });
 
-const getRenditionPaging = (status: Rendition.StatusEnum): RenditionPaging =>  ({
+const getRenditionPaging = (status: Rendition.StatusEnum): RenditionPaging => ({
     list: {
         entries: [getRenditionEntry(status)]
     }
@@ -43,14 +43,16 @@ describe('RenditionService', () => {
             providers: [
                 RenditionService,
                 { provide: AlfrescoApiService, useValue: {} },
-                { provide: LogService, useValue: { error: jasmine.createSpy('error') } },
                 { provide: TranslationService, useValue: {} },
                 { provide: ViewUtilService, useValue: {} },
-                { provide: RenditionsApi, useValue: {
+                {
+                    provide: RenditionsApi,
+                    useValue: {
                         listRenditions: jasmine.createSpy('listRenditions'),
                         getRendition: jasmine.createSpy('getRendition'),
                         createRendition: jasmine.createSpy('createRendition')
-                    } }
+                    }
+                }
             ]
         });
         renditionService = TestBed.inject(RenditionService);
@@ -77,9 +79,9 @@ describe('RenditionService', () => {
 
         renditionsApi.listRenditions.and.returnValue(Promise.resolve(mockRenditionPaging));
         renditionsApi.getRendition.and.returnValues(
-          Promise.resolve(getRenditionEntry(Rendition.StatusEnum.NOTCREATED)),
-          Promise.resolve(getRenditionEntry(Rendition.StatusEnum.NOTCREATED)),
-          Promise.resolve(mockRenditionEntry)
+            Promise.resolve(getRenditionEntry(Rendition.StatusEnum.NOTCREATED)),
+            Promise.resolve(getRenditionEntry(Rendition.StatusEnum.NOTCREATED)),
+            Promise.resolve(mockRenditionEntry)
         );
 
         const result = await renditionService.getRendition('nodeId', 'pdf');
@@ -98,5 +100,4 @@ describe('RenditionService', () => {
         expect(result).toEqual(mockRenditionPaging.list.entries[0]);
         expect(renditionsApi.getRendition).not.toHaveBeenCalled();
     });
-
 });

@@ -31,14 +31,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NodeEntry, NodePaging, Pagination, Node, SearchEntry } from '@alfresco/js-api';
-import {
-    NotificationService,
-    UserPreferencesService,
-    PaginationComponent,
-    DisplayMode,
-    ShowHeaderMode,
-    FormRenderingService
-} from '@alfresco/adf-core';
+import { NotificationService, UserPreferencesService, PaginationComponent, ShowHeaderMode, FormRenderingService } from '@alfresco/adf-core';
 import {
     ContentService,
     FolderCreatedEvent,
@@ -74,7 +67,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showViewer = false;
     showVersions = false;
     allowDropFiles = true;
-    displayMode = DisplayMode.List;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames', 'definition'];
 
     selectionModes = [
@@ -221,10 +213,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 if (params['id'] && this.currentFolderId !== params['id']) {
                     this.currentFolderId = params['id'];
                 }
-
-                if (params['mode'] && params['mode'] === DisplayMode.Gallery) {
-                    this.displayMode = DisplayMode.Gallery;
-                }
             });
         }
 
@@ -312,7 +300,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderChange($event) {
-        this.router.navigate([this.navigationRoute, $event.value.id, 'display', this.displayMode]);
+        this.router.navigate([this.navigationRoute, $event.value.id]);
     }
 
     handlePermissionError(event: any) {
@@ -400,17 +388,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     userHasPermissionToManageVersions(): boolean {
         const selection = this.documentList.selection;
         return this.contentService.hasAllowableOperations(selection[0].entry, 'update');
-    }
-
-    canEditFolder(selection: Array<NodeEntry>): boolean {
-        if (selection && selection.length === 1) {
-            const entry = selection[0].entry;
-
-            if (entry?.isFolder) {
-                return this.contentService.hasAllowableOperations(entry, 'update');
-            }
-        }
-        return false;
     }
 
     canCreateContent(parentNode: Node): boolean {
@@ -507,7 +484,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         if (this.currentFolderId === '-my-') {
             this.router.navigate([this.navigationRoute, '']);
         } else {
-            this.router.navigate([this.navigationRoute, this.currentFolderId, 'display', this.displayMode]);
+            this.router.navigate([this.navigationRoute, this.currentFolderId]);
         }
         this.documentList.reload();
     }

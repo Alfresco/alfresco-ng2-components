@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { LogService } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -67,7 +66,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     private completedTaskObserver: Observer<TaskDetailsModel>;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private activitiProcess: ProcessService, private logService: LogService, private dialog: MatDialog) {
+    constructor(private processService: ProcessService, private dialog: MatDialog) {
         this.task$ = new Observable<TaskDetailsModel>((observer) => (this.taskObserver = observer)).pipe(share());
         this.completedTask$ = new Observable<TaskDetailsModel>((observer) => (this.completedTaskObserver = observer)).pipe(share());
     }
@@ -98,7 +97,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     loadActive(processInstanceId: string) {
         this.activeTasks = [];
         if (processInstanceId) {
-            this.activitiProcess.getProcessTasks(processInstanceId, null).subscribe(
+            this.processService.getProcessTasks(processInstanceId, null).subscribe(
                 (res) => {
                     res.forEach((task) => {
                         this.taskObserver.next(task);
@@ -116,7 +115,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     loadCompleted(processInstanceId: string) {
         this.completedTasks = [];
         if (processInstanceId) {
-            this.activitiProcess.getProcessTasks(processInstanceId, 'completed').subscribe(
+            this.processService.getProcessTasks(processInstanceId, 'completed').subscribe(
                 (res) => {
                     res.forEach((task) => {
                         this.completedTaskObserver.next(task);
@@ -146,8 +145,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
-        } catch (err) {
-            this.logService.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
+        } catch {
             return value;
         }
     }

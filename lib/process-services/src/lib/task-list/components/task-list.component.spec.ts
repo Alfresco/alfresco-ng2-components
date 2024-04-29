@@ -22,20 +22,20 @@ import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDat
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import {
-    fakeGlobalTask,
-    fakeEmptyTask,
-    paginatedTask,
-    fakeColumnSchema, fakeCustomSchema
-} from '../../mock';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../mock';
+import { TranslateService } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatMenuItemHarness } from '@angular/material/menu/testing';
 
 declare let jasmine: any;
 
 describe('TaskListComponent', () => {
     let component: TaskListComponent;
     let fixture: ComponentFixture<TaskListComponent>;
+    let loader: HarnessLoader;
     let appConfig: AppConfigService;
     let taskListService: TaskListService;
 
@@ -71,27 +71,18 @@ describe('TaskListComponent', () => {
             component.selectionMode = selectionMode;
         }
         component.ngOnChanges({ sort: state });
-        fixture.detectChanges();
-        await fixture.whenStable();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const selectTask1 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-0"]' }));
+        const selectTask2 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-1"]' }));
+        await selectTask1.toggle();
+        await selectTask1.toggle();
+        await selectTask2.toggle();
 
         let selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
         let selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
         expect(selectRow1).toBeDefined();
         expect(selectRow2).toBeDefined();
-        expect(component.selectedInstances.length).toBe(2);
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
+        await selectTask2.toggle();
 
         expect(component.selectedInstances.length).toBe(1);
         selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
@@ -102,16 +93,14 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 
         fixture = TestBed.createComponent(TaskListComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         taskListService = TestBed.inject(TaskListService);
 
         appConfig.config = Object.assign(appConfig.config, {
@@ -135,25 +124,16 @@ describe('TaskListComponent', () => {
     it('should display loading spinner', () => {
         component.isLoading = true;
 
-        const spinner = fixture.debugElement.query(By.css('.mat-progress-spinner'));
+        const spinner = fixture.debugElement.query(By.css('.adf-task-list-loading-margin'));
         expect(spinner).toBeDefined();
     });
 
     it('should hide loading spinner upon loading complete', async () => {
         component.isLoading = true;
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        let spinner = fixture.debugElement.query(By.css('.mat-progress-spinner'));
-        expect(spinner).toBeDefined();
+        expect(fixture.debugElement.query(By.css('.adf-task-list-loading-margin'))).toBeDefined();
 
         component.isLoading = false;
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        spinner = fixture.debugElement.query(By.css('.mat-progress-spinner'));
-        expect(spinner).toBeNull();
+        expect(fixture.debugElement.query(By.css('.adf-task-list-loading-margin'))).toBeNull();
     });
 
     it('should use the default schemaColumn as default', () => {
@@ -200,7 +180,7 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['assignee'].id).toEqual(2);
             expect(component.rows[0]['assignee'].firstName).toEqual('firstNameFake1');
             expect(component.rows[0]['assignee'].lastName).toEqual('lastNameFake1');
-            expect(component.rows[0][('assignee')].email).toEqual('emailFake1');
+            expect(component.rows[0]['assignee'].email).toEqual('emailFake1');
             expect(component.rows[0]['created'].toISOString()).toEqual('2017-03-01T12:25:17.189Z');
             expect(component.rows[0]['dueDate'].toISOString()).toEqual('2017-04-02T12:25:17.189Z');
             expect(component.rows[0]['endDate'].toISOString()).toEqual('2017-05-03T12:25:31.129Z');
@@ -343,7 +323,6 @@ describe('TaskListComponent', () => {
     });
 
     describe('component changes', () => {
-
         beforeEach(() => {
             component.rows = fakeGlobalTask.data;
             fixture.detectChanges();
@@ -579,23 +558,14 @@ describe('TaskListComponent', () => {
 
         component.ngOnChanges({ sort: state });
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const selectAllCheckbox = fixture.nativeElement.querySelector('div[class*="adf-datatable-cell-header adf-datatable-checkbox"] .mat-checkbox-inner-container');
-        selectAllCheckbox.click();
-
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const selectAllCheckbox = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '.adf-datatable-cell-header' }));
+        await selectAllCheckbox.toggle();
 
         expect(component.selectedInstances.length).toBe(2);
         expect(component.selectedInstances[0].obj.name).toBe('nameFake1');
         expect(component.selectedInstances[1].obj.description).toBe('descriptionFake2');
 
-        selectAllCheckbox.click();
-
-        fixture.detectChanges();
-        await fixture.whenStable();
+        await selectAllCheckbox.toggle();
 
         expect(component.selectedInstances.length).toBe(0);
     });
@@ -622,16 +592,13 @@ describe('TaskListComponent', () => {
         component.selectionMode = 'single';
 
         component.ngOnChanges({ sort: state });
-        fixture.detectChanges();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        const selectTask1 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-0"]' }));
+        const selectTask2 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-1"]' }));
+        await selectTask1.toggle();
+        await selectTask1.toggle();
+        await selectTask2.toggle();
 
-        fixture.detectChanges();
-        await fixture.whenStable();
         expect(component.selectedInstances.length).toBe(2);
     });
 
@@ -661,22 +628,19 @@ describe('TaskListComponent', () => {
 });
 
 @Component({
-    template: `
-    <adf-tasklist #taskList>
+    template: ` <adf-tasklist #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3"></data-column>
             <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
             <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
-                    <div>{{entry.row?.obj?.startedBy | fullName}}</div>
+                    <div>{{ entry.row?.obj?.startedBy | fullName }}</div>
                 </ng-template>
             </data-column>
         </data-columns>
     </adf-tasklist>`
 })
-
 class CustomTaskListComponent {
-
     @ViewChild(TaskListComponent)
     taskList: TaskListComponent;
 }
@@ -687,10 +651,7 @@ describe('CustomTaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ProcessTestingModule],
             declarations: [CustomTaskListComponent]
         });
         fixture = TestBed.createComponent(CustomTaskListComponent);
@@ -714,15 +675,14 @@ describe('CustomTaskListComponent', () => {
 
 @Component({
     template: `
-    <adf-tasklist [appId]="1">
-        <adf-custom-empty-content-template>
-            <p id="custom-id">CUSTOM EMPTY</p>
-        </adf-custom-empty-content-template>
-    </adf-tasklist>
-       `
+        <adf-tasklist [appId]="1">
+            <adf-custom-empty-content-template>
+                <p id="custom-id">CUSTOM EMPTY</p>
+            </adf-custom-empty-content-template>
+        </adf-tasklist>
+    `
 })
-class EmptyTemplateComponent {
-}
+class EmptyTemplateComponent {}
 
 describe('Task List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
@@ -731,10 +691,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ProcessTestingModule],
             declarations: [EmptyTemplateComponent]
         });
         translateService = TestBed.inject(TranslateService);
@@ -760,25 +717,19 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
-    template: `
-    <adf-tasklist
-    [showContextMenu]="true"
-    (showRowContextMenu)="onShowRowContextMenu($event)"
-    #taskList>
+    template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
             <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
             <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
-                    <div>{{entry.row?.obj?.startedBy | fullName}}</div>
+                    <div>{{ entry.row?.obj?.startedBy | fullName }}</div>
                 </ng-template>
             </data-column>
         </data-columns>
     </adf-tasklist>`
 })
-
 class TaskListContextMenuComponent implements OnInit {
-
     @Output()
     contextAction = new EventEmitter<any>();
     private performAction$ = new Subject<any>();
@@ -791,8 +742,7 @@ class TaskListContextMenuComponent implements OnInit {
         event.value.actions = [
             {
                 data: event.value.row['obj'],
-                model:
-                {
+                model: {
                     key: 'taskDetails',
                     icon: 'open',
                     title: 'View Task Details',
@@ -802,8 +752,7 @@ class TaskListContextMenuComponent implements OnInit {
             },
             {
                 data: event.value.row['obj'],
-                model:
-                {
+                model: {
                     key: 'cancel',
                     icon: 'open',
                     title: 'Cancel Process',
@@ -815,31 +764,27 @@ class TaskListContextMenuComponent implements OnInit {
     }
 
     performContextActions() {
-        this.performAction$
-          .subscribe((action: any) => {
+        this.performAction$.subscribe((action: any) => {
             this.contextAction.emit(action.data);
-          });
+        });
     }
 }
 
 describe('TaskListContextMenuComponent', () => {
     let fixture: ComponentFixture<TaskListContextMenuComponent>;
     let customComponent: TaskListContextMenuComponent;
+    let loader: HarnessLoader;
     let taskListService: TaskListService;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
-            declarations: [
-                TaskListContextMenuComponent
-            ]
+            imports: [ProcessTestingModule],
+            declarations: [TaskListContextMenuComponent]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         element = fixture.nativeElement;
         taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
@@ -851,18 +796,15 @@ describe('TaskListContextMenuComponent', () => {
     });
 
     it('Should be able to show context menu on task list', async () => {
-        const contextMenu =  element.querySelector(`[data-automation-id="text_${fakeGlobalTask.data[0].name}"]`);
+        const contextMenu = element.querySelector(`[data-automation-id="text_${fakeGlobalTask.data[0].name}"]`);
         const contextActionSpy = spyOn(customComponent.contextAction, 'emit').and.callThrough();
         contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const contextActions = document.querySelectorAll('.mat-menu-item');
+        const contextActions = await loader.getAllHarnesses(MatMenuItemHarness);
 
         expect(contextActions.length).toBe(2);
-        expect(contextActions[0]['disabled']).toBe(false, 'View Task Details action not enabled');
-        expect(contextActions[1]['disabled']).toBe(false, 'Cancel Task action not enabled');
-        contextActions[0].dispatchEvent(new Event('click'));
-        fixture.detectChanges();
+        expect(await contextActions[0].isDisabled()).toBe(false, 'View Task Details action not enabled');
+        expect(await contextActions[1].isDisabled()).toBe(false, 'Cancel Task action not enabled');
+        await contextActions[0].click();
         expect(contextActionSpy).toHaveBeenCalled();
-      });
+    });
 });

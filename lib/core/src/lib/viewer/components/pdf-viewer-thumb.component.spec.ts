@@ -19,10 +19,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbComponent } from './pdf-viewer-thumb.component';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('PdfThumbComponent', () => {
-
     let fixture: ComponentFixture<PdfThumbComponent>;
     let component: PdfThumbComponent;
     const domSanitizer = {
@@ -32,10 +30,12 @@ describe('PdfThumbComponent', () => {
     const height = 119;
     const page = {
         id: 'pageId',
-        getPage: jasmine.createSpy('getPage').and.returnValue(Promise.resolve({
-            getViewport: () => ({ height: width, width: height }),
-            render: jasmine.createSpy('render').and.returnValue({ promise: Promise.resolve() })
-        })),
+        getPage: jasmine.createSpy('getPage').and.returnValue(
+            Promise.resolve({
+                getViewport: () => ({ height: width, width: height }),
+                render: jasmine.createSpy('render').and.returnValue({ promise: Promise.resolve() })
+            })
+        ),
 
         getWidth: jasmine.createSpy('getWidth').and.returnValue(width),
         getHeight: jasmine.createSpy('getHeight').and.returnValue(height)
@@ -43,13 +43,8 @@ describe('PdfThumbComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: DomSanitizer, useValue: domSanitizer }
-            ]
+            imports: [CoreTestingModule],
+            providers: [{ provide: DomSanitizer, useValue: domSanitizer }]
         });
         fixture = TestBed.createComponent(PdfThumbComponent);
         component = fixture.componentInstance;

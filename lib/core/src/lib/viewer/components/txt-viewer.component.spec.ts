@@ -19,20 +19,15 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TxtViewerComponent } from './txt-viewer.component';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('Text View component', () => {
-
     let component: TxtViewerComponent;
     let fixture: ComponentFixture<TxtViewerComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(TxtViewerComponent);
 
@@ -41,7 +36,6 @@ describe('Text View component', () => {
     });
 
     describe('View', () => {
-
         it('Should text container be present with urlFile', (done) => {
             fixture.detectChanges();
             const urlFile = './fake-test-file.txt';
@@ -57,7 +51,7 @@ describe('Text View component', () => {
         });
 
         it('Should text container be present with Blob file', (done) => {
-            const blobFile = new Blob(['text example'], {type: 'text/txt'});
+            const blobFile = new Blob(['text example'], { type: 'text/txt' });
 
             const change = new SimpleChange(null, blobFile, true);
 
@@ -69,5 +63,5 @@ describe('Text View component', () => {
                 });
             });
         });
-   });
+    });
 });

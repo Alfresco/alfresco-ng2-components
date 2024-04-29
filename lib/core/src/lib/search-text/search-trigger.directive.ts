@@ -37,6 +37,7 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
+    standalone: true,
     host: {
         role: 'combobox',
         '[attr.autocomplete]': 'autocomplete',
@@ -189,8 +190,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     private setTriggerValue(value: any): void {
         const toDisplay = this.searchPanel?.displayWith ? this.searchPanel.displayWith(value) : value;
-        const inputValue = toDisplay != null ? toDisplay : '';
-        this.element.nativeElement.value = inputValue;
+        this.element.nativeElement.value = toDisplay != null ? toDisplay : '';
     }
 
     private setValueAndClose(event: any | null): void {

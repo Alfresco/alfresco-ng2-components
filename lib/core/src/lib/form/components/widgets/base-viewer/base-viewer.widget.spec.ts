@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
-import { BaseViewerWidgetComponent, CoreTestingModule, FormFieldModel, FormService } from '@alfresco/adf-core';
+import { FormModel } from '../core/form.model';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormService } from '../../../services/form.service';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { BaseViewerWidgetComponent } from './base-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
@@ -43,7 +47,7 @@ describe('BaseViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, TranslateModule.forRoot(), BaseViewerWidgetComponent],
+            imports: [CoreTestingModule, BaseViewerWidgetComponent],
             providers: [{ provide: FormService, useValue: formServiceStub }]
         });
 

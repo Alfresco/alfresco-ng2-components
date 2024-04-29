@@ -25,49 +25,42 @@ import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatListItemHarness } from '@angular/material/list/testing';
 
 describe('ProcessInstanceTasksComponent', () => {
-
     let component: ProcessInstanceTasksComponent;
     let fixture: ComponentFixture<ProcessInstanceTasksComponent>;
-    let service: ProcessService;
-    // let getProcessTasksSpy: jasmine.Spy;
+    let loader: HarnessLoader;
+    let processService: ProcessService;
 
     const exampleProcessInstance = new ProcessInstance({ id: '123' });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
+        processService = TestBed.inject(ProcessService);
         component = fixture.componentInstance;
-        service = TestBed.inject(ProcessService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
 
-        spyOn(service, 'getProcessTasks').and.returnValue(of([new TaskDetailsModel(taskDetailsMock)]));
+        spyOn(processService, 'getProcessTasks').and.returnValue(of([new TaskDetailsModel(taskDetailsMock)]));
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
-
-    it('should initially render message about no active tasks if no process instance ID provided', async () => {
+    it('should initially render message about no active tasks if no process instance ID provided', () => {
         component.processInstanceDetails = undefined;
         fixture.detectChanges();
-        await fixture.whenStable();
 
         const msgEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks-none"]'));
         expect(msgEl).not.toBeNull();
     });
 
-    it('should initially render message about no completed tasks if no process instance ID provided', async () => {
+    it('should initially render message about no completed tasks if no process instance ID provided', () => {
         component.processInstanceDetails = undefined;
 
         fixture.detectChanges();
-        await fixture.whenStable();
 
         const msgEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks-none"]'));
         expect(msgEl).not.toBeNull();
@@ -92,13 +85,8 @@ describe('ProcessInstanceTasksComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ processInstanceDetails: change });
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        component.ngOnChanges({ processInstanceDetails: change });
-        const listEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks"]'));
-        expect(listEl).not.toBeNull();
-        expect(listEl.queryAll(By.css('mat-list-item')).length).toBe(1);
+        const items = await loader.getAllHarnesses(MatListItemHarness.with({ ancestor: '[data-automation-id="active-tasks"]' }));
+        expect(items.length).toBe(1);
     });
 
     it('should display completed tasks', async () => {
@@ -106,51 +94,42 @@ describe('ProcessInstanceTasksComponent', () => {
         fixture.detectChanges();
         component.ngOnChanges({ processInstanceDetails: change });
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const listEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks"]'));
-        expect(listEl).not.toBeNull();
-        expect(listEl.queryAll(By.css('mat-list-item')).length).toBe(1);
+        const items = await loader.getAllHarnesses(MatListItemHarness.with({ ancestor: '[data-automation-id="completed-tasks"]' }));
+        expect(items.length).toBe(1);
     });
 
     describe('task reloading', () => {
-
         beforeEach(() => {
             component.processInstanceDetails = exampleProcessInstance;
         });
 
-        it('should render a refresh button by default', async () => {
+        it('should render a refresh button by default', () => {
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).not.toBeNull();
         });
 
-        it('should render a refresh button if configured to', async () => {
+        it('should render a refresh button if configured to', () => {
             component.showRefreshButton = true;
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).not.toBeNull();
         });
 
-        it('should NOT render a refresh button if configured not to', async () => {
+        it('should NOT render a refresh button if configured not to', () => {
             component.showRefreshButton = false;
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(fixture.debugElement.query(By.css('.process-tasks-refresh'))).toBeNull();
         });
 
-        it('should call service to get tasks when reload button clicked', async () => {
+        it('should call service to get tasks when reload button clicked', () => {
             fixture.detectChanges();
-            await fixture.whenStable();
 
             component.onRefreshClicked();
-            expect(service.getProcessTasks).toHaveBeenCalled();
+            expect(processService.getProcessTasks).toHaveBeenCalled();
         });
     });
 });

@@ -19,16 +19,13 @@ import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ContextMenuModule } from './context-menu.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
     selector: 'adf-test-component',
-    template: `
-        <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div>
-    `
+    template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div> `
 })
 class TestComponent {
     actions;
@@ -83,14 +80,8 @@ describe('ContextMenuDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                ContextMenuModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [CoreTestingModule, ContextMenuModule],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         fixture.componentInstance.actions = actions;
@@ -118,7 +109,9 @@ describe('ContextMenuDirective', () => {
 
         it('should reset DOM element reference on Escape event', () => {
             const event = new KeyboardEvent('keydown', {
-                bubbles : true, cancelable : true, key : 'Escape'
+                bubbles: true,
+                cancelable: true,
+                key: 'Escape'
             });
 
             document.querySelector('.cdk-overlay-backdrop')?.dispatchEvent(event);
@@ -169,9 +162,16 @@ describe('ContextMenuDirective', () => {
         });
 
         it('should not render item icon if not set', async () => {
-            expect((await loader.getAllHarnesses(MatIconHarness.with({
-                ancestor: 'adf-context-menu', name: 'Action 1'
-            }))).length).toBe(0);
+            expect(
+                (
+                    await loader.getAllHarnesses(
+                        MatIconHarness.with({
+                            ancestor: 'adf-context-menu',
+                            name: 'Action 1'
+                        })
+                    )
+                ).length
+            ).toBe(0);
         });
     });
 });

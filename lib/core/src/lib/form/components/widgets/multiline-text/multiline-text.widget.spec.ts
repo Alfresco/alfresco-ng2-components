@@ -15,7 +15,12 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, FormFieldModel, FormFieldTypes, MultilineTextWidgetComponentComponent } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormModel } from '../core/form.model';
+import { FormFieldTypes } from '../core/form-field-types';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -32,7 +37,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;

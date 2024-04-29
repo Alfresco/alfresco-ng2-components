@@ -17,7 +17,7 @@
 
 import { Component, ViewChild, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
-import { LogService, TranslationService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
 import { getDisplayUser } from '../../helpers/get-display-user';
 import { Observable, of } from 'rxjs';
@@ -49,14 +49,14 @@ export class PeopleSelectorComponent {
     selectedUser: UserProcessModel;
     defaultPlaceholder: string;
 
-    constructor(private peopleProcessService: PeopleProcessService, private logService: LogService, private translationService: TranslationService) {
+    constructor(private peopleProcessService: PeopleProcessService, private translationService: TranslationService) {
         this.peopleIdChange = new EventEmitter();
         this.performSearch = this.searchUser.bind(this);
         this.defaultPlaceholder = this.translationService.instant(DEFAULT_ASSIGNEE_PLACEHOLDER);
     }
 
     searchUser(searchWord: string): Observable<any | UserProcessModel[]> {
-        return this.peopleProcessService.getWorkflowUsers(undefined, searchWord).pipe(catchError(this.onSearchUserError.bind(this)));
+        return this.peopleProcessService.getWorkflowUsers(undefined, searchWord).pipe(catchError(() => of([])));
     }
 
     userSelected(user: UserProcessModel): void {
@@ -65,11 +65,6 @@ export class PeopleSelectorComponent {
 
     userDeselected(): void {
         this.updateUserSelection(undefined);
-    }
-
-    private onSearchUserError(): Observable<UserProcessModel[]> {
-        this.logService.error('getWorkflowUsers threw error');
-        return of([]);
     }
 
     private updateUserSelection(user: UserProcessModel): void {

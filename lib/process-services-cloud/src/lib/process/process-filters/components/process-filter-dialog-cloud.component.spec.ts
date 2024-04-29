@@ -20,7 +20,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessFilterDialogCloudComponent', () => {
     let component: ProcessFilterDialogCloudComponent;
@@ -32,16 +31,12 @@ describe('ProcessFilterDialogCloudComponent', () => {
     };
 
     const mockDialogData = {
-        data: {name: 'Mock-Title'}
+        data: { name: 'Mock-Title' }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                ProcessFiltersCloudModule
-            ],
+            imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
@@ -62,20 +57,14 @@ describe('ProcessFilterDialogCloudComponent', () => {
 
     it('should display title', () => {
         fixture.detectChanges();
-        const titleElement = fixture.debugElement.nativeElement.querySelector(
-            '#adf-process-filter-dialog-title'
-        );
+        const titleElement = fixture.debugElement.nativeElement.querySelector('#adf-process-filter-dialog-title');
         expect(titleElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.TITLE ');
     });
 
     it('should enable save button if form is valid', async () => {
         fixture.detectChanges();
-        const saveButton = fixture.debugElement.nativeElement.querySelector(
-            '#adf-save-button-id'
-        );
-        const inputElement = fixture.debugElement.nativeElement.querySelector(
-            '#adf-filter-name-id'
-        );
+        const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
+        const inputElement = fixture.debugElement.nativeElement.querySelector('#adf-filter-name-id');
         inputElement.value = 'My custom Name';
         inputElement.dispatchEvent(new Event('input'));
 
@@ -88,36 +77,28 @@ describe('ProcessFilterDialogCloudComponent', () => {
 
     it('should disable save button if form is not valid', async () => {
         fixture.detectChanges();
-        const inputElement = fixture.debugElement.nativeElement.querySelector(
-            '#adf-filter-name-id'
-        );
+        const inputElement = fixture.debugElement.nativeElement.querySelector('#adf-filter-name-id');
         inputElement.value = '';
         inputElement.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const saveButton = fixture.debugElement.nativeElement.querySelector(
-            '#adf-save-button-id'
-        );
+        const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
         expect(saveButton).toBeDefined();
         expect(saveButton.disabled).toBe(true);
     });
 
     it('should able to close dialog on click of save button if form is valid', async () => {
         fixture.detectChanges();
-        const inputElement = fixture.debugElement.nativeElement.querySelector(
-            '#adf-filter-name-id'
-        );
+        const inputElement = fixture.debugElement.nativeElement.querySelector('#adf-filter-name-id');
         inputElement.value = 'My custom Name';
         inputElement.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const saveButton = fixture.debugElement.nativeElement.querySelector(
-            '#adf-save-button-id'
-        );
+        const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-button-id');
         expect(saveButton).toBeDefined();
         expect(saveButton.disabled).toBeFalsy();
 
@@ -127,9 +108,7 @@ describe('ProcessFilterDialogCloudComponent', () => {
 
     it('should able close dialog on click of cancel button', () => {
         component.data = { data: { name: '' } };
-        const cancelButton = fixture.debugElement.nativeElement.querySelector(
-            '#adf-cancel-button-id'
-        );
+        const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-cancel-button-id');
         fixture.detectChanges();
         cancelButton.click();
         expect(cancelButton).toBeDefined();

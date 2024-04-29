@@ -21,6 +21,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
+import { CoreTestingModule } from '../../../../testing';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('HyperlinkWidgetComponent', () => {
     let widget: HyperlinkWidgetComponent;
@@ -29,8 +31,9 @@ describe('HyperlinkWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatTooltipModule]
+            imports: [CoreTestingModule, MatTooltipModule]
         });
+
         fixture = TestBed.createComponent(HyperlinkWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

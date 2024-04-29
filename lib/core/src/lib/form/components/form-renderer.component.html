@@ -1,18 +1,19 @@
-<div id="adf-form-renderer"
-     class="{{ formDefinition.className }}"
-     [ngClass]="{'adf-readonly-form': formDefinition.readOnly}">
+
+<div id="adf-form-renderer" 
+     class="{{ formDefinition.className }}" 
+     [ngClass]="{ 'adf-readonly-form': formDefinition.readOnly }">
     <div *ngIf="formDefinition.hasTabs()">
         <div *ngIf="hasTabs()" class="alfresco-tabs-widget">
             <mat-tab-group>
                 <mat-tab *ngFor="let tab of visibleTabs()" [label]="tab.title | translate">
-                    <ng-template *ngTemplateOutlet="render; context: { fieldToRender : tab.fields }"></ng-template>
+                    <ng-template *ngTemplateOutlet="render; context: { fieldToRender: tab.fields }"></ng-template>
                 </mat-tab>
             </mat-tab-group>
         </div>
     </div>
 
     <div *ngIf="!formDefinition.hasTabs() && formDefinition.hasFields()">
-        <ng-template *ngTemplateOutlet="render; context: { fieldToRender : formDefinition.fields }"></ng-template>
+        <ng-template *ngTemplateOutlet="render; context: { fieldToRender: formDefinition.fields }"></ng-template>
     </div>
 </div>
 
@@ -67,7 +68,6 @@
                     <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
                 </div>
             </ng-template>
-
         </div>
         <div *ngIf="currentRootElement.type === 'dynamic-table'" class="adf-container-widget">
             <adf-form-field [field]="currentRootElement"></adf-form-field>

@@ -19,12 +19,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { SearchWidgetSettings } from '../search/models/search-widget-settings.interface';
 
 @Pipe({
-  name: 'tabLabels'
+    name: 'tabLabels',
+    standalone: true
 })
 export class TabLabelsPipe implements PipeTransform {
-
-  transform(field: string, settings?: SearchWidgetSettings): string {
-    return settings?.displayedLabelsByField?.[field] ? settings.displayedLabelsByField[field] : field;
-  }
-
+    transform(field: string, settings?: SearchWidgetSettings): string {
+        return settings?.displayedLabelsByField?.[field] ? settings.displayedLabelsByField[field] : field;
+    }
 }

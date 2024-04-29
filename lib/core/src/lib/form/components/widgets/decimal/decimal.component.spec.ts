@@ -23,8 +23,9 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { MatInputModule } from '@angular/material/input';
+import { CoreTestingModule } from '../../../../testing';
+import { FormsModule } from '@angular/forms';
 
 describe('DecimalComponent', () => {
     let loader: HarnessLoader;
@@ -34,7 +35,7 @@ describe('DecimalComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, DecimalWidgetComponent],
+            imports: [CoreTestingModule, MatInputModule, FormsModule, DecimalWidgetComponent],
             providers: [FormService]
         }).compileComponents();
 

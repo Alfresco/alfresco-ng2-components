@@ -21,13 +21,11 @@ import { By } from '@angular/platform-browser';
 import { ContentLinkModel, CoreTestingModule, DownloadService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentWidgetComponent } from './content.widget';
-import { TranslateModule } from '@ngx-translate/core';
 import { ProcessContentService } from '../../services/process-content.service';
 
 declare let jasmine: any;
 
 describe('ContentWidgetComponent', () => {
-
     let component: ContentWidgetComponent;
     let fixture: ComponentFixture<ContentWidgetComponent>;
     let element: HTMLElement;
@@ -37,33 +35,31 @@ describe('ContentWidgetComponent', () => {
 
     const createFakeImageBlob = () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-        return new Blob([data], {type: 'image/png'});
+        return new Blob([data], { type: 'image/png' });
     };
 
     const createFakePdfBlob = (): Blob => {
         const pdfData = atob(
             'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
-            'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
-            'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
-            'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
-            'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
-            'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
-            'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
-            'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
-            'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
-            'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
-            'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
-            'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
-            'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
-        return new Blob([pdfData], {type: 'application/pdf'});
+                'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
+                'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
+                'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
+                'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
+                'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
+                'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
+                'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
+                'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
+                'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
+                'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
+                'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
+                'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G'
+        );
+        return new Blob([pdfData], { type: 'application/pdf' });
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         downloadService = TestBed.inject(DownloadService);
         processContentService = TestBed.inject(ProcessContentService);
@@ -110,7 +106,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({id: change});
+            component.ngOnChanges({ id: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -121,7 +117,9 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
+                        firstName: 'admin',
+                        lastName: 'admin',
+                        email: 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: true,
@@ -150,7 +148,7 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({id: change});
+            component.ngOnChanges({ id: change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -161,7 +159,9 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
+                        firstName: 'admin',
+                        lastName: 'admin',
+                        email: 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: true,
@@ -175,10 +175,9 @@ describe('ContentWidgetComponent', () => {
         }));
 
         it('should show unsupported preview with unsupported file', fakeAsync(() => {
-
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({id: change});
+            component.ngOnChanges({ id: change });
 
             component.contentLoaded.subscribe(() => {
                 fixture.detectChanges();
@@ -196,7 +195,9 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
+                        firstName: 'admin',
+                        lastName: 'admin',
+                        email: 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: false,
@@ -220,7 +221,9 @@ describe('ContentWidgetComponent', () => {
                 created: 1490354907883,
                 createdBy: {
                     id: 2,
-                    firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
+                    firstName: 'admin',
+                    lastName: 'admin',
+                    email: 'administrator@admin.com'
                 },
                 relatedContent: false,
                 contentAvailable: true,
@@ -255,7 +258,9 @@ describe('ContentWidgetComponent', () => {
                 created: 1490354907883,
                 createdBy: {
                     id: 2,
-                    firstName: 'admin', lastName: 'admin', email: 'administrator@admin.com'
+                    firstName: 'admin',
+                    lastName: 'admin',
+                    email: 'administrator@admin.com'
                 },
                 relatedContent: false,
                 contentAvailable: true,

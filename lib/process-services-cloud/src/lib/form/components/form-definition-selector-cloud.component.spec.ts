@@ -19,75 +19,63 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormDefinitionSelectorCloudComponent } from './form-definition-selector-cloud.component';
-import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('FormDefinitionCloudComponent', () => {
-
     let fixture: ComponentFixture<FormDefinitionSelectorCloudComponent>;
     let service: FormDefinitionSelectorCloudService;
-    let element: HTMLElement;
     let getFormsSpy: jasmine.Spy;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
+            imports: [ProcessServiceCloudTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(FormDefinitionSelectorCloudComponent);
-        element = fixture.nativeElement;
         service = TestBed.inject(FormDefinitionSelectorCloudService);
         getFormsSpy = spyOn(service, 'getStandAloneTaskForms').and.returnValue(of([{ id: 'fake-form', name: 'fakeForm' } as any]));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should load the forms by default', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
-        clickMatSelect.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-        expect(options[0].nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE');
-        expect(options[1].nativeElement.innerText.trim()).toBe('fakeForm');
+        const selectElement = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-form-selector-dropdown' }));
+        await selectElement.open();
+        const options = await selectElement.getOptions();
+
+        expect(options.length).toBe(2);
+        expect(await options[0].getText()).toBe('ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE');
+        expect(await options[1].getText()).toBe('fakeForm');
         expect(getFormsSpy).toHaveBeenCalled();
     });
 
     it('should load only None option when no forms exist', async () => {
         getFormsSpy.and.returnValue(of([]));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
-        clickMatSelect.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-        expect((options).length).toBe(1);
+        const selectElement = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-form-selector-dropdown' }));
+        await selectElement.open();
+
+        const options = await selectElement.getOptions();
+
+        expect(options.length).toBe(1);
     });
 
-    it('should not preselect any form by default', () => {
-        fixture.detectChanges();
-        const formInput = element.querySelector('mat-select');
-        expect(formInput).toBeDefined();
-        expect(formInput.nodeValue).toBeNull();
+    it('should not preselect any form by default', async () => {
+        const selectElement = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-form-selector-dropdown' }));
+
+        expect(await selectElement.getValueText()).toBe('');
     });
 
     it('should display the name of the form that is selected', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
-        clickMatSelect.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-        options[1].triggerEventHandler('click', {});
-        fixture.detectChanges();
-        const selected = fixture.debugElement.query(By.css('mat-select'));
-        const selectedValue = ((selected).nativeElement.innerText);
-        expect(selectedValue.trim()).toBe('fakeForm');
+        const selectElement = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-form-selector-dropdown' }));
+        await selectElement.open();
+        const options = await selectElement.getOptions();
+
+        await options[1].click();
+
+        expect(await selectElement.getValueText()).toBe('fakeForm');
     });
 });

@@ -24,13 +24,11 @@ import { BehaviorSubject } from 'rxjs';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { RequestPaginationModel } from '../models/request-pagination.model';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: ``
 })
 class TestPaginatedComponent implements PaginatedComponent {
-
     private _pagination: BehaviorSubject<PaginationModel>;
 
     get pagination(): BehaviorSubject<PaginationModel> {
@@ -52,7 +50,6 @@ class TestPaginatedComponent implements PaginatedComponent {
 }
 
 describe('InfinitePaginationComponent', () => {
-
     let fixture: ComponentFixture<InfinitePaginationComponent>;
     let component: InfinitePaginationComponent;
     let pagination: PaginationModel;
@@ -60,13 +57,8 @@ describe('InfinitePaginationComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                TestPaginatedComponent
-            ]
+            imports: [CoreTestingModule],
+            declarations: [TestPaginatedComponent]
         });
         fixture = TestBed.createComponent(InfinitePaginationComponent);
         component = fixture.componentInstance;
@@ -84,7 +76,6 @@ describe('InfinitePaginationComponent', () => {
     });
 
     describe('View', () => {
-
         it('should show the loading spinner if loading', () => {
             pagination.hasMoreItems = true;
             component.isLoading = true;
@@ -116,7 +107,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should NOT show the load more button if there are no more elements to load', (done) => {
-            pagination = {maxItems: 444, skipCount: 25, totalItems: 30, hasMoreItems: false};
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 30, hasMoreItems: false };
 
             component.target.pagination.next(pagination);
 
@@ -132,7 +123,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should  show the load more button if there are  more elements to load', (done) => {
-            pagination = {maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true};
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
 
             component.target.pagination.next(pagination);
 
@@ -157,7 +148,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should trigger the loadMore event with skipcount 0 to reload all the elements', (done) => {
-            pagination = {maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true};
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
 
             component.target.pagination.next(pagination);
 
@@ -175,7 +166,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should trigger the loadMore event with merge true to reload all the elements', (done) => {
-            pagination = {maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true};
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
 
             component.target.pagination.next(pagination);
 
@@ -194,16 +185,15 @@ describe('InfinitePaginationComponent', () => {
     });
 
     describe('Target', () => {
-
         let spyTarget;
 
         beforeEach(() => {
-            pagination = {maxItems: 444, skipCount: 0, totalItems: 888, hasMoreItems: true};
+            pagination = { maxItems: 444, skipCount: 0, totalItems: 888, hasMoreItems: true };
 
             spyTarget = spyOn(component.target, 'updatePagination').and.callThrough();
         });
 
-        it('should subscribe to target\'s pagination observable to update pagination and pagesize correctly', () => {
+        it('should subscribe to target pagination observable to update pagination and pagesize correctly', () => {
             component.target.updatePagination(pagination);
             fixture.detectChanges();
 
@@ -211,7 +201,7 @@ describe('InfinitePaginationComponent', () => {
             expect(component.pageSize).toBe(25);
         });
 
-        it('should call the target\'s updatePagination on invoking the onLoadMore', () => {
+        it('should call the target updatePagination on invoking the onLoadMore', () => {
             component.target.updatePagination(pagination);
 
             fixture.detectChanges();
@@ -226,7 +216,7 @@ describe('InfinitePaginationComponent', () => {
             });
         });
 
-        it('should call the target\'s updatePagination on invoking the onLoadMore with a specific pageSize', () => {
+        it('should call the target updatePagination on invoking the onLoadMore with a specific pageSize', () => {
             component.pageSize = 7;
             component.target.updatePagination(pagination);
             fixture.detectChanges();
@@ -241,12 +231,12 @@ describe('InfinitePaginationComponent', () => {
             });
         });
 
-        it('should unsubscribe from the target\'s pagination on onDestroy', () => {
+        it('should unsubscribe from the target pagination on onDestroy', () => {
             fixture.detectChanges();
             fixture.destroy();
 
             const emitNewPaginationEvent = () => {
-                const newPagination = {maxItems: 1, skipCount: 0, totalItems: 2, hasMoreItems: true};
+                const newPagination = { maxItems: 1, skipCount: 0, totalItems: 2, hasMoreItems: true };
                 component.target.pagination.next(newPagination);
             };
 

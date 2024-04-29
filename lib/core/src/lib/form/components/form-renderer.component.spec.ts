@@ -42,6 +42,9 @@ import {
     radioWidgetVisibilityForm,
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
+import { FormService } from '../services/form.service';
+import { CoreTestingModule } from '../../testing';
+import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
@@ -84,7 +87,7 @@ describe('Form Renderer Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;

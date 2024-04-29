@@ -19,7 +19,7 @@ The aspect are filtered via the app.config.json in this way :
 ## Basic Usage
 
 ```html
-    <adf-aspect-list (valueChanged)="onValueChanged($event)" [nodeId]="nodeId">
+    <adf-aspect-list (valueChanged)="onValueChanged($event)" (updateCounter)="onUpdateCounter($event)" [nodeId]="nodeId">
     </adf-aspect-list>
 ```
 
@@ -37,9 +37,10 @@ The aspect are filtered via the app.config.json in this way :
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | valueChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string[]>` | Emitted every time the user select a new aspect |
+| updateCounter | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<number>` | Emitted every time the number of selected aspects changes |
 
 ## See also
 
--   [Aspect List Dialog component](rating.component.md)
--   [Aspect List service](../services/rating.service.md)
--   [Node Aspect service](../services/rating.service.md)
+-   [Aspect List Dialog component](aspect-list-dialog.component.md)
+-   [Aspect List service](../../../lib/content-services/src/lib/aspect-list/services/aspect-list.service.ts)
+-   [Node Aspect service](../../../lib/content-services/src/lib/aspect-list/services/node-aspect.service.ts)

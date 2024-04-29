@@ -20,22 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as boundaryEventMock from '../../mock/diagram/diagram-boundary.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Diagrams boundary', () => {
-
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
@@ -53,7 +48,7 @@ describe('Diagrams boundary', () => {
         jasmine.Ajax.uninstall();
     });
 
-    const ajaxReply =  (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -62,7 +57,6 @@ describe('Diagrams boundary', () => {
     };
 
     describe('Diagrams component Boundary events with process instance id: ', () => {
-
         it('Should render the Boundary time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -78,8 +72,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-timer');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -112,8 +107,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-timer');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -146,8 +142,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-timer');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -176,8 +173,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-error');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -210,8 +208,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-error');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -244,8 +243,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-error');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -274,8 +274,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-signal');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -308,8 +309,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-signal');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -342,8 +344,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-signal');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -372,8 +375,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -406,8 +410,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -440,8 +445,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -470,8 +476,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -504,8 +511,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -538,8 +546,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -555,7 +564,6 @@ describe('Diagrams boundary', () => {
     });
 
     describe('Diagrams component Boundary events: ', () => {
-
         it('Should render the Boundary time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -571,8 +579,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-timer');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -601,8 +610,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-error');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -631,8 +641,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-signal');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -661,8 +672,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -691,8 +703,9 @@ describe('Diagrams boundary', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-boundary-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');

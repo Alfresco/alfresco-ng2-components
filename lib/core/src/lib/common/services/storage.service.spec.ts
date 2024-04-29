@@ -20,10 +20,8 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('StorageService', () => {
-
     let storage: StorageService;
     let appConfig: AppConfigServiceMock;
     const key = 'test_key';
@@ -32,9 +30,7 @@ describe('StorageService', () => {
     describe('StorageService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    CoreTestingModule
-                ]
+                imports: [CoreTestingModule]
             });
             appConfig = TestBed.inject(AppConfigService);
             appConfig.config = {
@@ -78,10 +74,7 @@ describe('StorageService', () => {
     describe('StorageService', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule
-                ]
+                imports: [CoreTestingModule]
             });
             appConfig = TestBed.inject(AppConfigService);
 

@@ -23,6 +23,9 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { CoreTestingModule } from '../../../../testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -40,7 +43,7 @@ describe('TextWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
+            imports: [CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
         });
         fixture = TestBed.createComponent(TextWidgetComponent);
         widget = fixture.componentInstance;

@@ -43,7 +43,6 @@ import {
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -84,7 +83,6 @@ describe('StartProcessCloudComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TranslateModule.forRoot(),
                 ProcessServiceCloudTestingModule,
                 FormsModule,
                 MatCommonModule,

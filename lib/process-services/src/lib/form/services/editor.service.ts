@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { FormModelsApi } from '@alfresco/js-api';
@@ -26,7 +26,6 @@ import { FormDefinitionModel } from '../model/form-definition.model';
     providedIn: 'root'
 })
 export class EditorService {
-
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
@@ -36,8 +35,7 @@ export class EditorService {
         return this._editorApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Saves a form.
@@ -47,9 +45,7 @@ export class EditorService {
      * @returns Data for the saved form
      */
     saveForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
-        return from(
-            this.editorApi.saveForm(formId, formModel)
-        );
+        return from(this.editorApi.saveForm(formId, formModel));
     }
 
     /**
@@ -59,11 +55,10 @@ export class EditorService {
      * @returns Form definition
      */
     getFormDefinitionById(formId: number): Observable<any> {
-        return from(this.editorApi.getForm(formId))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.editorApi.getForm(formId)).pipe(
+            map(this.toJson),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -88,11 +83,8 @@ export class EditorService {
     private handleError(error: any): Observable<any> {
         let errMsg = EditorService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
-            errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : EditorService.GENERIC_ERROR_MESSAGE;
+            errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : EditorService.GENERIC_ERROR_MESSAGE;
         }
-        this.logService.error(errMsg);
         return throwError(errMsg);
     }
-
 }

@@ -21,7 +21,6 @@ import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -60,7 +59,7 @@ describe('CardViewSelectItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;

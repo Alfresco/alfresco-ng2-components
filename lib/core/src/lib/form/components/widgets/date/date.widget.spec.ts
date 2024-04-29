@@ -28,6 +28,9 @@ import { DateAdapter } from '@angular/material/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
 import { DateWidgetComponent } from './date.widget';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { FormFieldTypes } from '../core/form-field-types';
+import { DateFieldValidator, MaxDateFieldValidator, MinDateFieldValidator } from '../core/form-field-validator';
 
 describe('DateWidgetComponent', () => {
     let widget: DateWidgetComponent;
@@ -38,7 +41,7 @@ describe('DateWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
 
         form = new FormModel();

@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateRangeWidgetComponent } from './date-range.widget';
-import { TranslateModule } from '@ngx-translate/core';
 import { InsightsTestingModule } from '../../../../testing/insights.testing.module';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
 import { format } from 'date-fns';
@@ -28,10 +27,7 @@ describe('DateRangeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
 
         fixture = TestBed.createComponent(DateRangeWidgetComponent);
@@ -71,7 +67,7 @@ describe('DateRangeWidgetComponent', () => {
         expect(widget.dateRange.valid).toBeTrue();
 
         let emitted: { startDate: string; endDate: string };
-        widget.dateRangeChanged.subscribe((value) => emitted = value);
+        widget.dateRangeChanged.subscribe((value) => (emitted = value));
 
         widget.onGroupValueChanged();
 

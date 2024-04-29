@@ -23,20 +23,15 @@ import { of } from 'rxjs';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { TranslateModule } from '@ngx-translate/core';
 registerLocaleData(localeFr);
 
 describe('LocalizedDatePipe', () => {
-
     let pipe: LocalizedDatePipe;
     let userPreferences: UserPreferencesService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));

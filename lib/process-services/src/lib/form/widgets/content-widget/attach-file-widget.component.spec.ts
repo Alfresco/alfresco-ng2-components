@@ -23,7 +23,6 @@ import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-s
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -145,7 +144,7 @@ describe('AttachFileWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule, ContentModule.forRoot()]
+            imports: [ProcessTestingModule, ContentModule.forRoot()]
         });
         fixture = TestBed.createComponent(AttachFileWidgetComponent);
         widget = fixture.componentInstance;

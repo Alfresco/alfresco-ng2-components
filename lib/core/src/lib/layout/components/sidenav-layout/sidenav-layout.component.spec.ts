@@ -32,8 +32,7 @@ import { of } from 'rxjs';
 
 @Component({
     selector: 'adf-layout-container',
-    template: `
-        <ng-content select="[app-layout-navigation]"></ng-content>
+    template: ` <ng-content select="[app-layout-navigation]"></ng-content>
         <ng-content select="[app-layout-content]"></ng-content>`
 })
 export class DummyLayoutContainerComponent {
@@ -49,32 +48,29 @@ export class DummyLayoutContainerComponent {
 
 @Component({
     selector: 'adf-test-component-for-sidenav',
-    template: `
-            <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
+    template: ` <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
+        <adf-sidenav-layout-header>
+            <ng-template let-toggleMenu="toggleMenu">
+                <div role="button" id="header-test" (click)="toggleMenu()" role="button" tabindex="0" (keyup.enter)="toggleMenu()"></div>
+            </ng-template>
+        </adf-sidenav-layout-header>
 
-                <adf-sidenav-layout-header>
-                    <ng-template let-toggleMenu="toggleMenu">
-                        <div id="header-test" (click)="toggleMenu()"></div>
-                    </ng-template>
-                </adf-sidenav-layout-header>
+        <adf-sidenav-layout-navigation>
+            <ng-template let-isMenuMinimized="isMenuMinimized">
+                <div id="nav-test">{{ isMenuMinimized !== undefined ? 'variable-is-injected' : 'variable-is-not-injected' }}</div>
+            </ng-template>
+        </adf-sidenav-layout-navigation>
 
-                <adf-sidenav-layout-navigation>
-                    <ng-template let-isMenuMinimized="isMenuMinimized">
-                        <div id="nav-test">{{ isMenuMinimized !== undefined ? 'variable-is-injected' : 'variable-is-not-injected' }}</div>
-                    </ng-template>
-                </adf-sidenav-layout-navigation>
-
-                <adf-sidenav-layout-content>
-                    <ng-template>
-                        <div id="content-test"></div>
-                    </ng-template>
-                </adf-sidenav-layout-content>
-            </adf-sidenav-layout>`
+        <adf-sidenav-layout-content>
+            <ng-template>
+                <div id="content-test"></div>
+            </ng-template>
+        </adf-sidenav-layout-content>
+    </adf-sidenav-layout>`
 })
 export class SidenavLayoutTesterComponent {}
 
 describe('SidenavLayoutComponent', () => {
-
     let fixture: ComponentFixture<any>;
     let mediaMatcher: MediaMatcher;
     let mediaQueryList: any;
@@ -82,12 +78,7 @@ describe('SidenavLayoutComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CommonModule,
-                PlatformModule,
-                LayoutModule,
-                MaterialModule
-            ],
+            imports: [CommonModule, PlatformModule, LayoutModule, MaterialModule],
             declarations: [
                 DummyLayoutContainerComponent,
                 SidenavLayoutComponent,
@@ -95,13 +86,8 @@ describe('SidenavLayoutComponent', () => {
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
-            providers: [
-                MediaMatcher,
-                { provide: UserPreferencesService, useValue: { select: () => of() } }
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
+            providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         mediaQueryList = {
             mediaFn: null,
@@ -130,7 +116,6 @@ describe('SidenavLayoutComponent', () => {
     });
 
     describe('General behaviour', () => {
-
         beforeEach(() => fixture.detectChanges());
 
         it('should pass through input parameters', () => {
@@ -163,7 +148,6 @@ describe('SidenavLayoutComponent', () => {
     });
 
     describe('toggleMenu', () => {
-
         beforeEach(() => fixture.detectChanges());
 
         it('should toggle the isMenuMinimized if the mediaQueryList.matches is false (we are on desktop)', () => {
@@ -193,7 +177,6 @@ describe('SidenavLayoutComponent', () => {
     });
 
     describe('menuOpenState', () => {
-
         it('should be true by default', (done) => {
             fixture.detectChanges();
 
@@ -228,23 +211,17 @@ describe('SidenavLayoutComponent', () => {
 });
 
 describe('Template transclusion', () => {
-
     let fixture: ComponentFixture<any>;
     let mediaMatcher: MediaMatcher;
     const mediaQueryList: any = {
-            matches: false,
-            addListener: () => {},
-            removeListener: () => {}
+        matches: false,
+        addListener: () => {},
+        removeListener: () => {}
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CommonModule,
-                PlatformModule,
-                LayoutModule,
-                MaterialModule
-            ],
+            imports: [CommonModule, PlatformModule, LayoutModule, MaterialModule],
             declarations: [
                 DummyLayoutContainerComponent,
                 SidenavLayoutTesterComponent,
@@ -253,10 +230,7 @@ describe('Template transclusion', () => {
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
-            providers: [
-                MediaMatcher,
-                { provide: UserPreferencesService, useValue: { select: () => of() } }
-            ]
+            providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }]
         });
         mediaMatcher = TestBed.inject(MediaMatcher);
         spyOn(mediaMatcher, 'matchMedia').and.callFake(() => {
@@ -270,7 +244,6 @@ describe('Template transclusion', () => {
     });
 
     describe('adf-sidenav-layout-navigation', () => {
-
         const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #nav-test');
 
         it('should contain the transcluded side navigation template', () => {
@@ -287,7 +260,6 @@ describe('Template transclusion', () => {
     });
 
     describe('adf-sidenav-layout-header', () => {
-
         const outerHeaderSelector = By.css('.adf-sidenav-layout-full-space > #header-test');
         const innerHeaderSelector = By.css('.adf-layout__content > #header-test');
 
@@ -311,7 +283,7 @@ describe('Template transclusion', () => {
             expect(innerHeaderElement === null).toBe(false, 'Inner header should be shown');
         });
 
-        it('should call through the layout container\'s toggleMenu method', () => {
+        it(`should call through the layout container's toggleMenu method`, () => {
             mediaQueryList.matches = false;
             fixture.detectChanges();
             const layoutContainerComponent = fixture.debugElement.query(By.directive(DummyLayoutContainerComponent)).componentInstance;
@@ -325,7 +297,6 @@ describe('Template transclusion', () => {
     });
 
     describe('adf-sidenav-layout-content', () => {
-
         const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #content-test');
 
         it('should contain the transcluded content template', () => {

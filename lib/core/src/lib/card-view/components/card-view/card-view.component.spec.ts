@@ -21,7 +21,6 @@ import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewComponent } from './card-view.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { of } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view-selectitem-properties.interface';
@@ -38,7 +37,7 @@ describe('CardViewComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         }).compileComponents();
 
         fixture = TestBed.createComponent(CardViewComponent);

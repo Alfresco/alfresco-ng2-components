@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -33,9 +32,6 @@ describe('FolderActionsService', () => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule]
         });
-        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
-        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
-
         documentListService = TestBed.inject(DocumentListService);
         service = TestBed.inject(FolderActionsService);
     });

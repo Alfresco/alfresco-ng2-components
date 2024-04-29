@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    OnInit,
-    OnDestroy,
-    ViewChild,
-    ViewContainerRef,
-    ComponentRef,
-    ComponentFactoryResolver,
-    OnChanges,
-    SimpleChanges
-} from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ExtensionService } from '../../services/extension.service';
 
@@ -47,22 +36,14 @@ export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
 
     private componentRef: ComponentRef<any>;
 
-    constructor(
-        private extensions: ExtensionService,
-        private componentFactoryResolver: ComponentFactoryResolver
-    ) {}
+    constructor(private extensions: ExtensionService) {}
 
     ngOnInit() {
         const componentType = this.extensions.getComponentById(this.id);
         if (componentType) {
-            const factory = this.componentFactoryResolver.resolveComponentFactory(
-                componentType
-            );
-            if (factory) {
-                this.content.clear();
-                this.componentRef = this.content.createComponent(factory, 0);
-                this.updateInstance();
-            }
+            this.content.clear();
+            this.componentRef = this.content.createComponent(componentType, { index: 0 });
+            this.updateInstance();
         }
     }
 

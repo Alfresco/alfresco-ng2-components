@@ -18,19 +18,13 @@
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { UserPreferencesService } from './user-preferences.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule } from '../../core.module';
 
 describe('DirectionalityConfigService', () => {
     let userPreferencesService: UserPreferencesService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         userPreferencesService = TestBed.inject(UserPreferencesService);
     });

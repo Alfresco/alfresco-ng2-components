@@ -34,7 +34,6 @@ import { AppsProcessCloudService } from '../../../app/services/apps-process-clou
 import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from './../../../app/mock/app-model.mock';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
@@ -84,7 +83,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessFiltersCloudModule, ProcessServiceCloudTestingModule, MatIconTestingModule],
+            imports: [ProcessFiltersCloudModule, ProcessServiceCloudTestingModule, MatIconTestingModule],
             providers: [MatDialog, { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);

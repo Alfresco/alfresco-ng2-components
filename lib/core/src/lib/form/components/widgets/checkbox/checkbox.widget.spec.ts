@@ -21,7 +21,7 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { CheckboxWidgetComponent } from './checkbox.widget';
 import { FormBaseModule } from '../../../form-base.module';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader } from '@ngx-translate/core';
 import { TranslateLoaderService } from '../../../../translation/translate-loader.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CoreTestingModule } from '../../../../testing';
@@ -39,7 +39,7 @@ describe('CheckboxWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule, MatCheckboxModule, MatTooltipModule],
+            imports: [CoreTestingModule, FormBaseModule, MatCheckboxModule, MatTooltipModule],
             providers: [{ provide: TranslateLoader, useClass: TranslateLoaderService }]
         });
         fixture = TestBed.createComponent(CheckboxWidgetComponent);

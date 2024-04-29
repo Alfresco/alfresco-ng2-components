@@ -1,14 +1,25 @@
+$dialog-title-height: 100px;
+$dialog-information-height: 44px;
+$dialog-buttons-height: 68px;
+
+$dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-height + $dialog-buttons-height));
+
 .adf {
+    &-aspect-list-spinner,
+    &-aspect-list-container {
+        padding-top: 3px;
+        box-sizing: border-box;
+    }
+
     &-aspect-list-spinner {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 400px;
+        min-height: $dialog-list-height;
     }
 
     &-aspect-list-container {
-        padding-top: 3px;
-        height: 400px;
+        max-height: $dialog-list-height;
         overflow: auto;
         border: 1px solid var(--adf-theme-foreground-text-color-007);
 

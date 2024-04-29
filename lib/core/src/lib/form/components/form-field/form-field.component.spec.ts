@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
-import { FormBaseModule, FormFieldComponent, FormRenderingService } from '@alfresco/adf-core';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../../testing';
 import { CheckboxWidgetComponent, TextWidgetComponent } from '../widgets';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../widgets/core';
+import { FormRenderingService } from '../../services/form-rendering.service';
+import { FormFieldComponent } from './form-field.component';
+import { FormBaseModule } from '../../form-base.module';
+import { CoreTestingModule } from '../../../testing';
 
 describe('FormFieldComponent', () => {
     let fixture: ComponentFixture<FormFieldComponent>;
@@ -31,7 +35,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;

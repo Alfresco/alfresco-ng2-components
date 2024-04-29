@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, FormFieldModel, FormFieldTypes } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormModel } from '../core/form.model';
+import { DateTimeWidgetComponent } from './date-time.widget';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormFieldTypes } from '../core/form-field-types';
+import { DateFieldValidator, DateTimeFieldValidator } from '../core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -36,7 +43,7 @@ describe('DateTimeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatTooltipModule]
+            imports: [CoreTestingModule, MatTooltipModule]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
 

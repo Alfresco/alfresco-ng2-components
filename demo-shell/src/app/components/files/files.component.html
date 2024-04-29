@@ -65,19 +65,6 @@
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item
-                            (error)="openSnackMessageError($event)"
-                            [adf-create-folder]="currentFolderId">
-                        <mat-icon>create_new_folder</mat-icon>
-                        <span>New folder</span>
-                    </button>
-                    <button mat-menu-item
-                            [disabled]="!canEditFolder(documentList.selection)"
-                            (error)="openSnackMessageError($event)"
-                            [adf-edit-folder]="documentList.selection[0]?.entry">
-                        <mat-icon>create</mat-icon>
-                        <span>Edit folder</span>
-                    </button>
-                    <button mat-menu-item
                             adf-check-allowable-operation="delete"
                             [adf-nodes]="documentList.selection"
                             (delete)="onDeleteActionSuccess($event)"
@@ -99,7 +86,6 @@
                 [allowDropFiles]="allowDropFiles"
                 [selectionMode]="selectionMode"
                 [multiselect]="multiselect"
-                [display]="displayMode"
                 [node]="nodeResult"
                 [includeFields]="includeFields"
                 [sorting]="sorting"

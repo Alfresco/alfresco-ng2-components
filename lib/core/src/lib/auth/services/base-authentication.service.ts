@@ -20,12 +20,10 @@ import { RedirectionModel } from '../models/redirection.model';
 import { Observable, Observer, ReplaySubject, throwError } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { CookieService } from '../../common/services/cookie.service';
-import { LogService } from '../../common/services/log.service';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
 import ee from 'event-emitter';
 
 export abstract class BaseAuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
-
     on: ee.EmitterMethod;
     off: ee.EmitterMethod;
     once: ee.EmitterMethod;
@@ -37,11 +35,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
 
-    constructor(
-        protected appConfig: AppConfigService,
-        protected cookie: CookieService,
-        private logService: LogService
-    ) {
+    protected constructor(protected appConfig: AppConfigService, protected cookie: CookieService) {
         ee(this);
     }
 
@@ -77,7 +71,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
                 headers = new HttpHeaders();
             }
             try {
-
                 const header = this.getAuthHeaders(requestUrl, headers);
 
                 observer.next(header);
@@ -130,7 +123,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
      */
     handleError(error: any): Observable<any> {
         this.onError.next(error || 'Server error');
-        this.logService.error('Error when logging in', error);
         return throwError(error || 'Server error');
     }
 

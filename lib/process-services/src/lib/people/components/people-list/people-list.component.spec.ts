@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
@@ -31,16 +30,12 @@ const fakeUser: UserProcessModel = new UserProcessModel({
 });
 
 describe('PeopleListComponent', () => {
-
     let peopleListComponent: PeopleListComponent;
     let fixture: ComponentFixture<PeopleListComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(PeopleListComponent);
         peopleListComponent = fixture.componentInstance;

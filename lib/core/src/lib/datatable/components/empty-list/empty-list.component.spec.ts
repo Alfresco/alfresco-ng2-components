@@ -18,17 +18,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EmptyListComponent } from './empty-list.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('EmptyListComponentComponent', () => {
     let fixture: ComponentFixture<EmptyListComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(EmptyListComponent);
     });

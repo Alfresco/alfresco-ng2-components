@@ -19,46 +19,59 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import {
-    startFormDateWidgetMock, startFormDropdownDefinitionMock,
-    startFormTextDefinitionMock, startMockForm, startMockFormWithTab,
-    startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock,
-    taskFormSingleUploadMock, taskFormMultipleUploadMock, preselectedSingleNode, preselectedMultipleNodes
+    startFormDateWidgetMock,
+    startFormDropdownDefinitionMock,
+    startFormTextDefinitionMock,
+    startMockForm,
+    startMockFormWithTab,
+    startFormAmountWidgetMock,
+    startFormNumberWidgetMock,
+    startFormRadioButtonWidgetMock,
+    taskFormSingleUploadMock,
+    taskFormMultipleUploadMock,
+    preselectedSingleNode,
+    preselectedMultipleNodes
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
 import { WidgetVisibilityService, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { ProcessService } from '../process-list/services/process.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatCardHarness } from '@angular/material/card/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('StartFormComponent', () => {
-
     let component: StartFormComponent;
     let fixture: ComponentFixture<StartFormComponent>;
     let getStartFormSpy: jasmine.Spy;
     let visibilityService: WidgetVisibilityService;
     let translate: TranslateService;
     let processService: ProcessService;
+    let loader: HarnessLoader;
 
     const exampleId1 = 'my:process1';
     const exampleId2 = 'my:process2';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ProcessTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
         processService = TestBed.inject(ProcessService);
         visibilityService = TestBed.inject(WidgetVisibilityService);
         translate = TestBed.inject(TranslateService);
 
-        getStartFormSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(of({
-            processDefinitionName: 'my:process'
-        }));
+        getStartFormSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(
+            of({
+                processDefinitionName: 'my:process'
+            })
+        );
 
         spyOn(translate, 'instant').and.callFake((key) => key);
         spyOn(translate, 'get').and.callFake((key) => of(key));
@@ -115,14 +128,18 @@ describe('StartFormComponent', () => {
     });
 
     it('should show outcome buttons by default', () => {
-        getStartFormSpy.and.returnValue(of({
-            id: '1',
-            processDefinitionName: 'my:process',
-            outcomes: [{
-                id: 'approve',
-                name: 'Approve'
-            }]
-        }));
+        getStartFormSpy.and.returnValue(
+            of({
+                id: '1',
+                processDefinitionName: 'my:process',
+                outcomes: [
+                    {
+                        id: 'approve',
+                        name: 'Approve'
+                    }
+                ]
+            })
+        );
         component.processDefinitionId = exampleId1;
         component.ngOnInit();
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -131,14 +148,18 @@ describe('StartFormComponent', () => {
     });
 
     it('should show outcome buttons if showOutcomeButtons is true', () => {
-        getStartFormSpy.and.returnValue(of({
-            id: '1',
-            processDefinitionName: 'my:process',
-            outcomes: [{
-                id: 'approve',
-                name: 'Approve'
-            }]
-        }));
+        getStartFormSpy.and.returnValue(
+            of({
+                id: '1',
+                processDefinitionName: 'my:process',
+                outcomes: [
+                    {
+                        id: 'approve',
+                        name: 'Approve'
+                    }
+                ]
+            })
+        );
         component.processDefinitionId = exampleId1;
         component.showOutcomeButtons = true;
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
@@ -157,7 +178,6 @@ describe('StartFormComponent', () => {
     });
 
     describe('Display widgets', () => {
-
         it('should be able to display a textWidget from a process definition', async () => {
             getStartFormSpy.and.returnValue(of(startFormTextDefinitionMock));
             component.processDefinitionId = exampleId1;
@@ -243,8 +263,8 @@ describe('StartFormComponent', () => {
             const dropdownField = formFields.find((field) => field.id === 'mockTypeDropDown');
             const dropdownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
             const dropdownLabel = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget .adf-label');
-            const selectElement = fixture.debugElement.nativeElement.querySelector('.adf-select .mat-select-trigger');
-            selectElement.click();
+            const selectElement = await loader.getHarness(MatSelectHarness);
+            await selectElement.open();
 
             expect(selectElement).toBeTruthy();
             expect(dropdownWidget).toBeTruthy();
@@ -300,7 +320,7 @@ describe('StartFormComponent', () => {
 
             const formFieldsWidget = fixture.debugElement.nativeElement.querySelector('form-field');
             const inputElement = fixture.debugElement.nativeElement.querySelector('.adf-input');
-            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix > .adf-label');
+            const inputLabelElement = fixture.debugElement.nativeElement.querySelector('.adf-label');
             const dateElement = fixture.debugElement.nativeElement.querySelector('#billdate');
             const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#billdate-label');
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
@@ -322,14 +342,9 @@ describe('StartFormComponent', () => {
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
-            fixture.detectChanges();
-            await fixture.whenStable();
 
-            const refreshElement = fixture.debugElement.nativeElement.querySelector('.mat-card-actions>button');
-            refreshElement.click();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
+            const refreshElement = await (await loader.getHarness(MatCardHarness)).getHarness(MatButtonHarness);
+            await refreshElement.click();
 
             /* cspell:disable-next-line */
             const selectElement = fixture.debugElement.nativeElement.querySelector('#claimtype');
@@ -370,22 +385,21 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const titleElement = fixture.debugElement.nativeElement.querySelector('mat-card-title>h2');
-            const actionButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-button');
+            const cardTitle = await loader.getHarness(MatCardHarness);
+            const actionButtons = await loader.getAllHarnesses(MatButtonHarness);
 
-            expect(titleElement.innerText.trim()).toEqual('Mock Title');
+            expect(await cardTitle.getTitleText()).toEqual('Mock Title');
             expect(actionButtons.length).toBe(4);
-            expect(actionButtons[0].innerText.trim()).toBe('SAVE');
-            expect(actionButtons[0].disabled).toBeFalsy();
-            expect(actionButtons[1].innerText.trim()).toBe('APPROVE');
-            expect(actionButtons[1].disabled).toBeTruthy();
-            expect(actionButtons[2].innerText.trim()).toBe('COMPLETE');
-            expect(actionButtons[2].disabled).toBeTruthy();
+            expect(await actionButtons[0].getText()).toBe('SAVE');
+            expect(await actionButtons[0].isDisabled()).toBeFalsy();
+            expect(await actionButtons[1].getText()).toBe('APPROVE');
+            expect(await actionButtons[1].isDisabled()).toBeTruthy();
+            expect(await actionButtons[2].getText()).toBe('COMPLETE');
+            expect(await actionButtons[2].isDisabled()).toBeTruthy();
         });
     });
 
     describe('OutCome Actions', () => {
-
         it('should not enable outcome button when model missing', () => {
             expect(component.isOutcomeButtonVisible(null, false)).toBeFalsy();
         });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { ModelsApi } from '@alfresco/js-api';
@@ -34,7 +34,7 @@ export class ModelService {
         return this._modelsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Create a Form.
@@ -141,7 +141,6 @@ export class ModelService {
         if (error) {
             errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : ModelService.GENERIC_ERROR_MESSAGE;
         }
-        this.logService.error(errMsg);
         return throwError(errMsg);
     }
 }

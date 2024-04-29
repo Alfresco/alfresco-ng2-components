@@ -22,7 +22,6 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { PeopleCloudModule } from '../people-cloud.module';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
 import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
@@ -83,7 +82,7 @@ describe('PeopleCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule]
+            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule]
         });
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;

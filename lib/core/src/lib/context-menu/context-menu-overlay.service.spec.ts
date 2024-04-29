@@ -20,7 +20,6 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContextMenuOverlayService', () => {
     let contextMenuOverlayService: ContextMenuOverlayService;
@@ -36,11 +35,8 @@ describe('ContextMenuOverlayService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [ Overlay ]
+            imports: [CoreTestingModule],
+            providers: [Overlay]
         });
         overlay = TestBed.inject(Overlay);
         injector = TestBed.inject(Injector);
@@ -48,10 +44,7 @@ describe('ContextMenuOverlayService', () => {
 
     describe('Overlay', () => {
         beforeEach(() => {
-            contextMenuOverlayService = new ContextMenuOverlayService(
-                injector,
-                overlay
-            );
+            contextMenuOverlayService = new ContextMenuOverlayService(injector, overlay);
         });
 
         it('should create a custom overlay', () => {

@@ -18,7 +18,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { addMinutes, fromUnixTime, parse } from 'date-fns';
 
-@Pipe({ name: 'adfDateTime' })
+@Pipe({
+    name: 'adfDateTime',
+    standalone: true
+})
 export class DateTimePipe implements PipeTransform {
     transform(value: string | Date | number, dateFormat: string): Date {
         let parsedValue: Date;

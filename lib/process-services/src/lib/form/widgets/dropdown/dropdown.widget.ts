@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, FormFieldOption, WidgetComponent, LogService } from '@alfresco/adf-core';
+import { FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';
 
@@ -40,12 +40,7 @@ import { TaskFormService } from '../../services/task-form.service';
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
-    constructor(
-        public formService: FormService,
-        public taskFormService: TaskFormService,
-        public processDefinitionService: ProcessDefinitionService,
-        private logService: LogService
-    ) {
+    constructor(public formService: FormService, public taskFormService: TaskFormService, public processDefinitionService: ProcessDefinitionService) {
         super(formService);
     }
 
@@ -60,31 +55,27 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     getValuesByTaskId() {
-        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe(
-            (formFieldOption) => {
-                const options = [];
-                if (this.field.emptyOption) {
-                    options.push(this.field.emptyOption);
-                }
-                this.field.options = options.concat(formFieldOption || []);
-                this.field.updateForm();
-            },
-            (err) => this.handleError(err)
-        );
+        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe((formFieldOption) => {
+            const options = [];
+            if (this.field.emptyOption) {
+                options.push(this.field.emptyOption);
+            }
+            this.field.options = options.concat(formFieldOption || []);
+            this.field.updateForm();
+        });
     }
 
     getValuesByProcessDefinitionId() {
-        this.processDefinitionService.getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id).subscribe(
-            (formFieldOption) => {
+        this.processDefinitionService
+            .getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id)
+            .subscribe((formFieldOption) => {
                 const options = [];
                 if (this.field.emptyOption) {
                     options.push(this.field.emptyOption);
                 }
                 this.field.options = options.concat(formFieldOption || []);
                 this.field.updateForm();
-            },
-            (err) => this.handleError(err)
-        );
+            });
     }
 
     getOptionValue(option: FormFieldOption, fieldValue: string): string {
@@ -95,10 +86,6 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
             optionValue = option.name;
         }
         return optionValue;
-    }
-
-    handleError(error: any) {
-        this.logService.error(error);
     }
 
     isReadOnlyType(): boolean {

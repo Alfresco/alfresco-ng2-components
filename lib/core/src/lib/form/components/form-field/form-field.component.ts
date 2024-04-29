@@ -19,10 +19,8 @@ import {
     Compiler,
     Component,
     ComponentFactory,
-    ComponentFactoryResolver,
     ComponentRef,
     Input,
-    ModuleWithComponentFactories,
     NgModule,
     OnDestroy,
     OnInit,
@@ -71,12 +69,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     focus: boolean = false;
 
-    constructor(
-        private formRenderingService: FormRenderingService,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private visibilityService: WidgetVisibilityService,
-        private compiler: Compiler
-    ) {}
+    constructor(private formRenderingService: FormRenderingService, private visibilityService: WidgetVisibilityService, private compiler: Compiler) {}
 
     ngOnInit() {
         const w: any = window;
@@ -96,8 +89,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
             } else {
                 const componentType = this.formRenderingService.resolveComponentType(originalField);
                 if (componentType) {
-                    const factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-                    this.componentRef = this.container.createComponent(factory);
+                    this.componentRef = this.container.createComponent(componentType);
                     const instance = this.componentRef.instance;
                     instance.field = this.field;
                     instance.fieldChanged.subscribe((field) => {
@@ -154,7 +146,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         const decoratedCmp = Component(metadata)(cmpClass);
         const moduleClass = class RuntimeComponentModule {};
         const decoratedNgModule = NgModule({ imports: [], declarations: [decoratedCmp] })(moduleClass);
-        const module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(decoratedNgModule);
+        const module = compiler.compileModuleAndAllComponentsSync(decoratedNgModule);
 
         return module.componentFactories.find((x) => x.componentType === decoratedCmp);
     }

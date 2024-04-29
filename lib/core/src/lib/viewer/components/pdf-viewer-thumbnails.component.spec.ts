@@ -19,13 +19,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW, ESCAPE } from '@angular/cdk/keycodes';
 
 declare const pdfjsViewer: any;
 
 describe('PdfThumbListComponent', () => {
-
     let fixture: ComponentFixture<PdfThumbListComponent>;
     let component: PdfThumbListComponent;
 
@@ -45,26 +43,36 @@ describe('PdfThumbListComponent', () => {
             return this._currentPageNumber;
         },
         pdfDocument: {
-            getPage: () => Promise.resolve({
-                getViewport: () => ({ height: 421, width: 335 }),
-                render: jasmine.createSpy('render').and.returnValue({ promise: Promise.resolve() })
-            })
+            getPage: () =>
+                Promise.resolve({
+                    getViewport: () => ({ height: 421, width: 335 }),
+                    render: jasmine.createSpy('render').and.returnValue({ promise: Promise.resolve() })
+                })
         },
         _pages: [
-            page(1), page(2), page(3), page(4),
-            page(5), page(6), page(7), page(8),
-            page(9), page(10), page(11), page(12),
-            page(13), page(14), page(15), page(16)
+            page(1),
+            page(2),
+            page(3),
+            page(4),
+            page(5),
+            page(6),
+            page(7),
+            page(8),
+            page(9),
+            page(10),
+            page(11),
+            page(12),
+            page(13),
+            page(14),
+            page(15),
+            page(16)
         ],
         eventBus: new pdfjsViewer.EventBus()
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(PdfThumbListComponent);
         component = fixture.componentInstance;
@@ -173,7 +181,7 @@ describe('PdfThumbListComponent', () => {
 
     describe('Keyboard events', () => {
         it('should select next page in the list on DOWN_ARROW event', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: DOWN_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', { keyCode: DOWN_ARROW } as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(1);
             expect(document.activeElement.id).toBe('1');
@@ -183,7 +191,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should select previous page in the list on UP_ARROW event', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: UP_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', { keyCode: UP_ARROW } as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(2);
             expect(document.activeElement.id).toBe('2');
@@ -193,7 +201,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should not select previous page if it is the first page', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: UP_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', { keyCode: UP_ARROW } as KeyboardEventInit);
             fixture.detectChanges();
             component.goTo(1);
             expect(document.activeElement.id).toBe('1');
@@ -203,7 +211,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should not select next item if it is the last page', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: DOWN_ARROW} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', { keyCode: DOWN_ARROW } as KeyboardEventInit);
             fixture.detectChanges();
             component.scrollInto(16);
             fixture.detectChanges();
@@ -216,7 +224,7 @@ describe('PdfThumbListComponent', () => {
         });
 
         it('should emit on ESCAPE event', () => {
-            const event = new KeyboardEvent('keydown', {keyCode: ESCAPE} as KeyboardEventInit);
+            const event = new KeyboardEvent('keydown', { keyCode: ESCAPE } as KeyboardEventInit);
             spyOn(component.close, 'emit');
             fixture.detectChanges();
 

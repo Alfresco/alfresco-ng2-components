@@ -25,22 +25,9 @@ import { CoreModule } from '@alfresco/adf-core';
 import { VersionManagerModule } from '../version-manager';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 
-
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule,
-        UploadModule,
-        FormsModule,
-        VersionManagerModule
-    ],
-    declarations: [
-        NewVersionUploaderDialogComponent
-    ],
-    exports: [
-        NewVersionUploaderDialogComponent,
-        FormsModule
-    ]
+    imports: [CommonModule, MaterialModule, CoreModule, UploadModule, FormsModule, VersionManagerModule],
+    declarations: [NewVersionUploaderDialogComponent],
+    exports: [NewVersionUploaderDialogComponent, FormsModule]
 })
-export class NewVersionUploaderModule { }
+export class NewVersionUploaderModule {}

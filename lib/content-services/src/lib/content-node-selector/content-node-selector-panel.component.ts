@@ -22,26 +22,22 @@ import {
     UserPreferenceValues,
     InfinitePaginationComponent,
     PaginatedComponent,
-    AppConfigService,
     DataSorting,
     ShowHeaderMode
 } from '@alfresco/adf-core';
-import { NodesApiService } from '../common/services/nodes-api.service';
-import { UploadService } from '../common/services/upload.service';
-import { FileUploadCompleteEvent, FileUploadDeleteEvent } from '../common/events/file.event';
+import { NodesApiService, UploadService, FileUploadCompleteEvent, FileUploadDeleteEvent, SitesService } from '../common';
 import { UntypedFormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, SearchRequest, RequestScope } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
-import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
-import { Subject } from 'rxjs';
-import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
-import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { NodeEntryEvent } from '../document-list/components/node.event';
-import { SitesService } from '../common/services/sites.service';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { SearchQueryBuilderService } from '../search';
+import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -262,7 +258,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     preselectedNodes: NodeEntry[] = [];
     currentUploadBatch: NodeEntry[] = [];
 
-    sorting: string[] | DataSorting;
+    sorting: string[] | DataSorting = ['createdAt', 'desc'];
 
     searchPanelExpanded: boolean = false;
 
@@ -275,7 +271,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private uploadService: UploadService,
         private sitesService: SitesService,
-        private appConfigService: AppConfigService,
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
     ) {}
 
@@ -347,8 +342,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.documentList.$folderNode.pipe(takeUntil(this.onDestroy$)).subscribe((currentNode: Node) => {
             this.currentFolder.emit(currentNode);
         });
-
-        this.sorting = this.appConfigService.get('adf-content-node-selector.sorting', ['createdAt', 'desc']);
     }
 
     ngOnDestroy() {

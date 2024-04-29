@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { LogService, InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
+import { InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
 import { MatSelectChange } from '@angular/material/select';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -77,6 +77,9 @@ export class DropdownSitesComponent implements OnInit {
     @Output()
     change: EventEmitter<SiteEntry> = new EventEmitter();
 
+    @Output()
+    error = new EventEmitter<any>();
+
     private loading = true;
     private skipCount = 0;
 
@@ -86,7 +89,6 @@ export class DropdownSitesComponent implements OnInit {
     constructor(
         private authService: AuthenticationService,
         private sitesService: SitesService,
-        private logService: LogService,
         private liveAnnouncer: LiveAnnouncer,
         private translateService: TranslateService
     ) {}
@@ -158,7 +160,7 @@ export class DropdownSitesComponent implements OnInit {
                 this.loading = false;
             },
             (error) => {
-                this.logService.error(error);
+                this.error.emit(error);
             }
         );
     }

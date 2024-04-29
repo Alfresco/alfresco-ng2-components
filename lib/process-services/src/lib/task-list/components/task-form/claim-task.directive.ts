@@ -15,19 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    Directive,
-    Input,
-    Output,
-    EventEmitter,
-    HostListener,
-    OnInit
-} from '@angular/core';
+import { Directive, Input, Output, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { TaskListService } from '../../services/tasklist.service';
-import { LogService } from '@alfresco/adf-core';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adf-claim-task]'
 })
 export class ClaimTaskDirective implements OnInit {
@@ -45,9 +37,7 @@ export class ClaimTaskDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(
-        private taskListService: TaskListService,
-        private logService: LogService) {}
+    constructor(private taskListService: TaskListService) {}
 
     @HostListener('click')
     onClick() {
@@ -68,9 +58,7 @@ export class ClaimTaskDirective implements OnInit {
         }
 
         if (this.invalidParams.length) {
-            throw new Error(
-                `Attribute ${this.invalidParams.join(', ')} is required`
-            );
+            throw new Error(`Attribute ${this.invalidParams.join(', ')} is required`);
         }
     }
 
@@ -81,10 +69,9 @@ export class ClaimTaskDirective implements OnInit {
     private claimTask() {
         this.taskListService.claimTask(this.taskId).subscribe(
             () => {
-                this.logService.info('Task claimed');
                 this.success.emit(this.taskId);
             },
-            error => this.error.emit(error)
+            (error) => this.error.emit(error)
         );
     }
 }

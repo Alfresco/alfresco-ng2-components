@@ -43,12 +43,14 @@ import { DownloadPromptDialogComponent } from './download-prompt-dialog/download
 import { AppConfigService } from '../../app-config';
 import { DownloadPromptActions } from '../models/download-prompt.actions';
 
-const DEFAULT_NON_PREVIEW_CONFIG = {
-    enableDownloadPrompt: false,
-    enableDownloadPromptReminder: false,
-    downloadPromptDelay: 50,
-    downloadPromptReminderDelay: 30
-};
+export interface ViewerComponentConfig {
+    enableDownloadPrompt?: boolean;
+    enableDownloadPromptReminder?: boolean;
+    downloadPromptDelay?: number;
+    downloadPromptReminderDelay?: number;
+    enableFileAutoDownload?: boolean;
+    fileAutoDownloadSizeThresholdInMB?: number;
+}
 
 @Component({
     selector: 'adf-viewer',
@@ -200,22 +202,26 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
      */
-    enableDownloadPrompt: boolean = false;
+    @Input()
+    enableDownloadPrompt = false;
 
     /**
      * Enable reminder dialogs to prompt user to download the file, in case the preview is not responding for a set period of time.
      */
-    enableDownloadPromptReminder: boolean = false;
+    @Input()
+    enableDownloadPromptReminder = false;
 
     /**
      * Initial time in seconds to wait before giving the first prompt to user to download the file
      */
-    downloadPromptDelay: number = 50;
+    @Input()
+    downloadPromptDelay = 50;
 
     /**
      * Time in seconds to wait before giving the second and consequent reminders to the user to download the file.
      */
-    downloadPromptReminderDelay: number = 15;
+    @Input()
+    downloadPromptReminderDelay = 15;
 
     /**
      * Emitted when user clicks on download button on download prompt dialog.
@@ -390,12 +396,20 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     private configureDownloadPromptProperties() {
-        const nonResponsivePreviewConfig = this.appConfigService.get('viewer', DEFAULT_NON_PREVIEW_CONFIG);
+        const config = this.appConfigService.get<ViewerComponentConfig>('viewer');
 
-        this.enableDownloadPrompt = nonResponsivePreviewConfig.enableDownloadPrompt;
-        this.enableDownloadPromptReminder = nonResponsivePreviewConfig.enableDownloadPromptReminder;
-        this.downloadPromptDelay = nonResponsivePreviewConfig.downloadPromptDelay;
-        this.downloadPromptReminderDelay = nonResponsivePreviewConfig.downloadPromptReminderDelay;
+        if (config) {
+            this.enableDownloadPrompt = config.enableDownloadPrompt === true;
+            this.enableDownloadPromptReminder = config.enableDownloadPromptReminder === true;
+
+            if (config.downloadPromptDelay !== undefined) {
+                this.downloadPromptDelay = config.downloadPromptDelay;
+            }
+
+            if (config.downloadPromptReminderDelay !== undefined) {
+                this.downloadPromptReminderDelay = config.downloadPromptReminderDelay;
+            }
+        }
     }
 
     private initDownloadPrompt() {

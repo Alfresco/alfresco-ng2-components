@@ -21,11 +21,9 @@ import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
+import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 
 describe('Notification History Component', () => {
-
     let fixture: ComponentFixture<NotificationHistoryComponent>;
     let component: NotificationHistoryComponent;
     let element: HTMLElement;
@@ -42,10 +40,7 @@ describe('Notification History Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;
@@ -66,7 +61,6 @@ describe('Notification History Component', () => {
     });
 
     describe('ui ', () => {
-
         it('should empty message be present when there are no notifications in the history', (done) => {
             openNotification();
             fixture.detectChanges();
@@ -109,15 +103,12 @@ describe('Notification History Component', () => {
         it('should show message when pushed directly to Notification History', (done) => {
             const callBackSpy = jasmine.createSpy('callBack');
             fixture.detectChanges();
-            notificationService.pushToNotificationHistory(
-                {
-                    clickCallBack: callBackSpy,
-                    messages: ['My new message'],
-                    datetime: new Date(),
-                    type: NOTIFICATION_TYPE.RECURSIVE
-
-                } as NotificationModel
-            );
+            notificationService.pushToNotificationHistory({
+                clickCallBack: callBackSpy,
+                messages: ['My new message'],
+                datetime: new Date(),
+                type: NOTIFICATION_TYPE.RECURSIVE
+            } as NotificationModel);
             openNotification();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -148,12 +139,16 @@ describe('Notification History Component', () => {
         });
 
         it('should read notifications from local storage', (done) => {
-            storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify([{
-                messages: ['My new message'],
-                datetime: new Date(),
-                type: NOTIFICATION_TYPE.RECURSIVE
-
-            } as NotificationModel]));
+            storage.setItem(
+                NotificationHistoryComponent.NOTIFICATION_STORAGE,
+                JSON.stringify([
+                    {
+                        messages: ['My new message'],
+                        datetime: new Date(),
+                        type: NOTIFICATION_TYPE.RECURSIVE
+                    } as NotificationModel
+                ])
+            );
             fixture.detectChanges();
             openNotification();
             fixture.whenStable().then(() => {

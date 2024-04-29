@@ -18,9 +18,8 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { NotificationService, AppConfigService } from '@alfresco/adf-core';
-import { NodesApiService } from '../common/services/nodes-api.service';
-import { RenditionService } from '../common/services/rendition.service';
+import { NotificationService } from '@alfresco/adf-core';
+import { NodesApiService, RenditionService } from '../common';
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -43,7 +42,6 @@ describe('ShareDialogComponent', () => {
     let nodesApiService: NodesApiService;
     let fixture: ComponentFixture<ShareDialogComponent>;
     let component: ShareDialogComponent;
-    let appConfigService: AppConfigService;
 
     const shareToggleId = '[data-automation-id="adf-share-toggle"]';
     const expireToggle = '[data-automation-id="adf-expire-toggle"]';
@@ -77,7 +75,6 @@ describe('ShareDialogComponent', () => {
         sharedLinksApiService = TestBed.inject(SharedLinksApiService);
         renditionService = TestBed.inject(RenditionService);
         nodesApiService = TestBed.inject(NodesApiService);
-        appConfigService = TestBed.inject(AppConfigService);
 
         node = {
             entry: {
@@ -330,10 +327,7 @@ describe('ShareDialogComponent', () => {
         });
 
         it('should update node with input date and end of day time when type is `date`', async () => {
-            const dateTimePickerType = 'date';
             const date = new Date('2525-01-01');
-            spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType as any);
-
             fixture.detectChanges();
 
             const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: expireToggle }));

@@ -21,7 +21,6 @@ import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-ba
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatIconHarness } from '@angular/material/icon/testing';
@@ -92,7 +91,7 @@ describe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, MatSnackBarModule],
+            imports: [CoreTestingModule, MatSnackBarModule],
             declarations: [ProvidesNotificationServiceComponent]
         });
         translationService = TestBed.inject(TranslationService);

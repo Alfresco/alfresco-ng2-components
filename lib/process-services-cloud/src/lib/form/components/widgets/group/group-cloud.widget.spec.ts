@@ -19,31 +19,29 @@ import { FormFieldModel, FormFieldTypes, FormModel, IdentityGroupModel } from '@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('GroupCloudWidgetComponent', () => {
     let fixture: ComponentFixture<GroupCloudWidgetComponent>;
     let widget: GroupCloudWidgetComponent;
     let element: HTMLElement;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [
-                GroupCloudWidgetComponent
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
+            imports: [ProcessServiceCloudTestingModule],
+            declarations: [GroupCloudWidgetComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(GroupCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -52,7 +50,7 @@ describe('GroupCloudWidgetComponent', () => {
 
     it('should have enabled validation if field is NOT readOnly', () => {
         const readOnly = false;
-        widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }, null, readOnly), {
+        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
             type: FormFieldTypes.GROUP,
             value: []
         });
@@ -62,7 +60,6 @@ describe('GroupCloudWidgetComponent', () => {
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.GROUP,
@@ -77,10 +74,10 @@ describe('GroupCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
-          });
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeTruthy();
+            expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');
+        });
 
         it('should hide tooltip', async () => {
             const cloudGroupInput = element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
@@ -92,15 +89,14 @@ describe('GroupCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeFalsy();
         });
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.GROUP,
                 required: true
             });
@@ -132,7 +128,7 @@ describe('GroupCloudWidgetComponent', () => {
         });
 
         it('should be invalid after deselecting all groups', async () => {
-            widget.onChangedGroup([{id: 'test-id', name: 'test-name'}]);
+            widget.onChangedGroup([{ id: 'test-id', name: 'test-name' }]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -150,16 +146,17 @@ describe('GroupCloudWidgetComponent', () => {
     });
 
     describe('when is readOnly', () => {
-
         const readOnly = true;
 
         it('should single chip be disabled', async () => {
-            const mockSpaghetti: IdentityGroupModel[] = [{
-                id: 'bolognese',
-                name: 'Bolognese'
-            }];
+            const mockSpaghetti: IdentityGroupModel[] = [
+                {
+                    id: 'bolognese',
+                    name: 'Bolognese'
+                }
+            ];
 
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
                 type: FormFieldTypes.GROUP,
                 value: mockSpaghetti
             });
@@ -167,14 +164,11 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
-            expect(disabledFormField).toBeTruthy();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            expect(await formField.isDisabled()).toBeTrue();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const disabledGroupChip: HTMLElement = element.querySelector('.mat-chip-disabled');
-            expect(disabledGroupChip).toBeTruthy();
+            const gtoupChip = await loader.getHarness(MatChipHarness);
+            expect(await gtoupChip.isDisabled()).toBeTrue();
         });
 
         it('should multi chips be disabled', async () => {
@@ -183,7 +177,7 @@ describe('GroupCloudWidgetComponent', () => {
                 { id: 'carbonara', name: 'Carbonara' }
             ];
 
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
                 type: FormFieldTypes.GROUP,
                 value: mockSpaghetti
             });
@@ -191,19 +185,16 @@ describe('GroupCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const disabledFormField: HTMLElement = element.querySelector('.mat-form-field-disabled');
-            expect(disabledFormField).toBeTruthy();
+            const formField = await loader.getHarness(MatFormFieldHarness);
+            expect(await formField.isDisabled()).toBeTrue();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const disabledGroupChips = element.querySelectorAll('.mat-chip-disabled');
-            expect(disabledGroupChips.item(0)).toBeTruthy();
-            expect(disabledGroupChips.item(1)).toBeTruthy();
+            const groupChips = await loader.getAllHarnesses(MatChipHarness);
+            expect(await groupChips[0].isDisabled()).toBeTrue();
+            expect(await groupChips[1].isDisabled()).toBeTrue();
         });
 
         it('should have disabled validation', () => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>'}, null, readOnly), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
                 type: FormFieldTypes.GROUP,
                 value: []
             });
@@ -214,7 +205,6 @@ describe('GroupCloudWidgetComponent', () => {
     });
 
     describe('when form model has left labels', () => {
-
         it('should have left labels classes on leftLabels true', async () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                 id: 'group-id',

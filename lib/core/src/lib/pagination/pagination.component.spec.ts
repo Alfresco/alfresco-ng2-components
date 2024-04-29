@@ -21,7 +21,6 @@ import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { PaginationModel } from '../models/pagination.model';
 import { setupTestBed } from '@alfresco/adf-core';
 
@@ -33,22 +32,18 @@ class FakePaginationInput implements PaginationModel {
     maxItems = 25;
 
     constructor(pagesCount: number, currentPage: number, lastPageItems: number) {
-        this.totalItems = ((pagesCount - 1) * this.maxItems) + lastPageItems;
+        this.totalItems = (pagesCount - 1) * this.maxItems + lastPageItems;
         this.skipCount = (currentPage - 1) * this.maxItems;
     }
 }
 
 describe('PaginationComponent', () => {
-
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
 
     setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        schemas: [ NO_ERRORS_SCHEMA ]
+        imports: [CoreTestingModule],
+        schemas: [NO_ERRORS_SCHEMA]
     });
 
     beforeEach(() => {
@@ -87,7 +82,7 @@ describe('PaginationComponent', () => {
         });
 
         it('has range', () => {
-            expect(component.range).toEqual([ 1, 10 ]);
+            expect(component.range).toEqual([1, 10]);
         });
     });
 
@@ -101,12 +96,11 @@ describe('PaginationComponent', () => {
         });
 
         it('has range', () => {
-            expect(component.range).toEqual([ 1, 25 ]);
+            expect(component.range).toEqual([1, 25]);
         });
     });
 
     describe('Middle page', () => {
-
         // This test describes 6 pages being on the third page
         // and last page has 5 items
 
@@ -137,7 +131,7 @@ describe('PaginationComponent', () => {
         });
 
         it('has range', () => {
-            expect(component.range).toEqual([ 51, 75 ]);
+            expect(component.range).toEqual([51, 75]);
         });
 
         it('goes next', () => {
@@ -186,7 +180,6 @@ describe('PaginationComponent', () => {
     });
 
     describe('First page', () => {
-
         // This test describes 10 pages being on the first page
 
         beforeEach(() => {
@@ -207,12 +200,11 @@ describe('PaginationComponent', () => {
         });
 
         it('has range', () => {
-            expect(component.range).toEqual([ 1, 25 ]);
+            expect(component.range).toEqual([1, 25]);
         });
     });
 
     describe('Last page', () => {
-
         // This test describes 10 pages being on the last page
 
         beforeEach(() => {
@@ -233,7 +225,7 @@ describe('PaginationComponent', () => {
         });
 
         it('has range', () => {
-            expect(component.range).toEqual([ 226, 230 ]);
+            expect(component.range).toEqual([226, 230]);
         });
     });
 
@@ -249,13 +241,12 @@ describe('PaginationComponent', () => {
             expect(component.isFirstPage).toBe(true, 'isFirstPage');
             expect(component.isLastPage).toBe(true, 'isLastPage');
 
-            expect(component.range).toEqual([ 0, 0 ], 'range');
-            expect(component.pages).toEqual([ 1 ], 'pages');
+            expect(component.range).toEqual([0, 0], 'range');
+            expect(component.pages).toEqual([1], 'pages');
         });
     });
 
     describe('with paginated component', () => {
-
         it('should take pagination from the external component', () => {
             const pagination: PaginationModel = {};
 
@@ -347,7 +338,6 @@ describe('PaginationComponent', () => {
 
             expect(fixture.debugElement.nativeElement.querySelector('.adf-pagination__block')).toBeNull();
         });
-
     });
 
     describe('without total items', () => {
@@ -366,7 +356,7 @@ describe('PaginationComponent', () => {
         });
 
         it('has range', () => {
-            expect(component.range).toEqual([ 26, 50 ]);
+            expect(component.range).toEqual([26, 50]);
         });
         it('cannot calculate number of pages', () => {
             expect(component.pages).toEqual([1]);
@@ -384,8 +374,10 @@ describe('PaginationComponent', () => {
         it('should only some pages be available if over 100', () => {
             component.pagination = new FakePaginationInput(101, 30, 5);
 
-            const expectedPages = [1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-                31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 101];
+            const expectedPages = [
+                1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+                43, 44, 45, 46, 47, 48, 49, 50, 101
+            ];
 
             expect(component.limitedPages).toEqual(expectedPages);
             expect(component.limitedPages).not.toEqual(component.pages);

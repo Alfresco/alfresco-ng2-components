@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormService, FormFieldModel, FormModel, FormFieldTypes, LogService } from '@alfresco/adf-core';
+import { FormService, FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -23,27 +23,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { DisplayExternalPropertyWidgetComponent } from './display-external-property.widget';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 
 describe('DisplayExternalPropertyWidgetComponent', () => {
     let loader: HarnessLoader;
     let widget: DisplayExternalPropertyWidgetComponent;
     let fixture: ComponentFixture<DisplayExternalPropertyWidgetComponent>;
     let element: HTMLElement;
-    let logService: LogService;
-    let logServiceSpy: jasmine.Spy;
     let formCloudService: FormCloudService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                NoopAnimationsModule,
-                ReactiveFormsModule,
-                DisplayExternalPropertyWidgetComponent
-            ],
+            imports: [ProcessServiceCloudTestingModule, ReactiveFormsModule, DisplayExternalPropertyWidgetComponent],
             providers: [FormService]
         }).compileComponents();
 
@@ -51,10 +43,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
-        logService = TestBed.inject(LogService);
         formCloudService = TestBed.inject(FormCloudService);
-
-        logServiceSpy = spyOn(logService, 'error');
     });
 
     it('should display initial value', async () => {
@@ -101,10 +90,6 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
             const errorElement = element.querySelector('error-widget');
             expect(errorElement.textContent.trim()).toContain('FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED');
         });
-
-        it('should log the error', () => {
-            expect(logServiceSpy).toHaveBeenCalledWith('External property not found');
-        });
     });
 
     describe('when property is in preview state', () => {
@@ -122,10 +107,6 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         it('should NOT display the error message', () => {
             const errorElement = element.querySelector('error-widget');
             expect(errorElement).toBeFalsy();
-        });
-
-        it('should NOT log the error', () => {
-            expect(logServiceSpy).not.toHaveBeenCalled();
         });
 
         it('should display external property name', () => {

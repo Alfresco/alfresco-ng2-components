@@ -23,7 +23,6 @@ import { ServiceTaskListCloudComponent } from './service-task-list-cloud.compone
 import { fakeServiceTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
@@ -80,7 +79,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [EmptyTemplateComponent]
         });
         appConfig = TestBed.inject(AppConfigService);
@@ -357,7 +356,7 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
         });
 
@@ -415,7 +414,7 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);

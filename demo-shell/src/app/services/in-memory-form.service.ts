@@ -16,9 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService, LogService,
-         FormFieldOption, FormService, FormValues, FormModel,
-         FormOutcomeModel, FormOutcomeEvent } from '@alfresco/adf-core';
+import { AppConfigService, FormFieldOption, FormService, FormValues, FormModel, FormOutcomeModel, FormOutcomeEvent } from '@alfresco/adf-core';
 import { Observable, Subject } from 'rxjs';
 
 interface ProcessServiceData {
@@ -37,13 +35,11 @@ interface ProcessServiceData {
 //
 @Injectable()
 export class InMemoryFormService extends FormService {
-
     private data: ProcessServiceData;
 
     executeOutcome = new Subject<FormOutcomeEvent>();
 
-    constructor(appConfig: AppConfigService,
-                protected logService: LogService) {
+    constructor(appConfig: AppConfigService) {
         super();
         this.data = appConfig.get<ProcessServiceData>('activiti');
     }
@@ -53,14 +49,10 @@ export class InMemoryFormService extends FormService {
         // Uncomment this to use original call
         // return super.getRestFieldValues(taskId, fieldId);
 
-        this.logService.log(`getRestFieldValues: ${taskId} => ${field}`);
         return new Observable<FormFieldOption[]>((observer) => {
-            const currentField = this.data.rest.fields.find(
-                (f) => f.taskId === taskId && f.fieldId === field
-            );
-            if ( currentField ) {
+            const currentField = this.data.rest.fields.find((f) => f.taskId === taskId && f.fieldId === field);
+            if (currentField) {
                 const values: FormFieldOption[] = currentField.values || [];
-                this.logService.log(values);
                 observer.next(values);
             }
         });
@@ -75,7 +67,7 @@ export class InMemoryFormService extends FormService {
             delete flattenForm.formDefinition;
 
             const formValues: FormValues = {};
-            (data || []).forEach(variable => {
+            (data || []).forEach((variable) => {
                 formValues[variable.name] = variable.value;
             });
 
@@ -99,13 +91,11 @@ export class InMemoryFormService extends FormService {
         //  Uncomment this to use original call
         //  return super.getRestFieldValuesByProcessId(processDefinitionId, fieldId);
 
-        this.logService.log(`getRestFieldValuesByProcessId: ${processDefinitionId} => ${fieldId}`);
         return new Observable<FormFieldOption[]>((observer) => {
             const field = this.data.rest.fields.find(
                 (currentField) => currentField.processId === processDefinitionId && currentField.fieldId === fieldId
             );
             const values: FormFieldOption[] = field.values || [];
-            this.logService.log(values);
             observer.next(values);
         });
     }

@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper.component';
 import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
@@ -30,14 +29,8 @@ describe('PropertiesViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            providers: [
-                NodesApiService,
-                { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }
-            ]
+            imports: [ProcessServiceCloudTestingModule],
+            providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
         });
         fixture = TestBed.createComponent(PropertiesViewerWrapperComponent);
         component = fixture.componentInstance;

@@ -21,7 +21,6 @@ import { By } from '@angular/platform-browser';
 import { HighlightTransformService } from '../common/services/highlight-transform.service';
 import { HighlightDirective } from './highlight.directive';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 /* spellchecker: disable */
 const template: string = `
@@ -41,19 +40,13 @@ class TestComponent {
 }
 
 describe('HighlightDirective', () => {
-
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [CoreTestingModule],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -77,8 +70,12 @@ describe('HighlightDirective', () => {
         const containerElement2 = fixture.debugElement.query(By.css('#innerDiv14'));
         expect(containerElement1).not.toBeNull();
         expect(containerElement2).not.toBeNull();
-        expect(containerElement1.nativeElement.innerHTML).toBe('Lorem ipsum <span class="highlight-for-free-willy">salana-eyong-aysis</span> dolor sit amet');
-        expect(containerElement2.nativeElement.innerHTML).toBe('sed do eiusmod <span class="highlight-for-free-willy">salana-eyong-aysis</span> tempor incididunt');
+        expect(containerElement1.nativeElement.innerHTML).toBe(
+            'Lorem ipsum <span class="highlight-for-free-willy">salana-eyong-aysis</span> dolor sit amet'
+        );
+        expect(containerElement2.nativeElement.innerHTML).toBe(
+            'sed do eiusmod <span class="highlight-for-free-willy">salana-eyong-aysis</span> tempor incididunt'
+        );
     });
 
     it('should NOT replace the searched text in an element without the proper selector class', () => {

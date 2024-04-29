@@ -18,22 +18,21 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
-import {  MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 
 @Component({
-    template: `
-        <mat-select adf-infinite-select-scroll (scrollEnd)="load()" >
-            <mat-option *ngFor="let option of options; let idx=index">
-                {{ option.text }}
-            </mat-option>
-        </mat-select>`
+    template: ` <mat-select adf-infinite-select-scroll (scrollEnd)="load()">
+        <mat-option *ngFor="let option of options; let idx = index">
+            {{ option.text }}
+        </mat-option>
+    </mat-select>`
 })
 class TestComponent {
-    options = new Array(50).fill({text: 'dummy'});
+    options = new Array(50).fill({ text: 'dummy' });
 
     @ViewChild(MatSelect, { static: true })
     matSelect: MatSelect;
@@ -43,7 +42,7 @@ class TestComponent {
     }
 
     load() {
-        this.options.push(...new Array(10).fill({text: 'dummy'}));
+        this.options.push(...new Array(10).fill({ text: 'dummy' }));
     }
 }
 
@@ -54,14 +53,8 @@ describe('InfiniteSelectScrollDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MatSelectModule,
-                NoopAnimationsModule
-            ],
-            declarations: [
-                TestComponent,
-                InfiniteSelectScrollDirective
-            ]
+            imports: [MatSelectModule, NoopAnimationsModule, InfiniteSelectScrollDirective],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -77,7 +70,7 @@ describe('InfiniteSelectScrollDirective', () => {
 
     it('should call an action on scrollEnd event', async () => {
         const select = await loader.getHarness(MatSelectHarness);
-        const panel = (await select.host());
+        const panel = await select.host();
 
         await panel.dispatchEvent('scrollEnd');
 

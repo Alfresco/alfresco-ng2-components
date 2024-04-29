@@ -15,29 +15,16 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
+import { LoginDialogPanelComponent } from './components/login-dialog-panel/login-dialog-panel.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 
-import { LoginComponent } from './components/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { LoginFooterDirective } from './directives/login-footer.directive';
 import { LoginHeaderDirective } from './directives/login-header.directive';
-import { LoginDialogComponent } from './components/login-dialog.component';
-import { LoginDialogPanelComponent } from './components/login-dialog-panel.component';
 
 @NgModule({
     imports: [
-        RouterModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CommonModule,
-        TranslateModule
-    ],
-    declarations: [
         LoginComponent,
         LoginFooterDirective,
         LoginHeaderDirective,

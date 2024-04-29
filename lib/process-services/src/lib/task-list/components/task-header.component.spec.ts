@@ -32,7 +32,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { PeopleProcessService } from '../../common/services/people-process.service';
 import { BpmUserModel } from '../../common/models/bpm-user.model';
 
@@ -59,7 +58,7 @@ describe('TaskHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;

@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud.component';
 import { By } from '@angular/platform-browser';
 import { MatTableModule } from '@angular/material/table';
@@ -30,12 +29,7 @@ describe('FilePropertiesTableCloudComponent', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                MatTableModule,
-                MatIconModule
-            ],
+            imports: [ProcessServiceCloudTestingModule, MatTableModule, MatIconModule],
             declarations: [FilePropertiesTableCloudComponent]
         }).compileComponents();
     });
@@ -44,34 +38,34 @@ describe('FilePropertiesTableCloudComponent', () => {
         fixture = TestBed.createComponent(FilePropertiesTableCloudComponent);
         widget = fixture.componentInstance;
 
-        widget.uploadedFiles = [{
-            id: 'id',
-            name: 'download.png',
-            mimeType: 'image/png',
-            isExternal: true,
-            isFile: true,
-            isFolder: false,
-            content: {
-                mimeType: 'image/png'
+        widget.uploadedFiles = [
+            {
+                id: 'id',
+                name: 'download.png',
+                mimeType: 'image/png',
+                isExternal: true,
+                isFile: true,
+                isFolder: false,
+                content: {
+                    mimeType: 'image/png'
+                }
+            },
+            {
+                id: 'id2',
+                name: 'download2.png',
+                mimeType: 'image/png',
+                isExternal: true,
+                isFile: true,
+                isFolder: false,
+                content: {
+                    mimeType: 'image/png'
+                }
             }
-        }, {
-            id: 'id2',
-            name: 'download2.png',
-            mimeType: 'image/png',
-            isExternal: true,
-            isFile: true,
-            isFolder: false,
-            content: {
-                mimeType: 'image/png'
-            }
-        }];
+        ];
 
         widget.hasFile = true;
 
-        widget.displayedColumns = [
-            'icon',
-            'fileName'
-        ];
+        widget.displayedColumns = ['icon', 'fileName'];
 
         fixture.detectChanges();
     });

@@ -18,7 +18,8 @@
 import { CoreTestingModule, InplaceFormInputComponent } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UntypedFormControl } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { InplaceFormInputComponent } from './inplace-form-input.component';
 
 describe('InplaceFormInputComponent', () => {
     let component: InplaceFormInputComponent;
@@ -27,7 +28,7 @@ describe('InplaceFormInputComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, InplaceFormInputComponent]
+            imports: [CoreTestingModule, InplaceFormInputComponent]
         }).compileComponents();
     });
 

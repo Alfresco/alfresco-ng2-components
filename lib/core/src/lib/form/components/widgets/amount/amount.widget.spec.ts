@@ -15,7 +15,13 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, FormBaseModule, FormFieldModel, FormFieldTypes } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormFieldModel } from '../core/form-field.model';
+import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
+import { FormBaseModule } from '../../../form-base.module';
+import { FormFieldTypes } from '../core/form-field-types';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -34,7 +40,7 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
+            imports: [CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -132,6 +138,32 @@ describe('AmountWidgetComponent', () => {
             expect(asterisk.textContent).toEqual('*');
         });
     });
+});
+
+describe('AmountWidgetComponent - rendering', () => {
+    let loader: HarnessLoader;
+    let widget: AmountWidgetComponent;
+    let fixture: ComponentFixture<AmountWidgetComponent>;
+    let element: HTMLElement;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [CoreTestingModule, FormBaseModule]
+        });
+        fixture = TestBed.createComponent(AmountWidgetComponent);
+        widget = fixture.componentInstance;
+        element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
+    });
+
+    it('[C289915] - Should be able to display different currency icons', async () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            id: 'TestAmount1',
+            name: 'Test Amount',
+            type: 'amount',
+            currency: '$'
+        });
+        fixture.detectChanges();
 
     describe('AmountWidgetComponent - rendering', () => {
         it('[C289915] - Should be able to display different currency icons', async () => {
@@ -322,7 +354,7 @@ describe('AmountWidgetComponent settings', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule],
+            imports: [CoreTestingModule, FormBaseModule],
             providers: [
                 {
                     provide: ADF_AMOUNT_SETTINGS,

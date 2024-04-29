@@ -27,13 +27,14 @@ import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../data-column/data-column.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
 import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({ selector: 'adf-custom-column-template-component', template: ` <ng-template #tmplRef></ng-template> ` })
 class CustomColumnTemplateComponent {
@@ -140,7 +141,7 @@ describe('DataTable', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnHeaderComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -182,20 +183,6 @@ describe('DataTable', () => {
 
         expect(dataTable.data.setColumns).toHaveBeenCalled();
     }));
-
-    it('should use the cardview style if cardview is true', () => {
-        const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
-
-        dataTable.display = 'gallery';
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
-        });
-
-        fixture.detectChanges();
-
-        expect(element.querySelector('.adf-datatable-card')).not.toBeNull();
-        expect(element.querySelector('.adf-datatable')).toBeNull();
-    });
 
     it('should use the cardview style if cardview is false', () => {
         const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
@@ -299,22 +286,28 @@ describe('DataTable', () => {
 
         it('should sortPredicate from CdkDropList return true if column is enabled', () => {
             const dropList = getDropList();
-            spyOn(dropList, 'getSortedItems').and.returnValue([{
-                disabled: true
-            }, {
-                disabled: false
-            }] as CdkDrag[]);
+            spyOn(dropList, 'getSortedItems').and.returnValue([
+                {
+                    disabled: true
+                },
+                {
+                    disabled: false
+                }
+            ] as CdkDrag[]);
 
             expect(dropList.sortPredicate(1, undefined, dropList)).toBeTrue();
         });
 
         it('should sortPredicate from CdkDropList return false if column is disabled', () => {
             const dropList = getDropList();
-            spyOn(dropList, 'getSortedItems').and.returnValue([{
-                disabled: true
-            }, {
-                disabled: true
-            }] as CdkDrag[]);
+            spyOn(dropList, 'getSortedItems').and.returnValue([
+                {
+                    disabled: true
+                },
+                {
+                    disabled: true
+                }
+            ] as CdkDrag[]);
 
             expect(dropList.sortPredicate(1, undefined, dropList)).toBeFalse();
         });
@@ -955,12 +948,6 @@ describe('DataTable', () => {
         expect(dataTable.asIconValue(row, column)).toBe(null);
     });
 
-    it('should parse icon values to a valid i18n key', () => {
-        expect(dataTable.iconAltTextKey('custom')).toBe('ICONS.custom');
-        expect(dataTable.iconAltTextKey('/path/to/custom')).toBe('ICONS.custom');
-        expect(dataTable.iconAltTextKey('/path/to/custom.svg')).toBe('ICONS.custom');
-    });
-
     it('should require column and direction to evaluate sorting state', () => {
         expect(dataTable.isColumnSorted(null, null)).toBeFalsy();
         expect(dataTable.isColumnSorted({} as DataColumn, null)).toBeFalsy();
@@ -1230,6 +1217,28 @@ describe('DataTable', () => {
         expect(rows3[1].isSelected).toBeTruthy();
     });
 
+    it('should select the corresponding row when a checkbox is checked', async () => {
+        const petRows = [{ pet: 'dog' }, { pet: 'cat' }];
+        dataTable.multiselect = true;
+        dataTable.data = new ObjectDataTableAdapter(petRows, [new ObjectDataColumn({ key: 'pet' })]);
+        dataTable.ngOnChanges({ rows: new SimpleChange(null, petRows, false) });
+        fixture.detectChanges();
+
+        const loader = TestbedHarnessEnvironment.loader(fixture);
+        const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+
+        await checkboxes[2].check();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(await checkboxes[1].isChecked()).toBe(false);
+        expect(await checkboxes[2].isChecked()).toBe(true);
+
+        const rows = dataTable.data.getRows();
+        expect(rows[0].isSelected).toBeFalse();
+        expect(rows[1].isSelected).toBeTrue();
+    });
+
     it('should be able to display column of type boolean', () => {
         dataTable.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
 
@@ -1294,7 +1303,7 @@ describe('Accesibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1497,7 +1506,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1598,7 +1607,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1705,7 +1714,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });

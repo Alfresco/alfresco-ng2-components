@@ -20,11 +20,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { Subject, of } from 'rxjs';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoEndpointRepresentation } from '@alfresco/js-api';
 
 describe('AttachFileWidgetDialogService', () => {
-
     let service: AttachFileWidgetDialogService;
     let materialDialog: MatDialog;
     let spyOnDialogOpen: jasmine.Spy;
@@ -32,10 +30,7 @@ describe('AttachFileWidgetDialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         service = TestBed.inject(AttachFileWidgetDialogService);
         materialDialog = TestBed.inject(MatDialog);
@@ -61,7 +56,7 @@ describe('AttachFileWidgetDialogService', () => {
     });
 
     it('should attach predicate on dialog opening which accepts only file nodes', () => {
-        const spyOnOpenLoginDialog = spyOn((service as any), 'openLoginDialog');
+        const spyOnOpenLoginDialog = spyOn(service as any, 'openLoginDialog');
 
         service.openLogin(mockRepository, 'fake-action');
 

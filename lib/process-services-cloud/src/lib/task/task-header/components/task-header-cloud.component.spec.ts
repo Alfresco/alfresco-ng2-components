@@ -31,8 +31,10 @@ import {
     taskDetailsWithParentTaskIdMock,
     createdTaskDetailsCloudMock
 } from '../mocks/task-details-cloud.mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -44,6 +46,7 @@ describe('TaskHeaderCloudComponent', () => {
     let getCandidateUsersSpy: jasmine.Spy;
     let isTaskEditableSpy: jasmine.Spy;
     let alfrescoApiService: AlfrescoApiService;
+    let loader: HarnessLoader;
 
     const mockCandidateUsers = ['mockuser1', 'mockuser2', 'mockuser3'];
     const mockCandidateGroups = ['mockgroup1', 'mockgroup2', 'mockgroup3'];
@@ -58,12 +61,7 @@ describe('TaskHeaderCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                TaskHeaderCloudModule,
-                MatSelectModule
-            ]
+            imports: [ProcessServiceCloudTestingModule, TaskHeaderCloudModule, MatSelectModule]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {
@@ -82,6 +80,7 @@ describe('TaskHeaderCloudComponent', () => {
         isTaskEditableSpy = spyOn(taskCloudService, 'isTaskEditable').and.returnValue(true);
         getCandidateUsersSpy = spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of(mockCandidateUsers));
         getCandidateGroupsSpy = spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of(mockCandidateGroups));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -89,7 +88,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Task Details', () => {
-
         beforeEach(() => {
             component.ngOnChanges();
         });
@@ -130,19 +128,14 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should display priority with default values', async () => {
             fixture.detectChanges();
+            const dropdown = await loader.getHarness(MatSelectHarness);
+            await dropdown.open();
 
-            const priorityEl = fixture.debugElement.nativeElement.querySelector('[data-automation-id="header-priority"] .mat-select-trigger');
-            expect(priorityEl).toBeDefined();
-            expect(priorityEl).not.toBeNull();
-
-            priorityEl.click();
-            fixture.detectChanges();
-
-            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(options[0].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE');
-            expect(options[1].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
-            expect(options[2].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL');
-            expect(options[3].nativeElement.innerText).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH');
+            const options = await dropdown.getOptions();
+            expect(await options[0].getText()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE');
+            expect(await options[1].getText()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+            expect(await options[2].getText()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NORMAL');
+            expect(await options[3].getText()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.HIGH');
         });
 
         it('should display due date', async () => {
@@ -225,7 +218,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Task with parentTaskId', () => {
-
         beforeEach(() => {
             getTaskByIdSpy.and.returnValue(of(taskDetailsWithParentTaskIdMock));
             component.ngOnChanges();
@@ -253,7 +245,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Assigned Task', () => {
-
         beforeEach(() => {
             getTaskByIdSpy.and.returnValue(of(assignedTaskDetailsCloudMock));
             component.ngOnChanges();
@@ -277,7 +268,9 @@ describe('TaskHeaderCloudComponent', () => {
         it('should render defined edit icon for assignee property if the task in assigned state and shared among candidate users', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            const value = fixture.debugElement.query(
+                By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`)
+            );
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('create');
         });
@@ -289,29 +282,41 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            const editIcon = fixture.debugElement.query(
+                By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`)
+            );
             expect(editIcon).toBeNull();
         });
 
         it('should not render defined edit icon for assignee property if the task in assigned state and shared among candidate groups', async () => {
-            component.candidateGroups = [{ value: 'mock-group-1', icon: 'edit' }, { value: 'mock-group-2', icon: 'edit' }];
+            component.candidateGroups = [
+                { value: 'mock-group-1', icon: 'edit' },
+                { value: 'mock-group-2', icon: 'edit' }
+            ];
             component.candidateUsers = [];
             fixture.detectChanges();
             await fixture.whenStable();
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            const value = fixture.debugElement.query(
+                By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`)
+            );
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('create');
         });
 
         it('should not render defined edit icon for assignee property if the task in created state and shared among condidate groups', async () => {
             getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
-            component.candidateGroups = [{ value: 'mock-group-1', icon: 'edit' }, { value: 'mock-group-2', icon: 'edit' }];
+            component.candidateGroups = [
+                { value: 'mock-group-1', icon: 'edit' },
+                { value: 'mock-group-2', icon: 'edit' }
+            ];
             component.candidateUsers = [];
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            const editIcon = fixture.debugElement.query(
+                By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`)
+            );
             expect(editIcon).toBeNull();
         });
 
@@ -331,7 +336,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Created Task', () => {
-
         beforeEach(() => {
             getTaskByIdSpy.and.returnValue(of(createdStateTaskDetailsCloudMock));
             isTaskEditableSpy.and.returnValue(false);
@@ -362,7 +366,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Completed Task', () => {
-
         beforeEach(() => {
             getTaskByIdSpy.and.returnValue(of(completedTaskDetailsCloudMock));
             isTaskEditableSpy.and.returnValue(false);
@@ -384,7 +387,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Suspended Task', () => {
-
         beforeEach(() => {
             getTaskByIdSpy.and.returnValue(of(suspendedTaskDetailsCloudMock));
             isTaskEditableSpy.and.returnValue(false);
@@ -406,7 +408,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Task with candidates', () => {
-
         it('should display candidate groups', async () => {
             component.ngOnChanges();
             fixture.detectChanges();
@@ -459,7 +460,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Config properties', () => {
-
         it('should show only the properties from the configuration file', async () => {
             appConfigService.config = {
                 'adf-cloud-task-header': {
@@ -508,7 +508,6 @@ describe('TaskHeaderCloudComponent', () => {
     });
 
     describe('Task errors', () => {
-
         it('should emit an error when task can not be found', (done) => {
             getTaskByIdSpy.and.returnValue(throwError('Task not found'));
 
@@ -523,7 +522,7 @@ describe('TaskHeaderCloudComponent', () => {
         });
 
         it('should emit an error when app name and/or task id are not provided', (done) => {
-            component.error.subscribe( (err) => {
+            component.error.subscribe((err) => {
                 expect(err).toEqual('App Name and Task Id are mandatory');
                 done();
             });

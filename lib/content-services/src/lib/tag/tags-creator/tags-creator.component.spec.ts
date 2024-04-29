@@ -113,7 +113,7 @@ describe('TagsCreatorComponent', () => {
      */
     function getRemoveTagButtons(): HTMLButtonElement[] {
         const elements = fixture.debugElement.queryAll(By.css(`[data-automation-id="remove-tag-button"]`));
-        return elements.map(el => el.nativeElement);
+        return elements.map((el) => el.nativeElement);
     }
 
     /**
@@ -123,7 +123,7 @@ describe('TagsCreatorComponent', () => {
      */
     function getAddedTags(): string[] {
         const tagElements = fixture.debugElement.queryAll(By.css(`.adf-tags-creation .adf-tag`));
-        return tagElements.map(el => el.nativeElement.firstChild.nodeValue.trim());
+        return tagElements.map((el) => el.nativeElement.firstChild.nodeValue.trim());
     }
 
     /**
@@ -175,7 +175,7 @@ describe('TagsCreatorComponent', () => {
 
     describe('Created tags list', () => {
         it('should display no tags created message after initialization', () => {
-            const message =  fixture.debugElement.query(By.css('.adf-no-tags-message')).nativeElement.textContent.trim();
+            const message = fixture.debugElement.query(By.css('.adf-no-tags-message')).nativeElement.textContent.trim();
             expect(message).toBe('TAG.TAGS_CREATOR.NO_TAGS_CREATED');
         });
 
@@ -227,12 +227,14 @@ describe('TagsCreatorComponent', () => {
         it('should not duplicate already existing tag', fakeAsync(() => {
             const tag = 'Tag';
 
-            spyOn(tagService, 'findTagByName').and.returnValue(of({
-                entry: {
-                    tag,
-                    id: 'tag-1'
-                }
-            }));
+            spyOn(tagService, 'findTagByName').and.returnValue(
+                of({
+                    entry: {
+                        tag,
+                        id: 'tag-1'
+                    }
+                })
+            );
             addTagToAddedList(tag, true);
 
             expect(getAddedTags().length).toBe(0);
@@ -322,7 +324,7 @@ describe('TagsCreatorComponent', () => {
              */
             function getFirstError(): string {
                 const error = fixture.debugElement.query(By.directive(MatError));
-                return error?.nativeElement.textContent;
+                return error?.nativeElement.textContent.trim();
             }
 
             it('should show error for only spaces', fakeAsync(() => {
@@ -389,12 +391,14 @@ describe('TagsCreatorComponent', () => {
             it('should show error when duplicated already existing tag', fakeAsync(() => {
                 const tag = 'Some tag';
 
-                spyOn(tagService, 'findTagByName').and.returnValue(of({
-                    entry: {
-                        tag,
-                        id: 'tag-1'
-                    }
-                }));
+                spyOn(tagService, 'findTagByName').and.returnValue(
+                    of({
+                        entry: {
+                            tag,
+                            id: 'tag-1'
+                        }
+                    })
+                );
                 typeTag(tag);
 
                 const error = getFirstError();
@@ -408,12 +412,14 @@ describe('TagsCreatorComponent', () => {
                 addTagToAddedList(tag1, true, 0);
                 tick();
 
-                spyOn(tagService, 'findTagByName').and.returnValue(of({
-                    entry: {
-                        tag: tag2,
-                        id: 'tag-1'
-                    }
-                }));
+                spyOn(tagService, 'findTagByName').and.returnValue(
+                    of({
+                        entry: {
+                            tag: tag2,
+                            id: 'tag-1'
+                        }
+                    })
+                );
                 typeTag(tag2);
                 component.removeTag(tag1);
                 tick();
@@ -505,12 +511,14 @@ describe('TagsCreatorComponent', () => {
 
             it('should not be visible when trying to duplicate already existing tag', fakeAsync(() => {
                 const tag = 'Tag';
-                spyOn(tagService, 'findTagByName').and.returnValue(of({
-                    entry: {
-                        tag,
-                        id: 'tag-1'
-                    }
-                }));
+                spyOn(tagService, 'findTagByName').and.returnValue(
+                    of({
+                        entry: {
+                            tag,
+                            id: 'tag-1'
+                        }
+                    })
+                );
                 typeTag(tag);
                 expect(getCreateTagLabel().hasAttribute('hidden')).toBeTruthy();
             }));
@@ -531,7 +539,7 @@ describe('TagsCreatorComponent', () => {
              */
             function getExistingTags(): string[] {
                 const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag`));
-                return tagElements.map(el => el.nativeElement.textContent.trim());
+                return tagElements.map((el) => el.nativeElement.textContent.trim());
             }
 
             it('should call findTagByName on tagService using name set in input', fakeAsync(() => {
@@ -560,8 +568,7 @@ describe('TagsCreatorComponent', () => {
                 const name = 'Tag';
                 typeTag(name);
 
-                expect(tagService.searchTags).toHaveBeenCalledWith(name, { orderBy: 'tag', direction: 'asc' },
-                    false, 0, 15 );
+                expect(tagService.searchTags).toHaveBeenCalledWith(name, { orderBy: 'tag', direction: 'asc' }, false, 0, 15);
             }));
 
             it('should display loaded existing tags', fakeAsync(() => {
@@ -571,10 +578,7 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [
-                                { entry: { tag: tag1 } as any },
-                                { entry: { tag: tag2 } as any }
-                            ],
+                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
                             pagination: {}
                         }
                     })
@@ -596,10 +600,7 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [
-                                { entry: { tag: tag1 } as any },
-                                { entry: { tag: tag2 } as any }
-                            ],
+                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
                             pagination: {}
                         }
                     })
@@ -622,12 +623,14 @@ describe('TagsCreatorComponent', () => {
 
             it('should display exact tag', fakeAsync(() => {
                 const tag = 'Tag';
-                spyOn(tagService, 'findTagByName').and.returnValue(of({
-                    entry: {
-                        tag,
-                        id: 'tag-1'
-                    }
-                }));
+                spyOn(tagService, 'findTagByName').and.returnValue(
+                    of({
+                        entry: {
+                            tag,
+                            id: 'tag-1'
+                        }
+                    })
+                );
 
                 typeTag(tag);
 
@@ -638,12 +641,14 @@ describe('TagsCreatorComponent', () => {
             it('should not display exact tag if that tag was passed through tags input', fakeAsync(() => {
                 const tag = 'Tag';
                 component.tags = [tag];
-                spyOn(tagService, 'findTagByName').and.returnValue(of({
-                    entry: {
-                        tag,
-                        id: 'tag-1'
-                    }
-                }));
+                spyOn(tagService, 'findTagByName').and.returnValue(
+                    of({
+                        entry: {
+                            tag,
+                            id: 'tag-1'
+                        }
+                    })
+                );
 
                 typeTag(tag);
 
@@ -665,19 +670,18 @@ describe('TagsCreatorComponent', () => {
                 const tag1 = 'Tag 1';
                 const tag2 = 'Tag 2';
 
-                spyOn(tagService, 'findTagByName').and.returnValue(of({
-                    entry: {
-                        tag,
-                        id: 'tag-1'
-                    }
-                }));
+                spyOn(tagService, 'findTagByName').and.returnValue(
+                    of({
+                        entry: {
+                            tag,
+                            id: 'tag-1'
+                        }
+                    })
+                );
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [
-                                { entry: { tag: tag1 } as any },
-                                { entry: { tag: tag2 } as any }
-                            ],
+                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
                             pagination: {}
                         }
                     })
@@ -705,10 +709,7 @@ describe('TagsCreatorComponent', () => {
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
                         list: {
-                            entries: [
-                                selectedTag,
-                                { entry: { tag: leftTag } as any }
-                            ],
+                            entries: [selectedTag, { entry: { tag: leftTag } as any }],
                             pagination: {}
                         }
                     })

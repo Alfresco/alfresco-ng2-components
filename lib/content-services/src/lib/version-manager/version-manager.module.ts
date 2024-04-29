@@ -25,32 +25,13 @@ import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
 import { UploadModule } from '../upload/upload.module';
 import { VersionCompatibilityModule } from '../version-compatibility/version-compatibility.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, FileTypePipe } from '@alfresco/adf-core';
 import { VersionComparisonComponent } from './version-comparison.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule,
-        UploadModule,
-        VersionCompatibilityModule,
-        FormsModule,
-        ScrollingModule
-    ],
-    exports: [
-        VersionUploadComponent,
-        VersionManagerComponent,
-        VersionListComponent,
-        FormsModule,
-        VersionComparisonComponent
-    ],
-    declarations: [
-        VersionUploadComponent,
-        VersionManagerComponent,
-        VersionListComponent,
-        VersionComparisonComponent
-    ]
+    imports: [CommonModule, MaterialModule, CoreModule, UploadModule, VersionCompatibilityModule, FormsModule, ScrollingModule, FileTypePipe],
+    exports: [VersionUploadComponent, VersionManagerComponent, VersionListComponent, FormsModule, VersionComparisonComponent],
+    declarations: [VersionUploadComponent, VersionManagerComponent, VersionListComponent, VersionComparisonComponent]
 })
 export class VersionManagerModule {}
