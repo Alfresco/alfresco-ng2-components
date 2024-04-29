@@ -109,7 +109,7 @@ describe('permissions', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        await expect(await viewerPage.getActiveTab()).toEqual('Properties');
+        expect(await viewerPage.getActiveTab()).toEqual('Properties');
 
         await metadataViewPage.clickMetadataGroup('EXIF');
 
@@ -127,7 +127,7 @@ describe('permissions', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        await expect(await viewerPage.getActiveTab()).toEqual('Properties');
+        expect(await viewerPage.getActiveTab()).toEqual('Properties');
 
         await metadataViewPage.clickMetadataGroup('EXIF');
 
