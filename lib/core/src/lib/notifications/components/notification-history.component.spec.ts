@@ -21,7 +21,7 @@ import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
-import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
+import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 
 describe('Notification History Component', () => {
     let fixture: ComponentFixture<NotificationHistoryComponent>;
