@@ -1,15 +1,21 @@
+@import 'styles/mat-selectors';
+
 adf-search-facet-chip-tabbed {
     .adf-search-filter-chip-tabbed {
         &[disabled] {
             pointer-events: none;
+        }
+
+        #{$mat-evolution-chip-graphic} {
+            display: none;
         }
     }
 
     .adf-search-filter-chip-icon {
         padding-top: 2px;
     }
+}
 
-    .adf-search-widget-extra-width {
-        max-width: 500px;
-    }
+.adf-search-widget-extra-width.mat-mdc-menu-panel {
+    max-width: 500px;
 }
