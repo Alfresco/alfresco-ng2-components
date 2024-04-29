@@ -76,7 +76,7 @@ describe('People and Group widget', () => {
         await widget.groupWidget().insertGroup(groupVisibilityForm.FIELD.widget_id, groupVisibilityForm.searchTerm);
         await widget.groupWidget().checkDropDownListIsDisplayed();
         const suggestions = await widget.groupWidget().getDropDownList();
-        expect(suggestions.sort()).toEqual(['Heros', 'Users']);
+        expect(suggestions.sort((a, b) => a.localeCompare(b))).toEqual(['Heros', 'Users']);
         await widget.groupWidget().selectGroupFromDropDown('Users');
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -93,8 +93,8 @@ describe('People and Group widget', () => {
 
         await widget.groupWidget().insertGroup(subgroupFrom.FIELD.widget_id, subgroupFrom.searchTerm);
         await widget.groupWidget().checkDropDownListIsDisplayed();
-        const suggestions = await widget.groupWidget().getDropDownList();
-        expect(suggestions.sort()).toEqual(getSubGroupsName().sort());
+        const suggestions = (await widget.groupWidget().getDropDownList()).sort((a, b) => a.localeCompare(b));
+        expect(suggestions).toEqual(getSubGroupsName());
         await widget.groupWidget().selectGroupFromDropDown(getSubGroupsName()[0]);
         await taskPage.taskDetails().clickCompleteFormTask();
 
@@ -180,7 +180,7 @@ describe('People and Group widget', () => {
      * @returns list of subgroup names
      */
     function getSubGroupsName(): string[] {
-        return app.group.subgroup.map((subgroup: AppSubGroup) => subgroup.name);
+        return app.group.subgroup.map((subgroup: AppSubGroup) => subgroup.name).sort((a: string, b: string) => a.localeCompare(b));
     }
 
     /**
