@@ -16,20 +16,13 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { createApiService,
-    BrowserVisibility,
-    LoginPage,
-    UploadActions,
-    UserModel,
-    UsersActions, ViewerPage
-} from '@alfresco/adf-testing';
+import { createApiService, BrowserVisibility, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { VersionManagePage } from '../pages/version-manager.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Version Properties', () => {
-
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
@@ -111,9 +104,8 @@ describe('Version Properties', () => {
         await versionManagePage.commentText.typeText('Example comment text');
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
         await versionManagePage.checkFileVersionExist('1.1');
-        await expect(await versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
+        expect(await versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
         await versionManagePage.disableComments();
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-item-comment-1.1"]`)));
     });
-
 });

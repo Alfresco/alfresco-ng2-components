@@ -54,7 +54,6 @@ describe('Version component actions', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
-    let uploadActions;
 
     const bigFileToCancel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
@@ -62,7 +61,7 @@ describe('Version component actions', () => {
     });
 
     beforeAll(async () => {
-        uploadActions = new UploadActions(apiService);
+        const uploadActions = new UploadActions(apiService);
         await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.login(acsUser.username, acsUser.password);
