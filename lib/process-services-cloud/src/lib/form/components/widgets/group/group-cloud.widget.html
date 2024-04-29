@@ -1,8 +1,7 @@
 <div class="adf-dropdown-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly" [class.adf-left-label-input-container]="field.leftLabels">
-    <div>
-        <label class="adf-label" [class.adf-left-label]="field.leftLabels" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk"
-            *ngIf="isRequired()">*</span></label>
+    <div *ngIf="field.leftLabels">
+        <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
     </div>
     <div>
         <adf-cloud-group [mode]="mode"
@@ -16,6 +15,7 @@
                 [preSelectGroups]="preSelectGroup"
                 (blur)="markAsTouched()"
                 [attr.title]="field.tooltip">
+            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id" label>{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         </adf-cloud-group>
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired() && isTouched()"
