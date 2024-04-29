@@ -3,7 +3,6 @@
 
 .adf-search-filter-chip,
 .adf-search-filter-chip-tabbed {
-    border: 2px solid transparent;
     transition: border 500ms ease-in-out;
     height: 32px;
     max-width: 320px;
@@ -46,6 +45,10 @@
         min-width: 320px;
         border-radius: 12px;
 
+        &:has(.adf-search-properties-file-size-operator) {
+            min-width: 365px;
+        }
+
         @include mat.elevation(2);
     }
 }
@@ -57,4 +60,8 @@
 
 #{$mat-standard-chip} {
     -webkit-font-smoothing: unset;
+}
+
+#{$mat-evolution-chip-set} {
+    margin-top: -4px;
 }
