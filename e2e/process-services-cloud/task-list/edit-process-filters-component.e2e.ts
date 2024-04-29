@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    AppListCloudPage,
-    GroupIdentityService,
-    IdentityService,
-    LoginPage
-} from '@alfresco/adf-testing';
+import { createApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/tasks-cloud-demo.page';
@@ -28,7 +23,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Edit process filters cloud', () => {
-
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginPage();
@@ -43,7 +37,8 @@ describe('Edit process filters cloud', () => {
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
 
-    let testUser; let groupInfo;
+    let testUser;
+    let groupInfo;
 
     const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
@@ -75,7 +70,7 @@ describe('Edit process filters cloud', () => {
 
     it('[C291804] Delete Save and Save as actions should be displayed when clicking on default filter header', async () => {
         await processFilter.clickAllProcessesFilter();
-        await expect(await processFilter.getActiveFilterName()).toBe('All');
+        expect(await processFilter.getActiveFilterName()).toBe('All');
         await editProcessFilter.checkSaveButtonIsDisplayed();
         await editProcessFilter.checkSaveAsButtonIsDisplayed();
         await editProcessFilter.checkDeleteButtonIsDisplayed();
@@ -83,59 +78,59 @@ describe('Edit process filters cloud', () => {
 
     it('[C586757] Delete Save and Save as actions should be displayed and enabled when clicking on custom filter header', async () => {
         await createNewProcessCustomFilter('New');
-        await expect(await processFilter.getActiveFilterName()).toBe('New');
+        expect(await processFilter.getActiveFilterName()).toBe('New');
         await processFilter.clickProcessFilter('custom-new');
         await editProcessFilter.setSortFilterDropDown('Start Date');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
-        await expect(await editProcessFilter.getOrderFilterDropDownValue()).toEqual('Descending');
-        await expect(await editProcessFilter.getStateFilterDropDownValue()).toEqual('All');
+        expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
+        expect(await editProcessFilter.getOrderFilterDropDownValue()).toEqual('Descending');
+        expect(await editProcessFilter.getStateFilterDropDownValue()).toEqual('All');
 
         await editProcessFilter.checkSaveButtonIsDisplayed();
         await editProcessFilter.checkSaveAsButtonIsDisplayed();
         await editProcessFilter.checkDeleteButtonIsDisplayed();
 
-        await expect(await editProcessFilter.isCustomFilterNameDisplayed('New')).toEqual(true);
-        await expect(await editProcessFilter.checkSaveButtonIsEnabled()).toEqual(true);
-        await expect(await editProcessFilter.checkSaveAsButtonIsEnabled()).toEqual(true);
-        await expect(await editProcessFilter.checkDeleteButtonIsEnabled()).toEqual(true);
+        expect(await editProcessFilter.isCustomFilterNameDisplayed('New')).toEqual(true);
+        expect(await editProcessFilter.checkSaveButtonIsEnabled()).toEqual(true);
+        expect(await editProcessFilter.checkSaveAsButtonIsEnabled()).toEqual(true);
+        expect(await editProcessFilter.checkDeleteButtonIsEnabled()).toEqual(true);
     });
 
     it('[C291805] New process filter is added when clicking Save As button', async () => {
         await createNewProcessCustomFilter('New');
 
-        await expect(await processFilter.getActiveFilterName()).toBe('New');
+        expect(await processFilter.getActiveFilterName()).toBe('New');
 
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
+        expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await processFilter.clickAllProcessesFilter();
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
+        expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
         await processFilter.clickProcessFilter('custom-new');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
+        expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await editProcessFilter.clickDeleteButton();
     });
 
     it('[C291807] A process filter is updated when clicking on save button', async () => {
         await createNewProcessCustomFilter('New');
 
-        await expect(await processFilter.getActiveFilterName()).toBe('New');
+        expect(await processFilter.getActiveFilterName()).toBe('New');
         await editProcessFilter.setSortFilterDropDown('Process Name');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
+        expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
         await editProcessFilter.clickSaveButton();
 
-        await expect(await processFilter.getActiveFilterName()).toBe('New');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
+        expect(await processFilter.getActiveFilterName()).toBe('New');
+        expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Process Name');
         await editProcessFilter.clickDeleteButton();
     });
 
     it('[C291808] A process filter is deleted when clicking on delete button', async () => {
         await createNewProcessCustomFilter('New');
 
-        await expect(await processFilter.getActiveFilterName()).toBe('New');
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
+        expect(await processFilter.getActiveFilterName()).toBe('New');
+        expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Id');
         await editProcessFilter.clickDeleteButton();
 
         await browser.driver.sleep(1000);
 
-        await expect(await processFilter.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
+        expect(await processFilter.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
         await processFilter.checkProcessFilterNotDisplayed('New');
     });
 
@@ -143,15 +138,15 @@ describe('Edit process filters cloud', () => {
         await editProcessFilter.setSortFilterDropDown('Id');
         await editProcessFilter.clickSaveAsButton();
         await editProcessFilter.editProcessFilterDialog().setFilterName('Cancel');
-        await expect(await editProcessFilter.editProcessFilterDialog().getFilterName()).toEqual('Cancel');
+        expect(await editProcessFilter.editProcessFilterDialog().getFilterName()).toEqual('Cancel');
         await editProcessFilter.editProcessFilterDialog().clickOnCancelButton();
         await processFilter.checkProcessFilterNotDisplayed('Cancel');
-        await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.ALL);
+        expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.ALL);
         await processFilter.clickRunningProcessesFilter();
-        await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
+        expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
         await processFilter.clickAllProcessesFilter();
-        await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.ALL);
-        await expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
+        expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.ALL);
+        expect(await editProcessFilter.getSortFilterDropDownValue()).toEqual('Start Date');
         await editProcessFilter.closeFilter();
     });
 
@@ -162,9 +157,9 @@ describe('Edit process filters cloud', () => {
         const dialog = editProcessFilter.editProcessFilterDialog();
         await dialog.clearFilterName();
 
-        await expect(await dialog.getFilterName()).toEqual('');
-        await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
-        await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
+        expect(await dialog.getFilterName()).toEqual('');
+        expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
+        expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
         await dialog.clickOnCancelButton();
     });
 
@@ -175,13 +170,19 @@ describe('Edit process filters cloud', () => {
         const dialog = editProcessFilter.editProcessFilterDialog();
         await dialog.clearFilterName();
 
-        await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
-        await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
-        await expect(await dialog.getTitle()).toEqual('Save filter as');
-        await expect(await dialog.getFilterName()).toEqual('');
+        expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
+        expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
+        expect(await dialog.getTitle()).toEqual('Save filter as');
+        expect(await dialog.getFilterName()).toEqual('');
         await dialog.clickOnCancelButton();
     });
 
+    /**
+     * Create a new process custom filter
+     *
+     * @param name Filter name
+     * @param sort Sort value
+     */
     async function createNewProcessCustomFilter(name: string, sort = 'Id'): Promise<void> {
         await processFilter.clickAllProcessesFilter();
         await editProcessFilter.setSortFilterDropDown(sort);

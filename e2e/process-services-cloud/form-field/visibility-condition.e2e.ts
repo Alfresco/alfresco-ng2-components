@@ -24,7 +24,6 @@ import { displayValueTextJson } from '../../resources/forms/display-value-visibi
 import { dropdownVisibilityFormFieldJson, dropdownVisibilityFormVariableJson } from '../../resources/forms/dropdown-visibility-condition';
 
 describe('Visibility conditions - cloud', () => {
-
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudComponentPage();
@@ -72,6 +71,7 @@ describe('Visibility conditions - cloud', () => {
         },
         displayValue: {
             text: 'text1',
+            // eslint-disable-next-line
             number: '11'
         },
         notDisplayValue: {
@@ -187,57 +187,58 @@ describe('Visibility conditions - cloud', () => {
 
         await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkbox1);
-   });
+    });
 
     it('[C309650] Should be able to see Checkbox widget when has multiple visibility conditions and next condition operators', async () => {
-        let text1; let text2;
+        let text1;
+        let text2;
 
         await formCloudDemoPage.setConfigToEditor(multipleVisibilityFormJson);
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
         text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
 
-        await expect(text1).toEqual('');
-        await expect(text2).toEqual('');
+        expect(text1).toEqual('');
+        expect(text2).toEqual('');
 
         await widget.textWidget().setValue(widgets.textOneId, 'aaa');
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
         text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
 
-        await expect(text1).toEqual('aaa');
-        await expect(text2).toEqual('');
+        expect(text1).toEqual('aaa');
+        expect(text2).toEqual('');
         await widget.checkboxWidget().isCheckboxDisplayed(widgets.checkboxBasicVariable);
 
         await widget.textWidget().setValue(widgets.textOneId, 'bbb');
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
         text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
 
-        await expect(text1).toEqual('bbb');
-        await expect(text2).toEqual('');
+        expect(text1).toEqual('bbb');
+        expect(text2).toEqual('');
         await widget.checkboxWidget().isCheckboxHidden(widgets.checkboxBasicField);
 
         await widget.textWidget().setValue(widgets.textTwoId, 'aaa');
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
         text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
 
-        await expect(text1).toEqual('bbb');
-        await expect(text2).toEqual('aaa');
+        expect(text1).toEqual('bbb');
+        expect(text2).toEqual('aaa');
         await widget.checkboxWidget().isCheckboxHidden(widgets.checkboxBasicField);
 
         await widget.textWidget().setValue(widgets.textOneId, 'aaa');
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
         text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
 
-        await expect(text1).toEqual('aaa');
-        await expect(text2).toEqual('aaa');
+        expect(text1).toEqual('aaa');
+        expect(text2).toEqual('aaa');
         await widget.checkboxWidget().isCheckboxHidden(widgets.checkboxBasicField);
 
         await widget.textWidget().setValue(widgets.textTwoId, 'bbb');
         text1 = await widget.textWidget().getFieldValue(widgets.textOneId);
         text2 = await widget.textWidget().getFieldValue(widgets.textTwoId);
 
-        await expect(text1).toEqual('aaa');
-        await expect(text2).toEqual('bbb');
+        expect(text1).toEqual('aaa');
+        expect(text2).toEqual('bbb');
 
         await widget.checkboxWidget().isCheckboxDisplayed(widgets.checkboxBasicField);
     });
@@ -268,72 +269,74 @@ describe('Visibility conditions - cloud', () => {
         await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueNoConditionField);
 
         const textDisplayWidgetNoCondition = await widget.displayValueWidget().getFieldValue(displayValueString.displayValueNoConditionField);
-        await expect(textDisplayWidgetNoCondition).toEqual('No cats');
-   });
+        expect(textDisplayWidgetNoCondition).toEqual('No cats');
+    });
 
     it('[C309869] Should be able to see Display text widget when visibility condition refers to a form variable and a field', async () => {
         await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
 
         await widget.textWidget().isWidgetVisible(widgets.textOneDisplay);
         let textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
-        await expect(textOneField).toEqual('');
+        expect(textOneField).toEqual('');
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueSingleConditionField);
 
         await widget.textWidget().setValue(widgets.textOneDisplay, 'cat');
         textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
-        await expect(textOneField).toEqual('cat');
+        expect(textOneField).toEqual('cat');
         await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueSingleConditionField);
         const textDisplayWidgetSingleCondition = await widget.displayValueWidget().getFieldValue(displayValueString.displayValueSingleConditionField);
-        await expect(textDisplayWidgetSingleCondition).toEqual('cat');
+        expect(textDisplayWidgetSingleCondition).toEqual('cat');
 
         await widget.textWidget().setValue(widgets.textOneDisplay, 'dog');
         textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
-        await expect(textOneField).toEqual('dog');
+        expect(textOneField).toEqual('dog');
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueSingleConditionField);
-   });
+    });
 
     it('[C309871] Should be able to see Display text widget when has multiple visibility conditions and next condition operators', async () => {
         await formCloudDemoPage.setConfigToEditor(displayValueTextJson);
 
         await widget.textWidget().isWidgetVisible(widgets.textOneDisplay);
         let textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
-        await expect(textOneField).toEqual('');
+        expect(textOneField).toEqual('');
 
         await widget.textWidget().isWidgetVisible(widgets.textTwoDisplay);
         let textTwoField = await widget.textWidget().getFieldValue(widgets.textTwoDisplay);
-        await expect(textTwoField).toEqual('');
+        expect(textTwoField).toEqual('');
 
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueSingleConditionField);
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueMultipleConditionsField);
 
         await widget.textWidget().setValue(widgets.textOneDisplay, 'cat');
         textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
-        await expect(textOneField).toEqual('cat');
+        expect(textOneField).toEqual('cat');
         await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueMultipleConditionsField);
-        const textDisplayWidgetMultipleCondition = await widget.displayValueWidget().getFieldValue(displayValueString.displayValueMultipleConditionsField);
-        await expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
+        const textDisplayWidgetMultipleCondition = await widget
+            .displayValueWidget()
+            .getFieldValue(displayValueString.displayValueMultipleConditionsField);
+        expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
 
         await widget.textWidget().setValue(widgets.textOneDisplay, 'dog');
         textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
-        await expect(textOneField).toEqual('dog');
+        expect(textOneField).toEqual('dog');
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueMultipleConditionsField);
 
         await widget.textWidget().setValue(widgets.textTwoDisplay, 'cat');
         textTwoField = await widget.textWidget().getFieldValue(widgets.textTwoDisplay);
-        await expect(textTwoField).toEqual('cat');
+        expect(textTwoField).toEqual('cat');
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueMultipleConditionsField);
 
         await widget.textWidget().setValue(widgets.textOneDisplay, 'cat');
         textOneField = await widget.textWidget().getFieldValue(widgets.textOneDisplay);
-        await expect(textOneField).toEqual('cat');
+        expect(textOneField).toEqual('cat');
         await widget.displayValueWidget().checkDisplayValueWidgetIsHidden(displayValueString.displayValueMultipleConditionsField);
 
         await widget.textWidget().setValue(widgets.textTwoDisplay, 'dog');
         textTwoField = await widget.textWidget().getFieldValue(widgets.textTwoDisplay);
-        await expect(textTwoField).toEqual('dog');
+        expect(textTwoField).toEqual('dog');
         await widget.displayValueWidget().isDisplayValueWidgetVisible(displayValueString.displayValueMultipleConditionsField);
-        await expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
-   });
+        expect(textDisplayWidgetMultipleCondition).toEqual('more cats');
+    });
 
     it('[C309680] Should be able to see dropdown widget when has multiple Visibility Conditions set on Form Fields', async () => {
         await formCloudDemoPage.setConfigToEditor(dropdownVisibilityFormFieldJson);
@@ -348,11 +351,11 @@ describe('Visibility conditions - cloud', () => {
 
         await widget.amountWidget().setFieldValue(dropdownVisibilityTest.widgets.amountId, dropdownVisibilityTest.notDisplayValue.amount);
         await widget.dropdown().isWidgetHidden(dropdownVisibilityTest.widgets.dropdownId);
-   });
+    });
 
     it('[C309682] Should be able to see dropdown widget when has multiple Visibility Conditions set on Form Variables', async () => {
         await formCloudDemoPage.setConfigToEditor(dropdownVisibilityFormVariableJson);
 
         await widget.dropdown().isWidgetVisible(dropdownVisibilityTest.widgets.dropdownId);
-   });
+    });
 });
