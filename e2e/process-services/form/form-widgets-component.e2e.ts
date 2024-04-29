@@ -145,15 +145,13 @@ describe('Form widgets', () => {
         });
 
         it('[C272783] Should display displayText and displayValue in form', async () => {
-            expect(await widget.displayTextWidget().getFieldLabel(appFields.displayText_id)).toEqual(
-                formInstance.getWidgetBy('id', appFields.displayText_id).value
-            );
-            expect(await widget.displayValueWidget().getFieldLabel(appFields.displayValue_id)).toEqual(
-                formInstance.getWidgetBy('id', appFields.displayValue_id).value || 'Display value' || ''
-            );
-            expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id)).toEqual(
-                formInstance.getWidgetBy('id', appFields.displayValue_id).value || ''
-            );
+            const expected0 = formInstance.getWidgetBy('id', appFields.displayText_id).value;
+            const expected1 = (formInstance.getWidgetBy('id', appFields.displayValue_id).value as string) || 'Display value' || '';
+            const expected2 = (formInstance.getWidgetBy('id', appFields.displayValue_id).value as string) || '';
+
+            expect(await widget.displayTextWidget().getFieldLabel(appFields.displayText_id)).toEqual(expected0);
+            expect(await widget.displayValueWidget().getFieldLabel(appFields.displayValue_id)).toEqual(expected1);
+            expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id)).toEqual(expected2);
         });
 
         it('[C272784] Should display typeahead and header in form', async () => {

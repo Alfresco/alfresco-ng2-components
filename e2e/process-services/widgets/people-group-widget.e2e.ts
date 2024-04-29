@@ -119,7 +119,7 @@ describe('People and Group widget', () => {
         await widget.peopleWidget().insertUser(peopleWidget.FIELD.widget_id, peopleWidget.searchTerm);
         await widget.peopleWidget().checkDropDownListIsDisplayed();
         const suggestions = (await widget.peopleWidget().getDropDownList()).sort((a, b) => a.localeCompare(b));
-        expect(suggestions).toEqual(getGroupMembers().sort());
+        expect(suggestions).toEqual(getGroupMembers());
         await widget.peopleWidget().selectUserFromDropDown(getGroupMembers()[0]);
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -189,6 +189,8 @@ describe('People and Group widget', () => {
      * @returns list of group member full names
      */
     function getGroupMembers(): string[] {
-        return app.groupUser.map((groupUser: AppGroupUser) => `${groupUser.firstName} ${groupUser.lastName}`);
+        return app.groupUser
+            .map((groupUser: AppGroupUser) => `${groupUser.firstName} ${groupUser.lastName}`)
+            .sort((a: string, b: string) => a.localeCompare(b));
     }
 });
