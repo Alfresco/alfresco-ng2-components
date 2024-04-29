@@ -269,10 +269,8 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
         await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
-
         await contentServicesPage.checkPaginationIsNotDisplayed();
         await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
-
     });
 
     it('[C260071] Should be able to change pagination when having 25 files', async () => {
@@ -371,7 +369,6 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.createNewFolder(folderTwoModel.name);
         const nodeIdSubFolderTwo = await contentServicesPage.getAttributeValueForElement(folderTwoModel.name, 'Node id');
         await contentServicesPage.openFolder(folderTwoModel.name);
-
         for (let i = 0; i < numberOfSubFolders; i++) {
             await uploadActions.createFolder('subfolder' + (i + 1), nodeIdSubFolderTwo);
         }

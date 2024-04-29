@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/no-input-rename */
+/* eslint-disable */
 
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
-import { FolderDialogComponent } from '../dialogs/folder.dialog';
-import { ContentService } from '../common/services/content.service';
+import { ContentService, FolderDialogComponent } from '@alfresco/adf-content-services';
 
 const DEFAULT_FOLDER_PARENT_ID = '-my-';
 const DIALOG_WIDTH: number = 400;
@@ -50,16 +49,13 @@ export class FolderCreateDirective {
     @Output()
     success: EventEmitter<Node> = new EventEmitter<Node>();
 
-    @HostListener('click', [ '$event' ])
+    @HostListener('click', ['$event'])
     onClick(event) {
         event.preventDefault();
         this.openDialog();
     }
 
-    constructor(
-        public dialogRef: MatDialog,
-        public content: ContentService
-    ) {}
+    constructor(public dialogRef: MatDialog, public content: ContentService) {}
 
     private get dialogConfig() {
         const { parentNodeId, title: createTitle, nodeType } = this;
