@@ -1,7 +1,7 @@
 ---
 Title: Folder Create directive
 Added: v2.0.0
-Status: Active
+Status: Deprecated
 Last reviewed: 2019-01-16
 ---
 

@@ -16,7 +16,6 @@
  */
 
 export class DataTablePathParserHelper {
-    private readonly splitPathRegEx = /\.(?![^[]*\])/g;
     private readonly removeSquareBracketsRegEx = /^\[(.*)\]$/;
 
     retrieveDataFromPath(data: any, path: string): any[] {
@@ -37,11 +36,48 @@ export class DataTablePathParserHelper {
     }
 
     private splitPathIntoProperties(path: string): string[] {
-        return path.split(this.splitPathRegEx);
+        const properties: string[] = [];
+        const separator = '.';
+        const openBracket = '[';
+        const closeBracket = ']';
+
+        let currentPropertyBuffer = '';
+        let bracketCount = 0;
+        const isPropertySeparatorOutsideBrackets = () => bracketCount === 0;
+
+        for (const char of path) {
+            switch (char) {
+                case separator:
+                    if (isPropertySeparatorOutsideBrackets()) {
+                        properties.push(currentPropertyBuffer);
+                        currentPropertyBuffer = '';
+                    } else {
+                        currentPropertyBuffer += char;
+                    }
+                    break;
+                case openBracket:
+                    bracketCount++;
+                    currentPropertyBuffer += char;
+                    break;
+                case closeBracket:
+                    bracketCount--;
+                    currentPropertyBuffer += char;
+                    break;
+                default:
+                    currentPropertyBuffer += char;
+                    break;
+            }
+        }
+
+        if (currentPropertyBuffer) {
+            properties.push(currentPropertyBuffer);
+        }
+
+        return properties;
     }
 
     private removeSquareBracketsFromProperty(property: string): string {
-        return property.replace(this.removeSquareBracketsRegEx, '$1');
+        return property?.replace(this.removeSquareBracketsRegEx, '$1');
     }
 
     private isPropertyExistsInData(data: any, property: string): boolean {

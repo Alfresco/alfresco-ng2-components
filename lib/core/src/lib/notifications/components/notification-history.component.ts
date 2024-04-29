@@ -15,23 +15,44 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, OnDestroy, OnInit, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
-import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
-import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
+import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatListModule } from '@angular/material/list';
+import { NgForOf, NgIf } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 
 @Component({
     selector: 'adf-notification-history',
+    standalone: true,
     templateUrl: 'notification-history.component.html',
     styleUrls: ['./notification-history.component.scss'],
+    imports: [
+        MatButtonModule,
+        MatMenuModule,
+        TranslateModule,
+        MatIconModule,
+        MatBadgeModule,
+        MatListModule,
+        NgIf,
+        NgForOf,
+        MatTooltipModule,
+        TimeAgoPipe,
+        InitialUsernamePipe
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
-
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
     public static NOTIFICATION_STORAGE = 'notification-history';
 
@@ -55,24 +76,17 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     paginatedNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
-    constructor(
-        private notificationService: NotificationService,
-        public storageService: StorageService,
-        public cd: ChangeDetectorRef) {
-
-    }
+    constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
     }
 
     ngAfterViewInit(): void {
-        this.notificationService.notifications$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((notification: NotificationModel) => {
-                this.addNewNotification(notification);
-                this.cd.detectChanges();
-            });
+        this.notificationService.notifications$.pipe(takeUntil(this.onDestroy$)).subscribe((notification: NotificationModel) => {
+            this.addNewNotification(notification);
+            this.cd.detectChanges();
+        });
     }
 
     ngOnDestroy() {
@@ -92,9 +106,10 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     saveNotifications() {
-        this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications.filter((notification) =>
-            notification.type !== NOTIFICATION_TYPE.RECURSIVE
-        )));
+        this.storageService.setItem(
+            NotificationHistoryComponent.NOTIFICATION_STORAGE,
+            JSON.stringify(this.notifications.filter((notification) => notification.type !== NOTIFICATION_TYPE.RECURSIVE))
+        );
     }
 
     onMenuOpened() {

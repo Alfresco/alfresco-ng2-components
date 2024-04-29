@@ -16,7 +16,7 @@
  */
 
 import { DataColumn } from '@alfresco/adf-core';
-import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { TaskVariableCloud } from '../../../../models/task-variable-cloud.model';
 
 export const mockSchemaDefinition: DataColumn[] = [
     {
@@ -82,28 +82,6 @@ export const mockJsonNestedResponseEuropeCountriesData = {
             }
         ],
         'no-array': {}
-    }
-};
-
-export const mockJsonNestedResponseEuropeCountriesDataWithSeparatorInPropertyName = {
-    response: {
-        empty: [],
-        'my.data': {
-            'country[data].country': mockEuropeCountriesData
-        },
-        data: [
-            {
-                id: 'HR',
-                name: 'Croatia'
-            }
-        ],
-        'no-array': {}
-    }
-};
-
-export const mockJsonNestedResponseEuropeCountriesDataWithMultipleSpecialCharacters = {
-    response: {
-        'xyz:abc,xyz-abc,xyz_abc,abc+xyz': mockEuropeCountriesData
     }
 };
 

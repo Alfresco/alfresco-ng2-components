@@ -390,17 +390,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return this.contentService.hasAllowableOperations(selection[0].entry, 'update');
     }
 
-    canEditFolder(selection: Array<NodeEntry>): boolean {
-        if (selection && selection.length === 1) {
-            const entry = selection[0].entry;
-
-            if (entry?.isFolder) {
-                return this.contentService.hasAllowableOperations(entry, 'update');
-            }
-        }
-        return false;
-    }
-
     canCreateContent(parentNode: Node): boolean {
         if (parentNode) {
             return this.contentService.hasAllowableOperations(parentNode, 'create');

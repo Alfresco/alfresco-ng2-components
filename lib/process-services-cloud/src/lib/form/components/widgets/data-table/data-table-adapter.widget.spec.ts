@@ -21,7 +21,7 @@ import {
     mockCountriesIncorrectData,
     mockInvalidSchemaDefinition,
     mockSchemaDefinition
-} from '../../../mocks/data-table-widget.mock';
+} from './mocks/data-table-widget.mock';
 import { ObjectDataRow } from '@alfresco/adf-core';
 
 describe('WidgetDataTableAdapter', () => {

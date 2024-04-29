@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "event-emitter": "^0.3.5",
-    "superagent": "^8.0.9",
+    "superagent": "^9.0.1",
     "tslib": "^2.6.1"
   },
   "main": "./index.js",

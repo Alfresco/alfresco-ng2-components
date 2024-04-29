@@ -15,30 +15,12 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { PipeModule } from '../pipes/pipe.module';
 import { NotificationHistoryComponent } from './components/notification-history.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { PaginationModule } from '../pagination/pagination.module';
 import { AddNotificationStorybookComponent } from './components/add-notification.stories.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule,
-        PipeModule,
-        PaginationModule
-    ],
-    declarations: [
-        NotificationHistoryComponent,
-        AddNotificationStorybookComponent
-    ],
-    exports: [
-        NotificationHistoryComponent,
-        AddNotificationStorybookComponent
-    ]
+    imports: [NotificationHistoryComponent, AddNotificationStorybookComponent],
+    exports: [NotificationHistoryComponent, AddNotificationStorybookComponent]
 })
-export class NotificationHistoryModule { }
+export class NotificationHistoryModule {}

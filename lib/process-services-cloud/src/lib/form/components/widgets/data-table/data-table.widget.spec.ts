@@ -35,7 +35,7 @@ import {
     mockJsonResponseFormVariable,
     mockJsonNestedResponseFormVariable,
     mockJsonNestedResponseEuropeCountriesData
-} from '../../../mocks/data-table-widget.mock';
+} from './mocks/data-table-widget.mock';
 
 describe('DataTableWidgetComponent', () => {
     let widget: DataTableWidgetComponent;
