@@ -1,7 +1,6 @@
 <form>
     <mat-form-field class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
-        <mat-label *ngIf="!isReadonly()"
-            id="adf-group-cloud-title-id">{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}</mat-label>
+        <ng-content select="[label]"></ng-content>
         <mat-chip-grid #groupChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-group-chip-list">
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
@@ -20,6 +19,7 @@
                    [formControl]="searchGroupsControl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="groupChipList"
+                   [placeholder]="title | translate"
                    [required]="required"
                    (focus)="setFocus(true)"
                    (blur)="setFocus(false); markAsTouched()"
