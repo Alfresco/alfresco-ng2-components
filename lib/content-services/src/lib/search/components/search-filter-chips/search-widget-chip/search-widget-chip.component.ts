@@ -26,7 +26,7 @@ import { SearchWidgetContainerComponent } from '../../search-widget-container/se
   templateUrl: './search-widget-chip.component.html',
   styles: [
       `
-                .adf-search-widget-extra-width {
+                .adf-search-widget-extra-width.adf-search-filter-chip-menu-panel {
                   max-width: 500px;
                 }
               `

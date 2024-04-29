@@ -9,14 +9,14 @@
       <mat-radio-button [value]="DateRangeType.IN_LAST" data-automation-id="date-range-in-last">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
       </mat-radio-button>
-      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field">
+      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field" subscriptSizing="dynamic">
         <input matInput [attr.aria-label]="'SEARCH.DATE_RANGE_ADVANCED.ARIA_LABEL.NUMBER_INPUT' | translate"
                type="number" min="1" formControlName="inLastValue"
                data-automation-id="date-range-in-last-input" (input)="narrowDownAllowedCharacters($event)"
                (keydown)="preventIncorrectNumberCharacters($event)">
         <mat-error *ngIf="form.controls.inLastValue.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.IN_LAST' | translate }}</mat-error>
       </mat-form-field>
-      <mat-form-field class="adf-search-date-range-form-field">
+      <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-form-field-select" subscriptSizing="dynamic">
         <mat-select formControlName="inLastValueType" data-automation-id="date-range-in-last-dropdown">
           <mat-option data-automation-id="date-range-in-last-option-days" [value]="InLastDateType.DAYS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.DAYS' | translate }}</mat-option>
           <mat-option data-automation-id="date-range-in-last-option-weeks" [value]="InLastDateType.WEEKS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.WEEKS' | translate }}</mat-option>
@@ -24,11 +24,11 @@
         </mat-select>
       </mat-form-field>
     </span>
-    <span class="adf-search-date-range-container-row">
+    <span class="adf-search-date-range-container-row adf-search-date-range-container-row-date">
       <mat-radio-button [value]="DateRangeType.BETWEEN" data-automation-id="date-range-between">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
       </mat-radio-button>
-      <mat-form-field class="adf-search-date-range-form-field">
+      <mat-form-field class="adf-search-date-range-form-field" subscriptSizing="dynamic">
         <mat-date-range-input [rangePicker]="$any(picker)" [max]="convertedMaxDate">
           <input matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}"
                  data-automation-id="date-range-between-start-input" [formControl]="betweenStartDateFormControl" (change)="dateChanged($event, betweenStartDateFormControl)">
