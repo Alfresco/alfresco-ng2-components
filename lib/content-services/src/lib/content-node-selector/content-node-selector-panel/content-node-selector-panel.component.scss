@@ -45,6 +45,7 @@ h2.adf-search-results-label {
 
         &-input {
             width: 100%;
+            margin: 16px 0;
 
             &-icon {
                 color: var(--adf-theme-foreground-icon-color-054);
@@ -58,29 +59,10 @@ h2.adf-search-results-label {
 
         .adf-site-dropdown-container {
             display: block;
-            margin-bottom: 15px;
 
-            #{$mat-form-field-label} {
-                padding-top: 16px;
+            .adf-sites-dropdown-form-field {
+                width: 100%;
             }
-
-            #{$mat-floating-label-above} {
-                padding-top: 0;
-            }
-        }
-    }
-
-    .adf-sites-dropdown-form-field {
-        margin-top: 4px;
-        margin-bottom: 16px;
-    }
-
-    .adf-site-dropdown-list-element {
-        width: 100%;
-        margin-bottom: 0;
-
-        .adf-sites-dropdown-select-trigger {
-            font-size: var(--theme-body-1-font-size);
         }
     }
 
