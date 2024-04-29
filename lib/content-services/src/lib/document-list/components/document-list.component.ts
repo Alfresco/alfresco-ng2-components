@@ -19,6 +19,30 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
+    AlfrescoApiService,
+    AppConfigService,
+    CustomEmptyContentTemplateDirective,
+    CustomLoadingContentTemplateDirective,
+    CustomNoPermissionTemplateDirective,
+    DataCellEvent,
+    DataColumn,
+    DataColumnListComponent,
+    DataRow,
+    DataRowActionEvent,
+    DataSorting,
+    DataTableComponent,
+    DataTableSchema,
+    DataTableService,
+    PaginatedComponent,
+    PaginationModel,
+    RequestPaginationModel,
+    ShowHeaderMode,
+    ThumbnailService,
+    UserPreferencesService,
+    UserPreferenceValues
+} from '@alfresco/adf-core';
+import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
+import {
     AfterContentInit,
     Component,
     ContentChild,
@@ -34,50 +58,23 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { ContentService } from '../../common/services/content.service';
-
-import {
-    DataCellEvent,
-    DataRowActionEvent,
-    DataSorting,
-    DataTableComponent,
-    ShowHeaderMode,
-    PaginatedComponent,
-    AppConfigService,
-    DataColumnListComponent,
-    UserPreferencesService,
-    PaginationModel,
-    ThumbnailService,
-    CustomLoadingContentTemplateDirective,
-    CustomNoPermissionTemplateDirective,
-    CustomEmptyContentTemplateDirective,
-    RequestPaginationModel,
-    AlfrescoApiService,
-    UserPreferenceValues,
-    DataRow,
-    DataTableService,
-    DataTableSchema,
-    DataColumn,
-    ViewerComponentConfig
-} from '@alfresco/adf-core';
-import { NodesApiService } from '../../common/services/nodes-api.service';
-import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
-import { Subject, BehaviorSubject, of } from 'rxjs';
-import { ShareDataRow } from './../data/share-data-row.model';
-import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
-import { presetsDefaultModel } from '../models/preset.model';
-import { ContentActionModel } from './../models/content-action.model';
-import { PermissionStyleModel } from './../models/permissions-style.model';
-import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-import { FilterSearch } from './../../search/models/filter-search.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, of, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ContentService, NodesApiService } from '../../common';
+import { FilterSearch } from '../../search';
 import { RowFilter } from '../data/row-filter.model';
+import { ShareDataRow } from '../data/share-data-row.model';
+import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
+import { ContentActionModel } from '../models/content-action.model';
+import { DocumentLoaderNode } from '../models/document-folder.model';
+import { PermissionStyleModel } from '../models/permissions-style.model';
+import { presetsDefaultModel } from '../models/preset.model';
 import { DocumentListService } from '../services/document-list.service';
 import { LockService } from '../services/lock.service';
-import { DocumentLoaderNode } from '../models/document-folder.model';
-import { takeUntil } from 'rxjs/operators';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
-import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
+import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
@@ -524,6 +521,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.createDatatableSchema();
         this.data.setColumns(this.columns);
     }
+
     ngOnChanges(changes: SimpleChanges) {
         if (!changes['preselectNodes']) {
             this.resetSelection();
@@ -790,10 +788,8 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     onPreviewFile(node: NodeEntry) {
         if (node) {
             const sizeInMB = node.entry?.content?.sizeInBytes / BYTES_TO_MB_CONVERSION_VALUE;
-            const config = this.appConfig.get<ViewerComponentConfig>('viewer');
-
-            const fileAutoDownloadFlag = config?.enableFileAutoDownload ?? true;
-            const sizeThreshold = config?.fileAutoDownloadSizeThresholdInMB ?? 15;
+            const fileAutoDownloadFlag: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
+            const sizeThreshold: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
             if (fileAutoDownloadFlag && sizeInMB && sizeInMB > sizeThreshold) {
                 this.dialog.open(FileAutoDownloadComponent, { disableClose: true, data: node });
