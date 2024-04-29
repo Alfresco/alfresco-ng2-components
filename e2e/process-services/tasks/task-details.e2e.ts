@@ -90,23 +90,23 @@ describe('Task Details component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         await taskPage.createTask({ name: tasks[1], description: 'Description', formName: app.formName });
-        await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
-        await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
-        await expect(await taskPage.taskDetails().getDuration()).toEqual('');
-        await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
         const taskForm = await taskFormsApi.getTaskForm(allTasks.data[0].id);
         formModel = new FormModel(taskForm);
@@ -119,25 +119,25 @@ describe('Task Details component', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.createTask({ name: tasks[1], description: 'Description', formName: app.formName });
-        await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
 
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
-        await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
 
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        await expect(await taskPage.taskDetails().getDuration()).toEqual('');
-        await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
-        await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
         const taskForm = await taskFormsApi.getTaskForm(allTasks.data[0].id);
 
@@ -153,24 +153,24 @@ describe('Task Details component', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
-        await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel['definition'].models[1].name);
-        await expect(await taskPage.taskDetails().getDuration()).toEqual('');
-        await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
-        await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(appModel['definition'].models[1].name);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
         const taskForm = await taskFormsApi.getTaskForm(allTasks.data[0].id);
 
@@ -185,23 +185,23 @@ describe('Task Details component', () => {
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         const allTasks = await tasksApi.listTasks(new Task({ sort: 'created-desc' }));
         const taskModel = new TaskModel(allTasks.data[0]);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
-        await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel['definition'].models[1].name);
-        await expect(await taskPage.taskDetails().getDuration()).toEqual('');
-        await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
-        await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(appModel['definition'].models[1].name);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
         const taskForm = await taskFormsApi.getTaskForm(allTasks.data[0].id);
 
@@ -233,17 +233,17 @@ describe('Task Details component', () => {
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
-        await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        await expect(await taskPage.taskDetails().getDuration()).toEqual('');
-        await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
-        await expect(await taskPage.taskDetails().getParentTaskId()).toEqual(taskModel.getParentTaskId());
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual(taskModel.getParentTaskId());
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
     });
 
     it('[C286707] Should display task details for subtask - Custom App', async () => {
@@ -255,7 +255,7 @@ describe('Task Details component', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         const dialog = await taskPage.clickOnAddChecklistButton();
         await dialog.addName(checklistName);
@@ -270,17 +270,17 @@ describe('Task Details component', () => {
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
-        await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(taskModel.getCategory());
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        await expect(await taskPage.taskDetails().getDuration()).toEqual('');
-        await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
-        await expect(await taskPage.taskDetails().getParentTaskId()).toEqual(taskModel.getParentTaskId());
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
+        expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(taskModel.getCategory());
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getDuration()).toEqual('');
+        expect(await taskPage.taskDetails().getEndDate()).toEqual('');
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual(taskModel.getParentTaskId());
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
     });
 
     it('[C286709] Should display task details for completed task - Task App', async () => {
@@ -301,17 +301,17 @@ describe('Task Details component', () => {
 
         const taskModel = new TaskModel(getTaskResponse);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
-        await expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
-        await expect(await taskPage.taskDetails().getDuration()).toEqual(await taskPage.taskDetails().getDuration());
-        await expect(await taskPage.taskDetails().getEndDate()).toEqual(await taskPage.taskDetails().getEndDate());
-        await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.COMPLETED);
+        expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date(taskModel.getCreated()), TASK_DATE_FORMAT));
+        expect(await taskPage.taskDetails().getId()).toEqual(taskModel.getId());
+        expect(await taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
+        expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskPage.taskDetails().getDuration()).toEqual(await taskPage.taskDetails().getDuration());
+        expect(await taskPage.taskDetails().getEndDate()).toEqual(await taskPage.taskDetails().getEndDate());
+        expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
+        expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.COMPLETED);
     });
 
     it('[C260321] Should not be able to edit a completed task details', async () => {

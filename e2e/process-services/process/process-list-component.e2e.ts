@@ -191,12 +191,12 @@ describe('Process List Test', () => {
 
         const sortedProcessListNamesAsc = await processListDemoPage.getDisplayedProcessesNames();
 
-        await expect(JSON.stringify(processList) === JSON.stringify(sortedProcessListNamesAsc)).toBe(true);
+        expect(JSON.stringify(processList) === JSON.stringify(sortedProcessListNamesAsc)).toBe(true);
 
         await processListDemoPage.selectSorting('desc');
         await processListDemoPage.dataTable.waitTillContentLoaded();
 
         const sortedProcessListNamesDesc = await processListDemoPage.getDisplayedProcessesNames();
-        await expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessListNamesDesc)).toBe(true);
+        expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessListNamesDesc)).toBe(true);
     });
 });

@@ -16,10 +16,12 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     FileBrowserUtil,
-    LoginPage, ModelsActions,
+    LoginPage,
+    ModelsActions,
     ProcessInstanceTasksPage,
     StartProcessPage,
     StringUtil,
@@ -137,7 +139,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
+                expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
             });
 
             it('[C260445] Should require process definition and be possible to click cancel button', async () => {
@@ -179,12 +181,12 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
 
-                await expect(await startProcessPage.checkSelectProcessPlaceholderIsDisplayed()).toBe('');
+                expect(await startProcessPage.checkSelectProcessPlaceholderIsDisplayed()).toBe('');
 
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
 
-                await expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
-                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
+                expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
+                expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
             it('[C260449] Should be possible to start a process with start event', async () => {
@@ -201,14 +203,14 @@ describe('Start Process Component', () => {
                 const processId = await processDetailsPage.getId();
                 const response = await processApi.getProcessInstance(processId);
 
-                await expect(await processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
-                await expect(await processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
-                await expect(await processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
-                await expect(await processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
-                await expect(await processDetailsPage.getCreatedBy()).toEqual(`${response.startedBy.firstName} ${response.startedBy.lastName}`);
-                await expect(await processDetailsPage.getId()).toEqual(response.id);
-                await expect(await processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
-                await expect(await processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.name);
+                expect(await processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
+                expect(await processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
+                expect(await processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
+                expect(await processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
+                expect(await processDetailsPage.getCreatedBy()).toEqual(`${response.startedBy.firstName} ${response.startedBy.lastName}`);
+                expect(await processDetailsPage.getId()).toEqual(response.id);
+                expect(await processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
+                expect(await processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.name);
             });
 
             it('[C286503] Should NOT display any process definition when typing a non-existent one', async () => {
@@ -230,7 +232,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
+                expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
             it('[C286508] Should display only one option when typing an existent process definition', async () => {
@@ -242,7 +244,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.checkProcessOptionIsNotDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
+                expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
             it('[C286509] Should select automatically the processDefinition when the app contains only one', async () => {
@@ -250,8 +252,8 @@ describe('Start Process Component', () => {
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(simpleApp.title);
-                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
+                expect(await startProcessPage.getProcessDefinitionValue()).toBe(simpleApp.title);
+                expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
             it('[C286511] Should be able to type the process definition and start a process', async () => {
@@ -262,10 +264,8 @@ describe('Start Process Component', () => {
                 await startProcessPage.typeProcessDefinition(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.enterProcessName('Type');
-                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
-                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
-                );
+                expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
+                expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.clickStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Type');
@@ -279,9 +279,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.typeProcessDefinition('process');
 
                 await startProcessPage.pressDownArrowAndEnter();
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
-                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
-                );
+                expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
             });
 
             it('[C286514] Should the process definition input be cleared when clicking on options drop down ', async () => {
@@ -291,12 +289,10 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition('process');
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
-                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
-                );
+                expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.clickProcessDropdownArrow();
 
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe('');
+                expect(await startProcessPage.getProcessDefinitionValue()).toBe('');
             });
 
             it('[C260453] Should be possible to add a comment on an active process', async () => {
@@ -440,7 +436,7 @@ describe('Start Process Component', () => {
 
                 await startProcessPage.enterProcessName(processName255Characters);
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
+                expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
 
                 await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
                 await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
@@ -455,15 +451,15 @@ describe('Start Process Component', () => {
                 await startProcessPage.enterProcessName('DateFormProcess');
                 await startProcessPage.formFields().checkWidgetIsVisible('testdate');
                 await widget.dateWidget().setDateInput('testdate', '15-7-2019');
-                await expect(await startProcessPage.isStartFormProcessButtonEnabled()).toEqual(true);
+                expect(await startProcessPage.isStartFormProcessButtonEnabled()).toEqual(true);
                 await startProcessPage.clickFormStartProcessButton();
 
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('DateFormProcess');
                 await processInstanceTasksPage.clickOnStartForm();
                 await processInstanceTasksPage.checkStartProcessDialogIsDisplayed();
-                await expect(await processInstanceTasksPage.getTitle()).toBe('Start Form');
-                await expect(await widget.dateWidget().getDateInput('testdate')).toBe('15-7-2019');
+                expect(await processInstanceTasksPage.getTitle()).toBe('Start Form');
+                expect(await widget.dateWidget().getDateInput('testdate')).toBe('15-7-2019');
                 await processInstanceTasksPage.clickCloseButton();
                 await processInstanceTasksPage.checkStartProcessDialogIsNotDisplayed();
             });

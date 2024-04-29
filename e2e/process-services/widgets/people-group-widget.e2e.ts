@@ -23,7 +23,6 @@ import CONSTANTS = require('../../util/constants');
 import { AdminGroupsApi } from '@alfresco/js-api';
 
 describe('People and Group widget', () => {
-
     const app = browser.params.resources.Files.MORE_WIDGETS;
 
     const loginPage = new LoginPage();
@@ -59,7 +58,7 @@ describe('People and Group widget', () => {
         const name = 'group visibility task';
         const groupVisibilityForm = app.ADD_GROUP_VISIBILITY;
         await taskPage.createTask({ name, formName: groupVisibilityForm.formName });
-        await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(groupVisibilityForm.FIELD.widget_id);
         await widget.checkboxWidget().clickCheckboxInput(groupVisibilityForm.FIELD.checkbox_id);
@@ -68,7 +67,7 @@ describe('People and Group widget', () => {
         await widget.groupWidget().insertGroup(groupVisibilityForm.FIELD.widget_id, groupVisibilityForm.searchTerm);
         await widget.groupWidget().checkDropDownListIsDisplayed();
         const suggestions = await widget.groupWidget().getDropDownList();
-        await expect(suggestions.sort()).toEqual(['Heros', 'Users']);
+        expect(suggestions.sort()).toEqual(['Heros', 'Users']);
         await widget.groupWidget().selectGroupFromDropDown('Users');
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -77,7 +76,7 @@ describe('People and Group widget', () => {
         const name = 'group widget - subgroup restriction';
         const subgroupFrom = app.ADD_GROUP_AND_SUBGROUP_RESTRICTION;
         await taskPage.createTask({ name, formName: subgroupFrom.formName });
-        await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(subgroupFrom.FIELD.widget_id);
         await widget.checkboxWidget().clickCheckboxInput(subgroupFrom.FIELD.checkbox_id);
@@ -86,7 +85,7 @@ describe('People and Group widget', () => {
         await widget.groupWidget().insertGroup(subgroupFrom.FIELD.widget_id, subgroupFrom.searchTerm);
         await widget.groupWidget().checkDropDownListIsDisplayed();
         const suggestions = await widget.groupWidget().getDropDownList();
-        await expect(suggestions.sort()).toEqual(getSubGroupsName().sort());
+        expect(suggestions.sort()).toEqual(getSubGroupsName().sort());
         await widget.groupWidget().selectGroupFromDropDown(getSubGroupsName()[0]);
         await taskPage.taskDetails().clickCompleteFormTask();
 
@@ -95,14 +94,14 @@ describe('People and Group widget', () => {
 
         await taskPage.tasksListPage().selectRow(name);
         await widget.groupWidget().checkGroupFieldIsDisplayed();
-        await expect(await widget.groupWidget().getFieldValue(subgroupFrom.FIELD.widget_id)).toBe('Heros');
+        expect(await widget.groupWidget().getFieldValue(subgroupFrom.FIELD.widget_id)).toBe('Heros');
     });
 
     it('[C275714] Add people widget - group restrictions', async () => {
         const name = 'people widget - group restrictions';
         const peopleWidget = app.ADD_PEOPLE_AND_GROUP_RESTRICTION;
         await taskPage.createTask({ name, formName: peopleWidget.formName });
-        await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
+        expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(peopleWidget.FIELD.widget_id);
         await widget.checkboxWidget().clickCheckboxInput(peopleWidget.FIELD.checkbox_id);
@@ -111,25 +110,38 @@ describe('People and Group widget', () => {
         await widget.peopleWidget().insertUser(peopleWidget.FIELD.widget_id, peopleWidget.searchTerm);
         await widget.peopleWidget().checkDropDownListIsDisplayed();
         const suggestions = await widget.peopleWidget().getDropDownList();
-        await expect(suggestions.sort()).toEqual(getGroupMembers().sort());
+        expect(suggestions.sort()).toEqual(getGroupMembers().sort());
         await widget.peopleWidget().selectUserFromDropDown(getGroupMembers()[0]);
         await taskPage.taskDetails().clickCompleteFormTask();
     });
 
+    /**
+     * Create group and users
+     *
+     * @param tenantId tenant id
+     */
     async function createGroupAndUsers(tenantId: number) {
         await apiService.loginWithProfile('admin');
 
-        const userCreated = await Promise.all(app.groupUser.map(usersToCreate =>
-            usersActions.createUser(new UserModel({
-                tenantId,
-                firstName: usersToCreate.firstName,
-                lastName: usersToCreate.lastName
-            }))
-        ));
+        const userCreated = await Promise.all(
+            app.groupUser.map((usersToCreate) =>
+                usersActions.createUser(
+                    new UserModel({
+                        tenantId,
+                        firstName: usersToCreate.firstName,
+                        lastName: usersToCreate.lastName
+                    })
+                )
+            )
+        );
 
-        const subgroupUser = await usersActions.createUser(new UserModel({
-            tenantId, firstName: app.subGroupUser.firstName, lastName: app.subGroupUser.lastName
-        }));
+        const subgroupUser = await usersActions.createUser(
+            new UserModel({
+                tenantId,
+                firstName: app.subGroupUser.firstName,
+                lastName: app.subGroupUser.lastName
+            })
+        );
 
         const group = await adminGroupsApi.createNewGroup({
             name: app.group.name,
@@ -139,24 +151,35 @@ describe('People and Group widget', () => {
 
         await Promise.all(userCreated.map((userToAddGroup: UserModel) => adminGroupsApi.addGroupMember(group.id, userToAddGroup.id)));
 
-        const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
-            adminGroupsApi.createNewGroup({
-                name,
-                tenantId,
-                type: 1,
-                parentGroupId: group.id
-            })
-        ));
+        const subgroups: any[] = await Promise.all(
+            getSubGroupsName().map((name) =>
+                adminGroupsApi.createNewGroup({
+                    name,
+                    tenantId,
+                    type: 1,
+                    parentGroupId: group.id
+                })
+            )
+        );
 
         await Promise.all(subgroups.map((subgroup) => adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
-
     }
 
-    function getSubGroupsName() {
-        return app.group.subgroup.map(subgroup => subgroup.name);
+    /**
+     * Get subgroups name
+     *
+     * @returns list of subgroup names
+     */
+    function getSubGroupsName(): string[] {
+        return app.group.subgroup.map((subgroup) => subgroup.name);
     }
 
-    function getGroupMembers() {
-        return app.groupUser.map(groupUser => `${groupUser.firstName} ${groupUser.lastName}`);
+    /**
+     * Get group members
+     *
+     * @returns list of group member full names
+     */
+    function getGroupMembers(): string[] {
+        return app.groupUser.map((groupUser) => `${groupUser.firstName} ${groupUser.lastName}`);
     }
 });

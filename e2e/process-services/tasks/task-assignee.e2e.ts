@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    StartProcessPage,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, StartProcessPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './../pages/process-services.page';
 import { ProcessFiltersPage } from './../pages/process-filters.page';
@@ -35,7 +28,6 @@ import CONSTANTS = require('../../util/constants');
 import { AdminGroupsApi } from '@alfresco/js-api';
 
 describe('Task Assignee', () => {
-
     const app = browser.params.resources.Files.TEST_ASSIGNEE;
 
     const loginPage = new LoginPage();
@@ -54,18 +46,20 @@ describe('Task Assignee', () => {
     const adminGroupsApi = new AdminGroupsApi(apiService.getInstance());
 
     describe('Candidate User Assignee', () => {
-
         let user: UserModel;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
 
-            user = await usersActions.createUser(new UserModel({
-                firstName: app.candidate.firstName,
-                lastName: app.candidate.lastName
-            }));
+            user = await usersActions.createUser(
+                new UserModel({
+                    firstName: app.candidate.firstName,
+                    lastName: app.candidate.lastName
+                })
+            );
 
-            try {// creates group if not available
+            try {
+                // creates group if not available
                 await adminGroupsApi.createNewGroup({
                     name: app.candidateGroup,
                     tenantId: user.tenantId,
@@ -94,7 +88,7 @@ describe('Task Assignee', () => {
             const name = 'sample-process-one';
             await processServicesPage.goToApp(app.title);
             await processServiceTabBarPage.clickProcessButton();
-            await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+            expect(await processListPage.isProcessListDisplayed()).toEqual(true);
             await processFiltersPage.clickCreateProcessButton();
             await processFiltersPage.clickNewProcessDropdown();
             await startProcessPage.startProcess(name, app.processNames[0]);
@@ -132,30 +126,28 @@ describe('Task Assignee', () => {
             candidate1 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
             candidate2 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
 
-            const adminGroup = await adminGroupsApi.createNewGroup(
-                { name: app.adminGroup, tenantId: user.tenantId }
-            );
+            const adminGroup = await adminGroupsApi.createNewGroup({ name: app.adminGroup, tenantId: user.tenantId });
 
             await adminGroupsApi.addGroupMember(adminGroup.id, user.id);
 
             await adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
 
-            const candidateGroup = await adminGroupsApi.createNewGroup(
-                { name: app.candidateGroup, tenantId: user.tenantId, type: 1 }
-            );
+            const candidateGroup = await adminGroupsApi.createNewGroup({ name: app.candidateGroup, tenantId: user.tenantId, type: 1 });
 
             await adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
             await adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
             await adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
 
-            try {// for creates user if not available
-                await usersActions.createUser(new UserModel({
-                    tenantId: user.tenantId,
-                    firstName: app.candidate.firstName,
-                    lastName: app.candidate.lastName
-                }));
-            } catch (e) {
-            }
+            try {
+                // for creates user if not available
+                await usersActions.createUser(
+                    new UserModel({
+                        tenantId: user.tenantId,
+                        firstName: app.candidate.firstName,
+                        lastName: app.candidate.lastName
+                    })
+                );
+            } catch (e) {}
 
             await apiService.login(user.username, user.password);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });

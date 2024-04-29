@@ -272,7 +272,7 @@ describe('Task Details - Form', () => {
             await widget.tab().clickTabByLabel(tab.tabFieldField);
             await widget.textWidget().setValue(widgets.numberOneId, value.displayTab);
 
-            await expect(await taskDetailsPage.isCompleteButtonWithFormEnabled()).toEqual(false);
+            expect(await taskDetailsPage.isCompleteButtonWithFormEnabled()).toEqual(false);
         });
 
         it('[C315193] Should be able to complete a standalone task with invisible tab with invalid value for field', async () => {
@@ -371,7 +371,7 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkTaskListIsLoaded();
 
             await tasksListPage.selectRow(app.visibilityProcess.taskName);
-            await expect(await taskDetailsPage.getParentName()).toEqual(app.visibilityProcess.name);
+            expect(await taskDetailsPage.getParentName()).toEqual(app.visibilityProcess.name);
 
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);
@@ -405,7 +405,7 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkTaskListIsLoaded();
 
             await tasksListPage.selectRow(app.taskName);
-            await expect(await taskDetailsPage.getParentName()).toEqual(app.processName);
+            expect(await taskDetailsPage.getParentName()).toEqual(app.processName);
 
             await widget.textWidget().isWidgetVisible(app.form_fields.form_fieldId);
             await widget.textWidget().setValue(app.form_fields.form_fieldId, 'value');
@@ -413,7 +413,7 @@ describe('Task Details - Form', () => {
             await taskPage.formFields().refreshForm();
 
             await widget.textWidget().isWidgetVisible(app.form_fields.form_fieldId);
-            await expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('');
+            expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('');
 
             await widget.textWidget().setValue(app.form_fields.form_fieldId, 'value');
             await taskPage.taskDetails().saveTaskForm();
@@ -423,7 +423,7 @@ describe('Task Details - Form', () => {
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
-            await expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('value');
+            expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('value');
 
             await taskDetailsPage.clickCompleteFormTask();
         });

@@ -71,11 +71,11 @@ describe('Task List Pagination - Sorting', () => {
         await taskPage.filtersPage().sortByName('ASC');
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         const listAsc = await taskPage.filtersPage().getAllRowsNameColumn();
-        await expect(JSON.stringify(listAsc) === JSON.stringify(taskNames)).toEqual(true);
+        expect(JSON.stringify(listAsc) === JSON.stringify(taskNames)).toEqual(true);
         await taskPage.filtersPage().sortByName('DESC');
         const listDesc = await taskPage.filtersPage().getAllRowsNameColumn();
 
         taskNames.reverse();
-        await expect(JSON.stringify(listDesc) === JSON.stringify(taskNames)).toEqual(true);
+        expect(JSON.stringify(listDesc) === JSON.stringify(taskNames)).toEqual(true);
     });
 });

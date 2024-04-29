@@ -87,7 +87,7 @@ describe('Task Audit', () => {
         await taskPage.completeTaskNoForm();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(taskTaskApp);
-        await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
+        expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
 
         await taskPage.taskDetails().clickAuditLogButton();
         await FileBrowserUtil.isFileDownloaded(auditLogFile);
@@ -105,7 +105,7 @@ describe('Task Audit', () => {
         await taskPage.completeTaskNoForm();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(taskCompleteCustomApp);
-        await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
+        expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
 
         await taskPage.taskDetails().clickAuditLogButton();
         await FileBrowserUtil.isFileDownloaded(auditLogFile);
