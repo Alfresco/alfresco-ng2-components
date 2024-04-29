@@ -2,12 +2,65 @@
 @import 'styles/mat-selectors';
 
 adf-search-properties {
-    .adf-search-properties-file-size-label {
-        display: block;
-        margin-top: 4px;
+    .adf-search-properties-form {
+        .adf-search-properties-file-size-container {
+            .adf-search-properties-file-size-label {
+                margin-top: 4px;
+                display: block;
+            }
+
+            #{$mat-text-field--no-label} {
+                #{$mat-form-field-infix} {
+                    padding-top: 9px;
+                    padding-bottom: 9px;
+                    display: inline-block;
+                }
+            }
+
+            #{$mat-form-field-infix} {
+                height: 37.5px;
+                min-height: 37.5px;
+            }
+
+            #{$mat-select-trigger} {
+                height: 17.5px;
+            }
+
+            #{$mat-select-arrow-wrapper} {
+                width: 16px;
+            }
+
+            #{$mat-form-field-underline} {
+                &::before {
+                    display: none;
+                }
+            }
+
+            #{$mat-form-field-infix} {
+                display: inline-block;
+            }
+
+            #{$mat-select-arrow} {
+                margin-left: 5px;
+            }
+
+            #{$mat-form-field} {
+                margin-bottom: 18px;
+            }
+        }
+
+        adf-search-chip-autocomplete-input {
+            #{$mat-notched-outline-leading} {
+                border-color: var(--adf-theme-foreground-text-color-027) !important;
+            }
+
+            #{$mat-notched-outline-trailing} {
+                border-color: var(--adf-theme-foreground-text-color-027) !important;
+            }
+        }
     }
 
-    input {
+    input, .mat-form-field-infix.mat-form-field-infix {
         height: 25px;
         border: 1px solid var(--adf-theme-mat-grey-color-a400);
         border-radius: 5px;
@@ -21,14 +74,14 @@ adf-search-properties {
 
     .adf-search-properties-file-size-operator,
     .adf-search-properties-file-size-unit {
-        #{$mat-form--text-field-infix} {
+        #{$mat-form-field-infix} {
             border: 1px solid var(--adf-theme-mat-grey-color-a400);
             border-radius: 5px;
             padding: 9px;
         }
 
         &#{$mat-focused} {
-            #{$mat-form--text-field-infix} {
+            #{$mat-form-field-infix} {
                 outline: 2px auto -webkit-focus-ring-color;
             }
         }
