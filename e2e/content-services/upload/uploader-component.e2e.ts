@@ -190,7 +190,7 @@ describe('Upload component', () => {
             await uploadToggles.enableMaxSize();
             await uploadToggles.addMaxSize('0');
             await contentServicesPage.uploadFile(fileWithSpecificSize.location);
-            // await expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
+            // expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
 
             await uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
             await contentServicesPage.uploadFile(emptyFile.location);
@@ -250,6 +250,6 @@ describe('Upload component', () => {
         await contentServicesPage.uploadFile(pdfFileModel.location);
 
         await uploadDialog.displayTooltip();
-        await expect(await uploadDialog.getTooltip()).toEqual('Upload location no longer exists [404]');
+        expect(await uploadDialog.getTooltip()).toEqual('Upload location no longer exists [404]');
     });
 });

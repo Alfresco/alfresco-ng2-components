@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     BrowserActions,
     BrowserVisibility,
     FileBrowserUtil,
@@ -33,7 +34,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { VersionManagePage } from '../pages/version-manager.page';
 
 describe('Version component actions', () => {
-
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
@@ -72,7 +72,7 @@ describe('Version component actions', () => {
         await loginPage.login(acsUser.username, acsUser.password);
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
-   });
+    });
 
     beforeEach(async () => {
         await contentServicesPage.versionManagerContent(txtFileModel.name);
@@ -84,14 +84,14 @@ describe('Version component actions', () => {
 
     it('[C280003] Should not be possible delete a file version if there is only one version', async () => {
         await versionManagePage.clickActionButton('1.0');
-        await expect(await element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
+        expect(await element(by.css(`[id="adf-version-list-action-delete-1.0"]`)).isEnabled()).toBe(false);
         await versionManagePage.closeActionsMenu();
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-delete-1.0"]`)));
     });
 
     it('[C280004] Should not be possible restore the version if there is only one version', async () => {
         await versionManagePage.clickActionButton('1.0');
-        await expect(await element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
+        expect(await element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
         await versionManagePage.closeActionsMenu();
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
@@ -169,11 +169,13 @@ describe('Version component actions', () => {
 
         await versionManagePage.showNewVersionButton.click();
 
-        await browser.executeScript(' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1000)');
+        await browser.executeScript(
+            ' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1000)'
+        );
         await versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
         await versionManagePage.closeVersionDialog();
 
-        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
 
         await browser.refresh();
 
