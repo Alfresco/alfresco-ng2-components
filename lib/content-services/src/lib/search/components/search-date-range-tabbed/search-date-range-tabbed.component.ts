@@ -29,9 +29,10 @@ import { endOfDay, endOfToday, format, formatISO, startOfDay, startOfMonth, star
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
-    selector: 'adf-search-date-range-tabbed',
-    templateUrl: './search-date-range-tabbed.component.html',
-    encapsulation: ViewEncapsulation.None
+  selector: 'adf-search-date-range-tabbed',
+  templateUrl: './search-date-range-tabbed.component.html',
+  styleUrls: [ './search-date-range-tabbed.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     displayValue$ = new Subject<string>();
