@@ -19,25 +19,32 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @angular-eslint/no-output-native */
 
+import { NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
-    TemplateRef,
+    EventEmitter,
     HostListener,
-    Output,
     Input,
     OnChanges,
     OnDestroy,
-    ViewEncapsulation,
-    EventEmitter,
-    SimpleChanges
+    Output,
+    SimpleChanges,
+    TemplateRef,
+    ViewEncapsulation
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { PDFDocumentProxy, OnProgressParameters, PDFDocumentLoadingTask } from 'pdfjs-dist';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TranslateModule } from '@ngx-translate/core';
+import { OnProgressParameters, PDFDocumentLoadingTask, PDFDocumentProxy } from 'pdfjs-dist';
 import { Subject } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
+import { AppConfigService } from '../../../app-config';
+import { ToolbarComponent, ToolbarDividerComponent } from '../../../toolbar';
+import { RenderingQueueServices } from '../../services/rendering-queue.services';
+import { PdfPasswordDialogComponent } from '../pdf-viewer-password-dialog/pdf-viewer-password-dialog';
+import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -46,10 +53,23 @@ export type PdfScaleMode = 'init' | 'page-actual' | 'page-width' | 'page-height'
 
 @Component({
     selector: 'adf-pdf-viewer',
+    standalone: true,
     templateUrl: './pdf-viewer.component.html',
     styleUrls: ['./pdf-viewer-host.component.scss', './pdf-viewer.component.scss'],
     providers: [RenderingQueueServices],
     host: { class: 'adf-pdf-viewer' },
+    imports: [
+        MatButtonModule,
+        MatIconModule,
+        TranslateModule,
+        PdfThumbListComponent,
+        NgIf,
+        NgTemplateOutlet,
+        MatProgressBarModule,
+        NgStyle,
+        ToolbarComponent,
+        ToolbarDividerComponent
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges, OnDestroy {
@@ -116,11 +136,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     private pdfjsWorkerDestroy$ = new Subject<boolean>();
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        private dialog: MatDialog,
-        private renderingQueueServices: RenderingQueueServices,
-        private appConfigService: AppConfigService
-    ) {
+    constructor(private dialog: MatDialog, private renderingQueueServices: RenderingQueueServices, private appConfigService: AppConfigService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);

@@ -19,10 +19,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 @Component({
     selector: 'adf-viewer-open-with',
+    standalone: true,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-viewer-open-with' },
     template: `<ng-content></ng-content>`
 })
-export class ViewerOpenWithComponent {
-}
+export class ViewerOpenWithComponent {}

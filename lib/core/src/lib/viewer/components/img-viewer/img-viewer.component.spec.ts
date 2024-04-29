@@ -17,11 +17,11 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { UrlService } from '../../common/services/url.service';
-import { ImgViewerComponent } from './img-viewer.component';
-import { CoreTestingModule } from '../../testing';
-import { AppConfigService } from '../../app-config/app-config.service';
 import { By } from '@angular/platform-browser';
+import { AppConfigService } from '../../../app-config';
+import { UrlService } from '../../../common';
+import { CoreTestingModule } from '../../../testing';
+import { ImgViewerComponent } from './img-viewer.component';
 
 describe('Test Img viewer component ', () => {
     let component: ImgViewerComponent;

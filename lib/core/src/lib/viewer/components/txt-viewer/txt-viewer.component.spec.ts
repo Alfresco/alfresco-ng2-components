@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TxtViewerComponent } from './txt-viewer.component';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { CoreTestingModule } from '../../../testing';
 
 describe('Text View component', () => {
     let component: TxtViewerComponent;

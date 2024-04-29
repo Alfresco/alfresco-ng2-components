@@ -19,10 +19,12 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { CoreTestingModule } from '../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -70,7 +72,7 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatButtonModule, MatIconModule],
+            imports: [NoopAnimationsModule, TranslateModule.forRoot(), CoreTestingModule, MatButtonModule, MatIconModule],
             declarations: [DoubleViewerComponent],
             providers: [RenderingQueueServices, { provide: Location, useClass: SpyLocation }, MatDialog]
         });

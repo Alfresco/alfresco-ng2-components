@@ -16,9 +16,12 @@
  */
 
 import { Component } from '@angular/core';
+import { ViewerComponent } from '../viewer.component';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
+    standalone: true,
+    imports: [ViewerComponent],
     template: `
         <adf-viewer>
             <adf-viewer-toolbar>
@@ -27,5 +30,4 @@ import { Component } from '@angular/core';
         </adf-viewer>
     `
 })
-export class ViewerWithCustomToolbarComponent {
-}
+export class ViewerWithCustomToolbarComponent {}

@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+import { ExtensionsModule } from '@alfresco/adf-extensions';
+import { A11yModule } from '@angular/cdk/a11y';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
     ContentChild,
@@ -30,34 +33,55 @@ import {
     TemplateRef,
     ViewEncapsulation
 } from '@angular/core';
-import { fromEvent, Subject } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewerToolbarComponent } from './viewer-toolbar.component';
-import { ViewerOpenWithComponent } from './viewer-open-with.component';
-import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
-import { ViewerSidebarComponent } from './viewer-sidebar.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngx-translate/core';
+import { fromEvent, Subject } from 'rxjs';
 import { filter, first, skipWhile, takeUntil } from 'rxjs/operators';
+import { AppConfigService } from '../../app-config';
+import { PipeModule } from '../../pipes';
+import { ToolbarComponent, ToolbarDividerComponent, ToolbarTitleComponent } from '../../toolbar';
+import { DownloadPromptActions } from '../models/download-prompt.actions';
 import { CloseButtonPosition, Track } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
 import { DownloadPromptDialogComponent } from './download-prompt-dialog/download-prompt-dialog.component';
-import { AppConfigService } from '../../app-config';
-import { DownloadPromptActions } from '../models/download-prompt.actions';
+import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
+import { ViewerOpenWithComponent } from './viewer-open-with.component';
+import { ViewerRenderComponent } from './viewer-render/viewer-render.component';
+import { ViewerSidebarComponent } from './viewer-sidebar.component';
+import { ViewerToolbarComponent } from './viewer-toolbar.component';
 
-export interface ViewerComponentConfig {
-    enableDownloadPrompt?: boolean;
-    enableDownloadPromptReminder?: boolean;
-    downloadPromptDelay?: number;
-    downloadPromptReminderDelay?: number;
-    enableFileAutoDownload?: boolean;
-    fileAutoDownloadSizeThresholdInMB?: number;
-}
+const DEFAULT_NON_PREVIEW_CONFIG = {
+    enableDownloadPrompt: false,
+    enableDownloadPromptReminder: false,
+    downloadPromptDelay: 50,
+    downloadPromptReminderDelay: 30
+};
 
 @Component({
     selector: 'adf-viewer',
+    standalone: true,
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
     host: { class: 'adf-viewer' },
     encapsulation: ViewEncapsulation.None,
+    imports: [
+        NgIf,
+        A11yModule,
+        ToolbarComponent,
+        ToolbarTitleComponent,
+        MatButtonModule,
+        TranslateModule,
+        MatIconModule,
+        PipeModule,
+        MatMenuModule,
+        ToolbarDividerComponent,
+        ViewerRenderComponent,
+        NgTemplateOutlet,
+        ExtensionsModule
+    ],
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
@@ -202,26 +226,22 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
      */
-    @Input()
-    enableDownloadPrompt = false;
+    enableDownloadPrompt: boolean = false;
 
     /**
      * Enable reminder dialogs to prompt user to download the file, in case the preview is not responding for a set period of time.
      */
-    @Input()
-    enableDownloadPromptReminder = false;
+    enableDownloadPromptReminder: boolean = false;
 
     /**
      * Initial time in seconds to wait before giving the first prompt to user to download the file
      */
-    @Input()
-    downloadPromptDelay = 50;
+    downloadPromptDelay: number = 50;
 
     /**
      * Time in seconds to wait before giving the second and consequent reminders to the user to download the file.
      */
-    @Input()
-    downloadPromptReminderDelay = 15;
+    downloadPromptReminderDelay: number = 15;
 
     /**
      * Emitted when user clicks on download button on download prompt dialog.
@@ -396,20 +416,12 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     private configureDownloadPromptProperties() {
-        const config = this.appConfigService.get<ViewerComponentConfig>('viewer');
+        const nonResponsivePreviewConfig = this.appConfigService.get('viewer', DEFAULT_NON_PREVIEW_CONFIG);
 
-        if (config) {
-            this.enableDownloadPrompt = config.enableDownloadPrompt === true;
-            this.enableDownloadPromptReminder = config.enableDownloadPromptReminder === true;
-
-            if (config.downloadPromptDelay !== undefined) {
-                this.downloadPromptDelay = config.downloadPromptDelay;
-            }
-
-            if (config.downloadPromptReminderDelay !== undefined) {
-                this.downloadPromptReminderDelay = config.downloadPromptReminderDelay;
-            }
-        }
+        this.enableDownloadPrompt = nonResponsivePreviewConfig.enableDownloadPrompt;
+        this.enableDownloadPromptReminder = nonResponsivePreviewConfig.enableDownloadPromptReminder;
+        this.downloadPromptDelay = nonResponsivePreviewConfig.downloadPromptDelay;
+        this.downloadPromptReminderDelay = nonResponsivePreviewConfig.downloadPromptReminderDelay;
     }
 
     private initDownloadPrompt() {

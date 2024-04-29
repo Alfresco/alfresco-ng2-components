@@ -16,12 +16,11 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { By } from '@angular/platform-browser';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DownloadPromptDialogComponent } from './download-prompt-dialog.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { By } from '@angular/platform-browser';
+import { CoreTestingModule } from '../../../testing';
 import { DownloadPromptActions } from '../../models/download-prompt.actions';
+import { DownloadPromptDialogComponent } from './download-prompt-dialog.component';
 
 const mockDialog = {
     close: jasmine.createSpy('close')
@@ -35,8 +34,7 @@ describe('DownloadPromptDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [DownloadPromptDialogComponent],
-            imports: [CoreTestingModule],
+            imports: [CoreTestingModule, DownloadPromptDialogComponent],
             providers: [{ provide: MatDialogRef, useValue: mockDialog }]
         });
         matDialogRef = TestBed.inject(MatDialogRef);

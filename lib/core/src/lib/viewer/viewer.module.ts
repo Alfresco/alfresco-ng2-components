@@ -15,51 +15,28 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { ExtensionsModule } from '@alfresco/adf-extensions';
-
-import { MaterialModule } from '../material.module';
-import { ToolbarModule } from '../toolbar/toolbar.module';
-import { PipeModule } from '../pipes/pipe.module';
-import { ImgViewerComponent } from './components/img-viewer.component';
-import { MediaPlayerComponent } from './components/media-player.component';
-import { PdfViewerComponent } from './components/pdf-viewer.component';
-import { PdfPasswordDialogComponent } from './components/pdf-viewer-password-dialog';
-import { PdfThumbComponent } from './components/pdf-viewer-thumb.component';
-import { PdfThumbListComponent } from './components/pdf-viewer-thumbnails.component';
-import { TxtViewerComponent } from './components/txt-viewer.component';
+import { DownloadPromptDialogComponent } from './components/download-prompt-dialog/download-prompt-dialog.component';
+import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
+import { MediaPlayerComponent } from './components/media-player/media-player.component';
+import { PdfPasswordDialogComponent } from './components/pdf-viewer-password-dialog/pdf-viewer-password-dialog';
+import { PdfThumbComponent } from './components/pdf-viewer-thumb/pdf-viewer-thumb.component';
+import { PdfThumbListComponent } from './components/pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
+import { TxtViewerComponent } from './components/txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from './components/unknown-format/unknown-format.component';
 import { ViewerMoreActionsComponent } from './components/viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './components/viewer-open-with.component';
+import { ViewerRenderComponent } from './components/viewer-render/viewer-render.component';
 import { ViewerSidebarComponent } from './components/viewer-sidebar.component';
-import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
-import { ViewerRenderComponent } from './components/viewer-render.component';
-import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
-import { DirectiveModule } from '../directives/directive.module';
-import { A11yModule } from '@angular/cdk/a11y';
-import { ViewerComponent } from './components/viewer.component';
 import { ViewerToolbarCustomActionsComponent } from './components/viewer-toolbar-custom-actions.component';
-import { DownloadPromptDialogComponent } from './components/download-prompt-dialog/download-prompt-dialog.component';
+import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
+import { ViewerComponent } from './components/viewer.component';
+import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 
 @NgModule({
     imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ToolbarModule,
-        PipeModule,
-        DirectiveModule,
-        A11yModule,
-        ExtensionsModule
-    ],
-    declarations: [
         PdfPasswordDialogComponent,
         ViewerRenderComponent,
         ImgViewerComponent,
@@ -99,5 +76,4 @@ import { DownloadPromptDialogComponent } from './components/download-prompt-dial
         ViewerToolbarCustomActionsComponent
     ]
 })
-export class ViewerModule {
-}
+export class ViewerModule {}

@@ -15,28 +15,26 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import {
-    CoreTestingModule,
-    EventMock,
-    ViewerComponent,
-    ViewUtilService,
-    AppConfigService,
-    DownloadPromptDialogComponent,
-    DownloadPromptActions,
-    CloseButtonPosition
-} from '@alfresco/adf-core';
-import { of } from 'rxjs';
-import { ViewerWithCustomMoreActionsComponent } from './mock/adf-viewer-container-more-actions.component.mock';
-import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
-import { ViewerWithCustomSidebarComponent } from './mock/adf-viewer-container-sidebar.component.mock';
-import { ViewerWithCustomOpenWithComponent } from './mock/adf-viewer-container-open-with.component.mock';
-import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-container-toolbar-actions.component.mock';
 import { Component } from '@angular/core';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { AppConfigService } from '../../app-config';
+import { EventMock } from '../../mock';
+import { CoreTestingModule } from '../../testing';
+import { DownloadPromptActions } from '../models/download-prompt.actions';
+import { CloseButtonPosition } from '../models/viewer.model';
+import { ViewUtilService } from '../services/view-util.service';
+import { DownloadPromptDialogComponent } from './download-prompt-dialog/download-prompt-dialog.component';
+import { ViewerWithCustomMoreActionsComponent } from './mock/adf-viewer-container-more-actions.component.mock';
+import { ViewerWithCustomOpenWithComponent } from './mock/adf-viewer-container-open-with.component.mock';
+import { ViewerWithCustomSidebarComponent } from './mock/adf-viewer-container-sidebar.component.mock';
+import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-container-toolbar-actions.component.mock';
+import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
+import { ViewerComponent } from './viewer.component';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -54,8 +52,10 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatButtonModule, MatIconModule],
-            declarations: [
+            imports: [
+                CoreTestingModule,
+                MatButtonModule,
+                MatIconModule,
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,

@@ -16,9 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CoreTestingModule } from '../../../testing';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare const pdfjsLib: any;
 
