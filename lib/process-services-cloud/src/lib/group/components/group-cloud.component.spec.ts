@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { CoreTestingModule } from '@alfresco/adf-core';
@@ -73,7 +72,7 @@ describe('GroupCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, GroupCloudModule]
+            imports: [CoreTestingModule, GroupCloudModule]
         });
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;
@@ -83,13 +82,22 @@ describe('GroupCloudComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    it('should populate placeholder when title is present', () => {
+    it('should populate placeholder when title is present', async () => {
         component.title = 'TITLE_KEY';
 
         fixture.detectChanges();
 
-        const matLabel = element.querySelector<HTMLInputElement>('#adf-group-cloud-title-id');
-        expect(matLabel.textContent).toEqual('TITLE_KEY');
+        const inputElement = await loader.getHarness(MatInputHarness.with({ selector: '[data-automation-id="adf-cloud-group-search-input"]' }));
+
+        expect(await inputElement.getPlaceholder()).toEqual('TITLE_KEY');
+    });
+
+    it('should not populate placeholder when title is not present', async () => {
+        fixture.detectChanges();
+
+        const inputElement = await loader.getHarness(MatInputHarness.with({ selector: '[data-automation-id="adf-cloud-group-search-input"]' }));
+
+        expect(await inputElement.getPlaceholder()).toEqual('');
     });
 
     describe('Search group', () => {
