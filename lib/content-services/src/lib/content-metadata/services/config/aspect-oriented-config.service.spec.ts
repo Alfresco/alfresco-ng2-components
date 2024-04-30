@@ -163,7 +163,7 @@ describe('AspectOrientedConfigService', () => {
                     expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
                     expect(organisedPropertyGroups[i].properties.length).toBe(
                         expectation.properties.length,
-                        `Property count for "${organisedPropertyGroups[i].title}" group should match.`
+                        `Property count for '${organisedPropertyGroups[i].title}' group should match.`
                     );
 
                     expectation.properties.forEach((property, j) => {
@@ -211,7 +211,7 @@ describe('AspectOrientedConfigService', () => {
                 expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
                 expect(organisedPropertyGroups[i].properties.length).toBe(
                     expectation.properties.length,
-                    `Property count for "${organisedPropertyGroups[i].title}" group should match.`
+                    `Property count for '${organisedPropertyGroups[i].title}' group should match.`
                 );
 
                 expectation.properties.forEach((property, j) => {
