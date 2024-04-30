@@ -20,6 +20,7 @@ adf-search-properties {
             #{$mat-form-field-infix} {
                 height: 37.5px;
                 min-height: 37.5px;
+                display: inline-block;
             }
 
             #{$mat-select-trigger} {
@@ -36,10 +37,6 @@ adf-search-properties {
                 }
             }
 
-            #{$mat-form-field-infix} {
-                display: inline-block;
-            }
-
             #{$mat-select-arrow} {
                 margin-left: 5px;
             }
@@ -50,17 +47,53 @@ adf-search-properties {
         }
 
         adf-search-chip-autocomplete-input {
+            display: block;
+
+            #{$mat-text-field-outlined} {
+                &-start,
+                &-end {
+                    border-top: 1px solid var(--adf-theme-mat-grey-color-a400);
+                    border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
+                }
+
+                &-start {
+                    border-left: 1px solid var(--adf-theme-mat-grey-color-a400);
+                }
+
+                &-end {
+                    border-right: 1px solid var(--adf-theme-mat-grey-color-a400);
+                }
+            }
+
+            #{$mat-focused} {
+                #{$mat-text-field-outlined} {
+                    outline: 2px auto -webkit-focus-ring-color;
+                }
+            }
+
+            #{$mat-form-field-appearance-outline} {
+                #{$mat-text-field-outlined-thick} {
+                    #{$mat-text-field-outlined} {
+                        &-start,
+                        &-end {
+                            border-width: 1px;
+                        }
+                    }
+                }
+            }
+
             #{$mat-notched-outline-leading} {
-                border-color: var(--adf-theme-foreground-text-color-027) !important;
+                border-color: var(--adf-theme-foreground-text-color-027);
             }
 
             #{$mat-notched-outline-trailing} {
-                border-color: var(--adf-theme-foreground-text-color-027) !important;
+                border-color: var(--adf-theme-foreground-text-color-027);
             }
         }
     }
 
-    input, .mat-form-field-infix.mat-form-field-infix {
+    input,
+    .mat-form-field-infix.mat-form-field-infix {
         height: 25px;
         border: 1px solid var(--adf-theme-mat-grey-color-a400);
         border-radius: 5px;
@@ -89,43 +122,6 @@ adf-search-properties {
 
     .adf-search-properties-file-size-unit {
         width: 78px;
-    }
-
-    adf-search-chip-autocomplete-input {
-        display: block;
-
-        #{$mat-text-field-outlined} {
-            &-start,
-            &-end {
-                border-top: 1px solid var(--adf-theme-mat-grey-color-a400);
-                border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
-            }
-
-            &-start {
-                border-left: 1px solid var(--adf-theme-mat-grey-color-a400);
-            }
-
-            &-end {
-                border-right: 1px solid var(--adf-theme-mat-grey-color-a400);
-            }
-        }
-
-        #{$mat-focused} {
-            #{$mat-text-field-outlined} {
-                outline: 2px auto -webkit-focus-ring-color;
-            }
-        }
-
-        #{$mat-form-field-appearance-outline} {
-            #{$mat-text-field-outlined-thick} {
-                #{$mat-text-field-outlined} {
-                    &-start,
-                    &-end {
-                        border-width: 1px;
-                    }
-                }
-            }
-        }
     }
 
     .adf-search-properties-file-type-label {
