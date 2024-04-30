@@ -16,6 +16,6 @@ adf-search-facet-chip-tabbed {
     }
 }
 
-.adf-search-widget-extra-width.mat-mdc-menu-panel {
+.adf-search-widget-extra-width#{$mat-menu-panel} {
     max-width: 500px;
 }
