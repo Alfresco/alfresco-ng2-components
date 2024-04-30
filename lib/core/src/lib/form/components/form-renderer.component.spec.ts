@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -701,12 +701,12 @@ describe('Form Renderer Component', () => {
     });
 
     describe('Form rules', () => {
-        it('should call the Form Rules Manager init', () => {
+        it('should call the Form Rules Manager init on component changes', () => {
             spyOn(rulesManager, 'initialize');
             const formModel = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
 
             formRendererComponent.formDefinition = formModel;
-            formRendererComponent.ngOnInit();
+            formRendererComponent.ngOnChanges();
 
             expect(rulesManager.initialize).toHaveBeenCalledWith(formModel);
         });
