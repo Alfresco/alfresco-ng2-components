@@ -66,7 +66,7 @@ export class DynamicTableWidgetPage {
         const dataTableInput = $(`#${id}`);
         await BrowserVisibility.waitUntilElementIsVisible(dataTableInput);
         await BrowserActions.clearSendKeys(dataTableInput, text);
-     }
+    }
 
     async getTableRowText(rowNumber): Promise<string> {
         const tableRowByIndex = this.getTableRowByIndex(rowNumber);
@@ -121,7 +121,7 @@ export class DynamicTableWidgetPage {
     async checkItemIsPresent(item): Promise<void> {
         const row = element(by.cssContainingText('table tbody tr td span', item));
         const present = await BrowserVisibility.waitUntilElementIsVisible(row);
-        await expect(present).toBe(true);
+        expect(present).toBe(true);
     }
 
     private getTableRowByIndex = (idx: string) => $(`#dynamictable-row-${idx}`);

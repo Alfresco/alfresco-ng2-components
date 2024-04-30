@@ -16,15 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import {
-    createApiService,
-    LoginPage,
-    SnackbarPage,
-    StringUtil,
-    UploadActions,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, LoginPage, SnackbarPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { VersionManagePage } from '../pages/version-manager.page';
 import { UploadDialogPage } from '../pages/upload-dialog.page';
@@ -34,7 +26,6 @@ import CONSTANTS = require('../../util/constants');
 import { NodesApi, SitesApi } from '@alfresco/js-api';
 
 describe('Version component permissions', () => {
-
     const loginPage = new LoginPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
@@ -115,9 +106,9 @@ describe('Version component permissions', () => {
         Object.assign(lockFileModel, lockFileUploaded.entry);
 
         await nodesApi.lockNode(lockFileModel.id, {
-                type: 'FULL',
-                lifetime: 'PERSISTENT'
-            });
+            type: 'FULL',
+            lifetime: 'PERSISTENT'
+        });
 
         await apiService.login(fileCreatorUser.username, fileCreatorUser.password);
 
@@ -161,8 +152,8 @@ describe('Version component permissions', () => {
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');
-            await expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
-            await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
+            expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
+            expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             await versionManagePage.deleteFileVersion('1.1');
             await versionManagePage.confirmAccept.click();
@@ -176,7 +167,7 @@ describe('Version component permissions', () => {
 
         it('[C277204] Should be disabled the option for locked file', async () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
-            await expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false, 'Manage versions is enabled');
+            expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false, 'Manage versions is enabled');
         });
     });
 
@@ -200,7 +191,7 @@ describe('Version component permissions', () => {
 
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', async () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
-            await expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false, 'Manage version is enabled');
+            expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false);
         });
     });
 
@@ -234,8 +225,8 @@ describe('Version component permissions', () => {
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');
-            await expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
-            await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
+            expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
+            expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             await versionManagePage.deleteFileVersion('1.1');
             await versionManagePage.confirmAccept.click();
@@ -256,7 +247,7 @@ describe('Version component permissions', () => {
 
         it('[C277202] Should be disabled the option for a locked file', async () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
-            await expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false, 'Manage versions is enabled');
+            expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false);
         });
     });
 
@@ -290,8 +281,8 @@ describe('Version component permissions', () => {
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');
-            await expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
-            await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
+            expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
+            expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             await versionManagePage.deleteFileVersion('1.1');
             await versionManagePage.confirmAccept.click();
@@ -310,12 +301,12 @@ describe('Version component permissions', () => {
             await versionManagePage.uploadNewVersionFile(newVersionFile.location);
 
             await versionManagePage.checkFileVersionExist('1.1');
-            await expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
-            await expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
+            expect(await versionManagePage.getFileVersionName('1.1')).toEqual(newVersionFile.name);
+            expect(await versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
 
             await versionManagePage.clickActionButton('1.1');
 
-            await expect(await element(by.css(`[id="adf-version-list-action-delete-1.1"]`)).isEnabled()).toBe(false);
+            expect(await element(by.css(`[id="adf-version-list-action-delete-1.1"]`)).isEnabled()).toBe(false);
 
             await versionManagePage.closeActionsMenu();
 
@@ -324,7 +315,7 @@ describe('Version component permissions', () => {
 
         it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', async () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
-            await expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false, 'Manage versions is enabled');
+            expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false);
         });
     });
 });

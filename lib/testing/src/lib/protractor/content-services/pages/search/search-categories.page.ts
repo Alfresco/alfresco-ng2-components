@@ -25,7 +25,6 @@ import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchCategoriesPage {
-
     static checkListFiltersPage(filter: ElementFinder): SearchCheckListPage {
         return new SearchCheckListPage(filter);
     }
@@ -59,14 +58,13 @@ export class SearchCategoriesPage {
         await BrowserActions.click(fileSizeFilterHeader);
     }
 
-    async checkFilterIsCollapsed(filter: ElementFinder): Promise<void> {
+    async checkFilterIsCollapsed(filter: ElementFinder) {
         const elementClass = await BrowserActions.getAttribute(filter, 'class');
-        await expect(elementClass).not.toContain('mat-expanded');
+        expect(elementClass).not.toContain('mat-expanded');
     }
 
-    async checkFilterIsExpanded(filter: ElementFinder): Promise<void> {
+    async checkFilterIsExpanded(filter: ElementFinder) {
         const elementClass = await BrowserActions.getAttribute(filter, 'class');
-        await expect(elementClass).toContain('mat-expanded');
+        expect(elementClass).toContain('mat-expanded');
     }
-
 }

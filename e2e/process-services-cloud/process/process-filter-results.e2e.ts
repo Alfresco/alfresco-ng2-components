@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -36,9 +37,7 @@ import { EditProcessFilterConfiguration } from './../config/edit-process-filter.
 import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
 import { addDays, format, subDays } from 'date-fns';
 
-
 describe('Process filters cloud', () => {
-
     // en-US values for the process status
     const PROCESS_STATUS = {
         ALL: 'All',
@@ -99,16 +98,18 @@ describe('Process filters cloud', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
-        anotherUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+        anotherUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await identityService.addUserToGroup(anotherUser.idIdentityService, groupInfo.id);
 
         await apiService.login(anotherUser.username, anotherUser.password);
-        simpleAppProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+        simpleAppProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
+            browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess,
+            simpleApp
+        );
 
         differentAppUserProcessInstance = await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp, {
             name: StringUtil.generateRandomString(),
@@ -116,11 +117,15 @@ describe('Process filters cloud', () => {
         });
 
         await apiService.login(testUser.username, testUser.password);
-        processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+        processDefinition = await processDefinitionService.getProcessDefinitionByName(
+            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess,
+            candidateBaseApp
+        );
 
-        anotherProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
+        anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
+            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess,
+            candidateBaseApp
+        );
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             name: StringUtil.generateRandomString(),
@@ -150,7 +155,7 @@ describe('Process filters cloud', () => {
         await loginSSOPage.login(testUser.username, testUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
-   });
+    });
 
     afterAll(async () => {
         await processInstancesService.deleteProcessInstance(runningProcessInstance.entry.id, candidateBaseApp);
@@ -164,7 +169,7 @@ describe('Process filters cloud', () => {
 
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         await identityService.deleteIdentityUser(anotherUser.idIdentityService);
-   });
+    });
 
     beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -193,7 +198,7 @@ describe('Process filters cloud', () => {
         await editProcessFilter.setInitiator(`${testUser.firstName} ${testUser.lastName}`);
         await processList.getDataTable().waitTillContentLoaded();
 
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
+        expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
     it('[C306890] Should be able to filter by initiator', async () => {
@@ -239,13 +244,13 @@ describe('Process filters cloud', () => {
         await processList.getDataTable().waitTillContentLoaded();
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await expect(await processList.getDataTable().getNumberOfRows()).toBe(1);
+        expect(await processList.getDataTable().getNumberOfRows()).toBe(1);
 
         await editProcessFilter.setProperty('processInstanceId', anotherProcessInstance.entry.id);
         await processList.getDataTable().waitTillContentLoaded();
         await processList.checkContentIsDisplayedByName(anotherProcessInstance.entry.name);
         await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
-        await expect(await processList.getDataTable().getNumberOfRows()).toBe(1);
+        expect(await processList.getDataTable().getNumberOfRows()).toBe(1);
     });
 
     it('[C311321] Should be able to filter by process name', async () => {
@@ -364,6 +369,6 @@ describe('Process filters cloud', () => {
         await editProcessFilter.setProperty('lastModifiedFrom', afterDate);
         await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProperty('lastModifiedTo', afterDate);
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
+        expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 });

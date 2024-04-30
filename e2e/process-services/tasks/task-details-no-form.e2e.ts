@@ -64,6 +64,6 @@ describe('Task Details - No form', () => {
         await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
 
         const noFormMessage = 'No forms attached';
-        await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
     });
 });

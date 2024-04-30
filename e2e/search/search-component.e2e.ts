@@ -161,20 +161,20 @@ describe('Search component - Search Bar', () => {
 
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
 
-        await expect(await searchBarPage.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.shortName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
-        await expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        expect(await searchBarPage.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.shortName);
+        expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
+        expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
+        expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         await searchBarPage.clearText();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterText(firstFileModel.shortName);
         await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
-        await expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.firstName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.lastName);
-        await expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
+        expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
+        expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.firstName);
+        expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.lastName);
+        expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
     it('[C272800] Should display file/folder in search suggestion when typing name', async () => {
@@ -184,10 +184,10 @@ describe('Search component - Search Bar', () => {
 
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
 
-        await expect(await searchBarPage.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
-        await expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        expect(await searchBarPage.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
+        expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
+        expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         await searchBarPage.clearText();
 
@@ -195,10 +195,10 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.enterText(firstFileModel.name);
         await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
-        await expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.firstName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.lastName);
-        await expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
+        expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
+        expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.firstName);
+        expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.lastName);
+        expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
     it('[C260257] Should display content when clicking on folder from search suggestions', async () => {
@@ -210,7 +210,7 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.clickOnSpecificRow(firstFolderModel.name);
         await searchResultPage.dataTable.waitTillContentLoaded();
 
-        await expect(await contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
+        expect(await contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
 
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
@@ -220,7 +220,7 @@ describe('Search component - Search Bar', () => {
 
         await searchBarPage.clickOnSpecificRow(firstFileModel.name);
 
-        await expect(await viewerPage.getDisplayedFileName()).toEqual(firstFileModel.name);
+        expect(await viewerPage.getDisplayedFileName()).toEqual(firstFileModel.name);
 
         await viewerPage.clickCloseButton();
     });
@@ -252,7 +252,7 @@ describe('Search component - Search Bar', () => {
         await searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
-    it("[C290137] Should be able to search by '%'", async () => {
+    it(`[C290137] Should be able to search by '%'`, async () => {
         await openSearchBar();
 
         await searchBarPage.enterTextAndPressEnter('%');
@@ -275,11 +275,14 @@ describe('Search component - Search Bar', () => {
 
         it('[C299212] Should be able to configure the highlight option for search results', async () => {
             const text = await searchResultPage.getNodeHighlight(fileHighlightUploaded.entry.name).getText();
-            await expect(text.includes(`¿${term}?`)).toBe(true);
-            await expect(text.includes(`(${term})`)).toBe(true);
+            expect(text.includes(`¿${term}?`)).toBe(true);
+            expect(text.includes(`(${term})`)).toBe(true);
         });
     });
 
+    /**
+     * Open the search bar
+     */
     async function openSearchBar(): Promise<void> {
         if (await searchBarPage.searchBarExpanded.isDisplayed()) {
             await searchBarPage.clearText();

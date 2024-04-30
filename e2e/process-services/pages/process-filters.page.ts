@@ -43,13 +43,13 @@ export class ProcessFiltersPage {
     async clickCompletedFilterButton(): Promise<void> {
         const completedFilterButtonLocator = await this.getButtonFilterLocatorByName('Completed');
         await BrowserActions.click(completedFilterButtonLocator);
-        await expect(await completedFilterButtonLocator.isEnabled()).toBe(true);
+        expect(await completedFilterButtonLocator.isEnabled()).toBe(true);
     }
 
     async clickAllFilterButton(): Promise<void> {
         const allFilterButtonLocator = await this.getButtonFilterLocatorByName('All');
         await BrowserActions.click(allFilterButtonLocator);
-        await expect(await allFilterButtonLocator.isEnabled()).toBe(true);
+        expect(await allFilterButtonLocator.isEnabled()).toBe(true);
     }
 
     async clickCreateProcessButton(): Promise<void> {

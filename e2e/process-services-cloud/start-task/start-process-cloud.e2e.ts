@@ -15,14 +15,22 @@
  * limitations under the License.
  */
 
-import { createApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
+import {
+    createApiService,
+    AppListCloudPage,
+    BrowserActions,
+    GroupIdentityService,
+    IdentityService,
+    LoginPage,
+    StartProcessCloudPage,
+    StringUtil
+} from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Start Process', () => {
-
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -44,12 +52,13 @@ describe('Start Process', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required';
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    let testUser; let groupInfo;
+    let testUser;
+    let groupInfo;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
@@ -57,12 +66,12 @@ describe('Start Process', () => {
 
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
-   });
+    });
 
     afterAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-   });
+    });
 
     afterEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -77,7 +86,7 @@ describe('Start Process', () => {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 
         await startProcessPage.checkValidationErrorIsDisplayed(requiredError);
-        await expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
+        expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
 
         await BrowserActions.closeMenuAndDialogs();
         await startProcessPage.clickCancelProcessButton();
@@ -90,11 +99,11 @@ describe('Start Process', () => {
         await startProcessPage.selectFirstOptionFromProcessDropdown();
 
         await startProcessPage.enterProcessName(processName255Characters);
-        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
+        expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
 
         await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
         await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
-        await expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
+        expect(await startProcessPage.isStartProcessButtonDisabled()).toEqual(true);
     });
 
     it('[C291860] Should be able to start a process', async () => {
@@ -105,14 +114,14 @@ describe('Start Process', () => {
 
         await startProcessPage.clearField(startProcessPage.processNameInput);
         await startProcessPage.enterProcessName(processName);
-        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
+        expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
         await startProcessPage.clickStartProcessButton();
         await processFilter.clickOnProcessFilters();
 
         await processFilter.clickRunningProcessesFilter();
         await editProcessFilter.openFilter();
         await editProcessFilter.setProcessName(processName);
-        await expect(await processFilter.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
+        expect(await processFilter.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
         await processList.checkContentIsDisplayedByName(processName);
-   });
+    });
 });

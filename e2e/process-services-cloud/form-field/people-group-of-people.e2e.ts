@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    FormCloudComponentPage,
-    FormPage,
-    LoginPage,
-    ProcessCloudWidgetPage
-} from '@alfresco/adf-testing';
+import { FormCloudComponentPage, FormPage, LoginPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 import {
     peopleSingleModeFormMock,
     peopleMultipleModeFormMock,
@@ -34,7 +29,6 @@ import {
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('People and Group of people Widgets', () => {
-
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudComponentPage = new FormCloudComponentPage();
@@ -80,7 +74,7 @@ describe('People and Group of people Widgets', () => {
         await peopleCloudWidget.clickPeopleInput(widgets.peopleCloudWidgetSingleModeId);
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetSingleModeField);
         const peopleSingleMode = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetSingleModeId);
-        await expect(peopleSingleMode).toEqual('');
+        expect(peopleSingleMode).toEqual('');
 
         await peopleCloudWidget.searchAssigneeAndSelect('HR User');
         await peopleCloudWidget.checkSelectedPeople('HR User');
@@ -92,7 +86,7 @@ describe('People and Group of people Widgets', () => {
         await peopleCloudWidget.clickPeopleInput(widgets.peopleCloudWidgetMultipleModeId);
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetMultipleModeField);
         const peopleMultipleMode = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetMultipleModeId);
-        await expect(peopleMultipleMode).toEqual('');
+        expect(peopleMultipleMode).toEqual('');
 
         await peopleCloudWidget.searchAssigneeAndSelect('HR User');
         await peopleCloudWidget.searchAssigneeAndSelect('Sales User');
@@ -106,24 +100,24 @@ describe('People and Group of people Widgets', () => {
         const readOnlyAttribute = await peopleCloudWidget.checkPeopleWidgetIsReadOnly();
         const activePeopleField = await peopleCloudWidget.checkPeopleActiveField('HR User');
 
-        await expect (readOnlyAttribute).toBe(true);
-        await expect (activePeopleField).toBe(false);
+        expect(readOnlyAttribute).toBe(true);
+        expect(activePeopleField).toBe(false);
     });
 
     it('[C325004] Should save button be enabled for both valid and invalid inputs in the People field', async () => {
         await formCloudComponentPage.setConfigToEditor(peopleRequiredFormMock);
 
         await peopleCloudWidget.isPeopleWidgetVisible(peopleValueString.peopleCloudWidgetRequiredField);
-        await expect(await formPage.isSaveButtonDisabled()).toBe(false);
-        await expect(await formPage.isValidationIconRed()).toBe(true);
+        expect(await formPage.isSaveButtonDisabled()).toBe(false);
+        expect(await formPage.isValidationIconRed()).toBe(true);
 
         const requiredPeople = await peopleCloudWidget.getFieldValue(widgets.peopleCloudWidgetRequiredId);
-        await expect(requiredPeople).toEqual('');
+        expect(requiredPeople).toEqual('');
         await peopleCloudWidget.searchAssigneeAndSelect('HR User');
 
         await peopleCloudWidget.checkSelectedPeople('HR User');
-        await expect(await formPage.isSaveButtonDisabled()).toBe(false);
-        await expect(await formPage.isValidationIconBlue()).toBe(true);
+        expect(await formPage.isSaveButtonDisabled()).toBe(false);
+        expect(await formPage.isValidationIconBlue()).toBe(true);
     });
 
     it('[C325003] Should be able to add a user in Group of people field when Single mode is chosen', async () => {
@@ -131,7 +125,7 @@ describe('People and Group of people Widgets', () => {
 
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetSingleModeField);
         const groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
-        await expect(groupSingleMode).toEqual('');
+        expect(groupSingleMode).toEqual('');
 
         await groupCloudWidget.searchGroups('hr');
         await groupCloudWidget.selectGroupFromList('hr');
@@ -143,7 +137,7 @@ describe('People and Group of people Widgets', () => {
 
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetMultipleModeField);
         const groupSingleMode = await groupCloudWidget.getGroupsFieldContent();
-        await expect(groupSingleMode).toEqual('');
+        expect(groupSingleMode).toEqual('');
 
         await groupCloudWidget.searchGroups('hr');
         await groupCloudWidget.selectGroupFromList('hr');
@@ -159,24 +153,24 @@ describe('People and Group of people Widgets', () => {
         const readOnlyGroupAttribute = await groupCloudWidget.checkGroupWidgetIsReadOnly();
         const activeGroupField = await groupCloudWidget.checkGroupActiveField('hr');
 
-        await expect (readOnlyGroupAttribute).toBe(true);
-        await expect (activeGroupField).toBe(false);
+        expect(readOnlyGroupAttribute).toBe(true);
+        expect(activeGroupField).toBe(false);
     });
 
     it('[C325005] Should save button be enabled for both valid and invalid inputs in the Group of people field', async () => {
         await formCloudComponentPage.setConfigToEditor(groupRequiredFormMock);
 
         await groupCloudWidget.isGroupWidgetVisible(groupValueString.groupCloudWidgetRequiredField);
-        await expect(await formPage.isSaveButtonDisabled()).toBe(false);
-        await expect(await formPage.isValidationIconRed()).toBe(true);
+        expect(await formPage.isSaveButtonDisabled()).toBe(false);
+        expect(await formPage.isValidationIconRed()).toBe(true);
 
         const groupRequired = await groupCloudWidget.getGroupsFieldContent();
-        await expect(groupRequired).toEqual('');
+        expect(groupRequired).toEqual('');
         await groupCloudWidget.searchGroups('hr');
         await groupCloudWidget.selectGroupFromList('hr');
 
         await groupCloudWidget.checkSelectedGroup('hr');
-        await expect(await formPage.isSaveButtonDisabled()).toBe(false);
-        await expect(await formPage.isValidationIconBlue()).toBe(true);
+        expect(await formPage.isSaveButtonDisabled()).toBe(false);
+        expect(await formPage.isValidationIconBlue()).toBe(true);
     });
 });

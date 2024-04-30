@@ -15,20 +15,12 @@
  * limitations under the License.
  */
 
-import * as path from 'path';
-import * as fs from 'fs';
-import { browser } from 'protractor';
-
-export class FileBrowserUtil {
-    static async isFileDownloaded(fileName: string): Promise<boolean> {
-        const DEFAULT_ROOT_PATH = browser.params.testConfig ? browser.params.testConfig.main.rootPath : __dirname;
-        const file: boolean = await browser.driver.wait(
-            () => fs.existsSync(path.join(DEFAULT_ROOT_PATH, 'downloads', fileName)),
-            30000,
-            `${fileName} not downloaded`
-        );
-
-        expect(file).toBe(true);
-        return !!file;
-    }
-}
+export * from './activiti-alfresco.service';
+export * from './ecm-model.service';
+export * from './editor.service';
+export * from './external-alfresco-api.service';
+export * from './model.service';
+export * from './process-content.service';
+export * from './process-definition.service';
+export * from './task.service';
+export * from './task-form.service';

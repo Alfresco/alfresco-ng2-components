@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import { createApiService, BrowserActions,
+import {
+    createApiService,
+    BrowserActions,
     DataTableComponentPage,
     LocalStorageUtil,
     LoginPage,
@@ -32,7 +34,6 @@ import { browser, ElementFinder } from 'protractor';
 import { SearchConfiguration } from '../search.config';
 
 describe('Search Slider Filter', () => {
-
     const loginPage = new LoginPage();
     const searchBarPage = new SearchBarPage();
     const searchFilters = new SearchFiltersPage();
@@ -70,18 +71,16 @@ describe('Search Slider Filter', () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
         await searchResults.dataTable.waitTillContentLoaded();
-
     });
 
     afterAll(async () => {
         try {
             await apiService.login(acsUser.username, acsUser.password);
             await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
-        } catch (error) {
-        }
+        } catch (error) {}
 
         await navigationBarPage.clickLogoutButton();
-   });
+    });
 
     afterEach(async () => {
         await browser.refresh();
@@ -112,7 +111,7 @@ describe('Search Slider Filter', () => {
         await searchFilters.checkSizeSliderFilterIsExpanded();
         await searchFilters.checkSizeSliderFilterIsDisplayed();
 
-        await expect(await sizeSliderFilter.getValue()).toEqual(`${size}`);
+        expect(await sizeSliderFilter.getValue()).toEqual(`${size}`);
     });
 
     it('[C276981] Should be able to clear value in Search Size Slider', async () => {
@@ -124,12 +123,12 @@ describe('Search Slider Filter', () => {
         await sizeSliderFilter.setValue(size);
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const results = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
+                expect(parseInt(currentSize, 10) <= 5000).toBe(true);
             }
         }
 
@@ -138,12 +137,12 @@ describe('Search Slider Filter', () => {
 
         await searchResults.sortBySize('DESC');
 
-        const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const resultsSize = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of resultsSize) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
+                expect(parseInt(currentSize, 10) >= 5000).toBe(true);
             }
         }
     });
@@ -190,7 +189,7 @@ describe('Search Slider Filter', () => {
 
             await sizeSliderFilter.checkSliderIsDisplayed();
 
-            await expect(await sizeSliderFilter.getMinValue()).toEqual(`${minSize}`);
+            expect(await sizeSliderFilter.getMinValue()).toEqual(`${minSize}`);
         });
 
         it('[C276986] Should be able to set max value for Search Size Slider', async () => {
@@ -210,7 +209,7 @@ describe('Search Slider Filter', () => {
 
             await sizeSliderFilter.checkSliderIsDisplayed();
 
-            await expect(await sizeSliderFilter.getMaxValue()).toEqual(`${maxSize}`);
+            expect(await sizeSliderFilter.getMaxValue()).toEqual(`${maxSize}`);
         });
 
         it('[C276987] Should be able to set steps for Search Size Slider', async () => {
@@ -232,9 +231,9 @@ describe('Search Slider Filter', () => {
             await sizeSliderFilter.checkSliderIsDisplayed();
             await sizeSliderFilter.setValue(randomValue);
 
-            await expect(await sizeSliderFilter.getValue()).toEqual(`0`);
+            expect(await sizeSliderFilter.getValue()).toEqual(`0`);
             await sizeSliderFilter.setValue(step);
-            await expect(await sizeSliderFilter.getValue()).toEqual(`${step}`);
+            expect(await sizeSliderFilter.getValue()).toEqual(`${step}`);
         });
     });
 });

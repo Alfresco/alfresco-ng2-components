@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    StartProcessPage,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, StartProcessPage, UsersActions, Widget } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { ProcessDetailsPage } from './../pages/process-details.page';
 import { TaskDetailsPage } from './../pages/task-details.page';
@@ -31,7 +25,6 @@ import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.pag
 import { TaskFormsApi } from '@alfresco/js-api';
 
 describe('Form widgets - People ', () => {
-
     const app = browser.params.resources.Files.APP_WITH_USER_WIDGET;
 
     const loginPage = new LoginPage();
@@ -86,7 +79,7 @@ describe('Form widgets - People ', () => {
         const taskId = await taskDetails.getId();
         const taskForm: any = await taskFormsApi.getTaskForm(taskId);
         const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
-        await expect(userEmail).toEqual(processUserModel.email);
+        expect(userEmail).toEqual(processUserModel.email);
     });
 
     it('[C286576] Should be able to see user in completed task', async () => {
@@ -106,6 +99,6 @@ describe('Form widgets - People ', () => {
         const taskId = await taskDetails.getId();
         const taskForm: any = await taskFormsApi.getTaskForm(taskId);
         const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
-        await expect(userEmail).toEqual(processUserModel.email);
+        expect(userEmail).toEqual(processUserModel.email);
     });
 });
