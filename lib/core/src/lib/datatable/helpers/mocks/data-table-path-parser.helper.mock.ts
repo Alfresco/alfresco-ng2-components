@@ -38,7 +38,7 @@ export const mockResultData = [
     }
 ];
 
-export const mockResponseResultData = (propertyName: string) => ({
+export const mockResponseResultData = (propertyName?: string) => ({
     response: {
         [propertyName]: mockResultData
     }

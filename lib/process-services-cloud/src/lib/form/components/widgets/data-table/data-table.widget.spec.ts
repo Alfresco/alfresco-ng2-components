@@ -34,7 +34,9 @@ import {
     mockJsonResponseEuropeCountriesData,
     mockJsonResponseFormVariable,
     mockJsonNestedResponseFormVariable,
-    mockJsonNestedResponseEuropeCountriesData
+    mockJsonNestedResponseEuropeCountriesData,
+    mockNestedEuropeCountriesData,
+    mockSchemaDefinitionWithNestedKeys
 } from './mocks/data-table-widget.mock';
 
 describe('DataTableWidgetComponent', () => {
@@ -115,6 +117,15 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         widget.dataSource.getColumns().forEach((column, index) => expect(column.key).toEqual(mockSchemaDefinition[index].key));
+    });
+
+    it('should properly initialize data source based on nested schema and data', () => {
+        widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinitionWithNestedKeys, [], []);
+        widget.field.value = mockNestedEuropeCountriesData;
+        fixture.detectChanges();
+
+        const expectedData = new WidgetDataTableAdapter(mockNestedEuropeCountriesData, mockSchemaDefinitionWithNestedKeys);
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize data source with priority on the field value if process and form variables are provided', () => {

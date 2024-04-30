@@ -22,19 +22,22 @@ import { ObjectDataColumn } from './object-datacolumn.model';
 import { DataSorting } from './data-sorting.model';
 import { DataTableAdapter } from './datatable-adapter';
 import { Subject } from 'rxjs';
+import { DataTablePathParserHelper } from '../helpers/data-table-path-parser.helper';
 
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
     private _sorting: DataSorting;
     private _rows: DataRow[];
     private _columns: DataColumn[];
+    private columnPaths: string[] = [];
+    private columnKeys: string[] = [];
+    private helper = new DataTablePathParserHelper();
 
     selectedRow: DataRow;
     rowsChanged: Subject<Array<DataRow>>;
 
     static generateSchema(data: any[]) {
         const schema = [];
-
         if (data?.length) {
             const rowToExamine = data[0];
 
@@ -58,21 +61,64 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this._rows = [];
         this._columns = [];
 
-        if (data && data.length > 0) {
-            this._rows = data.map((item) => new ObjectDataRow(item));
-        }
-
-        if (schema && schema.length > 0) {
-            this._columns = schema.map((item) => new ObjectDataColumn(item));
-
-            // Sort by first sortable or just first column
-            const sortable = this._columns.filter((column) => column.sortable);
-            if (sortable.length > 0) {
-                this.sort(sortable[0].key, 'asc');
-            }
-        }
+        this.createColumns(schema);
+        this.createRows(data);
+        this.sortColumns();
 
         this.rowsChanged = new Subject<Array<DataRow>>();
+    }
+
+    private createColumns(schema: DataColumn[]): void {
+        if (schema?.length) {
+            this._columns = this.buildColumnsFromSchema(schema);
+        }
+    }
+
+    private buildColumnsFromSchema(schema: DataColumn[]): ObjectDataColumn[] {
+        return schema.map((dataColumn) => {
+            const columnKey = this.extractNestedColumnKey(dataColumn.key);
+            this.columnPaths.push(dataColumn.key);
+            this.columnKeys.push(columnKey);
+            dataColumn.key = columnKey;
+
+            return new ObjectDataColumn(dataColumn);
+        });
+    }
+
+    private sortColumns(): void {
+        const sortable = this._columns.filter((column) => column.sortable);
+        if (sortable?.length) {
+            this.sort(sortable[0].key, 'asc');
+        }
+    }
+
+    private extractNestedColumnKey(path: string): string {
+        const properties = this.helper.splitPathIntoProperties(path);
+
+        return this.helper.removeSquareBracketsFromProperty(properties[properties.length - 1]);
+    }
+
+    private createRows(data: any[]): void {
+        if (data?.length) {
+            this._rows = data.map((item) => this.buildDataRowFromItem(item));
+        }
+    }
+
+    private buildDataRowFromItem(item: any): ObjectDataRow {
+        const rowData = {};
+        this.columnPaths.forEach((path, i) => {
+            const rowValue = this.extractPropertyValue(this.helper.splitPathIntoProperties(path), item);
+
+            if (rowValue) {
+                rowData[this.columnKeys[i]] = rowValue;
+            }
+        });
+
+        return new ObjectDataRow(rowData);
+    }
+
+    private extractPropertyValue(properties: string[], item: any): string {
+        return properties.reduce((acc, property) => (acc ? acc[this.helper.removeSquareBracketsFromProperty(property)] : undefined), item);
     }
 
     getColumnType(_row: DataRow, col: DataColumn): string {

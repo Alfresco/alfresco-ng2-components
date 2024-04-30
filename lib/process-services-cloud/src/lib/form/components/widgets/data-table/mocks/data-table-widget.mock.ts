@@ -35,6 +35,23 @@ export const mockSchemaDefinition: DataColumn[] = [
     }
 ];
 
+export const mockSchemaDefinitionWithNestedKeys: DataColumn[] = [
+    {
+        type: 'text',
+        key: 'countries.europeCountries.id',
+        title: 'Country ID',
+        sortable: true,
+        draggable: true
+    },
+    {
+        type: 'text',
+        key: 'countries.europeCountries.name',
+        title: 'Country Name',
+        sortable: true,
+        draggable: true
+    }
+];
+
 export const mockInvalidSchemaDefinition: DataColumn[] = [
     {
         type: 'text',
@@ -84,6 +101,33 @@ export const mockJsonNestedResponseEuropeCountriesData = {
         'no-array': {}
     }
 };
+
+export const mockNestedEuropeCountriesData = [
+    {
+        countries: {
+            europeCountry: {
+                id: 'PL',
+                name: 'Poland'
+            }
+        }
+    },
+    {
+        countries: {
+            europeCountry: {
+                id: 'IT',
+                name: 'Italy'
+            }
+        }
+    },
+    {
+        countries: {
+            europeCountry: {
+                id: 'UK',
+                name: 'United Kingdom'
+            }
+        }
+    }
+];
 
 export const mockAmericaCountriesData = [
     {
