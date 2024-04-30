@@ -62,6 +62,7 @@
     #{$mat-snackbar} {
         &#{$mat-snack-bar-container} {
             margin: 24px;
+            border-radius: 4px;
 
             #{$mat-snackbar-label} {
                 line-height: unset;
