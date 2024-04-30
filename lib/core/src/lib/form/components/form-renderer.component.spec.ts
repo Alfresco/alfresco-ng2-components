@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-import { FormRendererComponent, FormRenderingService, FormRulesManager, FormService } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../testing';
+import { FormBaseModule } from '../form-base.module';
+import { FormRulesManager } from '../models/form-rules.model';
+import { FormRenderingService } from '../services/form-rendering.service';
+import { FormService } from '../services/form.service';
+import { FormRendererComponent } from './form-renderer.component';
 import {
     amountWidgetFormVisibilityMock,
     checkboxWidgetFormVisibilityMock,
@@ -42,9 +45,6 @@ import {
     radioWidgetVisibilityForm,
     textWidgetVisibility
 } from './mock/form-renderer.component.mock';
-import { FormService } from '../services/form.service';
-import { CoreTestingModule } from '../../testing';
-import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {

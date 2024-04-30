@@ -15,16 +15,12 @@
  * limitations under the License.
  */
 
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../../testing';
-import { CheckboxWidgetComponent, TextWidgetComponent } from '../widgets';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../widgets/core';
-import { FormRenderingService } from '../../services/form-rendering.service';
-import { FormFieldComponent } from './form-field.component';
 import { FormBaseModule } from '../../form-base.module';
-import { CoreTestingModule } from '../../../testing';
+import { FormRenderingService } from '../../services/form-rendering.service';
+import { CheckboxWidgetComponent, FormFieldModel, FormFieldTypes, FormModel, TextWidgetComponent } from '../widgets';
+import { FormFieldComponent } from './form-field.component';
 
 describe('FormFieldComponent', () => {
     let fixture: ComponentFixture<FormFieldComponent>;
@@ -48,12 +44,10 @@ describe('FormFieldComponent', () => {
     });
 
     it('should create default component instance', (done) => {
-        const field = new FormFieldModel(form, {
+        component.field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
-
-        component.field = field;
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -66,12 +60,10 @@ describe('FormFieldComponent', () => {
     it('should create custom component instance', (done) => {
         formRenderingService.setComponentTypeResolver(FormFieldTypes.AMOUNT, () => CheckboxWidgetComponent, true);
 
-        const field = new FormFieldModel(form, {
+        component.field = new FormFieldModel(form, {
             type: FormFieldTypes.AMOUNT,
             id: 'FAKE-TXT-WIDGET'
         });
-
-        component.field = field;
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -99,13 +91,12 @@ describe('FormFieldComponent', () => {
     });
 
     it('should hide the field when it is not visible', (done) => {
-        const field = new FormFieldModel(form, {
+        component.field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
-
-        component.field = field;
         component.field.isVisible = false;
+
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const debugElement = fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style;
@@ -116,12 +107,10 @@ describe('FormFieldComponent', () => {
     });
 
     it('should show the field when it is visible', (done) => {
-        const field = new FormFieldModel(form, {
+        component.field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
-
-        component.field = field;
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -132,23 +121,23 @@ describe('FormFieldComponent', () => {
     });
 
     it('should hide a visible element', () => {
-        const field = new FormFieldModel(form, {
+        component.field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,
             id: 'FAKE-TXT-WIDGET'
         });
 
-        component.field = field;
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('visible');
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('block');
         component.field.isVisible = false;
+
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.visibility).toEqual('hidden');
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').style.display).toEqual('none');
     });
 
     it('[C213878] - Should fields be correctly rendered when filled with process variables', async () => {
-        const field = new FormFieldModel(form, {
+        component.field = new FormFieldModel(form, {
             fieldType: 'HyperlinkRepresentation',
             id: 'label2',
             name: 'Label2',
@@ -191,8 +180,6 @@ describe('FormFieldComponent', () => {
             hyperlinkUrl: 'testtest',
             displayText: null
         });
-
-        component.field = field;
         fixture.detectChanges();
         const hyperlink: HTMLLinkElement = fixture.nativeElement.querySelector('#field-label2-container hyperlink-widget a');
         expect(hyperlink).not.toBeNull();
