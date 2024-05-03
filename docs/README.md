@@ -453,12 +453,6 @@ for more information about installing and using the source code.
 | [Task Audit Directive](process-services/directives/task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/task-list/components/task-audit.directive.ts) |
 | [Unclaim Task Directive](process-services/directives/unclaim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/unclaim-task.directive.ts) |
 
-### Pipes
-
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [Process name pipe](process-services/pipes/process-name.pipe.md) | When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided. | [Source](../lib/process-services/src/lib/pipes/process-name.pipe.ts) |
-
 ### Services
 
 | Name | Description | Source link |
