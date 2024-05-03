@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TranslationService, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
+import { TranslationService, CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
 import { AppsProcessService } from './services/apps-process.service';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer, of, Subject } from 'rxjs';
@@ -23,6 +23,12 @@ import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
 import { share, takeUntil, finalize } from 'rxjs/operators';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 const DEFAULT_TASKS_APP: string = 'tasks';
 const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
@@ -34,6 +40,8 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
 
 @Component({
     selector: 'adf-apps',
+    standalone: true,
+    imports: [CommonModule, MatListModule, MatIconModule, MatCardModule, MatProgressSpinnerModule, TranslateModule, EmptyContentComponent],
     templateUrl: './apps-list.component.html',
     styleUrls: ['./apps-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
