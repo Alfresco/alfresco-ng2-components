@@ -26,7 +26,7 @@ export class DatePickerCalendarPage {
     datePicker = $(`${materialLocators.Calendar.root}[id*="${materialLocators.Datepicker.root}"]`);
     nextMonthButton = $(`button[class*="${materialLocators.Calendar.button('next')}"]`);
     previousMonthButton = $(`button[class*="${materialLocators.Calendar.button('previous')}"]`);
-    todayDate = TestElement.byCss(`div${materialLocators.Calendar.body.today.class}`);
+    todayDate = TestElement.byCss(`${materialLocators.Calendar.body.today.class}`);
     periodButton = $(`button[class*=${materialLocators.Calendar.button('period')}]`);
 
     focusedElement = `div${materialLocators.Calendar.body.cell.content.class}${materialLocators.Focus.indicator}`;
