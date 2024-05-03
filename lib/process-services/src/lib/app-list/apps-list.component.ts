@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { TranslationService, CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
+import { CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
 import { AppsProcessService } from './services/apps-process.service';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { Observable, Observer, of, Subject } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
 import { share, takeUntil, finalize } from 'rxjs/operators';
@@ -80,7 +80,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     private iconsMDL: IconModel;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private appsProcessService: AppsProcessService, private translationService: TranslationService) {
+    constructor(private appsProcessService: AppsProcessService) {
         this.apps$ = new Observable<AppDefinitionRepresentationModel>((observer) => (this.appsObserver = observer)).pipe(share());
     }
 
@@ -110,8 +110,8 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         return app.defaultAppId === DEFAULT_TASKS_APP;
     }
 
-    getAppName(app: AppDefinitionRepresentationModel): Observable<string> {
-        return this.isDefaultApp(app) ? this.translationService.get(DEFAULT_TASKS_APP_NAME) : of(app.name);
+    getAppName(app: AppDefinitionRepresentationModel): string {
+        return this.isDefaultApp(app) ? DEFAULT_TASKS_APP_NAME : app.name;
     }
 
     /**
