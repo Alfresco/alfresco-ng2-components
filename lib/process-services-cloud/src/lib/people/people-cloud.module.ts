@@ -19,26 +19,15 @@ import { NgModule } from '@angular/core';
 import { PeopleCloudComponent } from './components/people-cloud.component';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, FullNamePipe, InitialUsernamePipe } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdentityUserService } from './services/identity-user.service';
 import { IDENTITY_USER_SERVICE_TOKEN } from './services/identity-user-service.token';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CoreModule
-    ],
+    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, FullNamePipe, InitialUsernamePipe],
     declarations: [PeopleCloudComponent],
-    exports: [
-        PeopleCloudComponent
-    ],
-    providers: [
-        { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }
-    ]
+    exports: [PeopleCloudComponent],
+    providers: [{ provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }]
 })
-export class PeopleCloudModule {
-}
+export class PeopleCloudModule {}
