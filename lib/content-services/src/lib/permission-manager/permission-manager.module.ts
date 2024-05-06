@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CoreModule, PipeModule } from '@alfresco/adf-core';
+import { CoreModule, InitialUsernamePipe, PipeModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,15 +34,7 @@ import { PopOverDirective } from './components/pop-over.directive';
 import { PermissionContainerComponent } from './components/permission-container/permission-container.component';
 
 @NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        SearchModule,
-        PipeModule
-    ],
+    imports: [CoreModule, CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, SearchModule, PipeModule, InitialUsernamePipe],
     declarations: [
         PermissionListComponent,
         AddPermissionPanelComponent,

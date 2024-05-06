@@ -17,19 +17,13 @@
 
 import { NgModule } from '@angular/core';
 import { IconComponent } from './icon.component';
-import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
 
+/**
+ * @deprecated this Module is deprecated and should no longer be used.
+ * Consider importing components directly instead.
+ */
 @NgModule({
-    imports: [
-        CommonModule,
-        MatIconModule
-    ],
-    declarations: [
-        IconComponent
-    ],
-    exports: [
-        IconComponent
-    ]
+    imports: [IconComponent],
+    exports: [IconComponent]
 })
 export class IconModule {}

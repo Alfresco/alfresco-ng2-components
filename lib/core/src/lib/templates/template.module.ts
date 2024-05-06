@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { ErrorContentComponent } from './error-content/error-content.component';
 import { EmptyContentComponent } from './empty-content/empty-content.component';
-import { IconModule } from '../icon/icon.module';
-import { MatButtonModule } from '@angular/material/button';
 
+/**
+ * @deprecated this Module is deprecated and should no longer be used.
+ * Consider importing components directly instead.
+ */
 @NgModule({
-    imports: [CommonModule, TranslateModule, IconModule],
-    declarations: [ErrorContentComponent, EmptyContentComponent],
-    exports: [ErrorContentComponent, EmptyContentComponent, MatButtonModule]
+    imports: [ErrorContentComponent, EmptyContentComponent],
+    exports: [ErrorContentComponent, EmptyContentComponent]
 })
 export class TemplateModule {}
