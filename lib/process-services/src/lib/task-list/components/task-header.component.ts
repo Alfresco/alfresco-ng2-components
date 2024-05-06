@@ -58,7 +58,6 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
     properties: any[] = [];
-    inEdit: boolean = false;
     displayDateClearAction = false;
     dateFormat: string;
     dateLocale: string;
@@ -196,10 +195,20 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         return this.taskDetails?.isCompleted() ? 'Completed' : 'Running';
     }
 
+    /**
+     * Emit the claim event
+     *
+     * @param taskId the id of the task to claim
+     */
     onClaimTask(taskId: string) {
         this.claim.emit(taskId);
     }
 
+    /**
+     * Emit the unclaim event
+     *
+     * @param taskId the id of the task to unclaim
+     */
     onUnclaimTask(taskId: string) {
         this.unclaim.emit(taskId);
     }
@@ -213,10 +222,20 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         return !!this.taskDetails?.endDate;
     }
 
+    /**
+     * Check if the form is clickable
+     *
+     * @returns `true` if the form is clickable, otherwise `false`
+     */
     isFormClickable(): boolean {
         return !!this.formName && !this.isCompleted();
     }
 
+    /**
+     * Get the task duration
+     *
+     * @returns the task duration in milliseconds
+     */
     getTaskDuration(): string {
         return this.taskDetails.duration ? `${this.taskDetails.duration} ms` : '';
     }
