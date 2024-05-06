@@ -17,10 +17,10 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../../dialogs';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
-import { MatDialog } from '@angular/material/dialog';
-import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs';
 
 @Component({
     standalone: true,

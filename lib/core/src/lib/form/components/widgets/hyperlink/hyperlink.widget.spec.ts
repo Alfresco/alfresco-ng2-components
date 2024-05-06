@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, FormFieldModel, FormFieldTypes } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormModel } from '../core/form.model';
-import { HyperlinkWidgetComponent } from './hyperlink.widget';
 import { CoreTestingModule } from '../../../../testing';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { HyperlinkWidgetComponent } from './hyperlink.widget';
 
 describe('HyperlinkWidgetComponent', () => {
     let widget: HyperlinkWidgetComponent;

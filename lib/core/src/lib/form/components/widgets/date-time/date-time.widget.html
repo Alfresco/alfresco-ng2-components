@@ -28,7 +28,7 @@
                    [matTooltip]="field.tooltip"
                    (blur)="markAsTouched()"
                    matTooltipPosition="above"
-                   matTooltipShowDelay="1000"
+                   matTooltipShowDelay="{{ 1000 }}"
                    [min]="minDate"
                    [max]="maxDate">
             <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
@@ -38,6 +38,7 @@
         <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
                       required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
         <mat-datetimepicker #datetimePicker
+                            data-automation-id="adf-date-time-widget-picker"
                             type="datetime"
                             [touchUi]="true"
                             [openOnFocus]="true"

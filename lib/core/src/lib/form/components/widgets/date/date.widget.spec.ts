@@ -15,22 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    CoreTestingModule,
-    DateFieldValidator,
-    FormFieldModel,
-    FormFieldTypes,
-    MaxDateFieldValidator,
-    MinDateFieldValidator
-} from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormModel } from '../core/form.model';
+import { CoreTestingModule } from '../../../../testing';
+import { DateFieldValidator, FormFieldModel, FormFieldTypes, FormModel, MaxDateFieldValidator, MinDateFieldValidator } from '../core';
 import { DateWidgetComponent } from './date.widget';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { FormFieldTypes } from '../core/form-field-types';
-import { DateFieldValidator, MaxDateFieldValidator, MinDateFieldValidator } from '../core/form-field-validator';
 
 describe('DateWidgetComponent', () => {
     let widget: DateWidgetComponent;

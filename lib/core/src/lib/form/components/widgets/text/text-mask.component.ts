@@ -138,7 +138,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         let addMethod = 'push';
         let resetPos = -1;
         let lastMaskChar: number;
-        let lastUntranslatedMaskChar: string;
+        let lastUntranslatedMaskChar: string | undefined;
         let check: boolean;
 
         if (isReversed) {
@@ -206,13 +206,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     }
 
     private isToCheck(isReversed: boolean, maskIndex: number, maskLen: number, valueIndex: number, valueLength: number): boolean {
-        let check = false;
-        if (isReversed) {
-            check = maskIndex > -1 && valueIndex > -1;
-        } else {
-            check = maskIndex < maskLen && valueIndex < valueLength;
-        }
-        return check;
+        return isReversed ? maskIndex > -1 && valueIndex > -1 : maskIndex < maskLen && valueIndex < valueLength;
     }
 
     private setValue(value) {

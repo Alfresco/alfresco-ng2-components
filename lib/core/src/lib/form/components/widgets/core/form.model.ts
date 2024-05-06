@@ -15,29 +15,28 @@
  * limitations under the License.
  */
 
-import { FormFieldEvent } from '../../../events/form-field.event';
-import { ValidateFormFieldEvent } from '../../../events/validate-form-field.event';
-import { ValidateFormEvent } from '../../../events/validate-form.event';
+import { FormFieldEvent, ValidateFormEvent, ValidateFormFieldEvent } from '../../../events';
+import { WidgetTypeEnum, WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import { FormValidationService } from '../../../services/form-validation-service.interface';
 import { ContainerModel } from './container.model';
+import { FormFieldTemplates } from './form-field-templates';
 import { FormFieldTypes } from './form-field-types';
+import { FORM_FIELD_VALIDATORS, FormFieldValidator } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
+import { FormOutcomeModel } from './form-outcome.model';
 import { FormValues } from './form-values';
-import { TabModel } from './tab.model';
 
 import { FormVariableModel } from './form-variable.model';
-import { ProcessVariableModel } from './process-variable.model';
-import { FormOutcomeModel } from './form-outcome.model';
-import { FormFieldValidator, FORM_FIELD_VALIDATORS } from './form-field-validator';
-import { FormFieldTemplates } from './form-field-templates';
-import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
-import { FormValidationService } from '../../../services/form-validation-service.interface';
 import { ProcessFormModel } from './process-form-model.interface';
-import { WidgetTypeEnum, WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import { ProcessVariableModel } from './process-variable.model';
+import { TabModel } from './tab.model';
+import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 
 export interface ConfirmMessage {
     show: boolean;
     message: string;
 }
+
 export interface FormRepresentationModel {
     [key: string]: any;
 
@@ -59,6 +58,7 @@ export interface FormRepresentationModel {
     };
     displayMode: string;
 }
+
 export class FormModel implements ProcessFormModel {
     static UNSET_TASK_NAME: string = 'Nameless task';
     static SAVE_OUTCOME: string = '$save';

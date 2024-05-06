@@ -19,20 +19,20 @@ import { ErrorMessageModel } from './error-message.model';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import {
+    DateTimeFieldValidator,
+    DecimalFieldValidator,
     FixedValueFieldValidator,
+    MaxDateFieldValidator,
+    MaxDateTimeFieldValidator,
     MaxLengthFieldValidator,
     MaxValueFieldValidator,
+    MinDateFieldValidator,
+    MinDateTimeFieldValidator,
     MinLengthFieldValidator,
     MinValueFieldValidator,
     NumberFieldValidator,
     RegExFieldValidator,
-    RequiredFieldValidator,
-    MaxDateTimeFieldValidator,
-    MinDateTimeFieldValidator,
-    MaxDateFieldValidator,
-    MinDateFieldValidator,
-    DateTimeFieldValidator,
-    DecimalFieldValidator
+    RequiredFieldValidator
 } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
@@ -1185,6 +1185,5 @@ describe('FormFieldValidator', () => {
 
             expect(decimalValidator.validate(field)).toBeTrue();
         });
-
     });
 });

@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import { FormModel } from '../core/form.model';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormService } from '../../../services/form.service';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { BaseViewerWidgetComponent } from './base-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormModel } from '../core/form.model';
+import { CoreTestingModule } from '../../../../testing';
+import { FormService } from '../../../services/form.service';
+import { FormFieldModel, FormModel } from '../core';
+import { BaseViewerWidgetComponent } from './base-viewer.widget';
 
 describe('BaseViewerWidgetComponent', () => {
     const fakeForm = new FormModel();

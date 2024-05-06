@@ -15,19 +15,14 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
-import { FormFieldTypes } from '../core/form-field-types';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormModel } from '../core/form.model';
+import { CoreTestingModule } from '../../../../testing';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
 
 describe('MultilineTextWidgetComponentComponent', () => {
     let loader: HarnessLoader;

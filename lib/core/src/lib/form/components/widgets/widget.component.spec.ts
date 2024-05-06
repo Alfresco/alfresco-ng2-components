@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormRulesEvent } from '@alfresco/adf-core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { FormFieldModel } from './core/form-field.model';
-import { FormModel } from './core/form.model';
-import { WidgetComponent } from './widget.component';
-import { CoreTestingModule } from '../../../testing';
 import { filter } from 'rxjs/operators';
 import { CoreTestingModule } from '../../../testing';
-import { FormModel } from './core/form.model';
+import { FormRulesEvent } from '../../events';
+import { FormFieldModel, FormModel } from './core';
 import { WidgetComponent } from './widget.component';
 
 describe('WidgetComponent', () => {

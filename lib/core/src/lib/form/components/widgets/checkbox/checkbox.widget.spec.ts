@@ -15,21 +15,19 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
-import { CheckboxWidgetComponent } from './checkbox.widget';
-import { FormBaseModule } from '../../../form-base.module';
-import { TranslateLoader } from '@ngx-translate/core';
-import { TranslateLoaderService } from '../../../../translation/translate-loader.service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { CoreTestingModule } from '../../../../testing';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { TranslateLoader } from '@ngx-translate/core';
+import { CoreTestingModule } from '../../../../testing';
+import { TranslateLoaderService } from '../../../../translation';
+import { FormBaseModule } from '../../../form-base.module';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { CheckboxWidgetComponent } from './checkbox.widget';
 
 describe('CheckboxWidgetComponent', () => {
     let loader: HarnessLoader;
