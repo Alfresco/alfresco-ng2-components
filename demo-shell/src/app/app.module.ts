@@ -55,7 +55,6 @@ import { CloudViewerComponent } from './components/cloud/cloud-viewer.component'
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
-import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
@@ -119,7 +118,6 @@ import { FolderDirectiveModule } from './folder-directive';
         ProcessDetailsCloudDemoComponent,
         StartTaskCloudDemoComponent,
         StartProcessCloudDemoComponent,
-        CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
         FormCloudDemoComponent,
         CustomEditorComponent,
