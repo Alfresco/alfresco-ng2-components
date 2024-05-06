@@ -18,7 +18,6 @@
 import {
     CardViewUpdateService,
     ClickNotification,
-    CommentsComponent,
     ContentLinkModel,
     FormFieldValidator,
     FormModel,
@@ -55,9 +54,6 @@ import { PeopleProcessService } from '../../common/services/people-process.servi
     encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
-    @ViewChild('activitiComments')
-    activitiComments: CommentsComponent;
-
     @ViewChild('activitiChecklist')
     activitiChecklist: any;
 
