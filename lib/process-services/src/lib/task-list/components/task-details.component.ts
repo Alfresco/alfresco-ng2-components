@@ -54,18 +54,11 @@ import { PeopleProcessService } from '../../common/services/people-process.servi
     encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
-    @ViewChild('activitiChecklist')
-    activitiChecklist: any;
-
     @ViewChild('errorDialog')
     errorDialog: TemplateRef<any>;
 
-    @ViewChild('activitiTaskForm')
+    @ViewChild('taskForm')
     taskFormComponent: TaskFormComponent;
-
-    /** Toggles debug mode. */
-    @Input()
-    debugMode: boolean = false;
 
     /** (**required**) The id of the task whose details we are asking for. */
     @Input()
@@ -173,9 +166,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     taskFormName: string = null;
     taskPeople: UserProcessModel[] = [];
     noTaskDetailsTemplateComponent: TemplateRef<any>;
-    showAssignee: boolean = false;
-    showAttachForm: boolean = false;
-    internalReadOnlyForm: boolean = false;
+    showAssignee = false;
+    showAttachForm = false;
+    internalReadOnlyForm = false;
     errorDialogRef: MatDialogRef<TemplateRef<any>>;
     peopleSearch: Observable<UserProcessModel[]>;
     data: any;
@@ -216,14 +209,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         } else if (taskId?.currentValue) {
             this.loadDetails(taskId.currentValue);
         }
-    }
-
-    isShowAttachForm(): boolean {
-        return this.showAttachForm;
-    }
-
-    isTaskActive() {
-        return this.taskDetails && this.taskDetails.duration === null;
     }
 
     isAssigned(): boolean {

@@ -358,7 +358,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
             fixture.detectChanges();
-            expect(component.showComments).toBeFalse();
+            expect(component.showComments).toBe(true);
         });
 
         it('should comments NOT be present if showComments is false', () => {

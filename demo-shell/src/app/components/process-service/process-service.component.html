@@ -50,17 +50,16 @@
                 class="app-grid-item app-tasks-details"
                 *ngIf="!isStartTaskMode()"
                 data-automation-id="app-tasks-details">
-                <adf-task-details #activitiDetails
-                                  [debugMode]="true"
-                                  [taskId]="currentTaskId"
-                                  [showFormTitle]="true"
-                                  [fieldValidators]="fieldValidators"
-                                  [showHeaderContent]="true"
-                                  (formCompleted)="onFormCompleted()"
-                                  (formContentClicked)="onContentClick($event)"
-                                  (taskCreated)="onTaskCreated($event)"
-                                  (assignTask)="onAssignTask()"
-                                  (taskDeleted)="onTaskDeleted()">
+                <adf-task-details
+                  [taskId]="currentTaskId"
+                  [showFormTitle]="true"
+                  [fieldValidators]="fieldValidators"
+                  [showHeaderContent]="true"
+                  (formCompleted)="onFormCompleted()"
+                  (formContentClicked)="onContentClick($event)"
+                  (taskCreated)="onTaskCreated($event)"
+                  (assignTask)="onAssignTask()"
+                  (taskDeleted)="onTaskDeleted()">
                 </adf-task-details>
 
                 <div *ngIf="currentTaskId">

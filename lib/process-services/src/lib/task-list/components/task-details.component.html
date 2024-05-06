@@ -18,7 +18,7 @@
     <div class="adf-task-details-core">
         <div class="adf-task-details-core-form">
             <div *ngIf="isAssigned()">
-                <adf-task-form
+                <adf-task-form #taskForm
                           [taskId]="taskDetails.id"
                           [showFormTitle]="showFormTitle"
                           [showFormRefreshButton]="showFormRefreshButton"
@@ -33,9 +33,9 @@
                           (executeOutcome)='onFormExecuteOutcome($event)'
                           (taskClaimed)="onClaimAction($event)"
                           (taskUnclaimed)="onUnclaimAction($event)"
-                          (error)="onFormError($event)" #activitiTaskForm>
+                          (error)="onFormError($event)">
                 </adf-task-form>
-                <adf-attach-form *ngIf="isShowAttachForm()"
+                <adf-attach-form *ngIf="showAttachForm"
                                  [taskId]="taskDetails.id"
                                  [formKey]="taskDetails.formKey"
                                  (cancelAttachForm)="onCancelAttachForm()"
@@ -68,7 +68,7 @@
                         (claim)="onClaimAction($event)"
                         (unclaim)="onUnclaimAction($event)">
                     </adf-task-header>
-                    <adf-people *ngIf="showInvolvePeople" #people
+                    <adf-people *ngIf="showInvolvePeople"
                                 [people]="taskPeople"
                                 [readOnly]="internalReadOnlyForm"
                                 [taskId]="taskDetails.id">
@@ -91,12 +91,12 @@
 
             <div *ngIf="showHeaderContent" class="adf-task-details-core-sidebar-checklist">
                 <div *ngIf="showChecklist">
-                    <adf-checklist #activitiChecklist
-                                   [readOnly]="internalReadOnlyForm"
-                                   [taskId]="taskDetails.id"
-                                   [assignee]="$any(taskDetails)?.assignee?.id"
-                                   (checklistTaskCreated)="onChecklistTaskCreated($event)"
-                                   (checklistTaskDeleted)="onChecklistTaskDeleted($event)">
+                    <adf-checklist
+                       [readOnly]="internalReadOnlyForm"
+                       [taskId]="taskDetails.id"
+                       [assignee]="$any(taskDetails)?.assignee?.id"
+                       (checklistTaskCreated)="onChecklistTaskCreated($event)"
+                       (checklistTaskDeleted)="onChecklistTaskDeleted($event)">
                     </adf-checklist>
                 </div>
             </div>

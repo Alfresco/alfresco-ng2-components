@@ -16,23 +16,19 @@
  */
 
 // eslint-disable-next-line
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-    EventEmitter,
-    Output
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi } from '@alfresco/js-api';
 import {
-    FORM_FIELD_VALIDATORS, FormRenderingService, FormService, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, NotificationService
+    FORM_FIELD_VALIDATORS,
+    FormRenderingService,
+    FormService,
+    AppConfigService,
+    PaginationComponent,
+    UserPreferenceValues,
+    AlfrescoApiService,
+    UserPreferencesService,
+    NotificationService
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,
@@ -41,7 +37,6 @@ import {
     ProcessInstanceListComponent,
     StartProcessInstanceComponent,
     FilterRepresentationModel,
-    TaskDetailsComponent,
     TaskDetailsEvent,
     TaskFiltersComponent,
     TaskListComponent,
@@ -69,12 +64,9 @@ const REPORT_ROUTE = 2;
     templateUrl: './process-service.component.html',
     styleUrls: ['./process-service.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers: [
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
-    ]
+    providers: [{ provide: FormRenderingService, useClass: ProcessFormRenderingService }]
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
-
     @ViewChild('activitiFilter')
     activitiFilter: TaskFiltersComponent;
 
@@ -95,9 +87,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     @ViewChild('activitiProcessDetails')
     activitiProcessDetails: ProcessInstanceDetailsComponent;
-
-    @ViewChild('activitiDetails')
-    activitiDetails: TaskDetailsComponent;
 
     @ViewChild('activitiStartProcess')
     activitiStartProcess: StartProcessInstanceComponent;
@@ -137,26 +126,24 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     applicationId: number;
     processDefinitionName: string;
 
-    fieldValidators = [
-        ...FORM_FIELD_VALIDATORS,
-        new DemoFieldValidator()
-    ];
+    fieldValidators = [...FORM_FIELD_VALIDATORS, new DemoFieldValidator()];
 
     private onDestroy$ = new Subject<boolean>();
     private scriptFileApi: ScriptFilesApi;
 
-    constructor(private elementRef: ElementRef,
-                private route: ActivatedRoute,
-                private router: Router,
-                private apiService: AlfrescoApiService,
-                private appConfig: AppConfigService,
-                private preview: PreviewService,
-                formRenderingService: FormRenderingService,
-                formService: FormService,
-                private location: Location,
-                private notificationService: NotificationService,
-                private preferenceService: UserPreferencesService) {
-
+    constructor(
+        private elementRef: ElementRef,
+        private route: ActivatedRoute,
+        private router: Router,
+        private apiService: AlfrescoApiService,
+        private appConfig: AppConfigService,
+        private preview: PreviewService,
+        formRenderingService: FormRenderingService,
+        formService: FormService,
+        private location: Location,
+        private notificationService: NotificationService,
+        private preferenceService: UserPreferencesService
+    ) {
         this.scriptFileApi = new ScriptFilesApi(this.apiService.getInstance());
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
@@ -177,22 +164,18 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
         formService.validateDynamicTableRow
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(
-                (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
-                    const row: DynamicTableRow = validateDynamicTableRowEvent.row;
-                    if (row?.value && row.value.name === 'admin') {
-                        validateDynamicTableRowEvent.summary.isValid = false;
-                        validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
-                        validateDynamicTableRowEvent.preventDefault();
-                    }
+            .subscribe((validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
+                const row: DynamicTableRow = validateDynamicTableRowEvent.row;
+                if (row?.value && row.value.name === 'admin') {
+                    validateDynamicTableRowEvent.summary.isValid = false;
+                    validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
+                    validateDynamicTableRowEvent.preventDefault();
                 }
-            );
-
-        formService.formContentClicked
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((content) => {
-                this.showContentPreview(content);
             });
+
+        formService.formContentClicked.pipe(takeUntil(this.onDestroy$)).subscribe((content) => {
+            this.showContentPreview(content);
+        });
     }
 
     ngOnInit() {
