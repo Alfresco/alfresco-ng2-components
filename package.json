@@ -142,7 +142,7 @@
     "editorjs-html": "3.4.3",
     "editorjs-paragraph-with-alignment": "3.0.0",
     "editorjs-text-color-plugin": "2.0.4",
-    "ejs": "^3.1.9",
+    "ejs": "^3.1.10",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-ban": "^1.6.0",
