@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
@@ -50,20 +50,11 @@ export class FormFieldTypes {
     static DATA_TABLE: string = 'data-table';
     static DISPLAY_EXTERNAL_PROPERTY: string = 'display-external-property';
 
-    static READONLY_TYPES: string[] = [
-        FormFieldTypes.HYPERLINK,
-        FormFieldTypes.DISPLAY_VALUE,
-        FormFieldTypes.READONLY_TEXT,
-        FormFieldTypes.GROUP
-    ];
+    static READONLY_TYPES: string[] = [FormFieldTypes.HYPERLINK, FormFieldTypes.DISPLAY_VALUE, FormFieldTypes.READONLY_TEXT, FormFieldTypes.GROUP];
 
-    static VALIDATABLE_TYPES: string[] = [
-        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
-    ];
+    static VALIDATABLE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 
-    static CONSTANT_VALUE_TYPES: string[] = [
-        FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
-    ];
+    static CONSTANT_VALUE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 
     static isReadOnlyType(type: string) {
         return FormFieldTypes.READONLY_TYPES.includes(type);

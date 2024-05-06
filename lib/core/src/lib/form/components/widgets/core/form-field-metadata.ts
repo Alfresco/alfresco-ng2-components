@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { DisplayableCMProperties } from './displayable-cm-properties.model';
 import { FormFieldFileSource } from './form-field-file-source';
 
 export interface FormFieldMetadata {
     [key: string]: any;
+
     fileSource?: FormFieldFileSource;
     link?: boolean;
     field?: {

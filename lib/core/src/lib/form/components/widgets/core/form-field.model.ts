@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
+import { isValid as isValidDate } from 'date-fns';
+import { DateFnsUtils } from '../../../../common';
+import { DataColumn } from '../../../../datatable';
 /* eslint-disable @angular-eslint/component-selector */
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormFieldOption } from './form-field-option';
-import { FormFieldTypes } from './form-field-types';
-import { FormWidgetModel } from './form-widget.model';
 import { FormFieldRule } from './form-field-rule';
-import { ProcessFormModel } from './process-form-model.interface';
+import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
-import { DataColumn } from '../../../../datatable/data/data-column.model';
-import { DateFnsUtils } from '../../../../common';
-import { isValid as isValidDate } from 'date-fns';
+import { FormWidgetModel } from './form-widget.model';
+import { ProcessFormModel } from './process-form-model.interface';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -472,7 +472,7 @@ export class FormFieldModel extends FormWidgetModel {
             case FormFieldTypes.DECIMAL: {
                 this.form.values[this.id] = parseFloat(this.value);
                 break;
-            };
+            }
             case FormFieldTypes.BOOLEAN: {
                 this.form.values[this.id] = this.value !== null && this.value !== undefined ? this.value : false;
                 break;

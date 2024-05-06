@@ -18,7 +18,7 @@
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ErrorMessageModel } from '../index';
+import { ErrorMessageModel } from '../core';
 import { ErrorWidgetComponent } from './error.component';
 
 describe('ErrorWidgetComponent', () => {

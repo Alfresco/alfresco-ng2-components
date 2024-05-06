@@ -16,12 +16,11 @@
  */
 
 import { ContainerModel } from './container.model';
-import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
+import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 
 describe('TabModel', () => {
-
     it('should setup with json config', () => {
         const json = {
             id: '<id>',

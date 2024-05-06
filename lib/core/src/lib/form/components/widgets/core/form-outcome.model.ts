@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
-import { FormWidgetModel } from './form-widget.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import { FormWidgetModel } from './form-widget.model';
 
 export class FormOutcomeModel extends FormWidgetModel {
-
-    static SAVE_ACTION: string = 'SAVE';            // Activiti 'Save' action name
-    static COMPLETE_ACTION: string = 'COMPLETE';    // Activiti 'Complete' action name
-    static START_PROCESS_ACTION: string = 'START PROCESS';    // Activiti 'Start Process' action name
+    static SAVE_ACTION: string = 'SAVE'; // Activiti 'Save' action name
+    static COMPLETE_ACTION: string = 'COMPLETE'; // Activiti 'Complete' action name
+    static START_PROCESS_ACTION: string = 'START PROCESS'; // Activiti 'Start Process' action name
 
     isSystem: boolean = false;
     isSelected: boolean = false;
@@ -35,8 +34,8 @@ export class FormOutcomeModel extends FormWidgetModel {
         super(form, json);
 
         if (json) {
-            this.isSystem = json.isSystem ? true : false;
-            this.isSelected = form && json.name === form.selectedOutcome ? true : false;
+            this.isSystem = !!json.isSystem;
+            this.isSelected = json.name === form?.selectedOutcome;
             this.visibilityCondition = new WidgetVisibilityModel(json.visibilityCondition);
         }
     }

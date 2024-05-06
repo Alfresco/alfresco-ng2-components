@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UntypedFormControl } from '@angular/forms';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { CoreTestingModule } from '../../../testing';
 import { InplaceFormInputComponent } from './inplace-form-input.component';
 
 describe('InplaceFormInputComponent', () => {

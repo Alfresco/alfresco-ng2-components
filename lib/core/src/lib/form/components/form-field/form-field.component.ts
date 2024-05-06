@@ -28,10 +28,9 @@ import {
     ViewContainerRef,
     ViewEncapsulation
 } from '@angular/core';
-
 import { FormRenderingService } from '../../services/form-rendering.service';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
-import { FormFieldModel } from '../widgets/core/form-field.model';
+import { FormFieldModel } from '../widgets';
 
 declare const adf: any;
 
