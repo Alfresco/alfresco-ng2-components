@@ -18,10 +18,9 @@
 import { Injectable } from '@angular/core';
 import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
 import { ExtensionService } from '../services/extension.service';
-import { Observable, BehaviorSubject, from } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { ViewerExtensionRef } from '../config/viewer.extensions';
 import { DocumentListPresetRef } from '../config/document-list.extensions';
-import { AlfrescoApiService, AppConfigService, AuthenticationService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
@@ -30,17 +29,8 @@ export class AppExtensionService {
     references$: Observable<ExtensionRef[]>;
     private _references = new BehaviorSubject<ExtensionRef[]>([]);
 
-    constructor(protected extensionService: ExtensionService, authenticationService: AuthenticationService, appConfigService: AppConfigService, apiService: AlfrescoApiService) {
+    constructor(protected extensionService: ExtensionService) {
         this.references$ = this._references.asObservable();
-
-        authenticationService.onLogin.subscribe(() => {
-            const instanceId = appConfigService.get('instanceId', '1234');
-
-            const requestParams = [{}, {}, {}, {}, {}, ['application/json'], ['application/json']];
-            from(apiService.getInstance().contentClient.callApi(`/settings/${instanceId}`, 'GET', ...requestParams)).subscribe((pluginConfig) => {
-                extensionService.appendConfig(pluginConfig.entry);
-            });
-        });
     }
 
     async load() {
@@ -53,9 +43,7 @@ export class AppExtensionService {
             return;
         }
 
-        const references = (config.$references || [])
-            .filter((entry) => typeof entry === 'object')
-            .map((entry) => entry as ExtensionRef);
+        const references = (config.$references || []).filter((entry) => typeof entry === 'object').map((entry) => entry as ExtensionRef);
         this._references.next(references);
     }
 
@@ -67,11 +55,7 @@ export class AppExtensionService {
      * @returns list of document list presets
      */
     getDocumentListPreset(key: string): DocumentListPresetRef[] {
-        return this.extensionService
-          .getElements<DocumentListPresetRef>(
-            `features.documentList.${key}`
-          )
-          .filter((entry) => !entry.disabled);
+        return this.extensionService.getElements<DocumentListPresetRef>(`features.documentList.${key}`).filter((entry) => !entry.disabled);
     }
 
     /**
@@ -88,13 +72,13 @@ export class AppExtensionService {
 
     protected isViewerExtensionDisabled(extension: ViewerExtensionRef): boolean {
         if (extension) {
-          if (extension.disabled) {
-            return true;
-          }
+            if (extension.disabled) {
+                return true;
+            }
 
-          if (extension.rules?.disabled) {
-            return this.extensionService.evaluateRule(extension.rules.disabled);
-          }
+            if (extension.rules?.disabled) {
+                return this.extensionService.evaluateRule(extension.rules.disabled);
+            }
         }
 
         return false;
