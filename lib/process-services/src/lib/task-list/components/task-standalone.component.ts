@@ -56,8 +56,6 @@ export class TaskStandaloneComponent {
     @Output()
     showAttachForm = new EventEmitter<void>();
 
-    constructor() {}
-
     onCancelButtonClick(): void {
         this.cancel.emit();
     }
