@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { By } from '@angular/platform-browser';
+import { take } from 'rxjs/operators';
 import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
 import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
 import { CoreTestingModule } from '../../../testing';
@@ -32,7 +37,7 @@ import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 
 @Component({
     selector: 'adf-custom-column-template-component',
-    template: ` <ng-template #tmplRef></ng-template> `
+    template: `<ng-template #tmplRef></ng-template>`
 })
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
@@ -40,7 +45,7 @@ class CustomColumnTemplateComponent {
 
 @Component({
     selector: 'adf-custom-column-header-component',
-    template: ` <ng-template #tmplRef> CUSTOM HEADER</ng-template> `
+    template: `<ng-template #tmplRef> CUSTOM HEADER</ng-template>`
 })
 class CustomColumnHeaderComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
@@ -529,8 +534,7 @@ describe('DataTable', () => {
 
         dataTable.onRowClick(rows[0], {
             metaKey: true,
-            preventDefault: () => {},
-            composedPath: () => []
+            preventDefault: () => {}
         } as any);
     });
 

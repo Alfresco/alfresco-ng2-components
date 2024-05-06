@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { DecimalConfig } from '../../data/data-column.model';
 import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { DecimalConfig } from '../../data/data-column.model';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 
 @Component({
-    standalone: true,
     imports: [AsyncPipe, DecimalPipe, NgIf],
+    standalone: true,
     selector: 'adf-number-cell',
     templateUrl: './number-cell.component.html',
     host: { class: 'adf-datatable-content-cell' },

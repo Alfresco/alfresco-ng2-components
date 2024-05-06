@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Subject, Observable, Observer, merge } from 'rxjs';
-import { BoundingRectangle, ResizeEvent, IResizeMouseEvent, ICoordinateX } from './types';
-import { map, take, share, filter, pairwise, mergeMap, takeUntil } from 'rxjs/operators';
-import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, EventEmitter, Input } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { merge, Observable, Observer, Subject } from 'rxjs';
+import { filter, map, mergeMap, pairwise, share, take, takeUntil } from 'rxjs/operators';
+import { BoundingRectangle, ICoordinateX, IResizeMouseEvent, ResizeEvent } from './types';
 
 @Directive({
     selector: '[adf-resizable]',

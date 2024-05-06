@@ -1,5 +1,6 @@
 <div role="grid"
-     *ngIf="data" class="adf-full-width adf-datatable-list"
+     *ngIf="data"
+     class="adf-full-width adf-datatable-list"
      [class.adf-sticky-header]="isStickyHeaderEnabled()"
      [class.adf-datatable--empty]="(isEmpty() && !isHeaderVisible()) || loading"
      [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
@@ -280,8 +281,9 @@
                                                    [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
-                            <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
+                            <div *ngSwitchCase="'text'"
                                  class="adf-cell-value"
+                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
                                 <adf-datatable-cell [copyContent]="col.copyContent"
                                                     [data]="data"
@@ -292,8 +294,8 @@
                                 </adf-datatable-cell>
                             </div>
                             <div *ngSwitchCase="'boolean'"
-                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  class="adf-cell-value"
+                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  [attr.data-automation-id]="'boolean_' + data.getValue(row, col, resolverFn)">
                                 <adf-boolean-cell [data]="data"
                                                   [column]="col"
@@ -303,8 +305,8 @@
                                 </adf-boolean-cell>
                             </div>
                             <div *ngSwitchCase="'json'"
-                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
-                                 class="adf-cell-value">
+                                 class="adf-cell-value"
+                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1">
                                 <adf-json-cell [editable]="col.editable"
                                                [data]="data"
                                                [column]="col"
@@ -360,7 +362,9 @@
                      class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie adf-datatable-actions-menu">
 
                     <ng-container *ngIf="(actions && actionsPosition === 'right')">
-                        <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"
+                        <button mat-icon-button
+                                [matMenuTriggerFor]="menu"
+                                #actionsMenuTrigger="matMenuTrigger"
                                 [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
                                 [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
                                 [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"

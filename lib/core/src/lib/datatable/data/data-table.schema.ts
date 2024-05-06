@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentChild, Input, Directive } from '@angular/core';
+import { ContentChild, Directive, Input } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { AppConfigService } from '../../app-config';
 import { DataColumnListComponent } from '../data-column';

@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, LocationCellComponent, ObjectDataColumn, ObjectDataTableAdapter } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../../../testing';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { LocationCellComponent } from './location-cell.component';
 
 describe('LocationCellComponent', () => {
     let component: LocationCellComponent;

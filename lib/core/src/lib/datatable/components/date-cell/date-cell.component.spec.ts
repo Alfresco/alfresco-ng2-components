@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AppConfigService, DataColumn, DateCellComponent, DateConfig } from '@alfresco/adf-core';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import localePL from '@angular/common/locales/pl';
@@ -23,6 +22,9 @@ import { LOCALE_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { AppConfigService } from '../../../app-config';
+import { DataColumn, DateConfig } from '../../data/data-column.model';
+import { DateCellComponent } from './date-cell.component';
 
 let component: DateCellComponent;
 let appConfigService: AppConfigService;

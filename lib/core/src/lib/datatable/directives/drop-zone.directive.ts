@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Directive, Input, ElementRef, NgZone, OnInit, OnDestroy } from '@angular/core';
-import { DataRow } from '../data/data-row.model';
+import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { DataColumn } from '../data/data-column.model';
+import { DataRow } from '../data/data-row.model';
 
 @Directive({
     selector: '[adf-drop-zone]',

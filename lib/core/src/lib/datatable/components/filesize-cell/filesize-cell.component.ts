@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { PipeModule } from '../../../pipes';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FileSizePipe, PipeModule } from '../../../pipes';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 
 @Component({
     selector: 'adf-filesize-cell',
@@ -29,7 +29,7 @@ import { PipeModule } from '../../../pipes';
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
-    imports: [NgIf, AsyncPipe, PipeModule],
+    imports: [NgIf, AsyncPipe, PipeModule, FileSizePipe],
     host: { class: 'adf-filesize-cell' }
 })
 export class FileSizeCellComponent extends DataTableCellComponent implements OnInit {
