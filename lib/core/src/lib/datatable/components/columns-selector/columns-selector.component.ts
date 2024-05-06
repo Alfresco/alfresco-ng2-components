@@ -26,7 +26,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { PipeModule } from '../../../pipes';
+import { FilterStringPipe } from '../../../pipes';
 import { DataColumn } from '../../data/data-column.model';
 
 @Component({
@@ -34,7 +34,17 @@ import { DataColumn } from '../../data/data-column.model';
     standalone: true,
     templateUrl: './columns-selector.component.html',
     styleUrls: ['./columns-selector.component.scss'],
-    imports: [MatButtonModule, TranslateModule, MatIconModule, MatDividerModule, ReactiveFormsModule, PipeModule, MatCheckboxModule, NgIf, NgForOf],
+    imports: [
+        MatButtonModule,
+        TranslateModule,
+        MatIconModule,
+        MatDividerModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        NgIf,
+        NgForOf,
+        FilterStringPipe
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class ColumnsSelectorComponent implements OnInit, OnDestroy {
