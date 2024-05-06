@@ -17,14 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ModelsActions,
-    TaskUtil,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ModelsActions, TaskUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -32,7 +25,6 @@ import { ActivitiCommentsApi, TaskActionsApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Comment component for Processes', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -92,7 +84,7 @@ describe('Comment component for Processes', () => {
     });
 
     it('[C212864] Should be able to add multiple comments on a single task using different users', async () => {
-        const newTask =  await taskUtil.createStandaloneTask(taskName.multiple_users);
+        const newTask = await taskUtil.createStandaloneTask(taskName.multiple_users);
 
         await taskActionsApi.involveUser(newTask.id, { email: secondUser.email });
 
@@ -117,14 +109,18 @@ describe('Comment component for Processes', () => {
 
         await commentsPage.getTotalNumberOfComments('Comments (' + totalCommentsLatest.total + ')');
 
-        await expect(await commentsPage.getMessage(0)).toEqual(totalCommentsLatest.data[0].message);
-        await expect(await commentsPage.getMessage(1)).toEqual(totalCommentsLatest.data[1].message);
+        expect(await commentsPage.getMessage(0)).toEqual(totalCommentsLatest.data[0].message);
+        expect(await commentsPage.getMessage(1)).toEqual(totalCommentsLatest.data[1].message);
 
-        await expect(await commentsPage.getUserName(0)).toEqual(totalCommentsLatest.data[0].createdBy.firstName + ' ' + totalCommentsLatest.data[0].createdBy.lastName);
-        await expect(await commentsPage.getUserName(1)).toEqual(totalCommentsLatest.data[1].createdBy.firstName + ' ' + totalCommentsLatest.data[1].createdBy.lastName);
+        expect(await commentsPage.getUserName(0)).toEqual(
+            totalCommentsLatest.data[0].createdBy.firstName + ' ' + totalCommentsLatest.data[0].createdBy.lastName
+        );
+        expect(await commentsPage.getUserName(1)).toEqual(
+            totalCommentsLatest.data[1].createdBy.firstName + ' ' + totalCommentsLatest.data[1].createdBy.lastName
+        );
 
-        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
-        await expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(secondUser.username, secondUser.password);
@@ -145,16 +141,16 @@ describe('Comment component for Processes', () => {
 
         await commentsPage.getTotalNumberOfComments('Comments (' + totalComments.total + ')');
 
-        await expect(await commentsPage.getMessage(0)).toEqual(totalComments.data[0].message);
-        await expect(await commentsPage.getMessage(1)).toEqual(totalComments.data[1].message);
-        await expect(await commentsPage.getMessage(2)).toEqual(totalComments.data[2].message);
+        expect(await commentsPage.getMessage(0)).toEqual(totalComments.data[0].message);
+        expect(await commentsPage.getMessage(1)).toEqual(totalComments.data[1].message);
+        expect(await commentsPage.getMessage(2)).toEqual(totalComments.data[2].message);
 
-        await expect(await commentsPage.getUserName(0)).toEqual(totalComments.data[0].createdBy.firstName + ' ' + totalComments.data[0].createdBy.lastName);
-        await expect(await commentsPage.getUserName(1)).toEqual(totalComments.data[1].createdBy.firstName + ' ' + totalComments.data[1].createdBy.lastName);
-        await expect(await commentsPage.getUserName(2)).toEqual(totalComments.data[2].createdBy.firstName + ' ' + totalComments.data[2].createdBy.lastName);
+        expect(await commentsPage.getUserName(0)).toEqual(totalComments.data[0].createdBy.firstName + ' ' + totalComments.data[0].createdBy.lastName);
+        expect(await commentsPage.getUserName(1)).toEqual(totalComments.data[1].createdBy.firstName + ' ' + totalComments.data[1].createdBy.lastName);
+        expect(await commentsPage.getUserName(2)).toEqual(totalComments.data[2].createdBy.firstName + ' ' + totalComments.data[2].createdBy.lastName);
 
-        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
-        await expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
-        await expect(await commentsPage.getTime(2)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTime(2)).toMatch(/(ago|few)/);
     });
 });

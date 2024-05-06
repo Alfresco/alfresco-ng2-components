@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 import { PeopleSearchComponent } from './people-search.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { UserProcessModel } from '../../../common/models/user-process.model';
@@ -37,7 +36,6 @@ const fakeSecondUser: UserProcessModel = new UserProcessModel({
 });
 
 describe('PeopleSearchComponent', () => {
-
     let peopleSearchComponent: PeopleSearchComponent;
     let fixture: ComponentFixture<PeopleSearchComponent>;
     let element: HTMLElement;
@@ -46,10 +44,7 @@ describe('PeopleSearchComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(PeopleSearchComponent);
         peopleSearchComponent = fixture.componentInstance;

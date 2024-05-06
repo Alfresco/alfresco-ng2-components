@@ -16,9 +16,7 @@
  */
 
 export * from './lib/directives/index';
-export * from './lib/social/index';
 export * from './lib/tag/index';
-export * from './lib/webscript/index';
 export * from './lib/document-list/index';
 export * from './lib/content-user-info/index';
 export * from './lib/upload/index';
@@ -28,7 +26,6 @@ export * from './lib/breadcrumb/index';
 export * from './lib/version-manager/index';
 export * from './lib/content-node-selector/index';
 export * from './lib/dialogs/index';
-export * from './lib/folder-directive/index';
 export * from './lib/content-metadata/index';
 export * from './lib/permission-manager/index';
 export * from './lib/content-node-share/index';

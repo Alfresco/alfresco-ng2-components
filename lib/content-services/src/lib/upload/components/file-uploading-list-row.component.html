@@ -6,7 +6,6 @@
     <adf-icon *ngIf="mimeType !== 'default'" value="adf:{{ mimeType }}"></adf-icon>
 
     <span
-        tabindex="0"
         class="adf-file-uploading-row__name"
         title="{{ file.name }}">
         {{ file.name }}
@@ -60,7 +59,6 @@
         *ngIf="isUploadVersionComplete()"
         class="adf-file-uploading-row__file-version"
         [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_DONE_STATUS' | translate"
-        role="status"
         >
         <mat-icon
             mat-list-icon
@@ -93,7 +91,6 @@
     </button>
 
     <div
-        tabindex="0"
         role="status"
         *ngIf="isUploadError()"
         class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
@@ -105,7 +102,6 @@
     </div>
 
     <div
-        tabindex="0"
         [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate"
         role="status"
         *ngIf="showCancelledStatus()"

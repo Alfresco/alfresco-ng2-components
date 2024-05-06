@@ -21,7 +21,6 @@ import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from './oidc-authentication.service';
 
@@ -35,10 +34,7 @@ describe('AuthenticationService', () => {
     let oidcAuthenticationService: OidcAuthenticationService;
 
     setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {
@@ -69,7 +65,7 @@ describe('AuthenticationService', () => {
             appConfigService.config.auth = { withCredentials: true };
         });
 
-       it('should emit login event for kerberos', (done) => {
+        it('should emit login event for kerberos', (done) => {
             spyOn(basicAlfrescoAuthService, 'requireAlfTicket').and.returnValue(Promise.resolve());
             const disposableLogin = authService.onLogin.subscribe(() => {
                 disposableLogin.unsubscribe();
@@ -97,7 +93,6 @@ describe('AuthenticationService', () => {
     });
 
     describe('when the setting is ECM', () => {
-
         const fakeECMLoginResponse = { type: 'ECM', ticket: 'fake-post-ticket' };
 
         beforeEach(() => {
@@ -216,7 +211,6 @@ describe('AuthenticationService', () => {
     });
 
     describe('when the setting is BPM', () => {
-
         beforeEach(() => {
             appConfigService.config.providers = 'BPM';
             appConfigService.load();
@@ -278,13 +272,13 @@ describe('AuthenticationService', () => {
 
         it('[BPM] should return an error when the logout return error', (done) => {
             authService.logout().subscribe(
-                () => {
-                },
+                () => {},
                 (err: any) => {
                     expect(err).toBeDefined();
                     expect(authService.getToken()).toBe(null);
                     done();
-                });
+                }
+            );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
@@ -323,7 +317,6 @@ describe('AuthenticationService', () => {
     });
 
     describe('remember me', () => {
-
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
@@ -367,7 +360,8 @@ describe('AuthenticationService', () => {
                     expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
                     disposableLogin.unsubscribe();
                     done();
-                });
+                }
+            );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403,
@@ -386,7 +380,6 @@ describe('AuthenticationService', () => {
     });
 
     describe('when the setting is both ECM and BPM ', () => {
-
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
             appConfigService.load();
@@ -426,7 +419,8 @@ describe('AuthenticationService', () => {
                     expect(authService.isEcmLoggedIn()).toBe(false, 'isEcmLoggedIn');
                     disposableLogin.unsubscribe();
                     done();
-                });
+                }
+            );
 
             jasmine.Ajax.requests.at(0).respondWith({
                 status: 403
@@ -447,7 +441,8 @@ describe('AuthenticationService', () => {
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     done();
-                });
+                }
+            );
 
             jasmine.Ajax.requests.at(0).respondWith({
                 status: 201,
@@ -471,7 +466,8 @@ describe('AuthenticationService', () => {
                     expect(authService.isEcmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     done();
-                });
+                }
+            );
 
             jasmine.Ajax.requests.at(0).respondWith({
                 status: 403
@@ -510,6 +506,5 @@ describe('AuthenticationService', () => {
             const username = authService.getUsername();
             expect(username).toEqual('john.petrucci');
         });
-
     });
 });

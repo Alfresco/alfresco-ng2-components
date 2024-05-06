@@ -21,12 +21,13 @@ import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { mockEmittedTaskAttachments, mockTaskAttachments } from '../mock/task/task-attachments.mock';
 import { ProcessContentService } from '../form/services/process-content.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatMenuItemHarness } from '@angular/material/menu/testing';
 
 describe('TaskAttachmentList', () => {
-
     let component: TaskAttachmentListComponent;
     let fixture: ComponentFixture<TaskAttachmentListComponent>;
     let service: ProcessContentService;
@@ -35,17 +36,16 @@ describe('TaskAttachmentList', () => {
     let getFileRawContentSpy: jasmine.Spy;
     let getContentPreviewSpy: jasmine.Spy;
     let disposableSuccess: any;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ProcessTestingModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
 
         service = TestBed.inject(ProcessContentService);
 
@@ -118,12 +118,14 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should show the empty default message when has no custom template', async () => {
-        getTaskRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getTaskRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
         component.hasCustomTemplate = false;
@@ -146,11 +148,12 @@ describe('TaskAttachmentList', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+
+        const actionMenuItems = await loader.getAllHarnesses(MatMenuItemHarness);
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
-        expect(actionMenu).toBe(3);
+        expect(actionMenuItems.length).toBe(3);
     });
 
     it('should not display remove action if attachments are read only', async () => {
@@ -166,20 +169,22 @@ describe('TaskAttachmentList', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        const actionMenuItems = await loader.getAllHarnesses(MatMenuItemHarness);
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
-        expect(actionMenu).toBe(2);
+        expect(actionMenuItems.length).toBe(2);
     });
 
     it('should show the empty list component when the attachments list is empty', async () => {
-        getTaskRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getTaskRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
 
@@ -190,19 +195,23 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should show the empty list component when the attachments list is empty for completed task', async () => {
-        getTaskRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getTaskRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
         component.disabled = true;
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER');
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual(
+                'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER'
+            );
         });
     });
 
@@ -223,7 +232,6 @@ describe('TaskAttachmentList', () => {
     });
 
     describe('change detection', () => {
-
         let change: SimpleChange;
         let nullChange: SimpleChange;
 
@@ -257,7 +265,6 @@ describe('TaskAttachmentList', () => {
     });
 
     describe('Delete attachments', () => {
-
         beforeEach(() => {
             component.taskId = '123';
             fixture.whenStable();
@@ -283,18 +290,14 @@ describe('TaskAttachmentList', () => {
         </adf-task-attachment-list>
     `
 })
-class CustomEmptyTemplateComponent {
-}
+class CustomEmptyTemplateComponent {}
 
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [ProcessTestingModule],
             declarations: [CustomEmptyTemplateComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });

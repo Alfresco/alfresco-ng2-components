@@ -23,7 +23,6 @@ import { ContentNodeDialogService, NodesApiService } from '@alfresco/adf-content
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 const fakeNode = {
     id: 'fake',
@@ -50,7 +49,7 @@ describe('AttachFolderWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessTestingModule]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(AttachFolderWidgetComponent);
         widget = fixture.componentInstance;

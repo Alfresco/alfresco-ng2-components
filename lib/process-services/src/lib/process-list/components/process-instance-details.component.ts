@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { LogService } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TaskDetailsEvent } from '../../task-list';
@@ -67,7 +66,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
 
     processInstanceDetails: ProcessInstance;
 
-    constructor(private activitiProcess: ProcessService, private logService: LogService) {}
+    constructor(private activitiProcess: ProcessService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const processInstanceId = changes['processInstanceId'];
@@ -130,8 +129,8 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
-        } catch (err) {
-            this.logService.error(`ProcessListInstanceHeader: error parsing date ${value} to format ${format}`);
+        } catch {
+            return undefined;
         }
     }
 

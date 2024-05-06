@@ -19,12 +19,10 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('CreateProcessAttachmentComponent', () => {
-
     let component: CreateProcessAttachmentComponent;
     let fixture: ComponentFixture<CreateProcessAttachmentComponent>;
     let element: HTMLElement;
@@ -49,10 +47,7 @@ describe('CreateProcessAttachmentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);
         component = fixture.componentInstance;

@@ -49,7 +49,6 @@ export class ProcessListCloudService extends BaseCloudService {
                 })
             );
         } else {
-            this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
     }
@@ -107,7 +106,11 @@ export class ProcessListCloudService extends BaseCloudService {
         const queryParam = {};
 
         for (const property in requestNode) {
-            if (Object.prototype.hasOwnProperty.call(requestNode, property) && !this.isExcludedField(property) && this.isPropertyValueValid(requestNode, property)) {
+            if (
+                Object.prototype.hasOwnProperty.call(requestNode, property) &&
+                !this.isExcludedField(property) &&
+                this.isPropertyValueValid(requestNode, property)
+            ) {
                 queryParam[property] = this.getQueryParamValueFromRequestNode(requestNode, property as keyof ProcessQueryCloudRequestModel);
             }
         }

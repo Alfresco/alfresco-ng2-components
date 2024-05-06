@@ -20,22 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as diagramsGatewaysMock from '../../mock/diagram/diagram-gateways.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Diagrams gateways', () => {
-
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
@@ -54,7 +49,7 @@ describe('Diagrams gateways', () => {
         jasmine.Ajax.uninstall();
     });
 
-    const ajaxReply =  (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -63,7 +58,6 @@ describe('Diagrams gateways', () => {
     };
 
     describe('Diagrams component Gateways: ', () => {
-
         it('Should render the Exclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -164,7 +158,6 @@ describe('Diagrams gateways', () => {
     });
 
     describe('Diagrams component Gateways with process instance id: ', () => {
-
         it('Should render the Exclusive Gateway', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -192,7 +185,9 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector(
+                        'diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]'
+                    );
                     expect(shape).not.toBeNull();
 
                     const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
@@ -214,7 +209,9 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector(
+                        'diagram-exclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(shape).not.toBeNull();
 
                     const shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
@@ -258,7 +255,9 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector(
+                        'diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]'
+                    );
                     expect(shape).not.toBeNull();
 
                     const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
@@ -280,7 +279,9 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector(
+                        'diagram-inclusive-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(shape).not.toBeNull();
 
                     const shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
@@ -324,7 +325,9 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector(
+                        'diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]'
+                    );
                     expect(shape).not.toBeNull();
 
                     const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
@@ -346,7 +349,9 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector(
+                        'diagram-parallel-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(shape).not.toBeNull();
 
                     const shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
@@ -400,7 +405,9 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]');
+                    const shape: any = element.querySelector(
+                        'diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#017501"]'
+                    );
                     expect(shape).not.toBeNull();
 
                     const shape1: any = element.querySelector('diagram-event-gateway');
@@ -432,7 +439,9 @@ describe('Diagrams gateways', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    const shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]');
+                    const shape: any = element.querySelector(
+                        'diagram-event-gateway > diagram-gateway > raphael-rhombus[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(shape).not.toBeNull();
 
                     const shape1: any = element.querySelector('diagram-event-gateway');

@@ -18,32 +18,17 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    AppConfigService,
-    DataRowEvent,
-    ObjectDataRow,
-    User,
-    DataColumn,
-    ColumnsSelectorComponent,
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    AppConfigServiceMock,
-    TranslationService,
-    TranslationMock
-} from '@alfresco/adf-core';
+import { AppConfigService, DataRowEvent, ObjectDataRow, User, DataColumn, ColumnsSelectorComponent } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { TaskListCloudModule } from '../task-list-cloud.module';
-import { HttpClientModule } from '@angular/common/http';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -117,7 +102,7 @@ describe('TaskListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule],
             providers: [
                 {
                     provide: TASK_LIST_CLOUD_TOKEN,
@@ -515,7 +500,7 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
         });
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
@@ -569,12 +554,7 @@ describe('TaskListCloudComponent: Creating an empty custom template - EmptyTempl
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule, NoopAnimationsModule, TranslateModule.forRoot(), TaskListCloudModule],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
+            imports: [ProcessServiceCloudTestingModule, TaskListCloudModule]
         });
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         const emptyList = { list: { entries: [] } };
@@ -606,7 +586,7 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);

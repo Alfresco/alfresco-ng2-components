@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     IntegrationService,
@@ -84,13 +85,13 @@ describe('Attach Folder', () => {
 
         await searchService.isSearchable(folderName);
         await contentNodeSelector.searchAndSelectResult(folderName, folderName);
-        await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
-        await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
+        expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
+        expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
         await searchService.isSearchable('Meeting Notes');
         await contentNodeSelector.searchAndSelectResult('Meeting Notes', 'Meeting Notes');
-        await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
-        await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
+        expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
+        expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
 
         await contentNodeSelector.clickCancelButton();
         await widget.attachFolderWidget().checkFolderIsNotAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, folderName);
@@ -99,8 +100,8 @@ describe('Attach Folder', () => {
         await contentNodeSelector.checkDialogIsDisplayed();
 
         await contentNodeSelector.searchAndSelectResult(folderName, folderName);
-        await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
-        await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
+        expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
+        expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
         await contentNodeSelector.clickMoveCopyButton();
         await widget.attachFolderWidget().checkFolderIsAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, folderName);

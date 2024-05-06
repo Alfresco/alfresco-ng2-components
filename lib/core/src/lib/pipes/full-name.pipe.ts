@@ -18,9 +18,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { UserLike } from './user-like.interface';
 
-@Pipe({ name: 'fullName' })
+@Pipe({
+    name: 'fullName',
+    standalone: true
+})
 export class FullNamePipe implements PipeTransform {
-
     transform(user: UserLike): string {
         return this.buildFullName(user) ? this.buildFullName(user) : this.buildFromUsernameOrEmail(user);
     }
@@ -35,6 +37,6 @@ export class FullNamePipe implements PipeTransform {
     }
 
     buildFromUsernameOrEmail(user: UserLike): string {
-        return (user?.username || user?.email) ?? '' ;
+        return (user?.username || user?.email) ?? '';
     }
 }

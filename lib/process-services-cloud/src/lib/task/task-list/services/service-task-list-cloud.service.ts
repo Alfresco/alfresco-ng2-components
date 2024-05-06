@@ -40,7 +40,6 @@ export class ServiceTaskListCloudService extends BaseCloudService {
             }
             return this.get(queryUrl, queryParams);
         } else {
-            this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
     }
@@ -55,11 +54,8 @@ export class ServiceTaskListCloudService extends BaseCloudService {
     getServiceTaskStatus(appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
         if (appName) {
             const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-context`;
-            return this.get(queryUrl).pipe(
-                map((response: any) => response.entry)
-            );
+            return this.get(queryUrl).pipe(map((response: any) => response.entry));
         } else {
-            this.logService.error('Appname is mandatory for querying task');
             return throwError('Appname not configured');
         }
     }
@@ -78,7 +74,6 @@ export class ServiceTaskListCloudService extends BaseCloudService {
             const queryUrl = `${this.getBasePath(appName)}/rb/admin/v1/executions/${executionId}/replay/service-task`;
             return this.post(queryUrl, payload);
         } else {
-            this.logService.error('Appname, executionId and flowNodeId are mandatory to replaying a service task');
             return throwError('Appname/executionId/flowNodeId not configured');
         }
     }
@@ -86,9 +81,11 @@ export class ServiceTaskListCloudService extends BaseCloudService {
     protected buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const property in requestNode) {
-            if (Object.prototype.hasOwnProperty.call(requestNode, property) &&
+            if (
+                Object.prototype.hasOwnProperty.call(requestNode, property) &&
                 !this.isExcludedField(property) &&
-                this.isPropertyValueValid(requestNode, property)) {
+                this.isPropertyValueValid(requestNode, property)
+            ) {
                 queryParam[property] = requestNode[property];
             }
         }

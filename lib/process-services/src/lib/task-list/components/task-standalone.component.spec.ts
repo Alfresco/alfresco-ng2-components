@@ -18,7 +18,6 @@
 import { TaskStandaloneComponent } from './task-standalone.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskStandaloneComponent', () => {
     let component: TaskStandaloneComponent;
@@ -27,10 +26,7 @@ describe('TaskStandaloneComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(TaskStandaloneComponent);
         component = fixture.componentInstance;

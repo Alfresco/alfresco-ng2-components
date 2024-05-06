@@ -18,7 +18,8 @@
 import { browser } from 'protractor';
 import {
     AppListCloudPage,
-    StringUtil, createApiService,
+    StringUtil,
+    createApiService,
     LoginPage,
     TasksService,
     IdentityService,
@@ -29,7 +30,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 
 describe('Edit task filters cloud', () => {
-
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginPage();
@@ -46,10 +46,11 @@ describe('Edit task filters cloud', () => {
     const groupIdentityService = new GroupIdentityService(apiService);
     const tasksService = new TasksService(apiService);
 
-    let testUser; let groupInfo;
+    let testUser;
+    let groupInfo;
 
     const completedTaskName = StringUtil.generateRandomString();
-        const assignedTaskName = StringUtil.generateRandomString();
+    const assignedTaskName = StringUtil.generateRandomString();
 
     /**
      * Click on the specified task filter
@@ -103,10 +104,10 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
-        await expect(await editTaskFilter.getStatusFilterDropDownValue()).toEqual('Assigned', `Status is no 'Assigned'`);
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate', `Sort filter is not 'createdDate'`);
-        await expect(await editTaskFilter.getOrderFilterDropDownValue()).toEqual('Descending', `Order is not 'Descending'`);
+        expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+        expect(await editTaskFilter.getStatusFilterDropDownValue()).toEqual('Assigned');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
+        expect(await editTaskFilter.getOrderFilterDropDownValue()).toEqual('Descending');
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
@@ -114,10 +115,10 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('completed-tasks');
         await waitTillContentLoaded();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
-        await expect(await editTaskFilter.getStatusFilterDropDownValue()).toEqual('Completed', `Status is not 'Completed'`);
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate', `Sort filter is not 'createdDate'`);
-        await expect(await editTaskFilter.getOrderFilterDropDownValue()).toEqual('Descending', `Order is not 'Descending'`);
+        expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
+        expect(await editTaskFilter.getStatusFilterDropDownValue()).toEqual('Completed');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
+        expect(await editTaskFilter.getOrderFilterDropDownValue()).toEqual('Descending');
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
@@ -132,15 +133,15 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+        expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
         await editTaskFilter.checkSaveButtonIsDisplayed();
         await editTaskFilter.checkSaveAsButtonIsDisplayed();
         await editTaskFilter.checkDeleteButtonIsDisplayed();
 
-        await expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(false);
-        await expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
-        await expect(await editTaskFilter.checkDeleteButtonIsEnabled()).toEqual(false);
+        expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(false);
+        expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
+        expect(await editTaskFilter.checkDeleteButtonIsEnabled()).toEqual(false);
         await editTaskFilter.closeFilter();
     });
 
@@ -154,34 +155,34 @@ describe('Edit task filters cloud', () => {
         await clickTaskFilter('custom-new');
         await waitTillContentLoaded();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('New');
+        expect(await taskFilter.getActiveFilterName()).toBe('New');
 
         await editTaskFilter.setSortFilterDropDown('priority');
         await editTaskFilter.checkSaveButtonIsDisplayed();
         await editTaskFilter.checkSaveAsButtonIsDisplayed();
         await editTaskFilter.checkDeleteButtonIsDisplayed();
 
-        await expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(true);
-        await expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(true);
-        await expect(await editTaskFilter.checkDeleteButtonIsEnabled()).toEqual(true);
+        expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(true);
+        expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(true);
+        expect(await editTaskFilter.checkDeleteButtonIsEnabled()).toEqual(true);
     });
 
     it('[C291795] New filter is added when clicking Save As button', async () => {
         await createNewCustomFilter('New');
-        await expect(await taskFilter.getActiveFilterName()).toBe('New');
+        expect(await taskFilter.getActiveFilterName()).toBe('New');
         await editTaskFilter.openFilter();
-        await expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(false);
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
-        await expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
-        await expect(await editTaskFilter.checkDeleteButtonIsEnabled()).toEqual(true);
+        expect(await editTaskFilter.checkSaveButtonIsEnabled()).toEqual(false);
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
+        expect(await editTaskFilter.checkSaveAsButtonIsEnabled()).toEqual(false);
+        expect(await editTaskFilter.checkDeleteButtonIsEnabled()).toEqual(true);
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
 
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
         await clickTaskFilter('custom-new');
         await waitTillContentLoaded();
 
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickDeleteButton();
     });
 
@@ -200,24 +201,24 @@ describe('Edit task filters cloud', () => {
         await editTaskFilterDialog.setFilterName('New');
         await editTaskFilterDialog.clickOnSaveButton();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('New');
+        expect(await taskFilter.getActiveFilterName()).toBe('New');
         await editTaskFilter.openFilter();
 
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.setSortFilterDropDown('priority');
         await editTaskFilter.clickSaveAsButton();
         await editTaskFilterDialog.setFilterName('New');
         await editTaskFilterDialog.clickOnSaveButton();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('New');
+        expect(await taskFilter.getActiveFilterName()).toBe('New');
         await editTaskFilter.openFilter();
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('priority');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('priority');
         await editTaskFilter.clickDeleteButton();
         await clickTaskFilter('custom-new');
         await waitTillContentLoaded();
 
         await editTaskFilter.openFilter();
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickDeleteButton();
     });
 
@@ -236,15 +237,15 @@ describe('Edit task filters cloud', () => {
         await editTaskFilterDialog.setFilterName('New');
         await editTaskFilterDialog.clickOnSaveButton();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('New');
+        expect(await taskFilter.getActiveFilterName()).toBe('New');
         await editTaskFilter.openFilter();
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.setSortFilterDropDown('name');
         await editTaskFilter.clickSaveButton();
         await editTaskFilter.openFilter();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('New');
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('name');
+        expect(await taskFilter.getActiveFilterName()).toBe('New');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('name');
         await editTaskFilter.clickDeleteButton();
     });
 
@@ -263,12 +264,12 @@ describe('Edit task filters cloud', () => {
         await editTaskFilterDialog.setFilterName('New');
         await editTaskFilterDialog.clickOnSaveButton();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('New');
+        expect(await taskFilter.getActiveFilterName()).toBe('New');
         await editTaskFilter.openFilter();
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickDeleteButton();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+        expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
         await taskFilter.checkTaskFilterNotDisplayed('New');
     });
 
@@ -279,16 +280,16 @@ describe('Edit task filters cloud', () => {
         await editTaskFilter.openFilter();
         await editTaskFilter.setSortFilterDropDown('priority');
 
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('priority');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('priority');
         await editTaskFilter.clickSaveAsButton();
 
-        await expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
+        expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
         await editTaskFilterDialog.setFilterName('Cancel');
-        await expect(await editTaskFilterDialog.getFilterName()).toEqual('Cancel');
+        expect(await editTaskFilterDialog.getFilterName()).toEqual('Cancel');
         await editTaskFilterDialog.clickOnCancelButton();
 
         await taskFilter.checkTaskFilterNotDisplayed('Cancel');
-        await expect(await taskFilter.getActiveFilterName()).toEqual('My Tasks');
+        expect(await taskFilter.getActiveFilterName()).toEqual('My Tasks');
 
         await clickTaskFilter('completed-tasks');
         await waitTillContentLoaded();
@@ -296,8 +297,8 @@ describe('Edit task filters cloud', () => {
         await waitTillContentLoaded();
         await editTaskFilter.openFilter();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
+        expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('createdDate');
 
         await editTaskFilter.closeFilter();
     });
@@ -309,14 +310,14 @@ describe('Edit task filters cloud', () => {
         await editTaskFilter.openFilter();
         await editTaskFilter.setSortFilterDropDown('id');
 
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickSaveAsButton();
 
-        await expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
+        expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
         await editTaskFilterDialog.clearFilterName();
-        await expect(await editTaskFilterDialog.getFilterName()).toEqual('');
-        await expect(await editTaskFilterDialog.checkSaveButtonIsEnabled()).toEqual(false);
-        await expect(await editTaskFilterDialog.checkCancelButtonIsEnabled()).toEqual(true);
+        expect(await editTaskFilterDialog.getFilterName()).toEqual('');
+        expect(await editTaskFilterDialog.checkSaveButtonIsEnabled()).toEqual(false);
+        expect(await editTaskFilterDialog.checkCancelButtonIsEnabled()).toEqual(true);
         await editTaskFilterDialog.clickOnCancelButton();
     });
 
@@ -326,13 +327,13 @@ describe('Edit task filters cloud', () => {
 
         await editTaskFilter.openFilter();
         await editTaskFilter.setSortFilterDropDown('id');
-        await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
+        expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickSaveAsButton();
 
-        await expect(await editTaskFilterDialog.checkSaveButtonIsEnabled()).toEqual(true);
-        await expect(await editTaskFilterDialog.checkCancelButtonIsEnabled()).toEqual(true);
-        await expect(await editTaskFilterDialog.getTitle()).toEqual('Save filter as');
-        await expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
+        expect(await editTaskFilterDialog.checkSaveButtonIsEnabled()).toEqual(true);
+        expect(await editTaskFilterDialog.checkCancelButtonIsEnabled()).toEqual(true);
+        expect(await editTaskFilterDialog.getTitle()).toEqual('Save filter as');
+        expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
         await editTaskFilterDialog.clickOnCancelButton();
     });
 

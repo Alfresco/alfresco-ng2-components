@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, JsonCellComponent, ObjectDataColumn, ObjectDataTableAdapter } from '@alfresco/adf-core';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { CoreTestingModule } from '../../../testing';
+import { JsonCellComponent } from './json-cell.component';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('JsonCellComponent', () => {
     let loader: HarnessLoader;
@@ -32,7 +34,7 @@ describe('JsonCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(JsonCellComponent);
         component = fixture.componentInstance;

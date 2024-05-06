@@ -23,7 +23,6 @@ import {
     FormFieldOption,
     FormFieldTypes,
     FormService,
-    LogService,
     RuleEntry,
     WidgetComponent
 } from '@alfresco/adf-core';
@@ -73,10 +72,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(public formService: FormService,
-                private formCloudService: FormCloudService,
-                private logService: LogService,
-                private appConfig: AppConfigService) {
+    constructor(public formService: FormService, private formCloudService: FormCloudService, private appConfig: AppConfigService) {
         super(formService);
     }
 
@@ -148,8 +144,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private getOptionsFromArray(nestedData: any[], id: string, label: string): FormFieldOption[] {
-        const options = nestedData.map(item => this.createOption(item, id, label));
-        const hasInvalidOption = options.some(option => !option);
+        const options = nestedData.map((item) => this.createOption(item, id, label));
+        const hasInvalidOption = options.some((option) => !option);
 
         if (hasInvalidOption) {
             this.variableOptionsFailed = true;
@@ -174,7 +170,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return option;
     }
 
-    private getOptionsFromVariable(processVariables: TaskVariableCloud[], formVariables: TaskVariableCloud[], variableName: string): TaskVariableCloud {
+    private getOptionsFromVariable(
+        processVariables: TaskVariableCloud[],
+        formVariables: TaskVariableCloud[],
+        variableName: string
+    ): TaskVariableCloud {
         const processVariableDropdownOptions: TaskVariableCloud = this.getVariableValueByName(processVariables, variableName);
         const formVariableDropdownOptions: TaskVariableCloud = this.getVariableValueByName(formVariables, variableName);
 
@@ -182,7 +182,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
-        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)?.value;
+        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)
+            ?.value;
     }
 
     private isVariableOptionType(): boolean {
@@ -193,18 +194,22 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         if (this.isValidRestType()) {
             this.resetRestApiErrorMessage();
             const bodyParam = this.buildBodyParam();
-            this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
+            this.formCloudService
+                .getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe((result: FormFieldOption[]) => {
-                    this.resetRestApiErrorMessage();
-                    this.field.options = result;
-                    this.updateOptions();
-                    this.field.updateForm();
-                    this.resetInvalidValue();
-                }, (err) => {
-                    this.resetRestApiOptions();
-                    this.handleError(err);
-                });
+                .subscribe(
+                    (result: FormFieldOption[]) => {
+                        this.resetRestApiErrorMessage();
+                        this.field.options = result;
+                        this.updateOptions();
+                        this.field.updateForm();
+                        this.resetInvalidValue();
+                    },
+                    (err) => {
+                        this.resetRestApiOptions();
+                        this.handleError(err);
+                    }
+                );
         }
     }
 
@@ -225,7 +230,8 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.formService.formFieldValueChanged
             .pipe(
                 filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)),
-                takeUntil(this.onDestroy$))
+                takeUntil(this.onDestroy$)
+            )
             .subscribe((event: FormFieldEvent) => {
                 const valueOfParentWidget = event.field.value;
                 this.parentValueChanged(valueOfParentWidget);
@@ -291,11 +297,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private isSelectedValueInOptions(): boolean {
         if (Array.isArray(this.fieldValue)) {
-            const optionIdList = [...this.field.options].map(option => option.id);
-            const fieldValueIds = this.fieldValue.map(valueOption => valueOption.id);
-            return fieldValueIds.every(valueOptionId => optionIdList.includes(valueOptionId));
+            const optionIdList = [...this.field.options].map((option) => option.id);
+            const fieldValueIds = this.fieldValue.map((valueOption) => valueOption.id);
+            return fieldValueIds.every((valueOptionId) => optionIdList.includes(valueOptionId));
         } else {
-            return [...this.field.options].map(option => option.id).includes(this.fieldValue);
+            return [...this.field.options].map((option) => option.id).includes(this.fieldValue);
         }
     }
 
@@ -380,7 +386,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private handleError(error: any) {
         if (!this.previewState) {
-            this.logService.error(error);
+            this.widgetError.emit(error);
         }
     }
 
@@ -395,16 +401,15 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     updateOptions(): void {
         this.showInputFilter = this.field.options.length > this.appConfig.get<number>('form.dropDownFilterLimit', HIDE_FILTER_LIMIT);
-        this.list$ = combineLatest([of(this.field.options), this.filter$])
-            .pipe(
-                map(([items, search]) => {
-                    if (!search) {
-                        return items;
-                    }
-                    return items.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
-                }),
-                takeUntil(this.onDestroy$)
-            );
+        this.list$ = combineLatest([of(this.field.options), this.filter$]).pipe(
+            map(([items, search]) => {
+                if (!search) {
+                    return items;
+                }
+                return items.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
+            }),
+            takeUntil(this.onDestroy$)
+        );
     }
 
     resetRestApiErrorMessage() {
@@ -428,10 +433,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     showRequiredMessage(): boolean {
-        return (this.isInvalidFieldRequired() || (this.isNoneValueSelected(this.field.value) && this.isRequired())) &&
+        return (
+            (this.isInvalidFieldRequired() || (this.isNoneValueSelected(this.field.value) && this.isRequired())) &&
             this.isTouched() &&
             !this.isRestApiFailed &&
-            !this.variableOptionsFailed;
+            !this.variableOptionsFailed
+        );
     }
 
     getDefaultOption(options: FormFieldOption[]): FormFieldOption {

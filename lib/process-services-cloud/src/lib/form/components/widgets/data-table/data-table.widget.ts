@@ -18,29 +18,17 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    WidgetComponent,
-    FormService,
-    DataTableModule,
-    LogService,
-    FormBaseModule,
-    DataRow,
-    DataColumn
-} from '@alfresco/adf-core';
+import { WidgetComponent, FormService, DataTableModule, FormBaseModule, DataRow, DataColumn } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
+import { DataTablePathParserHelper } from './helpers/data-table-path-parser.helper';
 
 @Component({
     standalone: true,
-    imports: [
-        CommonModule,
-        TranslateModule,
-        DataTableModule,
-        FormBaseModule
-    ],
+    imports: [CommonModule, TranslateModule, DataTableModule, FormBaseModule],
     selector: 'data-table',
     templateUrl: './data-table.widget.html',
     styleUrls: ['./data-table.widget.scss'],
@@ -58,7 +46,6 @@ import { WidgetDataTableAdapter } from './data-table-adapter.widget';
     encapsulation: ViewEncapsulation.None
 })
 export class DataTableWidgetComponent extends WidgetComponent implements OnInit {
-
     dataSource: WidgetDataTableAdapter;
     dataTableLoadFailed = false;
     previewState = false;
@@ -67,12 +54,9 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private columnsSchema: DataColumn[];
     private variableName: string;
     private defaultResponseProperty = 'data';
+    private pathParserHelper = new DataTablePathParserHelper();
 
-    constructor(
-        public formService: FormService,
-        private formCloudService: FormCloudService,
-        private logService: LogService
-    ) {
+    constructor(public formService: FormService, private formCloudService: FormCloudService) {
         super(formService);
     }
 
@@ -109,8 +93,8 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         const rowsData = fieldValue || this.getDataFromVariable();
 
         if (rowsData) {
-            const dataFromPath = this.getOptionsFromPath(rowsData, optionsPath);
-            this.rowsData = dataFromPath?.length ? dataFromPath : rowsData as DataRow[];
+            const dataFromPath = this.pathParserHelper.retrieveDataFromPath(rowsData, optionsPath);
+            this.rowsData = (dataFromPath?.length ? dataFromPath : rowsData) as DataRow[];
         }
     }
 
@@ -124,25 +108,9 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         return processVariableDropdownOptions ?? formVariableDropdownOptions;
     }
 
-    private getOptionsFromPath(data: any, path: string): DataRow[] {
-        const properties = path.split('.');
-        const currentProperty = properties.shift();
-
-        if (!Object.prototype.hasOwnProperty.call(data, currentProperty)) {
-            return [];
-        }
-
-        const nestedData = data[currentProperty];
-
-        if (Array.isArray(nestedData)) {
-            return nestedData;
-        }
-
-        return this.getOptionsFromPath(nestedData, properties.join('.'));
-    }
-
     private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
-        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)?.value;
+        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)
+            ?.value;
     }
 
     private setPreviewState(): void {
@@ -152,7 +120,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private handleError(error: any) {
         if (!this.previewState) {
             this.dataTableLoadFailed = true;
-            this.logService.error(error);
+            this.widgetError.emit(error);
         }
     }
 }

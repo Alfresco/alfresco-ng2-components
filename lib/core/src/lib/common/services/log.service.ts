@@ -22,11 +22,13 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
 import { Subject } from 'rxjs';
 
+/**
+ * @deprecated This service is deprecated and will be removed in future versions.
+ */
 @Injectable({
     providedIn: 'root'
 })
 export class LogService {
-
     get currentLogLevel() {
         const configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
 
@@ -51,7 +53,6 @@ export class LogService {
      */
     error(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.ERROR) {
-
             this.messageBus(message, 'ERROR');
 
             console.error(message, ...optionalParams);
@@ -66,7 +67,6 @@ export class LogService {
      */
     debug(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.DEBUG) {
-
             this.messageBus(message, 'DEBUG');
 
             console.debug(message, ...optionalParams);
@@ -81,7 +81,6 @@ export class LogService {
      */
     info(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.INFO) {
-
             this.messageBus(message, 'INFO');
 
             console.info(message, ...optionalParams);
@@ -96,7 +95,6 @@ export class LogService {
      */
     log(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.TRACE) {
-
             this.messageBus(message, 'LOG');
 
             console.log(message, ...optionalParams);
@@ -111,7 +109,6 @@ export class LogService {
      */
     trace(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.TRACE) {
-
             this.messageBus(message, 'TRACE');
 
             console.trace(message, ...optionalParams);
@@ -126,7 +123,6 @@ export class LogService {
      */
     warn(message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.WARN) {
-
             this.messageBus(message, 'WARN');
 
             console.warn(message, ...optionalParams);
@@ -142,7 +138,6 @@ export class LogService {
      */
     assert(test?: boolean, message?: string, ...optionalParams: any[]) {
         if (this.currentLogLevel !== LogLevelsEnum.SILENT) {
-
             this.messageBus(message, 'ASSERT');
 
             console.assert(test, message, ...optionalParams);

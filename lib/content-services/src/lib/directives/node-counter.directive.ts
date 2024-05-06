@@ -15,27 +15,22 @@
  * limitations under the License.
  */
 
-import { Directive, Input, Component, OnInit, OnChanges, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { Directive, Input, Component, OnInit, OnChanges, ViewContainerRef } from '@angular/core';
 
 @Directive({
     selector: '[adf-node-counter]'
 })
 export class NodeCounterDirective implements OnInit, OnChanges {
-
     /** Number to display in the counter badge */
     @Input('adf-node-counter')
     counter: number;
 
     componentRef: NodeCounterComponent;
 
-    constructor(
-        private resolver: ComponentFactoryResolver,
-        public viewContainerRef: ViewContainerRef
-    ) {}
+    constructor(private viewContainerRef: ViewContainerRef) {}
 
     ngOnInit() {
-        const componentFactory = this.resolver.resolveComponentFactory(NodeCounterComponent);
-        this.componentRef = this.viewContainerRef.createComponent(componentFactory).instance;
+        this.componentRef = this.viewContainerRef.createComponent(NodeCounterComponent).instance;
         this.componentRef.counter = this.counter;
     }
 
@@ -48,9 +43,7 @@ export class NodeCounterDirective implements OnInit, OnChanges {
 
 @Component({
     selector: 'adf-node-counter',
-    template: `
-        <div>{{ 'NODE_COUNTER.SELECTED_COUNT' | translate: { count: counter } }}</div>
-    `
+    template: ` <div>{{ 'NODE_COUNTER.SELECTED_COUNT' | translate : { count: counter } }}</div> `
 })
 export class NodeCounterComponent {
     counter: number;

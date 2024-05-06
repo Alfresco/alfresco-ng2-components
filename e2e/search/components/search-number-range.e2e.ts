@@ -106,7 +106,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.checkApplyButtonIsDisplayed();
         await sizeRangeFilter.checkClearButtonIsDisplayed();
 
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
     it('[C276922] Should be keep value when Number Range widget is collapsed', async () => {
@@ -117,8 +117,8 @@ describe('Search Number Range Filter', () => {
         await searchFilters.checkSizeRangeFilterIsCollapsed();
         await searchFilters.clickSizeRangeFilterHeader();
         await searchFilters.checkSizeRangeFilterIsExpanded();
-        await expect(await sizeRangeFilter.getFromNumber()).toEqual(`${size}`);
-        await expect(await sizeRangeFilter.getToNumber()).toEqual(`${size}`);
+        expect(await sizeRangeFilter.getFromNumber()).toEqual(`${size}`);
+        expect(await sizeRangeFilter.getToNumber()).toEqual(`${size}`);
     });
 
     it('[C276924] Should display error message when input had an invalid format', async () => {
@@ -128,39 +128,39 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.checkFromErrorInvalidIsDisplayed();
         await sizeRangeFilter.checkToErrorInvalidIsDisplayed();
 
-        await expect(await sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
-        await expect(await sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
+        expect(await sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         await sizeRangeFilter.putFromNumber('@');
         await sizeRangeFilter.putToNumber('£');
         await sizeRangeFilter.checkFromErrorInvalidIsDisplayed();
         await sizeRangeFilter.checkToErrorInvalidIsDisplayed();
-        await expect(await sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
-        await expect(await sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
+        expect(await sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         await sizeRangeFilter.putFromNumber('4.5');
         await sizeRangeFilter.putToNumber('4,5');
         await sizeRangeFilter.checkFromErrorInvalidIsDisplayed();
         await sizeRangeFilter.checkToErrorInvalidIsDisplayed();
-        await expect(await sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
-        await expect(await sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
+        expect(await sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         await sizeRangeFilter.putFromNumber('01');
         await sizeRangeFilter.putToNumber('-1');
-        await expect(await sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
-        await expect(await sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
+        expect(await sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         await sizeRangeFilter.clearFromField();
         await sizeRangeFilter.clearToField();
         await sizeRangeFilter.checkFromErrorRequiredIsDisplayed();
         await sizeRangeFilter.checkToErrorRequiredIsDisplayed();
-        await expect(await sizeRangeFilter.getFromErrorRequired()).toEqual('Required value');
-        await expect(await sizeRangeFilter.getToErrorRequired()).toEqual('Required value');
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.getFromErrorRequired()).toEqual('Required value');
+        expect(await sizeRangeFilter.getToErrorRequired()).toEqual('Required value');
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
     it('[C276943] Should be able to put a big value in To field', async () => {
@@ -170,7 +170,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.putToNumber(toSize);
         await sizeRangeFilter.putFromNumber(fromSize);
 
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
         await searchResults.dataTable.waitTillContentLoaded();
@@ -181,7 +181,7 @@ describe('Search Number Range Filter', () => {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
+                expect(parseInt(currentSize, 10) <= toSize).toBe(true);
             }
         }
     });
@@ -199,7 +199,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.putFromNumber(fromSize);
         await sizeRangeFilter.putToNumber(toSize);
 
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
         await searchResults.dataTable.waitTillContentLoaded();
@@ -210,7 +210,7 @@ describe('Search Number Range Filter', () => {
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
+                expect(parseInt(currentSize, 10) <= toSize).toBe(true);
             }
         }
 
@@ -224,7 +224,7 @@ describe('Search Number Range Filter', () => {
         for (const currentResult of resultsSize) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
+                expect(parseInt(currentSize, 10) <= toSize).toBe(true);
             }
         }
 
@@ -232,7 +232,7 @@ describe('Search Number Range Filter', () => {
         for (const currentResult of resultsDisplay) {
             const name = await BrowserActions.getAttribute(currentResult, 'title');
             if (name && name.trim() !== '') {
-                await expect(/z*/i.test(name)).toBe(true);
+                expect(/z*/i.test(name)).toBe(true);
             }
         }
     });
@@ -241,7 +241,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.checkToFieldIsDisplayed();
         await sizeRangeFilter.putToNumber(99999999);
         await sizeRangeFilter.putFromNumber(0);
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
         await searchResults.dataTable.waitTillContentLoaded();
@@ -259,7 +259,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.checkToFieldIsDisplayed();
         await sizeRangeFilter.putToNumber(1);
         await sizeRangeFilter.putFromNumber(0);
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
         await searchResults.dataTable.waitTillContentLoaded();
@@ -270,7 +270,7 @@ describe('Search Number Range Filter', () => {
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
-                await expect((currentSize === '0' || currentSize === '1')).toBe(true);
+                expect(currentSize === '0' || currentSize === '1').toBe(true);
             }
         }
     });
@@ -278,13 +278,13 @@ describe('Search Number Range Filter', () => {
     it('[C277092] Should disable apply button when from field value equal/is bigger than to field value', async () => {
         await sizeRangeFilter.checkFromFieldIsDisplayed();
         await sizeRangeFilter.putFromNumber(10);
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         await sizeRangeFilter.putToNumber('5');
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         await sizeRangeFilter.putToNumber('10');
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
     it('[C289930] Should be able to clear values in number range fields', async () => {
@@ -297,8 +297,8 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.putToNumber(1);
         await sizeRangeFilter.clickClearButton();
 
-        await expect(await sizeRangeFilter.getFromNumber()).toEqual('');
-        await expect(await sizeRangeFilter.getToNumber()).toEqual('');
+        expect(await sizeRangeFilter.getFromNumber()).toEqual('');
+        expect(await sizeRangeFilter.getToNumber()).toEqual('');
 
         await sizeRangeFilter.putFromNumber(0);
         await sizeRangeFilter.putToNumber(1);
@@ -309,20 +309,20 @@ describe('Search Number Range Filter', () => {
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) <= 1000).toBe(true);
+                expect(parseInt(currentSize, 10) <= 1000).toBe(true);
             }
         }
 
         await sizeRangeFilter.clickClearButton();
 
-        await expect(await sizeRangeFilter.getFromNumber()).toEqual('');
-        await expect(await sizeRangeFilter.getToNumber()).toEqual('');
+        expect(await sizeRangeFilter.getFromNumber()).toEqual('');
+        expect(await sizeRangeFilter.getToNumber()).toEqual('');
 
         const resultsSize = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of resultsSize) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
-                await expect(parseInt(currentSize, 10) >= 1000).toBe(true);
+                expect(parseInt(currentSize, 10) >= 1000).toBe(true);
             }
         }
     });
@@ -331,7 +331,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.checkToFieldIsDisplayed();
         await sizeRangeFilter.putToNumber(2);
         await sizeRangeFilter.putFromNumber(1);
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
 
@@ -342,7 +342,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.checkToFieldIsDisplayed();
         await sizeRangeFilter.putToNumber(1);
         await sizeRangeFilter.putFromNumber(0);
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
 
@@ -353,7 +353,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.checkToFieldIsDisplayed();
         await sizeRangeFilter.putToNumber(3);
         await sizeRangeFilter.putFromNumber(2);
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
 
@@ -364,7 +364,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.checkToFieldIsDisplayed();
         await sizeRangeFilter.putToNumber(4);
         await sizeRangeFilter.putFromNumber(3);
-        await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+        expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
 
@@ -402,7 +402,7 @@ describe('Search Number Range Filter', () => {
             await sizeRangeFilter.checkToFieldIsDisplayed();
             await sizeRangeFilter.putToNumber(toYear);
             await sizeRangeFilter.putFromNumber(fromYear);
-            await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+            expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             await sizeRangeFilter.clickApplyButton();
             await searchResults.dataTable.waitTillContentLoaded();
@@ -414,8 +414,8 @@ describe('Search Number Range Filter', () => {
                 const currentDate = await BrowserActions.getAttribute(currentResult, 'title');
                 const currentDateFormatted = parse(currentDate, 'MMM dd, yyyy, h:mm:ss a', new Date());
 
-                await expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
-                await expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);
+                expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
+                expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);
             }
         });
 
@@ -438,7 +438,7 @@ describe('Search Number Range Filter', () => {
             await sizeRangeFilter.checkToFieldIsDisplayed();
             await sizeRangeFilter.putToNumber(2);
             await sizeRangeFilter.putFromNumber(1);
-            await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+            expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             await sizeRangeFilter.clickApplyButton();
 
@@ -449,7 +449,7 @@ describe('Search Number Range Filter', () => {
             await sizeRangeFilter.checkToFieldIsDisplayed();
             await sizeRangeFilter.putToNumber(3);
             await sizeRangeFilter.putFromNumber(1);
-            await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+            expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             await sizeRangeFilter.clickApplyButton();
 
@@ -477,7 +477,7 @@ describe('Search Number Range Filter', () => {
             await sizeRangeFilter.checkToFieldIsDisplayed();
             await sizeRangeFilter.putToNumber(3);
             await sizeRangeFilter.putFromNumber(1);
-            await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+            expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             await sizeRangeFilter.clickApplyButton();
 
@@ -488,7 +488,7 @@ describe('Search Number Range Filter', () => {
             await sizeRangeFilter.checkToFieldIsDisplayed();
             await sizeRangeFilter.putToNumber(3);
             await sizeRangeFilter.putFromNumber(2);
-            await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
+            expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             await sizeRangeFilter.clickApplyButton();
 

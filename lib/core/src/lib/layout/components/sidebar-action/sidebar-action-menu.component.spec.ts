@@ -21,7 +21,6 @@ import { MaterialModule } from '../../../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
@@ -30,10 +29,7 @@ describe('SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(SidebarActionMenuComponent);
         element = fixture.nativeElement;
@@ -86,14 +82,8 @@ describe('Custom SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                SidebarActionMenuComponent,
-                CustomSidebarActionMenuComponent
-            ],
-            imports: [
-                MaterialModule,
-                NoopAnimationsModule
-            ]
+            declarations: [SidebarActionMenuComponent, CustomSidebarActionMenuComponent],
+            imports: [MaterialModule, NoopAnimationsModule]
         });
         fixture = TestBed.createComponent(CustomSidebarActionMenuComponent);
         fixture.detectChanges();

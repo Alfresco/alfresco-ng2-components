@@ -22,9 +22,7 @@ import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf
 
 import { MaterialModule } from './material.module';
 
-import { SocialModule } from './social/social.module';
 import { TagModule } from './tag/tag.module';
-import { WebScriptModule } from './webscript/webscript.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
@@ -35,7 +33,6 @@ import { ContentNodeSelectorModule } from './content-node-selector/content-node-
 import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
 import { ContentDirectiveModule } from './directives/content-directive.module';
 import { DialogModule } from './dialogs/dialog.module';
-import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { TreeViewModule } from './tree-view/tree-view.module';
@@ -44,24 +41,21 @@ import { AspectListModule } from './aspect-list/aspect-list.module';
 import { VersionCompatibilityModule } from './version-compatibility/version-compatibility.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
-import { ContentPipeModule } from './pipes/content-pipe.module';
+import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { ContentUserInfoModule } from './content-user-info/content-user-info.module';
-import { SecurityControlsServiceModule } from './security/services/security-controls-service.module';
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 
 @NgModule({
     imports: [
-        ContentPipeModule,
+        ...CONTENT_PIPES,
         CoreModule,
-        SocialModule,
         TagModule,
         CommonModule,
-        WebScriptModule,
         FormsModule,
         ReactiveFormsModule,
         DialogModule,
@@ -75,7 +69,6 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         ContentNodeSelectorModule,
         ContentNodeShareModule,
         ContentMetadataModule,
-        FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,
@@ -87,17 +80,12 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        SecurityControlsServiceModule,
         CategoriesModule
     ],
-    providers: [
-        provideTranslations('adf-content-services', 'assets/adf-content-services')
-    ],
+    providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
-        ContentPipeModule,
-        SocialModule,
+        ...CONTENT_PIPES,
         TagModule,
-        WebScriptModule,
         DocumentListModule,
         ContentUserInfoModule,
         UploadModule,
@@ -108,7 +96,6 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         ContentNodeShareModule,
         ContentMetadataModule,
         DialogModule,
-        FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,
@@ -120,7 +107,6 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        SecurityControlsServiceModule,
         CategoriesModule
     ]
 })

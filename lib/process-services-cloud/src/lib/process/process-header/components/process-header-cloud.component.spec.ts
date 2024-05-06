@@ -23,7 +23,6 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessHeaderCloudModule } from '../process-header-cloud.module';
 import { ProcessCloudService } from '../../services/process-cloud.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { processInstanceDetailsCloudMock } from '../../mock/process-instance-details-cloud.mock';
 
 describe('ProcessHeaderCloudComponent', () => {
@@ -34,11 +33,7 @@ describe('ProcessHeaderCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                ProcessHeaderCloudModule
-            ]
+            imports: [ProcessServiceCloudTestingModule, ProcessHeaderCloudModule]
         });
         fixture = TestBed.createComponent(ProcessHeaderCloudComponent);
         component = fixture.componentInstance;
@@ -174,7 +169,6 @@ describe('ProcessHeaderCloudComponent', () => {
     });
 
     describe('Config Filtering', () => {
-
         it('should show only the properties from the configuration file', async () => {
             spyOn(appConfigService, 'get').and.returnValue(['name', 'status']);
             component.ngOnChanges();
@@ -207,7 +201,6 @@ describe('ProcessHeaderCloudComponent', () => {
     });
 
     describe('Date values format', () => {
-
         beforeEach(() => {
             appConfigService.config = {
                 'adf-cloud-process-header': {

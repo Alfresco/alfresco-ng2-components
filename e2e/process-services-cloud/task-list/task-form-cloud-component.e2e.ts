@@ -16,7 +16,8 @@
  */
 
 import { browser, protractor } from 'protractor';
-import { createApiService,
+import {
+    createApiService,
     AppListCloudPage,
     LoginPage,
     ProcessCloudWidgetPage,
@@ -34,7 +35,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 
 describe('Task form cloud component', () => {
-
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const candidateBaseAppProcesses = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
@@ -61,7 +61,8 @@ describe('Task form cloud component', () => {
     const processInstancesService = new ProcessInstancesService(apiService);
     const formCloudService = new FormCloudService(apiService);
 
-    const completedTaskName = StringUtil.generateRandomString(); const assignedTaskName = StringUtil.generateRandomString();
+    const completedTaskName = StringUtil.generateRandomString();
+    const assignedTaskName = StringUtil.generateRandomString();
     const myTasksFilter = 'my-tasks';
     const completedTasksFilter = 'completed-tasks';
     const dateFieldId = 'Date0rzbb6';
@@ -69,8 +70,20 @@ describe('Task form cloud component', () => {
     const changedDate = '2020-07-10';
     const dropdownFieldId = 'DropdownOptions';
 
-    let completedTask; let createdTask; let assigneeTask; let toBeCompletedTask; let formValidationsTask; let formTaskId; let assigneeTaskId; let assigneeReleaseTask; let candidateUsersTask ;
-    let dateTimerTaskId; let dateTimerTask; let dateTimerChangedTaskId; let dateTimerChangedTask; let dropdownOptionsTask;
+    let completedTask;
+    let createdTask;
+    let assigneeTask;
+    let toBeCompletedTask;
+    let formValidationsTask;
+    let formTaskId;
+    let assigneeTaskId;
+    let assigneeReleaseTask;
+    let candidateUsersTask;
+    let dateTimerTaskId;
+    let dateTimerTask;
+    let dateTimerChangedTaskId;
+    let dateTimerChangedTask;
+    let dropdownOptionsTask;
 
     beforeAll(async () => {
         try {
@@ -80,10 +93,16 @@ describe('Task form cloud component', () => {
             assigneeTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
             await tasksService.claimTask(assigneeTask.entry.id, candidateBaseApp);
 
-            const formToTestValidationsKey = await formCloudService.getIdByFormName(candidateBaseApp,
-                    browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+            const formToTestValidationsKey = await formCloudService.getIdByFormName(
+                candidateBaseApp,
+                browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations
+            );
 
-            formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
+            formValidationsTask = await tasksService.createStandaloneTaskWithForm(
+                StringUtil.generateRandomString(),
+                candidateBaseApp,
+                formToTestValidationsKey
+            );
             await tasksService.claimTask(formValidationsTask.entry.id, candidateBaseApp);
 
             toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
@@ -93,8 +112,10 @@ describe('Task form cloud component', () => {
             await tasksService.claimTask(completedTask.entry.id, candidateBaseApp);
             await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
 
-            let processDefinition = await processDefinitionService
-                    .getProcessDefinitionByName(candidateBaseAppProcesses.candidateUserProcess, candidateBaseApp);
+            let processDefinition = await processDefinitionService.getProcessDefinitionByName(
+                candidateBaseAppProcesses.candidateUserProcess,
+                candidateBaseApp
+            );
 
             const candidateUsersProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
@@ -102,26 +123,31 @@ describe('Task form cloud component', () => {
             candidateUsersTask = processInstanceTasks.list.entries[0];
             await tasksService.claimTask(candidateUsersTask.entry.id, candidateBaseApp);
 
-            processDefinition = await processDefinitionService
-                    .getProcessDefinitionByName(candidateBaseAppProcesses.candidateUserProcess, candidateBaseApp);
+            processDefinition = await processDefinitionService.getProcessDefinitionByName(
+                candidateBaseAppProcesses.candidateUserProcess,
+                candidateBaseApp
+            );
 
             const formProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
             const formTasks = await queryService.getProcessInstanceTasks(formProcess.entry.id, candidateBaseApp);
             formTaskId = formTasks.list.entries[0].entry.id;
 
             const dropdownOptionsId = await formCloudService.getIdByFormName(simpleApp, simpleAppForm.dropdownWithOptions.name);
-            dropdownOptionsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, dropdownOptionsId);
+            dropdownOptionsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), simpleApp, dropdownOptionsId);
             await tasksService.claimTask(dropdownOptionsTask.entry.id, simpleApp);
 
-            const timerProcessDefinition = await processDefinitionService
-                .getProcessDefinitionByName(simpleAppProcess.intermediateDateProcessVarTimer, simpleApp);
+            const timerProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
+                simpleAppProcess.intermediateDateProcessVarTimer,
+                simpleApp
+            );
             const dateTimerProcess = await processInstancesService.createProcessInstance(timerProcessDefinition.entry.key, simpleApp);
             dateTimerTask = await queryService.getProcessInstanceTasks(dateTimerProcess.entry.id, simpleApp);
             dateTimerTaskId = dateTimerTask.list.entries[0].entry.id;
 
-            const timerChangedProcessDefinition = await processDefinitionService
-                .getProcessDefinitionByName(simpleAppProcess.intermediateDateProcessVarTimer, simpleApp);
+            const timerChangedProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
+                simpleAppProcess.intermediateDateProcessVarTimer,
+                simpleApp
+            );
             const dateTimerChangedProcess = await processInstancesService.createProcessInstance(timerChangedProcessDefinition.entry.key, simpleApp);
             dateTimerChangedTask = await queryService.getProcessInstanceTasks(dateTimerChangedProcess.entry.id, simpleApp);
             dateTimerChangedTaskId = dateTimerChangedTask.list.entries[0].entry.id;
@@ -136,7 +162,6 @@ describe('Task form cloud component', () => {
         } catch (error) {
             Logger.error('Error in beforeAll: ', error);
         }
-
     }, 5 * 60 * 1000);
 
     beforeEach(async () => {
@@ -154,7 +179,7 @@ describe('Task form cloud component', () => {
         await taskFilter.clickTaskFilter(myTasksFilter);
         await taskList.getDataTable().waitTillContentLoaded();
 
-        await expect(taskFilter.getActiveFilterName()).toBe('My Tasks');
+        expect(taskFilter.getActiveFilterName()).toBe('My Tasks');
         await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();
         await editTaskFilter.setStatusFilterDropDown('Created');
@@ -189,8 +214,8 @@ describe('Task form cloud component', () => {
         await appListCloudComponent.goToApp(simpleApp);
         await openTaskByIdFromFilters(myTasksFilter, assigneeTaskId);
 
-        await expect(await taskHeaderCloudPage.getAssignee()).toEqual(assigneeReleaseTask.list.entries[0].entry.assignee);
-        await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+        expect(await taskHeaderCloudPage.getAssignee()).toEqual(assigneeReleaseTask.list.entries[0].entry.assignee);
+        expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
         await taskFormCloudComponent.checkReleaseButtonIsNotDisplayed();
     });
 
@@ -200,7 +225,7 @@ describe('Task form cloud component', () => {
 
         await goToAppOpenDropdownTaskByNameFromFilters(myTasksFilter, dropdownOptionsTask.entry.name);
         await widget.dropdown().openDropdown(dropdownId);
-        await widget.dropdown().selectOption(selectedOption, dropdownId );
+        await widget.dropdown().selectOption(selectedOption, dropdownId);
         await taskFormCloudComponent.checkSaveButtonIsDisplayed();
         await taskFormCloudComponent.clickSaveButton();
 
@@ -208,7 +233,7 @@ describe('Task form cloud component', () => {
         await appListCloudComponent.checkApsContainer();
         await goToAppOpenDropdownTaskByNameFromFilters(myTasksFilter, dropdownOptionsTask.entry.name);
 
-        await expect(await widget.dropdown().getSelectedOptionText(dropdownFieldId)).toBe(selectedOption);
+        expect(await widget.dropdown().getSelectedOptionText(dropdownFieldId)).toBe(selectedOption);
     });
 
     it('[C313200] Should be able to complete a Task form with process date variable mapped to a Date widget in the form', async () => {
@@ -218,10 +243,10 @@ describe('Task form cloud component', () => {
         await completeTask();
         await verifyDateCompletedTask(dateTimerTaskId, defaultDate);
 
-        await openTaskByIdFromFilters(myTasksFilter, dateTimerChangedTaskId );
+        await openTaskByIdFromFilters(myTasksFilter, dateTimerChangedTaskId);
         await verifyDateInput(dateFieldId, defaultDate);
         await widget.dateWidget().clearDateInput(dateFieldId);
-        await widget.dateWidget().setDateInput(dateFieldId, changedDate );
+        await widget.dateWidget().setDateInput(dateFieldId, changedDate);
         await completeTask();
 
         await verifyDateCompletedTask(dateTimerChangedTaskId, changedDate);
@@ -234,7 +259,7 @@ describe('Task form cloud component', () => {
 
         it('[C307032] Should display the appropriate title for the unclaim option of a Task', async () => {
             await openTaskByIdFromFilters(myTasksFilter, candidateUsersTask.entry.id);
-            await expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
+            expect(await taskFormCloudComponent.getReleaseButtonText()).toBe('RELEASE');
         });
 
         it('[C310142] Empty content is displayed when having a task without form', async () => {
@@ -244,10 +269,10 @@ describe('Task form cloud component', () => {
             await taskList.checkContentIsDisplayedByName(assigneeTask.entry.name);
             await taskList.selectRow(assigneeTask.entry.name);
             await taskFormCloudComponent.checkFormIsNotDisplayed();
-            await expect(await taskFormCloudComponent.getFormTitle()).toBe(assigneeTask.entry.name);
+            expect(await taskFormCloudComponent.getFormTitle()).toBe(assigneeTask.entry.name);
             await taskFormCloudComponent.checkFormContentIsEmpty();
-            await expect(await taskFormCloudComponent.getEmptyFormContentTitle()).toBe(`No form available`);
-            await expect(await taskFormCloudComponent.getEmptyFormContentSubtitle()).toBe(`Attach a form that can be viewed later`);
+            expect(await taskFormCloudComponent.getEmptyFormContentTitle()).toBe(`No form available`);
+            expect(await taskFormCloudComponent.getEmptyFormContentSubtitle()).toBe(`Attach a form that can be viewed later`);
         });
 
         it('[C310199] Should not be able to complete a task when required field is empty or invalid data is added to a field', async () => {
@@ -261,36 +286,36 @@ describe('Task form cloud component', () => {
             await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number0klykr');
             await taskFormCloudComponent.formFields().checkWidgetIsVisible('Amount0mtp1h');
 
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
             await widget.textWidget().setValue('Text0tma8h', 'Some random text');
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
 
             await widget.dateWidget().setDateInput('Date0m1moq', 'invalid date');
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
 
             await widget.dateWidget().setDateInput('Date0m1moq', '20-10-2018');
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
 
             await widget.numberWidget().setFieldValue('Number0klykr', 'invalid number');
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
 
             await widget.numberWidget().setFieldValue('Number0klykr', '26');
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
 
             await widget.amountWidget().setFieldValue('Amount0mtp1h', 'invalid amount');
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(false);
 
             await widget.amountWidget().setFieldValue('Amount0mtp1h', '660');
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toBe(true);
         });
 
         it('[C307093] Complete button is not displayed when the task is already completed', async () => {
             await taskFilter.clickTaskFilter(completedTasksFilter);
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
             await taskList.checkContentIsDisplayedByName(completedTaskName);
             await taskList.selectRow(completedTaskName);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
@@ -301,7 +326,7 @@ describe('Task form cloud component', () => {
             await taskFilter.clickTaskFilter(myTasksFilter);
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await editTaskFilter.openFilter();
 
             await editTaskFilter.clearAssignee();
@@ -315,12 +340,12 @@ describe('Task form cloud component', () => {
             await taskFilter.clickTaskFilter(myTasksFilter);
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
             await selectTaskByName(assigneeTask.entry.name);
             await taskFormCloudComponent.clickCancelButton();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await taskList.checkContentIsDisplayedByName(assigneeTask.entry.name);
         });
 
@@ -328,7 +353,7 @@ describe('Task form cloud component', () => {
             await taskFilter.clickTaskFilter(myTasksFilter);
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
             await selectTaskByName(toBeCompletedTask.entry.name);
             await completeTask();
@@ -345,7 +370,7 @@ describe('Task form cloud component', () => {
             await taskFilter.clickTaskFilter(myTasksFilter);
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
             await selectTaskByName(completedTask.entry.name);
             await completeTask();
@@ -359,6 +384,12 @@ describe('Task form cloud component', () => {
         });
     });
 
+    /**
+     * Open task by id from filters
+     *
+     * @param filterName Filter name
+     * @param taskId Task id
+     */
     async function openTaskByIdFromFilters(filterName: string, taskId: string): Promise<void> {
         await taskFilter.clickTaskFilter(filterName);
         await taskList.getDataTable().waitTillContentLoaded();
@@ -367,24 +398,47 @@ describe('Task form cloud component', () => {
         await taskList.selectRowByTaskId(taskId);
     }
 
+    /**
+     * Verify date input
+     *
+     * @param widgetId Widget id
+     * @param input input value
+     */
     async function verifyDateInput(widgetId: string, input: string): Promise<void> {
         await widget.dateWidget().checkWidgetIsVisible(widgetId);
-        await expect(await widget.dateWidget().getDateInput(widgetId)).toBe(input);
+        expect(await widget.dateWidget().getDateInput(widgetId)).toBe(input);
     }
 
+    /**
+     * Select task by name
+     *
+     * @param taskName Task name
+     */
     async function selectTaskByName(taskName: string): Promise<void> {
         await taskList.checkContentIsDisplayedByName(taskName);
         await taskList.selectRow(taskName);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
     }
 
+    /**
+     * Verify date completed task
+     *
+     * @param taskId Task id
+     * @param input input value
+     */
     async function verifyDateCompletedTask(taskId: string, input: string): Promise<void> {
-        await openTaskByIdFromFilters(completedTasksFilter, taskId );
+        await openTaskByIdFromFilters(completedTasksFilter, taskId);
         await taskFormCloudComponent.checkFormIsReadOnly();
         await verifyDateInput(dateFieldId, input);
         await taskFormCloudComponent.clickCancelButton();
     }
 
+    /**
+     * Go to app open dropdown task by name from filters
+     *
+     * @param filterName Filter name
+     * @param taskName Task name
+     */
     async function goToAppOpenDropdownTaskByNameFromFilters(filterName: string, taskName: string): Promise<void> {
         await appListCloudComponent.goToApp(simpleApp);
         await taskFilter.clickTaskFilter(filterName);
@@ -396,6 +450,9 @@ describe('Task form cloud component', () => {
         await widget.dropdown().isWidgetVisible(dropdownFieldId);
     }
 
+    /**
+     * Complete task
+     */
     async function completeTask(): Promise<void> {
         await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         await taskFormCloudComponent.clickCompleteButton();

@@ -15,22 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    OnChanges,
-    SimpleChange,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
-import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
 @Component({
     selector: 'adf-card-view-item-dispatcher',
-    template: '<ng-template adf-card-view-content-proxy></ng-template>'
+    template: '<ng-template #content></ng-template>'
 })
 export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
@@ -60,14 +52,14 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
     displayLabelForChips: boolean = false;
 
-    @ViewChild(CardViewContentProxyDirective, { static: true })
-    private content: CardViewContentProxyDirective;
-
     private loaded: boolean = false;
     private componentReference: any = null;
 
     public ngOnInit;
     public ngDoCheck;
+
+    @ViewChild('content', { read: ViewContainerRef, static: true })
+    content!: ViewContainerRef;
 
     constructor(private cardItemTypeService: CardItemTypeService) {
         const dynamicLifeCycleMethods = [
@@ -91,10 +83,9 @@ export class CardViewItemDispatcherComponent implements OnChanges {
             this.loaded = true;
         }
 
-        Object.entries(changes)
-            .forEach(([changeName, change]: [string, SimpleChange]) => {
-                this.componentReference.instance[changeName] = change.currentValue;
-            });
+        Object.entries(changes).forEach(([changeName, change]: [string, SimpleChange]) => {
+            this.componentReference.instance[changeName] = change.currentValue;
+        });
 
         this.proxy('ngOnChanges', changes);
     }
@@ -102,7 +93,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     private loadComponent() {
         const factoryClass = this.cardItemTypeService.resolveComponentType(this.property);
 
-        this.componentReference = this.content.viewContainerRef.createComponent(factoryClass);
+        this.componentReference = this.content.createComponent(factoryClass);
 
         this.componentReference.instance.editable = this.editable;
         this.componentReference.instance.property = this.property;

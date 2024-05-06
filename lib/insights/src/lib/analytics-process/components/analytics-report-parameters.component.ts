@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AdfDateFnsAdapter, DownloadService, LogService } from '@alfresco/adf-core';
+import { AdfDateFnsAdapter, DownloadService } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -160,7 +160,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     constructor(
         private analyticsService: AnalyticsService,
         private formBuilder: FormBuilder,
-        private logService: LogService,
         private downloadService: DownloadService,
         private dialog: MatDialog,
         private dateAdapter: AdfDateFnsAdapter
@@ -351,12 +350,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     deleteReport(reportId: string) {
-        this.analyticsService.deleteReport(reportId).subscribe(
-            () => {
-                this.deleteReportSuccess.emit(reportId);
-            },
-            (error) => this.logService.error(error)
-        );
+        this.analyticsService.deleteReport(reportId).subscribe(() => {
+            this.deleteReportSuccess.emit(reportId);
+        });
     }
 
     ngAfterContentChecked() {

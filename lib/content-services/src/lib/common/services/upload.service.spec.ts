@@ -17,7 +17,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AppConfigModule, AppConfigService, CoreTestingModule } from '@alfresco/adf-core';
+import { AppConfigService, CoreTestingModule } from '@alfresco/adf-core';
 import { UploadService } from './upload.service';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
@@ -35,7 +35,7 @@ describe('UploadService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, AppConfigModule],
+            imports: [CoreTestingModule],
             providers: [
                 {
                     provide: DiscoveryApiService,

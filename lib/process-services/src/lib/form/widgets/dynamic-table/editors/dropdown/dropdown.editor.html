@@ -13,4 +13,5 @@
             <mat-option *ngFor="let opt of options" [value]="opt.name" [id]="opt.id">{{opt.name}}</mat-option>
         </mat-select>
     </mat-form-field>
+    <span *ngFor="let opt of options" id="testme">{{opt | json}}</span>
 </div>

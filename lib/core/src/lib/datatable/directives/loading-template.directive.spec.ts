@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, DataTableComponent, LoadingContentTemplateDirective } from '@alfresco/adf-core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { DataTableComponent } from '../components/datatable/datatable.component';
+import { LoadingContentTemplateDirective } from './loading-template.directive';
+import { CoreTestingModule } from '../../testing';
 
 describe('LoadingContentTemplateDirective', () => {
     let fixture: ComponentFixture<DataTableComponent>;
@@ -26,7 +27,7 @@ describe('LoadingContentTemplateDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;

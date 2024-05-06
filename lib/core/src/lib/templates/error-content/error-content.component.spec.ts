@@ -21,10 +21,8 @@ import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../translation/translation.service';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ErrorContentComponent', () => {
-
     let fixture: ComponentFixture<ErrorContentComponent>;
     let errorContentComponent: ErrorContentComponent;
     let element: HTMLElement;
@@ -32,13 +30,8 @@ describe('ErrorContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: ActivatedRoute, useValue: { params: of() } }
-            ]
+            imports: [CoreTestingModule],
+            providers: [{ provide: ActivatedRoute, useValue: { params: of() } }]
         });
         fixture = TestBed.createComponent(ErrorContentComponent);
         element = fixture.nativeElement;

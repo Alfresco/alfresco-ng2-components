@@ -24,7 +24,6 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 import { BaseAuthenticationService } from './base-authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { JwtHelperService } from './jwt-helper.service';
-import { LogService } from '../../common/services/log.service';
 import { AuthConfigService } from '../oidc/auth-config.service';
 import { AuthService } from '../oidc/auth.service';
 import { Minimatch } from 'minimatch';
@@ -34,18 +33,16 @@ import { HttpHeaders } from '@angular/common/http';
     providedIn: 'root'
 })
 export class OidcAuthenticationService extends BaseAuthenticationService {
-
     constructor(
         appConfig: AppConfigService,
         cookie: CookieService,
-        logService: LogService,
         private jwtHelperService: JwtHelperService,
         private authStorage: OAuthStorage,
         private oauthService: OAuthService,
         private readonly authConfig: AuthConfigService,
         private readonly auth: AuthService
     ) {
-        super(appConfig, cookie, logService);
+        super(appConfig, cookie);
     }
 
     isEcmLoggedIn(): boolean {
@@ -53,7 +50,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
             return this.isLoggedIn();
         }
         return false;
-
     }
 
     isBpmLoggedIn(): boolean {
@@ -118,7 +114,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         });
     }
 
-    getUsername(){
+    getUsername() {
         return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
@@ -169,11 +165,13 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         const oauth2 = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
 
         if (Array.isArray(oauth2.publicUrls)) {
-            return oauth2.publicUrls.length > 0 &&
+            return (
+                oauth2.publicUrls.length > 0 &&
                 oauth2.publicUrls.some((urlPattern: string) => {
                     const minimatch = new Minimatch(urlPattern);
                     return minimatch.match(window.location.href);
-                });
+                })
+            );
         }
         return false;
     }
@@ -219,5 +217,4 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
                 return undefined;
         }
     }
-
 }

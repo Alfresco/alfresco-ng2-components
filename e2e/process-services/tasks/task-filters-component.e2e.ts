@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage, ModelsActions,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ModelsActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/process-services.page';
 import { TasksPage } from '../pages/tasks.page';
@@ -80,23 +75,23 @@ describe('Task', () => {
         await tasksPage.createTask({ name: 'Test' });
         await taskFiltersDemoPage.myTasksFilter().clickTaskFilter();
         await tasksListPage.checkContentIsDisplayed('Test');
-        await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('My Tasks');
-        await expect(await taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+        expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('My Tasks');
+        expect(await taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
         await taskFiltersDemoPage.queuedTasksFilter().clickTaskFilter();
-        await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Queued Tasks');
+        expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Queued Tasks');
         await tasksListPage.checkContentIsNotDisplayed('Test');
-        await expect(await taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
+        expect(await taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
 
         await taskFiltersDemoPage.involvedTasksFilter().clickTaskFilter();
-        await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Involved Tasks');
+        expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Involved Tasks');
         await tasksListPage.checkContentIsDisplayed('Test');
-        await expect(await taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+        expect(await taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
         await taskFiltersDemoPage.completedTasksFilter().clickTaskFilter();
-        await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
+        expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
         await tasksListPage.checkContentIsNotDisplayed('Test');
-        await expect(await taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
+        expect(await taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
     });
 
     it('[C260348] Should display task in Complete Tasks List when task is completed', async () => {
@@ -110,23 +105,23 @@ describe('Task', () => {
         await task.clickStartButton();
         await taskFiltersDemoPage.myTasksFilter().clickTaskFilter();
         await tasksListPage.checkContentIsDisplayed('Test');
-        await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('My Tasks');
-        await expect(await taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+        expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('My Tasks');
+        expect(await taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
         await taskFiltersDemoPage.queuedTasksFilter().clickTaskFilter();
-        await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Queued Tasks');
-        await expect(await tasksListPage.getNoTasksFoundMessage()).toBe('No Tasks Found');
-        await expect(await taskDetailsPage.getEmptyTaskDetailsMessage()).toBe('No task details found');
+        expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Queued Tasks');
+        expect(await tasksListPage.getNoTasksFoundMessage()).toBe('No Tasks Found');
+        expect(await taskDetailsPage.getEmptyTaskDetailsMessage()).toBe('No task details found');
 
         await taskFiltersDemoPage.involvedTasksFilter().clickTaskFilter();
-        await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Involved Tasks');
+        expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Involved Tasks');
         await tasksListPage.checkContentIsDisplayed('Test');
-        await expect(await taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+        expect(await taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
         await taskFiltersDemoPage.completedTasksFilter().clickTaskFilter();
-        await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
-        await expect(await tasksListPage.getNoTasksFoundMessage()).toBe('No Tasks Found');
-        await expect(await taskDetailsPage.getEmptyTaskDetailsMessage()).toBe('No task details found');
+        expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
+        expect(await tasksListPage.getNoTasksFoundMessage()).toBe('No Tasks Found');
+        expect(await taskDetailsPage.getEmptyTaskDetailsMessage()).toBe('No task details found');
     });
 
     it('[C260349] Should sort task by name when Name sorting is clicked', async () => {
@@ -145,17 +140,17 @@ describe('Task', () => {
         await taskDetailsPage.checkTaskDetailsDisplayed();
 
         await tasksPage.clickSortByNameAsc();
-        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe('Test3');
+        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe('Test3');
         await tasksPage.clickSortByNameDesc();
-        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe('Test4');
+        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe('Test4');
 
         await taskFiltersDemoPage.completedTasksFilter().clickTaskFilter();
         await tasksListPage.checkContentIsDisplayed('Test1');
         await tasksListPage.checkContentIsDisplayed('Test2');
-        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe('Test2');
+        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe('Test2');
 
         await tasksPage.clickSortByNameAsc();
-        await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe('Test1');
+        expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe('Test1');
 
         await taskFiltersDemoPage.involvedTasksFilter().clickTaskFilter();
         await tasksListPage.checkContentIsDisplayed('Test3');
@@ -167,6 +162,6 @@ describe('Task', () => {
 
         await taskFiltersDemoPage.myTasksFilter().clickTaskFilter();
         await tasksListPage.checkContentIsDisplayed('Test');
-        await expect(await taskDetailsPage.getTaskDetailsTitle()).toBe('Test');
+        expect(await taskDetailsPage.getTaskDetailsTitle()).toBe('Test');
     });
 });

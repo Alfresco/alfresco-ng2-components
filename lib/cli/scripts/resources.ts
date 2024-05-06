@@ -21,7 +21,8 @@
 export const ACTIVITI_CLOUD_APPS: any = {
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/subprocessapp.zip?raw=true`,
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/subprocessapp.zip?raw=true`,
         processes: {
             processchild: 'processchild',
             processparent: 'processparent'
@@ -30,11 +31,17 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { role: 'APPLICATION_MANAGER', groups: [], users: ['manageruser'] },
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['hr', 'testgroup'], users: ['hruser'] }
-        ]
+        ],
+        variables: {
+            'process-runtime-service': {
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
+            }
+        }
     },
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/candidatebaseapp.zip?raw=true`,
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/candidatebaseapp.zip?raw=true`,
         processes: {
             candidateUserProcess: 'candidateuserprocess',
             candidateGroupProcess: 'candidategroupprocess',
@@ -74,11 +81,17 @@ export const ACTIVITI_CLOUD_APPS: any = {
         tasks: {
             uploadFileTask: 'UploadFileTask',
             candidateUserTask: 'candidateUserTask'
+        },
+        variables: {
+            'process-runtime-service': {
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
+            }
         }
     },
     SIMPLE_APP: {
         name: 'simpleapp',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/simpleapp.zip?raw=true`,
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/simpleapp.zip?raw=true`,
         processes: {
             processwithvariables: 'processwithvariables',
             simpleProcess: 'simpleprocess',
@@ -204,18 +217,29 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { role: 'ACTIVITI_USER', groups: ['hr', 'sales', 'testgroup'], users: ['hruser'] }
         ],
         infrastructure: { connectors: { restconnector: {} }, bridges: {} },
-        enableLocalDevelopment: true
+        enableLocalDevelopment: true,
+        variables: {
+            'process-runtime-service': {
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
+            }
+        }
     },
     UAT_BE_DEFAULT_APP: {
         name: 'uat-be-default-app',
-        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/uat-be-default-app.zip?raw=true`,
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/uat-be-default-app.zip?raw=true`,
         processes: {
             'script-acs-process': 'script-acs-process'
         },
         security: [
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['processadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['sales', 'testgroup'], users: ['hruser', 'salesuser', 'testadmin', 'testuser'] }
-        ]
+        ],
+        variables: {
+            'process-runtime-service': {
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
+            }
+        }
     }
 };
 

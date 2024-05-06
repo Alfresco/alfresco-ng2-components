@@ -17,17 +17,16 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { throwError as observableThrowError, Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { PaginationModel } from '../../models/pagination.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { LogService } from '../../common/services/log.service';
 
 export interface IdentityRoleResponseModel {
     entries: IdentityRoleModel[];
     pagination: PaginationModel;
-  }
+}
 
 @Injectable({
     providedIn: 'root'
@@ -36,11 +35,7 @@ export class IdentityRoleService {
     contextRoot = '';
     identityHost = '';
 
-    constructor(
-        protected http: HttpClient,
-        protected appConfig: AppConfigService,
-        protected logService: LogService
-    ) {
+    constructor(protected http: HttpClient, protected appConfig: AppConfigService) {
         this.contextRoot = this.appConfig.get('apiHost', '');
         this.identityHost = this.appConfig.get('identityHost');
     }
@@ -52,21 +47,11 @@ export class IdentityRoleService {
      * @param size page size
      * @returns List of roles
      */
-    getRoles(
-        skipCount: number = 0,
-        size: number = 5
-    ): Observable<IdentityRoleResponseModel> {
-        return this.http.get<any>(`${this.identityHost}/roles`).pipe(
-            map(res => this.preparePaginationWithRoles(res, skipCount, size)),
-            catchError(error => this.handleError(error))
-        );
+    getRoles(skipCount: number = 0, size: number = 5): Observable<IdentityRoleResponseModel> {
+        return this.http.get<any>(`${this.identityHost}/roles`).pipe(map((res) => this.preparePaginationWithRoles(res, skipCount, size)));
     }
 
-    private preparePaginationWithRoles(
-        roles: IdentityRoleModel[],
-        skipCount: number = 0,
-        size: number = 5
-    ): IdentityRoleResponseModel {
+    private preparePaginationWithRoles(roles: IdentityRoleModel[], skipCount: number = 0, size: number = 5): IdentityRoleResponseModel {
         return {
             entries: roles.slice(skipCount, skipCount + size),
             pagination: {
@@ -87,10 +72,7 @@ export class IdentityRoleService {
      */
     addRole(newRole: IdentityRoleModel): Observable<any> {
         if (newRole) {
-            const request = newRole;
-            return this.http
-                .post(`${this.identityHost}/roles`, request)
-                .pipe(catchError(error => this.handleError(error)));
+            return this.http.post(`${this.identityHost}/roles`, newRole);
         }
         return of();
     }
@@ -102,9 +84,7 @@ export class IdentityRoleService {
      * @returns Server result payload
      */
     deleteRole(deletedRole: IdentityRoleModel): Observable<any> {
-        return this.http
-            .delete(`${this.identityHost}/roles-by-id/${deletedRole.id}`)
-            .pipe(catchError(error => this.handleError(error)));
+        return this.http.delete(`${this.identityHost}/roles-by-id/${deletedRole.id}`);
     }
 
     /**
@@ -114,21 +94,10 @@ export class IdentityRoleService {
      * @param roleId Role id
      * @returns Server result payload
      */
-    updateRole(
-        updatedRole: IdentityRoleModel,
-        roleId: string
-    ): Observable<any> {
+    updateRole(updatedRole: IdentityRoleModel, roleId: string): Observable<any> {
         if (updatedRole && roleId) {
-            const request = updatedRole;
-            return this.http
-                .put(`${this.identityHost}/roles-by-id/${roleId}`, request)
-                .pipe(catchError(error => this.handleError(error)));
+            return this.http.put(`${this.identityHost}/roles-by-id/${roleId}`, updatedRole);
         }
         return of();
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return observableThrowError(error || 'Server error');
     }
 }

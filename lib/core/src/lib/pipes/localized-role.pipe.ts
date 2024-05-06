@@ -19,11 +19,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslationService } from '../translation/translation.service';
 
 @Pipe({
-    name: 'adfLocalizedRole'
+    name: 'adfLocalizedRole',
+    standalone: true
 })
 export class LocalizedRolePipe implements PipeTransform {
-    constructor(private translationService: TranslationService) {
-    }
+    constructor(private translationService: TranslationService) {}
 
     transform(value: string): any {
         if (value) {

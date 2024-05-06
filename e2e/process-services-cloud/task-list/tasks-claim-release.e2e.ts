@@ -16,7 +16,8 @@
  */
 
 import { browser } from 'protractor';
-import { createApiService,
+import {
+    createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -34,7 +35,6 @@ import { ProcessInstanceCloud } from '@alfresco/adf-process-services-cloud';
 import { taskFilterConfiguration } from './../config/task-filter.config';
 
 describe('Task claim/release', () => {
-
     const candidateApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP;
 
     const loginSSOPage = new LoginPage();
@@ -59,7 +59,10 @@ describe('Task claim/release', () => {
     describe('candidate user', () => {
         beforeAll(async () => {
             await apiService.login(browser.params.testConfig.users.hrUser.username, browser.params.testConfig.users.hrUser.password);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.candidateUserProcess, candidateApp.name);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName(
+                candidateApp.processes.candidateUserProcess,
+                candidateApp.name
+            );
             processInstance = (await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateApp.name)).entry;
         });
 
@@ -81,7 +84,7 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await taskFormCloudComponent.clickClaimButton();
             await browser.refresh();
@@ -89,18 +92,17 @@ describe('Task claim/release', () => {
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
 
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.username);
+            expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.username);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+            expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
         });
-
     });
 
     describe('candidate group', () => {
@@ -113,7 +115,10 @@ describe('Task claim/release', () => {
             await identityService.addUserToGroup(candidate.idIdentityService, groupInfo.id);
 
             await apiService.login(browser.params.testConfig.users.hrUser.username, browser.params.testConfig.users.hrUser.password);
-            const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.uploadFileProcess, candidateApp.name);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName(
+                candidateApp.processes.uploadFileProcess,
+                candidateApp.name
+            );
             processInstance = (await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateApp.name)).entry;
         });
 
@@ -135,24 +140,24 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+            expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await taskFormCloudComponent.clickClaimButton();
             await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.username);
+            expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.users.hrUser.username);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+            expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await navigationBarPage.clickLogoutButton();
             await navigateToApp(candidate);
@@ -163,29 +168,38 @@ describe('Task claim/release', () => {
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+            expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await taskFormCloudComponent.clickClaimButton();
             await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(candidate.username);
+            expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual(candidate.username);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
-            await expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
+            expect(await taskHeaderCloudPage.getStatus()).toEqual('CREATED');
+            expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
         });
-
     });
 
-    async function navigateToApp(user: { username: string; password: string }) {
+    interface UserType {
+        username: string;
+        password: string;
+    }
+
+    /**
+     * Navigate to the app
+     *
+     * @param user user
+     */
+    async function navigateToApp(user: UserType) {
         await loginSSOPage.login(user.username, user.password);
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -196,6 +210,12 @@ describe('Task claim/release', () => {
         await taskList.getDataTable().waitForTableBody();
     }
 
+    /**
+     * Set status task filter
+     *
+     * @param status status type
+     * @param processInstanceId process instance id
+     */
     async function setStatusTaskFilter(status: StatusType, processInstanceId: string) {
         await editTaskFilter.openFilter();
         await editTaskFilter.clearAssignee();

@@ -23,7 +23,6 @@ import {
     FormFieldValidator,
     FormModel,
     FormOutcomeEvent,
-    LogService,
     UpdateNotification
 } from '@alfresco/adf-core';
 import {
@@ -191,7 +190,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         private taskListService: TaskListService,
         private peopleProcessService: PeopleProcessService,
-        private logService: LogService,
         private cardViewUpdateService: CardViewUpdateService,
         private dialog: MatDialog
     ) {}
@@ -310,13 +308,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleProcessService.getWorkflowUsers(null, searchedWord).subscribe(
-            (users) => {
-                users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
-                this.peopleSearchObserver.next(users);
-            },
-            () => this.logService.error('Could not load users')
-        );
+        this.peopleProcessService.getWorkflowUsers(null, searchedWord).subscribe((users) => {
+            users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
+            this.peopleSearchObserver.next(users);
+        });
     }
 
     onCloseSearch() {
@@ -325,7 +320,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     assignTaskToUser(selectedUser: UserProcessModel) {
         this.taskListService.assignTask(this.taskDetails.id, selectedUser).subscribe(() => {
-            this.logService.info('Task Assigned to ' + selectedUser.email);
             this.assignTask.emit();
         });
         this.showAssignee = false;

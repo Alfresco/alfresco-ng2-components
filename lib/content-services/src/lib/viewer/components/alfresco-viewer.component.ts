@@ -32,7 +32,6 @@ import {
 import {
     AlfrescoApiService,
     CloseButtonPosition,
-    LogService,
     Track,
     ViewerComponent,
     ViewerMoreActionsComponent,
@@ -241,7 +240,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private renditionService: RenditionService,
         private viewUtilService: ViewUtilService,
-        private logService: LogService,
         private contentService: ContentService,
         private uploadService: UploadService,
         public dialog: MatDialog,
@@ -256,9 +254,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             .pipe(
                 filter(
                     (node) =>
-                        node &&
-                        node.id === this.nodeId &&
-                        this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node)
+                        node && node.id === this.nodeId && this.getNodeVersionProperty(this.nodeEntry.entry) !== this.getNodeVersionProperty(node)
                 ),
                 takeUntil(this.onDestroy$)
             )
@@ -284,7 +280,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             const sharedLinkEntry = await this.sharedLinksApi.getSharedLink(this.sharedLinkId);
             await this.setUpSharedLinkFile(sharedLinkEntry);
         } catch (error) {
-            this.logService.error('This sharedLink does not exist');
             this.invalidSharedLink.next(undefined);
             this.mimeType = 'invalid-link';
             this.urlFileContent = 'invalid-file';
@@ -303,7 +298,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             }
         } catch (error) {
             this.urlFileContent = 'invalid-node';
-            this.logService.error('This node does not exist');
         }
     }
 
@@ -373,7 +367,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                 return { url: urlFileContent, mimeType: 'application/pdf' };
             }
         } catch (error) {
-            this.logService.error(error);
             try {
                 const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
@@ -381,7 +374,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
                     return { url: urlFileContent, mimeType: 'image/png' };
                 }
             } catch (renditionError) {
-                this.logService.error(renditionError);
                 return null;
             }
         }

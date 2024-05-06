@@ -67,6 +67,7 @@ import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-la
 import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
+import { FolderDirectiveModule } from './folder-directive';
 
 @NgModule({
     imports: [
@@ -87,7 +88,8 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         ExtensionsModule.forRoot(),
         NgChartsModule,
         AppCloudSharedModule,
-        MonacoEditorModule.forRoot()
+        MonacoEditorModule.forRoot(),
+        FolderDirectiveModule
     ],
     declarations: [
         AppComponent,

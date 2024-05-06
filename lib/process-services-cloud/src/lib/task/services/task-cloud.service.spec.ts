@@ -19,16 +19,18 @@ import { TestBed } from '@angular/core/testing';
 import { TranslationService } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
-import { assignedTaskDetailsCloudMock, createdTaskDetailsCloudMock, emptyOwnerTaskDetailsCloudMock } from '../task-header/mocks/task-details-cloud.mock';
+import {
+    assignedTaskDetailsCloudMock,
+    createdTaskDetailsCloudMock,
+    emptyOwnerTaskDetailsCloudMock
+} from '../task-header/mocks/task-details-cloud.mock';
 import { fakeTaskDetailsCloud } from '../task-header/mocks/fake-task-details-response.mock';
 import { cloudMockUser } from '../start-task/mock/user-cloud.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { IdentityUserService } from '../../people/services/identity-user.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('Task Cloud Service', () => {
-
     let service: TaskCloudService;
     let adfHttpClient: AdfHttpClient;
     let identityUserService: IdentityUserService;
@@ -47,16 +49,13 @@ describe('Task Cloud Service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         identityUserService = TestBed.inject(IdentityUserService);
         translateService = TestBed.inject(TranslationService);
         service = TestBed.inject(TaskCloudService);
-        spyOn(translateService, 'instant').and.callFake((key) => key ? `${key}_translated` : null);
+        spyOn(translateService, 'instant').and.callFake((key) => (key ? `${key}_translated` : null));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(cloudMockUser);
         requestSpy = spyOn(adfHttpClient, 'request');
     });
@@ -104,7 +103,11 @@ describe('Task Cloud Service', () => {
     });
 
     it('should verify if the task assignee property is clickable', () => {
-        const isAssigneePropertyClickable = service.isAssigneePropertyClickable(assignedTaskDetailsCloudMock, [ { icon: '', value: 'user' } ], [ { icon: '', value: 'group' } ]);
+        const isAssigneePropertyClickable = service.isAssigneePropertyClickable(
+            assignedTaskDetailsCloudMock,
+            [{ icon: '', value: 'user' }],
+            [{ icon: '', value: 'group' }]
+        );
         expect(isAssigneePropertyClickable).toEqual(true);
     });
 
@@ -144,11 +147,12 @@ describe('Task Cloud Service', () => {
         const assignee = 'user12';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.claimTask(appName, taskId, assignee).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should throw error if taskId is not defined when claiming a task', (done) => {
@@ -157,11 +161,12 @@ describe('Task Cloud Service', () => {
         const assignee = 'user12';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.claimTask(appName, taskId, assignee).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should return the task details when unclaiming a task', (done) => {
@@ -182,11 +187,12 @@ describe('Task Cloud Service', () => {
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.unclaimTask(appName, taskId).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should throw error if taskId is not defined when unclaiming a task', (done) => {
@@ -194,11 +200,12 @@ describe('Task Cloud Service', () => {
         const taskId = null;
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.unclaimTask(appName, taskId).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should return the task details when querying by id', (done) => {
@@ -219,11 +226,12 @@ describe('Task Cloud Service', () => {
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.getTaskById(appName, taskId).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should throw error if taskId is not defined when querying by id', (done) => {
@@ -231,11 +239,12 @@ describe('Task Cloud Service', () => {
         const taskId = null;
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.getTaskById(appName, taskId).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should throw error if appName is not defined when updating a task', (done) => {
@@ -244,11 +253,12 @@ describe('Task Cloud Service', () => {
         const updatePayload = { description: 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should throw error if taskId is not defined when updating a task', (done) => {
@@ -257,11 +267,12 @@ describe('Task Cloud Service', () => {
         const updatePayload = { description: 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should return the task details when updating a task', (done) => {
@@ -284,11 +295,12 @@ describe('Task Cloud Service', () => {
         const updatePayload = { description: 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should throw error if taskId is not defined updating a task', (done) => {
@@ -297,11 +309,12 @@ describe('Task Cloud Service', () => {
         const updatePayload = { description: 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should return the candidate users by appName and taskId', (done) => {
@@ -322,22 +335,20 @@ describe('Task Cloud Service', () => {
         const appName = null;
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeCandidateUsersResults);
-        service.getCandidateUsers(appName, taskId).subscribe(
-            (res: any[]) => {
-                expect(res.length).toBe(0);
-                done();
-            });
+        service.getCandidateUsers(appName, taskId).subscribe((res: any[]) => {
+            expect(res.length).toBe(0);
+            done();
+        });
     });
 
     it('should log message and return empty array if taskId is not defined when fetching candidate users', (done) => {
         const appName = 'task-app';
         const taskId = null;
         requestSpy.and.callFake(returnFakeCandidateUsersResults);
-        service.getCandidateUsers(appName, taskId).subscribe(
-            (res: any[]) => {
-                expect(res.length).toBe(0);
-                done();
-            });
+        service.getCandidateUsers(appName, taskId).subscribe((res: any[]) => {
+            expect(res.length).toBe(0);
+            done();
+        });
     });
 
     it('should return the candidate groups by appName and taskId', (done) => {
@@ -358,33 +369,30 @@ describe('Task Cloud Service', () => {
         const appName = null;
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeCandidateGroupResults);
-        service.getCandidateGroups(appName, taskId).subscribe(
-            (res: any[]) => {
-                expect(res.length).toBe(0);
-                done();
-            });
+        service.getCandidateGroups(appName, taskId).subscribe((res: any[]) => {
+            expect(res.length).toBe(0);
+            done();
+        });
     });
 
     it('should log message and return empty array if taskId is not defined when fetching candidate groups', (done) => {
         const appName = 'task-app';
         const taskId = null;
         requestSpy.and.callFake(returnFakeCandidateGroupResults);
-        service.getCandidateGroups(appName, taskId).subscribe(
-            (res: any[]) => {
-                expect(res.length).toBe(0);
-                done();
-            });
+        service.getCandidateGroups(appName, taskId).subscribe((res: any[]) => {
+            expect(res.length).toBe(0);
+            done();
+        });
     });
 
     it('should call assign api and return updated task details', (done) => {
         const appName = 'task-app';
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
-        service.assign(appName, taskId, 'Phil Woods').subscribe(
-            (res) => {
-                expect(res.assignee).toBe('Phil Woods');
-                done();
-             });
+        service.assign(appName, taskId, 'Phil Woods').subscribe((res) => {
+            expect(res.assignee).toBe('Phil Woods');
+            done();
+        });
     });
 
     it('should throw error if appName is not defined when changing task assignee', (done) => {
@@ -392,11 +400,12 @@ describe('Task Cloud Service', () => {
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.assign(appName, taskId, 'mock-assignee').subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
 
     it('should throw error if taskId is not defined when changing task assignee', (done) => {
@@ -404,11 +413,11 @@ describe('Task Cloud Service', () => {
         const taskId = '';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.assign(appName, taskId, 'mock-assignee').subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
-            });
+            }
+        );
     });
-
 });

@@ -1,0 +1,234 @@
+@import '../../../styles/mixins';
+
+.adf-login {
+    @include flex-column;
+}
+
+.adf-login-content {
+    background-size: cover;
+    background-position: center;
+    min-height: 100%;
+    min-width: 320px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    // IE11 vertical centering
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        & {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .adf-ie11FixerParent {
+        margin-top: 16px;
+        min-width: 320px;
+
+        // IE11 vertical centering
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            padding-top: 16px;
+        }
+    }
+
+    // IE11 vertical centering
+    .adf-ie11FixerChild {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .adf-icon-inline {
+        position: absolute;
+        display: block;
+        top: 31%;
+        left: 82%;
+        width: 30px;
+        overflow: hidden;
+    }
+
+    .adf-login-card-wide {
+        border-radius: 8px;
+        background-color: var(--adf-theme-background-dialog-color);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+        width: 450px;
+        min-width: 320px;
+        padding: 21px 64px 34px;
+        box-sizing: border-box;
+    }
+
+    @media screen and (width <= 482px) {
+        .adf-login-card-wide {
+            width: calc(100% - 32px);
+        }
+    }
+
+    .adf-error-container {
+        height: 45px;
+    }
+
+    .adf-error-message {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        color: var(--theme-warn-color);
+        padding: 0;
+        margin-bottom: 4px;
+        font-size: var(--theme-caption-font-size);
+    }
+
+    .adf-error-message .adf-error-icon {
+        margin-right: 10px;
+    }
+
+    .adf-login-card-header-text {
+        margin: 0 auto;
+    }
+
+    .adf-img-logo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .adf-alfresco-logo {
+        padding: 24px 16px;
+    }
+
+    .adf-alfresco-logo img {
+        max-height: 58px;
+    }
+
+    .adf-login-button {
+        width: 100%;
+        height: 36px;
+        line-height: normal;
+        box-shadow: none;
+    }
+
+    .adf-login-button-label {
+        color: var(--theme-accent-color-default-contrast);
+    }
+
+    .adf-login-button.adf-isChecking {
+        background-color: #e0f7fa;
+    }
+
+    .adf-login-button.adf-isChecking .adf-login-button-label {
+        color: var(--theme-primary-color);
+    }
+
+    .adf-login-button.adf-isWelcome {
+        background-color: var(--theme-primary-color);
+        color: var(--theme-primary-color-default-contrast);
+    }
+
+    .adf-login-button.adf-isWelcome .adf-welcome-icon {
+        margin: 5px 0 0 10px;
+    }
+
+    .adf-interactive-login-label {
+        display: flex;
+        flex-direction: row;
+        line-height: 38px;
+        justify-content: center;
+    }
+
+    .adf-login-spinner-container {
+        margin-left: 15px;
+        margin-top: 5px;
+    }
+
+    .adf-login-controls {
+        padding: 0 0 26px;
+        overflow: visible;
+        width: 100%;
+    }
+
+    .adf-login-action {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .adf-login-action-left a,
+    .adf-login-action-right a {
+        text-decoration: none;
+    }
+
+    .adf-is-active {
+        background-color: transparent;
+        font-size: var(--theme-caption-font-size);
+        font-weight: normal;
+        line-height: 1.33;
+        color: var(--theme-warn-color);
+    }
+
+    .adf-copyright {
+        min-width: 320px;
+        text-align: center;
+        padding: 16px 0;
+        font-size: var(--theme-caption-font-size);
+        opacity: 0.54;
+    }
+
+    .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
+        color: var(--adf-theme-foreground-text-color);
+    }
+
+    .adf-login__field {
+        margin: 1em 0 0;
+        display: block;
+        padding-bottom: 18px;
+        font-size: var(--theme-subheading-2-font-size);
+
+        & input:-webkit-autofill {
+            /* stylelint-disable */
+            -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
+            -webkit-text-fill-color: var(--adf-theme-foreground-text-color);
+            /* stylelint-enable */
+        }
+    }
+
+    .adf-login-validation {
+        background-color: transparent;
+        color: var(--theme-warn-color);
+        font-size: var(--theme-caption-font-size);
+    }
+
+    .adf-login-error {
+        color: var(--theme-warn-color);
+        position: absolute;
+        font-size: var(--theme-caption-font-size);
+        margin-top: -12px;
+        display: block;
+    }
+
+    .adf-full-width {
+        width: 100%;
+    }
+
+    .adf-login__remember-me {
+        padding-top: 22px;
+    }
+
+    .adf-login__remember-me .adf-login-remember-me-label {
+        opacity: 0.87;
+    }
+
+    .adf-login-remember-me:has(.adf-login-remember-me-label) {
+        color: var(--adf-theme-foreground-text-color);
+    }
+
+    .adf-login-action-container {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        margin-top: 23px;
+    }
+}

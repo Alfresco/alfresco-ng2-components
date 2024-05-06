@@ -20,11 +20,9 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { LanguageMenuComponent } from './language-menu.component';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from './service/language.service';
 
 describe('LanguageMenuComponent', () => {
-
     let fixture: ComponentFixture<LanguageMenuComponent>;
     let component: LanguageMenuComponent;
     let appConfig: AppConfigService;
@@ -49,10 +47,7 @@ describe('LanguageMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
 
         fixture = TestBed.createComponent(LanguageMenuComponent);
@@ -71,7 +66,7 @@ describe('LanguageMenuComponent', () => {
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            component.languages$.subscribe(langs => {
+            component.languages$.subscribe((langs) => {
                 expect(langs).toEqual(languages);
                 done();
             });

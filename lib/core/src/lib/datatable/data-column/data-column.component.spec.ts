@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, DataColumnComponent } from '@alfresco/adf-core';
+import { DataColumnComponent } from './data-column.component';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('DataColumnListComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [CoreTestingModule]
         });
     });
 

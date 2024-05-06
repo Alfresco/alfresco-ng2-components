@@ -26,16 +26,15 @@ import { AspectListDialogComponentData } from './aspect-list-dialog-data.interfa
     encapsulation: ViewEncapsulation.None
 })
 export class AspectListDialogComponent implements OnInit {
-
     title: string;
     description: string;
     currentNodeId: string;
     overTableMessage: string;
+    counter = 0;
 
     currentAspectSelection: string[] = [];
 
-    constructor(private dialog: MatDialogRef<AspectListDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData) {
+    constructor(private dialog: MatDialogRef<AspectListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData) {
         this.title = data.title;
         this.description = data.description;
         this.overTableMessage = data.overTableMessage;
@@ -46,7 +45,7 @@ export class AspectListDialogComponent implements OnInit {
         this.dialog.backdropClick().subscribe(() => {
             this.close();
         });
-        this.dialog.keydownEvents().subscribe(event => {
+        this.dialog.keydownEvents().subscribe((event) => {
             // Esc
             if (event.keyCode === 27) {
                 event.preventDefault();
@@ -57,7 +56,11 @@ export class AspectListDialogComponent implements OnInit {
     }
 
     onValueChanged(aspectList: string[]) {
-       this.currentAspectSelection = aspectList;
+        this.currentAspectSelection = aspectList;
+    }
+
+    onUpdateCounter(count: number) {
+        this.counter = count;
     }
 
     close() {

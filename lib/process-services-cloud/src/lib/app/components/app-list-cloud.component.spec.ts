@@ -19,12 +19,10 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
-
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent, LAYOUT_GRID, LAYOUT_LIST } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppListCloudComponent', () => {
     let component: AppListCloudComponent;
@@ -55,7 +53,7 @@ describe('AppListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [CustomEmptyAppListCloudTemplateComponent]
         });
         fixture = TestBed.createComponent(AppListCloudComponent);

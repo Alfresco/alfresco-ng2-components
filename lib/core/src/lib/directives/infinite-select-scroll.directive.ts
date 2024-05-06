@@ -23,7 +23,8 @@ import { takeUntil } from 'rxjs/operators';
 const SELECT_ITEM_HEIGHT_EM = 3;
 
 @Directive({
-    selector: '[adf-infinite-select-scroll]'
+    selector: '[adf-infinite-select-scroll]',
+    standalone: true
 })
 export class InfiniteSelectScrollDirective implements AfterViewInit, OnDestroy {
     static readonly MAX_ITEMS = 50;
@@ -37,14 +38,12 @@ export class InfiniteSelectScrollDirective implements AfterViewInit, OnDestroy {
     constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
 
     ngAfterViewInit() {
-        this.matSelect.openedChange
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((opened: boolean) => {
-                if (opened) {
-                    this.itemHeightToWaitBeforeLoadNext = (this.getItemHeight() * (InfiniteSelectScrollDirective.MAX_ITEMS / 2));
-                    this.matSelect.panel.nativeElement.addEventListener('scroll', (event: Event) => this.handleScrollEvent(event));
-                }
-            });
+        this.matSelect.openedChange.pipe(takeUntil(this.onDestroy$)).subscribe((opened: boolean) => {
+            if (opened) {
+                this.itemHeightToWaitBeforeLoadNext = this.getItemHeight() * (InfiniteSelectScrollDirective.MAX_ITEMS / 2);
+                this.matSelect.panel.nativeElement.addEventListener('scroll', (event: Event) => this.handleScrollEvent(event));
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -60,7 +59,7 @@ export class InfiniteSelectScrollDirective implements AfterViewInit, OnDestroy {
 
     private isScrollInNextFetchArea(event: Event): boolean {
         const target = event.target as HTMLElement;
-        return target.scrollTop >= (target.scrollHeight - target.offsetHeight - this.itemHeightToWaitBeforeLoadNext);
+        return target.scrollTop >= target.scrollHeight - target.offsetHeight - this.itemHeightToWaitBeforeLoadNext;
     }
 
     private getItemHeight(): number {

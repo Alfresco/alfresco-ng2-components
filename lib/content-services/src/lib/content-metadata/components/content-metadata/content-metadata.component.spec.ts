@@ -751,7 +751,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
+            const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container .adf-content-metadata-panel'));
             expect(basicPropertiesGroup).toBeNull();
         });
 
@@ -764,7 +764,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
+            const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container .adf-content-metadata-panel'));
             expect(basicPropertiesGroup).toBeDefined();
         });
 

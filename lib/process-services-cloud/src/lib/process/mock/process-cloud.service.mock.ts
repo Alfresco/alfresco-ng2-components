@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
@@ -30,10 +29,7 @@ import { ProcessCloudInterface } from '../services/process-cloud.interface';
     providedIn: 'root'
 })
 export class ProcessCloudServiceMock implements ProcessCloudInterface {
-
     dataChangesDetected = new Subject<ProcessInstanceCloud>();
-
-    constructor(private logService: LogService) { }
 
     getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if (appName === 'app-placeholders' && processInstanceId) {
@@ -42,9 +38,7 @@ export class ProcessCloudServiceMock implements ProcessCloudInterface {
 
         if (appName && processInstanceId) {
             return of(processInstanceDetailsCloudMock);
-
         } else {
-            this.logService.error('AppName and ProcessInstanceId are mandatory for querying a process');
             return throwError('AppName/ProcessInstanceId not configured');
         }
     }
@@ -52,9 +46,7 @@ export class ProcessCloudServiceMock implements ProcessCloudInterface {
     getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
             return of(fakeProcessDefinitions);
-
         } else {
-            this.logService.error('AppName is mandatory for querying task');
             return throwError('AppName not configured');
         }
     }
@@ -63,7 +55,6 @@ export class ProcessCloudServiceMock implements ProcessCloudInterface {
         if (appName) {
             return of(mockAppVersions);
         } else {
-            this.logService.error('AppName is mandatory for querying the versions of an application');
             return throwError('AppName not configured');
         }
     }
@@ -72,7 +63,6 @@ export class ProcessCloudServiceMock implements ProcessCloudInterface {
         if (appName && processInstanceId) {
             return of();
         } else {
-            this.logService.error('App name and Process id are mandatory for deleting a process');
             return throwError('App name and process id not configured');
         }
     }

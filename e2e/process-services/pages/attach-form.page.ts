@@ -19,7 +19,6 @@ import { $ } from 'protractor';
 import { BrowserVisibility, BrowserActions, DropdownPage, materialLocators } from '@alfresco/adf-testing';
 
 export class AttachFormPage {
-
     noFormMessage = $('.adf-empty-content__title');
     attachFormButton = $('#adf-attach-form-attach-button');
     completeButton = $('#adf-attach-form-complete-button');
@@ -38,11 +37,11 @@ export class AttachFormPage {
 
     async checkDefaultFormTitleIsDisplayed(formTitle: string): Promise<void> {
         const result = await BrowserActions.getText(this.defaultTitle);
-        await expect(result).toEqual(formTitle);
+        expect(result).toEqual(formTitle);
     }
 
     async openDropDownForms(): Promise<void> {
-       await BrowserActions.click(this.formDropdown);
+        await BrowserActions.click(this.formDropdown);
     }
 
     async checkFormDropdownIsDisplayed(): Promise<void> {

@@ -20,17 +20,19 @@ import { fakeEcmUser, fakeEcmUserNoImage } from '@alfresco/adf-content-services'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { BpmUserModel } from '../common/models/bpm-user.model';
-
 import { ProcessUserInfoComponent } from './process-user-info.component';
 import { fakeBpmUser } from './mocks/bpm-user.service.mock';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
 
 describe('ProcessUserInfoComponent', () => {
     const profilePictureUrl = 'alfresco-logo.svg';
 
     let component: ProcessUserInfoComponent;
     let fixture: ComponentFixture<ProcessUserInfoComponent>;
+    let loader: HarnessLoader;
     let element: HTMLElement;
 
     const openUserInfo = () => {
@@ -48,14 +50,11 @@ describe('ProcessUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatMenuModule
-            ]
+            imports: [CoreTestingModule, MatMenuModule]
         });
         fixture = TestBed.createComponent(ProcessUserInfoComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         element = fixture.nativeElement;
 
         spyOn(window, 'requestAnimationFrame').and.returnValue(1);
@@ -78,7 +77,6 @@ describe('ProcessUserInfoComponent', () => {
     });
 
     describe('when user is logged on bpm', () => {
-
         beforeEach(async () => {
             component.bpmUser = fakeBpmUser;
             component.isLoggedIn = true;
@@ -109,7 +107,7 @@ describe('ProcessUserInfoComponent', () => {
             });
             component.bpmUser = wrongBpmUser;
             await whenFixtureReady();
-            const fullNameElement = (element.querySelector('#adf-userinfo-bpm-name-display'));
+            const fullNameElement = element.querySelector('#adf-userinfo-bpm-name-display');
             fixture.detectChanges();
             expect(element.querySelector('#userinfo_container')).toBeDefined();
             expect(element.querySelector('#adf-userinfo-bpm-name-display')).not.toBeNull();
@@ -120,14 +118,12 @@ describe('ProcessUserInfoComponent', () => {
         it('should not show the tabs', async () => {
             await whenFixtureReady();
             openUserInfo();
-            await fixture.whenStable();
-            fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('#tab-group-env')).classes['adf-hide-tab']).toBeTruthy();
+            const tabGroupHost = await (await loader.getHarness(MatTabGroupHarness.with({ selector: '#tab-group-env' }))).host();
+            expect(await tabGroupHost.hasClass('adf-hide-tab')).toBeTruthy();
         });
     });
 
     describe('when user is logged on bpm and ecm', () => {
-
         beforeEach(async () => {
             component.bpmUser = fakeBpmUser;
             component.ecmUser = fakeEcmUser as any;
@@ -138,19 +134,16 @@ describe('ProcessUserInfoComponent', () => {
         it('should show the tabs', async () => {
             await whenFixtureReady();
             openUserInfo();
-            await fixture.whenStable();
-            fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('#tab-group-env')).classes['adf-hide-tab']).toBeFalsy();
+            const tabGroupHost = await (await loader.getHarness(MatTabGroupHarness.with({ selector: '#tab-group-env' }))).host();
+            expect(await tabGroupHost.hasClass('adf-hide-tab')).toBeFalsy();
         });
 
         it('should get the bpm user information', async () => {
             spyOn(component, 'getBpmUserImage').and.returnValue(profilePictureUrl);
             await whenFixtureReady();
             openUserInfo();
-            const bpmTab = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'))[1];
-            bpmTab.triggerEventHandler('click', null);
-            fixture.detectChanges();
-            await fixture.whenStable();
+            const bpmTab = await loader.getHarness(MatTabHarness.with({ label: 'USER_PROFILE.TAB.PS' }));
+            await bpmTab.select();
             const bpmUsername = fixture.debugElement.query(By.css('#bpm-username'));
             const bpmImage = fixture.debugElement.query(By.css('#bpm-user-detail-image'));
             expect(element.querySelector('#userinfo_container')).not.toBeNull();
@@ -174,7 +167,9 @@ describe('ProcessUserInfoComponent', () => {
             expect(ecmUsername).not.toBeNull();
             expect(ecmImage).not.toBeNull();
             expect(ecmImage.properties.src).toContain(profilePictureUrl);
-            expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
+            expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain(
+                'fake-ecm-first-name fake-ecm-last-name'
+            );
             expect(fixture.debugElement.query(By.css('#ecm-job-title')).nativeElement.textContent).toContain('job-ecm-test');
         });
 
@@ -198,24 +193,19 @@ describe('ProcessUserInfoComponent', () => {
         it('should show the tabs for the env', async () => {
             await whenFixtureReady();
             openUserInfo();
-            const tabGroup = fixture.debugElement.query(By.css('#tab-group-env'));
-            const tabs = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'));
+            const tabGroup = await loader.getHarness(MatTabGroupHarness.with({ selector: '#tab-group-env' }));
+            const tabs = await tabGroup.getTabs();
 
-            expect(tabGroup).not.toBeNull();
-            expect(tabGroup.classes['adf-hide-tab']).toBeFalsy();
+            expect(await (await tabGroup.host()).hasClass('adf-hide-tab')).toBeFalsy();
             expect(tabs.length).toBe(2);
         });
 
         it('should not close the menu when a tab is clicked', async () => {
             await whenFixtureReady();
             openUserInfo();
-            const tabGroup = fixture.debugElement.query(By.css('#tab-group-env'));
+            const bpmTab = await loader.getHarness(MatTabHarness.with({ label: 'USER_PROFILE.TAB.PS' }));
 
-            const tabs = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'));
-
-            expect(tabGroup).not.toBeNull();
-            tabs[1].triggerEventHandler('click', null);
-            fixture.detectChanges();
+            bpmTab.select();
             expect(fixture.debugElement.query(By.css('#user-profile-lists'))).not.toBeNull();
         });
     });

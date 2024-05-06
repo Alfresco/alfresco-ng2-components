@@ -22,17 +22,20 @@ import { of, throwError } from 'rxjs';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { TaskCloudService } from '../services/task-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 
 describe('CompleteTaskDirective', () => {
-
     @Component({
-        selector:  'adf-cloud-test-component',
-        template: `<button adf-cloud-complete-task [taskId]='taskMock' [appName]='appNameMock' (success)="onCompleteTask($event)" (error)="onError($event)"></button>`
+        selector: 'adf-cloud-test-component',
+        template: `<button
+            adf-cloud-complete-task
+            [taskId]="taskMock"
+            [appName]="appNameMock"
+            (success)="onCompleteTask($event)"
+            (error)="onError($event)"
+        ></button>`
     })
     class TestComponent {
-
         taskMock = 'test1234';
         appNameMock = 'simple-app';
 
@@ -53,13 +56,8 @@ describe('CompleteTaskDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [ProcessServiceCloudTestingModule],
+            declarations: [TestComponent]
         });
         taskCloudService = TestBed.inject(TaskCloudService);
         fixture = TestBed.createComponent(TestComponent);
@@ -73,7 +71,7 @@ describe('CompleteTaskDirective', () => {
         expect(taskCloudService.completeTask).toHaveBeenCalled();
     });
 
-    it('should emit error on api fail',  async () => {
+    it('should emit error on api fail', async () => {
         const error = { message: 'process key not found' };
         spyOn(taskCloudService, 'completeTask').and.returnValue(throwError(error));
         spyOn(fixture.componentInstance, 'onError').and.callThrough();
@@ -105,13 +103,11 @@ describe('CompleteTaskDirective', () => {
 });
 
 describe('Complete Task Directive validation errors', () => {
-
     @Component({
-        selector:  'adf-cloud-no-fields-validation-component',
+        selector: 'adf-cloud-no-fields-validation-component',
         template: '<button adf-cloud-complete-task (success)="onCompleteTask($event)"></button>'
     })
     class TestMissingInputDirectiveComponent {
-
         appName = 'simple-app';
         appNameUndefined = undefined;
         appNameNull = null;
@@ -125,11 +121,10 @@ describe('Complete Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-cloud-no-taskid-validation-component',
+        selector: 'adf-cloud-no-taskid-validation-component',
         template: '<button adf-cloud-complete-task [appName]="appName" (success)="onCompleteTask($event)"></button>'
     })
     class TestMissingTaskIdDirectiveComponent {
-
         appName = 'simple-app';
 
         @ContentChildren(CompleteTaskDirective)
@@ -141,11 +136,10 @@ describe('Complete Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-cloud-undefined-appname-component',
+        selector: 'adf-cloud-undefined-appname-component',
         template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="appNameUndefined" (success)="onCompleteTask($event)"></button>'
     })
     class TestInvalidAppNameUndefinedDirectiveComponent {
-
         appName = 'simple-app';
         taskMock = 'test1234';
 
@@ -158,11 +152,10 @@ describe('Complete Task Directive validation errors', () => {
     }
 
     @Component({
-        selector:  'adf-cloud-null-appname-component',
+        selector: 'adf-cloud-null-appname-component',
         template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="appNameNull" (success)="onCompleteTask($event)"></button>'
     })
     class TestInvalidAppNameNullDirectiveComponent {
-
         appName = 'simple-app';
         taskMock = 'test1234';
 
@@ -178,10 +171,7 @@ describe('Complete Task Directive validation errors', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [
                 TestMissingTaskIdDirectiveComponent,
                 TestInvalidAppNameUndefinedDirectiveComponent,
@@ -198,16 +188,16 @@ describe('Complete Task Directive validation errors', () => {
 
     it('should throw error when taskId is not set', () => {
         fixture = TestBed.createComponent(TestMissingTaskIdDirectiveComponent);
-        expect( () => fixture.detectChanges()).toThrowError('Attribute taskId is required');
+        expect(() => fixture.detectChanges()).toThrowError('Attribute taskId is required');
     });
 
     it('should throw error when appName is undefined', () => {
         fixture = TestBed.createComponent(TestInvalidAppNameUndefinedDirectiveComponent);
-        expect( () => fixture.detectChanges()).toThrowError('Attribute appName is required');
+        expect(() => fixture.detectChanges()).toThrowError('Attribute appName is required');
     });
 
     it('should throw error when appName is null', () => {
         fixture = TestBed.createComponent(TestInvalidAppNameUndefinedDirectiveComponent);
-        expect( () => fixture.detectChanges()).toThrowError('Attribute appName is required');
+        expect(() => fixture.detectChanges()).toThrowError('Attribute appName is required');
     });
 });

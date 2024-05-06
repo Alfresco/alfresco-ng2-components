@@ -36,7 +36,7 @@ describe('TasksListDatatableAdapter', () => {
         const viewModel: TaskInstanceCloudListViewModel = {
             ...cloudModel,
             variablesMap: {
-                columnDisplayName1: processVariable
+                columnId1: processVariable
             }
         };
 
@@ -48,7 +48,7 @@ describe('TasksListDatatableAdapter', () => {
         };
 
         const column: DataColumn<ProcessListDataColumnCustomData> = getDataColumnMock({
-            title: 'columnDisplayName1',
+            id: 'columnId1',
             customData: {
                 assignedVariableDefinitionIds: ['variableDefinitionId'],
                 variableDefinitionsPayload: ['processKey/variableName'],

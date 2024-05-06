@@ -21,7 +21,6 @@ import { DataColumn } from '../../data/data-column.model';
 import { Observable, Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { CoreTestingModule } from '../../../testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -41,7 +40,8 @@ describe('ColumnsSelectorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ColumnsSelectorComponent, CoreTestingModule]
+            imports: [CoreTestingModule],
+            declarations: [ColumnsSelectorComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(ColumnsSelectorComponent);

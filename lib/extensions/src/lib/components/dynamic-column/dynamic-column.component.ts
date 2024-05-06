@@ -16,86 +16,75 @@
  */
 
 import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ViewContainerRef,
-  ComponentRef,
-  ComponentFactoryResolver,
-  OnChanges,
-  SimpleChanges,
-  ViewEncapsulation,
-  ChangeDetectionStrategy
+    Component,
+    Input,
+    OnInit,
+    OnDestroy,
+    ViewChild,
+    ViewContainerRef,
+    ComponentRef,
+    OnChanges,
+    SimpleChanges,
+    ViewEncapsulation,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
 
 @Component({
-  selector: 'adf-dynamic-column',
-  template: `
-    <ng-container #content></ng-container>
-  `,
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'adf-dynamic-column' },
-  styles: [
-    `
-      .adf-dynamic-column {
-        display: flex;
-        align-items: center;
-        width: inherit;
-      }
-    `
-  ]
+    selector: 'adf-dynamic-column',
+    template: ` <ng-container #content></ng-container> `,
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { class: 'adf-dynamic-column' },
+    styles: [
+        `
+            .adf-dynamic-column {
+                display: flex;
+                align-items: center;
+                width: inherit;
+            }
+        `
+    ]
 })
 export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {
-  @ViewChild('content', { read: ViewContainerRef, static: true })
-  content: ViewContainerRef;
+    @ViewChild('content', { read: ViewContainerRef, static: true })
+    content: ViewContainerRef;
 
-  @Input()
-  id: string;
+    @Input()
+    id: string;
 
-  @Input()
-  context: any;
+    @Input()
+    context: any;
 
-  private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<any>;
 
-  constructor(
-    private extensions: ExtensionService,
-    private componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+    constructor(private extensions: ExtensionService) {}
 
-  ngOnInit() {
-    const componentType = this.extensions.getComponentById(this.id);
-    if (componentType) {
-      const factory = this.componentFactoryResolver.resolveComponentFactory(
-        componentType
-      );
-      if (factory) {
-        this.content.clear();
-        this.componentRef = this.content.createComponent(factory, 0);
-        this.updateInstance();
-      }
+    ngOnInit() {
+        const componentType = this.extensions.getComponentById(this.id);
+        if (componentType) {
+            this.content.clear();
+            this.componentRef = this.content.createComponent(componentType, { index: 0 });
+            this.updateInstance();
+        }
     }
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.node) {
-      this.updateInstance();
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.node) {
+            this.updateInstance();
+        }
     }
-  }
 
-  ngOnDestroy() {
-    if (this.componentRef) {
-      this.componentRef.destroy();
-      this.componentRef = null;
+    ngOnDestroy() {
+        if (this.componentRef) {
+            this.componentRef.destroy();
+            this.componentRef = null;
+        }
     }
-  }
 
-  private updateInstance() {
-    if (this.componentRef?.instance) {
-      this.componentRef.instance.context = this.context;
+    private updateInstance() {
+        if (this.componentRef?.instance) {
+            this.componentRef.instance.context = this.context;
+        }
     }
-  }
 }

@@ -107,9 +107,9 @@ describe('Sorting for process filters', () => {
             state: 'running',
             sort: 'created-asc'
         });
-        await expect(processesQuery.data[0].name).toEqual(firstProc.name);
-        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
-        await expect(processesQuery.data[2].name).toEqual(thirdProc.name);
+        expect(processesQuery.data[0].name).toEqual(firstProc.name);
+        expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        expect(processesQuery.data[2].name).toEqual(thirdProc.name);
     });
 
     it('[C260477] Should be able to create a filter on APS for completed processes - Oldest first and check on ADF', async () => {
@@ -141,9 +141,9 @@ describe('Sorting for process filters', () => {
             state: 'completed',
             sort: 'created-asc'
         });
-        await expect(processesQuery.data[0].name).toEqual(firstProc.name);
-        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
-        await expect(processesQuery.data[2].name).toEqual(thirdProc.name);
+        expect(processesQuery.data[0].name).toEqual(firstProc.name);
+        expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        expect(processesQuery.data[2].name).toEqual(thirdProc.name);
     });
 
     it('[C260478] Should be able to create a filter on APS for all processes - Oldest first and check on ADF', async () => {
@@ -179,12 +179,12 @@ describe('Sorting for process filters', () => {
             state: 'all',
             sort: 'created-asc'
         });
-        await expect(processesQuery.data[0].name).toEqual(firstProc.name);
-        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
-        await expect(processesQuery.data[2].name).toEqual(thirdProc.name);
-        await expect(processesQuery.data[3].name).toEqual(deleteFirstProc.name);
-        await expect(processesQuery.data[4].name).toEqual(deleteSecondProc.name);
-        await expect(processesQuery.data[5].name).toEqual(deleteThirdProc.name);
+        expect(processesQuery.data[0].name).toEqual(firstProc.name);
+        expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        expect(processesQuery.data[2].name).toEqual(thirdProc.name);
+        expect(processesQuery.data[3].name).toEqual(deleteFirstProc.name);
+        expect(processesQuery.data[4].name).toEqual(deleteSecondProc.name);
+        expect(processesQuery.data[5].name).toEqual(deleteThirdProc.name);
     });
 
     it('[C260479] Should be able to create a filter on APS for running processes - Newest first and check on ADF', async () => {
@@ -212,9 +212,9 @@ describe('Sorting for process filters', () => {
             state: 'running',
             sort: 'created-desc'
         });
-        await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
-        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
-        await expect(processesQuery.data[2].name).toEqual(firstProc.name);
+        expect(processesQuery.data[0].name).toEqual(thirdProc.name);
+        expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        expect(processesQuery.data[2].name).toEqual(firstProc.name);
     });
 
     it('[C260480] Should be able to create a filter on APS for completed processes - Newest first and check on ADF', async () => {
@@ -245,9 +245,9 @@ describe('Sorting for process filters', () => {
             state: 'completed',
             sort: 'created-desc'
         });
-        await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
-        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
-        await expect(processesQuery.data[2].name).toEqual(firstProc.name);
+        expect(processesQuery.data[0].name).toEqual(thirdProc.name);
+        expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        expect(processesQuery.data[2].name).toEqual(firstProc.name);
     });
 
     it('[C260481] Should be able to create a filter on APS for all processes - Newest first and check on ADF', async () => {
@@ -283,12 +283,12 @@ describe('Sorting for process filters', () => {
             state: 'all',
             sort: 'created-desc'
         });
-        await expect(processesQuery.data[0].name).toEqual(deleteThirdProc.name);
-        await expect(processesQuery.data[1].name).toEqual(deleteSecondProc.name);
-        await expect(processesQuery.data[2].name).toEqual(deleteFirstProc.name);
-        await expect(processesQuery.data[3].name).toEqual(thirdProc.name);
-        await expect(processesQuery.data[4].name).toEqual(secondProc.name);
-        await expect(processesQuery.data[5].name).toEqual(firstProc.name);
+        expect(processesQuery.data[0].name).toEqual(deleteThirdProc.name);
+        expect(processesQuery.data[1].name).toEqual(deleteSecondProc.name);
+        expect(processesQuery.data[2].name).toEqual(deleteFirstProc.name);
+        expect(processesQuery.data[3].name).toEqual(thirdProc.name);
+        expect(processesQuery.data[4].name).toEqual(secondProc.name);
+        expect(processesQuery.data[5].name).toEqual(firstProc.name);
     });
 
     it('[C272815] Should be able to create a filter on APS for completed processes - Completed most recently and check on ADF', async () => {
@@ -320,9 +320,9 @@ describe('Sorting for process filters', () => {
             state: 'completed',
             sort: 'ended-asc'
         });
-        await expect(processesQuery.data[0].name).toEqual(secondProc.name);
-        await expect(processesQuery.data[1].name).toEqual(firstProc.name);
-        await expect(processesQuery.data[2].name).toEqual(thirdProc.name);
+        expect(processesQuery.data[0].name).toEqual(secondProc.name);
+        expect(processesQuery.data[1].name).toEqual(firstProc.name);
+        expect(processesQuery.data[2].name).toEqual(thirdProc.name);
     });
 
     it('[C272816] Should be able to create a filter on APS for completed processes - Completed least recently and check on ADF', async () => {
@@ -354,8 +354,8 @@ describe('Sorting for process filters', () => {
             state: 'completed',
             sort: 'ended-desc'
         });
-        await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
-        await expect(processesQuery.data[1].name).toEqual(firstProc.name);
-        await expect(processesQuery.data[2].name).toEqual(secondProc.name);
+        expect(processesQuery.data[0].name).toEqual(thirdProc.name);
+        expect(processesQuery.data[1].name).toEqual(firstProc.name);
+        expect(processesQuery.data[2].name).toEqual(secondProc.name);
     });
 });

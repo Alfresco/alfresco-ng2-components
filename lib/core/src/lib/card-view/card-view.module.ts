@@ -34,7 +34,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CardViewContentProxyDirective } from './directives/card-view-content-proxy.directive';
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { CardViewBoolItemComponent } from './components/card-view-boolitem/card-view-boolitem.component';
 import { CardViewDateItemComponent } from './components/card-view-dateitem/card-view-dateitem.component';
@@ -77,7 +76,6 @@ import { SelectFilterInputComponent } from './components/card-view-selectitem/se
         CardViewKeyValuePairsItemComponent,
         CardViewSelectItemComponent,
         CardViewItemDispatcherComponent,
-        CardViewContentProxyDirective,
         CardViewArrayItemComponent,
         SelectFilterInputComponent
     ],

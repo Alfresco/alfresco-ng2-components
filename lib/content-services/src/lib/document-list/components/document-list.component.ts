@@ -41,7 +41,6 @@ import {
     DataRowActionEvent,
     DataSorting,
     DataTableComponent,
-    DisplayMode,
     ShowHeaderMode,
     PaginatedComponent,
     AppConfigService,
@@ -58,10 +57,10 @@ import {
     DataRow,
     DataTableService,
     DataTableSchema,
-    DataColumn
+    DataColumn,
+    ViewerComponentConfig
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
-
 import { Node, NodeEntry, NodePaging, NodesApi, Pagination } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
@@ -70,7 +69,6 @@ import { presetsDefaultModel } from '../models/preset.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
-import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { FilterSearch } from './../../search/models/filter-search.interface';
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
@@ -97,7 +95,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
-export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
+export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent {
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
@@ -132,10 +130,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
      */
     @Input()
     where: string;
-
-    /** Change the display mode of the table. Can be "list" or "gallery". */
-    @Input()
-    display: string = DisplayMode.List;
 
     /**
      * Define a set of CSS styles to apply depending on the permission
@@ -479,7 +473,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return defaultSorting;
     }
 
-
     isMobile(): boolean {
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
@@ -797,9 +790,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     onPreviewFile(node: NodeEntry) {
         if (node) {
             const sizeInMB = node.entry?.content?.sizeInBytes / BYTES_TO_MB_CONVERSION_VALUE;
+            const config = this.appConfig.get<ViewerComponentConfig>('viewer');
 
-            const fileAutoDownloadFlag: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
-            const sizeThreshold: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
+            const fileAutoDownloadFlag = config?.enableFileAutoDownload ?? true;
+            const sizeThreshold = config?.fileAutoDownloadSizeThresholdInMB ?? 15;
 
             if (fileAutoDownloadFlag && sizeInMB && sizeInMB > sizeThreshold) {
                 this.dialog.open(FileAutoDownloadComponent, { disableClose: true, data: node });
@@ -975,7 +969,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
         return canNavigateFolder;
     }
-
 
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);

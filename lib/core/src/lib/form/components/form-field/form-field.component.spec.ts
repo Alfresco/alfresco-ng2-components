@@ -22,10 +22,8 @@ import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets';
 import { FormFieldComponent } from './form-field.component';
 import { FormBaseModule } from '../../form-base.module';
 import { CoreTestingModule } from '../../../testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('FormFieldComponent', () => {
-
     let fixture: ComponentFixture<FormFieldComponent>;
     let component: FormFieldComponent;
     let form: FormModel;
@@ -34,11 +32,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                FormBaseModule
-            ]
+            imports: [CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;

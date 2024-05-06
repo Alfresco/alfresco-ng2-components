@@ -19,20 +19,15 @@ import { TestBed } from '@angular/core/testing';
 import { fakeApps } from '../mocks/apps-service.mock';
 import { AppsProcessService } from './apps-process.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('AppsProcessService', () => {
-
     let service: AppsProcessService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(AppsProcessService);
         jasmine.Ajax.install();
@@ -43,19 +38,17 @@ describe('AppsProcessService', () => {
     });
 
     it('should get the deployed apps ', (done) => {
-        service.getDeployedApplications().subscribe(
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(2);
-                expect(res[0].name).toEqual('Sales-Fakes-App');
-                expect(res[0].description).toEqual('desc-fake1');
-                expect(res[0].deploymentId).toEqual('111');
-                expect(res[1].name).toEqual('health-care-Fake');
-                expect(res[1].description).toEqual('desc-fake2');
-                expect(res[1].deploymentId).toEqual('444');
-                done();
-            }
-        );
+        service.getDeployedApplications().subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res.length).toEqual(2);
+            expect(res[0].name).toEqual('Sales-Fakes-App');
+            expect(res[0].description).toEqual('desc-fake1');
+            expect(res[0].deploymentId).toEqual('111');
+            expect(res[1].name).toEqual('health-care-Fake');
+            expect(res[1].description).toEqual('desc-fake2');
+            expect(res[1].deploymentId).toEqual('444');
+            done();
+        });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
@@ -65,15 +58,13 @@ describe('AppsProcessService', () => {
     });
 
     it('should get the filter deployed app ', (done) => {
-        service.getDeployedApplicationsByName('health-care-Fake').subscribe(
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res.name).toEqual('health-care-Fake');
-                expect(res.description).toEqual('desc-fake2');
-                expect(res.deploymentId).toEqual('444');
-                done();
-            }
-        );
+        service.getDeployedApplicationsByName('health-care-Fake').subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res.name).toEqual('health-care-Fake');
+            expect(res.description).toEqual('desc-fake2');
+            expect(res.deploymentId).toEqual('444');
+            done();
+        });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
@@ -83,15 +74,13 @@ describe('AppsProcessService', () => {
     });
 
     it('should get the deployed app details by id ', (done) => {
-        service.getApplicationDetailsById(1).subscribe(
-            (app: any) => {
-                expect(app).toBeDefined();
-                expect(app.name).toEqual('Sales-Fakes-App');
-                expect(app.description).toEqual('desc-fake1');
-                expect(app.deploymentId).toEqual('111');
-                done();
-            }
-        );
+        service.getApplicationDetailsById(1).subscribe((app: any) => {
+            expect(app).toBeDefined();
+            expect(app.name).toEqual('Sales-Fakes-App');
+            expect(app.description).toEqual('desc-fake1');
+            expect(app.deploymentId).toEqual('111');
+            done();
+        });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,

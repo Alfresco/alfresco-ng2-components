@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import {
-  createApiService,
-  ApplicationsUtil,
-  LoginPage,
-  ProcessUtil,
-  UsersActions,
-  Widget, UserModel
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
@@ -74,19 +67,19 @@ describe('Dropdown widget', () => {
     });
 
     it('[C269051] Should be possible to set general and options properties for Dropdown widget ', async () => {
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
         await widget.dropdown().selectOption('Happy');
-        await expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
         await widget.dropdown().selectOption('Choose one');
-        await expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Choose one');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Choose one');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
         await widget.dropdown().selectOption('Sad');
-        await expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C269052] Should be possible to set visibility properties for Dropdown widget', async () => {

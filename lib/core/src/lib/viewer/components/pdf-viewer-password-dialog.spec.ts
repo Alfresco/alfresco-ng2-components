@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare const pdfjsLib: any;
 
@@ -30,10 +29,7 @@ describe('PdfPasswordDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             providers: [
                 {
                     provide: MAT_DIALOG_DATA,

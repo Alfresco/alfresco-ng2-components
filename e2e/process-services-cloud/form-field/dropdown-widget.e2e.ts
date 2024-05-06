@@ -16,17 +16,26 @@
  */
 
 import {
-    createApiService, AppListCloudPage, GroupIdentityService, IdentityService,
-    LoginPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
-    ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
-    TasksService, SnackbarPage, materialLocators
+    createApiService,
+    AppListCloudPage,
+    GroupIdentityService,
+    IdentityService,
+    LoginPage,
+    ProcessCloudWidgetPage,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    QueryService,
+    TaskFormCloudComponent,
+    TaskHeaderCloudPage,
+    TasksService,
+    SnackbarPage,
+    materialLocators
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '.././pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Form Field Component - Dropdown Widget', () => {
-
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -80,7 +89,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     afterAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-   });
+    });
 
     beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -118,7 +127,7 @@ describe('Form Field Component - Dropdown Widget', () => {
 
         optionsSelected.push(await dropdown.getSelectedOptionText('DropdownMultiselect'));
 
-        await expect(optionsSelected.toString().replace(/\s+/g, '')).toEqual([optionsToSelect, optionsToSelect].toString());
+        expect(optionsSelected.toString().replace(/\s+/g, '')).toEqual([optionsToSelect, optionsToSelect].toString());
     });
 
     it('[C309878] Should be able to select a dropdown option, save and complete the task form', async () => {
@@ -135,17 +144,17 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownOptions');
         await dropdown.selectOption('option2', `dropdown-cloud-widget ${materialLocators.Select.root}`);
 
-        await expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
+        expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
 
         await taskFormCloudComponent.checkSaveButtonIsDisplayed();
         await taskFormCloudComponent.clickSaveButton();
 
-        await expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
+        expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
 
         await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         await taskFormCloudComponent.clickCompleteButton();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+        expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
         await taskList.checkContentIsNotDisplayedByName(dropdownOptionTaskName);
 
@@ -161,7 +170,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('DropdownOptions');
 
-        await expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
+        expect(await dropdown.getSelectedOptionText('DropdownOptions')).toBe('option2');
 
         await taskFormCloudComponent.checkCompleteButtonIsNotDisplayed();
     });
@@ -185,7 +194,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await dropdown.closeDropdownFor(dropdownId);
 
         const actualSelectedOptions = await dropdown.getSelectedOptionText(dropdownId);
-        await expect(actualSelectedOptions).toEqual(expectedOptions.join(', '));
+        expect(actualSelectedOptions).toEqual(expectedOptions.join(', '));
     });
 
     it('[C601606] Should be able to search and select single options from the single choice dropdown', async () => {
@@ -209,7 +218,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await dropdown.searchAndChooseOptionFromList(expectedOption);
 
         const actualSelectedOptions = await dropdown.getSelectedOptionText(dropdownId);
-        await expect(actualSelectedOptions).toEqual(expectedOption);
+        expect(actualSelectedOptions).toEqual(expectedOption);
     });
 
     it('[C601606] Should not be able to search if there is less than 6 options to choose', async () => {
@@ -227,6 +236,6 @@ describe('Form Field Component - Dropdown Widget', () => {
         await dropdown.openDropdown(`#${dropdownId}`);
 
         const searchDropdownFieldIsPresent = await dropdown.searchElementLocator.isPresent(1000);
-        await expect(searchDropdownFieldIsPresent).toBeFalsy();
+        expect(searchDropdownFieldIsPresent).toBeFalsy();
     });
 });

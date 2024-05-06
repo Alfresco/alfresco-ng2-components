@@ -22,7 +22,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { WidgetComponent, FormService, AdfDateFnsAdapter, DateFnsUtils, ADF_DATE_FORMATS } from '@alfresco/adf-core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { addDays, subDays } from 'date-fns';
+import { addDays } from 'date-fns';
 
 @Component({
     selector: 'date-widget',
@@ -49,9 +49,9 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     typeId = 'DateCloudWidgetComponent';
     readonly DATE_FORMAT = 'dd-MM-yyyy';
 
-    minDate: Date;
-    maxDate: Date;
-    startAt: Date;
+    minDate: Date = null;
+    maxDate: Date = null;
+    startAt: Date = null;
 
     /**
      * Current date value.
@@ -63,8 +63,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Date>) {
+    constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>) {
         super(formService);
     }
 
@@ -76,11 +75,17 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
         if (this.field) {
             if (this.field.dynamicDateRangeSelection) {
-                if (Number.isInteger(this.field.minDateRangeValue)) {
-                    this.minDate = subDays(this.dateAdapter.today(), this.field.minDateRangeValue);
+                if (this.field.minDateRangeValue === null) {
+                    this.minDate = null;
+                    this.field.minValue = null;
+                } else {
+                    this.minDate = addDays(this.dateAdapter.today(), this.field.minDateRangeValue);
                     this.field.minValue = DateFnsUtils.formatDate(this.minDate, this.DATE_FORMAT);
                 }
-                if (Number.isInteger(this.field.maxDateRangeValue)) {
+                if (this.field.maxDateRangeValue === null) {
+                    this.maxDate = null;
+                    this.field.maxValue = null;
+                } else {
                     this.maxDate = addDays(this.dateAdapter.today(), this.field.maxDateRangeValue);
                     this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, this.DATE_FORMAT);
                 }

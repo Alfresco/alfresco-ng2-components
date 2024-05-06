@@ -18,22 +18,17 @@
 import { TestBed } from '@angular/core/testing';
 import { FormDefinitionSelectorCloudService } from './form-definition-selector-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { mockFormRepresentations } from '../mocks/form-representation.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('Form Definition Selector Cloud Service', () => {
-
     let service: FormDefinitionSelectorCloudService;
     let adfHttpClient: AdfHttpClient;
     const appName = 'app-name';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(FormDefinitionSelectorCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);

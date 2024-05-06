@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { DateTimePipe } from './date-time.pipe';
 import { addMinutes, isValid } from 'date-fns';
 
@@ -26,7 +25,7 @@ describe('DateTimePipe', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             providers: [DateTimePipe]
         });
 

@@ -21,7 +21,6 @@ import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { DateTimeEditorComponent } from './datetime.editor';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('DateTimeEditorComponent', () => {
     let component: DateTimeEditorComponent;
@@ -32,16 +31,13 @@ describe('DateTimeEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(DateTimeEditorComponent);
         component = fixture.componentInstance;
 
-        row = {value: {date: '1879-03-14T00:00:00.000Z'}} as DynamicTableRow;
-        column = {id: 'datetime', type: 'Datetime'} as DynamicTableColumn;
+        row = { value: { date: '1879-03-14T00:00:00.000Z' } } as DynamicTableRow;
+        column = { id: 'datetime', type: 'Datetime' } as DynamicTableColumn;
         const field = new FormFieldModel(new FormModel());
         table = new DynamicTableModel(field, null);
         table.rows.push(row);

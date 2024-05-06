@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { LoginComponent } from '../components/login.component';
-import { LoginHeaderDirective } from './login-header.directive';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { CoreTestingModule, LoginComponent, LoginHeaderDirective } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 describe('LoginHeaderDirective', () => {
@@ -29,13 +26,8 @@ describe('LoginHeaderDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: OidcAuthenticationService, useValue: {} }
-            ]
+            imports: [CoreTestingModule],
+            providers: [{ provide: OidcAuthenticationService, useValue: {} }]
         });
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;

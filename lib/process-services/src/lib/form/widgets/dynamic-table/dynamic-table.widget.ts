@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService, WidgetVisibilityService, WidgetComponent, FormService } from '@alfresco/adf-core';
+import { WidgetVisibilityService, WidgetComponent, FormService } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
 import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
@@ -41,8 +41,6 @@ import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
-    ERROR_MODEL_NOT_FOUND = 'Table model not found';
-
     content: DynamicTableModel;
 
     editMode: boolean = false;
@@ -54,7 +52,6 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         public formService: FormService,
         public elementRef: ElementRef,
         private visibilityService: WidgetVisibilityService,
-        private logService: LogService,
         private cd: ChangeDetectorRef
     ) {
         super(formService);
@@ -103,7 +100,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    private isEnterOrSpacePressed(keyCode) {
+    private isEnterOrSpacePressed(keyCode: number) {
         return this.selectArrayCode.indexOf(keyCode) !== -1;
     }
 
@@ -179,8 +176,6 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
                 this.content.selectedRow.value = this.copyObject(this.editRow.value);
             }
             this.content.flushValue();
-        } else {
-            this.logService.error(this.ERROR_MODEL_NOT_FOUND);
         }
         this.editMode = false;
         this.forceFocusOnAddButton();

@@ -56,7 +56,7 @@ import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
 import { ContextMenuModule } from '../../../context-menu';
 import { DirectiveModule } from '../../../directives';
 import { IconModule } from '../../../icon';
-import { LocalizedDatePipe, PipeModule } from '../../../pipes';
+import { FileTypePipe, FilterOutArrayObjectsByPropPipe, LocalizedDatePipe, PipeModule } from '../../../pipes';
 import { DataColumnListComponent } from '../../data-column';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
@@ -82,12 +82,6 @@ import { IconCellComponent } from '../icon-cell/icon-cell.component';
 import { JsonCellComponent } from '../json-cell/json-cell.component';
 import { LocationCellComponent } from '../location-cell/location-cell.component';
 import { NumberCellComponent } from '../number-cell/number-cell.component';
-
-// eslint-disable-next-line no-shadow
-export enum DisplayMode {
-    List = 'list',
-    Gallery = 'gallery'
-}
 
 // eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
@@ -129,7 +123,9 @@ export enum ShowHeaderMode {
         JsonCellComponent,
         AmountCellComponent,
         NumberCellComponent,
-        LocalizedDatePipe
+        LocalizedDatePipe,
+        FilterOutArrayObjectsByPropPipe,
+        FileTypePipe
     ],
     host: { class: 'adf-datatable' }
 })
@@ -145,10 +141,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     /** Data source for the table */
     @Input()
     data: DataTableAdapter;
-
-    /** Selects the display mode of the table. Can be "list" or "gallery". */
-    @Input()
-    display: string = DisplayMode.List;
 
     /** The rows that the datatable will show. */
     @Input()
@@ -310,9 +302,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     hoveredHeaderColumnIndex = -1;
     resizingColumnIndex = -1;
 
-    /** This array of fake rows fix the flex layout for the gallery view */
-    fakeRows = [];
-
     private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
@@ -350,7 +339,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 })
             );
         }
-        this.datatableLayoutFix();
         this.setTableSchema();
     }
 
@@ -397,10 +385,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (this.isPropertyChanged(changes['sorting'])) {
             this.setTableSorting(changes['sorting'].currentValue);
-        }
-
-        if (this.isPropertyChanged(changes['display'])) {
-            this.datatableLayoutFix();
         }
     }
 
@@ -565,7 +549,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
 
         if (row) {
-            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderListVisible() ? 1 : 0);
+            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderVisible() ? 1 : 0);
             this.keyManager.setActiveItem(rowIndex);
 
             const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
@@ -577,10 +561,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (row) {
             this.handleRowSelection(row, e);
         }
-    }
-
-    private isHeaderListVisible(): boolean {
-        return this.isHeaderVisible() && this.display === DisplayMode.List;
     }
 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
@@ -777,10 +757,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return null;
     }
 
-    iconAltTextKey(value: string): string {
-        return value ? 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '') : '';
-    }
-
     isColumnSorted(col: DataColumn, direction: string): boolean {
         if (col && direction) {
             const sorting = this.data.getSorting();
@@ -830,10 +806,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return row.isDropTarget === true;
     }
 
-    hasSelectionMode(): boolean {
-        return this.isSingleSelectionMode() || this.isMultiSelectionMode();
-    }
-
     isSingleSelectionMode(): boolean {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'single';
     }
@@ -860,14 +832,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (selectedRow) {
             selectedRow.isContextMenuSource = true;
         }
-    }
-
-    getSortingKey(): string | null {
-        if (this.data.getSorting()) {
-            return this.data.getSorting().key;
-        }
-
-        return null;
     }
 
     selectRow(row: DataRow, value: boolean) {
@@ -957,18 +921,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (this.dataRowsChanged) {
             this.dataRowsChanged.unsubscribe();
             this.dataRowsChanged = null;
-        }
-    }
-
-    private datatableLayoutFix() {
-        const maxGalleryRows = 25;
-
-        if (this.display === 'gallery') {
-            for (let i = 0; i < maxGalleryRows; i++) {
-                this.fakeRows.push('');
-            }
-        } else {
-            this.fakeRows = [];
         }
     }
 

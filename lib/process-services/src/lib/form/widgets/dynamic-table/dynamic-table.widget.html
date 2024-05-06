@@ -1,5 +1,4 @@
-<div class="adf-dynamic-table-scrolling {{field.className}}"
-    [class.adf-invalid]="!isValid()">
+<div class="adf-dynamic-table-scrolling {{field.className}}" [class.adf-invalid]="!isValid()">
     <div class="adf-label">{{content.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></div>
 
     <div *ngIf="!editMode">
@@ -7,22 +6,28 @@
             <table class="adf-full-width adf-dynamic-table" id="dynamic-table-{{content.id}}">
                 <thead>
                     <tr>
-                        <th *ngFor="let column of content.visibleColumns">
-                            {{column.name}}
-                        </th>
+                        <th *ngFor="let column of content.visibleColumns">{{column.name}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let row of content.rows; let idx = index" tabindex="0" id="{{content.id}}-row-{{idx}}"
-                        [class.adf-dynamic-table-widget__row-selected]="row.selected" (keyup)="onKeyPressed($event, row)">
-                        <td *ngFor="let column of content.visibleColumns"
-                            (click)="onRowClicked(row)">
-                            <span *ngIf="column.type !== 'Boolean' else checkbox">
-                                {{ getCellValue(row, column) }}
-                            </span>
+                    <tr
+                        *ngFor="let row of content.rows; let idx = index"
+                        role="button"
+                        tabindex="0"
+                        id="{{content.id}}-row-{{idx}}"
+                        [class.adf-dynamic-table-widget__row-selected]="row.selected"
+                        (keyup)="onKeyPressed($event, row)"
+                    >
+                        <td
+                            *ngFor="let column of content.visibleColumns"
+                            tabindex="0"
+                            role="button"
+                            (keyup.enter)="onRowClicked(row)"
+                            (click)="onRowClicked(row)"
+                        >
+                            <span *ngIf="column.type !== 'Boolean' else checkbox"> {{ getCellValue(row, column) }} </span>
                             <ng-template #checkbox>
-                                <mat-checkbox disabled [checked]="getCellValue(row, column)">
-                                </mat-checkbox>
+                                <mat-checkbox disabled [checked]="getCellValue(row, column)"> </mat-checkbox>
                             </ng-template>
                         </td>
                     </tr>
@@ -31,41 +36,25 @@
         </div>
 
         <div *ngIf="!readOnly">
-            <button mat-button
-                    [disabled]="!hasSelection()"
-                    (click)="moveSelectionUp()">
+            <button mat-button [disabled]="!hasSelection()" (click)="moveSelectionUp()">
                 <mat-icon>arrow_upward</mat-icon>
             </button>
-            <button mat-button
-                    [disabled]="!hasSelection()"
-                    (click)="moveSelectionDown()">
+            <button mat-button [disabled]="!hasSelection()" (click)="moveSelectionDown()">
                 <mat-icon>arrow_downward</mat-icon>
             </button>
-            <button mat-button
-                    [disabled]="field.readOnly"
-                    id="{{content.id}}-add-row"
-                    (click)="addNewRow()">
+            <button mat-button [disabled]="field.readOnly" id="{{content.id}}-add-row" (click)="addNewRow()">
                 <mat-icon>add_circle_outline</mat-icon>
             </button>
-            <button mat-button
-                    [disabled]="!hasSelection()"
-                    (click)="deleteSelection()">
+            <button mat-button [disabled]="!hasSelection()" (click)="deleteSelection()">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
-            <button mat-button
-                    [disabled]="!hasSelection()"
-                    (click)="editSelection()">
+            <button mat-button [disabled]="!hasSelection()" (click)="editSelection()">
                 <mat-icon>edit</mat-icon>
             </button>
         </div>
-     </div>
+    </div>
 
-     <row-editor *ngIf="editMode"
-        [table]="content"
-        [row]="editRow"
-        (save)="onSaveChanges()"
-        (cancel)="onCancelChanges()">
-     </row-editor>
-    <error-widget [error]="field.validationSummary" ></error-widget>
+    <row-editor *ngIf="editMode" [table]="content" [row]="editRow" (save)="onSaveChanges()" (cancel)="onCancelChanges()"> </row-editor>
+    <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

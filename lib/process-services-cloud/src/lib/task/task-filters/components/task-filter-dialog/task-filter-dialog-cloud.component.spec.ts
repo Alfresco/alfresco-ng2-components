@@ -20,7 +20,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
 import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskFilterDialogCloudComponent', () => {
     let component: TaskFilterDialogCloudComponent;
@@ -32,16 +31,12 @@ describe('TaskFilterDialogCloudComponent', () => {
     };
 
     const mockDialogData = {
-        data: {name: 'Mock-Title'}
+        data: { name: 'Mock-Title' }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                TaskFiltersCloudModule
-            ],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: mockDialogData }

@@ -16,13 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, NotificationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    ContentNodeSelectorComponent,
-    ContentNodeSelectorComponentData,
-    NodeAction
-} from '@alfresco/adf-content-services';
+import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
 import { Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, mapTo } from 'rxjs/operators';
@@ -32,7 +28,6 @@ import { DestinationFolderPathModel } from '../models/form-cloud-representation.
     providedIn: 'root'
 })
 export class ContentCloudNodeSelectorService {
-
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
@@ -41,14 +36,14 @@ export class ContentCloudNodeSelectorService {
 
     sourceNodeNotFound = false;
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private notificationService: NotificationService,
-        private logService: LogService,
-        private dialog: MatDialog) {
-    }
+    constructor(private apiService: AlfrescoApiService, private notificationService: NotificationService, private dialog: MatDialog) {}
 
-    openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean, restrictRootToCurrentFolderId?: boolean): Observable<Node[]> {
+    openUploadFileDialog(
+        currentFolderId?: string,
+        selectionMode?: string,
+        isAllFileSources?: boolean,
+        restrictRootToCurrentFolderId?: boolean
+    ): Observable<Node[]> {
         const select = new Subject<Node[]>();
         select.subscribe({ complete: this.close.bind(this) });
         const data = {
@@ -71,9 +66,7 @@ export class ContentCloudNodeSelectorService {
         if (destinationFolderPath.alias && destinationFolderPath.path) {
             try {
                 return await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
-            } catch (error) {
-                this.logService.error(error);
-            }
+            } catch {}
         }
 
         return this.getNodeId(destinationFolderPath.alias).toPromise();
@@ -89,9 +82,7 @@ export class ContentCloudNodeSelectorService {
         if (nodeId) {
             try {
                 isExistingNode = await this.getNodeId(nodeId).pipe(mapTo(true)).toPromise();
-            } catch (error) {
-                this.logService.error(error);
-            }
+            } catch {}
         }
         return isExistingNode;
     }

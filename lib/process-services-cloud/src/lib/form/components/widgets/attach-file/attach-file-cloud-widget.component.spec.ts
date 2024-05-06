@@ -71,7 +71,9 @@ import {
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormCloudModule } from '../../../form-cloud.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 const mockNodeToBeVersioned: any = {
     isFile: true,
@@ -123,6 +125,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     let localizedDataPipe: LocalizedDatePipe;
     let newVersionUploaderService: NewVersionUploaderService;
     let notificationService: NotificationService;
+    let loader: HarnessLoader;
 
     const createUploadWidgetField = (
         form: FormModel,
@@ -151,7 +154,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot()],
+            imports: [ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot()],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         notificationService = TestBed.inject(NotificationService);
@@ -166,6 +169,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
         openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeNode]));
         localizedDataPipe = new LocalizedDatePipe();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -594,7 +598,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         it('should preview file when show is clicked', () => {
             spyOn(processCloudContentService, 'getRawContentNode').and.returnValue(of(new Blob()));
             let lastValue: ContentLinkModel;
-            formService.formContentClicked.subscribe((fileClicked) => lastValue = fileClicked);
+            formService.formContentClicked.subscribe((fileClicked) => (lastValue = fileClicked));
 
             fixture.detectChanges();
             const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
@@ -935,26 +939,24 @@ describe('AttachFileCloudWidgetComponent', () => {
         it('should show tooltip', async () => {
             const attachButton = fixture.nativeElement.querySelector('button');
             attachButton.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+
+            expect(await tooltipElement.isOpen()).toBeTrue();
+            expect(await tooltipElement.getTooltipText()).toBe('my custom tooltip');
         });
 
         it('should hide tooltip', async () => {
-            const attachButton = fixture.nativeElement.querySelector('button');
+            const attachButton = fixture.nativeElement.querySelector('.adf-attach-widget__menu-upload__button');
             attachButton.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
             fixture.detectChanges();
 
             attachButton.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+
+            expect(await tooltipElement.isOpen()).toBeFalse();
         });
     });
 });

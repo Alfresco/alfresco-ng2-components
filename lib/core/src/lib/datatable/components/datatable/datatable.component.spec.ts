@@ -15,28 +15,20 @@
  * limitations under the License.
  */
 
-import {
-    CoreTestingModule,
-    DataColumn,
-    DataColumnComponent,
-    DataColumnListComponent,
-    DataRow,
-    DataSorting,
-    DataTableComponent,
-    ObjectDataColumn,
-    ObjectDataTableAdapter,
-    ShowHeaderMode
-} from '@alfresco/adf-core';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { Component, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
-import { take } from 'rxjs/operators';
 import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
 import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
+import { CoreTestingModule } from '../../../testing';
+import { DataColumnComponent, DataColumnListComponent } from '../../data-column';
+import { DataColumn } from '../../data/data-column.model';
+import { DataRow } from '../../data/data-row.model';
+import { DataSorting } from '../../data/data-sorting.model';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
+import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 
 @Component({
     selector: 'adf-custom-column-template-component',
@@ -147,7 +139,7 @@ describe('DataTable', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnHeaderComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -189,20 +181,6 @@ describe('DataTable', () => {
 
         expect(dataTable.data.setColumns).toHaveBeenCalled();
     }));
-
-    it('should use the cardview style if cardview is true', () => {
-        const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
-
-        dataTable.display = 'gallery';
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
-        });
-
-        fixture.detectChanges();
-
-        expect(element.querySelector('.adf-datatable-card')).not.toBeNull();
-        expect(element.querySelector('.adf-datatable')).toBeNull();
-    });
 
     it('should use the cardview style if cardview is false', () => {
         const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
@@ -1030,12 +1008,6 @@ describe('DataTable', () => {
         expect(dataTable.asIconValue(row, column)).toBe(null);
     });
 
-    it('should parse icon values to a valid i18n key', () => {
-        expect(dataTable.iconAltTextKey('custom')).toBe('ICONS.custom');
-        expect(dataTable.iconAltTextKey('/path/to/custom')).toBe('ICONS.custom');
-        expect(dataTable.iconAltTextKey('/path/to/custom.svg')).toBe('ICONS.custom');
-    });
-
     it('should require column and direction to evaluate sorting state', () => {
         expect(dataTable.isColumnSorted(null, null)).toBeFalsy();
         expect(dataTable.isColumnSorted({} as DataColumn, null)).toBeFalsy();
@@ -1312,6 +1284,28 @@ describe('DataTable', () => {
         expect(rows3[1].isSelected).toBeTruthy();
     });
 
+    it('should select the corresponding row when a checkbox is checked', async () => {
+        const petRows = [{ pet: 'dog' }, { pet: 'cat' }];
+        dataTable.multiselect = true;
+        dataTable.data = new ObjectDataTableAdapter(petRows, [new ObjectDataColumn({ key: 'pet' })]);
+        dataTable.ngOnChanges({ rows: new SimpleChange(null, petRows, false) });
+        fixture.detectChanges();
+
+        const loader = TestbedHarnessEnvironment.loader(fixture);
+        const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+
+        await checkboxes[2].check();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(await checkboxes[1].isChecked()).toBe(false);
+        expect(await checkboxes[2].isChecked()).toBe(true);
+
+        const rows = dataTable.data.getRows();
+        expect(rows[0].isSelected).toBeFalse();
+        expect(rows[1].isSelected).toBeTrue();
+    });
+
     it('should be able to display column of type boolean', () => {
         dataTable.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
 
@@ -1376,7 +1370,7 @@ describe('Accesibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1597,7 +1591,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1698,7 +1692,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1805,7 +1799,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            imports: [CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });

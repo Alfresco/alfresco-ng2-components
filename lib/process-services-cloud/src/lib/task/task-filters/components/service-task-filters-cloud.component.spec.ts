@@ -24,7 +24,6 @@ import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { fakeGlobalServiceFilters } from '../mock/task-filters-cloud.mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { ServiceTaskFilterCloudService } from '../services/service-task-filter-cloud.service';
 import { ServiceTaskFiltersCloudComponent } from './service-task-filters-cloud.component';
 
@@ -37,14 +36,8 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                TaskFiltersCloudModule
-            ],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-            ]
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(ServiceTaskFiltersCloudComponent);
         component = fixture.componentInstance;
@@ -119,7 +112,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         const change = new SimpleChange(null, appName, true);
 
         let lastValue: any;
-        component.error.subscribe((err) => lastValue = err);
+        component.error.subscribe((err) => (lastValue = err));
 
         component.ngOnChanges({ appName: change });
         fixture.detectChanges();

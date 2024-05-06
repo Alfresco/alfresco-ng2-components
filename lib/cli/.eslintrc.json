@@ -4,7 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
+      "extends": ["plugin:@nrwl/nx/angular"],
       "rules": {
         "prefer-arrow/prefer-arrow-functions": "off",
         "@typescript-eslint/no-var-requires": "off",
@@ -17,7 +17,6 @@
         "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/consistent-type-definitions": "error",
         "@typescript-eslint/dot-notation": "off",
-        "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-require-imports": "off",
         "default-case": "error",

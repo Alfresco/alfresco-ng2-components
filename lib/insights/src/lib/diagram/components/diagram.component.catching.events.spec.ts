@@ -20,22 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import * as intermediateCatchingMock from '../../mock/diagram/diagram-intermediate.mock';
 import { DiagramComponent } from './diagram.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Diagrams Catching', () => {
-
     let component: any;
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [InsightsTestingModule]
         });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
@@ -56,7 +51,7 @@ describe('Diagrams Catching', () => {
         jasmine.Ajax.uninstall();
     });
 
-    const ajaxReply =  (resp: any) => {
+    const ajaxReply = (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -65,7 +60,6 @@ describe('Diagrams Catching', () => {
     };
 
     describe('Diagrams component Intermediate Catching events: ', () => {
-
         it('Should render the Intermediate catching time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -81,8 +75,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-timer');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -111,8 +106,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-error');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -141,8 +137,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-signal');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -171,8 +168,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -188,7 +186,6 @@ describe('Diagrams Catching', () => {
     });
 
     describe('Diagrams component Intermediate Catching events with process instance id: ', () => {
-
         it('Should render the Intermediate catching time event', (done) => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
@@ -204,8 +201,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-timer');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -225,7 +223,9 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]'
+                    );
                     expect(coloredShape).not.toBeNull();
 
                     const shape: any = element.querySelector('diagram-intermediate-catching-event');
@@ -238,8 +238,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-timer');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -259,7 +260,9 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(coloredShape).not.toBeNull();
 
                     const shape: any = element.querySelector('diagram-intermediate-catching-event');
@@ -272,8 +275,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-timer');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-timer'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -302,8 +306,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-error');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -323,7 +328,9 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]'
+                    );
                     expect(coloredShape).not.toBeNull();
 
                     const shape: any = element.querySelector('diagram-intermediate-catching-event');
@@ -336,8 +343,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-error');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -357,7 +365,9 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(coloredShape).not.toBeNull();
 
                     const shape: any = element.querySelector('diagram-intermediate-catching-event');
@@ -370,8 +380,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-error');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-error'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -400,8 +411,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-signal');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -421,7 +433,9 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]'
+                    );
                     expect(coloredShape).not.toBeNull();
 
                     const shape: any = element.querySelector('diagram-intermediate-catching-event');
@@ -434,8 +448,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-signal');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -455,7 +470,9 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(coloredShape).not.toBeNull();
 
                     const shape: any = element.querySelector('diagram-intermediate-catching-event');
@@ -468,8 +485,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-signal');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-signal'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -498,8 +516,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -519,7 +538,9 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#017501"]'
+                    );
                     expect(coloredShape).not.toBeNull();
 
                     const shape: any = element.querySelector('diagram-intermediate-catching-event');
@@ -532,8 +553,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -553,7 +575,9 @@ describe('Diagrams Catching', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    const coloredShape: any = element.querySelector('diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event>raphael-circle[ng-reflect-stroke="#2632aa"]'
+                    );
                     expect(coloredShape).not.toBeNull();
 
                     const shape: any = element.querySelector('diagram-intermediate-catching-event');
@@ -566,8 +590,9 @@ describe('Diagrams Catching', () => {
                     const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    const iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
-                        ' div > div > diagram-icon-message');
+                    const iconShape: any = element.querySelector(
+                        'diagram-intermediate-catching-event > diagram-container-icon-event >' + ' div > div > diagram-icon-message'
+                    );
                     expect(iconShape).not.toBeNull();
 
                     const tooltip: any = element.querySelector('diagram-tooltip > div');

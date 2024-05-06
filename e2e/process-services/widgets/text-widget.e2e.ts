@@ -68,43 +68,43 @@ describe('Text widget', () => {
 
     it('[C268157] Should be able to set general properties for Text widget', async () => {
         const label = await widget.textWidget().getFieldLabel(app.FIELD.simpleText);
-        await expect(label).toBe('textSimple*');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(label).toBe('textSimple*');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         const placeHolder = await widget.textWidget().getFieldPlaceHolder(app.FIELD.simpleText);
-        await expect(placeHolder).toBe('Type something...');
+        expect(placeHolder).toBe('Type something...');
         await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C268170] Min-max length properties', async () => {
         await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
         await widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
-        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter at least 4 characters');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter at least 4 characters');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.textWidget().setValue(app.FIELD.textMinMax, '01234567890');
-        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter no more than 10 characters');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toContain('Enter no more than 10 characters');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.textWidget().setValue(app.FIELD.textMinMax, '123456789');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C268171] Input mask reversed checkbox properties', async () => {
         await widget.textWidget().setValue(app.FIELD.textMask, '18951523');
-        await expect(await widget.textWidget().getFieldValue(app.FIELD.textMask)).toBe('1895-1523');
+        expect(await widget.textWidget().getFieldValue(app.FIELD.textMask)).toBe('1895-1523');
     });
 
     it('[C268171] Input mask reversed checkbox properties', async () => {
         await widget.textWidget().setValue(app.FIELD.textMaskReversed, '1234567899');
-        await expect(await widget.textWidget().getFieldValue(app.FIELD.textMaskReversed)).toBe('3456-7899');
+        expect(await widget.textWidget().getFieldValue(app.FIELD.textMaskReversed)).toBe('3456-7899');
     });
 
     it('[C268177] Should be able to set Regex Pattern property for Text widget', async () => {
         await widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
         await widget.textWidget().setValue(app.FIELD.textRegexp, 'T');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
-        await expect(await widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toContain('Enter a different value');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toContain('Enter a different value');
         await widget.textWidget().setValue(app.FIELD.textRegexp, 'TE');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C274712] Should be able to set visibility properties for Text widget ', async () => {

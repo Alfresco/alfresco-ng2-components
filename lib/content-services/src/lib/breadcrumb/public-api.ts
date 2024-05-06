@@ -17,6 +17,5 @@
 
 export * from './breadcrumb.component';
 export * from './dropdown-breadcrumb.component';
-export * from './navigable-component.interface';
 
 export * from './breadcrumb.module';

@@ -21,10 +21,10 @@ import { Directive, ElementRef, Input, Renderer2, AfterViewChecked } from '@angu
 import { HighlightTransformService, HighlightTransformResult } from '../common/services/highlight-transform.service';
 
 @Directive({
-    selector: '[adf-highlight]'
+    selector: '[adf-highlight]',
+    standalone: true
 })
 export class HighlightDirective implements AfterViewChecked {
-
     /** Class selector for highlightable elements. */
     @Input('adf-highlight-selector')
     selector: string = '';
@@ -37,11 +37,7 @@ export class HighlightDirective implements AfterViewChecked {
     @Input('adf-highlight-class')
     classToApply: string = 'adf-highlight';
 
-    constructor(
-        private el: ElementRef,
-        private renderer: Renderer2,
-        private highlightTransformService: HighlightTransformService) {
-    }
+    constructor(private el: ElementRef, private renderer: Renderer2, private highlightTransformService: HighlightTransformService) {}
 
     ngAfterViewChecked() {
         this.highlight();
@@ -52,7 +48,11 @@ export class HighlightDirective implements AfterViewChecked {
             const elements = this.el.nativeElement.querySelectorAll(selector);
 
             elements.forEach((element) => {
-                const highlightTransformResult: HighlightTransformResult = this.highlightTransformService.highlight(element.innerHTML, search, classToApply);
+                const highlightTransformResult: HighlightTransformResult = this.highlightTransformService.highlight(
+                    element.innerHTML,
+                    search,
+                    classToApply
+                );
                 if (highlightTransformResult.changed) {
                     this.renderer.setProperty(element, 'innerHTML', highlightTransformResult.text);
                 }

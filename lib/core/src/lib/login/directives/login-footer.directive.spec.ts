@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { LoginComponent } from '../components/login.component';
-import { LoginFooterDirective } from './login-footer.directive';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { CoreTestingModule, LoginComponent, LoginFooterDirective } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 describe('LoginFooterDirective', () => {
@@ -29,13 +26,11 @@ describe('LoginFooterDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [CoreTestingModule],
             providers: [
                 {
-                    provide: OidcAuthenticationService, useValue: {}
+                    provide: OidcAuthenticationService,
+                    useValue: {}
                 }
             ]
         });

@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
+import { FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
@@ -49,8 +49,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     constructor(
         public formService: FormService,
         private taskFormService: TaskFormService,
-        private processDefinitionService: ProcessDefinitionService,
-        private logService: LogService
+        private processDefinitionService: ProcessDefinitionService
     ) {
         super(formService);
     }
@@ -67,30 +66,26 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     getValuesByTaskId() {
-        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe(
-            (formFieldOption) => {
-                const options = formFieldOption || [];
-                this.field.options = options;
+        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe((formFieldOption) => {
+            const options = formFieldOption || [];
+            this.field.options = options;
 
-                const fieldValue = this.field.value;
-                if (fieldValue) {
-                    const toSelect = options.find(
-                        (item) => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase()
-                    );
-                    if (toSelect) {
-                        this.value = toSelect.name;
-                    }
+            const fieldValue = this.field.value;
+            if (fieldValue) {
+                const toSelect = options.find((item) => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase());
+                if (toSelect) {
+                    this.value = toSelect.name;
                 }
-                this.onFieldChanged(this.field);
-                this.field.updateForm();
-            },
-            (err) => this.handleError(err)
-        );
+            }
+            this.onFieldChanged(this.field);
+            this.field.updateForm();
+        });
     }
 
     getValuesByProcessDefinitionId() {
-        this.processDefinitionService.getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id).subscribe(
-            (formFieldOption) => {
+        this.processDefinitionService
+            .getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id)
+            .subscribe((formFieldOption) => {
                 const options = formFieldOption || [];
                 this.field.options = options;
 
@@ -103,9 +98,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
                 }
                 this.onFieldChanged(this.field);
                 this.field.updateForm();
-            },
-            (err) => this.handleError(err)
-        );
+            });
     }
 
     getOptions(): FormFieldOption[] {
@@ -153,10 +146,6 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
 
     isValueDefined() {
         return this.value !== null && this.value !== undefined;
-    }
-
-    handleError(error: any) {
-        this.logService.error(error);
     }
 
     isReadOnlyType(): boolean {

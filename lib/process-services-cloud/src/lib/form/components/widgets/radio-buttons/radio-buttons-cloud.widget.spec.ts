@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldModel, FormFieldOption, FormFieldTypes, FormModel } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { RadioButtonsCloudWidgetComponent } from './radio-buttons-cloud.widget';
@@ -46,10 +45,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         formCloudService = TestBed.inject(FormCloudService);
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
@@ -132,7 +128,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         const option = await loader.getHarness(MatRadioButtonHarness.with({ label: 'opt-name-1' }));
         await option.check();
 
-        await loader.getHarness(MatRadioButtonHarness.with({ checked: true, label: 'opt-name-1'}));
+        await loader.getHarness(MatRadioButtonHarness.with({ checked: true, label: 'opt-name-1' }));
         expect(widget.field.isValid).toBe(true);
     });
 
@@ -210,7 +206,6 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.RADIO_BUTTONS,
@@ -226,7 +221,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
             await (await radioButton.host()).hover();
             const tooltip = await loader.getHarness(MatTooltipHarness);
             expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
-          });
+        });
 
         it('should hide tooltip', async () => {
             const radioButton = await loader.getHarness(MatRadioButtonHarness);

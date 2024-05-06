@@ -26,7 +26,7 @@ describe('ProcessListDatatableAdapter', () => {
         const viewModel: ProcessInstanceCloudListViewModel = {
             id: '1',
             variablesMap: {
-                columnDisplayName1: getProcessInstanceVariableMock({ type: 'number' })
+                columnId1: getProcessInstanceVariableMock({ type: 'number' })
             }
         };
 
@@ -38,7 +38,7 @@ describe('ProcessListDatatableAdapter', () => {
         };
 
         const column: DataColumn<ProcessListDataColumnCustomData> = getDataColumnMock({
-            title: 'columnDisplayName1',
+            id: 'columnId1',
             customData: {
                 assignedVariableDefinitionIds: ['1'],
                 variableDefinitionsPayload: ['processKey/variableName'],

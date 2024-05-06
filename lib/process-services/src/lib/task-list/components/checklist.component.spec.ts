@@ -22,10 +22,8 @@ import { ChecklistComponent } from './checklist.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ChecklistComponent', () => {
-
     let checklistComponent: ChecklistComponent;
     let fixture: ComponentFixture<ChecklistComponent>;
     let element: HTMLElement;
@@ -34,16 +32,17 @@ describe('ChecklistComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         service = TestBed.inject(TaskListService);
-        spyOn(service, 'getTaskChecklist').and.returnValue(of([new TaskDetailsModel({
-            id: 'fake-check-changed-id',
-            name: 'fake-check-changed-name'
-        })]));
+        spyOn(service, 'getTaskChecklist').and.returnValue(
+            of([
+                new TaskDetailsModel({
+                    id: 'fake-check-changed-id',
+                    name: 'fake-check-changed-name'
+                })
+            ])
+        );
 
         fixture = TestBed.createComponent(ChecklistComponent);
         checklistComponent = fixture.componentInstance;
@@ -63,13 +62,14 @@ describe('ChecklistComponent', () => {
     });
 
     describe('when is readonly mode', () => {
-
         beforeEach(() => {
             checklistComponent.taskId = 'fake-task-id';
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-check-id',
-                name: 'fake-check-name'
-            }));
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-check-id',
+                    name: 'fake-check-name'
+                })
+            );
             checklistComponent.readOnly = true;
 
             fixture.detectChanges();
@@ -86,14 +86,15 @@ describe('ChecklistComponent', () => {
     });
 
     describe('when is not in readonly mode', () => {
-
         beforeEach(() => {
             checklistComponent.taskId = 'fake-task-id';
             checklistComponent.readOnly = false;
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-check-id',
-                name: 'fake-check-name'
-            }));
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-check-id',
+                    name: 'fake-check-name'
+                })
+            );
 
             fixture.detectChanges();
             showChecklistDialog = element.querySelector<HTMLElement>('#add-checklist');
@@ -109,7 +110,6 @@ describe('ChecklistComponent', () => {
     });
 
     describe('when interact with checklist dialog', () => {
-
         beforeEach(() => {
             checklistComponent.taskId = 'fake-task-id';
             checklistComponent.checklist = [];
@@ -132,7 +132,6 @@ describe('ChecklistComponent', () => {
     });
 
     describe('when there are task checklist', () => {
-
         beforeEach(() => {
             checklistComponent.taskId = 'fake-task-id';
             checklistComponent.checklist = [];
@@ -148,25 +147,31 @@ describe('ChecklistComponent', () => {
         });
 
         it('should show task checklist', () => {
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-check-id',
-                name: 'fake-check-name'
-            }));
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-check-id',
+                    name: 'fake-check-name'
+                })
+            );
             fixture.detectChanges();
             expect(element.querySelector('#check-fake-check-id')).not.toBeNull();
             expect(element.querySelector('#check-fake-check-id').textContent).toContain('fake-check-name');
         });
 
         it('should not show delete icon when checklist task is completed', () => {
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-check-id',
-                name: 'fake-check-name'
-            }));
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-completed-id',
-                name: 'fake-completed-name',
-                endDate: '2018-05-23T11:25:14.552+0000'
-            }));
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-check-id',
+                    name: 'fake-check-name'
+                })
+            );
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-completed-id',
+                    name: 'fake-completed-name',
+                    endDate: '2018-05-23T11:25:14.552+0000'
+                })
+            );
             fixture.detectChanges();
             expect(element.querySelector('#remove-fake-check-id')).not.toBeNull();
             expect(element.querySelector('#check-fake-completed-id')).not.toBeNull();
@@ -175,9 +180,14 @@ describe('ChecklistComponent', () => {
         });
 
         it('should add checklist', async () => {
-            spyOn(service, 'addTask').and.returnValue(of(new TaskDetailsModel({
-                id: 'fake-check-added-id', name: 'fake-check-added-name'
-            })));
+            spyOn(service, 'addTask').and.returnValue(
+                of(
+                    new TaskDetailsModel({
+                        id: 'fake-check-added-id',
+                        name: 'fake-check-added-name'
+                    })
+                )
+            );
 
             showChecklistDialog.click();
             const addButtonDialog = window.document.querySelector<HTMLElement>('#add-check');
@@ -194,10 +204,12 @@ describe('ChecklistComponent', () => {
             spyOn(service, 'deleteTask').and.returnValue(of(null));
 
             checklistComponent.taskId = 'new-fake-task-id';
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-check-id',
-                name: 'fake-check-name'
-            }));
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-check-id',
+                    name: 'fake-check-name'
+                })
+            );
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -216,10 +228,12 @@ describe('ChecklistComponent', () => {
         it('should send an event when the checklist is deleted', async () => {
             spyOn(service, 'deleteTask').and.returnValue(of(null));
             checklistComponent.taskId = 'new-fake-task-id';
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-check-id',
-                name: 'fake-check-name'
-            }));
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-check-id',
+                    name: 'fake-check-name'
+                })
+            );
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -235,10 +249,12 @@ describe('ChecklistComponent', () => {
 
         it('should show load task checklist on change', async () => {
             checklistComponent.taskId = 'new-fake-task-id';
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-check-id',
-                name: 'fake-check-name'
-            }));
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-check-id',
+                    name: 'fake-check-name'
+                })
+            );
             fixture.detectChanges();
             const change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
@@ -254,10 +270,12 @@ describe('ChecklistComponent', () => {
 
         it('should show empty checklist when task id is null', async () => {
             checklistComponent.taskId = 'new-fake-task-id';
-            checklistComponent.checklist.push(new TaskDetailsModel({
-                id: 'fake-check-id',
-                name: 'fake-check-name'
-            }));
+            checklistComponent.checklist.push(
+                new TaskDetailsModel({
+                    id: 'fake-check-id',
+                    name: 'fake-check-name'
+                })
+            );
 
             fixture.detectChanges();
             await fixture.whenStable();

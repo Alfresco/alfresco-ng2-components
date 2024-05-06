@@ -43,6 +43,10 @@ Displays users involved with a specified task
 | readOnly | `boolean` | false | Should the data be read-only? |
 | taskId | `string` | "" | The numeric ID of the task. |
 
+### Events
+
+- `error`: Emitted when an error occurs.
+
 ## Details
 
 ### How to customize the people component behavior

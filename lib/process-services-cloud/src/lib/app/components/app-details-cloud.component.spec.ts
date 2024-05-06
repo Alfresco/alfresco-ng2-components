@@ -21,7 +21,6 @@ import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
 import { DEFAULT_APP_INSTANCE_THEME } from '../models/application-instance.model';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppDetailsCloudComponent', () => {
     let component: AppDetailsCloudComponent;
@@ -30,7 +29,7 @@ describe('AppDetailsCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule]
+            imports: [ProcessServiceCloudTestingModule, AppListCloudModule]
         });
         fixture = TestBed.createComponent(AppDetailsCloudComponent);
         component = fixture.componentInstance;

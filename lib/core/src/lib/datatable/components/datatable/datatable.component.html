@@ -1,7 +1,5 @@
 <div role="grid"
-     *ngIf="data" class="adf-full-width"
-     [class.adf-datatable-card]="display === 'gallery'"
-     [class.adf-datatable-list]="display === 'list'"
+     *ngIf="data" class="adf-full-width adf-datatable-list"
      [class.adf-sticky-header]="isStickyHeaderEnabled()"
      [class.adf-datatable--empty]="(isEmpty() && !isHeaderVisible()) || loading"
      [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
@@ -15,7 +13,6 @@
                            data-automation-id="datatable-row-header"
                            [disabled]="!isHeaderVisible()"
                            class="adf-datatable-row"
-                           *ngIf="display === 'list'"
                            role="row">
 
             <!-- Actions (left) -->
@@ -28,12 +25,13 @@
                 <mat-checkbox [indeterminate]="isSelectAllIndeterminate"
                               [checked]="isSelectAllChecked"
                               (change)="onSelectAllClick($event)"
-                              class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
+                              class="adf-checkbox-sr-only">
+                    {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
                 </mat-checkbox>
             </div>
 
             <div
-                class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header adf-datatable-cell-data"
+                class="adf-datatable-cell--{{ col.type || 'text' }} {{ col.cssClass }} adf-datatable-cell-header adf-datatable-cell-data"
                 *ngFor="
                     let col of (data.getColumns() | filterOutEvery:'isHidden':true);
                     let columnIndex = index
@@ -53,6 +51,7 @@
                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                 cdkDrag
                 cdkDragLockAxis="x"
+                [cdkDragPreviewClass]="'adf-drag-preview'"
                 (cdkDragStarted)="isDraggingHeaderColumn = true"
                 (cdkDragDropped)="onDropHeaderColumn($event)"
                 [cdkDragDisabled]="!col.draggable"
@@ -73,10 +72,9 @@
                      [ngClass]="{ 'adf-datatable-cell-header-content--hovered':
                         hoveredHeaderColumnIndex === columnIndex &&
                         !isDraggingHeaderColumn &&
-                        !isResizing && col.sortable}"
-                >
+                        !isResizing && col.sortable}">
                     <ng-container *ngIf="!col.header">
-                        <span *ngIf="col.title" matTooltip="{{col.title | translate}}"
+                        <span *ngIf="col.title" matTooltip="{{ col.title | translate }}"
                               class="adf-datatable-cell-value">{{ col.title | translate }}</span>
 
                         <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only"
@@ -90,30 +88,33 @@
 
                     <div *ngIf="col.header" class="adf-datatable-cell-value">
                         <ng-template [ngTemplateOutlet]="col.header"
-                                     [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
+                                     [ngTemplateOutletContext]="{ $implicit: col }"></ng-template>
                     </div>
 
-                    <span
-                        [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
-                        [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
+                    <span [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
+                          [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
                     </span>
 
-                    <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate"
-                                 [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
+                    <ng-template *ngIf="allowFiltering"
+                                 [ngTemplateOutlet]="headerFilterTemplate"
+                                 [ngTemplateOutletContext]="{ $implicit: col }"></ng-template>
 
                     <span *ngIf="col.draggable"
                           cdkDragHandle
                           [ngClass]="{ 'adf-datatable-cell-header-drag-icon': !isResizing }">
                         <adf-icon *ngIf="hoveredHeaderColumnIndex === columnIndex && !isResizing"
                                   value="adf:drag_indicator"
-                                  [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key">
+                                  [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-' + col.key">
                         </adf-icon>
                     </span>
                 </div>
                 <div *ngIf="isResizingEnabled && col.resizable && !lastColumn"
                      [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
                      adf-resize-handle
+                     tabindex="0"
+                     role="button"
                      (click)="$event.stopPropagation()"
+                     (keyup.enter)="$event.stopPropagation()"
                      class="adf-datatable__resize-handle"
                      [resizableContainer]="resizableElement">
                     <div class="adf-datatable__resize-handle--divider"></div>
@@ -122,25 +123,20 @@
             </div>
 
             <!-- Header actions (right) -->
-            <div *ngIf="(actions && actionsPosition === 'right') ||
-                       (mainActionTemplate && showMainDatatableActions)"
+            <div *ngIf="(actions && actionsPosition === 'right') || (mainActionTemplate && showMainDatatableActions)"
                  class="adf-actions-column adf-datatable-actions-menu adf-datatable-cell-header adf-datatable__actions-cell">
                 <ng-container *ngIf="mainActionTemplate">
-                    <button
-                        data-automation-id="adf-datatable-main-menu-button"
-                        matTooltip="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
-                        mat-icon-button
-                        #mainMenuTrigger="matMenuTrigger"
-                        (keydown.enter)="mainMenuTrigger.openMenu()"
-                        [matMenuTriggerFor]="mainMenu">
+                    <button data-automation-id="adf-datatable-main-menu-button"
+                            matTooltip="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
+                            mat-icon-button
+                            #mainMenuTrigger="matMenuTrigger"
+                            (keydown.enter)="mainMenuTrigger.openMenu()"
+                            [matMenuTriggerFor]="mainMenu">
                         <mat-icon>view_week_outline</mat-icon>
                     </button>
                     <mat-menu #mainMenu>
-                        <ng-container
-                            [ngTemplateOutlet]="mainActionTemplate"
-                            [ngTemplateOutletContext]="{
-                                $implicit: mainMenuTrigger
-                            }">
+                        <ng-container [ngTemplateOutlet]="mainActionTemplate"
+                                      [ngTemplateOutletContext]="{ $implicit: mainMenuTrigger }">
                         </ng-container>
                     </mat-menu>
                     <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
@@ -148,17 +144,6 @@
             </div>
 
         </adf-datatable-row>
-        <mat-form-field *ngIf="display === 'gallery' && isHeaderVisible()">
-            <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
-                <mat-option *ngFor="let col of getSortableColumns()"
-                            [value]="col.key"
-                            [attr.data-automation-id]="'grid-view-sorting-'+col.title"
-                            (click)="onColumnHeaderClick(col, $event)"
-                            (keyup.enter)="onColumnHeaderClick(col, $event)">
-                    {{ col.title | translate }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
     </div>
 
     <div class="adf-datatable-body"
@@ -196,13 +181,15 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect" class="adf-datatable-cell adf-datatable-checkbox">
-                    <mat-checkbox
-                        [checked]="row.isSelected"
-                        [attr.aria-checked]="row.isSelected"
-                        role="checkbox"
-                        (change)="onCheckboxChange(row, $event)"
-                        class="adf-checkbox-sr-only">
+                <label *ngIf="multiselect"
+                       [for]="'select-file-' + idx"
+                       class="adf-datatable-cell adf-datatable-checkbox">
+                    <mat-checkbox [id]="'select-file-' + idx"
+                                  [checked]="row.isSelected"
+                                  [attr.aria-checked]="row.isSelected"
+                                  role="checkbox"
+                                  (change)="onCheckboxChange(row, $event)"
+                                  class="adf-checkbox-sr-only">
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </label>
@@ -210,16 +197,20 @@
                 let col of (data.getColumns() | filterOutEvery:'isHidden':true),
                 let lastColumn = last;"
                      role="gridcell"
-                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data"
+                     class="adf-datatable-cell adf-datatable-cell--{{ col.type || 'text' }} {{ col.cssClass }} adf-datatable-cell-data"
                      [attr.title]="col.title | translate"
                      [attr.data-automation-id]="getAutomationValue(row)"
                      [attr.aria-selected]="row.isSelected"
                      [attr.aria-label]="col.title ? (col.title | translate) : null"
                      (click)="onRowClick(row, $event)"
+                     tabindex="0"
                      (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                      [adf-context-menu]="getContextMenuActions(row, col)"
                      [adf-context-menu-enabled]="contextMenu"
-                     adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row"
+                     adf-drop-zone
+                     dropTarget="cell"
+                     [dropColumn]="col"
+                     [dropRow]="row"
                      [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="data.getColumnType(row, col)">
@@ -300,7 +291,8 @@
                                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
-                            <div *ngSwitchCase="'boolean'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
+                            <div *ngSwitchCase="'boolean'"
+                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  class="adf-cell-value"
                                  [attr.data-automation-id]="'boolean_' + data.getValue(row, col, resolverFn)">
                                 <adf-boolean-cell [data]="data"
@@ -310,7 +302,8 @@
                                                   [tooltip]="getCellTooltip(row, col)">
                                 </adf-boolean-cell>
                             </div>
-                            <div *ngSwitchCase="'json'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
+                            <div *ngSwitchCase="'json'"
+                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  class="adf-cell-value">
                                 <adf-json-cell [editable]="col.editable"
                                                [data]="data"
@@ -347,10 +340,13 @@
                         </ng-container>
                     </div>
                     <div *ngIf="col.template" class="adf-datatable-cell-container">
-                        <div class="adf-cell-value" [attr.tabindex]="col.focus ? 0 : null">
-                            <ng-container
-                                [ngTemplateOutlet]="col.template"
-                                [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col, resolverFn) }">
+                        <div class="adf-cell-value"
+                             [attr.tabindex]="col.focus ? 0 : null">
+                            <ng-container [ngTemplateOutlet]="col.template"
+                                          [ngTemplateOutletContext]="{
+                                              $implicit: { data, row, col },
+                                              value: data.getValue(row, col, resolverFn)
+                                          }">
                             </ng-container>
                         </div>
                     </div>
@@ -386,10 +382,7 @@
                     </ng-container>
                 </div>
             </adf-datatable-row>
-            <div *ngIf="isEmpty()"
-                 role="row"
-                 [class.adf-datatable-row]="display === 'list'"
-                 [class.adf-datatable-card-empty]="display === 'gallery'">
+            <div *ngIf="isEmpty()" role="row" class="adf-datatable-row">
                 <div class="adf-no-content-container adf-datatable-cell" role="gridcell">
                     <ng-template *ngIf="noContentTemplate"
                                  ngFor [ngForOf]="[data]"
@@ -398,14 +391,10 @@
                     <ng-content select="adf-empty-list"></ng-content>
                 </div>
             </div>
-            <div *ngFor="let row of fakeRows"
-                 class="adf-datatable-row adf-datatable-row-empty-card">
-            </div>
         </ng-container>
         <div *ngIf="!loading && noPermission"
              role="row"
-             [class.adf-datatable-row]="display === 'list'"
-             class="adf-no-permission__row">
+             class="adf-datatable-row adf-no-permission__row">
             <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="noPermissionTemplate"
                              ngFor [ngForOf]="[data]"
@@ -413,9 +402,7 @@
                 </ng-template>
             </div>
         </div>
-        <div *ngIf="loading"
-             [class.adf-datatable-row]="display === 'list'"
-             [class.adf-datatable-card-loading]="display === 'gallery'">
+        <div *ngIf="loading" class="adf-datatable-row">
             <div class="adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"

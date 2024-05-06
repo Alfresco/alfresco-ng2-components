@@ -47,7 +47,6 @@ export class StartProcessCloudService extends BaseCloudService {
                 map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry)))
             );
         } else {
-            this.logService.error('AppName is mandatory for querying task');
             return throwError('AppName not configured');
         }
     }
@@ -63,9 +62,7 @@ export class StartProcessCloudService extends BaseCloudService {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances`;
         payload.payloadType = 'StartProcessPayload';
 
-        return this.post(url, payload).pipe(
-            map((result: any) => result.entry)
-        );
+        return this.post(url, payload).pipe(map((result: any) => result.entry));
     }
 
     /**
@@ -80,9 +77,7 @@ export class StartProcessCloudService extends BaseCloudService {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
         payload.payloadType = 'UpdateProcessPayload';
 
-        return this.put(url, payload).pipe(
-            map((processInstance: any) => processInstance.entry)
-        );
+        return this.put(url, payload).pipe(map((processInstance: any) => processInstance.entry));
     }
 
     /**
@@ -111,7 +106,7 @@ export class StartProcessCloudService extends BaseCloudService {
             map((res: { [key: string]: any }) => {
                 const result = [];
                 if (res) {
-                    Object.keys(res).forEach(mapping => result.push(new TaskVariableCloud({ name: mapping, value: res[mapping] })));
+                    Object.keys(res).forEach((mapping) => result.push(new TaskVariableCloud({ name: mapping, value: res[mapping] })));
                 }
                 return result;
             })

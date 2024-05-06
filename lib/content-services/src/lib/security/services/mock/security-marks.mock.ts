@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SecurityMarkPaging, SecurityMarkEntry, SecurityMarkBody } from '@alfresco/js-api';
+import { SecurityMarkPaging, SecurityMarkBody } from '@alfresco/js-api';
 
 export const fakeMarksApiResponse: SecurityMarkPaging = {
     list: {
@@ -38,14 +38,8 @@ export const fakeMarksApiResponse: SecurityMarkPaging = {
     }
 };
 
-export const fakeCreateMarksApiResponse: SecurityMarkEntry = {
-    entry: {
-        groupId: 'e7b83b84-bb48-46fc-8e64-4b6be910906c',
-        name: 'securityMark1',
-        id: 'ffBOeOJJ'
+export const createNewSecurityMarkMock: SecurityMarkBody[] = [
+    {
+        name: 'securityMark1'
     }
-};
-
-export const createNewSecurityMarkMock: SecurityMarkBody[] = [{
-    name: 'securityMark1'
-}];
+];

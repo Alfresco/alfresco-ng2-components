@@ -20,10 +20,8 @@ import { DebugElement } from '@angular/core';
 import { PeopleSearchFieldComponent } from './people-search-field.component';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('PeopleSearchFieldComponent', () => {
-
     let component: PeopleSearchFieldComponent;
     let fixture: ComponentFixture<PeopleSearchFieldComponent>;
     let debug: DebugElement;
@@ -31,10 +29,7 @@ describe('PeopleSearchFieldComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(PeopleSearchFieldComponent);
         component = fixture.componentInstance;

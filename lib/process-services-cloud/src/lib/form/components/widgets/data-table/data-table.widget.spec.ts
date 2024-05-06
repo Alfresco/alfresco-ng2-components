@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataColumn, FormFieldModel, FormFieldTypes, FormModel, LogService, VariableConfig } from '@alfresco/adf-core';
+import { DataColumn, FormFieldModel, FormFieldTypes, FormModel, VariableConfig } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { DataTableWidgetComponent } from './data-table.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -35,14 +35,12 @@ import {
     mockJsonResponseFormVariable,
     mockJsonNestedResponseFormVariable,
     mockJsonNestedResponseEuropeCountriesData
-} from '../../../mocks/data-table-widget.mock';
+} from './mocks/data-table-widget.mock';
 
 describe('DataTableWidgetComponent', () => {
     let widget: DataTableWidgetComponent;
     let fixture: ComponentFixture<DataTableWidgetComponent>;
     let formCloudService: FormCloudService;
-    let logService: LogService;
-    let logServiceSpy: jasmine.Spy;
 
     const errorIcon: string = 'error_outline';
 
@@ -73,6 +71,11 @@ describe('DataTableWidgetComponent', () => {
 
     const getPreview = () => fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget-preview"]');
 
+    const assertDataRows = (expectedData: WidgetDataTableAdapter) => {
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
+        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+    };
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule]
@@ -81,14 +84,11 @@ describe('DataTableWidgetComponent', () => {
         widget = fixture.componentInstance;
 
         formCloudService = TestBed.inject(FormCloudService);
-        logService = TestBed.inject(LogService);
 
         widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
             type: FormFieldTypes.DATA_TABLE,
             name: 'Data Table'
         });
-
-        logServiceSpy = spyOn(logService, 'error');
     });
 
     it('should display label', () => {
@@ -123,9 +123,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize data source based on field value', () => {
@@ -134,9 +132,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize default json response data source based on field value if path is NOT provided', () => {
@@ -145,9 +141,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize default json response data source based on variable if path is NOT provided', () => {
@@ -155,9 +149,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize json response data source based on field value if path is provided', () => {
@@ -166,9 +158,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize json response data source based on variable if path is provided', () => {
@@ -181,9 +171,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize data source based on form variable', () => {
@@ -191,9 +179,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should properly initialize data source based on process variable', () => {
@@ -201,9 +187,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+        assertDataRows(expectedData);
     });
 
     it('should NOT display error if form is in preview state', () => {
@@ -230,34 +214,31 @@ describe('DataTableWidgetComponent', () => {
         expect(dataTable).toBeNull();
     });
 
-    it('should display and log error if data source is not linked to every column', () => {
+    it('should display error if data source is not linked to every column', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
         fixture.detectChanges();
 
         checkDataTableErrorMessage();
-        expect(logServiceSpy).toHaveBeenCalledWith('Data source has corrupted model or structure');
         expect(widget.dataSource.getRows()).toEqual([]);
     });
 
-    it('should display and log error if data source has invalid column structure', () => {
+    it('should display error if data source has invalid column structure', () => {
         widget.field = getDataVariable(mockVariableConfig, mockInvalidSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
         fixture.detectChanges();
 
         checkDataTableErrorMessage();
-        expect(logServiceSpy).toHaveBeenCalledWith('Data source has corrupted model or structure');
         expect(widget.dataSource.getRows()).toEqual([]);
     });
 
-    it('should display and log error if data source is not found', () => {
+    it('should display error if data source is not found', () => {
         widget.field = getDataVariable({ variableName: 'not-found-data-source' }, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
         fixture.detectChanges();
 
         checkDataTableErrorMessage();
-        expect(logServiceSpy).toHaveBeenCalledWith('Data source not found or it is not an array');
         expect(widget.dataSource).toBeUndefined();
     });
 
-    it('should display and log error if path is incorrect', () => {
+    it('should display error if path is incorrect', () => {
         widget.field = getDataVariable(
             { ...mockVariableConfig, optionsPath: 'wrong.path' },
             mockSchemaDefinition,
@@ -267,11 +248,10 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         checkDataTableErrorMessage();
-        expect(logServiceSpy).toHaveBeenCalledWith('Data source not found or it is not an array');
         expect(widget.dataSource).toBeUndefined();
     });
 
-    it('should display and log error if provided data by path is not an array', () => {
+    it('should display error if provided data by path is not an array', () => {
         widget.field = getDataVariable(
             { ...mockVariableConfig, optionsPath: 'response.no-array' },
             mockSchemaDefinition,
@@ -281,7 +261,6 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         checkDataTableErrorMessage();
-        expect(logServiceSpy).toHaveBeenCalledWith('Data source not found or it is not an array');
         expect(widget.dataSource).toBeUndefined();
     });
 });
