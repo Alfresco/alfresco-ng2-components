@@ -80,8 +80,6 @@ export * from './download-status';
 export * from './downloadBodyCreate';
 export * from './downloadEntry';
 export * from './errorError';
-export * from './extensionComposition';
-export * from './extensionCompositionEntry';
 export * from './favorite';
 export * from './favoriteBodyCreate';
 export * from './favoriteEntry';

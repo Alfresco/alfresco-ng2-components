@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-export interface AppConfigPluginRef {
+export class AppConfigPluginRef {
     plugins: {
         [key: string]: boolean;
-    };
+    } = {};
 }

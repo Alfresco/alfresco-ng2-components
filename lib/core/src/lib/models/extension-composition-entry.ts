@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ExtensionConfig } from './extensionConfig';
+import { ExtensionComposition } from './extension-composition';
 
-export class ExtensionConfigEntry {
-    entry: ExtensionConfig;
+export class ExtensionCompositionEntry {
+    entry: ExtensionComposition;
 }

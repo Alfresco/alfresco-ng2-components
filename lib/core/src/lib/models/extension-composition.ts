@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-import { ExtensionComposition } from './extensionComposition';
+import { AppConfigPluginRef } from './app-config-plugin-ref';
+import { RouteRef, RuleRef, ActionRef } from '@alfresco/adf-extensions';
 
-export class ExtensionCompositionEntry {
-    entry: ExtensionComposition;
+export class ExtensionComposition {
+    appConfig: AppConfigPluginRef = new AppConfigPluginRef();
+    rules?: Array<RuleRef> = [];
+    routes?: Array<RouteRef> = [];
+    actions?: Array<ActionRef> = [];
+    features?: {
+        [key: string]: any;
+    } = {};
 }

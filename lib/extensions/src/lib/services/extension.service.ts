@@ -27,7 +27,6 @@ import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { mergeArrays, mergeObjects } from '../config/extension-utils';
-import { ExtensionComposition } from '@alfresco/js-api';
 
 /**
  * The default extensions factory
@@ -111,7 +110,7 @@ export class ExtensionService {
         return config;
     }
 
-    appendConfig(partialConfig: ExtensionComposition) {
+    appendConfig(partialConfig: any) {
         this.setup({
             ...this.config,
             rules: mergeArrays(this.config.rules, partialConfig.rules),

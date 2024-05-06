@@ -18,9 +18,12 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { from, Observable } from 'rxjs';
-import { AppConfigPluginRef, SettingsApi, ExtensionCompositionEntry, ExtensionComposition } from '@alfresco/js-api';
+import { SettingsApi } from '@alfresco/js-api';
 import { HttpClient } from '@angular/common/http';
 import { ExtensionInfoModel } from '../models';
+import { ExtensionCompositionEntry } from '../models/extension-composition-entry';
+import { AppConfigPluginRef } from '../models/app-config-plugin-ref';
+import { ExtensionComposition } from '../models/extension-composition';
 
 @Injectable({
     providedIn: 'root'

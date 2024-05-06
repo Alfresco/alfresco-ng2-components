@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ActionRef, RouteRef, RuleRef } from '@alfresco/js-api';
+import { ActionRef, RouteRef, RuleRef } from '@alfresco/adf-extensions';
 
 export class ExtensionInfoModel {
     $id: string;
