@@ -16,9 +16,13 @@
  */
 
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { IconComponent } from '../../icon';
 
 @Component({
     selector: 'adf-empty-content',
+    standalone: true,
+    imports: [TranslateModule, IconComponent],
     templateUrl: './empty-content.component.html',
     styleUrls: ['./empty-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,7 +30,6 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@a
     host: { class: 'adf-empty-content' }
 })
 export class EmptyContentComponent {
-
     /** Material Icon to use. */
     @Input()
     icon = 'cake';
@@ -38,5 +41,4 @@ export class EmptyContentComponent {
     /** String or Resource Key for the subtitle. */
     @Input()
     subtitle = '';
-
 }

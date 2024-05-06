@@ -22,10 +22,31 @@ import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { BpmUserModel } from '../common/models/bpm-user.model';
 import { ProcessUserInfoComponent } from './process-user-info.component';
-import { fakeBpmUser } from './mocks/bpm-user.service.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
+
+const fakeBpmUser = new BpmUserModel({
+    apps: [],
+    capabilities: null,
+    company: 'fake-company',
+    created: 'fake-create-date',
+    email: 'fakeBpm@fake.com',
+    externalId: 'fake-external-id',
+    firstName: 'fake-bpm-first-name',
+    lastName: 'fake-bpm-last-name',
+    groups: [],
+    id: 'fake-id',
+    lastUpdate: 'fake-update-date',
+    latestSyncTimeStamp: 'fake-timestamp',
+    password: 'fake-password',
+    pictureId: 12,
+    status: 'fake-status',
+    tenantId: 'fake-tenant-id',
+    tenantName: 'fake-tenant-name',
+    tenantPictureId: 'fake-tenant-picture-id',
+    type: 'fake-type'
+});
 
 describe('ProcessUserInfoComponent', () => {
     const profilePictureUrl = 'alfresco-logo.svg';
