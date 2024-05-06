@@ -25,10 +25,5 @@ export * from './lib/process-comments/index';
 export * from './lib/people/index';
 export * from './lib/form/index';
 export * from './lib/task-comments/index';
-export * from './lib/pipes/process-name.pipe';
-export * from './lib/pipes/process-services-pipe.module';
-
-export * from './lib/pipes/process-name.pipe';
-export * from './lib/pipes/process-services-pipe.module';
 export * from './lib/material.module';
 export * from './lib/process.module';

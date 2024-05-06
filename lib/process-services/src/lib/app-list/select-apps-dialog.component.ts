@@ -16,30 +16,34 @@
  */
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AppsProcessService } from './services/apps-process.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-select-apps-dialog',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatDialogModule, MatSelectModule, MatButtonModule],
     templateUrl: './select-apps-dialog.component.html',
     styleUrls: ['./select-apps-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SelectAppsDialogComponent {
-
     processApps: any;
 
     selectedProcess: any;
 
-    constructor(private appsProcessService: AppsProcessService,
-                public dialogRef: MatDialogRef<SelectAppsDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: any) {
-
-        this.appsProcessService.getDeployedApplications().subscribe(
-            (apps) => {
-                this.processApps = apps.filter((currentApp) => currentApp.id);
-            }
-        );
+    constructor(
+        private appsProcessService: AppsProcessService,
+        public dialogRef: MatDialogRef<SelectAppsDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        this.appsProcessService.getDeployedApplications().subscribe((apps) => {
+            this.processApps = apps.filter((currentApp) => currentApp.id);
+        });
     }
 
     onStart(): void {
