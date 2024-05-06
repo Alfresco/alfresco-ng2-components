@@ -45,7 +45,6 @@ import {
     DynamicTableRow
 } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
-import { CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';
 import { Location } from '@angular/common';
@@ -115,7 +114,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     presetColumn = 'default';
 
-    showApplications: boolean;
     applicationId: number;
     processDefinitionName: string;
 
@@ -131,7 +129,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         private apiService: AlfrescoApiService,
         private appConfig: AppConfigService,
         private preview: PreviewService,
-        formRenderingService: FormRenderingService,
         formService: FormService,
         private location: Location,
         private notificationService: NotificationService,
@@ -142,11 +139,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
         this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');
         this.processDefinitionName = this.defaultProcessDefinitionName;
-        // Uncomment this line to replace all 'text' field editors with custom component
-        // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
-
-        // Uncomment this line to map 'custom_stencil_01' to local editor component
-        formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
 
         this.preferenceService
             .select(UserPreferenceValues.PaginationSize)
