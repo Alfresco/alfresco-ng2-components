@@ -128,14 +128,12 @@
                 <adf-pagination
                     *ngIf="processList"
                     [target]="processList"
-                    (changePageSize)="onChangePageSize($event)"
-                    #processListPagination>
+                    (changePageSize)="onChangePageSize($event)">
                 </adf-pagination>
             </div>
 
             <div class="app-grid-item app-processes-details" *ngIf="!isStartProcessMode()">
                 <adf-process-instance-details
-                    #activitiProcessDetails
                     [processInstanceId]="currentProcessInstanceId"
                     (processCancelled)="processCancelled()"
                     (showProcessDiagram)="onShowProcessDiagram($event)"

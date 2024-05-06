@@ -33,7 +33,6 @@ import {
 import {
     ProcessFiltersComponent,
     ProcessInstance,
-    ProcessInstanceDetailsComponent,
     ProcessInstanceListComponent,
     StartProcessInstanceComponent,
     FilterRepresentationModel,
@@ -70,9 +69,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild('activitiFilter')
     activitiFilter: TaskFiltersComponent;
 
-    @ViewChild('processListPagination')
-    processListPagination: PaginationComponent;
-
     @ViewChild('taskListPagination')
     taskListPagination: PaginationComponent;
 
@@ -84,9 +80,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     @ViewChild('processList')
     processList: ProcessInstanceListComponent;
-
-    @ViewChild('activitiProcessDetails')
-    activitiProcessDetails: ProcessInstanceDetailsComponent;
 
     @ViewChild('activitiStartProcess')
     activitiStartProcess: StartProcessInstanceComponent;
