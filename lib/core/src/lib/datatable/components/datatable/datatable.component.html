@@ -6,6 +6,7 @@
      [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
     <thead *ngIf="isHeaderVisible()"
            class="adf-datatable-header"
+           role="rowgroup"
            [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }">
     <adf-datatable-row cdkDropList
                        cdkDropListOrientation="horizontal"
@@ -15,12 +16,16 @@
                        class="adf-datatable-row">
 
         <!-- Actions (left) -->
-        <th *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
+        <th *ngIf="actions && actionsPosition === 'left'"
+            role="columnheader"
+            class="adf-actions-column adf-datatable-cell-header">
             <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
         </th>
 
         <!-- Columns -->
-        <th *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
+        <th *ngIf="multiselect"
+            role="columnheader"
+            class="adf-datatable-cell-header adf-datatable-checkbox">
             <mat-checkbox [indeterminate]="isSelectAllIndeterminate"
                           [checked]="isSelectAllChecked"
                           (change)="onSelectAllClick($event)"
@@ -46,6 +51,7 @@
             (keyup.enter)="onColumnHeaderClick(col, $event)"
             [attr.tabindex]="isHeaderVisible() ? 0 : null"
             [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
+            role="columnheader"
             cdkDrag
             cdkDragLockAxis="x"
             [cdkDragPreviewClass]="'adf-drag-preview'"
@@ -121,6 +127,7 @@
 
         <!-- Header actions (right) -->
         <th *ngIf="(actions && actionsPosition === 'right') || (mainActionTemplate && showMainDatatableActions)"
+            role="columnheader"
             class="adf-actions-column adf-datatable-actions-menu adf-datatable-cell-header adf-datatable__actions-cell">
             <ng-container *ngIf="mainActionTemplate">
                 <button data-automation-id="adf-datatable-main-menu-button"
@@ -144,6 +151,7 @@
     </thead>
 
     <tbody class="adf-datatable-body"
+           role="rowgroup"
            [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing) }">
     <ng-container *ngIf="!loading && !noPermission">
         <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
@@ -191,7 +199,7 @@
             <div *ngFor="
                 let col of (data.getColumns() | filterOutEvery:'isHidden':true),
                 let lastColumn = last;"
-                 role="gridcell"
+                 role="cell"
                  class="adf-datatable-cell adf-datatable-cell--{{ col.type || 'text' }} {{ col.cssClass }} adf-datatable-cell-data"
                  [attr.title]="col.title | translate"
                  [attr.data-automation-id]="getAutomationValue(row)"
@@ -349,10 +357,9 @@
             </div>
 
             <!-- Row actions (right) -->
-            <div *ngIf="
-                        (actions && actionsPosition === 'right') ||
+            <div *ngIf="(actions && actionsPosition === 'right') ||
                         (mainActionTemplate && showMainDatatableActions)"
-                 role="gridcell"
+                 role="cell"
                  class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie adf-datatable-actions-menu">
 
                 <ng-container *ngIf="(actions && actionsPosition === 'right')">
@@ -381,7 +388,7 @@
             </div>
         </adf-datatable-row>
         <div *ngIf="isEmpty()" role="row" class="adf-datatable-row">
-            <div class="adf-no-content-container adf-datatable-cell" role="gridcell">
+            <div class="adf-no-content-container adf-datatable-cell" role="cell">
                 <ng-template *ngIf="noContentTemplate"
                              ngFor [ngForOf]="[data]"
                              [ngForTemplate]="noContentTemplate">
@@ -391,6 +398,7 @@
         </div>
     </ng-container>
     <tr *ngIf="!loading && noPermission"
+        role="row"
         class="adf-datatable-row adf-no-permission__row">
         <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
             <ng-template *ngIf="noPermissionTemplate"
@@ -399,8 +407,8 @@
             </ng-template>
         </div>
     </tr>
-    <div *ngIf="loading" class="adf-datatable-row">
-        <div class="adf-no-content-container adf-datatable-cell">
+    <div *ngIf="loading" class="adf-datatable-row" role="row">
+        <div class="adf-no-content-container adf-datatable-cell" role="cell">
             <ng-template *ngIf="loadingTemplate"
                          ngFor [ngForOf]="[data]"
                          [ngForTemplate]="loadingTemplate">

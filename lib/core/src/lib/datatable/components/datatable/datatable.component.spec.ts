@@ -1403,7 +1403,7 @@ describe('Accesibility', () => {
         expect(datatableHeaderCellAttributes.getNamedItem('role').value).toEqual('columnheader');
         expect(datatableBodyAttributes.getNamedItem('role').value).toEqual('rowgroup');
         expect(datatableBodyRowAttributes.getNamedItem('role').value).toEqual('row');
-        expect(datatableBodyCellAttributes.getNamedItem('role').value).toEqual('gridcell');
+        expect(datatableBodyCellAttributes.getNamedItem('role').value).toEqual('cell');
     });
 
     describe('aria-sort', () => {
