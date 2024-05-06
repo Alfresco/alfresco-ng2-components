@@ -37,17 +37,11 @@ export class NotificationCloudService extends BaseCloudService {
     }
 
     private get webSocketHost() {
-        // return this.contextRoot.split('://')[1];
-        // wss://aae-alpha-apa.envalfresco.com/process-centr/notifications/ws/graphql
-
-        // return 'hxps-alpha.studio.dev.experience.hyland.com';
-        return 'hxps-rc.studio.dev.experience.hyland.com';
-        // return 'aae-alpha-apa.envalfresco.com';
+        return this.contextRoot.split('://')[1];
     }
 
     private get protocol() {
-        // return this.contextRoot.split('://')[0] === 'https' ? 'wss' : 'ws';
-        return 'wss';
+        return this.contextRoot.split('://')[0] === 'https' ? 'wss' : 'ws';
     }
 
     initNotificationsForApp(appName: string) {
@@ -57,10 +51,8 @@ export class NotificationCloudService extends BaseCloudService {
                 uri: `${this.getBasePath(appName)}/notifications/graphql`
             });
 
-            const webSocketUri = `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`;
-
             const webSocketLink = new WebSocketLink({
-                uri: webSocketUri,
+                uri: `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`,
                 options: {
                     reconnect: true,
                     lazy: true,

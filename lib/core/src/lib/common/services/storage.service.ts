@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-
-export interface StorageServiceSettings {
-    storageType?: 'localStorage' | 'sessionStorage' | 'memoryStorage';
-}
-
-export const STORAGE_SERVICE_SETTINGS = new InjectionToken('STORAGE_SERVICE_SETTINGS');
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +24,6 @@ export class StorageService {
     private memoryStore: { [key: string]: any } = {};
     private readonly useLocalStorage: boolean = false;
     private _prefix: string = '';
-    private storage?: Storage;
 
     get prefix() {
         return this._prefix;
@@ -40,27 +33,8 @@ export class StorageService {
         this._prefix = prefix ? prefix + '_' : '';
     }
 
-    constructor(
-        @Optional()
-        @Inject(STORAGE_SERVICE_SETTINGS) private settings?: StorageServiceSettings
-    ) {
-        if (this.settings) {
-            switch (this.settings.storageType) {
-                case 'sessionStorage':
-                    this.useLocalStorage = this.storageAvailable(this.settings.storageType);
-                    this.storage = window['sessionStorage'];
-                    break;
-                case 'memoryStorage':
-                    this.useLocalStorage = false;
-                    break;
-                default:
-                    this.useLocalStorage = this.storageAvailable(this.settings.storageType);
-                    this.storage = window['localStorage'];
-            }
-        } else {
-            this.useLocalStorage = this.storageAvailable('localStorage');
-            this.storage = window['localStorage'];
-        }
+    constructor() {
+        this.useLocalStorage = this.storageAvailable('localStorage');
     }
 
     /**
@@ -71,7 +45,7 @@ export class StorageService {
      */
     getItem(key: string): string | null {
         if (this.useLocalStorage) {
-            return this.storage.getItem(this.prefix + key);
+            return localStorage.getItem(this.prefix + key);
         } else {
             return Object.prototype.hasOwnProperty.call(this.memoryStore, this.prefix + key) ? this.memoryStore[this.prefix + key] : null;
         }
@@ -85,7 +59,7 @@ export class StorageService {
      */
     setItem(key: string, data: string) {
         if (this.useLocalStorage) {
-            this.storage.setItem(this.prefix + key, data);
+            localStorage.setItem(this.prefix + key, data);
         } else {
             this.memoryStore[this.prefix + key] = data.toString();
         }
@@ -94,7 +68,7 @@ export class StorageService {
     /** Removes all currently stored items. */
     clear() {
         if (this.useLocalStorage) {
-            this.storage.clear();
+            localStorage.clear();
         } else {
             this.memoryStore = {};
         }
@@ -107,7 +81,7 @@ export class StorageService {
      */
     removeItem(key: string) {
         if (this.useLocalStorage) {
-            this.storage.removeItem(`${this.prefix}` + key);
+            localStorage.removeItem(`${this.prefix}` + key);
         } else {
             delete this.memoryStore[this.prefix + key];
         }
@@ -121,7 +95,7 @@ export class StorageService {
      */
     hasItem(key: string): boolean {
         if (this.useLocalStorage) {
-            return !!this.storage.getItem(this.prefix + key);
+            return !!localStorage.getItem(this.prefix + key);
         } else {
             return Object.prototype.hasOwnProperty.call(this.memoryStore, key);
         }

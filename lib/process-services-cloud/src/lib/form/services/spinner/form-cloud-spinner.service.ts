@@ -39,7 +39,6 @@ export class FormCloudSpinnerService {
 
                 const userProfilePortal = new ComponentPortal(FormSpinnerComponent);
                 const componentRef = this.overlayRef.attach(userProfilePortal);
-
                 componentRef.instance.message = event.payload.message;
             } else if (event?.payload.showSpinner === false) {
                 this.overlayRef?.detach();

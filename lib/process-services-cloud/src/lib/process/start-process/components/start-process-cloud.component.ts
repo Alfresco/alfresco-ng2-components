@@ -90,13 +90,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     @Input()
     showCancelButton: boolean = true;
 
-    /**
-     * You can manually force to show spinner
-     * e.g. in case you would like to postpone showing form until some data are loading
-     */
-    @Input()
-    showSpinner = false;
-
     /** Emitted when the process is successfully started. */
     @Output()
     success = new EventEmitter<ProcessInstanceCloud>();
@@ -132,7 +125,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     protected onDestroy$ = new Subject<boolean>();
     processDefinitionLoaded = false;
     loading$ = new BehaviorSubject<boolean>(!this.processDefinitionLoaded);
-    forceLoading = false;
 
     constructor(
         private startProcessCloudService: StartProcessCloudService,
