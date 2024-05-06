@@ -16,10 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { RuleContext, RuleEvaluator } from '../config/rule.extensions';
+import { RuleRef, RuleContext, RuleEvaluator, RuleParameter } from '../config/rule.extensions';
 import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
-import { RuleParameter, RuleRef } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'

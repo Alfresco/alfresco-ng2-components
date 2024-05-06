@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import { ActionRef, RouteRef, RuleRef } from '@alfresco/js-api';
+import { RouteRef } from './routing.extensions';
+import { RuleRef } from './rule.extensions';
+import { ActionRef } from './action.extensions';
 
 export interface ExtensionRef {
     $id: string;

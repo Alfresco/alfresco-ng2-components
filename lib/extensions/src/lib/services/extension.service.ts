@@ -16,16 +16,18 @@
  */
 
 import { Injectable, Type, InjectionToken, Inject } from '@angular/core';
-import { RuleEvaluator, RuleContext } from '../config/rule.extensions';
+import { RuleEvaluator, RuleRef, RuleContext } from '../config/rule.extensions';
 import { ExtensionConfig } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
+import { RouteRef } from '../config/routing.extensions';
+import { ActionRef } from '../config/action.extensions';
 import * as core from '../evaluators/core.evaluators';
 import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { mergeArrays, mergeObjects } from '../config/extension-utils';
-import { ActionRef, ExtensionComposition, RouteRef, RuleRef } from '@alfresco/js-api';
+import { ExtensionComposition } from '@alfresco/js-api';
 
 /**
  * The default extensions factory
@@ -110,15 +112,14 @@ export class ExtensionService {
     }
 
     appendConfig(partialConfig: ExtensionComposition) {
-        this.config = {
+        this.setup({
             ...this.config,
             rules: mergeArrays(this.config.rules, partialConfig.rules),
-            features: mergeObjects(this.config.features, partialConfig.features),
+            features: this.config.features ? mergeObjects(this.config.features, partialConfig.features) : partialConfig.features,
             routes: mergeArrays(this.config.routes, partialConfig.routes),
             actions: mergeArrays(this.config.actions, partialConfig.actions),
-            appConfig: mergeObjects(this.config.appConfig, partialConfig.appConfig)
-        };
-        this.setup(this.config);
+            appConfig: this.config.appConfig ? mergeObjects(this.config.appConfig, partialConfig.appConfig) : partialConfig.appConfig
+        });
     }
 
     /**

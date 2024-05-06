@@ -215,7 +215,7 @@ following example:
 ```
 
 You can access routes from the config using the `getRouteById` method of the
-[Extension service,](../extensions/services/extension.service.md) which returns a [`RouteRef`](../../lib/js-api/src/api/content-rest-api/model/routeRef.ts) object. Note that the references
+[Extension service,](../extensions/services/extension.service.md) which returns a [`RouteRef`](../../lib/extensions/src/lib/config/routing.extensions.ts) object. Note that the references
 to the component and auth guards are extension IDs,
 [as described above](#extension-points).
 

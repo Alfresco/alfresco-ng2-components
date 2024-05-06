@@ -15,23 +15,21 @@
  * limitations under the License.
  */
 
-import { RuleContext } from '../config/rule.extensions';
-import { RuleParameter } from '@alfresco/js-api';
+import { RuleContext, RuleParameter } from '../config/rule.extensions';
 
 export const not = (context: RuleContext, ...args: RuleParameter[]): boolean => {
     if (!args || args.length === 0) {
         return false;
     }
 
-    return args
-        .every((arg) => {
-            const evaluator = context.getEvaluator(arg.value);
-            if (!evaluator) {
-                console.warn('evaluator not found: ' + arg.value);
-                return false;
-            }
-            return !evaluator(context, ...(arg.parameters || []));
-        });
+    return args.every((arg) => {
+        const evaluator = context.getEvaluator(arg.value);
+        if (!evaluator) {
+            console.warn('evaluator not found: ' + arg.value);
+            return false;
+        }
+        return !evaluator(context, ...(arg.parameters || []));
+    });
 };
 
 export const every = (context: RuleContext, ...args: RuleParameter[]): boolean => {
@@ -39,15 +37,14 @@ export const every = (context: RuleContext, ...args: RuleParameter[]): boolean =
         return false;
     }
 
-    return args
-        .every((arg) => {
-            const evaluator = context.getEvaluator(arg.value);
-            if (!evaluator) {
-                console.warn('evaluator not found: ' + arg.value);
-                return false;
-            }
-            return evaluator(context, ...(arg.parameters || []));
-        });
+    return args.every((arg) => {
+        const evaluator = context.getEvaluator(arg.value);
+        if (!evaluator) {
+            console.warn('evaluator not found: ' + arg.value);
+            return false;
+        }
+        return evaluator(context, ...(arg.parameters || []));
+    });
 };
 
 export const some = (context: RuleContext, ...args: RuleParameter[]): boolean => {
@@ -55,13 +52,12 @@ export const some = (context: RuleContext, ...args: RuleParameter[]): boolean =>
         return false;
     }
 
-    return args
-        .some((arg) => {
-            const evaluator = context.getEvaluator(arg.value);
-            if (!evaluator) {
-                console.warn('evaluator not found: ' + arg.value);
-                return false;
-            }
-            return evaluator(context, ...(arg.parameters || []));
-        });
+    return args.some((arg) => {
+        const evaluator = context.getEvaluator(arg.value);
+        if (!evaluator) {
+            console.warn('evaluator not found: ' + arg.value);
+            return false;
+        }
+        return evaluator(context, ...(arg.parameters || []));
+    });
 };

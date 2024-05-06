@@ -18,10 +18,10 @@ Manages and runs basic extension functionality.
     -   _ruleId:_ `string`  - ID of the rule to evaluate
     -   _context:_ [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)  - (Optional) Custom rule execution context.
     -   **Returns** `boolean` - True if the rule passed, false otherwise
--   **getActionById**(id: `string`): [`ActionRef`](../../../lib/js-api/src/api/content-rest-api/model/actionRef.ts)<br/>
+-   **getActionById**(id: `string`): [`ActionRef`](../../../lib/extensions/src/lib/config/action.extensions.ts)<br/>
     Retrieves an action using its ID value.
     -   _id:_ `string`  - The ID value to look for
-    -   **Returns** [`ActionRef`](../../../lib/js-api/src/api/content-rest-api/model/actionRef.ts) - Action or null if not found
+    -   **Returns** [`ActionRef`](../../../lib/extensions/src/lib/config/action.extensions.ts) - Action or null if not found
 -   **getAuthGuards**(ids: `string[]`): `Array<Type<any>>`<br/>
     Retrieves one or more auth guards using an array of ID values.
     -   _ids:_ `string[]`  - Array of ID value to look for
@@ -44,14 +44,14 @@ Manages and runs basic extension functionality.
     Gets features by key.
     -   _key:_ `string|string[]`  - Key string using dot notation or array of strings
     -   _defaultValue:_ `any`  - Default value returned if feature is not found, default is empty array
--   **getRouteById**(id: `string`): [`RouteRef`](../../../lib/js-api/src/api/content-rest-api/model/routeRef.ts)<br/>
+-   **getRouteById**(id: `string`): [`RouteRef`](../../../lib/extensions/src/lib/config/routing.extensions.ts)<br/>
     Retrieves a route using its ID value.
     -   _id:_ `string`  - The ID value to look for
-    -   **Returns** [`RouteRef`](../../../lib/js-api/src/api/content-rest-api/model/routeRef.ts) - The route or null if not found
--   **getRuleById**(id: `string`): [`RuleRef`](../../../lib/js-api/src/api/content-rest-api/model/ruleRef.ts)<br/>
+    -   **Returns** [`RouteRef`](../../../lib/extensions/src/lib/config/routing.extensions.ts) - The route or null if not found
+-   **getRuleById**(id: `string`): [`RuleRef`](../../../lib/extensions/src/lib/config/rule.extensions.ts)<br/>
     Retrieves a rule using its ID value.
     -   _id:_ `string`  - The ID value to look for
-    -   **Returns** [`RuleRef`](../../../lib/js-api/src/api/content-rest-api/model/ruleRef.ts) - The rule or null if not found
+    -   **Returns** [`RuleRef`](../../../lib/extensions/src/lib/config/rule.extensions.ts) - The rule or null if not found
 -   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)`>`<br/>
     Loads and registers an extension config file and plugins (specified by path properties).
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)`>` - The loaded config data
