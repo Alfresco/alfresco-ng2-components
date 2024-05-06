@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BooleanPipe } from '../../../pipes';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 
 @Component({
     selector: 'adf-boolean-cell',

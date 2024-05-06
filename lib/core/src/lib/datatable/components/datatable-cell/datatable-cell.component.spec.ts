@@ -16,12 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataTableCellComponent } from './datatable-cell.component';
-import { DataRow } from '../../data/data-row.model';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { DataTableService } from '../../services/datatable.service';
+import { DataRow } from '../../data/data-row.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { DataTableService } from '../../services/datatable.service';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
+import { DataTableCellComponent } from './datatable-cell.component';
 
 describe('DataTableCellComponent', () => {
     let component: DataTableCellComponent;

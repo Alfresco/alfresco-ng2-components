@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
-import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { MatDialog } from '@angular/material/dialog';
-import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 
 @Component({
     selector: 'adf-json-cell',

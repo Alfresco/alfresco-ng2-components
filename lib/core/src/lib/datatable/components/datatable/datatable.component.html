@@ -25,12 +25,13 @@
                 <mat-checkbox [indeterminate]="isSelectAllIndeterminate"
                               [checked]="isSelectAllChecked"
                               (change)="onSelectAllClick($event)"
-                              class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
+                              class="adf-checkbox-sr-only">
+                    {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
                 </mat-checkbox>
             </div>
 
             <div
-                class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header adf-datatable-cell-data"
+                class="adf-datatable-cell--{{ col.type || 'text' }} {{ col.cssClass }} adf-datatable-cell-header adf-datatable-cell-data"
                 *ngFor="
                     let col of (data.getColumns() | filterOutEvery:'isHidden':true);
                     let columnIndex = index
@@ -50,6 +51,7 @@
                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                 cdkDrag
                 cdkDragLockAxis="x"
+                [cdkDragPreviewClass]="'adf-drag-preview'"
                 (cdkDragStarted)="isDraggingHeaderColumn = true"
                 (cdkDragDropped)="onDropHeaderColumn($event)"
                 [cdkDragDisabled]="!col.draggable"
@@ -70,10 +72,9 @@
                      [ngClass]="{ 'adf-datatable-cell-header-content--hovered':
                         hoveredHeaderColumnIndex === columnIndex &&
                         !isDraggingHeaderColumn &&
-                        !isResizing && col.sortable}"
-                >
+                        !isResizing && col.sortable}">
                     <ng-container *ngIf="!col.header">
-                        <span *ngIf="col.title" matTooltip="{{col.title | translate}}"
+                        <span *ngIf="col.title" matTooltip="{{ col.title | translate }}"
                               class="adf-datatable-cell-value">{{ col.title | translate }}</span>
 
                         <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only"
@@ -87,61 +88,55 @@
 
                     <div *ngIf="col.header" class="adf-datatable-cell-value">
                         <ng-template [ngTemplateOutlet]="col.header"
-                                     [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
+                                     [ngTemplateOutletContext]="{ $implicit: col }"></ng-template>
                     </div>
 
-                    <span
-                        [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
-                        [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
+                    <span [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
+                          [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
                     </span>
 
-                    <ng-template *ngIf="allowFiltering" [ngTemplateOutlet]="headerFilterTemplate"
-                                 [ngTemplateOutletContext]="{$implicit: col}"></ng-template>
+                    <ng-template *ngIf="allowFiltering"
+                                 [ngTemplateOutlet]="headerFilterTemplate"
+                                 [ngTemplateOutletContext]="{ $implicit: col }"></ng-template>
 
                     <span *ngIf="col.draggable"
                           cdkDragHandle
                           [ngClass]="{ 'adf-datatable-cell-header-drag-icon': !isResizing }">
                         <adf-icon *ngIf="hoveredHeaderColumnIndex === columnIndex && !isResizing"
                                   value="adf:drag_indicator"
-                                  [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key">
+                                  [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-' + col.key">
                         </adf-icon>
                     </span>
                 </div>
-                <div
-                    *ngIf="isResizingEnabled && col.resizable && !lastColumn"
-                    [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
-                    adf-resize-handle
-                    tabindex="0"
-                    role="button"
-                    (click)="$event.stopPropagation()"
-                    (keyup.enter)="$event.stopPropagation()"
-                    class="adf-datatable__resize-handle"
-                    [resizableContainer]="resizableElement">
+                <div *ngIf="isResizingEnabled && col.resizable && !lastColumn"
+                     [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
+                     adf-resize-handle
+                     tabindex="0"
+                     role="button"
+                     (click)="$event.stopPropagation()"
+                     (keyup.enter)="$event.stopPropagation()"
+                     class="adf-datatable__resize-handle"
+                     [resizableContainer]="resizableElement">
                     <div class="adf-datatable__resize-handle--divider"></div>
                 </div>
                 <div class="adf-drop-header-cell-placeholder" *cdkDragPlaceholder></div>
             </div>
 
             <!-- Header actions (right) -->
-            <div *ngIf="(actions && actionsPosition === 'right') ||
-                       (mainActionTemplate && showMainDatatableActions)"
+            <div *ngIf="(actions && actionsPosition === 'right') || (mainActionTemplate && showMainDatatableActions)"
                  class="adf-actions-column adf-datatable-actions-menu adf-datatable-cell-header adf-datatable__actions-cell">
                 <ng-container *ngIf="mainActionTemplate">
-                    <button
-                        data-automation-id="adf-datatable-main-menu-button"
-                        matTooltip="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
-                        mat-icon-button
-                        #mainMenuTrigger="matMenuTrigger"
-                        (keydown.enter)="mainMenuTrigger.openMenu()"
-                        [matMenuTriggerFor]="mainMenu">
+                    <button data-automation-id="adf-datatable-main-menu-button"
+                            matTooltip="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
+                            mat-icon-button
+                            #mainMenuTrigger="matMenuTrigger"
+                            (keydown.enter)="mainMenuTrigger.openMenu()"
+                            [matMenuTriggerFor]="mainMenu">
                         <mat-icon>view_week_outline</mat-icon>
                     </button>
                     <mat-menu #mainMenu>
-                        <ng-container
-                            [ngTemplateOutlet]="mainActionTemplate"
-                            [ngTemplateOutletContext]="{
-                                $implicit: mainMenuTrigger
-                            }">
+                        <ng-container [ngTemplateOutlet]="mainActionTemplate"
+                                      [ngTemplateOutletContext]="{ $implicit: mainMenuTrigger }">
                         </ng-container>
                     </mat-menu>
                     <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
@@ -186,15 +181,15 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect" [for]="'select-file-' + idx"
+                <label *ngIf="multiselect"
+                       [for]="'select-file-' + idx"
                        class="adf-datatable-cell adf-datatable-checkbox">
-                    <mat-checkbox
-                        [id]="'select-file-' + idx"
-                        [checked]="row.isSelected"
-                        [attr.aria-checked]="row.isSelected"
-                        role="checkbox"
-                        (change)="onCheckboxChange(row, $event)"
-                        class="adf-checkbox-sr-only">
+                    <mat-checkbox [id]="'select-file-' + idx"
+                                  [checked]="row.isSelected"
+                                  [attr.aria-checked]="row.isSelected"
+                                  role="checkbox"
+                                  (change)="onCheckboxChange(row, $event)"
+                                  class="adf-checkbox-sr-only">
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </label>
@@ -202,7 +197,7 @@
                 let col of (data.getColumns() | filterOutEvery:'isHidden':true),
                 let lastColumn = last;"
                      role="gridcell"
-                     class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data"
+                     class="adf-datatable-cell adf-datatable-cell--{{ col.type || 'text' }} {{ col.cssClass }} adf-datatable-cell-data"
                      [attr.title]="col.title | translate"
                      [attr.data-automation-id]="getAutomationValue(row)"
                      [attr.aria-selected]="row.isSelected"
@@ -212,7 +207,10 @@
                      (keydown.enter)="onEnterKeyPressed(row, $any($event))"
                      [adf-context-menu]="getContextMenuActions(row, col)"
                      [adf-context-menu-enabled]="contextMenu"
-                     adf-drop-zone dropTarget="cell" [dropColumn]="col" [dropRow]="row"
+                     adf-drop-zone
+                     dropTarget="cell"
+                     [dropColumn]="col"
+                     [dropRow]="row"
                      [ngStyle]="(col.width) && !lastColumn && {'flex': getFlexValue(col)}">
                     <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="data.getColumnType(row, col)">
@@ -282,8 +280,9 @@
                                                    [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
-                            <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
+                            <div *ngSwitchCase="'text'"
                                  class="adf-cell-value"
+                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
                                 <adf-datatable-cell [copyContent]="col.copyContent"
                                                     [data]="data"
@@ -293,8 +292,9 @@
                                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
-                            <div *ngSwitchCase="'boolean'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
+                            <div *ngSwitchCase="'boolean'"
                                  class="adf-cell-value"
+                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  [attr.data-automation-id]="'boolean_' + data.getValue(row, col, resolverFn)">
                                 <adf-boolean-cell [data]="data"
                                                   [column]="col"
@@ -303,8 +303,9 @@
                                                   [tooltip]="getCellTooltip(row, col)">
                                 </adf-boolean-cell>
                             </div>
-                            <div *ngSwitchCase="'json'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
-                                 class="adf-cell-value">
+                            <div *ngSwitchCase="'json'"
+                                 class="adf-cell-value"
+                                 [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1">
                                 <adf-json-cell [editable]="col.editable"
                                                [data]="data"
                                                [column]="col"
@@ -340,10 +341,13 @@
                         </ng-container>
                     </div>
                     <div *ngIf="col.template" class="adf-datatable-cell-container">
-                        <div class="adf-cell-value" [attr.tabindex]="col.focus ? 0 : null">
-                            <ng-container
-                                [ngTemplateOutlet]="col.template"
-                                [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col, resolverFn) }">
+                        <div class="adf-cell-value"
+                             [attr.tabindex]="col.focus ? 0 : null">
+                            <ng-container [ngTemplateOutlet]="col.template"
+                                          [ngTemplateOutletContext]="{
+                                              $implicit: { data, row, col },
+                                              value: data.getValue(row, col, resolverFn)
+                                          }">
                             </ng-container>
                         </div>
                     </div>
@@ -357,7 +361,9 @@
                      class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-center-actions-column-ie adf-datatable-actions-menu">
 
                     <ng-container *ngIf="(actions && actionsPosition === 'right')">
-                        <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"
+                        <button mat-icon-button
+                                [matMenuTriggerFor]="menu"
+                                #actionsMenuTrigger="matMenuTrigger"
                                 [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
                                 [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.ROW_OPTION_BUTTON' | translate"
                                 [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"

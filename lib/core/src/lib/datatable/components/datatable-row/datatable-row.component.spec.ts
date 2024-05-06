@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { DataTableRowComponent } from './datatable-row.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataRow } from '../../data/data-row.model';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { DataTableRowComponent } from './datatable-row.component';
 
 describe('DataTableRowComponent', () => {
     let fixture: ComponentFixture<DataTableRowComponent>;

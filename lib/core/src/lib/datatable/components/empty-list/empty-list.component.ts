@@ -26,9 +26,20 @@ import { Component, Directive, ViewEncapsulation } from '@angular/core';
 })
 export class EmptyListComponent {}
 
-@Directive({ selector: '[adf-empty-list-header]', standalone: true })
+@Directive({
+    selector: '[adf-empty-list-header]',
+    standalone: true
+})
 export class EmptyListHeaderDirective {}
-@Directive({ selector: '[adf-empty-list-body]', standalone: true })
+
+@Directive({
+    selector: '[adf-empty-list-body]',
+    standalone: true
+})
 export class EmptyListBodyDirective {}
-@Directive({ selector: '[adf-empty-list-footer]', standalone: true })
+
+@Directive({
+    selector: '[adf-empty-list-footer]',
+    standalone: true
+})
 export class EmptyListFooterDirective {}

@@ -15,30 +15,29 @@
  * limitations under the License.
  */
 
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { By } from '@angular/platform-browser';
+import { take } from 'rxjs/operators';
+import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
+import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
+import { CoreTestingModule } from '../../../testing';
+import { DataColumnComponent, DataColumnListComponent } from '../../data-column';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
-import { DataTableComponent, ShowHeaderMode } from './datatable.component';
-import { CoreTestingModule } from '../../../testing';
-import { DataColumnListComponent } from '../../data-column';
-import { DataColumnComponent } from '../../data-column';
-import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
-import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { take } from 'rxjs/operators';
-import { By } from '@angular/platform-browser';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 
 @Component({
     selector: 'adf-custom-column-template-component',
-    template: ` <ng-template #tmplRef></ng-template> `
+    template: `<ng-template #tmplRef></ng-template>`
 })
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
@@ -46,7 +45,7 @@ class CustomColumnTemplateComponent {
 
 @Component({
     selector: 'adf-custom-column-header-component',
-    template: ` <ng-template #tmplRef> CUSTOM HEADER</ng-template> `
+    template: `<ng-template #tmplRef> CUSTOM HEADER</ng-template>`
 })
 class CustomColumnHeaderComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
@@ -508,7 +507,15 @@ describe('DataTable', () => {
 
     it('should unselect the row with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
-        dataTable.data = new ObjectDataTableAdapter([{ name: '1', isSelected: true }], [new ObjectDataColumn({ key: 'name' })]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                {
+                    name: '1',
+                    isSelected: true
+                }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
         const rows = dataTable.data.getRows();
         rows[0].isSelected = true;
 
@@ -521,8 +528,7 @@ describe('DataTable', () => {
 
         dataTable.onRowClick(rows[0], {
             metaKey: true,
-            preventDefault: () => {},
-            composedPath: () => []
+            preventDefault: () => {}
         } as any);
     });
 
