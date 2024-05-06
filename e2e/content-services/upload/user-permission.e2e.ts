@@ -25,7 +25,6 @@ import CONSTANTS = require('../../util/constants');
 import { SiteEntry, SitesApi } from '@alfresco/js-api';
 
 describe('Upload - User permission', () => {
-
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const loginPage = new LoginPage();
@@ -84,7 +83,6 @@ describe('Upload - User permission', () => {
     });
 
     describe('Consumer permissions', () => {
-
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
         });
@@ -99,7 +97,7 @@ describe('Upload - User permission', () => {
             await uploadDialog.fileIsError(emptyFile.name);
             await uploadDialog.displayTooltip();
 
-            await expect(await uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
+            expect(await uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
         });
 
         it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', async () => {
@@ -118,7 +116,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.uploadFile(emptyFile.location);
 
             const message = await new SnackbarPage().getSnackBarMessage();
-            expect(message).toEqual('You don\'t have the create permission to upload the content');
+            expect(message).toEqual(`You don't have the create permission to upload the content`);
         });
     });
 

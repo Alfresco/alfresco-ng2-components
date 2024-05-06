@@ -24,7 +24,6 @@ import { Logger } from '../../core/utils/logger';
 import { materialLocators } from '../../public-api';
 
 export class StartProcessPage {
-
     defaultProcessName = $('input[id="processName"]');
     processNameInput = $('#processName');
     disabledSelectProcessDropdown = $('input[id="processDefinitionName"][disabled]');
@@ -82,7 +81,6 @@ export class StartProcessPage {
         } catch (error) {
             Logger.log(`No start form on process`);
         }
-
     }
 
     async selectFromApplicationDropdown(name): Promise<void> {
@@ -138,7 +136,7 @@ export class StartProcessPage {
     }
 
     async checkStartProcessButtonIsDisabled() {
-        await expect(await this.startProcessButton.isEnabled()).toBe(false);
+        expect(await this.startProcessButton.isEnabled()).toBe(false);
     }
 
     async clickStartProcessButton(): Promise<void> {

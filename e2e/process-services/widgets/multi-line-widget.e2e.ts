@@ -68,29 +68,29 @@ describe('Multi-line Widget', () => {
 
     it('[C268182] Should be able to set general properties for Multi-line Text Widget', async () => {
         const label = await widget.multilineTextWidget().getFieldLabel(app.FIELD.multiSimple);
-        await expect(label).toBe('multiSimple*');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(label).toBe('multiSimple*');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         const placeHolder = await widget.multilineTextWidget().getFieldPlaceHolder(app.FIELD.multiSimple);
-        await expect(placeHolder).toBe('Type something...');
+        expect(placeHolder).toBe('Type something...');
         await widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
-        await expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toContain('Enter at least 4 characters');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toContain('Enter at least 4 characters');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAAAAAAAAA');
-        await expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toContain('Enter no more than 10 characters');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toContain('Enter no more than 10 characters');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAA');
 
         await widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
         await widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, '3');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
-        await expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiRegexp)).toContain('Enter a different value');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiRegexp)).toContain('Enter a different value');
         await widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, 'TE');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C268232] Should be able to set visibility properties for Multi-line Text Widget', async () => {

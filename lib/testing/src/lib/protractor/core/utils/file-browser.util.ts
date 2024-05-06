@@ -20,14 +20,15 @@ import * as fs from 'fs';
 import { browser } from 'protractor';
 
 export class FileBrowserUtil {
-
     static async isFileDownloaded(fileName: string): Promise<boolean> {
         const DEFAULT_ROOT_PATH = browser.params.testConfig ? browser.params.testConfig.main.rootPath : __dirname;
-        const file = await browser.driver.wait(() => fs.existsSync(path.join(DEFAULT_ROOT_PATH, 'downloads', fileName)), 30000,`${fileName} not downloaded`);
+        const file: boolean = await browser.driver.wait(
+            () => fs.existsSync(path.join(DEFAULT_ROOT_PATH, 'downloads', fileName)),
+            30000,
+            `${fileName} not downloaded`
+        );
 
-        await expect(file).toBe(true, `${fileName} not downloaded`);
-
+        expect(file).toBe(true);
         return !!file;
     }
-
 }

@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    LoginPage,
-    StringUtil,
-    UploadActions,
-    UserModel,
-    UsersActions,
-    ViewerPage
-} from '@alfresco/adf-testing';
+import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -66,7 +59,6 @@ describe('Comment', () => {
     });
 
     describe('component', () => {
-
         beforeEach(async () => {
             await apiService.login(acsUser.username, acsUser.password);
 
@@ -100,9 +92,9 @@ describe('Comment', () => {
             await commentsPage.checkCommentInputIsDisplayed();
 
             await commentsPage.getTotalNumberOfComments('Comments (1)');
-            await expect(await commentsPage.getMessage(0)).toEqual(comments.test);
-            await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-            await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+            expect(await commentsPage.getMessage(0)).toEqual(comments.test);
+            expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+            expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         });
 
         it('[C276948] Should be able to add a comment on a file', async () => {
@@ -116,9 +108,9 @@ describe('Comment', () => {
             await commentsPage.checkUserIconIsDisplayed();
 
             await commentsPage.getTotalNumberOfComments('Comments (1)');
-            await expect(await commentsPage.getMessage(0)).toEqual(comments.first);
-            await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-            await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+            expect(await commentsPage.getMessage(0)).toEqual(comments.first);
+            expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+            expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         });
 
         it('[C280021] Should be able to add a multiline comment on a file', async () => {
@@ -132,17 +124,17 @@ describe('Comment', () => {
             await commentsPage.checkUserIconIsDisplayed();
 
             await commentsPage.getTotalNumberOfComments('Comments (1)');
-            await expect(await commentsPage.getMessage(0)).toEqual(comments.multiline);
-            await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-            await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+            expect(await commentsPage.getMessage(0)).toEqual(comments.multiline);
+            expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+            expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
             await commentsPage.addComment(comments.second);
             await commentsPage.checkUserIconIsDisplayed();
 
             await commentsPage.getTotalNumberOfComments('Comments (2)');
-            await expect(await commentsPage.getMessage(0)).toEqual(comments.second);
-            await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-            await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+            expect(await commentsPage.getMessage(0)).toEqual(comments.second);
+            expect(await commentsPage.getUserName(0)).toEqual(userFullName);
+            expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         });
     });
 

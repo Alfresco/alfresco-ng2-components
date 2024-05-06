@@ -24,6 +24,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '../pipes/pipe.module';
+import { FullNamePipe, InitialUsernamePipe } from '../pipes';
 
 @NgModule({
     declarations: [IdentityUserInfoComponent],
@@ -34,7 +35,9 @@ import { PipeModule } from '../pipes/pipe.module';
         MatTabsModule,
         MatCardModule,
         TranslateModule,
-        PipeModule
+        PipeModule,
+        InitialUsernamePipe,
+        FullNamePipe
     ],
     exports: [IdentityUserInfoComponent]
 })

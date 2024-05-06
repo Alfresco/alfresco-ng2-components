@@ -281,11 +281,11 @@ export class ContentServicesPage {
 
     async checkEmptyFolderTextToBe(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.emptyFolder);
-        await expect(await this.emptyFolder.getText()).toContain(text);
+        expect(await this.emptyFolder.getText()).toContain(text);
     }
 
     async checkEmptyFolderImageUrlToContain(url): Promise<void> {
-        await expect(await BrowserActions.getAttribute(this.emptyFolderImage, 'src')).toContain(url);
+        expect(await BrowserActions.getAttribute(this.emptyFolderImage, 'src')).toContain(url);
     }
 
     async getAttributeValueForElement(elementName: string, propertyName: string): Promise<string> {

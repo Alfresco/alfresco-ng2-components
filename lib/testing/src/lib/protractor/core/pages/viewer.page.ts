@@ -115,7 +115,7 @@ export class ViewerPage {
 
     async checkAllThumbnailsDisplayed(nbPages): Promise<void> {
         const defaultThumbnailHeight = 143;
-        await expect(await BrowserActions.getAttribute(this.thumbnailsContent, 'style')).toEqual(
+        expect(await BrowserActions.getAttribute(this.thumbnailsContent, 'style')).toEqual(
             'height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);'
         );
     }
@@ -124,7 +124,7 @@ export class ViewerPage {
         const selectedThumbnail = $('adf-pdf-thumb.adf-pdf-thumbnails__thumb.adf-pdf-thumbnails__thumb--selected > img');
         const pageNumber = await BrowserActions.getInputValue(this.pageSelectorInput);
 
-        await expect('Page ' + pageNumber).toEqual(await BrowserActions.getAttribute(selectedThumbnail, 'title'));
+        expect('Page ' + pageNumber).toEqual(await BrowserActions.getAttribute(selectedThumbnail, 'title'));
     }
 
     async checkThumbnailsCloseIsDisplayed(): Promise<void> {
@@ -193,7 +193,7 @@ export class ViewerPage {
     }
 
     async checkPageSelectorInputIsDisplayed(checkNumber: string): Promise<void> {
-        await expect(await BrowserActions.getInputValue(this.pageSelectorInput)).toEqual(checkNumber);
+        expect(await BrowserActions.getInputValue(this.pageSelectorInput)).toEqual(checkNumber);
     }
 
     async checkImgContainerIsDisplayed(): Promise<void> {
@@ -225,11 +225,11 @@ export class ViewerPage {
     }
 
     async checkZoomedIn(zoom): Promise<void> {
-        await expect(await BrowserActions.getText(this.percentage)).toBeGreaterThan(zoom);
+        expect(await BrowserActions.getText(this.percentage)).toBeGreaterThan(zoom);
     }
 
     async checkZoomedOut(zoom): Promise<void> {
-        await expect(await BrowserActions.getText(this.percentage)).toBeLessThan(zoom);
+        expect(await BrowserActions.getText(this.percentage)).toBeLessThan(zoom);
     }
 
     async checkScaleImgButtonIsDisplayed(): Promise<void> {
@@ -254,9 +254,7 @@ export class ViewerPage {
 
     async checkTabIsActive(tabName: string): Promise<void> {
         const materialLocatorPart = `div${materialLocators.Tab.labels.class} div${materialLocators.Tab.label.active.class} ${materialLocators.Tab.label.content.class}`;
-        const tab = element(
-            by.cssContainingText(`.adf-info-drawer-layout-content ${materialLocatorPart}`, tabName)
-        );
+        const tab = element(by.cssContainingText(`.adf-info-drawer-layout-content ${materialLocatorPart}`, tabName));
         await BrowserVisibility.waitUntilElementIsVisible(tab);
     }
 
@@ -330,7 +328,7 @@ export class ViewerPage {
     }
 
     async expectUrlToContain(text: string): Promise<void> {
-        await expect(browser.getCurrentUrl()).toContain(text);
+        expect(browser.getCurrentUrl()).toContain(text);
     }
 
     private async isSpinnerPresent(): Promise<boolean> {

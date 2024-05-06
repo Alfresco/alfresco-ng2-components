@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    StringUtil,
-    TaskUtil,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, StringUtil, TaskUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -89,8 +82,9 @@ describe('Start Task - Task App', () => {
 
         await taskPage.taskDetails().clickAddInvolvedUserButton();
 
-        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
-            .toEqual(assigneeUserModel.email);
+        expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)).toEqual(
+            assigneeUserModel.email
+        );
 
         await taskDetails.selectActivityTab();
         const firstComment = 'comm1';
@@ -115,7 +109,7 @@ describe('Start Task - Task App', () => {
         await task.clickCancelButton();
 
         await taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
-        await expect(await taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        expect(await taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
     it('[C260423] Should be possible to save filled form', async () => {
@@ -153,7 +147,7 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[5]);
         await taskPage.tasksListPage().selectRow(tasks[5]);
         await taskPage.checkTaskTitle(tasks[5]);
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
     });
 
     it('Attach a file', async () => {

@@ -61,7 +61,7 @@ describe('Process Instance Details', () => {
         await processServicesPage.checkApsContainer();
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         process = await processApi.getProcessInstance(processModel.id);
     });

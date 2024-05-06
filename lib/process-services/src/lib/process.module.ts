@@ -30,7 +30,6 @@ import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
 import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
-import { ProcessServicesPipeModule } from './pipes/process-services-pipe.module';
 import { TaskCommentsModule } from './task-comments/task-comments.module';
 import { ProcessUserInfoModule } from './process-user-info/process-user-info.module';
 
@@ -49,12 +48,9 @@ import { ProcessUserInfoModule } from './process-user-info/process-user-info.mod
         ProcessUserInfoModule,
         AttachmentModule,
         PeopleModule,
-        FormModule,
-        ProcessServicesPipeModule
+        FormModule
     ],
-    providers: [
-        provideTranslations('adf-process-services', 'assets/adf-process-services')
-    ],
+    providers: [provideTranslations('adf-process-services', 'assets/adf-process-services')],
     exports: [
         CommonModule,
         ProcessCommentsModule,
@@ -67,8 +63,7 @@ import { ProcessUserInfoModule } from './process-user-info/process-user-info.mod
         ProcessUserInfoModule,
         AttachmentModule,
         PeopleModule,
-        FormModule,
-        ProcessServicesPipeModule
+        FormModule
     ]
 })
 export class ProcessModule {

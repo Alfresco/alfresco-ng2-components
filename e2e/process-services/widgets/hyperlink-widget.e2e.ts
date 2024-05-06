@@ -71,7 +71,7 @@ describe('Hyperlink widget', () => {
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         await taskPage.formFields().checkWidgetIsVisible(app.FIELD.hyperlink_id);
 
-        await expect(await widget.hyperlink().getFieldLabel(app.FIELD.hyperlink_id)).toBe('Hyperlink');
-        await expect(await widget.hyperlink().getFieldText(app.FIELD.hyperlink_id)).toBe('https://www.google.com/');
+        expect(await widget.hyperlink().getFieldLabel(app.FIELD.hyperlink_id)).toBe('Hyperlink');
+        expect(await widget.hyperlink().getFieldText(app.FIELD.hyperlink_id)).toBe('https://www.google.com/');
     });
 });

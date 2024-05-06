@@ -17,9 +17,14 @@
 
 import { browser } from 'protractor';
 import {
-    StringUtil, TasksService,
-    LoginPage, createApiService,
-    AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService
+    StringUtil,
+    TasksService,
+    LoginPage,
+    createApiService,
+    AppListCloudPage,
+    LocalStorageUtil,
+    IdentityService,
+    GroupIdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
@@ -47,13 +52,21 @@ describe('Edit task filters and task list properties', () => {
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    let createdTask; let notDisplayedTask; let noPriorityTask; let lowPriorityTask; let normalPriorityTask; let hightPriorityTask; let subTask;
-        let otherOwnerTask; let testUser; let groupInfo;
+    let createdTask;
+    let notDisplayedTask;
+    let noPriorityTask;
+    let lowPriorityTask;
+    let normalPriorityTask;
+    let hightPriorityTask;
+    let subTask;
+    let otherOwnerTask;
+    let testUser;
+    let groupInfo;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -85,42 +98,41 @@ describe('Edit task filters and task list properties', () => {
 
         await loginSSOPage.login(testUser.username, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
-        await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
-            filterProperties: [
-                'taskId',
-                'appName',
-                'status',
-                'assignee',
-                'taskName',
-                'parentTaskId',
-                'priority',
-                'standalone',
-                'owner',
-                'processDefinitionId',
-                'processInstanceId',
-                'lastModified',
-                'sort',
-                'order'
-            ],
-            sortProperties: [
-                'id',
-                'name',
-                'createdDate',
-                'priority',
-                'processDefinitionId',
-                'processInstanceId',
-                'parentTaskId',
-                'priority',
-                'standalone',
-                'owner',
-                'assignee'
-            ],
-            actions: [
-                'save',
-                'saveAs',
-                'delete'
-            ]
-        }));
+        await LocalStorageUtil.setConfigField(
+            'adf-edit-task-filter',
+            JSON.stringify({
+                filterProperties: [
+                    'taskId',
+                    'appName',
+                    'status',
+                    'assignee',
+                    'taskName',
+                    'parentTaskId',
+                    'priority',
+                    'standalone',
+                    'owner',
+                    'processDefinitionId',
+                    'processInstanceId',
+                    'lastModified',
+                    'sort',
+                    'order'
+                ],
+                sortProperties: [
+                    'id',
+                    'name',
+                    'createdDate',
+                    'priority',
+                    'processDefinitionId',
+                    'processInstanceId',
+                    'parentTaskId',
+                    'priority',
+                    'standalone',
+                    'owner',
+                    'assignee'
+                ],
+                actions: ['save', 'saveAs', 'delete']
+            })
+        );
     }, 5 * 60 * 1000);
 
     afterAll(async () => {
@@ -142,10 +154,10 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setSortFilterDropDown('name');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Task Name')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Task Name')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Task Name')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Task Name')).toBe(true);
         });
 
         it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', async () => {
@@ -153,20 +165,20 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setSortFilterDropDown('id');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Id')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Id')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Id')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Id')).toBe(true);
         });
 
         it('[C306903] Should display tasks sorted by processDefinitionId when processDefinitionId is selected from sort dropdown', async () => {
             await editTaskFilter.setStatusFilterDropDown('Assigned');
             await editTaskFilter.setSortFilterDropDown('processDefinitionId');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'ProcessDefinitionId')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'ProcessDefinitionId')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'ProcessDefinitionId')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'ProcessDefinitionId')).toBe(true);
         });
 
         it('[C306905] Should display tasks sorted by processInstanceId when processInstanceId is selected from sort dropdown', async () => {
@@ -174,10 +186,10 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setSortFilterDropDown('processInstanceId');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'ProcessInstanceId')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'ProcessInstanceId')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'ProcessInstanceId')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'ProcessInstanceId')).toBe(true);
         });
 
         it('[C306907] Should display tasks sorted by assignee when assignee is selected from sort dropdown', async () => {
@@ -186,10 +198,10 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setSortFilterDropDown('assignee');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Assignee')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Assignee')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Assignee')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Assignee')).toBe(true);
         });
 
         it('[C306911] Should display tasks sorted by parentTaskId when parentTaskId is selected from sort dropdown', async () => {
@@ -198,10 +210,10 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setSortFilterDropDown('parentTaskId');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'ParentTaskId')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'ParentTaskId')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'ParentTaskId')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'ParentTaskId')).toBe(true);
         });
 
         it('[C290087] Should display tasks ordered by priority when Priority is selected from sort dropdown', async () => {
@@ -209,10 +221,10 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setSortFilterDropDown('priority');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Priority', 'PRIORITY')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Priority', 'PRIORITY')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Priority', 'PRIORITY')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Priority', 'PRIORITY')).toBe(true);
         });
 
         it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', async () => {
@@ -221,10 +233,10 @@ describe('Edit task filters and task list properties', () => {
             await editTaskFilter.setSortFilterDropDown('owner');
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.ASC);
 
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Owner')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.ASC, 'Owner')).toBe(true);
 
             await editTaskFilter.setOrderFilterDropDown(SORT_ORDER.DESC);
-            await expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Owner')).toBe(true);
+            expect(await taskList.getDataTable().checkListIsSorted(SORT_ORDER.DESC, 'Owner')).toBe(true);
         });
     });
 });

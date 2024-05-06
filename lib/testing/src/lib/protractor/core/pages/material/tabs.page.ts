@@ -21,7 +21,6 @@ import { BrowserVisibility } from '../../utils/browser-visibility';
 import { materialLocators } from './material-locators';
 
 export class TabsPage {
-
     tabs = $$(`div[id*='${materialLocators.Tab.label.root}']`);
 
     async clickTabByTitle(tabTitle): Promise<void> {
@@ -31,8 +30,8 @@ export class TabsPage {
 
     async checkTabIsSelectedByTitle(tabTitle): Promise<void> {
         const tab = element(by.cssContainingText(`div[id*='${materialLocators.Tab.label.root}']`, tabTitle));
-        const result = await BrowserActions.getAttribute(tab, 'aria-selected');
-        await expect(result).toBe('true');
+        const result: string = await BrowserActions.getAttribute(tab, 'aria-selected');
+        expect(result).toBe('true');
     }
 
     async getNoOfTabs(): Promise<number> {

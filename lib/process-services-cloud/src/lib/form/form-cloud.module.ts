@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule, ToolbarModule } from '@alfresco/adf-core';
+import { CoreModule, FormatSpacePipe, ToolbarModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -58,7 +58,8 @@ import { A11yModule } from '@angular/cdk/a11y';
         AlfrescoViewerModule,
         RichTextEditorModule,
         ToolbarModule,
-        A11yModule
+        A11yModule,
+        FormatSpacePipe
     ],
     declarations: [
         FormCloudComponent,
@@ -93,5 +94,4 @@ import { A11yModule } from '@angular/cdk/a11y';
         DisplayRichTextWidgetComponent
     ]
 })
-export class FormCloudModule {
-}
+export class FormCloudModule {}

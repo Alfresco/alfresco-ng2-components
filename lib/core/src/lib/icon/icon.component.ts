@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ViewEncapsulation,
-    ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'adf-icon',
+    standalone: true,
+    imports: [MatIconModule, NgIf],
     templateUrl: './icon.component.html',
     styleUrls: ['./icon.component.scss'],
     encapsulation: ViewEncapsulation.None,
