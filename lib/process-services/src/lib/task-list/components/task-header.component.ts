@@ -240,7 +240,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         return this.taskDetails.duration ? `${this.taskDetails.duration} ms` : '';
     }
 
-    private initDefaultProperties(parentInfoMap): any[] {
+    private initDefaultProperties(parentInfoMap: Map<string, string>): any[] {
         return [
             new CardViewTextItemModel({
                 label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
