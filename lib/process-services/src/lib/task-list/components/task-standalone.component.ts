@@ -23,29 +23,26 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
     styleUrls: ['./task-standalone.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-
 export class TaskStandaloneComponent {
-
     /** Name of the task. */
     @Input()
-    taskName;
+    taskName: string;
 
     /** Id of the task. */
     @Input()
-    taskId;
+    taskId: string;
 
     /** If true then Task completed message is shown and `Complete` and `Cancel` buttons are hidden. */
     @Input()
-    isCompleted: boolean = false;
+    isCompleted = false;
 
     /** Toggles rendering of the `Complete` button. */
     @Input()
-    hasCompletePermission: boolean = true;
+    hasCompletePermission = true;
 
-    // TODO: rename all with show prefix
     /** Toggles rendering of the `Cancel` button. */
     @Input()
-    hideCancelButton: boolean = true;
+    hideCancelButton = true;
 
     /** Emitted when the "Cancel" button is clicked. */
     @Output()
@@ -59,7 +56,7 @@ export class TaskStandaloneComponent {
     @Output()
     showAttachForm = new EventEmitter<void>();
 
-    constructor() { }
+    constructor() {}
 
     onCancelButtonClick(): void {
         this.cancel.emit();
