@@ -37,7 +37,7 @@ import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 
 @Component({
     selector: 'adf-custom-column-template-component',
-    template: `<ng-template #tmplRef></ng-template>`
+    template: ` <ng-template #tmplRef></ng-template>`
 })
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
@@ -45,7 +45,7 @@ class CustomColumnTemplateComponent {
 
 @Component({
     selector: 'adf-custom-column-header-component',
-    template: `<ng-template #tmplRef> CUSTOM HEADER</ng-template>`
+    template: ` <ng-template #tmplRef> CUSTOM HEADER</ng-template>`
 })
 class CustomColumnHeaderComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
@@ -980,7 +980,7 @@ describe('DataTable', () => {
         const column = {} as DataColumn;
 
         const row: any = {
-            getValue: () => 'http://www.google.com'
+            getValue: () => 'https://www.google.com'
         };
 
         expect(dataTable.isIconValue(row, column)).toBeFalsy();
@@ -1000,7 +1000,7 @@ describe('DataTable', () => {
         const column = {} as DataColumn;
 
         const row: any = {
-            getValue: () => 'http://www.google.com'
+            getValue: () => 'https://www.google.com'
         };
 
         expect(dataTable.asIconValue(row, column)).toBe(null);

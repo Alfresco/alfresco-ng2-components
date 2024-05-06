@@ -55,7 +55,7 @@ import { Observable, Observer, Subscription } from 'rxjs';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
 import { ContextMenuModule } from '../../../context-menu';
 import { DirectiveModule } from '../../../directives';
-import { IconModule } from '../../../icon';
+import { IconComponent } from '../../../icon';
 import { FileTypePipe, FilterOutArrayObjectsByPropPipe, LocalizedDatePipe } from '../../../pipes';
 import { DataColumnListComponent } from '../../data-column';
 import { DataColumn } from '../../data/data-column.model';
@@ -64,7 +64,6 @@ import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
-
 import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
@@ -105,7 +104,6 @@ export enum ShowHeaderMode {
         ResizableModule,
         DropZoneDirective,
         MatTooltipModule,
-        IconModule,
         MatMenuModule,
         MatIconModule,
         MatButtonModule,
@@ -123,8 +121,9 @@ export enum ShowHeaderMode {
         AmountCellComponent,
         NumberCellComponent,
         LocalizedDatePipe,
+        FilterOutArrayObjectsByPropPipe,
         FileTypePipe,
-        FilterOutArrayObjectsByPropPipe
+        IconComponent
     ],
     host: { class: 'adf-datatable' }
 })
