@@ -123,7 +123,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     readonly id: string;
     displayMode: FormCloudDisplayMode;
-    showSpinner = false;
 
     constructor(
         protected formCloudService: FormCloudService,
