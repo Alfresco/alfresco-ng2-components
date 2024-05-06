@@ -2,10 +2,10 @@
 
 All URIs are relative to *https://localhost/alfresco/api/-default-/public/alfresco/versions/1/*
 
-| Method                                            | HTTP request                   | Description                                                                         |
-|---------------------------------------------------|--------------------------------|-------------------------------------------------------------------------------------|
-| [getSavedExtensionState](#getSavedExtensionState) | **GET** /settings/{instanceId} | Gets the extension configuration saved for a running instance of ADW on the backend |
-| [publishExtensionConfig](#publishExtensionConfig) | **PUT** /settings/{instanceId} | Saves an extension configuration for a running instance of ADW on the backend       |
+| Method                                                 | HTTP request                   | Description                                                                         |
+|--------------------------------------------------------|--------------------------------|-------------------------------------------------------------------------------------|
+| [getSavedExtensionState](#getSavedExtensionState)      | **GET** /settings/{instanceId} | Gets the extension configuration saved for a running instance of ADW on the backend |
+| [publishExtensionConfig](#publishExtensionComposition) | **PUT** /settings/{instanceId} | Saves an extension configuration for a running instance of ADW on the backend       |
 
 ## getSavedExtensionState
 
