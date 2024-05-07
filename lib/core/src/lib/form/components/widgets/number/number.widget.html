@@ -29,7 +29,7 @@
                    [matTooltip]="field.tooltip"
                    (blur)="markAsTouched()"
                    matTooltipPosition="above"
-                   matTooltipShowDelay="1000">
+                   [matTooltipShowDelay]="1000">
         </mat-form-field>
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"

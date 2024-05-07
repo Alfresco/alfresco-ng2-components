@@ -1,36 +1,49 @@
-<div class="{{field.className}}" id="data-time-widget" [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-left-label-input-container]="field.leftLabels">
+<div class="{{ field.className }}"
+     id="data-time-widget"
+     [class.adf-invalid]="!field.isValid && isTouched()"
+     [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
-     </div>
+        <label class="adf-label adf-left-label" [attr.for]="field.id">
+            {{ field.name | translate }} ({{ field.dateDisplayFormat }})
+            <span class="adf-asterisk" *ngIf="isRequired()">*</span>
+        </label>
+    </div>
     <div>
-        <mat-form-field class="adf-date-time-widget" [class.adf-left-label-input-datepicker]="field.leftLabels" [hideRequiredMarker]="true">
-            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+        <mat-form-field class="adf-date-time-widget"
+                        [class.adf-left-label-input-datepicker]="field.leftLabels"
+                        [hideRequiredMarker]="true">
+            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">
+                {{ field.name | translate }} ({{ field.dateDisplayFormat }})
+                <span class="adf-asterisk" *ngIf="isRequired()">*</span>
+            </label>
             <input matInput
-                [matDatetimepicker]="datetimePicker"
-                [id]="field.id"
-                [(ngModel)]="value"
-                [required]="isRequired()"
-                [disabled]="field.readOnly"
-                (change)="onValueChanged($event)"
-                (dateChange)="onDateChanged($event)"
-                (keydown.enter)="datetimePicker.open()"
-                [placeholder]="field.placeholder"
-                [matTooltip]="field.tooltip"
-                (blur)="markAsTouched()"
-                matTooltipPosition="above"
-                matTooltipShowDelay="1000"
-                [min]="minDate"
-                [max]="maxDate">
-            <mat-datetimepicker-toggle matSuffix [for]="datetimePicker" [disabled]="field.readOnly"></mat-datetimepicker-toggle>
+                   [matDatetimepicker]="datetimePicker"
+                   [id]="field.id"
+                   [(ngModel)]="value"
+                   [required]="isRequired()"
+                   [disabled]="field.readOnly"
+                   (change)="onValueChanged($event)"
+                   (dateChange)="onDateChanged($event)"
+                   (keydown.enter)="datetimePicker.open()"
+                   [placeholder]="field.placeholder"
+                   [matTooltip]="field.tooltip"
+                   (blur)="markAsTouched()"
+                   matTooltipPosition="above"
+                   matTooltipShowDelay="{{ 1000 }}"
+                   [min]="minDate"
+                   [max]="maxDate">
+            <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
+                                       [disabled]="field.readOnly"></mat-datetimepicker-toggle>
         </mat-form-field>
         <error-widget [error]="field.validationSummary"></error-widget>
-        <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+        <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
+                      required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
         <mat-datetimepicker #datetimePicker
-            data-automation-id="adf-date-time-widget-picker"
-            type="datetime"
-            [touchUi]="true"
-            [timeInterval]="5"
-            [disabled]="field.readOnly">
+                            data-automation-id="adf-date-time-widget-picker"
+                            type="datetime"
+                            [touchUi]="true"
+                            [timeInterval]="5"
+                            [disabled]="field.readOnly">
         </mat-datetimepicker>
     </div>
 </div>

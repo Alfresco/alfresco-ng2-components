@@ -127,7 +127,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
      * @param container container model
      * @returns the column width for the given model
      */
-    getColumnWith(container: ContainerModel): string {
+    getColumnWidth(container: ContainerModel): string {
         const colspan = container ? container.field.colspan : 1;
         return (100 / container.field.numberOfColumns) * colspan + '';
     }
