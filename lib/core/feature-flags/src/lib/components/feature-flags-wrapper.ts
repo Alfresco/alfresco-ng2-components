@@ -19,8 +19,7 @@ import { Component } from '@angular/core';
 import { FlagsComponent } from './flags/flags.component';
 
 @Component({
-    /* eslint-disable-next-line @angular-eslint/component-selector */
-    selector: 'feature-flags-wrapper',
+    selector: 'adf-feature-flags-wrapper',
     standalone: true,
     imports: [FlagsComponent],
     template: `<adf-feature-flags-overrides class="feature-flags-overrides"></adf-feature-flags-overrides>`,
