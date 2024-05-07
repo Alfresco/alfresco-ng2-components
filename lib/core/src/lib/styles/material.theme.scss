@@ -90,11 +90,40 @@
                         top: 25px;
                     }
                 }
+
+
+                #{$mat-form-field-label} {
+                    color: var(--adf-input-label-color);
+                }
             }
 
             #{$mat-form-field-icon-suffix} {
                 #{$mat-icon} {
                     padding-top: 0;
+                }
+            }
+
+            &:not(#{$mat-text-field-disabled}) {
+                #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing}, #{$mat-notched-outline-notch} {
+                    border-color: var(--adf-input-border-color);
+                }
+
+                &:hover, &#{$mat-text-field-focused}, &#{$mat-text-field-invalid} {
+                    #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing}, #{$mat-notched-outline-notch} {
+                        border-width: 2px;
+                    }
+                }
+
+                &#{$mat-text-field-focused} {
+                    #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing} {
+                        border-color: var(--adf-focused-input-border-color);
+                    }
+                }
+
+                &#{$mat-text-field-invalid} {
+                    #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing}, #{$mat-notched-outline-notch} {
+                        border-color: var(--adf-error-input-border-color);
+                    }
                 }
             }
         }
