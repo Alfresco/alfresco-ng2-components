@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { FormService, FormSpinnerEvent } from '@alfresco/adf-core';
+import { Injectable, inject } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Injectable, inject } from '@angular/core';
-import { FormSpinnerComponent } from '../../components/spinner/form-spinner.component';
+import { FormService, FormSpinnerEvent } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormSpinnerComponent } from '../../components/spinner/form-spinner.component';
 
 @Injectable()
 export class FormCloudSpinnerService {
-    private overlayRef?: OverlayRef;
-
     private formService = inject(FormService);
     private overlay = inject(Overlay);
+
+    private overlayRef?: OverlayRef;
 
     initSpinnerHandling(onDestroy$: Observable<boolean>): void {
         this.formService.toggleFormSpinner.pipe(takeUntil(onDestroy$)).subscribe((event: FormSpinnerEvent) => {
