@@ -16,10 +16,10 @@
  */
 
 // import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { IsFlagsOverridabilityOnNg14 } from '../guards/is-flags-overridability-on.guard';
+import { IsFlagsOverrideOnNg14 } from '../guards/is-flags-overridability-on.guard';
 import { IsFeatureOnNg14 } from '../guards/is-feature-on.guard';
 import { IsFeatureOffNg14 } from '../guards/is-feature-off.guard';
-import { FeaturesServiceToken, FlagsOverridabilityToken } from '../interfaces/features.interface';
+import { FeaturesServiceToken, FlagsOverrideToken } from '../interfaces/features.interface';
 import { DummyFeaturesService } from '../services/dummy-features.service';
 
 /**
@@ -31,10 +31,10 @@ export function provideDummyFeatureFlags() /*: EnvironmentProviders*/ {
     //   return makeEnvironmentProviders([
     return [
         { provide: FeaturesServiceToken, useClass: DummyFeaturesService },
-        { provide: FlagsOverridabilityToken, useValue: false },
+        { provide: FlagsOverrideToken, useValue: false },
         IsFeatureOnNg14,
         IsFeatureOffNg14,
-        IsFlagsOverridabilityOnNg14
+        IsFlagsOverrideOnNg14
         //   ]);
     ];
 }

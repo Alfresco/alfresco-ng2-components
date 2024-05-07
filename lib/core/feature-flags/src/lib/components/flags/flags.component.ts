@@ -35,7 +35,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { FlagsOverridabilityComponent } from '../feature-overridability-indicator.component';
+import { FlagsOverrideComponent } from '../feature-overridability-indicator.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -43,7 +43,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'adf-feature-flags-overrides',
     standalone: true,
     imports: [
-        FlagsOverridabilityComponent,
+        FlagsOverrideComponent,
         CommonModule,
         FormsModule,
         MatTableModule,

@@ -17,7 +17,7 @@
 
 import { APP_INITIALIZER /*EnvironmentProviders, makeEnvironmentProviders*/ } from '@angular/core';
 import {
-    FlagsOverridabilityToken,
+    FlagsOverrideToken,
     FeaturesServiceToken,
     QaFeaturesHelperConfig,
     WritableFeaturesServiceConfig,
@@ -37,7 +37,7 @@ import { DOCUMENT } from '@angular/common';
 export function provideDebugFeatureFlags(config: WritableFeaturesServiceConfig & QaFeaturesHelperConfig) /*: EnvironmentProviders*/ {
     //   return makeEnvironmentProviders([
     return [
-        { provide: FlagsOverridabilityToken, useValue: true },
+        { provide: FlagsOverrideToken, useValue: true },
         { provide: FeaturesServiceToken, useClass: DebugFeaturesService },
         { provide: WritableFeaturesServiceConfigToken, useValue: config },
         { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },

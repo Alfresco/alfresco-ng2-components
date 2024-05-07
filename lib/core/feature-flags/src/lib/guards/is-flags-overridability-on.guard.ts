@@ -16,15 +16,15 @@
  */
 
 import { Inject, Injectable, Optional, inject } from '@angular/core';
-import { FlagsOverridabilityToken } from '../interfaces/features.interface';
+import { FlagsOverrideToken } from '../interfaces/features.interface';
 import { CanMatch } from '@angular/router';
 
-export const isFlagsOverridabilityOn = () => () => inject(FlagsOverridabilityToken) ?? false;
+export const isFlagsOverrideOn = () => () => inject(FlagsOverrideToken) ?? false;
 
 /** @deprecated */
 @Injectable()
-export class IsFlagsOverridabilityOnNg14 implements CanMatch {
-    constructor(@Optional() @Inject(FlagsOverridabilityToken) private devToolsToken: boolean) {}
+export class IsFlagsOverrideOnNg14 implements CanMatch {
+    constructor(@Optional() @Inject(FlagsOverrideToken) private devToolsToken: boolean) {}
 
     canMatch(): boolean {
         return !!this.devToolsToken;

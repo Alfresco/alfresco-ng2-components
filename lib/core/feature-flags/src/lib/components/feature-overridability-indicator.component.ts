@@ -49,7 +49,7 @@ import { Subject } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FlagsOverridabilityComponent implements OnDestroy {
+export class FlagsOverrideComponent implements OnDestroy {
     isEnabled = false;
     destroy$ = new Subject<void>();
 
@@ -61,7 +61,7 @@ export class FlagsOverridabilityComponent implements OnDestroy {
         private featuresService: IDebugFeaturesService,
         changeDetectorRef: ChangeDetectorRef
     ) {
-        // devTools: true means that FlagsOverridabilityToken is true (enable this component rendering)
+        // devTools: true means that FlagsOverrideToken is true (enable this component rendering)
         // production: true means the injected service doesn't implement the isEnabled method
         if (this.featuresService.isEnabled) {
             this.featuresService
