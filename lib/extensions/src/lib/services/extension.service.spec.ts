@@ -18,11 +18,11 @@
 import { ExtensionService } from './extension.service';
 import { ExtensionLoaderService } from './extension-loader.service';
 import { ExtensionConfig } from '../config/extension.config';
+import { ComponentRegisterService } from './component-register.service';
+import { RuleService } from './rule.service';
 import { RuleRef } from '../config/rule.extensions';
 import { RouteRef } from '../config/routing.extensions';
 import { ActionRef } from '../config/action.extensions';
-import { ComponentRegisterService } from './component-register.service';
-import { RuleService } from './rule.service';
 
 describe('ExtensionService', () => {
     const blankConfig: ExtensionConfig = {

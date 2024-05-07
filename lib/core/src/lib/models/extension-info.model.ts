@@ -15,6 +15,23 @@
  * limitations under the License.
  */
 
-export * from './alfresco-api.service';
-export { AlfrescoApiFactory } from './alfresco-api.interface';
-export * from './extension-manager.service';
+import { ActionRef, RouteRef, RuleRef } from '@alfresco/adf-extensions';
+
+export class ExtensionInfoModel {
+    $id: string;
+    $name: string;
+    $version: string;
+    $vendor: string;
+    $license: string;
+    $description?: string;
+    $dependencies?: Array<string>;
+    $compatibilities?: Array<string>;
+
+    extensionId: string;
+    rules?: Array<RuleRef>;
+    routes?: Array<RouteRef>;
+    actions?: Array<ActionRef>;
+    features?: {
+        [key: string]: any;
+    };
+}

@@ -15,6 +15,15 @@
  * limitations under the License.
  */
 
-export * from './alfresco-api.service';
-export { AlfrescoApiFactory } from './alfresco-api.interface';
-export * from './extension-manager.service';
+import { AppConfigPluginRef } from './app-config-plugin-ref';
+import { RouteRef, RuleRef, ActionRef } from '@alfresco/adf-extensions';
+
+export class ExtensionComposition {
+    appConfig: AppConfigPluginRef = new AppConfigPluginRef();
+    rules?: Array<RuleRef> = [];
+    routes?: Array<RouteRef> = [];
+    actions?: Array<ActionRef> = [];
+    features?: {
+        [key: string]: any;
+    } = {};
+}

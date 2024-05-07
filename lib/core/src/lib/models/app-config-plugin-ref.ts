@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
-export * from './alfresco-api.service';
-export { AlfrescoApiFactory } from './alfresco-api.interface';
-export * from './extension-manager.service';
+export class AppConfigPluginRef {
+    plugins: {
+        [key: string]: boolean;
+    } = {};
+}
