@@ -83,7 +83,7 @@
     "monaco-editor": "^0.33.0",
     "ng2-charts": "^4.1.1",
     "ngx-monaco-editor-v2": "^14.0.4",
-    "pdfjs-dist": "3.3.122",
+    "pdfjs-dist": "4.2.67",
     "raphael": "2.3.0",
     "rxjs": "6.6.6",
     "subscriptions-transport-ws": "^0.11.0",
