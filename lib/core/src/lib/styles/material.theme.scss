@@ -91,6 +91,12 @@
                     }
                 }
             }
+
+            #{$mat-form-field-icon-suffix} {
+                #{$mat-icon} {
+                    padding-top: 0;
+                }
+            }
         }
 
         #{$mat-form-field-hint-wrapper}, #{$mat-form-field-error-wrapper} {
