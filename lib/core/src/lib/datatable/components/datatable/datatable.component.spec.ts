@@ -1267,7 +1267,7 @@ describe('DataTable', () => {
 
         dataTable.resetSelection();
         const rowClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
-        const rowElement = fixture.debugElement.query(By.css(`[data-automation-id="datatable-row-0"] > div`)).nativeElement as HTMLElement;
+        const rowElement = fixture.debugElement.query(By.css(`[data-automation-id="datatable-row-0"] > td`)).nativeElement as HTMLElement;
         rowElement.dispatchEvent(new MouseEvent('click'));
         fixture.detectChanges();
         await rowClickPromise;
@@ -1278,7 +1278,7 @@ describe('DataTable', () => {
 
         dataTable.resetSelection();
         const cellClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
-        const cellElement = fixture.debugElement.query(By.css(`[data-automation-id="datatable-row-1"] > div`)).nativeElement as HTMLElement;
+        const cellElement = fixture.debugElement.query(By.css(`[data-automation-id="datatable-row-1"] > td`)).nativeElement as HTMLElement;
         cellElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         fixture.detectChanges();
         await cellClickPromise;
