@@ -1,0 +1,70 @@
+<mat-toolbar class="feature-flags-overrides-header">
+  <div class="feature-flags-overrides-header-text">
+    <feature-flags-overridability-indicator></feature-flags-overridability-indicator>
+    <span>Feature flag overrides</span>
+  </div>
+  <mat-slide-toggle
+    color="warning"
+    [checked]="isEnabled"
+    (change)="onEnable($event.checked)">
+  </mat-slide-toggle>
+  <button
+    class="feature-flags-overrides-header-close"
+    mat-icon-button
+    mat-dialog-close>
+        <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<ng-container *ngIf="flags$ | async as flags">
+  <table mat-table [dataSource]="flags" class="feature-flags-overrides-table mat-elevation-z0">
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell class="icon-col header-cell" *matHeaderCellDef>
+        <mat-icon class="material-icons-outlined" fontIcon="search" class="search-icon"></mat-icon>
+      </th>
+      <td mat-cell class="icon-col" *matCellDef="let element">
+        <button mat-icon-button *ngIf="element.fictive; else flagFromApi" class="fictive-flag-button" (click)="onDelete(element.flag)">
+          <mat-icon class="material-icons-outlined custom-flag-icon" fontIcon="memory"></mat-icon>
+          <mat-icon class="material-icons-outlined trash-icon" fontIcon="delete"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="flag">
+      <th mat-header-cell class="flag-col header-cell" *matHeaderCellDef>
+        <mat-form-field class="flag-form-field" appearance="outline" floatLabel="auto">
+          <input class="flag-input" [placeholder]="isEnabled ? 'Filter or add new' : 'Filter'" matInput type="text" [(ngModel)]="inputValue" (keyup)="onInputChange(inputValue)" (keypress)="onAdd($event)">
+        </mat-form-field>
+      </th>
+      <td mat-cell class="flag-col" *matCellDef="let element">{{ element.flag }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <th mat-header-cell class="val-col header-cell" *matHeaderCellDef>
+        <div class="input-field-buttons-container">
+          <button *ngIf="showPlusButton$ | async" mat-icon-button matTooltip="Add new feature flag (Shift + Enter)" color="accent" (click)="onAddButtonClick()">
+            <mat-icon class="material-icons-outlined" fontIcon="add_circle"></mat-icon>
+          </button>
+          <button *ngIf="inputValue" matSuffix mat-icon-button aria-label="Clear" (click)="onClearInput()" class="clear-button">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </div>
+      </th>
+      <td mat-cell class="val-col" *matCellDef="let element">
+        <mat-slide-toggle
+          [checked]="element.value"
+          (change)="onChange(element.flag, $event.checked)"
+          [disabled]="!isEnabled">
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</ng-container>
+
+<ng-template #flagFromApi>
+  <mat-icon class="material-icons-outlined" fontIcon="cloud"></mat-icon>
+</ng-template>
+
