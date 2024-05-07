@@ -12,9 +12,14 @@ adf-process-instance-filters {
                 width: 100%;
             }
 
-            .adf-filter-action-button .adf-filter-action-button__label {
-                padding-left: 20px;
-                margin: 0 8px;
+            .adf-filter-action-button {
+                align-items: center;
+                height: 32px;
+
+                .adf-filter-action-button__label {
+                    padding-left: 20px;
+                    margin: 0 8px;
+                }
             }
         }
     }
