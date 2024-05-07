@@ -1,5 +1,4 @@
-<div *ngIf="!requestNode">{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
-<adf-datatable *ngIf="requestNode"
+<adf-datatable *ngIf="requestNode; else noMessagesTemplate"
     [data]="data"
     [rows]="rows"
     [columns]="columns"
@@ -39,3 +38,7 @@
         </ng-template>
     </adf-no-content-template>
 </adf-datatable>
+
+<ng-template #noMessagesTemplate>
+    <div>{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
+</ng-template>
