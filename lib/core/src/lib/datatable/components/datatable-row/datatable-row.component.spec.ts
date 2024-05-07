@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { DataTableRowComponent } from './datatable-row.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataRow } from '../../data/data-row.model';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { DataTableRowComponent } from './datatable-row.component';
 
 describe('DataTableRowComponent', () => {
     let fixture: ComponentFixture<DataTableRowComponent>;
@@ -31,7 +31,7 @@ describe('DataTableRowComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [DataTableRowComponent]
+            imports: [DataTableRowComponent]
         });
 
         fixture = TestBed.createComponent(DataTableRowComponent);
@@ -51,16 +51,14 @@ describe('DataTableRowComponent', () => {
         component.row = row;
         fixture.detectChanges();
 
-        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected'))
-            .not.toBe(true);
+        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected')).not.toBe(true);
     });
 
     it('should not have select class when row data is null', () => {
         row.isSelected = false;
         fixture.detectChanges();
 
-        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected'))
-            .not.toBe(true);
+        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected')).not.toBe(true);
     });
 
     it('should set aria selected to true when row is selected', () => {

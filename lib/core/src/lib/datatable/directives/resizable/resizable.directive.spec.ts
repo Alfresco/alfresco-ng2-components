@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { ElementRef, NgZone, Renderer2 } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { ResizableDirective } from './resizable.directive';
 
 describe('ResizableDirective', () => {
@@ -54,7 +54,7 @@ describe('ResizableDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ResizableDirective],
+            imports: [ResizableDirective],
             providers: [
                 { provide: Renderer2, useValue: rendererMock },
                 { provide: ElementRef, useValue: elementRefMock }
@@ -103,7 +103,15 @@ describe('ResizableDirective', () => {
 
         directive.mousedown.next({ ...mouseDownEvent, resize: true });
 
-        expect(directive.resizeStart.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 0, width: 0 } });
+        expect(directive.resizeStart.emit).toHaveBeenCalledWith({
+            rectangle: {
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                width: 0
+            }
+        });
     });
 
     it('should unset cursor on mouseup', () => {
@@ -125,7 +133,9 @@ describe('ResizableDirective', () => {
         directive.mousedown.next({ ...mouseDownEvent, resize: true });
         directive.mouseup.next(mouseUpEvent);
 
-        expect(directive.resizeEnd.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, right: 0, width: 150, height: 0, bottom: 0, scrollTop: 0, scrollLeft: 0 } });
+        expect(directive.resizeEnd.emit).toHaveBeenCalledWith({
+            rectangle: { top: 0, left: 0, right: 0, width: 150, height: 0, bottom: 0, scrollTop: 0, scrollLeft: 0 }
+        });
     });
 
     it('should emit resizing on mousemove', () => {
@@ -137,7 +147,15 @@ describe('ResizableDirective', () => {
         directive.mousedown.next({ ...mouseDownEvent, resize: true });
         directive.mousemove.next(mouseMoveEvent);
 
-        expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 120, width: 120 } });
+        expect(directive.resizing.emit).toHaveBeenCalledWith({
+            rectangle: {
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 120,
+                width: 120
+            }
+        });
     });
 
     it('should emit resizing on mousemove considering cover padding', () => {
@@ -151,6 +169,14 @@ describe('ResizableDirective', () => {
         directive.mousedown.next({ ...mouseDownEvent, resize: true });
         directive.mousemove.next(mouseMoveEvent);
 
-        expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 130, width: 130 } });
+        expect(directive.resizing.emit).toHaveBeenCalledWith({
+            rectangle: {
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 130,
+                width: 130
+            }
+        });
     });
 });

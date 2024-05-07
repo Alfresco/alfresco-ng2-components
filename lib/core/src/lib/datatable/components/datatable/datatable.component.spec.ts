@@ -15,34 +15,37 @@
  * limitations under the License.
  */
 
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { By } from '@angular/platform-browser';
+import { take } from 'rxjs/operators';
+import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
+import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
+import { CoreTestingModule } from '../../../testing';
+import { DataColumnComponent, DataColumnListComponent } from '../../data-column';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
-import { DataTableComponent, ShowHeaderMode } from './datatable.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { DataColumnListComponent } from '../../data-column/data-column-list.component';
-import { DataColumnComponent } from '../../data-column/data-column.component';
-import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
-import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { take } from 'rxjs/operators';
-import { By } from '@angular/platform-browser';
 import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 
-@Component({ selector: 'adf-custom-column-template-component', template: ` <ng-template #tmplRef></ng-template> ` })
+@Component({
+    selector: 'adf-custom-column-template-component',
+    template: ` <ng-template #tmplRef></ng-template>`
+})
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
+
 @Component({
     selector: 'adf-custom-column-header-component',
-    template: ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
+    template: ` <ng-template #tmplRef> CUSTOM HEADER</ng-template>`
 })
 class CustomColumnHeaderComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
@@ -314,7 +317,12 @@ describe('DataTable', () => {
     });
 
     it('should emit "sorting-changed" DOM event', (done) => {
-        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'asc', sortingKey: 'displayName' });
+        const column = new ObjectDataColumn({
+            key: 'name',
+            sortable: true,
+            direction: 'asc',
+            sortingKey: 'displayName'
+        });
         dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [column]);
         dataTable.data.setSorting(new DataSorting('name', 'desc'));
 
@@ -505,7 +513,15 @@ describe('DataTable', () => {
 
     it('should unselect the row with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
-        dataTable.data = new ObjectDataTableAdapter([{ name: '1', isSelected: true }], [new ObjectDataColumn({ key: 'name' })]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                {
+                    name: '1',
+                    isSelected: true
+                }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
         const rows = dataTable.data.getRows();
         rows[0].isSelected = true;
 
@@ -518,8 +534,7 @@ describe('DataTable', () => {
 
         dataTable.onRowClick(rows[0], {
             metaKey: true,
-            preventDefault: () => {},
-            composedPath: () => []
+            preventDefault: () => {}
         } as any);
     });
 
@@ -560,7 +575,16 @@ describe('DataTable', () => {
 
     it('should select multiple rows with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
-        dataTable.data = new ObjectDataTableAdapter([{ name: '1', isSelected: true }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                {
+                    name: '1',
+                    isSelected: true
+                },
+                { name: '2' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
         const rows = dataTable.data.getRows();
         rows[0].isSelected = true;
 
@@ -725,7 +749,13 @@ describe('DataTable', () => {
     it('should not sort upon clicking non-sortable column header', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }, { name: '2' }],
-            [new ObjectDataColumn({ key: 'name', sortable: false }), new ObjectDataColumn({ key: 'other', sortable: true })]
+            [
+                new ObjectDataColumn({ key: 'name', sortable: false }),
+                new ObjectDataColumn({
+                    key: 'other',
+                    sortable: true
+                })
+            ]
         );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
@@ -740,7 +770,15 @@ describe('DataTable', () => {
     });
 
     it('should set sorting upon column header clicked', () => {
-        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }], [new ObjectDataColumn({ key: 'column_1', sortable: true })]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }],
+            [
+                new ObjectDataColumn({
+                    key: 'column_1',
+                    sortable: true
+                })
+            ]
+        );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
@@ -755,7 +793,15 @@ describe('DataTable', () => {
     });
 
     it('should invert sorting upon column header clicked', () => {
-        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }], [new ObjectDataColumn({ key: 'column_1', sortable: true })]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }],
+            [
+                new ObjectDataColumn({
+                    key: 'column_1',
+                    sortable: true
+                })
+            ]
+        );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
 
@@ -782,7 +828,13 @@ describe('DataTable', () => {
     it('should indicate column that has sorting applied', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }, { name: '2' }],
-            [new ObjectDataColumn({ key: 'name', sortable: true }), new ObjectDataColumn({ key: 'other', sortable: true })]
+            [
+                new ObjectDataColumn({ key: 'name', sortable: true }),
+                new ObjectDataColumn({
+                    key: 'other',
+                    sortable: true
+                })
+            ]
         );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
@@ -800,7 +852,13 @@ describe('DataTable', () => {
     it('should return false for columns that have no sorting', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }, { name: '2' }],
-            [new ObjectDataColumn({ key: 'name', sortable: false }), new ObjectDataColumn({ key: 'other', sortable: false })]
+            [
+                new ObjectDataColumn({ key: 'name', sortable: false }),
+                new ObjectDataColumn({
+                    key: 'other',
+                    sortable: false
+                })
+            ]
         );
 
         const [col1, col2] = dataTable.getSortableColumns();
@@ -849,7 +907,13 @@ describe('DataTable', () => {
     it('should have indeterminate state for "select all" when at least 1 row is selected or not all rows', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }, { name: '2' }],
-            [new ObjectDataColumn({ key: 'name', sortable: false }), new ObjectDataColumn({ key: 'other', sortable: false })]
+            [
+                new ObjectDataColumn({ key: 'name', sortable: false }),
+                new ObjectDataColumn({
+                    key: 'other',
+                    sortable: false
+                })
+            ]
         );
         const rows = dataTable.data.getRows();
 
@@ -922,7 +986,7 @@ describe('DataTable', () => {
         const column = {} as DataColumn;
 
         const row: any = {
-            getValue: () => 'http://www.google.com'
+            getValue: () => 'https://www.google.com'
         };
 
         expect(dataTable.isIconValue(row, column)).toBeFalsy();
@@ -942,7 +1006,7 @@ describe('DataTable', () => {
         const column = {} as DataColumn;
 
         const row: any = {
-            getValue: () => 'http://www.google.com'
+            getValue: () => 'https://www.google.com'
         };
 
         expect(dataTable.asIconValue(row, column)).toBe(null);
@@ -1139,7 +1203,14 @@ describe('DataTable', () => {
                 { id: 1, name: 'foo' },
                 { id: 2, name: 'bar' }
             ],
-            [new ObjectDataColumn({ key: 'id', title: 'ID' }), new ObjectDataColumn({ key: 'name', title: 'Name', header: customHeader })]
+            [
+                new ObjectDataColumn({ key: 'id', title: 'ID' }),
+                new ObjectDataColumn({
+                    key: 'name',
+                    title: 'Name',
+                    header: customHeader
+                })
+            ]
         );
         fixture.detectChanges();
 
@@ -1326,19 +1397,19 @@ describe('Accesibility', () => {
         });
 
         fixture.detectChanges();
-        const datatableAttributes = element.querySelector('.adf-datatable-list').attributes;
-        const datatableHeaderAttributes = element.querySelector('.adf-datatable-list .adf-datatable-header').attributes;
-        const datatableHeaderCellAttributes = element.querySelector('.adf-datatable-cell-header').attributes;
-        const datatableBodyAttributes = element.querySelector('.adf-datatable-body').attributes;
-        const datatableBodyRowAttributes = element.querySelector('.adf-datatable-body .adf-datatable-row').attributes;
-        const datatableBodyCellAttributes = element.querySelector('.adf-datatable-body .adf-datatable-cell').attributes;
+        const attributes = element.querySelector('.adf-datatable-list').attributes;
+        const header = element.querySelector('.adf-datatable-list .adf-datatable-header');
+        const headerCell = element.querySelector('.adf-datatable-cell-header');
+        const body = element.querySelector('.adf-datatable-body');
+        const row = element.querySelector('.adf-datatable-body .adf-datatable-row').attributes;
+        const cell = element.querySelector('.adf-datatable-body .adf-datatable-cell');
 
-        expect(datatableAttributes.getNamedItem('role').value).toEqual('grid');
-        expect(datatableHeaderAttributes.getNamedItem('role').value).toEqual('rowgroup');
-        expect(datatableHeaderCellAttributes.getNamedItem('role').value).toEqual('columnheader');
-        expect(datatableBodyAttributes.getNamedItem('role').value).toEqual('rowgroup');
-        expect(datatableBodyRowAttributes.getNamedItem('role').value).toEqual('row');
-        expect(datatableBodyCellAttributes.getNamedItem('role').value).toEqual('gridcell');
+        expect(attributes.getNamedItem('role').value).toEqual('grid');
+        expect(header.tagName).toEqual('THEAD');
+        expect(headerCell.tagName).toEqual('TH');
+        expect(body.tagName).toEqual('TBODY');
+        expect(row.getNamedItem('role').value).toEqual('row');
+        expect(cell.tagName).toEqual('TD');
     });
 
     describe('aria-sort', () => {
@@ -1467,7 +1538,16 @@ describe('Accesibility', () => {
         dataTable.showHeader = ShowHeaderMode.Never;
         const dataRows = [{ name: 'name1' }];
 
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: false })]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [],
+            [
+                new ObjectDataColumn({
+                    key: 'name',
+                    template: columnCustomTemplate,
+                    focus: false
+                })
+            ]
+        );
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -1484,7 +1564,16 @@ describe('Accesibility', () => {
         dataTable.showHeader = ShowHeaderMode.Never;
         const dataRows = [{ name: 'name1' }];
 
-        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: true })]);
+        dataTable.data = new ObjectDataTableAdapter(
+            [],
+            [
+                new ObjectDataColumn({
+                    key: 'name',
+                    template: columnCustomTemplate,
+                    focus: true
+                })
+            ]
+        );
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)

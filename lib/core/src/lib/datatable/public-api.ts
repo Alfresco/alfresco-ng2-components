@@ -52,6 +52,5 @@ export * from './directives/main-data-table-action-template.directive';
 
 export * from './services/datatable.service';
 
-
 export * from './datatable.module';
 export * from './data-column';
