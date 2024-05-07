@@ -1,6 +1,5 @@
-
-<div id="adf-form-renderer" 
-     class="{{ formDefinition.className }}" 
+<div id="adf-form-renderer"
+     class="{{ formDefinition.className }}"
      [ngClass]="{ 'adf-readonly-form': formDefinition.readOnly }">
     <div *ngIf="formDefinition.hasTabs()">
         <div *ngIf="hasTabs()" class="alfresco-tabs-widget">
@@ -21,7 +20,7 @@
     <div *ngFor="let currentRootElement of fieldToRender">
         <div *ngIf="currentRootElement.type === 'container' || currentRootElement.type === 'group'"
              class="adf-container-widget"
-             [id]="'field-'+currentRootElement?.id+'-container'"
+             [id]="'field-'+currentRootElement?.id + '-container'"
              [hidden]="!currentRootElement?.isVisible">
             <div [hidden]="!currentRootElement?.isGroup()" class="adf-container-widget__header">
                 <h4 class="adf-container-widget__header-text"
@@ -34,7 +33,10 @@
                         <mat-icon>{{ currentRootElement?.isExpanded ? 'expand_more' : 'expand_less' }}</mat-icon>
                     </button>
                     <span (click)="onExpanderClicked(currentRootElement)"
-                          [id]="'container-header-label-'+currentRootElement?.id">
+                          (keyup.enter)="onExpanderClicked(currentRootElement)"
+                          [id]="'container-header-label-' + currentRootElement?.id"
+                          role="button"
+                          tabindex="0">
                         {{ currentRootElement.name | translate }}
                     </span>
                 </h4>
@@ -55,7 +57,7 @@
                 <section class="adf-grid-list-column-view" *ngIf="currentRootElement?.isExpanded">
                     <div class="adf-grid-list-single-column"
                          *ngFor="let column of currentRootElement?.columns"
-                         [style.width.%]="getColumnWith(currentRootElement)">
+                         [style.width.%]="getColumnWidth(currentRootElement)">
                         <div class="adf-grid-list-column-view-item" *ngFor="let field of column?.fields">
                             <adf-form-field *ngIf="field" [field]="field"></adf-form-field>
                         </div>

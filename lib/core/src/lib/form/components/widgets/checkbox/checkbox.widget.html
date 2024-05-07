@@ -9,7 +9,7 @@
                   [matTooltip]="field.tooltip"
                   (click)="markAsTouched()"
                   matTooltipPosition="right"
-                  matTooltipShowDelay="1000">
+                  [matTooltipShowDelay]="1000">
         {{ field.name | translate }}
         <span class="adf-asterisk" *ngIf="isRequired()">*</span>
     </mat-checkbox>

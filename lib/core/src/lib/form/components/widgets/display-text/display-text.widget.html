@@ -1,6 +1,6 @@
 <div [matTooltip]="field.tooltip"
      matTooltipPosition="above"
-     matTooltipShowDelay="1000"
+     [matTooltipShowDelay]="1000"
      class="adf-display-text-widget {{ field.className }}">
     {{ field.value | translate }}
 </div>
