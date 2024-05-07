@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataColumn } from '@alfresco/adf-core';
+import { DataColumn, DataRow, ObjectDataColumn, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskVariableCloud } from '../../../../models/task-variable-cloud.model';
 
 export const mockSchemaDefinition: DataColumn[] = [
@@ -38,18 +38,23 @@ export const mockSchemaDefinition: DataColumn[] = [
 export const mockSchemaDefinitionWithNestedKeys: DataColumn[] = [
     {
         type: 'text',
-        key: 'countries.europeCountries.id',
+        key: 'countries.europeCountry.id',
         title: 'Country ID',
         sortable: true,
         draggable: true
     },
     {
         type: 'text',
-        key: 'countries.europeCountries.name',
+        key: 'countries.europeCountry.name',
         title: 'Country Name',
         sortable: true,
         draggable: true
     }
+];
+
+export const expectedCountryColumns: DataColumn[] = [
+    new ObjectDataColumn({ key: 'id', type: 'text', title: 'Country ID', sortable: true, draggable: true }),
+    new ObjectDataColumn({ key: 'name', type: 'text', title: 'Country Name', sortable: true, draggable: true })
 ];
 
 export const mockInvalidSchemaDefinition: DataColumn[] = [
@@ -82,6 +87,12 @@ export const mockEuropeCountriesData = [
         id: 'UK',
         name: 'United Kingdom'
     }
+];
+
+export const expectedEuropeCountriesRows: DataRow[] = [
+    new ObjectDataRow({ id: 'IT', name: 'Italy' }),
+    new ObjectDataRow({ id: 'PL', name: 'Poland' }),
+    new ObjectDataRow({ id: 'UK', name: 'United Kingdom' })
 ];
 
 export const mockJsonResponseEuropeCountriesData = {
@@ -142,6 +153,12 @@ export const mockAmericaCountriesData = [
         id: 'MX',
         name: 'Mexico'
     }
+];
+
+export const expectedAmericaCountriesRows: DataRow[] = [
+    new ObjectDataRow({ id: 'CA', name: 'Canada' }),
+    new ObjectDataRow({ id: 'MX', name: 'Mexico' }),
+    new ObjectDataRow({ id: 'US', name: 'United States' })
 ];
 
 export const mockCountriesIncorrectData = [
