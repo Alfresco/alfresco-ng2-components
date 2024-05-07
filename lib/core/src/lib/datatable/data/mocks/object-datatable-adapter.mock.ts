@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { DataColumn } from '../data-column.model';
-
 export const mockPersonData = [
     {
         person: {
@@ -62,26 +60,4 @@ export const mockPersonData = [
     }
 ];
 
-export const mockPersonSchema: DataColumn[] = [
-    {
-        type: 'json',
-        key: 'person.personData.[address.[data]test]',
-        title: 'Address',
-        sortable: true,
-        draggable: true
-    },
-    {
-        type: 'text',
-        key: 'person.name',
-        title: 'Name',
-        sortable: true,
-        draggable: true
-    },
-    {
-        type: 'json',
-        key: 'person.phoneNumbers',
-        title: 'Phone numbers',
-        sortable: true,
-        draggable: true
-    }
-];
+export const mockPersonDataFirstRow = mockPersonData[0].person;
