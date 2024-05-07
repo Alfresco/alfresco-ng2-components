@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService, CoreAutomationService, FormRenderingService } from '@alfresco/adf-core';
+import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    FormModel,
+    FormFieldModel,
+    FormService,
+    FormOutcomeEvent,
+    NotificationService,
+    CoreAutomationService,
+    FormRenderingService
+} from '@alfresco/adf-core';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { Subject } from 'rxjs';
@@ -33,6 +41,10 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class FormComponent implements OnInit, OnDestroy {
+    private formService = inject(FormService);
+    private notificationService = inject(NotificationService);
+    private automationService = inject(CoreAutomationService);
+
     form: FormModel;
     errorFields: FormFieldModel[] = [];
     formConfig: string;
@@ -49,25 +61,16 @@ export class FormComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(FormService) private formService: InMemoryFormService,
-                private notificationService: NotificationService,
-                private automationService: CoreAutomationService) {
-    }
-
     logErrors(errorFields: FormFieldModel[]) {
         this.errorFields = errorFields;
     }
 
     ngOnInit() {
-        this.formService.executeOutcome
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((formOutcomeEvent: FormOutcomeEvent) => {
-                formOutcomeEvent.preventDefault();
-            });
+        this.formService.executeOutcome.pipe(takeUntil(this.onDestroy$)).subscribe((formOutcomeEvent: FormOutcomeEvent) => {
+            formOutcomeEvent.preventDefault();
+        });
 
-        this.formConfig = JSON.stringify(
-            this.automationService.forms.getFormDefinition()
-        );
+        this.formConfig = JSON.stringify(this.automationService.forms.getFormDefinition());
         this.parseForm();
     }
 

@@ -18,7 +18,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pagination, ResultSetPaging } from '@alfresco/js-api';
-import { SearchConfiguration, SearchForm, SearchQueryBuilderService, SearchService } from '@alfresco/adf-content-services';
+import { SearchConfiguration, SearchQueryBuilderService, SearchService } from '@alfresco/adf-content-services';
 import { ShowHeaderMode, UserPreferencesService } from '@alfresco/adf-core';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -26,11 +26,10 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'app-search-filter-chips',
     templateUrl: './search-filter-chips.component.html',
-    styleUrls: [ './search-filter-chips.component.scss' ],
+    styleUrls: ['./search-filter-chips.component.scss'],
     providers: [SearchService]
 })
 export class SearchFilterChipsComponent implements OnInit, OnDestroy {
-
     queryParamName = 'q';
     searchedWord = '';
     data: ResultSetPaging;
@@ -38,15 +37,16 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
     isLoading = true;
 
     sorting = ['name', 'asc'];
-    searchForms: SearchForm[];
     showHeader = ShowHeaderMode.Always;
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public router: Router,
-                private preferences: UserPreferencesService,
-                private queryBuilder: SearchQueryBuilderService,
-                private route: ActivatedRoute) {
+    constructor(
+        public router: Router,
+        private preferences: UserPreferencesService,
+        private queryBuilder: SearchQueryBuilderService,
+        private route: ActivatedRoute
+    ) {
         combineLatest([this.route.params, this.queryBuilder.configUpdated])
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(([params, searchConfig]) => {
@@ -56,7 +56,7 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
                 if (query) {
                     this.queryBuilder.userQuery = query;
                 }
-        });
+            });
 
         queryBuilder.paging = {
             maxItems: this.preferences.paginationSize,
@@ -69,21 +69,17 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
 
         this.sorting = this.getSorting();
 
-        this.queryBuilder.updated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                this.sorting = this.getSorting();
-                this.isLoading = true;
-            });
+        this.queryBuilder.updated.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.sorting = this.getSorting();
+            this.isLoading = true;
+        });
 
-        this.queryBuilder.executed
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((resultSetPaging: ResultSetPaging) => {
-                this.queryBuilder.paging.skipCount = 0;
+        this.queryBuilder.executed.pipe(takeUntil(this.onDestroy$)).subscribe((resultSetPaging: ResultSetPaging) => {
+            this.queryBuilder.paging.skipCount = 0;
 
-                this.onSearchResultLoaded(resultSetPaging);
-                this.isLoading = false;
-            });
+            this.onSearchResultLoaded(resultSetPaging);
+            this.isLoading = false;
+        });
 
         if (this.route) {
             this.route.params.forEach((params: Params) => {
@@ -92,18 +88,20 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
                     this.queryBuilder.update();
                 } else {
                     this.queryBuilder.userQuery = null;
-                    this.queryBuilder.executed.next(new ResultSetPaging({
-                        list: {
-                            pagination: { totalItems: 0 },
-                            entries: []
-                        }
-                    }));
+                    this.queryBuilder.executed.next(
+                        new ResultSetPaging({
+                            list: {
+                                pagination: { totalItems: 0 },
+                                entries: []
+                            }
+                        })
+                    );
                 }
             });
         }
     }
 
-    private formatSearchQuery(userInput: string, fields =  ['cm:name']) {
+    private formatSearchQuery(userInput: string, fields = ['cm:name']) {
         if (!userInput) {
             return null;
         }

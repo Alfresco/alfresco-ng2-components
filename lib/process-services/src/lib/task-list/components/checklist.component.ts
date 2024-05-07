@@ -62,7 +62,7 @@ export class ChecklistComponent implements OnChanges {
 
     checklist: TaskDetailsModel[] = [];
 
-    constructor(private activitiTaskList: TaskListService, private dialog: MatDialog) {}
+    constructor(private taskListService: TaskListService, private dialog: MatDialog) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const taskId = changes['taskId'];
@@ -75,7 +75,7 @@ export class ChecklistComponent implements OnChanges {
     getTaskChecklist() {
         this.checklist = [];
         if (this.taskId) {
-            this.activitiTaskList.getTaskChecklist(this.taskId).subscribe(
+            this.taskListService.getTaskChecklist(this.taskId).subscribe(
                 (taskDetailsModel) => {
                     taskDetailsModel.forEach((task) => {
                         this.checklist.push(task);
@@ -100,7 +100,7 @@ export class ChecklistComponent implements OnChanges {
             parentTaskId: this.taskId,
             assignee: { id: this.assignee }
         });
-        this.activitiTaskList.addTask(newTask).subscribe(
+        this.taskListService.addTask(newTask).subscribe(
             (taskDetailsModel) => {
                 this.checklist.push(taskDetailsModel);
                 this.checklistTaskCreated.emit(taskDetailsModel);
@@ -114,7 +114,7 @@ export class ChecklistComponent implements OnChanges {
     }
 
     public delete(taskId: string) {
-        this.activitiTaskList.deleteTask(taskId).subscribe(
+        this.taskListService.deleteTask(taskId).subscribe(
             () => {
                 this.checklist = this.checklist.filter((check) => check.id !== taskId);
                 this.checklistTaskDeleted.emit(taskId);
