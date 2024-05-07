@@ -62,7 +62,6 @@ export class FlagsOverridabilityComponent implements OnDestroy {
         private featuresService: IDebugFeaturesService,
         changeDetectorRef: ChangeDetectorRef
     ) {
-        // workspace-hxp app on hxps-rc env has the production and devTools flag enabled,
         // devTools: true means that FlagsOverridabilityToken is true (enable this component rendering)
         // production: true means the injected service doesn't implement the isEnabled method
         if (this.featuresService.isEnabled) {
