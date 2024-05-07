@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export const mockPersonData = [
+export const mockPersonsData = [
     {
         person: {
             personData: {
@@ -60,4 +60,4 @@ export const mockPersonData = [
     }
 ];
 
-export const mockPersonDataFirstRow = mockPersonData[0].person;
+export const mockPersonDataFirstRow = mockPersonsData[0].person;

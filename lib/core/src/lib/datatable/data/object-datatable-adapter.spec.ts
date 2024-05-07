@@ -21,7 +21,7 @@ import { DataSorting } from './data-sorting.model';
 import { ObjectDataTableAdapter } from './object-datatable-adapter';
 import { ObjectDataRow } from './object-datarow.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
-import { mockPersonData, mockPersonDataFirstRow } from './mocks/object-datatable-adapter.mock';
+import { mockPersonsData, mockPersonDataFirstRow } from './mocks/object-datatable-adapter.mock';
 
 describe('ObjectDataTableAdapter', () => {
     it('should init with empty row collection', () => {
@@ -301,7 +301,7 @@ describe('ObjectDataTableAdapter', () => {
                 }
             ];
 
-            const adapter = new ObjectDataTableAdapter(mockPersonData, mockPersonSchema);
+            const adapter = new ObjectDataTableAdapter(mockPersonsData, mockPersonSchema);
             const rows = adapter.getRows();
             const columns = adapter.getColumns();
 
@@ -379,7 +379,7 @@ describe('ObjectDataTableAdapter', () => {
                 }
             ];
 
-            const adapter = new ObjectDataTableAdapter(mockPersonData, mockPersonSchema);
+            const adapter = new ObjectDataTableAdapter(mockPersonsData, mockPersonSchema);
             const rows = adapter.getRows();
             const columns = adapter.getColumns();
 

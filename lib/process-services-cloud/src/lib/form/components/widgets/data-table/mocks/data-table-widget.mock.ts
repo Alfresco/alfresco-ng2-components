@@ -52,7 +52,7 @@ export const mockSchemaDefinitionWithNestedKeys: DataColumn[] = [
     }
 ];
 
-export const expectedCountryColumns: DataColumn[] = [
+export const mockCountryColumns: DataColumn[] = [
     new ObjectDataColumn({ key: 'id', type: 'text', title: 'Country ID', sortable: true, draggable: true }),
     new ObjectDataColumn({ key: 'name', type: 'text', title: 'Country Name', sortable: true, draggable: true })
 ];
@@ -89,7 +89,7 @@ export const mockEuropeCountriesData = [
     }
 ];
 
-export const expectedEuropeCountriesRows: DataRow[] = [
+export const mockEuropeCountriesRows: DataRow[] = [
     new ObjectDataRow({ id: 'IT', name: 'Italy' }),
     new ObjectDataRow({ id: 'PL', name: 'Poland' }),
     new ObjectDataRow({ id: 'UK', name: 'United Kingdom' })
@@ -155,7 +155,7 @@ export const mockAmericaCountriesData = [
     }
 ];
 
-export const expectedAmericaCountriesRows: DataRow[] = [
+export const mockAmericaCountriesRows: DataRow[] = [
     new ObjectDataRow({ id: 'CA', name: 'Canada' }),
     new ObjectDataRow({ id: 'MX', name: 'Mexico' }),
     new ObjectDataRow({ id: 'US', name: 'United States' })

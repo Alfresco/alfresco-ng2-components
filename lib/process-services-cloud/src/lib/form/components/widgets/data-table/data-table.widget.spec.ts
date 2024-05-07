@@ -35,9 +35,9 @@ import {
     mockJsonNestedResponseEuropeCountriesData,
     mockNestedEuropeCountriesData,
     mockSchemaDefinitionWithNestedKeys,
-    expectedCountryColumns,
-    expectedEuropeCountriesRows,
-    expectedAmericaCountriesRows
+    mockCountryColumns,
+    mockEuropeCountriesRows,
+    mockAmericaCountriesRows
 } from './mocks/data-table-widget.mock';
 
 describe('DataTableWidgetComponent', () => {
@@ -126,7 +126,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockNestedEuropeCountriesData;
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedEuropeCountriesRows);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize data source with priority on the field value if process and form variables are provided', () => {
@@ -134,7 +134,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockAmericaCountriesData;
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedAmericaCountriesRows);
+        assertData(mockCountryColumns, mockAmericaCountriesRows);
     });
 
     it('should properly initialize data source based on field value', () => {
@@ -142,7 +142,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockAmericaCountriesData;
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedAmericaCountriesRows);
+        assertData(mockCountryColumns, mockAmericaCountriesRows);
     });
 
     it('should properly initialize default json response data source based on field value if path is NOT provided', () => {
@@ -150,14 +150,14 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockJsonResponseEuropeCountriesData;
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedEuropeCountriesRows);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize default json response data source based on variable if path is NOT provided', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonResponseFormVariable);
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedEuropeCountriesRows);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize json response data source based on field value if path is provided', () => {
@@ -165,7 +165,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockJsonNestedResponseEuropeCountriesData;
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedEuropeCountriesRows);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize json response data source based on variable if path is provided', () => {
@@ -177,21 +177,21 @@ describe('DataTableWidgetComponent', () => {
         );
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedEuropeCountriesRows);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize data source based on form variable', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariable);
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedEuropeCountriesRows);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize data source based on process variable', () => {
         widget.field = getDataVariable({ variableName: 'json-variable' }, mockSchemaDefinition, mockJsonProcessVariables);
         fixture.detectChanges();
 
-        assertData(expectedCountryColumns, expectedEuropeCountriesRows);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should NOT display error if form is in preview state', () => {
