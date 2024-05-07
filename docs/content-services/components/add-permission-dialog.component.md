@@ -7,6 +7,8 @@ Last reviewed: 2024-05-07
 
 # Add Permission Dialog Component
 
+`import { NodePermissionDialogService } from '@alfresco/adf-content-services';`
+
 Displays a dialog to search for people or groups to add to the current node permissions.
 
 ![Add Permission Component](../../docassets/images/add-permission-component.png)
