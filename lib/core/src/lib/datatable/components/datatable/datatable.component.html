@@ -110,7 +110,6 @@
             <div *ngIf="isResizingEnabled && col.resizable && !lastColumn"
                  [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
                  adf-resize-handle
-                 tabindex="0"
                  role="separator"
                  (click)="$event.stopPropagation()"
                  (keyup.enter)="$event.stopPropagation()"
