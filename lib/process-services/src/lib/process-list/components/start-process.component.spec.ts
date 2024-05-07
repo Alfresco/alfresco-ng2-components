@@ -71,7 +71,6 @@ describe('StartProcessComponent', () => {
             ],
             declarations: [StartProcessInstanceComponent],
             providers: [
-                ProcessNamePipe,
                 LocalizedDatePipe,
                 ActivitiContentService,
                 ProcessService,
