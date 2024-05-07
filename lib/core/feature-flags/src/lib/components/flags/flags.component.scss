@@ -1,87 +1,111 @@
 /* stylelint-disable */
-[ng-version^='16'] {
-    .feature-flags-overrides-header {
-        position: sticky;
-        top: 0px;
-        height: 64px;
-        z-index: 101;
+.feature-flags-overrides-header {
+    position: sticky;
+    top: 0px;
+    height: 64px;
+    z-index: 101;
+    display: flex;
+
+    .activity-indicator {
+        margin-right: 12px;
+        position: relative;
+        top: -2px;
+    }
+
+    &-text {
+        flex: 1;
+    }
+
+    &-close {
+        margin-left: 12px;
+    }
+}
+
+.feature-flags-overrides-table {
+    width: 100%;
+
+    .header-cell {
+        top: 64px !important;
+    }
+
+    .search-icon {
+        position: relative;
+        top: 4px;
+    }
+
+    .flag-form-field {
+        width: 100%;
         display: flex;
 
-        .activity-indicator {
-            margin-right: 12px;
-            position: relative;
-            top: -2px;
+        .mat-form-field-flex {
+            margin: 0;
+            padding: 0;
         }
 
-        &-text {
-            flex: 1;
+        .mat-form-field-wrapper,
+        .mat-form-field-appearance-outline .mat-form-field-wrapper {
+            padding: 0;
+            margin: 0;
         }
 
-        &-close {
-            margin-left: 12px;
+        .mat-form-field-wrapper {
+            width: 100%;
+        }
+
+        .mat-form-field-infix {
+            padding: 0;
+            border: none;
+        }
+
+        .mat-form-field-outline,
+        .mat-form-field-label-wrapper {
+            display: none;
         }
     }
 
-    .feature-flags-overrides-table {
-        width: 100%;
+    .input-field-buttons-container {
+        display: flex;
+        justify-content: flex-end;
+    }
 
-        .header-cell {
-            top: 64px !important;
+    .clear-button {
+        margin-left: -14px;
+    }
+
+    .fictive-flag-button {
+        margin-left: -8px;
+        position: relative;
+
+        mat-icon {
+            position: relative;
+            left: 8px;
         }
 
-        .flag-form-field {
-            width: 100%;
-            display: flex;
-
-            .mat-mdc-text-field-wrapper {
-                padding: 0;
-            }
-
-            .mdc-notched-outline,
-            .mat-mdc-form-field-subscript-wrapper {
-                display: none;
-            }
+        .custom-flag-icon {
+            display: block;
         }
 
-        .input-field-buttons-container {
-            display: flex;
-            justify-content: flex-end;
+        .trash-icon {
+            display: none;
         }
 
-        .clear-button {
-            margin-left: -20px;
-        }
-
-        .fictive-flag-button {
-            margin-left: -12px;
-            margin-right: -12px;
-
+        &:hover {
             .custom-flag-icon {
-                display: block;
+                display: none;
             }
 
             .trash-icon {
-                display: none;
-            }
-
-            &:hover {
-                .custom-flag-icon {
-                    display: none;
-                }
-
-                .trash-icon {
-                    display: block;
-                }
+                display: block;
             }
         }
+    }
 
-        .icon-col {
-            width: 56px;
-        }
+    .icon-col {
+        width: 56px;
+    }
 
-        .val-col {
-            width: 85px;
-            text-align: center;
-        }
+    .val-col {
+        width: 85px;
+        text-align: right;
     }
 }

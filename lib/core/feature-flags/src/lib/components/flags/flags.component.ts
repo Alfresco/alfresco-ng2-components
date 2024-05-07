@@ -57,7 +57,7 @@ import { TranslateModule } from '@ngx-translate/core';
         TranslateModule
     ],
     templateUrl: './flags.component.html',
-    styleUrls: ['./flags.component.ng14.scss', './flags.component.scss'],
+    styleUrls: ['./flags.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })

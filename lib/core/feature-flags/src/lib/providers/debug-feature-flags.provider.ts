@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER /*EnvironmentProviders, makeEnvironmentProviders*/ } from '@angular/core';
+import { APP_INITIALIZER } from '@angular/core';
 import {
     FlagsOverrideToken,
     FeaturesServiceToken,
@@ -34,8 +34,7 @@ import { DOCUMENT } from '@angular/common';
  * @param config Configuration for the Feature Flags
  * @returns Environment Providers for Feature Flags
  */
-export function provideDebugFeatureFlags(config: WritableFeaturesServiceConfig & QaFeaturesHelperConfig) /*: EnvironmentProviders*/ {
-    //   return makeEnvironmentProviders([
+export function provideDebugFeatureFlags(config: WritableFeaturesServiceConfig & QaFeaturesHelperConfig) {
     return [
         { provide: FlagsOverrideToken, useValue: true },
         { provide: FeaturesServiceToken, useClass: DebugFeaturesService },
@@ -56,6 +55,5 @@ export function provideDebugFeatureFlags(config: WritableFeaturesServiceConfig &
             deps: [QaFeaturesHelper, DOCUMENT],
             multi: true
         }
-        //   ]);
     ];
 }

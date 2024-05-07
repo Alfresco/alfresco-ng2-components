@@ -18,7 +18,6 @@
 import { Directive, Inject, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
 import { IFeaturesService, FeaturesServiceToken, FlagChangeset } from '../interfaces/features.interface';
-// import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
@@ -42,7 +41,6 @@ export class NotFeaturesDirective implements OnDestroy {
         private viewContainer: ViewContainerRef
     ) {
         combineLatest([this.featuresService.getFlags$(), this.inputUpdate$])
-            // .pipe(takeUntilDestroyed())
             .pipe(takeUntil(this.destroy$))
             .subscribe(([flags, features]: any) => this.updateView(flags, features));
     }

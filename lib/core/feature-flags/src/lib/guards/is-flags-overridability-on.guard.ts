@@ -21,7 +21,6 @@ import { CanMatch } from '@angular/router';
 
 export const isFlagsOverrideOn = () => () => inject(FlagsOverrideToken) ?? false;
 
-/** @deprecated */
 @Injectable()
 export class IsFlagsOverrideOnNg14 implements CanMatch {
     constructor(@Optional() @Inject(FlagsOverrideToken) private devToolsToken: boolean) {}

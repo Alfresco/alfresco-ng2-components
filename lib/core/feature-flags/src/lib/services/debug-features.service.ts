@@ -66,17 +66,33 @@ export class DebugFeaturesService implements IDebugFeaturesService {
         );
     }
 
+    /**
+     * Gets the flags as an observable.
+     *
+     * @returns the observable that emits the flag changeset.
+     */
     getFlags$(): Observable<FlagChangeset> {
         return this.isInDebugMode$.pipe(
             switchMap((isInDebugMode) => (isInDebugMode ? this.writableFeaturesService : this.overriddenFeaturesService).getFlags$())
         );
     }
 
+    /**
+     * Gets the flags snapshot.
+     *
+     * @deprecated Use getFlags$() instead.
+     * @returns the flag changeset.
+     */
     getFlagsSnapshot(): FlagChangeset {
         // eslint-disable-next-line rxjs/no-subject-value
         return this.isInDebugMode.getValue() ? this.writableFeaturesService.getFlagsSnapshot() : this.overriddenFeaturesService.getFlagsSnapshot();
     }
 
+    /**
+     * Resets the specified flags.
+     *
+     * @param flags The flags to reset.
+     */
     resetFlags(flags: FlagSet): void {
         this.writableFeaturesService.resetFlags(flags);
     }

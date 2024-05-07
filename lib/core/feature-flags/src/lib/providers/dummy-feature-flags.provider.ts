@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-// import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { IsFlagsOverrideOnNg14 } from '../guards/is-flags-overridability-on.guard';
 import { IsFeatureOnNg14 } from '../guards/is-feature-on.guard';
 import { IsFeatureOffNg14 } from '../guards/is-feature-off.guard';
@@ -27,14 +26,12 @@ import { DummyFeaturesService } from '../services/dummy-features.service';
  *
  * @returns Environment Providers for Feature Flags.
  */
-export function provideDummyFeatureFlags() /*: EnvironmentProviders*/ {
-    //   return makeEnvironmentProviders([
+export function provideDummyFeatureFlags() {
     return [
         { provide: FeaturesServiceToken, useClass: DummyFeaturesService },
         { provide: FlagsOverrideToken, useValue: false },
         IsFeatureOnNg14,
         IsFeatureOffNg14,
         IsFlagsOverrideOnNg14
-        //   ]);
     ];
 }
