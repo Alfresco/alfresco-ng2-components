@@ -17,7 +17,7 @@
 
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FileSizePipe } from '../../../pipes';
+import { FileSizePipe, PipeModule } from '../../../pipes';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 
 @Component({
@@ -29,7 +29,7 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
-    imports: [NgIf, AsyncPipe, FileSizePipe],
+    imports: [NgIf, AsyncPipe, PipeModule, FileSizePipe],
     host: { class: 'adf-filesize-cell' }
 })
 export class FileSizeCellComponent extends DataTableCellComponent implements OnInit {

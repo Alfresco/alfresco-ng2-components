@@ -24,20 +24,7 @@ import { LoginFooterDirective } from './directives/login-footer.directive';
 import { LoginHeaderDirective } from './directives/login-header.directive';
 
 @NgModule({
-    imports: [
-        LoginComponent,
-        LoginFooterDirective,
-        LoginHeaderDirective,
-        LoginDialogComponent,
-        LoginDialogPanelComponent
-    ],
-    exports: [
-        LoginComponent,
-        LoginFooterDirective,
-        LoginHeaderDirective,
-        LoginDialogComponent,
-        LoginDialogPanelComponent
-    ]
+    imports: [LoginComponent, LoginFooterDirective, LoginHeaderDirective, LoginDialogComponent, LoginDialogPanelComponent],
+    exports: [LoginComponent, LoginFooterDirective, LoginHeaderDirective, LoginDialogComponent, LoginDialogPanelComponent]
 })
-export class LoginModule {
-}
+export class LoginModule {}

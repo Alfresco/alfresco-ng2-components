@@ -30,9 +30,7 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, LoginModule, RouterTestingModule, MatButtonModule],
-            providers: [
-                { provide: AuthenticationService, useClass: AuthenticationMock }
-            ]
+            providers: [{ provide: AuthenticationService, useClass: AuthenticationMock }]
         })
     ],
     parameters: {

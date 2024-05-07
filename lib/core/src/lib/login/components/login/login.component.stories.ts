@@ -29,9 +29,7 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, LoginModule, RouterModule.forRoot([], { useHash: true })],
-            providers: [
-                { provide: AuthenticationService, useClass: AuthenticationMock }
-            ]
+            providers: [{ provide: AuthenticationService, useClass: AuthenticationMock }]
         })
     ],
     parameters: {
@@ -68,7 +66,8 @@ export default {
         },
         showRememberMe: {
             control: 'boolean',
-            description: 'Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly.',
+            description:
+                'Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly.',
             defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
