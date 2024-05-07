@@ -1,0 +1,60 @@
+<div class="adf-dialog-container {{dialogSize}}">
+    <div
+        mat-dialog-title
+        data-automation-id="adf-dialog-header"
+        class="adf-dialog-header"
+    >
+        <h1 class="adf-dialog-title">{{title}}</h1>
+        <button
+            data-automation-id="adf-dialog-close-button"
+            mat-icon-button
+            (click)="onCancel()"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div [ngTemplateOutlet]="data.descriptionTemplate" class="adf-description">
+        <ng-container>{{description}}</ng-container>
+    </div>
+
+
+
+    <mat-dialog-content class="adf-dialog-content">
+        <div class="adf-scrollable-container">
+            <ng-container [ngTemplateOutlet]="data.contentTemplate"></ng-container>
+
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="adf-dialog-actions">
+        <div>
+            <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
+        </div>
+        <div>
+            <button
+                mat-button
+                adf-auto-focus
+                id="aspect-dialog-actions-cancel"
+                data-automation-id="aspect-list-dialog-actions-cancel"
+                (click)="onCancel()"
+            >
+                {{ cancelButtonTitle | translate }}
+            </button>
+
+            <button
+                mat-button
+                mat-flat-button
+                color="primary"
+                id="adf-dialog-actions-confirm"
+                data-automation-id="adf-dialog-actions-confirm"
+                (click)="onConfirm()"
+                [disabled]="isConfirmButtonDisabled"
+            >
+                {{ confirmButtonTitle | translate }}
+            </button>
+        </div>
+    </mat-dialog-actions>
+</div>
+
+<ng-content select="[body]"></ng-content>

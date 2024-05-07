@@ -1,0 +1,94 @@
+$dialog-large-width: 806px;
+$dialog-medium-width: 518px;
+$dialog-small-width: 320px;
+$dialog-title-height: 100px;
+$dialog-information-height: 44px;
+$dialog-buttons-height: 68px;
+
+$dialog-padding: 24px;
+$dialog-list-height: calc(65vh - ($dialog-title-height + $dialog-information-height + $dialog-buttons-height));
+
+.adf-dialog-container {
+    max-width: calc(56% - $dialog-padding * 2);
+    position: relative;
+}
+
+.adf-scrollable-container {
+    max-height: $dialog-list-height;
+    overflow: auto;
+}
+
+.adf-dialog-header,
+.adf-dialog-content,
+.adf-dialog-actions
+{
+    margin: 0;
+    padding: 0;
+}
+
+.adf-dialog-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: $dialog-padding;
+}
+
+.adf-dialog-title {
+    font-size: large;
+    font-weight: 200;
+    margin: 0;
+}
+
+.adf-description {
+    padding-top: $dialog-padding;
+}
+
+.adf-dialog-content {
+    margin: $dialog-padding 0;
+}
+
+.adf-dialog-header,
+.adf-dialog-actions {
+    &::after {
+        content: " ";
+        position: absolute;
+        left: -$dialog-padding;
+        display: block;
+        height: 0;
+        border-bottom: 1px solid #2121211F;
+        width: calc(100% + $dialog-padding * 2);
+    }
+}
+
+.adf-dialog-actions::after {
+    top: 0
+}
+
+.adf-dialog-header::after {
+    bottom: 0;
+}
+
+.adf-dialog-actions {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding-top: $dialog-padding;
+}
+
+/* stylelint-disable selector-class-pattern */
+.mat-dialog-container {
+    border-radius: 8px;
+}
+
+.adf-large {
+    max-width: calc($dialog-large-width - $dialog-padding * 2);
+}
+
+.adf-medium {
+    max-width: calc($dialog-medium-width - $dialog-padding * 2);
+}
+
+.adf-small {
+    max-width: calc($dialog-small-width - $dialog-padding * 2);
+}
