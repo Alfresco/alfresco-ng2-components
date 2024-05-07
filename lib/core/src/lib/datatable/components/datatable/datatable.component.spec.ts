@@ -289,22 +289,28 @@ describe('DataTable', () => {
 
         it('should sortPredicate from CdkDropList return true if column is enabled', () => {
             const dropList = getDropList();
-            spyOn(dropList, 'getSortedItems').and.returnValue([{
-                disabled: true
-            }, {
-                disabled: false
-            }] as CdkDrag[]);
+            spyOn(dropList, 'getSortedItems').and.returnValue([
+                {
+                    disabled: true
+                },
+                {
+                    disabled: false
+                }
+            ] as CdkDrag[]);
 
             expect(dropList.sortPredicate(1, undefined, dropList)).toBeTrue();
         });
 
         it('should sortPredicate from CdkDropList return false if column is disabled', () => {
             const dropList = getDropList();
-            spyOn(dropList, 'getSortedItems').and.returnValue([{
-                disabled: true
-            }, {
-                disabled: true
-            }] as CdkDrag[]);
+            spyOn(dropList, 'getSortedItems').and.returnValue([
+                {
+                    disabled: true
+                },
+                {
+                    disabled: true
+                }
+            ] as CdkDrag[]);
 
             expect(dropList.sortPredicate(1, undefined, dropList)).toBeFalse();
         });
@@ -1391,19 +1397,19 @@ describe('Accesibility', () => {
         });
 
         fixture.detectChanges();
-        const datatableAttributes = element.querySelector('.adf-datatable-list').attributes;
-        const datatableHeaderAttributes = element.querySelector('.adf-datatable-list .adf-datatable-header').attributes;
-        const datatableHeaderCellAttributes = element.querySelector('.adf-datatable-cell-header').attributes;
-        const datatableBodyAttributes = element.querySelector('.adf-datatable-body').attributes;
-        const datatableBodyRowAttributes = element.querySelector('.adf-datatable-body .adf-datatable-row').attributes;
-        const datatableBodyCellAttributes = element.querySelector('.adf-datatable-body .adf-datatable-cell').attributes;
+        const attributes = element.querySelector('.adf-datatable-list').attributes;
+        const header = element.querySelector('.adf-datatable-list .adf-datatable-header');
+        const headerCell = element.querySelector('.adf-datatable-cell-header');
+        const body = element.querySelector('.adf-datatable-body');
+        const row = element.querySelector('.adf-datatable-body .adf-datatable-row').attributes;
+        const cell = element.querySelector('.adf-datatable-body .adf-datatable-cell');
 
-        expect(datatableAttributes.getNamedItem('role').value).toEqual('grid');
-        expect(datatableHeaderAttributes.getNamedItem('role').value).toEqual('rowgroup');
-        expect(datatableHeaderCellAttributes.getNamedItem('role').value).toEqual('columnheader');
-        expect(datatableBodyAttributes.getNamedItem('role').value).toEqual('rowgroup');
-        expect(datatableBodyRowAttributes.getNamedItem('role').value).toEqual('row');
-        expect(datatableBodyCellAttributes.getNamedItem('role').value).toEqual('cell');
+        expect(attributes.getNamedItem('role').value).toEqual('grid');
+        expect(header.tagName).toEqual('THEAD');
+        expect(headerCell.tagName).toEqual('TH');
+        expect(body.tagName).toEqual('TBODY');
+        expect(row.getNamedItem('role').value).toEqual('row');
+        expect(cell.tagName).toEqual('TD');
     });
 
     describe('aria-sort', () => {
