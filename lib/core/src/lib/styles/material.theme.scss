@@ -71,23 +71,28 @@
 
     #{$mat-form-field-appearance-outline} {
         #{$mat-text-field-outlined} {
-            padding-top: 6px;
+            padding-top: 14px;
+            padding-left: 12px;
 
             #{$mat-notched-outline} {
-                padding-bottom: 5px;
+                padding-bottom: 2px;
 
                 &#{$mat-notched-outline-notched} {
                     #{$mat-notched-outline-notch} {
-                        top: 13px;
+                        top: 15px;
                         position: absolute;
                         border: none;
-                        left: 13px
+                        left: 9px
                     }
                 }
 
                 &:not(#{$mat-notched-outline-notched}) {
-                    #{$mat-form-field-label} {
-                        top: 25px;
+                    #{$mat-notched-outline-notch} {
+                        margin-left: -5px;
+
+                        #{$mat-form-field-label} {
+                            top: 30px;
+                        }
                     }
                 }
 
@@ -129,7 +134,7 @@
         }
 
         #{$mat-form-field-hint-wrapper}, #{$mat-form-field-error-wrapper} {
-            padding-left: 0;
+            padding-left: 9px;
             margin-top: -5px;
         }
 
