@@ -22,8 +22,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'feature-flags-overridability-indicator',
+    selector: 'adf-feature-flags-overridability-indicator',
     standalone: true,
     imports: [CommonModule],
     styles: [

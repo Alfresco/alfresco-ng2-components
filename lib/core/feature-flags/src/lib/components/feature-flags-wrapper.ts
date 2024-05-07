@@ -23,7 +23,7 @@ import { FlagsComponent } from './flags/flags.component';
     selector: 'feature-flags-wrapper',
     standalone: true,
     imports: [FlagsComponent],
-    template: `<feature-flags-overrides class="feature-flags-overrides"></feature-flags-overrides>`,
+    template: `<adf-feature-flags-overrides class="feature-flags-overrides"></adf-feature-flags-overrides>`,
     styles: [
         `
             :host {

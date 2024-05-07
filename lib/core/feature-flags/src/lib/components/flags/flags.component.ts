@@ -37,10 +37,10 @@ import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlagsOverridabilityComponent } from '../feature-overridability-indicator.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: 'feature-flags-overrides',
+    selector: 'adf-feature-flags-overrides',
     standalone: true,
     imports: [
         FlagsOverridabilityComponent,
@@ -53,7 +53,8 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatButtonModule,
         MatInputModule,
         MatTooltipModule,
-        MatDialogModule
+        MatDialogModule,
+        TranslateModule
     ],
     templateUrl: './flags.component.html',
     styleUrls: ['./flags.component.ng14.scss', './flags.component.scss'],

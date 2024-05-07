@@ -252,6 +252,9 @@
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Toggle results between ascending and descending order",
       "SORT_BY": "Sort by"
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag overrides"
     }
   },
   "COMMENTS": {
