@@ -29,7 +29,7 @@ test.describe('People component stories tests', () => {
 
         await processServicesCloud.navigateTo({ moduleNames: ['people-cloud'], componentName: 'people-cloud', story: 'valid-preselected-users' });
 
-        expect(peopleComponent.usersNaming).toContainText(expectedUsersName);
+        await expect(peopleComponent.usersNaming).toContainText(expectedUsersName);
     });
 
     test('Mandatory Preselected Users', async ({ processServicesCloud, peopleComponent }) => {
@@ -41,8 +41,8 @@ test.describe('People component stories tests', () => {
         await processServicesCloud.navigateTo({ moduleNames: ['people-cloud'], componentName: 'people-cloud', story: 'mandatory-preselected-users' });
         await peopleComponent.getUserLocator('Kielbasa Sausage').hover();
 
-        expect.soft(peopleComponent.usersNaming).toContainText(expectedUsersName);
-        expect(peopleComponent.tooltip.content).toContainText('Mandatory');
+        await expect.soft(peopleComponent.usersNaming).toContainText(expectedUsersName);
+        await expect(peopleComponent.tooltip.content).toContainText('Mandatory');
     });
 
     test('Invalid Preselected Users', async ({ processServicesCloud, peopleComponent }) => {
@@ -51,7 +51,7 @@ test.describe('People component stories tests', () => {
 
         await processServicesCloud.navigateTo({ moduleNames: ['people-cloud'], componentName: 'people-cloud', story: 'invalid-preselected-users' });
 
-        expect(peopleComponent.error.content).toContainText(expectedWarningIcon + expectedWarningMessage);
+        await expect(peopleComponent.error.content).toContainText(expectedWarningIcon + expectedWarningMessage);
     });
 
     test('Excluded Users', async ({ processServicesCloud, peopleComponent }) => {
@@ -63,7 +63,7 @@ test.describe('People component stories tests', () => {
         await processServicesCloud.navigateTo({ moduleNames: ['people-cloud'], componentName: 'people-cloud', story: 'excluded-users' });
         await peopleComponent.usersInput.type('user');
 
-        expect(peopleComponent.listbox.allOptions).not.toContainText(expectedExcludedUsers);
+        await expect(peopleComponent.listbox.allOptions).not.toContainText(expectedExcludedUsers);
     });
 
     test('No Users', async ({ processServicesCloud, peopleComponent }) => {
@@ -72,6 +72,6 @@ test.describe('People component stories tests', () => {
         await processServicesCloud.navigateTo({ moduleNames: ['people-cloud'], componentName: 'people-cloud', story: 'no-users' });
         await peopleComponent.usersInput.type('user');
 
-        expect(peopleComponent.listbox.oneOption).toContainText(expectedInformation);
+        await expect(peopleComponent.listbox.oneOption).toContainText(expectedInformation);
     });
 });
