@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { IsFlagsOverrideOnNg14 } from '../guards/is-flags-override-on.guard';
-import { IsFeatureOnNg14 } from '../guards/is-feature-on.guard';
-import { IsFeatureOffNg14 } from '../guards/is-feature-off.guard';
+import { IsFlagsOverrideOn } from '../guards/is-flags-override-on.guard';
+import { IsFeatureOn } from '../guards/is-feature-on.guard';
+import { IsFeatureOff } from '../guards/is-feature-off.guard';
 import { FeaturesServiceToken, FlagsOverrideToken } from '../interfaces/features.interface';
 import { DummyFeaturesService } from '../services/dummy-features.service';
 
@@ -30,8 +30,8 @@ export function provideDummyFeatureFlags() {
     return [
         { provide: FeaturesServiceToken, useClass: DummyFeaturesService },
         { provide: FlagsOverrideToken, useValue: false },
-        IsFeatureOnNg14,
-        IsFeatureOffNg14,
-        IsFlagsOverrideOnNg14
+        IsFeatureOn,
+        IsFeatureOff,
+        IsFlagsOverrideOn
     ];
 }
