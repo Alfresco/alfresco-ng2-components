@@ -26,7 +26,7 @@ export class DummyFeaturesService implements IFeaturesService {
         return of();
     }
 
-    isOn$(_key: string): Observable<boolean> {
+    isOn$(): Observable<boolean> {
         return of(false);
     }
 
