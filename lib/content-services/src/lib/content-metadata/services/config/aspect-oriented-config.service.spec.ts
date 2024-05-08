@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -163,7 +163,7 @@ describe('AspectOrientedConfigService', () => {
                     expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
                     expect(organisedPropertyGroups[i].properties.length).toBe(
                         expectation.properties.length,
-                        `Property count for "${organisedPropertyGroups[i].title}" group should match.`
+                        `Property count for '${organisedPropertyGroups[i].title}' group should match.`
                     );
 
                     expectation.properties.forEach((property, j) => {
@@ -211,7 +211,7 @@ describe('AspectOrientedConfigService', () => {
                 expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
                 expect(organisedPropertyGroups[i].properties.length).toBe(
                     expectation.properties.length,
-                    `Property count for "${organisedPropertyGroups[i].title}" group should match.`
+                    `Property count for '${organisedPropertyGroups[i].title}' group should match.`
                 );
 
                 expectation.properties.forEach((property, j) => {
