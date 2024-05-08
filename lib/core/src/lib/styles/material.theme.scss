@@ -121,13 +121,13 @@
 
                 &#{$mat-text-field-focused} {
                     #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing} {
-                        border-color: var(--adf-focused-input-border-color);
+                        border-color: var(--adf-focused-input-color);
                     }
                 }
 
                 &#{$mat-text-field-invalid} {
                     #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing}, #{$mat-notched-outline-notch} {
-                        border-color: var(--adf-error-input-border-color);
+                        border-color: var(--adf-error-input-color);
                     }
                 }
             }
@@ -140,6 +140,30 @@
 
         #{$mat-form-field-hint-wrapper} {
             color: var(--adf-theme-foreground-text-color-054);
+        }
+
+        #{$mat-select} {
+            #{$mat-select-arrow-wrapper} {
+                height: 0;
+                margin-top: -6px;
+                align-items: end;
+            }
+        }
+
+        &#{$mat-focused} {
+            #{$mat-select} {
+                #{$mat-select-arrow} {
+                    color: var(--adf-focused-input-color);
+                }
+            }
+        }
+
+        &#{$mat-focused}#{$mat-select}, #{$mat-select} {
+            &#{$mat-select-invalid} {
+                #{$mat-select-arrow} {
+                    color: var(--adf-error-input-color);
+                }
+            }
         }
     }
 }
