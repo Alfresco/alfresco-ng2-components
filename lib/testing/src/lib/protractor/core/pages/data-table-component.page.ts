@@ -24,7 +24,6 @@ import { materialLocators } from './public-api';
 const MAX_LOADING_TIME = 120000;
 
 export class DataTableComponentPage {
-
     rootElement: ElementFinder;
     list: ElementArrayFinder;
     contents: ElementArrayFinder;
@@ -43,18 +42,18 @@ export class DataTableComponentPage {
 
     constructor(rootElement = $$('adf-datatable').first()) {
         this.rootElement = rootElement;
-        this.list = this.rootElement.$$(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
+        this.list = this.rootElement.$$(`tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
         this.contents = this.rootElement.$$('.adf-datatable-body span');
         this.tableBody = this.rootElement.$$(`.adf-datatable-body`).first();
         this.allColumns = this.rootElement.$$('div[data-automation-id*="auto_header_content_id"]');
         this.mainMenuButton = this.rootElement.$('[data-automation-id="adf-datatable-main-menu-button"]');
         this.selectedRowNumber = this.rootElement.$(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
         this.allSelectedRows = this.rootElement.$$(`adf-datatable-row[class*='is-selected']`);
-        this.selectAll = this.rootElement.$(`div[class*='adf-datatable-header'] ${materialLocators.Checkbox.root}`);
+        this.selectAll = this.rootElement.$(`thead[class*='adf-datatable-header'] ${materialLocators.Checkbox.root}`);
         this.emptyList = this.rootElement.$(`adf-empty-content`);
         this.emptyListTitle = this.rootElement.$(`.adf-empty-content__title`);
         this.emptyListSubtitle = this.rootElement.$(`.adf-empty-content__subtitle`);
-        this.noContentContainer = $(`div[class*='adf-no-content-container']`);
+        this.noContentContainer = $(`td[class*='adf-no-content-container']`);
     }
 
     geCellElementDetail(detail: string): ElementArrayFinder {
@@ -114,12 +113,16 @@ export class DataTableComponentPage {
     }
 
     async checkRowIsSelected(columnName: string, columnValue: string): Promise<void> {
-        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::adf-datatable-row[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(
+            by.xpath(`ancestor::adf-datatable-row[contains(@class, 'is-selected')]`)
+        );
         await BrowserVisibility.waitUntilElementIsVisible(selectedRow);
     }
 
     async checkRowIsNotSelected(columnName: string, columnValue: string): Promise<void> {
-        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(by.xpath(`ancestor::adf-datatable-row[contains(@class, 'is-selected')]`));
+        const selectedRow = this.getCellElementByValue(columnName, columnValue).element(
+            by.xpath(`ancestor::adf-datatable-row[contains(@class, 'is-selected')]`)
+        );
         await BrowserVisibility.waitUntilElementIsNotVisible(selectedRow);
     }
 
@@ -139,7 +142,7 @@ export class DataTableComponentPage {
      * @returns 'true' if the list is sorted as await expected and 'false' if it isn't
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string, listType: string = 'STRING'): Promise<any> {
-        const column = $$(`div.adf-datatable-cell[title='${columnTitle}'] span`);
+        const column = $$(`td.adf-datatable-cell[title='${columnTitle}'] span`);
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList: string[] = [];
 
@@ -229,14 +232,14 @@ export class DataTableComponentPage {
 
     async getAllRowsColumnValues(column: string): Promise<string[]> {
         let columnValues: string[] = [];
-        const columnLocator = $$(`adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title="${column}"] span`);
+        const columnLocator = $$(
+            `adf-datatable tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title="${column}"] span`
+        );
 
         await BrowserVisibility.waitUntilElementIsPresent(columnLocator.first(), 1000);
         try {
             await BrowserVisibility.waitUntilElementIsPresent(columnLocator.first(), 1000);
-            columnValues = await columnLocator
-                .filter(async (el) => el.isPresent())
-                .map(async (el) => el.getText());
+            columnValues = await columnLocator.filter(async (el) => el.isPresent()).map(async (el) => el.getText());
         } catch (error) {
             Logger.log(error);
         }
@@ -273,7 +276,7 @@ export class DataTableComponentPage {
      * @param titleColumn column title
      */
     async sortByColumn(sortOrder: string, titleColumn: string): Promise<void> {
-        const locator = $(`div[data-automation-id="auto_id_${titleColumn}"]`);
+        const locator = $(`th[data-automation-id="auto_id_${titleColumn}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(locator);
         const result = await BrowserActions.getAttribute(locator, 'class');
 
@@ -326,12 +329,20 @@ export class DataTableComponentPage {
     }
 
     getRow(columnName: string, columnValue: string): ElementFinder {
-        return this.rootElement.all(by.xpath(`//div[starts-with(@title, '${columnName}')]//div[contains(@data-automation-id, '${columnValue}')]//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`)).first();
+        return this.rootElement
+            .all(
+                by.xpath(
+                    `//div[starts-with(@title, '${columnName}')]//div[contains(@data-automation-id, '${columnValue}')]//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`
+                )
+            )
+            .first();
     }
 
     // @deprecated use Playwright instead
     getRowByIndex(index: number): ElementFinder {
-        return this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//adf-datatable-row[contains(@class,'adf-datatable-row')][${index}]`));
+        return this.rootElement.element(
+            by.xpath(`//div[contains(@class,'adf-datatable-body')]//adf-datatable-row[contains(@class,'adf-datatable-row')][${index}]`)
+        );
     }
 
     async contentInPosition(position: number): Promise<string> {
@@ -350,23 +361,27 @@ export class DataTableComponentPage {
     async waitTillContentLoaded(): Promise<void> {
         if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)), MAX_LOADING_TIME);
+            await BrowserVisibility.waitUntilElementIsNotVisible(
+                this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)),
+                MAX_LOADING_TIME
+            );
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
             }
-
         } else if (await this.isEmpty()) {
             Logger.log('empty page');
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)), 2000);
-                await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)), MAX_LOADING_TIME);
-            } catch (error) {
-            }
+                await BrowserVisibility.waitUntilElementIsNotVisible(
+                    this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)),
+                    MAX_LOADING_TIME
+                );
+            } catch (error) {}
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
@@ -392,8 +407,7 @@ export class DataTableComponentPage {
             try {
                 Logger.log('wait datatable loading spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName(materialLocators.Progress.bar.root)));
-            } catch (error) {
-            }
+            } catch (error) {}
             if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
@@ -404,12 +418,10 @@ export class DataTableComponentPage {
 
     // @deprecated use Playwright instead
     async isColumnDisplayed(columnTitle: string): Promise<boolean> {
-        const isColumnDisplayed = (await this.allColumns).some(
-            async column => {
-                const columnText = await column.getText();
-                return columnText === columnTitle;
-            }
-        );
+        const isColumnDisplayed = (await this.allColumns).some(async (column) => {
+            const columnText = await column.getText();
+            return columnText === columnTitle;
+        });
 
         return isColumnDisplayed;
     }
@@ -447,11 +459,18 @@ export class DataTableComponentPage {
     }
 
     getCellByContent(content: string): ElementFinder {
-        return this.rootElement.all(by.cssContainingText(`adf-datatable-row[class*='adf-datatable-row'] div[class*='adf-datatable-cell']`, content)).first();
+        return this.rootElement
+            .all(by.cssContainingText(`adf-datatable-row[class*='adf-datatable-row'] td[class*='adf-datatable-cell']`, content))
+            .first();
     }
 
     async checkCellByHighlightContent(content: string): Promise<void> {
-        const cell = this.rootElement.element(by.cssContainingText(`adf-datatable-row[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`, content));
+        const cell = this.rootElement.element(
+            by.cssContainingText(
+                `adf-datatable-row[class*='adf-datatable-row'] div[class*='adf-name-location-cell-name'] span.adf-highlight`,
+                content
+            )
+        );
         await BrowserVisibility.waitUntilElementIsVisible(cell);
     }
 
@@ -461,7 +480,10 @@ export class DataTableComponentPage {
     }
 
     async clickRowByContentCheckbox(name: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first().element(by.xpath(`ancestor::adf-datatable-row/label/${materialLocators.Checkbox.root}`));
+        const resultElement = this.rootElement
+            .$$(`div[data-automation-id='${name}']`)
+            .first()
+            .element(by.xpath(`ancestor::adf-datatable-row/label/${materialLocators.Checkbox.root}`));
         browser.actions().mouseMove(resultElement);
         await BrowserActions.click(resultElement);
     }
