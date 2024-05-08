@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ export class FolderEditDirective {
     @Output()
     success = new EventEmitter<Node>();
 
-    @HostListener('click', [ '$event' ])
+    @HostListener('click', ['$event'])
     onClick(event) {
         event.preventDefault();
         if (this.folder) {
@@ -53,11 +53,7 @@ export class FolderEditDirective {
         }
     }
 
-    constructor(
-        public dialogRef: MatDialog,
-        public elementRef: ElementRef,
-        public content: ContentService
-    ) {}
+    constructor(public dialogRef: MatDialog, public elementRef: ElementRef, public content: ContentService) {}
 
     private get dialogConfig() {
         const { folder } = this;
