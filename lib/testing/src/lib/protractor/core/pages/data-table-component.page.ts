@@ -332,7 +332,7 @@ export class DataTableComponentPage {
         return this.rootElement
             .all(
                 by.xpath(
-                    `//tr[starts-with(@title, '${columnName}')]//div[contains(@data-automation-id, '${columnValue}')]//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`
+                    `//tr[starts-with(@title, '${columnName}')]//[contains(@data-automation-id, '${columnValue}')]//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`
                 )
             )
             .first();

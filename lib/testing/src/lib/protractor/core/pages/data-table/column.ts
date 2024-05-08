@@ -19,13 +19,13 @@ export abstract class Column {
     columnName: string;
     columnType: string;
 
-    constructor(columnName: string, columnType: string ) {
+    constructor(columnName: string, columnType: string) {
         this.columnName = columnName;
         this.columnType = columnType;
     }
 
     createLocator(columnValue: string): string {
-        return `//div[@data-automation-id="${this.columnType}_${columnValue}"]`;
+        return `//[@data-automation-id="${this.columnType}_${columnValue}"]`;
     }
 
     getColumnName(): string {
