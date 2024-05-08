@@ -37,7 +37,9 @@ import {
     mockSchemaDefinitionWithNestedKeys,
     mockCountryColumns,
     mockEuropeCountriesRows,
-    mockAmericaCountriesRows
+    mockAmericaCountriesRows,
+    mockNestedCountryColumns,
+    mockNestedEuropeCountriesRows
 } from './mocks/data-table-widget.mock';
 
 describe('DataTableWidgetComponent', () => {
@@ -126,7 +128,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockNestedEuropeCountriesData;
         fixture.detectChanges();
 
-        assertData(mockCountryColumns, mockEuropeCountriesRows);
+        assertData(mockNestedCountryColumns, mockNestedEuropeCountriesRows);
     });
 
     it('should properly initialize data source with priority on the field value if process and form variables are provided', () => {

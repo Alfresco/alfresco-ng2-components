@@ -18,12 +18,13 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, DataTableModule, FormBaseModule, DataRow, DataColumn, DataTablePathParserHelper } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, DataTableModule, FormBaseModule, DataRow, DataColumn } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
+import { DataTablePathParserHelper } from './helpers/data-table-path-parser.helper';
 
 @Component({
     standalone: true,

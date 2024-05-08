@@ -57,6 +57,11 @@ export const mockCountryColumns: DataColumn[] = [
     new ObjectDataColumn({ key: 'name', type: 'text', title: 'Country Name', sortable: true, draggable: true })
 ];
 
+export const mockNestedCountryColumns: DataColumn[] = [
+    new ObjectDataColumn({ key: 'countries.europeCountry.id', type: 'text', title: 'Country ID', sortable: true, draggable: true }),
+    new ObjectDataColumn({ key: 'countries.europeCountry.name', type: 'text', title: 'Country Name', sortable: true, draggable: true })
+];
+
 export const mockInvalidSchemaDefinition: DataColumn[] = [
     {
         type: 'text',
@@ -93,6 +98,12 @@ export const mockEuropeCountriesRows: DataRow[] = [
     new ObjectDataRow({ id: 'IT', name: 'Italy' }),
     new ObjectDataRow({ id: 'PL', name: 'Poland' }),
     new ObjectDataRow({ id: 'UK', name: 'United Kingdom' })
+];
+
+export const mockNestedEuropeCountriesRows: DataRow[] = [
+    new ObjectDataRow({ 'countries.europeCountry.id': 'IT', 'countries.europeCountry.name': 'Italy' }),
+    new ObjectDataRow({ 'countries.europeCountry.id': 'PL', 'countries.europeCountry.name': 'Poland' }),
+    new ObjectDataRow({ 'countries.europeCountry.id': 'UK', 'countries.europeCountry.name': 'United Kingdom' })
 ];
 
 export const mockJsonResponseEuropeCountriesData = {
