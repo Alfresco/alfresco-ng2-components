@@ -22,7 +22,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-feature-flags-overridability-indicator',
+    selector: 'adf-feature-flags-override-indicator',
     standalone: true,
     imports: [CommonModule],
     styles: [

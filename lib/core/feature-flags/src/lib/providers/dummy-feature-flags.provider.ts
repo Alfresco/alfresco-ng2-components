@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { IsFlagsOverrideOnNg14 } from '../guards/is-flags-overridability-on.guard';
+import { IsFlagsOverrideOnNg14 } from '../guards/is-flags-override-on.guard';
 import { IsFeatureOnNg14 } from '../guards/is-feature-on.guard';
 import { IsFeatureOffNg14 } from '../guards/is-feature-off.guard';
 import { FeaturesServiceToken, FlagsOverrideToken } from '../interfaces/features.interface';

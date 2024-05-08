@@ -16,13 +16,13 @@
  */
 
 export * from './lib/components/flags/flags.component';
-export * from './lib/components/feature-overridability-indicator.component';
+export * from './lib/components/feature-override-indicator.component';
 export * from './lib/components/feature-flags-wrapper';
 export * from './lib/directives/features.directive';
 export * from './lib/directives/not-features.directive';
 export * from './lib/guards/is-feature-on.guard';
 export * from './lib/guards/is-feature-off.guard';
-export * from './lib/guards/is-flags-overridability-on.guard';
+export * from './lib/guards/is-flags-override-on.guard';
 export * from './lib/providers/dummy-feature-flags.provider';
 export * from './lib/providers/debug-feature-flags.provider';
 export * from './lib/interfaces/features.interface';
