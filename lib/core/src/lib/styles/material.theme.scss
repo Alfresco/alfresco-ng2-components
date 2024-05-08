@@ -88,10 +88,10 @@
 
                 &:not(#{$mat-notched-outline-notched}) {
                     #{$mat-notched-outline-notch} {
-                        margin-left: -5px;
-
                         #{$mat-form-field-label} {
                             top: 30px;
+                            left: -5px;
+                            padding-left: 5px;
                         }
                     }
                 }
@@ -122,6 +122,18 @@
                 &#{$mat-text-field-focused} {
                     #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing} {
                         border-color: var(--adf-focused-input-color);
+                    }
+                }
+
+                &:hover {
+                    #{$mat-notched-outline} {
+                        &:not(#{$mat-notched-outline-notched}) {
+                            #{$mat-notched-outline-notch} {
+                                #{$mat-form-field-label} {
+                                    top: 29px;
+                                }
+                            }
+                        }
                     }
                 }
 
