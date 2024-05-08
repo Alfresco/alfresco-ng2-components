@@ -16,7 +16,7 @@
  */
 
 import { DataTablePathParserHelper } from './data-table-path-parser.helper';
-import { mockResponseResultData, mockResultData } from './mocks/data-table-path-parser.helper.mock';
+import { mockResponseResultData, mockResultData } from '../mocks/data-table-path-parser.helper.mock';
 
 interface DataTablePathParserTestCase {
     description: string;
