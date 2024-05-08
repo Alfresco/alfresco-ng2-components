@@ -21,8 +21,7 @@
 export const ACTIVITI_CLOUD_APPS = {
     CANDIDATE_BASE_APP: {
         name: 'candidatebaseapp',
-        file_location:
-            'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
+        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/candidatebaseapp.zip?raw=true',
         processes: {
             candidateUserProcess: 'candidateuserprocess',
             candidateGroupProcess: 'candidategroupprocess',
@@ -96,8 +95,7 @@ export const ACTIVITI_CLOUD_APPS = {
     },
     SIMPLE_APP: {
         name: 'simpleapp',
-        file_location:
-            'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/simpleapp.zip?raw=true',
+        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/simpleapp.zip?raw=true',
         processes: {
             processwithvariables: 'processwithvariables',
             simpleProcess: 'simpleprocess',
@@ -147,10 +145,8 @@ export const ACTIVITI_CLOUD_APPS = {
             poolNonIntBoundaryCatch: 'pool-nonint-boundary-catch',
             poolIntermediateMessageThrow: 'pool-interm-message-throw',
             poolIntermediateMessageCatch: 'pool-interm-message-catch',
-            poolInterruptingBoundarySubprocessThrow:
-                'pool-int-bound-subpr-throw',
-            poolInterruptingBoundarySubprocessCatch:
-                'pool-int-bound-subpr-catch',
+            poolInterruptingBoundarySubprocessThrow: 'pool-int-bound-subpr-throw',
+            poolInterruptingBoundarySubprocessCatch: 'pool-int-bound-subpr-catch',
             poolInterruptingBoundaryThrow: 'pool-int-boundary-throw',
             poolInterruptingBoundaryCatch: 'pool-int-boundary-catch',
             attachFilesProcess: 'attach-files-process',
@@ -178,8 +174,8 @@ export const ACTIVITI_CLOUD_APPS = {
         processesData: {
             withDisplayedVariables: {
                 variablesColumns: [
-                    { name: 'Column A', value: 'Value A' },
-                    { name: 'Column B', value: '123' },
+                    { name: 'Column. A', value: 'Value A' },
+                    { name: 'Column B !@#$%^&*()_', value: '123' },
                     { name: 'Column C', value: 'Nov 3, 2033' },
                     { name: 'Column D', value: 'Oct 16, 2024' },
                     { name: 'Column E', value: 'false' }
@@ -187,8 +183,8 @@ export const ACTIVITI_CLOUD_APPS = {
             },
             withDisplayedVariables2: {
                 variablesColumns: [
-                    { name: 'Column A', value: 'Oct 26, 2023' },
-                    { name: 'Column B', value: 'Mar 12, 2037' },
+                    { name: 'Column. A', value: 'Oct 26, 2023' },
+                    { name: 'Column B !@#$%^&*()_', value: 'Mar 12, 2037' },
                     { name: 'Column C', value: 'true' },
                     { name: 'Column D', value: '456' },
                     { name: 'Column E', value: 'Value E' }
@@ -279,8 +275,7 @@ export const ACTIVITI_CLOUD_APPS = {
             uploadSingleMultiple: {
                 name: 'upload-single-multiple',
                 widgets: {
-                    contentMultipleAttachFileId:
-                        'UploadMultipleFileFromContentId',
+                    contentMultipleAttachFileId: 'UploadMultipleFileFromContentId',
                     contentSingleAttachFileId: 'UploadSingleFileFromContentId'
                 }
             },
@@ -436,8 +431,7 @@ export const ACTIVITI_CLOUD_APPS = {
     },
     SUB_PROCESS_APP: {
         name: 'subprocessapp',
-        file_location:
-            'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/subprocessapp.zip?raw=true',
+        file_location: 'https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/subprocessapp.zip?raw=true',
         processes: {
             processchild: 'processchild',
             processparent: 'processparent'
