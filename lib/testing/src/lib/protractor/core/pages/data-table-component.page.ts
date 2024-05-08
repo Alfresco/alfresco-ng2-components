@@ -475,7 +475,9 @@ export class DataTableComponentPage {
     }
 
     async clickRowByContent(name: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first();
+        const resultElement = this.rootElement.$$(`tr[data-automation-id='${name}']`).first();
+        console.log('tr', resultElement);
+        console.log('td', this.rootElement.$$(`td[data-automation-id='${name}']`).first());
         await BrowserActions.click(resultElement);
     }
 
@@ -489,22 +491,22 @@ export class DataTableComponentPage {
     }
 
     async checkRowContentIsDisplayed(content: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`div[data-automation-id='${content}']`).first();
+        const resultElement = this.rootElement.$$(`tr[data-automation-id='${content}']`).first();
         await BrowserVisibility.waitUntilElementIsVisible(resultElement);
     }
 
     async checkRowContentIsNotDisplayed(content: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`div[data-automation-id='${content}']`).first();
+        const resultElement = this.rootElement.$$(`tr[data-automation-id='${content}']`).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(resultElement);
     }
 
     async checkRowContentIsDisabled(content: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`div[data-automation-id='${content}'] div.adf-cell-value img[aria-label='Disabled']`).first();
+        const resultElement = this.rootElement.$$(`tr[data-automation-id='${content}'] div.adf-cell-value img[aria-label='Disabled']`).first();
         await BrowserVisibility.waitUntilElementIsVisible(resultElement);
     }
 
     async doubleClickRowByContent(name: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first();
+        const resultElement = this.rootElement.$$(`tr[data-automation-id='${name}']`).first();
         await BrowserActions.click(resultElement);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
