@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@ import {
     mockInvalidSchemaDefinition,
     mockSchemaDefinition
 } from './mocks/data-table-widget.mock';
-import { ObjectDataRow } from '@alfresco/adf-core';
+import { mockPersonDataFirstRow, mockPersonsData } from './mocks/data-table-adapter.mock';
+import { DataColumn, ObjectDataColumn, ObjectDataRow } from '@alfresco/adf-core';
 
 describe('WidgetDataTableAdapter', () => {
     let widgetDataTableAdapter: WidgetDataTableAdapter;
@@ -63,5 +64,131 @@ describe('WidgetDataTableAdapter', () => {
         const isValid = widgetDataTableAdapter.isDataSourceValid();
 
         expect(isValid).toBeTrue();
+    });
+
+    describe('should create proper rows and columns from schema and data with nested properties for', () => {
+        it('one column', () => {
+            const mockPersonSchema: DataColumn[] = [
+                {
+                    type: 'text',
+                    key: 'person.name',
+                    title: 'Name'
+                }
+            ];
+
+            const adapter = new WidgetDataTableAdapter(mockPersonsData, mockPersonSchema);
+            const rows = adapter.getRows();
+            const columns = adapter.getColumns();
+
+            const expectedFirstRow = new ObjectDataRow({
+                'person.name': 'John Doe'
+            });
+            const expectedSecondRow = new ObjectDataRow({
+                'person.name': 'Sam Smith'
+            });
+            const expectedColumns = [new ObjectDataColumn({ key: 'person.name', type: 'text', title: 'Name' })];
+
+            expect(rows.length).toBe(2);
+            expect(rows[0]).toEqual(expectedFirstRow);
+            expect(rows[1]).toEqual(expectedSecondRow);
+
+            expect(columns.length).toBe(1);
+            expect(columns).toEqual(expectedColumns);
+        });
+
+        it('one row', () => {
+            const mockPersonSchema: DataColumn[] = [
+                {
+                    type: 'text',
+                    key: 'name',
+                    title: 'Name'
+                },
+                {
+                    type: 'text',
+                    key: 'personData.[address.[data]test].city',
+                    title: 'City'
+                }
+            ];
+
+            const adapter = new WidgetDataTableAdapter([mockPersonDataFirstRow], mockPersonSchema);
+            const rows = adapter.getRows();
+            const columns = adapter.getColumns();
+
+            const expectedFirstRow = new ObjectDataRow({
+                name: 'John Doe',
+                'personData.[address.[data]test].city': 'Springfield'
+            });
+            const expectedColumns = [
+                new ObjectDataColumn({ key: 'name', type: 'text', title: 'Name' }),
+                new ObjectDataColumn({ key: 'personData.[address.[data]test].city', type: 'text', title: 'City' })
+            ];
+
+            expect(rows.length).toBe(1);
+            expect(rows[0]).toEqual(expectedFirstRow);
+
+            expect(columns.length).toBe(2);
+            expect(columns).toEqual(expectedColumns);
+        });
+
+        it('complex schema', () => {
+            const mockPersonSchema: DataColumn[] = [
+                {
+                    type: 'text',
+                    key: 'person.name',
+                    title: 'Name'
+                },
+                {
+                    type: 'text',
+                    key: 'person.personData.[address.[data]test].city',
+                    title: 'City'
+                },
+                {
+                    type: 'text',
+                    key: 'person.personData.[address.[data]test].street',
+                    title: 'Street'
+                },
+                {
+                    type: 'json',
+                    key: 'person.phoneNumbers',
+                    title: 'Phone numbers'
+                }
+            ];
+
+            const adapter = new WidgetDataTableAdapter(mockPersonsData, mockPersonSchema);
+            const rows = adapter.getRows();
+            const columns = adapter.getColumns();
+
+            const expectedFirstRow = new ObjectDataRow({
+                'person.personData.[address.[data]test].city': 'Springfield',
+                'person.personData.[address.[data]test].street': '1234 Main St',
+                'person.name': 'John Doe',
+                'person.phoneNumbers': [
+                    { type: 'home', phoneNumber: '123-456-7890' },
+                    { type: 'work', phoneNumber: '098-765-4321' }
+                ]
+            });
+            const expectedSecondRow = new ObjectDataRow({
+                'person.personData.[address.[data]test].city': 'Westlake',
+                'person.personData.[address.[data]test].street': '731 Second St',
+                'person.name': 'Sam Smith',
+                'person.phoneNumbers': [
+                    { type: 'home', phoneNumber: '123-456-7891' },
+                    { type: 'work', phoneNumber: '321-654-1987' }
+                ]
+            });
+            const expectedColumns = [
+                new ObjectDataColumn({ key: 'person.name', type: 'text', title: 'Name' }),
+                new ObjectDataColumn({ key: 'person.personData.[address.[data]test].city', type: 'text', title: 'City' }),
+                new ObjectDataColumn({ key: 'person.personData.[address.[data]test].street', type: 'text', title: 'Street' }),
+                new ObjectDataColumn({ key: 'person.phoneNumbers', type: 'json', title: 'Phone numbers' })
+            ];
+
+            expect(rows.length).toBe(2);
+            expect(rows[0]).toEqual(expectedFirstRow);
+            expect(rows[1]).toEqual(expectedSecondRow);
+
+            expect(columns.length).toBe(4);
+            expect(columns).toEqual(expectedColumns);
+        });
     });
 });

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,10 +42,14 @@ import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file
 import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
 import { RichTextEditorModule } from '../rich-text-editor';
 import { A11yModule } from '@angular/cdk/a11y';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
+import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.service';
 
 @NgModule({
     imports: [
         CommonModule,
+        OverlayModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
@@ -76,7 +80,8 @@ import { A11yModule } from '@angular/cdk/a11y';
         PropertiesViewerWidgetComponent,
         FilePropertiesTableCloudComponent,
         FileViewerWidgetComponent,
-        DisplayRichTextWidgetComponent
+        DisplayRichTextWidgetComponent,
+        FormSpinnerComponent
     ],
     exports: [
         FormCloudComponent,
@@ -92,6 +97,7 @@ import { A11yModule } from '@angular/cdk/a11y';
         PropertiesViewerWidgetComponent,
         FileViewerWidgetComponent,
         DisplayRichTextWidgetComponent
-    ]
+    ],
+    providers: [FormCloudSpinnerService]
 })
 export class FormCloudModule {}

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-export { Rule as ADFClassNameRule } from './adfClassNameRule';
-export { Rule as ADFComponentSelectorRule } from './adfFileNameRule';
-export { Rule as ADFOutputPrefixNameRule } from './adfPrefixNameRule';
+export interface FormSpinnerEventPayload {
+    showSpinner: boolean;
+    message?: string;
+}
 
-export const rulesDirectory = '.';
+export class FormSpinnerEvent {
+    constructor(public type: string, public payload: FormSpinnerEventPayload) {}
+}

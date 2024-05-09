@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@ import { ValidateFormEvent } from '../events/validate-form.event';
 import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
 import { FormValidationService } from './form-validation-service.interface';
 import { FormRulesEvent } from '../events/form-rules.event';
+import { FormSpinnerEvent } from '../events';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FormService implements FormValidationService {
-
     formLoaded = new Subject<FormEvent>();
     formDataRefreshed = new Subject<FormEvent>();
     formFieldValueChanged = new Subject<FormFieldEvent>();
@@ -44,6 +44,7 @@ export class FormService implements FormValidationService {
     taskSaved = new Subject<FormEvent>();
     taskSavedError = new Subject<FormErrorEvent>();
     formContentClicked = new Subject<ContentLinkModel>();
+    toggleFormSpinner = new Subject<FormSpinnerEvent>();
 
     validateForm = new Subject<ValidateFormEvent>();
     validateFormField = new Subject<ValidateFormFieldEvent>();
@@ -55,8 +56,7 @@ export class FormService implements FormValidationService {
 
     formRulesEvent = new Subject<FormRulesEvent>();
 
-    constructor() {
-    }
+    constructor() {}
 
     /**
      * Parses JSON data to create a corresponding Form model.

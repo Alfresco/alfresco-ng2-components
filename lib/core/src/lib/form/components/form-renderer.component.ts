@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnChanges, OnInit, Inject } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnInit, Inject } from '@angular/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
 import { FormModel } from './widgets/core/form.model';
 import { ContainerModel, FormFieldModel, TabModel } from './widgets';
@@ -36,7 +36,7 @@ import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } fr
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent<T> implements OnInit, OnChanges, OnDestroy {
+export class FormRendererComponent<T> implements OnInit, OnDestroy {
     /** Toggle debug options. */
     @Input()
     showDebugButton: boolean = false;
@@ -57,9 +57,6 @@ export class FormRendererComponent<T> implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit(): void {
         this.runMiddlewareServices();
-    }
-
-    ngOnChanges(): void {
         this.formRulesManager.initialize(this.formDefinition);
     }
 
