@@ -41,7 +41,7 @@ export class DataTableItem {
         console.log('getRow', '-------------------------------------------------------');
         const column = await this.getColumn(columnName);
         const locator =
-            `//tr[@title="${column.columnName}"]` +
+            `//td[@title="${column.columnName}"]` +
             column.createLocator(columnValue) +
             `//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`;
         return this.rootElement.element(by.xpath(locator));
@@ -81,7 +81,7 @@ export class DataTableItem {
         console.log('checkRowIsSelected', '-------------------------------------------------------');
         const column = await this.getColumn(columnName);
         const locator =
-            `//div[@title="${column.columnName}"]` +
+            `//td[@title="${column.columnName}"]` +
             column.createLocator(columnValue) +
             `//ancestor::adf-datatable-row[contains(@class, 'is-selected')]`;
         await BrowserVisibility.waitUntilElementIsVisible(element(by.xpath(locator)));
