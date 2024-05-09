@@ -151,5 +151,76 @@ describe('DebugFeaturesService', () => {
                 done();
             });
         });
+
+        it('should return false for isOn$ when flag is enabled', (done) => {
+            const flagKey = 'feature1';
+
+            service
+                .isOn$(flagKey)
+                .pipe(take(1))
+                .subscribe((isEnabled) => {
+                    expect(isEnabled).toBeFalse();
+                    done();
+                });
+        });
+
+        it('should return false for isOn$ when flag is disabled', (done) => {
+            const flagKey = 'feature2';
+
+            service
+                .isOn$(flagKey)
+                .pipe(take(1))
+                .subscribe((isEnabled) => {
+                    expect(isEnabled).toBeFalse();
+                    done();
+                });
+        });
+
+        it('should return true for isOff$ when flag is enabled', (done) => {
+            const flagKey = 'feature3';
+
+            service
+                .isOff$(flagKey)
+                .pipe(take(1))
+                .subscribe((isEnabled) => {
+                    expect(isEnabled).toBeTrue();
+                    done();
+                });
+        });
+
+        it('should return true for isOff$ when flag is disabled', (done) => {
+            const flagKey = 'feature4';
+
+            service
+                .isOff$(flagKey)
+                .pipe(take(1))
+                .subscribe((isEnabled) => {
+                    expect(isEnabled).toBeTrue();
+                    done();
+                });
+        });
+
+        it('should always reset specified flags', () => {
+            const flagsToReset = {
+                feature1: true
+            };
+            const writableFeaturesServiceToken = TestBed.inject(WritableFeaturesServiceToken);
+            const spy = spyOn(writableFeaturesServiceToken, 'resetFlags');
+            service.resetFlags(flagsToReset);
+
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it('should get the flags as an observable', (done) => {
+            service.getFlags$().subscribe((flags) => {
+                expect(flags).toEqual({});
+                done();
+            });
+        });
+
+        it('should get the flags snapshot', () => {
+            const flags = service.getFlagsSnapshot();
+            expect(flags).toEqual({});
+        });
     });
 });
