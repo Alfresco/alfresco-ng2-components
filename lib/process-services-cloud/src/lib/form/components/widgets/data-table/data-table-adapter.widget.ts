@@ -117,10 +117,10 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
     }
 
     isDataSourceValid(): boolean {
-        return this.hasAllColumnsLinkedToData() && this.hasAllMandatoryColumnPropertiesHaveValues();
+        return this.hasAllColumnsLinkedToData() && this.allMandatoryColumnPropertiesHaveValues();
     }
 
-    private hasAllMandatoryColumnPropertiesHaveValues(): boolean {
+    private allMandatoryColumnPropertiesHaveValues(): boolean {
         return this.adapter.getColumns().every((column) => !!column.key);
     }
 
