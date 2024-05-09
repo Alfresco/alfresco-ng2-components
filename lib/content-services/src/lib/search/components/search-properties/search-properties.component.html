@@ -8,8 +8,7 @@
         <mat-form-field
             [style.width.px]="fileSizeOperatorsMaxWidth"
             subscriptSizing="dynamic"
-            class="adf-search-properties-file-size-operator"
-            appearance="outline">
+            class="adf-search-properties-file-size-operator">
             <mat-select
                 data-automation-id="adf-search-properties-file-size-operator-select"
                 [formControl]="form.controls.fileSizeOperator"
@@ -21,7 +20,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="adf-search-properties-file-size">
+        <mat-form-field subscriptSizing="dynamic" class="adf-search-properties-file-size">
             <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate }}</mat-label>
             <input
                 matInput
@@ -35,7 +34,7 @@
                 (blur)="clearNumberFieldWhenInvalid($event)"
                 data-automation-id="adf-search-properties-file-size-input" />
         </mat-form-field>
-        <mat-form-field class="adf-search-properties-file-size-unit" subscriptSizing="dynamic" appearance="outline">
+        <mat-form-field class="adf-search-properties-file-size-unit" subscriptSizing="dynamic">
             <mat-select
                 [formControl]="form.controls.fileSizeUnit"
                 data-automation-id="adf-search-properties-file-size-unit-select">
