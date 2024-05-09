@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
+import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { EventMock } from '../../mock/event.mock';
-import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { PdfViewerComponent } from './pdf-viewer.component';
-import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { PdfThumbListComponent } from '@alfresco/adf-core';
-import { By } from '@angular/platform-browser';
+import { AppConfigService } from '../../../app-config';
+import { EventMock } from '../../../mock';
+import { CoreTestingModule } from '../../../testing';
+import { RenderingQueueServices } from '../../services/rendering-queue.services';
+import { PdfThumbListComponent } from '../pdf-viewer-thumbnails/pdf-viewer-thumbnails.component';
+import { PdfViewerComponent } from './pdf-viewer.component';
 
 declare const pdfjsLib: any;
 
@@ -38,7 +38,7 @@ declare const pdfjsLib: any;
 class TestDialogComponent {}
 
 @Component({
-    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"> </adf-pdf-viewer> `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"></adf-pdf-viewer> `
 })
 class UrlTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })
@@ -52,7 +52,7 @@ class UrlTestComponent {
 }
 
 @Component({
-    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"> </adf-pdf-viewer> `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"></adf-pdf-viewer> `
 })
 class UrlTestPasswordComponent {
     @ViewChild(PdfViewerComponent, { static: true })
@@ -66,7 +66,7 @@ class UrlTestPasswordComponent {
 }
 
 @Component({
-    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile"> </adf-pdf-viewer> `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile"></adf-pdf-viewer> `
 })
 class BlobTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })

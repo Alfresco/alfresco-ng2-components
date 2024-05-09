@@ -16,9 +16,14 @@
  */
 
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { ViewerComponent } from '../viewer.component';
 
 @Component({
     selector: 'adf-viewer-container-open-with',
+    standalone: true,
+    imports: [ViewerComponent, MatIconModule, MatMenuModule],
     template: `
         <adf-viewer>
             <adf-viewer-open-with>
@@ -38,5 +43,4 @@ import { Component } from '@angular/core';
         </adf-viewer>
     `
 })
-export class ViewerWithCustomOpenWithComponent {
-}
+export class ViewerWithCustomOpenWithComponent {}

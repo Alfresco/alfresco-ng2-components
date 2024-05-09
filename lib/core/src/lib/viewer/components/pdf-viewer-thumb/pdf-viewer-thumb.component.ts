@@ -15,25 +15,27 @@
  * limitations under the License.
  */
 
+import { FocusableOption } from '@angular/cdk/a11y';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FocusableOption } from '@angular/cdk/a11y';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-pdf-thumb',
+    standalone: true,
     templateUrl: './pdf-viewer-thumb.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { tabindex: '0'}
+    imports: [AsyncPipe, TranslateModule, NgIf],
+    host: { tabindex: '0' }
 })
 export class PdfThumbComponent implements OnInit, FocusableOption {
-
     @Input()
     page: any = null;
 
     image$: Promise<string>;
 
-    constructor(private sanitizer: DomSanitizer, private element: ElementRef) {
-    }
+    constructor(private sanitizer: DomSanitizer, private element: ElementRef) {}
 
     ngOnInit() {
         this.image$ = this.page.getPage().then((page) => this.getThumb(page));
@@ -47,15 +49,17 @@ export class PdfThumbComponent implements OnInit, FocusableOption {
         const viewport = page.getViewport({ scale: 1 });
 
         const canvas = this.getCanvas();
-        const scale = Math.min((canvas.height / viewport.height), (canvas.width / viewport.width));
+        const scale = Math.min(canvas.height / viewport.height, canvas.width / viewport.width);
 
-        return page.render({
-            canvasContext: canvas.getContext('2d'),
-            viewport: page.getViewport({ scale })
-        }).promise.then(() => {
-            const imageSource = canvas.toDataURL();
-            return this.sanitizer.bypassSecurityTrustUrl(imageSource);
-        });
+        return page
+            .render({
+                canvasContext: canvas.getContext('2d'),
+                viewport: page.getViewport({ scale })
+            })
+            .promise.then(() => {
+                const imageSource = canvas.toDataURL();
+                return this.sanitizer.bypassSecurityTrustUrl(imageSource);
+            });
     }
 
     private getCanvas(): HTMLCanvasElement {
@@ -64,5 +68,4 @@ export class PdfThumbComponent implements OnInit, FocusableOption {
         canvas.height = this.page.getHeight();
         return canvas;
     }
-
 }

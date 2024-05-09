@@ -18,8 +18,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { DOWN_ARROW, UP_ARROW, ESCAPE } from '@angular/cdk/keycodes';
+import { CoreTestingModule } from '../../../testing';
+import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 
 declare const pdfjsViewer: any;
 
