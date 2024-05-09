@@ -46,7 +46,6 @@ import { DataTablePathParserHelper } from './helpers/data-table-path-parser.help
     encapsulation: ViewEncapsulation.None
 })
 export class DataTableWidgetComponent extends WidgetComponent implements OnInit {
-
     dataSource: WidgetDataTableAdapter;
     dataTableLoadFailed = false;
     previewState = false;

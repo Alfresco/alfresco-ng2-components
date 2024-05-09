@@ -58,7 +58,7 @@ import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent<T> implements OnInit, OnChanges, OnDestroy {
+export class FormRendererComponent<T> implements OnInit, OnDestroy {
     /** Toggle debug options. */
     @Input()
     showDebugButton: boolean = false;
@@ -79,9 +79,6 @@ export class FormRendererComponent<T> implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit(): void {
         this.runMiddlewareServices();
-    }
-
-    ngOnChanges(): void {
         this.formRulesManager.initialize(this.formDefinition);
     }
 

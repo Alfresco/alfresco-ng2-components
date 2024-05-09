@@ -15,55 +15,55 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList, Component, ViewChild, SimpleChanges } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
-    DataColumnListComponent,
-    DataColumnComponent,
+    AppConfigService,
+    AuthenticationService,
     DataColumn,
+    DataColumnComponent,
+    DataColumnListComponent,
     DataTableComponent,
     DataTableModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
-    ThumbnailService,
-    AppConfigService,
-    AuthenticationService
+    ThumbnailService
 } from '@alfresco/adf-core';
-import { ContentService } from '../../common/services/content.service';
-import { Subject, of, throwError } from 'rxjs';
-import {
-    FileNode,
-    FolderNode,
-    fakeNodeAnswerWithNOEntries,
-    fakeNodeWithNoPermission,
-    fakeGetSitesAnswer,
-    fakeGetSiteMembership,
-    mockPreselectedNodes,
-    mockNodePagingWithPreselectedNodes,
-    mockNode1,
-    mockNode2,
-    mockNode3
-} from '../../mock';
-import { ContentActionModel } from '../models/content-action.model';
-import { ImageResolver } from './../data/image-resolver.model';
-import { RowFilter } from './../data/row-filter.model';
-import { DocumentListService } from './../services/document-list.service';
-import { CustomResourcesService } from './../services/custom-resources.service';
-import { DocumentListComponent } from './document-list.component';
-import { ContentTestingModule } from '../../testing/content.testing.module';
-import { FavoritePaging, NodeEntry, NodePaging, Node, FavoritePagingList } from '@alfresco/js-api';
-import { By } from '@angular/platform-browser';
-import { DocumentListModule } from '../document-list.module';
-import { ShareDataRow } from '../data/share-data-row.model';
-import { DocumentLoaderNode } from '../models/document-folder.model';
-import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
-import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
-import { MatDialog } from '@angular/material/dialog';
-import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
-import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
+import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, QueryList, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { By } from '@angular/platform-browser';
+import { of, Subject, throwError } from 'rxjs';
+import { ContentService } from '../../common';
+import {
+    fakeGetSiteMembership,
+    fakeGetSitesAnswer,
+    fakeNodeAnswerWithNOEntries,
+    fakeNodeWithNoPermission,
+    FileNode,
+    FolderNode,
+    mockNode1,
+    mockNode2,
+    mockNode3,
+    mockNodePagingWithPreselectedNodes,
+    mockPreselectedNodes
+} from '../../mock';
+import { ContentTestingModule } from '../../testing/content.testing.module';
+import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
+import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
+import { ImageResolver } from '../data/image-resolver.model';
+import { RowFilter } from '../data/row-filter.model';
+import { ShareDataRow } from '../data/share-data-row.model';
+import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
+import { DocumentListModule } from '../document-list.module';
+import { ContentActionModel } from '../models/content-action.model';
+import { DocumentLoaderNode } from '../models/document-folder.model';
+import { CustomResourcesService } from '../services/custom-resources.service';
+import { DocumentListService } from '../services/document-list.service';
+import { DocumentListComponent } from './document-list.component';
+import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 
 const mockDialog = {
     open: jasmine.createSpy('open')

@@ -701,12 +701,12 @@ describe('Form Renderer Component', () => {
     });
 
     describe('Form rules', () => {
-        it('should call the Form Rules Manager init on component changes', () => {
+        it('should call the Form Rules Manager init', () => {
             spyOn(rulesManager, 'initialize');
             const formModel = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
 
             formRendererComponent.formDefinition = formModel;
-            formRendererComponent.ngOnChanges();
+            formRendererComponent.ngOnInit();
 
             expect(rulesManager.initialize).toHaveBeenCalledWith(formModel);
         });

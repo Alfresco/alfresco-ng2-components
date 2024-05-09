@@ -32,11 +32,7 @@ import { AdfHttpClient } from '@alfresco/adf-core/api';
 export class NotificationCloudService extends BaseCloudService {
     appsListening = [];
 
-    constructor(
-        public apollo: Apollo,
-        private http: HttpLink,
-        private authService: AuthenticationService,
-        protected adfHttpClient: AdfHttpClient) {
+    constructor(public apollo: Apollo, private http: HttpLink, private authService: AuthenticationService, protected adfHttpClient: AdfHttpClient) {
         super(adfHttpClient);
     }
 

@@ -1,0 +1,20 @@
+.adf-cloud-form {
+    &-spinner {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        place-content: center center;
+
+        &-content {
+            display: flex;
+            flex-flow: column wrap;
+            place-content: center center;
+            row-gap: 25px;
+            align-items: center;
+
+            &-message {
+                font-size: var(--theme-body-4-font-size);
+            }
+        }
+    }
+}

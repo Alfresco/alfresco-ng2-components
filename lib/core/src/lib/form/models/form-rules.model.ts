@@ -39,7 +39,7 @@ export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager
 }
 
 export abstract class FormRulesManager<T> {
-    constructor(private formService: FormService) {}
+    constructor(protected formService: FormService) {}
 
     protected formModel: FormModel;
     private onDestroy$ = new Subject<boolean>();
@@ -66,7 +66,9 @@ export abstract class FormRulesManager<T> {
                         this.handleRuleEvent(event, rules);
                     });
 
-                this.formService.formRulesEvent.next(new FormRulesEvent('formLoaded', new FormEvent(formModel)));
+                const onFormLoadedEvent = new FormEvent(formModel);
+                const formRules = new FormRulesEvent('formLoaded', onFormLoadedEvent);
+                this.formService.formRulesEvent.next(formRules);
             }
         }
 

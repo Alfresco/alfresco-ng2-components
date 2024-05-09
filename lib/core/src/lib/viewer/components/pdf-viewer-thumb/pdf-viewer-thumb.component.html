@@ -1,0 +1,6 @@
+<ng-container *ngIf="image$ | async as image">
+    <img [src]="image" role="button"
+         [alt]="'ADF_VIEWER.SIDEBAR.THUMBNAILS.PAGE' | translate: { pageNum: page.id }"
+         title="{{ 'ADF_VIEWER.SIDEBAR.THUMBNAILS.PAGE' | translate: { pageNum: page.id } }}"
+         [attr.aria-label]="'ADF_VIEWER.SIDEBAR.THUMBNAILS.PAGE' | translate: { pageNum: page.id }">
+</ng-container>
