@@ -38,6 +38,7 @@ export class DataTableItem {
     }
 
     async getRow(columnName: string, columnValue: string): Promise<ElementFinder> {
+        console.log('getRow', '-------------------------------------------------------');
         const column = await this.getColumn(columnName);
         const locator =
             `//tr[@title="${column.columnName}"]` +
@@ -77,6 +78,7 @@ export class DataTableItem {
     }
 
     async checkRowIsSelected(columnName: string, columnValue: string): Promise<void> {
+        console.log('checkRowIsSelected', '-------------------------------------------------------');
         const column = await this.getColumn(columnName);
         const locator =
             `//div[@title="${column.columnName}"]` +

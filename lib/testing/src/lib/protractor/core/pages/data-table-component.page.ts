@@ -476,8 +476,6 @@ export class DataTableComponentPage {
 
     async clickRowByContent(name: string): Promise<void> {
         const resultElement = this.rootElement.$$(`tr[data-automation-id='${name}']`).first();
-        console.log('tr', resultElement);
-        console.log('td', this.rootElement.$$(`td[data-automation-id='${name}']`).first());
         await BrowserActions.click(resultElement);
     }
 
