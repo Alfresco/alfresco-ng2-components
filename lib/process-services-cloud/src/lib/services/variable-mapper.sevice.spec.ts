@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ describe('VariableMapperService', () => {
 
         const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
 
-        expect(viewModel[0].variablesMap[column.title].type).toEqual(expectedColumnType);
+        expect(viewModel[0].variablesMap[column.id].type).toEqual(expectedColumnType);
     };
 
     beforeEach(() => {
@@ -58,11 +58,11 @@ describe('VariableMapperService', () => {
         };
     });
 
-    it('should map variables by column title', () => {
+    it('should map variables by column id', () => {
         const expectedObjectWithVariableMap = {
             ...objectWithVariables,
             variablesMap: {
-                [column.title]: variable
+                [column.id]: variable
             }
         };
 

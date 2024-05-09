@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    CheckboxPage,
-    LoginPage,
-    UploadActions,
-    UserModel,
-    UsersActions,
-    ViewerPage
-} from '@alfresco/adf-testing';
+import { createApiService, CheckboxPage, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
@@ -30,7 +23,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 
 describe('CardView Component - properties', () => {
-
     const METADATA = {
         DATA_FORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
@@ -71,7 +63,7 @@ describe('CardView Component - properties', () => {
 
         await navigationBarPage.navigateToContentServices();
         await contentServicesPage.waitForTableBody();
-   });
+    });
 
     afterEach(async () => {
         await viewerPage.clickCloseButton();
@@ -84,8 +76,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-
+        expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
         await metadataViewPage.clickMetadataGroup('EXIF');
 
@@ -114,7 +105,6 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
 
@@ -129,7 +119,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
-   });
+    });
 
     it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
         await viewerPage.viewFile(pngFileModel.name);

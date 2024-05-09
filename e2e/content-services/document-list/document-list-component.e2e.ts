@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,12 +114,12 @@ describe('Document List Component', () => {
             await navigationBarPage.clickLogoutButton();
         });
 
-        it("[C279926] Should only display the user's files and folders", async () => {
+        it('[C279926] Should only display the user files and folders', async () => {
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkContentIsDisplayed(folderName);
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
-            await expect(await contentServicesPage.getDocumentListRowNumber()).toBe(4);
+            expect(await contentServicesPage.getDocumentListRowNumber()).toBe(4);
         });
 
         it('[C279927] Should display default columns', async () => {
@@ -182,27 +182,27 @@ describe('Document List Component', () => {
         });
 
         it('[C260112] Should be able to sort by name (Ascending)', async () => {
-            await expect(await contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true);
         });
 
         it('[C272770] Should be able to sort by name (Descending)', async () => {
-            await expect(await contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true);
         });
 
         it('[C272771] Should be able to sort by author (Ascending)', async () => {
-            await expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true);
         });
 
         it('[C272772] Should be able to sort by author (Descending)', async () => {
-            await expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true);
         });
 
         it('[C272773] Should be able to sort by date (Ascending)', async () => {
-            await expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true);
         });
 
         it('[C272774] Should be able to sort by date (Descending)', async () => {
-            await expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
+            expect(await contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true);
         });
     });
 

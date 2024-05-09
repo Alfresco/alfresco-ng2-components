@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,11 +77,9 @@ describe('Comment component for Processes', () => {
         await commentsPage.checkUserIconIsDisplayed();
 
         await commentsPage.getTotalNumberOfComments('Comments (' + addedComment.total + ')');
-        await expect(await commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
-        await expect(await commentsPage.getUserName(0)).toEqual(
-            addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName
-        );
-        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
+        expect(await commentsPage.getUserName(0)).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     it('[C260465] Should not be able to view process comment on included task', async () => {
@@ -97,7 +95,7 @@ describe('Comment component for Processes', () => {
         const taskId = taskQuery.data[0].id;
 
         const taskComments = await commentsApi.getTaskComments(taskId, { latestFirst: true });
-        await expect(taskComments.total).toEqual(0);
+        expect(taskComments.total).toEqual(0);
     });
 
     it('[C260466] Should be able to display comments from Task on the related Process', async () => {
@@ -117,10 +115,10 @@ describe('Comment component for Processes', () => {
         await commentsPage.checkUserIconIsDisplayed();
 
         await commentsPage.getTotalNumberOfComments('Comments (' + addedTaskComment.total + ')');
-        await expect(await commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
-        await expect(await commentsPage.getUserName(0)).toEqual(
+        expect(await commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
+        expect(await commentsPage.getUserName(0)).toEqual(
             addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName
         );
-        await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
+        expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 });

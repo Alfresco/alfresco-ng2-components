@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ describe('Process Instance Details', () => {
         await processServicesPage.checkApsContainer();
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         process = await processApi.getProcessInstance(processModel.id);
     });

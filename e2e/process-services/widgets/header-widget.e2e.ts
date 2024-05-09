@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ describe('Header widget', async () => {
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         await taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);
 
-        await expect(await widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 });

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     AppListCloudPage,
     BrowserActions,
     FilterProps,
@@ -37,7 +38,6 @@ import { EditProcessFilterConfiguration } from './../config/edit-process-filter.
 import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
 
 describe('Process list cloud', () => {
-
     // en-US values for the process status
     const PROCESS_STATUS = {
         ALL: 'All',
@@ -53,7 +53,6 @@ describe('Process list cloud', () => {
     };
 
     describe('Process List', () => {
-
         const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -77,54 +76,63 @@ describe('Process list cloud', () => {
         const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
 
-        let completedProcess; let runningProcessInstance; let switchProcessInstance; let noOfApps; let testUser; let groupInfo;
-            let anotherProcessInstance;
+        let completedProcess;
+        let runningProcessInstance;
+        let switchProcessInstance;
+        let noOfApps;
+        let testUser;
+        let groupInfo;
+        let anotherProcessInstance;
         const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async () => {
-        await apiService.loginWithProfile('identityAdmin');
+            await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+            testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-        await apiService.login(testUser.username, testUser.password);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+            await apiService.login(testUser.username, testUser.password);
 
-        const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+            const processDefinition = await processDefinitionService.getProcessDefinitionByName(
+                browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess,
+                candidateBaseApp
+            );
 
-        const anotherProcessDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
+            const anotherProcessDefinition = await processDefinitionService.getProcessDefinitionByName(
+                browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess,
+                candidateBaseApp
+            );
 
-        await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+            await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
                 name: StringUtil.generateRandomString(),
                 businessKey: StringUtil.generateRandomString()
             });
 
-        anotherProcessInstance = await processInstancesService.createProcessInstance(anotherProcessDefinition.entry.key, candidateBaseApp, {
+            anotherProcessInstance = await processInstancesService.createProcessInstance(anotherProcessDefinition.entry.key, candidateBaseApp, {
                 name: StringUtil.generateRandomString(),
                 businessKey: StringUtil.generateRandomString()
             });
 
-        switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
                 name: StringUtil.generateRandomString(),
                 businessKey: StringUtil.generateRandomString()
             });
 
-        completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
                 name: StringUtil.generateRandomString(),
                 businessKey: StringUtil.generateRandomString()
             });
 
-        const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
-        const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
-        await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
+            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
+            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
+            await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-        await loginSSOPage.login(testUser.username, testUser.password);
-        await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
-        await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
+            await loginSSOPage.login(testUser.username, testUser.password);
+            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
+            await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
         });
 
         afterAll(async () => {
@@ -142,24 +150,32 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         });
 
+        /**
+         * Set the filter
+         *
+         * @param props FilterProps
+         */
         async function setFilter(props: FilterProps): Promise<void> {
             await editProcessFilter.setFilter(props);
             await waitTillContentLoaded();
         }
 
+        /**
+         * Wait for the content to be loaded
+         */
         async function waitTillContentLoaded() {
             await processList.getDataTable().waitTillContentLoaded();
         }
 
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async () => {
             await setFilter({ status: PROCESS_STATUS.RUNNING });
-            await setFilter({ sort: 'Id'});
+            await setFilter({ sort: 'Id' });
             await setFilter({ order: SORT_DIRECTION.ASC });
 
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Id')).toBe(true);
+            expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Id')).toBe(true);
 
-            await setFilter({ order: SORT_DIRECTION.DESC});
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Id')).toBe(true);
+            await setFilter({ order: SORT_DIRECTION.DESC });
+            expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Id')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by status when Status is selected from sort dropdown', async () => {
@@ -167,10 +183,10 @@ describe('Process list cloud', () => {
             await setFilter({ sort: 'Status' });
             await setFilter({ order: SORT_DIRECTION.ASC });
 
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Status')).toBe(true);
+            expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Status')).toBe(true);
 
-            await setFilter({ order: SORT_DIRECTION.DESC});
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Status')).toBe(true);
+            await setFilter({ order: SORT_DIRECTION.DESC });
+            expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Status')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
@@ -178,10 +194,10 @@ describe('Process list cloud', () => {
             await setFilter({ sort: 'Last Modified' });
             await setFilter({ order: SORT_DIRECTION.ASC });
 
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Last Modified')).toBe(true);
+            expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Last Modified')).toBe(true);
 
             await setFilter({ order: SORT_DIRECTION.DESC });
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Last Modified')).toBe(true);
+            expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Last Modified')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
@@ -189,10 +205,10 @@ describe('Process list cloud', () => {
             await setFilter({ sort: 'Business Key' });
             await setFilter({ order: SORT_DIRECTION.ASC });
 
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Business Key')).toBe(true);
+            expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.ASC, 'Business Key')).toBe(true);
 
-            await setFilter({ order: SORT_DIRECTION.DESC});
-            await expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Business Key')).toBe(true);
+            await setFilter({ order: SORT_DIRECTION.DESC });
+            expect(await processList.getDataTable().checkListIsSorted(SORT_DIRECTION.DESC, 'Business Key')).toBe(true);
         });
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
@@ -202,19 +218,19 @@ describe('Process list cloud', () => {
 
             await editProcessFilter.saveAs('New');
 
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('New');
+            expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('New');
 
             await processList.checkContentIsDisplayedById(completedProcess.entry.id);
-            await expect(await processList.getDataTable().numberOfRows()).toBe(1);
+            expect(await processList.getDataTable().numberOfRows()).toBe(1);
 
-            await expect(await editProcessFilter.getProcessInstanceId()).toEqual(completedProcess.entry.id);
+            expect(await editProcessFilter.getProcessInstanceId()).toEqual(completedProcess.entry.id);
         });
 
         it('[C297646] Should display the filter dropdown fine , after switching between saved filters', async () => {
             await editProcessFilter.openFilter();
             noOfApps = await editProcessFilter.getNumberOfAppNameOptions();
 
-            await expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);
+            expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);
             await BrowserActions.closeMenuAndDialogs();
             await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
             await editProcessFilter.setAppNameDropDown(candidateBaseApp);
@@ -222,14 +238,14 @@ describe('Process list cloud', () => {
             await waitTillContentLoaded();
 
             await processList.checkContentIsDisplayedById(runningProcessInstance.entry.id);
-            await expect(await editProcessFilter.getNumberOfAppNameOptions()).toBe(noOfApps);
-            await expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);
+            expect(await editProcessFilter.getNumberOfAppNameOptions()).toBe(noOfApps);
+            expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);
             await BrowserActions.closeMenuAndDialogs();
 
             await editProcessFilter.saveAs('SavedFilter');
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SavedFilter');
+            expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SavedFilter');
 
-            await expect(await editProcessFilter.getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
+            expect(await editProcessFilter.getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
             await editProcessFilter.setStatusFilterDropDown(PROCESS_STATUS.RUNNING);
             await editProcessFilter.setAppNameDropDown(candidateBaseApp);
@@ -238,13 +254,12 @@ describe('Process list cloud', () => {
 
             await processList.checkContentIsDisplayedById(switchProcessInstance.entry.id);
             await editProcessFilter.saveAs('SwitchFilter');
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SwitchFilter');
+            expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('SwitchFilter');
 
-            await expect(await editProcessFilter.getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
-            await expect(await editProcessFilter.getNumberOfAppNameOptions()).toBe(noOfApps);
-            await expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);
+            expect(await editProcessFilter.getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
+            expect(await editProcessFilter.getNumberOfAppNameOptions()).toBe(noOfApps);
+            expect(await editProcessFilter.checkAppNamesAreUnique()).toBe(true);
             await BrowserActions.closeMenuAndDialogs();
         });
-
-   });
+    });
 });

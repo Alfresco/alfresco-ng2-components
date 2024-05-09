@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ describe('TasksListDatatableAdapter', () => {
         const viewModel: TaskInstanceCloudListViewModel = {
             ...cloudModel,
             variablesMap: {
-                columnDisplayName1: processVariable
+                columnId1: processVariable
             }
         };
 
@@ -48,7 +48,7 @@ describe('TasksListDatatableAdapter', () => {
         };
 
         const column: DataColumn<ProcessListDataColumnCustomData> = getDataColumnMock({
-            title: 'columnDisplayName1',
+            id: 'columnId1',
             customData: {
                 assignedVariableDefinitionIds: ['variableDefinitionId'],
                 variableDefinitionsPayload: ['processKey/variableName'],

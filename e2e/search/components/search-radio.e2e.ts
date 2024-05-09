@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     BrowserActions,
     LocalStorageUtil,
     LoginPage,
@@ -33,7 +34,6 @@ import { browser } from 'protractor';
 import { NodesApi } from '@alfresco/js-api';
 
 describe('Search Radio Component', () => {
-
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
@@ -60,7 +60,8 @@ describe('Search Radio Component', () => {
         folder: `${randomName}Folder`
     };
 
-    let createdFile; let createdFolder;
+    let createdFile;
+    let createdFolder;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -82,7 +83,7 @@ describe('Search Radio Component', () => {
         await loginPage.login(acsUser.username, acsUser.password);
 
         await BrowserActions.getUrl(browser.baseUrl + '/search;q=' + randomName);
-   });
+    });
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -91,7 +92,7 @@ describe('Search Radio Component', () => {
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-   });
+    });
 
     it('[C277039] Should be able to choose only one option at a time', async () => {
         await searchFiltersPage.checkTypeFilterIsDisplayed();
@@ -142,7 +143,7 @@ describe('Search Radio Component', () => {
             for (let numberOfOptions = 0; numberOfOptions < 6; numberOfOptions++) {
                 jsonFile.categories[5].component.settings.options.push({
                     name: 'Folder',
-                    value: 'TYPE:\'cm:folder\''
+                    value: `TYPE:'cm:folder'`
                 });
             }
 
@@ -155,7 +156,7 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
 
             await navigationBarPage.navigateToContentServices();
 
@@ -170,7 +171,7 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
 
             await navigationBarPage.navigateToContentServices();
             jsonFile.categories[5].component.settings.pageSize = 9;
@@ -184,7 +185,7 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(15);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(15);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
@@ -200,7 +201,7 @@ describe('Search Radio Component', () => {
             for (let numberOfOptions = 0; numberOfOptions < 6; numberOfOptions++) {
                 jsonFile.categories[5].component.settings.options.push({
                     name: 'Folder',
-                    value: 'TYPE:\'cm:folder\''
+                    value: `TYPE:'cm:folder'`
                 });
             }
 
@@ -213,21 +214,21 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.typeFiltersPage().clickShowMoreButton();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
 
             await searchFiltersPage.typeFiltersPage().clickShowLessButton();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
@@ -244,26 +245,26 @@ describe('Search Radio Component', () => {
 
             await searchFiltersPage.clickTypeFilterHeader();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.typeFiltersPage().clickShowMoreButton();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(16);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
 
             await searchFiltersPage.typeFiltersPage().clickShowLessButton();
 
-            await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
+            expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(11);
 
             await searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
         });
-   });
+    });
 
     describe('Properties', () => {
         let jsonFile;
@@ -282,7 +283,7 @@ describe('Search Radio Component', () => {
 
             jsonFile.categories[5].component.settings.options.push({
                 name: filterType.custom,
-                value: 'TYPE:\'cm:content\''
+                value: `TYPE:'cm:content'`
             });
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -306,5 +307,5 @@ describe('Search Radio Component', () => {
             await searchResults.checkContentIsDisplayed(nodeNames.document);
             await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
         });
-   });
+    });
 });

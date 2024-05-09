@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import { browser } from 'protractor';
 import { VersionManagePage } from '../pages/version-manager.page';
 
 describe('Upload component', () => {
-
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
@@ -90,17 +89,17 @@ describe('Upload component', () => {
 
         await uploadDialog.fileIsUploaded(docxFileModel.name);
         await uploadDialog.checkCloseButtonIsDisplayed();
-        await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         await uploadDialog.minimizeUploadDialog();
         await uploadDialog.dialogIsMinimized();
-        await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         await uploadDialog.maximizeUploadDialog();
         await uploadDialog.dialogIsDisplayed();
         await uploadDialog.fileIsUploaded(docxFileModel.name);
-        await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
+        expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         await uploadDialog.checkCloseButtonIsDisplayed();
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
@@ -112,7 +111,7 @@ describe('Upload component', () => {
 
         await uploadDialog.fileIsUploaded(docxFileModel.name);
         await uploadDialog.checkCloseButtonIsDisplayed();
-        await expect(await uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
+        expect(await uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
         await uploadDialog.checkCloseButtonIsDisplayed();
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
@@ -144,7 +143,7 @@ describe('Upload component', () => {
         await contentServicesPage.uploadMultipleFile(filesLocation);
         await contentServicesPage.checkContentsAreDisplayed(filesName);
         await uploadDialog.filesAreUploaded(filesName);
-        await expect(await uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
+        expect(await uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await uploadToggles.disableMultipleFileUpload();

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    LocalStorageUtil,
-    LoginPage,
-    StringUtil,
-    UploadActions,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, LocalStorageUtil, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../pages/search-results.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
 import { SearchBarPage } from '../pages/search-bar.page';
@@ -32,7 +25,6 @@ import { browser } from 'protractor';
 import { NodesApi } from '@alfresco/js-api';
 
 describe('Search Checklist Component', () => {
-
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
     const searchBarPage = new SearchBarPage();
@@ -58,7 +50,8 @@ describe('Search Checklist Component', () => {
         folder: `${randomName}Folder`
     };
 
-    let createdFile; let createdFolder;
+    let createdFile;
+    let createdFolder;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -153,7 +146,7 @@ describe('Search Checklist Component', () => {
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
                     name: 'Folder',
-                    value: 'TYPE:\'cm:folder\''
+                    value: `TYPE:'cm:folder'`
                 });
             }
 
@@ -165,21 +158,21 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.clickCheckListFilter();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
 
             await searchFiltersPage.checkListFiltersPage().clickShowLessButton();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
@@ -193,7 +186,7 @@ describe('Search Checklist Component', () => {
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
                     name: 'Folder',
-                    value: 'TYPE:\'cm:folder\''
+                    value: `TYPE:'cm:folder'`
                 });
             }
 
@@ -206,7 +199,7 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.clickCheckListFilter();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
@@ -222,7 +215,7 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.clickCheckListFilter();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
@@ -237,7 +230,7 @@ describe('Search Checklist Component', () => {
             await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
         });
@@ -250,7 +243,7 @@ describe('Search Checklist Component', () => {
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
                     name: 'Folder',
-                    value: 'TYPE:\'cm:folder\''
+                    value: `TYPE:'cm:folder'`
                 });
             }
 
@@ -265,14 +258,14 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.clickCheckListFilter();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
@@ -290,14 +283,14 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.clickCheckListFilter();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
             await searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-            await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
@@ -340,7 +333,7 @@ describe('Search Checklist Component', () => {
         it('[C277019] Should be able to add new properties with different types', async () => {
             jsonFile.categories[1].component.settings.options.push({
                 name: filterType.custom,
-                value: 'TYPE:\'cm:auditable\''
+                value: `TYPE:'cm:auditable'`
             });
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));

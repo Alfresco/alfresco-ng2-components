@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import { DataColumnType } from '@alfresco/adf-extensions';
 
 @Injectable({ providedIn: 'root' })
 export class VariableMapperService {
-    mapVariablesByColumnTitle <T extends { variables?: ProcessInstanceVariable[] }>(
+    mapVariablesByColumnTitle<T extends { variables?: ProcessInstanceVariable[] }>(
         instancesList: T[] = [],
         columnsSchema: DataColumn<ProcessListDataColumnCustomData>[] = []
     ): Array<WithVariablesMap<T>> {
@@ -34,19 +34,22 @@ export class VariableMapperService {
                 return instance;
             }
 
-            const variablesMap = (instance.variables ?? []).reduce<{[columnTitle: string]: ProcessInstanceVariable}>((variableAccumulator, variable) => {
-                const processVariableDefinitionPayload =  `${variable.processDefinitionKey}/${variable.name}`;
+            const variablesMap = (instance.variables ?? []).reduce<{ [columnTitle: string]: ProcessInstanceVariable }>(
+                (variableAccumulator, variable) => {
+                    const processVariableDefinitionPayload = `${variable.processDefinitionKey}/${variable.name}`;
 
-                const column = columnsByVariables[processVariableDefinitionPayload];
-                if (column) {
-                    variableAccumulator[column] = {
-                        ...variable,
-                        type: this.mapProcessVariableTypes(variable.type)
-                    };
-                }
+                    const column = columnsByVariables[processVariableDefinitionPayload];
+                    if (column) {
+                        variableAccumulator[column] = {
+                            ...variable,
+                            type: this.mapProcessVariableTypes(variable.type)
+                        };
+                    }
 
-                return variableAccumulator;
-            }, {});
+                    return variableAccumulator;
+                },
+                {}
+            );
 
             return {
                 ...instance,
@@ -57,20 +60,16 @@ export class VariableMapperService {
         return rowsViewModel;
     }
 
-    private mapColumnKeysByVariable(
-        columnsSchema: DataColumn<ProcessListDataColumnCustomData>[]
-    ): { [key: string]: string } {
+    private mapColumnKeysByVariable(columnsSchema: DataColumn<ProcessListDataColumnCustomData>[]): { [key: string]: string } {
         const columnsByVariables = columnsSchema
-            .filter(column => !!column.customData)
+            .filter((column) => !!column.customData)
             .reduce<{ [key: string]: string }>((columnsByVariable, column) => {
-                const columnTitle = column.title;
                 const variables = column.customData.variableDefinitionsPayload;
 
                 variables.forEach((key) => {
-                    columnsByVariable[key] = columnTitle;
+                    columnsByVariable[key] = column.id;
                 });
                 return columnsByVariable;
-
             }, {});
 
         return columnsByVariables;

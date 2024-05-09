@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { AppConfigService, AppConfigValues, FormValues } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
@@ -30,10 +30,13 @@ import { MatSelectChange } from '@angular/material/select';
 import { StartFormComponent } from '../../form';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
-import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
+import { getTime } from 'date-fns';
 
 const MAX_LENGTH = 255;
+const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
+const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
+
 @Component({
     selector: 'adf-start-process',
     templateUrl: './start-process.component.html',
@@ -129,7 +132,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         private activitiContentService: ActivitiContentService,
         private appsProcessService: AppsProcessService,
         private appConfig: AppConfigService,
-        private processNamePipe: ProcessNamePipe
+        private datePipe: LocalizedDatePipe
     ) {}
 
     ngOnInit() {
@@ -422,7 +425,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     processDefinitionSelectionChanged(processDefinition: ProcessDefinitionRepresentation) {
         if (processDefinition) {
             const processInstanceDetails = new ProcessInstance({ processDefinitionName: processDefinition.name });
-            const processName = this.processNamePipe.transform(this.name, processInstanceDetails);
+            const processName = this.formatProcessName(this.name, processInstanceDetails);
             this.processNameInput.setValue(processName);
             this.processNameInput.markAsDirty();
             this.processNameInput.markAsTouched();
@@ -490,5 +493,19 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
 
         return [];
+    }
+
+    private formatProcessName(processNameFormat: string, processInstance?: ProcessInstance): string {
+        let processName = processNameFormat;
+        if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
+            const presentDateTime = getTime(new Date());
+            processName = processName.replace(DATE_TIME_IDENTIFIER_REG_EXP, this.datePipe.transform(presentDateTime, 'medium'));
+        }
+
+        if (processName.match(PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
+            const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
+            processName = processName.replace(PROCESS_DEFINITION_IDENTIFIER_REG_EXP, selectedProcessDefinitionName);
+        }
+        return processName;
     }
 }

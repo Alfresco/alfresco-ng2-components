@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@
 import { browser } from 'protractor';
 import {
     LoginPage,
-    TasksService, createApiService,
+    TasksService,
+    createApiService,
     AppListCloudPage,
     StringUtil,
     IdentityService,
@@ -29,9 +30,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 
 describe('Task filters cloud', () => {
-
     describe('Task Filters', () => {
-
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
         const loginSSOPage = new LoginPage();
@@ -47,9 +46,11 @@ describe('Task filters cloud', () => {
         const groupIdentityService = new GroupIdentityService(apiService);
         const tasksService = new TasksService(apiService);
 
-        let testUser; let groupInfo;
+        let testUser;
+        let groupInfo;
 
-        const newTask = StringUtil.generateRandomString(5); const completedTask = StringUtil.generateRandomString(5);
+        const newTask = StringUtil.generateRandomString(5);
+        const completedTask = StringUtil.generateRandomString(5);
 
         beforeAll(async () => {
             await apiService.loginWithProfile('identityAdmin');
@@ -81,13 +82,13 @@ describe('Task filters cloud', () => {
             await taskFilter.clickTaskFilter('completed-tasks');
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
             await taskList.checkContentIsNotDisplayedByName(newTask);
 
             await taskFilter.clickTaskFilter('my-tasks');
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
             await taskList.checkContentIsDisplayedByName(newTask);
         });
@@ -101,13 +102,13 @@ describe('Task filters cloud', () => {
             await taskFilter.clickTaskFilter('my-tasks');
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await taskList.checkContentIsNotDisplayedByName(completedTask);
 
             await taskFilter.clickTaskFilter('completed-tasks');
             await taskList.getDataTable().waitTillContentLoaded();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('Completed Tasks');
 
             await taskList.checkContentIsDisplayedByName(completedTask);
         });

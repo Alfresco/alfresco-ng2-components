@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -151,9 +151,8 @@ describe('AppsListComponent', () => {
                 defaultAppId: 'tasks',
                 name: null
             } as AppDefinitionRepresentationModel;
-            component.getAppName(appDataMock).subscribe((name) => {
-                expect(name).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
-            });
+
+            expect(component.getAppName(appDataMock)).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
         });
 
         it('should provide the application name, when it exists', () => {
@@ -162,9 +161,7 @@ describe('AppsListComponent', () => {
                 name: 'the-name'
             } as AppDefinitionRepresentationModel;
 
-            component.getAppName(appDataMock).subscribe((name) => {
-                expect(name).toBe(appDataMock.name);
-            });
+            expect(component.getAppName(appDataMock)).toBe(appDataMock.name);
         });
     });
 

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,10 @@ export class MetadataViewPage {
 
     async clickOnPropertiesTab(): Promise<void> {
         const propertiesTab = element(
-            by.cssContainingText(`.adf-info-drawer-layout-content div${materialLocators.Tab.labels.class} div ${materialLocators.Tab.label.content.class}`, `Properties`)
+            by.cssContainingText(
+                `.adf-info-drawer-layout-content div${materialLocators.Tab.labels.class} div ${materialLocators.Tab.label.content.class}`,
+                `Properties`
+            )
         );
         await BrowserActions.click(propertiesTab);
     }
@@ -164,12 +167,12 @@ export class MetadataViewPage {
 
     async checkMetadataGroupIsExpand(groupName: string): Promise<void> {
         const group = await this.getExpandedMetadataGroupLocator(groupName);
-        await expect(await BrowserActions.getAttribute(group, 'class')).toContain(materialLocators.Expanded.root);
+        expect(await BrowserActions.getAttribute(group, 'class')).toContain(materialLocators.Expanded.root);
     }
 
     async checkMetadataGroupIsNotExpand(groupName: string): Promise<void> {
         const group = await this.getExpandedMetadataGroupLocator(groupName);
-        await expect(await BrowserActions.getAttribute(group, 'class')).not.toContain(materialLocators.Expanded.root);
+        expect(await BrowserActions.getAttribute(group, 'class')).not.toContain(materialLocators.Expanded.root);
     }
 
     async checkPropertyIsVisible(propertyName: string, type: string): Promise<void> {

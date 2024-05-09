@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ export class DataTablePathParserHelper {
         return this.retrieveDataFromPath(nestedData, properties.join('.'));
     }
 
-    private splitPathIntoProperties(path: string): string[] {
+    splitPathIntoProperties(path: string): string[] {
         const properties: string[] = [];
         const separator = '.';
         const openBracket = '[';
@@ -44,6 +44,10 @@ export class DataTablePathParserHelper {
         let currentPropertyBuffer = '';
         let bracketCount = 0;
         const isPropertySeparatorOutsideBrackets = () => bracketCount === 0;
+
+        if (!path) {
+            return properties;
+        }
 
         for (const char of path) {
             switch (char) {
@@ -76,7 +80,7 @@ export class DataTablePathParserHelper {
         return properties;
     }
 
-    private removeSquareBracketsFromProperty(property: string): string {
+    removeSquareBracketsFromProperty(property: string): string {
         return property?.replace(this.removeSquareBracketsRegEx, '$1');
     }
 

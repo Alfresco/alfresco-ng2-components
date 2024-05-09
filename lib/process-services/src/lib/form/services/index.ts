@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,12 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-
-import { ProcessNamePipe } from './process-name.pipe';
-
-@NgModule({
-    declarations: [
-        ProcessNamePipe
-    ],
-    exports: [
-        ProcessNamePipe
-    ]
-})
-export class ProcessServicesPipeModule {
-}
+export * from './activiti-alfresco.service';
+export * from './ecm-model.service';
+export * from './editor.service';
+export * from './external-alfresco-api.service';
+export * from './model.service';
+export * from './process-content.service';
+export * from './process-definition.service';
+export * from './task.service';
+export * from './task-form.service';

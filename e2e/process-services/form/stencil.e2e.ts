@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    StartProcessPage,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, StartProcessPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from './../pages/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -33,7 +27,6 @@ import { ProcessListPage } from './../pages/process-list.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Stencil', () => {
-
     const app = browser.params.resources.Files.STENCIL_PROCESS;
 
     const loginPage = new LoginPage();
@@ -74,7 +67,7 @@ describe('Stencil', () => {
     it('[C245648] Can start an app with custom stencil included', async () => {
         const name = 'test stencil process';
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        expect(await processListPage.isProcessListDisplayed()).toEqual(true);
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
 

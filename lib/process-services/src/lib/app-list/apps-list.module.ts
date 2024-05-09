@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
-
 import { AppsListComponent } from './apps-list.component';
 import { SelectAppsDialogComponent } from './select-apps-dialog.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+/**
+ * @deprecated this Module is deprecated and should no longer be used.
+ * Consider importing components directly instead.
+ */
 @NgModule({
-    imports: [CommonModule, MaterialModule, CoreModule, MatProgressSpinnerModule],
-    declarations: [AppsListComponent, SelectAppsDialogComponent],
+    imports: [AppsListComponent, SelectAppsDialogComponent],
     exports: [AppsListComponent, SelectAppsDialogComponent]
 })
 export class AppsListModule {}

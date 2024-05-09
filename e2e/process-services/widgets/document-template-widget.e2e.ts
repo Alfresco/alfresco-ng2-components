@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,6 +67,6 @@ describe('Document Template widget', () => {
     });
 
     it('[C260406] should check that the template contains assigned file ', async () => {
-        await expect(await widget.containerWidget().getFieldText(app.form_fields.container_id)).toEqual(app.attached_file);
+        expect(await widget.containerWidget().getFieldText(app.form_fields.container_id)).toEqual(app.attached_file);
     });
 });

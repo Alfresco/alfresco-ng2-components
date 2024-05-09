@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,13 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    PaginationPage,
-    ProcessUtil,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, PaginationPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksPage } from './../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Items per page set to 15 and adding of tasks', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -61,12 +54,12 @@ describe('Items per page set to 15 and adding of tasks', () => {
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
         const processUtil = new ProcessUtil(apiService);
-        for (i = 0; i < (nrOfTasks - 5); i++) {
+        for (i = 0; i < nrOfTasks - 5; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
     it('[C260306] Items per page set to 15 and adding of tasks', async () => {
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
@@ -75,11 +68,11 @@ describe('Items per page set to 15 and adding of tasks', () => {
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
 
-        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
-        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
+        expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
 
         const processUtil = new ProcessUtil(apiService);
         for (i; i < nrOfTasks; i++) {
@@ -90,11 +83,11 @@ describe('Items per page set to 15 and adding of tasks', () => {
         await paginationPage.clickOnNextPage();
         await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
 
-        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
-        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
-        await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
+        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
+        expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsEnabled();
     });

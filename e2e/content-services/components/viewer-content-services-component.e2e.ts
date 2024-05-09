@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -169,16 +169,16 @@ describe('Content Services Viewer', () => {
             const initialHeight = await viewerPage.getCanvasHeight();
 
             await viewerPage.clickZoomInButton();
-            await expect(+(await viewerPage.getCanvasWidth())).toBeGreaterThan(+initialWidth);
-            await expect(+(await viewerPage.getCanvasHeight())).toBeGreaterThan(+initialHeight);
+            expect(+(await viewerPage.getCanvasWidth())).toBeGreaterThan(+initialWidth);
+            expect(+(await viewerPage.getCanvasHeight())).toBeGreaterThan(+initialHeight);
 
             await viewerPage.clickActualSize();
-            await expect(+(await viewerPage.getCanvasWidth())).toEqual(+initialWidth);
-            await expect(+(await viewerPage.getCanvasHeight())).toEqual(+initialHeight);
+            expect(+(await viewerPage.getCanvasWidth())).toEqual(+initialWidth);
+            expect(+(await viewerPage.getCanvasHeight())).toEqual(+initialHeight);
 
             await viewerPage.clickZoomOutButton();
-            await expect(+(await viewerPage.getCanvasWidth())).toBeLessThan(+initialWidth);
-            await expect(+(await viewerPage.getCanvasHeight())).toBeLessThan(+initialHeight);
+            expect(+(await viewerPage.getCanvasWidth())).toBeLessThan(+initialWidth);
+            expect(+(await viewerPage.getCanvasHeight())).toBeLessThan(+initialHeight);
 
             await viewerPage.clickCloseButton();
         });
@@ -298,7 +298,7 @@ describe('Content Services Viewer', () => {
 
             await viewerPage.checkZoomInButtonIsNotDisplayed();
             await viewerPage.checkUnknownFormatIsDisplayed();
-            await expect(await viewerPage.getUnknownFormatMessage()).toBe("Couldn't load preview. Unknown format.");
+            expect(await viewerPage.getUnknownFormatMessage()).toBe(`Couldn't load preview. Unknown format.`);
 
             await viewerPage.clickCloseButton();
         });
@@ -397,6 +397,12 @@ describe('Content Services Viewer', () => {
         });
     });
 
+    /**
+     * Upload a new version of a file
+     *
+     * @param originalFileName The name of the original file
+     * @param newVersionLocation The location of the new version
+     */
     async function uploadNewVersion(originalFileName: string, newVersionLocation: string): Promise<void> {
         await contentServicesPage.doubleClickRow(originalFileName);
         await viewerPage.waitTillContentLoaded();
@@ -410,14 +416,25 @@ describe('Content Services Viewer', () => {
         await browser.refresh();
     }
 
+    /**
+     * Preview an unsupported file
+     *
+     * @param unsupportedFileName The name of the unsupported file
+     */
     async function previewUnsupportedFile(unsupportedFileName: string): Promise<void> {
         await contentServicesPage.doubleClickRow(unsupportedFileName);
         await viewerPage.waitTillContentLoaded();
         await viewerPage.checkUnknownFormatIsDisplayed();
-        await expect(await viewerPage.getUnknownFormatMessage()).toBe("Couldn't load preview. Unknown format.");
+        expect(await viewerPage.getUnknownFormatMessage()).toBe(`Couldn't load preview. Unknown format.`);
         await viewerPage.clickCloseButton();
     }
 
+    /**
+     * Change the name of the file in the viewer
+     *
+     * @param fileName The name of the file to be changed
+     * @param newName The new name of the file
+     */
     async function changeFileNameInViewer(fileName: string, newName: string): Promise<void> {
         await contentServicesPage.doubleClickRow(fileName);
         await viewerPage.waitTillContentLoaded();

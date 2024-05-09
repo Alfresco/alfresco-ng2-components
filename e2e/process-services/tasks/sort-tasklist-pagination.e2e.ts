@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,11 +71,11 @@ describe('Task List Pagination - Sorting', () => {
         await taskPage.filtersPage().sortByName('ASC');
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         const listAsc = await taskPage.filtersPage().getAllRowsNameColumn();
-        await expect(JSON.stringify(listAsc) === JSON.stringify(taskNames)).toEqual(true);
+        expect(JSON.stringify(listAsc) === JSON.stringify(taskNames)).toEqual(true);
         await taskPage.filtersPage().sortByName('DESC');
         const listDesc = await taskPage.filtersPage().getAllRowsNameColumn();
 
         taskNames.reverse();
-        await expect(JSON.stringify(listDesc) === JSON.stringify(taskNames)).toEqual(true);
+        expect(JSON.stringify(listDesc) === JSON.stringify(taskNames)).toEqual(true);
     });
 });

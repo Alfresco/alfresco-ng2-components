@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,13 @@
 
 import { NgModule } from '@angular/core';
 import { IconComponent } from './icon.component';
-import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
 
+/**
+ * @deprecated this Module is deprecated and should no longer be used.
+ * Consider importing components directly instead.
+ */
 @NgModule({
-    imports: [
-        CommonModule,
-        MatIconModule
-    ],
-    declarations: [
-        IconComponent
-    ],
-    exports: [
-        IconComponent
-    ]
+    imports: [IconComponent],
+    exports: [IconComponent]
 })
 export class IconModule {}

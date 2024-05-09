@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@ import { ProcessInstanceTasksComponent } from './components/process-instance-tas
 import { ProcessInstanceListComponent } from './components/process-list.component';
 import { StartProcessInstanceComponent } from './components/start-process.component';
 import { FormModule } from '../form/form.module';
-import { ProcessNamePipe } from '../pipes/process-name.pipe';
 
 @NgModule({
     imports: [
@@ -64,10 +63,6 @@ import { ProcessNamePipe } from '../pipes/process-name.pipe';
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
         StartProcessInstanceComponent
-    ],
-    providers: [
-        ProcessNamePipe
     ]
 })
-export class ProcessListModule {
-}
+export class ProcessListModule {}

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import { UploadTogglesPage } from '../../core/pages/dialog/upload-toggles.page';
 import { FileModel } from '../../models/ACS/file.model';
 
 describe('Upload component', async () => {
-
     const apiService = createApiService();
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
@@ -58,14 +57,13 @@ describe('Upload component', async () => {
         await contentServicesPage.goToDocumentList();
     });
 
-    const deleteNodesInCurrentPage = async function() {
+    const deleteNodesInCurrentPage = async () => {
         const nodeList = await contentServicesPage.getElementsDisplayedId();
 
         for (const node of nodeList) {
             try {
                 await uploadActions.deleteFileOrFolder(node);
-            } catch (error) {
-            }
+            } catch (error) {}
         }
     };
 
@@ -74,18 +72,20 @@ describe('Upload component', async () => {
 
         await contentServicesPage.uploadFile(mediumFile.location);
 
-        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.checkContentIsNotDisplayed(mediumFile.name);
     });
 
     it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', async () => {
-        await browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
+        await browser.executeScript(
+            ' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+                'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)'
+        );
 
         await contentServicesPage.uploadFile(largeFile.location);
-        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
@@ -94,12 +94,14 @@ describe('Upload component', async () => {
     it('[C272793] Should be able to cancel multiple files upload', async () => {
         await uploadToggles.enableMultipleFileUpload();
 
-        await browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
+        await browser.executeScript(
+            ' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
+                'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)'
+        );
 
         await contentServicesPage.uploadMultipleFile([mediumFile.location, largeFile.location]);
 
-        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.checkContentIsNotDisplayed(mediumFile.name);

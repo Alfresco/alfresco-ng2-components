@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget, UserModel
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -129,18 +122,18 @@ describe('Dynamic Table widget ', () => {
             await widget.dynamicTable().clickAddRow(app.FIELD.dynamic_table_id);
             await widget.dynamicTable().setDatatableInput('User1');
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
+            expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
 
             await widget.dynamicTable().clickTableRow(0);
             await widget.dynamicTable().clickEditButton();
             await widget.dynamicTable().setDatatableInput('User2');
             await widget.dynamicTable().clickCancelButton();
-            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
+            expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
 
             await widget.dynamicTable().clickEditButton();
             await widget.dynamicTable().setDatatableInput('User2');
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User2');
+            expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User2');
 
             await widget.dynamicTable().clickAddRow(app.FIELD.dynamic_table_id);
             await widget.dynamicTable().setDatatableInput('User3');
@@ -184,19 +177,19 @@ describe('Dynamic Table widget ', () => {
             await widget.dynamicTable().clickAddRow();
             await widget.dynamicTable().setDatatableInput('admin', app.CUSTOM_VALIDATOR.FIELD.NAME);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Sorry, wrong value. You cannot use "admin".');
+            expect(await widget.dynamicTable().checkErrorMessage()).toBe('Sorry, wrong value. You cannot use "admin".');
 
             await widget.dynamicTable().setDatatableInput('name', app.CUSTOM_VALIDATOR.FIELD.NAME);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Id' is required.`);
+            expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Id' is required.`);
 
             await widget.dynamicTable().setDatatableInput('id', app.CUSTOM_VALIDATOR.FIELD.ID);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Number' is required.`);
+            expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Number' is required.`);
 
             await widget.dynamicTable().setDatatableInput('12', app.CUSTOM_VALIDATOR.FIELD.NUM);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Address' is required.`);
+            expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Address' is required.`);
 
             await widget.dynamicTable().setDatatableInput('address', app.CUSTOM_VALIDATOR.FIELD.ADDRESS);
             await widget.dynamicTable().clickSaveButton();

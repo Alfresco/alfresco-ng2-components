@@ -35,7 +35,7 @@
   "application": {
     "storagePrefix": "ADF",
     "name": "Alfresco ADF Application",
-    "copyright": "© 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved."
+    "copyright": "© 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved."
   },
   "notifications": true,
   "search": [{

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,6 @@ import { newProcess, taskFormMock, testProcessDef, testMultipleProcessDefs, test
 import { StartProcessInstanceComponent } from './start-process.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { deployedApps } from '../../mock/apps-list.mock';
-import { ProcessNamePipe } from '../../pipes/process-name.pipe';
-import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
@@ -513,21 +511,6 @@ describe('StartProcessComponent', () => {
             await selectOptionByName(testProcessDef.name);
 
             expect(processDefinitionSelectionSpy).toHaveBeenCalledWith(testProcessDef);
-        });
-
-        it('should set the process name using the processName pipe when a process definition gets selected', async () => {
-            const processNamePipe = TestBed.inject(ProcessNamePipe);
-            const processNamePipeTransformSpy = spyOn(processNamePipe, 'transform').and.returnValue('fake-transformed-name');
-            const expectedProcessInstanceDetails = new ProcessInstance({ processDefinitionName: testProcessDef.name });
-            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
-            changeAppId(123);
-
-            await selectOptionByName(testProcessDef.name);
-
-            expect(processNamePipeTransformSpy).toHaveBeenCalledWith(component.name, expectedProcessInstanceDetails);
-            expect(component.nameController.dirty).toBe(true);
-            expect(component.nameController.touched).toBe(true);
-            expect(component.nameController.value).toEqual('fake-transformed-name');
         });
 
         it('should not emit start event when start the process without select a process and name', () => {

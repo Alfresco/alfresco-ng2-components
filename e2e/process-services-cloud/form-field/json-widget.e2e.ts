@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -33,7 +34,6 @@ import { TasksCloudDemoPage } from '.././pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Form Field Component - JSON Widget', () => {
-
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -63,7 +63,7 @@ describe('Form Field Component - JSON Widget', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -79,7 +79,7 @@ describe('Form Field Component - JSON Widget', () => {
     afterAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-   });
+    });
 
     beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -99,7 +99,7 @@ describe('Form Field Component - JSON Widget', () => {
         await jsonWidget.clickJsonButton(formWithJson.widgets.displayJsonWidgetId);
 
         await editJsonDialog.checkDialogIsDisplayed();
-        await expect(await editJsonDialog.getDialogContent()).toBe('{}');
+        expect(await editJsonDialog.getDialogContent()).toBe('{}');
         await editJsonDialog.clickCloseButton();
         await editJsonDialog.checkDialogIsNotDisplayed();
     });

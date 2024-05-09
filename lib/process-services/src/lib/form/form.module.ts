@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, FormatSpacePipe } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { StartFormComponent } from './start-form.component';
 import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
@@ -35,12 +35,7 @@ import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.wid
 import { AlfrescoViewerModule } from '@alfresco/adf-content-services';
 
 @NgModule({
-    imports: [
-        DynamicTableModule,
-        CoreModule,
-        AlfrescoViewerModule,
-        MaterialModule
-    ],
+    imports: [DynamicTableModule, CoreModule, AlfrescoViewerModule, MaterialModule, FormatSpacePipe],
     declarations: [
         UploadWidgetComponent,
         FormComponent,
@@ -69,5 +64,4 @@ import { AlfrescoViewerModule } from '@alfresco/adf-content-services';
         FileViewerWidgetComponent
     ]
 })
-export class FormModule {
-}
+export class FormModule {}

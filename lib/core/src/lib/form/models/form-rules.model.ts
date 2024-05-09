@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager
 }
 
 export abstract class FormRulesManager<T> {
-    constructor(private formService: FormService) {}
+    constructor(protected formService: FormService) {}
 
     protected formModel: FormModel;
     private onDestroy$ = new Subject<boolean>();
@@ -66,7 +66,9 @@ export abstract class FormRulesManager<T> {
                         this.handleRuleEvent(event, rules);
                     });
 
-                this.formService.formRulesEvent.next(new FormRulesEvent('formLoaded', new FormEvent(formModel)));
+                const onFormLoadedEvent = new FormEvent(formModel);
+                const formRules = new FormRulesEvent('formLoaded', onFormLoadedEvent);
+                this.formService.formRulesEvent.next(formRules);
             }
         }
 

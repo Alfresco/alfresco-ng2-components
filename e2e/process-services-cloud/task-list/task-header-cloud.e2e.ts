@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,8 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import { createApiService,
+import {
+    createApiService,
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
@@ -34,7 +35,6 @@ import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-ut
 const isValueInvalid = (value: any): boolean => value === null || value === undefined;
 
 describe('Task Header cloud component', () => {
-
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginPage();
@@ -73,21 +73,24 @@ describe('Task Header cloud component', () => {
     const formatDate = 'MMM D, YYYY';
     const dateTimeFormat = 'MMM D, Y, H:mm';
 
-    const createCompletedTask = async function() {
-        const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
-            simpleApp, { priority, description, dueDate: basicCreatedTask.entry.createdDate });
+    const createCompletedTask = async () => {
+        const completedTaskId = await tasksService.createStandaloneTask(completedTaskName, simpleApp, {
+            priority,
+            description,
+            dueDate: basicCreatedTask.entry.createdDate
+        });
         await tasksService.claimTask(completedTaskId.entry.id, simpleApp);
         await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
         return tasksService.getTask(completedTaskId.entry.id, simpleApp);
     };
 
-    const createSubTask = async function(createdTaskId) {
+    const createSubTask = async (createdTaskId) => {
         const subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, StringUtil.generateRandomString());
         await tasksService.claimTask(subTaskId.entry.id, simpleApp);
-        return  tasksService.getTask(subTaskId.entry.id, simpleApp);
+        return tasksService.getTask(subTaskId.entry.id, simpleApp);
     };
 
-    const createTask = async function() {
+    const createTask = async () => {
         const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
@@ -98,7 +101,7 @@ describe('Task Header cloud component', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.username, testUser.password);
@@ -140,19 +143,24 @@ describe('Task Header cloud component', () => {
         await tasksCloudDemoPage.waitTillContentLoaded();
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
-        await expect(await taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
-        await expect(await taskHeaderCloudPage.getDescription())
-            .toEqual(isValueInvalid(basicCreatedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
-        await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual('None');
-        await expect(await taskHeaderCloudPage.getCategory()).toEqual(!basicCreatedTask.entry.category ?
-            CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
-        await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(basicCreatedTask.entry.dueDate) ?
-            CONSTANTS.TASK_DETAILS.NO_DATE : basicCreatedDate);
-        await expect(await taskHeaderCloudPage.getEndDate()).toEqual('');
-        await expect(await taskHeaderCloudPage.getCreated()).toEqual(basicCreatedDate);
-        await expect(await taskHeaderCloudPage.getAssignee()).toEqual(isValueInvalid(basicCreatedTask.entry.assignee) ? '' : basicCreatedTask.entry.assignee);
-        await expect(await taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
+        expect(await taskHeaderCloudPage.getDescription()).toEqual(
+            isValueInvalid(basicCreatedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description
+        );
+        expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+        expect(await taskHeaderCloudPage.getPriority()).toEqual('None');
+        expect(await taskHeaderCloudPage.getCategory()).toEqual(
+            !basicCreatedTask.entry.category ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category
+        );
+        expect(await taskHeaderCloudPage.getDueDate()).toEqual(
+            isValueInvalid(basicCreatedTask.entry.dueDate) ? CONSTANTS.TASK_DETAILS.NO_DATE : basicCreatedDate
+        );
+        expect(await taskHeaderCloudPage.getEndDate()).toEqual('');
+        expect(await taskHeaderCloudPage.getCreated()).toEqual(basicCreatedDate);
+        expect(await taskHeaderCloudPage.getAssignee()).toEqual(
+            isValueInvalid(basicCreatedTask.entry.assignee) ? '' : basicCreatedTask.entry.assignee
+        );
+        expect(await taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
     });
 
     it('[C291944] Should display task details for completed task', async () => {
@@ -164,19 +172,22 @@ describe('Task Header cloud component', () => {
         await tasksCloudDemoPage.waitTillContentLoaded();
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
-        await expect(await taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
-        await expect(await taskHeaderCloudPage.getDescription())
-            .toEqual(isValueInvalid(completedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
-        await expect(await taskHeaderCloudPage.getStatus()).toEqual('COMPLETED');
-        await expect(await taskHeaderCloudPage.getReadonlyPriority()).toEqual('None');
-        await expect(await taskHeaderCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
-            CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
-        await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(completedTask.entry.dueDate) ?
-            CONSTANTS.TASK_DETAILS.NO_DATE : dueDate);
-        await expect(await taskHeaderCloudPage.getEndDate()).toEqual(completedEndDate);
-        await expect(await taskHeaderCloudPage.getCreated()).toEqual(completedCreatedDate);
-        await expect(await taskHeaderCloudPage.getAssignee()).toEqual(isValueInvalid(completedTask.entry.assignee) ? '' : completedTask.entry.assignee);
-        await expect(await taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
+        expect(await taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
+        expect(await taskHeaderCloudPage.getDescription()).toEqual(
+            isValueInvalid(completedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description
+        );
+        expect(await taskHeaderCloudPage.getStatus()).toEqual('COMPLETED');
+        expect(await taskHeaderCloudPage.getReadonlyPriority()).toEqual('None');
+        expect(await taskHeaderCloudPage.getCategory()).toEqual(
+            !completedTask.entry.category ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category
+        );
+        expect(await taskHeaderCloudPage.getDueDate()).toEqual(
+            isValueInvalid(completedTask.entry.dueDate) ? CONSTANTS.TASK_DETAILS.NO_DATE : dueDate
+        );
+        expect(await taskHeaderCloudPage.getEndDate()).toEqual(completedEndDate);
+        expect(await taskHeaderCloudPage.getCreated()).toEqual(completedCreatedDate);
+        expect(await taskHeaderCloudPage.getAssignee()).toEqual(isValueInvalid(completedTask.entry.assignee) ? '' : completedTask.entry.assignee);
+        expect(await taskHeaderCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
     });
 
     it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
@@ -188,20 +199,23 @@ describe('Task Header cloud component', () => {
         await tasksCloudDemoPage.waitTillContentLoaded();
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
-        await expect(await taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
-        await expect(await taskHeaderCloudPage.getDescription())
-            .toEqual(isValueInvalid(subTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
-        await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-        await expect(await taskHeaderCloudPage.getPriority()).toEqual('None');
-        await expect(await taskHeaderCloudPage.getCategory()).toEqual(!subTask.entry.category ?
-            CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);
-        await expect(await taskHeaderCloudPage.getDueDate()).toEqual(isValueInvalid(subTask.entry.dueDate) ? CONSTANTS.TASK_DETAILS.NO_DATE : subTaskCreatedDate);
-        await expect(await taskHeaderCloudPage.getEndDate()).toEqual('');
-        await expect(await taskHeaderCloudPage.getCreated()).toEqual(subTaskCreatedDate);
-        await expect(await taskHeaderCloudPage.getAssignee()).toEqual(isValueInvalid(subTask.entry.assignee) ? '' : subTask.entry.assignee);
-        await expect(await taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
-        await expect(await taskHeaderCloudPage.getParentTaskId())
-            .toEqual(isValueInvalid(subTask.entry.parentTaskId) ? '' : subTask.entry.parentTaskId);
+        expect(await taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
+        expect(await taskHeaderCloudPage.getDescription()).toEqual(
+            isValueInvalid(subTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description
+        );
+        expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
+        expect(await taskHeaderCloudPage.getPriority()).toEqual('None');
+        expect(await taskHeaderCloudPage.getCategory()).toEqual(
+            !subTask.entry.category ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category
+        );
+        expect(await taskHeaderCloudPage.getDueDate()).toEqual(
+            isValueInvalid(subTask.entry.dueDate) ? CONSTANTS.TASK_DETAILS.NO_DATE : subTaskCreatedDate
+        );
+        expect(await taskHeaderCloudPage.getEndDate()).toEqual('');
+        expect(await taskHeaderCloudPage.getCreated()).toEqual(subTaskCreatedDate);
+        expect(await taskHeaderCloudPage.getAssignee()).toEqual(isValueInvalid(subTask.entry.assignee) ? '' : subTask.entry.assignee);
+        expect(await taskHeaderCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
+        expect(await taskHeaderCloudPage.getParentTaskId()).toEqual(isValueInvalid(subTask.entry.parentTaskId) ? '' : subTask.entry.parentTaskId);
     });
 
     it('[C309698] Should validate the Priority field', async () => {
@@ -216,7 +230,7 @@ describe('Task Header cloud component', () => {
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
         const currentAssignee = await taskHeaderCloudPage.assigneeCardTextItem.getFieldValue();
-        await expect(currentAssignee).toBe('No assignee');
+        expect(currentAssignee).toBe('No assignee');
 
         await taskHeaderCloudPage.priorityCardSelectItem.checkElementIsReadonly();
         await taskHeaderCloudPage.statusCardTextItem.checkElementIsReadonly();
@@ -225,8 +239,8 @@ describe('Task Header cloud component', () => {
     it('[C291991] Should be able to assign a task only to the users that have access to the selected app', async () => {
         await tasksCloudDemoPage.clickStartNewTaskButton();
         const currentAssignee = await peopleCloudComponentPage.getChipAssignee();
-        await expect(currentAssignee).toContain(testUser.firstName);
-        await expect(currentAssignee).toContain(testUser.lastName);
+        expect(currentAssignee).toContain(testUser.firstName);
+        expect(currentAssignee).toContain(testUser.lastName);
 
         await peopleCloudComponentPage.searchAssignee('hrUser');
         await peopleCloudComponentPage.selectAssigneeFromList('HR User');

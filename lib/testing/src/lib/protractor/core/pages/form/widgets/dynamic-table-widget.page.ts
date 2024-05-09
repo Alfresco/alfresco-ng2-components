@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ export class DynamicTableWidgetPage {
         const dataTableInput = $(`#${id}`);
         await BrowserVisibility.waitUntilElementIsVisible(dataTableInput);
         await BrowserActions.clearSendKeys(dataTableInput, text);
-     }
+    }
 
     async getTableRowText(rowNumber): Promise<string> {
         const tableRowByIndex = this.getTableRowByIndex(rowNumber);
@@ -121,7 +121,7 @@ export class DynamicTableWidgetPage {
     async checkItemIsPresent(item): Promise<void> {
         const row = element(by.cssContainingText('table tbody tr td span', item));
         const present = await BrowserVisibility.waitUntilElementIsVisible(row);
-        await expect(present).toBe(true);
+        expect(present).toBe(true);
     }
 
     private getTableRowByIndex = (idx: string) => $(`#dynamictable-row-${idx}`);

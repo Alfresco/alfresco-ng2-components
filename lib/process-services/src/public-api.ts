@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,5 @@ export * from './lib/process-comments/index';
 export * from './lib/people/index';
 export * from './lib/form/index';
 export * from './lib/task-comments/index';
-export * from './lib/pipes/process-name.pipe';
-export * from './lib/pipes/process-services-pipe.module';
-
-export * from './lib/pipes/process-name.pipe';
-export * from './lib/pipes/process-services-pipe.module';
 export * from './lib/material.module';
 export * from './lib/process.module';

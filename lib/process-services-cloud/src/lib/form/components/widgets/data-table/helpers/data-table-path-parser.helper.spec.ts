@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,14 @@
 import { DataTablePathParserHelper } from './data-table-path-parser.helper';
 import { mockResponseResultData, mockResultData } from '../mocks/data-table-path-parser.helper.mock';
 
+interface DataTablePathParserTestCase {
+    description: string;
+    path: string;
+    data?: any;
+    propertyName?: string;
+    expected?: unknown[];
+}
+
 describe('DataTablePathParserHelper', () => {
     let helper: DataTablePathParserHelper;
 
@@ -26,11 +34,17 @@ describe('DataTablePathParserHelper', () => {
     });
 
     describe('should return the correct data for path', () => {
-        const testCases = [
+        const testCases: DataTablePathParserTestCase[] = [
             {
                 description: 'not existent',
                 data: {},
                 path: 'nonexistent.path',
+                expected: []
+            },
+            {
+                description: 'not defined',
+                data: {},
+                path: undefined,
                 expected: []
             },
             {
