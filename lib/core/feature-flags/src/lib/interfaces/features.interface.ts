@@ -22,7 +22,7 @@ export const FeaturesServiceConfigToken = new InjectionToken<any>('FeatureServic
 export const FeaturesServiceToken = new InjectionToken<IFeaturesService>('FeaturesService');
 export const WritableFeaturesServiceToken = new InjectionToken<IFeaturesService & IWritableFeaturesService>('WritableFeaturesServiceToken');
 export const WritableFeaturesServiceConfigToken = new InjectionToken<WritableFeaturesServiceConfig>('WritableFeaturesServiceConfigToken');
-export const OverridableFeaturesServiceToken = new InjectionToken<IFeaturesService>('OveriddableFeaturesServiceToken');
+export const OverridableFeaturesServiceToken = new InjectionToken<IFeaturesService>('OverridableFeaturesServiceToken');
 export const FlagsOverrideToken = new InjectionToken<boolean>('FlagsOverrideToken');
 
 export interface WritableFeaturesServiceConfig {

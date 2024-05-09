@@ -114,9 +114,9 @@ describe('StorageFeaturesService', () => {
             storageFeaturesService.mergeFlags(newFlags);
 
             expect(storageFeaturesService.getFlagsSnapshot()).toEqual({
-                feature1: Object({ current: true, previous: null, fictive: true }),
-                feature2: Object({ current: false, previous: false }),
-                feature3: Object({ current: false, previous: null })
+                feature1: { current: true, previous: null, fictive: true },
+                feature2: { current: false, previous: false },
+                feature3: { current: false, previous: null }
             });
         });
 
