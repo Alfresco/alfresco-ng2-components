@@ -35,7 +35,7 @@ export class DataTablePathParserHelper {
         return this.retrieveDataFromPath(nestedData, properties.join('.'));
     }
 
-    private splitPathIntoProperties(path: string): string[] {
+    splitPathIntoProperties(path: string): string[] {
         const properties: string[] = [];
         const separator = '.';
         const openBracket = '[';
@@ -44,6 +44,10 @@ export class DataTablePathParserHelper {
         let currentPropertyBuffer = '';
         let bracketCount = 0;
         const isPropertySeparatorOutsideBrackets = () => bracketCount === 0;
+
+        if (!path) {
+            return properties;
+        }
 
         for (const char of path) {
             switch (char) {
@@ -76,7 +80,7 @@ export class DataTablePathParserHelper {
         return properties;
     }
 
-    private removeSquareBracketsFromProperty(property: string): string {
+    removeSquareBracketsFromProperty(property: string): string {
         return property?.replace(this.removeSquareBracketsRegEx, '$1');
     }
 

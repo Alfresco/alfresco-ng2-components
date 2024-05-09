@@ -16,15 +16,13 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataColumn, FormFieldModel, FormFieldTypes, FormModel, VariableConfig } from '@alfresco/adf-core';
+import { DataColumn, DataRow, FormFieldModel, FormFieldTypes, FormModel, VariableConfig } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { DataTableWidgetComponent } from './data-table.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import {
-    mockEuropeCountriesData,
     mockAmericaCountriesData,
     mockInvalidSchemaDefinition,
     mockJsonFormVariable,
@@ -34,7 +32,14 @@ import {
     mockJsonResponseEuropeCountriesData,
     mockJsonResponseFormVariable,
     mockJsonNestedResponseFormVariable,
-    mockJsonNestedResponseEuropeCountriesData
+    mockJsonNestedResponseEuropeCountriesData,
+    mockNestedEuropeCountriesData,
+    mockSchemaDefinitionWithNestedKeys,
+    mockCountryColumns,
+    mockEuropeCountriesRows,
+    mockAmericaCountriesRows,
+    mockNestedCountryColumns,
+    mockNestedEuropeCountriesRows
 } from './mocks/data-table-widget.mock';
 
 describe('DataTableWidgetComponent', () => {
@@ -71,9 +76,10 @@ describe('DataTableWidgetComponent', () => {
 
     const getPreview = () => fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget-preview"]');
 
-    const assertDataRows = (expectedData: WidgetDataTableAdapter) => {
-        expectedData.getRows().forEach((row) => (row.cssClass = ''));
-        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+    const assertData = (expectedColumns: DataColumn[], expectedRows: DataRow[]) => {
+        expectedRows.forEach((row) => (row.cssClass = ''));
+        expect(widget.dataSource.getColumns()).toEqual(expectedColumns);
+        expect(widget.dataSource.getRows()).toEqual(expectedRows);
     };
 
     beforeEach(() => {
@@ -117,13 +123,20 @@ describe('DataTableWidgetComponent', () => {
         widget.dataSource.getColumns().forEach((column, index) => expect(column.key).toEqual(mockSchemaDefinition[index].key));
     });
 
+    it('should properly initialize data source based on nested schema and data', () => {
+        widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinitionWithNestedKeys, [], []);
+        widget.field.value = mockNestedEuropeCountriesData;
+        fixture.detectChanges();
+
+        assertData(mockNestedCountryColumns, mockNestedEuropeCountriesRows);
+    });
+
     it('should properly initialize data source with priority on the field value if process and form variables are provided', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, mockJsonProcessVariables, mockJsonFormVariable);
         widget.field.value = mockAmericaCountriesData;
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
-        assertDataRows(expectedData);
+        assertData(mockCountryColumns, mockAmericaCountriesRows);
     });
 
     it('should properly initialize data source based on field value', () => {
@@ -131,8 +144,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockAmericaCountriesData;
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
-        assertDataRows(expectedData);
+        assertData(mockCountryColumns, mockAmericaCountriesRows);
     });
 
     it('should properly initialize default json response data source based on field value if path is NOT provided', () => {
@@ -140,16 +152,14 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockJsonResponseEuropeCountriesData;
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        assertDataRows(expectedData);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize default json response data source based on variable if path is NOT provided', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonResponseFormVariable);
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        assertDataRows(expectedData);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize json response data source based on field value if path is provided', () => {
@@ -157,8 +167,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field.value = mockJsonNestedResponseEuropeCountriesData;
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        assertDataRows(expectedData);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize json response data source based on variable if path is provided', () => {
@@ -170,24 +179,21 @@ describe('DataTableWidgetComponent', () => {
         );
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        assertDataRows(expectedData);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize data source based on form variable', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariable);
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        assertDataRows(expectedData);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should properly initialize data source based on process variable', () => {
         widget.field = getDataVariable({ variableName: 'json-variable' }, mockSchemaDefinition, mockJsonProcessVariables);
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        assertDataRows(expectedData);
+        assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
     it('should NOT display error if form is in preview state', () => {

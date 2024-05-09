@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataColumn } from '@alfresco/adf-core';
+import { DataColumn, DataRow, ObjectDataColumn, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskVariableCloud } from '../../../../models/task-variable-cloud.model';
 
 export const mockSchemaDefinition: DataColumn[] = [
@@ -33,6 +33,33 @@ export const mockSchemaDefinition: DataColumn[] = [
         sortable: true,
         draggable: true
     }
+];
+
+export const mockSchemaDefinitionWithNestedKeys: DataColumn[] = [
+    {
+        type: 'text',
+        key: 'countries.europeCountry.id',
+        title: 'Country ID',
+        sortable: true,
+        draggable: true
+    },
+    {
+        type: 'text',
+        key: 'countries.europeCountry.name',
+        title: 'Country Name',
+        sortable: true,
+        draggable: true
+    }
+];
+
+export const mockCountryColumns: DataColumn[] = [
+    new ObjectDataColumn({ key: 'id', type: 'text', title: 'Country ID', sortable: true, draggable: true }),
+    new ObjectDataColumn({ key: 'name', type: 'text', title: 'Country Name', sortable: true, draggable: true })
+];
+
+export const mockNestedCountryColumns: DataColumn[] = [
+    new ObjectDataColumn({ key: 'countries.europeCountry.id', type: 'text', title: 'Country ID', sortable: true, draggable: true }),
+    new ObjectDataColumn({ key: 'countries.europeCountry.name', type: 'text', title: 'Country Name', sortable: true, draggable: true })
 ];
 
 export const mockInvalidSchemaDefinition: DataColumn[] = [
@@ -67,6 +94,18 @@ export const mockEuropeCountriesData = [
     }
 ];
 
+export const mockEuropeCountriesRows: DataRow[] = [
+    new ObjectDataRow({ id: 'IT', name: 'Italy' }),
+    new ObjectDataRow({ id: 'PL', name: 'Poland' }),
+    new ObjectDataRow({ id: 'UK', name: 'United Kingdom' })
+];
+
+export const mockNestedEuropeCountriesRows: DataRow[] = [
+    new ObjectDataRow({ 'countries.europeCountry.id': 'IT', 'countries.europeCountry.name': 'Italy' }),
+    new ObjectDataRow({ 'countries.europeCountry.id': 'PL', 'countries.europeCountry.name': 'Poland' }),
+    new ObjectDataRow({ 'countries.europeCountry.id': 'UK', 'countries.europeCountry.name': 'United Kingdom' })
+];
+
 export const mockJsonResponseEuropeCountriesData = {
     data: mockEuropeCountriesData
 };
@@ -85,6 +124,33 @@ export const mockJsonNestedResponseEuropeCountriesData = {
     }
 };
 
+export const mockNestedEuropeCountriesData = [
+    {
+        countries: {
+            europeCountry: {
+                id: 'PL',
+                name: 'Poland'
+            }
+        }
+    },
+    {
+        countries: {
+            europeCountry: {
+                id: 'IT',
+                name: 'Italy'
+            }
+        }
+    },
+    {
+        countries: {
+            europeCountry: {
+                id: 'UK',
+                name: 'United Kingdom'
+            }
+        }
+    }
+];
+
 export const mockAmericaCountriesData = [
     {
         id: 'CA',
@@ -98,6 +164,12 @@ export const mockAmericaCountriesData = [
         id: 'MX',
         name: 'Mexico'
     }
+];
+
+export const mockAmericaCountriesRows: DataRow[] = [
+    new ObjectDataRow({ id: 'CA', name: 'Canada' }),
+    new ObjectDataRow({ id: 'MX', name: 'Mexico' }),
+    new ObjectDataRow({ id: 'US', name: 'United States' })
 ];
 
 export const mockCountriesIncorrectData = [
