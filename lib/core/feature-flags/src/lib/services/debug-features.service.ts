@@ -29,7 +29,7 @@ import {
     FlagSet,
     IWritableFeaturesService
 } from '../interfaces/features.interface';
-import { StorageService } from 'public-api';
+import { StorageService } from '../../../..';
 
 @Injectable()
 export class DebugFeaturesService implements IDebugFeaturesService {

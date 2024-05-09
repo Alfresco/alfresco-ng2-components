@@ -47,7 +47,7 @@ describe('StorageFeaturesService', () => {
                     {
                         provide: WritableFeaturesServiceConfigToken,
                         useValue: {
-                            storageKey: 'storageFeaturesService-key-test'
+                            storageKey: 'storage-key-test'
                         }
                     },
                     StorageFeaturesService

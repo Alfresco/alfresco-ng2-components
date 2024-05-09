@@ -1,0 +1,147 @@
+/*!
+ * @license
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { TestBed } from '@angular/core/testing';
+import { DebugFeaturesService } from './debug-features.service';
+import { StorageService } from '../../../../src/lib/common/services/storage.service';
+import { OverridableFeaturesServiceToken, WritableFeaturesServiceToken } from '../interfaces/features.interface';
+import { DummyFeaturesService } from './dummy-features.service';
+import { StorageFeaturesService } from './storage-features.service';
+import { take } from 'rxjs/operators';
+
+describe('DebugFeaturesService', () => {
+    let service: DebugFeaturesService;
+    const mockStorage = {
+        getItem: () =>
+            JSON.stringify({
+                feature1: {
+                    current: true
+                },
+                feature2: {
+                    current: false,
+                    fictive: true
+                }
+            }),
+        setItem: () => {}
+    };
+
+    const getServiceWithDebugMode = (debugMode: boolean) => {
+        TestBed.configureTestingModule({
+            providers: [
+                DebugFeaturesService,
+                StorageService,
+                { provide: StorageService, useValue: mockStorage },
+                { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
+                { provide: OverridableFeaturesServiceToken, useClass: DummyFeaturesService }
+            ]
+        });
+        const featureService = TestBed.inject(DebugFeaturesService);
+        featureService.enable(debugMode);
+        return featureService;
+    };
+
+    describe('in debug mode', () => {
+        beforeEach(() => {
+            service = getServiceWithDebugMode(true);
+        });
+
+        it('should be in debug mode', (done) => {
+            service.isEnabled().subscribe((isEnabled) => {
+                expect(isEnabled).toBeTrue();
+                done();
+            });
+        });
+
+        it('should return false for isOn$ when flag is enabled', (done) => {
+            const flagKey = 'featureFlag1';
+
+            service
+                .isOn$(flagKey)
+                .pipe(take(1))
+                .subscribe((isEnabled) => {
+                    expect(isEnabled).toBeFalse();
+                    done();
+                });
+        });
+
+        it('should return false for isOn$ when flag is disabled', (done) => {
+            const flagKey = 'featureFlag2';
+
+            service
+                .isOn$(flagKey)
+                .pipe(take(1))
+                .subscribe((isEnabled) => {
+                    expect(isEnabled).toBeFalse();
+                    done();
+                });
+        });
+
+        it('should return true for isOff$ when flag is enabled', (done) => {
+            const flagKey = 'featureFlag3';
+
+            service
+                .isOff$(flagKey)
+                .pipe(take(1))
+                .subscribe((isEnabled) => {
+                    expect(isEnabled).toBeTrue();
+                    done();
+                });
+        });
+
+        it('should return true for isOff$ when flag is disabled', (done) => {
+            const flagKey = 'featureFlag4';
+
+            service
+                .isOff$(flagKey)
+                .pipe(take(1))
+                .subscribe((isEnabled) => {
+                    expect(isEnabled).toBeTrue();
+                    done();
+                });
+        });
+
+        it('should reset specified flags', () => {
+            const flagsToReset = ['flag1', 'flag2', 'flag3'];
+            service.resetFlags(flagsToReset);
+            // Add assertions to check if the flags were reset properly
+        });
+
+        it('should get the flags as an observable', (done) => {
+            service.getFlags$().subscribe((flags) => {
+                expect(flags).toEqual({});
+                done();
+            });
+        });
+
+        it('should get the flags snapshot', () => {
+            const flags = service.getFlagsSnapshot();
+            expect(flags).toEqual({});
+        });
+    });
+
+    describe('not in debug mode', () => {
+        beforeEach(() => {
+            service = getServiceWithDebugMode(false);
+        });
+        it('should not be in debug mode', (done) => {
+            service.isEnabled().subscribe((isEnabled) => {
+                expect(isEnabled).toBeFalse();
+                done();
+            });
+        });
+    });
+});
