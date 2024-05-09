@@ -26,7 +26,8 @@ import { ContentService } from '../common/services/content.service';
 const DIALOG_WIDTH: number = 400;
 
 @Directive({
-    selector: '[adf-edit-folder]'
+    selector: '[adf-edit-folder]',
+    standalone: true
 })
 export class FolderEditDirective {
     /** Folder node to edit. */
