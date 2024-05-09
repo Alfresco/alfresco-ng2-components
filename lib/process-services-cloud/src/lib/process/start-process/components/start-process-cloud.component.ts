@@ -86,6 +86,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     @Input()
     showTitle: boolean = true;
 
+    /** Show/hide cancel button. */
+    @Input()
+    showCancelButton: boolean = true;
+
     /** Emitted when the process is successfully started. */
     @Output()
     success = new EventEmitter<ProcessInstanceCloud>();
@@ -187,20 +191,24 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
-        this.processDefinitionCurrent = this.filteredProcesses.find(
+        const processDefinitionCurrent = this.filteredProcesses.find(
             (process: ProcessDefinitionCloud) => process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName
         );
 
-        this.startProcessCloudService.getStartEventFormStaticValuesMapping(this.appName, this.processDefinitionCurrent.id).subscribe(
+        this.startProcessCloudService.getStartEventFormStaticValuesMapping(this.appName, processDefinitionCurrent.id).subscribe(
             (staticMappings) => {
                 this.staticMappings = staticMappings;
                 this.resolvedValues = this.staticMappings.concat(this.values || []);
+                this.processDefinitionCurrent = processDefinitionCurrent;
             },
-            () => (this.resolvedValues = this.values)
+            () => {
+                this.resolvedValues = this.values;
+                this.processDefinitionCurrent = processDefinitionCurrent;
+            }
         );
 
         this.isFormCloudLoaded = false;
-        this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
+        this.processPayloadCloud.processDefinitionKey = processDefinitionCurrent.key;
     }
 
     private getProcessDefinitionListByNameOrKey(processDefinitionName: string): ProcessDefinitionCloud[] {

@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-export * from './form.event';
-export * from './form-error.event';
-export * from './form-field.event';
-export * from './validate-form-field.event';
-export * from './validate-form.event';
-export * from './form-rules.event';
-export * from './form-spinner.event';
+import { Component, Input } from '@angular/core';
+
+@Component({
+    templateUrl: './form-spinner.component.html',
+    styleUrls: ['./form-spinner.component.scss']
+})
+export class FormSpinnerComponent {
+    @Input() message = '';
+}

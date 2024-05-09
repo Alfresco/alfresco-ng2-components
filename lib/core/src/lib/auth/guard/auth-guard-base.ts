@@ -17,10 +17,7 @@
 
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import {
-    AppConfigService,
-    AppConfigValues
-} from '../../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
@@ -28,9 +25,7 @@ import { Observable } from 'rxjs';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../services/oidc-authentication.service';
 
-
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
-
     protected get withCredentials(): boolean {
         return this.appConfigService.get<boolean>('auth.withCredentials', false);
     }
@@ -43,8 +38,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog,
         private storageService: StorageService
-    ) {
-    }
+    ) {}
 
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,
@@ -96,7 +90,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
             urlToRedirect = `${urlToRedirect}?redirectUrl=${url}`;
             return this.navigate(urlToRedirect);
-       } else if (this.getOauthConfig().silentLogin && !this.oidcAuthenticationService.isPublicUrl()) {
+        } else if (this.getOauthConfig().silentLogin && !this.oidcAuthenticationService.isPublicUrl()) {
             if (!this.oidcAuthenticationService.hasValidIdToken() || !this.oidcAuthenticationService.hasValidAccessToken()) {
                 this.oidcAuthenticationService.ssoLogin(url);
             }
@@ -114,13 +108,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected getOauthConfig(): OauthConfigModel {
-        return (
-            this.appConfigService &&
-            this.appConfigService.get<OauthConfigModel>(
-                AppConfigValues.OAUTHCONFIG,
-                null
-            )
-        );
+        return this.appConfigService && this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
     }
 
     protected getLoginRoute(): string {
@@ -132,20 +120,12 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected isOAuthWithoutSilentLogin(): boolean {
-        const oauth = this.appConfigService.get<OauthConfigModel>(
-            AppConfigValues.OAUTHCONFIG,
-            null
-        );
-        return (
-            this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin
-        );
+        const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+        return this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin;
     }
 
     protected isSilentLogin(): boolean {
-        const oauth = this.appConfigService.get<OauthConfigModel>(
-            AppConfigValues.OAUTHCONFIG,
-            null
-        );
+        const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
 
         return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }

@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-export * from './form.event';
-export * from './form-error.event';
-export * from './form-field.event';
-export * from './validate-form-field.event';
-export * from './validate-form.event';
-export * from './form-rules.event';
-export * from './form-spinner.event';
+export interface FormSpinnerEventPayload {
+    showSpinner: boolean;
+    message?: string;
+}
+
+export class FormSpinnerEvent {
+    constructor(public type: string, public payload: FormSpinnerEventPayload) {}
+}
