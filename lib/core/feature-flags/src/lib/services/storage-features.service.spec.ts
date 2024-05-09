@@ -134,6 +134,10 @@ describe('StorageFeaturesService', () => {
 
             storageFeaturesService.setFlag(flagKey, flagValue);
         });
+
+        it('should return custom storageFeaturesService key', () => {
+            expect(storageFeaturesService.storageKey).toEqual('storage-key-test');
+        });
     });
 
     describe('if flags are not present in LocalStorage and no configuration is provided', () => {

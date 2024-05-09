@@ -43,7 +43,6 @@ describe('DebugFeaturesService', () => {
         TestBed.configureTestingModule({
             providers: [
                 DebugFeaturesService,
-                StorageService,
                 { provide: StorageService, useValue: mockStorage },
                 { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
                 { provide: OverridableFeaturesServiceToken, useClass: DummyFeaturesService }
@@ -67,7 +66,7 @@ describe('DebugFeaturesService', () => {
         });
 
         it('should return false for isOn$ when flag is enabled', (done) => {
-            const flagKey = 'featureFlag1';
+            const flagKey = 'feature1';
 
             service
                 .isOn$(flagKey)
@@ -79,7 +78,7 @@ describe('DebugFeaturesService', () => {
         });
 
         it('should return false for isOn$ when flag is disabled', (done) => {
-            const flagKey = 'featureFlag2';
+            const flagKey = 'feature2';
 
             service
                 .isOn$(flagKey)
@@ -91,7 +90,7 @@ describe('DebugFeaturesService', () => {
         });
 
         it('should return true for isOff$ when flag is enabled', (done) => {
-            const flagKey = 'featureFlag3';
+            const flagKey = 'feature3';
 
             service
                 .isOff$(flagKey)
@@ -103,7 +102,7 @@ describe('DebugFeaturesService', () => {
         });
 
         it('should return true for isOff$ when flag is disabled', (done) => {
-            const flagKey = 'featureFlag4';
+            const flagKey = 'feature4';
 
             service
                 .isOff$(flagKey)
@@ -114,10 +113,15 @@ describe('DebugFeaturesService', () => {
                 });
         });
 
-        it('should reset specified flags', () => {
-            const flagsToReset = ['flag1', 'flag2', 'flag3'];
+        it('should always reset specified flags', () => {
+            const flagsToReset = {
+                feature1: true
+            };
+            const writableFeaturesServiceToken = TestBed.inject(WritableFeaturesServiceToken);
+            const spy = spyOn(writableFeaturesServiceToken, 'resetFlags');
             service.resetFlags(flagsToReset);
-            // Add assertions to check if the flags were reset properly
+
+            expect(spy).toHaveBeenCalled();
         });
 
         it('should get the flags as an observable', (done) => {
@@ -130,6 +134,10 @@ describe('DebugFeaturesService', () => {
         it('should get the flags snapshot', () => {
             const flags = service.getFlagsSnapshot();
             expect(flags).toEqual({});
+        });
+
+        it('should return the storageFeaturesService key with -override postfix', () => {
+            expect(service.storageKey).toBe('feature-flags-override');
         });
     });
 
