@@ -16,15 +16,15 @@
  */
 
 import { AfterContentInit, ContentChild, Directive, Input, TemplateRef, OnDestroy } from '@angular/core';
-import { ViewerRenderComponent } from '../components/viewer-render.component';
+import { ViewerRenderComponent } from '../components/viewer-render/viewer-render.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-    selector: 'adf-viewer-extension'
+    selector: 'adf-viewer-extension',
+    standalone: true
 })
 export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
-
     @ContentChild(TemplateRef)
     template: any;
 
@@ -41,19 +41,16 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private viewerComponent: ViewerRenderComponent) {
-    }
+    constructor(private viewerComponent: ViewerRenderComponent) {}
 
     ngAfterContentInit() {
         this.templateModel = { template: this.template, isVisible: false };
         this.viewerComponent.extensionsSupportedByTemplates.push(...this.supportedExtensions);
         this.viewerComponent.extensionTemplates.push(this.templateModel);
 
-        this.viewerComponent.extensionChange
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(fileExtension => {
-                this.templateModel.isVisible = this.isVisible(fileExtension);
-            });
+        this.viewerComponent.extensionChange.pipe(takeUntil(this.onDestroy$)).subscribe((fileExtension) => {
+            this.templateModel.isVisible = this.isVisible(fileExtension);
+        });
     }
 
     ngOnDestroy() {
@@ -70,11 +67,10 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
     isVisible(fileExtension: string): boolean {
         let supportedExtension: string;
 
-        if (this.supportedExtensions && (this.supportedExtensions instanceof Array)) {
+        if (this.supportedExtensions && this.supportedExtensions instanceof Array) {
             supportedExtension = this.supportedExtensions.find((extension) => extension.toLowerCase() === fileExtension);
         }
 
         return !!supportedExtension;
     }
-
 }

@@ -16,9 +16,14 @@
  */
 
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { ViewerComponent } from '../viewer.component';
 
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
+    standalone: true,
+    imports: [ViewerComponent, MatIconModule, MatButtonModule],
     template: `
         <adf-viewer>
             <adf-viewer-toolbar-actions>
@@ -29,5 +34,4 @@ import { Component } from '@angular/core';
         </adf-viewer>
     `
 })
-export class ViewerWithCustomToolbarActionsComponent {
-}
+export class ViewerWithCustomToolbarActionsComponent {}
