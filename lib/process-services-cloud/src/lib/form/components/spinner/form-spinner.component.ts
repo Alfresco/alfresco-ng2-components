@@ -15,31 +15,12 @@
  * limitations under the License.
  */
 
-export const mockResultData = [
-    {
-        id: '1',
-        decimal: '1.0',
-        name: 'test1',
-        date: '1-12-2023',
-        amount: '0.12',
-        data: '{ "result": "positive" }',
-        trust: 'true',
-        image: 'check_circle'
-    },
-    {
-        id: '2',
-        decimal: '2.2',
-        name: 'test2',
-        date: '2-13-2023',
-        amount: '2.2',
-        data: '{ "result": "negative" }',
-        trust: 'true',
-        image: 'bookmark'
-    }
-];
+import { Component, Input } from '@angular/core';
 
-export const mockResponseResultData = (propertyName?: string) => ({
-    response: {
-        [propertyName]: mockResultData
-    }
-});
+@Component({
+    templateUrl: './form-spinner.component.html',
+    styleUrls: ['./form-spinner.component.scss']
+})
+export class FormSpinnerComponent {
+    @Input() message = '';
+}

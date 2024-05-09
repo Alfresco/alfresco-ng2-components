@@ -15,42 +15,118 @@
  * limitations under the License.
  */
 
-import {
-    ObjectDataTableAdapter,
-    DataColumn,
-    DataRow
-} from '@alfresco/adf-core';
+import { ObjectDataTableAdapter, DataColumn, DataRow, ObjectDataColumn, ObjectDataRow, DataTableAdapter, DataSorting } from '@alfresco/adf-core';
+import { DataTablePathParserHelper } from './helpers/data-table-path-parser.helper';
+import { Subject } from 'rxjs';
 
-export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
+export class WidgetDataTableAdapter implements DataTableAdapter {
+    private adapter: ObjectDataTableAdapter;
+    private columnKeys: string[] = [];
+    private helper = new DataTablePathParserHelper();
 
-    private rows: DataRow[];
-    private columns: DataColumn[];
+    get selectedRow(): DataRow {
+        return this.adapter.selectedRow;
+    }
 
-    constructor(data?: any[], schema?: DataColumn[]) {
-        super(data, schema);
-        this.rows = super.getRows();
-        this.columns = super.getColumns();
+    get rowsChanged(): Subject<Array<DataRow>> {
+        return this.adapter.rowsChanged;
+    }
+
+    constructor(data: any[], schema: DataColumn[]) {
+        this.adapter = new ObjectDataTableAdapter(data, schema);
+
+        this.createColumns(schema);
+        this.createRows(data);
+    }
+
+    private createColumns(schema: DataColumn[]): void {
+        if (schema?.length) {
+            this.adapter.setColumns(this.buildColumnsFromSchema(schema));
+        }
+    }
+
+    private buildColumnsFromSchema(schema: DataColumn[]): ObjectDataColumn[] {
+        return schema.map((dataColumn) => {
+            this.columnKeys.push(dataColumn.key);
+
+            return new ObjectDataColumn(dataColumn);
+        });
+    }
+
+    private createRows(data: any[]): void {
+        if (data?.length) {
+            this.adapter.setRows(data.map((item) => this.buildDataRowFromItem(item)));
+        }
+    }
+
+    private buildDataRowFromItem(item: any): ObjectDataRow {
+        const rowData = {};
+        this.columnKeys.forEach((path, i) => {
+            const rowValue = this.extractPropertyValue(this.helper.splitPathIntoProperties(path), item);
+
+            if (rowValue) {
+                rowData[this.columnKeys[i]] = rowValue;
+            }
+        });
+
+        return new ObjectDataRow(rowData);
+    }
+
+    private extractPropertyValue(properties: string[], item: any): string {
+        return properties.reduce((acc, property) => (acc ? acc[this.helper.removeSquareBracketsFromProperty(property)] : undefined), item);
+    }
+
+    getColumns(): Array<DataColumn> {
+        return this.adapter.getColumns();
     }
 
     getRows(): DataRow[] {
         if (this.isDataSourceValid()) {
-            return this.rows;
+            return this.adapter.getRows();
         }
 
         return [];
     }
 
-    isDataSourceValid(): boolean {
-        return this.hasAllColumnsLinkedToData() && this.hasAllMandatoryColumnPropertiesHaveValues();
+    setRows(rows: Array<DataRow>): void {
+        this.adapter.setRows(rows);
     }
 
-    private hasAllMandatoryColumnPropertiesHaveValues(): boolean {
-        return this.columns.every(column => !!column.key);
+    setColumns(columns: Array<DataColumn>): void {
+        this.adapter.setColumns(columns);
+    }
+
+    getValue(row: DataRow, col: DataColumn, resolverFn?: (_row: DataRow, _col: DataColumn) => any): any {
+        return this.adapter.getValue(row, col, resolverFn);
+    }
+
+    getColumnType(row: DataRow, col: DataColumn): string {
+        return this.adapter.getColumnType(row, col);
+    }
+
+    getSorting(): DataSorting {
+        return this.adapter.getSorting();
+    }
+
+    setSorting(sorting: DataSorting): void {
+        this.adapter.setSorting(sorting);
+    }
+
+    sort(key?: string, direction?: string): void {
+        this.adapter.sort(key, direction);
+    }
+
+    isDataSourceValid(): boolean {
+        return this.hasAllColumnsLinkedToData() && this.allMandatoryColumnPropertiesHaveValues();
+    }
+
+    private allMandatoryColumnPropertiesHaveValues(): boolean {
+        return this.adapter.getColumns().every((column) => !!column.key);
     }
 
     private hasAllColumnsLinkedToData(): boolean {
-        const availableColumnKeys: string[] = this.columns.map(column => column.key);
+        const availableColumnKeys: string[] = this.adapter.getColumns().map((column) => column.key);
 
-        return availableColumnKeys.every(columnKey => this.rows.some(row => Object.keys(row.obj).includes(columnKey)));
+        return availableColumnKeys.every((columnKey) => this.adapter.getRows().some((row) => Object.keys(row.obj).includes(columnKey)));
     }
 }
