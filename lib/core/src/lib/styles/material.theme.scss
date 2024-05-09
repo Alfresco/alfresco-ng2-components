@@ -75,7 +75,9 @@
             padding-left: 12px;
 
             &#{$mat-text-field--no-label} {
-                padding-top: 0;
+                #{$mat-form-field-infix} {
+                    top: -9px;
+                }
 
                 #{$mat-form-field-icon-suffix} {
                     #{$mat-icon} {
@@ -115,6 +117,10 @@
             #{$mat-form-field-icon-suffix} {
                 #{$mat-icon} {
                     padding-top: 0;
+                }
+
+                #{$mat-icon-button} {
+                    margin-top: -9px;
                 }
             }
 
