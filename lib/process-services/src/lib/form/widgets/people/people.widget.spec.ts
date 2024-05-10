@@ -179,9 +179,9 @@ describe('PeopleWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-        const fakeUserResult = [
-            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
-            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }
+        const fakeUserResult: UserProcessModel[] = [
+            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test', avatarId: 'avatar' },
+            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2', avatarId: 'avatar' }
         ];
 
         beforeEach(() => {

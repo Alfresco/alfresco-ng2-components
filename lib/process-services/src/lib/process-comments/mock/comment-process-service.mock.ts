@@ -18,34 +18,41 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommentModel, UserProcessModel, CommentsService } from '@alfresco/adf-core';
-import { fakeUser1 } from '../mock/comment-process.mock';
+import { CommentModel, CommentsService } from '@alfresco/adf-core';
+import { UserProcessModel } from '@alfresco/adf-process-services';
+
+export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
 @Injectable()
 export class CommentProcessServiceMock implements Partial<CommentsService> {
-    private comments: CommentModel [] = [];
+    private comments: CommentModel[] = [];
 
     get(_id: string): Observable<CommentModel[]> {
         const user = new UserProcessModel(fakeUser1);
 
-        this.comments.push(new CommentModel({
-            id: 46,
-            message: 'Hello from Process Model',
-            created: new Date('2022-08-02T03:37:30.010+0000'),
-            createdBy: user
-        }));
+        this.comments.push(
+            new CommentModel({
+                id: 46,
+                message: 'Hello from Process Model',
+                created: new Date('2022-08-02T03:37:30.010+0000'),
+                createdBy: user
+            })
+        );
 
         return of(this.comments);
     }
 
     add(_id: string, _message: string): Observable<CommentModel> {
         return from(this.comments).pipe(
-            map((response) => new CommentModel({
-                id: response.id,
-                message: response.message,
-                created: response.created,
-                createdBy: response.createdBy
-            }))
+            map(
+                (response) =>
+                    new CommentModel({
+                        id: response.id,
+                        message: response.message,
+                        created: response.created,
+                        createdBy: response.createdBy
+                    })
+            )
         );
     }
 }

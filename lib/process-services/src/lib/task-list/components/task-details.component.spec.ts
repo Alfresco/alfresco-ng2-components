@@ -385,13 +385,15 @@ describe('TaskDetailsComponent', () => {
                         id: 1,
                         firstName: 'fake-test-1',
                         lastName: 'fake-last-1',
-                        email: 'fake-test-1@test.com'
+                        email: 'fake-test-1@test.com',
+                        avatarId: '1'
                     },
                     {
                         id: 2,
                         firstName: 'fake-test-2',
                         lastName: 'fake-last-2',
-                        email: 'fake-test-2@test.com'
+                        email: 'fake-test-2@test.com',
+                        avatarId: '2'
                     }
                 ])
             );

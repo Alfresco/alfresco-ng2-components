@@ -30,9 +30,7 @@ import { map } from 'rxjs/operators';
     },
     encapsulation: ViewEncapsulation.None
 })
-
 export class PeopleSearchComponent implements OnInit {
-
     /** Parameters for displaying the list. */
     @Input()
     results: Observable<UserProcessModel[]>;
@@ -50,14 +48,11 @@ export class PeopleSearchComponent implements OnInit {
     closeSearch = new EventEmitter();
 
     filteredResults$: Observable<UserProcessModel[]>;
-    selectedUser: UserProcessModel = {};
+    selectedUser: UserProcessModel = {} as any;
     performSearch: PerformSearchCallback;
 
     ngOnInit() {
-        this.filteredResults$ = this.results
-            .pipe(
-                map((users) => users.filter((user) => user.id !== this.selectedUser.id))
-            );
+        this.filteredResults$ = this.results.pipe(map((users) => users.filter((user) => user.id !== this.selectedUser.id)));
         this.performSearch = this.performSearchCallback.bind(this);
     }
 

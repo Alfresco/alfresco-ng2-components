@@ -15,35 +15,11 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ADF_COMMENTS_SERVICE, CoreModule } from '@alfresco/adf-core';
-
 import { ProcessCommentsComponent } from './process-comments.component';
-import { CommentProcessService } from './services/comment-process.service';
 
 @NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        CommonModule,
-        CoreModule
-    ],
-    declarations: [
-        ProcessCommentsComponent
-    ],
-    exports: [
-        ProcessCommentsComponent
-    ],
-    providers: [
-        {
-            provide: ADF_COMMENTS_SERVICE,
-            useClass: CommentProcessService
-        }
-    ]
+    imports: [ProcessCommentsComponent],
+    exports: [ProcessCommentsComponent]
 })
-export class ProcessCommentsModule {
-}
+export class ProcessCommentsModule {}

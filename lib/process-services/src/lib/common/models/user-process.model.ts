@@ -29,6 +29,7 @@ export class UserProcessModel implements LightUserRepresentation {
     pictureId?: number;
     externalId?: string;
     userImage?: string;
+    avatarId: string;
 
     constructor(input?: any) {
         if (input) {
@@ -41,5 +42,4 @@ export class UserProcessModel implements LightUserRepresentation {
             this.userImage = input.userImage;
         }
     }
-
 }

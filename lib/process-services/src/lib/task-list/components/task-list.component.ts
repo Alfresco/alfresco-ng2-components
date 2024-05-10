@@ -33,11 +33,10 @@ import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChang
 
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { TaskDetailsModel } from '../models/task-details.model';
+import { ResultListDataRepresentationTaskRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 export const PRESET_KEY = 'adf-task-list.presets';
 
@@ -405,7 +404,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             );
     }
 
-    private loadTasksByState(): Observable<TaskListModel> {
+    private loadTasksByState(): Observable<ResultListDataRepresentationTaskRepresentation> {
         return this.taskListService.findTasksByState(this.requestNode);
     }
 
@@ -415,7 +414,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * @param instances task detail models
      * @returns list of task detail models
      */
-    private optimizeTaskDetails(instances: TaskDetailsModel[]): TaskDetailsModel[] {
+    private optimizeTaskDetails(instances: TaskRepresentation[]): TaskRepresentation[] {
         instances = instances.map((task) => {
             if (!task.name) {
                 task.name = 'No name';

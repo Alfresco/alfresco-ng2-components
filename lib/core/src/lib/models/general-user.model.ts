@@ -34,4 +34,4 @@ export class User {
             Object.assign(this, user);
         }
     }
-};
+}
