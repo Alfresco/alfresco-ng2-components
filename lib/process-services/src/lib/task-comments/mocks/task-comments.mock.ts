@@ -17,16 +17,22 @@
 
 export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
-export const fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
-
 export const fakeTasksComment = {
-    size: 2, total: 2, start: 0,
+    size: 2,
+    total: 2,
+    start: 0,
     data: [
         {
-            id: 1, message: 'fake-message-1', created: '', createdBy: fakeUser1
+            id: 1,
+            message: 'fake-message-1',
+            created: '',
+            createdBy: fakeUser1
         },
         {
-            id: 2, message: 'fake-message-2', created: '', createdBy: fakeUser1
+            id: 2,
+            message: 'fake-message-2',
+            created: '',
+            createdBy: fakeUser1
         }
     ]
 };
