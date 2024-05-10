@@ -55,3 +55,9 @@ Optionally, is possible to provide a `<CustomConfiguration>`
 `storageKey`: Local Storage key to save feature flags (default: `'feature-flags'`)
 `helperExposeKeyOnDocument`: browser document key to add commands to enable or disable feature flags from the browser console.
 
+Furher reading:
+https://hyland.atlassian.net/wiki/spaces/HXP/pages/1308017277/Studio+Management+of+Feature+Flags
+https://hyland.atlassian.net/wiki/spaces/HXP/pages/1308031390/Developing+frontend+apps+libs+e2es+with+feature+flags
+
+
+
