@@ -20,6 +20,10 @@ export class DataTablePathParserHelper {
     private readonly indexReferencesRegEx = /(\[\d+\])+$/;
 
     retrieveDataFromPath(data: any, path: string): any[] {
+        if (path === '') {
+            return [];
+        }
+
         const properties = this.splitPathIntoProperties(path);
         let currentProperty = properties.shift();
         const propertyIndexReferences = this.getIndexReferencesFromProperty(currentProperty);
@@ -43,10 +47,6 @@ export class DataTablePathParserHelper {
 
         if (Array.isArray(nestedData)) {
             return nestedData;
-        }
-
-        if (properties.length === 0) {
-            return [];
         }
 
         return this.retrieveDataFromPath(nestedData, properties.join('.'));
