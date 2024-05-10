@@ -20,7 +20,7 @@ export class DataTablePathParserHelper {
     private readonly indexReferencesRegEx = /(\[\d+\])+$/;
 
     retrieveDataFromPath(data: any, path: string): any[] {
-        if (path === '') {
+        if (!path) {
             return [];
         }
 
