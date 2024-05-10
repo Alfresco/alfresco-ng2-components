@@ -77,7 +77,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     isLoading: boolean = false;
 
     constructor(
-        private activitiContentService: ProcessContentService,
+        private processContentService: ProcessContentService,
         private downloadService: DownloadService,
         private thumbnailService: ThumbnailService,
         private ngZone: NgZone
@@ -105,10 +105,6 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         });
     }
 
-    hasCustomEmptyTemplate(): boolean {
-        return !!this.emptyTemplate;
-    }
-
     add(content: any): void {
         this.ngZone.run(() => {
             this.attachments.push({
@@ -119,10 +115,6 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
                 icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
             });
         });
-    }
-
-    isEmpty(): boolean {
-        return this.attachments?.length === 0;
     }
 
     onShowRowActionsMenu(event: any) {
@@ -166,7 +158,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     emitDocumentContent(content: any) {
-        this.activitiContentService.getContentPreview(content.id).subscribe(
+        this.processContentService.getContentPreview(content.id).subscribe(
             (blob: Blob) => {
                 content.contentBlob = blob;
                 this.attachmentClick.emit(content);
@@ -178,7 +170,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     downloadContent(content: any): void {
-        this.activitiContentService.getFileRawContent(content.id).subscribe(
+        this.processContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.downloadService.downloadBlob(blob, content.name),
             (err) => {
                 this.error.emit(err);
@@ -186,16 +178,12 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         );
     }
 
-    isDisabled(): boolean {
-        return this.disabled;
-    }
-
     private loadAttachmentsByProcessInstanceId(processInstanceId: string) {
         if (processInstanceId) {
             this.reset();
             this.isLoading = true;
             const isRelatedContent = 'true';
-            this.activitiContentService.getProcessRelatedContent(processInstanceId, { isRelatedContent }).subscribe(
+            this.processContentService.getProcessRelatedContent(processInstanceId, { isRelatedContent }).subscribe(
                 (res: any) => {
                     res.data.forEach((content) => {
                         this.attachments.push({
@@ -219,7 +207,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
 
     private deleteAttachmentById(contentId: number) {
         if (contentId) {
-            this.activitiContentService.deleteRelatedContent(contentId).subscribe(
+            this.processContentService.deleteRelatedContent(contentId).subscribe(
                 () => {
                     this.attachments = this.attachments.filter((content) => content.id !== contentId);
                 },
