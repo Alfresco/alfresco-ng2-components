@@ -34,6 +34,7 @@ import {
     TranslationService,
     ViewUtilService,
     ViewerComponent,
+    ViewerModule,
     ViewerSidebarComponent
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
@@ -157,15 +158,15 @@ describe('AlfrescoViewerComponent', () => {
                 MatButtonModule,
                 MatIconModule,
                 MatDialogModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                ViewerModule
             ],
             declarations: [
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
                 ViewerWithCustomMoreActionsComponent,
-                ViewerWithCustomToolbarActionsComponent,
-                ViewerSidebarComponent
+                ViewerWithCustomToolbarActionsComponent
             ],
             providers: [
                 ContentService,
@@ -179,7 +180,8 @@ describe('AlfrescoViewerComponent', () => {
                     }
                 },
                 { provide: Location, useClass: SpyLocation },
-                MatDialog
+                MatDialog,
+                ViewerSidebarComponent
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
