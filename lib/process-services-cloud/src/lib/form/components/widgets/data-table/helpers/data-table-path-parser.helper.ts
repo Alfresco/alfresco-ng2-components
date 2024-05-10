@@ -33,7 +33,7 @@ export class DataTablePathParserHelper {
             return [];
         }
 
-        const nestedData = isPropertyWithSingleIndexReference ? data[currentProperty][propertyIndexReferences[0]] : data[currentProperty];
+        const nestedData = isPropertyWithSingleIndexReference ? data[currentProperty]?.[propertyIndexReferences[0]] : data[currentProperty];
 
         if (Array.isArray(nestedData)) {
             return nestedData;
