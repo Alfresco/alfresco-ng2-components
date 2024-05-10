@@ -16,11 +16,11 @@
  */
 
 import { DataTablePathParserHelper } from './data-table-path-parser.helper';
-import { mockResponseResultData, mockResultData } from '../mocks/data-table-path-parser.helper.mock';
+import { mockResponseResultData, mockResponseResultDataWithNestedArray, mockResultData } from '../mocks/data-table-path-parser.helper.mock';
 
 interface DataTablePathParserTestCase {
     description: string;
-    path: string;
+    path?: string;
     data?: any;
     propertyName?: string;
     expected?: unknown[];
@@ -45,6 +45,11 @@ describe('DataTablePathParserHelper', () => {
                 description: 'not defined',
                 data: {},
                 path: undefined,
+                expected: []
+            },
+            {
+                description: 'empty string',
+                path: '',
                 expected: []
             },
             {
@@ -99,6 +104,16 @@ describe('DataTablePathParserHelper', () => {
                 path: 'response.[file.file[data]file[data]]'
             },
             {
+                description: 'with missing closing bracket in outermost square brackets',
+                propertyName: 'file.file[data',
+                path: 'response.[file.file[data]'
+            },
+            {
+                description: 'with missing openning bracket in outermost square brackets',
+                propertyName: 'file.filedata]',
+                path: 'response.[file.filedata]]'
+            },
+            {
                 description: 'with special characters except separator (.) in brackets',
                 propertyName: 'xyz:abc,xyz-abc,xyz_abc,abc+xyz',
                 path: 'response.[xyz:abc,xyz-abc,xyz_abc,abc+xyz]'
@@ -112,6 +127,26 @@ describe('DataTablePathParserHelper', () => {
                 description: 'without separator in brackets',
                 propertyName: 'my-data',
                 path: '[response].[my-data]'
+            },
+            {
+                description: 'with property followed by single index reference',
+                propertyName: 'users',
+                path: 'response.users[0].data',
+                data: mockResponseResultDataWithNestedArray('users')
+            },
+            {
+                description: 'with property followed by multiple index references',
+                propertyName: 'users:Array',
+                path: 'response.[users:Array][0][1][12].data',
+                data: mockResponseResultDataWithNestedArray('users:Array'),
+                expected: []
+            },
+            {
+                description: 'when path does NOT point to array',
+                propertyName: 'users',
+                path: 'response.users[0]',
+                data: mockResponseResultDataWithNestedArray('users'),
+                expected: []
             }
         ];
 
@@ -122,6 +157,87 @@ describe('DataTablePathParserHelper', () => {
                 const expectedResult = testCase.expected ?? mockResultData;
                 expect(result).toEqual(expectedResult);
             });
+        });
+    });
+
+    it('should split path to properties', () => {
+        const testCases: { path: string; expected: string[] }[] = [
+            { path: 'response.0', expected: ['response', '0'] },
+            { path: 'response', expected: ['response'] },
+            { path: 'response.person.file', expected: ['response', 'person', 'file'] },
+            { path: 'response.persons[0]', expected: ['response', 'persons[0]'] },
+            { path: 'response.[persons:Array][0]', expected: ['response', '[persons:Array][0]'] },
+            { path: 'response.persons[0][1]', expected: ['response', 'persons[0][1]'] },
+            { path: 'response.persons[0].file.data[4]', expected: ['response', 'persons[0]', 'file', 'data[4]'] },
+            { path: '', expected: [] },
+            { path: null, expected: [] },
+            { path: undefined, expected: [] }
+        ];
+
+        testCases.forEach((testCase) => {
+            const result = helper.splitPathIntoProperties(testCase.path);
+            expect(result).toEqual(testCase.expected);
+        });
+    });
+
+    it('should remove square brackets from property', () => {
+        const testCases: { property: string; expected: string }[] = [
+            { property: '[persons]', expected: 'persons' },
+            { property: '[persons:data]', expected: 'persons:data' },
+            { property: '[persons.data]', expected: 'persons.data' },
+            { property: '[persons.data[1]]', expected: 'persons.data[1]' },
+            { property: '[persons.data1]]', expected: 'persons.data1]' },
+            { property: 'persons.data1]', expected: 'persons.data1]' },
+            { property: 'persons.[data1]', expected: 'persons.[data1]' },
+            { property: 'persons', expected: 'persons' },
+            { property: '', expected: '' },
+            { property: undefined, expected: null },
+            { property: null, expected: null }
+        ];
+
+        testCases.forEach((testCase) => {
+            const result = helper.removeSquareBracketsFromProperty(testCase.property);
+            expect(result).toEqual(testCase.expected);
+        });
+    });
+
+    it('should remove square brackets and index references from property', () => {
+        const testCases: { property: string; expected: string }[] = [
+            { property: 'persons[0]', expected: 'persons' },
+            { property: '[persons:Array][0]', expected: 'persons:Array' },
+            { property: 'persons[0][1]', expected: 'persons' },
+            { property: '[persons[0].file.data][4]', expected: 'persons[0].file.data' },
+            { property: '[persons[0].file.data][1][4]', expected: 'persons[0].file.data' },
+            { property: '[persons.data1]][2][4][23]', expected: 'persons.data1]' },
+            { property: 'persons', expected: 'persons' },
+            { property: '', expected: '' },
+            { property: undefined, expected: null },
+            { property: null, expected: null }
+        ];
+
+        testCases.forEach((testCase) => {
+            const result = helper.removeSquareBracketsAndIndexReferencesFromProperty(testCase.property);
+            expect(result).toEqual(testCase.expected);
+        });
+    });
+
+    it('should return index references from property', () => {
+        const testCases: { property: string; expected: number[] }[] = [
+            { property: 'persons[0]', expected: [0] },
+            { property: '[persons:Array][0]', expected: [0] },
+            { property: 'persons[0][1][7]', expected: [0, 1, 7] },
+            { property: '[persons[0].file.data][4]', expected: [4] },
+            { property: '[persons[0].file.data][1][4]', expected: [1, 4] },
+            { property: '[persons[0].file.data]', expected: [] },
+            { property: 'persons', expected: [] },
+            { property: undefined, expected: [] },
+            { property: null, expected: [] },
+            { property: '', expected: [] }
+        ];
+
+        testCases.forEach((testCase) => {
+            const result = helper.getIndexReferencesFromProperty(testCase.property);
+            expect(result).toEqual(testCase.expected);
         });
     });
 });

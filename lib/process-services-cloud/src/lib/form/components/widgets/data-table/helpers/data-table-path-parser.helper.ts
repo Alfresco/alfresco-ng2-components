@@ -17,19 +17,36 @@
 
 export class DataTablePathParserHelper {
     private readonly removeSquareBracketsRegEx = /^\[(.*)\]$/;
+    private readonly indexReferencesRegEx = /(\[\d+\])+$/;
 
     retrieveDataFromPath(data: any, path: string): any[] {
         const properties = this.splitPathIntoProperties(path);
-        const currentProperty = this.removeSquareBracketsFromProperty(properties.shift());
+        let currentProperty = properties.shift();
+        const propertyIndexReferences = this.getIndexReferencesFromProperty(currentProperty);
+
+        const isPropertyWithSingleIndexReference = propertyIndexReferences.length === 1;
+        const isPropertyWithMultipleIndexReferences = propertyIndexReferences.length > 1;
+
+        if (isPropertyWithMultipleIndexReferences) {
+            return [];
+        }
+
+        currentProperty = isPropertyWithSingleIndexReference
+            ? this.removeSquareBracketsAndIndexReferencesFromProperty(currentProperty)
+            : this.removeSquareBracketsFromProperty(currentProperty);
 
         if (!this.isPropertyExistsInData(data, currentProperty)) {
             return [];
         }
 
-        const nestedData = data[currentProperty];
+        const nestedData = isPropertyWithSingleIndexReference ? data[currentProperty][propertyIndexReferences[0]] : data[currentProperty];
 
         if (Array.isArray(nestedData)) {
             return nestedData;
+        }
+
+        if (properties.length === 0) {
+            return [];
         }
 
         return this.retrieveDataFromPath(nestedData, properties.join('.'));
@@ -80,8 +97,23 @@ export class DataTablePathParserHelper {
         return properties;
     }
 
+    getIndexReferencesFromProperty(property: string): number[] {
+        const match = this.indexReferencesRegEx.exec(property);
+
+        return match ? match[0].slice(1, -1).split('][').map(Number) : [];
+    }
+
+    removeSquareBracketsAndIndexReferencesFromProperty(property: string): string {
+        if (property == null) {
+            return null;
+        }
+        const propertyWithoutIndexReferences = property.replace(this.indexReferencesRegEx, '');
+
+        return this.removeSquareBracketsFromProperty(propertyWithoutIndexReferences);
+    }
+
     removeSquareBracketsFromProperty(property: string): string {
-        return property?.replace(this.removeSquareBracketsRegEx, '$1');
+        return property?.replace(this.removeSquareBracketsRegEx, '$1') ?? null;
     }
 
     private isPropertyExistsInData(data: any, property: string): boolean {
