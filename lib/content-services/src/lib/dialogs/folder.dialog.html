@@ -15,7 +15,7 @@
                 adf-auto-focus
             />
 
-            <mat-hint *ngIf="form.controls['name'].dirty">
+            <mat-error *ngIf="form.controls['name'].dirty">
                 <span *ngIf="form.controls['name'].errors?.required">
                     {{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS.REQUIRED' | translate }}
                 </span>
@@ -23,7 +23,7 @@
                 <span *ngIf="!form.controls['name'].errors?.required && form.controls['name'].errors?.message">
                     {{ form.controls['name'].errors?.message | translate }}
                 </span>
-            </mat-hint>
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="adf-full-width">

@@ -93,6 +93,7 @@
         --adf-input-border-color: $adf-input-border-color,
         --adf-focused-input-color: $adf-focused-input-color,
         --adf-error-input-color: $adf-error-input-color,
+        --adf-hint-input-color: $adf-hint-input-color,
 
         --adf-display-external-property-widget-preview-selection-color: mat.get-color-from-palette($foreground, secondary-text)
     );

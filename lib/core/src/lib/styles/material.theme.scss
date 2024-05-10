@@ -118,10 +118,6 @@
                 #{$mat-icon} {
                     padding-top: 0;
                 }
-
-                #{$mat-icon-button} {
-                    margin-top: -9px;
-                }
             }
 
             &:not(#{$mat-text-field-disabled}) {
@@ -182,7 +178,11 @@
         }
 
         #{$mat-form-field-hint-wrapper} {
-            color: var(--adf-theme-foreground-text-color-054);
+            color: var(--adf-hint-input-color);
+        }
+
+        #{$mat-form-field-error-wrapper} {
+            color: var(--adf-error-input-color);
         }
 
         &#{$mat-focused} {
