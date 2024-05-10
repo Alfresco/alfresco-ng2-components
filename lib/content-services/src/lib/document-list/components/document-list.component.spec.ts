@@ -32,7 +32,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, QueryList, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
 import { of, Subject, throwError } from 'rxjs';
@@ -60,14 +59,10 @@ import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
 import { DocumentListModule } from '../document-list.module';
 import { ContentActionModel } from '../models/content-action.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
-import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
-import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { DocumentListComponent } from './document-list.component';
+import { CustomResourcesService, DocumentListService } from '../public-api';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
