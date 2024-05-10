@@ -80,17 +80,10 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
 
             const propertyIndexReferences = this.helper.getIndexReferencesFromProperty(property);
             const isPropertyWithSingleIndexReference = propertyIndexReferences.length === 1;
-            const isPropertyWithMultipleIndexReferences = propertyIndexReferences.length > 1;
 
-            if (isPropertyWithMultipleIndexReferences) {
-                return undefined;
-            }
+            const purePropertyName = this.helper.extractPurePropertyName(property);
 
-            const purePropertyName = isPropertyWithSingleIndexReference
-                ? this.helper.removeSquareBracketsAndIndexReferencesFromProperty(property)
-                : this.helper.removeSquareBracketsFromProperty(property);
-
-            return isPropertyWithSingleIndexReference ? acc[purePropertyName][propertyIndexReferences[0]] : acc[purePropertyName];
+            return isPropertyWithSingleIndexReference ? acc[purePropertyName]?.[propertyIndexReferences[0]] : acc[purePropertyName];
         }, item);
     }
 

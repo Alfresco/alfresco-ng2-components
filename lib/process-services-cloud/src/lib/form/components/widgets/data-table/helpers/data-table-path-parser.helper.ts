@@ -25,19 +25,9 @@ export class DataTablePathParserHelper {
         }
 
         const properties = this.splitPathIntoProperties(path);
-        let currentProperty = properties.shift();
+        const currentProperty = this.extractPurePropertyName(properties.shift());
         const propertyIndexReferences = this.getIndexReferencesFromProperty(currentProperty);
-
         const isPropertyWithSingleIndexReference = propertyIndexReferences.length === 1;
-        const isPropertyWithMultipleIndexReferences = propertyIndexReferences.length > 1;
-
-        if (isPropertyWithMultipleIndexReferences) {
-            return [];
-        }
-
-        currentProperty = isPropertyWithSingleIndexReference
-            ? this.removeSquareBracketsAndIndexReferencesFromProperty(currentProperty)
-            : this.removeSquareBracketsFromProperty(currentProperty);
 
         if (!this.isPropertyExistsInData(data, currentProperty)) {
             return [];
@@ -99,21 +89,37 @@ export class DataTablePathParserHelper {
 
     getIndexReferencesFromProperty(property: string): number[] {
         const match = this.indexReferencesRegEx.exec(property);
+        if (!match) {
+            return [];
+        }
 
-        return match ? match[0].slice(1, -1).split('][').map(Number) : [];
+        const indexReferencesString = match[0];
+        const numbersFromBrackets = indexReferencesString.slice(1, -1).split('][').map(Number);
+
+        return numbersFromBrackets;
     }
 
-    removeSquareBracketsAndIndexReferencesFromProperty(property: string): string {
-        if (property == null) {
-            return null;
+    extractPurePropertyName(property: string): string {
+        const propertyIndexReferences = this.getIndexReferencesFromProperty(property);
+        const numberOfIndexReferences = propertyIndexReferences.length;
+
+        if (numberOfIndexReferences > 1 || property == null) {
+            return '';
+        } else if (numberOfIndexReferences === 1) {
+            return this.removeSquareBracketsAndIndexReferencesFromProperty(property);
+        } else {
+            return this.removeSquareBracketsFromProperty(property);
         }
-        const propertyWithoutIndexReferences = property.replace(this.indexReferencesRegEx, '');
+    }
+
+    private removeSquareBracketsAndIndexReferencesFromProperty(property: string): string {
+        const propertyWithoutIndexReferences = property?.replace(this.indexReferencesRegEx, '');
 
         return this.removeSquareBracketsFromProperty(propertyWithoutIndexReferences);
     }
 
-    removeSquareBracketsFromProperty(property: string): string {
-        return property?.replace(this.removeSquareBracketsRegEx, '$1') ?? null;
+    private removeSquareBracketsFromProperty(property: string): string {
+        return property?.replace(this.removeSquareBracketsRegEx, '$1');
     }
 
     private isPropertyExistsInData(data: any, property: string): boolean {

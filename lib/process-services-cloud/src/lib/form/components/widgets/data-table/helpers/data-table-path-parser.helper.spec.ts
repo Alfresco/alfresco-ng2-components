@@ -180,7 +180,7 @@ describe('DataTablePathParserHelper', () => {
         });
     });
 
-    it('should remove square brackets from property', () => {
+    it('should extract pure property name', () => {
         const testCases: { property: string; expected: string }[] = [
             { property: '[persons]', expected: 'persons' },
             { property: '[persons:data]', expected: 'persons:data' },
@@ -190,19 +190,6 @@ describe('DataTablePathParserHelper', () => {
             { property: 'persons.data1]', expected: 'persons.data1]' },
             { property: 'persons.[data1]', expected: 'persons.[data1]' },
             { property: 'persons', expected: 'persons' },
-            { property: '', expected: '' },
-            { property: undefined, expected: null },
-            { property: null, expected: null }
-        ];
-
-        testCases.forEach((testCase) => {
-            const result = helper.removeSquareBracketsFromProperty(testCase.property);
-            expect(result).toEqual(testCase.expected);
-        });
-    });
-
-    it('should remove square brackets and index references from property', () => {
-        const testCases: { property: string; expected: string }[] = [
             { property: 'persons[0]', expected: 'persons' },
             { property: '[persons:Array][0]', expected: 'persons:Array' },
             { property: 'persons[0][1]', expected: 'persons' },
@@ -216,7 +203,7 @@ describe('DataTablePathParserHelper', () => {
         ];
 
         testCases.forEach((testCase) => {
-            const result = helper.removeSquareBracketsAndIndexReferencesFromProperty(testCase.property);
+            const result = helper.extractPurePropertyName(testCase.property);
             expect(result).toEqual(testCase.expected);
         });
     });
