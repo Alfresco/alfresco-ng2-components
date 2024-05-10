@@ -39,7 +39,7 @@ describe('DebugFeaturesService', () => {
         setItem: () => {}
     };
 
-    const getServiceWithDebugMode = (debugMode: boolean) => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
                 DebugFeaturesService,
@@ -48,179 +48,77 @@ describe('DebugFeaturesService', () => {
                 { provide: OverridableFeaturesServiceToken, useClass: DummyFeaturesService }
             ]
         });
-        const featureService = TestBed.inject(DebugFeaturesService);
-        featureService.enable(debugMode);
-        return featureService;
-    };
-
-    describe('in debug mode', () => {
-        beforeEach(() => {
-            service = getServiceWithDebugMode(true);
-        });
-
-        it('should be in debug mode', (done) => {
-            service.isEnabled().subscribe((isEnabled) => {
-                expect(isEnabled).toBeTrue();
-                done();
-            });
-        });
-
-        it('should return false for isOn$ when flag is enabled', (done) => {
-            const flagKey = 'feature1';
-
-            service
-                .isOn$(flagKey)
-                .pipe(take(1))
-                .subscribe((isEnabled) => {
-                    expect(isEnabled).toBeFalse();
-                    done();
-                });
-        });
-
-        it('should return false for isOn$ when flag is disabled', (done) => {
-            const flagKey = 'feature2';
-
-            service
-                .isOn$(flagKey)
-                .pipe(take(1))
-                .subscribe((isEnabled) => {
-                    expect(isEnabled).toBeFalse();
-                    done();
-                });
-        });
-
-        it('should return true for isOff$ when flag is enabled', (done) => {
-            const flagKey = 'feature3';
-
-            service
-                .isOff$(flagKey)
-                .pipe(take(1))
-                .subscribe((isEnabled) => {
-                    expect(isEnabled).toBeTrue();
-                    done();
-                });
-        });
-
-        it('should return true for isOff$ when flag is disabled', (done) => {
-            const flagKey = 'feature4';
-
-            service
-                .isOff$(flagKey)
-                .pipe(take(1))
-                .subscribe((isEnabled) => {
-                    expect(isEnabled).toBeTrue();
-                    done();
-                });
-        });
-
-        it('should always reset specified flags', () => {
-            const flagsToReset = {
-                feature1: true
-            };
-            const writableFeaturesServiceToken = TestBed.inject(WritableFeaturesServiceToken);
-            const spy = spyOn(writableFeaturesServiceToken, 'resetFlags');
-            service.resetFlags(flagsToReset);
-
-            expect(spy).toHaveBeenCalled();
-        });
-
-        it('should get the flags as an observable', (done) => {
-            service.getFlags$().subscribe((flags) => {
-                expect(flags).toEqual({});
-                done();
-            });
-        });
-
-        it('should get the flags snapshot', () => {
-            const flags = service.getFlagsSnapshot();
-            expect(flags).toEqual({});
-        });
-
-        it('should return the storageFeaturesService key with -override postfix', () => {
-            expect(service.storageKey).toBe('feature-flags-override');
-        });
+        service = TestBed.inject(DebugFeaturesService);
     });
 
-    describe('not in debug mode', () => {
-        beforeEach(() => {
-            service = getServiceWithDebugMode(false);
-        });
-        it('should not be in debug mode', (done) => {
-            service.isEnabled().subscribe((isEnabled) => {
+    it('should return false for isOn$ when flag is enabled', (done) => {
+        const flagKey = 'feature1';
+
+        service
+            .isOn$(flagKey)
+            .pipe(take(1))
+            .subscribe((isEnabled) => {
                 expect(isEnabled).toBeFalse();
                 done();
             });
-        });
+    });
 
-        it('should return false for isOn$ when flag is enabled', (done) => {
-            const flagKey = 'feature1';
+    it('should return false for isOn$ when flag is disabled', (done) => {
+        const flagKey = 'feature2';
 
-            service
-                .isOn$(flagKey)
-                .pipe(take(1))
-                .subscribe((isEnabled) => {
-                    expect(isEnabled).toBeFalse();
-                    done();
-                });
-        });
-
-        it('should return false for isOn$ when flag is disabled', (done) => {
-            const flagKey = 'feature2';
-
-            service
-                .isOn$(flagKey)
-                .pipe(take(1))
-                .subscribe((isEnabled) => {
-                    expect(isEnabled).toBeFalse();
-                    done();
-                });
-        });
-
-        it('should return true for isOff$ when flag is enabled', (done) => {
-            const flagKey = 'feature3';
-
-            service
-                .isOff$(flagKey)
-                .pipe(take(1))
-                .subscribe((isEnabled) => {
-                    expect(isEnabled).toBeTrue();
-                    done();
-                });
-        });
-
-        it('should return true for isOff$ when flag is disabled', (done) => {
-            const flagKey = 'feature4';
-
-            service
-                .isOff$(flagKey)
-                .pipe(take(1))
-                .subscribe((isEnabled) => {
-                    expect(isEnabled).toBeTrue();
-                    done();
-                });
-        });
-
-        it('should always reset specified flags', () => {
-            const flagsToReset = {
-                feature1: true
-            };
-            const writableFeaturesServiceToken = TestBed.inject(WritableFeaturesServiceToken);
-            const spy = spyOn(writableFeaturesServiceToken, 'resetFlags');
-            service.resetFlags(flagsToReset);
-
-            expect(spy).toHaveBeenCalled();
-        });
-
-        it('should get the flags as an observable', (done) => {
-            service.getFlags$().subscribe((flags) => {
-                expect(flags).toEqual({});
+        service
+            .isOn$(flagKey)
+            .pipe(take(1))
+            .subscribe((isEnabled) => {
+                expect(isEnabled).toBeFalse();
                 done();
             });
-        });
+    });
 
-        it('should get the flags snapshot', () => {
-            const flags = service.getFlagsSnapshot();
+    it('should return true for isOff$ when flag is enabled', (done) => {
+        const flagKey = 'feature3';
+
+        service
+            .isOff$(flagKey)
+            .pipe(take(1))
+            .subscribe((isEnabled) => {
+                expect(isEnabled).toBeTrue();
+                done();
+            });
+    });
+
+    it('should return true for isOff$ when flag is disabled', (done) => {
+        const flagKey = 'feature4';
+
+        service
+            .isOff$(flagKey)
+            .pipe(take(1))
+            .subscribe((isEnabled) => {
+                expect(isEnabled).toBeTrue();
+                done();
+            });
+    });
+
+    it('should always reset specified flags', () => {
+        const flagsToReset = {
+            feature1: true
+        };
+        const writableFeaturesServiceToken = TestBed.inject(WritableFeaturesServiceToken);
+        const spy = spyOn(writableFeaturesServiceToken, 'resetFlags');
+        service.resetFlags(flagsToReset);
+
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it('should get the flags as an observable', (done) => {
+        service.getFlags$().subscribe((flags) => {
             expect(flags).toEqual({});
+            done();
         });
+    });
+
+    it('should get the flags snapshot', () => {
+        const flags = service.getFlagsSnapshot();
+        expect(flags).toEqual({});
     });
 });
