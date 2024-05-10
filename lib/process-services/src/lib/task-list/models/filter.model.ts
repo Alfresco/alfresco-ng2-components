@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskFilterRepresentation, UserTaskFilterRepresentation, TaskQueryRepresentation } from '@alfresco/js-api';
+import { TaskFilterRepresentation, UserTaskFilterRepresentation } from '@alfresco/js-api';
 
 export class AppDefinitionRepresentationModel {
     defaultAppId: string;
@@ -81,8 +81,4 @@ export class FilterRepresentationModel implements UserTaskFilterRepresentation {
     hasFilter(): boolean {
         return !!this.filter;
     }
-}
-
-export class TaskQueryRequestRepresentationModel extends TaskQueryRepresentation {
-
 }

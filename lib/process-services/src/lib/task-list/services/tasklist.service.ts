@@ -19,7 +19,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError, switchMap, flatMap, filter } from 'rxjs/operators';
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
@@ -28,7 +28,8 @@ import {
     TaskActionsApi,
     TasksApi,
     ChecklistsApi,
-    ResultListDataRepresentationTaskRepresentation
+    ResultListDataRepresentationTaskRepresentation,
+    TaskQueryRepresentation
 } from '@alfresco/js-api';
 
 @Injectable({
@@ -83,7 +84,12 @@ export class TaskListService {
      * @returns The filter if it is related or null otherwise
      */
     isTaskRelatedToFilter(taskId: string, filterModel: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        const requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filterModel);
+        const requestNodeForFilter = new TaskQueryRepresentation({
+            appDefinitionId: filterModel.appId,
+            assignment: filterModel.filter.assignment,
+            state: filterModel.filter.state,
+            sort: filterModel.filter.sort
+        });
         return from(this.tasksApi.listTasks(requestNodeForFilter)).pipe(
             map((res) => (res.data.find((element) => element.id === taskId) ? filterModel : null))
         );
@@ -95,7 +101,7 @@ export class TaskListService {
      * @param requestNode Query to search for tasks
      * @returns List of tasks
      */
-    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<ResultListDataRepresentationTaskRepresentation> {
+    getTasks(requestNode: TaskQueryRepresentation): Observable<ResultListDataRepresentationTaskRepresentation> {
         return from(this.tasksApi.listTasks(requestNode));
     }
 
@@ -106,7 +112,7 @@ export class TaskListService {
      * @param state Task state. Can be "open" or "completed". State "all" applies to both "open" and "completed" tasks.
      * @returns List of tasks
      */
-    findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<ResultListDataRepresentationTaskRepresentation> {
+    findTasksByState(requestNode: TaskQueryRepresentation, state?: string): Observable<ResultListDataRepresentationTaskRepresentation> {
         if (state) {
             requestNode.state = state;
         }
@@ -120,10 +126,7 @@ export class TaskListService {
      * @param state Task state. Can be "open" or "completed". State "all" applies to both "open" and "completed" tasks.
      * @returns List of tasks
      */
-    findAllTasksByState(
-        requestNode: TaskQueryRequestRepresentationModel,
-        state?: string
-    ): Observable<ResultListDataRepresentationTaskRepresentation> {
+    findAllTasksByState(requestNode: TaskQueryRepresentation, state?: string): Observable<ResultListDataRepresentationTaskRepresentation> {
         if (state) {
             requestNode.state = state;
         }
@@ -243,7 +246,7 @@ export class TaskListService {
      * @param requestNode Query to search for tasks
      * @returns Number of tasks
      */
-    public getTotalTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<ResultListDataRepresentationTaskRepresentation> {
+    public getTotalTasks(requestNode: TaskQueryRepresentation): Observable<ResultListDataRepresentationTaskRepresentation> {
         requestNode.size = 0;
         return from(this.tasksApi.listTasks(requestNode));
     }
@@ -333,24 +336,4 @@ export class TaskListService {
     fetchTaskAuditJsonById(taskId: string): Observable<any> {
         return from(this.tasksApi.getTaskAuditLog(taskId));
     }
-
-    /**
-     * Gets the search query for a task based on the supplied filter.
-     *
-     * @param filterModel The filter to use
-     * @returns The search query
-     */
-    private generateTaskRequestNodeFromFilter(filterModel: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
-        const requestNode = {
-            appDefinitionId: filterModel.appId,
-            assignment: filterModel.filter.assignment,
-            state: filterModel.filter.state,
-            sort: filterModel.filter.sort
-        };
-        return new TaskQueryRequestRepresentationModel(requestNode);
-    }
-
-    // private callApiAddTask(task: TaskDetailsModel): Promise<TaskDetailsModel> {
-    //     return this.checklistsApi.addSubtask(task.parentTaskId, task);
-    // }
 }

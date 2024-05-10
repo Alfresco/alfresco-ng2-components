@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../../task-list/models/filter.model';
+import { FilterRepresentationModel } from '../../task-list/models/filter.model';
+import { TaskQueryRepresentation } from '@alfresco/js-api';
 
 export const fakeFiltersResponse: any = {
     size: 2,
@@ -75,14 +76,14 @@ export const fakeAppFilter = {
     ]
 };
 
-export const fakeFilter: TaskQueryRequestRepresentationModel = {
+export const fakeFilter: TaskQueryRepresentation = {
     sort: 'created-desc',
     text: '',
     state: 'open',
     assignment: 'fake-assignee'
 };
 
-export const mockFilterNoState: TaskQueryRequestRepresentationModel = {
+export const mockFilterNoState: TaskQueryRepresentation = {
     sort: 'created-desc',
     text: '',
     assignment: 'fake-assignee'

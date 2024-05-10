@@ -39,13 +39,13 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of, Subject } from 'rxjs';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { UserProcessModel } from '../../common/models/user-process.model';
 import { PeopleProcessService } from '../../common/services/people-process.service';
+import { TaskQueryRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-task-details',
@@ -372,7 +372,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
-        const requestNode = new TaskQueryRequestRepresentationModel({
+        const requestNode = new TaskQueryRepresentation({
             processInstanceId,
             processDefinitionId
         });
