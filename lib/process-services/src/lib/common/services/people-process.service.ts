@@ -21,7 +21,7 @@ import { AlfrescoApiService, GroupModel } from '@alfresco/adf-core';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { UserProcessModel } from '../models/user-process.model';
 import { combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
-import { TaskActionsApi, UsersApi, ResultListDataRepresentationLightUserRepresentation, ActivitiGroupsApi, UserProfileApi } from '@alfresco/js-api';
+import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -94,13 +94,13 @@ export class PeopleProcessService {
      * @param groupId group id
      * @returns Array of user information objects
      */
-    getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: string): Observable<UserProcessModel[]> {
+    getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: number): Observable<UserProcessModel[]> {
         const option = { excludeTaskId: taskId, filter: searchWord, groupId };
 
-        return from(this.getWorkflowUserApi(option)).pipe(
+        return from(this.userApi.getUsers(option)).pipe(
             switchMap((response) => (response.data as UserProcessModel[]) || []),
             map((user) => {
-                user.userImage = this.getUserProfileImageApi(user.id.toString());
+                user.userImage = this.userApi.getUserProfilePictureUrl(user.id.toString());
                 return of(user);
             }),
             combineAll(),
@@ -114,7 +114,7 @@ export class PeopleProcessService {
      * @returns Profile picture URL
      */
     getUserImage(user: UserProcessModel): string {
-        return this.getUserProfileImageApi(user.id.toString());
+        return this.userApi.getUserProfilePictureUrl(user.id.toString());
     }
 
     /**
@@ -125,7 +125,7 @@ export class PeopleProcessService {
      * @returns Empty response when the update completes
      */
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
-        return from(this.involveUserToTaskApi(taskId, { userId: idToInvolve }));
+        return from(this.taskActionsApi.involveUser(taskId, { userId: idToInvolve }));
     }
 
     /**
@@ -136,22 +136,6 @@ export class PeopleProcessService {
      * @returns Empty response when the update completes
      */
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
-        return from(this.removeInvolvedUserFromTaskApi(taskId, { userId: idToRemove }));
-    }
-
-    private getWorkflowUserApi(options: any): Promise<ResultListDataRepresentationLightUserRepresentation> {
-        return this.userApi.getUsers(options);
-    }
-
-    private involveUserToTaskApi(taskId: string, node: any) {
-        return this.taskActionsApi.involveUser(taskId, node);
-    }
-
-    private removeInvolvedUserFromTaskApi(taskId: string, node: any) {
-        return this.taskActionsApi.removeInvolvedUser(taskId, node);
-    }
-
-    private getUserProfileImageApi(userId: string): string {
-        return this.userApi.getUserProfilePictureUrl(userId);
+        return from(this.taskActionsApi.removeInvolvedUser(taskId, { userId: idToRemove }));
     }
 }

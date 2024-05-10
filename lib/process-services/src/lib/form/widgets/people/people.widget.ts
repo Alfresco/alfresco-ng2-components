@@ -50,7 +50,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @Output()
     peopleSelected: EventEmitter<number> = new EventEmitter();
 
-    groupId: string;
+    groupId: number;
     value: any;
 
     searchTerm = new UntypedFormControl();
