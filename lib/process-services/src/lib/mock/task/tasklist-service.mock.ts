@@ -15,24 +15,8 @@
  * limitations under the License.
  */
 
-import { TaskListModel } from '../../task-list/models/task-list.model';
 import { fakeAppFilter } from './task-filters.mock';
 
 export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
-export const fakeTaskList = new TaskListModel({
-    size: 1,
-    total: 1,
-    start: 0,
-    data: [
-        {
-            id: '1',
-            name: 'FakeNameTask',
-            description: null,
-            category: null,
-            assignee: fakeUser1,
-            created: '2016-07-15T11:19:17.440+0000'
-        }
-    ]
-});
 export const fakeAppPromise = Promise.resolve(fakeAppFilter);

@@ -21,7 +21,24 @@ import { of } from 'rxjs';
 import { fakeFilter, mockFilterNoState } from '../../mock/task/task-filters.mock';
 import { TaskListService } from './tasklist.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeTaskList } from '../../mock';
+import { fakeUser1 } from '../../mock';
+import { TaskListModel } from '@alfresco/adf-process-services';
+
+export const fakeTaskList = new TaskListModel({
+    size: 1,
+    total: 1,
+    start: 0,
+    data: [
+        {
+            id: '1',
+            name: 'FakeNameTask',
+            description: null,
+            category: null,
+            assignee: fakeUser1,
+            created: '2016-07-15T11:19:17.440+0000'
+        }
+    ]
+});
 
 describe('Activiti TaskList Service', () => {
     let service: TaskListService;

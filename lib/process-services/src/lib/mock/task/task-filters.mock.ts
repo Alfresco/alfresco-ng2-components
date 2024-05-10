@@ -88,40 +88,6 @@ export const mockFilterNoState: TaskQueryRequestRepresentationModel = {
     assignment: 'fake-assignee'
 };
 
-export const fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepresentationModel({
-    appId: 1,
-    name: 'CONTAIN FILTER',
-    recent: true,
-    icon: 'glyphicon-align-left',
-    filter: {
-        processDefinitionId: null,
-        processDefinitionKey: null,
-        name: null,
-        state: 'open',
-        sort: 'created-desc',
-        assignment: 'involved',
-        dueAfter: null,
-        dueBefore: null
-    }
-});
-
-export const fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepresentationModel({
-    appId: 2,
-    name: 'NO TASK FILTER',
-    recent: false,
-    icon: 'glyphicon-inbox',
-    filter: {
-        processDefinitionId: null,
-        processDefinitionKey: null,
-        name: null,
-        state: 'open',
-        sort: 'created-desc',
-        assignment: 'assignee',
-        dueAfter: null,
-        dueBefore: null
-    }
-});
-
 export const dummyMyTasksFilter = {
     appId: 101,
     name: 'My Tasks',
