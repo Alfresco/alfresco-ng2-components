@@ -76,7 +76,7 @@
     "chart.js": "^4.3.0",
     "cropperjs": "1.5.13",
     "date-fns": "^2.30.0",
-    "dotenv-expand": "^5.1.0",
+    "dotenv-expand": "^11.0.6",
     "event-emitter": "^0.3.5",
     "material-icons": "^1.13.12",
     "minimatch-browser": "1.0.0",
