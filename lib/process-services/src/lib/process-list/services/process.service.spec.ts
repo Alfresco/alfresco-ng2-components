@@ -17,38 +17,33 @@
 
 import { TestBed } from '@angular/core/testing';
 import { exampleProcess, mockError, fakeProcessDef, fakeTasksList } from '../../mock';
-import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
 import { CoreModule, DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { ProcessInstanceQueryRepresentation } from '@alfresco/js-api';
 
 describe('ProcessService', () => {
     let service: ProcessService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [CoreModule.forRoot(), ProcessTestingModule]
         });
         service = TestBed.inject(ProcessService);
     });
 
     describe('process instances', () => {
-        const filter = new ProcessFilterParamRepresentationModel({
+        const filter: ProcessInstanceQueryRepresentation = {
             processDefinitionId: '1',
-            appDefinitionId: '1',
+            appDefinitionId: 1,
             page: 1,
             sort: 'created-asc',
             state: 'completed'
-        });
+        };
 
         beforeEach(() => {
-            spyOn(service.processInstancesApi, 'getProcessInstances')
-                .and
-                .returnValue(Promise.resolve({ data: [exampleProcess] }));
+            spyOn(service.processInstancesApi, 'getProcessInstances').and.returnValue(Promise.resolve({ data: [exampleProcess] }));
         });
 
         it('should return the correct number of instances', (done) => {
@@ -70,13 +65,10 @@ describe('ProcessService', () => {
     });
 
     describe('process instance', () => {
-
         const processId = 'test';
 
         beforeEach(() => {
-            spyOn(service.processInstancesApi, 'getProcessInstance')
-                .and
-                .returnValue(Promise.resolve(exampleProcess));
+            spyOn(service.processInstancesApi, 'getProcessInstance').and.returnValue(Promise.resolve(exampleProcess));
         });
 
         it('should return the correct instance data', (done) => {
@@ -95,9 +87,7 @@ describe('ProcessService', () => {
         let startNewProcessInstance: jasmine.Spy;
 
         beforeEach(() => {
-            startNewProcessInstance = spyOn(service.processInstancesApi, 'startNewProcessInstance')
-                .and
-                .returnValue(Promise.resolve(exampleProcess));
+            startNewProcessInstance = spyOn(service.processInstancesApi, 'startNewProcessInstance').and.returnValue(Promise.resolve(exampleProcess));
         });
 
         it('should call the API to create the process instance', () => {
@@ -135,8 +125,7 @@ describe('ProcessService', () => {
             startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(mockError));
 
             service.startProcess(processDefId, processName).subscribe(
-                () => {
-                },
+                () => {},
                 (res) => {
                     expect(res).toBe(mockError);
                     done();
@@ -147,8 +136,7 @@ describe('ProcessService', () => {
         it('should return a default error if no data is returned by the API', (done) => {
             startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(new Error('Server error')));
             service.startProcess(processDefId, processName).subscribe(
-                () => {
-                },
+                () => {},
                 (err) => {
                     expect(err.message).toBe('Server error');
                     done();
@@ -158,14 +146,11 @@ describe('ProcessService', () => {
     });
 
     describe('cancel process instance', () => {
-
         const processInstanceId = '1234';
         let deleteProcessInstance: jasmine.Spy;
 
         beforeEach(() => {
-            deleteProcessInstance = spyOn(service.processInstancesApi, 'deleteProcessInstance')
-                .and
-                .returnValue(Promise.resolve());
+            deleteProcessInstance = spyOn(service.processInstancesApi, 'deleteProcessInstance').and.returnValue(Promise.resolve());
         });
 
         it('should call service to delete process instances', () => {
@@ -181,8 +166,7 @@ describe('ProcessService', () => {
         it('should pass on any error that is returned by the API', (done) => {
             deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(mockError));
             service.cancelProcess(null).subscribe(
-                () => {
-                },
+                () => {},
                 (res) => {
                     expect(res).toBe(mockError);
                     done();
@@ -193,8 +177,7 @@ describe('ProcessService', () => {
         it('should return a default error if no data is returned by the API', (done) => {
             deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(new Error('Server error')));
             service.cancelProcess(null).subscribe(
-                () => {
-                },
+                () => {},
                 (err) => {
                     expect(err.message).toBe('Server error');
                     done();
@@ -204,13 +187,12 @@ describe('ProcessService', () => {
     });
 
     describe('process definitions', () => {
-
         let getProcessDefinitions: jasmine.Spy;
 
         beforeEach(() => {
-            getProcessDefinitions = spyOn(service.processDefinitionsApi, 'getProcessDefinitions')
-                .and
-                .returnValue(Promise.resolve({ data: [fakeProcessDef, fakeProcessDef] }));
+            getProcessDefinitions = spyOn(service.processDefinitionsApi, 'getProcessDefinitions').and.returnValue(
+                Promise.resolve({ data: [fakeProcessDef, fakeProcessDef] })
+            );
         });
 
         it('should return the correct number of process defs', (done) => {
@@ -241,8 +223,7 @@ describe('ProcessService', () => {
         it('should pass on any error that is returned by the API', (done) => {
             getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(mockError));
             service.getProcessDefinitions().subscribe(
-                () => {
-                },
+                () => {},
                 (res) => {
                     expect(res).toBe(mockError);
                     done();
@@ -253,8 +234,7 @@ describe('ProcessService', () => {
         it('should return a default error if no data is returned by the API', (done) => {
             getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(new Error('Server error')));
             service.getProcessDefinitions().subscribe(
-                () => {
-                },
+                () => {},
                 (err) => {
                     expect(err.message).toBe('Server error');
                     done();
@@ -264,14 +244,11 @@ describe('ProcessService', () => {
     });
 
     describe('process instance tasks', () => {
-
         const processId = '1001';
         let listTasks: jasmine.Spy;
 
         beforeEach(() => {
-            listTasks = spyOn(service.tasksApi, 'listTasks')
-                .and
-                .returnValue(Promise.resolve(fakeTasksList));
+            listTasks = spyOn(service.tasksApi, 'listTasks').and.returnValue(Promise.resolve(fakeTasksList));
         });
 
         it('should return the correct number of tasks', (done) => {
@@ -315,8 +292,7 @@ describe('ProcessService', () => {
         it('should pass on any error that is returned by the API', (done) => {
             listTasks = listTasks.and.returnValue(Promise.reject(mockError));
             service.getProcessTasks(processId).subscribe(
-                () => {
-                },
+                () => {},
                 (res) => {
                     expect(res).toBe(mockError);
                     done();
@@ -327,8 +303,7 @@ describe('ProcessService', () => {
         it('should return a default error if no data is returned by the API', (done) => {
             listTasks = listTasks.and.returnValue(Promise.reject(new Error('Server error')));
             service.getProcessTasks(processId).subscribe(
-                () => {
-                },
+                () => {},
                 (err) => {
                     expect(err.message).toBe('Server error');
                     done();
@@ -338,29 +313,35 @@ describe('ProcessService', () => {
     });
 
     describe('process variables', () => {
-
         let getVariablesSpy: jasmine.Spy;
         let createOrUpdateProcessInstanceVariablesSpy: jasmine.Spy;
         let deleteProcessInstanceVariableSpy: jasmine.Spy;
 
         beforeEach(() => {
-            getVariablesSpy = spyOn(service.processInstanceVariablesApi, 'getProcessInstanceVariables').and.returnValue(Promise.resolve([{
-                name: 'var1',
-                value: 'Test1'
-            }, {
-                name: 'var3',
-                value: 'Test3'
-            }]));
+            getVariablesSpy = spyOn(service.processInstanceVariablesApi, 'getProcessInstanceVariables').and.returnValue(
+                Promise.resolve([
+                    {
+                        name: 'var1',
+                        value: 'Test1'
+                    },
+                    {
+                        name: 'var3',
+                        value: 'Test3'
+                    }
+                ])
+            );
 
-            createOrUpdateProcessInstanceVariablesSpy = spyOn(service.processInstanceVariablesApi,
-                'createOrUpdateProcessInstanceVariables').and.returnValue(Promise.resolve({} as any));
+            createOrUpdateProcessInstanceVariablesSpy = spyOn(
+                service.processInstanceVariablesApi,
+                'createOrUpdateProcessInstanceVariables'
+            ).and.returnValue(Promise.resolve({} as any));
 
-            deleteProcessInstanceVariableSpy = spyOn(service.processInstanceVariablesApi,
-                'deleteProcessInstanceVariable').and.returnValue(Promise.resolve());
+            deleteProcessInstanceVariableSpy = spyOn(service.processInstanceVariablesApi, 'deleteProcessInstanceVariable').and.returnValue(
+                Promise.resolve()
+            );
         });
 
         describe('get variables', () => {
-
             it('should call service to fetch variables', () => {
                 service.getProcessInstanceVariables(null);
                 expect(getVariablesSpy).toHaveBeenCalled();
@@ -369,8 +350,7 @@ describe('ProcessService', () => {
             it('should pass on any error that is returned by the API', (done) => {
                 getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(mockError));
                 service.getProcessInstanceVariables(null).subscribe(
-                    () => {
-                    },
+                    () => {},
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -381,8 +361,7 @@ describe('ProcessService', () => {
             it('should return a default error if no data is returned by the API', (done) => {
                 getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(new Error('Server error')));
                 service.getProcessInstanceVariables(null).subscribe(
-                    () => {
-                    },
+                    () => {},
                     (err) => {
                         expect(err.message).toBe('Server error');
                         done();
@@ -392,13 +371,16 @@ describe('ProcessService', () => {
         });
 
         describe('create or update variables', () => {
-            const updatedVariables = [new ProcessInstanceVariable({
-                name: 'var1',
-                value: 'Test1'
-            }), new ProcessInstanceVariable({
-                name: 'var3',
-                value: 'Test3'
-            })];
+            const updatedVariables = [
+                new ProcessInstanceVariable({
+                    name: 'var1',
+                    value: 'Test1'
+                }),
+                new ProcessInstanceVariable({
+                    name: 'var3',
+                    value: 'Test3'
+                })
+            ];
 
             it('should call service to create or update variables', () => {
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables);
@@ -408,8 +390,7 @@ describe('ProcessService', () => {
             it('should pass on any error that is returned by the API', (done) => {
                 createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(mockError));
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
-                    () => {
-                    },
+                    () => {},
                     (err) => {
                         expect(err).toBe(mockError);
                         done();
@@ -418,10 +399,11 @@ describe('ProcessService', () => {
             });
 
             it('should return a default error if no data is returned by the API', (done) => {
-                createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(new Error('Server error')));
+                createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(
+                    Promise.reject(new Error('Server error'))
+                );
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
-                    () => {
-                    },
+                    () => {},
                     (err) => {
                         expect(err.message).toBe('Server error');
                         done();
@@ -434,8 +416,7 @@ describe('ProcessService', () => {
             it('should pass on any error that is returned by the API', (done) => {
                 deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(mockError));
                 service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
-                    () => {
-                    },
+                    () => {},
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -446,8 +427,7 @@ describe('ProcessService', () => {
             it('should return a default error if no data is returned by the API', (done) => {
                 deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(new Error('Server error')));
                 service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
-                    () => {
-                    },
+                    () => {},
                     (err) => {
                         expect(err.message).toBe('Server error');
                         done();

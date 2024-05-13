@@ -21,7 +21,10 @@ export interface ProcessInstanceQueryRepresentation {
     processDefinitionId?: string;
     processInstanceId?: string;
     size?: number;
-    sort?: 'created-desc' | 'created-asc' | 'ended-desc' | 'ended-asc';
+    sort?: ProcessInstanceQueryRepresentationSort;
     start?: number;
-    state?: 'running' | 'completed' | 'all';
+    state?: ProcessInstanceQueryRepresentationState;
 }
+
+export type ProcessInstanceQueryRepresentationSort = 'created-desc' | 'created-asc' | 'ended-desc' | 'ended-asc';
+export type ProcessInstanceQueryRepresentationState = 'running' | 'completed' | 'all' | 'open';
