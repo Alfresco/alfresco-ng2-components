@@ -151,6 +151,21 @@ describe('WidgetDataTableAdapter', () => {
                     type: 'json',
                     key: 'person.phoneNumbers',
                     title: 'Phone numbers'
+                },
+                {
+                    type: 'text',
+                    key: 'person.phoneNumbers[0].phoneNumber',
+                    title: 'Phone Home'
+                },
+                {
+                    type: 'text',
+                    key: 'person.phoneNumbers[1].phoneNumber',
+                    title: 'Phone Work'
+                },
+                {
+                    type: 'text',
+                    key: 'person.cars[0].previousOwners[0].name',
+                    title: 'Last Car Owner'
                 }
             ];
 
@@ -165,7 +180,10 @@ describe('WidgetDataTableAdapter', () => {
                 'person.phoneNumbers': [
                     { type: 'home', phoneNumber: '123-456-7890' },
                     { type: 'work', phoneNumber: '098-765-4321' }
-                ]
+                ],
+                'person.phoneNumbers[0].phoneNumber': '123-456-7890',
+                'person.phoneNumbers[1].phoneNumber': '098-765-4321',
+                'person.cars[0].previousOwners[0].name': 'Jane Smith'
             });
             const expectedSecondRow = new ObjectDataRow({
                 'person.personData.[address.[data]test].city': 'Westlake',
@@ -174,20 +192,26 @@ describe('WidgetDataTableAdapter', () => {
                 'person.phoneNumbers': [
                     { type: 'home', phoneNumber: '123-456-7891' },
                     { type: 'work', phoneNumber: '321-654-1987' }
-                ]
+                ],
+                'person.phoneNumbers[0].phoneNumber': '123-456-7891',
+                'person.phoneNumbers[1].phoneNumber': '321-654-1987',
+                'person.cars[0].previousOwners[0].name': 'Bob Johnson'
             });
             const expectedColumns = [
                 new ObjectDataColumn({ key: 'person.name', type: 'text', title: 'Name' }),
                 new ObjectDataColumn({ key: 'person.personData.[address.[data]test].city', type: 'text', title: 'City' }),
                 new ObjectDataColumn({ key: 'person.personData.[address.[data]test].street', type: 'text', title: 'Street' }),
-                new ObjectDataColumn({ key: 'person.phoneNumbers', type: 'json', title: 'Phone numbers' })
+                new ObjectDataColumn({ key: 'person.phoneNumbers', type: 'json', title: 'Phone numbers' }),
+                new ObjectDataColumn({ key: 'person.phoneNumbers[0].phoneNumber', type: 'text', title: 'Phone Home' }),
+                new ObjectDataColumn({ key: 'person.phoneNumbers[1].phoneNumber', type: 'text', title: 'Phone Work' }),
+                new ObjectDataColumn({ key: 'person.cars[0].previousOwners[0].name', type: 'text', title: 'Last Car Owner' })
             ];
 
             expect(rows.length).toBe(2);
             expect(rows[0]).toEqual(expectedFirstRow);
             expect(rows[1]).toEqual(expectedSecondRow);
 
-            expect(columns.length).toBe(4);
+            expect(columns.length).toBe(7);
             expect(columns).toEqual(expectedColumns);
         });
     });

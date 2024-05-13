@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
+import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { ViewerRenderComponent } from './viewer-render.component';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { MatDialog } from '@angular/material/dialog';
-import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
+import { CoreTestingModule } from '../../../testing';
+import { RenderingQueueServices } from '../../services/rendering-queue.services';
+import { ViewerRenderComponent } from './viewer-render.component';
 
 @Component({
     selector: 'adf-double-viewer',

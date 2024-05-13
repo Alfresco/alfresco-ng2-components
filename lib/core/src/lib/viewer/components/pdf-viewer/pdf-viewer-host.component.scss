@@ -1,10 +1,7 @@
 .adf-pdf-viewer {
     .textLayer {
         position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
         overflow: hidden;
         opacity: 0.2;
         line-height: 1;
@@ -15,17 +12,12 @@
             position: absolute;
             white-space: pre;
             cursor: text;
-            -webkit-transform-origin: 0 0;
-            -moz-transform-origin: 0 0;
-            -o-transform-origin: 0 0;
-            -ms-transform-origin: 0 0;
             transform-origin: 0 0;
         }
 
         .adf-highlight {
             margin: -1px;
             padding: 1px;
-
             background-color: rgb(180, 0, 170);
             border-radius: 4px;
 
@@ -46,22 +38,18 @@
             }
         }
 
-        &::selection { background: rgb(0, 0, 255); }
-        &::-moz-selection { background: rgb(0, 0, 255); }
+        &::selection {
+            background: rgb(0, 0, 255);
+        }
 
         .adf-endOfContent {
             display: block;
             position: absolute;
-            left: 0;
+            inset: 0;
             top: 100%;
-            right: 0;
-            bottom: 0;
             z-index: -1;
             cursor: default;
             user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            -moz-user-select: none;
 
             &.adf-active {
                 top: 0;
@@ -110,7 +98,7 @@
             position: absolute;
             z-index: 200;
             max-width: 20em;
-            background-color: #ffff99;
+            background-color: #ff9;
             box-shadow: 0 2px 5px #333;
             border-radius: 2px;
             padding: 0.6em;
@@ -120,7 +108,7 @@
 
             h1 {
                 font-size: 1em;
-                border-bottom: 1px solid #000000;
+                border-bottom: 1px solid #000;
                 padding-bottom: 0.2em;
             }
 
@@ -162,10 +150,25 @@
             .adf-loadingIcon {
                 position: absolute;
                 display: block;
-                left: 0;
-                top: 0;
-                right: 0;
-                bottom: 0;
+                inset: 0;
+                width: 100px;
+                height: 100px;
+                left: 50%;
+                top: 50%;
+                margin-top: -50px;
+                margin-left: -50px;
+                font-size: 5px;
+                text-indent: -9999em;
+                border-top: 1.1em solid rgba(3, 0, 2, 0.2);
+                border-right: 1.1em solid rgba(3, 0, 2, 0.2);
+                border-bottom: 1.1em solid rgba(3, 0, 2, 0.2);
+                border-left: 1.1em solid #030002;
+                animation: load8 1.1s infinite linear;
+                border-radius: 50%;
+
+                &::after {
+                    border-radius: 50%;
+                }
             }
 
             * {
@@ -180,58 +183,11 @@
                 border: none;
             }
         }
-
-        .adf-loadingIcon {
-            width: 100px;
-            height: 100px;
-            left: 50%;
-            top: 50%;
-
-            margin-top: -50px;
-            margin-left: -50px;
-
-            font-size: 5px;
-            text-indent: -9999em;
-            border-top: 1.1em solid rgba(3, 0, 2, 0.2);
-            border-right: 1.1em solid rgba(3, 0, 2, 0.2);
-            border-bottom: 1.1em solid rgba(3, 0, 2, 0.2);
-            border-left: 1.1em solid #030002;
-            -webkit-transform: translateZ(0);
-            -ms-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-animation: load8 1.1s infinite linear;
-            animation: load8 1.1s infinite linear;
-
-            border-radius: 50%;
-            &::after {
-                border-radius: 50%;
-            }
-        }
     }
 
-    .adf-hidden, [hidden] {
+    .adf-hidden,
+    [hidden] {
         display: none;
-    }
-}
-
-@-webkit-keyframes load8 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-@keyframes load8 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
     }
 }
 
@@ -239,15 +195,14 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     outline: none;
 }
+
 html[dir='ltr'] .adf-viewer-pdf-viewer {
-    box-shadow: inset 1px 0 0 hsla(0, 0%, 100%, 0.05);
+    box-shadow: inset 1px 0 0 hsla(0deg, 0%, 100%, 0.05);
 }
+
 html[dir='rtl'] .adf-viewer-pdf-viewer {
-    box-shadow: inset -1px 0 0 hsla(0, 0%, 100%, 0.05);
+    box-shadow: inset -1px 0 0 hsla(0deg, 0%, 100%, 0.05);
 }

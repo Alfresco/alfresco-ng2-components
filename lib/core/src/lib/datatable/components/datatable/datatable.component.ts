@@ -986,7 +986,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         const headerContainer: HTMLElement = document.querySelector('.adf-datatable-header');
 
         if (headerContainer) {
-            const headerContainerColumns = headerContainer.querySelectorAll('.adf-datatable-cell-header');
+            const headerContainerColumns = headerContainer.querySelectorAll('.adf-datatable-cell-header:not(.adf-datatable-checkbox)');
 
             headerContainerColumns.forEach((column: HTMLElement, index: number): void => {
                 if (allColumns[index]) {

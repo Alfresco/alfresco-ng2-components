@@ -6,7 +6,7 @@
                 <div class="adf-viewer-render__loading-screen">
                     <h2>{{ 'ADF_VIEWER.LOADING' | translate }}</h2>
                     <div>
-                        <mat-spinner></mat-spinner>
+                        <mat-spinner class="adf-viewer-render__loading-screen__spinner"></mat-spinner>
                     </div>
                 </div>
             </ng-container>
@@ -20,12 +20,11 @@
     <div class="adf-viewer-render-layout-content adf-viewer__fullscreen-container">
         <div class="adf-viewer-render-content-container" [ngSwitch]="viewerType">
             <ng-container *ngSwitchCase="'external'">
-                <adf-preview-extension
-                    *ngIf="!!externalViewer"
-                    [id]="externalViewer.component"
-                    [url]="urlFile"
-                    [extension]="externalViewer.fileExtension"
-                    [attr.data-automation-id]="externalViewer.component">
+                <adf-preview-extension *ngIf="!!externalViewer"
+                                       [id]="externalViewer.component"
+                                       [url]="urlFile"
+                                       [extension]="externalViewer.fileExtension"
+                                       [attr.data-automation-id]="externalViewer.component">
                 </adf-preview-extension>
             </ng-container>
 
