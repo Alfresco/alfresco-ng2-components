@@ -22,7 +22,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Directive({
     /* eslint-disable-next-line @angular-eslint/directive-selector */
-    selector: '[forFeatures]',
+    selector: '[adfForFeatures]',
     standalone: true
 })
 export class FeaturesDirective implements OnDestroy {

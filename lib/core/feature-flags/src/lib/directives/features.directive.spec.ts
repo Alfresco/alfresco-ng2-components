@@ -25,7 +25,7 @@ import { By } from '@angular/platform-browser';
 @Component({
     template: `
         <div>
-            <div id="underFeatureFlag" *forFeatures="features"></div>
+            <div id="underFeatureFlag" *adfForFeatures="features"></div>
         </div>
     `
 })
@@ -35,7 +35,7 @@ class TestWithEnabledFlagComponent {
 @Component({
     template: `
         <div>
-            <div id="underFeatureFlag" *forFeatures="features"></div>
+            <div id="underFeatureFlag" *adfForFeatures="features"></div>
         </div>
     `
 })

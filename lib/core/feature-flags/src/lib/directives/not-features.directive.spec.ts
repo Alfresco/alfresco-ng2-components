@@ -25,7 +25,7 @@ import { NotFeaturesDirective } from './not-features.directive';
 @Component({
     template: `
         <div>
-            <div id="underFeatureFlag" *notForFeatures="features"></div>
+            <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
     `
 })
@@ -36,7 +36,7 @@ class TestWithEnabledFlagComponent {
 @Component({
     template: `
         <div>
-            <div id="underFeatureFlag" *notForFeatures="features"></div>
+            <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
     `
 })
