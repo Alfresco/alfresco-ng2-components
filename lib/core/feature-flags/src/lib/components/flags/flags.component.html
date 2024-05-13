@@ -33,7 +33,7 @@
     <ng-container matColumnDef="flag">
       <th mat-header-cell class="flag-col header-cell" *matHeaderCellDef>
         <mat-form-field class="flag-form-field" appearance="outline" floatLabel="auto">
-          <input class="flag-input" [placeholder]="isEnabled ? 'Filter or add new' : 'Filter'" matInput type="text" [(ngModel)]="inputValue" (keyup)="onInputChange(inputValue)" (keypress)="onAdd($event)">
+          <input class="flag-input" [placeholder]="(isEnabled ? 'CORE.FEATURE-FLAGS.FILTER_OR_ADD_NEW' : 'CORE.FEATURE-FLAGS.FILTER') | translate" matInput type="text" [(ngModel)]="inputValue" (keyup)="onInputChange(inputValue)" (keypress)="onAdd($event)">
         </mat-form-field>
       </th>
       <td mat-cell class="flag-col" *matCellDef="let element">{{ element.flag }}</td>

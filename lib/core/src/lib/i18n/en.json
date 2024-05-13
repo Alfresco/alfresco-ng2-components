@@ -254,7 +254,9 @@
       "SORT_BY": "Sort by"
     },
     "FEATURE-FLAGS": {
-      "OVERRIDES": "Feature flag overrides"
+      "OVERRIDES": "Feature flag overrides",
+      "FILTER_OR_ADD_NEW": "Filter or add new",
+      "FILTER": "Filter"
     }
   },
   "COMMENTS": {
