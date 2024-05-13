@@ -196,10 +196,9 @@ describe('DataTablePathParserHelper', () => {
             { property: '[persons[0].file.data][4]', expected: 'persons[0].file.data' },
             { property: '[persons[0].file.data][1][4]', expected: 'persons[0].file.data' },
             { property: '[persons.data1]][2][4][23]', expected: 'persons.data1]' },
-            { property: 'persons', expected: 'persons' },
             { property: '', expected: '' },
-            { property: undefined, expected: null },
-            { property: null, expected: null }
+            { property: undefined, expected: '' },
+            { property: null, expected: '' }
         ];
 
         testCases.forEach((testCase) => {

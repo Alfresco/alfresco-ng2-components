@@ -25,15 +25,17 @@ export class DataTablePathParserHelper {
         }
 
         const properties = this.splitPathIntoProperties(path);
-        const currentProperty = this.extractPurePropertyName(properties.shift());
+        const currentProperty = properties.shift();
         const propertyIndexReferences = this.getIndexReferencesFromProperty(currentProperty);
-        const isPropertyWithSingleIndexReference = propertyIndexReferences.length === 1;
+        const purePropertyName = this.extractPurePropertyName(currentProperty);
+        const isPropertyWithMultipleIndexReferences = propertyIndexReferences.length > 1;
 
-        if (!this.isPropertyExistsInData(data, currentProperty)) {
+        if (isPropertyWithMultipleIndexReferences || !this.isPropertyExistsInData(data, purePropertyName)) {
             return [];
         }
 
-        const nestedData = isPropertyWithSingleIndexReference ? data[currentProperty]?.[propertyIndexReferences[0]] : data[currentProperty];
+        const isPropertyWithSingleIndexReference = propertyIndexReferences.length === 1;
+        const nestedData = isPropertyWithSingleIndexReference ? data[purePropertyName]?.[propertyIndexReferences[0]] : data[purePropertyName];
 
         if (Array.isArray(nestedData)) {
             return nestedData;
@@ -103,9 +105,9 @@ export class DataTablePathParserHelper {
         const propertyIndexReferences = this.getIndexReferencesFromProperty(property);
         const numberOfIndexReferences = propertyIndexReferences.length;
 
-        if (numberOfIndexReferences > 1 || property == null) {
+        if (property == null) {
             return '';
-        } else if (numberOfIndexReferences === 1) {
+        } else if (numberOfIndexReferences !== 0) {
             return this.removeSquareBracketsAndIndexReferencesFromProperty(property);
         } else {
             return this.removeSquareBracketsFromProperty(property);
