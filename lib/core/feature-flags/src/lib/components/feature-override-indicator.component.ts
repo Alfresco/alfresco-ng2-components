@@ -61,8 +61,6 @@ export class FlagsOverrideComponent implements OnDestroy {
         private featuresService: IDebugFeaturesService,
         changeDetectorRef: ChangeDetectorRef
     ) {
-        // devTools: true means that FlagsOverrideToken is true (enable this component rendering)
-        // production: true means the injected service doesn't implement the isEnabled method
         if (this.featuresService.isEnabled) {
             this.featuresService
                 .isEnabled()
