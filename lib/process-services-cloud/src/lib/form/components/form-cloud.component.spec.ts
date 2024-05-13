@@ -65,6 +65,7 @@ import { ProcessServicesCloudModule } from '../../process-services-cloud.module'
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
+import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -616,6 +617,28 @@ describe('FormCloudComponent', () => {
 
         formComponent.appName = appName;
         formComponent.formId = formId;
+        formComponent.loadForm();
+    });
+
+    it('should fetch and parse form definition by id and also set the process variables when data is provided and no process variables are present', (done) => {
+        spyOn(formCloudService, 'getForm').and.returnValue(of(fakeCloudForm));
+
+        const appName = 'test-app';
+        const formId = 'form-de8895be-d0d7-4434-beef-559b15305d72';
+        const variables: TaskVariableCloud[] = [
+            new TaskVariableCloud({ name: 'var1', value: 'value1' }),
+            new TaskVariableCloud({ name: 'var2', value: 'value2' })
+        ];
+        formComponent.formLoaded.subscribe(() => {
+            expect(formComponent.form).toBeDefined();
+            expect(formComponent.form.id).toBe(formId);
+            expect(formComponent.form.processVariables).toEqual(variables as any);
+            done();
+        });
+
+        formComponent.appName = appName;
+        formComponent.formId = formId;
+        formComponent.data = variables;
         formComponent.loadForm();
     });
 

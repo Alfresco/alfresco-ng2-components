@@ -302,6 +302,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             .subscribe(
                 (form) => {
                     this.formCloudRepresentationJSON = form;
+                    this.formCloudRepresentationJSON.processVariables = this.data || [];
                     const parsedForm = this.parseForm(form);
                     this.visibilityService.refreshVisibility(parsedForm);
                     parsedForm?.validateForm();
