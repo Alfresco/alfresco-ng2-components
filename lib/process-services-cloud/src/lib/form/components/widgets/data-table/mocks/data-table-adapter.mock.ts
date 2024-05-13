@@ -34,6 +34,21 @@ export const mockPersonsData = [
                     type: 'work',
                     phoneNumber: '098-765-4321'
                 }
+            ],
+            cars: [
+                {
+                    make: 'Toyota',
+                    model: 'Corolla',
+                    year: 2019,
+                    previousOwners: [
+                        {
+                            name: 'Jane Smith'
+                        },
+                        {
+                            name: 'Jim Down'
+                        }
+                    ]
+                }
             ]
         }
     },
@@ -54,6 +69,21 @@ export const mockPersonsData = [
                 {
                     type: 'work',
                     phoneNumber: '321-654-1987'
+                }
+            ],
+            cars: [
+                {
+                    make: 'Honda',
+                    model: 'Civic',
+                    year: 2018,
+                    previousOwners: [
+                        {
+                            name: 'Bob Johnson'
+                        },
+                        {
+                            name: 'Tom Brown'
+                        }
+                    ]
                 }
             ]
         }
