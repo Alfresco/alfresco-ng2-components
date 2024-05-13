@@ -43,3 +43,13 @@ export const mockResponseResultData = (propertyName?: string) => ({
         [propertyName]: mockResultData
     }
 });
+
+export const mockResponseResultDataWithNestedArray = (propertyName?: string) => ({
+    response: {
+        [propertyName]: [
+            {
+                data: mockResultData
+            }
+        ]
+    }
+});
