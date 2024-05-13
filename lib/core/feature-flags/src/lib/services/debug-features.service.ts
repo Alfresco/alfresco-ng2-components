@@ -29,7 +29,7 @@ import {
     FlagSet,
     IWritableFeaturesService
 } from '../interfaces/features.interface';
-import { StorageService } from '../../../..';
+import { StorageService } from '@alfresco/adf-core';
 
 @Injectable()
 export class DebugFeaturesService implements IDebugFeaturesService {

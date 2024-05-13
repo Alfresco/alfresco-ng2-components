@@ -28,7 +28,7 @@ import {
     WritableFeaturesServiceConfig
 } from '../interfaces/features.interface';
 import { FlagSetParser } from './flagset.parser';
-import { StorageService } from '../../../..';
+import { StorageService } from '@alfresco/adf-core';
 
 @Injectable()
 export class StorageFeaturesService implements IFeaturesService, IWritableFeaturesService {
