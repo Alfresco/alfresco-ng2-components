@@ -22,6 +22,15 @@
         align-items: center;
         padding: 10px 15px;
         border: 1px solid var(--adf-theme-foreground-text-color-007);
+
+        .adf-permission-visibility-toggle {
+            .adf-permission-visibility-toggle-icon {
+                font-size: 24px;
+                height: 24px;
+                width: 24px;
+                margin: 1px 0 0 4px;
+            }
+        }
     }
 
     &-inherit-container {
@@ -37,6 +46,7 @@
 
     &-inherit-toggle {
         padding-left: 30px;
+        margin-top: -2px;
     }
 
     &-inherit-subtitle {
@@ -78,6 +88,10 @@
         overflow: hidden;
         flex: 1 1 auto;
         padding: 0;
+    }
+
+    &-delete-selected-permission-icon {
+        color: var(--theme-grey-divider-color);
     }
 }
 
