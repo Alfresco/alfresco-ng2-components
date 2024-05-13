@@ -22,18 +22,16 @@ import { FlagsComponent } from './flags/flags.component';
     selector: 'adf-feature-flags-wrapper',
     standalone: true,
     imports: [FlagsComponent],
-    template: `<adf-feature-flags-overrides class="feature-flags-overrides"></adf-feature-flags-overrides>`,
+    template: `
+        <div class="adf-feature-flags-wrapper">
+            <adf-feature-flags-overrides></adf-feature-flags-overrides>
+        </div>
+    `,
     styles: [
         `
-            :host {
-                display: flex;
-                justify-content: center;
+            .adf-feature-flags-wrapper {
                 width: 100%;
                 height: 100%;
-            }
-
-            .feature-flags-overrides {
-                width: 100%;
             }
         `
     ]
