@@ -71,8 +71,8 @@ export class TaskListService {
      */
     getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel> {
         return from(filterList).pipe(
-            flatMap((data: FilterRepresentationModel) => this.isTaskRelatedToFilter(taskId, data)),
-            filter((data: FilterRepresentationModel) => data != null)
+            flatMap((data) => this.isTaskRelatedToFilter(taskId, data)),
+            filter((data) => data != null)
         );
     }
 
@@ -155,15 +155,7 @@ export class TaskListService {
      * @returns Array of checklist task details
      */
     getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
-        return from(this.checklistsApi.getChecklist(id)).pipe(
-            map((response) => {
-                const checklists: TaskDetailsModel[] = [];
-                response.data.forEach((checklist) => {
-                    checklists.push(new TaskDetailsModel(checklist));
-                });
-                return checklists;
-            })
-        );
+        return from(this.checklistsApi.getChecklist(id)).pipe(map((response) => response.data.map((checklist) => new TaskDetailsModel(checklist))));
     }
 
     /**
@@ -178,15 +170,7 @@ export class TaskListService {
             modelType: 2 // Integer | modelType
         };
 
-        return from(this.modelsApi.getModels(opts)).pipe(
-            map((response) => {
-                const forms: Form[] = [];
-                response.data.forEach((form) => {
-                    forms.push(new Form(form.id, form.name));
-                });
-                return forms;
-            })
-        );
+        return from(this.modelsApi.getModels(opts)).pipe(map((response) => response.data.map((form) => new Form(form.id, form.name))));
     }
 
     /**
