@@ -30,11 +30,11 @@ import {
     DEFAULT_PAGINATION
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { ResultListDataRepresentationTaskRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
+import { TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 export const PRESET_KEY = 'adf-task-list.presets';
 
@@ -382,7 +382,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     private load() {
         this.isLoading = true;
 
-        this.loadTasksByState()
+        this.taskListService
+            .findTasksByState(this.requestNode)
             .pipe(finalize(() => (this.isLoading = false)))
             .subscribe(
                 (tasks) => {
@@ -400,10 +401,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
                     this.error.emit(error);
                 }
             );
-    }
-
-    private loadTasksByState(): Observable<ResultListDataRepresentationTaskRepresentation> {
-        return this.taskListService.findTasksByState(this.requestNode);
     }
 
     /**

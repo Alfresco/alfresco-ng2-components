@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { fakeAppPromise } from '../../mock';
 import {
     fakeFiltersResponse,
     fakeAppFilter,
@@ -104,7 +103,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should call the api with the appId', (done) => {
-            spyOn(service, 'callApiTaskFilters').and.returnValue(fakeAppPromise);
+            spyOn(service, 'callApiTaskFilters').and.returnValue(Promise.resolve(fakeAppFilter));
 
             const appId = 1;
             service.getTaskListFilters(appId).subscribe(() => {

@@ -16,7 +16,6 @@
  */
 
 import { FilterRepresentationModel } from '../../task-list/models/filter.model';
-import { TaskQueryRepresentation } from '@alfresco/js-api';
 
 export const fakeFiltersResponse: any = {
     size: 2,
@@ -74,19 +73,6 @@ export const fakeAppFilter = {
             filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
         }
     ]
-};
-
-export const fakeFilter: TaskQueryRepresentation = {
-    sort: 'created-desc',
-    text: '',
-    state: 'open',
-    assignment: 'fake-assignee'
-};
-
-export const mockFilterNoState: TaskQueryRepresentation = {
-    sort: 'created-desc',
-    text: '',
-    assignment: 'fake-assignee'
 };
 
 export const dummyMyTasksFilter = {

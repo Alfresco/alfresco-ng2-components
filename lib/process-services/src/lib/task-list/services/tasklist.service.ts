@@ -109,13 +109,9 @@ export class TaskListService {
      * Gets tasks matching a query and state value.
      *
      * @param requestNode Query to search for tasks
-     * @param state Task state. Can be "open" or "completed". State "all" applies to both "open" and "completed" tasks.
      * @returns List of tasks
      */
-    findTasksByState(requestNode: TaskQueryRepresentation, state?: string): Observable<ResultListDataRepresentationTaskRepresentation> {
-        if (state) {
-            requestNode.state = state;
-        }
+    findTasksByState(requestNode: TaskQueryRepresentation): Observable<ResultListDataRepresentationTaskRepresentation> {
         return this.getTasks(requestNode).pipe(catchError(() => of(new ResultListDataRepresentationTaskRepresentation())));
     }
 
@@ -123,13 +119,9 @@ export class TaskListService {
      * Gets all tasks matching a query and state value.
      *
      * @param requestNode Query to search for tasks.
-     * @param state Task state. Can be "open" or "completed". State "all" applies to both "open" and "completed" tasks.
      * @returns List of tasks
      */
-    findAllTasksByState(requestNode: TaskQueryRepresentation, state?: string): Observable<ResultListDataRepresentationTaskRepresentation> {
-        if (state) {
-            requestNode.state = state;
-        }
+    findAllTasksByState(requestNode: TaskQueryRepresentation): Observable<ResultListDataRepresentationTaskRepresentation> {
         return this.getTotalTasks(requestNode).pipe(
             switchMap((res) => {
                 requestNode.size = res.total;

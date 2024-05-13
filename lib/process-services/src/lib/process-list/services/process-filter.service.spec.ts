@@ -47,9 +47,7 @@ describe('Process filter', () => {
         let createFilter: jasmine.Spy;
 
         beforeEach(() => {
-            getFilters = spyOn(service.userFiltersApi, 'getUserProcessInstanceFilters').and.returnValue(
-                Promise.resolve(fakeProcessFiltersResponse)
-            );
+            getFilters = spyOn(service.userFiltersApi, 'getUserProcessInstanceFilters').and.returnValue(Promise.resolve(fakeProcessFiltersResponse));
 
             jasmine.Ajax.install();
         });
@@ -211,8 +209,8 @@ describe('Process filter', () => {
 
         describe('add filter', () => {
             beforeEach(() => {
-                createFilter = spyOn(service.userFiltersApi, 'createUserProcessInstanceFilter').and.callFake(
-                    (processFilter) => Promise.resolve(processFilter)
+                createFilter = spyOn(service.userFiltersApi, 'createUserProcessInstanceFilter').and.callFake((processFilter) =>
+                    Promise.resolve(processFilter)
                 );
             });
 
@@ -267,8 +265,7 @@ describe('Process filter', () => {
                         id: 8,
                         index: 0,
                         name: 'Running',
-                        recent: false,
-                        hasFilter: () => true
+                        recent: false
                     }
                 ];
 
