@@ -42,13 +42,14 @@
             <button
                 mat-flat-button
                 data-automation-id="permission-info-button"
+                class="adf-permission-visibility-toggle"
                 [adf-pop-over]="inheritedPermission"
                 [target]="target"
                 #popOver="adfPopOver"
                 *ngIf="model.node.permissions.isInheritanceEnabled">
                 {{ (popOver.open ? 'PERMISSION_MANAGER.LABELS.HIDE' : 'PERMISSION_MANAGER.LABELS.SHOW') | translate }}
-                <mat-icon *ngIf="popOver.open" iconPositionEnd> keyboard_arrow_up </mat-icon>
-                <mat-icon *ngIf="!popOver.open" iconPositionEnd> keyboard_arrow_down </mat-icon>
+                <mat-icon class="adf-permission-visibility-toggle-icon" iconPositionEnd>
+                    {{ popOver.open ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }} </mat-icon>
             </button>
         </div>
 
@@ -87,7 +88,7 @@
                     [disabled]="!selectedPermissions?.length"
                     (click)="deleteSelection()"
                     data-automation-id="adf-delete-selected-permission">
-                    <mat-icon>delete_outline</mat-icon>
+                    <mat-icon class="adf-delete-selected-permission-icon">delete_outline</mat-icon>
                 </button>
             </section>
 
