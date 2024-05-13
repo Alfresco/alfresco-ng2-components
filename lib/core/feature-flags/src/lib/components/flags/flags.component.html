@@ -42,7 +42,7 @@
     <ng-container matColumnDef="value">
       <th mat-header-cell class="val-col header-cell" *matHeaderCellDef>
         <div class="input-field-buttons-container">
-          <button *ngIf="showPlusButton$ | async" mat-icon-button matTooltip="Add new feature flag (Shift + Enter)" color="accent" (click)="onAddButtonClick()">
+          <button *ngIf="showPlusButton$ | async" mat-icon-button matTooltip="{{'CORE.FEATURE-FLAGS.ADD_NEW' | translate}}" color="accent" (click)="onAddButtonClick()">
             <mat-icon class="material-icons-outlined" fontIcon="add_circle"></mat-icon>
           </button>
           <button *ngIf="inputValue" matSuffix mat-icon-button aria-label="Clear" (click)="onClearInput()" class="clear-button">

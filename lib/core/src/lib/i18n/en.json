@@ -256,7 +256,8 @@
     "FEATURE-FLAGS": {
       "OVERRIDES": "Feature flag overrides",
       "FILTER_OR_ADD_NEW": "Filter or add new",
-      "FILTER": "Filter"
+      "FILTER": "Filter",
+      "ADD_NEW": "Add new feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
