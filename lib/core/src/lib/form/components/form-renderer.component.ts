@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnInit, Inject } from '@angular/core';
+import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { Component, Inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
-import { FormModel } from './widgets/core/form.model';
-import { ContainerModel, FormFieldModel, TabModel } from './widgets';
 import { FormService } from '../services/form.service';
+import { FormFieldComponent } from './form-field/form-field.component';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
+import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
 
 @Component({
     selector: 'adf-form-renderer',
+    standalone: true,
     templateUrl: './form-renderer.component.html',
     styleUrls: ['./form-renderer.component.scss'],
     providers: [
@@ -32,7 +40,21 @@ import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } fr
             useFactory: formRulesManagerFactory,
             deps: [Injector]
         }
-
+    ],
+    imports: [
+        NgClass,
+        MatTabsModule,
+        NgIf,
+        NgForOf,
+        NgTemplateOutlet,
+        TranslateModule,
+        MatButtonModule,
+        MatIconModule,
+        NgStyle,
+        FormFieldComponent,
+        JsonPipe,
+        MatSlideToggleModule,
+        FormsModule
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -45,7 +67,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     formDefinition: FormModel;
 
     debugMode: boolean;
-
     fields: FormFieldModel[];
 
     constructor(
@@ -135,7 +156,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     private runMiddlewareServices(): void {
         const formFields = this.formDefinition.getFormFields();
 
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
             this.middlewareServices.forEach((middlewareService) => {
                 if (middlewareService.type === field.type) {
                     field = middlewareService.getParsedField(field);
