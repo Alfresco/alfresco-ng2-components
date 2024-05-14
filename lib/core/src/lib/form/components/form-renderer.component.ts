@@ -16,7 +16,7 @@
  */
 
 import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
-import { Component, Inject, Injector, Input, OnChanges, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -67,7 +67,6 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     formDefinition: FormModel;
 
     debugMode: boolean;
-
     fields: FormFieldModel[];
 
     constructor(
