@@ -33,7 +33,7 @@
         <ng-container [ngTemplateOutlet]="data.contentTemplate"></ng-container>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="adf-dialog-actions">
+    <mat-dialog-actions class="adf-dialog-actions" [ngClass]="{'adf-additional-actions': data.actionsTemplate}">
         <div>
             <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
         </div>

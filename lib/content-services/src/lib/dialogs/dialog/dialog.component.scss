@@ -1,3 +1,5 @@
+$theme-blue-button-color: #1f74db;
+
 $dialog-large-l-width: 1075px;
 $dialog-large-m-width: 941px;
 $dialog-large-s-width: 806px;
@@ -12,30 +14,39 @@ $dialog-small-s-width: 346px;
 $dialog-small-xs-width: 315px;
 $dialog-small-xxs-width: 269px;
 
-$dialog-large-l-height: 907px;
 $dialog-medium-l-height: 778px;
+$dialog-small-l-height: 432px;
+
+$dialog-large-l-height: 907px;
+$dialog-large-m-height: 882px;
+$dialog-large-s-height: 756px;
+
+$dialog-medium-m-height: 756px;
+$dialog-medium-s-height: 648px;
 
 $l-screen: 1920px;
 $m-screen: 1680px;
 $s-screen: 1440px;
 $xs-screen: 375px;
 $xxs-screen: 320px;
+$breakpoint-alert-with-additional-buttons-centered: 1469px;
+$breakpoint-medium-with-additional-buttons-centered: 1469px;
 
 $dialog-padding: 24px;
 
 .adf-dialog-container {
-    max-width: calc(56% - $dialog-padding * 2);
+    min-width: calc(269px - $dialog-padding * 2);
+    min-height: calc(300px - $dialog-padding * 2);
     position: relative;
     display: flex;
     flex-direction: column;
     max-height: 100%;
-    max-height: calc(84vh - $dialog-padding * 2)
+    max-height: calc(84vh - $dialog-padding * 2);
 }
 
 .adf-dialog-header,
 .adf-dialog-content,
-.adf-dialog-actions
-{
+.adf-dialog-actions {
     margin: 0;
     padding: 0;
 }
@@ -50,12 +61,19 @@ $dialog-padding: 24px;
     &.adf-centered-header {
         align-items: flex-start;
     }
-}
 
-.adf-dialog-title {
-    font-size: large;
-    font-weight: 200;
-    margin: 0;
+    .adf-dialog-title {
+        font-size: large;
+        font-weight: 200;
+        margin: 0;
+    }
+
+    .adf-dialog-header-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 48px;
+        color: $theme-blue-button-color;
+    }
 }
 
 .adf-description {
@@ -73,18 +91,18 @@ $dialog-padding: 24px;
 .adf-dialog-header,
 .adf-dialog-actions {
     &::after {
-        content: " ";
+        content: ' ';
         position: absolute;
         left: -$dialog-padding;
         display: block;
         height: 0;
-        border-bottom: 1px solid #2121211F;
+        border-bottom: 1px solid #2121211f;
         width: calc(100% + $dialog-padding * 2);
     }
 }
 
 .adf-dialog-actions::after {
-    top: 0
+    top: 0;
 }
 
 .adf-dialog-header::after {
@@ -99,7 +117,7 @@ $dialog-padding: 24px;
     text-transform: capitalize;
 
     /* stylelint-disable-next-line selector-class-pattern */
-    .mat-button.mat-button-base+.mat-button-base {
+    .mat-button.mat-button-base + .mat-button-base {
         margin-left: 12px;
     }
 
@@ -107,13 +125,6 @@ $dialog-padding: 24px;
     .mat-button {
         text-transform: capitalize;
     }
-}
-
-.adf-dialog-header-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 48px;
-    color: #1F74DB;
 }
 
 /* stylelint-disable selector-class-pattern */
@@ -134,35 +145,54 @@ $dialog-padding: 24px;
         max-height: calc($dialog-large-l-height - $dialog-padding * 2);
     }
 
-    @media screen and (max-width: $s-screen) {
-        max-width: calc(100vw - $dialog-padding * 2);
-        max-height: calc(100vh - $dialog-padding * 2);
+    @media screen and (max-width: $m-screen) {
+        max-height: calc($dialog-large-m-height - $dialog-padding * 2);
     }
 
-    @media screen and (max-height: $dialog-large-l-height) and (min-width: $s-screen) {
+    @media screen and (max-width: $s-screen) {
+        max-height: calc($dialog-large-s-height - $dialog-padding * 2);
+    }
+
+    @media screen and (max-height: $dialog-large-l-height) {
         max-height: calc(72vh - $dialog-padding * 2);
+    }
+
+    @media screen and (max-width: $xs-screen) {
+        max-width: calc(100vw - $dialog-padding * 2);
+        max-height: calc(100vh - $dialog-padding * 2);
     }
 }
 
 .adf-medium {
     max-width: calc(36vw - $dialog-padding * 2);
+    max-height: calc(72vh - $dialog-padding * 2);
 
-    @media screen and (max-width: $l-screen) {
-        max-height: calc($dialog-medium-l-height - $dialog-padding * 2);
-    }
-
-    @media screen and (min-width: $l-screen) {
+    @media screen and (min-width: $m-screen) {
         max-width: calc($dialog-medium-l-width - $dialog-padding * 2);
         max-height: calc($dialog-medium-l-height - $dialog-padding * 2);
     }
 
+    @media screen and (max-width: $m-screen) {
+        max-height: calc($dialog-medium-m-height - $dialog-padding * 2);
+    }
+
     @media screen and (max-width: $s-screen) {
+        max-height: calc($dialog-medium-s-height - $dialog-padding * 2);
+    }
+
+    @media screen and (max-width: $xs-screen) {
         max-width: calc(100vw - $dialog-padding * 2);
         max-height: calc(100vh - $dialog-padding * 2);
     }
 
-    @media screen and (max-height: $dialog-medium-l-height) and (min-width: $s-screen) {
+    @media screen and (max-height: $dialog-medium-l-height) and (min-width: $xs-screen) {
         max-height: calc(72vh - $dialog-padding * 2);
+    }
+
+    @media screen and (max-width: $breakpoint-medium-with-additional-buttons-centered) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
     }
 }
 
@@ -191,12 +221,39 @@ $dialog-padding: 24px;
     max-width: calc(24vw - $dialog-padding * 2);
     max-height: calc(40vh - $dialog-padding * 2);
 
-    @media screen and (max-width: $s-screen) {
-        max-width: calc(84vw - $dialog-padding * 2);
+    @media screen and (min-width: $m-screen) {
+        max-width: calc($dialog-small-l-width - $dialog-padding * 2);
+        max-height: calc($dialog-small-l-height - $dialog-padding * 2);
     }
 
-    @media screen and (min-width: $l-screen) {
-        max-width: calc($dialog-small-l-width - $dialog-padding * 2);
-        max-height: calc(432px - $dialog-padding * 2);
+    @media screen and (max-width: $s-screen) {
+        max-width: calc($dialog-small-m-width - $dialog-padding * 2);
+        max-height: calc(420px - $dialog-padding * 2);
+    }
+
+    @media screen and (max-width: $s-screen) {
+        max-width: calc($dialog-small-s-width - $dialog-padding * 2);
+        max-height: calc(360px - $dialog-padding * 2);
+    }
+
+    @media screen and (max-width: $xs-screen) {
+        max-width: calc(84vw - $dialog-padding * 2);
+        max-height: calc(41vh - $dialog-padding * 2);
+    }
+
+    @media screen and (max-height: $dialog-small-l-height) {
+        max-height: calc(84vh - $dialog-padding * 2);
+    }
+
+    @media screen and (max-width: $breakpoint-alert-with-additional-buttons-centered) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+@media screen and (max-width: $xs-screen) {
+    .adf-additional-actions {
+        justify-content: center;
     }
 }
