@@ -34,6 +34,7 @@ export const nonDeployedApps: AppDefinitionRepresentation[] = [
         icon: 'icon3'
     }
 ];
+
 export const deployedApps: AppDefinitionRepresentation[] = [
     {
         id: 1,
@@ -85,6 +86,7 @@ export const deployedApps: AppDefinitionRepresentation[] = [
         modelId: 66
     }
 ];
+
 export const defaultApp: AppDefinitionRepresentation[] = [
     {
         defaultAppId: 'tasks'
