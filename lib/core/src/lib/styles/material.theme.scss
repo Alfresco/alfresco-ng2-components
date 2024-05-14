@@ -100,6 +100,7 @@
 
                 &:not(#{$mat-notched-outline-notched}) {
                     #{$mat-notched-outline-notch} {
+
                         #{$mat-form-field-label} {
                             top: 30px;
                             left: -5px;
@@ -159,6 +160,12 @@
             &#{$mat-text-field-disabled} {
                 #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing} {
                     background-color: var(--adf-disabled-input-color);
+                }
+
+                #{$mat-notched-outline}:not(#{$mat-notched-outline-notched}) {
+                    #{$mat-notched-outline-notch} {
+                        background-color: var(--adf-disabled-input-color);
+                    }
                 }
 
                 #{$mat-text-filed-input} {
