@@ -16,8 +16,9 @@
  */
 
 import { FilterProcessRepresentationModel } from '../../process-list/models/filter-process.model';
+import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
-export const fakeProcessFilters = [
+export const fakeProcessFilters: UserProcessInstanceFilterRepresentation[] = [
     new FilterProcessRepresentationModel({
         id: 10,
         name: 'FakeCompleted',

@@ -15,18 +15,6 @@
  * limitations under the License.
  */
 
-import { Union } from '../../../../types';
-
-export interface ProcessInstanceQueryRepresentation {
-    appDefinitionId?: number;
-    page?: number;
-    processDefinitionId?: string;
-    processInstanceId?: string;
-    size?: number;
-    sort?: ProcessInstanceQueryRepresentationSort;
-    start?: number;
-    state?: ProcessInstanceQueryRepresentationState;
-}
-
-export type ProcessInstanceQueryRepresentationSort = Union<string, 'created-desc' | 'created-asc' | 'ended-desc' | 'ended-asc'>;
-export type ProcessInstanceQueryRepresentationState = Union<string, 'running' | 'completed' | 'all' | 'open'>;
+// Creates a union type of string literals with strings, but retains intellisense for the literals.
+// Union<string, 'foo' | 'bar'> => string | Omit<string, 'foo' | 'bar'>
+export type Union<S = string, T extends string | number = string> = T | Omit<S, T>;
