@@ -64,16 +64,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
 
         this.mediaQueryList.addListener(this.onMediaQueryChange);
 
-        if (this.isMobileScreenSize) {
-            this.sidenavAnimationState = this.SIDENAV_STATES.MOBILE;
-            this.contentAnimationState = this.CONTENT_STATES.MOBILE;
-        } else if (this.expandedSidenav) {
-            this.sidenavAnimationState = this.SIDENAV_STATES.EXPANDED;
-            this.contentAnimationState = this.toggledContentAnimation;
-        } else {
-            this.sidenavAnimationState = this.SIDENAV_STATES.COMPACT;
-            this.contentAnimationState = this.toggledContentAnimation;
-        }
+        this.updateSidenavState();
     }
 
     ngOnDestroy(): void {
@@ -148,7 +139,22 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private onMediaQueryChange(): void {
-        this.sidenavAnimationState = this.SIDENAV_STATES.EXPANDED;
-        this.contentAnimationState = this.toggledContentAnimation;
+        this.updateSidenavState();
+    }
+
+    private updateSidenavState(): void {
+        if (this.isMobileScreenSize) {
+            this.sidenavAnimationState = this.SIDENAV_STATES.MOBILE;
+            this.contentAnimationState = this.CONTENT_STATES.MOBILE;
+        } else {
+            if (this.expandedSidenav && !this.hideSidenav) {
+                this.sidenavAnimationState = this.SIDENAV_STATES.EXPANDED;
+                this.contentAnimationState = this.toggledContentAnimation;
+                this.sidenav.open();
+            } else {
+                this.sidenavAnimationState = this.SIDENAV_STATES.COMPACT;
+                this.contentAnimationState = this.toggledContentAnimation;
+            }
+        }
     }
 }
