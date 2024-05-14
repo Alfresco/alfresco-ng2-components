@@ -27,17 +27,17 @@ import { Subject } from 'rxjs';
     imports: [CommonModule],
     styles: [
         `
-            .activity-indicator {
+            .adf-activity-indicator {
                 font-size: 0.885rem;
             }
         `,
         `
-            .activity-indicator .small {
+            .adf-activity-indicator .small {
                 font-size: 0.7rem;
             }
         `,
         `
-            .activity-indicator .large {
+            .adf-activity-indicator .large {
                 font-size: 1.2rem;
             }
         `

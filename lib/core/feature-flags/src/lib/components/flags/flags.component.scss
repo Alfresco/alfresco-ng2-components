@@ -1,12 +1,13 @@
-/* stylelint-disable */
-.feature-flags-overrides-header {
+/* stylelint-disable selector-class-pattern */
+.adf-feature-flags-overrides-header {
     position: sticky;
+    /* stylelint-disable-next-line length-zero-no-unit */
     top: 0px;
     height: 64px;
     z-index: 101;
     display: flex;
 
-    .activity-indicator {
+    .adf-activity-indicator {
         margin-right: 12px;
         position: relative;
         top: -2px;
@@ -21,19 +22,19 @@
     }
 }
 
-.feature-flags-overrides-table {
+.adf-feature-flags-overrides-table {
     width: 100%;
 
-    .header-cell {
-        top: 64px !important;
+    .adf-header-cell.adf-icon-col {
+        top: 64px;
     }
 
-    .search-icon {
+    .adf-search-icon {
         position: relative;
         top: 4px;
     }
 
-    .flag-form-field {
+    .adf-flag-form-field {
         width: 100%;
         display: flex;
 
@@ -48,7 +49,7 @@
             margin: 0;
         }
 
-        .mat-form-field-wrapper {
+        .adf-feature-flags-overrides-table .adf-flag-form-field .mat-form-field-wrapper {
             width: 100%;
         }
 
@@ -63,16 +64,16 @@
         }
     }
 
-    .input-field-buttons-container {
+    .adf-input-field-buttons-container {
         display: flex;
         justify-content: flex-end;
     }
 
-    .clear-button {
+    .adf-clear-button {
         margin-left: -14px;
     }
 
-    .fictive-flag-button {
+    .adf-fictive-flag-button {
         margin-left: -8px;
         position: relative;
 
@@ -81,30 +82,30 @@
             left: 8px;
         }
 
-        .custom-flag-icon {
+        .adf-custom-flag-icon {
             display: block;
         }
 
-        .trash-icon {
+        .adf-rash-icon {
             display: none;
         }
 
         &:hover {
-            .custom-flag-icon {
+            .adf-custom-flag-icon {
                 display: none;
             }
 
-            .trash-icon {
+            .adf-trash-icon {
                 display: block;
             }
         }
     }
 
-    .icon-col {
+    .adf-icon-col {
         width: 56px;
     }
 
-    .val-col {
+    .adf-val-col {
         width: 85px;
         text-align: right;
     }
