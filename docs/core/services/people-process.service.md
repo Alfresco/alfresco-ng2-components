@@ -13,9 +13,9 @@ Gets information about Process Services users.
 
 ### Methods
 
--   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../../core/models/bpm-user.model.md)`>`<br/>
+-   **getCurrentUserInfo**(): `Observable<UserRepresentation>`<br/>
     Gets information about the current user.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../../core/models/bpm-user.model.md)`>` - User information object
+    -   **Returns** `Observable<UserRepresentation>` - User information object
 -   **getCurrentUserProfileImage**(): `string`<br/>
     Gets the current user's profile image as a URL.
     -   **Returns** `string` - URL string
@@ -66,5 +66,4 @@ You can find more information about the REST API methods used by this service in
 ## See also
 
 -   [User process model](../models/user-process.model.md)
--   [Bpm user model](../models/bpm-user.model.md)
 -   [People content service](people-content.service.md)

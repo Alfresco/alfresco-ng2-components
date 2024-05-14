@@ -163,7 +163,6 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Bpm User model](core/models/bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/process-services/src/lib/common/models/bpm-user.model.ts) |
 | [Ecm User model](core/models/ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/content-services/src/lib/common/models/ecm-user.model.ts) |
 | [Form Field model](core/models/form-field.model.md) | Contains the value and metadata for a field of a Form component. | [Source](../lib/core/src/lib/form/components/widgets/core/form-field.model.ts) |
 | [Product Version model](core/models/product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../lib/core/src/lib/models/product-version.model.ts) |

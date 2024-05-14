@@ -21,7 +21,7 @@ import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angu
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { PeopleProcessService } from '../common/services/people-process.service';
-import { BpmUserModel } from '../common/models/bpm-user.model';
+import { UserRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-process-user-info',
@@ -30,7 +30,6 @@ import { BpmUserModel } from '../common/models/bpm-user.model';
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessUserInfoComponent implements OnDestroy {
-
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     /** Determines if user is logged in. */
@@ -39,7 +38,7 @@ export class ProcessUserInfoComponent implements OnDestroy {
 
     /** BPM user info. */
     @Input()
-    bpmUser: BpmUserModel;
+    bpmUser: UserRepresentation;
 
     /** ECM user info. */
     @Input()
@@ -80,8 +79,7 @@ export class ProcessUserInfoComponent implements OnDestroy {
 
     private destroy$ = new Subject();
 
-    constructor(private peopleProcessService: PeopleProcessService, private peopleContentService: PeopleContentService) {
-    }
+    constructor(private peopleProcessService: PeopleProcessService, private peopleContentService: PeopleContentService) {}
 
     ngOnDestroy(): void {
         this.destroy$.next(true);

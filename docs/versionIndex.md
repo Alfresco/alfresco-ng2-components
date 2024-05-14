@@ -520,7 +520,6 @@ backend services have been tested with each released version of ADF.
 -   [Auth guard ecm service](core/services/auth-guard-ecm.service.md)
 -   [Auth guard service](core/services/auth-guard.service.md)
 -   [Authentication service](core/services/authentication.service.md)
--   [Bpm user model](core/models/bpm-user.model.md)
 -   [Bpm user service](core/services/bpm-user.service.md)
 -   [Breadcrumb component](content-services/components/breadcrumb.component.md)
 -   [Card item types service](core/services/card-item-types.service.md)

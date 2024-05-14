@@ -18,10 +18,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { AlfrescoApiService, GroupModel } from '@alfresco/adf-core';
-import { BpmUserModel } from '../models/bpm-user.model';
 import { UserProcessModel } from '../models/user-process.model';
 import { combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
-import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi } from '@alfresco/js-api';
+import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -58,8 +57,8 @@ export class PeopleProcessService {
      *
      * @returns User information object
      */
-    getCurrentUserInfo(): Observable<BpmUserModel> {
-        return from(this.profileApi.getProfile()).pipe(map((userRepresentation) => new BpmUserModel(userRepresentation)));
+    getCurrentUserInfo(): Observable<UserRepresentation> {
+        return from(this.profileApi.getProfile());
     }
 
     /**
