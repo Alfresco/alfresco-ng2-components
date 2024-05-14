@@ -17,7 +17,6 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { from, of, throwError } from 'rxjs';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
@@ -95,7 +94,7 @@ describe('ProcessFiltersComponent', () => {
 
     it('should emit the selected filter based on the filterParam input', async () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
-        filterList.filterParam = new FilterProcessRepresentationModel({ id: 10 });
+        filterList.filterParam = { id: 10 } as any;
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
@@ -130,7 +129,7 @@ describe('ProcessFiltersComponent', () => {
         const change = new SimpleChange(null, appId, true);
 
         filterList.currentFilter = nonExistingFilterParam;
-        filterList.filterParam = new FilterProcessRepresentationModel(nonExistingFilterParam);
+        filterList.filterParam = nonExistingFilterParam as any;
 
         filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
@@ -180,11 +179,11 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an event when a filter is selected', async () => {
-        const currentFilter = new FilterProcessRepresentationModel({
+        const currentFilter: UserProcessInstanceFilterRepresentation = {
             id: 10,
             name: 'FakeCompleted',
             filter: { state: 'open', assignment: 'fake-involved' }
-        });
+        };
 
         let lastValue: UserProcessInstanceFilterRepresentation;
         filterList.filterClicked.subscribe((filter) => (lastValue = filter));
@@ -226,10 +225,10 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        const filter = new FilterProcessRepresentationModel({
+        const filter: UserProcessInstanceFilterRepresentation = {
             name: 'FakeAll',
             filter: { state: 'open', assignment: 'fake-assignee' }
-        });
+        };
         expect(filterList.currentFilter).toBeUndefined();
         filterList.selectFilter(filter);
         expect(filterList.getCurrentFilter()).toBe(filter);
@@ -238,7 +237,7 @@ describe('ProcessFiltersComponent', () => {
     it('should select the filter passed as input by id', async () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
-        filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
+        filterList.filterParam = { id: 20 } as any;
 
         const appId = 1;
         const change = new SimpleChange(null, appId, true);
@@ -255,7 +254,7 @@ describe('ProcessFiltersComponent', () => {
     it('should select the filter passed as input by name', async () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
-        filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeAll' });
+        filterList.filterParam = { name: 'FakeAll' } as any;
 
         const appId = 1;
         const change = new SimpleChange(null, appId, true);

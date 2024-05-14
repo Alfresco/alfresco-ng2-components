@@ -24,10 +24,9 @@ import {
     dummyCompletedFilter,
     dummyDuplicateRunningFilter
 } from '../../mock';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { ProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { of } from 'rxjs';
 
 declare let jasmine: any;
@@ -90,7 +89,7 @@ describe('Process filter', () => {
             });
 
             it('should return the default filters', (done) => {
-                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel[]) => {
+                service.createDefaultFilters(1234).subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
                     expect(res[0].name).toEqual('Running');
@@ -140,7 +139,7 @@ describe('Process filter', () => {
             });
 
             it('should be able create filters and add sorting information to the response', (done) => {
-                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel[]) => {
+                service.createDefaultFilters(1234).subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
                     expect(res[0].name).toEqual('Running');
@@ -214,7 +213,7 @@ describe('Process filter', () => {
                 );
             });
 
-            const filter = fakeProcessFiltersResponse.data[0];
+            const filter: UserProcessInstanceFilterRepresentation = fakeProcessFiltersResponse.data[0];
 
             it('should call the API to create the filter', () => {
                 service.addProcessFilter(filter);
@@ -253,7 +252,7 @@ describe('Process filter', () => {
         });
 
         describe('isFilterAlreadyExisting', () => {
-            let dummyProcessFilters: FilterProcessRepresentationModel[];
+            let dummyProcessFilters: UserProcessInstanceFilterRepresentation[];
             let filterRepresentationData: ProcessInstanceFilterRepresentation;
 
             beforeEach(() => {
@@ -316,9 +315,9 @@ describe('Process filter', () => {
 
                 service.createDefaultFilters(appId).subscribe((result) => {
                     expect(result).toEqual([
-                        new FilterProcessRepresentationModel({ ...runningFilter, filter: runningFilter.filter, appId }),
-                        new FilterProcessRepresentationModel({ ...completedFilter, filter: completedFilter.filter, appId }),
-                        new FilterProcessRepresentationModel({ ...allFilter, filter: allFilter.filter, appId })
+                        { ...runningFilter, filter: runningFilter.filter, appId },
+                        { ...completedFilter, filter: completedFilter.filter, appId },
+                        { ...allFilter, filter: allFilter.filter, appId }
                     ]);
                     done();
                 });

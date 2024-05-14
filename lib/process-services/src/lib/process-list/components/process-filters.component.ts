@@ -18,7 +18,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { Observable, Subject } from 'rxjs';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './../services/process-filter.service';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { IconModel } from '../../app-list/icon.model';
@@ -38,7 +37,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
      * (ie, the first filter in the list) is selected.
      */
     @Input()
-    filterParam: FilterProcessRepresentationModel;
+    filterParam: UserProcessInstanceFilterRepresentation;
 
     /** Emitted when a filter is being clicked from the UI. */
     @Output()
@@ -186,7 +185,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
      *
      * @param filterParam filter parameter
      */
-    selectProcessFilter(filterParam: FilterProcessRepresentationModel): void {
+    selectProcessFilter(filterParam: UserProcessInstanceFilterRepresentation): void {
         if (filterParam) {
             const newFilter = this.filters.find(
                 (processFilter, index) =>

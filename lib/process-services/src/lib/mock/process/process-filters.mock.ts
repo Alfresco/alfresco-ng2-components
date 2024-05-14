@@ -15,43 +15,42 @@
  * limitations under the License.
  */
 
-import { FilterProcessRepresentationModel } from '../../process-list/models/filter-process.model';
 import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 export const fakeProcessFilters: UserProcessInstanceFilterRepresentation[] = [
-    new FilterProcessRepresentationModel({
+    {
         id: 10,
         name: 'FakeCompleted',
         icon: 'glyphicon-th',
         filter: { state: 'open', assignment: 'fake-involved' }
-    }),
-    new FilterProcessRepresentationModel({
+    },
+    {
         id: 20,
         name: 'FakeAll',
         icon: 'glyphicon-random',
         filter: { state: 'open', assignment: 'fake-assignee' }
-    }),
-    new FilterProcessRepresentationModel({
+    },
+    {
         id: 30,
         name: 'Running',
         icon: 'glyphicon-ok-sign',
         filter: { state: 'open', assignment: 'fake-running' }
-    })
+    }
 ];
 
-export const fakeProcessFiltersResponse = {
+export const fakeProcessFiltersResponse: any = {
     size: 1,
     total: 1,
     start: 0,
     data: [
-        new FilterProcessRepresentationModel({
+        {
             name: 'Running',
             appId: '22',
             id: 333,
             recent: true,
             icon: 'glyphicon-random',
             filter: { sort: 'created-desc', name: '', state: 'running' }
-        })
+        }
     ]
 };
 

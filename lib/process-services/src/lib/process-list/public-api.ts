@@ -29,7 +29,6 @@ export * from './services/process.service';
 export * from './services/process-filter.service';
 
 // models
-export * from './models/filter-process.model';
 export * from './models/process-definition.model';
 export * from './models/process-instance.model';
 export * from './models/process-instance-filter.model';
