@@ -162,7 +162,7 @@
                     [title]="'Start Process'"
                     [name]="defaultProcessName"
                     (formContentClicked)="onContentClick($event)"
-                    (start)="onStartProcessInstance($event)"
+                    (start)="onStartProcessInstance($event.id)"
                     (cancel)="onCancelProcessInstance()"
                     (error)="onStartProcessError($event)">
                 </adf-start-process>

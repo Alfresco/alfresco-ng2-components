@@ -20,7 +20,6 @@ import { AppConfigService, AppConfigValues, FormValues, LocalizedDatePipe } from
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
-import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { UntypedFormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable, Subject, forkJoin } from 'rxjs';
@@ -28,7 +27,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectChange } from '@angular/material/select';
 import { StartFormComponent } from '../../form';
-import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
+import { Node, ProcessInstanceRepresentation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 import { getTime } from 'date-fns';
@@ -88,7 +87,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     /** Emitted when the process starts. */
     @Output()
-    start = new EventEmitter<ProcessInstance>();
+    start = new EventEmitter<ProcessInstanceRepresentation>();
 
     /** Emitted when the process is canceled. */
     @Output()
@@ -424,7 +423,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     processDefinitionSelectionChanged(processDefinition: ProcessDefinitionRepresentation) {
         if (processDefinition) {
-            const processInstanceDetails = new ProcessInstance({ processDefinitionName: processDefinition.name });
+            const processInstanceDetails: ProcessInstanceRepresentation = { processDefinitionName: processDefinition.name };
             const processName = this.formatProcessName(this.name, processInstanceDetails);
             this.processNameInput.setValue(processName);
             this.processNameInput.markAsDirty();
@@ -495,7 +494,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return [];
     }
 
-    private formatProcessName(processNameFormat: string, processInstance?: ProcessInstance): string {
+    private formatProcessName(processNameFormat: string, processInstance?: ProcessInstanceRepresentation): string {
         let processName = processNameFormat;
         if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = getTime(new Date());

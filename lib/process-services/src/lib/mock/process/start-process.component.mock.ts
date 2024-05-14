@@ -16,12 +16,12 @@
  */
 
 import { ProcessDefinitionRepresentation } from '../../process-list/models/process-definition.model';
-import { ProcessInstance } from '../../process-list/models/process-instance.model';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
-export const newProcess = new ProcessInstance({
+export const newProcess: ProcessInstanceRepresentation = {
     id: '32323',
     name: 'Process'
-});
+};
 
 export const testProcessDef = new ProcessDefinitionRepresentation({
     id: 'my:process1',
@@ -29,24 +29,31 @@ export const testProcessDef = new ProcessDefinitionRepresentation({
     hasStartForm: false
 });
 
-export const testProcessDefinitions = [new ProcessDefinitionRepresentation({
-    id: 'my:process1',
-    name: 'My Process 1',
-    hasStartForm: false
-})];
+export const testProcessDefinitions = [
+    new ProcessDefinitionRepresentation({
+        id: 'my:process1',
+        name: 'My Process 1',
+        hasStartForm: false
+    })
+];
 
-export const testMultipleProcessDefs = [new ProcessDefinitionRepresentation({
-    id: 'my:process1',
-    name: 'My Process 1',
-    hasStartForm: false
-}), new ProcessDefinitionRepresentation({
-    id: 'my:process2',
-    name: 'My Process 2',
-    hasStartForm: true
-})];
+export const testMultipleProcessDefs = [
+    new ProcessDefinitionRepresentation({
+        id: 'my:process1',
+        name: 'My Process 1',
+        hasStartForm: false
+    }),
+    new ProcessDefinitionRepresentation({
+        id: 'my:process2',
+        name: 'My Process 2',
+        hasStartForm: true
+    })
+];
 
-export const testProcessDefWithForm = [new ProcessDefinitionRepresentation({
-    id: 'my:process1',
-    name: 'My Process 1',
-    hasStartForm: true
-})];
+export const testProcessDefWithForm = [
+    new ProcessDefinitionRepresentation({
+        id: 'my:process1',
+        name: 'My Process 1',
+        hasStartForm: true
+    })
+];

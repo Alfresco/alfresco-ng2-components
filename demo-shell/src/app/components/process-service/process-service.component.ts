@@ -32,7 +32,6 @@ import {
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,
-    ProcessInstance,
     ProcessInstanceListComponent,
     StartProcessInstanceComponent,
     FilterRepresentationModel,
@@ -285,8 +284,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = currentTaskIdNew;
     }
 
-    onStartProcessInstance(instance: ProcessInstance): void {
-        this.currentProcessInstanceId = instance.id;
+    onStartProcessInstance(instanceId: string): void {
+        this.currentProcessInstanceId = instanceId;
         this.activitiStartProcess.reset();
         this.activitiProcessFilter.selectRunningFilter();
     }

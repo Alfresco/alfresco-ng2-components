@@ -32,7 +32,6 @@ import { from, Observable, of, throwError } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
-import { ProcessInstance } from '../models/process-instance.model';
 import { catchError, map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
@@ -140,7 +139,7 @@ export class ProcessService {
      * @param processInstanceId ID of the target process
      * @returns Metadata for the instance
      */
-    getProcess(processInstanceId: string): Observable<ProcessInstance> {
+    getProcess(processInstanceId: string): Observable<ProcessInstanceRepresentation> {
         return from(this.processInstancesApi.getProcessInstance(processInstanceId)).pipe(
             map(this.toJson),
             catchError((err) => this.handleProcessError(err))
@@ -252,7 +251,7 @@ export class ProcessService {
         outcome?: string,
         startFormValues?: FormValues,
         variables?: ProcessInstanceVariable[]
-    ): Observable<ProcessInstance> {
+    ): Observable<ProcessInstanceRepresentation> {
         const startRequest: any = {
             name,
             processDefinitionId
@@ -266,10 +265,7 @@ export class ProcessService {
         if (variables) {
             startRequest.variables = variables;
         }
-        return from(this.processInstancesApi.startNewProcessInstance(startRequest)).pipe(
-            map((pd) => new ProcessInstance(pd)),
-            catchError((err) => this.handleProcessError(err))
-        );
+        return from(this.processInstancesApi.startNewProcessInstance(startRequest)).pipe(catchError((err) => this.handleProcessError(err)));
     }
 
     /**
