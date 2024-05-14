@@ -120,6 +120,18 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(await allOptions[2].getText()).toEqual('option_3');
         });
 
+        it('should NOT load data from restUrl when field is readonly', () => {
+            spyOn(formCloudService, 'getRestWidgetData');
+            widget.field.readOnly = true;
+            widget.field.restUrl = 'https://fake-rest-url';
+            widget.field.optionType = 'rest';
+            widget.field.restIdProperty = 'name';
+
+            widget.ngOnInit();
+
+            expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
+        });
+
         it('should show error message if the restUrl failed to fetch options', async () => {
             const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
             const errorIcon: string = 'error_outline';
@@ -194,7 +206,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
         });
 
-        it('should not display required error for a non required dropdown when selecting the none option', async () => {
+        it('should NOT display required error for a non required dropdown when selecting the none option', async () => {
             widget.field.options = [{ id: 'empty', name: 'Choose empty' }, ...fakeOptionList];
 
             widget.ngOnInit();
@@ -209,7 +221,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(requiredErrorElement).toBeFalsy();
         });
 
-        it('should not display required error when selecting a valid option for a required dropdown', async () => {
+        it('should NOT display required error when selecting a valid option for a required dropdown', async () => {
             widget.field.required = true;
             widget.field.options = [{ id: 'empty', name: 'Choose empty' }, ...fakeOptionList];
 
@@ -224,7 +236,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(requiredErrorElement).toBeFalsy();
         });
 
-        it('should not have a value when switching from an available option to the None option', async () => {
+        it('should NOT have a value when switching from an available option to the None option', async () => {
             widget.field.options = [{ id: 'empty', name: 'This is a mock none option' }, ...fakeOptionList];
 
             widget.ngOnInit();
@@ -315,6 +327,22 @@ describe('DropdownCloudWidgetComponent', () => {
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
             expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
         });
+
+        it('should NOT display a required error when dropdown is readonly', async () => {
+            widget.field.readOnly = true;
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+            const dropdownSelect = element.querySelector('.adf-select');
+            dropdownSelect.dispatchEvent(new Event('blur'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+        });
     });
 
     describe('filter', () => {
@@ -374,7 +402,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: 'false',
+                readOnly: false,
                 options: fakeOptionList,
                 selectionType: 'multiple',
                 value: [
@@ -393,7 +421,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: 'false',
+                readOnly: false,
                 selectionType: 'multiple',
                 options: fakeOptionList
             });
@@ -412,7 +440,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: 'false',
+                readOnly: false,
                 restUrl: 'https://fake-rest-url',
                 optionType: 'rest',
                 selectionType: 'multiple',
@@ -452,7 +480,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: 'false',
+                readOnly: false,
                 restUrl: 'https://fake-rest-url',
                 optionType: 'rest',
                 selectionType: 'multiple'
@@ -502,7 +530,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
                     type: 'dropdown',
-                    readOnly: 'false',
+                    readOnly: false,
                     optionType: 'rest',
                     restUrl: 'myFakeDomain.com/cities?country=${parentDropdown}',
                     rule: {
@@ -609,7 +637,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
                     type: 'dropdown',
-                    readOnly: 'false',
+                    readOnly: false,
                     optionType: 'manual',
                     rule: {
                         ruleOn: 'parentDropdown',
@@ -649,7 +677,7 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             describe('Manual - On parent value changes (chain)', () => {
-                it('should reset the current value when it not part of the available options', () => {
+                it('should reset the current value when it NOT part of the available options', () => {
                     widget.field.options = mockConditionalEntries[1].options;
                     widget.field.value = 'non-existent-value';
                     fixture.detectChanges();
@@ -662,7 +690,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     expect(widget.fieldValue).toEqual('');
                 });
 
-                it('should not reset the current value when it is part of the available options', () => {
+                it('should NOT reset the current value when it is part of the available options', () => {
                     widget.field.options = mockConditionalEntries[1].options;
                     widget.field.value = 'ATH';
                     fixture.detectChanges();
@@ -698,7 +726,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
                     type: 'dropdown',
-                    readOnly: 'false',
+                    readOnly: false,
                     optionType: 'manual',
                     rule: {
                         ruleOn: 'parentDropdown',
@@ -722,7 +750,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
                     type: 'dropdown',
-                    readOnly: 'false',
+                    readOnly: false,
                     restUrl: 'mock-url.com/country=${country}',
                     optionType: 'rest',
                     rule: {
@@ -762,7 +790,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(adfLeftLabel).not.toBeNull();
             });
 
-            it('should not have left labels classes on leftLabels false', async () => {
+            it('should NOT have left labels classes on leftLabels false', async () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
                     id: 'dropdown-id',
                     name: 'option list',
@@ -781,7 +809,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(adfLeftLabel).toBeNull();
             });
 
-            it('should not have left labels classes on leftLabels not present', async () => {
+            it('should NOT have left labels classes on leftLabels NOT present', async () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'option list',
@@ -817,7 +845,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 id: 'variable-dropdown-id',
                 name: 'variable-options-dropdown',
                 type: 'dropdown',
-                readOnly: 'false',
+                readOnly: false,
                 optionType: 'variable',
                 variableConfig: {
                     variableName,
@@ -956,6 +984,21 @@ describe('DropdownCloudWidgetComponent', () => {
                 mockProcessVariablesWithJson
             );
             spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
+            fixture.detectChanges();
+
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+            expect(failedErrorMsgElement).toBeNull();
+        });
+
+        it('should NOT display errors if field is readonly', () => {
+            widget.field = getVariableDropdownWidget(
+                'variables.wrong-variable-id',
+                'response.wrongPath.players',
+                'wrongId',
+                'wrongFullName',
+                mockProcessVariablesWithJson
+            );
+            widget.field.readOnly = true;
             fixture.detectChanges();
 
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
