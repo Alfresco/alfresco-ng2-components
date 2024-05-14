@@ -20,7 +20,6 @@ import { ActivitiCommentsApi, CommentRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserProcessModel } from '../../common/models/user-process.model';
 import { PeopleProcessService } from '../../common/services/people-process.service';
 
 @Injectable({
@@ -67,13 +66,11 @@ export class TaskCommentsService implements CommentsService {
     }
 
     private addToComments(comments: CommentModel[], comment: CommentRepresentation): void {
-        const user = new UserProcessModel(comment.createdBy);
-
         const newComment: CommentRepresentation = {
             id: comment.id,
             message: comment.message,
             created: comment.created,
-            createdBy: user
+            createdBy: comment.createdBy
         };
 
         comments.push(this.newCommentModel(newComment));

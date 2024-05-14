@@ -18,23 +18,23 @@
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { UserProcessModel } from '../../../common/models/user-process.model';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
-const fakeUser = new UserProcessModel({
-    id: 'fake-id',
+const fakeUser: LightUserRepresentation = {
+    id: 0,
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
-});
+};
 
-const fakeSecondUser = new UserProcessModel({
-    id: 'fake-involve-id',
+const fakeSecondUser: LightUserRepresentation = {
+    id: 1,
     firstName: 'fake-involve-name',
     lastName: 'fake-involve-last',
     email: 'fake-involve@mail.com'
-});
+};
 
 describe('PeopleComponent', () => {
     let activitiPeopleComponent: PeopleComponent;

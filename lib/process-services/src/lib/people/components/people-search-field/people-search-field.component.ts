@@ -23,7 +23,7 @@ import { Observable, of } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { getDisplayUser } from '../../helpers/get-display-user';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
-import { UserProcessModel } from '../../../common/models/user-process.model';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-people-search-field',
@@ -40,9 +40,9 @@ export class PeopleSearchFieldComponent {
     placeholder: string;
 
     @Output()
-    rowClick = new EventEmitter<UserProcessModel>();
+    rowClick = new EventEmitter<LightUserRepresentation>();
 
-    users$: Observable<UserProcessModel[]>;
+    users$: Observable<LightUserRepresentation[]>;
     searchUser: UntypedFormControl = new UntypedFormControl();
 
     defaultPlaceholder = 'ADF_TASK_LIST.PEOPLE.SEARCH_USER';
@@ -70,7 +70,7 @@ export class PeopleSearchFieldComponent {
         return this.placeholder || this.defaultPlaceholder;
     }
 
-    onRowClick(model: UserProcessModel) {
+    onRowClick(model: LightUserRepresentation) {
         this.rowClick.emit(model);
     }
 

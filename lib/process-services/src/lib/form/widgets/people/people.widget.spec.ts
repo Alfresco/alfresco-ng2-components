@@ -22,7 +22,7 @@ import { Observable, of } from 'rxjs';
 import { PeopleWidgetComponent } from './people.widget';
 import { TranslateService } from '@ngx-translate/core';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
-import { UserProcessModel } from '../../../common/models/user-process.model';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 describe('PeopleWidgetComponent', () => {
     let widget: PeopleWidgetComponent;
@@ -53,29 +53,29 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should return full name for a given model', () => {
-        const model = new UserProcessModel({
+        const model = {
             firstName: 'John',
             lastName: 'Doe'
-        });
+        };
         expect(widget.getDisplayName(model)).toBe('John Doe');
     });
 
     it('should skip first name for display name', () => {
-        const model = new UserProcessModel({ firstName: null, lastName: 'Doe' });
+        const model = { firstName: null, lastName: 'Doe' };
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
     it('should skip last name for display name', () => {
-        const model = new UserProcessModel({ firstName: 'John', lastName: null });
+        const model = { firstName: 'John', lastName: null };
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
     it('should init value from the field', async () => {
-        widget.field.value = new UserProcessModel({
+        widget.field.value = {
             id: 'people-id',
             firstName: 'John',
             lastName: 'Doe'
-        });
+        };
 
         spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of(null));
 
@@ -87,11 +87,11 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should show the readonly value when the form is readonly', async () => {
-        widget.field.value = new UserProcessModel({
+        widget.field.value = {
             id: 'people-id',
             firstName: 'John',
             lastName: 'Doe'
-        });
+        };
         widget.field.readOnly = true;
         widget.field.form.readOnly = true;
 
@@ -131,12 +131,12 @@ describe('PeopleWidgetComponent', () => {
             })
         );
 
-        widget.field.value = new UserProcessModel({
+        widget.field.value = {
             id: 'people-id',
             firstName: 'John',
             lastName: 'Doe',
             email: 'john@test.com'
-        });
+        };
         widget.ngOnInit();
 
         const involvedUser = fixture.debugElement.nativeElement.querySelector('input[data-automation-id="adf-people-search-input"]');
@@ -179,9 +179,9 @@ describe('PeopleWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-        const fakeUserResult: UserProcessModel[] = [
-            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test', avatarId: 'avatar' },
-            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2', avatarId: 'avatar' }
+        const fakeUserResult: LightUserRepresentation[] = [
+            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
+            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }
         ];
 
         beforeEach(() => {

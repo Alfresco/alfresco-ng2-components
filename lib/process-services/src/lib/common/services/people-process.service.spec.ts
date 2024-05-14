@@ -16,27 +16,27 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { UserProcessModel } from '../models/user-process.model';
 import { PeopleProcessService } from './people-process.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
-const firstInvolvedUser: UserProcessModel = new UserProcessModel({
+const firstInvolvedUser: LightUserRepresentation = {
     id: 1,
     email: 'fake-user1@fake.com',
     firstName: 'fakeName1',
     lastName: 'fakeLast1'
-});
+};
 
-const secondInvolvedUser: UserProcessModel = new UserProcessModel({
+const secondInvolvedUser: LightUserRepresentation = {
     id: 2,
     email: 'fake-user2@fake.com',
     firstName: 'fakeName2',
     lastName: 'fakeLast2'
-});
+};
 
-const fakeInvolveUserList: UserProcessModel[] = [firstInvolvedUser, secondInvolvedUser];
+const fakeInvolveUserList: LightUserRepresentation[] = [firstInvolvedUser, secondInvolvedUser];
 
 const errorResponse = { error: new Error('Unsuccessful HTTP response') };
 

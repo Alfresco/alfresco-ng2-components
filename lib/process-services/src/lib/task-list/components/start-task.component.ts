@@ -24,7 +24,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { UserProcessModel } from '../../common/models/user-process.model';
 import { isValid } from 'date-fns';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
@@ -162,10 +161,6 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.cancel.emit();
     }
 
-    isUserNameEmpty(user: UserProcessModel): boolean {
-        return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
-    }
-
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
         firstName = firstName !== null ? firstName : '';
         lastName = lastName !== null ? lastName : '';
@@ -230,9 +225,5 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     private loadFormsTask(): void {
         this.forms$ = this.taskService.getFormList();
-    }
-
-    private isEmpty(data: string): boolean {
-        return data === undefined || data === null || data.trim().length === 0;
     }
 }

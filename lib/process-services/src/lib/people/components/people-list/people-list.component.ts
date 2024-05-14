@@ -17,17 +17,15 @@
 
 import { DataTableComponent, DataCellEvent, DataColumnListComponent, ShowHeaderMode } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { UserProcessModel } from '../../../common/models/user-process.model';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-people-list',
     templateUrl: './people-list.component.html',
     styleUrls: ['./people-list.component.scss']
 })
-
 export class PeopleListComponent implements AfterContentInit {
-
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
@@ -36,21 +34,21 @@ export class PeopleListComponent implements AfterContentInit {
 
     /** The array of user data used to populate the people list. */
     @Input()
-    users: UserProcessModel[];
+    users: LightUserRepresentation[];
 
-    /** Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. */
+    /** Toggles if actions should be visible, i.e. the 'Three-Dots' menu. */
     @Input()
     actions: boolean = false;
 
     /** Emitted when the user clicks a row in the people list. */
     @Output()
-    clickRow = new EventEmitter<UserProcessModel>();
+    clickRow = new EventEmitter<LightUserRepresentation>();
 
     /** Emitted when the user clicks in the 'Three Dots' drop down menu for a row. */
     @Output()
     clickAction = new EventEmitter<UserEventModel>();
 
-    user: UserProcessModel;
+    user: LightUserRepresentation;
     showHeader = ShowHeaderMode.Never;
 
     ngAfterContentInit() {
@@ -67,20 +65,17 @@ export class PeopleListComponent implements AfterContentInit {
     }
 
     onShowRowActionsMenu(event: DataCellEvent) {
-
         const removeAction = {
             title: 'Remove',
             name: 'remove'
         };
 
-        event.value.actions = [
-            removeAction
-        ];
+        event.value.actions = [removeAction];
     }
 
     onExecuteRowAction(event: any) {
         const args = event.value;
         const action = args.action;
-        this.clickAction.emit({type: action.name, value: args.row.obj});
+        this.clickAction.emit({ type: action.name, value: args.row.obj });
     }
 }

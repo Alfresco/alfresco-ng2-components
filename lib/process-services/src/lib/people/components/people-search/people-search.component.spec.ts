@@ -19,21 +19,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { PeopleSearchComponent } from './people-search.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { UserProcessModel } from '../../../common/models/user-process.model';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
-const fakeUser: UserProcessModel = new UserProcessModel({
-    id: '1',
+const fakeUser: LightUserRepresentation = {
+    id: 1,
     firstName: 'John',
     lastName: 'Doe',
     email: 'JohnDoe@fake.com'
-});
+};
 
-const fakeSecondUser: UserProcessModel = new UserProcessModel({
-    id: '2',
+const fakeSecondUser: LightUserRepresentation = {
+    id: 2,
     firstName: 'Jane',
     lastName: 'Jackson',
     email: 'JaneJackson@fake.com'
-});
+};
 
 describe('PeopleSearchComponent', () => {
     let peopleSearchComponent: PeopleSearchComponent;

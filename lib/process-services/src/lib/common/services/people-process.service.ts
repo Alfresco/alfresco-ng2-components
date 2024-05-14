@@ -16,11 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { AlfrescoApiService, GroupModel } from '@alfresco/adf-core';
 import { UserProcessModel } from '../models/user-process.model';
-import { combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
-import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
+import { map } from 'rxjs/operators';
+import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepresentation, LightUserRepresentation } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -93,18 +93,10 @@ export class PeopleProcessService {
      * @param groupId group id
      * @returns Array of user information objects
      */
-    getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: number): Observable<UserProcessModel[]> {
+    getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: number): Observable<LightUserRepresentation[]> {
         const option = { excludeTaskId: taskId, filter: searchWord, groupId };
 
-        return from(this.userApi.getUsers(option)).pipe(
-            switchMap((response) => (response.data as UserProcessModel[]) || []),
-            map((user) => {
-                user.userImage = this.userApi.getUserProfilePictureUrl(user.id.toString());
-                return of(user);
-            }),
-            combineAll(),
-            defaultIfEmpty([])
-        );
+        return from(this.userApi.getUsers(option)).pipe(map((response) => response.data || []));
     }
     /**
      * Gets the profile picture URL for the specified user.

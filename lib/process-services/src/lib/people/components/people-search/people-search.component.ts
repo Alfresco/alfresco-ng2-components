@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { UserProcessModel } from '../../../common/models/user-process.model';
 import { Component, EventEmitter, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { map } from 'rxjs/operators';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-people-search',
@@ -33,7 +33,7 @@ import { map } from 'rxjs/operators';
 export class PeopleSearchComponent implements OnInit {
     /** Parameters for displaying the list. */
     @Input()
-    results: Observable<UserProcessModel[]>;
+    results: Observable<LightUserRepresentation[]>;
 
     /** Emitted when a search is performed with a new keyword. */
     @Output()
@@ -41,14 +41,14 @@ export class PeopleSearchComponent implements OnInit {
 
     /** Emitted when a user is selected and the action button is clicked. */
     @Output()
-    success = new EventEmitter<UserProcessModel>();
+    success = new EventEmitter<LightUserRepresentation>();
 
     /** Emitted when the "close" button is clicked. */
     @Output()
     closeSearch = new EventEmitter();
 
-    filteredResults$: Observable<UserProcessModel[]>;
-    selectedUser: UserProcessModel = {} as any;
+    filteredResults$: Observable<LightUserRepresentation[]>;
+    selectedUser: LightUserRepresentation = {} as any;
     performSearch: PerformSearchCallback;
 
     ngOnInit() {
@@ -56,7 +56,7 @@ export class PeopleSearchComponent implements OnInit {
         this.performSearch = this.performSearchCallback.bind(this);
     }
 
-    onRowClick(user: UserProcessModel) {
+    onRowClick(user: LightUserRepresentation) {
         this.selectedUser = user;
     }
 
@@ -76,7 +76,7 @@ export class PeopleSearchComponent implements OnInit {
         this.success.emit(this.selectedUser);
     }
 
-    private performSearchCallback(event: any): Observable<UserProcessModel[]> {
+    private performSearchCallback(event: any): Observable<LightUserRepresentation[]> {
         this.searchPeople.emit(event);
         return this.filteredResults$;
     }

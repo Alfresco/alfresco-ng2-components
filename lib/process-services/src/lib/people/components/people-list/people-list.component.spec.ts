@@ -20,14 +20,14 @@ import { DataRowActionEvent, DataRowEvent, ObjectDataRow } from '@alfresco/adf-c
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { UserProcessModel } from '../../../common/models/user-process.model';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
-const fakeUser: UserProcessModel = new UserProcessModel({
+const fakeUser: LightUserRepresentation = {
     id: 1,
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
-});
+};
 
 describe('PeopleListComponent', () => {
     let peopleListComponent: PeopleListComponent;

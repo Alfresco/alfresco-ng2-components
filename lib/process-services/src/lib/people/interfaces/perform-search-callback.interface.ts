@@ -16,6 +16,6 @@
  */
 
 import { Observable } from 'rxjs';
-import { UserProcessModel } from '../../common/models/user-process.model';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
-export type PerformSearchCallback = (searchWord: string) => Observable<UserProcessModel[]>;
+export type PerformSearchCallback = (searchWord: string) => Observable<LightUserRepresentation[]>;

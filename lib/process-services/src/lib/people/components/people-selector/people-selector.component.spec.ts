@@ -42,8 +42,7 @@ describe('PeopleSelectorComponent', () => {
     it('should have the selected user details as placeholder if one is set', () => {
         component.selectedUser = {
             firstName: 'Max',
-            lastName: 'CaulField',
-            avatarId: '1'
+            lastName: 'CaulField'
         };
         expect(component.placeholder).toBe('Max CaulField');
     });
@@ -63,11 +62,11 @@ describe('PeopleSelectorComponent', () => {
             done();
         });
 
-        component.userSelected({ id: 789, avatarId: '1' });
+        component.userSelected({ id: 789 });
     });
 
     it('should emit an event with undefined when reset button is clicked', (done) => {
-        component.selectedUser = { id: 746, avatarId: '1' };
+        component.selectedUser = { id: 746 };
         fixture.detectChanges();
 
         component.peopleIdChange.subscribe((userId) => {

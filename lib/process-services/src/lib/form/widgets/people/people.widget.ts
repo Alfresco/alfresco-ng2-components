@@ -22,8 +22,8 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEnc
 import { UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { catchError, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
-import { UserProcessModel } from '../../../common/models/user-process.model';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'people-widget',
@@ -67,7 +67,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
             return this.peopleProcessService.getWorkflowUsers(undefined, value, this.groupId).pipe(catchError(() => of([])));
         }),
-        map((list: UserProcessModel[]) => {
+        map((list) => {
             const value = this.searchTerm.value.email ? this.getDisplayName(this.searchTerm.value) : this.searchTerm.value;
             this.checkUserAndValidateForm(list, value);
             return list;
@@ -94,7 +94,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    checkUserAndValidateForm(list: UserProcessModel[], value: string): void {
+    checkUserAndValidateForm(list: LightUserRepresentation[], value: string): void {
         const isValidUser = this.isValidUser(list, value);
         if (isValidUser || value === '') {
             this.field.validationSummary.message = '';
@@ -107,7 +107,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    isValidUser(users: UserProcessModel[], name: string): boolean {
+    isValidUser(users: LightUserRepresentation[], name: string): boolean {
         if (users) {
             return !!users.find((user) => {
                 const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
@@ -120,7 +120,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return false;
     }
 
-    getDisplayName(model: UserProcessModel) {
+    getDisplayName(model: LightUserRepresentation) {
         if (model) {
             const displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
@@ -128,7 +128,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item?: UserProcessModel) {
+    onItemSelect(item?: LightUserRepresentation) {
         if (item) {
             this.field.value = item;
         } else {
