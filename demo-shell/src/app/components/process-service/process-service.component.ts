@@ -18,7 +18,7 @@
 // eslint-disable-next-line
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi } from '@alfresco/js-api';
+import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS,
     FormRenderingService,
@@ -34,7 +34,6 @@ import {
     ProcessFiltersComponent,
     ProcessInstanceListComponent,
     StartProcessInstanceComponent,
-    FilterRepresentationModel,
     TaskDetailsEvent,
     TaskFiltersComponent,
     TaskListComponent,
@@ -106,7 +105,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
-    taskFilter: FilterRepresentationModel;
+    taskFilter: UserTaskFilterRepresentation;
     processFilter: UserProcessInstanceFilterRepresentation;
     blobFile: any;
     flag = true;
@@ -189,7 +188,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.onDestroy$.complete();
     }
 
-    onTaskFilterClick(filter: FilterRepresentationModel): void {
+    onTaskFilterClick(filter: UserTaskFilterRepresentation): void {
         this.applyTaskFilter(filter);
         this.taskPage = 0;
     }
@@ -217,7 +216,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.applyTaskFilter(this.activitiFilter.getCurrentFilter());
     }
 
-    applyTaskFilter(filter: FilterRepresentationModel) {
+    applyTaskFilter(filter: UserTaskFilterRepresentation) {
         this.taskFilter = Object.assign({}, filter);
 
         if (filter && this.taskList) {

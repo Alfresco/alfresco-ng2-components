@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { TaskFilterRepresentation, UserTaskFilterRepresentation } from '@alfresco/js-api';
-
 export class AppDefinitionRepresentationModel {
     defaultAppId: string;
     deploymentId: string;
@@ -40,45 +38,5 @@ export class AppDefinitionRepresentationModel {
             this.modelId = obj.modelId ? obj.modelId : null;
             this.tenantId = obj.tenantId ? obj.tenantId : null;
         }
-    }
-}
-
-export class FilterParamsModel {
-    id: number;
-    name: string;
-    index: number;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.name = obj.name || null;
-            this.index = obj.index;
-        }
-    }
-}
-
-export class FilterRepresentationModel implements UserTaskFilterRepresentation {
-    id: number;
-    appId: number;
-    name: string;
-    recent: boolean;
-    icon: string;
-    filter: TaskFilterRepresentation;
-    index: number;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.appId = obj.appId || null;
-            this.name = obj.name || null;
-            this.recent = !!obj.recent;
-            this.icon = obj.icon || null;
-            this.filter = new UserTaskFilterRepresentation(obj.filter);
-            this.index = obj.index;
-        }
-    }
-
-    hasFilter(): boolean {
-        return !!this.filter;
     }
 }

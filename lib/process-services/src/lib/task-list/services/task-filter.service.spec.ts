@@ -25,11 +25,10 @@ import {
     dummyCompletedTasksFilter,
     dummyDuplicateMyTasksFilter
 } from '../../mock/task/task-filters.mock';
-import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TaskFilterRepresentation } from '@alfresco/js-api';
+import { TaskFilterRepresentation, UserTaskFilterRepresentation } from '@alfresco/js-api';
 import { of } from 'rxjs';
 
 declare let jasmine: any;
@@ -67,7 +66,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should return the task filter by id', (done) => {
-            service.getTaskFilterById(2).subscribe((taskFilter: FilterRepresentationModel) => {
+            service.getTaskFilterById(2).subscribe((taskFilter) => {
                 expect(taskFilter).toBeDefined();
                 expect(taskFilter.id).toEqual(2);
                 expect(taskFilter.name).toEqual('FakeMyTasks');
@@ -85,7 +84,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should return the task filter by name', (done) => {
-            service.getTaskFilterByName('FakeMyTasks').subscribe((res: FilterRepresentationModel) => {
+            service.getTaskFilterByName('FakeMyTasks').subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual(2);
                 expect(res.name).toEqual('FakeMyTasks');
@@ -264,7 +263,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should add a filter', (done) => {
-            const filterFake = new FilterRepresentationModel({
+            const filterFake = new TaskFilterRepresentation({
                 name: 'FakeNameFilter',
                 assignment: 'fake-assignment'
             });
@@ -290,7 +289,7 @@ describe('Activiti Task filter Service', () => {
     });
 
     describe('isFilterAlreadyExisting', () => {
-        let dummyTaskFilters: FilterRepresentationModel[];
+        let dummyTaskFilters: UserTaskFilterRepresentation[];
         let filterRepresentationData: TaskFilterRepresentation;
 
         beforeEach(() => {
@@ -302,8 +301,7 @@ describe('Activiti Task filter Service', () => {
                     id: 9,
                     index: 0,
                     name: 'My Tasks',
-                    recent: false,
-                    hasFilter: () => true
+                    recent: false
                 }
             ];
 
@@ -358,10 +356,10 @@ describe('Activiti Task filter Service', () => {
 
             service.createDefaultFilters(appId).subscribe((result) => {
                 expect(result).toEqual([
-                    new FilterRepresentationModel({ ...myTasksFilter, filter: myTasksFilter.filter, appId }),
-                    new FilterRepresentationModel({ ...involvedTasksFilter, filter: involvedTasksFilter.filter, appId }),
-                    new FilterRepresentationModel({ ...queuedTasksFilter, filter: queuedTasksFilter.filter, appId }),
-                    new FilterRepresentationModel({ ...completedTasksFilter, filter: completedTasksFilter.filter, appId })
+                    new UserTaskFilterRepresentation({ ...myTasksFilter, filter: myTasksFilter.filter, appId }),
+                    new UserTaskFilterRepresentation({ ...involvedTasksFilter, filter: involvedTasksFilter.filter, appId }),
+                    new UserTaskFilterRepresentation({ ...queuedTasksFilter, filter: queuedTasksFilter.filter, appId }),
+                    new UserTaskFilterRepresentation({ ...completedTasksFilter, filter: completedTasksFilter.filter, appId })
                 ]);
                 done();
             });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FilterRepresentationModel } from '../../task-list/models/filter.model';
+import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 
 export const fakeFiltersResponse: any = {
     size: 2,
@@ -40,19 +40,19 @@ export const fakeFiltersResponse: any = {
 };
 
 export const fakeTaskFilters = [
-    new FilterRepresentationModel({
+    new UserTaskFilterRepresentation({
         name: 'FakeInvolvedTasks',
         icon: 'glyphicon-align-left',
         id: 10,
         filter: { state: 'open', assignment: 'fake-involved' }
     }),
-    new FilterRepresentationModel({
+    new UserTaskFilterRepresentation({
         name: 'FakeMyTasks1',
         icon: 'glyphicon-ok-sign',
         id: 11,
         filter: { state: 'open', assignment: 'fake-assignee' }
     }),
-    new FilterRepresentationModel({
+    new UserTaskFilterRepresentation({
         name: 'FakeMyTasks2',
         icon: 'glyphicon-inbox',
         id: 12,

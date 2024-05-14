@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
-import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
@@ -29,6 +28,7 @@ import { By } from '@angular/platform-browser';
 import { fakeTaskFilters } from '../../mock/task/task-filters.mock';
 import { NavigationStart, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 
 describe('TaskFiltersComponent', () => {
     let taskListService: TaskListService;
@@ -114,7 +114,7 @@ describe('TaskFiltersComponent', () => {
 
     it('should select the task filter based on the input by name param', () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
-        component.filterParam = new FilterParamsModel({ name: 'FakeMyTasks1' });
+        component.filterParam = new UserTaskFilterRepresentation({ name: 'FakeMyTasks1' });
 
         let lastValue: any;
         component.success.subscribe((res) => (lastValue = res));
@@ -130,7 +130,7 @@ describe('TaskFiltersComponent', () => {
 
     it('should select the task filter based on the input by index param', () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
-        component.filterParam = new FilterParamsModel({ index: 2 });
+        component.filterParam = new UserTaskFilterRepresentation({ index: 2 });
 
         let lastValue: any;
         component.success.subscribe((res) => (lastValue = res));
@@ -147,7 +147,7 @@ describe('TaskFiltersComponent', () => {
     it('should select the task filter based on the input by id param', () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
 
-        component.filterParam = new FilterParamsModel({ id: 10 });
+        component.filterParam = new UserTaskFilterRepresentation({ id: 10 });
 
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
@@ -166,7 +166,7 @@ describe('TaskFiltersComponent', () => {
         spyOn(component.filterSelected, 'emit');
         component.filters = fakeTaskFilters;
 
-        const filterParam = new FilterParamsModel({ id: 10 });
+        const filterParam = new UserTaskFilterRepresentation({ id: 10 });
         const change = new SimpleChange(null, filterParam, true);
         component.filterParam = filterParam;
 
@@ -257,7 +257,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should not change the current filter if no filter with taskid is found', () => {
-        const filter = new FilterRepresentationModel({
+        const filter = new UserTaskFilterRepresentation({
             name: 'FakeMyTasks',
             filter: { state: 'open', assignment: 'fake-assignee' }
         });
@@ -300,7 +300,7 @@ describe('TaskFiltersComponent', () => {
     it('should reset selection when filterParam is a filter that does not exist', async () => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
         component.currentFilter = fakeTaskFilters[0];
-        component.filterParam = new FilterRepresentationModel({ name: 'non-existing-filter' });
+        component.filterParam = { name: 'non-existing-filter' };
         const appId = '1';
 
         const change = new SimpleChange(null, appId, true);

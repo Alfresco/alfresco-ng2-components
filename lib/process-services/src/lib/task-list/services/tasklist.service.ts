@@ -19,7 +19,6 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError, switchMap, flatMap, filter } from 'rxjs/operators';
-import { FilterRepresentationModel } from '../models/filter.model';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
@@ -29,7 +28,8 @@ import {
     TasksApi,
     ChecklistsApi,
     ResultListDataRepresentationTaskRepresentation,
-    TaskQueryRepresentation
+    TaskQueryRepresentation,
+    UserTaskFilterRepresentation
 } from '@alfresco/js-api';
 
 @Injectable({
@@ -69,7 +69,7 @@ export class TaskListService {
      * @param filterList List of filters to search through
      * @returns Filters belonging to the task
      */
-    getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel> {
+    getFilterForTaskById(taskId: string, filterList: UserTaskFilterRepresentation[]): Observable<UserTaskFilterRepresentation> {
         return from(filterList).pipe(
             flatMap((data) => this.isTaskRelatedToFilter(taskId, data)),
             filter((data) => data != null)
@@ -83,7 +83,7 @@ export class TaskListService {
      * @param filterModel The filter you want to check
      * @returns The filter if it is related or null otherwise
      */
-    isTaskRelatedToFilter(taskId: string, filterModel: FilterRepresentationModel): Observable<FilterRepresentationModel> {
+    isTaskRelatedToFilter(taskId: string, filterModel: UserTaskFilterRepresentation): Observable<UserTaskFilterRepresentation> {
         const requestNodeForFilter = new TaskQueryRepresentation({
             appDefinitionId: filterModel.appId,
             assignment: filterModel.filter.assignment,

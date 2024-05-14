@@ -70,11 +70,11 @@ Manages Task Instances.
     -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
     -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed". State "all" applies to both "active" and "completed" tasks.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
--   **getFilterForTaskById**(taskId: `string`, filterList: [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
+-   **getFilterForTaskById**(taskId: `string`, filterList: `UserTaskFilterRepresentation[]`): `Observable<UserTaskFilterRepresentation>`<br/>
     Gets all the filters in the list that belong to a task.
     -   _taskId:_ `string`  - ID of the target task
-    -   _filterList:_ [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]`  - List of filters to search through
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` - Filters belonging to the task
+    -   _filterList:_ `UserTaskFilterRepresentation[]`  - List of filters to search through
+    -   **Returns** `Observable<UserTaskFilterRepresentation>` - Filters belonging to the task
 -   **getFormList**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts)`[]>`<br/>
     Gets all available reusable forms.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts)`[]>` - Array of form details
@@ -94,11 +94,11 @@ Manages Task Instances.
     Gets the total number of the tasks found by a query.
     -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Number of tasks
--   **isTaskRelatedToFilter**(taskId: `string`, filterModel: [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
+-   **isTaskRelatedToFilter**(taskId: `string`, filterModel: `UserTaskFilterRepresentation`): `Observable<UserTaskFilterRepresentation`>`<br/>
     Checks if a taskId is filtered with the given filter.
     -   _taskId:_ `string`  - ID of the target task
-    -   _filterModel:_ [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - The filter you want to check
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` - The filter if it is related or null otherwise
+    -   _filterModel:_ `UserTaskFilterRepresentation` - The filter you want to check
+    -   **Returns** `Observable<UserTaskFilterRepresentation>` - The filter if it is related or null otherwise
 -   **unclaimTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Un-claims a task for the current user.
     -   _taskId:_ `string`  - ID of the task to unclaim
