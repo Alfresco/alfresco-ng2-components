@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Inject, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
-export enum DialogSize {
-    LARGE = 'adf-large',
-    MEDIUM = 'adf-medium',
-    SMALL = 'adf-small'
-  }
+import { DialogComponentData } from './dialog-data.interface';
+import { BehaviorSubject } from 'rxjs';
+import { DialogSize } from './dialog.model';
 
 @Component({
     selector: 'adf-dialog',
@@ -31,50 +28,34 @@ export enum DialogSize {
     encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent {
-    /**
-     * Emitted when the edit/create folder give error for example a folder with same name already exist
-     */
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
-
-    /**
-     * Emitted when the edit/create folder is successfully created/modified
-     */
-    @Output()
-    success: EventEmitter<void> = new EventEmitter<void>();
-    @Output()
-    cancel: EventEmitter<void> = new EventEmitter<void>();
-
-    title: string;
-    description: string;
-    isConfirmButtonDisabled: boolean;
-    large: boolean;
-    disableSubmitButton = false;
+    isConfirmButtonDisabled$ = new BehaviorSubject<boolean>(false);
+    isCloseButtonHidden: boolean;
+    isCancelButtonHidden: boolean;
     dialogSize: DialogSize;
     confirmButtonTitle: string;
     cancelButtonTitle: string;
+    disableSubmitButton = false;
 
     constructor(
         @Inject(MAT_DIALOG_DATA)
-        public data: any,
+        public data: DialogComponentData,
         public dialogRef: MatDialogRef<DialogComponent>
     ) {
         if (data) {
-            this.title = data.title;
-            this.description = data.description;
-            this.isConfirmButtonDisabled = data.isConfirmButtonDisabled;
-            this.dialogSize = data.dialogSize || '';
-            this.confirmButtonTitle = data.confirmButtonTitle || 'ADF-ASPECT-LIST.DIALOG.APPLY';
-            this.cancelButtonTitle = data.cancelButtonTitle || 'ADF-ASPECT-LIST.DIALOG.CANCEL';
+            this.isCancelButtonHidden = data.isCancelButtonHidden || false;
+            this.isCloseButtonHidden = data.isCloseButtonHidden || false;
+            this.dialogSize = data.dialogSize || DialogSize.MEDIUM;
+            this.confirmButtonTitle = data.confirmButtonTitle || 'COMMON.APPLY';
+            this.cancelButtonTitle = data.cancelButtonTitle || 'COMMON.CANCEL';
+
+            if (data.isConfirmButtonDisabled$) {
+                data.isConfirmButtonDisabled$.subscribe((value) => this.isConfirmButtonDisabled$.next(value));
+            }
         }
     }
 
     onConfirm() {
-        this.success.emit();
-    }
-
-    onCancel() {
-        this.cancel.emit();
+        this.isConfirmButtonDisabled$.next(true);
         this.dialogRef.close();
     }
 }

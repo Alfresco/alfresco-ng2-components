@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,8 @@
  * limitations under the License.
  */
 
-export * from './folder.dialog';
-export * from './node-lock.dialog';
-export * from './confirm.dialog';
-export * from './category-selector.dialog';
-
-export * from './dialog.module';
-export * from './library/library.dialog';
-export * from './dialog';
-
-export * from './download-zip/download-zip.dialog';
-export * from './download-zip/download-zip.dialog.module';
-
-
-export * from './folder-name.validators';
+export enum DialogSize {
+    LARGE = 'adf-large',
+    MEDIUM = 'adf-medium',
+    ALERT = 'adf-alert'
+  }
