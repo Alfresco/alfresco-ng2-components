@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [People Component](../../../lib/process-services/src/lib/people/components/people/people.component.ts "Defined in people.component.ts")
+# People Component
 
 Displays users involved with a specified task
 
@@ -97,7 +97,7 @@ This makes it easy to customize the [people component](people.component.md) to i
 
 ![involve-people-double-click-and-close-search](../../docassets/images/involve-people-double-click-and-close-search.gif)
 
-### Involve People double double without close search
+### Involve people without closing search
 
 ```html
 <adf-people #people

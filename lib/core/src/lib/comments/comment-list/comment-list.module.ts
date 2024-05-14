@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
 import { PipeModule } from '../../pipes/pipe.module';
 
 import { CommentListComponent } from './comment-list.component';
+import { TimeAgoPipe } from '../../pipes';
 
 @NgModule({
     imports: [
@@ -38,14 +39,10 @@ import { CommentListComponent } from './comment-list.component';
         MatFormFieldModule,
         MatInputModule,
         MatListModule,
-        MatLineModule
+        MatLineModule,
+        TimeAgoPipe
     ],
-    declarations: [
-        CommentListComponent
-    ],
-    exports: [
-        CommentListComponent
-    ]
+    declarations: [CommentListComponent],
+    exports: [CommentListComponent]
 })
-export class CommentListModule {
-}
+export class CommentListModule {}

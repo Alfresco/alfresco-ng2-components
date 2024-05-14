@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [People list component](../../../lib/process-services/src/lib/people/components/people-list/people-list.component.ts "Defined in people-list.component.ts")
+# People List Component
 
 Shows a list of users (people).
 
@@ -22,26 +22,27 @@ export class SomeComponent implements OnInit {
 
     people: UserProcessModel[] = [
         {
-          id: 1,
-          email: 'john.doe@alfresco.com',
-          firstName: 'John',
-          lastName: 'Doe'
+            id: 1,
+            email: 'john.doe@alfresco.com',
+            firstName: 'John',
+            lastName: 'Doe'
         },
         {
-          id: 2,
-          email: 'jane.doe@alfresco.com',
-          firstName: 'Jane',
-          lastName: 'Doe'
+            id: 2,
+            email: 'jane.doe@alfresco.com',
+            firstName: 'Jane',
+            lastName: 'Doe'
         }
     ];
-    
+
     onClickPeopleRow(user: UserProcessModel) {
         console.log('Clicked row: ', user);
     }
-    
+
     onClickPeopleAction($event: Event) {
         console.log('Clicked action: ', $event);
     }
+}
 ```
 
 You can use column templates with the [people list component](people-list.component.md), since it is based on the
