@@ -19,23 +19,20 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommentModel, CommentsService } from '@alfresco/adf-core';
-import { UserProcessModel } from '@alfresco/adf-process-services';
 
-export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName', avatarId: '0' };
 
 @Injectable()
 export class CommentProcessServiceMock implements Partial<CommentsService> {
     private comments: CommentModel[] = [];
 
     get(_id: string): Observable<CommentModel[]> {
-        const user = new UserProcessModel(fakeUser1);
-
         this.comments.push(
             new CommentModel({
                 id: 46,
                 message: 'Hello from Process Model',
                 created: new Date('2022-08-02T03:37:30.010+0000'),
-                createdBy: user
+                createdBy: fakeUser1
             })
         );
 
