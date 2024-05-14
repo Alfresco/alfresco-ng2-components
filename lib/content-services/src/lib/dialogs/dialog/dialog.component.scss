@@ -96,10 +96,16 @@ $dialog-padding: 24px;
     display: flex;
     justify-content: space-between;
     padding-top: $dialog-padding;
+    text-transform: capitalize;
 
     /* stylelint-disable-next-line selector-class-pattern */
     .mat-button.mat-button-base+.mat-button-base {
         margin-left: 12px;
+    }
+
+    /* stylelint-disable-next-line selector-class-pattern */
+    .mat-button {
+        text-transform: capitalize;
     }
 }
 

@@ -344,6 +344,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Dialog component](content-services/dialogs/dialog.md) | Dialog styled wrapper. | [Source](../lib/content-services/src/lib/dialogs/dialog/dialog.component.ts) |
 | [Confirm dialog component](content-services/dialogs/confirm.dialog.md) | Requests a yes/no choice from the user. | [Source](../lib/content-services/src/lib/dialogs/confirm.dialog.ts) |
 | [Library dialog component](content-services/dialogs/library.dialog.md) | Creates a new Content Services document library/site. | [Source](../lib/content-services/src/lib/dialogs/library/library.dialog.ts) |
 

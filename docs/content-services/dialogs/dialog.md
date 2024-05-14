@@ -63,7 +63,7 @@ With icon
     id="aspect-dialog-actions-cancel"
     data-automation-id="aspect-list-dialog-actions-cancel"
   >
-    reset
+    Reset
   </button>
 
   <button
@@ -73,7 +73,7 @@ With icon
     id="adf-dialog-actions-confirm"
     data-automation-id="adf-dialog-actions-confirm"
   >
-    clean
+    Clean
   </button>
 </ng-template>
 ```

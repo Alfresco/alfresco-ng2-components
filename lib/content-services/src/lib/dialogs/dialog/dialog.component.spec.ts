@@ -141,13 +141,22 @@ describe('DialogComponent', () => {
         });
     });
 
-    describe('when isCloseButtonHidden set to true', () => {
+    describe('when isCloseButtonHidden and isCancelButtonHidden set to true', () => {
         beforeEach(() => {
-            setupBeforeEach({ ...data, isCloseButtonHidden:  true});
+            setupBeforeEach({
+                ...data,
+                isCloseButtonHidden:  true,
+                isCancelButtonHidden: true
+            });
         });
 
         it ('should hide close button', () => {
             expect(closeButton).toBeNull();
+        });
+
+
+        it ('should hide close button', () => {
+            expect(cancelButton).toBeNull();
         });
     });
 
