@@ -18,12 +18,14 @@
 import { AlfrescoApiService, DateFnsUtils, FormValues } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import {
+    FormDefinitionRepresentation,
     ProcessDefinitionsApi,
     ProcessInstanceQueryRepresentation,
     ProcessInstanceRepresentation,
     ProcessInstancesApi,
     ProcessInstanceVariablesApi,
     RestVariable,
+    ResultListDataRepresentationProcessInstanceRepresentation,
     TasksApi
 } from '@alfresco/js-api';
 import { from, Observable, of, throwError } from 'rxjs';
@@ -31,7 +33,6 @@ import { TaskDetailsModel } from '../../task-list';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessInstance } from '../models/process-instance.model';
-import { ProcessListModel } from '../models/process-list.model';
 import { catchError, map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
@@ -73,9 +74,12 @@ export class ProcessService {
      * @param processDefinitionKey Limits returned instances to a process definition
      * @returns List of process instances
      */
-    getProcessInstances(requestNode: ProcessInstanceQueryRepresentation, processDefinitionKey?: string): Observable<ProcessListModel> {
+    getProcessInstances(
+        requestNode: ProcessInstanceQueryRepresentation,
+        processDefinitionKey?: string
+    ): Observable<ResultListDataRepresentationProcessInstanceRepresentation> {
         return from(this.processInstancesApi.getProcessInstances(requestNode)).pipe(
-            map((res: any) => {
+            map((res) => {
                 if (processDefinitionKey) {
                     res.data = res.data.filter((process) => process.processDefinitionKey === processDefinitionKey);
                     return res;
@@ -94,7 +98,10 @@ export class ProcessService {
      * @param processDefinitionKey Limits returned instances to a process definition
      * @returns List of processes
      */
-    getProcesses(requestNode: ProcessInstanceQueryRepresentation, processDefinitionKey?: string): Observable<ProcessListModel> {
+    getProcesses(
+        requestNode: ProcessInstanceQueryRepresentation,
+        processDefinitionKey?: string
+    ): Observable<ResultListDataRepresentationProcessInstanceRepresentation> {
         return this.getProcessInstances(requestNode, processDefinitionKey).pipe(
             map((response) => ({
                 ...response,
@@ -103,7 +110,7 @@ export class ProcessService {
                     return instance;
                 })
             })),
-            catchError(() => of(new ProcessListModel({})))
+            catchError(() => of({}))
         );
     }
 
@@ -159,7 +166,7 @@ export class ProcessService {
      * @param processId Process definition ID
      * @returns Form definition
      */
-    getStartFormInstance(processId: string): Observable<any> {
+    getStartFormInstance(processId: string): Observable<FormDefinitionRepresentation> {
         return from(this.processInstancesApi.getProcessInstanceStartForm(processId)).pipe(
             map(this.toJson),
             catchError((err) => this.handleProcessError(err))

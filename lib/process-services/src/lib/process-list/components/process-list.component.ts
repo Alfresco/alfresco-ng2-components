@@ -34,12 +34,12 @@ import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChang
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs';
-import { ProcessListModel } from '../models/process-list.model';
 import { finalize } from 'rxjs/operators';
 import {
     ProcessInstanceQueryRepresentation,
     ProcessInstanceQueryRepresentationSort,
-    ProcessInstanceQueryRepresentationState
+    ProcessInstanceQueryRepresentationState,
+    ResultListDataRepresentationProcessInstanceRepresentation
 } from '@alfresco/js-api';
 
 const PRESET_KEY = 'adf-process-list.presets';
@@ -140,7 +140,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
-    success = new EventEmitter<ProcessListModel>();
+    success = new EventEmitter<ResultListDataRepresentationProcessInstanceRepresentation>();
 
     /** Emitted when an error occurs while loading the list of process instances from the server. */
     // eslint-disable-next-line @angular-eslint/no-output-native
@@ -332,7 +332,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
                     this.selectFirst();
                     this.success.emit(response);
                     this.pagination.next({
-                        count: response.data.length,
+                        count: (response.data || []).length,
                         maxItems: this.size,
                         skipCount: this.page * this.size,
                         totalItems: response.total
