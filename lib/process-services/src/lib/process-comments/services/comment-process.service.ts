@@ -46,13 +46,12 @@ export class CommentProcessService implements CommentsService {
             map((response) => {
                 const comments: CommentModel[] = [];
                 response.data.forEach((comment) => {
-                    const user = new UserProcessModel(comment.createdBy);
                     comments.push(
                         new CommentModel({
                             id: comment.id,
                             message: comment.message,
                             created: comment.created,
-                            createdBy: new User(user)
+                            createdBy: new User(comment.createdBy)
                         })
                     );
                 });
@@ -83,6 +82,6 @@ export class CommentProcessService implements CommentsService {
     }
 
     getUserImage(user: UserProcessModel): string {
-        return this.peopleProcessService.getUserImage(user);
+        return this.peopleProcessService.getUserImage(user.id.toString());
     }
 }

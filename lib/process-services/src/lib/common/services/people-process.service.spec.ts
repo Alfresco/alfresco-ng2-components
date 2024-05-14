@@ -60,7 +60,7 @@ describe('PeopleProcessService', () => {
         });
 
         it('should be able to retrieve people to involve in the task', fakeAsync(() => {
-            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users: UserProcessModel[]) => {
+            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(2);
                 expect(users[0].id).toEqual(1);
@@ -77,11 +77,11 @@ describe('PeopleProcessService', () => {
         }));
 
         it('should be able to get people images for people retrieved', fakeAsync(() => {
-            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users: UserProcessModel[]) => {
+            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(2);
-                expect(service.getUserImage(users[0])).toContain('/users/' + users[0].id + '/picture');
-                expect(service.getUserImage(users[1])).toContain('/users/' + users[1].id + '/picture');
+                expect(service.getUserImage(users[0].id.toString())).toContain('/users/' + users[0].id + '/picture');
+                expect(service.getUserImage(users[1].id.toString())).toContain('/users/' + users[1].id + '/picture');
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -92,13 +92,13 @@ describe('PeopleProcessService', () => {
         }));
 
         it('should return user image url', () => {
-            const url = service.getUserImage(firstInvolvedUser);
+            const url = service.getUserImage(firstInvolvedUser.id.toString());
 
             expect(url).toContain('/users/' + firstInvolvedUser.id + '/picture');
         });
 
         it('should return empty list when there are no users to involve', fakeAsync(() => {
-            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users: UserProcessModel[]) => {
+            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(0);
             });

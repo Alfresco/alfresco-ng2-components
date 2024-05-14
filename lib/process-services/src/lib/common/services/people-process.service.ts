@@ -109,11 +109,11 @@ export class PeopleProcessService {
     /**
      * Gets the profile picture URL for the specified user.
      *
-     * @param user The target user
+     * @param userId The target user
      * @returns Profile picture URL
      */
-    getUserImage(user: UserProcessModel): string {
-        return this.userApi.getUserProfilePictureUrl(user.id.toString());
+    getUserImage(userId: string): string {
+        return this.userApi.getUserProfilePictureUrl(userId);
     }
 
     /**

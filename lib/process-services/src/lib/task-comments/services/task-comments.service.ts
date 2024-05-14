@@ -89,6 +89,6 @@ export class TaskCommentsService implements CommentsService {
     }
 
     getUserImage(user: UserProcessModel): string {
-        return this.peopleProcessService.getUserImage(user);
+        return this.peopleProcessService.getUserImage(user.id.toString());
     }
 }
