@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ProcessFilterService } from './../services/process-filter.service';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { IconModel } from '../../app-list/icon.model';
@@ -61,13 +61,11 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Toggle to show or hide the filter's icon. */
     @Input()
-    showIcon: boolean = true;
+    showIcon = true;
 
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<UserProcessInstanceFilterRepresentation>();
-
-    filter$: Observable<ProcessInstanceFilterRepresentation>;
 
     currentFilter: ProcessInstanceFilterRepresentation;
 
@@ -208,16 +206,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
      */
     selectRunningFilter() {
         this.selectProcessFilter(this.processFilterService.getRunningFilterInstance(null));
-    }
-
-    /**
-     * Select as default task filter the first in the list
-     */
-    selectDefaultTaskFilter() {
-        if (!this.isFilterListEmpty()) {
-            this.currentFilter = this.filters[0];
-            this.filterSelected.emit(this.filters[0]);
-        }
     }
 
     /**
