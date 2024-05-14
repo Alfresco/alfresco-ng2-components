@@ -31,7 +31,7 @@ export class NotFeaturesDirective implements OnDestroy {
     private destroy$ = new Subject();
 
     @Input()
-    set notForFeatures(feature: string[] | string) {
+    set adfNotForFeatures(feature: string[] | string) {
         this.inputUpdate$.next(Array.isArray(feature) ? feature : [feature]);
     }
 

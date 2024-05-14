@@ -31,7 +31,7 @@ export class FeaturesDirective implements OnDestroy {
     private destroy$ = new Subject();
 
     @Input()
-    set forFeatures(feature: string[] | string) {
+    set adfForFeatures(feature: string[] | string) {
         this.inputUpdate$.next(Array.isArray(feature) ? feature : [feature]);
     }
 
