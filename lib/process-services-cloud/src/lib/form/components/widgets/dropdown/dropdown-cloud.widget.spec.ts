@@ -64,11 +64,10 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('Simple Dropdown', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: false,
                 restUrl: 'https://fake-rest-url',
                 options: [{ id: 'empty', name: 'Choose one...' }]
             });
@@ -347,11 +346,10 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('filter', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                 id: 'dropdown-id',
                 name: 'option list',
                 type: 'dropdown',
-                readOnly: false,
                 options: filterOptionList
             });
             widget.ngOnInit();
@@ -398,11 +396,10 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('multiple selection', () => {
         it('should show preselected option', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: false,
                 options: fakeOptionList,
                 selectionType: 'multiple',
                 value: [
@@ -417,11 +414,10 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should support multiple options', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: false,
                 selectionType: 'multiple',
                 options: fakeOptionList
             });
@@ -436,11 +432,10 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should show preselected option for rest options', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: false,
                 restUrl: 'https://fake-rest-url',
                 optionType: 'rest',
                 selectionType: 'multiple',
@@ -476,11 +471,10 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should support multiple options for rest options', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
-                readOnly: false,
                 restUrl: 'https://fake-rest-url',
                 optionType: 'rest',
                 selectionType: 'multiple'
@@ -526,11 +520,10 @@ describe('DropdownCloudWidgetComponent', () => {
                 validate: () => true
             });
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
                     type: 'dropdown',
-                    readOnly: false,
                     optionType: 'rest',
                     restUrl: 'myFakeDomain.com/cities?country=${parentDropdown}',
                     rule: {
@@ -633,11 +626,10 @@ describe('DropdownCloudWidgetComponent', () => {
             const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown' });
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
                     type: 'dropdown',
-                    readOnly: false,
                     optionType: 'manual',
                     rule: {
                         ruleOn: 'parentDropdown',
@@ -722,11 +714,10 @@ describe('DropdownCloudWidgetComponent', () => {
 
         describe('Load selection for linked dropdown (i.e. saved, completed forms)', () => {
             it('should load the selection of a manual type linked dropdown', () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
                     type: 'dropdown',
-                    readOnly: false,
                     optionType: 'manual',
                     rule: {
                         ruleOn: 'parentDropdown',
@@ -746,11 +737,10 @@ describe('DropdownCloudWidgetComponent', () => {
 
             it('should load the selection of a rest type linked dropdown', () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                     id: 'child-dropdown-id',
                     name: 'child-dropdown',
                     type: 'dropdown',
-                    readOnly: false,
                     restUrl: 'mock-url.com/country=${country}',
                     optionType: 'rest',
                     rule: {
@@ -772,11 +762,10 @@ describe('DropdownCloudWidgetComponent', () => {
 
         describe('when form model has left labels', () => {
             it('should have left labels classes on leftLabels true', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, leftLabels: true }), {
                     id: 'dropdown-id',
                     name: 'option list',
                     type: FormFieldTypes.DROPDOWN,
-                    readOnly: false,
                     options: filterOptionList
                 });
 
@@ -791,11 +780,10 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should NOT have left labels classes on leftLabels false', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, leftLabels: false }), {
                     id: 'dropdown-id',
                     name: 'option list',
                     type: FormFieldTypes.DROPDOWN,
-                    readOnly: false,
                     options: filterOptionList
                 });
 
@@ -810,11 +798,10 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should NOT have left labels classes on leftLabels NOT present', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                     id: 'dropdown-id',
                     name: 'option list',
                     type: FormFieldTypes.DROPDOWN,
-                    readOnly: false,
                     options: filterOptionList
                 });
 
@@ -841,11 +828,10 @@ describe('DropdownCloudWidgetComponent', () => {
             processVariables?: TaskVariableCloud[],
             variables?: TaskVariableCloud[]
         ) =>
-            new FormFieldModel(new FormModel({ taskId: 'fake-task-id', processVariables, variables }), {
+            new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, processVariables, variables }), {
                 id: 'variable-dropdown-id',
                 name: 'variable-options-dropdown',
                 type: 'dropdown',
-                readOnly: false,
                 optionType: 'variable',
                 variableConfig: {
                     variableName,
