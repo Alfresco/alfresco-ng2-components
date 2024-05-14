@@ -27,8 +27,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectChange } from '@angular/material/select';
 import { StartFormComponent } from '../../form';
-import { Node, ProcessInstanceRepresentation, RelatedContentRepresentation } from '@alfresco/js-api';
-import { AppDefinitionRepresentationModel } from '../../task-list';
+import { AppDefinitionRepresentation, Node, ProcessInstanceRepresentation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 import { getTime } from 'date-fns';
 
@@ -103,7 +102,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     /** Emitted when application selection changes. */
     @Output()
-    applicationSelection = new EventEmitter<AppDefinitionRepresentationModel>();
+    applicationSelection = new EventEmitter<AppDefinitionRepresentation>();
 
     @ViewChild('startForm')
     startForm: StartFormComponent;
@@ -118,8 +117,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     filteredProcessesDefinitions$: Observable<ProcessDefinitionRepresentation[]>;
     maxProcessNameLength: number = MAX_LENGTH;
     alfrescoRepositoryName: string;
-    applications: AppDefinitionRepresentationModel[] = [];
-    selectedApplication: AppDefinitionRepresentationModel;
+    applications: AppDefinitionRepresentation[] = [];
+    selectedApplication: AppDefinitionRepresentation;
 
     isProcessDefinitionsLoading = true;
     isAppsLoading = true;
@@ -202,7 +201,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.activitiProcess
             .getProcessDefinitions(appId)
             .pipe(
-                map((processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
+                map((processDefinitionRepresentations) => {
                     let currentProcessDef: ProcessDefinitionRepresentation;
 
                     if (processDefinitionRepresentations.length === 1) {
@@ -251,9 +250,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.appsProcessService
             .getDeployedApplications()
             .pipe(
-                map((response: AppDefinitionRepresentationModel[]) => {
-                    const applications = this.removeDefaultApps(response);
-                    let currentApplication: AppDefinitionRepresentationModel;
+                map((response) => {
+                    const applications = response.filter((app) => app.id);
+
+                    let currentApplication: AppDefinitionRepresentation;
 
                     if (applications && applications.length === 1) {
                         currentApplication = applications[0];
@@ -311,10 +311,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     isProcessDefinitionSelected(): boolean {
         return !!this.selectedProcessDef?.id;
-    }
-
-    isProcessDefinitionsEmpty(): boolean {
-        return this.processDefinitions.length === 0;
     }
 
     disableDropdownButton(): boolean {
@@ -441,10 +437,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     private isAppSelected(): boolean {
         return !!this.selectedApplication?.id;
-    }
-
-    private removeDefaultApps(apps: AppDefinitionRepresentationModel[]): AppDefinitionRepresentationModel[] {
-        return apps.filter((app) => app.id);
     }
 
     private resetSelectedProcessDefinition() {

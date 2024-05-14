@@ -34,7 +34,6 @@ export * from './services/process-upload.service';
 export * from './services/task-upload.service';
 export * from './services/task-filter.service';
 
-export * from './models/filter.model';
 export * from './models/form.model';
 export * from './models/task-details.event';
 export * from './models/task-details.model';

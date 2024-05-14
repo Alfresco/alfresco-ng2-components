@@ -19,7 +19,6 @@ import { CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alf
 import { AppsProcessService } from './services/apps-process.service';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer, Subject } from 'rxjs';
-import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
 import { share, takeUntil, finalize } from 'rxjs/operators';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
@@ -64,15 +63,15 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 
     /** Emitted when an app entry is clicked. */
     @Output()
-    appClick = new EventEmitter<AppDefinitionRepresentationModel>();
+    appClick = new EventEmitter<AppDefinitionRepresentation>();
 
     /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter<any>();
 
-    apps$: Observable<AppDefinitionRepresentationModel>;
-    currentApp: AppDefinitionRepresentationModel;
-    appList: AppDefinitionRepresentationModel[] = [];
+    apps$: Observable<AppDefinitionRepresentation>;
+    currentApp: AppDefinitionRepresentation;
+    appList: AppDefinitionRepresentation[] = [];
     loading: boolean = false;
     hasEmptyCustomContentTemplate: boolean = false;
 
@@ -81,7 +80,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private appsProcessService: AppsProcessService) {
-        this.apps$ = new Observable<AppDefinitionRepresentationModel>((observer) => (this.appsObserver = observer)).pipe(share());
+        this.apps$ = new Observable<AppDefinitionRepresentation>((observer) => (this.appsObserver = observer)).pipe(share());
     }
 
     ngOnInit() {
@@ -110,7 +109,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         return app.defaultAppId === DEFAULT_TASKS_APP;
     }
 
-    getAppName(app: AppDefinitionRepresentationModel): string {
+    getAppName(app: AppDefinitionRepresentation): string {
         return this.isDefaultApp(app) ? DEFAULT_TASKS_APP_NAME : app.name;
     }
 
@@ -119,7 +118,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
      *
      * @param app application model
      */
-    selectApp(app: AppDefinitionRepresentationModel) {
+    selectApp(app: AppDefinitionRepresentation) {
         this.currentApp = app;
         this.appClick.emit(app);
     }
@@ -176,11 +175,11 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         return this.loading;
     }
 
-    getTheme(app: AppDefinitionRepresentationModel): string {
+    getTheme(app: AppDefinitionRepresentation): string {
         return app.theme ? app.theme : '';
     }
 
-    getBackgroundIcon(app: AppDefinitionRepresentationModel): string {
+    getBackgroundIcon(app: AppDefinitionRepresentation): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(app.icon);
     }
 

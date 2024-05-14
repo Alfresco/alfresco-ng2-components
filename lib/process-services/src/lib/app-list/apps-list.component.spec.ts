@@ -23,10 +23,10 @@ import { of, throwError } from 'rxjs';
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent, APP_LIST_LAYOUT_GRID, APP_LIST_LAYOUT_LIST } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { AppDefinitionRepresentationModel } from '../task-list';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 
 describe('AppsListComponent', () => {
     let loader: HarnessLoader;
@@ -147,19 +147,19 @@ describe('AppsListComponent', () => {
 
     describe('internationalization', () => {
         it('should provide a translation for the default application name, when app name is not provided', () => {
-            const appDataMock = {
+            const appDataMock: AppDefinitionRepresentation = {
                 defaultAppId: 'tasks',
                 name: null
-            } as AppDefinitionRepresentationModel;
+            };
 
             expect(component.getAppName(appDataMock)).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
         });
 
         it('should provide the application name, when it exists', () => {
-            const appDataMock = {
+            const appDataMock: AppDefinitionRepresentation = {
                 defaultAppId: 'uiu',
                 name: 'the-name'
-            } as AppDefinitionRepresentationModel;
+            };
 
             expect(component.getAppName(appDataMock)).toBe(appDataMock.name);
         });

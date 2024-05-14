@@ -52,13 +52,13 @@ Starts a process.
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| applicationSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when application selection changes. |
-| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the process is canceled. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| processDefinitionSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md)`>` | Emitted when process definition selection changes. |
-| start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
+| Name                       | Type                                            | Description                                        |
+|----------------------------|-------------------------------------------------|----------------------------------------------------|
+| applicationSelection       | `EventEmitterAppDefinitionRepresentation>`      | Emitted when application selection changes.        |
+| cancel                     | `EventEmitter<void>`                            | Emitted when the process is canceled.              |
+| error                      | `EventEmitter<any>`                             | Emitted when an error occurs.                      |
+| processDefinitionSelection | `EventEmitter<ProcessDefinitionRepresentation>` | Emitted when process definition selection changes. |
+| start                      | `EventEmitter<ProcessInstance>`                 | Emitted when the process starts.                   |
 
 ## Details
 

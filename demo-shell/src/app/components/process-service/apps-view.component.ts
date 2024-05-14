@@ -17,19 +17,16 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppDefinitionRepresentationModel } from '@alfresco/adf-process-services';
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'app-process-list-view',
     templateUrl: './apps-view.component.html'
 })
 export class AppsViewComponent {
+    constructor(private router: Router) {}
 
-    constructor(private router: Router) {
+    onAppClicked(app: AppDefinitionRepresentation) {
+        this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
     }
-
-     onAppClicked(app: AppDefinitionRepresentationModel) {
-         this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
-     }
-
 }
