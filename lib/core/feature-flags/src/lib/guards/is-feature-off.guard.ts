@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
 
 export const isFeatureOff = (flag: string) => () => inject(FeaturesServiceToken).isOff$(flag);
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IsFeatureOff implements CanMatch {
     constructor(@Inject(FeaturesServiceToken) private featuresServiceToken: IFeaturesService) {}
 
