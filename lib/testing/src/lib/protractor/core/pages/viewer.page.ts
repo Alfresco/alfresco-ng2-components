@@ -253,7 +253,7 @@ export class ViewerPage {
     }
 
     async checkTabIsActive(tabName: string): Promise<void> {
-        const materialLocatorPart = `div${materialLocators.Tab.labels.class} div${materialLocators.Tab.label.active.class} ${materialLocators.Tab.label.content.class}`;
+        const materialLocatorPart = `div${materialLocators.Tab.label.active.class} ${materialLocators.Tab.label.content.class}`;
         const tab = element(by.cssContainingText(`.adf-info-drawer-layout-content ${materialLocatorPart}`, tabName));
         await BrowserVisibility.waitUntilElementIsVisible(tab);
     }
