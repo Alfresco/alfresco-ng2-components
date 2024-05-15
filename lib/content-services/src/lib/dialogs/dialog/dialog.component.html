@@ -8,7 +8,7 @@
         class="adf-dialog-header"
         [ngClass]="{'adf-centered-header': data.headerIcon}"
     >
-        <div class="adf-dialog-title-container" [ngClass]="{'adf-centered-title': data.headerIcon}">
+        <div class="adf-dialog-title-container" [ngClass]="{ 'adf-centered-title': data.headerIcon }">
             <mat-icon *ngIf="data.headerIcon" class="adf-dialog-header-icon">{{data.headerIcon}}</mat-icon>
             <h2 class="adf-dialog-title">{{data.title}}</h2>
         </div>
@@ -24,7 +24,7 @@
 
     <div
         [ngTemplateOutlet]="data.descriptionTemplate"
-        [ngClass]="{'adf-description': data.description || data.descriptionTemplate }"
+        [ngClass]="{ 'adf-description': data.description || data.descriptionTemplate }"
     >
         <ng-container>{{data.description}}</ng-container>
     </div>
@@ -33,7 +33,7 @@
         <ng-container [ngTemplateOutlet]="data.contentTemplate"></ng-container>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="adf-dialog-actions" [ngClass]="{'adf-additional-actions': data.actionsTemplate}">
+    <mat-dialog-actions class="adf-dialog-actions" [ngClass]="{ 'adf-additional-actions': data.actionsTemplate }">
         <div>
             <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
         </div>
@@ -49,7 +49,6 @@
             </button>
 
             <button
-                mat-button
                 mat-flat-button
                 color="primary"
                 data-automation-id="adf-dialog-actions-confirm"

@@ -43,7 +43,7 @@ With icon
 | isCancelButtonHidden | `boolean` | `false` | Toggles cancel button visibility. (optional) |
 | isCloseButtonHidden | `boolean` | `false` | Toggles close button visibility. (optional) |
 | isConfirmButtonDisabled$ | `Subject<boolean>` | `false` | Toggles confirm button disability. (optional) |
-| dialogSize | `DialogSize` | `MEDIUM` | Set dialog size. Can be `LARGE`, `MEDIUM`, `ALERT`. (optional) |
+| dialogSize | `DialogSize` | `Medium` | Set dialog size. Can be `Large`, `Medium`, `Alert`. (optional) |
 | contentTemplate | `TemplateRef<any>` | `no` | Inserts a content template. (optional) |
 | actionsTemplate | `TemplateRef<any>` | `no` | Inserts a template styled on the left. Should be used for additional `ghost` style buttons. (optional) |
 | descriptionTemplate | `TemplateRef<any>` | `no` | Inserts a description template. (optional) |
