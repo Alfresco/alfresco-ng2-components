@@ -30,7 +30,6 @@ import { ContentDirectiveModule } from '../directives';
 import { DownloadZipDialogModule } from './download-zip/download-zip.dialog.module';
 import { CategorySelectorDialogComponent } from './category-selector.dialog';
 import { CategoriesModule } from '../category';
-import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
     imports: [
@@ -45,7 +44,6 @@ import { DialogComponent } from './dialog/dialog.component';
         CategoriesModule
     ],
     declarations: [
-        DialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
         ConfirmDialogComponent,
@@ -53,7 +51,6 @@ import { DialogComponent } from './dialog/dialog.component';
         CategorySelectorDialogComponent
     ],
     exports: [
-        DialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
         ConfirmDialogComponent,

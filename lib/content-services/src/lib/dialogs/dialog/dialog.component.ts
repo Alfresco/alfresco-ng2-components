@@ -20,8 +20,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponentData } from './dialog-data.interface';
 import { BehaviorSubject } from 'rxjs';
 import { DialogSize } from './dialog.model';
+import { MaterialModule } from '../../material.module';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone: true,
+    imports: [CommonModule, MaterialModule, TranslateModule],
     selector: 'adf-dialog',
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
