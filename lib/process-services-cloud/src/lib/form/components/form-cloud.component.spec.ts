@@ -26,7 +26,9 @@ import {
     FormFieldTypes,
     FormModel,
     FormOutcomeEvent,
-    FormOutcomeModel, FormRenderingService, FormService,
+    FormOutcomeModel,
+    FormRenderingService,
+    FormService,
     UploadWidgetContentLinkModel,
     WidgetVisibilityService,
     provideTranslations,
@@ -64,6 +66,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
