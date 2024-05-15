@@ -122,7 +122,7 @@ $dialog-padding: 24px;
         border-radius: 8px;
     }
 
-    .adf-large {
+    &.adf-large {
         max-width: calc(56vw - $dialog-padding * 2);
         max-height: calc(84vh - $dialog-padding * 2);
 
@@ -146,7 +146,7 @@ $dialog-padding: 24px;
         }
     }
 
-    .adf-medium {
+    &.adf-medium {
         max-width: calc(36vw - $dialog-padding * 2);
         max-height: calc(72vh - $dialog-padding * 2);
 
@@ -170,7 +170,7 @@ $dialog-padding: 24px;
         }
     }
 
-    .adf-alert {
+    &.adf-alert {
         .adf-centered-title {
             padding-left: 40px;
             margin: auto;
