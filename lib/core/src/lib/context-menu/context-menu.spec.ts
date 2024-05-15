@@ -21,6 +21,7 @@ import { ContextMenuModule } from './context-menu.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
@@ -71,6 +72,29 @@ describe('ContextMenuDirective', () => {
                 disabled: false,
                 title: 'Action 4',
                 icon: 'action-icon-4'
+            },
+            subject: {
+                next: jasmine.createSpy('next')
+            }
+        },
+        {
+            model: {
+                visible: true,
+                disabled: false,
+                title: 'action-5',
+                icon: 'action-icon-5',
+                tooltip: 'Action 5 tooltip'
+            },
+            subject: {
+                next: jasmine.createSpy('next')
+            }
+        },
+        {
+            model: {
+                visible: true,
+                disabled: false,
+                title: 'action-6',
+                icon: 'action-icon-6'
             },
             subject: {
                 next: jasmine.createSpy('next')
@@ -134,7 +158,7 @@ describe('ContextMenuDirective', () => {
         });
 
         it('should not render item with visibility property set to false', () => {
-            expect(contextMenu?.querySelectorAll('button').length).toBe(3);
+            expect(contextMenu?.querySelectorAll('button').length).toBe(5);
         });
 
         it('should render item as disabled when `disabled` property is set to true', async () => {
@@ -172,6 +196,28 @@ describe('ContextMenuDirective', () => {
                     )
                 ).length
             ).toBe(0);
+        });
+
+        it('should show tooltip if is set', async () => {
+            const expectedTooltipText = 'Action 5 tooltip';
+            const tooltip = await loader.getHarness(
+                MatTooltipHarness.with({
+                    selector: '[data-automation-id="context-action-5"]'
+                })
+            );
+            await tooltip.show();
+            expect(await tooltip.isOpen()).toBeTrue();
+            expect(await tooltip.getTooltipText()).toEqual(expectedTooltipText);
+        });
+
+        it('should not show tooltip if is not set', async () => {
+            const tooltip = await loader.getHarness(
+                MatTooltipHarness.with({
+                    selector: '[data-automation-id="context-action-6"]'
+                })
+            );
+            await tooltip.show();
+            expect(await tooltip.isOpen()).toBeFalse();
         });
     });
 });
