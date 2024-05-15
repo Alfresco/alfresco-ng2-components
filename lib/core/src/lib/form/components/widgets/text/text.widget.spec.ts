@@ -15,20 +15,18 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
-import { TextWidgetComponent } from './text.widget';
-import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { CoreTestingModule } from '../../../../testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatInputHarness } from '@angular/material/input/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatInputHarness } from '@angular/material/input/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { CoreTestingModule } from '../../../../testing';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { TextWidgetComponent } from './text.widget';
 
 describe('TextWidgetComponent', () => {
     const form = new FormModel({ taskId: 'fake-task-id' });

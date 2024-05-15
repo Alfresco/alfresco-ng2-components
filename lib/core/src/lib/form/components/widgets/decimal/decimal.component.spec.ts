@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-
-import { DecimalWidgetComponent } from './decimal.component';
-import { FormService } from '../../../services/form.service';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
-import { MatInputModule } from '@angular/material/input';
 import { CoreTestingModule } from '../../../../testing';
-import { FormsModule } from '@angular/forms';
+import { FormService } from '../../../services/form.service';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { DecimalWidgetComponent } from './decimal.component';
 
 describe('DecimalComponent', () => {
     let loader: HarnessLoader;
@@ -36,8 +35,7 @@ describe('DecimalComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatInputModule, FormsModule],
-            declarations: [DecimalWidgetComponent],
+            imports: [CoreTestingModule, MatInputModule, FormsModule, DecimalWidgetComponent],
             providers: [FormService]
         }).compileComponents();
 

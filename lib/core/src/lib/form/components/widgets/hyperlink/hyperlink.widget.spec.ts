@@ -16,12 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
-import { HyperlinkWidgetComponent } from './hyperlink.widget';
-import { CoreTestingModule } from '../../../../testing';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CoreTestingModule } from '../../../../testing';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { HyperlinkWidgetComponent } from './hyperlink.widget';
 
 describe('HyperlinkWidgetComponent', () => {
     let widget: HyperlinkWidgetComponent;
@@ -32,6 +30,7 @@ describe('HyperlinkWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule, MatTooltipModule]
         });
+
         fixture = TestBed.createComponent(HyperlinkWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

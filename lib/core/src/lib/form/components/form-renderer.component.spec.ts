@@ -15,37 +15,37 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { FormRendererComponent } from './form-renderer.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../../testing';
 import { FormBaseModule } from '../form-base.module';
+import { FormRulesManager } from '../models/form-rules.model';
+import { FormRenderingService } from '../services/form-rendering.service';
+import { FormService } from '../services/form.service';
+import { FormRendererComponent } from './form-renderer.component';
 import {
-    formDisplayValueVisibility,
-    formDisplayValueForm,
-    formDisplayValueCombinedVisibility,
-    formNumberWidgetVisibility,
-    formNumberTextJson,
-    formRequiredNumberWidget,
-    colspanForm,
-    numberNotRequiredForm,
-    numberMinMaxForm,
-    textWidgetVisibility,
-    numberWidgetVisibilityForm,
-    radioWidgetVisibilityForm,
-    customWidgetForm,
-    formDateVisibility,
-    customWidgetFormWithVisibility,
     amountWidgetFormVisibilityMock,
     checkboxWidgetFormVisibilityMock,
+    colspanForm,
+    customWidgetForm,
+    customWidgetFormWithVisibility,
     dateWidgetFormVisibilityMock,
-    multilineWidgetFormVisibilityMock,
+    displayBigDecimalWidgetMock,
     displayTextWidgetFormVisibilityMock,
-    displayBigDecimalWidgetMock
+    formDateVisibility,
+    formDisplayValueCombinedVisibility,
+    formDisplayValueForm,
+    formDisplayValueVisibility,
+    formNumberTextJson,
+    formNumberWidgetVisibility,
+    formRequiredNumberWidget,
+    multilineWidgetFormVisibilityMock,
+    numberMinMaxForm,
+    numberNotRequiredForm,
+    numberWidgetVisibilityForm,
+    radioWidgetVisibilityForm,
+    textWidgetVisibility
 } from './mock/form-renderer.component.mock';
-import { FormService } from '../services/form.service';
-import { CoreTestingModule } from '../../testing';
-import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
-import { FormRulesManager } from '../models/form-rules.model';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
     expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');

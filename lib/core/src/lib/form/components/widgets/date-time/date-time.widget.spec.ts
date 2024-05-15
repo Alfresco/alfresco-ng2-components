@@ -15,18 +15,15 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
-import { DateTimeWidgetComponent } from './date-time.widget';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { FormFieldTypes } from '../core/form-field-types';
-import { DateFieldValidator, DateTimeFieldValidator } from '../core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { CoreTestingModule } from '../../../../testing';
+import { DateFieldValidator, DateTimeFieldValidator, FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { DateTimeWidgetComponent } from './date-time.widget';
 
 describe('DateTimeWidgetComponent', () => {
     let loader: HarnessLoader;
