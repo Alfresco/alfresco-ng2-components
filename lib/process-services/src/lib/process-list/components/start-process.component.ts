@@ -74,15 +74,15 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     /** Hide or show the process selection dropdown. */
     @Input()
-    showSelectProcessDropdown: boolean = true;
+    showSelectProcessDropdown = true;
 
     /** Hide or show application selection dropdown. */
     @Input()
-    showSelectApplicationDropdown?: boolean = false;
+    showSelectApplicationDropdown? = false;
 
     /** Parameter to enable selection of process when filtering. */
     @Input()
-    processFilterSelector?: boolean = true;
+    processFilterSelector? = true;
 
     /** Emitted when the process starts. */
     @Output()
@@ -90,7 +90,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     /** Emitted when the process is canceled. */
     @Output()
-    cancel: EventEmitter<void> = new EventEmitter<void>();
+    cancel = new EventEmitter<void>();
 
     /** Emitted when an error occurs. */
     @Output()
@@ -125,9 +125,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     movedNodeToPS: FormValues;
 
     private onDestroy$ = new Subject<boolean>();
+
     constructor(
-        private activitiProcess: ProcessService,
-        private activitiContentService: ActivitiContentService,
+        private processService: ProcessService,
+        private contentService: ActivitiContentService,
         private appsProcessService: AppsProcessService,
         private appConfig: AppConfigService,
         private datePipe: LocalizedDatePipe
@@ -148,7 +149,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             takeUntil(this.onDestroy$)
         );
 
-        this.activitiContentService.getAlfrescoRepositories().subscribe((repoList) => {
+        this.contentService.getAlfrescoRepositories().subscribe((repoList) => {
             if (repoList?.[0]) {
                 const alfrescoRepository = repoList[0];
                 this.alfrescoRepositoryName = `alfresco-${alfrescoRepository.id}-${alfrescoRepository.name}`;
@@ -177,7 +178,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    getSelectedProcess(selectedProcess: string): ProcessDefinitionRepresentation {
+    private getSelectedProcess(selectedProcess: string): ProcessDefinitionRepresentation {
         let processSelected = this.processDefinitions.find((process) => process.name.toLowerCase() === selectedProcess);
 
         if (!processSelected) {
@@ -186,7 +187,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return processSelected;
     }
 
-    load() {
+    private load() {
         if (this.showSelectApplicationDropdown) {
             this.loadApps();
         } else {
@@ -194,11 +195,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    loadProcessDefinitions(appId: any): void {
+    loadProcessDefinitions(appId: number): void {
         this.isProcessDefinitionsLoading = true;
         this.resetSelectedProcessDefinition();
 
-        this.activitiProcess
+        this.processService
             .getProcessDefinitions(appId)
             .pipe(
                 map((processDefinitionRepresentations) => {
@@ -245,7 +246,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    loadApps() {
+    private loadApps() {
         this.isAppsLoading = true;
         this.appsProcessService
             .getDeployedApplications()
@@ -284,7 +285,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             );
     }
 
-    loadProcessDefinitionsBasedOnSelectedApp() {
+    private loadProcessDefinitionsBasedOnSelectedApp() {
         if (this.selectedApplication?.id) {
             this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
         } else {
@@ -313,7 +314,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return !!this.selectedProcessDef?.id;
     }
 
-    disableDropdownButton(): boolean {
+    isDropdownDisabled(): boolean {
         return this.showSelectApplicationDropdown && !this.isAppSelected();
     }
 
@@ -325,7 +326,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return alfrescoRepositoryName + 'Alfresco';
     }
 
-    moveNodeFromCStoPS(): void {
+    private moveNodeFromCStoPS(): void {
         const accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (const key in this.values) {
@@ -333,7 +334,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
                 const contents = currentValue
                     .filter((value: any) => !!value?.isFile)
-                    .map((content: Node) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
+                    .map((content: Node) => this.contentService.applyAlfrescoNode(content, null, accountIdentifier));
                 forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => {
                     this.movedNodeToPS = { [key]: [...res] };
                 });
@@ -344,7 +345,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     startProcess(outcome?: string) {
         if (this.selectedProcessDef?.id && this.nameController.value) {
             const formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.activitiProcess.startProcess(this.selectedProcessDef.id, this.nameController.value, outcome, formValues, this.variables).subscribe(
+            this.processService.startProcess(this.selectedProcessDef.id, this.nameController.value, outcome, formValues, this.variables).subscribe(
                 (res) => {
                     this.name = '';
                     this.start.emit(res);
@@ -364,7 +365,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return this.selectedProcessDef?.hasStartForm;
     }
 
-    isStartFormMissingOrValid(): boolean {
+    private isStartFormMissingOrValid(): boolean {
         if (this.startForm) {
             return this.startForm.form?.isValid;
         } else {
@@ -399,7 +400,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return undefined;
     }
 
-    displayDropdown(event) {
+    displayDropdown(event: Event) {
         event.stopPropagation();
         if (!this.inputAutocomplete.panelOpen) {
             this.processDefinitionInput.setValue('');

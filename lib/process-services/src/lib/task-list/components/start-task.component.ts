@@ -135,9 +135,10 @@ export class StartTaskComponent implements OnInit, OnDestroy {
                 switchMap((createRes) =>
                     this.attachForm(createRes.id, this.taskDetailsModel.formKey).pipe(
                         defaultIfEmpty(createRes),
-                        switchMap((attachRes) =>
-                            this.assignTaskByUserId(createRes.id, this.assigneeId.toString()).pipe(defaultIfEmpty(attachRes ? attachRes : createRes))
-                        )
+                        switchMap((attachRes) => {
+                            const assigneeId = this.assigneeId ? this.assigneeId.toString() : null;
+                            return this.assignTaskByUserId(createRes.id, assigneeId).pipe(defaultIfEmpty(attachRes ? attachRes : createRes));
+                        })
                     )
                 )
             )
