@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponentData } from './dialog-data.interface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { DialogSize } from './dialog.model';
 import { MaterialModule } from '../../material.module';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     standalone: true,
@@ -32,7 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
     styleUrls: ['./dialog.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DialogComponent {
+export class DialogComponent implements OnDestroy {
     isConfirmButtonDisabled$ = new BehaviorSubject<boolean>(false);
     isCloseButtonHidden: boolean;
     isCancelButtonHidden: boolean;
@@ -40,6 +41,8 @@ export class DialogComponent {
     confirmButtonTitle: string;
     cancelButtonTitle: string;
     disableSubmitButton = false;
+
+    private onDestroy$ = new Subject<void>();
 
     constructor(
         @Inject(MAT_DIALOG_DATA)
@@ -54,7 +57,7 @@ export class DialogComponent {
             this.cancelButtonTitle = data.cancelButtonTitle || 'COMMON.CANCEL';
 
             if (data.isConfirmButtonDisabled$) {
-                data.isConfirmButtonDisabled$.subscribe((value) => this.isConfirmButtonDisabled$.next(value));
+                data.isConfirmButtonDisabled$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.isConfirmButtonDisabled$.next(value));
             }
         }
     }
@@ -62,5 +65,10 @@ export class DialogComponent {
     onConfirm() {
         this.isConfirmButtonDisabled$.next(true);
         this.dialogRef.close();
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 }
