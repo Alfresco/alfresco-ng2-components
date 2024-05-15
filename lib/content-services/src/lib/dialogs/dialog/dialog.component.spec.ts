@@ -162,15 +162,15 @@ describe('DialogComponent', () => {
 
     describe('when dialog has large size', () => {
         beforeEach(() => {
-            setupBeforeEach({ ...data, dialogSize:  DialogSize.LARGE});
+            setupBeforeEach({ ...data, dialogSize:  DialogSize.Large});
         });
 
         it('should have correct dialogSize value', () => {
-            expect(component.dialogSize).toEqual(DialogSize.LARGE);
+            expect(component.dialogSize).toEqual(DialogSize.Large);
         });
 
-        it(`should contain ${DialogSize.LARGE} class`, () => {
-            expect(dialogContainer.classList).toContain(DialogSize.LARGE);
+        it(`should contain ${DialogSize.Large} class`, () => {
+            expect(dialogContainer.classList).toContain(DialogSize.Large);
         });
 
         it('should not have header and actions border', () => {
@@ -184,15 +184,15 @@ describe('DialogComponent', () => {
 
     describe('when dialog has medium size', () => {
         beforeEach(() => {
-            setupBeforeEach({ ...data, dialogSize:  DialogSize.MEDIUM});
+            setupBeforeEach({ ...data, dialogSize:  DialogSize.Medium});
         });
 
         it('should have correct dialogSize value', () => {
-            expect(component.dialogSize).toEqual(DialogSize.MEDIUM);
+            expect(component.dialogSize).toEqual(DialogSize.Medium);
         });
 
-        it(`should contain ${DialogSize.MEDIUM} class`, () => {
-            expect(dialogContainer.classList).toContain(DialogSize.MEDIUM);
+        it(`should contain ${DialogSize.Medium} class`, () => {
+            expect(dialogContainer.classList).toContain(DialogSize.Medium);
         });
 
         it('should not have header and actions border', () => {
@@ -207,15 +207,15 @@ describe('DialogComponent', () => {
     describe('when dialog has alert size', () => {
         describe('when dialog has not an ican', () => {
             beforeEach(() => {
-                setupBeforeEach({ ...data, dialogSize:  DialogSize.ALERT});
+                setupBeforeEach({ ...data, dialogSize:  DialogSize.Alert});
             });
 
             it('should have correct dialogSize value', () => {
-                expect(component.dialogSize).toEqual(DialogSize.ALERT);
+                expect(component.dialogSize).toEqual(DialogSize.Alert);
             });
 
-            it(`should contain ${DialogSize.ALERT} class`, () => {
-                expect(dialogContainer.classList).toContain(DialogSize.ALERT);
+            it(`should contain ${DialogSize.Alert} class`, () => {
+                expect(dialogContainer.classList).toContain(DialogSize.Alert);
             });
 
             it('should not have header and actions border', () => {
@@ -237,7 +237,7 @@ describe('DialogComponent', () => {
             beforeEach(() => {
                 setupBeforeEach({
                     ...data,
-                    dialogSize:  DialogSize.ALERT,
+                    dialogSize:  DialogSize.Alert,
                     headerIcon: 'access_time'
                 });
             });

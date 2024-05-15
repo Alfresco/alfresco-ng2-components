@@ -105,7 +105,7 @@ $dialog-padding: 24px;
 
     /* stylelint-disable-next-line selector-class-pattern */
     .mat-button.mat-button-base + .mat-button-base {
-        margin-left: 12px;
+        margin-left: 16px;
     }
 
     /* stylelint-disable-next-line selector-class-pattern */
@@ -114,8 +114,7 @@ $dialog-padding: 24px;
     }
 }
 
-/* stylelint-disable selector-class-pattern */
-.mat-dialog-container {
+mat-dialog-container {
     border-radius: 8px;
 }
 

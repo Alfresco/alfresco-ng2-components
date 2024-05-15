@@ -17,7 +17,7 @@
 
 import { TemplateRef } from '@angular/core';
 import { Subject } from 'rxjs';
-import { DialogSize } from './dialog.model';
+import { DialogSizes } from './dialog.model';
 
 export interface DialogComponentData {
     title: string;
@@ -27,7 +27,7 @@ export interface DialogComponentData {
     isConfirmButtonDisabled$?: Subject<boolean>;
     isCloseButtonHidden?: boolean;
     isCancelButtonHidden?: boolean;
-    dialogSize?: DialogSize;
+    dialogSize?: DialogSizes;
     contentTemplate?: TemplateRef<any>;
     actionsTemplate?: TemplateRef<any>;
     descriptionTemplate?: TemplateRef<any>;

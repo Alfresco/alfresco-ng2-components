@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-export enum DialogSize {
-    LARGE = 'adf-large',
-    MEDIUM = 'adf-medium',
-    ALERT = 'adf-alert'
-  }
+export const DialogSize = {
+    Large: 'adf-large',
+    Medium: 'adf-medium',
+    Alert: 'adf-alert'
+} as const;
+
+export type DialogSizes = typeof DialogSize[keyof typeof DialogSize];
