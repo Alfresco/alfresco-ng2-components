@@ -167,14 +167,14 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             this.moveNodeFromCStoPS();
         }
 
-        if (this.isAppIdChanged(changes)) {
-            this.appId = changes['appId'].currentValue;
-            this.load();
+        const appId = changes['appId'];
+        if (appId?.currentValue) {
+            this.load(appId.currentValue);
         }
 
-        if (this.isProcessDefinitionChanged(changes)) {
-            this.processDefinitionName = changes['processDefinitionName'].currentValue;
-            this.filterProcessDefinitionByName();
+        const processDefinitionName = changes['processDefinitionName'];
+        if (processDefinitionName?.currentValue) {
+            this.filterProcessDefinitionByName(processDefinitionName.currentValue);
         }
     }
 
@@ -187,11 +187,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return processSelected;
     }
 
-    private load() {
+    private load(appId?: number) {
         if (this.showSelectApplicationDropdown) {
             this.loadApps();
         } else {
-            this.loadProcessDefinitions(this.appId);
+            this.loadProcessDefinitions(appId);
         }
     }
 
@@ -235,9 +235,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             );
     }
 
-    filterProcessDefinitionByName() {
-        if (this.processDefinitionName) {
-            const filteredProcessDef = this.processDefinitions.find((processDefinition) => processDefinition.name === this.processDefinitionName);
+    private filterProcessDefinitionByName(definitionName: string) {
+        if (definitionName) {
+            const filteredProcessDef = this.processDefinitions.find((processDefinition) => processDefinition.name === definitionName);
 
             if (filteredProcessDef) {
                 this.processDefinitionSelectionChanged(filteredProcessDef);
@@ -326,7 +326,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return alfrescoRepositoryName + 'Alfresco';
     }
 
-    private moveNodeFromCStoPS(): void {
+    moveNodeFromCStoPS(): void {
         const accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (const key in this.values) {
@@ -460,17 +460,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             this.processDefinitionController.enable();
             this.nameController.enable();
         }
-    }
-
-    private isAppIdChanged(changes: SimpleChanges) {
-        return changes['appId']?.currentValue && changes['appId'].currentValue !== changes['appId'].previousValue;
-    }
-
-    private isProcessDefinitionChanged(changes: SimpleChanges) {
-        return (
-            changes['processDefinitionName']?.currentValue &&
-            changes['processDefinitionName'].currentValue !== changes['processDefinitionName'].previousValue
-        );
     }
 
     private _filter(value: string): ProcessDefinitionRepresentation[] {
