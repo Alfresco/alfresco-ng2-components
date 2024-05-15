@@ -1,34 +1,21 @@
 $theme-blue-button-color: #1f74db;
 
 $dialog-large-l-width: 1075px;
-$dialog-large-m-width: 941px;
-$dialog-large-s-width: 806px;
+$dialog-large-l-height: 907px;
 
 $dialog-medium-l-width: 691px;
-$dialog-medium-m-width: 605px;
-$dialog-medium-s-width: 518px;
+$dialog-medium-l-height: 778px;
 
 $dialog-small-l-width: 461px;
-$dialog-small-m-width: 403px;
 $dialog-small-s-width: 346px;
-$dialog-small-xs-width: 315px;
-$dialog-small-xxs-width: 269px;
-
-$dialog-medium-l-height: 778px;
 $dialog-small-l-height: 432px;
-
-$dialog-large-l-height: 907px;
-$dialog-large-m-height: 882px;
-$dialog-large-s-height: 756px;
-
-$dialog-medium-m-height: 756px;
-$dialog-medium-s-height: 648px;
+$dialog-small-s-height: 360px;
 
 $l-screen: 1920px;
 $m-screen: 1680px;
 $s-screen: 1440px;
 $xs-screen: 375px;
-$xxs-screen: 320px;
+
 $breakpoint-alert-with-additional-buttons-centered: 1469px;
 $breakpoint-medium-with-additional-buttons-centered: 1469px;
 
@@ -115,6 +102,7 @@ $dialog-padding: 24px;
     justify-content: space-between;
     padding-top: $dialog-padding;
     text-transform: capitalize;
+    min-height: auto;
 
     /* stylelint-disable-next-line selector-class-pattern */
     .mat-button.mat-button-base + .mat-button-base {
@@ -136,25 +124,12 @@ $dialog-padding: 24px;
     max-width: calc(56vw - $dialog-padding * 2);
     max-height: calc(84vh - $dialog-padding * 2);
 
-    @media screen and (max-width: $l-screen) {
-        max-height: calc($dialog-large-l-height - $dialog-padding * 2);
-    }
-
     @media screen and (min-width: $l-screen) {
         max-width: calc($dialog-large-l-width - $dialog-padding * 2);
+    }
+
+    @media screen and (min-height: $dialog-large-l-width) {
         max-height: calc($dialog-large-l-height - $dialog-padding * 2);
-    }
-
-    @media screen and (max-width: $m-screen) {
-        max-height: calc($dialog-large-m-height - $dialog-padding * 2);
-    }
-
-    @media screen and (max-width: $s-screen) {
-        max-height: calc($dialog-large-s-height - $dialog-padding * 2);
-    }
-
-    @media screen and (max-height: $dialog-large-l-height) {
-        max-height: calc(72vh - $dialog-padding * 2);
     }
 
     @media screen and (max-width: $xs-screen) {
@@ -167,17 +142,8 @@ $dialog-padding: 24px;
     max-width: calc(36vw - $dialog-padding * 2);
     max-height: calc(72vh - $dialog-padding * 2);
 
-    @media screen and (min-width: $m-screen) {
+    @media screen and (min-width: $l-screen) {
         max-width: calc($dialog-medium-l-width - $dialog-padding * 2);
-        max-height: calc($dialog-medium-l-height - $dialog-padding * 2);
-    }
-
-    @media screen and (max-width: $m-screen) {
-        max-height: calc($dialog-medium-m-height - $dialog-padding * 2);
-    }
-
-    @media screen and (max-width: $s-screen) {
-        max-height: calc($dialog-medium-s-height - $dialog-padding * 2);
     }
 
     @media screen and (max-width: $xs-screen) {
@@ -185,8 +151,8 @@ $dialog-padding: 24px;
         max-height: calc(100vh - $dialog-padding * 2);
     }
 
-    @media screen and (max-height: $dialog-medium-l-height) and (min-width: $xs-screen) {
-        max-height: calc(72vh - $dialog-padding * 2);
+    @media screen and (min-height: $dialog-large-l-width) {
+        max-height: calc($dialog-medium-l-height - $dialog-padding * 2);
     }
 
     @media screen and (max-width: $breakpoint-medium-with-additional-buttons-centered) {
@@ -227,13 +193,8 @@ $dialog-padding: 24px;
     }
 
     @media screen and (max-width: $s-screen) {
-        max-width: calc($dialog-small-m-width - $dialog-padding * 2);
-        max-height: calc(420px - $dialog-padding * 2);
-    }
-
-    @media screen and (max-width: $s-screen) {
         max-width: calc($dialog-small-s-width - $dialog-padding * 2);
-        max-height: calc(360px - $dialog-padding * 2);
+        max-height: calc($dialog-small-s-height - $dialog-padding * 2);
     }
 
     @media screen and (max-width: $xs-screen) {
