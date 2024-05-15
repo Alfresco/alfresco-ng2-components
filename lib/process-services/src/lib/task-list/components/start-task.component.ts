@@ -105,7 +105,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.taskForm.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
     }
 
-    whitespaceValidator(control: UntypedFormControl): any {
+    private whitespaceValidator(control: UntypedFormControl): any {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
             const isControlValid = control.value.length === 0 || !isWhitespace;
@@ -136,7 +136,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
                     this.attachForm(createRes.id, this.taskDetailsModel.formKey).pipe(
                         defaultIfEmpty(createRes),
                         switchMap((attachRes) =>
-                            this.assignTaskByUserId(createRes.id, this.assigneeId).pipe(defaultIfEmpty(attachRes ? attachRes : createRes))
+                            this.assignTaskByUserId(createRes.id, this.assigneeId.toString()).pipe(defaultIfEmpty(attachRes ? attachRes : createRes))
                         )
                     )
                 )
@@ -153,7 +153,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
             );
     }
 
-    getAssigneeId(userId: number): void {
+    setAssigneeId(userId: number): void {
         this.assigneeId = userId;
     }
 
@@ -204,10 +204,6 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return this.taskForm.get('description');
     }
 
-    get formKeyController(): AbstractControl {
-        return this.taskForm.get('formKey');
-    }
-
     private attachForm(taskId: string, formKey: string): Observable<any> {
         let response: any = EMPTY;
         if (taskId && formKey) {
@@ -216,7 +212,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return response;
     }
 
-    private assignTaskByUserId(taskId: string, userId: any): Observable<TaskDetailsModel> {
+    private assignTaskByUserId(taskId: string, userId: string): Observable<TaskDetailsModel> {
         if (taskId && userId) {
             return this.taskService.assignTaskByUserId(taskId, userId);
         }

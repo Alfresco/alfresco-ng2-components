@@ -96,7 +96,7 @@ describe('Start Task - Custom App', () => {
         'User Task',
         'User Task'
     ];
-    const invalidAppId = '1234567890';
+    const invalidAppId = 'invalid1234567890';
     const invalidName = 'invalidName';
     const invalidTaskId = '0000';
     const noTasksFoundMessage = 'No Tasks Found';
