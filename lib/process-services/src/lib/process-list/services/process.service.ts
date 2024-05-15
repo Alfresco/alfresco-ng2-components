@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 import {
     FormDefinitionRepresentation,
     ProcessDefinitionsApi,
+    ProcessInstanceAuditInfoRepresentation,
     ProcessInstanceQueryRepresentation,
     ProcessInstanceRepresentation,
     ProcessInstancesApi,
@@ -28,7 +29,7 @@ import {
     ResultListDataRepresentationProcessInstanceRepresentation,
     TasksApi
 } from '@alfresco/js-api';
-import { from, Observable, of, throwError } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -85,8 +86,7 @@ export class ProcessService {
                 } else {
                     return res;
                 }
-            }),
-            catchError((err) => this.handleProcessError(err))
+            })
         );
     }
 
@@ -120,7 +120,7 @@ export class ProcessService {
      * @returns Binary PDF data
      */
     fetchProcessAuditPdfById(processId: string): Observable<Blob> {
-        return from(this.processInstancesApi.getProcessAuditPdf(processId)).pipe(catchError((err) => this.handleProcessError(err)));
+        return from(this.processInstancesApi.getProcessAuditPdf(processId));
     }
 
     /**
@@ -129,8 +129,8 @@ export class ProcessService {
      * @param processId ID of the target process
      * @returns JSON data
      */
-    fetchProcessAuditJsonById(processId: string): Observable<any> {
-        return from(this.processInstancesApi.getTaskAuditLog(processId)).pipe(catchError((err) => this.handleProcessError(err)));
+    fetchProcessAuditJsonById(processId: string): Observable<ProcessInstanceAuditInfoRepresentation> {
+        return from(this.processInstancesApi.getTaskAuditLog(processId));
     }
 
     /**
@@ -140,10 +140,7 @@ export class ProcessService {
      * @returns Metadata for the instance
      */
     getProcess(processInstanceId: string): Observable<ProcessInstanceRepresentation> {
-        return from(this.processInstancesApi.getProcessInstance(processInstanceId)).pipe(
-            map(this.toJson),
-            catchError((err) => this.handleProcessError(err))
-        );
+        return from(this.processInstancesApi.getProcessInstance(processInstanceId)).pipe(map(this.toJson));
     }
 
     /**
@@ -153,10 +150,7 @@ export class ProcessService {
      * @returns Form definition
      */
     getStartFormDefinition(processId: string): Observable<any> {
-        return from(this.processDefinitionsApi.getProcessDefinitionStartForm(processId)).pipe(
-            map(this.toJson),
-            catchError((err) => this.handleProcessError(err))
-        );
+        return from(this.processDefinitionsApi.getProcessDefinitionStartForm(processId)).pipe(map(this.toJson));
     }
 
     /**
@@ -166,10 +160,7 @@ export class ProcessService {
      * @returns Form definition
      */
     getStartFormInstance(processId: string): Observable<FormDefinitionRepresentation> {
-        return from(this.processInstancesApi.getProcessInstanceStartForm(processId)).pipe(
-            map(this.toJson),
-            catchError((err) => this.handleProcessError(err))
-        );
+        return from(this.processInstancesApi.getProcessInstanceStartForm(processId)).pipe(map(this.toJson));
     }
 
     /**
@@ -208,8 +199,7 @@ export class ProcessService {
                     task.created = DateFnsUtils.formatDate(new Date(task.created), 'YYYY-MM-DD');
                     return task;
                 })
-            ),
-            catchError((err) => this.handleProcessError(err))
+            )
         );
     }
 
@@ -230,8 +220,7 @@ export class ProcessService {
               };
         return from(this.processDefinitionsApi.getProcessDefinitions(opts)).pipe(
             map(this.extractData),
-            map((processDefs) => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd))),
-            catchError((err) => this.handleProcessError(err))
+            map((processDefs) => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd)))
         );
     }
 
@@ -265,7 +254,7 @@ export class ProcessService {
         if (variables) {
             startRequest.variables = variables;
         }
-        return from(this.processInstancesApi.startNewProcessInstance(startRequest)).pipe(catchError((err) => this.handleProcessError(err)));
+        return from(this.processInstancesApi.startNewProcessInstance(startRequest));
     }
 
     /**
@@ -275,7 +264,7 @@ export class ProcessService {
      * @returns Null response notifying when the operation is complete
      */
     cancelProcess(processInstanceId: string): Observable<void> {
-        return from(this.processInstancesApi.deleteProcessInstance(processInstanceId)).pipe(catchError((err) => this.handleProcessError(err)));
+        return from(this.processInstancesApi.deleteProcessInstance(processInstanceId));
     }
 
     /**
@@ -286,8 +275,7 @@ export class ProcessService {
      */
     getProcessInstanceVariables(processInstanceId: string): Observable<ProcessInstanceVariable[]> {
         return from(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId)).pipe(
-            map((processVars: any[]) => processVars.map((currentProcessVar) => new ProcessInstanceVariable(currentProcessVar))),
-            catchError((err) => this.handleProcessError(err))
+            map((processVars) => processVars.map((currentProcessVar) => new ProcessInstanceVariable(currentProcessVar)))
         );
     }
 
@@ -299,9 +287,7 @@ export class ProcessService {
      * @returns Array of instance variable info
      */
     createOrUpdateProcessInstanceVariables(processInstanceId: string, variables: RestVariable[]): Observable<ProcessInstanceVariable[]> {
-        return from(this.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, variables)).pipe(
-            catchError((err) => this.handleProcessError(err))
-        );
+        return from(this.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, variables));
     }
 
     /**
@@ -312,17 +298,11 @@ export class ProcessService {
      * @returns Null response notifying when the operation is complete
      */
     deleteProcessInstanceVariable(processInstanceId: string, variableName: string): Observable<void> {
-        return from(this.processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName)).pipe(
-            catchError((err) => this.handleProcessError(err))
-        );
+        return from(this.processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName));
     }
 
     private extractData(res: any) {
         return res.data || {};
-    }
-
-    private handleProcessError(error: any) {
-        return throwError(error || 'Server error');
     }
 
     private getProcessNameOrDescription(processInstance: ProcessInstanceRepresentation, dateFormat: string): string {

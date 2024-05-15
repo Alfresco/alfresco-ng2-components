@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { map, catchError, switchMap, flatMap, filter } from 'rxjs/operators';
+import { map, catchError, flatMap, filter } from 'rxjs/operators';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
@@ -112,22 +112,7 @@ export class TaskListService {
      * @returns List of tasks
      */
     findTasksByState(requestNode: TaskQueryRepresentation): Observable<ResultListDataRepresentationTaskRepresentation> {
-        return this.getTasks(requestNode).pipe(catchError(() => of(new ResultListDataRepresentationTaskRepresentation())));
-    }
-
-    /**
-     * Gets all tasks matching a query and state value.
-     *
-     * @param requestNode Query to search for tasks.
-     * @returns List of tasks
-     */
-    findAllTasksByState(requestNode: TaskQueryRepresentation): Observable<ResultListDataRepresentationTaskRepresentation> {
-        return this.getTotalTasks(requestNode).pipe(
-            switchMap((res) => {
-                requestNode.size = res.total;
-                return this.getTasks(requestNode);
-            })
-        );
+        return this.getTasks(requestNode).pipe(catchError(() => of(new ResultListDataRepresentationTaskRepresentation({ data: [] }))));
     }
 
     /**
@@ -214,17 +199,6 @@ export class TaskListService {
      */
     completeTask(taskId: string) {
         return from(this.taskActionsApi.completeTask(taskId));
-    }
-
-    /**
-     * Gets the total number of the tasks found by a query.
-     *
-     * @param requestNode Query to search for tasks
-     * @returns Number of tasks
-     */
-    public getTotalTasks(requestNode: TaskQueryRepresentation): Observable<ResultListDataRepresentationTaskRepresentation> {
-        requestNode.size = 0;
-        return from(this.tasksApi.listTasks(requestNode));
     }
 
     /**

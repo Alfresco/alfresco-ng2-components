@@ -60,11 +60,6 @@ Manages Task Instances.
     Fetches the Task Audit information in PDF format.
     -   _taskId:_ `string`  - ID of the target task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary PDF data
--   **findAllTasksByState**(requestNode: `TaskQueryRequestRepresentationModel`, state?: `string`): `Observable<TaskListModel>`<br/>
-    Gets all tasks matching a query and state value.
-    -   _requestNode:_ `TaskQueryRequestRepresentationModel`  - Query to search for tasks.
-    -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed". State "all" applies to both "active" and "completed" tasks.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
 -   **findTasksByState**(requestNode: `TaskQueryRequestRepresentationModel`, state?: `string`): `Observable<TaskListModel>`<br/>
     Gets tasks matching a query and state value.
     -   _requestNode:_ `TaskQueryRequestRepresentationModel`  - Query to search for tasks
