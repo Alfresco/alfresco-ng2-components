@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, CommentModel, CommentsService, User } from '@alfresco/adf-core';
-import { ActivitiCommentsApi, CommentRepresentation } from '@alfresco/js-api';
+import { AlfrescoApiService, CommentModel, CommentsService } from '@alfresco/adf-core';
+import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -41,17 +41,7 @@ export class TaskCommentsService implements CommentsService {
      * @returns Details for each comment
      */
     get(id: string): Observable<CommentModel[]> {
-        return from(this.commentsApi.getTaskComments(id)).pipe(
-            map((response) => {
-                const comments: CommentModel[] = [];
-
-                response.data.forEach((comment) => {
-                    this.addToComments(comments, comment);
-                });
-
-                return comments;
-            })
-        );
+        return from(this.commentsApi.getTaskComments(id)).pipe(map((response) => response.data.map((comment) => new CommentModel(comment))));
     }
 
     /**
@@ -62,27 +52,7 @@ export class TaskCommentsService implements CommentsService {
      * @returns Details about the comment
      */
     add(id: string, message: string): Observable<CommentModel> {
-        return from(this.commentsApi.addTaskComment({ message }, id)).pipe(map((response) => this.newCommentModel(response)));
-    }
-
-    private addToComments(comments: CommentModel[], comment: CommentRepresentation): void {
-        const newComment: CommentRepresentation = {
-            id: comment.id,
-            message: comment.message,
-            created: comment.created,
-            createdBy: comment.createdBy
-        };
-
-        comments.push(this.newCommentModel(newComment));
-    }
-
-    private newCommentModel(representation: CommentRepresentation): CommentModel {
-        return new CommentModel({
-            id: representation.id,
-            message: representation.message,
-            created: representation.created,
-            createdBy: new User(representation.createdBy)
-        });
+        return from(this.commentsApi.addTaskComment({ message }, id)).pipe(map((response) => new CommentModel(response)));
     }
 
     getUserImage(userId: string): string {

@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CommentModel, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { fakeTasksComment, fakeUser1 } from '../mocks/task-comments.mock';
 import { TaskCommentsService } from './task-comments.service';
 
@@ -42,7 +42,7 @@ describe('TaskCommentsService', () => {
 
     describe('Task comments', () => {
         it('should add a comment task ', (done) => {
-            service.add('999', 'fake-comment-message').subscribe((res: CommentModel) => {
+            service.add('999', 'fake-comment-message').subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.id).not.toEqual(null);
                 expect(res.message).toEqual('fake-comment-message');
@@ -66,7 +66,7 @@ describe('TaskCommentsService', () => {
         });
 
         it('should return the tasks comments ', (done) => {
-            service.get('999').subscribe((res: CommentModel[]) => {
+            service.get('999').subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
                 expect(res[0].message).toEqual('fake-message-1');

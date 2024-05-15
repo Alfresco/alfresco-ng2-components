@@ -51,12 +51,12 @@ export class CommentModel {
         return result.toUpperCase();
     }
 
-    constructor(obj?: Partial<CommentModel>) {
+    constructor(obj?: any) {
         if (obj) {
             this.id = obj.id;
             this.message = obj.message;
             this.created = obj.created;
-            this.createdBy = obj.createdBy;
+            this.createdBy = new User(obj.createdBy);
             this.isSelected = obj.isSelected ? obj.isSelected : false;
         }
     }
