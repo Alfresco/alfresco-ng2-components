@@ -19,7 +19,6 @@ import {
     AppDefinitionRepresentation,
     LightUserRepresentation,
     ProcessInstanceRepresentation,
-    TaskRepresentation,
     UserRepresentation,
     UserTaskFilterRepresentation
 } from '@alfresco/js-api';
@@ -41,6 +40,3 @@ export type AppDefinitionRepresentationModel = AppDefinitionRepresentation;
 
 /** @deprecated use js-api/LightUserRepresentation instead */
 export type UserProcessModel = LightUserRepresentation;
-
-/** @deprecated use js-api/TaskRepresentation instead */
-export type TaskDetailsModel = TaskRepresentation;
