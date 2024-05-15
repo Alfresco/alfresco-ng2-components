@@ -128,8 +128,9 @@ this.tasklistService.getTaskDetails(taskInstanceId).subscribe( (taskInstance: Ta
 
 The resulting [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) object contains information like the following:
 
+```text
         adhocTaskCanBeReassigned: false
-        assignee: UserProcessModel {pictureId: null, id: 1, email: "admin@app.activiti.com", firstName: null, lastName: "Administrator"}
+        assignee: LightUserRepresentation {pictureId: null, id: 1, email: "admin@app.activiti.com", firstName: null, lastName: "Administrator"}
         category: null
         created: Wed Oct 11 2017 09:07:14 GMT+0100 (BST) {}
         description: null
@@ -159,6 +160,7 @@ The resulting [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-li
         processInstanceName: null
         processInstanceStartUserId: "1"
         taskDefinitionKey: "clarifyInvoice"
+```
 
 ### Queries
 
@@ -178,6 +180,7 @@ const taskQuery: TaskQueryRequestRepresentationModel = {
   size: 5,
   start: null
 };
+
 this.tasklistService.getTasks(taskQuery).subscribe( (taskListModel: TaskListModel) => {
     console.log('Task List Model: ', taskListModel);
 }, error => {

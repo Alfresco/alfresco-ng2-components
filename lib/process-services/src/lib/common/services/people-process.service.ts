@@ -18,7 +18,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { AlfrescoApiService, GroupModel } from '@alfresco/adf-core';
-import { UserProcessModel } from '../models/user-process.model';
 import { map } from 'rxjs/operators';
 import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepresentation, LightUserRepresentation } from '@alfresco/js-api';
 
@@ -115,7 +114,7 @@ export class PeopleProcessService {
      * @param idToInvolve ID of the user to involve
      * @returns Empty response when the update completes
      */
-    involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
+    involveUserWithTask(taskId: string, idToInvolve: string): Observable<LightUserRepresentation[]> {
         return from(this.taskActionsApi.involveUser(taskId, { userId: idToInvolve }));
     }
 
@@ -126,7 +125,7 @@ export class PeopleProcessService {
      * @param idToRemove ID of the user to remove
      * @returns Empty response when the update completes
      */
-    removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
+    removeInvolvedUser(taskId: string, idToRemove: string): Observable<LightUserRepresentation[]> {
         return from(this.taskActionsApi.removeInvolvedUser(taskId, { userId: idToRemove }));
     }
 }

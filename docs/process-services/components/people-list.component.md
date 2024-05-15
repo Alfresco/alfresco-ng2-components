@@ -16,11 +16,11 @@ Shows a list of users (people).
 Populate the users in the component class:
 
 ```ts
-import { UserProcessModel } from '@alfresco/adf-core';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 export class SomeComponent implements OnInit {
 
-    people: UserProcessModel[] = [
+    people: LightUserRepresentation[] = [
         {
             id: 1,
             email: 'john.doe@alfresco.com',
@@ -35,7 +35,7 @@ export class SomeComponent implements OnInit {
         }
     ];
 
-    onClickPeopleRow(user: UserProcessModel) {
+    onClickPeopleRow(user: LightUserRepresentation) {
         console.log('Clicked row: ', user);
     }
 
@@ -77,14 +77,14 @@ You can use column templates with the [people list component](people-list.compon
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| actions | `boolean` | false | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. |
-| users | [`UserProcessModel`](../../core/models/user-process.model.md)`[]` |  | The array of user data used to populate the people list. |
+| Name    | Type                        | Default value | Description                                                                   |
+|---------|-----------------------------|---------------|-------------------------------------------------------------------------------|
+| actions | `boolean`                   | false         | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. |
+| users   | `LightUserRepresentation[]` |               | The array of user data used to populate the people list.                      |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| clickAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserEventModel`](../../../lib/process-services/src/lib/task-list/models/user-event.model.ts)`>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
-| clickRow | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`>` | Emitted when the user clicks a row in the people list. |
+| Name        | Type                                    | Description                                                                |
+|-------------|-----------------------------------------|----------------------------------------------------------------------------|
+| clickAction | `EventEmitter<UserEventModel>`          | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
+| clickRow    | `EventEmitter<LightUserRepresentation>` | Emitted when the user clicks a row in the people list.                     |
