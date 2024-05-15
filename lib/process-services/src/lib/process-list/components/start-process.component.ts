@@ -179,12 +179,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     private getSelectedProcess(selectedProcess: string): ProcessDefinitionRepresentation {
-        let processSelected = this.processDefinitions.find((process) => process.name.toLowerCase() === selectedProcess);
-
-        if (!processSelected) {
-            processSelected = new ProcessDefinitionRepresentation();
-        }
-        return processSelected;
+        return this.processDefinitions.find((process) => process.name.toLowerCase() === selectedProcess) || new ProcessDefinitionRepresentation();
     }
 
     private load(appId?: number) {
