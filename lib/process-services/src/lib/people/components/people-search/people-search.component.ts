@@ -20,9 +20,15 @@ import { Observable } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { map } from 'rxjs/operators';
 import { LightUserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-people-search',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, PeopleSearchFieldComponent, MatButtonModule],
     templateUrl: './people-search.component.html',
     styleUrls: ['./people-search.component.scss'],
     host: {

@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
-import { DataTableComponent, DataCellEvent, DataColumnListComponent, ShowHeaderMode } from '@alfresco/adf-core';
+import { DataTableComponent, DataCellEvent, DataColumnListComponent, ShowHeaderMode, DataTableModule } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { LightUserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-people-list',
+    standalone: true,
+    imports: [CommonModule, DataTableModule],
     templateUrl: './people-list.component.html',
     styleUrls: ['./people-list.component.scss']
 })

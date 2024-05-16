@@ -17,9 +17,8 @@
 
 import { Directive } from '@angular/core';
 
-/**
- * Directive selectors without adf- prefix will be deprecated on 3.0.0
- */
-// eslint-disable-next-line @angular-eslint/directive-selector
-@Directive({ selector: '[adf-people-search-title]' })
-export class PeopleSearchTitleDirective { }
+@Directive({
+    selector: '[adf-people-search-title]',
+    standalone: true
+})
+export class PeopleSearchTitleDirective {}

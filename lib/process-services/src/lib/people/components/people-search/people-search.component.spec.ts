@@ -44,7 +44,7 @@ describe('PeopleSearchComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, PeopleSearchComponent]
         });
         fixture = TestBed.createComponent(PeopleSearchComponent);
         peopleSearchComponent = fixture.componentInstance;

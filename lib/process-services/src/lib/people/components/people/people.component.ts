@@ -22,9 +22,17 @@ import { PeopleSearchComponent } from '../people-search/people-search.component'
 import { share } from 'rxjs/operators';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { DataTableModule } from '@alfresco/adf-core';
+import { PeopleListComponent } from '../people-list/people-list.component';
 
 @Component({
     selector: 'adf-people',
+    standalone: true,
+    imports: [CommonModule, MatCardModule, TranslateModule, MatIconModule, DataTableModule, PeopleSearchComponent, PeopleListComponent],
     templateUrl: './people.component.html',
     styleUrls: ['./people.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -55,18 +63,6 @@ export class PeopleComponent {
 
     constructor(public peopleProcessService: PeopleProcessService) {
         this.peopleSearch$ = new Observable<LightUserRepresentation[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
-    }
-
-    involveUserAndCloseSearch() {
-        if (this.peopleSearch) {
-            this.peopleSearch.involveUserAndClose();
-        }
-    }
-
-    involveUserWithoutCloseSearch() {
-        if (this.peopleSearch) {
-            this.peopleSearch.involveUser();
-        }
     }
 
     searchUser(searchedWord: string) {

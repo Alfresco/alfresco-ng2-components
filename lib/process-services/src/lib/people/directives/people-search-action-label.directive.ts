@@ -17,9 +17,8 @@
 
 import { Directive } from '@angular/core';
 
-/**
- * Directive selectors without adf- prefix will be deprecated on 3.0.0
- */
-// eslint-disable-next-line @angular-eslint/directive-selector
-@Directive({ selector: 'adf-people-search-action-label, people-search-action-label' })
-export class PeopleSearchActionLabelDirective { }
+@Directive({
+    selector: 'adf-people-search-action-label',
+    standalone: true
+})
+export class PeopleSearchActionLabelDirective {}

@@ -37,28 +37,28 @@ const fakeSecondUser: LightUserRepresentation = {
 };
 
 describe('PeopleComponent', () => {
-    let activitiPeopleComponent: PeopleComponent;
+    let peopleComponent: PeopleComponent;
     let fixture: ComponentFixture<PeopleComponent>;
     let element: HTMLElement;
     const userArray = [fakeUser, fakeSecondUser];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, PeopleComponent]
         });
         fixture = TestBed.createComponent(PeopleComponent);
-        activitiPeopleComponent = fixture.componentInstance;
+        peopleComponent = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        activitiPeopleComponent.people = [];
-        activitiPeopleComponent.readOnly = true;
+        peopleComponent.people = [];
+        peopleComponent.readOnly = true;
         fixture.detectChanges();
     });
 
     afterEach(() => fixture.destroy());
 
     it('should show people component title', async () => {
-        activitiPeopleComponent.people = [...userArray];
+        peopleComponent.people = [...userArray];
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -77,8 +77,8 @@ describe('PeopleComponent', () => {
 
     describe('when there are involved people', () => {
         beforeEach(() => {
-            activitiPeopleComponent.taskId = 'fake-task-id';
-            activitiPeopleComponent.people.push(...userArray);
+            peopleComponent.taskId = 'fake-task-id';
+            peopleComponent.people.push(...userArray);
             fixture.detectChanges();
         });
 
@@ -100,7 +100,7 @@ describe('PeopleComponent', () => {
         });
 
         it('should remove people involved', fakeAsync(() => {
-            activitiPeopleComponent.removeInvolvedUser(fakeUser);
+            peopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
@@ -113,7 +113,7 @@ describe('PeopleComponent', () => {
         }));
 
         it('should involve people', fakeAsync(() => {
-            activitiPeopleComponent.involveUser(fakeUser);
+            peopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
@@ -126,7 +126,7 @@ describe('PeopleComponent', () => {
         }));
 
         it('should return an observable with user search results', (done) => {
-            activitiPeopleComponent.peopleSearch$.subscribe((users) => {
+            peopleComponent.peopleSearch$.subscribe((users) => {
                 expect(users.length).toBe(2);
                 expect(users[0].firstName).toBe('fake-test-1');
                 expect(users[0].lastName).toBe('fake-last-1');
@@ -134,7 +134,7 @@ describe('PeopleComponent', () => {
                 expect(users[0].id).toBe(1);
                 done();
             });
-            activitiPeopleComponent.searchUser('fake-search-word');
+            peopleComponent.searchUser('fake-search-word');
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
@@ -158,11 +158,11 @@ describe('PeopleComponent', () => {
         });
 
         it('should return an empty list for not valid search', (done) => {
-            activitiPeopleComponent.peopleSearch$.subscribe((users) => {
+            peopleComponent.peopleSearch$.subscribe((users) => {
                 expect(users.length).toBe(0);
                 done();
             });
-            activitiPeopleComponent.searchUser('fake-search-word');
+            peopleComponent.searchUser('fake-search-word');
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
@@ -174,7 +174,7 @@ describe('PeopleComponent', () => {
     describe('when there are errors on service call', () => {
         beforeEach(() => {
             jasmine.Ajax.install();
-            activitiPeopleComponent.people.push(...userArray);
+            peopleComponent.people.push(...userArray);
             fixture.detectChanges();
         });
 
@@ -183,7 +183,7 @@ describe('PeopleComponent', () => {
         });
 
         it('should not remove user if remove involved user fail', async () => {
-            activitiPeopleComponent.removeInvolvedUser(fakeUser);
+            peopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
@@ -194,7 +194,7 @@ describe('PeopleComponent', () => {
         });
 
         it('should not involve user if involve user fail', async () => {
-            activitiPeopleComponent.involveUser(fakeUser);
+            peopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
