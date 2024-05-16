@@ -43,7 +43,6 @@ import {
     DynamicTableRow
 } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
-import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';
 import { Location } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
@@ -115,7 +114,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     applicationId: number;
     processDefinitionName: string;
 
-    fieldValidators = [...FORM_FIELD_VALIDATORS, new DemoFieldValidator()];
+    fieldValidators = [...FORM_FIELD_VALIDATORS];
 
     private onDestroy$ = new Subject<boolean>();
     private scriptFileApi: ScriptFilesApi;
@@ -125,17 +124,17 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         private route: ActivatedRoute,
         private router: Router,
         private apiService: AlfrescoApiService,
-        private appConfig: AppConfigService,
-        private preview: PreviewService,
+        private appConfigService: AppConfigService,
+        private previewService: PreviewService,
         formService: FormService,
         private location: Location,
         private notificationService: NotificationService,
         private preferenceService: UserPreferencesService
     ) {
         this.scriptFileApi = new ScriptFilesApi(this.apiService.getInstance());
-        this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
-        this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
-        this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');
+        this.defaultProcessName = this.appConfigService.get<string>('adf-start-process.name');
+        this.defaultProcessDefinitionName = this.appConfigService.get<string>('adf-start-process.processDefinitionName');
+        this.defaultTaskName = this.appConfigService.get<string>('adf-start-task.name');
         this.processDefinitionName = this.defaultProcessDefinitionName;
 
         this.preferenceService
@@ -346,9 +345,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     private showContentPreview(content: any) {
         if (content.contentBlob) {
-            this.preview.showBlob(content.name, content.contentBlob);
+            this.previewService.showBlob(content.name, content.contentBlob);
         } else {
-            this.preview.showResource(content.sourceId.split(';')[0]);
+            this.previewService.showResource(content.sourceId.split(';')[0]);
         }
     }
 

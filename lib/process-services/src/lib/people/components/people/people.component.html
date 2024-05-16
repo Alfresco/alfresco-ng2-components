@@ -14,13 +14,13 @@
         <div class="adf-assignment-container" *ngIf="showAssignment">
             <adf-people-search
                 #peopleSearch
+                [headerTitle]="'ADF_TASK_LIST.DETAILS.LABELS.ADD_PEOPLE'"
+                [actionLabel]="'ADF_TASK_LIST.PEOPLE.ADD_USER'"
                 (searchPeople)="searchUser($event)"
                 (success)="involveUser($event)"
                 (closeSearch)="onCloseSearch()"
                 [results]="peopleSearch$"
             >
-                <ng-container adf-people-search-title>{{ 'ADF_TASK_LIST.DETAILS.LABELS.ADD_PEOPLE' | translate }}</ng-container>
-                <ng-container adf-people-search-action-label>{{ 'ADF_TASK_LIST.PEOPLE.ADD_USER' | translate }}</ng-container>
             </adf-people-search>
         </div>
         <div class="adf-assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">

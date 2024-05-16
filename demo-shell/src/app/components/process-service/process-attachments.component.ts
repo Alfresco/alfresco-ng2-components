@@ -17,24 +17,11 @@
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProcessAttachmentListComponent, ProcessService, ProcessUploadService } from '@alfresco/adf-process-services';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
+import { UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
-
-/**
- * Provide a factory for process upload service
- *
- * @param api api client
- * @param config config service
- * @param discoveryApiService discovery service
- * @returns factory function
- */
-export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
-    return new ProcessUploadService(api, config, discoveryApiService);
-}
 
 @Component({
     selector: 'app-process-attachments',
@@ -43,8 +30,7 @@ export function processUploadServiceFactory(api: AlfrescoApiService, config: App
     providers: [
         {
             provide: UploadService,
-            useFactory: processUploadServiceFactory,
-            deps: [AlfrescoApiService, AppConfigService, DiscoveryApiService]
+            useClass: ProcessUploadService
         }
     ],
     encapsulation: ViewEncapsulation.None

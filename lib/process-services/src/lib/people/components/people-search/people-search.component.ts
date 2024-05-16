@@ -37,6 +37,12 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleSearchComponent implements OnInit {
+    @Input()
+    headerTitle?: string;
+
+    @Input()
+    actionLabel?: string;
+
     /** Parameters for displaying the list. */
     @Input()
     results: Observable<LightUserRepresentation[]>;

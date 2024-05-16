@@ -68,7 +68,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     showIcon: boolean;
 
     currentFilter: UserTaskFilterRepresentation;
-
     filters: UserTaskFilterRepresentation[] = [];
 
     private onDestroy$ = new Subject<boolean>();
@@ -120,20 +119,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     * Load the task list filtered by appId or by appName
-     *
-     * @param appId application id
-     * @param appName application name
-     */
-    getFilters(appId?: number, appName?: string): void {
-        if (appName) {
-            this.getFiltersByAppName(appName);
-        } else {
-            this.getFiltersByAppId(appId);
-        }
-    }
-
-    /**
      * Return the filter list filtered by appId
      *
      * @param appId - optional
@@ -177,7 +162,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      *
      * @param appId application id
      */
-    createFiltersByAppId(appId?: number): void {
+    private createFiltersByAppId(appId?: number): void {
         this.taskFilterService.createDefaultFilters(appId).subscribe(
             (resDefault) => {
                 this.resetFilter();
@@ -207,7 +192,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    public selectFilterAndEmit(newFilter: UserTaskFilterRepresentation) {
+    private selectFilterAndEmit(newFilter: UserTaskFilterRepresentation) {
         this.selectFilter(newFilter);
         this.filterSelected.emit(this.currentFilter);
     }
@@ -243,15 +228,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
         );
-    }
-
-    /**
-     * Select as default task filter the first in the list
-     */
-    public selectDefaultTaskFilter(): void {
-        if (!this.isFilterListEmpty()) {
-            this.currentFilter = this.filters[0];
-        }
     }
 
     /**
