@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage, materialLocators } from '@alfresco/adf-testing';
-import { $, by, element, protractor } from 'protractor';
+import { $, by, element } from 'protractor';
 
 export class ProcessListDemoPage {
     appIdInput = $('input[data-automation-id="app-id"]');
