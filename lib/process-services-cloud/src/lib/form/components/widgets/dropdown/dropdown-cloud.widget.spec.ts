@@ -119,18 +119,6 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(await allOptions[2].getText()).toEqual('option_3');
         });
 
-        it('should NOT load data from restUrl when field is readonly', () => {
-            spyOn(formCloudService, 'getRestWidgetData');
-            widget.field.readOnly = true;
-            widget.field.restUrl = 'https://fake-rest-url';
-            widget.field.optionType = 'rest';
-            widget.field.restIdProperty = 'name';
-
-            widget.ngOnInit();
-
-            expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
-        });
-
         it('should show error message if the restUrl failed to fetch options', async () => {
             const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
             const errorIcon: string = 'error_outline';

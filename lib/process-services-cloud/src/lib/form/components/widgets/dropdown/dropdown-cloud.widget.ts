@@ -191,7 +191,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private persistFieldOptionsFromRestApi() {
-        if (!this.isValidRestType() || this.field.readOnly) {
+        if (!this.isValidRestType()) {
             return;
         }
 
