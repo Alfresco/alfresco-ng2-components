@@ -16,20 +16,33 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import {
-    mockError,
-    fakeProcessFiltersResponse,
-    dummyRunningFilter,
-    dummyAllFilter,
-    dummyCompletedFilter,
-    dummyDuplicateRunningFilter
-} from '../../mock';
 import { ProcessFilterService } from './process-filter.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { of } from 'rxjs';
 
 declare let jasmine: any;
+
+const fakeProcessFiltersResponse: any = {
+    size: 1,
+    total: 1,
+    start: 0,
+    data: [
+        {
+            name: 'Running',
+            appId: '22',
+            id: 333,
+            recent: true,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
+        }
+    ]
+};
+
+const mockError = {
+    message: null,
+    messageKey: 'GENERAL.ERROR.FORBIDDEN'
+};
 
 describe('Process filter', () => {
     let service: ProcessFilterService;
@@ -292,10 +305,42 @@ describe('Process filter', () => {
             it('should return an array with unique process filters', (done) => {
                 const appId = 123;
 
-                const runningFilter = dummyRunningFilter;
-                const completedFilter = dummyCompletedFilter;
-                const allFilter = dummyAllFilter;
-                const duplicateRunningFilter = dummyDuplicateRunningFilter;
+                const runningFilter = {
+                    appId: 123,
+                    name: 'Running',
+                    filter: { sort: 'created-desc', name: '', state: 'running' },
+                    icon: 'fa-random',
+                    id: 18,
+                    index: 10,
+                    recent: false
+                };
+                const completedFilter = {
+                    appId: 123,
+                    name: 'Completed',
+                    filter: { sort: 'created-desc', name: '', state: 'completed' },
+                    icon: 'fa-random',
+                    id: 19,
+                    index: 11,
+                    recent: false
+                };
+                const allFilter = {
+                    appId: 123,
+                    name: 'All',
+                    filter: { sort: 'created-desc', name: '', state: 'all' },
+                    icon: 'fa-random',
+                    id: 20,
+                    index: 12,
+                    recent: false
+                };
+                const duplicateRunningFilter = {
+                    appId: 123,
+                    name: 'Running',
+                    filter: { sort: 'created-desc', name: '', state: 'running' },
+                    icon: 'fa-random',
+                    id: 21,
+                    index: 13,
+                    recent: false
+                };
 
                 const runningObservable = of(runningFilter);
                 const completedObservable = of(completedFilter);

@@ -22,11 +22,31 @@ import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { fakeProcessFilters } from '../../mock/process/process-filters.mock';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { NavigationStart, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+
+const fakeProcessFilters: UserProcessInstanceFilterRepresentation[] = [
+    {
+        id: 10,
+        name: 'FakeCompleted',
+        icon: 'glyphicon-th',
+        filter: { state: 'open', assignment: 'fake-involved' }
+    },
+    {
+        id: 20,
+        name: 'FakeAll',
+        icon: 'glyphicon-random',
+        filter: { state: 'open', assignment: 'fake-assignee' }
+    },
+    {
+        id: 30,
+        name: 'Running',
+        icon: 'glyphicon-ok-sign',
+        filter: { state: 'open', assignment: 'fake-running' }
+    }
+];
 
 describe('ProcessFiltersComponent', () => {
     let filterList: ProcessFiltersComponent;

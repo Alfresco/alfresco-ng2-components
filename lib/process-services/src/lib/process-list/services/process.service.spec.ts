@@ -16,12 +16,41 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { exampleProcess, mockError, fakeProcessDef, fakeTasksList } from '../../mock';
+import { exampleProcess } from '../../mock';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
 import { CoreModule, DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { ProcessInstanceQueryRepresentation } from '@alfresco/js-api';
+import { ProcessDefinitionRepresentation, TaskDetailsModel } from '@alfresco/adf-process-services';
+
+const fakeTasksList = {
+    data: [
+        new TaskDetailsModel({
+            id: 1,
+            name: 'Task 1',
+            processInstanceId: 1000,
+            created: '2016-11-10T03:37:30.010+0000'
+        }),
+        new TaskDetailsModel({
+            id: 2,
+            name: 'Task 2',
+            processInstanceId: 1000,
+            created: '2016-11-10T03:37:30.010+0000'
+        })
+    ]
+};
+
+const fakeProcessDef = new ProcessDefinitionRepresentation({
+    id: '32323',
+    key: 'blah',
+    name: 'Process 1'
+});
+
+const mockError = {
+    message: null,
+    messageKey: 'GENERAL.ERROR.FORBIDDEN'
+};
 
 describe('ProcessService', () => {
     let service: ProcessService;
