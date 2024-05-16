@@ -30,9 +30,9 @@ import {
     TasksApi,
     ProcessDefinitionRepresentation
 } from '@alfresco/js-api';
-import { from, Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 @Injectable({
@@ -41,27 +41,22 @@ import { DatePipe } from '@angular/common';
 export class ProcessService {
     private _tasksApi: TasksApi;
     get tasksApi(): TasksApi {
-        this._tasksApi = this._tasksApi ?? new TasksApi(this.alfrescoApiService.getInstance());
-        return this._tasksApi;
+        return (this._tasksApi ||= new TasksApi(this.alfrescoApiService.getInstance()));
     }
 
     private _processDefinitionsApi: ProcessDefinitionsApi;
     get processDefinitionsApi(): ProcessDefinitionsApi {
-        this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.alfrescoApiService.getInstance());
-        return this._processDefinitionsApi;
+        return (this._processDefinitionsApi ||= new ProcessDefinitionsApi(this.alfrescoApiService.getInstance()));
     }
 
     private _processInstancesApi: ProcessInstancesApi;
     get processInstancesApi(): ProcessInstancesApi {
-        this._processInstancesApi = this._processInstancesApi ?? new ProcessInstancesApi(this.alfrescoApiService.getInstance());
-        return this._processInstancesApi;
+        return (this._processInstancesApi ||= new ProcessInstancesApi(this.alfrescoApiService.getInstance()));
     }
 
     private _processInstanceVariablesApi: ProcessInstanceVariablesApi;
     get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
-        this._processInstanceVariablesApi =
-            this._processInstanceVariablesApi ?? new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance());
-        return this._processInstanceVariablesApi;
+        return (this._processInstanceVariablesApi ||= new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance()));
     }
 
     constructor(private alfrescoApiService: AlfrescoApiService) {}
@@ -81,10 +76,8 @@ export class ProcessService {
             map((res) => {
                 if (processDefinitionKey) {
                     res.data = res.data.filter((process) => process.processDefinitionKey === processDefinitionKey);
-                    return res;
-                } else {
-                    return res;
                 }
+                return res;
             })
         );
     }
@@ -101,14 +94,13 @@ export class ProcessService {
         processDefinitionKey?: string
     ): Observable<ResultListDataRepresentationProcessInstanceRepresentation> {
         return this.getProcessInstances(requestNode, processDefinitionKey).pipe(
-            map((response) => ({
-                ...response,
-                data: (response.data || []).map((instance) => {
+            map((response) => {
+                response.data = (response.data || []).map((instance) => {
                     instance.name = this.getProcessNameOrDescription(instance, 'medium');
                     return instance;
-                })
-            })),
-            catchError(() => of({}))
+                });
+                return response;
+            })
         );
     }
 
@@ -168,7 +160,7 @@ export class ProcessService {
      * @param res Object representing form data
      * @returns JSON data
      */
-    toJson(res: any) {
+    private toJson(res: any) {
         if (res) {
             return res || {};
         }
