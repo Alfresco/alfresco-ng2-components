@@ -29,7 +29,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
 
-// const DEFAULT_TASKS_APP: string = 'tasks';
 const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
 const DEFAULT_TASKS_APP_THEME: string = 'theme-2';
 const DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';

@@ -45,5 +45,4 @@ Gets information about Process Services users.
 
 ## See also
 
--   [User process model](../models/user-process.model.md)
 -   [People content service](people-content.service.md)

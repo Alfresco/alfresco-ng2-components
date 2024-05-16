@@ -651,7 +651,6 @@ backend services have been tested with each released version of ADF.
 -   [Upload service](core/services/upload.service.md)
 -   [User initial pipe](core/pipes/user-initial.pipe.md)
 -   [User preferences service](core/services/user-preferences.service.md)
--   [User process model](core/models/user-process.model.md)
 -   [Version list component](content-services/components/version-list.component.md)
 -   [Version manager component](content-services/components/version-manager.component.md)
 -   [Viewer component](core/components/viewer.component.md)
