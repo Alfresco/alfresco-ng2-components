@@ -1,5 +1,5 @@
 ---
-Title: Dialog Size model
+Title: Dialog Size Model
 Added: v6.9.0
 Status: Active
 Last reviewed: 2024-05-17
@@ -12,18 +12,17 @@ Sets a specific CSS class to [Dialog Component](../dialogs/dialog.md).
 ## Basic usage
 
 ```ts
-export const DialogSize = {
+const DialogSize = {
     Large: 'adf-large',
     Medium: 'adf-medium',
     Alert: 'adf-alert'
 } as const;
 
-export type DialogSizes = typeof DialogSize[keyof typeof DialogSize];
+type DialogSizes = typeof DialogSize[keyof typeof DialogSize];
 ```
 
 ## Properties
 
-| [`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | Large | `string` | `adf-large` | Add `afd-large` class to Dialog container |
@@ -31,8 +30,6 @@ export type DialogSizes = typeof DialogSize[keyof typeof DialogSize];
 | Alert | `string` | `adf-alert` | Add `afd-alert` class to Dialog container |
 
 ### Examples
-
-If you want to change the style on rows where the user can create content: 
 
 ```ts
 constructor(private dialog: MatDialog) {}

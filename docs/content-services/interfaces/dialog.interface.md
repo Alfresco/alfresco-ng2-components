@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2024-05-17
 ---
 
-# [Dialog Component](../../../lib/content-services/src/lib/dialogs/dialog/dialog-data.interface.ts "Defined in dialog-data.interface.ts")
+# [Dialog Data Interface](../../../lib/content-services/src/lib/dialogs/dialog/dialog-data.interface.ts "Defined in dialog-data.interface.ts")
 
 Specifies interface for [Dialog Component](../dialogs/dialog.md).
 

@@ -22,9 +22,11 @@ Max-width for Medium dialog is `778px`;
 ### Alert dialogs
 
 Standard:
+
 ![Standard alert dialog component](../../docassets/images/adf-dialog-alert-standart.png)
 
-With icon
+With icon:
+
 ![Alert dialog component with icon](../../docassets/images/adf-dialog-alert-with-icon.png)
 
 ### Dialog with additional buttons
