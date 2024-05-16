@@ -17,10 +17,31 @@
 
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { fakeTasksComment, fakeUser1 } from '../mocks/task-comments.mock';
 import { TaskCommentsService } from './task-comments.service';
 
 declare let jasmine: any;
+
+export const fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+
+export const fakeTasksComment = {
+    size: 2,
+    total: 2,
+    start: 0,
+    data: [
+        {
+            id: 1,
+            message: 'fake-message-1',
+            created: '',
+            createdBy: fakeUser1
+        },
+        {
+            id: 2,
+            message: 'fake-message-2',
+            created: '',
+            createdBy: fakeUser1
+        }
+    ]
+};
 
 describe('TaskCommentsService', () => {
     let service: TaskCommentsService;

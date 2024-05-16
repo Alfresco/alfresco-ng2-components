@@ -16,28 +16,10 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ProcessUserInfoComponent } from './process-user-info.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTabsModule } from '@angular/material/tabs';
-import { TranslateModule } from '@ngx-translate/core';
-import { FullNamePipe, InitialUsernamePipe, PipeModule } from '@alfresco/adf-core';
 
 @NgModule({
-    declarations: [ProcessUserInfoComponent],
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatMenuModule,
-        MatTabsModule,
-        MatCardModule,
-        TranslateModule,
-        PipeModule,
-        FullNamePipe,
-        InitialUsernamePipe
-    ],
+    imports: [ProcessUserInfoComponent],
     exports: [ProcessUserInfoComponent]
 })
 export class ProcessUserInfoModule {}

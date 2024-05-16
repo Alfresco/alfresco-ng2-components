@@ -18,7 +18,6 @@
 import { CoreTestingModule, UserInfoMode } from '@alfresco/adf-core';
 import { fakeEcmUser, fakeEcmUserNoImage } from '@alfresco/adf-content-services';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { ProcessUserInfoComponent } from './process-user-info.component';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -70,7 +69,7 @@ describe('ProcessUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatMenuModule]
+            imports: [CoreTestingModule, ProcessUserInfoComponent]
         });
         fixture = TestBed.createComponent(ProcessUserInfoComponent);
         component = fixture.componentInstance;
