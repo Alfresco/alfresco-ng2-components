@@ -42,22 +42,11 @@ With icon:
 </ng-template>
 
 <ng-template #actionsDialogTemplate>
-  <button
-    mat-button
-    adf-auto-focus
-    id="aspect-dialog-actions-cancel"
-    data-automation-id="aspect-list-dialog-actions-cancel"
-  >
+  <button mat-button>
     Reset
   </button>
 
-  <button
-    mat-button
-    mat-ghost-button
-    color="primary"
-    id="adf-dialog-actions-confirm"
-    data-automation-id="adf-dialog-actions-confirm"
-  >
+  <button mat-button>
     Clean
   </button>
 </ng-template>
@@ -69,7 +58,7 @@ With icon:
 
 constructor(private dialog: MatDialog) {}
 
-...
+//...
 
 function openDialog() {
     const data: DialogData = {

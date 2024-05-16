@@ -19,7 +19,7 @@ import { TemplateRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DialogSizes } from './dialog.model';
 
-export interface DialogComponentData {
+export interface DialogData {
     title: string;
     description?: string;
     confirmButtonTitle?: string;

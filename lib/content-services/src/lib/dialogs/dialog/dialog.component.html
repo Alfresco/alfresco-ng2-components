@@ -9,7 +9,13 @@
         [ngClass]="{'adf-centered-header': data.headerIcon}"
     >
         <div class="adf-dialog-title-container" [ngClass]="{ 'adf-centered-title': data.headerIcon }">
-            <mat-icon *ngIf="data.headerIcon" class="adf-dialog-header-icon">{{data.headerIcon}}</mat-icon>
+            <mat-icon
+                *ngIf="data.headerIcon"
+                color="primary"
+                class="adf-dialog-header-icon"
+            >
+                {{data.headerIcon}}
+            </mat-icon>
             <h2 class="adf-dialog-title">{{data.title}}</h2>
         </div>
         <button

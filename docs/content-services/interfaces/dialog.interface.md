@@ -32,18 +32,18 @@ interface DialogData {
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| title | `string` | `no` | It will be placed in the dialog title section. |
-| headerIcon | `string` | `no` | It will be placed in header section. Should be used with Alert dialogs. (optional) |
-| description | `string` | `no` | It will be placed first in the dialog content section. (optional) |
+| title | `string` |    | It will be placed in the dialog title section. |
+| headerIcon | `string` |    | It will be placed in header section. Should be used with Alert dialogs. (optional) |
+| description | `string` |    | It will be placed first in the dialog content section. (optional) |
 | confirmButtonTitle | `string` | `COMMON.APPLY` | Confirmation action. After this, the dialog is closed and the `isConfirmButtonDisabled$` is set to `true`. (optional) |
 | cancelButtonTitle | `string` | `COMMON.CANCEL` | Cancellation action. After this, the dialog is closed |
 | isCancelButtonHidden | `boolean` | `false` | Toggles cancel button visibility. (optional) |
 | isCloseButtonHidden | `boolean` | `false` | Toggles close button visibility. (optional) |
 | isConfirmButtonDisabled$ | `Subject<boolean>` | `false` | Toggles confirm button disability. (optional) |
 | dialogSize | `DialogSize` | `Medium` | Set dialog size. Can be `Large`, `Medium`, `Alert`. (optional) |
-| contentTemplate | `TemplateRef<any>` | `no` | Inserts a content template. (optional) |
-| actionsTemplate | `TemplateRef<any>` | `no` | Inserts a template styled on the left. Should be used for additional `ghost` style buttons. (optional) |
-| descriptionTemplate | `TemplateRef<any>` | `no` | Inserts a description template. (optional) |
+| contentTemplate | `TemplateRef<any>` |    | Inserts a content template. (optional) |
+| actionsTemplate | `TemplateRef<any>` |    | Inserts a template styled on the left. Should be used for additional `mat-button` style buttons. (optional) |
+| descriptionTemplate | `TemplateRef<any>` |    | Inserts a description template. (optional) |
 
 ## See also
 

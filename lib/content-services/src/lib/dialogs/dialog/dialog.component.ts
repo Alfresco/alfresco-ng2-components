@@ -27,10 +27,10 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, MaterialModule, TranslateModule],
     selector: 'adf-dialog',
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
+    imports: [CommonModule, MaterialModule, TranslateModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent implements OnDestroy {

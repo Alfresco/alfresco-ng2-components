@@ -1,5 +1,3 @@
-$theme-blue-button-color: #1f74db;
-
 $dialog-large-l-width: 1075px;
 $dialog-large-l-height: 907px;
 
@@ -58,7 +56,6 @@ $dialog-padding: 24px;
             width: 48px;
             height: 48px;
             font-size: 48px;
-            color: $theme-blue-button-color;
         }
     }
 
@@ -82,7 +79,7 @@ $dialog-padding: 24px;
             left: -$dialog-padding;
             display: block;
             height: 0;
-            border-bottom: 1px solid #2121211f;
+            border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
             width: calc(100% + $dialog-padding * 2);
         }
     }
