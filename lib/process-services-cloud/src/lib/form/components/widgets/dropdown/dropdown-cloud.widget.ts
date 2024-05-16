@@ -191,28 +191,26 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private persistFieldOptionsFromRestApi() {
-        if (!this.isValidRestType() || this.field.readOnly) {
-            return;
+        if (this.isValidRestType()) {
+            this.resetRestApiErrorMessage();
+            const bodyParam = this.buildBodyParam();
+            this.formCloudService
+                .getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(
+                    (result: FormFieldOption[]) => {
+                        this.resetRestApiErrorMessage();
+                        this.field.options = result;
+                        this.updateOptions();
+                        this.field.updateForm();
+                        this.resetInvalidValue();
+                    },
+                    (err) => {
+                        this.resetRestApiOptions();
+                        this.handleError(err);
+                    }
+                );
         }
-
-        this.resetRestApiErrorMessage();
-        const bodyParam = this.buildBodyParam();
-        this.formCloudService
-            .getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(
-                (result: FormFieldOption[]) => {
-                    this.resetRestApiErrorMessage();
-                    this.field.options = result;
-                    this.updateOptions();
-                    this.field.updateForm();
-                    this.resetInvalidValue();
-                },
-                (err) => {
-                    this.resetRestApiOptions();
-                    this.handleError(err);
-                }
-            );
     }
 
     private buildBodyParam(): any {
