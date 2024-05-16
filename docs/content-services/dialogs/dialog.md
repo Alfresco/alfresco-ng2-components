@@ -2,7 +2,7 @@
 Title: Dialog component
 Added: v6.9.0
 Status: Active
-Last reviewed: 2024-05-14
+Last reviewed: 2024-05-17
 ---
 
 # [Dialog component](../../../lib/content-services/src/lib/dialogs/dialog/ "Defined in dialog.component.ts")
@@ -30,23 +30,6 @@ With icon
 ### Dialog with additional buttons
 
 ![Dialog with additional buttons](../../docassets/images/adf-dialog-with-additional-buttons.png)
-
-## Dialog inputs
-
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| title | `string` | `no` | It will be placed in the dialog title section. |
-| headerIcon | `string` | `no` | It will be placed in header section. Should be used with Alert dialogs. (optional) |
-| description | `string` | `no` | It will be placed first in the dialog content section. (optional) |
-| confirmButtonTitle | `string` | `COMMON.APPLY` | Confirmation action. After this, the dialog is closed and the `isConfirmButtonDisabled$` is set to `true`. (optional) |
-| cancelButtonTitle | `string` | `COMMON.CANCEL` | Cancellation action. After this, the dialog is closed |
-| isCancelButtonHidden | `boolean` | `false` | Toggles cancel button visibility. (optional) |
-| isCloseButtonHidden | `boolean` | `false` | Toggles close button visibility. (optional) |
-| isConfirmButtonDisabled$ | `Subject<boolean>` | `false` | Toggles confirm button disability. (optional) |
-| dialogSize | `DialogSize` | `Medium` | Set dialog size. Can be `Large`, `Medium`, `Alert`. (optional) |
-| contentTemplate | `TemplateRef<any>` | `no` | Inserts a content template. (optional) |
-| actionsTemplate | `TemplateRef<any>` | `no` | Inserts a template styled on the left. Should be used for additional `ghost` style buttons. (optional) |
-| descriptionTemplate | `TemplateRef<any>` | `no` | Inserts a description template. (optional) |
 
 ## Basic Usage 
 
@@ -86,10 +69,10 @@ constructor(private dialog: MatDialog) {}
 
 ...
 
-function openCatDialog() {
-    const data: DialogComponentData = {
-        title: 'title',
-        dialogSize: DialogSize.ALERT,
+function openDialog() {
+    const data: DialogData = {
+        title: 'Dialog title',
+        dialogSize: DialogSize.Alert,
         isConfirmButtonDisabled$: of(true),
         contentTemplate: this.contentDialogTemplate,
         actionsTemplate: this.actionsDialogTemplate
@@ -105,3 +88,8 @@ This component lets the user reuse styled dialog wrapper. Use the
 Angular [`MatDialog`](https://material.angular.io/components/dialog/overview)
 service to open the dialog, as shown in the example, and pass a `data` object
 with properties.
+
+## See also
+
+- [Dialog Data Interface](../interfaces/dialog.interface.md)
+- [Dialog Model](../models/dialog.model.md)

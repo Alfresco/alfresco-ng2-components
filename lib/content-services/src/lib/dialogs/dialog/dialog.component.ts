@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogComponentData } from './dialog-data.interface';
+import { DialogData } from './dialog-data.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DialogSize, DialogSizes } from './dialog.model';
 import { MaterialModule } from '../../material.module';
@@ -46,7 +46,7 @@ export class DialogComponent implements OnDestroy {
 
     constructor(
         @Inject(MAT_DIALOG_DATA)
-        public data: DialogComponentData,
+        public data: DialogData,
         public dialogRef: MatDialogRef<DialogComponent>
     ) {
         if (data) {

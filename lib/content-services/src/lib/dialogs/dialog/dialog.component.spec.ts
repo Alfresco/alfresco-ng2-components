@@ -19,7 +19,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { DialogComponent } from './dialog.component';
-import { DialogComponentData } from './dialog-data.interface';
+import { DialogData } from './dialog-data.interface';
 import { DialogSize } from './dialog.model';
 
 describe('DialogComponent', () => {
@@ -30,7 +30,7 @@ describe('DialogComponent', () => {
     let confirmButton: HTMLButtonElement;
     let dialogContainer: HTMLElement;
 
-    const data: DialogComponentData = {
+    const data: DialogData = {
         title: 'Title',
         description: 'Description that can be longer or shorter'
     };
@@ -39,7 +39,7 @@ describe('DialogComponent', () => {
         close: jasmine.createSpy('close')
     };
 
-    const setupBeforeEach = (dialogOptions: DialogComponentData = data) => {
+    const setupBeforeEach = (dialogOptions: DialogData = data) => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule],
             providers: [
