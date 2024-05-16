@@ -19,7 +19,6 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { AppConfigService, AppConfigValues, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
-import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessService } from './../services/process.service';
 import { UntypedFormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable, Subject, forkJoin } from 'rxjs';
@@ -27,7 +26,13 @@ import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectChange } from '@angular/material/select';
 import { StartFormComponent } from '../../form';
-import { AppDefinitionRepresentation, Node, ProcessInstanceRepresentation, RelatedContentRepresentation } from '@alfresco/js-api';
+import {
+    AppDefinitionRepresentation,
+    Node,
+    ProcessInstanceRepresentation,
+    RelatedContentRepresentation,
+    ProcessDefinitionRepresentation
+} from '@alfresco/js-api';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 import { getTime } from 'date-fns';
 
@@ -179,7 +184,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     private getSelectedProcess(selectedProcess: string): ProcessDefinitionRepresentation {
-        return this.processDefinitions.find((process) => process.name.toLowerCase() === selectedProcess) || new ProcessDefinitionRepresentation();
+        return this.processDefinitions.find((process) => process.name.toLowerCase() === selectedProcess);
     }
 
     private load(appId?: number) {

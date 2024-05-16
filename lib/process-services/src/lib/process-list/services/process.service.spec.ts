@@ -21,8 +21,8 @@ import { ProcessInstanceVariable } from '../models/process-instance-variable.mod
 import { ProcessService } from './process.service';
 import { CoreModule, DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { ProcessInstanceQueryRepresentation } from '@alfresco/js-api';
-import { ProcessDefinitionRepresentation, TaskDetailsModel } from '@alfresco/adf-process-services';
+import { ProcessInstanceQueryRepresentation, ProcessDefinitionRepresentation } from '@alfresco/js-api';
+import { TaskDetailsModel } from '@alfresco/adf-process-services';
 
 const fakeTasksList = {
     data: [
@@ -41,11 +41,11 @@ const fakeTasksList = {
     ]
 };
 
-const fakeProcessDef = new ProcessDefinitionRepresentation({
+const fakeProcessDef: ProcessDefinitionRepresentation = {
     id: '32323',
     key: 'blah',
     name: 'Process 1'
-});
+};
 
 const mockError = {
     message: null,

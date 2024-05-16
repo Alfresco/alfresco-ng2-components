@@ -31,7 +31,6 @@ import {
     DEFAULT_PAGINATION
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -43,6 +42,24 @@ import {
 } from '@alfresco/js-api';
 
 const PRESET_KEY = 'adf-process-list.presets';
+
+export const processPresetsDefaultModel = {
+    default: [
+        {
+            key: 'name',
+            type: 'text',
+            title: 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+            sortable: true
+        },
+        {
+            key: 'created',
+            type: 'text',
+            title: 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
+            cssClass: 'hidden',
+            sortable: true
+        }
+    ]
+};
 
 @Component({
     selector: 'adf-process-instance-list',

@@ -358,7 +358,7 @@ describe('StartProcessComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.selectedProcessDef.name).not.toBeDefined();
+            expect(component.selectedProcessDef).toBeUndefined();
         });
 
         describe('dropdown', () => {

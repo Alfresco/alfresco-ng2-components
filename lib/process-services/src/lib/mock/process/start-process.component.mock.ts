@@ -15,45 +15,44 @@
  * limitations under the License.
  */
 
-import { ProcessDefinitionRepresentation } from '../../process-list/models/process-definition.model';
-import { ProcessInstanceRepresentation } from '@alfresco/js-api';
+import { ProcessInstanceRepresentation, ProcessDefinitionRepresentation } from '@alfresco/js-api';
 
 export const newProcess: ProcessInstanceRepresentation = {
     id: '32323',
     name: 'Process'
 };
 
-export const testProcessDef = new ProcessDefinitionRepresentation({
+export const testProcessDef: ProcessDefinitionRepresentation = {
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: false
-});
+};
 
-export const testProcessDefinitions = [
-    new ProcessDefinitionRepresentation({
+export const testProcessDefinitions: ProcessDefinitionRepresentation[] = [
+    {
         id: 'my:process1',
         name: 'My Process 1',
         hasStartForm: false
-    })
+    }
 ];
 
-export const testMultipleProcessDefs = [
-    new ProcessDefinitionRepresentation({
+export const testMultipleProcessDefs: ProcessDefinitionRepresentation[] = [
+    {
         id: 'my:process1',
         name: 'My Process 1',
         hasStartForm: false
-    }),
-    new ProcessDefinitionRepresentation({
+    },
+    {
         id: 'my:process2',
         name: 'My Process 2',
         hasStartForm: true
-    })
+    }
 ];
 
-export const testProcessDefWithForm = [
-    new ProcessDefinitionRepresentation({
+export const testProcessDefWithForm: ProcessDefinitionRepresentation[] = [
+    {
         id: 'my:process1',
         name: 'My Process 1',
         hasStartForm: true
-    })
+    }
 ];

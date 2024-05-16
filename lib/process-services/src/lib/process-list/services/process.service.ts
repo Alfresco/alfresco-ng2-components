@@ -27,11 +27,11 @@ import {
     ProcessInstanceVariablesApi,
     RestVariable,
     ResultListDataRepresentationProcessInstanceRepresentation,
-    TasksApi
+    TasksApi,
+    ProcessDefinitionRepresentation
 } from '@alfresco/js-api';
 import { from, Observable, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
-import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { catchError, map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
@@ -218,10 +218,7 @@ export class ProcessService {
             : {
                   latest: true
               };
-        return from(this.processDefinitionsApi.getProcessDefinitions(opts)).pipe(
-            map(this.extractData),
-            map((processDefs) => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd)))
-        );
+        return from(this.processDefinitionsApi.getProcessDefinitions(opts)).pipe(map(this.extractData));
     }
 
     /**
