@@ -25,10 +25,30 @@ import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
-import { fakeTaskFilters } from '../../mock/task/task-filters.mock';
 import { NavigationStart, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserTaskFilterRepresentation } from '@alfresco/js-api';
+
+const fakeTaskFilters = [
+    new UserTaskFilterRepresentation({
+        name: 'FakeInvolvedTasks',
+        icon: 'glyphicon-align-left',
+        id: 10,
+        filter: { state: 'open', assignment: 'fake-involved' }
+    }),
+    new UserTaskFilterRepresentation({
+        name: 'FakeMyTasks1',
+        icon: 'glyphicon-ok-sign',
+        id: 11,
+        filter: { state: 'open', assignment: 'fake-assignee' }
+    }),
+    new UserTaskFilterRepresentation({
+        name: 'FakeMyTasks2',
+        icon: 'glyphicon-inbox',
+        id: 12,
+        filter: { state: 'open', assignment: 'fake-assignee' }
+    })
+];
 
 describe('TaskFiltersComponent', () => {
     let taskListService: TaskListService;
