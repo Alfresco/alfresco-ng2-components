@@ -18,7 +18,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { AppConfigService, AppConfigValues, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
-import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './../services/process.service';
 import { UntypedFormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable, Subject, forkJoin } from 'rxjs';
@@ -31,7 +30,8 @@ import {
     Node,
     ProcessInstanceRepresentation,
     RelatedContentRepresentation,
-    ProcessDefinitionRepresentation
+    ProcessDefinitionRepresentation,
+    RestVariable
 } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 import { getTime } from 'date-fns';
@@ -67,7 +67,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
      * [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md).
      */
     @Input()
-    variables: ProcessInstanceVariable[];
+    variables: RestVariable[];
 
     /** Parameter to pass form field values in the start form if one is associated. */
     @Input()

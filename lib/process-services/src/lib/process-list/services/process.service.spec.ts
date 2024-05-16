@@ -17,11 +17,10 @@
 
 import { TestBed } from '@angular/core/testing';
 import { exampleProcess } from '../../mock';
-import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
 import { CoreModule, DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { ProcessInstanceQueryRepresentation, ProcessDefinitionRepresentation } from '@alfresco/js-api';
+import { ProcessInstanceQueryRepresentation, ProcessDefinitionRepresentation, RestVariable } from '@alfresco/js-api';
 import { TaskDetailsModel } from '@alfresco/adf-process-services';
 
 const fakeTasksList = {
@@ -400,15 +399,15 @@ describe('ProcessService', () => {
         });
 
         describe('create or update variables', () => {
-            const updatedVariables = [
-                new ProcessInstanceVariable({
+            const updatedVariables: RestVariable[] = [
+                {
                     name: 'var1',
                     value: 'Test1'
-                }),
-                new ProcessInstanceVariable({
+                },
+                {
                     name: 'var3',
                     value: 'Test3'
-                })
+                }
             ];
 
             it('should call service to create or update variables', () => {

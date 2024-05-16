@@ -32,7 +32,6 @@ import {
 } from '@alfresco/js-api';
 import { from, Observable, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
-import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { catchError, map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
@@ -236,7 +235,7 @@ export class ProcessService {
         name: string,
         outcome?: string,
         startFormValues?: FormValues,
-        variables?: ProcessInstanceVariable[]
+        variables?: RestVariable[]
     ): Observable<ProcessInstanceRepresentation> {
         const startRequest: any = {
             name,
@@ -270,10 +269,8 @@ export class ProcessService {
      * @param processInstanceId ID of the target process
      * @returns Array of instance variable info
      */
-    getProcessInstanceVariables(processInstanceId: string): Observable<ProcessInstanceVariable[]> {
-        return from(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId)).pipe(
-            map((processVars) => processVars.map((currentProcessVar) => new ProcessInstanceVariable(currentProcessVar)))
-        );
+    getProcessInstanceVariables(processInstanceId: string): Observable<RestVariable[]> {
+        return from(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId));
     }
 
     /**
@@ -283,7 +280,7 @@ export class ProcessService {
      * @param variables Variables to update
      * @returns Array of instance variable info
      */
-    createOrUpdateProcessInstanceVariables(processInstanceId: string, variables: RestVariable[]): Observable<ProcessInstanceVariable[]> {
+    createOrUpdateProcessInstanceVariables(processInstanceId: string, variables: RestVariable[]): Observable<RestVariable[]> {
         return from(this.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, variables));
     }
 

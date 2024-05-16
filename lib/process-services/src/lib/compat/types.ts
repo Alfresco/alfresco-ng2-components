@@ -19,6 +19,7 @@ import {
     AppDefinitionRepresentation,
     LightUserRepresentation,
     ProcessInstanceRepresentation,
+    RestVariable,
     UserRepresentation,
     UserTaskFilterRepresentation
 } from '@alfresco/js-api';
@@ -40,3 +41,8 @@ export type AppDefinitionRepresentationModel = AppDefinitionRepresentation;
 
 /** @deprecated use js-api/LightUserRepresentation instead */
 export type UserProcessModel = LightUserRepresentation;
+
+/** @deprecated use js-api/RestVariable instead */
+export type ProcessInstanceVariable = RestVariable;
+
+export { ProcessDefinitionRepresentation } from '@alfresco/js-api';

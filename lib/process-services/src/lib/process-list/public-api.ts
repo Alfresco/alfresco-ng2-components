@@ -28,7 +28,4 @@ export * from './components/start-process.component';
 export * from './services/process.service';
 export * from './services/process-filter.service';
 
-// models
-export * from './models/process-instance-variable.model';
-
 export * from './process-list.module';
