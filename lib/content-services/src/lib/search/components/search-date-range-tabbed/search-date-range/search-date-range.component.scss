@@ -1,14 +1,9 @@
 @import 'styles/mat-selectors';
 
 adf-search-date-range {
-    #{$mat-icon-button}:is(button),
-    #{$mat-icon-button}#{$mat-button-base} {
-        height: 24px;
-    }
-
     .adf-search-date-range-container {
         margin-top: 20px;
-        padding: 10px;
+        padding: 10px 10px 0;
 
         .adf-search-date-range-form-field-select {
             width: 180px;
@@ -23,10 +18,11 @@ adf-search-date-range {
 
             &-date {
                 margin-top: 8px;
-            }
+                align-items: flex-start;
 
-            #{$mat-select-arrow-wrapper} {
-                height: unset;
+                mat-radio-button {
+                    margin-top: 19px;
+                }
             }
 
             .adf-search-date-range-input-field {
@@ -36,12 +32,9 @@ adf-search-date-range {
             .adf-search-date-range-form-field {
                 padding-left: 10px;
                 flex: 1;
-                margin-bottom: 12px;
 
-                #{$mat-form-field-flex} {
-                    #{$mat-form-field-infix} {
-                        padding: 0.375em 0 4px;
-                    }
+                #{$mat-date-range-input-container} {
+                    justify-content: space-between;
                 }
             }
         }
