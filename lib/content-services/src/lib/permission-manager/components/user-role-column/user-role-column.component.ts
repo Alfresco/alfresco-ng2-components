@@ -45,12 +45,7 @@ import { RoleModel } from '../../models/role.model';
         `
             .adf-role-selector-field.mat-mdc-form-field {
                 width: 100%;
-                height: 40px;
                 max-width: 200px;
-
-                .mat-mdc-form-field-infix {
-                    padding-top: 8px;
-                }
 
                 .mat-mdc-form-field-subscript-wrapper {
                     display: none;
