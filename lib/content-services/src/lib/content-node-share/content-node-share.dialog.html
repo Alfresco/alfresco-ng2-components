@@ -31,13 +31,13 @@
                     [style.display]="isExpiryDateToggleChecked ? 'block' : 'none'"
                     data-automation-id="adf-slide-toggle-checked"
                     class="adf-share-link__date-time-container">
-                    <mat-form-field class="adf-full-width" subscriptSizing="dynamic" data-automation-id="adf-content-share-expiration-field">
+                    <mat-form-field class="adf-full-width" data-automation-id="adf-content-share-expiration-field">
                         <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
                         <mat-datepicker-toggle
                             [disabled]="time.disabled"
                             [for]="datePicker"
                             matSuffix
-                            class="adf-share-link__icon adf-share-link__calender-icon">
+                            class="adf-share-link__icon">
                         </mat-datepicker-toggle>
                         <mat-datepicker
                             #datePicker
@@ -75,16 +75,16 @@
                 <mat-form-field
                     subscriptSizing="dynamic"
                     floatLabel="always"
-                    class="adf-full-width adf-share-link__form--field"
+                    class="adf-full-width"
                     data-automation-id="adf-content-share-public-link-field"
                     [ngClass]="isLinkWithExpiryDate? 'adf-share-link__border-color' : ''">
+                    <mat-label>{{ 'SHARE.PUBLIC-LINK' | translate }}</mat-label>
                     <input
                         #sharedLinkInput
                         data-automation-id="adf-share-link"
                         class="adf-share-link__input"
                         matInput
                         cdkFocusInitial
-                        placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}"
                         [attr.aria-label]="'SHARE.PUBLIC-LINK' | translate"
                         formControlName="sharedUrl"
                         readonly="readonly">

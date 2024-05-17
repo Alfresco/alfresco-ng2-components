@@ -55,8 +55,17 @@
         color: var(--adf-theme-foreground-text-color-054);
     }
 
-    .adf-property-read-only:not(:has(.adf-property-readonly-value)) {
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+    .adf-property-read-only {
+        &:not(:has(.adf-property-readonly-value)) {
+            border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+        }
+
+        #{$mat-text-field-disabled}:not(:has(.adf-property-readonly-value)) {
+            #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing}, #{$mat-notched-outline-notch} {
+                border: none;
+                background-color: inherit;
+            }
+        }
     }
 
     .adf-property-readonly-value {
