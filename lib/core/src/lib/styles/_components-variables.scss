@@ -89,6 +89,13 @@
         --adf-danger-button-background: $adf-danger-button-background,
         --adf-secondary-button-background: $adf-secondary-button-background,
 
+        --adf-input-text-color: $adf-input-text-color,
+        --adf-input-border-color: $adf-input-border-color,
+        --adf-focused-input-color: $adf-focused-input-color,
+        --adf-error-input-color: $adf-error-input-color,
+        --adf-hint-input-color: $adf-hint-input-color,
+        --adf-disabled-input-color: $adf-disabled-input-color,
+
         --adf-display-external-property-widget-preview-selection-color: mat.get-color-from-palette($foreground, secondary-text)
     );
 
