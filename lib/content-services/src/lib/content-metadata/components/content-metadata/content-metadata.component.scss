@@ -9,22 +9,6 @@ $panel-properties-height: 56px !default;
             border: 1px solid var(--adf-metadata-property-panel-border-color);
             border-radius: 12px;
             margin: 12px;
-
-            .adf-property-list .adf-property .adf-property-field {
-                .adf-property-value:not(.adf-card-view-selectitem .adf-property-value) {
-                    margin-top: 10px;
-                    height: 32px;
-
-                    &:is(textarea) {
-                        padding-top: 6px;
-                    }
-                }
-
-                label {
-                    font-size: 19px;
-                    line-height: 20px;
-                }
-            }
         }
 
         .adf-metadata-properties-header {
@@ -39,15 +23,6 @@ $panel-properties-height: 56px !default;
 
         #{$mat-expansion-panel-body} {
             padding-top: 16px;
-
-            input {
-                border-color: transparent;
-                width: 100%;
-
-                &:focus-visible {
-                    outline: none;
-                }
-            }
         }
 
         .adf-edit-icon-buttons {
