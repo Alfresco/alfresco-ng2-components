@@ -303,8 +303,8 @@ describe('CategoriesManagementComponent', () => {
         it('should have no required validator set for category control', () => {
             expect(component.categoryNameControl.hasValidator(Validators.required)).toBeFalse();
         });
-        //eslint-disable-next-line
-        xit('should display validation error when searching for empty category', fakeAsync(() => {
+
+        it('should display validation error when searching for empty category', fakeAsync(() => {
             typeCategory('   ');
 
             expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.EMPTY_CATEGORY');
@@ -319,8 +319,8 @@ describe('CategoriesManagementComponent', () => {
             expect(component.categoryNameControlVisible).toBeFalse();
             expect(component.categories).toEqual([]);
         });
-        // eslint-disable-next-line
-        xit('should not display create category label', fakeAsync(() => {
+
+        it('should not display create category label', fakeAsync(() => {
             typeCategory('test');
             fixture.detectChanges();
             expect(getCreateCategoryLabel()).toBeUndefined();
@@ -475,8 +475,7 @@ describe('CategoriesManagementComponent', () => {
         }));
 
         describe('Errors', () => {
-            //eslint-disable-next-line
-            xit('should display validation error when searching for empty category', fakeAsync(() => {
+            it('should display validation error when searching for empty category', fakeAsync(() => {
                 typeCategory('   ');
                 component.categoryNameControl.markAsTouched();
                 fixture.detectChanges();

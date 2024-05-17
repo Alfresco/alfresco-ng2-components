@@ -125,8 +125,8 @@ describe('TaskHeaderCloudComponent', () => {
             const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
             expect(statusEl.nativeElement.value).toBe('ASSIGNED');
         });
-        //eslint-disable-next-line
-        xit('should display priority with default values', async () => {
+
+        it('should display priority with default values', async () => {
             fixture.detectChanges();
             const dropdown = await loader.getHarness(MatSelectHarness);
             await dropdown.open();
@@ -419,8 +419,8 @@ describe('TaskHeaderCloudComponent', () => {
             expect(candidateGroup1.innerText).toContain('mockgroup1');
             expect(candidateGroup2.innerText).toContain('mockgroup2');
         });
-        //eslint-disable-next-line
-        xit('should display candidate user', async () => {
+
+        it('should display candidate user', async () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
