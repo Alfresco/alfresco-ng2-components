@@ -18,23 +18,22 @@
 import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SearchCategory } from '../../../models/search-category.interface';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';
 
 @Component({
-  selector: 'adf-search-widget-chip',
-  templateUrl: './search-widget-chip.component.html',
-  styles: [
-      `
-                .adf-search-widget-extra-width.adf-search-filter-chip-menu-panel {
-                  max-width: 500px;
-                }
-              `
-  ],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-search-widget-chip',
+    templateUrl: './search-widget-chip.component.html',
+    styles: [
+        `
+            .adf-search-widget-extra-width.adf-search-filter-chip-menu-panel {
+                max-width: 500px;
+            }
+        `
+    ],
+    encapsulation: ViewEncapsulation.None
 })
-export class SearchWidgetChipComponent  {
-
+export class SearchWidgetChipComponent {
     @Input()
     category: SearchCategory;
 
