@@ -183,10 +183,6 @@
 
     .adf-login-form-field .adf-login-password-icon.adf-login-form-password-icon {
         color: var(--adf-theme-foreground-text-color);
-        font-size: var(--theme-subheading-2-font-size);
-        top: 9px;
-        position: relative;
-        left: 7px;
     }
 
     .adf-login-controls:has(div) {
@@ -204,26 +200,6 @@
             padding-bottom: 16px;
             font-size: var(--theme-subheading-2-font-size);
 
-            #{$mat-form-field-infix} {
-                min-height: 0;
-                padding-bottom: 3px;
-                padding-top: 20px;
-
-                .adf-login-form-input-label {
-                    font-size: var(--theme-subheading-2-font-size);
-                }
-
-                #{$mat-floating-label-float-above} {
-                    padding-bottom: 6px;
-                }
-
-                #{$mat-floating-label--required} {
-                    &::after {
-                        font-size: var(--theme-subheading-2-font-size);
-                    }
-                }
-            }
-
             & input:-webkit-autofill {
                 /* stylelint-disable */
                 -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
@@ -235,16 +211,17 @@
 
     .adf-login-validation {
         background-color: transparent;
-        color: var(--theme-warn-color);
+        color: var(--adf-error-input-color);
         font-size: var(--theme-caption-font-size);
     }
 
     .adf-login-error {
-        color: var(--theme-warn-color);
+        color: var(--adf-error-input-color);
         position: absolute;
         font-size: var(--theme-caption-font-size);
         margin-top: -12px;
         display: block;
+        padding-left: 12px;
     }
 
     .adf-full-width {
