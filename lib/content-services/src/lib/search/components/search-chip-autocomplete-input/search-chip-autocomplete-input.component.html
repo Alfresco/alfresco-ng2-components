@@ -1,4 +1,5 @@
-<mat-form-field class="adf-chip-list" appearance="outline">
+<mat-form-field class="adf-chip-list">
+    <mat-label>{{ placeholder | translate }}</mat-label>
     <mat-chip-grid #chipList [attr.aria-label]="'SEARCH.FILTER.ARIA-LABEL.OPTIONS-SELECTION' | translate">
         <mat-chip-row
             class="adf-option-chips adf-autocomplete-added-option-chips"
@@ -16,7 +17,6 @@
             </button>
         </mat-chip-row>
         <input
-            placeholder="{{ placeholder | translate }}"
             aria-controls="adf-search-chip-autocomplete"
             #optionInput
             [formControl]="formCtrl"

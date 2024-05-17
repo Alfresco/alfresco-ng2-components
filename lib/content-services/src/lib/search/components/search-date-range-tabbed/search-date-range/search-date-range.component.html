@@ -28,12 +28,19 @@
       <mat-radio-button [value]="DateRangeType.BETWEEN" data-automation-id="date-range-between">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
       </mat-radio-button>
-      <mat-form-field class="adf-search-date-range-form-field" subscriptSizing="dynamic">
+      <mat-form-field class="adf-search-date-range-form-field">
+        <mat-label>{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDER' | translate }}</mat-label>
         <mat-date-range-input [rangePicker]="$any(picker)" [max]="convertedMaxDate">
-          <input matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}"
-                 data-automation-id="date-range-between-start-input" [formControl]="betweenStartDateFormControl" (change)="dateChanged($event, betweenStartDateFormControl)">
-          <input matEndDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.END_DATE' | translate }}"
-                 data-automation-id="date-range-between-end-input" [formControl]="betweenEndDateFormControl" (change)="dateChanged($event, betweenEndDateFormControl)">
+          <input
+              matStartDate
+              data-automation-id="date-range-between-start-input"
+              [formControl]="betweenStartDateFormControl"
+              (change)="dateChanged($event, betweenStartDateFormControl)">
+          <input
+              matEndDate
+              data-automation-id="date-range-between-end-input"
+              [formControl]="betweenEndDateFormControl"
+              (change)="dateChanged($event, betweenEndDateFormControl)">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker" data-automation-id="date-range-between-datepicker-toggle"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>

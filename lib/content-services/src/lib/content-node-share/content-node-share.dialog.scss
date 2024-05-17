@@ -34,15 +34,6 @@
 
         &__form {
             padding-top: 8px;
-
-            #{$mat-form-field-infix}:has(.adf-share-link__input) {
-                border-top: 0.9375em solid transparent;
-                height: 16px;
-            }
-
-            &--field {
-                padding-bottom: 16px;
-            }
         }
 
         &__public-content {
@@ -64,12 +55,12 @@
             margin: 8px 0;
 
             &-sharable {
-                margin-bottom: 0;
+                margin-bottom: 14px;
             }
         }
 
         &--sharable-container {
-            margin-bottom: 0;
+            margin-bottom: 14px;
         }
 
         &--header {
@@ -116,23 +107,30 @@
             font-size: 22px;
         }
 
-        &__calender-icon {
-            top: 12px;
-            position: relative;
-            right: -6px;
-
-            svg {
-                height: 18px;
-                width: 18px;
-            }
-        }
-
         &__date-time-container {
-            padding-bottom: 20px;
+            padding-bottom: 2px;
         }
 
         &__border-color {
-            border: 1px solid var(--theme-warn-color-a700);
+            &.adf-full-width {
+                &#{$mat-form-field} {
+                    &#{$mat-form-field-label-always-float} {
+                        &#{$mat-form-field-appearance-outline} {
+                            #{$mat-text-field-outlined}, #{$mat-text-field-outlined}:hover {
+                                #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing}, #{$mat-notched-outline-notch} {
+                                    border-color: var(--theme-warn-color-a700);
+                                    border-width: 2px;
+                                }
+
+                                #{$mat-notched-outline-notch} {
+                                    border-left: none;
+                                    border-left-width: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
