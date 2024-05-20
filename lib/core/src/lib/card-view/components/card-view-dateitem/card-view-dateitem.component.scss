@@ -9,33 +9,28 @@
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
         margin-top: 10px;
 
-        &:not(.adf-property-readonly-value) {
-            #{$mat-text-field-disabled} {
-                #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing}, #{$mat-notched-outline-notch} {
-                    border: none;
-                    background-color: inherit;
-                }
+        &.adf-property-value-editable {
+            display: flex;
+            align-items: center;
+            border-radius: 6px;
+            border-bottom: inherit;
+            margin-bottom: 18px;
+        }
 
-                #{$mat-select-arrow-wrapper} {
-                    display: none;
-                }
-            }
+        &.adf-property-readonly-value {
+            padding: 0 0 0 12px;
         }
     }
 
-    #{$mat-form-field-wrapper} {
-        #{$mat-form-field-input-control} {
-            &.adf-invisible-date-input {
-                height: 0;
-                width: 0;
-                overflow: hidden;
-                opacity: 0;
-                border: none;
-                margin: 0;
-                padding: 0;
-                float: right;
-            }
-        }
+    .adf-invisible-date-input {
+        height: 2px;
+        width: 0;
+        overflow: hidden;
+        opacity: 0;
+        border: none;
+        margin: 0;
+        padding: 0;
+        float: right;
     }
 
     .adf-dateitem-chip-list-container.adf-property-field {
@@ -45,7 +40,8 @@
     }
 
     .adf-dateitem-editable {
-        width: 100%;
+        cursor: pointer;
+        padding: 0 12px;
 
         /* stylelint-disable-next-line no-descending-specificity */
         &-controls {
@@ -61,6 +57,8 @@
             }
 
             #{$mat-icon} {
+                width: 16px;
+                height: 16px;
                 opacity: 0.5;
 
                 &:hover {
@@ -73,6 +71,9 @@
             }
 
             .adf-date-reset-icon {
+                line-height: 10px;
+                position: relative;
+                top: 4px;
                 padding: 0 8px;
             }
         }
