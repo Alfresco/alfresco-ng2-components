@@ -1,6 +1,18 @@
 .adf-categories-management {
     .adf-category-name-field {
+        justify-content: space-between;
         width: 100%;
+        color: var(--adf-metadata-property-panel-text-color);
+        background: var(--adf-metadata-buttons-background-color);
+        height: 32px;
+        border-radius: 12px;
+        align-items: center;
+
+        input {
+            background-color: transparent;
+            padding: 7px 8px 8px;
+            width: 100%;
+        }
     }
 
     .adf-assigned-categories {
