@@ -20,20 +20,17 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field subscriptSizing="dynamic" class="adf-search-properties-file-size">
-            <mat-label>{{ 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate }}</mat-label>
-            <input
-                matInput
-                [formControl]="form.controls.fileSize"
-                type="number"
-                min="0"
-                step="any"
-                (input)="narrowDownAllowedCharacters($event)"
-                (keydown)="preventIncorrectNumberCharacters($event)"
-                id="adf-search-properties-file-size"
-                (blur)="clearNumberFieldWhenInvalid($event)"
-                data-automation-id="adf-search-properties-file-size-input" />
-        </mat-form-field>
+        <input
+            [formControl]="form.controls.fileSize"
+            type="number"
+            min="0"
+            step="any"
+            (input)="narrowDownAllowedCharacters($event)"
+            (keydown)="preventIncorrectNumberCharacters($event)"
+            id="adf-search-properties-file-size"
+            [placeholder]="'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate"
+            (blur)="clearNumberFieldWhenInvalid($event)"
+            data-automation-id="adf-search-properties-file-size-input" />
         <mat-form-field class="adf-search-properties-file-size-unit" subscriptSizing="dynamic">
             <mat-select
                 [formControl]="form.controls.fileSizeUnit"
