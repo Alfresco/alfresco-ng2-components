@@ -1,11 +1,11 @@
-<mat-form-field class="adf-permission-search-input">
-    <mat-label>{{ 'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate }}</mat-label>
+<mat-form-field appearance="outline" floatPlaceholder="never" class="adf-permission-search-input">
     <input
         matInput
         id="searchInput"
         [formControl]="searchInput"
         type="text"
         title="{{ 'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate }}"
+        placeholder="{{ 'PERMISSION_MANAGER.ADD-PERMISSION.SEARCH' | translate }}"
         [value]="searchedWord"
     />
 
