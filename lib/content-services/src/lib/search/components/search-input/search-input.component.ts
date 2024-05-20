@@ -16,10 +16,12 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppConfigService } from '../../../../../../core';
+import { SearchConfiguration } from '../../models';
 
 @Component({
     selector: 'adf-search-input',
@@ -29,7 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
     styleUrls: ['./search-input.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchInputComponent {
+export class SearchInputComponent implements OnInit {
     @Input()
     value = '';
 
@@ -44,6 +46,15 @@ export class SearchInputComponent {
 
     @Output()
     changed = new EventEmitter<string>();
+
+    constructor(private appConfig: AppConfigService) {}
+
+    ngOnInit(): void {
+        const searchConfig = this.appConfig.get<SearchConfiguration>('search-headers') || {};
+        if (searchConfig['app:fields']) {
+            this.fields = searchConfig['app:fields'];
+        }
+    }
 
     onSearchInputChanged(event: Event) {
         const input = event.target as HTMLInputElement;
