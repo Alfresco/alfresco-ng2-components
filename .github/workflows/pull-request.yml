@@ -107,7 +107,7 @@ jobs:
           repo: Alfresco/hxp-frontend-apps
           ref: develop
           workflow: upstream-adf.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ALFRESCO_BUILD_GH_TOKEN }}
           wait-for-completion: false
           inputs: >
             {
