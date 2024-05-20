@@ -19,7 +19,6 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CoreTestingModule } from '@alfresco/adf-core';
-
 import { DisplayRichTextWidgetComponent } from './display-rich-text.widget';
 
 describe('DisplayRichTextWidgetComponent', () => {
@@ -44,28 +43,40 @@ describe('DisplayRichTextWidgetComponent', () => {
                         text: 'Editor.js',
                         level: 1
                     }
+                },
+                {
+                    id: '2',
+                    type: 'paragraph',
+                    data: {
+                        text: 'Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark>'
+                    }
                 }
             ],
             version: 1
-        },
-        required: false,
-        readOnly: false,
-        overrideId: false,
-        colspan: 1,
-        placeholder: null,
-        minLength: 0,
-        maxLength: 0,
-        params: {
-            existingColspan: 1,
-            maxColspan: 1
+        }
+    };
+
+    const mockUnsafeFormField: any = {
+        id: 'fake-unsafe-form-field',
+        name: 'fake-label',
+        value: {
+            time: 1658154611110,
+            blocks: [
+                {
+                    id: '1',
+                    type: 'paragraph',
+                    data: {
+                        text: '<img src="x" onerror="alert(\'XSS\')">'
+                    }
+                }
+            ],
+            version: 1
         }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(DisplayRichTextWidgetComponent);
         widget = fixture.componentInstance;
@@ -79,11 +90,22 @@ describe('DisplayRichTextWidgetComponent', () => {
     });
 
     it('should parse editorjs data to html', async () => {
-        const expectedHtml = '<h1>Editor.js</h1>';
+        const expectedHtml = '<h1>Editor.js</h1><p>Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark></p>';
+
         fixture.detectChanges();
         await fixture.whenStable();
+
         const parsedHtmlEl = debugEl.query(By.css(cssSelector.parsedHTML));
         expect(parsedHtmlEl.nativeElement.innerHTML).toEqual(expectedHtml);
     });
 
+    it('should sanitize unsafe HTML', async () => {
+        widget.field = mockUnsafeFormField;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const parsedHtmlEl = debugEl.query(By.css(cssSelector.parsedHTML));
+        expect(parsedHtmlEl.nativeElement.innerHTML.includes('<img src="x" onerror="alert(\'XSS\')">')).toBe(false);
+    });
 });
