@@ -220,7 +220,7 @@ jobs:
           repo: Alfresco/hxp-frontend-apps
           ref: develop
           workflow: upstream-adf.yml
-          token: ${{ secrets.HYLAND_GH_PACKAGES_READ_ONLY_TOKEN }}
+          token: ${{ secrets.ALFRESCO_BUILD_GH_TOKEN }}
           wait-for-completion: false
           inputs: >
             {
