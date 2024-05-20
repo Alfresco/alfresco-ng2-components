@@ -4,22 +4,26 @@
 adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
-
-        mat-chip-grid {
-            padding-left: 9px;
-        }
-
-        .adf-search-properties-file-input {
-            margin-left: 0;
-        }
     }
 
     .adf-chip-list:has(#{$mat-notched-outline}) {
-        margin-top: 2px;
+        margin-top: 4px;
     }
 
     #{$mat-form--text-field-infix} {
         border: none;
+    }
+
+    .adf-chip-list#{$mat-form-field} {
+        #{$mat-form-field-infix} {
+            padding-top: 14px;
+            padding-bottom: 14px;
+            min-height: unset;
+        }
+    }
+
+    .adf-search-properties-file-input {
+        margin-left: 3px;
     }
 
     .adf-autocomplete-added-option-chips.adf-option-chips {

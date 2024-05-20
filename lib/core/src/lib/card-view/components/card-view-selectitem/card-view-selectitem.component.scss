@@ -24,6 +24,17 @@
         #{$mat-form-field-wrapper} {
             background-color: initial;
         }
+
+        /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+        mat-select {
+            padding: 6px 0 8px 12px;
+            margin-top: 0;
+            border-radius: 6px;
+
+            #{$mat-select-value} {
+                color: var(--adf-metadata-action-button-clear-color);
+            }
+        }
     }
 
     #{$mat-form-field-subscript-wrapper} {
@@ -31,19 +42,9 @@
     }
 
     .adf-property-read-only {
+        padding: 6px 0;
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
         color: var(--adf-metadata-property-panel-title-color);
-
-        #{$mat-text-field-disabled}:not(:has(.adf-property-readonly-value)) {
-            #{$mat-notched-outline-leading}, #{$mat-notched-outline-trailing}, #{$mat-notched-outline-notch} {
-                border: none;
-                background-color: inherit;
-            }
-
-            #{$mat-select-arrow-wrapper} {
-                display: none;
-            }
-        }
     }
 
     .mdc-line-ripple {
