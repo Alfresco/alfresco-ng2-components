@@ -94,7 +94,6 @@ env:
   PROXY_HOST_ECM: ${{ secrets.E2E_HOST }}
 
 jobs:
-
   pre-checks:
     runs-on: ubuntu-latest
     steps:
