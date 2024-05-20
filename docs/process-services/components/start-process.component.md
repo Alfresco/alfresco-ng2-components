@@ -38,27 +38,27 @@ Starts a process.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| appId | `number` |  | (optional) Limit the list of processes that can be started to those contained in the specified app. |
-| name | `string` | "" | (optional) Name to assign to the current process. |
-| processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
-| processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
-| showSelectApplicationDropdown | `boolean` | false | (optional) Hide or show application selection dropdown. |
-| showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
-| title | `string` |  | (optional) Define the header of the component. |
-| values | [`FormValues`](../../../lib/core/src/lib/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
-| variables | [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/RestVariable.md). |
+| Name                          | Type             | Default value | Description                                                                                                                                                      |
+|-------------------------------|------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| appId                         | `number`         |               | (optional) Limit the list of processes that can be started to those contained in the specified app.                                                              |
+| name                          | `string`         | ""            | (optional) Name to assign to the current process.                                                                                                                |
+| processDefinitionName         | `string`         |               | (optional) Definition name of the process to start.                                                                                                              |
+| processFilterSelector         | `boolean`        | true          | (optional) Parameter to enable selection of process when filtering.                                                                                              |
+| showSelectApplicationDropdown | `boolean`        | false         | (optional) Hide or show application selection dropdown.                                                                                                          |
+| showSelectProcessDropdown     | `boolean`        | true          | Hide or show the process selection dropdown.                                                                                                                     |
+| title                         | `string`         |               | (optional) Define the header of the component.                                                                                                                   |
+| values                        | `FormValues`     |               | Parameter to pass form field values in the start form if one is associated.                                                                                      |
+| variables                     | `RestVariable[]` |               | Variables in the input to the process [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/RestVariable.md). |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| applicationSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when application selection changes. |
-| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the process is canceled. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| processDefinitionSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md)`>` | Emitted when process definition selection changes. |
-| start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
+| Name                       | Type                                            | Description                                        |
+|----------------------------|-------------------------------------------------|----------------------------------------------------|
+| applicationSelection       | `EventEmitterAppDefinitionRepresentation>`      | Emitted when application selection changes.        |
+| cancel                     | `EventEmitter<void>`                            | Emitted when the process is canceled.              |
+| error                      | `EventEmitter<any>`                             | Emitted when an error occurs.                      |
+| processDefinitionSelection | `EventEmitter<ProcessDefinitionRepresentation>` | Emitted when process definition selection changes. |
+| start                      | `EventEmitter<ProcessInstance>`                 | Emitted when the process starts.                   |
 
 ## Details
 
@@ -123,8 +123,8 @@ to _alfresco-1002_ as follows:
     "application": {
         "name": "Alfresco ADF Application"
     },
-    "ecmHost": "http://{hostname}{:port}/ecm",
-    "bpmHost": "http://{hostname}{:port}/bpm",
+    "ecmHost": "https://{hostname}{:port}/ecm",
+    "bpmHost": "https://{hostname}{:port}/bpm",
     "logLevel": "silent",
     "alfrescoRepositoryName": "alfresco-1002"
 }       
@@ -135,10 +135,10 @@ You then need to pass the node as the input `values` object with the other prope
 ```ts
 let node: Node = null;
 
- this.nodesApiService.getNode(NODE_ID).subscribe((res) => this.node = res);
+this.nodesApiService.getNode(NODE_ID).subscribe((res) => this.node = res);
 
 const formValues: FormValues  = {
-    'file' : node
+    'file' : node,
     'field_one': 'example text'
 };
 ```
@@ -149,20 +149,19 @@ You could pass multiple nodes too:
 const nodes: string[] = [NODE_ID_1, NODE_ID_2];
 
 const values: FormValues = {
-        'files': []
-      };
+  'files': []
+};
 
-      Observable.from(nodes)
-        .flatMap((nodeId) => this.nodesApiService.getNode(nodeId))
-        .subscribe(
-              (node) => {
-                values.files.push(node);
-              },
-              (error) => console.log(error) ,
-              () => {
-                this.formValues = values;
-              });
-    });
+Observable.from(nodes)
+  .flatMap((nodeId) => this.nodesApiService.getNode(nodeId))
+  .subscribe(
+    (node) => {
+        values.files.push(node);
+    },
+  (error) => console.log(error),
+  () => {
+    this.formValues = values;
+  });
 ```
 
 Note that in the object above, the key `file` is the name of the attach file field in the start form of the process. The value of the `file` property must be a
@@ -211,9 +210,11 @@ When an error occurs, the component will emit an error event that can be used to
 ```
 
 ```ts
+class StartProcessComponent {
     onError(error) {
         this.notificationService.showError(event.response.body.message);
     }
+}
 ```
 
 ## See also

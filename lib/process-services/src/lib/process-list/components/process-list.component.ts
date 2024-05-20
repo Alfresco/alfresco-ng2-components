@@ -31,14 +31,35 @@ import {
     DEFAULT_PAGINATION
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
-import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs';
-import { ProcessListModel } from '../models/process-list.model';
 import { finalize } from 'rxjs/operators';
+import {
+    ProcessInstanceQueryRepresentation,
+    ProcessInstanceQueryRepresentationSort,
+    ProcessInstanceQueryRepresentationState,
+    ResultListDataRepresentationProcessInstanceRepresentation
+} from '@alfresco/js-api';
 
 const PRESET_KEY = 'adf-process-list.presets';
+
+export const processPresetsDefaultModel = {
+    default: [
+        {
+            key: 'name',
+            type: 'text',
+            title: 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+            sortable: true
+        },
+        {
+            key: 'created',
+            type: 'text',
+            title: 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
+            cssClass: 'hidden',
+            sortable: true
+        }
+    ]
+};
 
 @Component({
     selector: 'adf-process-instance-list',
@@ -62,18 +83,17 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /** The id of the process instance. */
     @Input()
-    processInstanceId: number | string;
+    processInstanceId: string;
 
-    /** Defines the state of the processes. Possible values are `running`, `completed` and `all` */
+    /** Defines the state of the processes. */
     @Input()
-    state: string;
+    state: ProcessInstanceQueryRepresentationState;
 
     /**
-     * Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`,
-     * `ended-desc`, `ended-asc`.
+     * Defines the sort ordering of the list.
      */
     @Input()
-    sort: string;
+    sort: ProcessInstanceQueryRepresentationSort;
 
     /** The page number of the processes to fetch. */
     @Input()
@@ -137,14 +157,14 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     /** Emitted when the list of process instances has been loaded successfully from the server. */
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
-    success = new EventEmitter<ProcessListModel>();
+    success = new EventEmitter<ResultListDataRepresentationProcessInstanceRepresentation>();
 
     /** Emitted when an error occurs while loading the list of process instances from the server. */
     // eslint-disable-next-line @angular-eslint/no-output-native
     @Output()
     error = new EventEmitter<any>();
 
-    requestNode: ProcessFilterParamRepresentationModel;
+    requestNode: ProcessInstanceQueryRepresentation;
     currentInstanceId: string;
     isLoading: boolean = true;
     rows: any[] = [];
@@ -271,8 +291,8 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         return skipCount && maxItems ? Math.floor(skipCount / maxItems) : 0;
     }
 
-    private createRequestNode(): ProcessFilterParamRepresentationModel {
-        return new ProcessFilterParamRepresentationModel({
+    private createRequestNode(): ProcessInstanceQueryRepresentation {
+        return {
             appDefinitionId: this.appId,
             processDefinitionId: this.processDefinitionId,
             processInstanceId: this.processInstanceId,
@@ -281,7 +301,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
             page: this.page,
             size: this.size,
             start: 0
-        });
+        };
     }
 
     private isSortChanged(changes: SimpleChanges): boolean {
@@ -318,7 +338,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         return changed;
     }
 
-    private load(requestNode: ProcessFilterParamRepresentationModel) {
+    private load(requestNode: ProcessInstanceQueryRepresentation) {
         this.isLoading = true;
         this.processService
             .getProcesses(requestNode)
@@ -329,7 +349,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
                     this.selectFirst();
                     this.success.emit(response);
                     this.pagination.next({
-                        count: response.data.length,
+                        count: (response.data || []).length,
                         maxItems: this.size,
                         skipCount: this.page * this.size,
                         totalItems: response.total

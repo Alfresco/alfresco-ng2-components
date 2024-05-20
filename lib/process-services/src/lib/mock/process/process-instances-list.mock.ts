@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { ProcessListModel } from '../../process-list/models/process-list.model';
+import { ResultListDataRepresentationProcessInstanceRepresentation } from '@alfresco/js-api';
 
-export const fakeProcessInstance = new ProcessListModel({
+export const fakeProcessInstance: ResultListDataRepresentationProcessInstanceRepresentation = {
     size: 2,
     total: 2,
     start: 0,
@@ -28,7 +28,7 @@ export const fakeProcessInstance = new ProcessListModel({
             businessKey: null,
             processDefinitionId: 'fakeprocess:5:7507',
             tenantId: 'tenant_1',
-            started: '2015-11-09T12:36:14.184+0000',
+            started: new Date('2015-11-09T12:36:14.184+0000'),
             ended: null,
             startedBy: {
                 id: 3,
@@ -58,7 +58,7 @@ export const fakeProcessInstance = new ProcessListModel({
             businessKey: null,
             processDefinitionId: 'fakeprocess:5:7507',
             tenantId: 'tenant_1',
-            started: '2018-01-10T17:02:22.597+0000',
+            started: new Date('2018-01-10T17:02:22.597+0000'),
             ended: null,
             startedBy: {
                 id: 3,
@@ -83,7 +83,7 @@ export const fakeProcessInstance = new ProcessListModel({
             ]
         }
     ]
-});
+};
 
 export const fakeProcessInstancesWithNoName = {
     size: 2,
@@ -125,12 +125,12 @@ export const fakeProcessInstancesWithNoName = {
     ]
 };
 
-export const fakeProcessInstancesEmpty = new ProcessListModel({
+export const fakeProcessInstancesEmpty: ResultListDataRepresentationProcessInstanceRepresentation = {
     size: 0,
     total: 0,
     start: 0,
     data: []
-});
+};
 
 export const fakeProcessCustomSchema = [
     {

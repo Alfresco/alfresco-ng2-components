@@ -15,47 +15,15 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { CoreModule } from '@alfresco/adf-core';
 import { PeopleComponent } from './components/people/people.component';
 import { PeopleListComponent } from './components/people-list/people-list.component';
 import { PeopleSearchComponent } from './components/people-search/people-search.component';
 import { PeopleSearchFieldComponent } from './components/people-search-field/people-search-field.component';
 import { PeopleSelectorComponent } from './components/people-selector/people-selector.component';
 
-import { PeopleSearchActionLabelDirective } from './directives/people-search-action-label.directive';
-import { PeopleSearchTitleDirective } from './directives/people-search-title.directive';
-
 @NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        CommonModule,
-        CoreModule
-    ],
-    declarations: [
-        PeopleComponent,
-        PeopleSearchComponent,
-        PeopleSearchFieldComponent,
-        PeopleSelectorComponent,
-        PeopleSearchTitleDirective,
-        PeopleSearchActionLabelDirective,
-        PeopleListComponent
-    ],
-    exports: [
-        PeopleComponent,
-        PeopleSearchComponent,
-        PeopleSearchFieldComponent,
-        PeopleSelectorComponent,
-        PeopleSearchTitleDirective,
-        PeopleSearchActionLabelDirective,
-        PeopleListComponent
-    ]
+    imports: [PeopleComponent, PeopleSearchComponent, PeopleSearchFieldComponent, PeopleSelectorComponent, PeopleListComponent],
+    exports: [PeopleComponent, PeopleSearchComponent, PeopleSearchFieldComponent, PeopleSelectorComponent, PeopleListComponent]
 })
-export class PeopleModule {
-}
+export class PeopleModule {}

@@ -16,27 +16,27 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { UserProcessModel } from '../models/user-process.model';
 import { PeopleProcessService } from './people-process.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
-const firstInvolvedUser: UserProcessModel = new UserProcessModel({
+const firstInvolvedUser: LightUserRepresentation = {
     id: 1,
     email: 'fake-user1@fake.com',
     firstName: 'fakeName1',
     lastName: 'fakeLast1'
-});
+};
 
-const secondInvolvedUser: UserProcessModel = new UserProcessModel({
+const secondInvolvedUser: LightUserRepresentation = {
     id: 2,
     email: 'fake-user2@fake.com',
     firstName: 'fakeName2',
     lastName: 'fakeLast2'
-});
+};
 
-const fakeInvolveUserList: UserProcessModel[] = [firstInvolvedUser, secondInvolvedUser];
+const fakeInvolveUserList: LightUserRepresentation[] = [firstInvolvedUser, secondInvolvedUser];
 
 const errorResponse = { error: new Error('Unsuccessful HTTP response') };
 
@@ -60,7 +60,7 @@ describe('PeopleProcessService', () => {
         });
 
         it('should be able to retrieve people to involve in the task', fakeAsync(() => {
-            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users: UserProcessModel[]) => {
+            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(2);
                 expect(users[0].id).toEqual(1);
@@ -77,11 +77,11 @@ describe('PeopleProcessService', () => {
         }));
 
         it('should be able to get people images for people retrieved', fakeAsync(() => {
-            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users: UserProcessModel[]) => {
+            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(2);
-                expect(service.getUserImage(users[0])).toContain('/users/' + users[0].id + '/picture');
-                expect(service.getUserImage(users[1])).toContain('/users/' + users[1].id + '/picture');
+                expect(service.getUserImage(users[0].id.toString())).toContain('/users/' + users[0].id + '/picture');
+                expect(service.getUserImage(users[1].id.toString())).toContain('/users/' + users[1].id + '/picture');
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -92,13 +92,13 @@ describe('PeopleProcessService', () => {
         }));
 
         it('should return user image url', () => {
-            const url = service.getUserImage(firstInvolvedUser);
+            const url = service.getUserImage(firstInvolvedUser.id.toString());
 
             expect(url).toContain('/users/' + firstInvolvedUser.id + '/picture');
         });
 
         it('should return empty list when there are no users to involve', fakeAsync(() => {
-            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users: UserProcessModel[]) => {
+            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe((users) => {
                 expect(users).toBeDefined();
                 expect(users.length).toBe(0);
             });
