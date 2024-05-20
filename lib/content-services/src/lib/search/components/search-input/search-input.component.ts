@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
+import { AppConfigService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppConfigService } from '../../../../../../core';
 import { SearchConfiguration } from '../../models';
 
 @Component({
@@ -50,7 +50,7 @@ export class SearchInputComponent implements OnInit {
     constructor(private appConfig: AppConfigService) {}
 
     ngOnInit(): void {
-        const searchConfig = this.appConfig.get<SearchConfiguration>('search-headers') || {};
+        const searchConfig = this.appConfig.get<SearchConfiguration>('search') || {};
         if (searchConfig['app:fields']) {
             this.fields = searchConfig['app:fields'];
         }
