@@ -2,12 +2,12 @@
 Title: Search text component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2024-04-05
+Last reviewed: 2024-05-13
 ---
 
 # [Search text component](../../../lib/content-services/src/lib/search/components/search-text/search-text.component.ts "Defined in search-text.component.ts")
 
-Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 4 inputs representing logical conditions to form search query from.
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of a input representing a value used in search query to specify field contents.
 
 ![Text Widget](../../docassets/images/search-text.png)
 
