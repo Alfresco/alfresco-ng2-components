@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Form service](../../../lib/core/src/lib/form/services/form.service.ts "Defined in form.service.ts")
+# Form Service
 
 Implements Process Services form methods
 
@@ -13,11 +13,9 @@ Implements Process Services form methods
 ```ts
 import { FormService, FormEvent, FormFieldEvent } from '@alfresco/adf-core';
 
-@Component(...)
+@Component()
 class MyComponent {
-
     constructor(formService: FormService) {
-
         formService.formLoaded.subscribe(
             (e: FormEvent) => {
                 console.log(`Form loaded: ${e.form.id}`);
@@ -29,9 +27,7 @@ class MyComponent {
                 console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
             }
         );
-
     }
-
 }
 ```
 
@@ -173,33 +169,25 @@ class MyComponent {
 
     -   `userId` - ID of the target user
 
--   [`getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]>`](../../core/models/user-process.model.md)  
+-   `getWorkflowUsers(filter: string, groupId?: string): Observable<LightUserRepresentation[]>`  
     Gets a list of workflow users.  
 
     -   `filter` - Filter to select specific users
     -   `groupId` - (Optional) Group ID for the search
 
--   [`getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`](../../../lib/core/src/lib/form/components/widgets/core/group.model.ts)  
-    Gets a list of groups in a workflow.  
-
+-   `getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`
+    Gets a list of groups in a workflow.
     -   `filter` - Filter to select specific groups
     -   `groupId` - (Optional) Group ID for the search
-
 -   `getFormId(res: any): string`  
-    Gets the ID of a form.  
-
+    Gets the ID of a form.
     -   `res` - Object representing a form
-
 -   `toJson(res: any): any`  
-    Creates a JSON representation of form data.  
-
+    Creates a JSON representation of form data.
     -   `res` - Object representing form data
-
 -   `toJsonArray(res: any): any`  
-    Creates a JSON array representation of form data.  
-
+    Creates a JSON array representation of form data.
     -   `res` - Object representing form data
-
 -   `handleError(error: any):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Reports an error message.  
     -   `error` - Data object with optional \`message\` and \`status\` fields for the error

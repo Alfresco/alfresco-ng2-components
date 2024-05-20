@@ -24,7 +24,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { UserProcessModel } from '../../common/models/user-process.model';
 import { isValid } from 'date-fns';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
@@ -106,7 +105,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.taskForm.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
     }
 
-    whitespaceValidator(control: UntypedFormControl): any {
+    private whitespaceValidator(control: UntypedFormControl): any {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
             const isControlValid = control.value.length === 0 || !isWhitespace;
@@ -136,9 +135,10 @@ export class StartTaskComponent implements OnInit, OnDestroy {
                 switchMap((createRes) =>
                     this.attachForm(createRes.id, this.taskDetailsModel.formKey).pipe(
                         defaultIfEmpty(createRes),
-                        switchMap((attachRes) =>
-                            this.assignTaskByUserId(createRes.id, this.assigneeId).pipe(defaultIfEmpty(attachRes ? attachRes : createRes))
-                        )
+                        switchMap((attachRes) => {
+                            const assigneeId = this.assigneeId ? this.assigneeId.toString() : null;
+                            return this.assignTaskByUserId(createRes.id, assigneeId).pipe(defaultIfEmpty(attachRes ? attachRes : createRes));
+                        })
                     )
                 )
             )
@@ -154,16 +154,12 @@ export class StartTaskComponent implements OnInit, OnDestroy {
             );
     }
 
-    getAssigneeId(userId: number): void {
+    setAssigneeId(userId: number): void {
         this.assigneeId = userId;
     }
 
     onCancel(): void {
         this.cancel.emit();
-    }
-
-    isUserNameEmpty(user: UserProcessModel): boolean {
-        return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
@@ -209,10 +205,6 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return this.taskForm.get('description');
     }
 
-    get formKeyController(): AbstractControl {
-        return this.taskForm.get('formKey');
-    }
-
     private attachForm(taskId: string, formKey: string): Observable<any> {
         let response: any = EMPTY;
         if (taskId && formKey) {
@@ -221,7 +213,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return response;
     }
 
-    private assignTaskByUserId(taskId: string, userId: any): Observable<TaskDetailsModel> {
+    private assignTaskByUserId(taskId: string, userId: string): Observable<TaskDetailsModel> {
         if (taskId && userId) {
             return this.taskService.assignTaskByUserId(taskId, userId);
         }
@@ -230,9 +222,5 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     private loadFormsTask(): void {
         this.forms$ = this.taskService.getFormList();
-    }
-
-    private isEmpty(data: string): boolean {
-        return data === undefined || data === null || data.trim().length === 0;
     }
 }

@@ -15,14 +15,27 @@
  * limitations under the License.
  */
 
-import { CommentModel } from '@alfresco/adf-core';
+import { ADF_COMMENTS_SERVICE, CommentListModule, CommentModel } from '@alfresco/adf-core';
 import { CommentProcessService } from './services/comment-process.service';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Observable, Observer, Subject } from 'rxjs';
 import { share, takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-process-instance-comments',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatInputModule, CommentListModule, FormsModule],
+    providers: [
+        {
+            provide: ADF_COMMENTS_SERVICE,
+            useClass: CommentProcessService
+        }
+    ],
     templateUrl: './process-comments.component.html',
     styleUrls: ['./process-comments.component.scss'],
     encapsulation: ViewEncapsulation.None,

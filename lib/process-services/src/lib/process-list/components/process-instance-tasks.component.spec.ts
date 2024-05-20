@@ -21,13 +21,13 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
 import { taskDetailsMock } from '../../mock';
-import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatListItemHarness } from '@angular/material/list/testing';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('ProcessInstanceTasksComponent', () => {
     let component: ProcessInstanceTasksComponent;
@@ -35,7 +35,7 @@ describe('ProcessInstanceTasksComponent', () => {
     let loader: HarnessLoader;
     let processService: ProcessService;
 
-    const exampleProcessInstance = new ProcessInstance({ id: '123' });
+    const exampleProcessInstance: ProcessInstanceRepresentation = { id: '123' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({

@@ -33,7 +33,7 @@ export class AttachmentComponent implements OnChanges {
      *  attachment from the user within the component.
      */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /**
      * Emitted when an attachment is created or uploaded successfully
@@ -42,7 +42,7 @@ export class AttachmentComponent implements OnChanges {
     @Output()
     success = new EventEmitter<any>();
 
-    constructor(private activitiContentService: ProcessContentService) {}
+    constructor(private processContentService: ProcessContentService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['taskId']?.currentValue) {
@@ -58,7 +58,7 @@ export class AttachmentComponent implements OnChanges {
             const opts = {
                 isRelatedContent: true
             };
-            this.activitiContentService.createTaskRelatedContent(this.taskId, file, opts).subscribe(
+            this.processContentService.createTaskRelatedContent(this.taskId, file, opts).subscribe(
                 (res) => {
                     this.success.emit(res);
                 },

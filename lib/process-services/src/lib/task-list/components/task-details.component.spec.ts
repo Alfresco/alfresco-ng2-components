@@ -28,18 +28,18 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskService } from '../../form/services/task.service';
 import { TaskFormService } from '../../form/services/task-form.service';
 import { TaskCommentsService } from '../../task-comments/services/task-comments.service';
-import { UserProcessModel } from '../../common/models/user-process.model';
 import { PeopleProcessService } from '../../common/services/people-process.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
-const fakeUser = new UserProcessModel({
-    id: 'fake-id',
+const fakeUser: LightUserRepresentation = {
+    id: 0,
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
-});
+};
 
 const fakeTaskAssignResponse = new TaskDetailsModel({
     id: 'fake-id',
@@ -385,18 +385,20 @@ describe('TaskDetailsComponent', () => {
                         id: 1,
                         firstName: 'fake-test-1',
                         lastName: 'fake-last-1',
-                        email: 'fake-test-1@test.com'
+                        email: 'fake-test-1@test.com',
+                        avatarId: '1'
                     },
                     {
                         id: 2,
                         firstName: 'fake-test-2',
                         lastName: 'fake-last-2',
-                        email: 'fake-test-2@test.com'
+                        email: 'fake-test-2@test.com',
+                        avatarId: '2'
                     }
                 ])
             );
 
-            let lastValue: UserProcessModel[];
+            let lastValue: LightUserRepresentation[];
             component.peopleSearch.subscribe((users) => (lastValue = users));
             component.searchUser('fake-search-word');
 
@@ -410,7 +412,7 @@ describe('TaskDetailsComponent', () => {
         it('should return an empty list for not valid search', () => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
-            let lastValue: UserProcessModel[];
+            let lastValue: LightUserRepresentation[];
             component.peopleSearch.subscribe((users) => (lastValue = users));
             component.searchUser('fake-search-word');
 

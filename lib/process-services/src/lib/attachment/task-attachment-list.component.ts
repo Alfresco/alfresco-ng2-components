@@ -95,10 +95,6 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         this.attachments = [];
     }
 
-    hasCustomEmptyTemplate() {
-        return !!this.emptyTemplate;
-    }
-
     reload(): void {
         this.ngZone.run(() => {
             this.loadAttachmentsByTaskId(this.taskId);
@@ -128,10 +124,6 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
                 }
             );
         }
-    }
-
-    isEmpty(): boolean {
-        return this.attachments && this.attachments.length === 0;
     }
 
     onShowRowActionsMenu(event: any) {
@@ -193,10 +185,6 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
                 this.error.emit(err);
             }
         );
-    }
-
-    isDisabled(): boolean {
-        return this.disabled;
     }
 
     private loadAttachmentsByTaskId(taskId: string) {

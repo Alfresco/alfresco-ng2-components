@@ -51,14 +51,12 @@
                 <adf-info-drawer-tab label="ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TAB_DETAILS_TITLE">
                     <div class="adf-assignment-container" *ngIf="showAssignee">
                         <adf-people-search
+                            [headerTitle]="'ADF_TASK_LIST.DETAILS.LABELS.ADD_ASSIGNEE'"
+                            [actionLabel]="'ADF_TASK_LIST.PEOPLE.ADD_ASSIGNEE'"
                             (searchPeople)="searchUser($event)"
                             (success)="assignTaskToUser($event)"
                             (closeSearch)="onCloseSearch()"
                             [results]="peopleSearch">
-                            <ng-container adf-people-search-title>{{ 'ADF_TASK_LIST.DETAILS.LABELS.ADD_ASSIGNEE' | translate }}
-                            </ng-container>
-                            <ng-container adf-people-search-action-label>{{ 'ADF_TASK_LIST.PEOPLE.ADD_ASSIGNEE' | translate }}
-                            </ng-container>
                         </adf-people-search>
                     </div>
                     <adf-task-header

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-02-08
 ---
 
-# [Row Filter Model](../../../lib/content-services/document-list/data/row-filter.model.ts "Defined in row-filter.model.ts")
+# Row Filter Model
 
 Defines the Row Filter function used by the [Document List Component](../components/document-list.component.md).
 

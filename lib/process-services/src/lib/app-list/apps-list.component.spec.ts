@@ -23,10 +23,10 @@ import { of, throwError } from 'rxjs';
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent, APP_LIST_LAYOUT_GRID, APP_LIST_LAYOUT_LIST } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { AppDefinitionRepresentationModel } from '../task-list';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 
 describe('AppsListComponent', () => {
     let loader: HarnessLoader;
@@ -61,6 +61,10 @@ describe('AppsListComponent', () => {
         loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should define layoutType with the default value', () => {
         component.layoutType = '';
         fixture.detectChanges();
@@ -88,16 +92,27 @@ describe('AppsListComponent', () => {
     it('should show the apps filtered by defaultAppId', () => {
         component.filtersAppId = [{ defaultAppId: 'fake-app-1' }];
         fixture.detectChanges();
-        expect(component.isEmpty()).toBe(false);
-        expect(component.appList).toBeDefined();
         expect(component.appList.length).toEqual(1);
     });
 
-    it('should show the apps filtered by deploymentId', () => {
+    it('should filter apps by defaultAppId', async () => {
+        const filtered = component.filterApps(deployedApps, [{ defaultAppId: 'fake-app-1' }]);
+        expect(filtered.length).toEqual(1);
+        expect(filtered[0].defaultAppId).toEqual('fake-app-1');
+    });
+
+    it('should filter apps by deploymentId', async () => {
+        const filtered = component.filterApps(deployedApps, [{ deploymentId: '4' }]);
+        expect(filtered.length).toEqual(1);
+        expect(filtered[0].deploymentId).toEqual('4');
+    });
+
+    it('should show the apps filtered by deploymentId', async () => {
         component.filtersAppId = [{ deploymentId: '4' }];
+
         fixture.detectChanges();
-        expect(component.isEmpty()).toBe(false);
-        expect(component.appList).toBeDefined();
+        await fixture.whenStable();
+
         expect(component.appList.length).toEqual(1);
         expect(component.appList[0].deploymentId).toEqual('4');
     });
@@ -105,8 +120,6 @@ describe('AppsListComponent', () => {
     it('should show the apps filtered by name', () => {
         component.filtersAppId = [{ name: 'App5' }];
         fixture.detectChanges();
-        expect(component.isEmpty()).toBe(false);
-        expect(component.appList).toBeDefined();
         expect(component.appList.length).toEqual(1);
         expect(component.appList[0].name).toEqual('App5');
     });
@@ -114,8 +127,6 @@ describe('AppsListComponent', () => {
     it('should show the apps filtered by id', () => {
         component.filtersAppId = [{ id: 6 }];
         fixture.detectChanges();
-        expect(component.isEmpty()).toBe(false);
-        expect(component.appList).toBeDefined();
         expect(component.appList.length).toEqual(1);
         expect(component.appList[0].id).toEqual(6);
     });
@@ -123,8 +134,6 @@ describe('AppsListComponent', () => {
     it('should show the apps filtered by modelId', () => {
         component.filtersAppId = [{ modelId: 66 }];
         fixture.detectChanges();
-        expect(component.isEmpty()).toBe(false);
-        expect(component.appList).toBeDefined();
         expect(component.appList.length).toEqual(2);
         expect(component.appList[0].modelId).toEqual(66);
     });
@@ -132,8 +141,6 @@ describe('AppsListComponent', () => {
     it('should show the apps filtered by tenantId', () => {
         component.filtersAppId = [{ tenantId: 9 }];
         fixture.detectChanges();
-        expect(component.isEmpty()).toBe(false);
-        expect(component.appList).toBeDefined();
         expect(component.appList.length).toEqual(2);
         expect(component.appList[0].tenantId).toEqual(9);
     });
@@ -147,19 +154,19 @@ describe('AppsListComponent', () => {
 
     describe('internationalization', () => {
         it('should provide a translation for the default application name, when app name is not provided', () => {
-            const appDataMock = {
+            const appDataMock: AppDefinitionRepresentation = {
                 defaultAppId: 'tasks',
                 name: null
-            } as AppDefinitionRepresentationModel;
+            };
 
             expect(component.getAppName(appDataMock)).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
         });
 
         it('should provide the application name, when it exists', () => {
-            const appDataMock = {
+            const appDataMock: AppDefinitionRepresentation = {
                 defaultAppId: 'uiu',
                 name: 'the-name'
-            } as AppDefinitionRepresentationModel;
+            };
 
             expect(component.getAppName(appDataMock)).toBe(appDataMock.name);
         });

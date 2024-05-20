@@ -16,12 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { AlfrescoApiService, GroupModel } from '@alfresco/adf-core';
-import { BpmUserModel } from '../models/bpm-user.model';
-import { UserProcessModel } from '../models/user-process.model';
-import { combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
-import { TaskActionsApi, UsersApi, ResultListDataRepresentationLightUserRepresentation, ActivitiGroupsApi, UserProfileApi } from '@alfresco/js-api';
+import { map } from 'rxjs/operators';
+import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepresentation, LightUserRepresentation } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -58,8 +56,8 @@ export class PeopleProcessService {
      *
      * @returns User information object
      */
-    getCurrentUserInfo(): Observable<BpmUserModel> {
-        return from(this.profileApi.getProfile()).pipe(map((userRepresentation) => new BpmUserModel(userRepresentation)));
+    getCurrentUserInfo(): Observable<UserRepresentation> {
+        return from(this.profileApi.getProfile());
     }
 
     /**
@@ -94,27 +92,19 @@ export class PeopleProcessService {
      * @param groupId group id
      * @returns Array of user information objects
      */
-    getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: string): Observable<UserProcessModel[]> {
+    getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: number): Observable<LightUserRepresentation[]> {
         const option = { excludeTaskId: taskId, filter: searchWord, groupId };
 
-        return from(this.getWorkflowUserApi(option)).pipe(
-            switchMap((response) => (response.data as UserProcessModel[]) || []),
-            map((user) => {
-                user.userImage = this.getUserProfileImageApi(user.id.toString());
-                return of(user);
-            }),
-            combineAll(),
-            defaultIfEmpty([])
-        );
+        return from(this.userApi.getUsers(option)).pipe(map((response) => response.data || []));
     }
     /**
      * Gets the profile picture URL for the specified user.
      *
-     * @param user The target user
+     * @param userId The target user
      * @returns Profile picture URL
      */
-    getUserImage(user: UserProcessModel): string {
-        return this.getUserProfileImageApi(user.id.toString());
+    getUserImage(userId: string): string {
+        return this.userApi.getUserProfilePictureUrl(userId);
     }
 
     /**
@@ -124,8 +114,8 @@ export class PeopleProcessService {
      * @param idToInvolve ID of the user to involve
      * @returns Empty response when the update completes
      */
-    involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
-        return from(this.involveUserToTaskApi(taskId, { userId: idToInvolve }));
+    involveUserWithTask(taskId: string, idToInvolve: string): Observable<LightUserRepresentation[]> {
+        return from(this.taskActionsApi.involveUser(taskId, { userId: idToInvolve }));
     }
 
     /**
@@ -135,23 +125,7 @@ export class PeopleProcessService {
      * @param idToRemove ID of the user to remove
      * @returns Empty response when the update completes
      */
-    removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
-        return from(this.removeInvolvedUserFromTaskApi(taskId, { userId: idToRemove }));
-    }
-
-    private getWorkflowUserApi(options: any): Promise<ResultListDataRepresentationLightUserRepresentation> {
-        return this.userApi.getUsers(options);
-    }
-
-    private involveUserToTaskApi(taskId: string, node: any) {
-        return this.taskActionsApi.involveUser(taskId, node);
-    }
-
-    private removeInvolvedUserFromTaskApi(taskId: string, node: any) {
-        return this.taskActionsApi.removeInvolvedUser(taskId, node);
-    }
-
-    private getUserProfileImageApi(userId: string): string {
-        return this.userApi.getUserProfilePictureUrl(userId);
+    removeInvolvedUser(taskId: string, idToRemove: string): Observable<LightUserRepresentation[]> {
+        return from(this.taskActionsApi.removeInvolvedUser(taskId, { userId: idToRemove }));
     }
 }

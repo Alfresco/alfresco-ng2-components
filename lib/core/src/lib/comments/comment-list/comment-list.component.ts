@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { CommentModel } from '../../models/comment.model';
-import { User } from '../../models/general-user.model';
 import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
@@ -28,7 +27,6 @@ import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
     encapsulation: ViewEncapsulation.None
 })
 export class CommentListComponent {
-
     /** The comments data used to populate the list. */
     @Input()
     comments: CommentModel[];
@@ -43,7 +41,7 @@ export class CommentListComponent {
         this.clickRow.emit(comment);
     }
 
-    getUserImage(user: User): string {
-        return this.commentsService.getUserImage(user);
+    getUserImage(userId: string): string {
+        return this.commentsService.getUserImage(userId);
     }
 }

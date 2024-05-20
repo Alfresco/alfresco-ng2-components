@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
+import { CoreModule, EmptyContentComponent, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -48,7 +48,8 @@ import { ProcessUserInfoModule } from './process-user-info/process-user-info.mod
         ProcessUserInfoModule,
         AttachmentModule,
         PeopleModule,
-        FormModule
+        FormModule,
+        EmptyContentComponent
     ],
     providers: [provideTranslations('adf-process-services', 'assets/adf-process-services')],
     exports: [

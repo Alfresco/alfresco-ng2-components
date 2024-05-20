@@ -17,13 +17,13 @@
 
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
+import { Subject } from 'rxjs';
 import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
 import { IconModel } from '../../app-list/icon.model';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
+import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-task-filters',
@@ -37,15 +37,15 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      * the default filter (the first one the list) is selected.
      */
     @Input()
-    filterParam: FilterParamsModel;
+    filterParam: UserTaskFilterRepresentation;
 
     /** Emitted when a filter is being clicked from the UI. */
     @Output()
-    filterClicked = new EventEmitter<FilterRepresentationModel>();
+    filterClicked = new EventEmitter<UserTaskFilterRepresentation>();
 
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
-    filterSelected = new EventEmitter<FilterRepresentationModel>();
+    filterSelected = new EventEmitter<UserTaskFilterRepresentation>();
 
     /** Emitted when the list is loaded. */
     @Output()
@@ -67,11 +67,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     showIcon: boolean;
 
-    filter$: Observable<FilterRepresentationModel>;
-
-    currentFilter: FilterRepresentationModel;
-
-    filters: FilterRepresentationModel[] = [];
+    currentFilter: UserTaskFilterRepresentation;
+    filters: UserTaskFilterRepresentation[] = [];
 
     private onDestroy$ = new Subject<boolean>();
     isTaskRoute: boolean;
@@ -117,22 +114,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isActiveRoute(filterActive: FilterRepresentationModel): boolean {
+    isActiveRoute(filterActive: UserTaskFilterRepresentation): boolean {
         return (this.isTaskActive || this.isTaskRoute) && this.currentFilter === filterActive;
-    }
-
-    /**
-     * Load the task list filtered by appId or by appName
-     *
-     * @param appId application id
-     * @param appName application name
-     */
-    getFilters(appId?: number, appName?: string): void {
-        if (appName) {
-            this.getFiltersByAppName(appName);
-        } else {
-            this.getFiltersByAppId(appId);
-        }
     }
 
     /**
@@ -142,7 +125,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      */
     getFiltersByAppId(appId?: number) {
         this.taskFilterService.getTaskListFilters(appId).subscribe(
-            (res: FilterRepresentationModel[]) => {
+            (res) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
                     this.createFiltersByAppId(appId);
                 } else {
@@ -179,9 +162,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      *
      * @param appId application id
      */
-    createFiltersByAppId(appId?: number): void {
+    private createFiltersByAppId(appId?: number): void {
         this.taskFilterService.createDefaultFilters(appId).subscribe(
-            (resDefault: FilterRepresentationModel[]) => {
+            (resDefault) => {
                 this.resetFilter();
                 this.filters = resDefault;
                 this.selectFilter(this.filterParam);
@@ -198,7 +181,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      *
      * @param newFilter new filter model
      */
-    public selectFilter(newFilter: FilterParamsModel): void {
+    public selectFilter(newFilter: UserTaskFilterRepresentation): void {
         if (newFilter) {
             this.currentFilter = this.filters.find(
                 (entry, index) =>
@@ -209,7 +192,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    public selectFilterAndEmit(newFilter: FilterParamsModel) {
+    private selectFilterAndEmit(newFilter: UserTaskFilterRepresentation) {
         this.selectFilter(newFilter);
         this.filterSelected.emit(this.currentFilter);
     }
@@ -219,7 +202,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      *
      * @param filterParams filter parameters model
      */
-    onFilterClick(filterParams: FilterParamsModel) {
+    onFilterClick(filterParams: UserTaskFilterRepresentation) {
         this.selectFilter(filterParams);
         this.filterClicked.emit(this.currentFilter);
     }
@@ -230,9 +213,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      * @param taskId task id
      */
     selectFilterWithTask(taskId: string): void {
-        const filteredFilterList: FilterRepresentationModel[] = [];
+        const filteredFilterList: UserTaskFilterRepresentation[] = [];
         this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
-            (filterModel: FilterRepresentationModel) => {
+            (filterModel) => {
                 filteredFilterList.push(filterModel);
             },
             (err) => {
@@ -248,20 +231,11 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     * Select as default task filter the first in the list
-     */
-    public selectDefaultTaskFilter(): void {
-        if (!this.isFilterListEmpty()) {
-            this.currentFilter = this.filters[0];
-        }
-    }
-
-    /**
      * Get the current filter
      *
      * @returns filter model
      */
-    getCurrentFilter(): FilterRepresentationModel {
+    getCurrentFilter(): UserTaskFilterRepresentation {
         return this.currentFilter;
     }
 

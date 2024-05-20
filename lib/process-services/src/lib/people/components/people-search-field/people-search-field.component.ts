@@ -15,18 +15,24 @@
  * limitations under the License.
  */
 
-import { TranslationService } from '@alfresco/adf-core';
+import { DataTableModule, TranslationService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { getDisplayUser } from '../../helpers/get-display-user';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
-import { UserProcessModel } from '../../../common/models/user-process.model';
+import { LightUserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { PeopleListComponent } from '../people-list/people-list.component';
 
 @Component({
     selector: 'adf-people-search-field',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, DataTableModule, PeopleListComponent],
     templateUrl: './people-search-field.component.html',
     styleUrls: ['./people-search-field.component.scss'],
     host: { class: 'adf-people-search-field' },
@@ -40,9 +46,9 @@ export class PeopleSearchFieldComponent {
     placeholder: string;
 
     @Output()
-    rowClick = new EventEmitter<UserProcessModel>();
+    rowClick = new EventEmitter<LightUserRepresentation>();
 
-    users$: Observable<UserProcessModel[]>;
+    users$: Observable<LightUserRepresentation[]>;
     searchUser: UntypedFormControl = new UntypedFormControl();
 
     defaultPlaceholder = 'ADF_TASK_LIST.PEOPLE.SEARCH_USER';
@@ -70,7 +76,7 @@ export class PeopleSearchFieldComponent {
         return this.placeholder || this.defaultPlaceholder;
     }
 
-    onRowClick(model: UserProcessModel) {
+    onRowClick(model: LightUserRepresentation) {
         this.rowClick.emit(model);
     }
 

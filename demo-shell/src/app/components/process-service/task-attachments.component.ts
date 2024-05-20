@@ -16,12 +16,7 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import {
-    TaskAttachmentListComponent,
-    TaskDetailsModel,
-    TaskListService,
-    TaskUploadService
-} from '@alfresco/adf-process-services';
+import { TaskAttachmentListComponent, TaskDetailsModel, TaskListService, TaskUploadService } from '@alfresco/adf-process-services';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
@@ -48,14 +43,12 @@ export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppCon
     providers: [
         {
             provide: UploadService,
-            useFactory: (taskUploadServiceFactory),
+            useFactory: taskUploadServiceFactory,
             deps: [AlfrescoApiService, AppConfigService, DiscoveryApiService]
         }
     ]
 })
-
 export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
-
     @ViewChild('taskAttachList')
     taskAttachList: TaskAttachmentListComponent;
 
@@ -66,23 +59,15 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        private uploadService: UploadService,
-        private activitiTaskList: TaskListService,
-        private preview: PreviewService) {
-    }
+    constructor(private uploadService: UploadService, private taskListService: TaskListService, private previewService: PreviewService) {}
 
     ngOnInit() {
-        this.uploadService.fileUploadComplete
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe(event => this.onFileUploadComplete(event.data));
+        this.uploadService.fileUploadComplete.pipe(takeUntil(this.onDestroy$)).subscribe((event) => this.onFileUploadComplete(event.data));
     }
 
     ngOnChanges() {
         if (this.taskId) {
-            this.activitiTaskList
-                .getTaskDetails(this.taskId)
-                .subscribe(taskDetails => this.taskDetails = taskDetails);
+            this.taskListService.getTaskDetails(this.taskId).subscribe((taskDetails) => (this.taskDetails = taskDetails));
         }
     }
 
@@ -96,11 +81,10 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onAttachmentClick(content: any): void {
-        this.preview.showBlob(content.name, content.contentBlob);
+        this.previewService.showBlob(content.name, content.contentBlob);
     }
 
     isCompletedTask(): boolean {
         return this.taskDetails?.endDate != null;
     }
-
 }

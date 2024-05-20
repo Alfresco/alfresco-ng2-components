@@ -21,7 +21,7 @@ import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../common';
 
 @Component({
     selector: 'adf-task-form',
@@ -122,7 +122,6 @@ export class TaskFormComponent implements OnInit, OnChanges {
     taskDetails: TaskDetailsModel;
     currentLoggedUser: UserRepresentation;
     loading: boolean = false;
-    completedTaskMessage: string;
     internalReadOnlyForm: boolean = false;
 
     constructor(
@@ -218,10 +217,6 @@ export class TaskFormComponent implements OnInit, OnChanges {
         return !this.taskDetails?.processDefinitionId;
     }
 
-    isTaskLoaded(): boolean {
-        return !!this.taskDetails;
-    }
-
     isCompletedTask(): boolean {
         return !!this.taskDetails?.endDate;
     }
@@ -312,10 +307,6 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
     isTaskClaimedByCandidateMember(): boolean {
         return this.isCandidateMember() && this.isAssignedToMe() && !this.isCompletedTask();
-    }
-
-    reloadTask() {
-        this.loadTask(this.taskId);
     }
 
     onClaimTask(taskId: string) {

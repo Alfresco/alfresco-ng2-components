@@ -21,13 +21,14 @@ import { of, throwError } from 'rxjs';
 import { ProcessService } from './../services/process.service';
 import { DownloadService } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { ProcessInstanceAuditInfoRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-basic-button',
     template: ` <button
         id="auditButton"
         adf-process-audit
-        [process-id]="1234"
+        [process-id]="'1234'"
         [download]="download"
         [fileName]="fileName"
         [format]="format"
@@ -42,8 +43,12 @@ class BasicButtonComponent {
     fileName: string;
     format: string;
 
-    onAuditClick() {}
-    onAuditError() {}
+    onAuditClick(_event: any) {
+        /* do nothing */
+    }
+    onAuditError(_event: any) {
+        /* do nothing */
+    }
 }
 
 describe('ProcessAuditDirective', () => {
@@ -140,11 +145,11 @@ describe('ProcessAuditDirective', () => {
         component.fileName = 'FakeAuditName';
         component.format = 'json';
         component.download = true;
-        const auditJson = {
-            processInstanceId: 42516,
+        const auditJson: ProcessInstanceAuditInfoRepresentation = {
+            processInstanceId: '42516',
             processInstanceName: 'Fake Process - August 3rd 2017',
             processDefinitionName: 'Claim Approval Process',
-            processDefinitionVersion: 1,
+            processDefinitionVersion: '1',
             processInstanceStartTime: 'Thu Aug 03 15:32:47 UTC 2017',
             processInstanceEndTime: null,
             // eslint-disable-next-line @cspell/spellchecker

@@ -18,7 +18,6 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, forkJoin } from 'rxjs';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { map } from 'rxjs/operators';
 import {
     ResultListDataRepresentationUserProcessInstanceFilterRepresentation,
@@ -30,15 +29,13 @@ import {
     providedIn: 'root'
 })
 export class ProcessFilterService {
-
     private _userFiltersApi: UserFiltersApi;
     get userFiltersApi(): UserFiltersApi {
         this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.alfrescoApiService.getInstance());
         return this._userFiltersApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     /**
      * Gets all filters defined for a Process App.
@@ -46,20 +43,18 @@ export class ProcessFilterService {
      * @param appId ID of the target app
      * @returns Array of filter details
      */
-    getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
-        return from(this.callApiProcessFilters(appId))
-            .pipe(
-                map((response) => {
-                    const filters: FilterProcessRepresentationModel[] = [];
-                    response.data.forEach((filter) => {
-                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
-                            const filterModel = new FilterProcessRepresentationModel(filter);
-                            filters.push(filterModel);
-                        }
-                    });
-                    return filters;
-                })
-            );
+    getProcessFilters(appId: number): Observable<UserProcessInstanceFilterRepresentation[]> {
+        return from(this.callApiProcessFilters(appId)).pipe(
+            map((response) => {
+                const filters = [];
+                response.data.forEach((filter) => {
+                    if (!this.isFilterAlreadyExisting(filters, filter.name)) {
+                        filters.push(filter);
+                    }
+                });
+                return filters;
+            })
+        );
     }
 
     /**
@@ -70,10 +65,7 @@ export class ProcessFilterService {
      * @returns Details of the filter
      */
     getProcessFilterById(filterId: number, appId?: number): Observable<UserProcessInstanceFilterRepresentation> {
-        return from(this.callApiProcessFilters(appId))
-            .pipe(
-                map((response) => response.data.find((filter) => filter.id === filterId))
-            );
+        return from(this.callApiProcessFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.id === filterId)));
     }
 
     /**
@@ -84,10 +76,7 @@ export class ProcessFilterService {
      * @returns Details of the filter
      */
     getProcessFilterByName(filterName: string, appId?: number): Observable<UserProcessInstanceFilterRepresentation> {
-        return from(this.callApiProcessFilters(appId))
-            .pipe(
-                map((response) => response.data.find((filter) => filter.name === filterName))
-            );
+        return from(this.callApiProcessFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.name === filterName)));
     }
 
     /**
@@ -96,7 +85,7 @@ export class ProcessFilterService {
      * @param appId ID of the target app
      * @returns Default filters just created
      */
-    createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
+    createDefaultFilters(appId: number): Observable<UserProcessInstanceFilterRepresentation[]> {
         const runningFilter = this.getRunningFilterInstance(appId, 0);
         const runningObservable = this.addProcessFilter(runningFilter);
 
@@ -107,39 +96,33 @@ export class ProcessFilterService {
         const allObservable = this.addProcessFilter(allFilter);
 
         return new Observable((observer) => {
-            forkJoin([
-                    runningObservable,
-                    completedObservable,
-                    allObservable
-                ]
-            ).subscribe(
-                (res) => {
-                    const filters: FilterProcessRepresentationModel[] = [];
-                    res.forEach((filter) => {
-                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
-                            if (filter.name === runningFilter.name) {
-                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: runningFilter.filter, appId }));
-                            } else if (filter.name === completedFilter.name) {
-                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: completedFilter.filter, appId }));
-                            } else if (filter.name === allFilter.name) {
-                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: allFilter.filter, appId }));
-                            }
+            forkJoin([runningObservable, completedObservable, allObservable]).subscribe((res) => {
+                const filters: UserProcessInstanceFilterRepresentation[] = [];
+                res.forEach((filter) => {
+                    if (!this.isFilterAlreadyExisting(filters, filter.name)) {
+                        if (filter.name === runningFilter.name) {
+                            filters.push({ ...filter, filter: runningFilter.filter, appId });
+                        } else if (filter.name === completedFilter.name) {
+                            filters.push({ ...filter, filter: completedFilter.filter, appId });
+                        } else if (filter.name === allFilter.name) {
+                            filters.push({ ...filter, filter: allFilter.filter, appId });
                         }
-                    });
-                    observer.next(filters);
-                    observer.complete();
+                    }
                 });
+                observer.next(filters);
+                observer.complete();
+            });
         });
     }
 
     /**
      * Checks if a filter with the given name already exists in the list of filters.
      *
-     * @param filters - An array of FilterProcessRepresentationModel objects representing the existing filters.
+     * @param filters - An array of objects representing the existing filters.
      * @param filterName - The name of the filter to check for existence.
      * @returns - True if a filter with the specified name already exists, false otherwise.
      */
-    isFilterAlreadyExisting(filters: FilterProcessRepresentationModel[], filterName: string): boolean {
+    isFilterAlreadyExisting(filters: Partial<{ name: string }>[], filterName: string): boolean {
         return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
@@ -150,15 +133,15 @@ export class ProcessFilterService {
      * @param index of the filter (optional)
      * @returns Filter just created
      */
-    getRunningFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
-        return new FilterProcessRepresentationModel({
+    getRunningFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
+        return {
             name: 'Running',
             appId,
             recent: true,
             icon: 'glyphicon-random',
             filter: { sort: 'created-desc', name: '', state: 'running' },
             index
-        });
+        };
     }
 
     /**
@@ -167,7 +150,7 @@ export class ProcessFilterService {
      * @param filter The filter to add
      * @returns The filter just added
      */
-    addProcessFilter(filter: FilterProcessRepresentationModel): Observable<UserProcessInstanceFilterRepresentation> {
+    addProcessFilter(filter: UserProcessInstanceFilterRepresentation): Observable<UserProcessInstanceFilterRepresentation> {
         return from(this.userFiltersApi.createUserProcessInstanceFilter(filter));
     }
 
@@ -185,25 +168,25 @@ export class ProcessFilterService {
         }
     }
 
-    getCompletedFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
-        return new FilterProcessRepresentationModel({
+    getCompletedFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
+        return {
             name: 'Completed',
             appId,
             recent: false,
             icon: 'glyphicon-ok-sign',
             filter: { sort: 'created-desc', name: '', state: 'completed' },
             index
-        });
+        };
     }
 
-    getAllFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
-        return new FilterProcessRepresentationModel({
+    getAllFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
+        return {
             name: 'All',
             appId,
             recent: true,
             icon: 'glyphicon-th',
             filter: { sort: 'created-desc', name: '', state: 'all' },
             index
-        });
+        };
     }
 }

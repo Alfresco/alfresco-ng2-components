@@ -16,29 +16,12 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import {
-    ProcessAttachmentListComponent,
-    ProcessInstance,
-    ProcessService,
-    ProcessUploadService
-} from '@alfresco/adf-process-services';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
+import { ProcessAttachmentListComponent, ProcessService, ProcessUploadService } from '@alfresco/adf-process-services';
+import { UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-/**
- * Provide a factory for process upload service
- *
- * @param api api client
- * @param config config service
- * @param discoveryApiService discovery service
- * @returns factory function
- */
-export function processUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
-    return new ProcessUploadService(api, config, discoveryApiService);
-}
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'app-process-attachments',
@@ -47,41 +30,31 @@ export function processUploadServiceFactory(api: AlfrescoApiService, config: App
     providers: [
         {
             provide: UploadService,
-            useFactory: (processUploadServiceFactory),
-            deps: [AlfrescoApiService, AppConfigService, DiscoveryApiService]
+            useClass: ProcessUploadService
         }
     ],
     encapsulation: ViewEncapsulation.None
 })
-
 export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
-
     @ViewChild('processAttachList')
     processAttachList: ProcessAttachmentListComponent;
 
     @Input()
     processInstanceId: string;
 
-    processInstance: ProcessInstance;
+    processInstance: ProcessInstanceRepresentation;
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        private uploadService: UploadService,
-        private processService: ProcessService,
-        private preview: PreviewService
-    ) {}
+    constructor(private uploadService: UploadService, private processService: ProcessService, private preview: PreviewService) {}
 
     ngOnInit() {
-        this.uploadService.fileUploadComplete
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(value => this.onFileUploadComplete(value.data));
+        this.uploadService.fileUploadComplete.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.onFileUploadComplete(value.data));
     }
 
     ngOnChanges() {
         if (this.processInstanceId) {
-            this.processService.getProcess(this.processInstanceId)
-                .subscribe((processInstance: ProcessInstance) => {
+            this.processService.getProcess(this.processInstanceId).subscribe((processInstance) => {
                 this.processInstance = processInstance;
             });
         }
@@ -103,5 +76,4 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
     isCompletedProcess(): boolean {
         return this.processInstance?.ended != null;
     }
-
 }
