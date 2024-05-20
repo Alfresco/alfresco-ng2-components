@@ -2,7 +2,7 @@
 
 <mat-dialog-content class="adf-library-dialog-content">
   <form novalidate [formGroup]="form" (submit)="submit()">
-    <mat-form-field class="adf-library-dialog-form-field">
+    <mat-form-field class="adf-library-dialog-form-field" appearance="outline">
       <mat-label>{{ 'LIBRARY.DIALOG.FORM.NAME' | translate }}</mat-label>
       <input
         required
@@ -28,7 +28,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="adf-library-dialog-form-field">
+    <mat-form-field class="adf-library-dialog-form-field" appearance="outline">
       <mat-label>{{ 'LIBRARY.DIALOG.FORM.SITE_ID' | translate }}</mat-label>
       <input
         required
@@ -46,7 +46,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="adf-library-dialog-form-field">
+    <mat-form-field class="adf-library-dialog-form-field" appearance="outline">
       <mat-label>{{ 'LIBRARY.DIALOG.FORM.DESCRIPTION' | translate }}</mat-label>
       <textarea
         matInput
