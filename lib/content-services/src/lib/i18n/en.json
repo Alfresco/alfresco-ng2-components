@@ -437,7 +437,10 @@
         "WEEKS": "In the last {{value}} weeks",
         "MONTHS": "In the last {{value}} months"
       },
-      "BETWEEN_PLACEHOLDER": "Start Date - End Date",
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date"
+      },
       "ERROR": {
         "IN_LAST": "Value required",
         "START_DATE": {
