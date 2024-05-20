@@ -4,7 +4,7 @@
 
 <mat-dialog-content class="adf-folder-dialog-content">
     <form [formGroup]="form" (submit)="submit()">
-        <mat-form-field class="adf-full-width">
+        <mat-form-field class="adf-full-width" appearance="outline">
             <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.LABEL' | translate }}</mat-label>
             <input
                 id="adf-folder-name-input"
@@ -15,7 +15,7 @@
                 adf-auto-focus
             />
 
-            <mat-error *ngIf="form.controls['name'].dirty">
+            <mat-hint *ngIf="form.controls['name'].dirty">
                 <span *ngIf="form.controls['name'].errors?.required">
                     {{ 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS.REQUIRED' | translate }}
                 </span>
@@ -23,10 +23,10 @@
                 <span *ngIf="!form.controls['name'].errors?.required && form.controls['name'].errors?.message">
                     {{ form.controls['name'].errors?.message | translate }}
                 </span>
-            </mat-error>
+            </mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="adf-full-width">
+        <mat-form-field class="adf-full-width" appearance="outline">
             <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_TITLE.LABEL' | translate }}</mat-label>
             <input
                 id="adf-folder-title-input"
@@ -36,7 +36,7 @@
             />
         </mat-form-field>
 
-        <mat-form-field class="adf-full-width">
+        <mat-form-field class="adf-full-width" appearance="outline">
             <mat-label>{{ 'CORE.FOLDER_DIALOG.FOLDER_DESCRIPTION.LABEL' | translate }}</mat-label>
             <textarea
                 id="adf-folder-description-input"
