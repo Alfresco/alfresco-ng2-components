@@ -1,5 +1,5 @@
 <div class="adf-search-input-container">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-label *ngIf="label">{{ label | translate }}</mat-label>
         <input matInput [placeholder]="placeholder | translate" [value]="value" (change)="onSearchInputChanged($event)" />
     </mat-form-field>
