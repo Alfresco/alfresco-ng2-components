@@ -24,6 +24,8 @@ import { Observable } from 'rxjs';
 export abstract class AuthService {
   abstract onLogin: Observable<any>;
 
+  abstract onTokenReceived: Observable<any>;
+
   /** Subscribe to whether the user has valid Id/Access tokens.  */
   abstract authenticated$: Observable<boolean>;
 

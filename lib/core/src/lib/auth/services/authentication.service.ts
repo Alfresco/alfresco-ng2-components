@@ -30,9 +30,14 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
 export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
+    onTokenReceived: Subject<any> = new Subject<any>();
 
     constructor(private injector: Injector, private redirectAuthService: RedirectAuthService) {
         this.redirectAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
+
+        this.redirectAuthService.onTokenReceived.subscribe(
+            (value) => this.onTokenReceived.next(value)
+        );
 
         this.basicAlfrescoAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 
