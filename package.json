@@ -74,7 +74,7 @@
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "apollo-angular": "^5.0.2",
     "chart.js": "^4.3.0",
-    "cropperjs": "1.5.13",
+    "cropperjs": "1.6.2",
     "date-fns": "^2.30.0",
     "dotenv-expand": "^5.1.0",
     "event-emitter": "^0.3.5",
