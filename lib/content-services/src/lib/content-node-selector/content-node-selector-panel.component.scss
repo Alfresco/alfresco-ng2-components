@@ -41,15 +41,40 @@ h2.adf-search-results-label {
     }
 
     &-content {
+        #{$mat-input-element} {
+            &:focus::placeholder {
+                color: var(--theme-primary-color);
+            }
+        }
+
+        #{$mat-form-field-wrapper} {
+            #{$mat-form-field-flex} {
+                align-items: center;
+
+                #{$mat-form-field-infix} {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+            }
+        }
+
+        #{$mat-form-field-subscript-wrapper} {
+            height: 16px;
+        }
+
         padding-top: 0;
 
         &-input {
             width: 100%;
             margin: 16px 0;
 
-            &-icon {
+            .adf-content-node-selector-content-input-icon {
                 color: var(--adf-theme-foreground-icon-color-054);
                 cursor: pointer;
+                padding: 0 0 8px;
+                width: 1em;
+                height: 1em;
+                font-size: 20px;
 
                 &:hover {
                     color: var(--adf-theme-foreground-base-color);
