@@ -18,7 +18,7 @@
 // eslint-disable-next-line
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi } from '@alfresco/js-api';
+import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS,
     FormRenderingService,
@@ -32,10 +32,8 @@ import {
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,
-    ProcessInstance,
     ProcessInstanceListComponent,
     StartProcessInstanceComponent,
-    FilterRepresentationModel,
     TaskDetailsEvent,
     TaskFiltersComponent,
     TaskListComponent,
@@ -45,7 +43,6 @@ import {
     DynamicTableRow
 } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
-import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';
 import { Location } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
@@ -107,7 +104,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
-    taskFilter: FilterRepresentationModel;
+    taskFilter: UserTaskFilterRepresentation;
     processFilter: UserProcessInstanceFilterRepresentation;
     blobFile: any;
     flag = true;
@@ -117,7 +114,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     applicationId: number;
     processDefinitionName: string;
 
-    fieldValidators = [...FORM_FIELD_VALIDATORS, new DemoFieldValidator()];
+    fieldValidators = [...FORM_FIELD_VALIDATORS];
 
     private onDestroy$ = new Subject<boolean>();
     private scriptFileApi: ScriptFilesApi;
@@ -127,17 +124,17 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         private route: ActivatedRoute,
         private router: Router,
         private apiService: AlfrescoApiService,
-        private appConfig: AppConfigService,
-        private preview: PreviewService,
+        private appConfigService: AppConfigService,
+        private previewService: PreviewService,
         formService: FormService,
         private location: Location,
         private notificationService: NotificationService,
         private preferenceService: UserPreferencesService
     ) {
         this.scriptFileApi = new ScriptFilesApi(this.apiService.getInstance());
-        this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
-        this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
-        this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');
+        this.defaultProcessName = this.appConfigService.get<string>('adf-start-process.name');
+        this.defaultProcessDefinitionName = this.appConfigService.get<string>('adf-start-process.processDefinitionName');
+        this.defaultTaskName = this.appConfigService.get<string>('adf-start-task.name');
         this.processDefinitionName = this.defaultProcessDefinitionName;
 
         this.preferenceService
@@ -190,7 +187,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.onDestroy$.complete();
     }
 
-    onTaskFilterClick(filter: FilterRepresentationModel): void {
+    onTaskFilterClick(filter: UserTaskFilterRepresentation): void {
         this.applyTaskFilter(filter);
         this.taskPage = 0;
     }
@@ -218,7 +215,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.applyTaskFilter(this.activitiFilter.getCurrentFilter());
     }
 
-    applyTaskFilter(filter: FilterRepresentationModel) {
+    applyTaskFilter(filter: UserTaskFilterRepresentation) {
         this.taskFilter = Object.assign({}, filter);
 
         if (filter && this.taskList) {
@@ -285,8 +282,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = currentTaskIdNew;
     }
 
-    onStartProcessInstance(instance: ProcessInstance): void {
-        this.currentProcessInstanceId = instance.id;
+    onStartProcessInstance(instanceId: string): void {
+        this.currentProcessInstanceId = instanceId;
         this.activitiStartProcess.reset();
         this.activitiProcessFilter.selectRunningFilter();
     }
@@ -348,9 +345,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     private showContentPreview(content: any) {
         if (content.contentBlob) {
-            this.preview.showBlob(content.name, content.contentBlob);
+            this.previewService.showBlob(content.name, content.contentBlob);
         } else {
-            this.preview.showResource(content.sourceId.split(';')[0]);
+            this.previewService.showResource(content.sourceId.split(';')[0]);
         }
     }
 

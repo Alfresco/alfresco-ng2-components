@@ -20,9 +20,9 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Observer, Subject } from 'rxjs';
 import { TaskDetailsEvent, TaskDetailsModel } from '../../task-list';
-import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { share, takeUntil } from 'rxjs/operators';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-process-instance-tasks',
@@ -32,7 +32,7 @@ import { share, takeUntil } from 'rxjs/operators';
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestroy {
     /** The ID of the process instance to display tasks for. */
     @Input()
-    processInstanceDetails: ProcessInstance;
+    processInstanceDetails: ProcessInstanceRepresentation;
 
     /**
      * Toggles whether to show a refresh button next to the list of tasks to allow

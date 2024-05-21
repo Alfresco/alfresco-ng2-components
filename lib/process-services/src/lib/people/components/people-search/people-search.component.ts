@@ -15,14 +15,20 @@
  * limitations under the License.
  */
 
-import { UserProcessModel } from '../../../common/models/user-process.model';
 import { Component, EventEmitter, OnInit, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { map } from 'rxjs/operators';
+import { LightUserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { PeopleSearchFieldComponent } from '../people-search-field/people-search-field.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-people-search',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, PeopleSearchFieldComponent, MatButtonModule],
     templateUrl: './people-search.component.html',
     styleUrls: ['./people-search.component.scss'],
     host: {
@@ -30,12 +36,16 @@ import { map } from 'rxjs/operators';
     },
     encapsulation: ViewEncapsulation.None
 })
-
 export class PeopleSearchComponent implements OnInit {
+    @Input()
+    headerTitle?: string;
+
+    @Input()
+    actionLabel?: string;
 
     /** Parameters for displaying the list. */
     @Input()
-    results: Observable<UserProcessModel[]>;
+    results: Observable<LightUserRepresentation[]>;
 
     /** Emitted when a search is performed with a new keyword. */
     @Output()
@@ -43,25 +53,22 @@ export class PeopleSearchComponent implements OnInit {
 
     /** Emitted when a user is selected and the action button is clicked. */
     @Output()
-    success = new EventEmitter<UserProcessModel>();
+    success = new EventEmitter<LightUserRepresentation>();
 
     /** Emitted when the "close" button is clicked. */
     @Output()
     closeSearch = new EventEmitter();
 
-    filteredResults$: Observable<UserProcessModel[]>;
-    selectedUser: UserProcessModel = {};
+    filteredResults$: Observable<LightUserRepresentation[]>;
+    selectedUser: LightUserRepresentation = {} as any;
     performSearch: PerformSearchCallback;
 
     ngOnInit() {
-        this.filteredResults$ = this.results
-            .pipe(
-                map((users) => users.filter((user) => user.id !== this.selectedUser.id))
-            );
+        this.filteredResults$ = this.results.pipe(map((users) => users.filter((user) => user.id !== this.selectedUser.id)));
         this.performSearch = this.performSearchCallback.bind(this);
     }
 
-    onRowClick(user: UserProcessModel) {
+    onRowClick(user: LightUserRepresentation) {
         this.selectedUser = user;
     }
 
@@ -81,7 +88,7 @@ export class PeopleSearchComponent implements OnInit {
         this.success.emit(this.selectedUser);
     }
 
-    private performSearchCallback(event: any): Observable<UserProcessModel[]> {
+    private performSearchCallback(event: any): Observable<LightUserRepresentation[]> {
         this.searchPeople.emit(event);
         return this.filteredResults$;
     }

@@ -15,4 +15,6 @@
  * limitations under the License.
  */
 
-export * from './public-api';
+export * from './task-comments.component';
+export * from './services/task-comments.service';
+export * from './task-comments.module';

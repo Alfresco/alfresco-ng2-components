@@ -18,9 +18,8 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, from } from 'rxjs';
-import { FilterRepresentationModel } from '../models/filter.model';
 import { map } from 'rxjs/operators';
-import { UserFiltersApi } from '@alfresco/js-api';
+import { UserFiltersApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -40,7 +39,7 @@ export class TaskFilterService {
      * @param appId ID of the target app
      * @returns Array of default filters just created
      */
-    public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
+    public createDefaultFilters(appId: number): Observable<UserTaskFilterRepresentation[]> {
         const myTasksFilter = this.getMyTasksFilterInstance(appId, 0);
         const myTaskObservable = this.addFilter(myTasksFilter);
 
@@ -55,12 +54,12 @@ export class TaskFilterService {
 
         return new Observable((observer) => {
             forkJoin([myTaskObservable, involvedObservable, queuedObservable, completeObservable]).subscribe((res) => {
-                const filters: FilterRepresentationModel[] = [];
+                const filters: UserTaskFilterRepresentation[] = [];
                 res.forEach((filter) => {
                     if (!this.isFilterAlreadyExisting(filters, filter.name)) {
                         if (filter.name === involvedTasksFilter.name) {
                             filters.push(
-                                new FilterRepresentationModel({
+                                new UserTaskFilterRepresentation({
                                     ...filter,
                                     filter: involvedTasksFilter.filter,
                                     appId
@@ -68,7 +67,7 @@ export class TaskFilterService {
                             );
                         } else if (filter.name === myTasksFilter.name) {
                             filters.push(
-                                new FilterRepresentationModel({
+                                new UserTaskFilterRepresentation({
                                     ...filter,
                                     filter: myTasksFilter.filter,
                                     appId
@@ -76,7 +75,7 @@ export class TaskFilterService {
                             );
                         } else if (filter.name === queuedTasksFilter.name) {
                             filters.push(
-                                new FilterRepresentationModel({
+                                new UserTaskFilterRepresentation({
                                     ...filter,
                                     filter: queuedTasksFilter.filter,
                                     appId
@@ -84,7 +83,7 @@ export class TaskFilterService {
                             );
                         } else if (filter.name === completedTasksFilter.name) {
                             filters.push(
-                                new FilterRepresentationModel({
+                                new UserTaskFilterRepresentation({
                                     ...filter,
                                     filter: completedTasksFilter.filter,
                                     appId
@@ -105,13 +104,13 @@ export class TaskFilterService {
      * @param appId Optional ID for a specific app
      * @returns Array of task filter details
      */
-    getTaskListFilters(appId?: number): Observable<FilterRepresentationModel[]> {
+    getTaskListFilters(appId?: number): Observable<UserTaskFilterRepresentation[]> {
         return from(this.callApiTaskFilters(appId)).pipe(
             map((response) => {
-                const filters: FilterRepresentationModel[] = [];
-                response.data.forEach((filter: FilterRepresentationModel) => {
+                const filters: UserTaskFilterRepresentation[] = [];
+                response.data.forEach((filter: UserTaskFilterRepresentation) => {
                     if (!this.isFilterAlreadyExisting(filters, filter.name)) {
-                        const filterModel = new FilterRepresentationModel(filter);
+                        const filterModel = new UserTaskFilterRepresentation(filter);
                         filters.push(filterModel);
                     }
                 });
@@ -123,11 +122,11 @@ export class TaskFilterService {
     /**
      * Checks if a filter with the given name already exists in the list of filters.
      *
-     * @param filters - An array of `FilterRepresentationModel` objects representing the existing filters.
+     * @param filters - An array of objects representing the existing filters.
      * @param filterName - The name of the filter to check for existence.
      * @returns - True if a filter with the specified name already exists, false otherwise.
      */
-    isFilterAlreadyExisting(filters: FilterRepresentationModel[], filterName: string): boolean {
+    isFilterAlreadyExisting(filters: UserTaskFilterRepresentation[], filterName: string): boolean {
         return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
@@ -138,7 +137,7 @@ export class TaskFilterService {
      * @param appId ID of the app for the filter
      * @returns Details of task filter
      */
-    getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel> {
+    getTaskFilterById(filterId: number, appId?: number): Observable<UserTaskFilterRepresentation> {
         return from(this.callApiTaskFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.id === filterId)));
     }
 
@@ -149,7 +148,7 @@ export class TaskFilterService {
      * @param appId ID of the app for the filter
      * @returns Details of task filter
      */
-    getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel> {
+    getTaskFilterByName(taskName: string, appId?: number): Observable<UserTaskFilterRepresentation> {
         return from(this.callApiTaskFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.name === taskName)));
     }
 
@@ -159,8 +158,8 @@ export class TaskFilterService {
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
-    addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        return from(this.userFiltersApi.createUserTaskFilter(filter)).pipe(map((response: FilterRepresentationModel) => response));
+    addFilter(filter: UserTaskFilterRepresentation): Observable<UserTaskFilterRepresentation> {
+        return from(this.userFiltersApi.createUserTaskFilter(filter));
     }
 
     /**
@@ -184,8 +183,8 @@ export class TaskFilterService {
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getMyTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getMyTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+        return new UserTaskFilterRepresentation({
             name: 'My Tasks',
             appId,
             recent: false,
@@ -207,8 +206,8 @@ export class TaskFilterService {
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getInvolvedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getInvolvedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+        return new UserTaskFilterRepresentation({
             name: 'Involved Tasks',
             appId,
             recent: false,
@@ -225,8 +224,8 @@ export class TaskFilterService {
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getQueuedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getQueuedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+        return new UserTaskFilterRepresentation({
             name: 'Queued Tasks',
             appId,
             recent: false,
@@ -243,8 +242,8 @@ export class TaskFilterService {
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getCompletedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getCompletedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+        return new UserTaskFilterRepresentation({
             name: 'Completed Tasks',
             appId,
             recent: true,

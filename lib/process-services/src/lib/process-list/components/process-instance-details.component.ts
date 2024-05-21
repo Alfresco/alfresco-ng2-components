@@ -18,11 +18,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TaskDetailsEvent } from '../../task-list';
-
-import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-process-instance-details',
@@ -64,9 +63,9 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     @Output()
     showProcessDiagram = new EventEmitter<any>();
 
-    processInstanceDetails: ProcessInstance;
+    processInstanceDetails: ProcessInstanceRepresentation;
 
-    constructor(private activitiProcess: ProcessService) {}
+    constructor(private processService: ProcessService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const processInstanceId = changes['processInstanceId'];
@@ -89,7 +88,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
 
     load(processId: string) {
         if (processId) {
-            this.activitiProcess.getProcess(processId).subscribe((res) => {
+            this.processService.getProcess(processId).subscribe((res) => {
                 this.processInstanceDetails = res;
             });
         }
@@ -100,7 +99,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     }
 
     cancelProcess() {
-        this.activitiProcess.cancelProcess(this.processInstanceId).subscribe(
+        this.processService.cancelProcess(this.processInstanceId).subscribe(
             (data) => {
                 this.processCancelled.emit(data);
             },

@@ -18,15 +18,13 @@
 import { CoreTestingModule, UserInfoMode } from '@alfresco/adf-core';
 import { fakeEcmUser, fakeEcmUserNoImage } from '@alfresco/adf-content-services';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
-import { BpmUserModel } from '../common/models/bpm-user.model';
 import { ProcessUserInfoComponent } from './process-user-info.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
 
-const fakeBpmUser = new BpmUserModel({
+const fakeBpmUser: any = {
     apps: [],
     capabilities: null,
     company: 'fake-company',
@@ -46,7 +44,7 @@ const fakeBpmUser = new BpmUserModel({
     tenantName: 'fake-tenant-name',
     tenantPictureId: 'fake-tenant-picture-id',
     type: 'fake-type'
-});
+};
 
 describe('ProcessUserInfoComponent', () => {
     const profilePictureUrl = 'alfresco-logo.svg';
@@ -71,7 +69,7 @@ describe('ProcessUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatMenuModule]
+            imports: [CoreTestingModule, ProcessUserInfoComponent]
         });
         fixture = TestBed.createComponent(ProcessUserInfoComponent);
         component = fixture.componentInstance;
@@ -122,11 +120,10 @@ describe('ProcessUserInfoComponent', () => {
         });
 
         it('should show last name if first name is null', async () => {
-            const wrongBpmUser: BpmUserModel = new BpmUserModel({
+            component.bpmUser = {
                 firstName: null,
                 lastName: 'fake-last-name'
-            });
-            component.bpmUser = wrongBpmUser;
+            } as any;
             await whenFixtureReady();
             const fullNameElement = element.querySelector('#adf-userinfo-bpm-name-display');
             fixture.detectChanges();

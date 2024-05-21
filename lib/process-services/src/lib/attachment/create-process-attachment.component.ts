@@ -34,7 +34,7 @@ export class CreateProcessAttachmentComponent implements OnChanges {
      * from the user within the component.
      */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /**
      * Emitted when an attachment is successfully created or uploaded
@@ -43,7 +43,7 @@ export class CreateProcessAttachmentComponent implements OnChanges {
     @Output()
     success = new EventEmitter<RelatedContentRepresentation>();
 
-    constructor(private activitiContentService: ProcessContentService) {}
+    constructor(private processContentService: ProcessContentService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['processInstanceId']?.currentValue) {
@@ -59,7 +59,7 @@ export class CreateProcessAttachmentComponent implements OnChanges {
             const opts = {
                 isRelatedContent: true
             };
-            this.activitiContentService.createProcessRelatedContent(this.processInstanceId, file, opts).subscribe(
+            this.processContentService.createProcessRelatedContent(this.processInstanceId, file, opts).subscribe(
                 (res) => {
                     this.success.emit(res);
                 },

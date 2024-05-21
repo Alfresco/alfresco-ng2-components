@@ -6,7 +6,7 @@
             <div *ngIf="!comment.hasAvatarPicture" class="adf-comment-user-icon">{{ comment.userInitials }}</div>
             <img *ngIf="comment.hasAvatarPicture" class="adf-people-img"
                  [alt]="'COMMENTS.PROFILE_IMAGE' | translate"
-                 [src]="getUserImage(comment.createdBy)" />
+                 [src]="getUserImage(comment.createdBy.id.toString())" />
         </div>
         <div class="adf-comment-contents">
             <div matLine class="adf-comment-user-name">{{ comment.userDisplayName }}</div>

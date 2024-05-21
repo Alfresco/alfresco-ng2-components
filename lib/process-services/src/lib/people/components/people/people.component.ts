@@ -20,11 +20,19 @@ import { Observable, Observer } from 'rxjs';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleSearchComponent } from '../people-search/people-search.component';
 import { share } from 'rxjs/operators';
-import { UserProcessModel } from '../../../common/models/user-process.model';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { LightUserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { DataTableModule } from '@alfresco/adf-core';
+import { PeopleListComponent } from '../people-list/people-list.component';
 
 @Component({
     selector: 'adf-people',
+    standalone: true,
+    imports: [CommonModule, MatCardModule, TranslateModule, MatIconModule, DataTableModule, PeopleSearchComponent, PeopleListComponent],
     templateUrl: './people.component.html',
     styleUrls: ['./people.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -32,7 +40,7 @@ import { PeopleProcessService } from '../../../common/services/people-process.se
 export class PeopleComponent {
     /** The array of User objects to display. */
     @Input()
-    people: UserProcessModel[] = [];
+    people: LightUserRepresentation[] = [];
 
     /** The numeric ID of the task. */
     @Input()
@@ -49,24 +57,12 @@ export class PeopleComponent {
     error = new EventEmitter<any>();
 
     showAssignment: boolean = false;
-    peopleSearch$: Observable<UserProcessModel[]>;
+    peopleSearch$: Observable<LightUserRepresentation[]>;
 
-    private peopleSearchObserver: Observer<UserProcessModel[]>;
+    private peopleSearchObserver: Observer<LightUserRepresentation[]>;
 
     constructor(public peopleProcessService: PeopleProcessService) {
-        this.peopleSearch$ = new Observable<UserProcessModel[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
-    }
-
-    involveUserAndCloseSearch() {
-        if (this.peopleSearch) {
-            this.peopleSearch.involveUserAndClose();
-        }
-    }
-
-    involveUserWithoutCloseSearch() {
-        if (this.peopleSearch) {
-            this.peopleSearch.involveUser();
-        }
+        this.peopleSearch$ = new Observable<LightUserRepresentation[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
     }
 
     searchUser(searchedWord: string) {
@@ -78,8 +74,8 @@ export class PeopleComponent {
         );
     }
 
-    involveUser(user: UserProcessModel) {
-        if (user?.id) {
+    involveUser(user: LightUserRepresentation) {
+        if (user?.id !== undefined) {
             this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString()).subscribe(
                 () => (this.people = [...this.people, user]),
                 () => this.error.emit('Impossible to involve user with task')
@@ -87,7 +83,7 @@ export class PeopleComponent {
         }
     }
 
-    removeInvolvedUser(user: UserProcessModel) {
+    removeInvolvedUser(user: LightUserRepresentation) {
         this.peopleProcessService.removeInvolvedUser(this.taskId, user.id.toString()).subscribe(
             () => {
                 this.people = this.people.filter((involvedUser) => involvedUser.id !== user.id);

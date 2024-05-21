@@ -5,13 +5,11 @@ Status: Active
 Last reviewed: 2022-12-19
 ---
 
-# [Node Comments service](../../../lib/content-services/src/lib/node-comments/services/node-comments.service.ts "Defined in node-comments.service.ts")
+# Node Comments Service
 
 Adds and retrieves comments for nodes in Content Services.
 
-## Class members
-
-### Methods
+## API
 
 -   **add**(id: `string`, message: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>`<br/>
     Adds a comment to a task.
@@ -23,10 +21,6 @@ Adds and retrieves comments for nodes in Content Services.
     -   _id:_ `string`  - ID of the target task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>` - Details for each comment
 -   **getUserImage**(avatarId: `string`): `string`<br/>
-
-    -   _avatarId:_ `string`  - 
-    -   **Returns** `string` -
-
-## See also
-
--   [Node comments component](../../../lib/content-services/src/lib/node-comments/node-comments.component.ts)
+    Gets the URL for the user's profile image.
+    -   _avatarId:_ `string`  - ID of the user
+    -   **Returns** `string` - URL for the user's profile image

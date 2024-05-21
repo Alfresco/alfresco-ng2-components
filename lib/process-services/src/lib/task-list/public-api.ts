@@ -34,12 +34,9 @@ export * from './services/process-upload.service';
 export * from './services/task-upload.service';
 export * from './services/task-filter.service';
 
-export * from './models/filter.model';
 export * from './models/form.model';
-export * from './models/start-task.model';
 export * from './models/task-details.event';
 export * from './models/task-details.model';
-export * from './models/task-list.model';
 export * from './models/user-event.model';
 export * from './models/user-group.model';
 

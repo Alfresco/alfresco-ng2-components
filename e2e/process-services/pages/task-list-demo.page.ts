@@ -20,22 +20,21 @@ import { $ } from 'protractor';
 import { TasksListPage } from './tasks-list.page';
 
 export class TaskListDemoPage {
-
     taskListPage = new TasksListPage();
-    appId = $('input[data-automation-id=\'appId input\']');
-    itemsPerPage = $('input[data-automation-id=\'items per page\']');
-    itemsPerPageForm = $(`${materialLocators.Form.field.root}[data-automation-id=\'items per page\']`);
-    processDefinitionId = $('input[data-automation-id=\'process definition id\']');
-    processInstanceId = $('input[data-automation-id=\'process instance id\']');
-    page = $('input[data-automation-id=\'page\']');
-    pageForm = $(`${materialLocators.Form.field.root}[data-automation-id=\'page\']`);
-    taskName = $('input[data-automation-id=\'task name\']');
+    appId = $(`input[data-automation-id='appId input']`);
+    itemsPerPage = $(`input[data-automation-id='items per page']`);
+    itemsPerPageForm = $(`${materialLocators.Form.field.root}[data-automation-id='items per page']`);
+    processDefinitionId = $(`input[data-automation-id='process definition id']`);
+    processInstanceId = $(`input[data-automation-id='process instance id']`);
+    page = $(`input[data-automation-id='page']`);
+    pageForm = $(`${materialLocators.Form.field.root}[data-automation-id='page']`);
+    taskName = $(`input[data-automation-id='task name']`);
     resetButton = $('.app-reset-button button');
-    dueBefore = $('input[data-automation-id=\'due before\']');
-    dueAfter = $('input[data-automation-id=\'due after\']');
-    taskId = $('input[data-automation-id=\'task id\']');
+    dueBefore = $(`input[data-automation-id='due before']`);
+    dueAfter = $(`input[data-automation-id='due after']`);
+    taskId = $(`input[data-automation-id='task id']`);
 
-    stateDropDownArrow = $(`${materialLocators.Form.field.root}[data-automation-id=\'state\']`);
+    stateDropDownArrow = $(`${materialLocators.Form.field.root}[data-automation-id='state']`);
     stateDropdown = new DropdownPage(this.stateDropDownArrow);
 
     taskList(): TasksListPage {
@@ -131,5 +130,4 @@ export class TaskListDemoPage {
     getAllProcessInstanceIds(): Promise<any> {
         return this.taskList().getDataTable().getAllRowsColumnValues('Process Instance Id');
     }
-
 }

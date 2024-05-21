@@ -21,7 +21,6 @@ import { AppConfigService } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
-import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
 import { newProcess, taskFormMock, testProcessDef, testMultipleProcessDefs, testProcessDefWithForm, testProcessDefinitions } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
@@ -32,6 +31,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { RestVariable } from '@alfresco/js-api';
 
 describe('StartProcessComponent', () => {
     let appConfig: AppConfigService;
@@ -358,7 +358,7 @@ describe('StartProcessComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.selectedProcessDef.name).not.toBeDefined();
+            expect(component.selectedProcessDef).toBeUndefined();
         });
 
         describe('dropdown', () => {
@@ -468,9 +468,9 @@ describe('StartProcessComponent', () => {
         });
 
         it('should call service to start process with the variables setted', async () => {
-            const inputProcessVariable: ProcessInstanceVariable[] = [];
+            const inputProcessVariable: RestVariable[] = [];
 
-            const variable: ProcessInstanceVariable = {};
+            const variable: RestVariable = {};
             variable.name = 'nodeId';
             variable.value = 'id';
 
