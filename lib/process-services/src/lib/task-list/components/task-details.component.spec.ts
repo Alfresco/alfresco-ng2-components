@@ -20,7 +20,6 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, CommentModel, User } from '@alfresco/adf-core';
-import { TaskDetailsModel } from '../models/task-details.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
@@ -32,7 +31,7 @@ import { PeopleProcessService } from '../../common/services/people-process.servi
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
-import { LightUserRepresentation } from '@alfresco/js-api';
+import { LightUserRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 const fakeUser: LightUserRepresentation = {
     id: 0,
@@ -41,12 +40,12 @@ const fakeUser: LightUserRepresentation = {
     email: 'fake@mail.com'
 };
 
-const fakeTaskAssignResponse = new TaskDetailsModel({
+const fakeTaskAssignResponse: any = {
     id: 'fake-id',
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
-});
+};
 
 describe('TaskDetailsComponent', () => {
     let taskListService: TaskListService;
@@ -295,7 +294,7 @@ describe('TaskDetailsComponent', () => {
 
         it('should emit a task created event when checklist task is created', () => {
             const emitSpy: jasmine.Spy = spyOn(component.taskCreated, 'emit');
-            const mockTask = new TaskDetailsModel(taskDetailsMock);
+            const mockTask = new TaskRepresentation(taskDetailsMock);
             component.onChecklistTaskCreated(mockTask);
             expect(emitSpy).toHaveBeenCalled();
         });
@@ -307,7 +306,7 @@ describe('TaskDetailsComponent', () => {
             component.showHeaderContent = true;
             component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [];
-            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
@@ -319,7 +318,7 @@ describe('TaskDetailsComponent', () => {
             component.showHeaderContent = true;
             component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [];
-            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
@@ -331,7 +330,7 @@ describe('TaskDetailsComponent', () => {
             component.showHeaderContent = true;
             component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [fakeUser];
-            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsMock);
             component.taskDetails.endDate = null;
 
             fixture.detectChanges();
@@ -343,7 +342,7 @@ describe('TaskDetailsComponent', () => {
             component.showHeaderContent = true;
             component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [fakeUser];
-            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
@@ -355,7 +354,7 @@ describe('TaskDetailsComponent', () => {
             component.showHeaderContent = true;
             component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [];
-            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsMock);
 
             fixture.detectChanges();
             expect(component.showComments).toBe(true);
@@ -365,7 +364,7 @@ describe('TaskDetailsComponent', () => {
             component.showComments = false;
             component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
             component.taskPeople = [];
-            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsMock);
 
             fixture.detectChanges();
             expect(component.showComments).toBeFalse();

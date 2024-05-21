@@ -41,12 +41,12 @@ import {
     taskDetailsWithOutFormMock,
     taskFormMock
 } from '../../../mock/task/task-details.mock';
-import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TaskFormService } from '../../../form/services/task-form.service';
 import { TaskService } from '../../../form/services/task.service';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -282,7 +282,7 @@ describe('TaskFormComponent', () => {
 
         it('Should be able to show completed message and cancel button for the completed task without form', async () => {
             completedTaskDetailsMock.formKey = null;
-            component.taskDetails = new TaskDetailsModel(completedTaskDetailsMock);
+            component.taskDetails = new TaskRepresentation(completedTaskDetailsMock);
             fixture.detectChanges();
             await fixture.whenStable();
             const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
@@ -297,7 +297,7 @@ describe('TaskFormComponent', () => {
 
         it('Should not display complete button to the completed task without form', async () => {
             completedTaskDetailsMock.formKey = null;
-            component.taskDetails = new TaskDetailsModel(completedTaskDetailsMock);
+            component.taskDetails = new TaskRepresentation(completedTaskDetailsMock);
             fixture.detectChanges();
             await fixture.whenStable();
             const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
@@ -312,7 +312,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should be able to show no form message if the task does not attached a form', async () => {
-            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
             const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
@@ -326,7 +326,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should be able display complete button to a task without form', async () => {
-            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
             const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
@@ -336,7 +336,7 @@ describe('TaskFormComponent', () => {
 
         it('Should be able to complete a task with no form when complete button is clicked', async () => {
             fixture.detectChanges();
-            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
             const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
@@ -347,7 +347,7 @@ describe('TaskFormComponent', () => {
         it('Should emit error event in case complete task service fails', async () => {
             const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
             completeTaskSpy.and.returnValue(throwError({ message: 'servce failed' }));
-            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
             const formSelector = element.querySelector('adf-form');
@@ -361,7 +361,7 @@ describe('TaskFormComponent', () => {
         it('Should be able to emit cancel event on task with no-form when cancel button is clicked', async () => {
             const cancelSpy = spyOn(component.cancel, 'emit');
             getTaskDetailsSpy.and.returnValue(of(taskDetailsWithOutFormMock));
-            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
             const cancelButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
@@ -370,7 +370,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should display the template in a process task with no Form', async () => {
-            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
+            component.taskDetails = new TaskRepresentation(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
             let formMessage = fixture.debugElement.nativeElement.querySelector('.adf-empty-content__title');
@@ -383,7 +383,7 @@ describe('TaskFormComponent', () => {
             expect(subMessage.innerText).toContain('ADF_TASK_FORM.EMPTY_FORM.SUBTITLE');
 
             completeButtonElement.click();
-            component.taskDetails = new TaskDetailsModel(completedProcessTaskWithoutForm);
+            component.taskDetails = new TaskRepresentation(completedProcessTaskWithoutForm);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -394,8 +394,8 @@ describe('TaskFormComponent', () => {
             expect(formMessage.innerText).toContain('ADF_TASK_FORM.COMPLETED_TASK.TITLE');
             expect(subMessage.innerText).toContain('ADF_TASK_FORM.COMPLETED_TASK.SUBTITLE');
             expect(cancelButton).not.toBeNull();
-            expect(cancelButton['disabled']).toEqual(false, 'cancel button not visible for completed task');
-            expect(completeButtonElement).toBeNull('complete button shown for completed task');
+            expect(cancelButton['disabled']).toEqual(false);
+            expect(completeButtonElement).toBeNull();
             expect(taskListService.completeTask).toHaveBeenCalled();
         });
     });
@@ -407,7 +407,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should display empty template in case standalone task does not attached a form', async () => {
-            component.taskDetails = new TaskDetailsModel(standaloneTaskWithoutForm);
+            component.taskDetails = new TaskRepresentation(standaloneTaskWithoutForm);
             fixture.detectChanges();
             await fixture.whenStable();
             const taskStandAlone = element.querySelector('adf-task-standalone');
@@ -418,7 +418,7 @@ describe('TaskFormComponent', () => {
 
         it('Should be able display attach form button for a standalone task without form', async () => {
             const showAttachFormSpy = spyOn(component.showAttachForm, 'emit');
-            component.taskDetails = new TaskDetailsModel(standaloneTaskWithoutForm);
+            component.taskDetails = new TaskRepresentation(standaloneTaskWithoutForm);
             fixture.detectChanges();
             await fixture.whenStable();
             const attacheFormButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-attach-form-button');
@@ -452,7 +452,7 @@ describe('TaskFormComponent', () => {
             expect(formMessage.innerText).toContain('ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE');
 
             completeButtonElement.click();
-            component.taskDetails = new TaskDetailsModel(completedStandaloneTaskWithoutForm);
+            component.taskDetails = new TaskRepresentation(completedStandaloneTaskWithoutForm);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -460,8 +460,8 @@ describe('TaskFormComponent', () => {
             completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
             attacheFormButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-attach-form-button');
             expect(formMessage.innerText).toContain('ADF_TASK_LIST.STANDALONE_TASK.COMPLETE_TASK_MESSAGE');
-            expect(attacheFormButton).toBeNull('attach form button shown for completed task');
-            expect(completeButtonElement).toBeNull('complete button shown for completed task');
+            expect(attacheFormButton).toBeNull();
+            expect(completeButtonElement).toBeNull();
             expect(taskListService.completeTask).toHaveBeenCalled();
         });
     });

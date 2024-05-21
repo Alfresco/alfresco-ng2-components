@@ -16,12 +16,13 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { TaskAttachmentListComponent, TaskDetailsModel, TaskListService, TaskUploadService } from '@alfresco/adf-process-services';
+import { TaskAttachmentListComponent, TaskListService, TaskUploadService } from '@alfresco/adf-process-services';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 /**
  * Provide a task upload service factory
@@ -55,7 +56,7 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     taskId: string;
 
-    taskDetails: TaskDetailsModel;
+    taskDetails: TaskRepresentation;
 
     private onDestroy$ = new Subject<boolean>();
 
