@@ -68,4 +68,10 @@
             }
         }
     }
+
+    #{$mat-input-element} {
+        &:focus::placeholder {
+            color: var(--theme-primary-color);
+        }
+    }
 }
