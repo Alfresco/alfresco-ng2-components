@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-import { FormBaseModule } from '../form-base.module';
-import { CoreTestingModule } from '../../testing';
-import { ByPassFormRuleManager, FormRulesManager, formRulesManagerFactory, FORM_RULES_MANAGER } from './form-rules.model';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FormModel } from '../components/widgets/core/form.model';
-import { FormRulesEvent } from '../events/form-rules.event';
-import { FormEvent } from '../events/form.event';
-import { FormService } from '../services/form.service';
 import { getTestScheduler } from 'jasmine-marbles';
+import { CoreTestingModule } from '../../testing';
+import { FormModel } from '../components/widgets';
+import { FormEvent, FormRulesEvent } from '../events';
+import { FormService } from '../services/form.service';
+import { ByPassFormRuleManager, FORM_RULES_MANAGER, FormRulesManager, formRulesManagerFactory } from './form-rules.model';
 
 class CustomRuleManager extends FormRulesManager<any> {
     protected getRules() {
         return null;
     }
+
     protected handleRuleEvent(): void {
         return;
     }
@@ -43,7 +42,7 @@ describe('Form Rules', () => {
     describe('Injection token provided', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, FormBaseModule],
+                imports: [CoreTestingModule],
                 providers: [
                     {
                         provide: FORM_RULES_MANAGER,
@@ -108,7 +107,7 @@ describe('Form Rules', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, FormBaseModule]
+                imports: [CoreTestingModule]
             });
             injector = TestBed.inject(Injector);
             rulesManager = formRulesManagerFactory<any>(injector);
