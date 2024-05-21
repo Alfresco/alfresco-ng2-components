@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '@alfresco/adf-core';
-import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess } from '../../mock';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -34,7 +33,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         fixture = TestBed.createComponent(ProcessInstanceHeaderComponent);
         component = fixture.componentInstance;
 
-        component.processInstance = new ProcessInstance(exampleProcess);
+        component.processInstance = exampleProcess;
 
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config['adf-process-instance-header'] = {};

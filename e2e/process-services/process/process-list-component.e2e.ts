@@ -60,7 +60,7 @@ describe('Process List Test', () => {
         insertAppId: 'Insert App ID'
     };
 
-    let appWithDateFieldId: string | number;
+    let appWithDateFieldId: string;
     let procWithDate: ProcessInstanceRepresentation;
     let completedProcWithDate: ProcessInstanceRepresentation;
     let completedProcWithUserWidget: ProcessInstanceRepresentation;
@@ -83,7 +83,7 @@ describe('Process List Test', () => {
         await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.procWithUserWidget);
         completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.completedProcWithUserWidget);
 
-        appWithDateFieldId = await applicationsUtil.getAppDefinitionId(appDateModel.id);
+        appWithDateFieldId = (await applicationsUtil.getAppDefinitionId(appDateModel.id)).toString();
 
         const procWithDateTaskId = await processUtil.getProcessTaskId(completedProcWithDate.id);
 

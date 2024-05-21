@@ -33,7 +33,6 @@ import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { PeopleProcessService } from '../../common/services/people-process.service';
-import { BpmUserModel } from '../../common/models/bpm-user.model';
 
 describe('TaskHeaderComponent', () => {
     let service: TaskListService;
@@ -42,7 +41,7 @@ describe('TaskHeaderComponent', () => {
     let peopleProcessService: PeopleProcessService;
     let appConfigService: AppConfigService;
 
-    const fakeBpmAssignedUser = new BpmUserModel({
+    const fakeBpmAssignedUser: any = {
         id: 1001,
         apps: [],
         capabilities: 'fake-capability',
@@ -54,7 +53,7 @@ describe('TaskHeaderComponent', () => {
         lastName: 'Adams',
         fullname: 'Wilbur Adams',
         groups: []
-    });
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({

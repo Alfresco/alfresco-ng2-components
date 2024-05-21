@@ -6,8 +6,8 @@
                (executeRowAction)="onExecuteRowAction($event)">
             <adf-no-content-template>
                 <ng-template>
-                    <ng-content *ngIf="hasCustomTemplate; else defaulEmptyList" class="adf-custom-empty-template"></ng-content>
-                    <ng-template #defaulEmptyList>
+                    <ng-content *ngIf="hasCustomTemplate; else defaultEmptyList" class="adf-custom-empty-template"></ng-content>
+                    <ng-template #defaultEmptyList>
                         <adf-empty-list>
                             <div adf-empty-list-header class="adf-empty-list-header">
                                 {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}}
@@ -18,7 +18,7 @@
             </adf-no-content-template>
 
             <data-columns>
-                <data-column key="icon" type="image" srTitle="ADF_TASK_LIST.PROPERTIES.THUMBNAIL" [sortable]="false"></data-column>
+                <data-column key="icon" type="image" [sr-title]="'ADF_TASK_LIST.PROPERTIES.THUMBNAIL'" [sortable]="false"></data-column>
                 <data-column key="name" type="text" title="ADF_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-ellipsis-cell" [sortable]="true"></data-column>
                 <data-column key="created" type="date" format="shortDate" title="ADF_TASK_LIST.PROPERTIES.CREATED"></data-column>
             </data-columns>

@@ -31,7 +31,7 @@ describe('ProcessCommentsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, ProcessCommentsComponent]
         });
         fixture = TestBed.createComponent(ProcessCommentsComponent);
         component = fixture.componentInstance;

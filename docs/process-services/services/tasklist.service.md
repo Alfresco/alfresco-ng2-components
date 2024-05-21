@@ -5,9 +5,13 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Tasklist Service](../../../lib/process-services/src/lib/task-list/services/tasklist.service.ts "Defined in tasklist.service.ts")
+# TaskList Service
 
 Manages Task Instances.
+
+```ts
+import { TaskListService } from '@alfresco/adf-process-services';
+```
 
 ## Class members
 
@@ -60,22 +64,17 @@ Manages Task Instances.
     Fetches the Task Audit information in PDF format.
     -   _taskId:_ `string`  - ID of the target task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary PDF data
--   **findAllTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
-    Gets all tasks matching a query and state value.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks.
-    -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed". State "all" applies to both "active" and "completed" tasks.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
--   **findTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
+-   **findTasksByState**(requestNode: `TaskQueryRequestRepresentationModel`, state?: `string`): `Observable<ResultListDataRepresentationTaskRepresentation>`<br/>
     Gets tasks matching a query and state value.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   _requestNode:_ `TaskQueryRequestRepresentationModel`  - Query to search for tasks
     -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed". State "all" applies to both "active" and "completed" tasks.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
--   **getFilterForTaskById**(taskId: `string`, filterList: [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
+    -   **Returns** `Observable<ResultListDataRepresentationTaskRepresentation>` - List of tasks
+-   **getFilterForTaskById**(taskId: `string`, filterList: `UserTaskFilterRepresentation[]`): `Observable<UserTaskFilterRepresentation>`<br/>
     Gets all the filters in the list that belong to a task.
     -   _taskId:_ `string`  - ID of the target task
-    -   _filterList:_ [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]`  - List of filters to search through
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` - Filters belonging to the task
--   **getFormList**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts)`[]>`<br/>
+    -   _filterList:_ `UserTaskFilterRepresentation[]`  - List of filters to search through
+    -   **Returns** `Observable<UserTaskFilterRepresentation>` - Filters belonging to the task
+-   **getFormList**(): `Observable<Form[]>`<br/>
     Gets all available reusable forms.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts)`[]>` - Array of form details
 -   **getTaskChecklist**(id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`[]>`<br/>
@@ -85,21 +84,21 @@ Manages Task Instances.
 -   **getTaskDetails**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Gets details for a task.
     -   _taskId:_ `string`  - ID of the target task.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Task details
--   **getTasks**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
+    -   **Returns** `Observable<TaskDetailsModel>` - Task details
+-   **getTasks**(requestNode: `TaskQueryRequestRepresentationModel`): `Observable<ResultListDataRepresentationTaskRepresentation>`<br/>
     Gets all the tasks matching the supplied query.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
--   **getTotalTasks**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   _requestNode:_ `TaskQueryRequestRepresentationModel` - Query to search for tasks
+    -   **Returns** `Observable<ResultListDataRepresentationTaskRepresentation>` - List of tasks
+-   **getTotalTasks**(requestNode: `TaskQueryRequestRepresentationModel`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets the total number of the tasks found by a query.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Number of tasks
--   **isTaskRelatedToFilter**(taskId: `string`, filterModel: [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
+    -   _requestNode:_ `TaskQueryRequestRepresentationModel`  - Query to search for tasks
+    -   **Returns** `Observable<any>` - Number of tasks
+-   **isTaskRelatedToFilter**(taskId: `string`, filterModel: `UserTaskFilterRepresentation`): `Observable<UserTaskFilterRepresentation`>`<br/>
     Checks if a taskId is filtered with the given filter.
     -   _taskId:_ `string`  - ID of the target task
-    -   _filterModel:_ [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - The filter you want to check
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` - The filter if it is related or null otherwise
--   **unclaimTask**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
+    -   _filterModel:_ `UserTaskFilterRepresentation` - The filter you want to check
+    -   **Returns** `Observable<UserTaskFilterRepresentation>` - The filter if it is related or null otherwise
+-   **unclaimTask**(taskId: `string`): `Observable<TaskDetailsModel>`<br/>
     Un-claims a task for the current user.
     -   _taskId:_ `string`  - ID of the task to unclaim
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Null response notifying when the operation is complete
@@ -128,8 +127,9 @@ this.tasklistService.getTaskDetails(taskInstanceId).subscribe( (taskInstance: Ta
 
 The resulting [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) object contains information like the following:
 
+```text
         adhocTaskCanBeReassigned: false
-        assignee: UserProcessModel {pictureId: null, id: 1, email: "admin@app.activiti.com", firstName: null, lastName: "Administrator"}
+        assignee: LightUserRepresentation {pictureId: null, id: 1, email: "admin@app.activiti.com", firstName: null, lastName: "Administrator"}
         category: null
         created: Wed Oct 11 2017 09:07:14 GMT+0100 (BST) {}
         description: null
@@ -159,10 +159,11 @@ The resulting [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-li
         processInstanceName: null
         processInstanceStartUserId: "1"
         taskDefinitionKey: "clarifyInvoice"
+```
 
 ### Queries
 
-Some of the methods run a search query contained in a [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) and
+Some of the methods run a search query contained in a `TaskQueryRequestRepresentationModel` and
 return the matched tasks. Below is an example of how you might run a query using `getTasks`:
 
 ```ts
@@ -178,7 +179,8 @@ const taskQuery: TaskQueryRequestRepresentationModel = {
   size: 5,
   start: null
 };
-this.tasklistService.getTasks(taskQuery).subscribe( (taskListModel: TaskListModel) => {
+
+this.tasklistService.getTasks(taskQuery).subscribe((taskListModel) => {
     console.log('Task List Model: ', taskListModel);
 }, error => {
     console.log('Error: ', error);
@@ -201,9 +203,9 @@ The `assignment` property filters tasks based on how they are assigned (or not a
 Use `assignee` if you are interested in tasks that are assigned to a user. If you want to see
 pooled tasks (i.e. tasks that needs to be claimed by a user), then use `candidate`.
 
-A successful query returns a [`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts) with the `data` property set to an array of
-[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts):
+A successful query returns a `ResultListDataRepresentationTaskRepresentation` with the `data` property set to an array of `TaskRepresentation` objects. For example:
 
+```text
     data:
         0: {id: "75010", name: "Approve Invoice  - Invoice-10202.pdf", description: null, category: null, assignee: {…}, …}
         1: {id: "74746", name: "Verify with the person that did the purchase", description: null, category: "2", assignee: {…}, …}
@@ -214,18 +216,7 @@ A successful query returns a [`TaskListModel`](../../../lib/process-services/src
     size: 5
     start: 0
     total: 10
+```
 
 The `total` property indicates that actual number of tasks that were found, but the `size` property
 limited the found set to five items.
-
-### Importing
-
-```ts
-import { TaskListService, TaskDetailsModel, TaskQueryRequestRepresentationModel, TaskListModel, Form } from '@alfresco/adf-process-services';
-import { TaskUpdateRepresentation } from '@alfresco/js-api';
-
-export class SomePageComponent implements OnInit {
-
-  constructor(private tasklistService: TaskListService) {
-  }
-```

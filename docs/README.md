@@ -163,29 +163,27 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Bpm User model](core/models/bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/process-services/src/lib/common/models/bpm-user.model.ts) |
 | [Ecm User model](core/models/ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/content-services/src/lib/common/models/ecm-user.model.ts) |
 | [Form Field model](core/models/form-field.model.md) | Contains the value and metadata for a field of a Form component. | [Source](../lib/core/src/lib/form/components/widgets/core/form-field.model.ts) |
 | [Product Version model](core/models/product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../lib/core/src/lib/models/product-version.model.ts) |
-| [User Process model](core/models/user-process.model.md) | Represents a Process Services user. | [Source](../lib/process-services/src/lib/common/models/user-process.model.ts) |
 
 ### Pipes
 
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [App Config Pipe](core/pipes/app-config.pipe.md) | Retrieves values from the application configuration file directly. | [Source](../lib/core/src/lib/app-config/app-config.pipe.ts) |
-| [Decimal Number Pipe](core/pipes/decimal-number.pipe.md) | Transforms a number to have a certain amount of digits in its integer part and also in its decimal part. | [Source](../lib/core/src/lib/pipes/decimal-number.pipe.ts) |
-| [File Size pipe](core/pipes/file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc. | [Source](../lib/core/src/lib/pipes/file-size.pipe.ts) |
-| [Format Space pipe](core/pipes/format-space.pipe.md) | Replaces all the white space in a string with a supplied character. | [Source](../lib/core/src/lib/pipes/format-space.pipe.ts) |
-| [Full name pipe](core/pipes/full-name.pipe.md) | Joins the first and last name properties from a UserProcessModel object into a single string. | [Source](../lib/core/src/lib/pipes/full-name.pipe.ts) |
-| [Localized Date pipe](core/pipes/localized-date.pipe.md) | Converts a date to a given format and locale. | [Source](../lib/core/src/lib/pipes/localized-date.pipe.ts) |
-| [Mime Type Icon pipe](core/pipes/mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type. | [Source](../lib/core/src/lib/pipes/mime-type-icon.pipe.ts) |
+| Name | Description                                                                                                                                                                                                                   | Source link |
+| ---- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ----------- |
+| [App Config Pipe](core/pipes/app-config.pipe.md) | Retrieves values from the application configuration file directly.                                                                                                                                                            | [Source](../lib/core/src/lib/app-config/app-config.pipe.ts) |
+| [Decimal Number Pipe](core/pipes/decimal-number.pipe.md) | Transforms a number to have a certain amount of digits in its integer part and also in its decimal part.                                                                                                                      | [Source](../lib/core/src/lib/pipes/decimal-number.pipe.ts) |
+| [File Size pipe](core/pipes/file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc.                                                                                                                                                                  | [Source](../lib/core/src/lib/pipes/file-size.pipe.ts) |
+| [Format Space pipe](core/pipes/format-space.pipe.md) | Replaces all the white space in a string with a supplied character.                                                                                                                                                           | [Source](../lib/core/src/lib/pipes/format-space.pipe.ts) |
+| [Full name pipe](core/pipes/full-name.pipe.md) | Joins the first and last name properties from a `UserLike` object into a single string.                                                                                                                                       | [Source](../lib/core/src/lib/pipes/full-name.pipe.ts) |
+| [Localized Date pipe](core/pipes/localized-date.pipe.md) | Converts a date to a given format and locale.                                                                                                                                                                                 | [Source](../lib/core/src/lib/pipes/localized-date.pipe.ts) |
+| [Mime Type Icon pipe](core/pipes/mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type.                                                                                                                                                                                   | [Source](../lib/core/src/lib/pipes/mime-type-icon.pipe.ts) |
 | [Multi Value Pipe](core/pipes/multi-value.pipe.md) | Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is the comma ,  however, you can set your own separator in the params of the pipe. | [Source](../lib/core/src/lib/pipes/multi-value.pipe.ts) |
-| [Node Name Tooltip pipe](core/pipes/node-name-tooltip.pipe.md) | Formats the tooltip for a Node. | [Source](../lib/content-services/src/lib/pipes/node-name-tooltip.pipe.ts) |
-| [Text Highlight pipe](core/pipes/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/src/lib/pipes/text-highlight.pipe.ts) |
-| [Time Ago pipe](core/pipes/time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/src/lib/pipes/time-ago.pipe.ts) |
-| [User Initial pipe](core/pipes/user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../lib/core/src/lib/pipes/user-initial.pipe.ts) |
-| [Date Time pipe](core/pipes/date-time.pipe.md) | Converts a given input value into a Date object and adjusts it according to the specified format and timezone offset. | [Source](../lib/core/src/lib/pipes/date-time.pipe.ts) |
+| [Node Name Tooltip pipe](core/pipes/node-name-tooltip.pipe.md) | Formats the tooltip for a Node.                                                                                                                                                                                               | [Source](../lib/content-services/src/lib/pipes/node-name-tooltip.pipe.ts) |
+| [Text Highlight pipe](core/pipes/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string.                                                                                                                                                    | [Source](../lib/core/src/lib/pipes/text-highlight.pipe.ts) |
+| [Time Ago pipe](core/pipes/time-ago.pipe.md) | Converts a recent past date into a number of days ago.                                                                                                                                                                        | [Source](../lib/core/src/lib/pipes/time-ago.pipe.ts) |
+| [User Initial pipe](core/pipes/user-initial.pipe.md) | Takes the name fields of a `UserLike` object and extracts and formats the initials.                                                                                                                                            | [Source](../lib/core/src/lib/pipes/user-initial.pipe.ts) |
+| [Date Time pipe](core/pipes/date-time.pipe.md) | Converts a given input value into a Date object and adjusts it according to the specified format and timezone offset.                                                                                                         | [Source](../lib/core/src/lib/pipes/date-time.pipe.ts) |
 
 ### Services
 

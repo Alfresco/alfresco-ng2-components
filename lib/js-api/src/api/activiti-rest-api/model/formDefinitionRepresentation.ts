@@ -21,6 +21,7 @@ import { FormJavascriptEventRepresentation } from './formJavascriptEventRepresen
 import { FormOutcomeRepresentation } from './formOutcomeRepresentation';
 import { FormTabRepresentation } from './formTabRepresentation';
 import { FormVariableRepresentation } from './formVariableRepresentation';
+import { RestVariable } from './restVariable';
 
 export interface FormDefinitionRepresentation {
     className?: string;
@@ -45,4 +46,5 @@ export interface FormDefinitionRepresentation {
     taskId?: string;
     taskName?: string;
     variables?: FormVariableRepresentation[];
+    processVariables?: RestVariable[];
 }

@@ -18,14 +18,13 @@
 /**
  * This object represent the details of a task.
  */
-import { TaskRepresentation } from '@alfresco/js-api';
-import { UserProcessModel } from '../../common/models/user-process.model';
+import { LightUserRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { UserGroupModel } from './user-group.model';
 
 export class TaskDetailsModel implements TaskRepresentation {
     id?: string;
     name?: string;
-    assignee?: UserProcessModel;
+    assignee?: LightUserRepresentation;
     priority?: number;
     adhocTaskCanBeReassigned?: boolean;
     category?: string;
@@ -41,8 +40,8 @@ export class TaskDetailsModel implements TaskRepresentation {
     managerOfCandidateGroup?: boolean;
     memberOfCandidateGroup?: boolean;
     memberOfCandidateUsers?: boolean;
-    involvedGroups?: UserGroupModel [];
-    involvedPeople?: UserProcessModel [];
+    involvedGroups?: UserGroupModel[];
+    involvedPeople?: LightUserRepresentation[];
     parentTaskId?: string;
     parentTaskName?: string;
     processDefinitionCategory?: string;
@@ -62,7 +61,7 @@ export class TaskDetailsModel implements TaskRepresentation {
             this.id = obj.id || null;
             this.name = obj.name || null;
             this.priority = obj.priority;
-            this.assignee = obj.assignee ? new UserProcessModel(obj.assignee) : null;
+            this.assignee = obj.assignee;
             this.adhocTaskCanBeReassigned = obj.adhocTaskCanBeReassigned;
             this.category = obj.category || null;
             this.created = obj.created || null;

@@ -15,22 +15,28 @@
  * limitations under the License.
  */
 
-import { UserInfoMode } from '@alfresco/adf-core';
+import { FullNamePipe, InitialUsernamePipe, UserInfoMode } from '@alfresco/adf-core';
 import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { PeopleProcessService } from '../common/services/people-process.service';
-import { BpmUserModel } from '../common/models/bpm-user.model';
+import { UserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-process-user-info',
+    standalone: true,
+    imports: [CommonModule, FullNamePipe, MatButtonModule, MatMenuModule, InitialUsernamePipe, MatTabsModule, TranslateModule, MatCardModule],
     templateUrl: './process-user-info.component.html',
     styleUrls: ['./process-user-info.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessUserInfoComponent implements OnDestroy {
-
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     /** Determines if user is logged in. */
@@ -39,7 +45,7 @@ export class ProcessUserInfoComponent implements OnDestroy {
 
     /** BPM user info. */
     @Input()
-    bpmUser: BpmUserModel;
+    bpmUser: UserRepresentation;
 
     /** ECM user info. */
     @Input()
@@ -80,8 +86,7 @@ export class ProcessUserInfoComponent implements OnDestroy {
 
     private destroy$ = new Subject();
 
-    constructor(private peopleProcessService: PeopleProcessService, private peopleContentService: PeopleContentService) {
-    }
+    constructor(private peopleProcessService: PeopleProcessService, private peopleContentService: PeopleContentService) {}
 
     ngOnDestroy(): void {
         this.destroy$.next(true);

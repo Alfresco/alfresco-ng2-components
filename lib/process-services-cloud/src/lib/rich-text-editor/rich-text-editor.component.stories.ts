@@ -19,7 +19,6 @@ import { RichTextEditorModule } from './rich-text-editor.module';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../testing/process-services-cloud-story.module';
 import { RichTextEditorComponent } from './rich-text-editor.component';
-import { exampleData } from './mocks/rich-text-editor.mock';
 
 export default {
     component: RichTextEditorComponent,
@@ -36,14 +35,6 @@ export default {
             table: {
                 type: { summary: 'OutputData' }
             }
-        },
-        readOnly: {
-            control: 'boolean',
-            defaultValue: false,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
-            }
         }
     }
 } as Meta;
@@ -51,10 +42,7 @@ export default {
 const template: Story<RichTextEditorComponent> = (args: RichTextEditorComponent) => ({
     props: args,
     template: `
-    <adf-cloud-rich-text-editor
-        [data]=data
-        [readOnly]=readOnly
-        #editor >
+    <adf-cloud-rich-text-editor [data]=data #editor>
     </adf-cloud-rich-text-editor>
     <hr/>
     <h3>Output data from editor:</h3>
@@ -65,34 +53,28 @@ const template: Story<RichTextEditorComponent> = (args: RichTextEditorComponent)
 export const defaultRichTextEditor = template.bind({});
 defaultRichTextEditor.args = {
     data: {
-        time : 1550476186479,
-        blocks : [
+        time: 1550476186479,
+        blocks: [
             {
-                type : 'paragraph',
-                data : {
-                    text : 'The example of text that was written in <b>one of popular</b> text editors.'
+                type: 'paragraph',
+                data: {
+                    text: 'The example of text that was written in <b>one of popular</b> text editors.'
                 }
             },
             {
-                type : 'header',
-                data : {
-                    text : 'With the header of course',
-                    level : 2
+                type: 'header',
+                data: {
+                    text: 'With the header of course',
+                    level: 2
                 }
             },
             {
-                type : 'paragraph',
-                data : {
-                    text : 'So what do we have?'
+                type: 'paragraph',
+                data: {
+                    text: 'So what do we have?'
                 }
             }
         ],
-        version : '2.29.0'
+        version: '2.29.0'
     }
-};
-
-export const readOnlyRichTextEditor = template.bind({});
-readOnlyRichTextEditor.args = {
-    readOnly: true,
-    data: exampleData
 };
