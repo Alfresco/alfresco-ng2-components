@@ -52,7 +52,32 @@ $search-result-height: calc(100% - 60px);
         &-input {
             width: 100%;
 
+            #{$mat-form-field-wrapper} {
+                #{$mat-form-field-flex} {
+                    align-items: center;
+
+                    #{$mat-form-field-infix} {
+                        padding-top: 0;
+                        padding-bottom: 0;
+                    }
+                }
+            }
+
+            #{$mat-form-field-subscript-wrapper} {
+                height: 16px;
+            }
+
+            .adf-permission-search-input-control {
+                &:focus::placeholder {
+                    color: var(--theme-primary-color);
+                }
+            }
+
             .adf-permission-search-icon {
+                padding: 0 0 12px;
+                width: 1em;
+                height: 1em;
+                font-size: 20px;
                 cursor: pointer;
 
                 &:hover {
