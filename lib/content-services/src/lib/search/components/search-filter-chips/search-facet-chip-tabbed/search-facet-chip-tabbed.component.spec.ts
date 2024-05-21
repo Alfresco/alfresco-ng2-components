@@ -142,6 +142,18 @@ describe('SearchFacetChipTabbedComponent', () => {
         expect(await icon.getName()).toBe('keyboard_arrow_up');
     });
 
+    it('should update isPopulated and call detectChanges on ChangeDetectorRef', () => {
+        spyOn(component['changeDetectorRef'], 'detectChanges').and.callThrough();
+
+        component.onIsPopulatedEventChange(true);
+        expect(component.isPopulated).toBe(true);
+        expect(component['changeDetectorRef'].detectChanges).toHaveBeenCalled();
+
+        component.onIsPopulatedEventChange(false);
+        expect(component.isPopulated).toBe(false);
+        expect(component['changeDetectorRef'].detectChanges).toHaveBeenCalledTimes(2);
+    });
+
     it('should update display value when new displayValue$ emitted', async () => {
         const displayValue = 'field_LABEL: test, test2';
         const chip = await loader.getHarness(MatChipHarness);

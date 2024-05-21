@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'adf-search-facet-chip-tabbed',
-  templateUrl: './search-facet-chip-tabbed.component.html',
-  styleUrls: ['./search-facet-chip-tabbed.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-search-facet-chip-tabbed',
+    templateUrl: './search-facet-chip-tabbed.component.html',
+    styleUrls: ['./search-facet-chip-tabbed.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipTabbedComponent {
     @Input()
@@ -47,7 +47,7 @@ export class SearchFacetChipTabbedComponent {
     chipIcon = 'keyboard_arrow_down';
     isPopulated = false;
 
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory) {}
+    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory, private changeDetectorRef: ChangeDetectorRef) {}
 
     onMenuOpen() {
         if (this.menuContainer && !this.focusTrap) {
@@ -86,5 +86,9 @@ export class SearchFacetChipTabbedComponent {
         if (this.menuTrigger.menuOpen) {
             this.menuTrigger.closeMenu();
         }
+    }
+    onIsPopulatedEventChange(isPopulated: boolean): void {
+        this.isPopulated = isPopulated;
+        this.changeDetectorRef.detectChanges();
     }
 }
