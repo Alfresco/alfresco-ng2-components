@@ -34,7 +34,7 @@
                 {{ tabbedFacet.label | translate }}
             </ng-container>
             <ng-container ngProjectAs="filter-content">
-                <adf-search-facet-tabbed-content [tabbedFacet]="tabbedFacet" (isPopulated)="isPopulated = $event"
+                <adf-search-facet-tabbed-content [tabbedFacet]="tabbedFacet" (isPopulated)="onIsPopulatedEventChange($event)"
                                                  [onReset$]="reset$" [onApply$]="apply$" (displayValue$)="displayValue = $event">
                 </adf-search-facet-tabbed-content>
             </ng-container>
