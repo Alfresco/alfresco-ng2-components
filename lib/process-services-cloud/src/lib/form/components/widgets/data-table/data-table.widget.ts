@@ -83,7 +83,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
                 this.handleError('Data source has corrupted model or structure');
             }
         } else {
-            this.handleError('Data source not found or it is not an array');
+            this.handleError('Data source not found or it is not an array/object');
         }
     }
 

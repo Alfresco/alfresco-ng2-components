@@ -16,7 +16,7 @@
  */
 
 import { DataTablePathParserHelper } from './data-table-path-parser.helper';
-import { mockResponseResultData, mockResponseResultDataWithNestedArray, mockResultData } from '../mocks/data-table-path-parser.helper.mock';
+import { mockResponseResultData, mockResponseResultDataWithArrayInsideArray, mockResultData } from '../mocks/data-table-path-parser.helper.mock';
 
 interface DataTablePathParserTestCase {
     description: string;
@@ -132,20 +132,32 @@ describe('DataTablePathParserHelper', () => {
                 description: 'with property followed by single index reference',
                 propertyName: 'users',
                 path: 'response.users[0].data',
-                data: mockResponseResultDataWithNestedArray('users')
+                data: mockResponseResultDataWithArrayInsideArray('users')
             },
             {
                 description: 'with property followed by multiple index references',
                 propertyName: 'users:Array',
                 path: 'response.[users:Array][0][1][12].data',
-                data: mockResponseResultDataWithNestedArray('users:Array'),
+                data: mockResponseResultDataWithArrayInsideArray('users:Array'),
                 expected: []
             },
             {
-                description: 'when path does NOT point to array',
+                description: 'when path points to array in the middle (incorrect path)',
                 propertyName: 'users',
-                path: 'response.users[0]',
-                data: mockResponseResultDataWithNestedArray('users'),
+                path: 'response.users.incorrectPath',
+                data: mockResponseResultDataWithArrayInsideArray('users'),
+                expected: []
+            },
+            {
+                description: 'when path points to the particular element of the array',
+                propertyName: 'users',
+                path: 'response.users[1]',
+                expected: [mockResultData[1]]
+            },
+            {
+                description: 'when path points to the particular element of the array which does NOT exist',
+                propertyName: 'users',
+                path: 'response.users[100]',
                 expected: []
             }
         ];

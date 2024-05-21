@@ -196,18 +196,6 @@ describe('DataTableWidgetComponent', () => {
         assertData(mockCountryColumns, mockEuropeCountriesRows);
     });
 
-    it('should NOT display error if form is in preview state', () => {
-        widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
-        spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
-        fixture.detectChanges();
-
-        const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
-        const previewDataTable = getPreview();
-
-        expect(failedErrorMsgElement).toBeNull();
-        expect(previewDataTable).toBeTruthy();
-    });
-
     it('should NOT display data table with data source if form is in preview state', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariable);
         spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
@@ -220,53 +208,85 @@ describe('DataTableWidgetComponent', () => {
         expect(dataTable).toBeNull();
     });
 
-    it('should display error if data source is not linked to every column', () => {
-        widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
-        fixture.detectChanges();
+    describe('should NOT display error message if', () => {
+        it('form is in preview state', () => {
+            widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
+            spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
+            fixture.detectChanges();
 
-        checkDataTableErrorMessage();
-        expect(widget.dataSource.getRows()).toEqual([]);
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
+            const previewDataTable = getPreview();
+
+            expect(failedErrorMsgElement).toBeNull();
+            expect(previewDataTable).toBeTruthy();
+        });
+
+        it('path points to single object with appropriate schema definition', () => {
+            widget.field = getDataVariable({ ...mockVariableConfig, optionsPath: 'response.single-object' }, mockSchemaDefinition, [], []);
+            widget.field.value = mockJsonNestedResponseEuropeCountriesData;
+            fixture.detectChanges();
+
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
+
+            assertData(mockCountryColumns, [mockEuropeCountriesRows[1]]);
+            expect(failedErrorMsgElement).toBeNull();
+        });
     });
 
-    it('should display error if data source has invalid column structure', () => {
-        widget.field = getDataVariable(mockVariableConfig, mockInvalidSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
-        fixture.detectChanges();
+    describe('should display error message if', () => {
+        it('data source is NOT linked to every column', () => {
+            widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
+            fixture.detectChanges();
 
-        checkDataTableErrorMessage();
-        expect(widget.dataSource.getRows()).toEqual([]);
-    });
+            checkDataTableErrorMessage();
+            expect(widget.dataSource.getRows()).toEqual([]);
+        });
 
-    it('should display error if data source is not found', () => {
-        widget.field = getDataVariable({ variableName: 'not-found-data-source' }, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
-        fixture.detectChanges();
+        it('data source has invalid column structure', () => {
+            widget.field = getDataVariable(mockVariableConfig, mockInvalidSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
+            fixture.detectChanges();
 
-        checkDataTableErrorMessage();
-        expect(widget.dataSource).toBeUndefined();
-    });
+            checkDataTableErrorMessage();
+            expect(widget.dataSource.getRows()).toEqual([]);
+        });
 
-    it('should display error if path is incorrect', () => {
-        widget.field = getDataVariable(
-            { ...mockVariableConfig, optionsPath: 'wrong.path' },
-            mockSchemaDefinition,
-            mockJsonNestedResponseFormVariable,
-            []
-        );
-        fixture.detectChanges();
+        it('data source is NOT found', () => {
+            widget.field = getDataVariable(
+                { variableName: 'not-found-data-source' },
+                mockSchemaDefinition,
+                [],
+                mockJsonFormVariableWithIncorrectData
+            );
+            fixture.detectChanges();
 
-        checkDataTableErrorMessage();
-        expect(widget.dataSource).toBeUndefined();
-    });
+            checkDataTableErrorMessage();
+            expect(widget.dataSource).toBeUndefined();
+        });
 
-    it('should display error if provided data by path is not an array', () => {
-        widget.field = getDataVariable(
-            { ...mockVariableConfig, optionsPath: 'response.no-array' },
-            mockSchemaDefinition,
-            mockJsonNestedResponseFormVariable,
-            []
-        );
-        fixture.detectChanges();
+        it('path is incorrect', () => {
+            widget.field = getDataVariable(
+                { ...mockVariableConfig, optionsPath: 'wrong.path' },
+                mockSchemaDefinition,
+                mockJsonNestedResponseFormVariable,
+                []
+            );
+            fixture.detectChanges();
 
-        checkDataTableErrorMessage();
-        expect(widget.dataSource).toBeUndefined();
+            checkDataTableErrorMessage();
+            expect(widget.dataSource).toBeUndefined();
+        });
+
+        it('provided data by path is NOT an array or object', () => {
+            widget.field = getDataVariable(
+                { ...mockVariableConfig, optionsPath: 'response.no-array-or-object' },
+                mockSchemaDefinition,
+                mockJsonNestedResponseFormVariable,
+                []
+            );
+            fixture.detectChanges();
+
+            checkDataTableErrorMessage();
+            expect(widget.dataSource).toBeUndefined();
+        });
     });
 });
