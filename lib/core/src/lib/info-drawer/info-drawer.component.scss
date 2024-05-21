@@ -64,15 +64,20 @@
 }
 
 .adf-info-drawer-tabs {
+
     #{$mat-tab-label-container} {
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     }
 
-    .adf-info-drawer-tab {
+    div[role="tab"].adf-info-drawer-tab {
         color: var(--adf-info-drawer-tab-default-color);
         background-color: var(--adf-info-drawer-tab-default-background);
         border-bottom: var(--adf-info-drawer-tab-default-bottom-line);
         opacity: 1;
+
+        &#{$mat-tab-label} {
+            flex-grow: 1;
+        }
 
         &:has(span) {
             height: 32px;
