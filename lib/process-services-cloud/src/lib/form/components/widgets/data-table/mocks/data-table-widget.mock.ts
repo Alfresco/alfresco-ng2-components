@@ -114,13 +114,14 @@ export const mockJsonNestedResponseEuropeCountriesData = {
     response: {
         empty: [],
         'my-data': mockEuropeCountriesData,
+        'single-object': mockEuropeCountriesData[0],
+        'no-array-or-object': 'string-value',
         data: [
             {
                 id: 'HR',
                 name: 'Croatia'
             }
-        ],
-        'no-array': {}
+        ]
     }
 };
 
