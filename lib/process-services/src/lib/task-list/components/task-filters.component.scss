@@ -13,9 +13,13 @@
             width: 100%;
         }
 
-        .adf-filter-action-button .adf-filter-action-button__label {
-            padding-left: 20px;
-            margin: 0 8px;
+        .adf-filter-action-button {
+            justify-content: start;
+
+            .adf-filter-action-button__label {
+                padding-left: 20px;
+                margin: 0 8px;
+            }
         }
 
         &.adf-active,
