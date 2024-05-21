@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-NODE_OPTIONS=--max_old_space_size=4096 npx lint-staged
+export NODE_OPTIONS=--max_old_space_size=8192
+npx lint-staged

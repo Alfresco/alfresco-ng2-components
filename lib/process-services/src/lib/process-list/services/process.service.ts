@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService, DateFnsUtils, FormValues } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
     FormDefinitionRepresentation,
     ProcessDefinitionsApi,
@@ -39,6 +39,8 @@ import { DatePipe } from '@angular/common';
     providedIn: 'root'
 })
 export class ProcessService {
+    private alfrescoApiService = inject(AlfrescoApiService);
+
     private _tasksApi: TasksApi;
     get tasksApi(): TasksApi {
         return (this._tasksApi ||= new TasksApi(this.alfrescoApiService.getInstance()));
@@ -58,8 +60,6 @@ export class ProcessService {
     get processInstanceVariablesApi(): ProcessInstanceVariablesApi {
         return (this._processInstanceVariablesApi ||= new ProcessInstanceVariablesApi(this.alfrescoApiService.getInstance()));
     }
-
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     /**
      * Gets process instances for a filter and optionally a process definition.
