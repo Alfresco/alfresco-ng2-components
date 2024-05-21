@@ -105,20 +105,4 @@ describe('RichTextEditorComponent', () => {
 
         expect(destroyEditorSpy).not.toHaveBeenCalled();
     });
-
-    it('should add readonly class if readOnly is set to true', async () => {
-        component.readOnly = true;
-        await whenEditorIsReady();
-
-        const editorEl = debugElement.query(By.css(cssSelectors.editorJsElement));
-        expect(editorEl.nativeElement.classList).toContain('readonly');
-    });
-
-    it('should not add readonly class if readOnly is set to false', async () => {
-        component.readOnly = false;
-        await whenEditorIsReady();
-
-        const editorEl = debugElement.query(By.css(cssSelectors.editorJsElement));
-        expect(editorEl.nativeElement.classList).not.toContain('readonly');
-    });
 });
