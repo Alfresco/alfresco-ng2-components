@@ -26,9 +26,9 @@ import {
     CardViewIntItemModel,
     CardViewItemLengthValidator
 } from '@alfresco/adf-core';
-import { TaskDetailsModel } from '../models/task-details.model';
 import { PeopleProcessService } from '../../common/services/people-process.service';
 import { TaskDescriptionValidator } from '../validators/task-description.validator';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-task-header',
@@ -43,7 +43,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     /** (required) Details related to the task. */
     @Input()
-    taskDetails: TaskDetailsModel;
+    taskDetails: TaskRepresentation;
 
     /** Toggles display of the claim/release button. */
     @Input()

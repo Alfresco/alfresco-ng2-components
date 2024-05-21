@@ -28,10 +28,10 @@ import {
     RestVariable,
     ResultListDataRepresentationProcessInstanceRepresentation,
     TasksApi,
-    ProcessDefinitionRepresentation
+    ProcessDefinitionRepresentation,
+    TaskRepresentation
 } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
-import { TaskDetailsModel } from '../../task-list';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
@@ -174,7 +174,7 @@ export class ProcessService {
      * @param state Task state filter (can be "active" or "completed")
      * @returns Array of task instance details
      */
-    getProcessTasks(processInstanceId: string, state?: string): Observable<TaskDetailsModel[]> {
+    getProcessTasks(processInstanceId: string, state?: string): Observable<TaskRepresentation[]> {
         const taskOpts = state
             ? {
                   processInstanceId,

@@ -20,11 +20,11 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDe
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { Form } from '../models/form.model';
-import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { isValid } from 'date-fns';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
@@ -60,7 +60,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     @Output()
     error = new EventEmitter<any>();
 
-    taskDetailsModel: TaskDetailsModel = new TaskDetailsModel();
+    taskDetailsModel = new TaskRepresentation();
     forms$: Observable<Form[]>;
     assigneeId: number;
     field: FormFieldModel;
@@ -213,7 +213,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return response;
     }
 
-    private assignTaskByUserId(taskId: string, userId: string): Observable<TaskDetailsModel> {
+    private assignTaskByUserId(taskId: string, userId: string): Observable<TaskRepresentation> {
         if (taskId && userId) {
             return this.taskService.assignTaskByUserId(taskId, userId);
         }

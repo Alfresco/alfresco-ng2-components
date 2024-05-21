@@ -36,7 +36,6 @@ export * from './services/task-filter.service';
 
 export * from './models/form.model';
 export * from './models/task-details.event';
-export * from './models/task-details.model';
 export * from './models/user-event.model';
 export * from './models/user-group.model';
 

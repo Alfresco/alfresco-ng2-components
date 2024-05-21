@@ -19,7 +19,6 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { TaskDetailsModel } from '../../task-list';
 import { taskDetailsMock } from '../../mock';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
@@ -27,7 +26,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatListItemHarness } from '@angular/material/list/testing';
-import { ProcessInstanceRepresentation } from '@alfresco/js-api';
+import { ProcessInstanceRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 describe('ProcessInstanceTasksComponent', () => {
     let component: ProcessInstanceTasksComponent;
@@ -46,7 +45,7 @@ describe('ProcessInstanceTasksComponent', () => {
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
 
-        spyOn(processService, 'getProcessTasks').and.returnValue(of([new TaskDetailsModel(taskDetailsMock)]));
+        spyOn(processService, 'getProcessTasks').and.returnValue(of([new TaskRepresentation(taskDetailsMock)]));
     });
 
     it('should initially render message about no active tasks if no process instance ID provided', () => {

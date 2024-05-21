@@ -27,12 +27,11 @@ import {
     claimedByGroupMemberMock,
     taskDetailsWithOutCandidateGroup
 } from '../../mock';
-
-import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { PeopleProcessService } from '../../common/services/people-process.service';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('TaskHeaderComponent', () => {
     let service: TaskListService;
@@ -64,7 +63,7 @@ describe('TaskHeaderComponent', () => {
         service = TestBed.inject(TaskListService);
         peopleProcessService = TestBed.inject(PeopleProcessService);
         spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmAssignedUser));
-        component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+        component.taskDetails = new TaskRepresentation(taskDetailsMock);
         appConfigService = TestBed.inject(AppConfigService);
     });
 
@@ -133,12 +132,12 @@ describe('TaskHeaderComponent', () => {
         await fixture.whenStable();
 
         const datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
-        expect(datePicker).not.toBeNull('Datepicker should be in DOM');
+        expect(datePicker).not.toBeNull();
     });
 
     describe('Claiming', () => {
         it('should be able display the claim/release button if showClaimRelease set to true', async () => {
-            component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+            component.taskDetails = new TaskRepresentation(claimableTaskDetailsMock);
             component.showClaimRelease = true;
             component.refreshData();
 
@@ -150,7 +149,7 @@ describe('TaskHeaderComponent', () => {
         });
 
         it('should not be able display the claim/release button if showClaimRelease set to false', async () => {
-            component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+            component.taskDetails = new TaskRepresentation(claimableTaskDetailsMock);
             component.showClaimRelease = false;
             component.refreshData();
 
@@ -162,7 +161,7 @@ describe('TaskHeaderComponent', () => {
         });
 
         it('should display the claim button if no assignee', async () => {
-            component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+            component.taskDetails = new TaskRepresentation(claimableTaskDetailsMock);
 
             component.refreshData();
 
@@ -174,7 +173,7 @@ describe('TaskHeaderComponent', () => {
         });
 
         it('should display the claim button if the task is claimable', async () => {
-            component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+            component.taskDetails = new TaskRepresentation(claimableTaskDetailsMock);
             component.refreshData();
 
             fixture.detectChanges();
@@ -186,7 +185,7 @@ describe('TaskHeaderComponent', () => {
         });
 
         it('should not display the claim/requeue button if the task is not claimable ', async () => {
-            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutCandidateGroup);
+            component.taskDetails = new TaskRepresentation(taskDetailsWithOutCandidateGroup);
             component.refreshData();
 
             fixture.detectChanges();
@@ -202,7 +201,7 @@ describe('TaskHeaderComponent', () => {
     });
 
     it('should display the requeue button if task is claimed by the current logged-in user', async () => {
-        component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
+        component.taskDetails = new TaskRepresentation(claimedTaskDetailsMock);
         component.refreshData();
 
         fixture.detectChanges();
@@ -214,7 +213,7 @@ describe('TaskHeaderComponent', () => {
     });
 
     it('should not display the requeue button to logged in user if task is claimed by other candidate member', async () => {
-        component.taskDetails = new TaskDetailsModel(claimedByGroupMemberMock);
+        component.taskDetails = new TaskRepresentation(claimedByGroupMemberMock);
         component.refreshData();
 
         fixture.detectChanges();
@@ -226,7 +225,7 @@ describe('TaskHeaderComponent', () => {
     });
 
     it('should display the claim button if the task is claimable by candidates members', async () => {
-        component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+        component.taskDetails = new TaskRepresentation(claimableTaskDetailsMock);
         component.refreshData();
 
         fixture.detectChanges();
@@ -239,7 +238,7 @@ describe('TaskHeaderComponent', () => {
     });
 
     it('should not display the requeue button if the task is completed', async () => {
-        component.taskDetails = new TaskDetailsModel(completedTaskDetailsMock);
+        component.taskDetails = new TaskRepresentation(completedTaskDetailsMock);
         component.refreshData();
 
         fixture.detectChanges();

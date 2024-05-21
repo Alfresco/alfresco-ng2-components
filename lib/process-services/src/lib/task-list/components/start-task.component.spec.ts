@@ -21,10 +21,10 @@ import { TaskListService } from '../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { taskDetailsMock } from '../../mock/task/task-details.mock';
-import { TaskDetailsModel } from '../models/task-details.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('StartTaskComponent', () => {
     let component: StartTaskComponent;
@@ -99,7 +99,7 @@ describe('StartTaskComponent', () => {
 
         it('should send on success event when the task is started', () => {
             const successSpy = spyOn(component.success, 'emit');
-            component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
@@ -124,7 +124,7 @@ describe('StartTaskComponent', () => {
 
         it('should not emit success event when data not present', () => {
             const successSpy = spyOn(component.success, 'emit');
-            component.taskDetailsModel = new TaskDetailsModel(null);
+            component.taskDetailsModel = new TaskRepresentation(null);
             fixture.detectChanges();
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
@@ -158,7 +158,7 @@ describe('StartTaskComponent', () => {
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(1204);
             component.appId = 42;
-            component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             fixture.detectChanges();
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
@@ -183,7 +183,7 @@ describe('StartTaskComponent', () => {
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(null);
             component.appId = 42;
-            component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             fixture.detectChanges();
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
@@ -243,7 +243,7 @@ describe('StartTaskComponent', () => {
 
         it('should assign task with id of selected user assigned', () => {
             const successSpy = spyOn(component.success, 'emit');
-            component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(1204);
             component.appId = 42;
@@ -265,7 +265,7 @@ describe('StartTaskComponent', () => {
             component.taskForm.controls['formKey'].setValue(1204);
             component.appId = 42;
             component.assigneeId = null;
-            component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetailsModel = new TaskRepresentation(taskDetailsMock);
             fixture.detectChanges();
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
@@ -280,7 +280,7 @@ describe('StartTaskComponent', () => {
 
     it('should not attach a form when a form id is not selected', () => {
         const attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(of([]));
-        spyOn(service, 'createNewTask').and.returnValue(of(new TaskDetailsModel({ id: 'task-id' })));
+        spyOn(service, 'createNewTask').and.returnValue(of(new TaskRepresentation({ id: 'task-id' })));
         component.taskForm.controls['name'].setValue('fakeName');
         fixture.detectChanges();
         const createTaskButton = element.querySelector<HTMLElement>('#button-start');

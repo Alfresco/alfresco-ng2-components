@@ -17,9 +17,8 @@
 
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges } from '@angular/core';
 import { FormModel, ContentLinkModel, FormFieldValidator, FormOutcomeEvent, TranslationService, FormFieldModel } from '@alfresco/adf-core';
-import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
-import { UserRepresentation } from '@alfresco/js-api';
+import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 import { PeopleProcessService } from '../../../common';
 
@@ -119,7 +118,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
     @Output()
     taskUnclaimed = new EventEmitter<string>();
 
-    taskDetails: TaskDetailsModel;
+    taskDetails: TaskRepresentation;
     currentLoggedUser: UserRepresentation;
     loading: boolean = false;
     internalReadOnlyForm: boolean = false;

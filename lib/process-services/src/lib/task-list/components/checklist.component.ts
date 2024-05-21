@@ -17,8 +17,8 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-checklist',
@@ -41,11 +41,11 @@ export class ChecklistComponent implements OnChanges {
 
     /** (required) The assignee id that the subtasks are assigned to. */
     @Input()
-    assignee: string;
+    assignee: number;
 
     /** Emitted when a new checklist task is created. */
     @Output()
-    checklistTaskCreated = new EventEmitter<TaskDetailsModel>();
+    checklistTaskCreated = new EventEmitter<TaskRepresentation>();
 
     /** Emitted when a checklist task is deleted. */
     @Output()
@@ -60,7 +60,7 @@ export class ChecklistComponent implements OnChanges {
 
     taskName: string;
 
-    checklist: TaskDetailsModel[] = [];
+    checklist: TaskRepresentation[] = [];
 
     constructor(private taskListService: TaskListService, private dialog: MatDialog) {}
 
@@ -95,7 +95,7 @@ export class ChecklistComponent implements OnChanges {
     }
 
     public add() {
-        const newTask = new TaskDetailsModel({
+        const newTask = new TaskRepresentation({
             name: this.taskName,
             parentTaskId: this.taskId,
             assignee: { id: this.assignee }

@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { TaskDetailsModel } from './task-details.model';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 export class TaskDetailsEvent {
-
-    private _value: TaskDetailsModel;
+    private _value: TaskRepresentation;
     private _defaultPrevented: boolean = false;
 
-    get value(): TaskDetailsModel {
+    get value(): TaskRepresentation {
         return this._value;
     }
 
@@ -30,7 +29,7 @@ export class TaskDetailsEvent {
         return this._defaultPrevented;
     }
 
-    constructor(value: TaskDetailsModel) {
+    constructor(value: TaskRepresentation) {
         this._value = value;
     }
 

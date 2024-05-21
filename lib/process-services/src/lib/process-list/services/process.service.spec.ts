@@ -20,22 +20,21 @@ import { exampleProcess } from '../../mock';
 import { ProcessService } from './process.service';
 import { CoreModule, DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { ProcessInstanceQueryRepresentation, ProcessDefinitionRepresentation, RestVariable } from '@alfresco/js-api';
-import { TaskDetailsModel } from '@alfresco/adf-process-services';
+import { ProcessInstanceQueryRepresentation, ProcessDefinitionRepresentation, RestVariable, TaskRepresentation } from '@alfresco/js-api';
 
 const fakeTasksList = {
     data: [
-        new TaskDetailsModel({
-            id: 1,
+        new TaskRepresentation({
+            id: '1',
             name: 'Task 1',
-            processInstanceId: 1000,
-            created: '2016-11-10T03:37:30.010+0000'
+            processInstanceId: '1000',
+            created: new Date('2016-11-10T03:37:30.010+0000')
         }),
-        new TaskDetailsModel({
-            id: 2,
+        new TaskRepresentation({
+            id: '2',
             name: 'Task 2',
-            processInstanceId: 1000,
-            created: '2016-11-10T03:37:30.010+0000'
+            processInstanceId: '1000',
+            created: new Date('2016-11-10T03:37:30.010+0000')
         })
     ]
 };

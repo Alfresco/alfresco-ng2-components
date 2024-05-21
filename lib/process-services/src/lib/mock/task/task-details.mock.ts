@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { UserRepresentation } from '@alfresco/js-api';
-import { TaskDetailsModel } from '../../task-list/models/task-details.model';
+import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
 
-export const standaloneTaskWithoutForm = new TaskDetailsModel({
+export const standaloneTaskWithoutForm = new TaskRepresentation({
     id: '200',
     name: 'Standalone Task Without Form',
     description: null,
@@ -29,7 +28,7 @@ export const standaloneTaskWithoutForm = new TaskDetailsModel({
         lastName: 'Adams',
         email: 'wilbur@app.activiti.com'
     },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -58,7 +57,7 @@ export const standaloneTaskWithoutForm = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export const completedStandaloneTaskWithoutForm = new TaskDetailsModel({
+export const completedStandaloneTaskWithoutForm = new TaskRepresentation({
     id: '200',
     name: 'Standalone Task Without Form',
     description: null,
@@ -69,7 +68,7 @@ export const completedStandaloneTaskWithoutForm = new TaskDetailsModel({
         lastName: 'Adams',
         email: 'wilbur@app.activiti.com'
     },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: new Date(),
     duration: null,
@@ -98,7 +97,7 @@ export const completedStandaloneTaskWithoutForm = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export const taskDetailsMock = new TaskDetailsModel({
+export const taskDetailsMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -109,7 +108,7 @@ export const taskDetailsMock = new TaskDetailsModel({
         lastName: 'Adams',
         email: 'wilbur@app.activiti.com'
     },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -138,13 +137,13 @@ export const taskDetailsMock = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export const initiatorCanCompleteTaskDetailsMock = new TaskDetailsModel({
+export const initiatorCanCompleteTaskDetailsMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
     category: null,
     assignee: { email: 'mock-user-email' },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -173,13 +172,13 @@ export const initiatorCanCompleteTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export const initiatorWithCandidatesTaskDetailsMock = new TaskDetailsModel({
+export const initiatorWithCandidatesTaskDetailsMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
     category: null,
     assignee: null,
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -221,13 +220,13 @@ export const initiatorWithCandidatesTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateGroup: true
 });
 
-export const taskDetailsWithOutAssigneeMock = new TaskDetailsModel({
+export const taskDetailsWithOutAssigneeMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
     category: null,
     assignee: undefined,
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -256,13 +255,13 @@ export const taskDetailsWithOutAssigneeMock = new TaskDetailsModel({
     memberOfCandidateGroup: false
 });
 
-export const claimableTaskDetailsMock = new TaskDetailsModel({
+export const claimableTaskDetailsMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
     category: null,
     assignee: null,
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -296,7 +295,7 @@ export const claimableTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateUsers: false
 });
 
-export const claimedTaskDetailsMock = new TaskDetailsModel({
+export const claimedTaskDetailsMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -307,7 +306,7 @@ export const claimedTaskDetailsMock = new TaskDetailsModel({
         lastName: 'Adams',
         email: 'wilbur@app.activiti.com'
     },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -349,7 +348,7 @@ export const claimedTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateUsers: true
 });
 
-export const claimedByGroupMemberMock = new TaskDetailsModel({
+export const claimedByGroupMemberMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -360,7 +359,7 @@ export const claimedByGroupMemberMock = new TaskDetailsModel({
         lastName: 'fake-last-name',
         email: 'fake@app.activiti.com'
     },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -399,7 +398,7 @@ export const claimedByGroupMemberMock = new TaskDetailsModel({
     memberOfCandidateUsers: true
 });
 
-export const taskDetailsWithOutCandidateGroup = new TaskDetailsModel({
+export const taskDetailsWithOutCandidateGroup = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -410,7 +409,7 @@ export const taskDetailsWithOutCandidateGroup = new TaskDetailsModel({
         lastName: 'Adams',
         email: 'wilbur@app.activiti.com'
     },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: null,
     duration: null,
@@ -441,7 +440,7 @@ export const taskDetailsWithOutCandidateGroup = new TaskDetailsModel({
     ]
 });
 
-export const completedTaskWithFormMock = new TaskDetailsModel({
+export const completedTaskWithFormMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -452,7 +451,7 @@ export const completedTaskWithFormMock = new TaskDetailsModel({
         lastName: 'Adams',
         email: 'wilbur@app.activiti.com'
     },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: new Date(),
     duration: null,
@@ -471,7 +470,7 @@ export const completedTaskWithFormMock = new TaskDetailsModel({
     memberOfCandidateUsers: false
 });
 
-export const completedTaskDetailsMock = new TaskDetailsModel({
+export const completedTaskDetailsMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: null,
@@ -482,7 +481,7 @@ export const completedTaskDetailsMock = new TaskDetailsModel({
         lastName: 'Adams',
         email: 'wilbur@app.activiti.com'
     },
-    created: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
     dueDate: null,
     endDate: new Date(),
     duration: null,
@@ -501,14 +500,14 @@ export const completedTaskDetailsMock = new TaskDetailsModel({
     memberOfCandidateUsers: false
 });
 
-export const taskDetailsWithOutFormMock = new TaskDetailsModel({
+export const taskDetailsWithOutFormMock = new TaskRepresentation({
     id: '91',
     name: 'Request translation',
     description: 'fake description',
     category: null,
     assignee: { id: 1001, firstName: 'Admin', lastName: 'Paul', email: 'fake-email@gmail.com' },
-    created: '2016-11-03T15:25:42.749+0000',
-    dueDate: '2016-11-03T15:25:42.749+0000',
+    created: new Date('2016-11-03T15:25:42.749+0000'),
+    dueDate: new Date('2016-11-03T15:25:42.749+0000'),
     endDate: null,
     duration: null,
     priority: 50,
@@ -791,20 +790,20 @@ export const taskFormMock = {
     globalDateFormat: 'D-M-YYYY'
 };
 
-export const tasksMock = [new TaskDetailsModel(taskDetailsMock)];
+export const tasksMock = [taskDetailsMock];
 
-export const noDataMock = [
-    new TaskDetailsModel({
-        id: 1005,
+export const noDataMock: any[] = [
+    {
+        id: '1005',
         message: 'example-message',
-        created: '2017-10-06T11:54:53.443+0000',
+        created: new Date('2017-10-06T11:54:53.443+0000'),
         createdBy: {
             id: 4004,
             firstName: 'gadget',
             lastName: 'inspector',
             email: 'gadget@inspector.com'
         }
-    })
+    }
 ];
 
 export const involvedUserTaskForm = {
@@ -935,7 +934,7 @@ export const fakeUser = new UserRepresentation({
     tenantName: 'abc'
 });
 
-export const completedProcessTaskWithoutForm = new TaskDetailsModel({
+export const completedProcessTaskWithoutForm = new TaskRepresentation({
     id: '49',
     name: 'process task without form',
     description: null,
@@ -946,9 +945,9 @@ export const completedProcessTaskWithoutForm = new TaskDetailsModel({
         lastName: 'User',
         email: 'hruser@example.com'
     },
-    created: '2021-07-08T07:39:27.046+0000',
+    created: new Date('2021-07-08T07:39:27.046+0000'),
     dueDate: null,
-    endDate: '2021-07-08T07:39:35.817+0000',
+    endDate: new Date('2021-07-08T07:39:35.817+0000'),
     duration: 8771,
     priority: 0,
     parentTaskId: null,
