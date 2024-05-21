@@ -22,7 +22,7 @@ import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { StorageService } from '../../common/services/storage.service';
-import { OidcAuthenticationService } from '../services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 
 describe('AuthGuardService', () => {

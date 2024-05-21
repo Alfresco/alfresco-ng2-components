@@ -17,7 +17,7 @@
 
 import { CoreTestingModule, LoginComponent, LoginFooterDirective } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../../auth/oidc/oidc-authentication.service';
 
 describe('LoginFooterDirective', () => {
     let fixture: ComponentFixture<LoginComponent>;
