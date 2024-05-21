@@ -52,12 +52,12 @@ Manages process instances, process variables, and process audit Log.
     -   _requestNode:_ [`ProcessFilterParamRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)  - Filter for instances
     -   _processDefinitionKey:_ `string`  - (Optional) Limits returned instances to a process definition
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` - List of process instances
--   **getProcessTasks**(processInstanceId: `string`, state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`[]>`<br/>
+-   **getProcessTasks**(processInstanceId: `string`, state?: `string`): `Observable<TaskRepresentation[]>`<br/>
     Gets task instances for a process instance.
     -   _processInstanceId:_ `string`  - ID of the process instance
     -   _state:_ `string`  - (Optional) Task state filter (can be "active" or "completed")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`[]>` - Array of task instance details
--   **getProcesses**(requestNode: [`ProcessFilterParamRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts), processDefinitionKey?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>`<br/>
+    -   **Returns** `Observable<TaskRepresentation[]>` - Array of task instance details
+-   **getProcesses**(requestNode: `ProcessFilterParamRepresentationModel, processDefinitionKey?: `string`): `Observable<ProcessListModel>`<br/>
     Gets processes for a filter and optionally a process definition.
     -   _requestNode:_ [`ProcessFilterParamRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)  - Filter for instances
     -   _processDefinitionKey:_ `string`  - (Optional) Limits returned instances to a process definition

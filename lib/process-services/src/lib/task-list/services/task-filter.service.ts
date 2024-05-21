@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, forkJoin, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserFiltersApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
@@ -25,13 +25,13 @@ import { UserFiltersApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class TaskFilterService {
+    private apiService = inject(AlfrescoApiService);
+
     private _userFiltersApi: UserFiltersApi;
     get userFiltersApi(): UserFiltersApi {
         this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.apiService.getInstance());
         return this._userFiltersApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Creates and returns the default filters for a process app.

@@ -39,12 +39,11 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of, Subject } from 'rxjs';
-import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { PeopleProcessService } from '../../common/services/people-process.service';
-import { LightUserRepresentation, TaskQueryRepresentation } from '@alfresco/js-api';
+import { LightUserRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-task-details',
@@ -132,7 +131,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when a checklist task is created. */
     @Output()
-    taskCreated = new EventEmitter<TaskDetailsModel>();
+    taskCreated = new EventEmitter<TaskRepresentation>();
 
     /** Emitted when a checklist task is deleted. */
     @Output()
@@ -161,7 +160,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     unClaimedTask = new EventEmitter<string>();
 
-    taskDetails: TaskDetailsModel;
+    taskDetails: TaskRepresentation;
     taskFormName: string = null;
     taskPeople: LightUserRepresentation[] = [];
     noTaskDetailsTemplateComponent: TemplateRef<any>;
@@ -256,7 +255,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         this.formLoaded.emit(form);
     }
 
-    onChecklistTaskCreated(task: TaskDetailsModel): void {
+    onChecklistTaskCreated(task: TaskRepresentation): void {
         this.taskCreated.emit(task);
     }
 
@@ -376,7 +375,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         this.taskListService.getTasks(requestNode).subscribe(
             (response) => {
                 if (response && response.length > 0) {
-                    this.taskDetails = new TaskDetailsModel(response[0]);
+                    this.taskDetails = new TaskRepresentation(response[0]);
                 } else {
                     this.reset();
                 }

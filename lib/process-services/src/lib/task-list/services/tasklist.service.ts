@@ -20,7 +20,6 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError, flatMap, filter } from 'rxjs/operators';
 import { Form } from '../models/form.model';
-import { TaskDetailsModel } from '../models/task-details.model';
 import {
     TaskUpdateRepresentation,
     ModelsApi,
@@ -29,7 +28,8 @@ import {
     ChecklistsApi,
     ResultListDataRepresentationTaskRepresentation,
     TaskQueryRepresentation,
-    UserTaskFilterRepresentation
+    UserTaskFilterRepresentation,
+    TaskRepresentation
 } from '@alfresco/js-api';
 
 @Injectable({
@@ -121,8 +121,8 @@ export class TaskListService {
      * @param taskId ID of the target task.
      * @returns Task details
      */
-    getTaskDetails(taskId: string): Observable<TaskDetailsModel> {
-        return from(this.tasksApi.getTask(taskId)).pipe(map((details) => new TaskDetailsModel(details)));
+    getTaskDetails(taskId: string): Observable<TaskRepresentation> {
+        return from(this.tasksApi.getTask(taskId));
     }
 
     /**
@@ -131,8 +131,8 @@ export class TaskListService {
      * @param id ID of the target task
      * @returns Array of checklist task details
      */
-    getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
-        return from(this.checklistsApi.getChecklist(id)).pipe(map((response) => response.data.map((checklist) => new TaskDetailsModel(checklist))));
+    getTaskChecklist(id: string): Observable<TaskRepresentation[]> {
+        return from(this.checklistsApi.getChecklist(id)).pipe(map((response) => response.data));
     }
 
     /**
@@ -167,8 +167,8 @@ export class TaskListService {
      * @param task The task to add
      * @returns The subtask that was added
      */
-    addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
-        return from(this.checklistsApi.addSubtask(task.parentTaskId, task)).pipe(map((response) => new TaskDetailsModel(response)));
+    addTask(task: TaskRepresentation): Observable<TaskRepresentation> {
+        return from(this.checklistsApi.addSubtask(task.parentTaskId, task));
     }
 
     /**
@@ -207,8 +207,8 @@ export class TaskListService {
      * @param task Details of the new task
      * @returns Details of the newly created task
      */
-    createNewTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
-        return from(this.tasksApi.createNewTask(task)).pipe(map((response) => new TaskDetailsModel(response)));
+    createNewTask(task: TaskRepresentation): Observable<TaskRepresentation> {
+        return from(this.tasksApi.createNewTask(task));
     }
 
     /**
@@ -218,9 +218,9 @@ export class TaskListService {
      * @param requestNode User or group to assign the task to
      * @returns Details of the assigned task
      */
-    assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
+    assignTask(taskId: string, requestNode: any): Observable<TaskRepresentation> {
         const assignee = { assignee: requestNode.id };
-        return from(this.taskActionsApi.assignTask(taskId, assignee)).pipe(map((response) => new TaskDetailsModel(response)));
+        return from(this.taskActionsApi.assignTask(taskId, assignee));
     }
 
     /**
@@ -230,10 +230,10 @@ export class TaskListService {
      * @param userId ID of the user to assign the task to
      * @returns Details of the assigned task
      */
-    assignTaskByUserId(taskId: string, userId: string): Observable<TaskDetailsModel> {
+    assignTaskByUserId(taskId: string, userId: string): Observable<TaskRepresentation> {
         const assignee = { assignee: userId };
 
-        return from(this.taskActionsApi.assignTask(taskId, assignee)).pipe(map((response) => new TaskDetailsModel(response)));
+        return from(this.taskActionsApi.assignTask(taskId, assignee));
     }
 
     /**
@@ -242,7 +242,7 @@ export class TaskListService {
      * @param taskId ID of the task to claim
      * @returns Details of the claimed task
      */
-    claimTask(taskId: string): Observable<TaskDetailsModel> {
+    claimTask(taskId: string): Observable<TaskRepresentation> {
         return from(this.taskActionsApi.claimTask(taskId));
     }
 
@@ -252,7 +252,7 @@ export class TaskListService {
      * @param taskId ID of the task to unclaim
      * @returns Null response notifying when the operation is complete
      */
-    unclaimTask(taskId: string): Observable<TaskDetailsModel> {
+    unclaimTask(taskId: string): Observable<TaskRepresentation> {
         return from(this.taskActionsApi.unclaimTask(taskId));
     }
 
@@ -263,8 +263,8 @@ export class TaskListService {
      * @param updated Data to update the task (as a `TaskUpdateRepresentation` instance).
      * @returns Updated task details
      */
-    updateTask(taskId: string, updated: TaskUpdateRepresentation): Observable<TaskDetailsModel> {
-        return from(this.tasksApi.updateTask(taskId, updated)).pipe(map((result) => result as TaskDetailsModel));
+    updateTask(taskId: string, updated: TaskUpdateRepresentation): Observable<TaskRepresentation> {
+        return from(this.tasksApi.updateTask(taskId, updated));
     }
 
     /**
