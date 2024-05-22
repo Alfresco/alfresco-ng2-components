@@ -18,7 +18,7 @@
 import { BasicAlfrescoAuthService, CoreTestingModule, LoginDialogPanelComponent } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authentication.service';
 
 describe('LoginDialogPanelComponent', () => {
     let component: LoginDialogPanelComponent;

@@ -23,7 +23,7 @@ import { RouterStateSnapshot, Router } from '@angular/router';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { MatDialog } from '@angular/material/dialog';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 describe('AuthGuardService BPM', () => {
     let authGuard: AuthGuardBpm;

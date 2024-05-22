@@ -23,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { Observable } from 'rxjs';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     protected get withCredentials(): boolean {

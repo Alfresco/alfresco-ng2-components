@@ -16,7 +16,7 @@
  */
 
 import { Injectable, Injector } from '@angular/core';
-import { OidcAuthenticationService } from './oidc-authentication.service';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { Observable, Subject, from } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
@@ -28,30 +28,18 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
     providedIn: 'root'
 })
 export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
-
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
 
-    constructor(
-        private injector: Injector,
-        private redirectAuthService: RedirectAuthService
-    ) {
-        this.redirectAuthService.onLogin.subscribe(
-            (value) => this.onLogin.next(value)
-        );
+    constructor(private injector: Injector, private redirectAuthService: RedirectAuthService) {
+        this.redirectAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 
-        this.basicAlfrescoAuthService.onLogin.subscribe(
-            (value) => this.onLogin.next(value)
-        );
+        this.basicAlfrescoAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 
         if (this.isOauth()) {
-            this.oidcAuthenticationService.onLogout.subscribe(
-                (value) => this.onLogout.next(value)
-            );
+            this.oidcAuthenticationService.onLogout.subscribe((value) => this.onLogout.next(value));
         } else {
-            this.basicAlfrescoAuthService.onLogout.subscribe(
-                (value) => this.onLogout.next(value)
-            );
+            this.basicAlfrescoAuthService.onLogout.subscribe((value) => this.onLogout.next(value));
         }
     }
 
@@ -76,7 +64,9 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     }
 
     addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
-        return this.isOauth() ? this.oidcAuthenticationService.addTokenToHeader(requestUrl, headersArg) : this.basicAlfrescoAuthService.addTokenToHeader(requestUrl, headersArg);
+        return this.isOauth()
+            ? this.oidcAuthenticationService.addTokenToHeader(requestUrl, headersArg)
+            : this.basicAlfrescoAuthService.addTokenToHeader(requestUrl, headersArg);
     }
 
     isECMProvider(): boolean {
@@ -205,5 +195,4 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     isKerberosEnabled(): boolean {
         return !this.isOauth() ? this.basicAlfrescoAuthService.isKerberosEnabled() : false;
     }
-
 }
