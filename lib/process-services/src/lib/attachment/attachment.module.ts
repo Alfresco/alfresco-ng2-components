@@ -20,22 +20,14 @@ import { MaterialModule } from '../material.module';
 
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
-import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
+import { CreateProcessAttachmentComponent } from './create-process-attachment/create-process-attachment.component';
 import { AttachmentComponent } from './create-task-attachment.component';
 import { CoreModule } from '@alfresco/adf-core';
 
+/** @deprecated import standalone directives and components instead */
 @NgModule({
-    imports: [
-        CoreModule,
-        MaterialModule
-    ],
-    declarations: [
-        TaskAttachmentListComponent,
-        ProcessAttachmentListComponent,
-        CreateProcessAttachmentComponent,
-        CreateProcessAttachmentComponent,
-        AttachmentComponent
-    ],
+    imports: [CoreModule, MaterialModule, CreateProcessAttachmentComponent, CreateProcessAttachmentComponent],
+    declarations: [TaskAttachmentListComponent, ProcessAttachmentListComponent, AttachmentComponent],
     exports: [
         TaskAttachmentListComponent,
         ProcessAttachmentListComponent,
