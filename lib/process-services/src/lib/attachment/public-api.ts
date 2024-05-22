@@ -15,9 +15,19 @@
  * limitations under the License.
  */
 
+import { TaskAttachmentListComponent } from './task-attachment-list/task-attachment-list.component';
+import { ProcessAttachmentListComponent } from './process-attachment-list/process-attachment-list.component';
+import { CreateProcessAttachmentComponent } from './create-process-attachment/create-process-attachment.component';
+import { AttachmentComponent } from './create-task-attachment/create-task-attachment.component';
+
 export * from './task-attachment-list/task-attachment-list.component';
 export * from './process-attachment-list/process-attachment-list.component';
 export * from './create-process-attachment/create-process-attachment.component';
 export * from './create-task-attachment/create-task-attachment.component';
 
-export * from './attachment.module';
+export const ATTACHMENT_DIRECTIVES = [
+    TaskAttachmentListComponent,
+    ProcessAttachmentListComponent,
+    CreateProcessAttachmentComponent,
+    AttachmentComponent
+] as const;
