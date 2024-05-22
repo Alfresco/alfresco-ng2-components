@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { AppsListComponent } from './apps-list.component';
-import { SelectAppsDialogComponent } from './select-apps-dialog.component';
+import { SelectAppsDialogComponent } from './select-apps-dialog/select-apps-dialog.component';
 
 /**
  * @deprecated this Module is deprecated and should no longer be used.
