@@ -22,7 +22,6 @@ import { Logger } from '../../utils/logger';
 import { materialLocators } from './material-locators';
 
 export class DropdownPage {
-
     dropDownElement: ElementFinder;
 
     constructor(dropDownElement = $$(`div[class="${materialLocators.Select.arrow.wrapper.root}"]`).first()) {
@@ -36,7 +35,9 @@ export class DropdownPage {
 
     async selectOption(option: string): Promise<void> {
         Logger.log(`Select dropdown option ${option}`);
-        const optionElement = element.all(by.cssContainingText(`${materialLocators.Option.root} span${materialLocators.Option.text.class}`, option)).first();
+        const optionElement = element
+            .all(by.cssContainingText(`${materialLocators.Option.root.trim()} span${materialLocators.Option.text.class}`, option))
+            .first();
         await BrowserActions.click(optionElement);
         await browser.waitForAngular();
     }
@@ -86,11 +87,15 @@ export class DropdownPage {
     }
 
     async checkOptionIsDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText(`${materialLocators.Option.root} span${materialLocators.Option.text.class}`, option)).first());
+        await BrowserVisibility.waitUntilElementIsVisible(
+            element.all(by.cssContainingText(`${materialLocators.Option.root} span${materialLocators.Option.text.class}`, option)).first()
+        );
     }
 
     async checkOptionIsNotDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText(`${materialLocators.Option.root} span${materialLocators.Option.text.class}`, option)).first());
+        await BrowserVisibility.waitUntilElementIsNotVisible(
+            element.all(by.cssContainingText(`${materialLocators.Option.root} span${materialLocators.Option.text.class}`, option)).first()
+        );
     }
 
     async selectDropdownOption(option: string): Promise<void> {
