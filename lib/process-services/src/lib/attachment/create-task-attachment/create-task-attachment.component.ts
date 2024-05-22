@@ -15,15 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessContentService } from '../form/services/process-content.service';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ProcessContentService } from '../../form/services/process-content.service';
+import { CommonModule } from '@angular/common';
+import { RelatedContentRepresentation } from '@alfresco/js-api';
+import { MatButtonModule } from '@angular/material/button';
+import { UploadDirective } from '@alfresco/adf-core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-create-task-attachment',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule, UploadDirective, MatIconModule],
     styleUrls: ['./create-task-attachment.component.scss'],
     templateUrl: './create-task-attachment.component.html'
 })
 export class AttachmentComponent implements OnChanges {
+    private processContentService = inject(ProcessContentService);
+
     /** (required) The numeric ID of the task to display. */
     @Input()
     taskId: string;
@@ -40,9 +49,7 @@ export class AttachmentComponent implements OnChanges {
      * from within the component.
      */
     @Output()
-    success = new EventEmitter<any>();
-
-    constructor(private processContentService: ProcessContentService) {}
+    success = new EventEmitter<RelatedContentRepresentation>();
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['taskId']?.currentValue) {

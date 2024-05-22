@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -31,6 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './create-process-attachment.component.html'
 })
 export class CreateProcessAttachmentComponent implements OnChanges {
+    private processContentService = inject(ProcessContentService);
+
     /** (required) The ID of the process instance to display. */
     @Input()
     processInstanceId: string;
@@ -48,8 +50,6 @@ export class CreateProcessAttachmentComponent implements OnChanges {
      */
     @Output()
     success = new EventEmitter<RelatedContentRepresentation>();
-
-    constructor(private processContentService: ProcessContentService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['processInstanceId']?.currentValue) {
