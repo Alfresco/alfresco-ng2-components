@@ -1,7 +1,30 @@
+@import 'styles/mat-selectors';
+
 .adf-folder-dialog {
     .adf-folder-dialog-content {
         padding: 0;
         overflow: unset;
+
+        #{$mat-form-field-infix} {
+            padding-bottom: 3.5px;
+        }
+
+        #{$mat-form-field-hide-placeholder} {
+            #{$mat-floating-label} {
+                padding-top: 11px;
+            }
+        }
+
+        #{$mat-form-field-hint-wrapper} {
+            padding-left: 0;
+            margin-left: -2px;
+            color: var(--adf-theme-foreground-secondary-text-color);
+            font-size: 10.5px;
+        }
+    }
+
+    .adf-folder-dialog-title {
+        display: inline-flex;
     }
 }
 
