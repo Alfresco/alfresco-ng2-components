@@ -38,6 +38,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
     discoveryClient: ContentClient;
     gsClient: ContentClient;
     authClient: ContentClient;
+    hxiConnectorClient: ContentClient;
     oauth2Auth: Oauth2Auth;
     processAuth: ProcessAuth;
     contentAuth: ContentAuth;
@@ -164,6 +165,12 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         } else {
             this.processClient.setConfig(this.config);
         }
+
+        if (!this.hxiConnectorClient) {
+            this.hxiConnectorClient = new ContentClient(this.config, `/api/${this.config.tenant}/private/hxi/versions/1`, this.httpClient);
+        } else {
+            this.hxiConnectorClient.setConfig(this.config, `/api/${this.config.tenant}/private/hxi/versions/1`);
+        }
     }
 
     /**@private? */
@@ -175,6 +182,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         this.searchClient.off('error', () => {});
         this.discoveryClient.off('error', () => {});
         this.gsClient.off('error', () => {});
+        this.hxiConnectorClient.off('error', () => {});
 
         this.contentClient.on('error', (error: any) => {
             this.errorHandler(error);
@@ -201,6 +209,10 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         });
 
         this.gsClient.on('error', (error: any) => {
+            this.errorHandler(error);
+        });
+
+        this.hxiConnectorClient.on('error', (error: any) => {
             this.errorHandler(error);
         });
     }
@@ -312,6 +324,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         this.searchClient.setAuthentications(authECM);
         this.discoveryClient.setAuthentications(authECM);
         this.gsClient.setAuthentications(authECM);
+        this.hxiConnectorClient.setAuthentications(authECM);
     }
 
     /**
