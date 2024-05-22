@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { StorageFeaturesService } from './storage-features.service';
 import { CoreTestingModule, StorageService } from '../../../../src/public-api';
-import { FlagSet, WritableFeaturesServiceConfigToken, WritableFlagChangeset } from '../interfaces/features.interface';
+import { FlagSet, WritableFeaturesServiceConfigToken } from '../interfaces/features.interface';
 import { skip, take } from 'rxjs/operators';
 
 describe('StorageFeaturesService', () => {
