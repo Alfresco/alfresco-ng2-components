@@ -11,8 +11,9 @@ A minimalistic search input component that formats user query according to the p
 </adf-search-input>
 ```
 
-> Notes: this component does not perform search operations.
-> It handles the user input, formats and produces the search query to use with `Search Query Builder` or other services. 
+> Notes: 
+> - This component does not perform search operations. It handles the user input, formats and produces the search query to use with [Search Query Builder](../services/search-query-builder.service.md) or other services.
+> - If [search configuration](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/content-services/src/lib/search/models/search-configuration.interface.ts) contains `app:fields` param set its value will override `fields` input of this component.
 
 ## Properties
 
