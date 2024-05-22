@@ -3,8 +3,8 @@
      [class.adf-invalid]="!field.isValid && isTouched()"
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
-        <label class="adf-label adf-left-label" [attr.for]="field.id">{{ field.name | translate }}
-            ({{ field.dateDisplayFormat }})<span class="adf-asterisk" *ngIf="isRequired()">*</span>
+        <label class="adf-label adf-left-label" [attr.for]="field.id">
+            {{ field.name | translate }} ({{ field.dateDisplayFormat }})<span class="adf-asterisk" *ngIf="isRequired()">*</span>
         </label>
     </div>
     <div>
