@@ -78,17 +78,6 @@ export class DebugFeaturesService implements IDebugFeaturesService {
     }
 
     /**
-     * Gets the flags snapshot.
-     *
-     * @deprecated Use getFlags$() instead.
-     * @returns the flag changeset.
-     */
-    getFlagsSnapshot(): FlagChangeset {
-        // eslint-disable-next-line rxjs/no-subject-value
-        return this.isInDebugMode.getValue() ? this.writableFeaturesService.getFlagsSnapshot() : this.overriddenFeaturesService.getFlagsSnapshot();
-    }
-
-    /**
      * Resets the specified flags.
      *
      * @param flags The flags to reset.
@@ -101,7 +90,7 @@ export class DebugFeaturesService implements IDebugFeaturesService {
         this.isInDebugMode.next(on);
     }
 
-    isEnabled(): Observable<boolean> {
+    isEnabled$(): Observable<boolean> {
         return this.isInDebugMode$;
     }
 }

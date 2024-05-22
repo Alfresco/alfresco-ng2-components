@@ -16,7 +16,7 @@
  */
 
 import { ApplicationRef, Inject, Injectable } from '@angular/core';
-import { FlagChangeset, FeaturesServiceToken, FlagSet } from '../interfaces/features.interface';
+import { FeaturesServiceToken, FlagSet } from '../interfaces/features.interface';
 import { DebugFeaturesService } from './debug-features.service';
 @Injectable()
 export class QaFeaturesHelper {
@@ -29,10 +29,6 @@ export class QaFeaturesHelper {
         });
 
         return isOn;
-    }
-
-    getFlags(): FlagChangeset {
-        return this.debugFeaturesService.getFlagsSnapshot();
     }
 
     resetFlags(flags: FlagSet): void {
@@ -52,7 +48,7 @@ export class QaFeaturesHelper {
 
     isEnabled(): boolean {
         let enabled = false;
-        this.debugFeaturesService.isEnabled().subscribe((isEnabled) => {
+        this.debugFeaturesService.isEnabled$().subscribe((isEnabled) => {
             enabled = isEnabled;
         });
         return enabled;

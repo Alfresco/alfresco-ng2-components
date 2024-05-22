@@ -56,7 +56,6 @@ export interface IFeaturesService<T = FlagChangeset> {
     isOn$(key: string): Observable<boolean>;
     isOff$(key: string): Observable<boolean>;
     getFlags$(): Observable<T>;
-    getFlagsSnapshot(): T;
 }
 
 export interface IWritableFeaturesService {
@@ -68,6 +67,6 @@ export interface IWritableFeaturesService {
 
 export type IDebugFeaturesService = Omit<IFeaturesService<WritableFlagChangeset>, 'init'> & {
     enable(on: boolean): void;
-    isEnabled(): Observable<boolean>;
+    isEnabled$(): Observable<boolean>;
     resetFlags(flags: FlagSet): void;
 };

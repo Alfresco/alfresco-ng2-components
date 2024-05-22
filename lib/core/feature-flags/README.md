@@ -28,7 +28,6 @@ interface IFeaturesService<T = FlagChangeset> {
   isOn$(key: string): Observable<boolean>;
   isOff$(key: string): Observable<boolean>;
   getFlags$(): Observable<T>;
-  getFlagsSnapshot(): T;
 }
 ```
 

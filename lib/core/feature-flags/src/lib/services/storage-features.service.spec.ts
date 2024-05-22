@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { StorageFeaturesService } from './storage-features.service';
 import { CoreTestingModule, StorageService } from '../../../../src/public-api';
 import { FlagSet, WritableFeaturesServiceConfigToken, WritableFlagChangeset } from '../interfaces/features.interface';
-import { skip } from 'rxjs/operators';
+import { skip, take } from 'rxjs/operators';
 
 describe('StorageFeaturesService', () => {
     let storageFeaturesService: StorageFeaturesService;
@@ -58,48 +58,70 @@ describe('StorageFeaturesService', () => {
             storageFeaturesService.init();
         });
 
-        it('should return the stored flag set', () => {
-            expect(storageFeaturesService.getFlagsSnapshot()).toEqual({
-                feature1: {
-                    current: true,
-                    previous: null
-                },
-                feature2: {
-                    current: false,
-                    fictive: true,
-                    previous: null
-                }
-            });
+        it('should return the stored flag set', (done) => {
+            storageFeaturesService
+                .getFlags$()
+                .pipe(take(1))
+                .subscribe((flags) => {
+                    expect(flags).toEqual({
+                        feature1: {
+                            current: true,
+                            previous: null
+                        },
+                        feature2: {
+                            current: false,
+                            fictive: true,
+                            previous: null
+                        }
+                    });
+                    done();
+                });
         });
 
-        it('should set a flag and retrieve its value', () => {
+        it('should set a flag and retrieve its value', (done) => {
             const flagKey = 'testFlag';
             const flagValue = true;
 
             storageFeaturesService.setFlag(flagKey, flagValue);
-
-            expect(storageFeaturesService.getFlagsSnapshot()[flagKey]).toEqual({ current: true, previous: null, fictive: true });
+            storageFeaturesService
+                .getFlags$()
+                .pipe(take(1))
+                .subscribe((flags) => {
+                    expect(flags[flagKey]).toEqual({ current: true, previous: null, fictive: true });
+                    done();
+                });
         });
 
-        it('should remove a flag', () => {
+        it('should remove a flag', (done) => {
             const flagKey = 'testFlag';
             const flagValue = true;
 
             storageFeaturesService.setFlag(flagKey, flagValue);
             storageFeaturesService.removeFlag(flagKey);
-
-            expect(storageFeaturesService.getFlagsSnapshot()[flagKey]).toBeUndefined();
+            storageFeaturesService
+                .getFlags$()
+                .pipe(take(1))
+                .subscribe((flags) => {
+                    expect(flags[flagKey]).toBeUndefined();
+                    done();
+                });
         });
 
-        it('should reset flags to the provided set', () => {
+        it('should reset flags to the provided set', (done) => {
             const flagSet: FlagSet = { feature1: true };
             storageFeaturesService.resetFlags(flagSet);
 
-            expect(storageFeaturesService.getFlagsSnapshot().feature1.previous).toBeNull();
-            expect((storageFeaturesService.getFlagsSnapshot().feature1 as WritableFlagChangeset).fictive).toBe(true);
+            storageFeaturesService
+                .getFlags$()
+                .pipe(take(1))
+                .subscribe((flags) => {
+                    expect(flags.feature1.previous).toBeNull();
+                    expect(flags.feature1.fictive).toBe(true);
+                    done();
+                });
         });
 
-        it('should merge flags to the provided set', () => {
+        it('should merge flags to the provided set', (done) => {
             const newFlags = {
                 feature2: {
                     current: false,
@@ -113,11 +135,17 @@ describe('StorageFeaturesService', () => {
 
             storageFeaturesService.mergeFlags(newFlags);
 
-            expect(storageFeaturesService.getFlagsSnapshot()).toEqual({
-                feature1: { current: true, previous: null, fictive: true },
-                feature2: { current: false, previous: false },
-                feature3: { current: false, previous: null }
-            });
+            storageFeaturesService
+                .getFlags$()
+                .pipe(take(1))
+                .subscribe((flags) => {
+                    expect(flags).toEqual({
+                        feature1: { current: true, previous: null, fictive: true },
+                        feature2: { current: false, previous: false },
+                        feature3: { current: false, previous: null }
+                    });
+                    done();
+                });
         });
 
         it('should emit flag changes when a flag is set', (done) => {

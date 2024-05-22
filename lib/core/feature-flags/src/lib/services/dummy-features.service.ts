@@ -37,8 +37,4 @@ export class DummyFeaturesService implements IFeaturesService {
     getFlags$(): Observable<FlagChangeset> {
         return of({});
     }
-
-    getFlagsSnapshot(): FlagChangeset {
-        return {};
-    }
 }

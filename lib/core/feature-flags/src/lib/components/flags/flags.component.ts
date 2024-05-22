@@ -26,7 +26,7 @@ import {
     IFeaturesService
 } from '../../interfaces/features.interface';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
-import { debounceTime, map, take, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, take, takeUntil, tap } from 'rxjs/operators';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -70,6 +70,7 @@ export class FlagsComponent implements OnDestroy {
     inputValue = '';
     inputValue$ = new BehaviorSubject<string>('');
     showPlusButton$!: Observable<boolean>;
+    writableFlagChangeset: WritableFlagChangeset = {};
 
     constructor(
         @Inject(FeaturesServiceToken)
@@ -77,9 +78,9 @@ export class FlagsComponent implements OnDestroy {
         @Inject(WritableFeaturesServiceToken)
         private writableFeaturesService: IWritableFeaturesService
     ) {
-        if (this.featuresService.isEnabled) {
+        if (this.featuresService.isEnabled$) {
             this.featuresService
-                .isEnabled()
+                .isEnabled$()
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((isEnabled) => {
                     this.isEnabled = isEnabled;
@@ -87,6 +88,7 @@ export class FlagsComponent implements OnDestroy {
         }
 
         const flags$ = this.featuresService.getFlags$().pipe(
+            tap((flags) => (this.writableFlagChangeset = flags)),
             map((flags) =>
                 Object.keys(flags).map((key) => ({
                     flag: key,
@@ -119,7 +121,7 @@ export class FlagsComponent implements OnDestroy {
 
     protected onEnable(value: boolean) {
         if (value) {
-            this.writableFeaturesService.mergeFlags(this.featuresService.getFlagsSnapshot());
+            this.writableFeaturesService.mergeFlags(this.writableFlagChangeset);
         }
 
         this.featuresService.enable(value);

@@ -42,8 +42,7 @@ const mockFeaturesService = (flagChangeset: FlagChangeset): IFeaturesService => 
         assertFeatureFlag(flagChangeset, key);
         return of(!flagChangeset[key].current);
     },
-    getFlags$: () => of(flagChangeset),
-    getFlagsSnapshot: () => flagChangeset
+    getFlags$: () => of(flagChangeset)
 });
 
 const arrayToFlagChangeset = (featureFlags: string[]): FlagChangeset => {

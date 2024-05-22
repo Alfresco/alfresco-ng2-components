@@ -57,9 +57,4 @@ describe('DummyFeaturesService', () => {
             expect(flags).toEqual({});
         });
     });
-
-    it('should return an empty object when getFlagsSnapshot is called', () => {
-        const flags = service.getFlagsSnapshot();
-        expect(flags).toEqual({});
-    });
 });

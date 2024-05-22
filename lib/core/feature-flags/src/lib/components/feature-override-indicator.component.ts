@@ -61,9 +61,9 @@ export class FlagsOverrideComponent implements OnDestroy {
         private featuresService: IDebugFeaturesService,
         changeDetectorRef: ChangeDetectorRef
     ) {
-        if (this.featuresService.isEnabled) {
+        if (this.featuresService.isEnabled$) {
             this.featuresService
-                .isEnabled()
+                .isEnabled$()
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((isEnabled) => {
                     this.isEnabled = isEnabled;

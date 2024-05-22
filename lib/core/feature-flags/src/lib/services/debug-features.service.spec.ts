@@ -116,9 +116,4 @@ describe('DebugFeaturesService', () => {
             done();
         });
     });
-
-    it('should get the flags snapshot', () => {
-        const flags = service.getFlagsSnapshot();
-        expect(flags).toEqual({});
-    });
 });
