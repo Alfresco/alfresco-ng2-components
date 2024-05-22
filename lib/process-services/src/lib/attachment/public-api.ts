@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export * from './task-attachment-list.component';
+export * from './task-attachment-list/task-attachment-list.component';
 export * from './process-attachment-list/process-attachment-list.component';
 export * from './create-process-attachment/create-process-attachment.component';
 export * from './create-task-attachment/create-task-attachment.component';

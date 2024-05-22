@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
-import { ProcessTestingModule } from '../testing/process.testing.module';
-import { mockEmittedTaskAttachments, mockTaskAttachments } from '../mock/task/task-attachments.mock';
-import { ProcessContentService } from '../form/services/process-content.service';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { mockEmittedTaskAttachments, mockTaskAttachments } from '../../mock/task/task-attachments.mock';
+import { ProcessContentService } from '../../form/services/process-content.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
@@ -40,8 +40,7 @@ describe('TaskAttachmentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [ProcessTestingModule, TaskAttachmentListComponent]
         });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;

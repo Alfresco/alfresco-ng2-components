@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ThumbnailService, EmptyListComponent, DownloadService } from '@alfresco/adf-core';
+import { ThumbnailService, EmptyListComponent, DownloadService, DataTableModule } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     ContentChild,
@@ -28,10 +28,15 @@ import {
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
-import { ProcessContentService } from '../form/services/process-content.service';
+import { ProcessContentService } from '../../form/services/process-content.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'adf-task-attachment-list',
+    standalone: true,
+    imports: [CommonModule, DataTableModule, TranslateModule, MatProgressSpinnerModule],
     styleUrls: ['./task-attachment-list.component.scss'],
     templateUrl: './task-attachment-list.component.html',
     encapsulation: ViewEncapsulation.None
