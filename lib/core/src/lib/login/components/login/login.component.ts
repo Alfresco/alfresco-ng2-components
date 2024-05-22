@@ -31,7 +31,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../../app-config';
 import { AuthenticationService, BasicAlfrescoAuthService } from '../../../auth';
-import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authentication.service';
 import { UserPreferencesService } from '../../../common';
 import { TranslationService } from '../../../translation';
 

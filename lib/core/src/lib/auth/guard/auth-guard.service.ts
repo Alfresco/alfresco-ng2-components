@@ -24,24 +24,24 @@ import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../services/oidc-authentication.service';
-
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuard extends AuthGuardBase {
-
     ticketChangeBind: any;
 
-    constructor(private jwtHelperService: JwtHelperService,
-                authenticationService: AuthenticationService,
-                basicAlfrescoAuthService: BasicAlfrescoAuthService,
-                oidcAuthenticationService: OidcAuthenticationService,
-                router: Router,
-                appConfigService: AppConfigService,
-                dialog: MatDialog,
-                storageService: StorageService) {
+    constructor(
+        private jwtHelperService: JwtHelperService,
+        authenticationService: AuthenticationService,
+        basicAlfrescoAuthService: BasicAlfrescoAuthService,
+        oidcAuthenticationService: OidcAuthenticationService,
+        router: Router,
+        appConfigService: AppConfigService,
+        dialog: MatDialog,
+        storageService: StorageService
+    ) {
         super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
         this.ticketChangeBind = this.ticketChange.bind(this);
 
@@ -57,9 +57,11 @@ export class AuthGuard extends AuthGuardBase {
             this.ticketChangeRedirect(event);
         }
 
-        if (event.key.endsWith(JwtHelperService.USER_ACCESS_TOKEN) &&
+        if (
+            event.key.endsWith(JwtHelperService.USER_ACCESS_TOKEN) &&
             this.jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
-            this.jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)) {
+                this.jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)
+        ) {
             this.ticketChangeRedirect(event);
         }
     }

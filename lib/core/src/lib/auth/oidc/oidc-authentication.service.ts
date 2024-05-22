@@ -21,11 +21,11 @@ import { Observable, defer, EMPTY } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { BaseAuthenticationService } from './base-authentication.service';
+import { BaseAuthenticationService } from '../services/base-authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
-import { JwtHelperService } from './jwt-helper.service';
-import { AuthConfigService } from '../oidc/auth-config.service';
-import { AuthService } from '../oidc/auth.service';
+import { JwtHelperService } from '../services/jwt-helper.service';
+import { AuthConfigService } from './auth-config.service';
+import { AuthService } from './auth.service';
 import { Minimatch } from 'minimatch';
 import { HttpHeaders } from '@angular/common/http';
 

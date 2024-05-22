@@ -29,7 +29,7 @@ import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { EMPTY, of, throwError } from 'rxjs';
-import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authentication.service';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {

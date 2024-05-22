@@ -22,7 +22,7 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from './oidc-authentication.service';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 declare let jasmine: any;
 

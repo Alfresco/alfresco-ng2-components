@@ -23,21 +23,22 @@ import { AuthGuardBase } from './auth-guard-base';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardBpm extends AuthGuardBase {
-
-    constructor(authenticationService: AuthenticationService,
-                basicAlfrescoAuthService: BasicAlfrescoAuthService,
-                oidcAuthenticationService: OidcAuthenticationService,
-                router: Router,
-                appConfigService: AppConfigService,
-                dialog: MatDialog,
-                storageService: StorageService) {
-        super(authenticationService,basicAlfrescoAuthService, oidcAuthenticationService,router, appConfigService, dialog, storageService);
+    constructor(
+        authenticationService: AuthenticationService,
+        basicAlfrescoAuthService: BasicAlfrescoAuthService,
+        oidcAuthenticationService: OidcAuthenticationService,
+        router: Router,
+        appConfigService: AppConfigService,
+        dialog: MatDialog,
+        storageService: StorageService
+    ) {
+        super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
     }
 
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
