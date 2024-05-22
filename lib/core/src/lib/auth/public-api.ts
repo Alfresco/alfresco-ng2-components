@@ -30,7 +30,6 @@ export * from './services/identity-group.service';
 export * from './services/jwt-helper.service';
 export * from './services/oauth2.service';
 export * from './services/user-access.service';
-export * from './services/oidc-authentication.service';
 
 export * from './basic-auth/basic-alfresco-auth.service';
 export * from './basic-auth/process-auth';
@@ -49,3 +48,5 @@ export * from './models/identity-role.model';
 
 export * from './models/user-access.model';
 export * from './models/application-access.model';
+
+export * from './oidc/public-api';

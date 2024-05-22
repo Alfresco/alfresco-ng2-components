@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { OidcAuthenticationService } from './oidc-authentication.service';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { AppConfigService, AuthService } from '@alfresco/adf-core';
-import { AUTH_MODULE_CONFIG } from '../oidc/auth-config';
+import { AUTH_MODULE_CONFIG } from './auth-config';
 
 interface MockAppConfigOAuth2 {
     oauth2: {
@@ -45,7 +45,6 @@ class MockAppConfigService {
         return defaultValue;
     }
 }
-
 
 class MockOAuthService {
     clientId = 'testClientId';

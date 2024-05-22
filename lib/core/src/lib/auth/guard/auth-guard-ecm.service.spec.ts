@@ -22,7 +22,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { MatDialog } from '@angular/material/dialog';
-import { OidcAuthenticationService } from '../services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 
 describe('AuthGuardService ECM', () => {
