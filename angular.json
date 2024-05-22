@@ -114,8 +114,8 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "scripts": [
-              "node_modules/pdfjs-dist/build/pdf.js",
-              "node_modules/pdfjs-dist/web/pdf_viewer.js",
+              "node_modules/pdfjs-dist/build/pdf.mjs",
+              "node_modules/pdfjs-dist/web/pdf_viewer.mjs",
               "node_modules/raphael/raphael.min.js"
             ],
             "vendorChunk": true,
