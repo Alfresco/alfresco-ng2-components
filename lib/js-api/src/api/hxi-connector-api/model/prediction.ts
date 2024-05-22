@@ -36,10 +36,7 @@ export class Prediction {
     }
 }
 
-export enum UpdateType {
-    AUTOFILL = 'AUTOFILL',
-    AUTOCORRECT = 'AUTOCORRECT'
-}
+export type UpdateType = 'AUTOFILL' | 'AUTOCORRECT';
 
 export enum ReviewStatus {
     UNREVIEWED = 'UNREVIEWED',
