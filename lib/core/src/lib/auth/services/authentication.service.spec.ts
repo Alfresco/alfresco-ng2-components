@@ -21,7 +21,6 @@ import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from './oidc-authentication.service';
 import { AuthModule } from '../oidc/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieServiceMock } from '../../mock';
@@ -43,11 +42,7 @@ describe('AuthenticationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                AuthModule.forRoot({ useHash: true }),
-                HttpClientModule
-            ],
+            imports: [TranslateModule.forRoot(), AuthModule.forRoot({ useHash: true }), HttpClientModule],
             providers: [
                 {
                     provide: CookieService,
