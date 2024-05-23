@@ -16,10 +16,11 @@
  */
 
 import { InjectionToken } from '@angular/core';
-import { FormFieldModel } from '../../components/widgets';
+import { FormFieldModel } from '../widgets';
 
 export interface FormFieldModelRenderMiddleware {
     type: string;
+
     getParsedField(field: FormFieldModel): FormFieldModel;
 }
 

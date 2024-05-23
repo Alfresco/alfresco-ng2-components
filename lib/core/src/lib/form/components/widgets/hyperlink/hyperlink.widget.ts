@@ -17,13 +17,17 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
+import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
-import { WidgetComponent } from '../widget.component';
 import { FormFieldModel } from '../core';
+import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'hyperlink-widget',
+    standalone: true,
     templateUrl: './hyperlink.widget.html',
     styleUrls: ['./hyperlink.widget.scss'],
     host: {
@@ -37,10 +41,10 @@ import { FormFieldModel } from '../core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [TranslateModule, MatTooltipModule, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {
-
     static DEFAULT_HYPERLINK_URL: string = '#';
     static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
 

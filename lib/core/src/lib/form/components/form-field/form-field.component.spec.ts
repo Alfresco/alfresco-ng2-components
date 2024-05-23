@@ -16,12 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRenderingService } from '../../services/form-rendering.service';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../widgets/core';
-import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets';
-import { FormFieldComponent } from './form-field.component';
-import { FormBaseModule } from '../../form-base.module';
 import { CoreTestingModule } from '../../../testing';
+import { FormRenderingService } from '../../services/form-rendering.service';
+import { CheckboxWidgetComponent, FormFieldModel, FormFieldTypes, FormModel, TextWidgetComponent } from '../widgets';
+import { FormFieldComponent } from './form-field.component';
 
 describe('FormFieldComponent', () => {
     let fixture: ComponentFixture<FormFieldComponent>;
@@ -32,7 +30,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, FormBaseModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;

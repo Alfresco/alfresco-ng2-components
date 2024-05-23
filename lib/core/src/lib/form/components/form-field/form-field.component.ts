@@ -28,27 +28,16 @@ import {
     ViewContainerRef,
     ViewEncapsulation
 } from '@angular/core';
-
 import { FormRenderingService } from '../../services/form-rendering.service';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
-import { FormFieldModel } from '../widgets/core/form-field.model';
+import { FormFieldModel } from '../widgets';
 
 declare const adf: any;
 
 @Component({
     selector: 'adf-form-field',
-    template: `
-        <div
-            [id]="'field-' + field?.id + '-container'"
-            [style.visibility]="!field?.isVisible ? 'hidden' : 'visible'"
-            [style.display]="!field?.isVisible ? 'none' : 'block'"
-            [class.adf-focus]="focus"
-            (focusin)="focusToggle()"
-            (focusout)="focusToggle()"
-        >
-            <div #container></div>
-        </div>
-    `,
+    standalone: true,
+    templateUrl: './form-field.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
@@ -109,6 +98,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         }
     }
 
+    focusToggle() {
+        setTimeout(() => {
+            this.focus = !this.focus;
+        });
+    }
+
     private getField(): FormFieldModel {
         if (this.field?.params) {
             const wrappedField = this.field.params.field;
@@ -148,11 +143,5 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         const module = compiler.compileModuleAndAllComponentsSync(decoratedNgModule);
 
         return module.componentFactories.find((x) => x.componentType === decoratedCmp);
-    }
-
-    focusToggle() {
-        setTimeout(() => {
-            this.focus = !this.focus;
-        });
     }
 }
