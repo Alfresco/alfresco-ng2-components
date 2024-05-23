@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, AppConfigServiceMock, LocalizedDatePipe, TemplateModule, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { of, throwError } from 'rxjs';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ProcessService } from '../services/process.service';
 import { newProcess, taskFormMock, testProcessDef, testMultipleProcessDefs, testProcessDefWithForm, testProcessDefinitions } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
@@ -38,6 +38,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { RestVariable } from '@alfresco/js-api';
 
 describe('StartProcessComponent', () => {
     let appConfig: AppConfigService;
