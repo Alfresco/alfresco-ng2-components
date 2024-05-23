@@ -38,6 +38,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { RestVariable } from '@alfresco/js-api';
 
 describe('StartProcessComponent', () => {
     let appConfig: AppConfigService;
