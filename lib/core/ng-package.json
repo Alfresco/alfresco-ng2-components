@@ -42,7 +42,6 @@
   },
   "allowedNonPeerDependencies": [
     "cropperjs",
-    "angular-oauth2-oidc",
-    "@nrwl/devkit"
+    "angular-oauth2-oidc"
   ]
 }

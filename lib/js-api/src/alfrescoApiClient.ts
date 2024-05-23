@@ -239,7 +239,6 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
     }
 
     getAlfTicket(ticket: string): string {
-
         const ticketParam = this.isWithCredentials() ? '&ticket=' : '&alf_ticket=';
 
         if (ticket) {

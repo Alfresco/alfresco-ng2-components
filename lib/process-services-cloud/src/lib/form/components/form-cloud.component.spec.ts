@@ -19,7 +19,8 @@
 
 import { VersionCompatibilityService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import {
-    ContentLinkModel, CoreModule,
+    ContentLinkModel,
+    CoreModule,
     FormFieldModel,
     FormFieldTypes,
     FormModel,
