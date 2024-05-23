@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, getTestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import {
     FormService,
@@ -54,7 +54,7 @@ describe('RadioButtonsWidgetComponent', () => {
     let processDefinitionService: ProcessDefinitionService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
+        getTestBed().configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 MatRadioModule,
@@ -62,17 +62,18 @@ describe('RadioButtonsWidgetComponent', () => {
                 MatButtonModule,
                 FormsModule,
                 HttpClientTestingModule,
-                MatIconModule
+                MatIconModule,
+                ErrorWidgetComponent
             ],
-            declarations: [RadioButtonsWidgetComponent, ErrorWidgetComponent],
+            declarations: [RadioButtonsWidgetComponent],
             providers: [
                 { provide: TranslationService, useClass: TranslationMock },
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         });
-        taskFormService = TestBed.inject(TaskFormService);
-        processDefinitionService = TestBed.inject(ProcessDefinitionService);
+        taskFormService = getTestBed().inject(TaskFormService);
+        processDefinitionService = getTestBed().inject(ProcessDefinitionService);
 
         formService = new FormService();
         widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService);
@@ -186,7 +187,7 @@ describe('RadioButtonsWidgetComponent', () => {
         ];
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
+            fixture = getTestBed().createComponent(RadioButtonsWidgetComponent);
             radioButtonWidget = fixture.componentInstance;
             element = fixture.nativeElement;
             loader = TestbedHarnessEnvironment.loader(fixture);
