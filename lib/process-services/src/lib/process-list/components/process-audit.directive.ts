@@ -27,13 +27,13 @@ const PDF_FORMAT: string = 'pdf';
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'button[adf-process-audit]',
+    standalone: true,
     host: {
         role: 'button',
         '(click)': 'onClickAudit()'
     }
 })
 export class ProcessAuditDirective implements OnChanges {
-
     /** ID of the process. */
     @Input('process-id')
     processId: string;
@@ -58,9 +58,7 @@ export class ProcessAuditDirective implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private downloadService: DownloadService,
-                private processListService: ProcessService) {
-    }
+    constructor(private downloadService: DownloadService, private processListService: ProcessService) {}
 
     ngOnChanges(): void {
         if (!this.isValidType()) {
@@ -88,11 +86,13 @@ export class ProcessAuditDirective implements OnChanges {
                     }
                     this.clicked.emit({ format: this.format, value: blob, fileName: this.fileName });
                 },
-                (err) => this.error.emit(err));
+                (err) => this.error.emit(err)
+            );
         } else {
             this.processListService.fetchProcessAuditJsonById(this.processId).subscribe(
                 (res) => this.clicked.emit({ format: this.format, value: res, fileName: this.fileName }),
-                (err) => this.error.emit(err));
+                (err) => this.error.emit(err)
+            );
         }
     }
 
@@ -107,5 +107,4 @@ export class ProcessAuditDirective implements OnChanges {
     isPdfFormat() {
         return this.format === PDF_FORMAT;
     }
-
 }

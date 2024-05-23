@@ -15,17 +15,25 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Observer, Subject } from 'rxjs';
 import { TaskDetailsEvent } from '../../task-list';
 import { ProcessService } from './../services/process.service';
 import { share, takeUntil } from 'rxjs/operators';
 import { ProcessInstanceRepresentation, TaskRepresentation } from '@alfresco/js-api';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { FormModule } from '../../form';
 
 @Component({
     selector: 'adf-process-instance-tasks',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule, TranslateModule, MatChipsModule, MatListModule, MatIconModule, FormModule, MatDialogModule],
     templateUrl: './process-instance-tasks.component.html',
     styleUrls: ['./process-instance-tasks.component.css']
 })

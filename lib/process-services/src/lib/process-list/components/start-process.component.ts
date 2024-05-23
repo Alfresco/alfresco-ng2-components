@@ -16,15 +16,15 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { AppConfigService, AppConfigValues, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, EmptyContentComponent, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessService } from './../services/process.service';
-import { UntypedFormControl, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormControl, Validators, AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, Subject, forkJoin } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatSelectChange } from '@angular/material/select';
-import { StartFormComponent } from '../../form';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { FormModule, StartFormComponent } from '../../form';
 import {
     AppDefinitionRepresentation,
     Node,
@@ -35,6 +35,13 @@ import {
 } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 import { getTime } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 const MAX_LENGTH = 255;
 const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
@@ -42,6 +49,22 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
 
 @Component({
     selector: 'adf-start-process',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatProgressSpinnerModule,
+        TranslateModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        EmptyContentComponent,
+        FormModule
+    ],
     templateUrl: './start-process.component.html',
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None

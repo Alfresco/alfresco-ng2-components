@@ -15,16 +15,30 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TaskDetailsEvent } from '../../task-list';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { ProcessCommentsComponent } from '../../process-comments';
 
 @Component({
     selector: 'adf-process-instance-details',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatCardModule,
+        MatButtonModule,
+        ProcessCommentsComponent,
+        ProcessInstanceTasksComponent,
+        ProcessInstanceHeaderComponent
+    ],
     templateUrl: './process-instance-details.component.html',
     styleUrls: ['./process-instance-details.component.css']
 })

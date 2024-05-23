@@ -28,7 +28,9 @@ import {
     PaginationModel,
     UserPreferencesService,
     DataCellEvent,
-    DEFAULT_PAGINATION
+    DEFAULT_PAGINATION,
+    DataTableModule,
+    EmptyContentComponent
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessService } from '../services/process.service';
@@ -40,6 +42,9 @@ import {
     ProcessInstanceQueryRepresentationState,
     ResultListDataRepresentationProcessInstanceRepresentation
 } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 const PRESET_KEY = 'adf-process-list.presets';
 
@@ -63,6 +68,8 @@ export const processPresetsDefaultModel = {
 
 @Component({
     selector: 'adf-process-instance-list',
+    standalone: true,
+    imports: [CommonModule, DataTableModule, MatProgressSpinnerModule, EmptyContentComponent, TranslateModule],
     styleUrls: ['./process-list.component.css'],
     templateUrl: './process-list.component.html'
 })

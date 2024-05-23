@@ -1,4 +1,4 @@
-<div *ngIf="!processInstanceDetails">{{ 'ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE'|translate }}</div>
+<div *ngIf="!processInstanceDetails">{{ 'ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE' | translate }}</div>
 <mat-card *ngIf="processInstanceDetails">
     <mat-card-header>
         <mat-card-title>{{ getProcessNameOrDescription('medium') }}</mat-card-title>
@@ -6,15 +6,15 @@
     <mat-card-content>
         <adf-process-instance-header
             #processInstanceHeader
-            [processInstance]="processInstanceDetails"
-            (showProcessDiagram)="onShowProcessDiagram()">
+            [processInstance]="processInstanceDetails">
         </adf-process-instance-header>
 
         <button
             class="adf-in-medias-res-button"
-            mat-button id="show-diagram-button"
+            id="show-diagram-button"
             type="button"
-            mat-button mat-raised-button
+            mat-button
+            mat-raised-button
             [disabled]="!isRunning()"
             (click)="onShowProcessDiagram()">{{ 'ADF_PROCESS_LIST.DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
 
@@ -34,7 +34,7 @@
 
         <mat-card>
             <mat-card-content>
-                <adf-process-instance-comments #activitiComments
+                <adf-process-instance-comments
                     [readOnly]="false"
                     [processInstanceId]="processInstanceDetails.id">
                 </adf-process-instance-comments>

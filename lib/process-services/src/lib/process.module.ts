@@ -22,7 +22,6 @@ import { CoreModule, EmptyContentComponent, FormRenderingService, provideTransla
 
 import { MaterialModule } from './material.module';
 
-import { ProcessListModule } from './process-list/process-list.module';
 import { TaskListModule } from './task-list/task-list.module';
 import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
@@ -32,6 +31,7 @@ import { ATTACHMENT_DIRECTIVES } from './attachment';
 import { APPS_LIST_DIRECTIVES } from './app-list';
 import { PEOPLE_DIRECTIVES } from './people';
 import { PROCESS_COMMENTS_DIRECTIVES } from './process-comments';
+import { PROCESS_LIST_DIRECTIVES } from './process-list';
 
 @NgModule({
     imports: [
@@ -41,7 +41,7 @@ import { PROCESS_COMMENTS_DIRECTIVES } from './process-comments';
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        ProcessListModule,
+        ...PROCESS_LIST_DIRECTIVES,
         TaskListModule,
         TaskCommentsModule,
         ...APPS_LIST_DIRECTIVES,
@@ -57,7 +57,7 @@ import { PROCESS_COMMENTS_DIRECTIVES } from './process-comments';
         ...PROCESS_COMMENTS_DIRECTIVES,
         FormsModule,
         ReactiveFormsModule,
-        ProcessListModule,
+        ...PROCESS_LIST_DIRECTIVES,
         TaskListModule,
         TaskCommentsModule,
         ...APPS_LIST_DIRECTIVES,

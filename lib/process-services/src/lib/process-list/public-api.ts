@@ -16,6 +16,14 @@
  */
 
 // component
+import { ProcessInstanceListComponent } from './components/process-list.component';
+import { ProcessFiltersComponent } from './components/process-filters.component';
+import { ProcessInstanceDetailsComponent } from './components/process-instance-details.component';
+import { ProcessInstanceHeaderComponent } from './components/process-instance-header.component';
+import { ProcessInstanceTasksComponent } from './components/process-instance-tasks.component';
+import { StartProcessInstanceComponent } from './components/start-process.component';
+import { ProcessAuditDirective } from './components/process-audit.directive';
+
 export * from './components/process-filters.component';
 export * from './components/process-instance-details.component';
 export * from './components/process-audit.directive';
@@ -28,4 +36,12 @@ export * from './components/start-process.component';
 export * from './services/process.service';
 export * from './services/process-filter.service';
 
-export * from './process-list.module';
+export const PROCESS_LIST_DIRECTIVES = [
+    ProcessAuditDirective,
+    ProcessInstanceListComponent,
+    ProcessFiltersComponent,
+    ProcessInstanceDetailsComponent,
+    ProcessInstanceHeaderComponent,
+    ProcessInstanceTasksComponent,
+    StartProcessInstanceComponent
+] as const;

@@ -23,10 +23,15 @@ import { AppsProcessService } from '../../app-list/services/apps-process.service
 import { IconModel } from '../../app-list/icon.model';
 import { NavigationStart, Router } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { IconComponent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-process-instance-filters',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatButtonModule, IconComponent],
     templateUrl: './process-filters.component.html',
     styleUrls: ['./process-filters.component.scss'],
     encapsulation: ViewEncapsulation.None

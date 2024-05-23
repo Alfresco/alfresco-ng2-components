@@ -21,13 +21,18 @@ import {
     CardViewItem,
     CardViewBaseItemModel,
     CardViewTextItemModel,
-    TranslationService
+    TranslationService,
+    CardViewModule
 } from '@alfresco/adf-core';
 import { Component, Input, OnChanges } from '@angular/core';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-process-instance-header',
+    standalone: true,
+    imports: [CommonModule, MatCardModule, CardViewModule],
     templateUrl: './process-instance-header.component.html',
     styleUrls: ['./process-instance-header.component.css']
 })
