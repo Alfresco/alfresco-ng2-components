@@ -23,6 +23,10 @@
           "version": "7.0.0",
           "alwaysAddToPackageJson": false
         },
+        "@alfresco/adf-process-services": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
         "@alfresco/eslint-plugin-eslint-angular": {
           "version": "7.0.0",
           "alwaysAddToPackageJson": false
