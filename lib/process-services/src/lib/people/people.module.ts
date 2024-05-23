@@ -22,8 +22,17 @@ import { PeopleSearchComponent } from './components/people-search/people-search.
 import { PeopleSearchFieldComponent } from './components/people-search-field/people-search-field.component';
 import { PeopleSelectorComponent } from './components/people-selector/people-selector.component';
 
+/** @deprecated Import the standalone components instead */
 @NgModule({
     imports: [PeopleComponent, PeopleSearchComponent, PeopleSearchFieldComponent, PeopleSelectorComponent, PeopleListComponent],
     exports: [PeopleComponent, PeopleSearchComponent, PeopleSearchFieldComponent, PeopleSelectorComponent, PeopleListComponent]
 })
 export class PeopleModule {}
+
+export const PEOPLE_DIRECTIVES = [
+    PeopleComponent,
+    PeopleSearchComponent,
+    PeopleSearchFieldComponent,
+    PeopleSelectorComponent,
+    PeopleListComponent
+] as const;

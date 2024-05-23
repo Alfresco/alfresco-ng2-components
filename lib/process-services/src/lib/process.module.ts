@@ -25,13 +25,13 @@ import { MaterialModule } from './material.module';
 import { ProcessListModule } from './process-list/process-list.module';
 import { TaskListModule } from './task-list/task-list.module';
 import { ProcessCommentsModule } from './process-comments/process-comments.module';
-import { PeopleModule } from './people/people.module';
 import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
 import { TaskCommentsModule } from './task-comments/task-comments.module';
 import { ProcessUserInfoModule } from './process-user-info/process-user-info.module';
 import { ATTACHMENT_DIRECTIVES } from './attachment';
 import { APPS_LIST_DIRECTIVES } from './app-list';
+import { PEOPLE_DIRECTIVES } from './people';
 
 @NgModule({
     imports: [
@@ -47,7 +47,7 @@ import { APPS_LIST_DIRECTIVES } from './app-list';
         ...APPS_LIST_DIRECTIVES,
         ProcessUserInfoModule,
         ...ATTACHMENT_DIRECTIVES,
-        PeopleModule,
+        ...PEOPLE_DIRECTIVES,
         FormModule,
         EmptyContentComponent
     ],
@@ -63,7 +63,7 @@ import { APPS_LIST_DIRECTIVES } from './app-list';
         ...APPS_LIST_DIRECTIVES,
         ProcessUserInfoModule,
         ...ATTACHMENT_DIRECTIVES,
-        PeopleModule,
+        ...PEOPLE_DIRECTIVES,
         FormModule
     ]
 })
