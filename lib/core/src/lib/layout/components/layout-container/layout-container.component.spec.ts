@@ -37,6 +37,13 @@ describe('LayoutContainerComponent', () => {
         });
     };
 
+    const testDirectionChange = (position: 'start' | 'end', direction: Direction, marginProperty: string) => {
+        layoutContainerComponent.position = position;
+        layoutContainerComponent.direction = direction;
+        layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
+        expect(layoutContainerComponent.contentAnimationState.params[marginProperty]).not.toBeNull();
+    };
+
     beforeEach(() => {
         layoutContainerComponent = new LayoutContainerComponent();
         layoutContainerComponent.sidenavMin = 70;
@@ -139,36 +146,20 @@ describe('LayoutContainerComponent', () => {
     });
 
     describe('OnChange direction', () => {
-        describe('Sidenav [start] position', () => {
-            beforeEach(() => (layoutContainerComponent.position = 'start'));
-
-            it('should set `margin-left` when current direction is `ltr`', () => {
-                layoutContainerComponent.direction = 'ltr';
-                layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
-                expect(layoutContainerComponent.contentAnimationState.params['margin-left']).not.toBeNull();
-            });
-
-            it('should set `margin-right` when current direction is `rtl`', () => {
-                layoutContainerComponent.direction = 'rtl';
-                layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
-                expect(layoutContainerComponent.contentAnimationState.params['margin-right']).not.toBeNull();
-            });
+        it('should set `margin-left` for `start` position and `ltr` direction', () => {
+            testDirectionChange('start', 'ltr', 'margin-left');
         });
 
-        describe('Sidenav [end] position', () => {
-            beforeEach(() => (layoutContainerComponent.position = 'end'));
+        it('should set `margin-right` for `start` position and `rtl` direction', () => {
+            testDirectionChange('start', 'rtl', 'margin-right');
+        });
 
-            it('should set `margin-right` when current direction is `ltr`', () => {
-                layoutContainerComponent.direction = 'ltr';
-                layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
-                expect(layoutContainerComponent.contentAnimationState.params['margin-right']).not.toBeNull();
-            });
+        it('should set `margin-right` for `end` position and `ltr` direction', () => {
+            testDirectionChange('end', 'ltr', 'margin-right');
+        });
 
-            it('should set `margin-left` when current direction is `rtl`', () => {
-                layoutContainerComponent.direction = 'rtl';
-                layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
-                expect(layoutContainerComponent.contentAnimationState.params['margin-left']).not.toBeNull();
-            });
+        it('should set `margin-left` for `end` position and `rtl` direction', () => {
+            testDirectionChange('end', 'rtl', 'margin-left');
         });
     });
 
@@ -195,12 +186,16 @@ describe('LayoutContainerComponent', () => {
     });
 
     describe('Media query change', () => {
-        it('should close sidenav on mobile and open on desktop', () => {
+        const testMediaQueryChange = (matches: boolean, expectedSidenavState: any, expectedContentState: any) => {
             layoutContainerComponent.ngOnInit();
-            layoutContainerComponent.mediaQueryList.matches = true;
+            layoutContainerComponent.mediaQueryList.matches = matches;
             window.dispatchEvent(new Event('resize'));
-            expect(layoutContainerComponent.sidenavAnimationState).toEqual(layoutContainerComponent.SIDENAV_STATES.MOBILE);
-            expect(layoutContainerComponent.contentAnimationState).toEqual(layoutContainerComponent.CONTENT_STATES.MOBILE);
+            expect(layoutContainerComponent.sidenavAnimationState).toEqual(expectedSidenavState);
+            expect(layoutContainerComponent.contentAnimationState).toEqual(expectedContentState);
+        };
+
+        it('should close sidenav on mobile and open on desktop', () => {
+            testMediaQueryChange(true, layoutContainerComponent.SIDENAV_STATES.MOBILE, layoutContainerComponent.CONTENT_STATES.MOBILE);
             layoutContainerComponent.mediaQueryList.matches = false;
             window.dispatchEvent(new Event('resize'));
             expect(layoutContainerComponent.sidenavAnimationState).toEqual(layoutContainerComponent.SIDENAV_STATES.EXPANDED);
@@ -213,11 +208,7 @@ describe('LayoutContainerComponent', () => {
 
         it('should keep sidenav compact when resized back to desktop and hideSidenav is true', () => {
             layoutContainerComponent.hideSidenav = true;
-            layoutContainerComponent.ngOnInit();
-            layoutContainerComponent.mediaQueryList.matches = true;
-            window.dispatchEvent(new Event('resize'));
-            expect(layoutContainerComponent.sidenavAnimationState).toEqual(layoutContainerComponent.SIDENAV_STATES.MOBILE);
-            expect(layoutContainerComponent.contentAnimationState).toEqual(layoutContainerComponent.CONTENT_STATES.MOBILE);
+            testMediaQueryChange(true, layoutContainerComponent.SIDENAV_STATES.MOBILE, layoutContainerComponent.CONTENT_STATES.MOBILE);
             layoutContainerComponent.mediaQueryList.matches = false;
             window.dispatchEvent(new Event('resize'));
             expect(layoutContainerComponent.sidenavAnimationState).toEqual(layoutContainerComponent.SIDENAV_STATES.COMPACT);
