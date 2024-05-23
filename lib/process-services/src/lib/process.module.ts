@@ -24,7 +24,6 @@ import { MaterialModule } from './material.module';
 
 import { ProcessListModule } from './process-list/process-list.module';
 import { TaskListModule } from './task-list/task-list.module';
-import { ProcessCommentsModule } from './process-comments/process-comments.module';
 import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
 import { TaskCommentsModule } from './task-comments/task-comments.module';
@@ -32,12 +31,13 @@ import { ProcessUserInfoModule } from './process-user-info/process-user-info.mod
 import { ATTACHMENT_DIRECTIVES } from './attachment';
 import { APPS_LIST_DIRECTIVES } from './app-list';
 import { PEOPLE_DIRECTIVES } from './people';
+import { PROCESS_COMMENTS_DIRECTIVES } from './process-comments';
 
 @NgModule({
     imports: [
         CoreModule,
         CommonModule,
-        ProcessCommentsModule,
+        ...PROCESS_COMMENTS_DIRECTIVES,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
@@ -54,7 +54,7 @@ import { PEOPLE_DIRECTIVES } from './people';
     providers: [provideTranslations('adf-process-services', 'assets/adf-process-services')],
     exports: [
         CommonModule,
-        ProcessCommentsModule,
+        ...PROCESS_COMMENTS_DIRECTIVES,
         FormsModule,
         ReactiveFormsModule,
         ProcessListModule,
