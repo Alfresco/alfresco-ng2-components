@@ -58,7 +58,8 @@ describe('TreeComponent', () => {
     const getNodeSpinner = async (nodeId: string) =>
         loader.getHarnessOrNull(MatProgressSpinnerHarness.with({ ancestor: composeNodeSelector(nodeId) }));
 
-    const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-icon`);
+    const getExpandCollapseBtn = (nodeId: string) =>
+        fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-tree-expand-collapse-button`);
 
     const tickCheckbox = (index: number) => {
         const selector = `[data-automation-id="${index === 0 ? 'has-children-node-checkbox' : 'no-children-node-checkbox'}"]`;
@@ -289,7 +290,7 @@ describe('TreeComponent', () => {
         component.refreshTree();
         fixture.detectChanges();
         spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(singleNode) }));
-        const loadMoreBtn = fixture.debugElement.query(By.css('.adf-tree-load-more-button adf-icon')).nativeElement;
+        const loadMoreBtn = fixture.debugElement.query(By.css('.adf-tree-load-more-button')).nativeElement;
         const appendSpy = spyOn(component.treeService, 'appendNodes').and.callThrough();
         loadMoreBtn.dispatchEvent(new Event('click'));
         fixture.whenStable();
