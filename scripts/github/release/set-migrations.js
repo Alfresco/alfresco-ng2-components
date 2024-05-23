@@ -1,4 +1,5 @@
 const fs = require('fs');
+const semver = require('semver');
 
 const getFile = (path) => {
     const rawFile = fs.readFileSync(path, 'utf8');
@@ -7,7 +8,7 @@ const getFile = (path) => {
     return file;
 };
 
-module.exports = async () => {
+const setMigration = () => {
     const corePackagePath = 'lib/core/package.json';
     const jaApiConfigPackagePath = 'lib/js-api/package.json';
     const coreMigrationConfigPath = 'lib/core/schematics/migrations/collection.json';
@@ -21,11 +22,23 @@ module.exports = async () => {
     const coreMigrations = [
         {
             name: 'move-out-alfresco-api',
-            version: '7.0.0'
+            allowedVersionScope: '<=7.0.0'
         }
     ];
 
+    console.log(`Core version is ${coreVersion}`);
+
     coreMigrations.forEach((migration) => {
+        const isCoreVersionValid = semver.satisfies(semver.coerce(coreVersion), migration.allowedVersionScope);
+
+        console.log(`Allowed scope for '${migration.name}' is ${migration.allowedVersionScope}`);
+        console.log(`${coreVersion} is ${isCoreVersionValid ? 'VALID' : 'NOT VALID'} for ${migration.name}`);
+
+        if (!isCoreVersionValid) {
+            console.log(`Skipping migration for ${migration.name}`);
+            return;
+        }
+
         coreMigration['schematics'][migration.name]['version'] = coreVersion;
         coreMigration['packageJsonUpdates'][migration.name]['version'] = coreVersion;
         const packagesToUpdate = coreMigration['packageJsonUpdates'][migration.name]['packages'];
@@ -39,9 +52,9 @@ module.exports = async () => {
         });
     });
 
-    console.log('Set migration for', coreVersion);
-    console.log('coreSchematics', coreMigration.schematics);
-    console.log('packageJsonUpdates', JSON.stringify(coreMigration.packageJsonUpdates));
+    console.log('\nmigrations:', JSON.stringify(coreMigration, null, 2));
 
-    fs.writeFileSync(coreMigrationConfigPath, JSON.stringify(coreMigration, null, 4));
+    fs.writeFileSync(coreMigrationConfigPath, JSON.stringify(coreMigration, null, 2));
 };
+
+module.exports = setMigration;
