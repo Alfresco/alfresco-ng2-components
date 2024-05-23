@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-export * from './apps-list.component';
-export * from './select-apps-dialog.component';
+import { AppsListComponent } from './apps-list.component';
+import { SelectAppsDialogComponent } from './select-apps-dialog/select-apps-dialog.component';
 
+export * from './apps-list.component';
+export * from './select-apps-dialog/select-apps-dialog.component';
 export * from './services/apps-process.service';
 
-export * from './apps-list.module';
+export const APPS_LIST_DIRECTIVES = [AppsListComponent, SelectAppsDialogComponent] as const;

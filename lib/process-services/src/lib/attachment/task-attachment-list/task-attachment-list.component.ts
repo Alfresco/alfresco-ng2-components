@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DownloadService, EmptyListComponent, ThumbnailService } from '@alfresco/adf-core';
+import { ThumbnailService, EmptyListComponent, DownloadService, DataTableModule } from '@alfresco/adf-core';
 import {
     AfterContentInit,
     ContentChild,
@@ -28,31 +28,35 @@ import {
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
-import { ProcessContentService } from '../form/services/process-content.service';
+import { ProcessContentService } from '../../form/services/process-content.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'adf-process-attachment-list',
-    styleUrls: ['./process-attachment-list.component.scss'],
-    templateUrl: './process-attachment-list.component.html',
+    selector: 'adf-task-attachment-list',
+    standalone: true,
+    imports: [CommonModule, DataTableModule, TranslateModule, MatProgressSpinnerModule],
+    styleUrls: ['./task-attachment-list.component.scss'],
+    templateUrl: './task-attachment-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {
+export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;
 
-    /** (**required**) The ID of the process instance to display. */
+    /** (**required**) The ID of the task to display. */
     @Input()
-    processInstanceId: string;
+    taskId: string;
 
-    /** Disable/Enable read-only mode for attachment list. */
+    /** Disable/Enable read only mode for attachment list. */
     @Input()
     disabled: boolean = false;
 
     /**
-     * Emitted when the attachment is double-clicked or the
-     * view option is selected from the context menu by the user from
-     * within the component. Returns a Blob representing the object
-     * that was clicked.
+     * Emitted when the attachment is double-clicked or a view
+     * option is selected from the context menu by the user from within the component.
+     * Returns a Blob representing the clicked object.
      */
     @Output()
     attachmentClick = new EventEmitter();
@@ -64,10 +68,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     @Output()
     success = new EventEmitter();
 
-    /**
-     * Emitted when the attachment list is not able to fetch the attachments
-     * (eg, following a network error).
-     */
+    /** Emitted when an error occurs while fetching the attachments. */
     @Output()
     error = new EventEmitter<any>();
 
@@ -77,15 +78,15 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     isLoading: boolean = false;
 
     constructor(
-        private processContentService: ProcessContentService,
+        private activitiContentService: ProcessContentService,
         private downloadService: DownloadService,
         private thumbnailService: ThumbnailService,
         private ngZone: NgZone
     ) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['processInstanceId']?.currentValue) {
-            this.loadAttachmentsByProcessInstanceId(changes['processInstanceId'].currentValue);
+        if (changes['taskId']?.currentValue) {
+            this.loadAttachmentsByTaskId(changes['taskId'].currentValue);
         }
     }
 
@@ -95,13 +96,13 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         }
     }
 
-    reset() {
+    reset(): void {
         this.attachments = [];
     }
 
     reload(): void {
         this.ngZone.run(() => {
-            this.loadAttachmentsByProcessInstanceId(this.processInstanceId);
+            this.loadAttachmentsByTaskId(this.taskId);
         });
     }
 
@@ -117,19 +118,32 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         });
     }
 
+    deleteAttachmentById(contentId: number) {
+        if (contentId) {
+            this.activitiContentService.deleteRelatedContent(contentId).subscribe(
+                () => {
+                    this.attachments = this.attachments.filter((content) => content.id !== contentId);
+                },
+                (err) => {
+                    this.error.emit(err);
+                }
+            );
+        }
+    }
+
     onShowRowActionsMenu(event: any) {
         const viewAction = {
-            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT',
+            title: 'ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT',
             name: 'view'
         };
 
         const removeAction = {
-            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT',
+            title: 'ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT',
             name: 'remove'
         };
 
         const downloadAction = {
-            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
+            title: 'ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
             name: 'download'
         };
 
@@ -158,7 +172,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     emitDocumentContent(content: any) {
-        this.processContentService.getContentPreview(content.id).subscribe(
+        this.activitiContentService.getContentPreview(content.id).subscribe(
             (blob: Blob) => {
                 content.contentBlob = blob;
                 this.attachmentClick.emit(content);
@@ -170,7 +184,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     downloadContent(content: any): void {
-        this.processContentService.getFileRawContent(content.id).subscribe(
+        this.activitiContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.downloadService.downloadBlob(blob, content.name),
             (err) => {
                 this.error.emit(err);
@@ -178,15 +192,16 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         );
     }
 
-    private loadAttachmentsByProcessInstanceId(processInstanceId: string) {
-        if (processInstanceId) {
-            this.reset();
+    private loadAttachmentsByTaskId(taskId: string) {
+        if (taskId) {
             this.isLoading = true;
+            this.reset();
             const isRelatedContent = 'true';
-            this.processContentService.getProcessRelatedContent(processInstanceId, { isRelatedContent }).subscribe(
+            this.activitiContentService.getTaskRelatedContent(taskId, { isRelatedContent }).subscribe(
                 (res) => {
+                    const attachList = [];
                     res.data.forEach((content) => {
-                        this.attachments.push({
+                        attachList.push({
                             id: content.id,
                             name: content.name,
                             created: content.created,
@@ -194,25 +209,13 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
                             icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
                         });
                     });
+                    this.attachments = attachList;
                     this.success.emit(this.attachments);
                     this.isLoading = false;
                 },
                 (err) => {
                     this.error.emit(err);
                     this.isLoading = false;
-                }
-            );
-        }
-    }
-
-    private deleteAttachmentById(contentId: number) {
-        if (contentId) {
-            this.processContentService.deleteRelatedContent(contentId).subscribe(
-                () => {
-                    this.attachments = this.attachments.filter((content) => content.id !== contentId);
-                },
-                (err) => {
-                    this.error.emit(err);
                 }
             );
         }
