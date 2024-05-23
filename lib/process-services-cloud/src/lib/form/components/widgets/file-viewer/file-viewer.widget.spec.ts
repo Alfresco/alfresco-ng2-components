@@ -44,7 +44,8 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), FileViewerWidgetComponent],
+            imports: [TranslateModule.forRoot()],
+            declarations: [FileViewerWidgetComponent],
             providers: [{ provide: FormService, useValue: formServiceStub }],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
