@@ -19,8 +19,8 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AttachmentComponent } from './create-task-attachment.component';
-import { ProcessTestingModule } from '../testing/process.testing.module';
-import { ProcessContentService } from '../form/services/process-content.service';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { ProcessContentService } from '../../form/services/process-content.service';
 
 describe('AttachmentComponent', () => {
     let service: ProcessContentService;
@@ -30,7 +30,7 @@ describe('AttachmentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, AttachmentComponent]
         });
         fixture = TestBed.createComponent(AttachmentComponent);
         component = fixture.componentInstance;

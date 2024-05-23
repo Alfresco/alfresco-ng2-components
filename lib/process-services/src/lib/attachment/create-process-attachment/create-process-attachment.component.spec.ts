@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
-import { ProcessTestingModule } from '../testing/process.testing.module';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let jasmine: any;
 
@@ -47,7 +47,7 @@ describe('CreateProcessAttachmentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, CreateProcessAttachmentComponent]
         });
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);
         component = fixture.componentInstance;
