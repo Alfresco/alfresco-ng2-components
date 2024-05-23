@@ -20,7 +20,7 @@ import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PeopleProcessService } from '../../common/services/people-process.service';
+import { PeopleProcessService } from '../common/services/people-process.service';
 
 @Injectable({
     providedIn: 'root'

@@ -15,14 +15,9 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, EmptyContentComponent, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
-import { MaterialModule } from './material.module';
+import { FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
-import { TaskCommentsModule } from './task-comments/task-comments.module';
-import { ProcessUserInfoModule } from './process-user-info/process-user-info.module';
 import { ATTACHMENT_DIRECTIVES } from './attachment';
 import { APPS_LIST_DIRECTIVES } from './app-list';
 import { PEOPLE_DIRECTIVES } from './people';
@@ -30,36 +25,33 @@ import { PROCESS_COMMENTS_DIRECTIVES } from './process-comments';
 import { PROCESS_LIST_DIRECTIVES } from './process-list';
 import { TASK_LIST_DIRECTIVES } from './task-list';
 import { FORM_DIRECTIVES } from './form';
+import { TASK_COMMENTS_DIRECTIVES } from './task-comments';
+import { PROCESS_USER_INFO_DIRECTIVES } from './process-user-info';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
     imports: [
-        CoreModule,
-        CommonModule,
         ...PROCESS_COMMENTS_DIRECTIVES,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
         ...PROCESS_LIST_DIRECTIVES,
         ...TASK_LIST_DIRECTIVES,
-        TaskCommentsModule,
+        ...TASK_COMMENTS_DIRECTIVES,
         ...APPS_LIST_DIRECTIVES,
-        ProcessUserInfoModule,
+        ...PROCESS_USER_INFO_DIRECTIVES,
         ...ATTACHMENT_DIRECTIVES,
         ...PEOPLE_DIRECTIVES,
-        ...FORM_DIRECTIVES,
-        EmptyContentComponent
+        ...FORM_DIRECTIVES
     ],
-    providers: [provideTranslations('adf-process-services', 'assets/adf-process-services')],
+    providers: [
+        provideTranslations('adf-process-services', 'assets/adf-process-services'),
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
+    ],
     exports: [
-        CommonModule,
         ...PROCESS_COMMENTS_DIRECTIVES,
-        FormsModule,
-        ReactiveFormsModule,
         ...PROCESS_LIST_DIRECTIVES,
         ...TASK_LIST_DIRECTIVES,
-        TaskCommentsModule,
+        ...TASK_COMMENTS_DIRECTIVES,
         ...APPS_LIST_DIRECTIVES,
-        ProcessUserInfoModule,
+        ...PROCESS_USER_INFO_DIRECTIVES,
         ...ATTACHMENT_DIRECTIVES,
         ...PEOPLE_DIRECTIVES,
         ...FORM_DIRECTIVES
@@ -74,12 +66,6 @@ export class ProcessModule {
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: ProcessFormRenderingService }
             ]
-        };
-    }
-
-    static forChild(): ModuleWithProviders<ProcessModule> {
-        return {
-            ngModule: ProcessModule
         };
     }
 }

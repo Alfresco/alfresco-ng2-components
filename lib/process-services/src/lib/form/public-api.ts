@@ -21,18 +21,14 @@ import { StartFormComponent } from './start-form/start-form.component';
 import { WIDGET_DIRECTIVES } from './widgets';
 import { FormComponent } from './form.component';
 
-export * from './widgets/index';
-export * from './services';
-
-export * from './process-form-rendering.service';
-
 export * from './events/validate-dynamic-table-row.event';
-
-export * from './model/form-definition.model';
-
 export * from './form-list/form-list.component';
-export * from './form.component';
+export * from './model/form-definition.model';
+export * from './services';
 export * from './start-form/start-form.component';
+export * from './widgets/public-api';
+export * from './form.component';
 export * from './form-custom-outcomes.component';
+export * from './process-form-rendering.service';
 
 export const FORM_DIRECTIVES = [FormListComponent, FormCustomOutcomesComponent, StartFormComponent, FormComponent, ...WIDGET_DIRECTIVES];

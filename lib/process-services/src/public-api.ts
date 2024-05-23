@@ -25,6 +25,5 @@ export * from './lib/process-comments/index';
 export * from './lib/people/index';
 export * from './lib/form/index';
 export * from './lib/task-comments/index';
-export * from './lib/material.module';
 export * from './lib/process.module';
 export * from './lib/compat/types';

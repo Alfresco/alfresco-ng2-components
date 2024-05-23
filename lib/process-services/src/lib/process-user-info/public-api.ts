@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
-export * from './process-user-info.component';
+import { ProcessUserInfoComponent } from './process-user-info.component';
 
-export * from './process-user-info.module';
+export * from './process-user-info.component';
+export const PROCESS_USER_INFO_DIRECTIVES = [ProcessUserInfoComponent] as const;
