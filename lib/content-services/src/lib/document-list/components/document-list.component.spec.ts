@@ -1431,7 +1431,7 @@ describe('DocumentList', () => {
         expect(documentList.reload).toHaveBeenCalled();
     });
 
-    it('should not show loading state if pagination is updated with merge setting as true', fakeAsync(() => {
+    it('should not show loading state if pagination is updated with merge setting as true', () => {
         spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
             of(
                 new DocumentLoaderNode(null, {
@@ -1456,7 +1456,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
 
         expect(element.querySelector('#adf-document-list-loading')).toBe(null);
-    }));
+    });
 
     it('should NOT reload data on first call of ngOnChanges', () => {
         spyOn(documentList, 'reload').and.stub();
