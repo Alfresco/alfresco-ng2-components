@@ -22,7 +22,6 @@ import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
 import { TaskListModule } from '../task-list/task-list.module';
-import { PeopleModule } from '../people/people.module';
 import { ContentWidgetModule } from '../form/widgets/content-widget/content-widget.module';
 import { ProcessAuditDirective } from './components/process-audit.directive';
 import { ProcessFiltersComponent } from './components/process-filters.component';
@@ -32,6 +31,7 @@ import { ProcessInstanceTasksComponent } from './components/process-instance-tas
 import { ProcessInstanceListComponent } from './components/process-list.component';
 import { StartProcessInstanceComponent } from './components/start-process.component';
 import { FormModule } from '../form/form.module';
+import { PEOPLE_DIRECTIVES } from '../people';
 
 @NgModule({
     imports: [
@@ -41,7 +41,7 @@ import { FormModule } from '../form/form.module';
         ReactiveFormsModule,
         CoreModule,
         TaskListModule,
-        PeopleModule,
+        ...PEOPLE_DIRECTIVES,
         ContentWidgetModule,
         ProcessCommentsModule,
         FormModule

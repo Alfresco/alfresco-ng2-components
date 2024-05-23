@@ -20,11 +20,8 @@ import { NgModule } from '@angular/core';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { MaterialModule } from '../material.module';
-import { PeopleModule } from '../people/people.module';
 import { ContentWidgetModule } from '../form/widgets/content-widget/content-widget.module';
-
 import { ChecklistComponent } from './components/checklist.component';
 import { NoTaskDetailsTemplateDirective } from './components/no-task-detail-template.directive';
 import { StartTaskComponent } from './components/start-task.component';
@@ -40,6 +37,7 @@ import { FormModule } from '../form/form.module';
 import { ClaimTaskDirective } from './components/task-form/claim-task.directive';
 import { UnclaimTaskDirective } from './components/task-form/unclaim-task.directive';
 import { TaskCommentsModule } from '../task-comments/task-comments.module';
+import { PEOPLE_DIRECTIVES } from '../people';
 
 @NgModule({
     imports: [
@@ -49,7 +47,7 @@ import { TaskCommentsModule } from '../task-comments/task-comments.module';
         FormModule,
         ReactiveFormsModule,
         CoreModule,
-        PeopleModule,
+        ...PEOPLE_DIRECTIVES,
         ProcessCommentsModule,
         ContentWidgetModule,
         TaskCommentsModule
