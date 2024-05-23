@@ -6,5 +6,32 @@
       "version": "7.0.0",
       "factory": "./7_0_0/index#updateAlfrescoApiImports"
     }
+  },
+  "packageJsonUpdates": {
+    "move-out-alfresco-api": {
+      "version": "7.0.0",
+      "packages": {
+        "@alfresco/adf-content-services": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/adf-extensions": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/adf-process-services-cloud": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/eslint-plugin-eslint-angular": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/js-api": {
+          "version": "10.0.0",
+          "alwaysAddToPackageJson": false
+        }
+      }
+    }
   }
 }
