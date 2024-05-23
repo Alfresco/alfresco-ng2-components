@@ -1,5 +1,6 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
     <mat-form-field class="adf-sites-dropdown-form-field" appearance="fill" subscriptSizing="dynamic">
+        <mat-label>{{placeholder | translate}}</mat-label>
         <mat-select
             adf-infinite-select-scroll
             (scrollEnd)="loadAllOnScroll()"
@@ -7,8 +8,6 @@
             data-automation-id="site-my-files-option"
             class="adf-site-dropdown-list-element"
             id="site-dropdown"
-            placeholder="{{placeholder | translate}}"
-            floatPlaceholder="never"
             [(value)]="selected"
             (selectionChange)="selectedSite($event)">
             <mat-select-trigger class="adf-sites-dropdown-select-trigger">
