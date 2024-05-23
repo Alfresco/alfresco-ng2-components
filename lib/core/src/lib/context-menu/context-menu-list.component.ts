@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'adf-context-menu',
