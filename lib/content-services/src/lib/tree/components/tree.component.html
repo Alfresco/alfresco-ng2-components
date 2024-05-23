@@ -17,7 +17,7 @@
                 *matTreeNodeDef="let node when isLoadMoreNode"
                 matTreeNodePadding>
                 <div class="adf-tree-expand-collapse-container">
-                    <button class="adf-tree-load-more-button" mat-icon-button>
+                    <button class="adf-tree-load-more-button" mat-icon-button (click)="loadMoreSubnodes(node)">
                         <mat-progress-spinner
                             color="primary"
                             mode="indeterminate"
@@ -25,10 +25,7 @@
                             *ngIf="node.isLoading; else loadMoreIcon">
                         </mat-progress-spinner>
                         <ng-template #loadMoreIcon>
-                            <adf-icon
-                                [value]="'chevron_right'"
-                                (click)="loadMoreSubnodes(node)">
-                            </adf-icon>
+                            <adf-icon [value]="'chevron_right'"></adf-icon>
                         </ng-template>
                     </button>
                 </div>
@@ -54,6 +51,7 @@
                 <div class="adf-tree-expand-collapse-container">
                     <button *ngIf="node.hasChildren"
                             class="adf-tree-expand-collapse-button"
+                            (click)="expandCollapseNode(node)"
                             mat-icon-button>
                         <mat-progress-spinner
                             color="primary"
@@ -62,10 +60,7 @@
                             *ngIf="node.isLoading; else expandCollapseIcon">
                         </mat-progress-spinner>
                         <ng-template #expandCollapseIcon>
-                            <adf-icon
-                                [value]="expandCollapseIconValue(node)"
-                                (click)="expandCollapseNode(node)">
-                            </adf-icon>
+                            <adf-icon [value]="expandCollapseIconValue(node)"></adf-icon>
                         </ng-template>
                     </button>
                 </div>
