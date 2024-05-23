@@ -22,12 +22,12 @@ import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { OidcAuthenticationService } from '../services/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY } from 'rxjs';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 describe('AuthGuardService ECM', () => {
     let authGuard: AuthGuardEcm;
