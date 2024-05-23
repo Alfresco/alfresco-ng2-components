@@ -32,6 +32,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { SiteEntry } from '@alfresco/js-api';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 const customSiteList = {
     list: {
@@ -64,6 +65,10 @@ describe('DropdownSitesComponent', () => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule]
         });
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Rendering tests', () => {
@@ -144,10 +149,10 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const select = await loader.getHarness(MatSelectHarness);
-                await select.open();
+                const selectFormField = await loader.getHarness(MatFormFieldHarness);
+                const label = await selectFormField.getLabel();
 
-                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.LOCATION');
+                expect(label).toContain('DROPDOWN.PLACEHOLDER_LABEL');
             });
 
             it('should show custom placeholder label when the "placeholder" input property is given a value', async () => {
@@ -156,10 +161,10 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const select = await loader.getHarness(MatSelectHarness);
-                await select.open();
+                const selectFormField = await loader.getHarness(MatFormFieldHarness);
+                const label = await selectFormField.getLabel();
 
-                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.LOCATION');
+                expect(label).toContain('NODE_SELECTOR.SELECT_LIBRARY');
             });
 
             it('should load custom sites when the "siteList" input property is given a value', async () => {
