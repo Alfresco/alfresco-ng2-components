@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { from, of, throwError } from 'rxjs';
-import { AppsProcessService } from '../../../app-list/services/apps-process.service';
+import { AppsProcessService } from '../../../services/apps-process.service';
 import { ProcessFilterService } from '../../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';

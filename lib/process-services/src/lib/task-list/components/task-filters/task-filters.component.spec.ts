@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppsProcessService } from '../../../app-list/services/apps-process.service';
+import { AppsProcessService } from '../../../services/apps-process.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';

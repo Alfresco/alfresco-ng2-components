@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { ProcessFilterService } from '../../services/process-filter.service';
-import { AppsProcessService } from '../../../app-list/services/apps-process.service';
+import { AppsProcessService } from '../../../services/apps-process.service';
 import { IconModel } from '../../../app-list/icon.model';
 import { NavigationStart, Router } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';

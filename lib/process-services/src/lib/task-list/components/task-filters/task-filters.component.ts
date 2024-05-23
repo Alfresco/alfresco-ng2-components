@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppsProcessService } from '../../../app-list/services/apps-process.service';
+import { AppsProcessService } from '../../../services/apps-process.service';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TaskFilterService } from '../../services/task-filter.service';

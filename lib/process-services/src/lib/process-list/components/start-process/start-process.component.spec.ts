@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '@alfresco/adf-core';
-import { AppsProcessService } from '../../../app-list/services/apps-process.service';
+import { AppsProcessService } from '../../../services/apps-process.service';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessService } from '../../services/process.service';

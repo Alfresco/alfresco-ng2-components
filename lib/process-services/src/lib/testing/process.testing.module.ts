@@ -26,7 +26,8 @@ import {
     TranslationService,
     TranslationMock,
     CoreModule,
-    FormRenderingService, AuthModule
+    FormRenderingService,
+    AuthModule
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessFormRenderingService } from '../form/process-form-rendering.service';
@@ -38,7 +39,7 @@ import { RouterTestingModule } from '@angular/router/testing';
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
-        ProcessModule,
+        ProcessModule.forRoot(),
         RouterTestingModule
     ],
     providers: [
@@ -48,11 +49,6 @@ import { RouterTestingModule } from '@angular/router/testing';
         FormRenderingService,
         { provide: FormRenderingService, useClass: ProcessFormRenderingService }
     ],
-    exports: [
-        NoopAnimationsModule,
-        TranslateModule,
-        CoreModule,
-        ProcessModule
-    ]
+    exports: [NoopAnimationsModule, TranslateModule, CoreModule, ProcessModule]
 })
 export class ProcessTestingModule {}
