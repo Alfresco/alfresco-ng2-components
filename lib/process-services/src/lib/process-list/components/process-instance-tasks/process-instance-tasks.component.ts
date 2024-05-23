@@ -19,8 +19,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Observer, Subject } from 'rxjs';
-import { TaskDetailsEvent } from '../../task-list';
-import { ProcessService } from './../services/process.service';
+import { TaskDetailsEvent } from '../../../task-list';
+import { ProcessService } from '../../services/process.service';
 import { share, takeUntil } from 'rxjs/operators';
 import { ProcessInstanceRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { FormModule } from '../../form';
+import { FormModule } from '../../../form';
 
 @Component({
     selector: 'adf-process-instance-tasks',

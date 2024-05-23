@@ -19,7 +19,7 @@
 
 import { DownloadService } from '@alfresco/adf-core';
 import { Directive, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { ProcessService } from './../services/process.service';
+import { ProcessService } from '../../services/process.service';
 
 const JSON_FORMAT: string = 'json';
 const PDF_FORMAT: string = 'pdf';

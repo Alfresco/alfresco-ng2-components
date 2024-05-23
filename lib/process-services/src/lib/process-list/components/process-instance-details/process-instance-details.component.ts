@@ -17,15 +17,15 @@
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { TaskDetailsEvent } from '../../task-list';
-import { ProcessService } from './../services/process.service';
-import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
-import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
+import { TaskDetailsEvent } from '../../../task-list';
+import { ProcessService } from '../../services/process.service';
+import { ProcessInstanceHeaderComponent } from '../process-instance-header/process-instance-header.component';
+import { ProcessInstanceTasksComponent } from '../process-instance-tasks/process-instance-tasks.component';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { ProcessCommentsComponent } from '../../process-comments';
+import { ProcessCommentsComponent } from '../../../process-comments';
 
 @Component({
     selector: 'adf-process-instance-details',

@@ -33,7 +33,7 @@ import {
     EmptyContentComponent
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ProcessService } from '../services/process.service';
+import { ProcessService } from '../../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import {

@@ -18,9 +18,9 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { ProcessService } from './../services/process.service';
+import { ProcessService } from '../../services/process.service';
 import { DownloadService } from '@alfresco/adf-core';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { ProcessInstanceAuditInfoRepresentation } from '@alfresco/js-api';
 
 @Component({

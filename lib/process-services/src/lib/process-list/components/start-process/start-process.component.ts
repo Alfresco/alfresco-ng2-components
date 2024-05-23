@@ -17,14 +17,14 @@
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { AppConfigService, AppConfigValues, EmptyContentComponent, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
-import { AppsProcessService } from '../../app-list/services/apps-process.service';
-import { ProcessService } from './../services/process.service';
+import { AppsProcessService } from '../../../app-list/services/apps-process.service';
+import { ProcessService } from '../../services/process.service';
 import { UntypedFormControl, Validators, AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, Subject, forkJoin } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { FormModule, StartFormComponent } from '../../form';
+import { FormModule, StartFormComponent } from '../../../form';
 import {
     AppDefinitionRepresentation,
     Node,
@@ -33,7 +33,7 @@ import {
     ProcessDefinitionRepresentation,
     RestVariable
 } from '@alfresco/js-api';
-import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
+import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
 import { getTime } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
