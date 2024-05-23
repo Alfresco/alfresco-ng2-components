@@ -44,13 +44,10 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot()
-            ],
-            declarations: [ FileViewerWidgetComponent ],
-            providers: [ { provide: FormService, useValue: formServiceStub } ],
+            imports: [TranslateModule.forRoot(), FileViewerWidgetComponent],
+            providers: [{ provide: FormService, useValue: formServiceStub }],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-          });
+        });
 
         formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(FileViewerWidgetComponent);

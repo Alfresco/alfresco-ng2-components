@@ -20,7 +20,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, EmptyContentComponent, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 import { MaterialModule } from './material.module';
-import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
 import { TaskCommentsModule } from './task-comments/task-comments.module';
 import { ProcessUserInfoModule } from './process-user-info/process-user-info.module';
@@ -30,6 +29,7 @@ import { PEOPLE_DIRECTIVES } from './people';
 import { PROCESS_COMMENTS_DIRECTIVES } from './process-comments';
 import { PROCESS_LIST_DIRECTIVES } from './process-list';
 import { TASK_LIST_DIRECTIVES } from './task-list';
+import { FORM_DIRECTIVES } from './form';
 
 @NgModule({
     imports: [
@@ -46,7 +46,7 @@ import { TASK_LIST_DIRECTIVES } from './task-list';
         ProcessUserInfoModule,
         ...ATTACHMENT_DIRECTIVES,
         ...PEOPLE_DIRECTIVES,
-        FormModule,
+        ...FORM_DIRECTIVES,
         EmptyContentComponent
     ],
     providers: [provideTranslations('adf-process-services', 'assets/adf-process-services')],
@@ -62,7 +62,7 @@ import { TASK_LIST_DIRECTIVES } from './task-list';
         ProcessUserInfoModule,
         ...ATTACHMENT_DIRECTIVES,
         ...PEOPLE_DIRECTIVES,
-        FormModule
+        ...FORM_DIRECTIVES
     ]
 })
 export class ProcessModule {

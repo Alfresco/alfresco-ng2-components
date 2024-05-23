@@ -29,12 +29,19 @@ import {
     OnDestroy,
     inject
 } from '@angular/core';
-import { FormComponent } from './form.component';
-import { ContentLinkModel, FormOutcomeModel } from '@alfresco/adf-core';
-import { ProcessService } from '../process-list/services/process.service';
+import { FormComponent } from '../form.component';
+import { ContentLinkModel, FormOutcomeModel, FormRendererComponent } from '@alfresco/adf-core';
+import { ProcessService } from '../../process-list/services/process.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-start-form',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, FormRendererComponent, MatIconModule],
     templateUrl: './start-form.component.html',
     styleUrls: ['./start-form.component.scss'],
     encapsulation: ViewEncapsulation.None

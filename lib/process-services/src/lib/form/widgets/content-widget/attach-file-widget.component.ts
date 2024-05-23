@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AppConfigService, AppConfigValues, DownloadService, FormService, ThumbnailService } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, of, Subject, zip } from 'rxjs';
@@ -27,9 +27,18 @@ import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.servi
 import { UploadWidgetComponent } from '../upload/upload.widget';
 import { ProcessContentService } from '../../services/process-content.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'attach-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, MatTooltipModule, ErrorWidgetComponent],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],
     host: {

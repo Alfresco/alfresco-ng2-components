@@ -25,7 +25,6 @@ import { mockProcessInstanceComments } from '../../../mock/process/process-comme
 import { ProcessService } from '../../services/process.service';
 import { ProcessInstanceDetailsComponent } from './process-instance-details.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { FormModule } from '../../../form';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
@@ -39,7 +38,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, FormModule],
+            imports: [ProcessTestingModule, ProcessInstanceDetailsComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(ProcessInstanceDetailsComponent);

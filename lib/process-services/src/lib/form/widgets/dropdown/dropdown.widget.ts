@@ -18,12 +18,19 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
+import { FormService, FormFieldOption, WidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'dropdown-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, FormsModule, ErrorWidgetComponent],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],
     host: {

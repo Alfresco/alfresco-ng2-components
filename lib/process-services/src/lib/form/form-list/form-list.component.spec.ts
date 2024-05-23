@@ -22,7 +22,6 @@ import { FormListComponent } from './form-list.component';
 import { ModelService } from '../services/model.service';
 
 describe('TaskAttachmentList', () => {
-
     let component: FormListComponent;
     let fixture: ComponentFixture<FormListComponent>;
     let modelService: ModelService;
@@ -30,9 +29,7 @@ describe('TaskAttachmentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule, FormListComponent]
         });
         fixture = TestBed.createComponent(FormListComponent);
         component = fixture.componentInstance;
@@ -41,10 +38,12 @@ describe('TaskAttachmentList', () => {
     });
 
     it('should show the forms as a list', async () => {
-        spyOn(modelService, 'getForms').and.returnValue(of([
-            {name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02'},
-            {name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03'}
-        ]));
+        spyOn(modelService, 'getForms').and.returnValue(
+            of([
+                { name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02' },
+                { name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03' }
+            ])
+        );
 
         component.ngOnChanges();
 

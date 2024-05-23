@@ -35,8 +35,8 @@ import {
 import { StartFormComponent } from './start-form.component';
 import { WidgetVisibilityService, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
 import { TranslateService } from '@ngx-translate/core';
-import { ProcessTestingModule } from '../testing/process.testing.module';
-import { ProcessService } from '../process-list/services/process.service';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { ProcessService } from '../../process-list/services/process.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';

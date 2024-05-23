@@ -26,12 +26,8 @@ import { DropdownEditorComponent } from './dropdown.editor';
 import { TaskFormService } from '../../../../services/task-form.service';
 import { ProcessDefinitionService } from '../../../../services/process-definition.service';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { FormModule } from '../../../../form.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatOptionModule } from '@angular/material/core';
 import { ProcessTestingModule } from '../../../../../testing/process.testing.module';
 
 describe('DropdownEditorComponent', () => {
@@ -48,7 +44,7 @@ describe('DropdownEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, MatFormFieldModule, MatSelectModule, MatOptionModule, FormModule]
+            imports: [ProcessTestingModule, DropdownEditorComponent]
         });
         formService = TestBed.inject(FormService);
         taskFormService = TestBed.inject(TaskFormService);

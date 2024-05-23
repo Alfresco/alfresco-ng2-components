@@ -74,7 +74,7 @@ describe('UploadWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, UploadWidgetComponent]
         });
     });
 

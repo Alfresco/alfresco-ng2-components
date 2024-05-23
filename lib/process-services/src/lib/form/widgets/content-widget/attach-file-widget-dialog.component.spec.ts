@@ -51,7 +51,7 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentModule.forRoot(), ProcessTestingModule],
+            imports: [ContentModule.forRoot(), ProcessTestingModule, AttachFileWidgetDialogComponent],
             providers: [
                 { provide: OidcAuthenticationService, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: data },

@@ -24,7 +24,7 @@ import { Observable, Subject, forkJoin } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { FormModule, StartFormComponent } from '../../../form';
+import { StartFormComponent } from '../../../form';
 import {
     AppDefinitionRepresentation,
     Node,
@@ -63,7 +63,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
         MatIconModule,
         MatInputModule,
         EmptyContentComponent,
-        FormModule
+        StartFormComponent
     ],
     templateUrl: './start-process.component.html',
     styleUrls: ['./start-process.component.scss'],

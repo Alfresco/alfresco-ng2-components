@@ -32,9 +32,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
-import { FormModule } from '../../../form';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { PeopleWidgetComponent } from '../../../form';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
@@ -51,9 +51,9 @@ const MAX_LENGTH = 255;
         MatInputModule,
         MatDatepickerModule,
         MatIconModule,
-        FormModule,
         MatSelectModule,
-        MatButtonModule
+        MatButtonModule,
+        PeopleWidgetComponent
     ],
     templateUrl: './start-task.component.html',
     styleUrls: ['./start-task.component.scss'],

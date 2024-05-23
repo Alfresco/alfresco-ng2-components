@@ -21,14 +21,18 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'adf-amount-editor',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, MatInputModule],
     templateUrl: './amount.editor.html',
     styleUrls: ['./amount.editor.scss']
 })
 export class AmountEditorComponent implements OnInit {
-
     @Input()
     table: DynamicTableModel;
 
@@ -48,5 +52,4 @@ export class AmountEditorComponent implements OnInit {
         const value: number = Number(event.target.value);
         row.value[column.id] = value;
     }
-
 }

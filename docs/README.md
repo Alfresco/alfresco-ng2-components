@@ -120,7 +120,7 @@ for more information about installing and using the source code.
 | [Sidenav Layout component](core/components/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/src/lib/layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Snackbar Content Component](core/components/snackbar-content.component.md) | Custom content for Snackbar which allows use icon as action. | [Source](../lib/core/src/lib/snackbar-content/snackbar-content.component.ts) |
 | [Sorting Picker Component](core/components/sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../lib/core/src/lib/sorting-picker/sorting-picker.component.ts) |
-| [Start Form component](core/components/start-form.component.md) | Displays the Start Form for a process. | [Source](../lib/process-services/src/lib/form/start-form.component.ts) |
+| [Start Form component](core/components/start-form.component.md) | Displays the Start Form for a process. | [Source](../lib/process-services/src/lib/form/start-form/start-form.component.ts) |
 | [Text Mask directive](core/components/text-mask.component.md) | Implements text field input masks. | [Source](../lib/core/src/lib/form/components/widgets/text/text-mask.component.ts) |
 | [Toolbar Divider Component](core/components/toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../lib/core/src/lib/toolbar/toolbar-divider.component.ts) |
 | [Toolbar Title Component](core/components/toolbar-title.component.md) | Supplies custom HTML to be included in a Toolbar component title. | [Source](../lib/core/src/lib/toolbar/toolbar-title.component.ts) |

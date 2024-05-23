@@ -30,7 +30,6 @@ import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 import { PeopleProcessService } from '../../../common';
 import { CommonModule } from '@angular/common';
-import { FormModule } from '../../../form';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
@@ -38,13 +37,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClaimTaskDirective } from './claim-task.directive';
 import { UnclaimTaskDirective } from './unclaim-task.directive';
 import { TaskStandaloneComponent } from '../task-standalone/task-standalone.component';
+import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
 
 @Component({
     selector: 'adf-task-form',
     standalone: true,
     imports: [
         CommonModule,
-        FormModule,
         MatCardModule,
         EmptyContentComponent,
         MatButtonModule,
@@ -52,7 +51,9 @@ import { TaskStandaloneComponent } from '../task-standalone/task-standalone.comp
         MatProgressSpinnerModule,
         ClaimTaskDirective,
         UnclaimTaskDirective,
-        TaskStandaloneComponent
+        TaskStandaloneComponent,
+        FormComponent,
+        FormCustomOutcomesComponent
     ],
     templateUrl: './task-form.component.html',
     styleUrls: ['./task-form.component.scss'],

@@ -17,20 +17,22 @@
 
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { ModelService } from '../services/model.service';
+import { CommonModule } from '@angular/common';
+import { DataTableModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-form-list',
+    standalone: true,
+    imports: [CommonModule, DataTableModule],
     templateUrl: './form-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class FormListComponent implements OnChanges {
-
     /** The array that contains the information to show inside the list. */
     @Input()
-    forms: any [] = [];
+    forms: any[] = [];
 
-    constructor(protected modelService: ModelService) {
-    }
+    constructor(protected modelService: ModelService) {}
 
     ngOnChanges() {
         this.getForms();
@@ -45,5 +47,4 @@ export class FormListComponent implements OnChanges {
             this.forms.push(...forms);
         });
     }
-
 }

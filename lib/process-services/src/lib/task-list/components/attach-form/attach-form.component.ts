@@ -26,13 +26,13 @@ import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormModule } from '../../../form';
 import { MatButtonModule } from '@angular/material/button';
+import { FormComponent } from '../../../form';
 
 @Component({
     selector: 'adf-attach-form',
     standalone: true,
-    imports: [CommonModule, MatCardModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, FormModule, MatButtonModule],
+    imports: [CommonModule, MatCardModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatButtonModule, FormComponent],
     templateUrl: './attach-form.component.html',
     styleUrls: ['./attach-form.component.scss']
 })
