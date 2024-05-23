@@ -115,7 +115,7 @@ describe('DialogComponent', () => {
 
         it('should close dialog', () => {
             component.onConfirm();
-            expect(dialogRef.close).toHaveBeenCalled();
+            expect(dialogRef.close).toHaveBeenCalledWith(true);
         });
 
         it('should set correct button title', () => {

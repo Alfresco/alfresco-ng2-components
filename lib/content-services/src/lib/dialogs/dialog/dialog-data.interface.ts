@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TemplateRef } from '@angular/core';
+import { TemplateRef, Type } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DialogSizes } from './dialog.model';
 
@@ -28,6 +28,8 @@ export interface DialogData {
     isCloseButtonHidden?: boolean;
     isCancelButtonHidden?: boolean;
     dialogSize?: DialogSizes;
+    contentText?: string;
+    contentComponent?: Type<any>;
     contentTemplate?: TemplateRef<any>;
     actionsTemplate?: TemplateRef<any>;
     descriptionTemplate?: TemplateRef<any>;
