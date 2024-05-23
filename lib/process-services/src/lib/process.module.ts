@@ -19,10 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, EmptyContentComponent, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
-
 import { MaterialModule } from './material.module';
-
-import { TaskListModule } from './task-list/task-list.module';
 import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
 import { TaskCommentsModule } from './task-comments/task-comments.module';
@@ -32,6 +29,7 @@ import { APPS_LIST_DIRECTIVES } from './app-list';
 import { PEOPLE_DIRECTIVES } from './people';
 import { PROCESS_COMMENTS_DIRECTIVES } from './process-comments';
 import { PROCESS_LIST_DIRECTIVES } from './process-list';
+import { TASK_LIST_DIRECTIVES } from './task-list';
 
 @NgModule({
     imports: [
@@ -42,7 +40,7 @@ import { PROCESS_LIST_DIRECTIVES } from './process-list';
         ReactiveFormsModule,
         MaterialModule,
         ...PROCESS_LIST_DIRECTIVES,
-        TaskListModule,
+        ...TASK_LIST_DIRECTIVES,
         TaskCommentsModule,
         ...APPS_LIST_DIRECTIVES,
         ProcessUserInfoModule,
@@ -58,7 +56,7 @@ import { PROCESS_LIST_DIRECTIVES } from './process-list';
         FormsModule,
         ReactiveFormsModule,
         ...PROCESS_LIST_DIRECTIVES,
-        TaskListModule,
+        ...TASK_LIST_DIRECTIVES,
         TaskCommentsModule,
         ...APPS_LIST_DIRECTIVES,
         ProcessUserInfoModule,

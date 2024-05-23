@@ -17,10 +17,10 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { TaskListService } from '../services/tasklist.service';
+import { TaskListService } from '../../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { taskDetailsMock } from '../../mock/task/task-details.mock';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { taskDetailsMock } from '../../../mock/task/task-details.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';
@@ -50,7 +50,7 @@ describe('StartTaskComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, StartTaskComponent]
         });
         fixture = TestBed.createComponent(StartTaskComponent);
         component = fixture.componentInstance;

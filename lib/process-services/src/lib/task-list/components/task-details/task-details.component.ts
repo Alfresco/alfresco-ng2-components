@@ -22,6 +22,7 @@ import {
     FormFieldValidator,
     FormModel,
     FormOutcomeEvent,
+    InfoDrawerModule,
     UpdateNotification
 } from '@alfresco/adf-core';
 import {
@@ -37,16 +38,39 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of, Subject } from 'rxjs';
-import { TaskListService } from './../services/tasklist.service';
+import { TaskListService } from '../../services/tasklist.service';
 import { catchError, share, takeUntil } from 'rxjs/operators';
-import { TaskFormComponent } from './task-form/task-form.component';
-import { PeopleProcessService } from '../../common/services/people-process.service';
+import { TaskFormComponent } from '../task-form/task-form.component';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 import { LightUserRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { AttachFormComponent } from '../attach-form/attach-form.component';
+import { PeopleComponent, PeopleSearchComponent } from '../../../people';
+import { TaskHeaderComponent } from '../task-header/task-header.component';
+import { TaskCommentsComponent } from '../../../task-comments';
+import { ChecklistComponent } from '../checklist/checklist.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-task-details',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        TaskFormComponent,
+        AttachFormComponent,
+        InfoDrawerModule,
+        PeopleSearchComponent,
+        TaskHeaderComponent,
+        PeopleComponent,
+        TaskCommentsComponent,
+        ChecklistComponent,
+        MatDialogModule,
+        MatButtonModule
+    ],
     templateUrl: './task-details.component.html',
     styleUrls: ['./task-details.component.scss'],
     encapsulation: ViewEncapsulation.None

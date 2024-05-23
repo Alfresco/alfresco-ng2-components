@@ -17,8 +17,8 @@
 
 import { AttachFormComponent } from './attach-form.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TaskListService } from './../services/tasklist.service';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TaskListService } from '../../services/tasklist.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
@@ -30,7 +30,7 @@ describe('AttachFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, AttachFormComponent]
         });
         fixture = TestBed.createComponent(AttachFormComponent);
         component = fixture.componentInstance;

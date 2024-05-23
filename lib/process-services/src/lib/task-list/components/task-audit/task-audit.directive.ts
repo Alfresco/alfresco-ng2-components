@@ -19,7 +19,7 @@
 
 import { DownloadService } from '@alfresco/adf-core';
 import { Directive, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { TaskListService } from './../services/tasklist.service';
+import { TaskListService } from '../../services/tasklist.service';
 
 const JSON_FORMAT: string = 'json';
 const PDF_FORMAT: string = 'pdf';
@@ -27,13 +27,13 @@ const PDF_FORMAT: string = 'pdf';
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'button[adf-task-audit]',
+    standalone: true,
     host: {
         role: 'button',
         '(click)': 'onClickAudit()'
     }
 })
 export class TaskAuditDirective implements OnChanges {
-
     /** (**required**) The id of the task. */
     @Input('task-id')
     taskId: string;
@@ -60,9 +60,7 @@ export class TaskAuditDirective implements OnChanges {
 
     public audit: any;
 
-    constructor(private downloadService: DownloadService,
-                private taskListService: TaskListService) {
-    }
+    constructor(private downloadService: DownloadService, private taskListService: TaskListService) {}
 
     ngOnChanges(): void {
         if (!this.isValidType()) {
@@ -93,7 +91,8 @@ export class TaskAuditDirective implements OnChanges {
                 },
                 (err) => {
                     this.error.emit(err);
-                });
+                }
+            );
         } else {
             this.taskListService.fetchTaskAuditJsonById(this.taskId).subscribe(
                 (res) => {
@@ -102,7 +101,8 @@ export class TaskAuditDirective implements OnChanges {
                 },
                 (err) => {
                     this.error.emit(err);
-                });
+                }
+            );
         }
     }
 
@@ -117,5 +117,4 @@ export class TaskAuditDirective implements OnChanges {
     isPdfFormat() {
         return this.format === PDF_FORMAT;
     }
-
 }

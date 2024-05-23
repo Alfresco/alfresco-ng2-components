@@ -18,8 +18,8 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { TaskListService } from './../services/tasklist.service';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TaskListService } from '../../services/tasklist.service';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 declare let jasmine: any;
 

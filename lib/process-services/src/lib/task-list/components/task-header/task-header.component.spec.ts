@@ -26,11 +26,11 @@ import {
     claimedTaskDetailsMock,
     claimedByGroupMemberMock,
     taskDetailsWithOutCandidateGroup
-} from '../../mock';
-import { TaskListService } from './../services/tasklist.service';
+} from '../../../mock';
+import { TaskListService } from '../../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { PeopleProcessService } from '../../common/services/people-process.service';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('TaskHeaderComponent', () => {
@@ -56,7 +56,7 @@ describe('TaskHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, TaskHeaderComponent]
         });
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;

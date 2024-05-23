@@ -16,14 +16,23 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { Form } from '../models/form.model';
-import { TaskListService } from './../services/tasklist.service';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { ModelService } from '../../form/services/model.service';
-import { TaskFormService } from '../../form/services/task-form.service';
+import { Form } from '../../models/form.model';
+import { TaskListService } from '../../services/tasklist.service';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { ModelService } from '../../../form/services/model.service';
+import { TaskFormService } from '../../../form/services/task-form.service';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormModule } from '../../../form';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-attach-form',
+    standalone: true,
+    imports: [CommonModule, MatCardModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, FormModule, MatButtonModule],
     templateUrl: './attach-form.component.html',
     styleUrls: ['./attach-form.component.scss']
 })

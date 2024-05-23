@@ -17,13 +17,13 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppsProcessService } from '../../app-list/services/apps-process.service';
+import { AppsProcessService } from '../../../app-list/services/apps-process.service';
 import { AppConfigService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
-import { TaskListService } from '../services/tasklist.service';
-import { TaskFilterService } from '../services/task-filter.service';
+import { TaskListService } from '../../services/tasklist.service';
+import { TaskFilterService } from '../../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { NavigationStart, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -60,7 +60,7 @@ describe('TaskFiltersComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, RouterTestingModule]
+            imports: [ProcessTestingModule, RouterTestingModule, TaskFiltersComponent]
         });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';

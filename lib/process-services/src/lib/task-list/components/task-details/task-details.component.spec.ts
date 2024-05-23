@@ -20,14 +20,14 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, CommentModel, User } from '@alfresco/adf-core';
-import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../mock';
-import { TaskListService } from './../services/tasklist.service';
+import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../../mock';
+import { TaskListService } from '../../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TaskService } from '../../form/services/task.service';
-import { TaskFormService } from '../../form/services/task-form.service';
-import { TaskCommentsService } from '../../task-comments/services/task-comments.service';
-import { PeopleProcessService } from '../../common/services/people-process.service';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TaskService } from '../../../form/services/task.service';
+import { TaskFormService } from '../../../form/services/task-form.service';
+import { TaskCommentsService } from '../../../task-comments/services/task-comments.service';
+import { PeopleProcessService } from '../../../common/services/people-process.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
@@ -63,7 +63,7 @@ describe('TaskDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
+            imports: [ProcessTestingModule, TaskDetailsComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);

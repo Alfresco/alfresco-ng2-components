@@ -19,10 +19,10 @@ import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, Simpl
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
-import { TaskListService } from '../services/tasklist.service';
+import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../mock';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -93,7 +93,7 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, TaskListComponent]
         });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';

@@ -16,12 +16,34 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { TaskListService } from './../services/tasklist.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TaskListService } from '../../services/tasklist.service';
 import { TaskRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-checklist',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatChipsModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule
+    ],
     templateUrl: './checklist.component.html',
     styleUrls: ['./checklist.component.scss']
 })

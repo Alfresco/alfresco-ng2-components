@@ -15,18 +15,24 @@
  * limitations under the License.
  */
 
-import { AppsProcessService } from '../../app-list/services/apps-process.service';
+import { AppsProcessService } from '../../../app-list/services/apps-process.service';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
-import { TaskFilterService } from './../services/task-filter.service';
-import { TaskListService } from './../services/tasklist.service';
-import { IconModel } from '../../app-list/icon.model';
+import { TaskFilterService } from '../../services/task-filter.service';
+import { TaskListService } from '../../services/tasklist.service';
+import { IconModel } from '../../../app-list/icon.model';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
 import { UserTaskFilterRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { IconComponent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-task-filters',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatButtonModule, IconComponent],
     templateUrl: './task-filters.component.html',
     styleUrls: ['./task-filters.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -15,29 +15,22 @@
  * limitations under the License.
  */
 
-import {
-    AfterContentInit,
-    ContentChild,
-    Directive,
-    TemplateRef
-} from '@angular/core';
-import { TaskDetailsComponent } from './task-details.component';
+import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: 'adf-no-task-details-template, no-task-details-template'
+    selector: 'adf-no-task-details-template, no-task-details-template',
+    standalone: true
 })
 export class NoTaskDetailsTemplateDirective implements AfterContentInit {
-
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(
-        private activitiTaskDetails: TaskDetailsComponent) {
-    }
+    constructor(private activitiTaskDetails: TaskDetailsComponent) {}
 
     ngAfterContentInit() {
         this.activitiTaskDetails.noTaskDetailsTemplateComponent = this.template;

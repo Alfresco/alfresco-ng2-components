@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { CommentProcessService } from '../../../process-comments/services/comment-process.service';
-import { TaskListModule } from '../../../task-list/task-list.module';
 import { exampleProcess, exampleProcessNoName, mockRunningProcess, processEnded } from '../../../mock';
 import { mockProcessInstanceComments } from '../../../mock/process/process-comments.mock';
 import { ProcessService } from '../../services/process.service';
@@ -40,7 +39,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, FormModule, TaskListModule],
+            imports: [ProcessTestingModule, FormModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(ProcessInstanceDetailsComponent);

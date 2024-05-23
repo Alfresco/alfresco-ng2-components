@@ -19,18 +19,42 @@ import { FormFieldModel, FormModel, DateFnsUtils, AdfDateFnsAdapter, ADF_DATE_FO
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { EMPTY, Observable, Subject } from 'rxjs';
-import { Form } from '../models/form.model';
-import { TaskListService } from './../services/tasklist.service';
+import { Form } from '../../models/form.model';
+import { TaskListService } from '../../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
-import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { isValid } from 'date-fns';
 import { TaskRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { FormModule } from '../../../form';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
 
 @Component({
     selector: 'adf-start-task',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatIconModule,
+        FormModule,
+        MatSelectModule,
+        MatButtonModule
+    ],
     templateUrl: './start-task.component.html',
     styleUrls: ['./start-task.component.scss'],
     providers: [

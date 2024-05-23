@@ -18,8 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChecklistComponent } from './checklist.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { TaskListService } from './../services/tasklist.service';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TaskListService } from '../../services/tasklist.service';
 import { of } from 'rxjs';
 import { TaskRepresentation } from '@alfresco/js-api';
 
