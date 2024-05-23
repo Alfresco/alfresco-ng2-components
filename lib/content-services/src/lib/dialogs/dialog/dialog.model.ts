@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-export * from './folder.dialog';
-export * from './node-lock.dialog';
-export * from './confirm.dialog';
-export * from './category-selector.dialog';
+export const DialogSize = {
+    Large: 'adf-large',
+    Medium: 'adf-medium',
+    Alert: 'adf-alert'
+} as const;
 
-export * from './dialog.module';
-export * from './library/library.dialog';
-export * from './dialog';
-
-export * from './download-zip/download-zip.dialog';
-export * from './download-zip/download-zip.dialog.module';
-
-export * from './folder-name.validators';
+export type DialogSizes = typeof DialogSize[keyof typeof DialogSize];

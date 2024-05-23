@@ -15,16 +15,21 @@
  * limitations under the License.
  */
 
-export * from './folder.dialog';
-export * from './node-lock.dialog';
-export * from './confirm.dialog';
-export * from './category-selector.dialog';
+import { TemplateRef } from '@angular/core';
+import { Subject } from 'rxjs';
+import { DialogSizes } from './dialog.model';
 
-export * from './dialog.module';
-export * from './library/library.dialog';
-export * from './dialog';
-
-export * from './download-zip/download-zip.dialog';
-export * from './download-zip/download-zip.dialog.module';
-
-export * from './folder-name.validators';
+export interface DialogData {
+    title: string;
+    description?: string;
+    confirmButtonTitle?: string;
+    cancelButtonTitle?: string;
+    isConfirmButtonDisabled$?: Subject<boolean>;
+    isCloseButtonHidden?: boolean;
+    isCancelButtonHidden?: boolean;
+    dialogSize?: DialogSizes;
+    contentTemplate?: TemplateRef<any>;
+    actionsTemplate?: TemplateRef<any>;
+    descriptionTemplate?: TemplateRef<any>;
+    headerIcon?: string;
+}

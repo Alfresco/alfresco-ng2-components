@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "Tillämpa",
+    "CANCEL": "Avbryt"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "Återställ",

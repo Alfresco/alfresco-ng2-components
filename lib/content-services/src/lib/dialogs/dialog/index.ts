@@ -15,16 +15,6 @@
  * limitations under the License.
  */
 
-export * from './folder.dialog';
-export * from './node-lock.dialog';
-export * from './confirm.dialog';
-export * from './category-selector.dialog';
-
-export * from './dialog.module';
-export * from './library/library.dialog';
-export * from './dialog';
-
-export * from './download-zip/download-zip.dialog';
-export * from './download-zip/download-zip.dialog.module';
-
-export * from './folder-name.validators';
+export * from './dialog-data.interface';
+export * from './dialog.model';
+export * from './dialog.component';

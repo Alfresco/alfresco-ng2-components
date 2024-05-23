@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "Applica",
+    "CANCEL": "Annulla"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "Ripristina",
