@@ -4,11 +4,11 @@
     </div>
     <div *ngIf="!readOnly" class="adf-comments-input-container adf-comments-divider">
             <mat-form-field>
-                <mat-label>{{'COMMENTS.ADD' | translate}}</mat-label>
                 <textarea
                     matInput
                     id="comment-input"
                     class="adf-text-text-area"
+                    [placeholder]='"COMMENTS.ADD" | translate'
                     [attr.aria-label]="'COMMENTS.ADD' | translate"
                     [(ngModel)]="message"
                     (keydown.escape)="clearMessage($event)"
