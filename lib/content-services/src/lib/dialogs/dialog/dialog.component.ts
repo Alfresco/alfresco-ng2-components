@@ -55,6 +55,7 @@ export class DialogComponent implements OnDestroy {
             this.dialogSize = data.dialogSize || DialogSize.Medium;
             this.confirmButtonTitle = data.confirmButtonTitle || 'COMMON.APPLY';
             this.cancelButtonTitle = data.cancelButtonTitle || 'COMMON.CANCEL';
+            this.dialogRef.addPanelClass(`${this.dialogSize}-dialog-panel`);
 
             if (data.isConfirmButtonDisabled$) {
                 data.isConfirmButtonDisabled$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.isConfirmButtonDisabled$.next(value));
@@ -64,7 +65,7 @@ export class DialogComponent implements OnDestroy {
 
     onConfirm() {
         this.isConfirmButtonDisabled$.next(true);
-        this.dialogRef.close();
+        this.dialogRef.close(true);
     }
 
     ngOnDestroy() {

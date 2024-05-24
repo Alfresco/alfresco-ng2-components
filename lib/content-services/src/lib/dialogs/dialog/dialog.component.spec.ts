@@ -54,8 +54,7 @@ describe('DialogComponent', () => {
 
         confirmButton = fixture.nativeElement.querySelector('[data-automation-id="adf-dialog-actions-confirm"]');
         closeButton = fixture.nativeElement.querySelector('[data-automation-id="adf-dialog-close-button"]');
-        cancelButton = fixture.nativeElement.querySelector(
-            '[data-automation-id="adf-dialog-actions-cancel"]');
+        cancelButton = fixture.nativeElement.querySelector('[data-automation-id="adf-dialog-actions-cancel"]');
         dialogContainer = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-dialog-container"]');
     };
 
@@ -85,7 +84,7 @@ describe('DialogComponent', () => {
     describe('confirm action', () => {
         const mockButtonTitle = 'mockTitle';
         beforeEach(() => {
-            setupBeforeEach({ ...data, confirmButtonTitle: mockButtonTitle});
+            setupBeforeEach({ ...data, confirmButtonTitle: mockButtonTitle });
             fixture.detectChanges();
         });
 
@@ -115,7 +114,7 @@ describe('DialogComponent', () => {
 
         it('should close dialog', () => {
             component.onConfirm();
-            expect(dialogRef.close).toHaveBeenCalled();
+            expect(dialogRef.close).toHaveBeenCalledWith(true);
         });
 
         it('should set correct button title', () => {
@@ -145,24 +144,23 @@ describe('DialogComponent', () => {
         beforeEach(() => {
             setupBeforeEach({
                 ...data,
-                isCloseButtonHidden:  true,
+                isCloseButtonHidden: true,
                 isCancelButtonHidden: true
             });
         });
 
-        it ('should hide close button', () => {
+        it('should hide close button', () => {
             expect(closeButton).toBeNull();
         });
 
-
-        it ('should hide close button', () => {
+        it('should hide close button', () => {
             expect(cancelButton).toBeNull();
         });
     });
 
     describe('when dialog has large size', () => {
         beforeEach(() => {
-            setupBeforeEach({ ...data, dialogSize:  DialogSize.Large});
+            setupBeforeEach({ ...data, dialogSize: DialogSize.Large });
         });
 
         it('should have correct dialogSize value', () => {
@@ -184,7 +182,7 @@ describe('DialogComponent', () => {
 
     describe('when dialog has medium size', () => {
         beforeEach(() => {
-            setupBeforeEach({ ...data, dialogSize:  DialogSize.Medium});
+            setupBeforeEach({ ...data, dialogSize: DialogSize.Medium });
         });
 
         it('should have correct dialogSize value', () => {
@@ -207,7 +205,7 @@ describe('DialogComponent', () => {
     describe('when dialog has alert size', () => {
         describe('when dialog has not an ican', () => {
             beforeEach(() => {
-                setupBeforeEach({ ...data, dialogSize:  DialogSize.Alert});
+                setupBeforeEach({ ...data, dialogSize: DialogSize.Alert });
             });
 
             it('should have correct dialogSize value', () => {
@@ -237,7 +235,7 @@ describe('DialogComponent', () => {
             beforeEach(() => {
                 setupBeforeEach({
                     ...data,
-                    dialogSize:  DialogSize.Alert,
+                    dialogSize: DialogSize.Alert,
                     headerIcon: 'access_time'
                 });
             });
@@ -247,7 +245,6 @@ describe('DialogComponent', () => {
 
                 expect(headerIcon).toBeDefined();
             });
-
 
             it('should center header content', () => {
                 const header = fixture.nativeElement.querySelector('.adf-centered-header');

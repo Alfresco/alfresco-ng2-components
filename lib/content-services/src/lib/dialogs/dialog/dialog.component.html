@@ -1,12 +1,12 @@
 <div
     data-automation-id="adf-dialog-container"
-    class="adf-dialog-container {{dialogSize}}"
+    class="adf-dialog-container {{ dialogSize }}"
 >
     <div
         mat-dialog-title
         data-automation-id="adf-dialog-header"
         class="adf-dialog-header"
-        [ngClass]="{'adf-centered-header': data.headerIcon}"
+        [ngClass]="{ 'adf-centered-header': data.headerIcon }"
     >
         <div class="adf-dialog-title-container" [ngClass]="{ 'adf-centered-title': data.headerIcon }">
             <mat-icon
@@ -14,9 +14,9 @@
                 color="primary"
                 class="adf-dialog-header-icon"
             >
-                {{data.headerIcon}}
+                {{ data.headerIcon }}
             </mat-icon>
-            <h2 class="adf-dialog-title">{{data.title}}</h2>
+            <h2 class="adf-dialog-title">{{ data.title | translate }}</h2>
         </div>
         <button
             *ngIf="!isCloseButtonHidden"
@@ -32,26 +32,32 @@
         [ngTemplateOutlet]="data.descriptionTemplate"
         [ngClass]="{ 'adf-description': data.description || data.descriptionTemplate }"
     >
-        <ng-container>{{data.description}}</ng-container>
+        <ng-container>{{ data.description }}</ng-container>
     </div>
 
-    <mat-dialog-content class="adf-dialog-content">
+    <mat-dialog-content *ngIf="data.contentTemplate || data.contentComponent || data.contentText" class="adf-dialog-content">
         <ng-container [ngTemplateOutlet]="data.contentTemplate"></ng-container>
+        <ng-container [ngComponentOutlet]="data.contentComponent"></ng-container>
+        <ng-container>{{ data.contentText }}</ng-container>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="adf-dialog-actions" [ngClass]="{ 'adf-additional-actions': data.actionsTemplate }">
+    <mat-dialog-actions
+        class="adf-dialog-actions"
+        [ngClass]="{ 'adf-additional-actions': data.actionsTemplate }"
+    >
         <div>
             <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
         </div>
         <div>
             <button
                 *ngIf="!isCancelButtonHidden"
-                mat-button
+                mat-stroked-button
+                color="primary"
                 mat-dialog-close
                 adf-auto-focus
                 data-automation-id="adf-dialog-actions-cancel"
             >
-                {{cancelButtonTitle | translate}}
+                {{ cancelButtonTitle | translate }}
             </button>
 
             <button
@@ -61,7 +67,7 @@
                 [disabled]="isConfirmButtonDisabled$ | async"
                 (click)="onConfirm()"
             >
-                {{confirmButtonTitle | translate}}
+                {{ confirmButtonTitle | translate }}
             </button>
         </div>
     </mat-dialog-actions>

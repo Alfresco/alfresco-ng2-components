@@ -12,21 +12,97 @@ $dialog-small-s-height: 360px;
 $l-screen: 1920px;
 $m-screen: 1680px;
 $s-screen: 1440px;
-$xs-screen: 375px;
+$xs-screen: 500px;
+$xxs-screen: 375px;
 
 $breakpoint-alert-with-additional-buttons-centered: 1469px;
 $breakpoint-medium-with-additional-buttons-centered: 1469px;
 $breakpoint-large-with-additional-buttons-centered: 642px;
+$breakpoint-medium-screen: 920px;
 
 $dialog-padding: 24px;
 
+.adf-large-dialog-panel,
+.adf-medium-dialog-panel,
+.adf-alert-dialog-panel {
+    min-width: calc(269px - $dialog-padding * 2);
+
+    @media screen and (max-width: $xxs-screen) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+.adf-large-dialog-panel {
+    max-width: calc(56vw);
+
+    @media screen and (min-width: $l-screen) {
+        max-width: calc($dialog-large-l-width);
+    }
+
+    @media screen and (max-width: $xs-screen) {
+        max-width: calc(100vw);
+    }
+
+    @media screen and (max-width: $breakpoint-large-with-additional-buttons-centered) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+.adf-medium-dialog-panel {
+    max-width: calc(36vw);
+
+    @media screen and (min-width: $l-screen) {
+        max-width: calc($dialog-medium-l-width);
+    }
+
+    @media screen and (max-width: $breakpoint-medium-screen) {
+        max-width: calc(84vw);
+    }
+
+    @media screen and (max-width: $xxs-screen) {
+        max-width: calc(100vw);
+    }
+
+    @media screen and (max-width: $breakpoint-medium-with-additional-buttons-centered) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+.adf-alert-dialog-panel {
+    max-width: 24vw;
+
+    @media screen and (min-width: $m-screen) {
+        max-width: $dialog-small-l-width;
+    }
+
+    @media screen and (max-width: $s-screen) {
+        max-width: $dialog-small-s-width;
+    }
+
+    @media screen and (max-width: $xxs-screen) {
+        max-width: 84vw;
+    }
+
+    @media screen and (max-width: $breakpoint-alert-with-additional-buttons-centered) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
 .adf-dialog-container {
     min-width: calc(269px - $dialog-padding * 2);
-    min-height: calc(300px - $dialog-padding * 2);
+    min-height: calc(188px - $dialog-padding * 2);
+    max-height: calc(84vh - $dialog-padding * 2);
     position: relative;
     display: flex;
     flex-direction: column;
-    max-height: calc(84vh - $dialog-padding * 2);
 
     .adf-dialog-header,
     .adf-dialog-content,
@@ -113,26 +189,14 @@ $dialog-padding: 24px;
         }
     }
 
-    // TODO: Update after migration to Angular 15
-    /* stylelint-disable-next-line selector-class-pattern */
-    .mat-dialog-container {
-        border-radius: 8px;
-    }
-
     &.adf-large {
-        max-width: calc(56vw - $dialog-padding * 2);
         max-height: calc(84vh - $dialog-padding * 2);
-
-        @media screen and (min-width: $l-screen) {
-            max-width: calc($dialog-large-l-width - $dialog-padding * 2);
-        }
 
         @media screen and (min-height: $dialog-large-l-width) {
             max-height: calc($dialog-large-l-height - $dialog-padding * 2);
         }
 
-        @media screen and (max-width: $xs-screen) {
-            max-width: calc(100vw - $dialog-padding * 2);
+        @media screen and (max-width: $xxs-screen) {
             max-height: calc(100vh - $dialog-padding * 2);
         }
 
@@ -144,15 +208,9 @@ $dialog-padding: 24px;
     }
 
     &.adf-medium {
-        max-width: calc(36vw - $dialog-padding * 2);
         max-height: calc(72vh - $dialog-padding * 2);
 
-        @media screen and (min-width: $l-screen) {
-            max-width: calc($dialog-medium-l-width - $dialog-padding * 2);
-        }
-
-        @media screen and (max-width: $xs-screen) {
-            max-width: calc(100vw - $dialog-padding * 2);
+        @media screen and (max-width: $xxs-screen) {
             max-height: calc(100vh - $dialog-padding * 2);
         }
 
@@ -189,26 +247,22 @@ $dialog-padding: 24px;
             }
         }
 
-        max-width: calc(24vw - $dialog-padding * 2);
         max-height: calc(40vh - $dialog-padding * 2);
 
         @media screen and (min-width: $m-screen) {
-            max-width: calc($dialog-small-l-width - $dialog-padding * 2);
             max-height: calc($dialog-small-l-height - $dialog-padding * 2);
         }
 
         @media screen and (max-width: $s-screen) {
-            max-width: calc($dialog-small-s-width - $dialog-padding * 2);
             max-height: calc($dialog-small-s-height - $dialog-padding * 2);
         }
 
-        @media screen and (max-width: $xs-screen) {
-            max-width: calc(84vw - $dialog-padding * 2);
-            max-height: calc(41vh - $dialog-padding * 2);
+        @media screen and (max-width: $xxs-screen) {
+            max-height: calc(56vh - $dialog-padding * 2);
         }
 
-        @media screen and (max-height: $dialog-small-l-height) {
-            max-height: calc(84vh - $dialog-padding * 2);
+        @media screen and (max-height: $xxs-screen) {
+            max-height: 84vh;
         }
 
         @media screen and (max-width: $breakpoint-alert-with-additional-buttons-centered) {
@@ -218,9 +272,19 @@ $dialog-padding: 24px;
         }
     }
 
-    @media screen and (max-width: $xs-screen) {
+    @media screen and (max-width: $xxs-screen) {
         .adf-additional-actions {
             justify-content: center;
         }
     }
+}
+
+.adf-additional-actions {
+    color: var(--theme-primary-color);
+}
+
+// TODO: Update after migration to Angular 15
+/* stylelint-disable-next-line selector-class-pattern */
+.mat-dialog-container {
+    border-radius: 8px;
 }

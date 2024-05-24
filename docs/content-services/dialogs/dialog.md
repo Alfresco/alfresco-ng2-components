@@ -69,9 +69,11 @@ function openDialog() {
         actionsTemplate: this.actionsDialogTemplate
     };
 
-    this.dialog.open(DialogComponent, { data });
+    this.dialog.open(DialogComponent, { data }, width: '600px');
 }
 ```
+
+Note that **fixed width** may be provided which will work correctly on smaller screens. But don't specify any values ​​for **height**, as this may break the scrollable content and hide the buttons.
 
 ## Details
 
