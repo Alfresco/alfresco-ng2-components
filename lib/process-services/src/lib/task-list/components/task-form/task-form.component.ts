@@ -339,6 +339,10 @@ export class TaskFormComponent implements OnInit, OnChanges {
         return this.isCandidateMember() && this.isAssignedToMe() && !this.isCompletedTask();
     }
 
+    reloadTask() {
+        this.loadTask(this.taskId);
+    }
+
     onClaimTask(taskId: string) {
         this.taskClaimed.emit(taskId);
     }
