@@ -175,18 +175,6 @@ $dialog-padding: 24px;
         padding-top: $dialog-padding;
         text-transform: capitalize;
         min-height: auto;
-
-        // TODO: Update after migration to Angular 15
-        /* stylelint-disable-next-line selector-class-pattern */
-        .mat-button.mat-button-base + .mat-button-base {
-            margin-left: 16px;
-        }
-
-        // TODO: Update after migration to Angular 15
-        /* stylelint-disable-next-line selector-class-pattern */
-        .mat-button {
-            text-transform: capitalize;
-        }
     }
 
     &.adf-large {
@@ -281,6 +269,18 @@ $dialog-padding: 24px;
 
 .adf-additional-actions {
     color: var(--theme-primary-color);
+}
+
+// TODO: Update after migration to Angular 15
+/* stylelint-disable-next-line selector-class-pattern */
+.mat-dialog-actions .mat-button-base + .mat-button-base {
+    margin-left: 16px;
+}
+
+// TODO: Update after migration to Angular 15
+/* stylelint-disable-next-line selector-class-pattern */
+.mat-button {
+    text-transform: capitalize;
 }
 
 // TODO: Update after migration to Angular 15
