@@ -1,8 +1,8 @@
 ---
 Title: Dialog component
-Added: v6.9.0
+Added: v6.10.0
 Status: Active
-Last reviewed: 2024-05-17
+Last reviewed: 2024-05-24
 ---
 
 # [Dialog component](../../../lib/content-services/src/lib/dialogs/dialog/ "Defined in dialog.component.ts")
@@ -64,9 +64,15 @@ function openDialog() {
     const data: DialogData = {
         title: 'Dialog title',
         dialogSize: DialogSize.Alert,
-        isConfirmButtonDisabled$: of(true),
-        contentTemplate: this.contentDialogTemplate,
-        actionsTemplate: this.actionsDialogTemplate
+        isConfirmButtonDisabled$: of(false),
+        contentTemplate: this.contentDialogTemplate, // or  contentComponent: this.contentDialogTemplate
+        additionalActionButton1: {
+            title: 'Reset',
+            class: 'reset-button',
+            onClick: () => {
+                this.isConfirmButtonDisabled$.next(true);
+            }
+        } // or actionsTemplate: this.actionsDialogTemplate
     };
 
     this.dialog.open(DialogComponent, { data }, width: '600px');
@@ -86,3 +92,4 @@ with properties.
 
 - [Dialog Data Interface](../interfaces/dialog.interface.md)
 - [Dialog Model](../models/dialog.model.md)
+- [AdditionalDialogActionButton Interface](./additional-dialog-action-button.md)

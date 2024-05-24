@@ -1,8 +1,8 @@
 ---
 Title: Dialog Size Model
-Added: v6.9.0
+Added: v6.10.0
 Status: Active
-Last reviewed: 2024-05-17
+Last reviewed: 2024-05-24
 ---
 
 # [Dialog Size model](../../../lib/content-services/src/lib/dialogs/dialog/dialog.model.ts "Defined in dialog.model.ts")
@@ -50,3 +50,4 @@ function openDialog() {
 
 - [Dialog Component](../dialogs/dialog.md)
 - [Dialog Data Interface](../interfaces/dialog.interface.md)
+- [AdditionalDialogActionButton Interface](./additional-dialog-action-button.md)

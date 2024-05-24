@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DialogData } from './dialog-data.interface';
+import { AdditionalDialogActionButton, DialogData } from './dialog-data.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DialogSize, DialogSizes } from './dialog.model';
 import { MaterialModule } from '../../material.module';
@@ -37,10 +37,11 @@ export class DialogComponent implements OnDestroy {
     isConfirmButtonDisabled$ = new BehaviorSubject<boolean>(false);
     isCloseButtonHidden: boolean;
     isCancelButtonHidden: boolean;
-    dialogSize: DialogSizes;
     confirmButtonTitle: string;
     cancelButtonTitle: string;
-    disableSubmitButton = false;
+    dialogSize: DialogSizes;
+    additionalActionButton1: AdditionalDialogActionButton;
+    additionalActionButton2: AdditionalDialogActionButton;
 
     private onDestroy$ = new Subject<void>();
 
@@ -55,6 +56,8 @@ export class DialogComponent implements OnDestroy {
             this.dialogSize = data.dialogSize || DialogSize.Medium;
             this.confirmButtonTitle = data.confirmButtonTitle || 'COMMON.APPLY';
             this.cancelButtonTitle = data.cancelButtonTitle || 'COMMON.CANCEL';
+            this.additionalActionButton1 = data.additionalActionButton1;
+            this.additionalActionButton2 = data.additionalActionButton2;
             this.dialogRef.addPanelClass(`${this.dialogSize}-dialog-panel`);
 
             if (data.isConfirmButtonDisabled$) {

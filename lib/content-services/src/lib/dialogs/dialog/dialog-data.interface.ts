@@ -34,4 +34,12 @@ export interface DialogData {
     actionsTemplate?: TemplateRef<any>;
     descriptionTemplate?: TemplateRef<any>;
     headerIcon?: string;
+    additionalActionButton1?: AdditionalDialogActionButton;
+    additionalActionButton2?: AdditionalDialogActionButton;
+}
+
+export interface AdditionalDialogActionButton {
+    title: string;
+    onClick: (args?: any) => void;
+    class?: string;
 }
