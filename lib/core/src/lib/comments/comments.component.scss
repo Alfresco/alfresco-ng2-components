@@ -10,13 +10,33 @@ adf-comments {
             width: 100%;
             padding-bottom: 8px;
 
+            #{$mat-form-field} {
+                width: 100%;
+            }
+
+            #{$mat-form-field-subscript-wrapper} {
+                display: none;
+            }
+
+            #{$mat-form-field-wrapper} {
+                #{$mat-form-field-flex} {
+                    #{$mat-form-field-infix} {
+                        padding-bottom: 2px;
+                        padding-top: 25px;
+                    }
+                }
+
+                #{$mat-input-element} {
+                    &:focus::placeholder {
+                        color: var(--theme-primary-color);
+                        -webkit-font-smoothing: subpixel-antialiased;
+                    }
+                }
+            }
+
             textarea {
                 resize: vertical;
                 height: 20px;
-            }
-
-            #{$mat-form-field} {
-                width: 100%;
             }
         }
     }
@@ -32,7 +52,7 @@ adf-comments {
     }
 
     .adf-comments-input-actions {
-        padding-top: 4px;
+        padding-top: 16px;
         display: flex;
         justify-content: flex-end;
     }
