@@ -20,6 +20,7 @@ This page describes how you can configure the search configuration.
 -   [Categories and widgets](#categories-and-widgets)
 -   [Facet Fields](#facet-fields)
 -   [Facet Queries](#facet-queries)
+-   [Facet Intervals](#facet-intervals)
 -   [Highlight](#highlight)
 -   [See also](#see-also)
 
@@ -554,6 +555,62 @@ The default page size of 5 will be used if you set the value to 0 or omit it ent
 |facetOrder|`number`||Specifies the order of facets. Lower numbers are displayed first.|
 |bucketSortBy|`string`||Specifies sort criteria of facet queries. Possible values are "LABEL" and "COUNT".|
 |bucketSortDirection|`string`||Specifies sort order of facet queries. Possible values are "ASCENDING" and "DESCENDING".|
+
+### Facet Intervals
+
+These provide custom categories based on admin defined ranges inside `intervals`.
+You can specify exactly what you want for each interval in the config file and you can
+use overlapping ranges if necessary.
+
+#### FacetIntervals Properties
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| intervals | array | Specifies the fields to [facet](../../lib/content-services/src/lib/search/models/facet-field.interface.ts) by interval. |
+| expanded | boolean | Toggles expanded state of the facet intervals. |
+
+Note: Interval fields setting can be controlled by passing [settings](../../lib/content-services/src/lib/search/models/facet-field.interface.ts).
+Note: the `sets` parameter from the Search API (which sets the intervals for all fields)
+is not yet supported.
+
+```json
+{
+    "search": {
+      "facetIntervals":{
+        "expanded": true,
+        "intervals":[
+          {
+            "label":"TheCreated",
+            "field":"cm:created",
+            "sets":[
+              { "label":"lastYear", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlier", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          },
+          {
+            "label":"TheModified",
+            "field":"cm:modified",
+            "sets":[
+              { "label":"2016", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlierThan2017", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          }
+        ]
+      }
+  }
+}
+```
+
+You can specify a value for the `mincount` property inside each `intervals` item to set the minimum count required for a facet interval to be displayed. By default, only the intervals that have 1 or more response entries are displayed at runtime.
+Check the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json) file
+for further details about the structure and properties of `intervals` that you can set inside the configuration file.
+
+Each defined `intervals` item is collected into its own collapsible category identified uniquely
+by its `label`. The code snippet just above will result in the following display of facet intervals:
+
+![Facet Intervals](../docassets/images/search-facet-intervals.png)
 
 ### Highlight
 
