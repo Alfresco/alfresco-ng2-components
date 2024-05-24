@@ -17,12 +17,6 @@
     }
 }
 
-.adf-container-widget__header-text,
-.adf-label {
-    font-family: var(--theme-font-family);
-    color: var(--theme-primary-color);
-}
-
 .adf-field-list {
     padding: 0;
     list-style-type: none;
@@ -97,11 +91,16 @@
     #{$mat-form-field} {
         width: 100%;
 
+        #{$mat-text-field-focused} {
+            label {
+                color: var(--theme-primary-color);
+            }
+        }
+
         label {
             transform: scaleX(1);
             transition: transform 150ms linear;
             background-color: 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
-            color: var(--theme-primary-color);
         }
 
         #{$mat-form-field-prefix} {
