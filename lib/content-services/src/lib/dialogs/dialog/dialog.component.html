@@ -43,31 +43,24 @@
 
     <mat-dialog-actions
         class="adf-dialog-actions"
-        [ngClass]="{ 'adf-additional-actions': data.actionsTemplate || additionalActionButton1 || additionalActionButton2}"
+        [ngClass]="{ 'adf-additional-actions': data.actionsTemplate || additionalActionButtons }"
     >
-        <div>
-            <ng-container *ngIf="!(additionalActionButton1 || additionalActionButton2)" [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
-            <ng-container *ngIf="!data.actionsTemplate">
-                <button
-                    *ngIf="additionalActionButton1"
-                    mat-button
-                    color="primary"
-                    class="{{ additionalActionButton1.class }}"
-                    (click)="additionalActionButton1.onClick()"
-                >
-                    {{ additionalActionButton1.title | translate }}
-                </button>
-                <button
-                    *ngIf="additionalActionButton2"
-                    mat-button
-                    color="primary"
-                    class="{{ additionalActionButton2.class }}"
-                    (click)="additionalActionButton2.onClick()"
-                >
-                    {{ additionalActionButton2.title | translate }}
-                </button>
-            </ng-container>
+        <div *ngIf="!additionalActionButtons && data.actionsTemplate">
+            <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
         </div>
+
+        <div *ngIf="!data.actionsTemplate && additionalActionButtons">
+            <button
+                *ngFor="let additionalButton of additionalActionButtons"
+                mat-button
+                color="primary"
+                class="{{ additionalButton.class }}"
+                (click)="additionalButton.onClick()"
+            >
+                {{ additionalButton.title | translate }}
+            </button>
+        </div>
+
         <div>
             <button
                 *ngIf="!isCancelButtonHidden"

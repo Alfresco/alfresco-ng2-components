@@ -27,6 +27,8 @@ interface AdditionalDialogActionButton {
 | onClick | `(args?: any) => void` |    | Callback for button. (optional) |
 | class | `string` |    | Button class. (optional) |
 
+Note that in order for the design to be displayed well, it is necessary to provide no more than 2 additional buttons.
+
 ## See also
 
 - [Dialog Component](../dialogs/dialog.md)

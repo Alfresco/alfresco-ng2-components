@@ -40,8 +40,7 @@ export class DialogComponent implements OnDestroy {
     confirmButtonTitle: string;
     cancelButtonTitle: string;
     dialogSize: DialogSizes;
-    additionalActionButton1: AdditionalDialogActionButton;
-    additionalActionButton2: AdditionalDialogActionButton;
+    additionalActionButtons: AdditionalDialogActionButton[];
 
     private onDestroy$ = new Subject<void>();
 
@@ -56,8 +55,7 @@ export class DialogComponent implements OnDestroy {
             this.dialogSize = data.dialogSize || DialogSize.Medium;
             this.confirmButtonTitle = data.confirmButtonTitle || 'COMMON.APPLY';
             this.cancelButtonTitle = data.cancelButtonTitle || 'COMMON.CANCEL';
-            this.additionalActionButton1 = data.additionalActionButton1;
-            this.additionalActionButton2 = data.additionalActionButton2;
+            this.additionalActionButtons = data.additionalActionButtons;
             this.dialogRef.addPanelClass(`${this.dialogSize}-dialog-panel`);
 
             if (data.isConfirmButtonDisabled$) {

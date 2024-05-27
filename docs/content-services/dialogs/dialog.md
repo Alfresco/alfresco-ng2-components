@@ -66,13 +66,13 @@ function openDialog() {
         dialogSize: DialogSize.Alert,
         isConfirmButtonDisabled$: of(false),
         contentTemplate: this.contentDialogTemplate, // or  contentComponent: this.contentDialogTemplate
-        additionalActionButton1: {
+        additionalActionButtons: [{
             title: 'Reset',
             class: 'reset-button',
             onClick: () => {
                 this.isConfirmButtonDisabled$.next(true);
             }
-        } // or actionsTemplate: this.actionsDialogTemplate
+        }] // or actionsTemplate: this.actionsDialogTemplate
     };
 
     this.dialog.open(DialogComponent, { data }, width: '600px');
@@ -80,6 +80,7 @@ function openDialog() {
 ```
 
 Note that **fixed width** may be provided which will work correctly on smaller screens. But don't specify any values ​​for **height**, as this may break the scrollable content and hide the buttons.
+To display the design well, it is necessary to provide no more than 2 additional buttons.
 
 ## Details
 
@@ -92,4 +93,4 @@ with properties.
 
 - [Dialog Data Interface](../interfaces/dialog.interface.md)
 - [Dialog Model](../models/dialog.model.md)
-- [AdditionalDialogActionButton Interface](./additional-dialog-action-button.md)
+- [AdditionalDialogActionButton Interface](../interfaces/additional-dialog-action-button.md)
