@@ -1,9 +1,0 @@
-name: 'Update Google Chrome Driver'
-description: 'Update Google Chrome Driver'
-
-runs:
-  using: "composite"
-  steps:
-      - name: Update Google Chrome Driver
-        shell: bash
-        run: './scripts/webdriver-update-newest/update-to-newest-webdriver.sh'

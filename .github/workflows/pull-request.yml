@@ -446,8 +446,6 @@ jobs:
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
         with:
           fetch-depth: 0 # Fetch all history for all
-      - name: update chrome driver
-        uses: ./.github/actions/update-chrome-driver
       - uses: ./.github/actions/setup
         with:
           enable-cache: "true"

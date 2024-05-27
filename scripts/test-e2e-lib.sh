@@ -140,6 +140,9 @@ done
 
 rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/
+echo "====== BROWSER_RUN: $BROWSER_RUN ======"
+echo "====== Update webdriver-manager ====="
+npm run update-webdriver
 
 export DEBUG_OPTION=''
 if [[  $DEBUG == "true" ]]; then
