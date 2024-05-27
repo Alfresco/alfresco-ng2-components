@@ -111,8 +111,6 @@ jobs:
             echo "package-lock must be version 3"
             exit 1
           fi
-      - name: update chrome driver
-        uses: ./.github/actions/update-chrome-driver
 
   check-if-pr-is-approved:
     runs-on: ubuntu-latest
@@ -213,6 +211,8 @@ jobs:
           npx nx run testing:bundle
       - run: npx nx print-affected $NX_CALCULATION_FLAGS
       - uses: ./.github/actions/upload-node-modules-and-artifacts
+      - name: update chrome driver
+        uses: ./.github/actions/update-chrome-driver
 
   unit-tests:
     timeout-minutes: 30
