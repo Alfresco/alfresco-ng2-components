@@ -16,18 +16,7 @@
  */
 
 import { TagEntry, TagPaging } from '@alfresco/js-api';
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
@@ -142,12 +131,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _tags: string[] = [];
     private _tagNameControl = new FormControl<string>(
         '',
-        [
-            this.validateIfNotAlreadyAdded.bind(this),
-            Validators.required,
-            this.validateEmptyTag,
-            this.validateSpecialCharacters
-        ],
+        [this.validateIfNotAlreadyAdded.bind(this), Validators.required, this.validateEmptyTag, this.validateSpecialCharacters],
         this.validateIfNotExistingTag.bind(this)
     );
     private _tagNameControlVisible = false;
@@ -167,10 +151,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @ViewChild('tagNameInput')
     private tagNameInputElement: ElementRef;
 
-    constructor(
-        private tagService: TagService,
-        private notificationService: NotificationService
-    ) {}
+    constructor(private tagService: TagService, private notificationService: NotificationService) {}
 
     ngOnInit(): void {
         this.tagNameControl.valueChanges
@@ -193,9 +174,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             )
             .subscribe((name: string) => this.onTagNameControlValueChange(name));
 
-        this.tagNameControl.statusChanges
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.setTagNameControlErrorMessageKey());
+        this.tagNameControl.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.setTagNameControlErrorMessageKey());
 
         this.setTagNameControlErrorMessageKey();
     }
@@ -218,7 +197,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     /*
      * Returns `true` if tags empty and non editable state, otherwise `false`
-    */
+     */
     get showEmptyTagMessage(): boolean {
         return this.tags?.length === 0 && !this.tagNameControlVisible;
     }
@@ -307,29 +286,31 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             forkJoin({
                 exactResult: this.tagService.findTagByName(name),
                 searchedResult: this.tagService.searchTags(name, DEFAULT_TAGS_SORTING, false, 0, this.existingTagsListLimit)
-            }).pipe(
-                takeUntil(this.cancelExistingTagsLoading$),
-                finalize(() => (this._typing = false))
-            ).subscribe(({ exactResult, searchedResult }: {
-                exactResult: TagEntry;
-                searchedResult: TagPaging;
-            }) => {
-                if (exactResult) {
-                    this.existingExactTag = exactResult;
-                    this.removeExactTagFromSearchedResult(searchedResult);
-                    searchedResult.list.entries.unshift(exactResult);
-                } else {
-                    this.existingExactTag = null;
-                }
+            })
+                .pipe(
+                    takeUntil(this.cancelExistingTagsLoading$),
+                    finalize(() => (this._typing = false))
+                )
+                .subscribe(
+                    ({ exactResult, searchedResult }: { exactResult: TagEntry; searchedResult: TagPaging }) => {
+                        if (exactResult) {
+                            this.existingExactTag = exactResult;
+                            this.removeExactTagFromSearchedResult(searchedResult);
+                            searchedResult.list.entries.unshift(exactResult);
+                        } else {
+                            this.existingExactTag = null;
+                        }
 
-                this._initialExistingTags = searchedResult.list.entries;
-                this.excludeAlreadyAddedTags(this._initialExistingTags);
-                this.exactTagSet$.next();
-                this._spinnerVisible = false;
-            }, () => {
-                this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
-                this._spinnerVisible = false;
-            });
+                        this._initialExistingTags = searchedResult.list.entries;
+                        this.excludeAlreadyAddedTags(this._initialExistingTags);
+                        this.exactTagSet$.next();
+                        this._spinnerVisible = false;
+                    },
+                    () => {
+                        this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
+                        this._spinnerVisible = false;
+                    }
+                );
         } else {
             this.existingExactTag = null;
             this._spinnerVisible = false;
@@ -337,9 +318,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private removeExactTagFromSearchedResult(searchedResult: TagPaging): void {
-        const exactTagIndex = searchedResult.list.entries.findIndex(
-            (row) => this.compareTags(row.entry.tag, this.existingExactTag.entry.tag)
-        );
+        const exactTagIndex = searchedResult.list.entries.findIndex((row) => this.compareTags(row.entry.tag, this.existingExactTag.entry.tag));
 
         if (exactTagIndex > -1) {
             searchedResult.list.entries.splice(exactTagIndex, 1);
@@ -349,16 +328,14 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private validateIfNotExistingTag(tagNameControl: FormControl<string>): Observable<TagNameControlErrors | null> {
         return this.exactTagSet$.pipe(
             map<void, TagNameControlErrors | null>(() =>
-                this.compareTags(tagNameControl.value, this.existingExactTag?.entry?.tag) ? { duplicatedExistingTag: true }
-                    : null
-            ), first()
+                this.compareTags(tagNameControl.value, this.existingExactTag?.entry?.tag) ? { duplicatedExistingTag: true } : null
+            ),
+            first()
         );
     }
 
     private validateIfNotAlreadyAdded(tagNameControl: FormControl<string>): TagNameControlErrors | null {
-        return this.tags.some((tag) => this.compareTags(tag, tagNameControl.value))
-            ? { duplicatedAddedTag: true }
-            : null;
+        return this.tags.some((tag) => this.compareTags(tag, tagNameControl.value)) ? { duplicatedAddedTag: true } : null;
     }
 
     private compareTags(tagName1?: string, tagName2?: string): boolean {
@@ -366,16 +343,12 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private validateEmptyTag(tagNameControl: FormControl<string>): TagNameControlErrors | null {
-        return tagNameControl.value.length && !tagNameControl.value.trim()
-            ? { emptyTag: true }
-            : null;
+        return tagNameControl.value.length && !tagNameControl.value.trim() ? { emptyTag: true } : null;
     }
 
     private validateSpecialCharacters(tagNameControl: FormControl<string>): TagNameControlErrors | null {
-        const specialSymbolsRegex = /[':"\\|<>/?]/;
-        return tagNameControl.value.length && specialSymbolsRegex.test(tagNameControl.value)
-            ? { specialCharacters: true }
-            : null;
+        const specialSymbolsRegex = /[{}()^':"\\|<>/?]/;
+        return tagNameControl.value.length && specialSymbolsRegex.test(tagNameControl.value) ? { specialCharacters: true } : null;
     }
 
     private setTagNameControlErrorMessageKey(): void {
@@ -388,9 +361,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     private checkScrollbarVisibility(): void {
         setTimeout(() => {
-            this._tagsListScrollbarVisible =
-                this.tagsListElement.nativeElement.scrollHeight >
-                this.tagsListElement.nativeElement.clientHeight;
+            this._tagsListScrollbarVisible = this.tagsListElement.nativeElement.scrollHeight > this.tagsListElement.nativeElement.clientHeight;
         });
     }
 
@@ -399,9 +370,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private updateExistingTagsListOnRemoveFromTagsToConfirm(tag: string) {
-        const entryForTagAddedToExistingTags = this._initialExistingTags?.find(
-            (tagEntry) => tagEntry.entry.tag === tag
-        );
+        const entryForTagAddedToExistingTags = this._initialExistingTags?.find((tagEntry) => tagEntry.entry.tag === tag);
         if (entryForTagAddedToExistingTags) {
             this.existingTags.unshift(entryForTagAddedToExistingTags);
             if (this.existingExactTag) {
@@ -418,8 +387,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private sortExistingTags() {
-        this.existingTags.sort((tagEntry1, tagEntry2) =>
-            tagEntry1.entry.tag.localeCompare(tagEntry2.entry.tag));
+        this.existingTags.sort((tagEntry1, tagEntry2) => tagEntry1.entry.tag.localeCompare(tagEntry2.entry.tag));
     }
 
     private excludeAlreadyAddedTags(tags: TagEntry[]) {
