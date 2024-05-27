@@ -114,8 +114,8 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "scripts": [
-              "node_modules/pdfjs-dist/build/pdf.js",
-              "node_modules/pdfjs-dist/web/pdf_viewer.js",
+              "node_modules/pdfjs-dist/legacy/build/pdf.mjs",
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.mjs",
               "node_modules/raphael/raphael.min.js"
             ],
             "vendorChunk": true,
@@ -352,6 +352,10 @@
             },
             "styles": [
               "demo-shell/src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/pdfjs-dist/legacy/build/pdf.mjs",
+              "node_modules/pdfjs-dist/web/pdf_viewer.mjs"
             ]
           }
         },

@@ -17,7 +17,7 @@
 
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -132,6 +132,10 @@ describe('Test PdfViewer component', () => {
         fixture.whenStable().then(() => {
             done();
         });
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
     });
 
     describe('User interaction', () => {
@@ -251,6 +255,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 expect(zoomBefore < currentZoom).toBe(true);
+                flush();
             }), 55000);
 
             it('should zoom out decrement the scale value', fakeAsync(() => {
@@ -264,6 +269,7 @@ describe('Test PdfViewer component', () => {
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
                 const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 expect(zoomBefore > currentZoom).toBe(true);
+                flush();
             }), 55000);
 
             it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
