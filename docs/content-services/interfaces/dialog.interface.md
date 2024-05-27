@@ -25,8 +25,7 @@ interface DialogData {
     actionsTemplate?: TemplateRef<any>;
     descriptionTemplate?: TemplateRef<any>;
     headerIcon?: string;
-    additionalActionButton1?: AdditionalDialogActionButton;
-    additionalActionButton2?: AdditionalDialogActionButton;
+    additionalActionButtons?: AdditionalDialogActionButton[];
 }
 ```
 
@@ -48,7 +47,7 @@ interface DialogData {
 | contentTemplate | `TemplateRef<any>` |    | Inserts a content template. (optional) |
 | actionsTemplate | `TemplateRef<any>` |    | Inserts a template styled on the left. Should be used for additional `mat-button` style buttons. (optional) |
 | descriptionTemplate | `TemplateRef<any>` |    | Inserts a description template. (optional) |
-| additionalActionButtons | `AdditionalDialogActionButton` |    | Inserts additional base-styled buttons into the action bar on the left. (optional) |
+| additionalActionButtons | `AdditionalDialogActionButton[]` |    | Inserts additional base-styled buttons into the action bar on the left. (optional) |
 
 ## See also
 

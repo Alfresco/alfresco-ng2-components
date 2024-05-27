@@ -36,7 +36,8 @@ describe('DialogComponent', () => {
     };
 
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        close: jasmine.createSpy('close'),
+        addPanelClass: jasmine.createSpy('addPanelClass')
     };
 
     const setupBeforeEach = (dialogOptions: DialogData = data) => {
