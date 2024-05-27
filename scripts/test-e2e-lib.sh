@@ -140,16 +140,6 @@ done
 
 rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/
-echo "====== BROWSER_RUN: $BROWSER_RUN ======"
-echo "====== Update webdriver-manager ====="
-if [ "$CI" = "true" ]; then
-    export chrome=$(google-chrome --product-version)
-    echo "Updating wedriver-manager with chromedriver: $chrome."
-    ./node_modules/protractor/bin/webdriver-manager update --gecko=false --versions.chrome=$chrome
-else
-    echo "Updating wedriver-manager with latest chromedriver, be sure to use evergreen Chrome."
-    ./node_modules/protractor/bin/webdriver-manager update --gecko=false
-fi
 
 export DEBUG_OPTION=''
 if [[  $DEBUG == "true" ]]; then

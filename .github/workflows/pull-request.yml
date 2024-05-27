@@ -111,6 +111,8 @@ jobs:
             echo "package-lock must be version 3"
             exit 1
           fi
+      - name: update chrome driver
+        uses: ./.github/actions/update-chrome-driver
 
   check-if-pr-is-approved:
     runs-on: ubuntu-latest
