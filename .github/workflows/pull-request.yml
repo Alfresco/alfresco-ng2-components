@@ -451,8 +451,6 @@ jobs:
           enable-cache: "true"
           enable-node-modules-cache: "true"
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: setup chrome
-        uses: ./.github/actions/setup-chrome
       - name: e2e
         uses: ./.github/actions/e2e
         with:

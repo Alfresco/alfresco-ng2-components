@@ -1,9 +1,0 @@
-name: 'Install Google Chrome'
-description: 'Install Google Chrome'
-
-runs:
-  using: "composite"
-  steps:
-      - name: Install google chrome
-        shell: bash
-        run: './scripts/webdriver-update-newest/update-to-newest-webdriver.sh'
