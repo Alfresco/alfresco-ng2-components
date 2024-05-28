@@ -43,6 +43,7 @@ import { FormDefinitionModel } from './model/form-definition.model';
 @Component({
     selector: 'adf-form',
     templateUrl: './form.component.html',
+    styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
