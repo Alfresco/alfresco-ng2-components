@@ -42,8 +42,7 @@ export class LoginPage {
 
         try {
             currentUrl = await browser.getCurrentUrl();
-        } catch (e) {
-        }
+        } catch (e) {}
 
         if (!currentUrl || currentUrl.indexOf(this.loginUrl) === -1) {
             await BrowserActions.getUrl(this.loginUrl);
@@ -87,10 +86,11 @@ export class LoginPage {
         if (oauth2 && oauth2.silentLogin === false) {
             Logger.log(`Login SSO`);
             await this.clickOnSSOButton();
-        }else{
+        } else {
             Logger.log(`Login SSO silent login`);
         }
 
+        await this.goToLoginPage();
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         await this.displayPassword();
         await this.enterUsername(username);
