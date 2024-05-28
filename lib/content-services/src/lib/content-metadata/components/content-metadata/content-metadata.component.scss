@@ -10,6 +10,16 @@ $panel-properties-height: 56px !default;
             border-radius: 12px;
             margin: 12px;
 
+            adf-card-view-textitem {
+                #{$mat-form-field-subscript-wrapper} {
+                    display: none;
+                }
+
+                #{$mat-form-field-infix} {
+                    padding-bottom: 0;
+                }
+            }
+
             .adf-property-list .adf-property .adf-property-field {
                 .adf-property-value:not(.adf-card-view-selectitem .adf-property-value) {
                     margin-top: 10px;
