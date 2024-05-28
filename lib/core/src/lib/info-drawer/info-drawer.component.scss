@@ -40,7 +40,7 @@
                         margin-bottom: 0;
                     }
 
-                    .mdc-tab__text-label {
+                    #{$mat-tab-label-text} {
                         flex-grow: 1;
 
                         #{$mat-icon} + span {
@@ -63,16 +63,21 @@
     }
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .adf-info-drawer-tabs {
     #{$mat-tab-label-container} {
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     }
 
-    .adf-info-drawer-tab {
+    div[role='tab'].adf-info-drawer-tab {
         color: var(--adf-info-drawer-tab-default-color);
         background-color: var(--adf-info-drawer-tab-default-background);
         border-bottom: var(--adf-info-drawer-tab-default-bottom-line);
         opacity: 1;
+
+        &#{$mat-tab-label} {
+            flex-grow: 1;
+        }
 
         &:has(span) {
             height: 32px;
@@ -80,14 +85,14 @@
 
         &--active {
             color: var(--adf-info-drawer-tab-active-unfocused-color);
-            background-color:  var(--adf-info-drawer-tab-active-unfocused-background);
+            background-color: var(--adf-info-drawer-tab-active-unfocused-background);
             border-bottom: 1px solid var(--adf-info-drawer-tab-active-unfocused-bottom-line);
 
             &:focus {
                 color: var(--adf-info-drawer-tab-active-focused-color);
                 border-bottom: var(--adf-info-drawer-tab-active-focused-bottom-line);
+            }
         }
-    }
 
         &:hover:not([class*='--disabled'], [class*='--active']) {
             color: var(--adf-info-drawer-tab-hover-color);
