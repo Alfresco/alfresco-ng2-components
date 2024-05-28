@@ -7,6 +7,9 @@ inputs:
   e2e-test-folder:
     description: "Test folder"
     required: true
+  e2e-artifact-id:
+    description: "Artifact id"
+    required: true
   e2e-test-provider:
     description: "Test provider"
     required: true
