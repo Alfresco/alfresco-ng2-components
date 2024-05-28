@@ -74,4 +74,12 @@
             color: var(--theme-primary-color);
         }
     }
+
+    #{$mat-datetimepicker-dialog} {
+        #{$mat-dialog-container} {
+            #{$mat-dialog-surface} {
+                padding: 0;
+            }
+        }
+    }
 }
