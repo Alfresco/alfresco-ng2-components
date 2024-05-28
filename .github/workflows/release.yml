@@ -215,7 +215,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
       - name: HxP upstream invoke
-        uses: aurelien-baudet/workflow-dispatch@93e95b157d791ae7f42aef8f8a0d3d723eba1c31 # v2.1.1
+        uses: the-actions-org/workflow-dispatch@93e95b157d791ae7f42aef8f8a0d3d723eba1c31 # v2.1.1
         with:
           repo: Alfresco/hxp-frontend-apps
           ref: develop
