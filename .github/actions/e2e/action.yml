@@ -185,7 +185,7 @@ runs:
     - name: upload artifacts on gh
       id: upload_gh
       if: ${{ steps.determine-affected.outputs.isAffected == 'true' }}
-      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+      uses: actions/upload-artifact@v4
       with:
         name: e2e-artifact-output-${{inputs.e2e-artifact-id}}
         path: e2e-output/
