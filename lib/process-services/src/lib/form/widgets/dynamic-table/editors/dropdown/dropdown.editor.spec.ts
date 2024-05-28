@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import { FormFieldModel, FormModel, FormService } from '@alfresco/adf-core';

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
 @Injectable({ providedIn: 'root' })
 export class ExternalAlfrescoApiService extends AlfrescoApiService {

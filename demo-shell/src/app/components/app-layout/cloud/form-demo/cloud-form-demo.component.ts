@@ -17,7 +17,6 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-    CoreAutomationService,
     FormFieldModel,
     FormModel,
     FormRenderingService,
@@ -32,6 +31,7 @@ import {
     CustomEditorComponent,
     CustomWidgetComponent
 } from '../../../cloud/custom-form-components/custom-editor.component';
+import { CoreAutomationService } from '../../../../services/automation.service';
 
 @Component({
     templateUrl: './cloud-form-demo.component.html',

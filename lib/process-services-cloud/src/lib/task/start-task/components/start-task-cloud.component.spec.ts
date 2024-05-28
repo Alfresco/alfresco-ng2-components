@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';

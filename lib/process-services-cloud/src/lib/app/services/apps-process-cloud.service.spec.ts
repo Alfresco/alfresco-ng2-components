@@ -17,7 +17,8 @@
 
 import { TestBed } from '@angular/core/testing';
 import { throwError } from 'rxjs';
-import { AppConfigService, AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
+import { AppConfigService, CoreTestingModule } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from '../mock/app-model.mock';

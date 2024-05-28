@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { MatDialog } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { Observable, of, Subject } from 'rxjs';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { AlfrescoEndpointRepresentation, Node, ContentApi } from '@alfresco/js-api';

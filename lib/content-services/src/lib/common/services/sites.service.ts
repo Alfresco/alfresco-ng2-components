@@ -17,7 +17,6 @@
 
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import {
     Node,
     SiteBodyCreate,
@@ -32,6 +31,7 @@ import {
     SitePaging,
     SitesApi
 } from '@alfresco/js-api';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'

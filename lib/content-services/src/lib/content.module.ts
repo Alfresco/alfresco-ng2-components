@@ -22,6 +22,7 @@ import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf
 
 import { MaterialModule } from './material.module';
 
+import { AlfrescoApiModule } from './api-factories/alfresco-api.module';
 import { TagModule } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
@@ -49,10 +50,12 @@ import { ContentUserInfoModule } from './content-user-info/content-user-info.mod
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
+import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories';
 
 @NgModule({
     imports: [
         ...CONTENT_PIPES,
+        AlfrescoApiModule,
         CoreModule,
         TagModule,
         CommonModule,
@@ -85,6 +88,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
         ...CONTENT_PIPES,
+        AlfrescoApiModule,
         TagModule,
         DocumentListModule,
         ContentUserInfoModule,
@@ -127,6 +131,12 @@ export class ContentModule {
                     provide: APP_INITIALIZER,
                     useFactory: contentAuthLoaderFactory,
                     deps: [ContentAuthLoaderService],
+                    multi: true
+                },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: createAlfrescoApiInstance,
+                    deps: [AlfrescoApiLoaderService],
                     multi: true
                 }
             ]

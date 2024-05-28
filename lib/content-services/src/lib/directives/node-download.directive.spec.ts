@@ -19,9 +19,10 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { NodeDownloadDirective } from './node-download.directive';
-import { ContentDirectiveModule } from '@alfresco/adf-content-services';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { ContentDirectiveModule } from './content-directive.module';
 
 @Component({
     template: '<div [adfNodeDownload]="selection" [version]="version"></div>'

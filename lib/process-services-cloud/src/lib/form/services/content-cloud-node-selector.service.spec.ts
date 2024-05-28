@@ -16,7 +16,8 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, AlfrescoApiServiceMock, NotificationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
+import { NotificationService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';

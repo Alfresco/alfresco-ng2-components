@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Observable, defer, forkJoin } from 'rxjs';
 import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
 import { map } from 'rxjs/operators';

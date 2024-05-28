@@ -19,7 +19,6 @@ export * from './alfresco-api.mock';
 export * from './cookie.service.mock';
 export * from './event.mock';
 export * from './translation.service.mock';
-export * from './alfresco-api.service.mock';
 
 export * from './form/form.component.mock';
 export * from './form/form-definition.mock';

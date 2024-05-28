@@ -22,13 +22,13 @@ import {
     FormService,
     FormOutcomeEvent,
     NotificationService,
-    CoreAutomationService,
     FormRenderingService
 } from '@alfresco/adf-core';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CoreAutomationService } from '../../services/automation.service';
 
 @Component({
     selector: 'app-form',

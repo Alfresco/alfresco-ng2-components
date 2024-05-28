@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, FormFieldOption, FormValues, TaskProcessVariableModel } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
+import { FormFieldOption, FormValues, TaskProcessVariableModel } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { CompleteFormRepresentation, SaveFormRepresentation, TaskFormsApi } from '@alfresco/js-api';

@@ -20,10 +20,11 @@ import { SearchPropertiesComponent } from './search-properties.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { MatOption } from '@angular/material/core';
-import { SearchChipAutocompleteInputComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { FileSizeUnit } from './file-size-unit.enum';
 import { FileSizeOperator } from './file-size-operator.enum';
 import { SearchProperties } from './search-properties';
+import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 
 describe('SearchPropertiesComponent', () => {
     let component: SearchPropertiesComponent;

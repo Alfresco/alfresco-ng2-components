@@ -17,8 +17,8 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { GroupService } from '@alfresco/adf-content-services';
 import { ContentIncludeQuery, GroupEntry } from '@alfresco/js-api';
+import { GroupService } from './group.service';
 
 describe('GroupService', () => {
     let service: GroupService;
@@ -83,12 +83,16 @@ describe('GroupService', () => {
 
             service.updateGroup(group.entry, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toEqual(returnedGroup);
-                expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
-                    displayName: group.entry.displayName,
-                    description: group.entry.description
-                }, {
-                    include: ['description']
-                });
+                expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(
+                    group.entry.id,
+                    {
+                        displayName: group.entry.displayName,
+                        description: group.entry.description
+                    },
+                    {
+                        include: ['description']
+                    }
+                );
                 done();
             });
         });
@@ -105,12 +109,16 @@ describe('GroupService', () => {
                         description: ''
                     }
                 });
-                expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
-                    displayName: group.entry.displayName,
-                    description: group.entry.description
-                }, {
-                    include: ['description']
-                });
+                expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(
+                    group.entry.id,
+                    {
+                        displayName: group.entry.displayName,
+                        description: group.entry.description
+                    },
+                    {
+                        include: ['description']
+                    }
+                );
                 done();
             });
         });
@@ -121,12 +129,16 @@ describe('GroupService', () => {
 
             service.updateGroup(group.entry, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toEqual(returnedGroup);
-                expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(group.entry.id, {
-                    displayName: group.entry.displayName,
-                    description: group.entry.description
-                }, {
-                    include: ['description']
-                });
+                expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(
+                    group.entry.id,
+                    {
+                        displayName: group.entry.displayName,
+                        description: group.entry.description
+                    },
+                    {
+                        include: ['description']
+                    }
+                );
                 done();
             });
         });

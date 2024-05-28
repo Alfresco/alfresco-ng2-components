@@ -23,7 +23,6 @@ import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extension
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
-import { AlfrescoViewerComponent, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
 import { CloseButtonPosition, CoreTestingModule, EventMock, ViewUtilService, ViewerComponent } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -32,6 +31,9 @@ import { throwError } from 'rxjs';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
+import { AlfrescoViewerComponent } from './alfresco-viewer.component';
+import { RenditionService } from '../../common/services/rendition.service';
+import { NodeActionsService } from '../../document-list/services/node-actions.service';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',

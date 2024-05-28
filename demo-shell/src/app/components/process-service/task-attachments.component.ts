@@ -16,9 +16,13 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { TaskAttachmentListComponent, TaskListService, TaskUploadService } from '@alfresco/adf-process-services';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
+import {
+    TaskAttachmentListComponent,
+    TaskListService,
+    TaskUploadService
+} from '@alfresco/adf-process-services';
+import { AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

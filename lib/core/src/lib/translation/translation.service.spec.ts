@@ -24,8 +24,6 @@ import { TranslateLoaderService } from './translate-loader.service';
 import { provideTranslations, TranslationService } from './translation.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
@@ -45,7 +43,6 @@ describe('TranslationService', () => {
                 })
             ],
             providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 provideTranslations('@alfresco/adf-core', 'assets/ng2-alfresco-core')
             ]

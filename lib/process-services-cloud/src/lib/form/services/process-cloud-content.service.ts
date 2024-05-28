@@ -18,8 +18,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AlfrescoApiService, DownloadService } from '@alfresco/adf-core';
-import { ContentService, NodesApiService } from '@alfresco/adf-content-services';
+import { DownloadService } from '@alfresco/adf-core';
+import { ContentService, NodesApiService, AlfrescoApiService } from '@alfresco/adf-content-services';
 import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 
 @Injectable({

@@ -28,15 +28,13 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import {
-    CategoriesManagementComponent,
-    CategoriesManagementMode,
-    CategoryService,
-    TagsCreatorComponent,
-    TagsCreatorMode,
-    TagService
-} from '@alfresco/adf-content-services';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { TagsCreatorComponent } from '../../../tag/tags-creator/tags-creator.component';
+import { CategoriesManagementComponent } from '../../../category/categories-management/categories-management.component';
+import { TagService } from '../../../tag/services/tag.service';
+import { CategoryService } from '../../../category/services/category.service';
+import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
+import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;

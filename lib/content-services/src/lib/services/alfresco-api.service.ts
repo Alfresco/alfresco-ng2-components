@@ -17,12 +17,9 @@
 
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { ReplaySubject } from 'rxjs';
-import { OauthConfigModel } from '../auth/models/oauth-config.model';
-import { StorageService } from '../common/services/storage.service';
-import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
 import { AlfrescoApiFactory } from './alfresco-api.interface';
+import { AppConfigService, AppConfigValues, OauthConfigModel, OpenidConfiguration, StorageService } from '@alfresco/adf-core';
 
 export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
 
@@ -30,7 +27,6 @@ export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
     providedIn: 'root'
 })
 export class AlfrescoApiService {
-
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected alfrescoApi: AlfrescoApi;
@@ -50,14 +46,15 @@ export class AlfrescoApiService {
         protected appConfig: AppConfigService,
         protected storageService: StorageService,
         @Optional()
-        @Inject(ALFRESCO_API_FACTORY) private alfrescoApiFactory?: AlfrescoApiFactory
+        @Inject(ALFRESCO_API_FACTORY)
+        private alfrescoApiFactory?: AlfrescoApiFactory
     ) {}
 
     async load(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;
 
         if (config.authType === 'OAUTH') {
-                await this.mapAlfrescoApiOpenIdConfig();
+            await this.mapAlfrescoApiOpenIdConfig();
         }
 
         this.initAlfrescoApiWithConfig();

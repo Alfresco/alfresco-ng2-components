@@ -15,10 +15,20 @@
  * limitations under the License.
  */
 
-import { createNewPersonMock, fakeEcmAdminUser, fakeEcmUser, fakeEcmUser2, fakeEcmUserList } from '../mocks/ecm-user.service.mock';
-import { AlfrescoApiService, AlfrescoApiServiceMock, CoreTestingModule } from '@alfresco/adf-core';
+import {
+    createNewPersonMock,
+    fakeEcmAdminUser,
+    fakeEcmUser,
+    fakeEcmUser2,
+    fakeEcmUserList
+} from '../mocks/ecm-user.service.mock';
+import {
+    CoreTestingModule
+} from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../../mock';
 
 describe('PeopleContentService', () => {
     let peopleContentService: PeopleContentService;

@@ -18,7 +18,7 @@
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SiteEntry, SiteMembershipRequestBodyCreate, SiteMembershipRequestEntry, SitesApi } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LibraryMembershipToggleEvent } from '../interfaces/library-membership-toggle-event.interface';
 import { LibraryMembershipErrorEvent } from '../interfaces/library-membership-error-event.interface';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';

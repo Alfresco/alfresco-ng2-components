@@ -18,7 +18,7 @@
 import { DownloadEntry, DownloadBodyCreate, DownloadsApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'

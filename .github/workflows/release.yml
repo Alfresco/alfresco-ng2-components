@@ -182,12 +182,21 @@ jobs:
         with:
           dry-run-flag: ${{ inputs.dry-run-flag }}
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: build libraries
+      - name: Set libraries versions
         run: |
           set -u;
           ./scripts/github/build/bumpversion.sh
+      - name: Set migrations
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const setMigrations = require('./scripts/github/release/set-migrations.js');
+            setMigrations();
+      - name: build libraries
+        run: |
           npx nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
+          npx nx affected $NX_CALCULATION_FLAGS --target=build-schematics
       - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         name: release libraries GH registry
         with:
