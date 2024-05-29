@@ -55,7 +55,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     virtualHeight: number = 0;
     translateY: number = 0;
-    renderItems = [];
+    renderItems: any = [];
     width: number = 91;
     currentHeight: number = 0;
 

@@ -21,11 +21,16 @@ import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
 import { CoreTestingModule } from '../../../testing';
 import { DOWN_ARROW, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 
-declare const pdfjsViewer: any;
-
 describe('PdfThumbListComponent', () => {
     let fixture: ComponentFixture<PdfThumbListComponent>;
     let component: PdfThumbListComponent;
+
+    const busMock = jasmine.createSpyObj('EventBus', ['on', 'off', 'dispatch']);
+    busMock.dispatch.and.callFake((eventName, payload) => {
+        if (eventName === 'pagechanging') {
+            component['onPageChange'](payload);
+        }
+    });
 
     const page = (id) => ({
         id,
@@ -67,7 +72,7 @@ describe('PdfThumbListComponent', () => {
             page(15),
             page(16)
         ],
-        eventBus: new pdfjsViewer.EventBus()
+        eventBus: busMock
     };
 
     beforeEach(() => {
@@ -135,7 +140,7 @@ describe('PdfThumbListComponent', () => {
         expect(renderedIds).toContain(12);
 
         /* cspell:disable-next-line */
-        viewerMock.eventBus.dispatch('pagechanging', { pageNumber: 12 });
+        component.pdfViewer.eventBus.dispatch('pagechanging', { pageNumber: 12 });
 
         const newRenderedIds = component.renderItems.map((item) => item.id);
 
@@ -144,6 +149,7 @@ describe('PdfThumbListComponent', () => {
 
     it('should scroll thumbnail height amount to buffer thumbnail onPageChange event', () => {
         spyOn(component, 'scrollInto');
+        component.renderItems = viewerMock['_pages'].slice(0, 6);
         fixture.detectChanges();
 
         expect(component.renderItems[component.renderItems.length - 1].id).toBe(6);
@@ -176,7 +182,7 @@ describe('PdfThumbListComponent', () => {
 
         component.goTo(12);
 
-        expect(viewerMock.currentPageNumber).toBe(12);
+        expect(component.pdfViewer.currentPageNumber).toBe(12);
     });
 
     describe('Keyboard events', () => {
