@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging, NodesApi, TrashcanApi, Node } from '@alfresco/js-api';
+import { NodeEntry, NodePaging, NodesApi, TrashcanApi, Node, NodeHold } from '@alfresco/js-api';
 import { Subject, from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { catchError, map } from 'rxjs/operators';
@@ -238,5 +238,29 @@ export class NodesApiService {
         }
 
         return new NodeMetadata(metadata, nodeEntry.entry.nodeType);
+    }
+
+    /**
+     * Gets the list of holds assigned to the node.
+     *
+     * @param nodeId ID of the target node
+     * @returns List of assigned holds
+     */
+    getNodeAssignHolds(nodeId: string): Observable<NodeHold[]> {
+        const queryOptions = Object.assign({
+            maxItems: this.preferences.paginationSize,
+            skipCount: 0,
+            where: `(assocType='rma:frozenContent')`
+        });
+
+        return from(this.nodesApi.listAssignedHolds(nodeId, queryOptions)).pipe(
+            map((holds) =>
+                holds.list?.entries?.map((entity) => ({
+                    id: entity.entry.id,
+                    name: entity.entry.name
+                }))
+            ),
+            catchError((err) => throwError(err))
+        );
     }
 }
