@@ -19,7 +19,8 @@
             <button mat-raised-button
                 color="primary"
                 (click)="openSelectDialogFromFileSource()"
-                [id]="'folder-'+field?.id+'-button'">
+                [id]="'folder-'+field?.id+'-button'"
+                class="adf-attach-folder-menu-trigger">
                     {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>cloud_upload</mat-icon>
             </button>
