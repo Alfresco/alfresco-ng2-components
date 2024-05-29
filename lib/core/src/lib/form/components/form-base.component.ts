@@ -123,6 +123,10 @@ export abstract class FormBaseComponent {
             return false;
         }
 
+        if (outcome.skipValidation) {
+            return true;
+        }
+
         if (outcome) {
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
                 return !this.disableSaveButton;
@@ -135,6 +139,7 @@ export abstract class FormBaseComponent {
             }
             return this.form.isValid;
         }
+
         return false;
     }
 
