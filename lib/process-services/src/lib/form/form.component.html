@@ -4,7 +4,7 @@
 </div>
 
 <div *ngIf="hasForm()" class="adf-form-container">
-    <mat-card appearance="outlined">
+    <mat-card appearance="outlined" class="adf-form-card">
         <mat-card-header>
             <mat-card-title>
                 <h4>
@@ -29,11 +29,11 @@
                 </h4>
             </mat-card-title>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content class="adf-form-card-content">
             <adf-form-renderer [formDefinition]="form">
             </adf-form-renderer>
         </mat-card-content>
-        <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">
+        <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
             <ng-content select="adf-form-custom-outcomes"></ng-content>
             <button [id]="'adf-form-'+ outcome.name  | formatSpace" *ngFor="let outcome of form.outcomes"
                 [color]="getColorForOutcome(outcome.name)" mat-button [disabled]="!isOutcomeButtonEnabled(outcome)"
