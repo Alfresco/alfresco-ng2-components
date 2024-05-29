@@ -24,6 +24,16 @@
         align-items: center;
     }
 
+    &-attach-widget__menu-trigger {
+        display: flex;
+        flex-direction: row-reverse;
+
+        #{$mat-icon} {
+            margin-left: 4px;
+            margin-right: 0;
+        }
+    }
+
     &-attach-widget__input-type {
         width: 0.1px;
         height: 0.1px;
@@ -76,7 +86,6 @@
         }
 
         @include layout-bp(lt-md) {
-
             #{$mat-list-item-primary-text} {
                 max-width: 150px;
             }

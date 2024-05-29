@@ -37,4 +37,14 @@
         display: flex;
         align-items: center;
     }
+
+    &-attach-folder-menu-trigger {
+        display: flex;
+        flex-direction: row-reverse;
+
+        #{$mat-icon} {
+            margin-left: 4px;
+            margin-right: 0;
+        }
+    }
 }
