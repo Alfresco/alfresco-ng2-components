@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Wczytywanie...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} - pole kombi - {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Potwierdź",
+    "ACTION": "Czy chcesz kontynuować?",
+    "YES_LABEL": "Tak",
+    "NO_LABEL": "Nie"
   }
 }
