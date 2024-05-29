@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, SettingsPage, BrowserVisibility, createApiService } from '@alfresco/adf-testing';
+import { LoginPage, SettingsPage, BrowserVisibility } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../core/pages/navigation-bar.page';
 import { LoginShellPage } from '../../../core/pages/login-shell.page';
@@ -25,11 +25,6 @@ describe('Login component - SSO', () => {
     const loginSSOPage = new LoginPage();
     const loginPage = new LoginShellPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = createApiService();
-
-    beforeAll(async () => {
-        await apiService.loginWithProfile('admin');
-    });
 
     describe('Login component - SSO implicit Flow', () => {
         afterEach(async () => {

@@ -90,7 +90,6 @@ export class LoginPage {
             Logger.log(`Login SSO silent login`);
         }
 
-        await this.goToLoginPage();
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         await this.displayPassword();
         await this.enterUsername(username);
