@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { PredictionsApi, PredictionPaging } from '@alfresco/js-api';
+import { PredictionsApi, PredictionPaging, ReviewStatus } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -39,5 +39,16 @@ export class PredictionService {
      */
     getPredictions(nodeId: string): Observable<PredictionPaging> {
         return from(this.predictionsApi.getPredictions(nodeId));
+    }
+
+    /**
+     * Review a prediction
+     *
+     * @param predictionId The identifier of prediction.
+     * @param reviewStatus Review status to apply.
+     * @returns Observable<void>
+     */
+    reviewPrediction(predictionId: string, reviewStatus: ReviewStatus): Observable<void> {
+        return from(this.predictionsApi.reviewPrediction(predictionId, reviewStatus));
     }
 }
