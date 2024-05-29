@@ -88,7 +88,7 @@
         top: 1.8em;
     }
 
-    #{$mat-form-field} {
+    #{$mat-focused} {
         width: 100%;
 
         #{$mat-text-field-focused} {
@@ -98,7 +98,6 @@
         }
 
         label {
-            transform: scaleX(1);
             transition: transform 150ms linear;
             background-color: 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
         }
@@ -113,7 +112,8 @@
         width: 80%;
     }
 
-    adf-form-field {
+    adf-form-field,
+    mat-form-field {
         width: 100%;
     }
 }
@@ -146,7 +146,9 @@
         }
 
         & #{$mat-tab-ink-bar} {
-            height: 4px;
+            #{$mat-tab-indicator-underline} {
+                border-top-width: 4px;
+            }
         }
 
         & #{$mat-form-field-wrapper} {
@@ -217,6 +219,10 @@
         & #{$mat-button} {
             height: 36px;
             border-radius: 5px;
+            width: auto;
+            padding: 0 16px;
+            margin: 0 8px;
+            white-space: nowrap;
         }
 
         & #{$mat-button-label} {
