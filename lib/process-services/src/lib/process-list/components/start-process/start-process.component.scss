@@ -20,7 +20,10 @@
             text-align: right;
         }
         #{$mat-button} {
-            text-transform: uppercase !important;
+            width: auto;
+            padding: 0 16px;
+            margin: 0 8px;
+            white-space: nowrap;
         }
     }
 
@@ -36,6 +39,7 @@
 
     &-process-input-autocomplete {
         display: flex;
+        padding-bottom: 2px;
 
         button {
             position: absolute;
