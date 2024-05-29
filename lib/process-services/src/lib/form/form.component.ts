@@ -53,6 +53,7 @@ import { TranslateModule } from '@ngx-translate/core';
     standalone: true,
     imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatTooltipModule, TranslateModule, FormRendererComponent, FormatSpacePipe],
     templateUrl: './form.component.html',
+    styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
