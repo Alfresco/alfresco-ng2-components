@@ -71,3 +71,4 @@ export * from './combinedInstructionBody';
 export * from './classificationGuide';
 export * from './classificationGuides';
 export * from './nodeSecurityMarkBody';
+export * from './nodeHold';
