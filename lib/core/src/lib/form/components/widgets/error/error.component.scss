@@ -1,3 +1,8 @@
 .adf-error {
     display: flex;
+
+    &-widget-container {
+        height: auto;
+        padding: 5px 0;
+    }
 }
