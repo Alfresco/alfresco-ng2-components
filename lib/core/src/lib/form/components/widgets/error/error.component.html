@@ -1,4 +1,4 @@
-<div class="adf-error-container">
+<div class="adf-error-container adf-error-widget-container">
     <div *ngIf="error?.isActive()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
         <mat-icon class="adf-error-icon">error_outline</mat-icon>
         <div class="adf-error-text">{{ error.message | translate:translateParameters }}</div>
