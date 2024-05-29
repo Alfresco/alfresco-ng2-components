@@ -9,7 +9,7 @@
             <div class="adf-title" *ngIf="title">{{ title | translate}}</div>
             <div class="content">
                 <div class="adf-start-process-definition-container">
-                    <mat-form-field *ngIf="showSelectApplicationDropdown" [floatLabel]="'always'" class="adf-start-process-app-list">
+                    <mat-form-field *ngIf="showSelectApplicationDropdown" [floatLabel]="'always'" class="adf-start-process-app-list" [subscriptSizing]="'dynamic'">
                         <mat-label>{{ 'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION' | translate }}</mat-label>
                         <mat-select
                             placeholder="{{ 'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION' | translate }}"
@@ -25,7 +25,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
+                    <mat-form-field class="adf-process-input-container" [floatLabel]="'always'" [subscriptSizing]="'dynamic'">
                         <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate}}</mat-label>
                         <input
                             type="text"
