@@ -26,7 +26,7 @@ Name | Type | Description  | Notes
 
 <a name="reviewPrediction"></a>
 # **reviewPrediction**
-> Promise<void> reviewPrediction(predictionId, reviewStatus)
+> Promise\<void\> reviewPrediction(predictionId, reviewStatus)
 
 Confirm or reject a prediction.
 
@@ -39,4 +39,4 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Promise<void>**
+**Promise\<void\>**
