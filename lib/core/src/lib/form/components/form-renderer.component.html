@@ -3,7 +3,7 @@
     <div *ngIf="formDefinition.hasTabs()">
         <div *ngIf="hasTabs()" class="alfresco-tabs-widget">
             <mat-tab-group>
-                <mat-tab *ngFor="let tab of visibleTabs()" [label]="tab.title | translate">
+                <mat-tab *ngFor="let tab of visibleTabs()" [label]="tab.title | translate | uppercase">
                     <ng-template *ngTemplateOutlet="render; context: { fieldToRender: tab.fields }"></ng-template>
                 </mat-tab>
             </mat-tab-group>
