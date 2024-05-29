@@ -990,7 +990,7 @@ describe('FormCloudComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
     });
 
-    it('should enable outcome after enaenabling skip validation property, even if the form is not valid', () => {
+    it('should enable outcome with skip validation property, even if the form is not valid', () => {
         const formModel = new FormModel(cloudFormMock);
         formComponent.form = formModel;
         formModel.isValid = false;
