@@ -7,12 +7,12 @@
         <div id="adf-attach-widget-simple-upload" *ngIf="isSimpleUploadButton() && isUploadButtonVisible()">
             <a mat-raised-button color="primary">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
-                <mat-icon>file_upload</mat-icon>
+                <mat-icon>file_upload</mat-icon>d
                 <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.id" (change)="onAttachFileChanged($event)" />
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" (focusout)="markAsTouched()" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id" class="adf-attach-widget__menu-trigger">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>attach_file</mat-icon>
             </button>
