@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Process Attachment List component](../../../lib/process-services/src/lib/attachment/process-attachment-list.component.ts "Defined in process-attachment-list.component.ts")
+# [Process Attachment List component](../../../lib/process-services/src/lib/attachment/process-attachment-list/process-attachment-list.component.ts "Defined in process-attachment-list.component.ts")
 
 Displays documents attached to a specified process instance.
 

@@ -1,5 +1,5 @@
-<div class="adf-search-text-header">
-    <ng-content select="[adf-people-search-title], [people-search-title]"></ng-content>
+<div class="adf-search-text-header" *ngIf="headerTitle">
+    {{headerTitle | translate}}
 </div>
 
 <adf-people-search-field [performSearch]="performSearch" (rowClick)="onRowClick($event)"></adf-people-search-field>
@@ -9,6 +9,6 @@
         {{'ADF_TASK_LIST.PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
     <button mat-button type="button" id="add-people" (click)="involveUserAndClose()">
-        <ng-content select="[adf-people-search-action-label], [people-search-action-label]"></ng-content>
+        {{actionLabel | translate}}
     </button>
 </div>

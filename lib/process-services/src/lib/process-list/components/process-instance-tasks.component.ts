@@ -19,10 +19,10 @@ import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Observer, Subject } from 'rxjs';
-import { TaskDetailsEvent, TaskDetailsModel } from '../../task-list';
-import { ProcessInstance } from '../models/process-instance.model';
+import { TaskDetailsEvent } from '../../task-list';
 import { ProcessService } from './../services/process.service';
 import { share, takeUntil } from 'rxjs/operators';
+import { ProcessInstanceRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-process-instance-tasks',
@@ -32,7 +32,7 @@ import { share, takeUntil } from 'rxjs/operators';
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestroy {
     /** The ID of the process instance to display tasks for. */
     @Input()
-    processInstanceDetails: ProcessInstance;
+    processInstanceDetails: ProcessInstanceRepresentation;
 
     /**
      * Toggles whether to show a refresh button next to the list of tasks to allow
@@ -55,20 +55,20 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     @Output()
     taskClick = new EventEmitter<TaskDetailsEvent>();
 
-    activeTasks: TaskDetailsModel[] = [];
-    completedTasks: TaskDetailsModel[] = [];
-    task$: Observable<TaskDetailsModel>;
-    completedTask$: Observable<TaskDetailsModel>;
+    activeTasks: TaskRepresentation[] = [];
+    completedTasks: TaskRepresentation[] = [];
+    task$: Observable<TaskRepresentation>;
+    completedTask$: Observable<TaskRepresentation>;
     message: string;
     processId: string;
 
-    private taskObserver: Observer<TaskDetailsModel>;
-    private completedTaskObserver: Observer<TaskDetailsModel>;
+    private taskObserver: Observer<TaskRepresentation>;
+    private completedTaskObserver: Observer<TaskRepresentation>;
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private processService: ProcessService, private dialog: MatDialog) {
-        this.task$ = new Observable<TaskDetailsModel>((observer) => (this.taskObserver = observer)).pipe(share());
-        this.completedTask$ = new Observable<TaskDetailsModel>((observer) => (this.completedTaskObserver = observer)).pipe(share());
+        this.task$ = new Observable<TaskRepresentation>((observer) => (this.taskObserver = observer)).pipe(share());
+        this.completedTask$ = new Observable<TaskRepresentation>((observer) => (this.completedTaskObserver = observer)).pipe(share());
     }
 
     ngOnInit() {
@@ -150,7 +150,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         }
     }
 
-    clickTask(task: TaskDetailsModel) {
+    clickTask(task: TaskRepresentation) {
         const args = new TaskDetailsEvent(task);
         this.taskClick.emit(args);
     }

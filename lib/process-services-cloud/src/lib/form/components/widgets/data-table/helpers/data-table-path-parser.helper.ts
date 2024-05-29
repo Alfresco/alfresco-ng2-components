@@ -37,8 +37,10 @@ export class DataTablePathParserHelper {
         const isPropertyWithSingleIndexReference = propertyIndexReferences.length === 1;
         const nestedData = isPropertyWithSingleIndexReference ? data[purePropertyName]?.[propertyIndexReferences[0]] : data[purePropertyName];
 
-        if (Array.isArray(nestedData)) {
-            return nestedData;
+        if (nestedData && properties.length === 0) {
+            if (this.isDataArrayOrObject(nestedData)) {
+                return Array.isArray(nestedData) ? nestedData : [nestedData];
+            }
         }
 
         return this.retrieveDataFromPath(nestedData, properties.join('.'));
@@ -126,5 +128,12 @@ export class DataTablePathParserHelper {
 
     private isPropertyExistsInData(data: any, property: string): boolean {
         return Object.prototype.hasOwnProperty.call(data, property);
+    }
+
+    private isDataArrayOrObject(data: any): boolean {
+        if (data == null) {
+            return false;
+        }
+        return Array.isArray(data) || typeof data === 'object';
     }
 }

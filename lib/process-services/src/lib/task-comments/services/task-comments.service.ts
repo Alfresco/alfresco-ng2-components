@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, CommentModel, CommentsService, User } from '@alfresco/adf-core';
-import { ActivitiCommentsApi, CommentRepresentation } from '@alfresco/js-api';
+import { AlfrescoApiService, CommentModel, CommentsService } from '@alfresco/adf-core';
+import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserProcessModel } from '../../common/models/user-process.model';
 import { PeopleProcessService } from '../../common/services/people-process.service';
 
 @Injectable({
@@ -42,17 +41,7 @@ export class TaskCommentsService implements CommentsService {
      * @returns Details for each comment
      */
     get(id: string): Observable<CommentModel[]> {
-        return from(this.commentsApi.getTaskComments(id)).pipe(
-            map((response) => {
-                const comments: CommentModel[] = [];
-
-                response.data.forEach((comment) => {
-                    this.addToComments(comments, comment);
-                });
-
-                return comments;
-            })
-        );
+        return from(this.commentsApi.getTaskComments(id)).pipe(map((response) => response.data.map((comment) => new CommentModel(comment))));
     }
 
     /**
@@ -63,32 +52,10 @@ export class TaskCommentsService implements CommentsService {
      * @returns Details about the comment
      */
     add(id: string, message: string): Observable<CommentModel> {
-        return from(this.commentsApi.addTaskComment({ message }, id)).pipe(map((response) => this.newCommentModel(response)));
+        return from(this.commentsApi.addTaskComment({ message }, id)).pipe(map((response) => new CommentModel(response)));
     }
 
-    private addToComments(comments: CommentModel[], comment: CommentRepresentation): void {
-        const user = new UserProcessModel(comment.createdBy);
-
-        const newComment: CommentRepresentation = {
-            id: comment.id,
-            message: comment.message,
-            created: comment.created,
-            createdBy: user
-        };
-
-        comments.push(this.newCommentModel(newComment));
-    }
-
-    private newCommentModel(representation: CommentRepresentation): CommentModel {
-        return new CommentModel({
-            id: representation.id,
-            message: representation.message,
-            created: representation.created,
-            createdBy: new User(representation.createdBy)
-        });
-    }
-
-    getUserImage(user: UserProcessModel): string {
-        return this.peopleProcessService.getUserImage(user);
+    getUserImage(userId: string): string {
+        return this.peopleProcessService.getUserImage(userId);
     }
 }

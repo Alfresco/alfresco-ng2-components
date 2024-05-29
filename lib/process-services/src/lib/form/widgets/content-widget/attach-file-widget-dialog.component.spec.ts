@@ -21,12 +21,11 @@ import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService, 
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { AlfrescoApiService, BasicAlfrescoAuthService } from '@alfresco/adf-core';
+import { AlfrescoApiService, BasicAlfrescoAuthService, OidcAuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Node, SiteEntry, NodeEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
-import { OidcAuthenticationService } from 'lib/core/src/lib/auth/services/oidc-authentication.service';
 
 describe('AttachFileWidgetDialogComponent', () => {
     let widget: AttachFileWidgetDialogComponent;

@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "应用",
+    "CANCEL": "取消"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "恢复",

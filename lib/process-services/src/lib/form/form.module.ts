@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
-import { CoreModule, FormatSpacePipe } from '@alfresco/adf-core';
+import { CoreModule, FormatSpacePipe, InitialUsernamePipe } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { StartFormComponent } from './start-form.component';
 import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
@@ -35,7 +35,7 @@ import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.wid
 import { AlfrescoViewerModule } from '@alfresco/adf-content-services';
 
 @NgModule({
-    imports: [DynamicTableModule, CoreModule, AlfrescoViewerModule, MaterialModule, FormatSpacePipe],
+    imports: [DynamicTableModule, CoreModule, AlfrescoViewerModule, MaterialModule, FormatSpacePipe, InitialUsernamePipe],
     declarations: [
         UploadWidgetComponent,
         FormComponent,

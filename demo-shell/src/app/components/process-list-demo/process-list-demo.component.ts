@@ -20,6 +20,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, A
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ProcessInstanceQueryRepresentationSort, ProcessInstanceQueryRepresentationState } from '@alfresco/js-api';
 
 const DEFAULT_SIZE = 20;
 
@@ -27,15 +28,14 @@ const DEFAULT_SIZE = 20;
     templateUrl: './process-list-demo.component.html',
     styleUrls: [`./process-list-demo.component.scss`]
 })
-
 export class ProcessListDemoComponent implements OnInit, OnDestroy {
     minValue = 0;
     processListForm: UntypedFormGroup;
     appId: number;
     processDefId: string;
     processInsId: string;
-    state: string;
-    sort: string;
+    state: ProcessInstanceQueryRepresentationState;
+    sort: ProcessInstanceQueryRepresentationSort;
     size: number = DEFAULT_SIZE;
     page: number = 0;
 
@@ -48,15 +48,13 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
     ];
 
     sortOptions = [
-        {value: 'created-asc', title: 'Created (asc)'},
-        {value: 'created-desc', title: 'Created (desc)'}
+        { value: 'created-asc', title: 'Created (asc)' },
+        { value: 'created-desc', title: 'Created (desc)' }
     ];
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private route: ActivatedRoute,
-                private formBuilder: UntypedFormBuilder) {
-    }
+    constructor(private route: ActivatedRoute, private formBuilder: UntypedFormBuilder) {}
 
     ngOnInit() {
         this.resetQueryParameters();
@@ -91,12 +89,11 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
         this.processListForm.valueChanges
             .pipe(takeUntil(this.onDestroy$))
             .pipe(debounceTime(500))
-            .subscribe(processFilter => {
+            .subscribe((processFilter) => {
                 if (this.isFormValid()) {
                     this.filterProcesses(processFilter);
                 }
             });
-
     }
 
     filterProcesses(processFilter: any) {

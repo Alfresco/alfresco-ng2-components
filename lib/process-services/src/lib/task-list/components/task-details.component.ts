@@ -39,13 +39,11 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of, Subject } from 'rxjs';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from './task-form/task-form.component';
-import { UserProcessModel } from '../../common/models/user-process.model';
 import { PeopleProcessService } from '../../common/services/people-process.service';
+import { LightUserRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-task-details',
@@ -133,7 +131,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when a checklist task is created. */
     @Output()
-    taskCreated = new EventEmitter<TaskDetailsModel>();
+    taskCreated = new EventEmitter<TaskRepresentation>();
 
     /** Emitted when a checklist task is deleted. */
     @Output()
@@ -162,18 +160,18 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     unClaimedTask = new EventEmitter<string>();
 
-    taskDetails: TaskDetailsModel;
+    taskDetails: TaskRepresentation;
     taskFormName: string = null;
-    taskPeople: UserProcessModel[] = [];
+    taskPeople: LightUserRepresentation[] = [];
     noTaskDetailsTemplateComponent: TemplateRef<any>;
     showAssignee = false;
     showAttachForm = false;
     internalReadOnlyForm = false;
     errorDialogRef: MatDialogRef<TemplateRef<any>>;
-    peopleSearch: Observable<UserProcessModel[]>;
+    peopleSearch: Observable<LightUserRepresentation[]>;
     data: any;
 
-    private peopleSearchObserver: Observer<UserProcessModel[]>;
+    private peopleSearchObserver: Observer<LightUserRepresentation[]>;
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
@@ -184,7 +182,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.peopleSearch = new Observable<UserProcessModel[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
+        this.peopleSearch = new Observable<LightUserRepresentation[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
 
         if (this.taskId) {
             this.loadDetails(this.taskId);
@@ -257,7 +255,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         this.formLoaded.emit(form);
     }
 
-    onChecklistTaskCreated(task: TaskDetailsModel): void {
+    onChecklistTaskCreated(task: TaskRepresentation): void {
         this.taskCreated.emit(task);
     }
 
@@ -299,7 +297,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         this.showAssignee = false;
     }
 
-    assignTaskToUser(selectedUser: UserProcessModel) {
+    assignTaskToUser(selectedUser: LightUserRepresentation) {
         this.taskListService.assignTask(this.taskDetails.id, selectedUser).subscribe(() => {
             this.assignTask.emit();
         });
@@ -363,23 +361,21 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
                 }
 
                 if (this.taskDetails?.involvedPeople) {
-                    this.taskDetails.involvedPeople.forEach((user) => {
-                        this.taskPeople.push(new UserProcessModel(user));
-                    });
+                    this.taskPeople.push(...this.taskDetails.involvedPeople);
                 }
             });
         }
     }
 
     private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
-        const requestNode = new TaskQueryRequestRepresentationModel({
+        const requestNode = new TaskQueryRepresentation({
             processInstanceId,
             processDefinitionId
         });
         this.taskListService.getTasks(requestNode).subscribe(
             (response) => {
                 if (response && response.length > 0) {
-                    this.taskDetails = new TaskDetailsModel(response[0]);
+                    this.taskDetails = new TaskRepresentation(response[0]);
                 } else {
                     this.reset();
                 }

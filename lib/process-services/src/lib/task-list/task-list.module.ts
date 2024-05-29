@@ -85,5 +85,4 @@ import { TaskCommentsModule } from '../task-comments/task-comments.module';
         UnclaimTaskDirective
     ]
 })
-export class TaskListModule {
-}
+export class TaskListModule {}

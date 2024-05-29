@@ -17,12 +17,21 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
+import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
+import { InputMaskDirective } from './text-mask.component';
 
 @Component({
     selector: 'text-widget',
+    standalone: true,
     templateUrl: './text.widget.html',
     styleUrls: ['./text.widget.scss'],
     host: {
@@ -36,10 +45,10 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatTooltipModule, ErrorWidgetComponent, InputMaskDirective],
     encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
-
     mask: string;
     placeholder: string;
     isMaskReversed: boolean;
@@ -51,7 +60,10 @@ export class TextWidgetComponent extends WidgetComponent implements OnInit {
     ngOnInit() {
         if (this.field.params) {
             this.mask = this.field.params['inputMask'];
-            this.placeholder = this.field.params['inputMask'] && this.field.params['inputMaskPlaceholder'] ? this.field.params['inputMaskPlaceholder'] : this.field.placeholder;
+            this.placeholder =
+                this.field.params['inputMask'] && this.field.params['inputMaskPlaceholder']
+                    ? this.field.params['inputMaskPlaceholder']
+                    : this.field.placeholder;
             this.isMaskReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
         }
     }

@@ -24,6 +24,7 @@ export * from './src/api/auth-rest-api/index';
 export * from './src/api/activiti-rest-api/index';
 export * from './src/api/search-rest-api/index';
 export * from './src/api/model-rest-api/index';
+export * from './src/api/hxi-connector-api/index';
 
 export * from './src/api/content-custom-api/api/content.api';
 export * from './src/authentication/contentAuth';

@@ -30,14 +30,11 @@ import {
     DEFAULT_PAGINATION
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
-
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { TaskListModel } from '../models/task-list.model';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { TaskDetailsModel } from '../models/task-details.model';
+import { TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 export const PRESET_KEY = 'adf-task-list.presets';
 
@@ -183,7 +180,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     dueBefore: string;
 
-    requestNode: TaskQueryRequestRepresentationModel;
+    requestNode: TaskQueryRepresentation;
     currentInstanceId: string;
     selectedInstances: any[];
     pagination: BehaviorSubject<PaginationModel>;
@@ -385,7 +382,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     private load() {
         this.isLoading = true;
 
-        this.loadTasksByState()
+        this.taskListService
+            .findTasksByState(this.requestNode)
             .pipe(finalize(() => (this.isLoading = false)))
             .subscribe(
                 (tasks) => {
@@ -405,17 +403,13 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             );
     }
 
-    private loadTasksByState(): Observable<TaskListModel> {
-        return this.taskListService.findTasksByState(this.requestNode);
-    }
-
     /**
      * Optimize name field
      *
      * @param instances task detail models
      * @returns list of task detail models
      */
-    private optimizeTaskDetails(instances: TaskDetailsModel[]): TaskDetailsModel[] {
+    private optimizeTaskDetails(instances: TaskRepresentation[]): TaskRepresentation[] {
         instances = instances.map((task) => {
             if (!task.name) {
                 task.name = 'No name';
@@ -426,7 +420,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     private createRequestNode() {
-        const requestNode = {
+        return new TaskQueryRepresentation({
             appDefinitionId: this.appId,
             dueAfter: this.dueAfter ? new Date(this.dueAfter) : null,
             dueBefore: this.dueBefore ? new Date(this.dueBefore) : null,
@@ -441,7 +435,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             start: this.start,
             taskId: this.taskId,
             includeProcessInstance: this.includeProcessInstance
-        };
-        return new TaskQueryRequestRepresentationModel(requestNode);
+        });
     }
 }

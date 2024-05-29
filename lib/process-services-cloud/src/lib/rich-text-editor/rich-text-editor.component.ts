@@ -28,12 +28,8 @@ import { editorJsConfig } from './editorjs-config';
     encapsulation: ViewEncapsulation.None
 })
 export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit {
-
     @Input()
     data: OutputData;
-
-    @Input()
-    readOnly = false;
 
     private _outputData = new Subject<OutputData>();
 
@@ -42,9 +38,6 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
     editorInstance: EditorJS;
     dynamicId: string;
     isReady = false;
-
-    constructor() {
-    }
 
     ngOnInit(): void {
         this.dynamicId = `editorjs-${crypto.getRandomValues(new Uint32Array(1))}`;
@@ -55,27 +48,25 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
             holder: this.dynamicId,
             ...editorJsConfig,
             data: this.data,
-            readOnly: this.readOnly,
             onChange: () => {
-                if (!this.readOnly) {
-                    this.sendEditorOutputData();
-                }
+                this.sendEditorOutputData();
             },
             onReady: () => {
                 this.isReady = true;
-                if (!this.readOnly) {
-                    this.sendEditorOutputData();
-                }
+                this.sendEditorOutputData();
             }
         } as any);
     }
 
     private sendEditorOutputData() {
-        this.editorInstance.save().then((outputData) => {
-            this._outputData.next(outputData);
-        }).catch((error) => {
-            console.error('Saving failed: ', error);
-        });
+        this.editorInstance
+            .save()
+            .then((outputData) => {
+                this._outputData.next(outputData);
+            })
+            .catch((error) => {
+                console.error('Saving failed: ', error);
+            });
     }
 
     getEditorContent() {
@@ -87,5 +78,4 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
             this.editorInstance.destroy();
         }
     }
-
 }

@@ -22,4 +22,5 @@ export interface ProcessInstanceFilterRepresentation {
     processDefinitionKey?: string;
     sort?: string;
     state?: string;
+    assignment?: string;
 }

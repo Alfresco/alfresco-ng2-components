@@ -24,7 +24,7 @@ import {
     TranslationService
 } from '@alfresco/adf-core';
 import { Component, Input, OnChanges } from '@angular/core';
-import { ProcessInstance } from '../models/process-instance.model';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-process-instance-header',
@@ -34,7 +34,7 @@ import { ProcessInstance } from '../models/process-instance.model';
 export class ProcessInstanceHeaderComponent implements OnChanges {
     /** (**required**) Full details of the process instance to display information about. */
     @Input()
-    processInstance: ProcessInstance;
+    processInstance: ProcessInstanceRepresentation;
 
     properties: CardViewItem[];
     dateFormat: string;

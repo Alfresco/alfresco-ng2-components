@@ -15,13 +15,18 @@
  * limitations under the License.
  */
 
+import { Union } from '../../../../types';
+
 export interface ProcessInstanceQueryRepresentation {
     appDefinitionId?: number;
     page?: number;
     processDefinitionId?: string;
     processInstanceId?: string;
     size?: number;
-    sort?: 'created-desc' | 'created-asc' | 'ended-desc' | 'ended-asc';
+    sort?: ProcessInstanceQueryRepresentationSort;
     start?: number;
-    state?: 'running' | 'completed' | 'all';
+    state?: ProcessInstanceQueryRepresentationState;
 }
+
+export type ProcessInstanceQueryRepresentationSort = Union<string, 'created-desc' | 'created-asc' | 'ended-desc' | 'ended-asc'>;
+export type ProcessInstanceQueryRepresentationState = Union<string, 'running' | 'completed' | 'all' | 'open'>;

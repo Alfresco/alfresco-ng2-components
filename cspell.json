@@ -90,6 +90,7 @@
     "numbervisibilityprocess",
     "OAUTHCONFIG",
     "oidc",
+    "overridable",
     "pdfjs",
     "penta",
     "printf",
@@ -143,7 +144,8 @@
     "BPMECM",
     "berseria",
     "zestiria",
-    "validatable"
+    "validatable",
+    "edjs"
   ],
   "dictionaries": [
     "html",

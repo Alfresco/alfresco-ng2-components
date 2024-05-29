@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2020-06-09
 ---
 
-# [Form custom outcomes component](../../../lib/process-services/src/lib/form/form-custom-outcomes.component.ts "Defined in form-custom-outcomes.component.ts")
+# Form Custom Outcomes Component
 
 Supplies custom outcome buttons to be included in [Form component](form.component.md).
 

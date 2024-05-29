@@ -16,6 +16,3 @@
  */
 
 export * from './services/people-process.service';
-
-export * from './models/bpm-user.model';
-export * from './models/user-process.model';

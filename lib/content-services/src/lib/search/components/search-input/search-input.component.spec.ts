@@ -15,17 +15,19 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatInputHarness } from '@angular/material/input/testing';
-import { SearchInputComponent } from '@alfresco/adf-content-services';
+import { SearchConfiguration, SearchInputComponent } from '@alfresco/adf-content-services';
+import { AppConfigService } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('SearchInputComponent', () => {
     let loader: HarnessLoader;
     let component: SearchInputComponent;
     let fixture: ComponentFixture<SearchInputComponent>;
+    let appConfig: AppConfigService;
 
     /**
      * Sets the search input value
@@ -50,6 +52,7 @@ describe('SearchInputComponent', () => {
         component = fixture.componentInstance;
 
         loader = TestbedHarnessEnvironment.loader(fixture);
+        appConfig = TestBed.inject(AppConfigService);
     });
 
     it('should show custom placeholder', async () => {
@@ -72,6 +75,21 @@ describe('SearchInputComponent', () => {
         await setInputValue('test');
 
         expect(formatted).toBe('(cm:description:"test*" OR TAG:"test*")');
+    });
+
+    it('should override input fields if search configuration is set', () => {
+        appConfig.config = {
+            search: {
+                'app:fields': ['TEXT', 'description']
+            }
+        };
+        expect(component.fields).toEqual(['cm:name']);
+        const config = appConfig.get<SearchConfiguration>('search');
+        const destFields = config['app:fields'];
+
+        component.ngOnInit();
+        fixture.detectChanges();
+        expect(component.fields).toEqual(destFields);
     });
 
     it('should emit changed event with [cm:name]', async () => {

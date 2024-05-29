@@ -16,24 +16,18 @@
  */
 
 import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
-import { BpmUserModel, PeopleProcessService } from '@alfresco/adf-process-services';
-import {
-    AuthenticationService,
-    BasicAlfrescoAuthService,
-    IdentityUserModel,
-    IdentityUserService,
-    UserInfoMode
-} from '@alfresco/adf-core';
+import { PeopleProcessService } from '@alfresco/adf-process-services';
+import { AuthenticationService, BasicAlfrescoAuthService, IdentityUserModel, IdentityUserService, UserInfoMode } from '@alfresco/adf-core';
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Observable, of } from 'rxjs';
+import { UserRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'app-shell-user-info',
     templateUrl: './user-info.component.html'
 })
 export class UserInfoComponent implements OnInit {
-
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
     menuPositionX: MenuPositionX = 'after';
@@ -44,17 +38,17 @@ export class UserInfoComponent implements OnInit {
 
     mode: UserInfoMode;
     ecmUser$: Observable<EcmUserModel>;
-    bpmUser$: Observable<BpmUserModel>;
+    bpmUser$: Observable<UserRepresentation>;
     identityUser$: Observable<IdentityUserModel>;
-    selectedIndex: number;
     userInfoMode = UserInfoMode;
 
-    constructor(private peopleContentService: PeopleContentService,
-                private peopleProcessService: PeopleProcessService,
-                private identityUserService: IdentityUserService,
-                private basicAlfrescoAuthService: BasicAlfrescoAuthService,
-                private authService: AuthenticationService) {
-    }
+    constructor(
+        private peopleContentService: PeopleContentService,
+        private peopleProcessService: PeopleProcessService,
+        private identityUserService: IdentityUserService,
+        private basicAlfrescoAuthService: BasicAlfrescoAuthService,
+        private authService: AuthenticationService
+    ) {}
 
     ngOnInit() {
         this.getUserInfo();
@@ -69,7 +63,6 @@ export class UserInfoComponent implements OnInit {
                 this.mode = UserInfoMode.CONTENT_SSO;
                 this.loadEcmUserInfo();
             }
-
         } else if (this.isAllLoggedIn()) {
             this.loadEcmUserInfo();
             this.loadBpmUserInfo();
@@ -103,7 +96,10 @@ export class UserInfoComponent implements OnInit {
     }
 
     private isAllLoggedIn() {
-        return (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) || (this.authService.isALLProvider() && this.basicAlfrescoAuthService.isKerberosEnabled());
+        return (
+            (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) ||
+            (this.authService.isALLProvider() && this.basicAlfrescoAuthService.isKerberosEnabled())
+        );
     }
 
     private isBpmLoggedIn() {
@@ -114,4 +110,3 @@ export class UserInfoComponent implements OnInit {
         return this.authService.isEcmLoggedIn() || (this.authService.isECMProvider() && this.basicAlfrescoAuthService.isKerberosEnabled());
     }
 }
-
