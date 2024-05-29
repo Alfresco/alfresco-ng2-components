@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2024-05-24
 ---
 
-# [Dialog Data Interface](../../../lib/content-services/src/lib/dialogs/dialog/dialog-data.interface.ts "Defined in dialog-data.interface.ts")
+# [Dialog Data Interface](../../../lib/core/src/lib/dialogs/dialog/dialog-data.interface.ts "Defined in dialog-data.interface.ts")
 
 Specifies interface for [Dialog Component](../dialogs/dialog.md).
 
@@ -53,4 +53,4 @@ interface DialogData {
 
 - [Dialog Component](../dialogs/dialog.md)
 - [Dialog Model](../models/dialog.model.md)
-- [AdditionalDialogActionButton Interface](./additional-dialog-action-button.md)
+- [AdditionalDialogActionButton Interface](./additional-dialog-action-button.interface.md)

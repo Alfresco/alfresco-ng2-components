@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2024-05-24
 ---
 
-# [Dialog Size model](../../../lib/content-services/src/lib/dialogs/dialog/dialog.model.ts "Defined in dialog.model.ts")
+# [Dialog Size model](../../../lib/core/src/lib/dialogs/dialog/dialog.model.ts "Defined in dialog.model.ts")
 
 Sets a specific CSS class to [Dialog Component](../dialogs/dialog.md). 
 

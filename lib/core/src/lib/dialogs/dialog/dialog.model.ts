@@ -21,4 +21,4 @@ export const DialogSize = {
     Alert: 'adf-alert'
 } as const;
 
-export type DialogSizes = typeof DialogSize[keyof typeof DialogSize];
+export type DialogSizes = (typeof DialogSize)[keyof typeof DialogSize];
