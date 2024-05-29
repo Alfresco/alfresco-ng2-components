@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2024-05-24
 ---
 
-# [Dialog component](../../../lib/content-services/src/lib/dialogs/dialog/ "Defined in dialog.component.ts")
+# [Dialog component](../../../lib/core/src/lib/dialogs/dialog/dialog.component.ts "Defined in dialog.component.ts")
 
 Dialog wrapper styled according to a consistent design system.
 

@@ -17,10 +17,10 @@
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { DialogComponent } from './dialog.component';
 import { DialogData } from './dialog-data.interface';
 import { DialogSize } from './dialog.model';
+import { CoreTestingModule } from '../../testing';
 
 describe('DialogComponent', () => {
     let component: DialogComponent;
@@ -42,7 +42,7 @@ describe('DialogComponent', () => {
 
     const setupBeforeEach = (dialogOptions: DialogData = data) => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [CoreTestingModule],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: dialogOptions },
                 { provide: MatDialogRef, useValue: dialogRef }
