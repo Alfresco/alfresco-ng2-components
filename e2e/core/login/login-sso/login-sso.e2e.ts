@@ -45,6 +45,8 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.appConfig.oauth2.redirectUriLogout
             );
 
+            await browser.refresh();
+
             await loginSSOPage.loginSSOIdentityService(
                 browser.params.testConfig.users.admin.username,
                 browser.params.testConfig.users.admin.password
@@ -61,6 +63,8 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.appConfig.oauth2.clientId,
                 browser.params.testConfig.appConfig.oauth2.redirectUriLogout
             );
+
+            await browser.refresh();
 
             await loginSSOPage.loginSSOIdentityService(
                 browser.params.testConfig.users.admin.username,
@@ -81,6 +85,7 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.appConfig.oauth2.redirectUriLogout
             );
 
+            await browser.refresh();
             await loginPage.waitForElements();
 
             await loginPage.enterUsername(browser.params.testConfig.users.admin.username);
