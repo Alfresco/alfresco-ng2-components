@@ -26,14 +26,14 @@ describe('Login component - SSO', () => {
     const loginPage = new LoginShellPage();
     const navigationBarPage = new NavigationBarPage();
 
-    describe('Login component - SSO implicit Flow', () => {
-        afterEach(async () => {
-            await navigationBarPage.clickLogoutButton();
-            await browser.executeScript('window.sessionStorage.clear();');
-            await browser.executeScript('window.localStorage.clear();');
-            await browser.refresh();
-        });
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
+        await browser.executeScript('window.sessionStorage.clear();');
+        await browser.executeScript('window.localStorage.clear();');
+        await browser.refresh();
+    });
 
+    describe('Login component - SSO implicit Flow', () => {
         it('[C261050] Should be possible login with SSO', async () => {
             await settingsPage.setProviderEcmSso(
                 browser.params.testConfig.appConfig.ecmHost,
@@ -42,7 +42,8 @@ describe('Login component - SSO', () => {
                 false,
                 true,
                 browser.params.testConfig.appConfig.oauth2.clientId,
-                browser.params.testConfig.appConfig.oauth2.redirectUriLogout
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout,
+                false
             );
 
             await loginSSOPage.loginSSOIdentityService(
@@ -59,7 +60,8 @@ describe('Login component - SSO', () => {
                 true,
                 true,
                 browser.params.testConfig.appConfig.oauth2.clientId,
-                browser.params.testConfig.appConfig.oauth2.redirectUriLogout
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout,
+                false
             );
 
             await loginSSOPage.loginSSOIdentityService(
