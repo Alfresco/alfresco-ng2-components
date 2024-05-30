@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet, UpperCasePipe } from '@angular/common';
 import { Component, Inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -54,6 +54,7 @@ import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
         MatSlideToggleModule,
         FormsModule,
         JsonPipe,
+        UpperCasePipe,
         NgClass
     ],
     encapsulation: ViewEncapsulation.None
