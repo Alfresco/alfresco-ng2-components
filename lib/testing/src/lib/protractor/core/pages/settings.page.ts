@@ -66,8 +66,7 @@ export class SettingsPage {
         silentLogin = true,
         implicitFlow = true,
         clientId?: string,
-        logoutUrl: string = '/logout',
-        codeFlow = false
+        logoutUrl: string = '/logout'
     ) {
         await this.goToSettingsPage();
         await this.setProvider('ECM');
@@ -77,7 +76,30 @@ export class SettingsPage {
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
-        await this.setCodeFlow(codeFlow);
+        await this.setClientId(clientId);
+        await this.setLogoutUrl(logoutUrl);
+        await this.clickApply();
+        await browser.sleep(1000);
+    }
+
+    async setProviderEcmSsoWithoutCodeFlow(
+        contentServiceURL,
+        authHost,
+        identityHost,
+        silentLogin = true,
+        implicitFlow = true,
+        clientId?: string,
+        logoutUrl: string = '/logout'
+    ) {
+        await this.goToSettingsPage();
+        await this.setProvider('ECM');
+        await this.clickSsoRadioButton();
+        await this.setContentServicesURL(contentServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setCodeFlow(false);
+        await this.setImplicitFlow(implicitFlow);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();

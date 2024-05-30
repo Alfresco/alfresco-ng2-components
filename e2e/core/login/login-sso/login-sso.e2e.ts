@@ -26,14 +26,14 @@ describe('Login component - SSO', () => {
     const loginPage = new LoginShellPage();
     const navigationBarPage = new NavigationBarPage();
 
-    afterEach(async () => {
-        await navigationBarPage.clickLogoutButton();
-        await browser.executeScript('window.sessionStorage.clear();');
-        await browser.executeScript('window.localStorage.clear();');
-        await browser.refresh();
-    });
-
     describe('Login component - SSO implicit Flow', () => {
+        afterEach(async () => {
+            await navigationBarPage.clickLogoutButton();
+            await browser.executeScript('window.sessionStorage.clear();');
+            await browser.executeScript('window.localStorage.clear();');
+            await browser.refresh();
+        });
+
         it('[C261050] Should be possible login with SSO', async () => {
             await settingsPage.setProviderEcmSso(
                 browser.params.testConfig.appConfig.ecmHost,
@@ -71,7 +71,7 @@ describe('Login component - SSO', () => {
 
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
-            await settingsPage.setProviderEcmSso(
+            await settingsPage.setProviderEcmSsoWithoutCodeFlow(
                 browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost,
