@@ -67,7 +67,7 @@ export class SettingsPage {
         implicitFlow = true,
         clientId?: string,
         logoutUrl: string = '/logout',
-        codeFlow = true
+        codeFlow = false
     ) {
         await this.goToSettingsPage();
         await this.setProvider('ECM');
