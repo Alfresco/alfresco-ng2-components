@@ -64,15 +64,15 @@ describe('Task form cloud component', () => {
     const visibilityConditionTasks = [];
 
     const tab = {
-        tabWithFields: 'tabWithFields',
-        tabFieldValue: 'tabBasicFieldValue',
-        tabVarValue: 'tabBasicVarValue',
-        tabVarField: 'tabBasicVarField',
-        tabFieldField: 'tabBasicFieldField',
-        tabVarVar: 'tabBasicVarVar',
-        tabFieldVar: 'tabBasicFieldVar',
-        tabNextOperators: 'tabNextOperators',
-        tabMultipleConditions: 'tabMultipleConditions'
+        tabWithFields: 'TABWITHFIELDS',
+        tabFieldValue: 'TABBASICFIELDVALUE',
+        tabVarValue: 'TABBASICVARVALUE',
+        tabVarField: 'TABBASICVARFIELD',
+        tabFieldField: 'TABBASICFIELDFIELD',
+        tabVarVar: 'TABBASICVARVAR',
+        tabFieldVar: 'TABBASICFIELDVAR',
+        tabNextOperators: 'TABNEXTOPERATORS',
+        tabMultipleConditions: 'TABMULTIPLECONDITIONS'
     };
 
     const widgets = {
