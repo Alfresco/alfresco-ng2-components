@@ -54,7 +54,7 @@
         background-color: inherit;
         color: inherit;
 
-        &:hover {
+        &:not(#{$mat-list-item-disabled}):hover {
             cursor: pointer;
             background: var(--adf-theme-mat-grey-color-a200);
         }
