@@ -201,9 +201,9 @@ export const ACTIVITI_CLOUD_APPS = {
             tabVisibilityVars: {
                 name: 'tabvisibilitywithvars',
                 tabs: {
-                    tabWithFields: 'tabWithFields',
-                    tabVarVar: 'tabBasicVarVar',
-                    tabBasicVarField: 'tabBasicVarField'
+                    tabWithFields: 'TABWITHFIELDS',
+                    tabVarVar: 'TABBASICVARVAR',
+                    tabBasicVarField: 'TABBASICVARFIELD'
                 },
                 widgets: {
                     textOneId: 'TextOne',
