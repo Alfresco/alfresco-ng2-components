@@ -185,10 +185,10 @@ describe('Task Details - Form', () => {
         };
 
         const tab = {
-            tabWithFields: 'tabWithFields',
-            tabFieldValue: 'tabBasicFieldValue',
-            tabFieldField: 'tabBasicFieldField',
-            tabFieldVar: 'tabBasicFieldVar'
+            tabWithFields: 'TABWITHFIELDS',
+            tabFieldValue: 'TABBASICFIELDVALUE',
+            tabFieldField: 'TABBASICFIELDFIELD',
+            tabFieldVar: 'TABBASICFIELDVAR'
         };
 
         let newTask;
