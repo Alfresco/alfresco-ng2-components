@@ -34,7 +34,10 @@
     "js_api_build_esm5": "shx rm -rf ./dist/libs/js-api/esm5 && tsc -p ./lib/js-api/tsconfig/tsconfig.esm5.json",
     "js_api_build_esm2015": "shx rm -rf ./dist/libs/js-api/esm2015 && tsc -p ./lib/js-api/tsconfig/tsconfig.esm2015.json",
     "js_api_build_types": "shx rm -rf ./dist/libs/js-api/typings && tsc -p ./lib/js-api/tsconfig/tsconfig.types.json",
-    "js_api_assets": "shx cp ./lib/js-api/package.json ./dist/libs/js-api/ && shx cp ./lib/js-api/README.md ./dist/libs/js-api/ && shx cp ./lib/js-api/LICENSE.txt ./dist/libs/js-api/"
+    "js_api_assets": "shx cp ./lib/js-api/package.json ./dist/libs/js-api/ && shx cp ./lib/js-api/README.md ./dist/libs/js-api/ && shx cp ./lib/js-api/LICENSE.txt ./dist/libs/js-api/",
+    "postinstall": "npm run update-webdriver",
+    "update-webdriver": "./scripts/webdriver-update-newest/update-to-newest-webdriver.sh",
+    "update-webdriver:windows": "powershell  -executionPolicy bypass ./scripts/update-webdriver.ps1"
   },
   "repository": {
     "type": "git",
@@ -129,7 +132,7 @@
     "@types/mocha": "^10.0.4",
     "@types/node": "18.0.0",
     "@types/pdfjs-dist": "^2.10.378",
-    "@types/selenium-webdriver": "^4.0.11",
+    "@types/selenium-webdriver": "^4.1.17",
     "@types/shelljs": "^0.8.15",
     "@types/superagent": "^4.1.22",
     "@typescript-eslint/eslint-plugin": "5.59.8",
@@ -187,7 +190,7 @@
     "protractor-smartrunner": "^2.0.0-beta6",
     "rimraf": "^5.0.5",
     "sass-loader": "13.3.2",
-    "selenium-webdriver": "4.1.0",
+    "selenium-webdriver": "^4.14.0",
     "shelljs": "^0.8.5",
     "shx": "^0.3.4",
     "spdx-license-list": "^6.9.0",

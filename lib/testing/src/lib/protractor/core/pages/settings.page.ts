@@ -33,6 +33,7 @@ export class SettingsPage {
     silentLoginToggleElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="silentLogin"]`);
     implicitFlowLabel = $(`${materialLocators.Slide.toggle.root}[formcontrolname="implicitFlow"] label`);
     implicitFlowElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="implicitFlow"]`);
+    codeFlowElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="codeFlow"]`);
     applyButton = $('button[data-automation-id="settings-apply-button"]');
     providerDropdown = new DropdownPage($(`${materialLocators.Select.root}[id="adf-provider-selector"]`));
 
@@ -41,8 +42,7 @@ export class SettingsPage {
 
         try {
             currentUrl = await browser.getCurrentUrl();
-        } catch (e) {
-        }
+        } catch (e) {}
 
         if (!currentUrl || currentUrl.indexOf(this.settingsURL) === -1) {
             await browser.get(this.settingsURL);
@@ -59,7 +59,15 @@ export class SettingsPage {
         await BrowserActions.click(this.ssoRadioButton);
     }
 
-    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout') {
+    async setProviderEcmSso(
+        contentServiceURL,
+        authHost,
+        identityHost,
+        silentLogin = true,
+        implicitFlow = true,
+        clientId?: string,
+        logoutUrl: string = '/logout'
+    ) {
         await this.goToSettingsPage();
         await this.setProvider('ECM');
         await this.clickSsoRadioButton();
@@ -67,6 +75,30 @@ export class SettingsPage {
         await this.setAuthHost(authHost);
         await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
+        await this.setClientId(clientId);
+        await this.setLogoutUrl(logoutUrl);
+        await this.clickApply();
+        await browser.sleep(1000);
+    }
+
+    async setProviderEcmSsoWithoutCodeFlow(
+        contentServiceURL,
+        authHost,
+        identityHost,
+        silentLogin = true,
+        implicitFlow = true,
+        clientId?: string,
+        logoutUrl: string = '/logout'
+    ) {
+        await this.goToSettingsPage();
+        await this.setProvider('ECM');
+        await this.clickSsoRadioButton();
+        await this.setContentServicesURL(contentServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setCodeFlow(false);
         await this.setImplicitFlow(implicitFlow);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
@@ -104,7 +136,7 @@ export class SettingsPage {
 
         const isChecked = (await BrowserActions.getAttribute(this.silentLoginToggleElement, 'class')).includes(materialLocators.Checked.root);
 
-        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+        if ((isChecked && !enableToggle) || (!isChecked && enableToggle)) {
             await BrowserActions.click(this.silentLoginToggleLabel);
         }
     }
@@ -114,8 +146,18 @@ export class SettingsPage {
 
         const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes(materialLocators.Checked.root);
 
-        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+        if ((isChecked && !enableToggle) || (!isChecked && enableToggle)) {
             await BrowserActions.click(this.implicitFlowLabel);
+        }
+    }
+
+    async setCodeFlow(enableToggle) {
+        await BrowserVisibility.waitUntilElementIsVisible(this.codeFlowElement);
+
+        const isChecked = (await BrowserActions.getAttribute(this.codeFlowElement, 'class')).includes(materialLocators.Checked.root);
+
+        if ((isChecked && !enableToggle) || (!isChecked && enableToggle)) {
+            await BrowserActions.click(this.codeFlowElement);
         }
     }
 }
