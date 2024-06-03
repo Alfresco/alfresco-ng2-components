@@ -191,6 +191,10 @@ describe('LayoutContainerComponent', () => {
             params: { width: 200 }
         };
 
+        const expandedContentState = {
+            value: 'expanded'
+        };
+
         const testMediaQueryChange = (matches: boolean, expectedSidenavState: any, expectedContentState: any) => {
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.mediaQueryList.matches = matches;
@@ -200,7 +204,7 @@ describe('LayoutContainerComponent', () => {
         };
 
         it('should close sidenav on mobile and open on desktop', () => {
-            testMediaQueryChange(true, expandedState, expandedState);
+            testMediaQueryChange(true, expandedState, expandedContentState);
             layoutContainerComponent.mediaQueryList.matches = false;
             window.dispatchEvent(new Event('resize'));
             expect(layoutContainerComponent.sidenavAnimationState).toEqual(layoutContainerComponent.SIDENAV_STATES.EXPANDED);
@@ -213,7 +217,7 @@ describe('LayoutContainerComponent', () => {
 
         it('should keep sidenav compact when resized back to desktop and hideSidenav is true', () => {
             layoutContainerComponent.hideSidenav = true;
-            testMediaQueryChange(true, expandedState, expandedState);
+            testMediaQueryChange(true, expandedState, expandedContentState);
             layoutContainerComponent.mediaQueryList.matches = false;
             window.dispatchEvent(new Event('resize'));
             expect(layoutContainerComponent.sidenavAnimationState).toEqual(layoutContainerComponent.SIDENAV_STATES.COMPACT);
