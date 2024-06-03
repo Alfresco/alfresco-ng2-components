@@ -42,7 +42,7 @@ describe('DropdownWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, DropdownWidgetComponent]
         });
         fixture = TestBed.createComponent(DropdownWidgetComponent);
         widget = fixture.componentInstance;

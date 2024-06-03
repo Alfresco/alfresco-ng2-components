@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# [Start Form component](../../../lib/process-services/src/lib/form/start-form.component.ts "Defined in start-form.component.ts")
+# [Start Form component](../../../lib/process-services/src/lib/form/start-form/start-form.component.ts "Defined in start-form.component.ts")
 
 Displays the Start [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) for a process.
 

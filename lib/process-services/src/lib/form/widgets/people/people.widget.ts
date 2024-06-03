@@ -17,16 +17,34 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, FormService, InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { catchError, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'people-widget',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatTooltipModule,
+        InitialUsernamePipe,
+        ErrorWidgetComponent
+    ],
     templateUrl: './people.widget.html',
     styleUrls: ['./people.widget.scss'],
     host: {

@@ -34,7 +34,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [CommonModule, RouterModule.forChild(routes), CoreModule, ProcessModule.forChild(), LocalizedDatePipe, FullNamePipe],
+    imports: [CommonModule, RouterModule.forChild(routes), CoreModule, ProcessModule, LocalizedDatePipe, FullNamePipe],
     declarations: [TaskListDemoComponent]
 })
 export class AppTaskListModule {}

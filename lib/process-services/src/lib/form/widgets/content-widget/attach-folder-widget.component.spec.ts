@@ -49,7 +49,7 @@ describe('AttachFolderWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            imports: [ProcessTestingModule, AttachFolderWidgetComponent]
         });
         fixture = TestBed.createComponent(AttachFolderWidgetComponent);
         widget = fixture.componentInstance;

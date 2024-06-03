@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Process Instance Details Header component](../../../lib/process-services/src/lib/process-list/components/process-instance-header.component.ts "Defined in process-instance-header.component.ts")
+# [Process Instance Details Header component](../../../lib/process-services/src/lib/process-list/components/process-instance-header/process-instance-header.component.ts "Defined in process-instance-header.component.ts")
 
 Sub-component of the process details component, which renders some general information about the selected process.
 

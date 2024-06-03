@@ -59,7 +59,7 @@ describe('ContentWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, ContentWidgetComponent]
         });
         downloadService = TestBed.inject(DownloadService);
         processContentService = TestBed.inject(ProcessContentService);

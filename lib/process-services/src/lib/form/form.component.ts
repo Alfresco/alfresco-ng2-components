@@ -28,7 +28,9 @@ import {
     FormOutcomeEvent,
     FormValues,
     ContentLinkModel,
-    TaskProcessVariableModel
+    TaskProcessVariableModel,
+    FormRendererComponent,
+    FormatSpacePipe
 } from '@alfresco/adf-core';
 import { from, Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -39,9 +41,17 @@ import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';
 import { NodesApiService } from '@alfresco/adf-content-services';
 import { FormDefinitionModel } from './model/form-definition.model';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-form',
+    standalone: true,
+    imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatTooltipModule, TranslateModule, FormRendererComponent, FormatSpacePipe],
     templateUrl: './form.component.html',
     encapsulation: ViewEncapsulation.None
 })

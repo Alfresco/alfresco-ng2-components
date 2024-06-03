@@ -20,5 +20,3 @@ export * from './attach-folder-widget.component';
 export * from './attach-file-widget-dialog-component.interface';
 export * from './attach-file-widget-dialog.component';
 export * from './attach-file-widget-dialog.service';
-
-export * from './content-widget.module';

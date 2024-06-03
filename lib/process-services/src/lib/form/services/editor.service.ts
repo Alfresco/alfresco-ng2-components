@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { FormModelsApi } from '@alfresco/js-api';
+import { FormModelsApi, FormRepresentation } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
 import { FormDefinitionModel } from '../model/form-definition.model';
 
@@ -44,7 +44,7 @@ export class EditorService {
      * @param formModel Model data for the form
      * @returns Data for the saved form
      */
-    saveForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
+    saveForm(formId: number, formModel: FormDefinitionModel): Observable<FormRepresentation> {
         return from(this.editorApi.saveForm(formId, formModel));
     }
 

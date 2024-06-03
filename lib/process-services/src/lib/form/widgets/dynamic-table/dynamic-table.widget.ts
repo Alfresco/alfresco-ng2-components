@@ -17,14 +17,22 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { WidgetVisibilityService, WidgetComponent, FormService } from '@alfresco/adf-core';
+import { WidgetVisibilityService, WidgetComponent, FormService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
 import { DynamicTableRow } from './editors/models/dynamic-table-row.model';
 import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RowEditorComponent } from './editors/row-editor/row.editor';
 
 @Component({
     selector: 'dynamic-table-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatCheckboxModule, MatButtonModule, MatIconModule, RowEditorComponent, ErrorWidgetComponent],
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.scss'],
     host: {
