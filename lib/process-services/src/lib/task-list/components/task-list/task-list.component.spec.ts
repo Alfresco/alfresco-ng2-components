@@ -29,10 +29,10 @@ import {
     AlfrescoApiServiceMock,
     AlfrescoApiService
 } from '@alfresco/adf-core';
-import { TaskListService } from '../services/tasklist.service';
+import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
-import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../mock';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../mock';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -106,8 +106,14 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), DataTableModule, NoopAnimationsModule, MatProgressSpinnerModule, HttpClientTestingModule, TaskListComponent],
-            declarations: [TaskListComponent],
+            imports: [
+                TranslateModule.forRoot(),
+                DataTableModule,
+                NoopAnimationsModule,
+                MatProgressSpinnerModule,
+                HttpClientTestingModule,
+                TaskListComponent
+            ],
             providers: [
                 TaskListService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
