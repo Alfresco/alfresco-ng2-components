@@ -63,9 +63,9 @@ describe('RadioButtonsWidgetComponent', () => {
                 FormsModule,
                 HttpClientTestingModule,
                 MatIconModule,
-                ErrorWidgetComponent
+                ErrorWidgetComponent,
+                RadioButtonsWidgetComponent
             ],
-            declarations: [RadioButtonsWidgetComponent],
             providers: [
                 { provide: TranslationService, useClass: TranslationMock },
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
