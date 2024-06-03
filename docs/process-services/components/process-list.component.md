@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Process Instance List](../../../lib/process-services/src/lib/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
+# [Process Instance List](../../../lib/process-services/src/lib/process-list/components/process-list/process-list.component.ts "Defined in process-list.component.ts")
 
 Renders a list containing all the process instances matched by the parameters specified.
 
@@ -195,7 +195,7 @@ The Process Instance List also supports pagination:
 
 Emitted before the context menu is displayed for a row.
 
-Note that the [`ProcessInstanceListComponent`](../../../lib/process-services/src/lib/process-list/components/process-list.component.ts) itself does not populate the context menu with items. You can provide all necessary content via the handler.
+Note that the [`ProcessInstanceListComponent`](../../../lib/process-services/src/lib/process-list/components/process-list/process-list.component.ts) itself does not populate the context menu with items. You can provide all necessary content via the handler.
 
 ```html
 <adf-process-instance-list

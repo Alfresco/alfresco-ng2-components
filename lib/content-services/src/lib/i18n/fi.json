@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "Käytä",
+    "CANCEL": "Peruuta"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "Palauta",

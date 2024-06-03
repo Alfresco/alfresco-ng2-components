@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ViewEncapsulation,
-    ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'adf-icon',
+    standalone: true,
+    imports: [MatIconModule, NgIf],
     templateUrl: './icon.component.html',
     styleUrls: ['./icon.component.scss'],
     encapsulation: ViewEncapsulation.None,

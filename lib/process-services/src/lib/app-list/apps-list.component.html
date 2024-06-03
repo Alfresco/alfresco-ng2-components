@@ -2,7 +2,7 @@
     <mat-list *ngIf="isList()" class="adf-app-list">
         <mat-list-item class="adf-app-list-item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
             <mat-icon matListIcon>touch_app</mat-icon>
-            <span matLine>{{getAppName(app) | async}}</span>
+            <span matLine>{{getAppName(app) | translate}}</span>
         </mat-list-item>
     </mat-list>
     <div *ngIf="isGrid()" class="adf-app-listgrid">
@@ -11,7 +11,7 @@
                 <mat-card tabindex="0"
                     role="button"
                     class="adf-app-listgrid-item-card"
-                    title="{{getAppName(app) | async}}"
+                    title="{{getAppName(app) | translate}}"
                     [ngClass]="[getTheme(app)]"
                     (click)="selectApp(app)"
                     (keyup.enter)="selectApp(app)">
@@ -19,7 +19,7 @@
                             <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{getBackgroundIcon(app)}}</mat-icon>
                         </div>
                         <div mat-card-title class="adf-app-listgrid-item-card-title">
-                            <h1>{{getAppName(app) | async}}</h1>
+                            <h1>{{getAppName(app) | translate}}</h1>
                         </div>
                         <mat-card-subtitle class="adf-app-listgrid-item-card-subtitle">
                             <div class="adf-line-clamp">{{app.description}}</div>
@@ -41,7 +41,10 @@
 
 <ng-template #empty>
     <div class="adf-app-list-empty" *ngIf="isEmpty()">
-        <ng-content select="adf-custom-empty-content-template" *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate" class="adf-custom-empty-template"></ng-content>
+        <ng-content select="adf-custom-empty-content-template"
+                    *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate"
+                    class="adf-custom-empty-template">
+        </ng-content>
 
         <ng-template #defaultEmptyTemplate>
             <adf-empty-content

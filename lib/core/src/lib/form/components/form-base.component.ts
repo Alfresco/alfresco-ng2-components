@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { FormOutcomeModel, FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormModel } from './widgets';
-import { EventEmitter, Input, Output, Directive } from '@angular/core';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets';
 
-@Directive()
+@Directive({
+    standalone: true
+})
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class FormBaseComponent {
     static SAVE_OUTCOME_ID: string = '$save';
@@ -116,12 +118,15 @@ export abstract class FormBaseComponent {
         return outcomeName === FormBaseComponent.COMPLETE_OUTCOME_NAME ? FormBaseComponent.COMPLETE_BUTTON_COLOR : null;
     }
 
-    isOutcomeButtonEnabled(outcome: FormOutcomeModel): boolean {
+    isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
         if (this.form.readOnly) {
             return false;
         }
 
         if (outcome) {
+            if (outcome.skipValidation) {
+                return true;
+            }
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
                 return !this.disableSaveButton;
             }
@@ -133,6 +138,7 @@ export abstract class FormBaseComponent {
             }
             return this.form.isValid;
         }
+
         return false;
     }
 
@@ -210,10 +216,14 @@ export abstract class FormBaseComponent {
     }
 
     abstract onRefreshClicked(): void;
+
     abstract saveTaskForm(): void;
+
     abstract completeTaskForm(outcome?: string): void;
 
     protected abstract onTaskSaved(form: FormModel): void;
+
     protected abstract storeFormAsMetadata(): void;
+
     protected abstract onExecuteOutcome(outcome: FormOutcomeModel): boolean;
 }

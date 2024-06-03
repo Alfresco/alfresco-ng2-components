@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRenderingService } from '../../services/form-rendering.service';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../widgets/core';
-import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets';
-import { FormFieldComponent } from './form-field.component';
-import { FormBaseModule } from '../../form-base.module';
 import { CoreTestingModule } from '../../../testing';
+import { FormRenderingService } from '../../services/form-rendering.service';
+import { CheckboxWidgetComponent, FormFieldModel, FormFieldTypes, FormModel, TextWidgetComponent } from '../widgets';
+import { FormFieldComponent } from './form-field.component';
 
 describe('FormFieldComponent', () => {
     let fixture: ComponentFixture<FormFieldComponent>;
@@ -32,7 +30,7 @@ describe('FormFieldComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, FormBaseModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;

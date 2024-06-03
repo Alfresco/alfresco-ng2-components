@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Process Details component](../../../lib/process-services/src/lib/process-list/components/process-instance-details.component.ts "Defined in process-instance-details.component.ts")
+# [Process Details component](../../../lib/process-services/src/lib/process-list/components/process-instance-details/process-instance-details.component.ts "Defined in process-instance-details.component.ts")
 
 Displays detailed information about a specified process instance
 

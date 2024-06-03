@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from './oidc-authentication.service';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 declare let jasmine: any;
 

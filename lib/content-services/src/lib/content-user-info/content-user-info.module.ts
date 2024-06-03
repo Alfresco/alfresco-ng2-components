@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContentUserInfoComponent } from './content-user-info.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipeModule } from '@alfresco/adf-core';
+import { FullNamePipe, InitialUsernamePipe, PipeModule } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -34,7 +34,9 @@ import { MatCardModule } from '@angular/material/card';
         MatTabsModule,
         MatCardModule,
         TranslateModule,
-        PipeModule
+        PipeModule,
+        InitialUsernamePipe,
+        FullNamePipe
     ],
     exports: [ContentUserInfoComponent]
 })

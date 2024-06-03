@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,13 @@ import {
     TaskHeaderCloudPage,
     StartTasksCloudPage,
     PeopleCloudComponentPage,
-    TasksService, createApiService,
+    TasksService,
+    createApiService,
     IdentityService,
     GroupIdentityService
 } from '@alfresco/adf-testing';
 
 describe('Start Task', () => {
-
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginPage();
@@ -59,7 +59,10 @@ describe('Start Task', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
-    let apsUser; let testUser; let activitiUser; let groupInfo;
+    let apsUser;
+    let testUser;
+    let activitiUser;
+    let groupInfo;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
@@ -117,8 +120,8 @@ describe('Start Task', () => {
         const taskId = await taskList.getIdCellValue(unassignedTaskName);
         await taskList.selectRow(unassignedTaskName);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-        await expect(await taskHeaderCloudPage.getId()).toBe(taskId);
-        await expect(await taskHeaderCloudPage.getAssignee()).toBe('No assignee');
+        expect(await taskHeaderCloudPage.getId()).toBe(taskId);
+        expect(await taskHeaderCloudPage.getAssignee()).toBe('No assignee');
     });
 
     it('[C291956] Should be able to create a new standalone task without assignee', async () => {
@@ -197,7 +200,7 @@ describe('Start Task', () => {
         await taskFilter.clickTaskFilter('my-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
 
-        await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+        expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
     });
 
     it('[C305050] Should be able to reassign the removed user when starting a new task', async () => {
@@ -221,6 +224,6 @@ describe('Start Task', () => {
 
         await taskList.selectRow(reassignTaskName);
 
-        await expect(await taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
+        expect(await taskHeaderCloudPage.getAssignee()).toBe(apsUser.username);
     });
 });

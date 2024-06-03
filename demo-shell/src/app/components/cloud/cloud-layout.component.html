@@ -3,7 +3,10 @@
     <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="270" [stepOver]="780">
       <adf-sidenav-layout-header>
         <ng-template>
-          <app-cloud-breadcrumbs></app-cloud-breadcrumbs>
+            <div class="app-cloud-layout-toolbar">
+                <span>{{appName}}</span>
+                <span *ngIf="filterName">{{ ' > ' + (filterName | translate)}}</span>
+            </div>
         </ng-template>
       </adf-sidenav-layout-header>
       <adf-sidenav-layout-navigation>

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UntypedFormControl } from '@angular/forms';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { CoreTestingModule } from '../../../testing';
 import { InplaceFormInputComponent } from './inplace-form-input.component';
 
 describe('InplaceFormInputComponent', () => {
@@ -27,8 +27,7 @@ describe('InplaceFormInputComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [InplaceFormInputComponent]
+            imports: [CoreTestingModule, InplaceFormInputComponent]
         }).compileComponents();
     });
 

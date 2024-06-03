@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { formModelTabs } from '../../mock';
 import { FormService } from './form.service';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { CoreTestingModule } from '../../testing';
 
 describe('Form service', () => {
     let service: FormService;

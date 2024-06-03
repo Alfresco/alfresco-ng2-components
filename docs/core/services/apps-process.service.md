@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-16
 ---
 
-# [Apps Process service](../../../lib/process-services/src/lib/app-list/services/apps-process.service.ts "Defined in apps-process.service.ts")
+# [Apps Process service](../../../lib/process-services/src/lib/services/apps-process.service.ts "Defined in apps-process.service.ts")
 
 Gets details of the Process Services apps that are deployed for the user.
 
@@ -13,10 +13,6 @@ Gets details of the Process Services apps that are deployed for the user.
 
 ### Methods
 
--   **getApplicationDetailsById**(appId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`>`<br/>
-    Gets the details for a specific app ID number.
-    -   _appId:_ `number`  - ID of the target app
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`>` - Details of the app
 -   **getDeployedApplications**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`[]>`<br/>
     Gets a list of deployed apps for this user.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AppDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md)`[]>` - The list of deployed apps

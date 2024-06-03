@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,11 +71,11 @@ describe('Process List - Pagination when adding processes', () => {
         await processFiltersPage.dataTable.waitTillContentLoaded();
         await processDetailsPage.checkProcessTitleIsDisplayed();
 
-        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of 20');
-        await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
+        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of 20');
+        expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
@@ -87,11 +87,11 @@ describe('Process List - Pagination when adding processes', () => {
         await paginationPage.clickOnNextPage();
         await processDetailsPage.checkProcessTitleIsDisplayed();
         await processFiltersPage.waitForTableBody();
-        await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
-        await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-25 of 25');
-        await expect(await processFiltersPage.numberOfProcessRows()).toBe(10);
+        expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
+        expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
+        expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
+        expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-25 of 25');
+        expect(await processFiltersPage.numberOfProcessRows()).toBe(10);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsEnabled();
     });

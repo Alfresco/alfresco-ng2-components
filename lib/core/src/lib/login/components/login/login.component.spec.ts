@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import { Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { EMPTY, of, throwError } from 'rxjs';
-import { OidcAuthenticationService } from '../../../auth/services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../../../auth/oidc/oidc-authentication.service';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -324,7 +324,7 @@ describe('LoginComponent', () => {
         it('should render the default copyright text', () => {
             expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
             expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual(
-                '\u00A9 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.'
+                '\u00A9 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.'
             );
         });
 

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { FormModelsApi } from '@alfresco/js-api';
+import { FormModelsApi, FormRepresentation } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
 import { FormDefinitionModel } from '../model/form-definition.model';
 
@@ -44,7 +44,7 @@ export class EditorService {
      * @param formModel Model data for the form
      * @returns Data for the saved form
      */
-    saveForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
+    saveForm(formId: number, formModel: FormDefinitionModel): Observable<FormRepresentation> {
         return from(this.editorApi.saveForm(formId, formModel));
     }
 

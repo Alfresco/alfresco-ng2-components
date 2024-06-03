@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,25 +17,36 @@
 
 export class DataTablePathParserHelper {
     private readonly removeSquareBracketsRegEx = /^\[(.*)\]$/;
+    private readonly indexReferencesRegEx = /(\[\d+\])+$/;
 
     retrieveDataFromPath(data: any, path: string): any[] {
-        const properties = this.splitPathIntoProperties(path);
-        const currentProperty = this.removeSquareBracketsFromProperty(properties.shift());
-
-        if (!this.isPropertyExistsInData(data, currentProperty)) {
+        if (!path) {
             return [];
         }
 
-        const nestedData = data[currentProperty];
+        const properties = this.splitPathIntoProperties(path);
+        const currentProperty = properties.shift();
+        const propertyIndexReferences = this.getIndexReferencesFromProperty(currentProperty);
+        const purePropertyName = this.extractPurePropertyName(currentProperty);
+        const isPropertyWithMultipleIndexReferences = propertyIndexReferences.length > 1;
 
-        if (Array.isArray(nestedData)) {
-            return nestedData;
+        if (isPropertyWithMultipleIndexReferences || !this.isPropertyExistsInData(data, purePropertyName)) {
+            return [];
+        }
+
+        const isPropertyWithSingleIndexReference = propertyIndexReferences.length === 1;
+        const nestedData = isPropertyWithSingleIndexReference ? data[purePropertyName]?.[propertyIndexReferences[0]] : data[purePropertyName];
+
+        if (nestedData && properties.length === 0) {
+            if (this.isDataArrayOrObject(nestedData)) {
+                return Array.isArray(nestedData) ? nestedData : [nestedData];
+            }
         }
 
         return this.retrieveDataFromPath(nestedData, properties.join('.'));
     }
 
-    private splitPathIntoProperties(path: string): string[] {
+    splitPathIntoProperties(path: string): string[] {
         const properties: string[] = [];
         const separator = '.';
         const openBracket = '[';
@@ -44,6 +55,10 @@ export class DataTablePathParserHelper {
         let currentPropertyBuffer = '';
         let bracketCount = 0;
         const isPropertySeparatorOutsideBrackets = () => bracketCount === 0;
+
+        if (!path) {
+            return properties;
+        }
 
         for (const char of path) {
             switch (char) {
@@ -76,11 +91,49 @@ export class DataTablePathParserHelper {
         return properties;
     }
 
+    getIndexReferencesFromProperty(property: string): number[] {
+        const match = this.indexReferencesRegEx.exec(property);
+        if (!match) {
+            return [];
+        }
+
+        const indexReferencesString = match[0];
+        const numbersFromBrackets = indexReferencesString.slice(1, -1).split('][').map(Number);
+
+        return numbersFromBrackets;
+    }
+
+    extractPurePropertyName(property: string): string {
+        const propertyIndexReferences = this.getIndexReferencesFromProperty(property);
+        const numberOfIndexReferences = propertyIndexReferences.length;
+
+        if (property == null) {
+            return '';
+        } else if (numberOfIndexReferences !== 0) {
+            return this.removeSquareBracketsAndIndexReferencesFromProperty(property);
+        } else {
+            return this.removeSquareBracketsFromProperty(property);
+        }
+    }
+
+    private removeSquareBracketsAndIndexReferencesFromProperty(property: string): string {
+        const propertyWithoutIndexReferences = property?.replace(this.indexReferencesRegEx, '');
+
+        return this.removeSquareBracketsFromProperty(propertyWithoutIndexReferences);
+    }
+
     private removeSquareBracketsFromProperty(property: string): string {
         return property?.replace(this.removeSquareBracketsRegEx, '$1');
     }
 
     private isPropertyExistsInData(data: any, property: string): boolean {
         return Object.prototype.hasOwnProperty.call(data, property);
+    }
+
+    private isDataArrayOrObject(data: any): boolean {
+        if (data == null) {
+            return false;
+        }
+        return Array.isArray(data) || typeof data === 'object';
     }
 }

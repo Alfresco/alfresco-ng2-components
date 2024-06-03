@@ -120,7 +120,7 @@ for more information about installing and using the source code.
 | [Sidenav Layout component](core/components/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/src/lib/layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Snackbar Content Component](core/components/snackbar-content.component.md) | Custom content for Snackbar which allows use icon as action. | [Source](../lib/core/src/lib/snackbar-content/snackbar-content.component.ts) |
 | [Sorting Picker Component](core/components/sorting-picker.component.md) | Selects from a set of predefined sorting definitions and directions. | [Source](../lib/core/src/lib/sorting-picker/sorting-picker.component.ts) |
-| [Start Form component](core/components/start-form.component.md) | Displays the Start Form for a process. | [Source](../lib/process-services/src/lib/form/start-form.component.ts) |
+| [Start Form component](core/components/start-form.component.md) | Displays the Start Form for a process. | [Source](../lib/process-services/src/lib/form/start-form/start-form.component.ts) |
 | [Text Mask directive](core/components/text-mask.component.md) | Implements text field input masks. | [Source](../lib/core/src/lib/form/components/widgets/text/text-mask.component.ts) |
 | [Toolbar Divider Component](core/components/toolbar-divider.component.md) | Divides groups of elements in a Toolbar with a visual separator. | [Source](../lib/core/src/lib/toolbar/toolbar-divider.component.ts) |
 | [Toolbar Title Component](core/components/toolbar-title.component.md) | Supplies custom HTML to be included in a Toolbar component title. | [Source](../lib/core/src/lib/toolbar/toolbar-title.component.ts) |
@@ -163,29 +163,27 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Bpm User model](core/models/bpm-user.model.md) | Contains information about a Process Services user. | [Source](../lib/process-services/src/lib/common/models/bpm-user.model.ts) |
 | [Ecm User model](core/models/ecm-user.model.md) | Contains information about a Content Services user. | [Source](../lib/content-services/src/lib/common/models/ecm-user.model.ts) |
 | [Form Field model](core/models/form-field.model.md) | Contains the value and metadata for a field of a Form component. | [Source](../lib/core/src/lib/form/components/widgets/core/form-field.model.ts) |
 | [Product Version model](core/models/product-version.model.md) | Contains version and license information classes for Alfresco products. | [Source](../lib/core/src/lib/models/product-version.model.ts) |
-| [User Process model](core/models/user-process.model.md) | Represents a Process Services user. | [Source](../lib/process-services/src/lib/common/models/user-process.model.ts) |
 
 ### Pipes
 
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [App Config Pipe](core/pipes/app-config.pipe.md) | Retrieves values from the application configuration file directly. | [Source](../lib/core/src/lib/app-config/app-config.pipe.ts) |
-| [Decimal Number Pipe](core/pipes/decimal-number.pipe.md) | Transforms a number to have a certain amount of digits in its integer part and also in its decimal part. | [Source](../lib/core/src/lib/pipes/decimal-number.pipe.ts) |
-| [File Size pipe](core/pipes/file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc. | [Source](../lib/core/src/lib/pipes/file-size.pipe.ts) |
-| [Format Space pipe](core/pipes/format-space.pipe.md) | Replaces all the white space in a string with a supplied character. | [Source](../lib/core/src/lib/pipes/format-space.pipe.ts) |
-| [Full name pipe](core/pipes/full-name.pipe.md) | Joins the first and last name properties from a UserProcessModel object into a single string. | [Source](../lib/core/src/lib/pipes/full-name.pipe.ts) |
-| [Localized Date pipe](core/pipes/localized-date.pipe.md) | Converts a date to a given format and locale. | [Source](../lib/core/src/lib/pipes/localized-date.pipe.ts) |
-| [Mime Type Icon pipe](core/pipes/mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type. | [Source](../lib/core/src/lib/pipes/mime-type-icon.pipe.ts) |
+| Name | Description                                                                                                                                                                                                                   | Source link |
+| ---- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ----------- |
+| [App Config Pipe](core/pipes/app-config.pipe.md) | Retrieves values from the application configuration file directly.                                                                                                                                                            | [Source](../lib/core/src/lib/app-config/app-config.pipe.ts) |
+| [Decimal Number Pipe](core/pipes/decimal-number.pipe.md) | Transforms a number to have a certain amount of digits in its integer part and also in its decimal part.                                                                                                                      | [Source](../lib/core/src/lib/pipes/decimal-number.pipe.ts) |
+| [File Size pipe](core/pipes/file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc.                                                                                                                                                                  | [Source](../lib/core/src/lib/pipes/file-size.pipe.ts) |
+| [Format Space pipe](core/pipes/format-space.pipe.md) | Replaces all the white space in a string with a supplied character.                                                                                                                                                           | [Source](../lib/core/src/lib/pipes/format-space.pipe.ts) |
+| [Full name pipe](core/pipes/full-name.pipe.md) | Joins the first and last name properties from a `UserLike` object into a single string.                                                                                                                                       | [Source](../lib/core/src/lib/pipes/full-name.pipe.ts) |
+| [Localized Date pipe](core/pipes/localized-date.pipe.md) | Converts a date to a given format and locale.                                                                                                                                                                                 | [Source](../lib/core/src/lib/pipes/localized-date.pipe.ts) |
+| [Mime Type Icon pipe](core/pipes/mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type.                                                                                                                                                                                   | [Source](../lib/core/src/lib/pipes/mime-type-icon.pipe.ts) |
 | [Multi Value Pipe](core/pipes/multi-value.pipe.md) | Takes an array of strings and turns it into one string where items are separated by a separator. The default separator applied to the list is the comma ,  however, you can set your own separator in the params of the pipe. | [Source](../lib/core/src/lib/pipes/multi-value.pipe.ts) |
-| [Node Name Tooltip pipe](core/pipes/node-name-tooltip.pipe.md) | Formats the tooltip for a Node. | [Source](../lib/content-services/src/lib/pipes/node-name-tooltip.pipe.ts) |
-| [Text Highlight pipe](core/pipes/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/src/lib/pipes/text-highlight.pipe.ts) |
-| [Time Ago pipe](core/pipes/time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/src/lib/pipes/time-ago.pipe.ts) |
-| [User Initial pipe](core/pipes/user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../lib/core/src/lib/pipes/user-initial.pipe.ts) |
-| [Date Time pipe](core/pipes/date-time.pipe.md) | Converts a given input value into a Date object and adjusts it according to the specified format and timezone offset. | [Source](../lib/core/src/lib/pipes/date-time.pipe.ts) |
+| [Node Name Tooltip pipe](core/pipes/node-name-tooltip.pipe.md) | Formats the tooltip for a Node.                                                                                                                                                                                               | [Source](../lib/content-services/src/lib/pipes/node-name-tooltip.pipe.ts) |
+| [Text Highlight pipe](core/pipes/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string.                                                                                                                                                    | [Source](../lib/core/src/lib/pipes/text-highlight.pipe.ts) |
+| [Time Ago pipe](core/pipes/time-ago.pipe.md) | Converts a recent past date into a number of days ago.                                                                                                                                                                        | [Source](../lib/core/src/lib/pipes/time-ago.pipe.ts) |
+| [User Initial pipe](core/pipes/user-initial.pipe.md) | Takes the name fields of a `UserLike` object and extracts and formats the initials.                                                                                                                                            | [Source](../lib/core/src/lib/pipes/user-initial.pipe.ts) |
+| [Date Time pipe](core/pipes/date-time.pipe.md) | Converts a given input value into a Date object and adjusts it according to the specified format and timezone offset.                                                                                                         | [Source](../lib/core/src/lib/pipes/date-time.pipe.ts) |
 
 ### Services
 
@@ -194,7 +192,7 @@ for more information about installing and using the source code.
 | [APS Alfresco Content Service](core/services/activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/process-services/src/lib/form/services/activiti-alfresco.service.ts) |
 | [Alfresco Api Service](core/services/alfresco-api.service.md) | Provides access to an initialized AlfrescoJSApi instance. | [Source](../lib/core/src/lib/services/alfresco-api.service.ts) |
 | [App Config service](core/services/app-config.service.md) | Supports app configuration settings, stored server side. | [Source](../lib/core/src/lib/app-config/app-config.service.ts) |
-| [Apps Process service](core/services/apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../lib/process-services/src/lib/app-list/services/apps-process.service.ts) |
+| [Apps Process service](core/services/apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../lib/process-services/src/lib/services/apps-process.service.ts) |
 | [Auth Guard Bpm service](core/services/auth-guard-bpm.service.md) | Adds authentication with Process Services to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard-bpm.service.ts) |
 | [Auth Guard Ecm service](core/services/auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard-ecm.service.ts) |
 | [Auth Guard SSO Role service](core/services/auth-guard-sso-role.service.md) | Checks the user roles of a user. | [Source](../lib/core/src/lib/auth/guard/auth-guard-sso-role.service.ts) |
@@ -344,6 +342,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Dialog component](content-services/dialogs/dialog.md) | Dialog styled wrapper. | [Source](../lib/content-services/src/lib/dialogs/dialog/dialog.component.ts) |
 | [Confirm dialog component](content-services/dialogs/confirm.dialog.md) | Requests a yes/no choice from the user. | [Source](../lib/content-services/src/lib/dialogs/confirm.dialog.ts) |
 | [Library dialog component](content-services/dialogs/library.dialog.md) | Creates a new Content Services document library/site. | [Source](../lib/content-services/src/lib/dialogs/library/library.dialog.ts) |
 
@@ -395,7 +394,7 @@ for more information about installing and using the source code.
 | [Security Controls service](content-services/services/security-controls.service.md) | Manages security groups & marks in Content Services. | [Source](../lib/content-services/src/lib/security/services/security-controls-groups-marks-security.service.ts) |
 | [Sites service](content-services/services/sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/content-services/src/lib/common/services/sites.service.ts) |
 | [Tag service](content-services/services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/src/lib/tag/services/tag.service.ts) |
-| [Task Comments service](content-services/services/task-comments.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/process-services/src/lib/task-comments/services/task-comments.service.ts) |
+| [Task Comments service](content-services/services/task-comments.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/process-services/src/lib/task-comments/task-comments.service.ts) |
 
 <!--content-services end-->
 
@@ -415,49 +414,43 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Apps List Component](process-services/components/apps-list.component.md) | Shows all available apps. | [Source](../lib/process-services/src/lib/app-list/apps-list.component.ts) |
-| [Attach Form component](process-services/components/attach-form.component.md) | This component can be used when there is no form attached to a task and you want to add one. | [Source](../lib/process-services/src/lib/task-list/components/attach-form.component.ts) |
-| [Checklist Component](process-services/components/checklist.component.md) | Shows the checklist task functionality. | [Source](../lib/process-services/src/lib/task-list/components/checklist.component.ts) |
-| [Create Process Attachment component](process-services/components/create-process-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified process instance. | [Source](../lib/process-services/src/lib/attachment/create-process-attachment.component.ts) |
-| [Create Task Attachment Component](process-services/components/create-task-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified task. | [Source](../lib/process-services/src/lib/attachment/create-task-attachment.component.ts) |
+| [Attach Form component](process-services/components/attach-form.component.md) | This component can be used when there is no form attached to a task and you want to add one. | [Source](../lib/process-services/src/lib/task-list/components/attach-form/attach-form.component.ts) |
+| [Checklist Component](process-services/components/checklist.component.md) | Shows the checklist task functionality. | [Source](../lib/process-services/src/lib/task-list/components/checklist/checklist.component.ts) |
+| [Create Process Attachment component](process-services/components/create-process-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified process instance. | [Source](../lib/process-services/src/lib/attachment/create-process-attachment/create-process-attachment.component.ts) |
+| [Create Task Attachment Component](process-services/components/create-task-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified task. | [Source](../lib/process-services/src/lib/attachment/create-task-attachment/create-task-attachment.component.ts) |
 | [Form custom outcomes component](process-services/components/form-custom-outcome.component.md) | Supplies custom outcome buttons to be included in Form component. | [Source](../lib/process-services/src/lib/form/form-custom-outcomes.component.ts) |
 | [Form component](process-services/components/form.component.md) | Shows a Form from APS | [Source](../lib/process-services/src/lib/form/form.component.ts) |
 | [People list component](process-services/components/people-list.component.md) | Shows a list of users (people). | [Source](../lib/process-services/src/lib/people/components/people-list/people-list.component.ts) |
 | [People Search component](process-services/components/people-search.component.md) | Searches users/people. | [Source](../lib/process-services/src/lib/people/components/people-search/people-search.component.ts) |
 | [People Component](process-services/components/people.component.md) | Displays users involved with a specified task | [Source](../lib/process-services/src/lib/people/components/people/people.component.ts) |
-| [Process Attachment List component](process-services/components/process-attachment-list.component.md) | Displays documents attached to a specified process instance. | [Source](../lib/process-services/src/lib/attachment/process-attachment-list.component.ts) |
+| [Process Attachment List component](process-services/components/process-attachment-list.component.md) | Displays documents attached to a specified process instance. | [Source](../lib/process-services/src/lib/attachment/process-attachment-list/process-attachment-list.component.ts) |
 | [Process Instance Comments component](process-services/components/process-comments.component.md) | Displays comments associated with a particular process instance and allows the user to add new comments. | [Source](../lib/process-services/src/lib/process-comments/process-comments.component.ts) |
-| [Process Filters Component](process-services/components/process-filters.component.md) | Collection of criteria used to filter process instances, which may be customized by users. | [Source](../lib/process-services/src/lib/process-list/components/process-filters.component.ts) |
-| [Process Details component](process-services/components/process-instance-details.component.md) | Displays detailed information about a specified process instance | [Source](../lib/process-services/src/lib/process-list/components/process-instance-details.component.ts) |
-| [Process Instance Details Header component](process-services/components/process-instance-header.component.md) | Sub-component of the process details component, which renders some general information about the selected process. | [Source](../lib/process-services/src/lib/process-list/components/process-instance-header.component.ts) |
-| [Process Instance Tasks component](process-services/components/process-instance-tasks.component.md) | Lists both the active and completed tasks associated with a particular process instance | [Source](../lib/process-services/src/lib/process-list/components/process-instance-tasks.component.ts) |
-| [Process Instance List](process-services/components/process-list.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services/src/lib/process-list/components/process-list.component.ts) |
+| [Process Filters Component](process-services/components/process-filters.component.md) | Collection of criteria used to filter process instances, which may be customized by users. | [Source](../lib/process-services/src/lib/process-list/components/process-filters/process-filters.component.ts) |
+| [Process Details component](process-services/components/process-instance-details.component.md) | Displays detailed information about a specified process instance | [Source](../lib/process-services/src/lib/process-list/components/process-instance-details/process-instance-details.component.ts) |
+| [Process Instance Details Header component](process-services/components/process-instance-header.component.md) | Sub-component of the process details component, which renders some general information about the selected process. | [Source](../lib/process-services/src/lib/process-list/components/process-instance-header/process-instance-header.component.ts) |
+| [Process Instance Tasks component](process-services/components/process-instance-tasks.component.md) | Lists both the active and completed tasks associated with a particular process instance | [Source](../lib/process-services/src/lib/process-list/components/process-instance-tasks/process-instance-tasks.component.ts) |
+| [Process Instance List](process-services/components/process-list.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services/src/lib/process-list/components/process-list/process-list.component.ts) |
 | [Process User Info component](process-services/components/process-user-info.component.md) | Shows user information for PROCESS and ALL mode. | [Source](../lib/process-services/src/lib/process-user-info/process-user-info.component.ts) |
-| [Select App Component](process-services/components/select-apps-dialog.component.md) | Shows all available apps and returns the selected app. | [Source](../lib/process-services/src/lib/app-list/select-apps-dialog.component.ts) |
-| [Start Process component](process-services/components/start-process.component.md) | Starts a process. | [Source](../lib/process-services/src/lib/process-list/components/start-process.component.ts) |
-| [Start Task Component](process-services/components/start-task.component.md) | Creates/Starts a new task for the specified app. | [Source](../lib/process-services/src/lib/task-list/components/start-task.component.ts) |
-| [Task Attachment List Component](process-services/components/task-attachment-list.component.md) | Displays documents attached to a specified task. | [Source](../lib/process-services/src/lib/attachment/task-attachment-list.component.ts) |
+| [Select App Component](process-services/components/select-apps-dialog.component.md) | Shows all available apps and returns the selected app. | [Source](../lib/process-services/src/lib/app-list/select-apps-dialog/select-apps-dialog.component.ts) |
+| [Start Process component](process-services/components/start-process.component.md) | Starts a process. | [Source](../lib/process-services/src/lib/process-list/components/start-process/start-process.component.ts) |
+| [Start Task Component](process-services/components/start-task.component.md) | Creates/Starts a new task for the specified app. | [Source](../lib/process-services/src/lib/task-list/components/start-task/start-task.component.ts) |
+| [Task Attachment List Component](process-services/components/task-attachment-list.component.md) | Displays documents attached to a specified task. | [Source](../lib/process-services/src/lib/attachment/task-attachment-list/task-attachment-list.component.ts) |
 | [Task Comments Component](process-services/components/task-comments.component.md) | Displays comments from users involved in a specified task and allows an involved user to add a comment to a task. | [Source](../lib/process-services/src/lib/task-comments/task-comments.component.ts) |
-| [Task Details component](process-services/components/task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../lib/process-services/src/lib/task-list/components/task-details.component.ts) |
-| [Task Filters component](process-services/components/task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/src/lib/task-list/components/task-filters.component.ts) |
+| [Task Details component](process-services/components/task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../lib/process-services/src/lib/task-list/components/task-details/task-details.component.ts) |
+| [Task Filters component](process-services/components/task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/src/lib/task-list/components/task-filters/task-filters.component.ts) |
 | [Task Form component](process-services/components/task-form.component.md) | Shows a form for a task. | [Source](../lib/process-services/src/lib/task-list/components/task-form/task-form.component.ts) |
-| [Task Header component](process-services/components/task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/src/lib/task-list/components/task-header.component.ts) |
-| [Task List component](process-services/components/task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/src/lib/task-list/components/task-list.component.ts) |
-| [Task Standalone component](process-services/components/task-standalone.component.md) | This component can be used when the task doesn't belong to any processes. | [Source](../lib/process-services/src/lib/task-list/components/task-standalone.component.ts) |
+| [Task Header component](process-services/components/task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/src/lib/task-list/components/task-header/task-header.component.ts) |
+| [Task List component](process-services/components/task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/src/lib/task-list/components/task-list/task-list.component.ts) |
+| [Task Standalone component](process-services/components/task-standalone.component.md) | This component can be used when the task doesn't belong to any processes. | [Source](../lib/process-services/src/lib/task-list/components/task-standalone/task-standalone.component.ts) |
 
 ### Directives
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Claim Task Directive](process-services/directives/claim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/claim-task.directive.ts) |
-| [Process Audit Directive](process-services/directives/process-audit.directive.md) | Fetches the Process Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/process-list/components/process-audit.directive.ts) |
-| [Task Audit Directive](process-services/directives/task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/task-list/components/task-audit.directive.ts) |
+| [Process Audit Directive](process-services/directives/process-audit.directive.md) | Fetches the Process Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/process-list/components/process-audit/process-audit.directive.ts) |
+| [Task Audit Directive](process-services/directives/task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/task-list/components/task-audit/task-audit.directive.ts) |
 | [Unclaim Task Directive](process-services/directives/unclaim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/unclaim-task.directive.ts) |
-
-### Pipes
-
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [Process name pipe](process-services/pipes/process-name.pipe.md) | When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided. | [Source](../lib/process-services/src/lib/pipes/process-name.pipe.ts) |
 
 ### Services
 

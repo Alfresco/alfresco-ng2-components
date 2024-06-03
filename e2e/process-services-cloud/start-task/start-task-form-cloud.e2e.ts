@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@ import {
     AppListCloudPage,
     BreadcrumbDropdownPage,
     StringUtil,
-    StartTasksCloudPage, createApiService,
+    StartTasksCloudPage,
+    createApiService,
     IdentityService,
     GroupIdentityService,
     TaskFormCloudComponent,
@@ -34,7 +35,8 @@ import {
     ContentNodeSelectorDialogPage,
     ProcessInstancesService,
     ProcessDefinitionsService,
-    FileBrowserUtil, ProcessCloudWidgetPage,
+    FileBrowserUtil,
+    ProcessCloudWidgetPage,
     QueryService
 } from '@alfresco/adf-testing';
 import { StartProcessCloudConfiguration } from './../config/start-process-cloud.config';
@@ -43,7 +45,6 @@ import { ProcessDetailsCloudDemoPage } from './../pages/process-details-cloud-de
 import { FileModel } from '../../models/ACS/file.model';
 
 describe('Start Task Form', () => {
-
     const loginSSOPage = new LoginPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const navigationBarPage = new NavigationBarPage();
@@ -77,11 +78,17 @@ describe('Start Task Form', () => {
     const startProcessCloudConfig = startProcessCloudConfiguration.getConfiguration();
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
-    let testUser; let groupInfo;
+    let testUser;
+    let groupInfo;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
-    let processDefinition; let uploadLocalFileProcess; let uploadContentFileProcess; let uploadDefaultFileProcess;
-        let cancelUploadFileProcess; let completeUploadFileProcess; let downloadContentFileProcess;
+    let processDefinition;
+    let uploadLocalFileProcess;
+    let uploadContentFileProcess;
+    let uploadDefaultFileProcess;
+    let cancelUploadFileProcess;
+    let completeUploadFileProcess;
+    let downloadContentFileProcess;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const pdfFile = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const pdfFileModel = new FileModel({
@@ -99,15 +106,17 @@ describe('Start Task Form', () => {
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
         await apiService.login(testUser.username, testUser.password);
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processInstancesService = new ProcessInstancesService(apiService);
-        processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.uploadFileProcess, candidateBaseApp);
+        processDefinition = await processDefinitionService.getProcessDefinitionByName(
+            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.uploadFileProcess,
+            candidateBaseApp
+        );
 
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
@@ -186,8 +195,8 @@ describe('Start Task Form', () => {
             await widget.numberWidget().setFieldValue('Number07vyx9', 26);
             await taskFormCloudComponent.checkSaveButtonIsDisplayed();
             await taskFormCloudComponent.clickSaveButton();
-            await expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample');
-            await expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
+            expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample');
+            expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
 
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
@@ -195,12 +204,12 @@ describe('Start Task Form', () => {
             await appListCloudComponent.goToApp(candidateBaseApp);
             await taskList.getDataTable().waitForTableBody();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await taskList.checkContentIsDisplayedByName(standaloneTaskName);
             await taskList.selectRow(standaloneTaskName);
             await taskFormCloudComponent.formFields().checkFormIsDisplayed();
-            await expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample');
-            await expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
+            expect(await widget.textWidget().getFieldValue('FirstName')).toBe('sample');
+            expect(await widget.numberWidget().getFieldValue('Number07vyx9')).toBe('26');
             await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
         });
 
@@ -209,9 +218,11 @@ describe('Start Task Form', () => {
             await startTask.checkFormIsDisplayed();
             await startTask.checkFormDefinitionIsNotDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.uploadfileform);
             await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.starteventform);
-            await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+            await startTask.checkFormDefinitionIsDisplayed(
+                browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations
+            );
         });
-   });
+    });
 
     describe('Attach content to process-cloud task form using upload widget', async () => {
         beforeEach(async () => {
@@ -268,16 +279,16 @@ describe('Start Task Form', () => {
             const contentFileWidget = widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
             await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            await expect(await breadCrumbDropdownPage.getTextOfCurrentFolder()).toBe(testUser.username);
+            expect(await breadCrumbDropdownPage.getTextOfCurrentFolder()).toBe(testUser.username);
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowContentIsDisplayed(folderName);
-            await expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
-            await expect(await contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
+            expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
+            expect(await contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
 
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(folderName);
             await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(folderName);
-            await expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
-            await expect(await contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
+            expect(await contentNodeSelectorDialogPage.checkCancelButtonIsEnabled()).toBe(true);
+            expect(await contentNodeSelectorDialogPage.checkCopyMoveButtonIsEnabled()).toBe(false);
             await contentNodeSelectorDialogPage.clickCancelButton();
             await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
         });
@@ -379,7 +390,7 @@ describe('Start Task Form', () => {
             const taskId = await taskHeaderCloudPage.getId();
             await taskFormCloudComponent.checkCompleteButtonIsDisplayed();
             await taskFormCloudComponent.clickCompleteButton();
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await taskList.checkContentIsNotDisplayedById(taskId);
 
             await taskFilter.clickTaskFilter('completed-tasks');
@@ -416,7 +427,7 @@ describe('Start Task Form', () => {
 
             const taskId = await taskHeaderCloudPage.getId();
             await taskFormCloudComponent.clickCompleteButton();
-            await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+            expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
             await taskList.checkContentIsNotDisplayedById(taskId);
 
             await taskFilter.clickTaskFilter('completed-tasks');
@@ -428,5 +439,5 @@ describe('Start Task Form', () => {
             await contentFileWidget.downloadFile(testFileModel.name);
             await FileBrowserUtil.isFileDownloaded(testFileModel.name);
         });
-   });
+    });
 });

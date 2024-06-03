@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,7 @@
 
 import { browser } from 'protractor';
 
-import {
-    ApplicationsUtil,
-    BrowserVisibility,
-    createApiService,
-    LoginPage, UserModel,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { ApplicationsUtil, BrowserVisibility, createApiService, LoginPage, UserModel, UsersActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
@@ -32,7 +25,6 @@ import CONSTANTS = require('../../util/constants');
 import Task = require('../../models/APS/Task');
 
 describe('Start Task - Task App', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -64,7 +56,7 @@ describe('Start Task - Task App', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
-    afterEach( async () => {
+    afterEach(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
@@ -81,7 +73,7 @@ describe('Start Task - Task App', () => {
         await taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
         await taskPage.taskDetails().checkAttachFormButtonIsEnabled();
         await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        await expect(await taskDetails.getNoFormMessage()).toEqual('No forms attached');
+        expect(await taskDetails.getNoFormMessage()).toEqual('No forms attached');
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', async () => {
@@ -95,7 +87,7 @@ describe('Start Task - Task App', () => {
         await taskPage.completeTaskNoForm();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow('Completed standalone task');
-        await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + 'Completed standalone task' + ' completed');
+        expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + 'Completed standalone task' + ' completed');
 
         await taskPage.formFields().noFormIsDisplayed();
         await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
@@ -139,7 +131,7 @@ describe('Start Task - Task App', () => {
 
         await taskPage.formFields().noFormIsDisplayed();
         await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        await expect(await taskDetails.getNoFormMessage()).toEqual('No forms attached');
+        expect(await taskDetails.getNoFormMessage()).toEqual('No forms attached');
     });
 
     it('[C329799] Form actions are enabled in assigned task', async () => {
@@ -164,8 +156,8 @@ describe('Start Task - Task App', () => {
         await widget.textWidget().isWidgetVisible(app.form_fields.form_fieldId);
         await widget.textWidget().setValue(app.form_fields.form_fieldId, 'value');
 
-        await expect(await taskPage.formFields().isSaveFormButtonEnabled()).toEqual(true);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isSaveFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
         await taskPage.formFields().completeForm();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
@@ -173,9 +165,9 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().selectRow(taskName);
         await taskPage.formFields().checkFormIsDisplayed();
 
-        await expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('value');
+        expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('value');
 
         await BrowserVisibility.waitUntilElementIsNotVisible(await taskPage.formFields().saveButton);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
     });
 });

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,11 +72,11 @@ describe('Radio Buttons Widget', () => {
 
     it('[C274704] Should be able to set visibility properties for Radio Button widget', async () => {
         await taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-        await expect(await widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
+        expect(await widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
         await widget.radioWidget().selectOption(app.FIELD.radio_buttons_id, 1);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 });

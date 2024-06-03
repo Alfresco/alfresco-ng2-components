@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,17 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'display-text-widget',
+    standalone: true,
     templateUrl: './display-text.widget.html',
     styleUrls: ['./display-text.widget.scss'],
     host: {
@@ -36,12 +39,11 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    imports: [MatTooltipModule, TranslateModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DisplayTextWidgetComponent extends WidgetComponent {
-
     constructor(public formService: FormService) {
-         super(formService);
+        super(formService);
     }
-
 }

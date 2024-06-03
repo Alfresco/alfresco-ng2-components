@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,60 +15,46 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
-
-import { MaterialModule } from './material.module';
-
-import { ProcessListModule } from './process-list/process-list.module';
-import { TaskListModule } from './task-list/task-list.module';
-import { AppsListModule } from './app-list/apps-list.module';
-import { ProcessCommentsModule } from './process-comments/process-comments.module';
-import { AttachmentModule } from './attachment/attachment.module';
-import { PeopleModule } from './people/people.module';
-import { FormModule } from './form/form.module';
+import { FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
-import { ProcessServicesPipeModule } from './pipes/process-services-pipe.module';
-import { TaskCommentsModule } from './task-comments/task-comments.module';
-import { ProcessUserInfoModule } from './process-user-info/process-user-info.module';
+import { ATTACHMENT_DIRECTIVES } from './attachment';
+import { APPS_LIST_DIRECTIVES } from './app-list';
+import { PEOPLE_DIRECTIVES } from './people';
+import { PROCESS_COMMENTS_DIRECTIVES } from './process-comments';
+import { PROCESS_LIST_DIRECTIVES } from './process-list';
+import { TASK_LIST_DIRECTIVES } from './task-list';
+import { FORM_DIRECTIVES } from './form';
+import { TASK_COMMENTS_DIRECTIVES } from './task-comments';
+import { PROCESS_USER_INFO_DIRECTIVES } from './process-user-info';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
     imports: [
-        CoreModule,
-        CommonModule,
-        ProcessCommentsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        ProcessListModule,
-        TaskListModule,
-        TaskCommentsModule,
-        AppsListModule,
-        ProcessUserInfoModule,
-        AttachmentModule,
-        PeopleModule,
-        FormModule,
-        ProcessServicesPipeModule
+        ...PROCESS_COMMENTS_DIRECTIVES,
+        ...PROCESS_LIST_DIRECTIVES,
+        ...TASK_LIST_DIRECTIVES,
+        ...TASK_COMMENTS_DIRECTIVES,
+        ...APPS_LIST_DIRECTIVES,
+        ...PROCESS_USER_INFO_DIRECTIVES,
+        ...ATTACHMENT_DIRECTIVES,
+        ...PEOPLE_DIRECTIVES,
+        ...FORM_DIRECTIVES
     ],
     providers: [
-        provideTranslations('adf-process-services', 'assets/adf-process-services')
+        provideTranslations('adf-process-services', 'assets/adf-process-services'),
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
     ],
     exports: [
-        CommonModule,
-        ProcessCommentsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ProcessListModule,
-        TaskListModule,
-        TaskCommentsModule,
-        AppsListModule,
-        ProcessUserInfoModule,
-        AttachmentModule,
-        PeopleModule,
-        FormModule,
-        ProcessServicesPipeModule
+        ...PROCESS_COMMENTS_DIRECTIVES,
+        ...PROCESS_LIST_DIRECTIVES,
+        ...TASK_LIST_DIRECTIVES,
+        ...TASK_COMMENTS_DIRECTIVES,
+        ...APPS_LIST_DIRECTIVES,
+        ...PROCESS_USER_INFO_DIRECTIVES,
+        ...ATTACHMENT_DIRECTIVES,
+        ...PEOPLE_DIRECTIVES,
+        ...FORM_DIRECTIVES
     ]
 })
 export class ProcessModule {
@@ -80,12 +66,6 @@ export class ProcessModule {
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: ProcessFormRenderingService }
             ]
-        };
-    }
-
-    static forChild(): ModuleWithProviders<ProcessModule> {
-        return {
-            ngModule: ProcessModule
         };
     }
 }

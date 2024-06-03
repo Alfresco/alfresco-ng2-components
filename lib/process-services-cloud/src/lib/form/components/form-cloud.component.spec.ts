@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,6 +65,7 @@ import { ProcessServicesCloudModule } from '../../process-services-cloud.module'
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
+import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -619,6 +620,28 @@ describe('FormCloudComponent', () => {
         formComponent.loadForm();
     });
 
+    it('should fetch and parse form definition by id and also set the process variables when data is provided and no process variables are present', (done) => {
+        spyOn(formCloudService, 'getForm').and.returnValue(of(fakeCloudForm));
+
+        const appName = 'test-app';
+        const formId = 'form-de8895be-d0d7-4434-beef-559b15305d72';
+        const variables: TaskVariableCloud[] = [
+            new TaskVariableCloud({ name: 'var1', value: 'value1' }),
+            new TaskVariableCloud({ name: 'var2', value: 'value2' })
+        ];
+        formComponent.formLoaded.subscribe(() => {
+            expect(formComponent.form).toBeDefined();
+            expect(formComponent.form.id).toBe(formId);
+            expect(formComponent.form.processVariables).toEqual(variables as any);
+            done();
+        });
+
+        formComponent.appName = appName;
+        formComponent.formId = formId;
+        formComponent.data = variables;
+        formComponent.loadForm();
+    });
+
     it('should handle error when getting form by definition id', () => {
         const error = 'Some error';
 
@@ -965,6 +988,20 @@ describe('FormCloudComponent', () => {
 
         const saveOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.SAVE_ACTION);
         expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
+    });
+
+    it('should enable outcome with skip validation property, even if the form is not valid', () => {
+        const formModel = new FormModel(cloudFormMock);
+        formComponent.form = formModel;
+        formModel.isValid = false;
+
+        const customOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
+            name: 'Custom',
+            skipValidation: true
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(customOutcome)).toBeTruthy();
     });
 
     it('should disable start process outcome button when disableStartProcessButton is true', () => {

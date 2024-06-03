@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,15 @@
  */
 
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 import { DownloadPromptActions } from '../../models/download-prompt.actions';
 
 @Component({
     selector: 'adf-download-prompt-dialog',
+    standalone: true,
+    imports: [MatDialogModule, TranslateModule, MatButtonModule],
     templateUrl: './download-prompt-dialog.component.html'
 })
 export class DownloadPromptDialogComponent {

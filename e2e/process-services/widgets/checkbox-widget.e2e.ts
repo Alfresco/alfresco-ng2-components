@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,10 +67,10 @@ describe('Checkbox Widget', () => {
 
     it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {
         await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, '2');
-        await expect(await widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_input_id);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C272812] Should be able to set visibility settings for Checkbox widget', async () => {

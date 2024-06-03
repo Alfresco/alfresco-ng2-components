@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { FormWidgetModel } from './form-widget.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
 export class FormOutcomeModel extends FormWidgetModel {
-
-    static SAVE_ACTION: string = 'SAVE';            // Activiti 'Save' action name
-    static COMPLETE_ACTION: string = 'COMPLETE';    // Activiti 'Complete' action name
-    static START_PROCESS_ACTION: string = 'START PROCESS';    // Activiti 'Start Process' action name
+    static SAVE_ACTION: string = 'SAVE'; // Activiti 'Save' action name
+    static COMPLETE_ACTION: string = 'COMPLETE'; // Activiti 'Complete' action name
+    static START_PROCESS_ACTION: string = 'START PROCESS'; // Activiti 'Start Process' action name
 
     isSystem: boolean = false;
     isSelected: boolean = false;
     isVisible: boolean = true;
+    skipValidation: boolean = false;
     visibilityCondition: WidgetVisibilityModel;
 
     constructor(form: any, json?: any) {
@@ -36,6 +36,7 @@ export class FormOutcomeModel extends FormWidgetModel {
 
         if (json) {
             this.isSystem = json.isSystem ? true : false;
+            this.skipValidation = json.skipValidation ?? false;
             this.isSelected = form && json.name === form.selectedOutcome ? true : false;
             this.visibilityCondition = new WidgetVisibilityModel(json.visibilityCondition);
         }

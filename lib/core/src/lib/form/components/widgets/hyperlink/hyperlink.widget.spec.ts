@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormModel } from '../core/form.model';
-import { HyperlinkWidgetComponent } from './hyperlink.widget';
-import { CoreTestingModule } from '../../../../testing';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CoreTestingModule } from '../../../../testing';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { HyperlinkWidgetComponent } from './hyperlink.widget';
 
 describe('HyperlinkWidgetComponent', () => {
     let widget: HyperlinkWidgetComponent;

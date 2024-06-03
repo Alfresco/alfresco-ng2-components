@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,20 @@
  */
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AlfrescoApiService, LoginDialogPanelComponent, TranslationService, AuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { DocumentListService, SitesService, SearchService } from '@alfresco/adf-content-services';
+import { DocumentListService, SitesService, SearchService, ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 import { ExternalAlfrescoApiService } from '../../services/external-alfresco-api.service';
 import { Node } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',
+    standalone: true,
+    imports: [CommonModule, MatDialogModule, LoginDialogPanelComponent, ContentNodeSelectorModule, MatButtonModule, TranslateModule],
     templateUrl: './attach-file-widget-dialog.component.html',
     styleUrls: ['./attach-file-widget-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,

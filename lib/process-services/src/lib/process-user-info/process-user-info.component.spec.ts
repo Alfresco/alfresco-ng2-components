@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,33 @@
 import { CoreTestingModule, UserInfoMode } from '@alfresco/adf-core';
 import { fakeEcmUser, fakeEcmUserNoImage } from '@alfresco/adf-content-services';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
-import { BpmUserModel } from '../common/models/bpm-user.model';
 import { ProcessUserInfoComponent } from './process-user-info.component';
-import { fakeBpmUser } from './mocks/bpm-user.service.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
+
+const fakeBpmUser: any = {
+    apps: [],
+    capabilities: null,
+    company: 'fake-company',
+    created: 'fake-create-date',
+    email: 'fakeBpm@fake.com',
+    externalId: 'fake-external-id',
+    firstName: 'fake-bpm-first-name',
+    lastName: 'fake-bpm-last-name',
+    groups: [],
+    id: 'fake-id',
+    lastUpdate: 'fake-update-date',
+    latestSyncTimeStamp: 'fake-timestamp',
+    password: 'fake-password',
+    pictureId: 12,
+    status: 'fake-status',
+    tenantId: 'fake-tenant-id',
+    tenantName: 'fake-tenant-name',
+    tenantPictureId: 'fake-tenant-picture-id',
+    type: 'fake-type'
+};
 
 describe('ProcessUserInfoComponent', () => {
     const profilePictureUrl = 'alfresco-logo.svg';
@@ -50,7 +69,7 @@ describe('ProcessUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatMenuModule]
+            imports: [CoreTestingModule, ProcessUserInfoComponent]
         });
         fixture = TestBed.createComponent(ProcessUserInfoComponent);
         component = fixture.componentInstance;
@@ -101,11 +120,10 @@ describe('ProcessUserInfoComponent', () => {
         });
 
         it('should show last name if first name is null', async () => {
-            const wrongBpmUser: BpmUserModel = new BpmUserModel({
+            component.bpmUser = {
                 firstName: null,
                 lastName: 'fake-last-name'
-            });
-            component.bpmUser = wrongBpmUser;
+            } as any;
             await whenFixtureReady();
             const fullNameElement = element.querySelector('#adf-userinfo-bpm-name-display');
             fixture.detectChanges();

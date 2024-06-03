@@ -3,6 +3,12 @@
         margin-bottom: 15px;
         display: flex;
         flex-direction: column;
+
+        .adf-label {
+            width: auto;
+            height: auto;
+            white-space: normal;
+        }
     }
 
     &-radio-button-container-horizontal {
@@ -35,6 +41,12 @@
 
     &-radio-button {
         margin: 5px;
+
+        label {
+            span {
+                white-space: normal;
+            }
+        }
     }
 
     &-radio-group-error-message .adf-error-container {

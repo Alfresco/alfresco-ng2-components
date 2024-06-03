@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,28 +17,25 @@
 
 import { SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ErrorWidgetComponent } from './error.component';
 import { CoreTestingModule } from '../../../../testing';
-import { ErrorMessageModel } from '../index';
+import { ErrorMessageModel } from '../core';
+import { ErrorWidgetComponent } from './error.component';
 
 describe('ErrorWidgetComponent', () => {
-
     let widget: ErrorWidgetComponent;
     let fixture: ComponentFixture<ErrorWidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(ErrorWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
     });
     const errorMessage: string = 'fake-error';
-    const errorMessageModel: ErrorMessageModel = new ErrorMessageModel({message: errorMessage});
+    const errorMessageModel: ErrorMessageModel = new ErrorMessageModel({ message: errorMessage });
     const errorChanges: SimpleChanges = {
         error: new SimpleChange(errorMessageModel, errorMessageModel, false)
     };

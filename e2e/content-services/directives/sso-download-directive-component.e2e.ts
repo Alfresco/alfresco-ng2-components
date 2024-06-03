@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,6 +80,8 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             true,
             browser.params.testConfig.appConfig.oauth2.clientId
         );
+
+        await browser.refresh();
 
         await loginSsoPage.loginSSOIdentityService(acsUser.username, acsUser.password);
 

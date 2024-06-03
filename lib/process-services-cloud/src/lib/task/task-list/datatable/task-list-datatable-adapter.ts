@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,17 +20,13 @@ import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } 
 import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
 
 export class TasksListDatatableAdapter extends ObjectDataTableAdapter {
-    constructor(
-        data: TaskInstanceCloudListViewModel[],
-        schema: DataColumn<ProcessListDataColumnCustomData>[]
-    ) {
+    constructor(data: TaskInstanceCloudListViewModel[], schema: DataColumn<ProcessListDataColumnCustomData>[]) {
         super(data, schema);
     }
 
     getColumnType(row: DataRow, col: DataColumn<ProcessListDataColumnCustomData>): string {
         if (col.customData?.columnType === PROCESS_LIST_CUSTOM_VARIABLE_COLUMN) {
-            const variableDisplayName = col.title;
-            const columnType = row.obj.variablesMap?.[variableDisplayName]?.type;
+            const columnType = row.obj.variablesMap?.[col.id]?.type;
             return columnType ?? 'text';
         }
 

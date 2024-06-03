@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ describe('Process List Test', () => {
         insertAppId: 'Insert App ID'
     };
 
-    let appWithDateFieldId: string | number;
+    let appWithDateFieldId: string;
     let procWithDate: ProcessInstanceRepresentation;
     let completedProcWithDate: ProcessInstanceRepresentation;
     let completedProcWithUserWidget: ProcessInstanceRepresentation;
@@ -83,7 +83,7 @@ describe('Process List Test', () => {
         await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.procWithUserWidget);
         completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.completedProcWithUserWidget);
 
-        appWithDateFieldId = await applicationsUtil.getAppDefinitionId(appDateModel.id);
+        appWithDateFieldId = (await applicationsUtil.getAppDefinitionId(appDateModel.id)).toString();
 
         const procWithDateTaskId = await processUtil.getProcessTaskId(completedProcWithDate.id);
 
@@ -191,12 +191,12 @@ describe('Process List Test', () => {
 
         const sortedProcessListNamesAsc = await processListDemoPage.getDisplayedProcessesNames();
 
-        await expect(JSON.stringify(processList) === JSON.stringify(sortedProcessListNamesAsc)).toBe(true);
+        expect(JSON.stringify(processList) === JSON.stringify(sortedProcessListNamesAsc)).toBe(true);
 
         await processListDemoPage.selectSorting('desc');
         await processListDemoPage.dataTable.waitTillContentLoaded();
 
         const sortedProcessListNamesDesc = await processListDemoPage.getDisplayedProcessesNames();
-        await expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessListNamesDesc)).toBe(true);
+        expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessListNamesDesc)).toBe(true);
     });
 });

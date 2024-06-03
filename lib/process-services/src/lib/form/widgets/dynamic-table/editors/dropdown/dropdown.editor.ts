@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,15 @@ import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { ProcessDefinitionService } from '../../../../services/process-definition.service';
 import { TaskFormService } from '../../../../services/task-form.service';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-dropdown-editor',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule],
     templateUrl: './dropdown.editor.html',
     styleUrls: ['./dropdown.editor.scss']
 })

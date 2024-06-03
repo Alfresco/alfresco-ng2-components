@@ -5,11 +5,9 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Form component](../../../lib/process-services/src/lib/form/form.component.ts "Defined in form.component.ts")
+# Form component
 
-Shows a [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) from APS
-
-(See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
+Renders a Form from Alfresco Process Services.
 
 ## Contents
 

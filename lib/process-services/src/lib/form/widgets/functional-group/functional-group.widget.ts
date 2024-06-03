@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,21 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, GroupModel, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, FormService, GroupModel, WidgetComponent } from '@alfresco/adf-core';
 import { catchError, debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
     selector: 'functional-group-widget',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, ReactiveFormsModule, MatAutocompleteModule, ErrorWidgetComponent],
     templateUrl: './functional-group.widget.html',
     styleUrls: ['./functional-group.widget.scss'],
     host: {

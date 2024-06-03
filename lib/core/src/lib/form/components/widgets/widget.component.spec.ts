@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,11 @@
  */
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { FormFieldModel } from './core/form-field.model';
-import { FormModel } from './core/form.model';
-import { WidgetComponent } from './widget.component';
-import { CoreTestingModule } from '../../../testing';
 import { filter } from 'rxjs/operators';
-import { FormRulesEvent } from '../../events/form-rules.event';
+import { CoreTestingModule } from '../../../testing';
+import { FormRulesEvent } from '../../events';
+import { FormFieldModel, FormModel } from './core';
+import { WidgetComponent } from './widget.component';
 
 describe('WidgetComponent', () => {
     let widget: WidgetComponent;

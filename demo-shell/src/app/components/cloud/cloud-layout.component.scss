@@ -2,10 +2,6 @@
     overflow: auto;
 }
 
-.app-cloud-layout-tab-body .mat-tab-body-wrapper {
-    height: 100%;
-}
-
 app-cloud-layout {
     .app-cloud-layout-tab-body {
         height: 100%;
@@ -18,5 +14,13 @@ app-cloud-layout {
             box-sizing: border-box;
             display: flex;
         }
+
+        & > div {
+            height: 100%;
+        }
+    }
+
+    .app-cloud-layout-toolbar {
+        display: flex;
     }
 }

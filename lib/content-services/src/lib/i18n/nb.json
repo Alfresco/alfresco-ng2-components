@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "Bruk",
+    "CANCEL": "Avbryt"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "Gjenopprett",

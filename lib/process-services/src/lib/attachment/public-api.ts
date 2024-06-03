@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,19 @@
  * limitations under the License.
  */
 
-export * from './task-attachment-list.component';
-export * from './process-attachment-list.component';
-export * from './create-process-attachment.component';
-export * from './create-task-attachment.component';
+import { TaskAttachmentListComponent } from './task-attachment-list/task-attachment-list.component';
+import { ProcessAttachmentListComponent } from './process-attachment-list/process-attachment-list.component';
+import { CreateProcessAttachmentComponent } from './create-process-attachment/create-process-attachment.component';
+import { AttachmentComponent } from './create-task-attachment/create-task-attachment.component';
 
-export * from './attachment.module';
+export * from './task-attachment-list/task-attachment-list.component';
+export * from './process-attachment-list/process-attachment-list.component';
+export * from './create-process-attachment/create-process-attachment.component';
+export * from './create-task-attachment/create-task-attachment.component';
+
+export const ATTACHMENT_DIRECTIVES = [
+    TaskAttachmentListComponent,
+    ProcessAttachmentListComponent,
+    CreateProcessAttachmentComponent,
+    AttachmentComponent
+] as const;

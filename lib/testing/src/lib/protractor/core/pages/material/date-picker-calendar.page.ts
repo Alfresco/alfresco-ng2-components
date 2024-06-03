@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,10 +40,10 @@ export class DatePickerCalendarPage {
         const afterCalendar = $(`td[class*="${materialLocators.Calendar.body.cell.root}"][aria-label="${afterDate}"]`);
         if (await afterCalendar.isPresent()) {
             const aria = await BrowserActions.getAttribute(afterCalendar, 'aria-disabled');
-            await expect(aria).toBe('true');
+            expect(aria).toBe('true');
         }
         const isEnabled = await this.nextMonthButton.isEnabled();
-        await expect(isEnabled).toBe(false);
+        expect(isEnabled).toBe(false);
     }
 
     async checkDatesBeforeDateAreDisabled(date: Date): Promise<void> {
@@ -51,10 +51,10 @@ export class DatePickerCalendarPage {
         const beforeCalendar = $(`td[class*="${materialLocators.Calendar.body.cell.root}"][aria-label="${beforeDate}"]`);
         if (await beforeCalendar.isPresent()) {
             const aria = await BrowserActions.getAttribute(beforeCalendar, 'aria-disabled');
-            await expect(aria).toBe('true');
+            expect(aria).toBe('true');
         }
         const isEnabled = await this.previousMonthButton.isEnabled();
-        await expect(isEnabled).toBe(false);
+        expect(isEnabled).toBe(false);
     }
 
     async selectTodayDate(): Promise<void> {

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
+import { AppsListComponent } from './apps-list.component';
+import { SelectAppsDialogComponent } from './select-apps-dialog/select-apps-dialog.component';
+
 export * from './apps-list.component';
-export * from './select-apps-dialog.component';
+export * from './select-apps-dialog/select-apps-dialog.component';
+export * from '../services/apps-process.service';
 
-export * from './services/apps-process.service';
-
-export * from './apps-list.module';
+export const APPS_LIST_DIRECTIVES = [AppsListComponent, SelectAppsDialogComponent] as const;

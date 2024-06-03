@@ -1,4 +1,0 @@
-<video controls class="adf-video-player" [ngClass]="{'adf-audio-file': mimeType && mimeType.startsWith('audio')}">
-    <source [src]="urlFile" [type]="mimeType" (error)="onMediaPlayerError($event)"/>
-    <track *ngFor="let track of tracks" [kind]="track.kind" [label]="track.label" [srclang]="track.srclang" [src]="track.src"/>
-</video>

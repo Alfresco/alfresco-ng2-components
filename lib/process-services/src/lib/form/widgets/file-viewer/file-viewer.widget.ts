@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,18 @@
  * limitations under the License.
  */
 
-import { BaseViewerWidgetComponent, FormService } from '@alfresco/adf-core';
+import { BaseViewerWidgetComponent, ErrorWidgetComponent, FormService } from '@alfresco/adf-core';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { AlfrescoViewerModule } from '@alfresco/adf-content-services';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'file-viewer-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, AlfrescoViewerModule, ErrorWidgetComponent],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],
     host: {

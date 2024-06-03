@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,8 +59,8 @@ describe('Empty Process List Test', () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await (await processServicesPage.goToApp(appWithProcess.title)).clickProcessButton();
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
-        await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
+        expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
+        expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
@@ -68,14 +68,14 @@ describe('Empty Process List Test', () => {
         await startProcessPage.selectFromProcessDropdown(appWithProcess.process_wse_name);
         await startProcessPage.clickStartProcessButton();
 
-        await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
+        expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
         await processDetailsPage.propertiesList.waitVisible();
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await (await processServicesPage.goToApp(simpleAppWithUserForm.title)).clickProcessButton();
-        await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
-        await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
+        expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
+        expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
@@ -83,7 +83,7 @@ describe('Empty Process List Test', () => {
         await startProcessPage.selectFromProcessDropdown(simpleAppWithUserForm.processName);
         await startProcessPage.clickStartProcessButton();
 
-        await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
+        expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
         await processDetailsPage.propertiesList.waitVisible();
     });

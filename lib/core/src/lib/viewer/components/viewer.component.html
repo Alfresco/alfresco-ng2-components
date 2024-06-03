@@ -10,7 +10,6 @@
         <ng-container *ngIf="showToolbar && !toolbar">
             <adf-toolbar id="adf-viewer-toolbar" class="adf-viewer-toolbar">
                 <adf-toolbar-title>
-
                     <ng-container *ngIf="allowLeftSidebar">
                         <button mat-icon-button
                                 [attr.aria-expanded]="showLeftSidebar"
@@ -162,17 +161,16 @@
                 </div>
             </ng-container>
 
-            <adf-viewer-render
-                (close)="onClose()"
-                [mimeType]="mimeType"
-                [fileName]="fileName"
-                [blobFile]="blobFile"
-                [readOnly]="readOnly"
-                (submitFile)="onSubmitFile($event)"
-                [urlFile]="urlFile"
-                (isSaving)="allowNavigate = !$event"
-                [tracks]="tracks"
-                [viewerTemplateExtensions]="viewerExtensions ?? viewerTemplateExtensions">
+            <adf-viewer-render (close)="onClose()"
+                               [mimeType]="mimeType"
+                               [fileName]="fileName"
+                               [blobFile]="blobFile"
+                               [readOnly]="readOnly"
+                               (submitFile)="onSubmitFile($event)"
+                               [urlFile]="urlFile"
+                               (isSaving)="allowNavigate = !$event"
+                               [tracks]="tracks"
+                               [viewerTemplateExtensions]="viewerExtensions ?? viewerTemplateExtensions">
             </adf-viewer-render>
 
         </div>

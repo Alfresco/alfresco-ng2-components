@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,6 +85,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     /** Show/hide title. */
     @Input()
     showTitle: boolean = true;
+
+    /** Show/hide cancel button. */
+    @Input()
+    showCancelButton: boolean = true;
 
     /** Emitted when the process is successfully started. */
     @Output()
@@ -187,20 +191,24 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
-        this.processDefinitionCurrent = this.filteredProcesses.find(
+        const processDefinitionCurrent = this.filteredProcesses.find(
             (process: ProcessDefinitionCloud) => process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName
         );
 
-        this.startProcessCloudService.getStartEventFormStaticValuesMapping(this.appName, this.processDefinitionCurrent.id).subscribe(
+        this.startProcessCloudService.getStartEventFormStaticValuesMapping(this.appName, processDefinitionCurrent.id).subscribe(
             (staticMappings) => {
                 this.staticMappings = staticMappings;
                 this.resolvedValues = this.staticMappings.concat(this.values || []);
+                this.processDefinitionCurrent = processDefinitionCurrent;
             },
-            () => (this.resolvedValues = this.values)
+            () => {
+                this.resolvedValues = this.values;
+                this.processDefinitionCurrent = processDefinitionCurrent;
+            }
         );
 
         this.isFormCloudLoaded = false;
-        this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
+        this.processPayloadCloud.processDefinitionKey = processDefinitionCurrent.key;
     }
 
     private getProcessDefinitionListByNameOrKey(processDefinitionName: string): ProcessDefinitionCloud[] {

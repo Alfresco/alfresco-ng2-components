@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
 import { PipeModule } from '../../pipes/pipe.module';
 
 import { CommentListComponent } from './comment-list.component';
+import { TimeAgoPipe } from '../../pipes';
 
 @NgModule({
     imports: [
@@ -38,14 +39,10 @@ import { CommentListComponent } from './comment-list.component';
         MatFormFieldModule,
         MatInputModule,
         MatListModule,
-        MatLineModule
+        MatLineModule,
+        TimeAgoPipe
     ],
-    declarations: [
-        CommentListComponent
-    ],
-    exports: [
-        CommentListComponent
-    ]
+    declarations: [CommentListComponent],
+    exports: [CommentListComponent]
 })
-export class CommentListModule {
-}
+export class CommentListModule {}

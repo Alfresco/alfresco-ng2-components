@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "Použít",
+    "CANCEL": "Zrušit"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "Obnovit",

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,11 @@ import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService, 
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { AlfrescoApiService, BasicAlfrescoAuthService } from '@alfresco/adf-core';
+import { AlfrescoApiService, BasicAlfrescoAuthService, OidcAuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Node, SiteEntry, NodeEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
-import { OidcAuthenticationService } from 'lib/core/src/lib/auth/services/oidc-authentication.service';
 
 describe('AttachFileWidgetDialogComponent', () => {
     let widget: AttachFileWidgetDialogComponent;
@@ -52,7 +51,7 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentModule.forRoot(), ProcessTestingModule],
+            imports: [ContentModule.forRoot(), ProcessTestingModule, AttachFileWidgetDialogComponent],
             providers: [
                 { provide: OidcAuthenticationService, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: data },

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,16 @@ import { UrlService, ContentLinkModel, FormService, DownloadService } from '@alf
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-content',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatCardModule, MatIconModule, MatButtonModule],
     templateUrl: './content.widget.html',
     styleUrls: ['./content.widget.scss'],
     encapsulation: ViewEncapsulation.None

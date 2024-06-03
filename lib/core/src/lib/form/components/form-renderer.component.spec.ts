@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,37 +15,36 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../../testing';
+import { FormRulesManager } from '../models/form-rules.model';
+import { FormRenderingService } from '../services/form-rendering.service';
+import { FormService } from '../services/form.service';
 import { FormRendererComponent } from './form-renderer.component';
-import { FormBaseModule } from '../form-base.module';
 import {
-    formDisplayValueVisibility,
-    formDisplayValueForm,
-    formDisplayValueCombinedVisibility,
-    formNumberWidgetVisibility,
-    formNumberTextJson,
-    formRequiredNumberWidget,
-    colspanForm,
-    numberNotRequiredForm,
-    numberMinMaxForm,
-    textWidgetVisibility,
-    numberWidgetVisibilityForm,
-    radioWidgetVisibilityForm,
-    customWidgetForm,
-    formDateVisibility,
-    customWidgetFormWithVisibility,
     amountWidgetFormVisibilityMock,
     checkboxWidgetFormVisibilityMock,
+    colspanForm,
+    customWidgetForm,
+    customWidgetFormWithVisibility,
     dateWidgetFormVisibilityMock,
-    multilineWidgetFormVisibilityMock,
+    displayBigDecimalWidgetMock,
     displayTextWidgetFormVisibilityMock,
-    displayBigDecimalWidgetMock
+    formDateVisibility,
+    formDisplayValueCombinedVisibility,
+    formDisplayValueForm,
+    formDisplayValueVisibility,
+    formNumberTextJson,
+    formNumberWidgetVisibility,
+    formRequiredNumberWidget,
+    multilineWidgetFormVisibilityMock,
+    numberMinMaxForm,
+    numberNotRequiredForm,
+    numberWidgetVisibilityForm,
+    radioWidgetVisibilityForm,
+    textWidgetVisibility
 } from './mock/form-renderer.component.mock';
-import { FormService } from '../services/form.service';
-import { CoreTestingModule } from '../../testing';
-import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
-import { FormRulesManager } from '../models/form-rules.model';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
     expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');
@@ -87,7 +86,7 @@ describe('Form Renderer Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, FormBaseModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;
@@ -701,12 +700,12 @@ describe('Form Renderer Component', () => {
     });
 
     describe('Form rules', () => {
-        it('should call the Form Rules Manager init on component changes', () => {
+        it('should call the Form Rules Manager init', () => {
             spyOn(rulesManager, 'initialize');
             const formModel = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
 
             formRendererComponent.formDefinition = formModel;
-            formRendererComponent.ngOnChanges();
+            formRendererComponent.ngOnInit();
 
             expect(rulesManager.initialize).toHaveBeenCalledWith(formModel);
         });

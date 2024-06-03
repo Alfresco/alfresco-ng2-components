@@ -347,7 +347,6 @@
         </section>
         <div *ngIf="!acceptedFilesTypeShow">
             <adf-upload-button
-                #uploadButton
                 [disabled]="!enableUpload"
                 [rootFolderId]="documentList.currentFolderId"
                 [multipleFiles]="multipleFileUpload"
@@ -362,7 +361,6 @@
         </div>
         <div *ngIf="acceptedFilesTypeShow">
             <adf-upload-button
-                #uploadButton
                 [disabled]="!enableUpload"
                 [rootFolderId]="documentList.currentFolderId"
                 [acceptedFilesType]="acceptedFilesType"

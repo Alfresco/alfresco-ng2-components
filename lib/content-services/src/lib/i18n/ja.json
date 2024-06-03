@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "適用",
+    "CANCEL": "キャンセル"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "復元",

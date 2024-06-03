@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,37 +16,37 @@
  */
 
 /* spell-checker: disable */
-import { ProcessInstance } from '../../process-list/models/process-instance.model';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
-export const exampleProcess = new ProcessInstance({
+export const exampleProcess: ProcessInstanceRepresentation = {
     id: '123',
     name: 'Process 123',
-    started: '2016-11-10T03:37:30.010+0000',
+    started: new Date('2016-11-10T03:37:30.010+0000'),
     startedBy: {
         id: 1001,
         firstName: 'Bob',
         lastName: 'Jones',
         email: 'bob@app.activiti.com'
     }
-});
+};
 
-export const processEnded = new ProcessInstance({
+export const processEnded: ProcessInstanceRepresentation = {
     id: '123',
     name: 'Process 123',
-    started: '2016-11-10T03:37:30.010+0000',
+    started: new Date('2016-11-10T03:37:30.010+0000'),
     startedBy: {
         id: 1001,
         firstName: 'Bob',
         lastName: 'Jones',
         email: 'bob@app.activiti.com'
     },
-    ended: '2016-11-11T03:37:30.010+0000'
-});
+    ended: new Date('2016-11-11T03:37:30.010+0000')
+};
 
-export const mockRunningProcess = new ProcessInstance({
+export const mockRunningProcess: ProcessInstanceRepresentation = {
     id: '123',
     name: 'Process 123',
-    started: '2016-11-10T03:37:30.010+0000',
+    started: new Date('2016-11-10T03:37:30.010+0000'),
     startedBy: {
         id: 1001,
         firstName: 'Bob',
@@ -54,12 +54,12 @@ export const mockRunningProcess = new ProcessInstance({
         email: 'bob@app.activiti.com'
     },
     ended: null
-});
+};
 
-export const exampleProcessNoName = new ProcessInstance({
+export const exampleProcessNoName: ProcessInstanceRepresentation = {
     id: '123',
     name: null,
-    started: '2016-11-10T03:37:30.010+0000',
+    started: new Date('2016-11-10T03:37:30.010+0000'),
     startedBy: {
         id: 1001,
         firstName: 'Bob',
@@ -67,4 +67,4 @@ export const exampleProcessNoName = new ProcessInstance({
         email: 'bob@app.activiti.com'
     },
     processDefinitionName: 'My Process'
-});
+};

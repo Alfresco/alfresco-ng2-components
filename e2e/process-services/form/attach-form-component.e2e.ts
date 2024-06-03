@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    FormFields,
-    LoginPage,
-    ModelsActions,
-    TaskUtil,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, FormFields, LoginPage, ModelsActions, TaskUtil, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { AttachFormPage } from './../pages/attach-form.page';
@@ -47,7 +40,9 @@ describe('Attach Form Component', () => {
     const modelsActions = new ModelsActions(apiService);
 
     const formTextField = app.form_fields.form_fieldId;
-    let user; let tenantId; let appModel;
+    let user;
+    let tenantId;
+    let appModel;
 
     const testNames = {
         taskName: 'Test Task',
@@ -78,13 +73,13 @@ describe('Attach Form Component', () => {
         await taskUtil.createStandaloneTask(testNames.taskName);
         await taskUtil.createStandaloneTask(standaloneTask.taskName);
         await loginPage.login(user.username, user.password);
-   });
+    });
 
     afterAll(async () => {
         await modelsActions.deleteModel(appModel.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(tenantId);
-   });
+    });
 
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
@@ -132,7 +127,7 @@ describe('Attach Form Component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(testNames.taskName);
 
-        await expect(await formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
+        expect(await formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
     });
 
     it('[C329804] Attach form from standalone task with no form template', async () => {

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ describe('Checklist component', () => {
         await (await taskPage.clickOnAddChecklistButton()).clickCreateChecklistButton();
         await taskPage.checkChecklistDialogIsNotDisplayed();
         await taskPage.checkNoChecklistIsDisplayed();
-        await expect(await taskPage.getNumberOfChecklists()).toEqual('0');
+        expect(await taskPage.getNumberOfChecklists()).toEqual('0');
     });
 
     it('[C279975] Should no checklist be created when clicking on Cancel button on checklist dialog', async () => {
@@ -89,7 +89,7 @@ describe('Checklist component', () => {
         await checklistDialog.clickCancelButton();
         await taskPage.checkChecklistDialogIsNotDisplayed();
         await taskPage.checkNoChecklistIsDisplayed();
-        await expect(await taskPage.getNumberOfChecklists()).toEqual('0');
+        expect(await taskPage.getNumberOfChecklists()).toEqual('0');
     });
 
     it('[C261025] Should Checklist dialog be displayed when clicking on add checklist button', async () => {
@@ -98,8 +98,8 @@ describe('Checklist component', () => {
 
         await taskPage.clickOnAddChecklistButton();
         await taskPage.checkChecklistDialogIsDisplayed();
-        await expect(await taskPage.usingCheckListDialog().getDialogTitle()).toEqual('New Check');
-        await expect(await taskPage.usingCheckListDialog().getNameFieldPlaceholder()).toEqual('Name');
+        expect(await taskPage.usingCheckListDialog().getDialogTitle()).toEqual('New Check');
+        expect(await taskPage.usingCheckListDialog().getNameFieldPlaceholder()).toEqual('Name');
         await taskPage.usingCheckListDialog().checkAddChecklistButtonIsEnabled();
         await checklistDialog.checkCancelButtonIsEnabled();
         await taskPage.usingCheckListDialog().clickCancelButton();
@@ -112,13 +112,13 @@ describe('Checklist component', () => {
         await (await taskPage.clickOnAddChecklistButton()).addName(checklists[2]);
         await checklistDialog.clickCreateChecklistButton();
         await taskPage.checkChecklistIsDisplayed(checklists[2]);
-        await expect(await taskPage.getNumberOfChecklists()).toEqual('1');
+        expect(await taskPage.getNumberOfChecklists()).toEqual('1');
 
         await (await taskPage.clickOnAddChecklistButton()).addName(checklists[3]);
         await checklistDialog.clickCreateChecklistButton();
         await taskPage.checkChecklistIsDisplayed(checklists[3]);
         await taskPage.checkChecklistIsDisplayed(checklists[2]);
-        await expect(await taskPage.getNumberOfChecklists()).toEqual('2');
+        expect(await taskPage.getNumberOfChecklists()).toEqual('2');
     });
 
     it('[C279980] Should checklist be removed when clicking on remove button', async () => {
@@ -159,7 +159,7 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().selectRow(tasks[3]);
         await taskPage.checkChecklistIsDisplayed(removeChecklist[2]);
         await taskPage.checkChecklistIsDisplayed(removeChecklist[3]);
-        await expect(await taskPage.getNumberOfChecklists()).toEqual('2');
+        expect(await taskPage.getNumberOfChecklists()).toEqual('2');
 
         await taskPage.checkChecklistsRemoveButtonIsNotDisplayed(removeChecklist[3]);
     });

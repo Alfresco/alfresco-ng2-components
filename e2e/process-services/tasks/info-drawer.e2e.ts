@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     BrowserActions,
     BrowserVisibility,
     LocalStorageUtil,
-    LoginPage, ModelsActions,
+    LoginPage,
+    ModelsActions,
     StringUtil,
     UserModel,
     UsersActions
@@ -36,7 +38,6 @@ import CONSTANTS = require('../../util/constants');
 import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
 
 describe('Info Drawer', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -107,7 +108,7 @@ describe('Info Drawer', () => {
         await taskPage.tasksListPage().selectRow(name);
 
         await taskPage.checkTaskTitle(name);
-        await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
+        expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
         await shouldHaveInfoDrawerDetails({
             ...taskDetails,
             dueDate: date.header,
@@ -132,13 +133,13 @@ describe('Info Drawer', () => {
         await taskPage.tasksListPage().selectRow(name);
 
         await taskPage.checkTaskTitle(name);
-        await expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
+        expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
         await taskPage.taskDetails().updatePriority('40');
         await taskPage.taskDetails().checkTaskDetailsDisplayed();
-        await expect(await taskPage.taskDetails().getPriority()).toEqual('40');
+        expect(await taskPage.taskDetails().getPriority()).toEqual('40');
         await taskPage.taskDetails().updatePriority();
         await taskPage.taskDetails().checkTaskDetailsDisplayed();
-        await expect(await taskPage.taskDetails().getPriority()).toEqual('');
+        expect(await taskPage.taskDetails().getPriority()).toEqual('');
 
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -152,7 +153,7 @@ describe('Info Drawer', () => {
         await taskPage.tasksListPage().selectRow(name);
 
         await taskPage.checkTaskTitle(name);
-        await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
+        expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
         await shouldHaveInfoDrawerDetails({
             ...taskDetails,
             dueDate: date.header,
@@ -161,7 +162,7 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateDueDate();
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(DateFnsUtils.formatDate(new Date('Aug 1, 2017'), taskDetails.dateFormat));
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(DateFnsUtils.formatDate(new Date('Aug 1, 2017'), taskDetails.dateFormat));
 
         await taskPage.taskDetails().clickCompleteFormTask();
 
@@ -218,7 +219,7 @@ describe('Info Drawer', () => {
             formName: app.formName
         });
 
-        await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
+        expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
         await BrowserActions.click(taskPage.taskDetails().assigneeButton);
         const cancelSearch = element(by.css('button[id="close-people-search"]'));
         await BrowserVisibility.waitUntilElementIsPresent(cancelSearch);
@@ -231,7 +232,7 @@ describe('Info Drawer', () => {
             formName: app.formName
         });
 
-        await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
+        expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
         await BrowserActions.click(taskPage.taskDetails().assigneeButton);
         const addPeople = element(by.css('button[id="add-people"]'));
         await BrowserVisibility.waitUntilElementIsPresent(addPeople);
@@ -301,7 +302,7 @@ describe('Info Drawer', () => {
         await taskPage.checkTaskTitle(name);
         await taskPage.taskDetails().checkTaskDetailsDisplayed();
         await browser.sleep(2000);
-        await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
+        expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
         await shouldHaveInfoDrawerDetails({
             ...taskDetails,
             dueDate: 'Aug 12, 2017',
@@ -310,9 +311,9 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateDescription('');
-        await expect(await taskPage.taskDetails().getDescriptionPlaceholder()).toEqual('No description');
+        expect(await taskPage.taskDetails().getDescriptionPlaceholder()).toEqual('No description');
         await taskPage.taskDetails().updateDescription('Good Bye');
-        await expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
+        expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
 
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -328,10 +329,10 @@ describe('Info Drawer', () => {
         await taskPage.tasksListPage().selectRow(name);
 
         await taskPage.checkTaskTitle(name);
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(processUserModelFullName);
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(taskDetails.status);
-        await expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(taskDetails.parentName);
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(processUserModelFullName);
+        expect(await taskPage.taskDetails().getStatus()).toEqual(taskDetails.status);
+        expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(taskDetails.parentName);
         await taskPage.taskDetails().checkDueDatePickerButtonIsNotDisplayed();
 
         await taskPage.taskDetails().clickCompleteFormTask();
@@ -355,14 +356,16 @@ describe('Info Drawer', () => {
      * @param props task details properties to validate
      */
     async function shouldHaveInfoDrawerDetails(props: TaskDetailsProps) {
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(props.fullName);
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(props.description);
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(props.status);
-        await expect(await taskPage.taskDetails().getPriority()).toEqual(props.priority);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(props.dueDate !== 'No date' ? DateFnsUtils.formatDate(new Date(props.dueDate), props.dateFormat) : 'No date');
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(props.category);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(props.parentName);
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(DateFnsUtils.formatDate(new Date().getTime(), props.dateFormat));
+        expect(await taskPage.taskDetails().getAssignee()).toEqual(props.fullName);
+        expect(await taskPage.taskDetails().getDescription()).toEqual(props.description);
+        expect(await taskPage.taskDetails().getStatus()).toEqual(props.status);
+        expect(await taskPage.taskDetails().getPriority()).toEqual(props.priority);
+        expect(await taskPage.taskDetails().getDueDate()).toEqual(
+            props.dueDate !== 'No date' ? DateFnsUtils.formatDate(new Date(props.dueDate), props.dateFormat) : 'No date'
+        );
+        expect(await taskPage.taskDetails().getCategory()).toEqual(props.category);
+        expect(await taskPage.taskDetails().getParentName()).toEqual(props.parentName);
+        expect(await taskPage.taskDetails().getCreated()).toEqual(DateFnsUtils.formatDate(new Date().getTime(), props.dateFormat));
         await taskPage.taskDetails().waitFormNameEqual(props.formName);
     }
 });

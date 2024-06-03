@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,10 @@ import { CloudLayoutService } from './services/cloud-layout.service';
     encapsulation: ViewEncapsulation.None
 })
 export class CloudLayoutComponent implements OnInit {
-    displayMenu = true;
     appName: string;
+    filterName: string;
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private cloudLayoutService: CloudLayoutService
-    ) { }
+    constructor(private router: Router, private route: ActivatedRoute, private cloudLayoutService: CloudLayoutService) {}
 
     ngOnInit() {
         let root: string = '';
@@ -52,6 +48,10 @@ export class CloudLayoutComponent implements OnInit {
 
             if (root === 'processes' && params.id) {
                 this.cloudLayoutService.setCurrentProcessFilterParam({ id: params.id });
+            }
+
+            if (params.filterName) {
+                this.filterName = params.filterName;
             }
         });
     }

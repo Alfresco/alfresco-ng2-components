@@ -31,21 +31,21 @@ Shows all available filters.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | Display filters available to the current user for the application with the specified name. |
-| filterParam | [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
-| showIcons | `boolean` | false | Toggles display of the filter's icons. |
+| Name        | Type                | Default value | Description                                                                                                                        |
+|-------------|---------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------|
+| appName     | `string`            | ""            | Display filters available to the current user for the application with the specified name.                                         |
+| filterParam | `FilterParamsModel` |               | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
+| showIcons   | `boolean`           | false         | Toggles display of the filter's icons.                                                                                             |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
-| filterClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter is being clicked from the UI. |
-| filterCounterUpdated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskCloudEngineEvent`](../../../lib/process-services-cloud/src/lib/models/engine-event-cloud.model.ts)`[]>` | Emitted when filter counters are updated. |
-| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter is being selected based on the filterParam input. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list is loaded. |
+| Name                 | Type                                  | Description                                                             |
+|----------------------|---------------------------------------|-------------------------------------------------------------------------|
+| error                | `EventEmitter<any>`                   | Emitted when an error occurs during loading.                            |
+| filterClicked        | `EventEmitter<TaskFilterCloudModel>`  | Emitted when a filter is being clicked from the UI.                     |
+| filterCounterUpdated | `EventEmitter<TaskCloudEngineEvent>`  | Emitted when filter counters are updated.                               |
+| filterSelected       | `EventEmitter`<TaskFilterCloudModel>` | Emitted when a filter is being selected based on the filterParam input. |
+| success              | `EventEmitter<any>`                   | Emitted when the list is loaded.                                        |
 
 ## Details
 
@@ -59,8 +59,7 @@ Use the `filterParam` property to restrict the range of filters that are shown:
 </adf-cloud-task-filters>
 ```
 
-You can use properties from [`FilterParamsModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)
-as the value of `filterParam` as shown in the table below:
+You can use properties from `FilterParamsModel` as the value of `filterParam` as shown in the table below:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |

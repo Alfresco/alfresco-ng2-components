@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -204,11 +204,11 @@ describe('Search Filters', () => {
         const bucketNumberForFilter = await searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
         const resultFileNames: any = await contentList.getAllRowsColumnValues('Display name');
 
-        await expect(bucketNumberForFilter).not.toEqual('0');
-        await expect(await paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
+        expect(bucketNumberForFilter).not.toEqual('0');
+        expect(await paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
 
         resultFileNames.map(async (nameOfResultFiles) => {
-            await expect(nameOfResultFiles.toLowerCase()).toContain('.png');
+            expect(nameOfResultFiles.toLowerCase()).toContain('.png');
         });
     });
 
@@ -282,8 +282,8 @@ describe('Search Filters', () => {
             await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
-            await expect(await searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
-            await expect(await searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
+            expect(await searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
+            expect(await searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
         });
 
         it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {

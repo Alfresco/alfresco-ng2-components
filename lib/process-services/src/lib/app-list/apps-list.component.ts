@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,20 @@
  * limitations under the License.
  */
 
-import { TranslationService, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
-import { AppsProcessService } from './services/apps-process.service';
+import { CustomEmptyContentTemplateDirective, EmptyContentComponent } from '@alfresco/adf-core';
+import { AppsProcessService } from '../services/apps-process.service';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { Observable, Observer, of, Subject } from 'rxjs';
-import { AppDefinitionRepresentationModel } from '../task-list';
+import { Subject } from 'rxjs';
 import { IconModel } from './icon.model';
-import { share, takeUntil, finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
-const DEFAULT_TASKS_APP: string = 'tasks';
 const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
 const DEFAULT_TASKS_APP_THEME: string = 'theme-2';
 const DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
@@ -34,6 +38,8 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
 
 @Component({
     selector: 'adf-apps',
+    standalone: true,
+    imports: [CommonModule, MatListModule, MatIconModule, MatCardModule, MatProgressSpinnerModule, TranslateModule, EmptyContentComponent],
     templateUrl: './apps-list.component.html',
     styleUrls: ['./apps-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -50,38 +56,36 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     @Input()
     layoutType: string = APP_LIST_LAYOUT_GRID;
 
+    /** The default app to show when the component is loaded. */
+    @Input()
+    defaultAppId = 'tasks';
+
     /** Provides a way to filter the apps to show. */
     @Input()
-    filtersAppId: any[];
+    filtersAppId: AppDefinitionRepresentation[];
 
     /** Emitted when an app entry is clicked. */
     @Output()
-    appClick = new EventEmitter<AppDefinitionRepresentationModel>();
+    appClick = new EventEmitter<AppDefinitionRepresentation>();
 
     /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter<any>();
 
-    apps$: Observable<AppDefinitionRepresentationModel>;
-    currentApp: AppDefinitionRepresentationModel;
-    appList: AppDefinitionRepresentationModel[] = [];
+    currentApp: AppDefinitionRepresentation;
+    appList: AppDefinitionRepresentation[] = [];
     loading: boolean = false;
     hasEmptyCustomContentTemplate: boolean = false;
 
-    private appsObserver: Observer<AppDefinitionRepresentation>;
     private iconsMDL: IconModel;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private appsProcessService: AppsProcessService, private translationService: TranslationService) {
-        this.apps$ = new Observable<AppDefinitionRepresentationModel>((observer) => (this.appsObserver = observer)).pipe(share());
-    }
+    constructor(private appsProcessService: AppsProcessService) {}
 
     ngOnInit() {
         if (!this.isValidType()) {
             this.setDefaultLayoutType();
         }
-
-        this.apps$.pipe(takeUntil(this.onDestroy$)).subscribe((app) => this.appList.push(app));
 
         this.iconsMDL = new IconModel();
         this.load();
@@ -98,12 +102,12 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         }
     }
 
-    isDefaultApp(app: AppDefinitionRepresentation): boolean {
-        return app.defaultAppId === DEFAULT_TASKS_APP;
+    private isDefaultApp(app: AppDefinitionRepresentation): boolean {
+        return app.defaultAppId === this.defaultAppId;
     }
 
-    getAppName(app: AppDefinitionRepresentationModel): Observable<string> {
-        return this.isDefaultApp(app) ? this.translationService.get(DEFAULT_TASKS_APP_NAME) : of(app.name);
+    getAppName(app: AppDefinitionRepresentation): string {
+        return this.isDefaultApp(app) ? DEFAULT_TASKS_APP_NAME : app.name;
     }
 
     /**
@@ -111,7 +115,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
      *
      * @param app application model
      */
-    selectApp(app: AppDefinitionRepresentationModel) {
+    selectApp(app: AppDefinitionRepresentation) {
         this.currentApp = app;
         this.appClick.emit(app);
     }
@@ -168,11 +172,11 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         return this.loading;
     }
 
-    getTheme(app: AppDefinitionRepresentationModel): string {
+    getTheme(app: AppDefinitionRepresentation): string {
         return app.theme ? app.theme : '';
     }
 
-    getBackgroundIcon(app: AppDefinitionRepresentationModel): string {
+    getBackgroundIcon(app: AppDefinitionRepresentation): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(app.icon);
     }
 
@@ -180,18 +184,22 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         this.loading = true;
         this.appsProcessService
             .getDeployedApplications()
-            .pipe(finalize(() => (this.loading = false)))
+            .pipe(
+                map((apps) => apps.filter((app) => app.deploymentId !== undefined || app.defaultAppId === this.defaultAppId)),
+                finalize(() => (this.loading = false))
+            )
             .subscribe(
                 (res) => {
-                    this.filterApps(res).forEach((app) => {
+                    const apps = this.filterApps(res, this.filtersAppId).map((app) => {
                         if (this.isDefaultApp(app)) {
                             app.theme = DEFAULT_TASKS_APP_THEME;
                             app.icon = DEFAULT_TASKS_APP_ICON;
-                            this.appsObserver.next(app);
-                        } else if (app.deploymentId) {
-                            this.appsObserver.next(app);
                         }
+
+                        return app;
                     });
+
+                    this.appList = [...apps];
                 },
                 (err) => {
                     this.error.emit(err);
@@ -199,28 +207,19 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
             );
     }
 
-    private filterApps(apps: AppDefinitionRepresentation[]): AppDefinitionRepresentation[] {
-        if (this.filtersAppId) {
-            const filteredApps: AppDefinitionRepresentation[] = [];
-
-            apps.forEach((app) => {
-                this.filtersAppId.forEach((filter) => {
-                    if (
-                        app.defaultAppId === filter.defaultAppId ||
-                        app.deploymentId === filter.deploymentId ||
-                        app.name === filter.name ||
-                        app.id === filter.id ||
-                        app.modelId === filter.modelId ||
-                        app.tenantId === filter.tenantId
-                    ) {
-                        filteredApps.push(app);
-                    }
-                });
-            });
-
-            return filteredApps;
-        }
-
-        return apps;
+    filterApps(apps: AppDefinitionRepresentation[], filter: Partial<AppDefinitionRepresentation>[]): AppDefinitionRepresentation[] {
+        return filter && filter.length > 0
+            ? apps.filter((app) =>
+                  filter.some(
+                      (f) =>
+                          (f.defaultAppId && app.defaultAppId === f.defaultAppId) ||
+                          (f.deploymentId && app.deploymentId === f.deploymentId) ||
+                          (f.name && app.name === f.name) ||
+                          (f.id !== undefined && app.id === f.id) ||
+                          (f.modelId !== undefined && app.modelId === f.modelId) ||
+                          (f.tenantId !== undefined && app.tenantId === f.tenantId)
+                  )
+              )
+            : apps;
     }
 }

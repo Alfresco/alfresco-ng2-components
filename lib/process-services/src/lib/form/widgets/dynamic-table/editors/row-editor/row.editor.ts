@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,30 @@ import { DynamicRowValidationSummary } from '../models/dynamic-row-validation-su
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
+import { CommonModule } from '@angular/common';
+import { DropdownEditorComponent } from '../dropdown/dropdown.editor';
+import { DateEditorComponent } from '../date/date.editor';
+import { DateTimeEditorComponent } from '../datetime/datetime.editor';
+import { BooleanEditorComponent } from '../boolean/boolean.editor';
+import { AmountEditorComponent } from '../amount/amount.editor';
+import { TextEditorComponent } from '../text/text.editor';
+import { ErrorWidgetComponent } from '@alfresco/adf-core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'row-editor',
+    standalone: true,
+    imports: [
+        CommonModule,
+        DropdownEditorComponent,
+        DateEditorComponent,
+        DateTimeEditorComponent,
+        BooleanEditorComponent,
+        AmountEditorComponent,
+        TextEditorComponent,
+        ErrorWidgetComponent,
+        MatButtonModule
+    ],
     templateUrl: './row.editor.html',
     styleUrls: ['./row.editor.css']
 })

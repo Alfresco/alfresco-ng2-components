@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,9 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage, materialLocators } from '@alfresco/adf-testing';
-import { $, by, element, protractor } from 'protractor';
+import { $, by, element } from 'protractor';
 
 export class ProcessListDemoPage {
-
     appIdInput = $('input[data-automation-id="app-id"]');
     resetButton = element(by.cssContainingText('button span', 'Reset'));
     emptyProcessContent = $('.adf-empty-content');
@@ -43,11 +42,8 @@ export class ProcessListDemoPage {
         await this.stateDropdown.selectDropdownOption(stateOption);
     }
 
-    async addAppId(appId: string | number): Promise<void> {
-        await BrowserActions.click(this.appIdInput);
-        await this.appIdInput.sendKeys(protractor.Key.ENTER);
-        await this.appIdInput.clear();
-        await this.appIdInput.sendKeys(appId);
+    async addAppId(appId: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.appIdInput, appId);
     }
 
     async clickResetButton(): Promise<void> {

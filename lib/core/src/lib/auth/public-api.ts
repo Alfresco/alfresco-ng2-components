@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,3 +48,5 @@ export * from './models/identity-role.model';
 
 export * from './models/user-access.model';
 export * from './models/application-access.model';
+
+export * from './oidc/public-api';

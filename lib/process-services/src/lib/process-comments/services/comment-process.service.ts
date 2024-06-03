@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import { CommentModel, AlfrescoApiService, CommentsService, User } from '@alfres
 import { map } from 'rxjs/operators';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { PeopleProcessService } from '../../common/services/people-process.service';
-import { UserProcessModel } from '../../common/models/user-process.model';
 
 @Injectable({
     providedIn: 'root'
@@ -44,19 +43,14 @@ export class CommentProcessService implements CommentsService {
     get(id: string): Observable<CommentModel[]> {
         return from(this.commentsApi.getProcessInstanceComments(id)).pipe(
             map((response) => {
-                const comments: CommentModel[] = [];
-                response.data.forEach((comment) => {
-                    const user = new UserProcessModel(comment.createdBy);
-                    comments.push(
-                        new CommentModel({
-                            id: comment.id,
-                            message: comment.message,
-                            created: comment.created,
-                            createdBy: new User(user)
-                        })
-                    );
+                return response.data.map((comment) => {
+                    return new CommentModel({
+                        id: comment.id,
+                        message: comment.message,
+                        created: comment.created,
+                        createdBy: new User(comment.createdBy)
+                    });
                 });
-                return comments;
             })
         );
     }
@@ -82,7 +76,7 @@ export class CommentProcessService implements CommentsService {
         );
     }
 
-    getUserImage(user: UserProcessModel): string {
-        return this.peopleProcessService.getUserImage(user);
+    getUserImage(userId: string): string {
+        return this.peopleProcessService.getUserImage(userId);
     }
 }

@@ -24,4 +24,3 @@ latest version of the class, see the
 
 -   [Ecm user service](../services/ecm-user.service.md)
 -   [People content service](../services/people-content.service.md)
--   [Bpm user model](bpm-user.model.md)

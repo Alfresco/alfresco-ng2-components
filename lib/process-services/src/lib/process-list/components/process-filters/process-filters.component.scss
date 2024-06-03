@@ -1,0 +1,26 @@
+adf-process-instance-filters {
+    .adf {
+        &-filters__entry:has(.adf-filter-action-button) {
+            padding: 0;
+            width: 100%;
+            cursor: pointer;
+            font-size: var(--theme-body-1-font-size);
+            font-weight: bold;
+
+            .adf-full-width {
+                display: flex;
+                width: 100%;
+            }
+
+            .adf-filter-action-button {
+                align-items: center;
+                height: 32px;
+
+                .adf-filter-action-button__label {
+                    padding-left: 20px;
+                    margin: 0 8px;
+                }
+            }
+        }
+    }
+}

@@ -45,14 +45,11 @@ Note: If you need more information about how to sync your fork, see [this page](
 ## Code style
 
 The code style for ADF follows the [Angular style guide](https://angular.io/guide/styleguide) plus some internal rules.
-You don’t have to worry too much about those rules because they are automatically checked by tslint/codelyzer/adf-rules.
-If your code is not compliant with one of these rules you will see an error when you build the project along with some help on how to fix it.
 
-The ADF-Rules are as follows:
+The codebase is also checked with:
 
-* File name component/directive cannot start with Alfresco/Activiti/adf - this rule is to help developers find files easily
-* Class names cannot start with Alfresco/Activiti/adf for the same reason as above
-* scss is mandatory. All the classes need to have the `adf-` prefix
+- ESLint tool
+- Stylelint tool
 
 ## Test guide
 

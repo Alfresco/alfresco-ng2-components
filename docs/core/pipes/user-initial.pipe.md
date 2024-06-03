@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-11-12
 ---
 
-# [User Initial pipe](../../../lib/core/src/lib/pipes/user-initial.pipe.ts "Defined in user-initial.pipe.ts")
+# User Initials Pipe
 
-Takes the name fields of a [`UserProcessModel`](../../core/models/user-process.model.md) object and extracts and formats the initials.
+Takes the name fields of a `UserLike` object and extracts and formats the initials.
 
 ## Basic Usage
 

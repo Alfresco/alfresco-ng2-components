@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,24 @@
  */
 
 // eslint-disable-next-line
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-    EventEmitter,
-    Output
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi } from '@alfresco/js-api';
+import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
 import {
-    FORM_FIELD_VALIDATORS, FormRenderingService, FormService, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, NotificationService
+    FORM_FIELD_VALIDATORS,
+    FormRenderingService,
+    FormService,
+    AppConfigService,
+    PaginationComponent,
+    UserPreferenceValues,
+    AlfrescoApiService,
+    UserPreferencesService,
+    NotificationService
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,
-    ProcessInstance,
-    ProcessInstanceDetailsComponent,
     ProcessInstanceListComponent,
     StartProcessInstanceComponent,
-    FilterRepresentationModel,
-    TaskDetailsComponent,
     TaskDetailsEvent,
     TaskFiltersComponent,
     TaskListComponent,
@@ -51,8 +43,6 @@ import {
     DynamicTableRow
 } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
-import { CustomStencil01 } from './custom-editor/custom-editor.component';
-import { DemoFieldValidator } from './demo-field-validator';
 import { PreviewService } from '../../services/preview.service';
 import { Location } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
@@ -69,17 +59,11 @@ const REPORT_ROUTE = 2;
     templateUrl: './process-service.component.html',
     styleUrls: ['./process-service.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers: [
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
-    ]
+    providers: [{ provide: FormRenderingService, useClass: ProcessFormRenderingService }]
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
-
     @ViewChild('activitiFilter')
     activitiFilter: TaskFiltersComponent;
-
-    @ViewChild('processListPagination')
-    processListPagination: PaginationComponent;
 
     @ViewChild('taskListPagination')
     taskListPagination: PaginationComponent;
@@ -92,12 +76,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     @ViewChild('processList')
     processList: ProcessInstanceListComponent;
-
-    @ViewChild('activitiProcessDetails')
-    activitiProcessDetails: ProcessInstanceDetailsComponent;
-
-    @ViewChild('activitiDetails')
-    activitiDetails: TaskDetailsComponent;
 
     @ViewChild('activitiStartProcess')
     activitiStartProcess: StartProcessInstanceComponent;
@@ -126,47 +104,38 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
-    taskFilter: FilterRepresentationModel;
+    taskFilter: UserTaskFilterRepresentation;
     processFilter: UserProcessInstanceFilterRepresentation;
     blobFile: any;
     flag = true;
 
     presetColumn = 'default';
 
-    showApplications: boolean;
     applicationId: number;
     processDefinitionName: string;
 
-    fieldValidators = [
-        ...FORM_FIELD_VALIDATORS,
-        new DemoFieldValidator()
-    ];
+    fieldValidators = [...FORM_FIELD_VALIDATORS];
 
     private onDestroy$ = new Subject<boolean>();
     private scriptFileApi: ScriptFilesApi;
 
-    constructor(private elementRef: ElementRef,
-                private route: ActivatedRoute,
-                private router: Router,
-                private apiService: AlfrescoApiService,
-                private appConfig: AppConfigService,
-                private preview: PreviewService,
-                formRenderingService: FormRenderingService,
-                formService: FormService,
-                private location: Location,
-                private notificationService: NotificationService,
-                private preferenceService: UserPreferencesService) {
-
+    constructor(
+        private elementRef: ElementRef,
+        private route: ActivatedRoute,
+        private router: Router,
+        private apiService: AlfrescoApiService,
+        private appConfigService: AppConfigService,
+        private previewService: PreviewService,
+        formService: FormService,
+        private location: Location,
+        private notificationService: NotificationService,
+        private preferenceService: UserPreferencesService
+    ) {
         this.scriptFileApi = new ScriptFilesApi(this.apiService.getInstance());
-        this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
-        this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
-        this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');
+        this.defaultProcessName = this.appConfigService.get<string>('adf-start-process.name');
+        this.defaultProcessDefinitionName = this.appConfigService.get<string>('adf-start-process.processDefinitionName');
+        this.defaultTaskName = this.appConfigService.get<string>('adf-start-task.name');
         this.processDefinitionName = this.defaultProcessDefinitionName;
-        // Uncomment this line to replace all 'text' field editors with custom component
-        // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
-
-        // Uncomment this line to map 'custom_stencil_01' to local editor component
-        formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
 
         this.preferenceService
             .select(UserPreferenceValues.PaginationSize)
@@ -177,22 +146,18 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
         formService.validateDynamicTableRow
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(
-                (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
-                    const row: DynamicTableRow = validateDynamicTableRowEvent.row;
-                    if (row?.value && row.value.name === 'admin') {
-                        validateDynamicTableRowEvent.summary.isValid = false;
-                        validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
-                        validateDynamicTableRowEvent.preventDefault();
-                    }
+            .subscribe((validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
+                const row: DynamicTableRow = validateDynamicTableRowEvent.row;
+                if (row?.value && row.value.name === 'admin') {
+                    validateDynamicTableRowEvent.summary.isValid = false;
+                    validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
+                    validateDynamicTableRowEvent.preventDefault();
                 }
-            );
-
-        formService.formContentClicked
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((content) => {
-                this.showContentPreview(content);
             });
+
+        formService.formContentClicked.pipe(takeUntil(this.onDestroy$)).subscribe((content) => {
+            this.showContentPreview(content);
+        });
     }
 
     ngOnInit() {
@@ -222,7 +187,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.onDestroy$.complete();
     }
 
-    onTaskFilterClick(filter: FilterRepresentationModel): void {
+    onTaskFilterClick(filter: UserTaskFilterRepresentation): void {
         this.applyTaskFilter(filter);
         this.taskPage = 0;
     }
@@ -250,7 +215,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.applyTaskFilter(this.activitiFilter.getCurrentFilter());
     }
 
-    applyTaskFilter(filter: FilterRepresentationModel) {
+    applyTaskFilter(filter: UserTaskFilterRepresentation) {
         this.taskFilter = Object.assign({}, filter);
 
         if (filter && this.taskList) {
@@ -317,8 +282,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = currentTaskIdNew;
     }
 
-    onStartProcessInstance(instance: ProcessInstance): void {
-        this.currentProcessInstanceId = instance.id;
+    onStartProcessInstance(instanceId: string): void {
+        this.currentProcessInstanceId = instanceId;
         this.activitiStartProcess.reset();
         this.activitiProcessFilter.selectRunningFilter();
     }
@@ -380,9 +345,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     private showContentPreview(content: any) {
         if (content.contentBlob) {
-            this.preview.showBlob(content.name, content.contentBlob);
+            this.previewService.showBlob(content.name, content.contentBlob);
         } else {
-            this.preview.showResource(content.sourceId.split(';')[0]);
+            this.previewService.showResource(content.sourceId.split(';')[0]);
         }
     }
 

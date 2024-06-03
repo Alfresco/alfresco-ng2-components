@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
-export * from './process-user-info.component';
+import { ProcessUserInfoComponent } from './process-user-info.component';
 
-export * from './process-user-info.module';
+export * from './process-user-info.component';
+export const PROCESS_USER_INFO_DIRECTIVES = [ProcessUserInfoComponent] as const;

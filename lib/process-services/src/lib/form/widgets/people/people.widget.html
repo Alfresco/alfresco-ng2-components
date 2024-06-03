@@ -26,7 +26,7 @@
                     <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
                     <div *ngIf="user.pictureId" class="adf-people-widget-image-row">
                         <img id="adf-people-widget-pic-{{i}}" class="adf-people-widget-image"
-                             [alt]="getDisplayName(user)" [src]="peopleProcessService.getUserImage(user)"/>
+                             [alt]="getDisplayName(user)" [src]="peopleProcessService.getUserImage(user.id.toString())"/>
                     </div>
                     <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
                 </div>

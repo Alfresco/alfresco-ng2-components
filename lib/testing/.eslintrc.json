@@ -32,7 +32,6 @@
             "accessibility": "explicit"
           }
         ],
-        "@typescript-eslint/no-floating-promises": "error",
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-var-requires": "error",

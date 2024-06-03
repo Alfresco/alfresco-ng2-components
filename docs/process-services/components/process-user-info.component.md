@@ -22,7 +22,7 @@ Shows user information for `PROCESS` and `ALL` mode.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | bpmBackgroundImage | `string` |  | Custom path for the background banner image for APS users. |
-| bpmUser | [`BpmUserModel`](../../core/models/bpm-user.model.md) |  | BPM user info. |
+| bpmUser | UserRepresentation |  | BPM user info. |
 | ecmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
 | ecmUser | [`EcmUserModel`](../../core/models/ecm-user.model.md) |  | ECM user info. |
 | isLoggedIn | `boolean` |  | Determines if user is logged in. |

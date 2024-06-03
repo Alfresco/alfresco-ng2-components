@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,22 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { ADF_COMMENTS_SERVICE } from '@alfresco/adf-core';
-import { TaskCommentsService } from './services/task-comments.service';
+import { ADF_COMMENTS_SERVICE, CommentsModule } from '@alfresco/adf-core';
+import { TaskCommentsService } from './task-comments.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-task-comments',
+    standalone: true,
+    imports: [CommonModule, CommentsModule],
     templateUrl: './task-comments.component.html',
     encapsulation: ViewEncapsulation.None,
-    providers: [{
-        provide: ADF_COMMENTS_SERVICE,
-        useClass: TaskCommentsService
-    }]
+    providers: [
+        {
+            provide: ADF_COMMENTS_SERVICE,
+            useClass: TaskCommentsService
+        }
+    ]
 })
 export class TaskCommentsComponent {
     /** The numeric ID of the task. */

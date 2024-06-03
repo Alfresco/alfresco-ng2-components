@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -140,6 +140,18 @@ describe('SearchFacetChipTabbedComponent', () => {
         const icon = await chip.getHarness(MatIconHarness);
 
         expect(await icon.getName()).toBe('keyboard_arrow_up');
+    });
+
+    it('should update isPopulated and call detectChanges on ChangeDetectorRef', () => {
+        spyOn(component['changeDetectorRef'], 'detectChanges').and.callThrough();
+
+        component.onIsPopulatedEventChange(true);
+        expect(component.isPopulated).toBe(true);
+        expect(component['changeDetectorRef'].detectChanges).toHaveBeenCalled();
+
+        component.onIsPopulatedEventChange(false);
+        expect(component.isPopulated).toBe(false);
+        expect(component['changeDetectorRef'].detectChanges).toHaveBeenCalledTimes(2);
     });
 
     it('should update display value when new displayValue$ emitted', async () => {

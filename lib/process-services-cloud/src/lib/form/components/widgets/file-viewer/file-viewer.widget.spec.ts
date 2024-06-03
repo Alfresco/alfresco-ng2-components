@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,13 +44,11 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot()
-            ],
-            declarations: [ FileViewerWidgetComponent ],
-            providers: [ { provide: FormService, useValue: formServiceStub } ],
+            imports: [TranslateModule.forRoot()],
+            declarations: [FileViewerWidgetComponent],
+            providers: [{ provide: FormService, useValue: formServiceStub }],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-          });
+        });
 
         formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(FileViewerWidgetComponent);

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 import { CoreTestingModule, LoginComponent, LoginHeaderDirective } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
+import { OidcAuthenticationService } from '../../auth/oidc/oidc-authentication.service';
 
 describe('LoginHeaderDirective', () => {
     let fixture: ComponentFixture<LoginComponent>;

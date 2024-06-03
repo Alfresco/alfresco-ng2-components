@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { FormModel } from '../core/form.model';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormService } from '../../../services/form.service';
-import { CoreTestingModule } from '../../../../testing/core.testing.module';
-import { BaseViewerWidgetComponent } from './base-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../../../../testing';
+import { FormService } from '../../../services/form.service';
+import { FormFieldModel, FormModel } from '../core';
+import { BaseViewerWidgetComponent } from './base-viewer.widget';
 
 describe('BaseViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -45,8 +44,7 @@ describe('BaseViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [BaseViewerWidgetComponent],
+            imports: [CoreTestingModule, BaseViewerWidgetComponent],
             providers: [{ provide: FormService, useValue: formServiceStub }]
         });
 

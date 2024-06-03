@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,8 @@
 
 import { Directive } from '@angular/core';
 
-/**
- * Directive selectors without adf- prefix will be deprecated on 3.0.0
- */
-@Directive({ selector: '[adf-form-custom-button], [form-custom-button]' }) export class StartFormCustomButtonDirective {}
+@Directive({
+    selector: '[adf-form-custom-button]',
+    standalone: true
+})
+export class StartFormCustomButtonDirective {}

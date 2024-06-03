@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import { ProcessModule } from '@alfresco/adf-process-services';
 
 const routes: Routes = [
     {
-      path: '',
-      component: ProcessListDemoComponent
+        path: '',
+        component: ProcessListDemoComponent
     },
     {
         path: ':id',
@@ -34,12 +34,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        CoreModule,
-        ProcessModule.forChild()
-    ],
+    imports: [CommonModule, RouterModule.forChild(routes), CoreModule, ProcessModule],
     declarations: [ProcessListDemoComponent]
 })
 export class AppProcessListModule {}

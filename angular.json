@@ -368,7 +368,8 @@
               "lib/core/shell/**/*.ts",
               "lib/core/shell/**/*.html",
               "lib/core/breadcrumbs/**/*.ts",
-              "lib/core/breadcrumbs/**/*.html"
+              "lib/core/breadcrumbs/**/*.html",
+              "lib/core/feature-flags/**/*.ts"
             ]
           }
         },

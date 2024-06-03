@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ViewEncapsulation
-} from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'adf-inplace-form-input',
+    standalone: true,
     templateUrl: './inplace-form-input.component.html',
     styleUrls: ['./inplace-form-input.component.scss'],
+    imports: [MatFormFieldModule, ReactiveFormsModule, MatInputModule, NgClass],
     encapsulation: ViewEncapsulation.None
 })
 export class InplaceFormInputComponent {

@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "Anvend",
+    "CANCEL": "Annuller"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "Gendan",

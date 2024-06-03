@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,12 +67,12 @@ describe('Number widget', () => {
     });
 
     it('[C269111] Should be able to set general properties for Number Widget', async () => {
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
-        await expect(await widget.numberWidget().getNumberFieldLabel(app.FIELD.number_general)).toContain('Number General');
-        await expect(await widget.numberWidget().getPlaceholder(app.FIELD.number_general)).toContain('Type a number');
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.numberWidget().getNumberFieldLabel(app.FIELD.number_general)).toContain('Number General');
+        expect(await widget.numberWidget().getPlaceholder(app.FIELD.number_general)).toContain('Type a number');
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C274702] Should be able to set advanced and visibility properties for Number Widget', async () => {
@@ -83,16 +83,16 @@ describe('Number widget', () => {
         await taskPage.formFields().checkWidgetIsVisible(app.FIELD.number_visible);
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 2);
-        await expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe(`Can't be less than 3`);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe(`Can't be less than 3`);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 101);
-        await expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe(`Can't be greater than 100`);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe(`Can't be greater than 100`);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 4);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 });

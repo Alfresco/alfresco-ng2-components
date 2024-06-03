@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,34 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, FormService, InitialUsernamePipe, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { catchError, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
-import { UserProcessModel } from '../../../common/models/user-process.model';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { LightUserRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'people-widget',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatTooltipModule,
+        InitialUsernamePipe,
+        ErrorWidgetComponent
+    ],
     templateUrl: './people.widget.html',
     styleUrls: ['./people.widget.scss'],
     host: {
@@ -50,7 +68,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @Output()
     peopleSelected: EventEmitter<number> = new EventEmitter();
 
-    groupId: string;
+    groupId: number;
     value: any;
 
     searchTerm = new UntypedFormControl();
@@ -67,7 +85,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
             return this.peopleProcessService.getWorkflowUsers(undefined, value, this.groupId).pipe(catchError(() => of([])));
         }),
-        map((list: UserProcessModel[]) => {
+        map((list) => {
             const value = this.searchTerm.value.email ? this.getDisplayName(this.searchTerm.value) : this.searchTerm.value;
             this.checkUserAndValidateForm(list, value);
             return list;
@@ -94,7 +112,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    checkUserAndValidateForm(list: UserProcessModel[], value: string): void {
+    checkUserAndValidateForm(list: LightUserRepresentation[], value: string): void {
         const isValidUser = this.isValidUser(list, value);
         if (isValidUser || value === '') {
             this.field.validationSummary.message = '';
@@ -107,7 +125,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    isValidUser(users: UserProcessModel[], name: string): boolean {
+    isValidUser(users: LightUserRepresentation[], name: string): boolean {
         if (users) {
             return !!users.find((user) => {
                 const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
@@ -120,7 +138,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return false;
     }
 
-    getDisplayName(model: UserProcessModel) {
+    getDisplayName(model: LightUserRepresentation) {
         if (model) {
             const displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
@@ -128,7 +146,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item?: UserProcessModel) {
+    onItemSelect(item?: LightUserRepresentation) {
         if (item) {
             this.field.value = item;
         } else {

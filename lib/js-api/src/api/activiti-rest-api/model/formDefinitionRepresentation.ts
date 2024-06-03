@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import { FormJavascriptEventRepresentation } from './formJavascriptEventRepresen
 import { FormOutcomeRepresentation } from './formOutcomeRepresentation';
 import { FormTabRepresentation } from './formTabRepresentation';
 import { FormVariableRepresentation } from './formVariableRepresentation';
+import { RestVariable } from './restVariable';
 
 export interface FormDefinitionRepresentation {
     className?: string;
@@ -45,4 +46,5 @@ export interface FormDefinitionRepresentation {
     taskId?: string;
     taskName?: string;
     variables?: FormVariableRepresentation[];
+    processVariables?: RestVariable[];
 }

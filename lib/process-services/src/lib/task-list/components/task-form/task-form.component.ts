@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,45 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges } from '@angular/core';
-import { FormModel, ContentLinkModel, FormFieldValidator, FormOutcomeEvent, TranslationService, FormFieldModel } from '@alfresco/adf-core';
-import { TaskDetailsModel } from '../../models/task-details.model';
+import {
+    FormModel,
+    ContentLinkModel,
+    FormFieldValidator,
+    FormOutcomeEvent,
+    TranslationService,
+    FormFieldModel,
+    EmptyContentComponent
+} from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
-import { UserRepresentation } from '@alfresco/js-api';
+import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../common';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ClaimTaskDirective } from './claim-task.directive';
+import { UnclaimTaskDirective } from './unclaim-task.directive';
+import { TaskStandaloneComponent } from '../task-standalone/task-standalone.component';
+import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
 
 @Component({
     selector: 'adf-task-form',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatCardModule,
+        EmptyContentComponent,
+        MatButtonModule,
+        TranslateModule,
+        MatProgressSpinnerModule,
+        ClaimTaskDirective,
+        UnclaimTaskDirective,
+        TaskStandaloneComponent,
+        FormComponent,
+        FormCustomOutcomesComponent
+    ],
     templateUrl: './task-form.component.html',
     styleUrls: ['./task-form.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -119,10 +149,9 @@ export class TaskFormComponent implements OnInit, OnChanges {
     @Output()
     taskUnclaimed = new EventEmitter<string>();
 
-    taskDetails: TaskDetailsModel;
+    taskDetails: TaskRepresentation;
     currentLoggedUser: UserRepresentation;
     loading: boolean = false;
-    completedTaskMessage: string;
     internalReadOnlyForm: boolean = false;
 
     constructor(
@@ -216,10 +245,6 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
     isStandaloneTask(): boolean {
         return !this.taskDetails?.processDefinitionId;
-    }
-
-    isTaskLoaded(): boolean {
-        return !!this.taskDetails;
     }
 
     isCompletedTask(): boolean {

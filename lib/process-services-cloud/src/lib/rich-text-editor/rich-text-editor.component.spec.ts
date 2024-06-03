@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,21 +104,5 @@ describe('RichTextEditorComponent', () => {
         component.ngOnDestroy();
 
         expect(destroyEditorSpy).not.toHaveBeenCalled();
-    });
-
-    it('should add readonly class if readOnly is set to true', async () => {
-        component.readOnly = true;
-        await whenEditorIsReady();
-
-        const editorEl = debugElement.query(By.css(cssSelectors.editorJsElement));
-        expect(editorEl.nativeElement.classList).toContain('readonly');
-    });
-
-    it('should not add readonly class if readOnly is set to false', async () => {
-        component.readOnly = false;
-        await whenEditorIsReady();
-
-        const editorEl = debugElement.query(By.css(cssSelectors.editorJsElement));
-        expect(editorEl.nativeElement.classList).not.toContain('readonly');
     });
 });

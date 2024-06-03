@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,23 @@
 import { browser } from 'protractor';
 import {
     AppListCloudPage,
-    StringUtil, createApiService,
+    StringUtil,
+    createApiService,
     LoginPage,
     TasksService,
     ProcessDefinitionsService,
     ProcessInstancesService,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    IdentityService, GroupIdentityService, ProcessCloudWidgetPage, FormCloudService
+    IdentityService,
+    GroupIdentityService,
+    ProcessCloudWidgetPage,
+    FormCloudService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 
 describe('Task form cloud component', () => {
-
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -46,10 +49,15 @@ describe('Task form cloud component', () => {
     let processInstancesService: ProcessInstancesService;
     let identityService: IdentityService;
 
-    let completedTask; let assigneeTask; let toBeCompletedTask; let formValidationsTask; let testUser;
+    let completedTask;
+    let assigneeTask;
+    let toBeCompletedTask;
+    let formValidationsTask;
+    let testUser;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    const completedTaskName = StringUtil.generateRandomString(); const assignedTaskName = StringUtil.generateRandomString();
+    const completedTaskName = StringUtil.generateRandomString();
+    const assignedTaskName = StringUtil.generateRandomString();
     const apiService = createApiService();
     const apiServiceHrUser = createApiService();
 
@@ -90,7 +98,7 @@ describe('Task form cloud component', () => {
         identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
         const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -103,26 +111,44 @@ describe('Task form cloud component', () => {
 
         const formCloudService = new FormCloudService(apiServiceHrUser);
 
-        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name);
+        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(
+            simpleApp,
+            browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name
+        );
 
-        const tabVisibilityVarsId = await formCloudService.getIdByFormName(simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
+        const tabVisibilityVarsId = await formCloudService.getIdByFormName(
+            simpleApp,
+            browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name
+        );
 
         for (let i = 0; i < 4; i++) {
-            visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, tabVisibilityFieldsId);
+            visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(
+                StringUtil.generateRandomString(),
+                simpleApp,
+                tabVisibilityFieldsId
+            );
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
         for (let i = 4; i < 7; i++) {
-            visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
-                simpleApp, tabVisibilityVarsId);
+            visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(
+                StringUtil.generateRandomString(),
+                simpleApp,
+                tabVisibilityVarsId
+            );
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
-        const formToTestValidationsKey = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name,
-            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+        const formToTestValidationsKey = await formCloudService.getIdByFormName(
+            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name,
+            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations
+        );
 
-        formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
+        formValidationsTask = await tasksService.createStandaloneTaskWithForm(
+            StringUtil.generateRandomString(),
+            candidateBaseApp,
+            formToTestValidationsKey
+        );
         await tasksService.claimTask(formValidationsTask.entry.id, candidateBaseApp);
 
         toBeCompletedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
@@ -134,14 +160,15 @@ describe('Task form cloud component', () => {
 
         processDefinitionService = new ProcessDefinitionsService(apiServiceHrUser);
 
-        const processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
+        const processDefinition = await processDefinitionService.getProcessDefinitionByName(
+            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess,
+            candidateBaseApp
+        );
 
         processInstancesService = new ProcessInstancesService(apiServiceHrUser);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
         await loginSSOPage.login(testUser.username, testUser.password);
-
     }, 5 * 60 * 1000);
 
     beforeEach(async () => {
@@ -154,8 +181,7 @@ describe('Task form cloud component', () => {
         try {
             await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-        } catch (error) {
-        }
+        } catch (error) {}
         await browser.executeScript('window.sessionStorage.clear();');
         await browser.executeScript('window.localStorage.clear();');
     });
@@ -175,7 +201,7 @@ describe('Task form cloud component', () => {
 
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
             await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[0].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[0].entry.name);
@@ -206,7 +232,7 @@ describe('Task form cloud component', () => {
 
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
             await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[1].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[1].entry.name);
@@ -234,7 +260,7 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
 
             await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[2].entry.name);
 
@@ -254,7 +280,7 @@ describe('Task form cloud component', () => {
 
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
             await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[4].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[4].entry.name);
@@ -277,7 +303,7 @@ describe('Task form cloud component', () => {
             await widget.tab().clickTabByLabel(tab.tabVarField);
             await widget.textWidget().setValue(widgets.numberOneId, value.displayTab);
 
-            await expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toEqual(false);
+            expect(await taskFormCloudComponent.isCompleteButtonEnabled()).toEqual(false);
         });
 
         it('[C315179] Should be able to complete a standalone task with visible tab with valid value for field', async () => {
@@ -293,7 +319,7 @@ describe('Task form cloud component', () => {
 
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
             await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[6].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[6].entry.name);
@@ -318,7 +344,7 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabMultipleConditions);
             await taskFormCloudComponent.clickCompleteButton();
 
-            await expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
+            expect(await taskFilter.getActiveFilterName()).toBe(myTasksFilterTitle);
             await taskList.checkContentIsNotDisplayedByName(visibilityConditionTasks[3].entry.name);
 
             await chooseFilterAndSelectTaskByName(completedTasksFilter, visibilityConditionTasks[3].entry.name);
@@ -326,6 +352,12 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabMultipleConditions);
         });
 
+        /**
+         * Choose a filter and select a task by name
+         *
+         * @param filterName Filter name
+         * @param taskName Task name
+         */
         async function chooseFilterAndSelectTaskByName(filterName: string, taskName: string): Promise<void> {
             await taskFilter.clickTaskFilter(filterName);
             await taskList.getDataTable().waitTillContentLoaded();
@@ -333,16 +365,27 @@ describe('Task form cloud component', () => {
             await taskList.selectRow(taskName);
         }
 
+        /**
+         * Select a task by name
+         *
+         * @param taskName Task name
+         */
         async function selectTaskByName(taskName: string): Promise<void> {
             await taskList.checkContentIsDisplayedByName(taskName);
             await taskList.selectRow(taskName);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
         }
 
+        /**
+         * Choose a filter
+         *
+         * @param filterName Filter name
+         * @param filterTitle Filter title
+         */
         async function chooseFilter(filterName: string, filterTitle: string): Promise<void> {
             await taskFilter.clickTaskFilter(filterName);
             await taskList.getDataTable().waitTillContentLoaded();
-            await expect(await taskFilter.getActiveFilterName()).toBe(filterTitle);
+            expect(await taskFilter.getActiveFilterName()).toBe(filterTitle);
         }
-   });
+    });
 });

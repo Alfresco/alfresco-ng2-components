@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, OnDestroy, Injector, OnChanges, OnInit, Inject } from '@angular/core';
+import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { Component, Inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormRulesManager, formRulesManagerFactory } from '../models/form-rules.model';
-import { FormModel } from './widgets/core/form.model';
-import { ContainerModel, FormFieldModel, TabModel } from './widgets';
 import { FormService } from '../services/form.service';
+import { FormFieldComponent } from './form-field/form-field.component';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } from './middlewares/middleware';
+import { ContainerModel, FormFieldModel, FormModel, TabModel } from './widgets';
 
 @Component({
     selector: 'adf-form-renderer',
+    standalone: true,
     templateUrl: './form-renderer.component.html',
     styleUrls: ['./form-renderer.component.scss'],
     providers: [
@@ -32,11 +40,25 @@ import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE, FormFieldModelRenderMiddleware } fr
             useFactory: formRulesManagerFactory,
             deps: [Injector]
         }
-
+    ],
+    imports: [
+        NgIf,
+        MatTabsModule,
+        NgForOf,
+        NgTemplateOutlet,
+        TranslateModule,
+        MatButtonModule,
+        MatIconModule,
+        NgStyle,
+        FormFieldComponent,
+        MatSlideToggleModule,
+        FormsModule,
+        JsonPipe,
+        NgClass
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormRendererComponent<T> implements OnInit, OnChanges, OnDestroy {
+export class FormRendererComponent<T> implements OnInit, OnDestroy {
     /** Toggle debug options. */
     @Input()
     showDebugButton: boolean = false;
@@ -57,9 +79,6 @@ export class FormRendererComponent<T> implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit(): void {
         this.runMiddlewareServices();
-    }
-
-    ngOnChanges(): void {
         this.formRulesManager.initialize(this.formDefinition);
     }
 
@@ -138,7 +157,7 @@ export class FormRendererComponent<T> implements OnInit, OnChanges, OnDestroy {
     private runMiddlewareServices(): void {
         const formFields = this.formDefinition.getFormFields();
 
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
             this.middlewareServices.forEach((middlewareService) => {
                 if (middlewareService.type === field.type) {
                     field = middlewareService.getParsedField(field);

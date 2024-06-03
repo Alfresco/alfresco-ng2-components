@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,8 @@ import { TaskListService } from '../../services/tasklist.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-claim-task]'
+    selector: '[adf-claim-task]',
+    standalone: true
 })
 export class ClaimTaskDirective implements OnInit {
     /** (Required) The id of the task. */

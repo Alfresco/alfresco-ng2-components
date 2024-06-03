@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,16 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppDefinitionRepresentationModel } from '@alfresco/adf-process-services';
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'app-process-list-view',
     templateUrl: './apps-view.component.html'
 })
 export class AppsViewComponent {
+    constructor(private router: Router) {}
 
-    constructor(private router: Router) {
+    onAppClicked(app: AppDefinitionRepresentation) {
+        this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
     }
-
-     onAppClicked(app: AppDefinitionRepresentationModel) {
-         this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
-     }
-
 }

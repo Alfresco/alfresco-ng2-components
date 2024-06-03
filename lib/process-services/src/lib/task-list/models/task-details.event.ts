@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { TaskDetailsModel } from './task-details.model';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 export class TaskDetailsEvent {
-
-    private _value: TaskDetailsModel;
+    private _value: TaskRepresentation;
     private _defaultPrevented: boolean = false;
 
-    get value(): TaskDetailsModel {
+    get value(): TaskRepresentation {
         return this._value;
     }
 
@@ -30,7 +29,7 @@ export class TaskDetailsEvent {
         return this._defaultPrevented;
     }
 
-    constructor(value: TaskDetailsModel) {
+    constructor(value: TaskRepresentation) {
         this._value = value;
     }
 

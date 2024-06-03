@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 import { materialLocators } from '../../public-api';
 
 export class GroupWidgetPage {
-
     groupField = $('input[data-automation-id="adf-group-search-input"]');
     firstResult = $('#adf-group-widget-user-0');
     formFields = new FormFields();
@@ -39,7 +38,7 @@ export class GroupWidgetPage {
         return this.formFields.getFieldText(fieldId);
     }
 
-    insertGroup(fieldId, value): Promise<void> {
+    insertGroup(fieldId: string, value: string): Promise<void> {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
@@ -52,13 +51,13 @@ export class GroupWidgetPage {
         await BrowserVisibility.waitUntilElementIsVisible(groupElement);
     }
 
-    async getDropDownList(): Promise<any[]> {
+    async getDropDownList(): Promise<string[]> {
         const user: Locator = by.css('[id="adf-group-label-name"]');
         await BrowserVisibility.waitUntilElementIsVisible(element(user));
         return element.all(user).map((elementFinder) => elementFinder.getText());
     }
 
-    async selectGroupFromDropDown(groupName): Promise<void> {
+    async selectGroupFromDropDown(groupName: string): Promise<void> {
         const group = element(by.cssContainingText('[id="adf-group-label-name"]', groupName));
         await BrowserActions.click(group);
     }

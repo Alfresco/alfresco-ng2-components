@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "APPLY": "تطبيق",
+    "CANCEL": "إلغاء"
+  },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "استعادة",

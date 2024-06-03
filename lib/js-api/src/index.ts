@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ export * from './api/auth-rest-api';
 export * from './api/activiti-rest-api';
 export * from './api/search-rest-api';
 export * from './api/model-rest-api';
+export * from './api/hxi-connector-api';
 
 export * from './api/content-custom-api/api/content.api';
 export * from './authentication/contentAuth';

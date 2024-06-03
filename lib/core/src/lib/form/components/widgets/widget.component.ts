@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormFieldEvent } from '../../events/form-field.event';
-import { FormRulesEvent } from '../../events/form-rules.event';
+import { FormFieldEvent, FormRulesEvent } from '../../events';
 import { FormService } from '../../services/form.service';
 import { FormFieldModel } from './core';
 
@@ -28,6 +27,7 @@ import { FormFieldModel } from './core';
  */
 @Component({
     selector: 'base-widget',
+    standalone: true,
     template: '',
     host: {
         '(click)': 'event($event)',

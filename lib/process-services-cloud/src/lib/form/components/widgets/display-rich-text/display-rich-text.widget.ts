@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,11 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, SecurityContext, ViewEncapsulation } from '@angular/core';
 import { WidgetComponent, FormService } from '@alfresco/adf-core';
-/* cspell:disable-next-line */
 import edjsHTML from 'editorjs-html';
+import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
     selector: 'display-rich-text',
     templateUrl: './display-rich-text.widget.html',
@@ -39,16 +40,23 @@ import edjsHTML from 'editorjs-html';
     encapsulation: ViewEncapsulation.None
 })
 export class DisplayRichTextWidgetComponent extends WidgetComponent implements OnInit {
-
     parsedHTML: any;
 
-    constructor(public formService: FormService) {
+    constructor(public formService: FormService, private readonly sanitizer: DomSanitizer) {
         super(formService);
     }
 
     ngOnInit(): void {
-        /* cspell:disable-next-line */
         this.parsedHTML = edjsHTML().parseStrict(this.field.value);
+
+        if (!(this.parsedHTML instanceof Error)) {
+            this.sanitizeHtmlContent();
+        } else {
+            throw this.parsedHTML;
+        }
     }
 
+    private sanitizeHtmlContent(): void {
+        this.parsedHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.parsedHTML.join(''));
+    }
 }
