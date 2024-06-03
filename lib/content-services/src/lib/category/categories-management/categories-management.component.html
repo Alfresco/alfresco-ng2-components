@@ -1,8 +1,6 @@
 <div class="adf-categories-management">
     <div *ngIf="categoryNameControlVisible" class="adf-category-name-field">
         <input #categoryNameInput
-            matInput
-            autocomplete="off"
             [formControl]="categoryNameControl"
             (keyup.enter)="addCategory()"
             placeholder="{{'CATEGORIES_MANAGEMENT.CATEGORIES_SEARCH_PLACEHOLDER' | translate }}"
@@ -52,8 +50,8 @@
                 <mat-list-item
                     *ngFor="let category of existingCategories"
                     class="adf-category"
-                    (click)='addCategoryToAssign(category)'>
-                    {{ category.name }}
+                    (click)='addCategoryToAssign(category, isCRUDMode || !multiSelect && categories.length > 0)'>
+                        {{ category.name }}
                 </mat-list-item>
                 <p *ngIf="!existingCategories?.length && !existingCategoriesLoading"
                    data-automation-id="no-categories-message">
