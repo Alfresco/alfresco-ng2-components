@@ -97,7 +97,7 @@
                 "output": "/assets/adf-insights/i18n"
               },
               {
-                "glob": "pdf.worker.min.js",
+                "glob": "pdf.worker.min.mjs",
                 "input": "node_modules/pdfjs-dist/build",
                 "output": "/"
               },
@@ -111,10 +111,10 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ],
             "scripts": [
-              "node_modules/pdfjs-dist/legacy/build/pdf.mjs",
+              "node_modules/pdfjs-dist/build/pdf.mjs",
               "node_modules/pdfjs-dist/legacy/web/pdf_viewer.mjs",
               "node_modules/raphael/raphael.min.js"
             ],
@@ -354,8 +354,8 @@
               "demo-shell/src/styles.scss"
             ],
             "scripts": [
-              "node_modules/pdfjs-dist/legacy/build/pdf.mjs",
-              "node_modules/pdfjs-dist/web/pdf_viewer.mjs"
+              "node_modules/pdfjs-dist/build/pdf.mjs",
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.mjs"
             ]
           }
         },
@@ -388,7 +388,7 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -413,7 +413,7 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -534,7 +534,7 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -559,7 +559,7 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -726,7 +726,7 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -751,7 +751,7 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -1192,7 +1192,7 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ]
           },
           "configurations": {
@@ -1212,7 +1212,7 @@
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
-              "node_modules/pdfjs-dist/web/pdf_viewer.css"
+              "node_modules/pdfjs-dist/legacy/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
