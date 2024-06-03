@@ -188,7 +188,7 @@ describe('LayoutContainerComponent', () => {
     describe('Media query change', () => {
         const expandedState = {
             value: 'expanded',
-            params: { width: layoutContainerComponent.sidenavMax }
+            params: { width: 200 }
         };
 
         const testMediaQueryChange = (matches: boolean, expectedSidenavState: any, expectedContentState: any) => {
