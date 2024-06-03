@@ -17,9 +17,19 @@
 
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormModel, FormService, FormFieldModel } from '@alfresco/adf-core';
+import {
+    FormModel,
+    FormService,
+    FormFieldModel,
+    TranslationService,
+    TranslationMock,
+    AuthenticationService,
+    RedirectAuthService
+} from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EMPTY } from 'rxjs';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -44,13 +54,15 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot()
+            imports: [TranslateModule.forRoot(), FileViewerWidgetComponent, HttpClientTestingModule],
+            providers: [
+                { provide: FormService, useValue: formServiceStub },
+                { provide: TranslationService, useClass: TranslationMock },
+                AuthenticationService,
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
             ],
-            declarations: [ FileViewerWidgetComponent ],
-            providers: [ { provide: FormService, useValue: formServiceStub } ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
-          });
+        });
 
         formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(FileViewerWidgetComponent);
