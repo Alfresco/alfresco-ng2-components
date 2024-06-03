@@ -31,10 +31,10 @@ interface CategoryNameControlErrors {
 }
 
 @Component({
-  selector: 'adf-categories-management',
-  templateUrl: './categories-management.component.html',
-  styleUrls: ['./categories-management.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-categories-management',
+    templateUrl: './categories-management.component.html',
+    styleUrls: ['./categories-management.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CategoriesManagementComponent implements OnInit, OnDestroy {
     readonly nameErrorMessagesByErrors = new Map<keyof CategoryNameControlErrors, string>([
@@ -49,11 +49,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<void>();
     private _categoryNameControl = new FormControl<string>(
         '',
-        [
-            this.validateIfNotAlreadyAdded.bind(this),
-            this.validateEmptyCategory,
-            Validators.required
-        ],
+        [this.validateIfNotAlreadyAdded.bind(this), this.validateEmptyCategory, Validators.required],
         this.validateIfNotAlreadyCreated.bind(this)
     );
     private _existingCategories: Category[];
@@ -78,23 +74,23 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      *
      * @param categoryNameControlVisible control visibility.
      */
-     @Input()
-     set categoryNameControlVisible(categoryNameControlVisible: boolean) {
-         this._categoryNameControlVisible = categoryNameControlVisible;
-         if (categoryNameControlVisible) {
-             setTimeout(() => {
-                 this.categoryNameInputElement.nativeElement.scrollIntoView();
-             });
-             this._existingCategoriesPanelVisible = true;
-         } else {
+    @Input()
+    set categoryNameControlVisible(categoryNameControlVisible: boolean) {
+        this._categoryNameControlVisible = categoryNameControlVisible;
+        if (categoryNameControlVisible) {
+            setTimeout(() => {
+                this.categoryNameInputElement.nativeElement.scrollIntoView();
+            });
+            this._existingCategoriesPanelVisible = true;
+        } else {
             this._existingCategoriesPanelVisible = false;
             this.clearCategoryNameInput();
-         }
-     }
+        }
+    }
 
-     get categoryNameControlVisible(): boolean {
-         return this._categoryNameControlVisible;
-     }
+    get categoryNameControlVisible(): boolean {
+        return this._categoryNameControlVisible;
+    }
 
     /** Emits when classifiable aspect changes */
     @Input()
@@ -150,9 +146,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             )
             .subscribe((name: string) => this.onNameControlValueChange(name));
 
-        this.categoryNameControl.statusChanges
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.setCategoryNameControlErrorMessageKey());
+        this.categoryNameControl.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.setCategoryNameControlErrorMessageKey());
 
         this.setCategoryNameControlErrorMessageKey();
 
@@ -164,13 +158,11 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             this._categoryNameControl.removeValidators(Validators.required);
             this.categories.forEach((category) => this.initialCategories.push(category));
             if (this.classifiableChanged) {
-                this.classifiableChanged
-                    .pipe(takeUntil(this.onDestroy$))
-                    .subscribe(() => {
-                        this.categories = [];
-                        this.categoryNameControlVisible = false;
-                        this.categoryNameControlVisibleChange.emit(false);
-                    });
+                this.classifiableChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+                    this.categories = [];
+                    this.categoryNameControlVisible = false;
+                    this.categoryNameControlVisibleChange.emit(false);
+                });
             }
         }
     }
@@ -188,7 +180,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     /*
      * Returns `true` if categories empty and category panel non editable state, otherwise `false`
-    */
+     */
     get showEmptyCategoryMessage(): boolean {
         return this.categories.length === 0 && !this.categoryNameControlVisible;
     }
@@ -235,13 +227,16 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      * Adds existing category to categories list and removes it from existing categories list.
      *
      * @param category - selection list change containing selected category
+     * @param disableAddCategory - allow or disallow the ability to add a new category for assigning
      */
-    addCategoryToAssign(category: Category) {
-        const selectedCategory: Category = category;
-        this.categories.push(selectedCategory);
-        this._existingCategories.splice(this._existingCategories.indexOf(selectedCategory), 1);
-        this.categoryNameControl.updateValueAndValidity();
-        this.categoriesChange.emit(this.categories);
+    addCategoryToAssign(category: Category, disableAddCategory: boolean) {
+        if (!disableAddCategory) {
+            const selectedCategory: Category = category;
+            this.categories.push(selectedCategory);
+            this._existingCategories.splice(this._existingCategories.indexOf(selectedCategory), 1);
+            this.categoryNameControl.updateValueAndValidity();
+            this.categoriesChange.emit(this.categories);
+        }
     }
 
     /**
@@ -275,7 +270,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     private searchForExistingCategories(searchTerm: string) {
-        this.categoryService.searchCategories(searchTerm, 0 , this.existingCategoriesListLimit).subscribe((existingCategoriesResult) => {
+        this.categoryService.searchCategories(searchTerm, 0, this.existingCategoriesListLimit).subscribe((existingCategoriesResult) => {
             this._existingCategories = existingCategoriesResult.list.entries.map((rowEntry) => {
                 const existingCat = new Category();
                 existingCat.id = rowEntry.entry.id;
@@ -283,7 +278,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
                 existingCat.name = path ? `${path}/${rowEntry.entry.name}` : rowEntry.entry.name;
                 return existingCat;
             });
-            this._existingCategories = this._existingCategories.filter((existingCat) => this.categories.find((category) => existingCat.id === category.id) === undefined);
+            this._existingCategories = this._existingCategories.filter(
+                (existingCat) => this.categories.find((category) => existingCat.id === category.id) === undefined
+            );
             this.sortCategoriesList(this._existingCategories);
             this._existingCategoriesLoading = false;
             this._typing = false;
@@ -294,7 +291,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     private getChildrenCategories(searchTerm: string) {
         this.categoryService.getSubcategories(this.parentId).subscribe((childrenCategories) => {
             this._existingCategories = childrenCategories.list.entries.map((categoryEntry) => categoryEntry.entry);
-            this._existingCategories = this._existingCategories.filter((existingCat) => existingCat.name.toLowerCase().includes(searchTerm.toLowerCase()));
+            this._existingCategories = this._existingCategories.filter((existingCat) =>
+                existingCat.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
             this.sortCategoriesList(this._existingCategories);
             this._existingCategoriesLoading = false;
             this._typing = false;
@@ -308,11 +307,13 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             : null;
     }
 
-    private validateIfNotAlreadyCreated(nameControl: FormControl<string>): Observable<CategoryNameControlErrors | null>  {
+    private validateIfNotAlreadyCreated(nameControl: FormControl<string>): Observable<CategoryNameControlErrors | null> {
         return this.existingCategoryLoaded$.pipe(
-            map<void, CategoryNameControlErrors | null>(() => this.existingCategories.some((category) => this.compareCategories(category, nameControl.value)) && this.isCRUDMode
+            map<void, CategoryNameControlErrors | null>(() =>
+                this.existingCategories.some((category) => this.compareCategories(category, nameControl.value)) && this.isCRUDMode
                     ? { duplicatedExistingCategory: true }
-                    : null),
+                    : null
+            ),
             first()
         );
     }
@@ -322,9 +323,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     private validateEmptyCategory(categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
-        return categoryNameControl.value.length && !categoryNameControl.value.trim()
-            ? { emptyCategory: true }
-            : null;
+        return categoryNameControl.value.length && !categoryNameControl.value.trim() ? { emptyCategory: true } : null;
     }
 
     private setCategoryNameControlErrorMessageKey() {
