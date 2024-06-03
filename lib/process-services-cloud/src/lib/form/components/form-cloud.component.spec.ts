@@ -990,6 +990,20 @@ describe('FormCloudComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
     });
 
+    it('should enable outcome with skip validation property, even if the form is not valid', () => {
+        const formModel = new FormModel(cloudFormMock);
+        formComponent.form = formModel;
+        formModel.isValid = false;
+
+        const customOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
+            name: 'Custom',
+            skipValidation: true
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(customOutcome)).toBeTruthy();
+    });
+
     it('should disable start process outcome button when disableStartProcessButton is true', () => {
         const formModel = new FormModel(cloudFormMock);
         formComponent.form = formModel;
