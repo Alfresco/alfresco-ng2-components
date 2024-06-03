@@ -1,56 +1,41 @@
-<mat-toolbar
-    class="adf-toolbar-container-row"
-    [color]="color"
-    [style.background-color]="color"
-    [style.background-image]="backgroundImage ? 'url(' + backgroundImage + ')' : 'none'">
-    <button
-        *ngIf="showSidenavToggle && position === 'start'"
-        id="adf-sidebar-toggle-start"
-        data-automation-id="adf-menu-icon"
-        class="adf-menu-icon adf-header-icon-button"
-        mat-icon-button
-        (click)="toggleMenu()"
-        [attr.aria-expanded]="expandedSidenav"
-        [attr.aria-label]="'CORE.HEADER.ACCESSIBILITY.SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL' | translate">
-        <mat-icon
-            class="adf-menu-icon-header"
-            role="img"
-            aria-hidden="true">{{ toggleIcon }}
-        </mat-icon>
+<mat-toolbar class="adf-toolbar-container-row"
+             [color]="color"
+             [style.background-color]="color"
+             [style.background-image]="backgroundImage ? 'url(' + backgroundImage + ')' : 'none'">
+    <button *ngIf="showSidenavToggle && position === 'start'"
+            id="adf-sidebar-toggle-start"
+            data-automation-id="adf-menu-icon"
+            class="adf-menu-icon adf-header-icon-button"
+            mat-icon-button
+            (click)="toggleMenu()"
+            [attr.aria-expanded]="expandedSidenav"
+            [attr.aria-label]="'CORE.HEADER.ACCESSIBILITY.SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL' | translate">
+        <mat-icon class="adf-menu-icon-header" role="img" aria-hidden="true">{{ toggleIcon }}</mat-icon>
     </button>
 
     <a *ngIf="showLogo" [routerLink]="redirectUrl" title="{{ tooltip }}">
-        <img
-            src="{{ logo }}"
-            class="adf-app-logo"
-            alt="{{ 'CORE.HEADER.LOGO_ARIA' | translate }}"
-        />
+        <img src="{{ logo }}"
+             class="adf-app-logo"
+             alt="{{ 'CORE.HEADER.LOGO_ARIA' | translate }}" />
     </a>
 
-    <h1
-        role="link"
+    <h1 role="link"
         [attr.aria-label]="title | translate"
         [routerLink]="redirectUrl"
-        class="adf-app-title"
-        >
+        class="adf-app-title">
         {{ title }}
     </h1>
 
     <ng-content></ng-content>
 
-    <button
-        *ngIf="showSidenavToggle && position === 'end'"
-        id="adf-sidebar-toggle-end"
-        data-automation-id="adf-menu-icon"
-        class="adf-menu-icon adf-header-icon-button"
-        mat-icon-button
-        (click)="toggleMenu()"
-        [attr.aria-expanded]="expandedSidenav"
-        [attr.aria-label]="'CORE.HEADER.ACCESSIBILITY.SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL' | translate">
-        <mat-icon
-            class="adf-menu-icon-header"
-            role="img"
-            aria-hidden="true">{{ toggleIcon }}
-        </mat-icon>
+    <button *ngIf="showSidenavToggle && position === 'end'"
+            id="adf-sidebar-toggle-end"
+            data-automation-id="adf-menu-icon"
+            class="adf-menu-icon adf-header-icon-button"
+            mat-icon-button
+            (click)="toggleMenu()"
+            [attr.aria-expanded]="expandedSidenav"
+            [attr.aria-label]="'CORE.HEADER.ACCESSIBILITY.SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL' | translate">
+        <mat-icon class="adf-menu-icon-header" role="img" aria-hidden="true">{{ toggleIcon }}</mat-icon>
     </button>
 </mat-toolbar>

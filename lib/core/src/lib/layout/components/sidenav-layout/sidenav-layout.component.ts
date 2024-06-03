@@ -36,12 +36,16 @@ import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layou
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Direction } from '@angular/cdk/bidi';
 import { takeUntil } from 'rxjs/operators';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { LayoutContainerComponent } from '../layout-container/layout-container.component';
 
 @Component({
     selector: 'adf-sidenav-layout',
+    standalone: true,
     templateUrl: './sidenav-layout.component.html',
     styleUrls: ['./sidenav-layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    imports: [NgIf, NgTemplateOutlet, LayoutContainerComponent],
     host: { class: 'adf-sidenav-layout' }
 })
 export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -96,7 +100,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService ) {
+    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService) {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 
