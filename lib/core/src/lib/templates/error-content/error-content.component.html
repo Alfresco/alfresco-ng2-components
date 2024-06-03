@@ -1,13 +1,13 @@
 <ng-container *ngIf="{ isSmallScreen: isSmallScreen$ | async } as screenSize">
     <div class="adf-error-content">
-        <p class="adf-error-content-code {{ screenSize.isSmallScreen ? 'adf-error-content-code--small mat-display-3': 'mat-display-4' }}">
+        <p class="adf-error-content-code {{ screenSize.isSmallScreen ? 'adf-error-content-code--small mat-headline-2': 'mat-headline-1' }}">
             {{ errorCodeTranslated }}
         </p>
         <div class="adf-error-content-shadow {{ screenSize.isSmallScreen ? 'adf-error-content-shadow--small': '' }}"></div>
-        <p class="adf-error-content-title {{ screenSize.isSmallScreen ? 'mat-headline': 'mat-display-2' }}">
+        <p class="adf-error-content-title {{ screenSize.isSmallScreen ? 'mat-headline-5': 'mat-headline-3' }}">
             {{ 'ERROR_CONTENT.' + errorCodeTranslated + '.TITLE' | translate }}
         </p>
-        <p class="adf-error-content-description {{ screenSize.isSmallScreen ? 'mat-subheading-2': 'mat-headline' }}">
+        <p class="adf-error-content-description {{ screenSize.isSmallScreen ? 'mat-subtitle-1': 'mat-headline-5' }}">
             {{ 'ERROR_CONTENT.' + errorCodeTranslated + '.DESCRIPTION' | translate }}
         </p>
         <ng-content select="[adf-error-content-actions]"></ng-content>
