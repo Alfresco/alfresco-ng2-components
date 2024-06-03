@@ -1,8 +1,9 @@
+@import 'styles/mat-selectors';
+
 .adf-categories-management {
     .adf-category-name-field {
         justify-content: space-between;
-        width: 100%;
-        color: var(--adf-metadata-property-panel-text-color);
+        padding: 0 10px;
         background: var(--adf-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
@@ -10,8 +11,15 @@
 
         input {
             background-color: transparent;
-            padding: 7px 8px 8px;
+            color: var(--adf-metadata-property-panel-text-color);
+            padding: 7px 0;
             width: 100%;
+            border: none;
+            outline: none;
+        }
+
+        #{$mat-form-field-error} {
+            padding-top: 5px;
         }
     }
 
@@ -46,7 +54,7 @@
         background-color: inherit;
         color: inherit;
 
-        &:hover {
+        &:not(#{$mat-list-item-disabled}):hover {
             cursor: pointer;
             background: var(--adf-theme-mat-grey-color-a200);
         }
@@ -72,5 +80,9 @@
         color: var(--theme-primary-color);
         cursor: pointer;
         overflow-wrap: anywhere;
+    }
+
+    #{$mat-list-item-disabled} #{$mat-list-item-primary-text} {
+        opacity: 1;
     }
 }
