@@ -29,7 +29,7 @@ import {
     AlfrescoApiServiceMock,
     AlfrescoApiService
 } from '@alfresco/adf-core';
-import { TaskListService } from '../services/tasklist.service';
+import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../testing/mock';
@@ -106,8 +106,14 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), DataTableModule, NoopAnimationsModule, MatProgressSpinnerModule, HttpClientTestingModule, TaskListComponent],
-            declarations: [TaskListComponent],
+            imports: [
+                TranslateModule.forRoot(),
+                DataTableModule,
+                NoopAnimationsModule,
+                MatProgressSpinnerModule,
+                HttpClientTestingModule,
+                TaskListComponent
+            ],
             providers: [
                 TaskListService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

@@ -16,11 +16,19 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, AppConfigServiceMock, LocalizedDatePipe, TemplateModule, TranslationMock, TranslationService } from '@alfresco/adf-core';
-import { AppsProcessService } from '../../app-list/services/apps-process.service';
+import { ComponentFixture, getTestBed } from '@angular/core/testing';
+import {
+    AppConfigService,
+    AppConfigServiceMock,
+    FormRenderingService,
+    LocalizedDatePipe,
+    PipeModule,
+    TemplateModule,
+    TranslationMock,
+    TranslationService
+} from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ProcessService } from '../../services/process.service';
 import {
     newProcess,
@@ -32,13 +40,10 @@ import {
 } from '../../../testing/mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { deployedApps } from '../../mock/apps-list.mock';
-import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
-import { FormModule } from '../../form';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -46,6 +51,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RestVariable } from '@alfresco/js-api';
+import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
+import { AppsProcessService } from '../../../services/apps-process.service';
+import { deployedApps } from '../../../mock/apps-list.mock';
+import { ProcessFormRenderingService } from '../../../form';
+import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from 'lib/core/src/lib/form/components/middlewares/middleware';
 
 describe('StartProcessComponent', () => {
     let appConfig: AppConfigService;
@@ -62,11 +72,10 @@ describe('StartProcessComponent', () => {
     let getDeployedApplicationsSpy: jasmine.Spy;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
+        getTestBed().configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 TemplateModule,
-                FormModule,
                 NoopAnimationsModule,
                 ReactiveFormsModule,
                 FormsModule,
@@ -74,16 +83,20 @@ describe('StartProcessComponent', () => {
                 MatInputModule,
                 MatIconModule,
                 MatSelectModule,
-                MatAutocompleteModule
+                MatAutocompleteModule,
+                PipeModule,
+                StartProcessInstanceComponent
             ],
-            declarations: [StartProcessInstanceComponent],
             providers: [
                 LocalizedDatePipe,
                 ActivitiContentService,
                 ProcessService,
                 AppsProcessService,
+                FormRenderingService,
+                { provide: FormRenderingService, useClass: ProcessFormRenderingService },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE, useValue: [] }
             ]
         });
     });
@@ -109,13 +122,13 @@ describe('StartProcessComponent', () => {
     }
 
     beforeEach(() => {
-        appConfig = TestBed.inject(AppConfigService);
-        activitiContentService = TestBed.inject(ActivitiContentService);
-        fixture = TestBed.createComponent(StartProcessInstanceComponent);
+        appConfig = getTestBed().inject(AppConfigService);
+        activitiContentService = getTestBed().inject(ActivitiContentService);
+        fixture = getTestBed().createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
-        processService = TestBed.inject(ProcessService);
-        appsProcessService = TestBed.inject(AppsProcessService);
+        processService = getTestBed().inject(ProcessService);
+        appsProcessService = getTestBed().inject(AppsProcessService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
