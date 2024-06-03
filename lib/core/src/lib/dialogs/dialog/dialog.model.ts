@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-import { TemplateRef } from '@angular/core';
-import { Subject } from 'rxjs';
-import { DialogSizes } from './dialog.model';
+export const DialogSize = {
+    Large: 'adf-large',
+    Medium: 'adf-medium',
+    Alert: 'adf-alert'
+} as const;
 
-export interface DialogData {
-    title: string;
-    description?: string;
-    confirmButtonTitle?: string;
-    cancelButtonTitle?: string;
-    isConfirmButtonDisabled$?: Subject<boolean>;
-    isCloseButtonHidden?: boolean;
-    isCancelButtonHidden?: boolean;
-    dialogSize?: DialogSizes;
-    contentTemplate?: TemplateRef<any>;
-    actionsTemplate?: TemplateRef<any>;
-    descriptionTemplate?: TemplateRef<any>;
-    headerIcon?: string;
-}
+export type DialogSizes = (typeof DialogSize)[keyof typeof DialogSize];

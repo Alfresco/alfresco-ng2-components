@@ -20,3 +20,4 @@ export * from './edit-json/edit-json.dialog.module';
 export * from './unsaved-changes-dialog/unsaved-changes-dialog.component';
 export * from './unsaved-changes-dialog/unsaved-changes-dialog.module';
 export * from './unsaved-changes-dialog/unsaved-changes.guard';
+export * from './dialog';

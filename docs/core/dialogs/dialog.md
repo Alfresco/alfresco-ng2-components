@@ -1,11 +1,11 @@
 ---
 Title: Dialog component
-Added: v6.9.0
+Added: v6.10.0
 Status: Active
-Last reviewed: 2024-05-17
+Last reviewed: 2024-05-24
 ---
 
-# [Dialog component](../../../lib/content-services/src/lib/dialogs/dialog/ "Defined in dialog.component.ts")
+# [Dialog component](../../../lib/core/src/lib/dialogs/dialog/dialog.component.ts "Defined in dialog.component.ts")
 
 Dialog wrapper styled according to a consistent design system.
 
@@ -64,14 +64,23 @@ function openDialog() {
     const data: DialogData = {
         title: 'Dialog title',
         dialogSize: DialogSize.Alert,
-        isConfirmButtonDisabled$: of(true),
-        contentTemplate: this.contentDialogTemplate,
-        actionsTemplate: this.actionsDialogTemplate
+        isConfirmButtonDisabled$: of(false),
+        contentTemplate: this.contentDialogTemplate, // or  contentComponent: this.contentDialogTemplate
+        additionalActionButtons: [{
+            title: 'Reset',
+            class: 'reset-button',
+            onClick: () => {
+                this.isConfirmButtonDisabled$.next(true);
+            }
+        }] // or actionsTemplate: this.actionsDialogTemplate
     };
 
-    this.dialog.open(DialogComponent, { data });
+    this.dialog.open(DialogComponent, { data }, width: '600px');
 }
 ```
+
+Note that **fixed width** may be provided which will work correctly on smaller screens. But don't specify any values ​​for **height**, as this may break the scrollable content and hide the buttons.
+To display the design well, it is necessary to provide no more than 2 additional buttons.
 
 ## Details
 
@@ -84,3 +93,4 @@ with properties.
 
 - [Dialog Data Interface](../interfaces/dialog.interface.md)
 - [Dialog Model](../models/dialog.model.md)
+- [AdditionalDialogActionButton Interface](../interfaces/additional-dialog-action-button.md)
