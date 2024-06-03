@@ -1,0 +1,284 @@
+$dialog-large-l-width: 1075px;
+$dialog-large-l-height: 907px;
+
+$dialog-medium-l-width: 691px;
+$dialog-medium-l-height: 778px;
+
+$dialog-small-l-width: 461px;
+$dialog-small-s-width: 346px;
+$dialog-small-l-height: 432px;
+$dialog-small-s-height: 360px;
+
+$l-screen: 1920px;
+$m-screen: 1680px;
+$s-screen: 1440px;
+$xs-screen: 500px;
+$xxs-screen: 375px;
+
+$breakpoint-alert-with-additional-buttons-centered: 1501px;
+$breakpoint-medium-with-additional-buttons-centered: 1002px;
+$breakpoint-large-with-additional-buttons-centered: 642px;
+$breakpoint-medium-screen: 920px;
+
+$dialog-padding: 24px;
+
+.adf-large-dialog-panel,
+.adf-medium-dialog-panel,
+.adf-alert-dialog-panel {
+    min-width: calc(269px - $dialog-padding * 2);
+
+    @media screen and (max-width: $xxs-screen) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+.adf-large-dialog-panel {
+    max-width: calc(56vw);
+
+    @media screen and (min-width: $l-screen) {
+        max-width: calc($dialog-large-l-width);
+    }
+
+    @media screen and (max-width: $xs-screen) {
+        max-width: calc(100vw);
+    }
+
+    @media screen and (max-width: $breakpoint-large-with-additional-buttons-centered) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+.adf-medium-dialog-panel {
+    max-width: calc(36vw);
+
+    @media screen and (min-width: $l-screen) {
+        max-width: calc($dialog-medium-l-width);
+    }
+
+    @media screen and (max-width: $breakpoint-medium-screen) {
+        max-width: calc(84vw);
+    }
+
+    @media screen and (max-width: $xxs-screen) {
+        max-width: calc(100vw);
+    }
+
+    @media screen and (max-width: $breakpoint-medium-with-additional-buttons-centered) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+.adf-alert-dialog-panel {
+    max-width: 24vw;
+
+    @media screen and (min-width: $m-screen) {
+        max-width: $dialog-small-l-width;
+    }
+
+    @media screen and (max-width: $s-screen) {
+        max-width: $dialog-small-s-width;
+    }
+
+    @media screen and (max-width: $xxs-screen) {
+        max-width: 84vw;
+    }
+
+    @media screen and (max-width: $breakpoint-alert-with-additional-buttons-centered) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+.adf-dialog-container {
+    min-width: calc(269px - $dialog-padding * 2);
+    min-height: calc(188px - $dialog-padding * 2);
+    max-height: calc(84vh - $dialog-padding * 2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .adf-dialog-header,
+    .adf-dialog-content,
+    .adf-dialog-actions {
+        margin: 0;
+        padding: 0;
+    }
+
+    .adf-dialog-header {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: $dialog-padding;
+
+        &.adf-centered-header {
+            align-items: flex-start;
+        }
+
+        .adf-dialog-title {
+            font-size: large;
+            font-weight: 200;
+            margin: 0;
+        }
+
+        .adf-dialog-header-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 48px;
+        }
+    }
+
+    .adf-description {
+        padding-top: $dialog-padding;
+    }
+
+    .adf-dialog-content {
+        margin: $dialog-padding 0;
+        overflow: auto;
+        flex: 1;
+        max-height: none;
+        line-height: 20px;
+    }
+
+    .adf-dialog-header,
+    .adf-dialog-actions {
+        &::after {
+            content: ' ';
+            position: absolute;
+            left: -$dialog-padding;
+            display: block;
+            height: 0;
+            border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+            width: calc(100% + $dialog-padding * 2);
+        }
+    }
+
+    .adf-dialog-actions::after {
+        top: 0;
+    }
+
+    .adf-dialog-header::after {
+        bottom: 0;
+    }
+
+    .adf-dialog-actions {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        padding-top: $dialog-padding;
+        text-transform: capitalize;
+        min-height: auto;
+    }
+
+    &.adf-large {
+        max-height: calc(84vh - $dialog-padding * 2);
+
+        @media screen and (min-height: $dialog-large-l-width) {
+            max-height: calc($dialog-large-l-height - $dialog-padding * 2);
+        }
+
+        @media screen and (max-width: $xxs-screen) {
+            max-height: calc(100vh - $dialog-padding * 2);
+        }
+
+        @media screen and (max-width: $breakpoint-large-with-additional-buttons-centered) {
+            .adf-additional-actions {
+                justify-content: center;
+            }
+        }
+    }
+
+    &.adf-medium {
+        max-height: calc(72vh - $dialog-padding * 2);
+
+        @media screen and (max-width: $xxs-screen) {
+            max-height: calc(100vh - $dialog-padding * 2);
+        }
+
+        @media screen and (min-height: $dialog-large-l-width) {
+            max-height: calc($dialog-medium-l-height - $dialog-padding * 2);
+        }
+
+        @media screen and (max-width: $breakpoint-medium-with-additional-buttons-centered) {
+            .adf-additional-actions {
+                justify-content: center;
+            }
+        }
+    }
+
+    &.adf-alert {
+        .adf-centered-title {
+            padding-left: 40px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .adf-dialog-content {
+            margin: 0;
+        }
+
+        .adf-dialog-header {
+            padding: 0;
+        }
+
+        .adf-dialog-header,
+        .adf-dialog-actions {
+            &::after {
+                display: none;
+            }
+        }
+
+        max-height: calc(40vh - $dialog-padding * 2);
+
+        @media screen and (min-width: $m-screen) {
+            max-height: calc($dialog-small-l-height - $dialog-padding * 2);
+        }
+
+        @media screen and (max-width: $s-screen) {
+            max-height: calc($dialog-small-s-height - $dialog-padding * 2);
+        }
+
+        @media screen and (max-width: $xxs-screen) {
+            max-height: calc(56vh - $dialog-padding * 2);
+        }
+
+        @media screen and (max-height: $xxs-screen) {
+            max-height: 84vh;
+        }
+
+        @media screen and (max-width: $breakpoint-alert-with-additional-buttons-centered) {
+            .adf-additional-actions {
+                justify-content: center;
+            }
+        }
+    }
+
+    @media screen and (max-width: $xxs-screen) {
+        .adf-additional-actions {
+            justify-content: center;
+        }
+    }
+}
+
+.adf-additional-actions {
+    color: var(--theme-primary-color);
+}
+
+// TODO: Update after migration to Angular 15
+/* stylelint-disable-next-line selector-class-pattern */
+.mat-dialog-actions .mat-button-base + .mat-button-base {
+    margin-left: 16px;
+}
+
+// TODO: Update after migration to Angular 15
+/* stylelint-disable-next-line selector-class-pattern */
+.mat-dialog-container {
+    border-radius: 8px;
+}

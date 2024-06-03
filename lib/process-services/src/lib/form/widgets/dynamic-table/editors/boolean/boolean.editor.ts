@@ -21,14 +21,17 @@ import { Component, Input } from '@angular/core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
+import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
     selector: 'adf-boolean-editor',
+    standalone: true,
+    imports: [CommonModule, MatCheckboxModule],
     templateUrl: './boolean.editor.html',
     styleUrls: ['./boolean.editor.scss']
 })
 export class BooleanEditorComponent {
-
     @Input()
     table: DynamicTableModel;
 
@@ -42,5 +45,4 @@ export class BooleanEditorComponent {
         const value: boolean = event.checked;
         row.value[column.id] = value;
     }
-
 }

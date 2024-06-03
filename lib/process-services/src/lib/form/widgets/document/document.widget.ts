@@ -17,9 +17,13 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { ContentWidgetComponent } from './content.widget';
 
 @Component({
     selector: 'adf-form-document-widget',
+    standalone: true,
+    imports: [CommonModule, ContentWidgetComponent],
     templateUrl: './document.widget.html',
     host: {
         '(click)': 'event($event)',
@@ -35,7 +39,6 @@ import { FormService, WidgetComponent } from '@alfresco/adf-core';
     encapsulation: ViewEncapsulation.None
 })
 export class DocumentWidgetComponent extends WidgetComponent implements OnInit {
-
     fileId: string = null;
     hasFile: boolean = false;
 

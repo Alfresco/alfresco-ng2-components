@@ -20,6 +20,6 @@ import { SelectAppsDialogComponent } from './select-apps-dialog/select-apps-dial
 
 export * from './apps-list.component';
 export * from './select-apps-dialog/select-apps-dialog.component';
-export * from './services/apps-process.service';
+export * from '../services/apps-process.service';
 
 export const APPS_LIST_DIRECTIVES = [AppsListComponent, SelectAppsDialogComponent] as const;

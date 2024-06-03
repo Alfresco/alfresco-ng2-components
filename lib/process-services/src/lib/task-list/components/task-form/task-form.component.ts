@@ -16,14 +16,45 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges } from '@angular/core';
-import { FormModel, ContentLinkModel, FormFieldValidator, FormOutcomeEvent, TranslationService, FormFieldModel } from '@alfresco/adf-core';
+import {
+    FormModel,
+    ContentLinkModel,
+    FormFieldValidator,
+    FormOutcomeEvent,
+    TranslationService,
+    FormFieldModel,
+    EmptyContentComponent
+} from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 import { PeopleProcessService } from '../../../common';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ClaimTaskDirective } from './claim-task.directive';
+import { UnclaimTaskDirective } from './unclaim-task.directive';
+import { TaskStandaloneComponent } from '../task-standalone/task-standalone.component';
+import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
 
 @Component({
     selector: 'adf-task-form',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatCardModule,
+        EmptyContentComponent,
+        MatButtonModule,
+        TranslateModule,
+        MatProgressSpinnerModule,
+        ClaimTaskDirective,
+        UnclaimTaskDirective,
+        TaskStandaloneComponent,
+        FormComponent,
+        FormCustomOutcomesComponent
+    ],
     templateUrl: './task-form.component.html',
     styleUrls: ['./task-form.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -306,6 +337,10 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
     isTaskClaimedByCandidateMember(): boolean {
         return this.isCandidateMember() && this.isAssignedToMe() && !this.isCompletedTask();
+    }
+
+    reloadTask() {
+        this.loadTask(this.taskId);
     }
 
     onClaimTask(taskId: string) {

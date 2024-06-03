@@ -15,12 +15,23 @@
  * limitations under the License.
  */
 
+import { PeopleComponent } from './components/people/people.component';
+import { PeopleSearchComponent } from './components/people-search/people-search.component';
+import { PeopleSearchFieldComponent } from './components/people-search-field/people-search-field.component';
+import { PeopleSelectorComponent } from './components/people-selector/people-selector.component';
+import { PeopleListComponent } from './components/people-list/people-list.component';
+
 export * from './components/people/people.component';
 export * from './components/people-list/people-list.component';
 export * from './components/people-search/people-search.component';
 export * from './components/people-search-field/people-search-field.component';
 export * from './components/people-selector/people-selector.component';
-
 export * from './interfaces/perform-search-callback.interface';
 
-export * from './people.module';
+export const PEOPLE_DIRECTIVES = [
+    PeopleComponent,
+    PeopleSearchComponent,
+    PeopleSearchFieldComponent,
+    PeopleSelectorComponent,
+    PeopleListComponent
+] as const;

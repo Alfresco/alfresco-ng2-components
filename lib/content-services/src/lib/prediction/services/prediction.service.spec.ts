@@ -18,7 +18,7 @@
 import { PredictionService } from './prediction.service';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { Prediction, PredictionEntry, PredictionPaging, PredictionPagingList } from '@alfresco/js-api';
+import { Prediction, PredictionEntry, PredictionPaging, PredictionPagingList, ReviewStatus } from '@alfresco/js-api';
 
 describe('PredictionService', () => {
     let service: PredictionService;
@@ -43,5 +43,12 @@ describe('PredictionService', () => {
 
         service.getPredictions('test id');
         expect(service.predictionsApi.getPredictions).toHaveBeenCalledWith('test id');
+    });
+
+    it('should call reviewPrediction on PredictionsApi with predictionId and reviewStatus', () => {
+        spyOn(service.predictionsApi, 'reviewPrediction').and.returnValue(Promise.resolve());
+
+        service.reviewPrediction('test id', ReviewStatus.CONFIRMED);
+        expect(service.predictionsApi.reviewPrediction).toHaveBeenCalledWith('test id', ReviewStatus.CONFIRMED);
     });
 });
