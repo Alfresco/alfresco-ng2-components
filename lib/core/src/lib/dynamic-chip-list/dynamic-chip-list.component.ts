@@ -138,7 +138,6 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
             this.limitChipsDisplayed = this.paginationData.hasMoreItems;
         }
         this.initialLimitChipsDisplayed = this.limitChipsDisplayed;
-        this.showDelete = true;
     }
 
     ngAfterViewInit(): void {
