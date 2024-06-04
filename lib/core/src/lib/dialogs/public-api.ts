@@ -25,3 +25,4 @@ export * from './unsaved-changes-dialog/unsaved-changes.guard';
 export * from './confirm-dialog/confirm.dialog';
 export * from './confirm-dialog/confirm.dialog.module';
 
+export * from './dialog';

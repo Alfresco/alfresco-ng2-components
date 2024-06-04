@@ -21,8 +21,7 @@ import { By } from '@angular/platform-browser';
 import { DiagramTooltipComponent } from './diagram-tooltip.component';
 
 @Component({
-    template: `
-        <div id="diagram-element-id">Hover me</div>
+    template: ` <div id="diagram-element-id">Hover me</div>
         <diagram-tooltip [data]="data"></diagram-tooltip>`
 })
 class TestHostComponent {
@@ -32,16 +31,14 @@ class TestHostComponent {
 }
 
 describe('DiagramTooltipComponent', () => {
-
     describe('Template', () => {
-
         let fixture: ComponentFixture<DiagramTooltipComponent>;
         let component: DiagramTooltipComponent;
         let data;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [DiagramTooltipComponent]
+                imports: [DiagramTooltipComponent]
             });
             fixture = TestBed.createComponent(DiagramTooltipComponent);
             component = fixture.componentInstance;
@@ -88,8 +85,8 @@ describe('DiagramTooltipComponent', () => {
 
         it('should render the properties, if there is any', () => {
             data.properties = [
-                {name: 'property-1-name', value: 'property-1-value'},
-                {name: 'property-2-name', value: 'property-2-value'}
+                { name: 'property-1-name', value: 'property-1-value' },
+                { name: 'property-2-name', value: 'property-2-value' }
             ];
             fixture.detectChanges();
 
@@ -125,7 +122,8 @@ describe('DiagramTooltipComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [DiagramTooltipComponent, TestHostComponent]
+                imports: [DiagramTooltipComponent],
+                declarations: [TestHostComponent]
             });
             fixture = TestBed.createComponent(TestHostComponent);
             fixture.detectChanges();
@@ -165,7 +163,7 @@ describe('DiagramTooltipComponent', () => {
             expect(tooltip).toBeNull();
         });
 
-        it('should hide the tooltip on windows\'s scroll element', () => {
+        it('should hide the tooltip on windows scroll element', () => {
             const tooltipTarget = fixture.debugElement.query(By.css('#diagram-element-id'));
 
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
@@ -175,7 +173,7 @@ describe('DiagramTooltipComponent', () => {
             expect(tooltip).toBeNull();
         });
 
-        it('should hide the tooltip on windows\'s touchstart element', () => {
+        it('should hide the tooltip on windows touchstart element', () => {
             const tooltipTarget = fixture.debugElement.query(By.css('#diagram-element-id'));
 
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('touchend'));

@@ -16,9 +16,11 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AboutGithubLinkComponent } from './about-github-link.component';
 import { aboutGithubDetails } from '../about.mock';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslationService } from '../../translation';
+import { TranslationMock } from '../../mock';
 
 describe('AboutGithubLinkComponent', () => {
     let fixture: ComponentFixture<AboutGithubLinkComponent>;
@@ -26,7 +28,8 @@ describe('AboutGithubLinkComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [TranslateModule.forRoot()],
+            providers: [{ provide: TranslationService, useClass: TranslationMock }]
         });
         fixture = TestBed.createComponent(AboutGithubLinkComponent);
         component = fixture.componentInstance;

@@ -73,7 +73,7 @@ import { FolderDirectiveModule } from './folder-directive';
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy' }),
+        RouterModule.forRoot(appRoutes, { useHash: true }),
         AuthModule.forRoot({ useHash: true }),
         FormsModule,
         HttpClientModule,
@@ -88,7 +88,8 @@ import { FolderDirectiveModule } from './folder-directive';
         NgChartsModule,
         AppCloudSharedModule,
         MonacoEditorModule.forRoot(),
-        FolderDirectiveModule
+        FolderDirectiveModule,
+        ShowDiagramComponent
     ],
     declarations: [
         AppComponent,
@@ -98,7 +99,6 @@ import { FolderDirectiveModule } from './folder-directive';
         SearchBarComponent,
         SearchResultComponent,
         ProcessServiceComponent,
-        ShowDiagramComponent,
         FormViewerComponent,
         FormNodeViewerComponent,
         AppsViewComponent,

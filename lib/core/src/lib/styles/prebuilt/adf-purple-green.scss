@@ -2,6 +2,7 @@
 @use '@angular/material' as mat;
 @import '../theming';
 @import './all-theme';
+@include mat.all-component-typographies;
 @include mat.core;
 
 $primary: mat.define-palette(mat.$purple-palette, 700, 500, 800);

@@ -30,8 +30,8 @@ let component: DateCellComponent;
 let appConfigService: AppConfigService;
 let fixture: ComponentFixture<DateCellComponent>;
 
-const mockDate = new Date('2023-10-25');
-const mockTooltip = mockDate.toISOString();
+let mockDate;
+let mockTooltip = '';
 const mockColumn: DataColumn = {
     key: 'mock-date',
     type: 'date',
@@ -85,7 +85,10 @@ const configureTestingModule = (providers: any[]) => {
 
 describe('DateCellComponent', () => {
     beforeEach(() => {
+        registerLocaleData(localePL);
         configureTestingModule([]);
+        mockDate = new Date('2023-10-25T00:00:00');
+        mockTooltip = mockDate.toISOString();
     });
 
     it('should set default date config', () => {
@@ -110,7 +113,6 @@ describe('DateCellComponent', () => {
 
     it('should display date and tooltip with based on appConfig values if dateConfig is NOT provided', () => {
         const mockDateConfig: DateConfig = {};
-
         const expectedDate = 'Oct 25, 2023';
         const expectedTooltip = 'October 25, 2023 at 12:00:00 AM GMT+0';
 

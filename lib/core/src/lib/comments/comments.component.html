@@ -7,8 +7,9 @@
                 <textarea
                     matInput
                     id="comment-input"
+                    class="adf-text-text-area"
+                    [placeholder]='"COMMENTS.ADD" | translate'
                     [attr.aria-label]="'COMMENTS.ADD' | translate"
-                    placeholder="{{'COMMENTS.ADD' | translate}}"
                     [(ngModel)]="message"
                     (keydown.escape)="clearMessage($event)"
                 >

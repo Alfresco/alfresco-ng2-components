@@ -23,7 +23,10 @@ import { RaphaelBase } from '../raphael-base';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({ selector: 'adf-raphael-icon-box-publish, raphael-icon-box-publish' })
+@Directive({
+    selector: 'adf-raphael-icon-box-publish, raphael-icon-box-publish',
+    standalone: true
+})
 export class RaphaelIconBoxPublishDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;

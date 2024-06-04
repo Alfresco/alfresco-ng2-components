@@ -15,17 +15,23 @@
  * limitations under the License.
  */
 
-import {  ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
 import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { isValid } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-date-editor',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, FormsModule],
     templateUrl: './date.editor.html',
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
@@ -73,7 +79,7 @@ export class DateEditorComponent implements OnInit {
         } else if (newDateValue?.value) {
             this.row.value[this.column.id] = `${DateFnsUtils.formatDate(newDateValue?.value, 'yyyy-MM-dd')}T00:00:00.000Z`;
             this.table.flushValue();
-        }  else {
+        } else {
             this.row.value[this.column.id] = '';
         }
     }

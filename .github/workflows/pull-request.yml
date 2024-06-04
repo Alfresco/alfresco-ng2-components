@@ -101,7 +101,7 @@ jobs:
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Ensure SHA pinned actions
-        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@40e45e738b3cad2729f599d8afc6ed02184e1dbd # v3.0.5
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@2f2ebc6d914ab515939dc13f570f91baeb2c194c # v3.0.6
 
       - name: Check package-lock.json version
         run: |
@@ -121,10 +121,10 @@ jobs:
          fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@553490b6434e1ec43ced9b321a04fadb91535d4c # v5.25.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@5d69aa4df0b14964338b43535fadb318b4ff337b # v5.28.0
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@553490b6434e1ec43ced9b321a04fadb91535d4c # v5.25.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@5d69aa4df0b14964338b43535fadb318b4ff337b # v5.28.0
 
       - name: ci:force flag parser
         shell: bash
@@ -451,8 +451,6 @@ jobs:
           enable-cache: "true"
           enable-node-modules-cache: "true"
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: setup chrome
-        uses: ./.github/actions/setup-chrome
       - name: e2e
         uses: ./.github/actions/e2e
         with:

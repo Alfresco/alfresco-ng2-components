@@ -118,12 +118,15 @@ export abstract class FormBaseComponent {
         return outcomeName === FormBaseComponent.COMPLETE_OUTCOME_NAME ? FormBaseComponent.COMPLETE_BUTTON_COLOR : null;
     }
 
-    isOutcomeButtonEnabled(outcome: FormOutcomeModel): boolean {
+    isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
         if (this.form.readOnly) {
             return false;
         }
 
         if (outcome) {
+            if (outcome.skipValidation) {
+                return true;
+            }
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
                 return !this.disableSaveButton;
             }
@@ -135,6 +138,7 @@ export abstract class FormBaseComponent {
             }
             return this.form.isValid;
         }
+
         return false;
     }
 

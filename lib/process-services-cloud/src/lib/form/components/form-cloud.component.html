@@ -31,7 +31,7 @@
                 </button>
         </adf-toolbar>
 
-        <mat-card [class.adf-cloud-form-content-card]="displayMode === 'fullScreen'">
+        <mat-card appearance="outlined" [class.adf-cloud-form-content-card]="displayMode === 'fullScreen'">
             <div class="adf-cloud-form-content-card-container">
             <mat-card-header *ngIf="showTitle || showRefreshButton || showValidationIcon">
                 <mat-card-title>
@@ -63,16 +63,24 @@
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content class="adf-form-container-card-content">
-                <adf-form-renderer [formDefinition]="form">
+                <adf-form-renderer
+                    [formDefinition]="form"
+                    [readOnly]="readOnly"
+                >
                 </adf-form-renderer>
             </mat-card-content>
             <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">
                 <ng-content select="adf-cloud-form-custom-outcomes"></ng-content>
                 <ng-container *ngFor="let outcome of form.outcomes">
-                    <button *ngIf="outcome.isVisible" [id]="'adf-form-'+ outcome.name  | formatSpace" [color]="getColorForOutcome(outcome.name)"
-                        mat-button [disabled]="!isOutcomeButtonEnabled(outcome)"
+                    <button
+                        *ngIf="outcome.isVisible"
+                        [id]="'adf-form-'+ outcome.name  | formatSpace"
+                        [color]="getColorForOutcome(outcome.name)"
+                        mat-button
+                        [disabled]="!isOutcomeButtonEnabled(outcome)"
                         [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
-                        (click)="onOutcomeClicked(outcome)">
+                        (click)="onOutcomeClicked(outcome)"
+                    >
                         {{outcome.name | translate | uppercase }}
                     </button>
                 </ng-container>

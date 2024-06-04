@@ -18,11 +18,15 @@
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from '../widget.component';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'analytics-dropdown-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, ReactiveFormsModule],
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.scss'],
     encapsulation: ViewEncapsulation.None

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-16
 ---
 
-# [Task Filters component](../../../lib/process-services/src/lib/task-list/components/task-filters.component.ts "Defined in task-filters.component.ts")
+# [Task Filters component](../../../lib/process-services/src/lib/task-list/components/task-filters/task-filters.component.ts "Defined in task-filters.component.ts")
 
 Shows all available filters.
 

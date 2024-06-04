@@ -710,6 +710,17 @@ describe('Form Renderer Component', () => {
             expect(rulesManager.initialize).toHaveBeenCalledWith(formModel);
         });
 
+        it('should NOT call the Form Rules Manager init when the form is read only', () => {
+            spyOn(rulesManager, 'initialize');
+            const formModel = formService.parseForm(customWidgetFormWithVisibility.formRepresentation.formDefinition);
+
+            formRendererComponent.formDefinition = formModel;
+            formRendererComponent.readOnly = true;
+            formRendererComponent.ngOnInit();
+
+            expect(rulesManager.initialize).not.toHaveBeenCalled();
+        });
+
         it('should call the Form Rules Manager destroy on component destruction', () => {
             spyOn(rulesManager, 'destroy');
 

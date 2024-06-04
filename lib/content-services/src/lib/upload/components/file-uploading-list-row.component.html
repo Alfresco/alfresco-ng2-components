@@ -1,5 +1,5 @@
 <div class="adf-file-uploading-row">
-    <mat-icon *ngIf="mimeType === 'default'" mat-list-icon class="adf-file-uploading-row__type">
+    <mat-icon *ngIf="mimeType === 'default'" matListItemLine class="adf-file-uploading-row__type">
         insert_drive_file
     </mat-icon>
 
@@ -12,10 +12,10 @@
     </span>
 
     <span *ngIf="isUploadVersion()" class="adf-file-uploading-row__version" tabindex="0" >
-        <mat-chip color="primary"
+        <mat-chip-option color="primary"
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.VERSION' | translate: { version:  versionNumber }"
             [title]="'version' + versionNumber" disabled
-        >{{ versionNumber }}</mat-chip>
+        >{{ versionNumber }}</mat-chip-option>
     </span>
 
     <div
@@ -61,7 +61,7 @@
         [attr.aria-label]="'ADF_FILE_UPLOAD.STATUS.FILE_DONE_STATUS' | translate"
         >
         <mat-icon
-            mat-list-icon
+            matListItemLine
             class="adf-file-uploading-row__status--done">
             check_circle
         </mat-icon>
@@ -94,7 +94,7 @@
         role="status"
         *ngIf="isUploadError()"
         class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
-        <mat-icon mat-list-icon
+        <mat-icon matListItemLine
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: file.errorCode | adfFileUploadError }"
             [title]="file.errorCode | adfFileUploadError">
             report_problem

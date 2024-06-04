@@ -36,8 +36,8 @@ import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('DropdownCloudWidgetComponent', () => {
     let formService: FormService;

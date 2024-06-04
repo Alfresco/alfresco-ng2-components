@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconCamelDirective } from '../raphael/icons/raphael-icon-camel.component';
 
 @Component({
     selector: 'diagram-icon-camel-task',
+    standalone: true,
+    imports: [RaphaelIconCamelDirective],
     templateUrl: './diagram-icon-camel-task.component.html'
 })
 export class DiagramIconCamelTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 8, y: this.data.y + 6};
-        this.options.stroke = 'none' ;
-        this.options.fillColors = '#bd4848' ;
+        this.position = { x: this.data.x + 8, y: this.data.y + 6 };
+        this.options.stroke = 'none';
+        this.options.fillColors = '#bd4848';
     }
 }

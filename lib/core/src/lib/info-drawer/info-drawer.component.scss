@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-info-drawer {
         .adf-metadata-properties-panel {
@@ -5,7 +7,7 @@
             margin: 0;
         }
 
-        .mat-tab-label {
+        #{$mat-tab-label-text} {
             min-width: 0;
         }
 
@@ -29,32 +31,28 @@
                 }
 
                 .adf-info-drawer-tabs {
-                    & .mat-tab-body-content > * {
+                    & #{$mat-tab-body-content} > * {
                         margin-bottom: 20px;
                         display: block;
                     }
 
-                    & .mat-tab-body-content > *:last-child {
+                    & #{$mat-tab-body-content} > *:last-child {
                         margin-bottom: 0;
                     }
 
-                    .mat-tab-label {
+                    #{$mat-tab-label-text} {
                         flex-grow: 1;
 
-                        .mat-icon + span {
+                        #{$mat-icon} + span {
                             padding-left: 5px;
                         }
                     }
 
-                    .mat-ink-bar {
-                        height: 2px;
-                    }
-
-                    .mat-tab-body {
+                    #{$mat-tab-body} {
                         overflow-y: hidden;
                     }
 
-                    .mat-tab-body-content {
+                    #{$mat-tab-body-content} {
                         /* stylelint-disable */
                         overflow: auto;
                         /* stylelint-enable */
@@ -65,32 +63,47 @@
     }
 }
 
-.adf-info-drawer-tab {
-    color: var(--adf-info-drawer-tab-default-color);
-    background-color: var(--adf-info-drawer-tab-default-background);
-    border-bottom: var(--adf-info-drawer-tab-default-bottom-line);
-    opacity: 1;
+/* stylelint-disable-next-line no-descending-specificity */
+.adf-info-drawer-tabs {
+    #{$mat-tab-label-container} {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
 
-    &--active {
-        color: var(--adf-info-drawer-tab-active-unfocused-color);
-        background-color: var(--adf-info-drawer-tab-active-unfocused-background);
-        border-bottom: var(--adf-info-drawer-tab-active-unfocused-bottom-line);
+    div[role='tab'].adf-info-drawer-tab {
+        color: var(--adf-info-drawer-tab-default-color);
+        background-color: var(--adf-info-drawer-tab-default-background);
+        border-bottom: var(--adf-info-drawer-tab-default-bottom-line);
+        opacity: 1;
 
-        &:focus {
-            color: var(--adf-info-drawer-tab-active-focused-color);
-            border-bottom: var(--adf-info-drawer-tab-active-focused-bottom-line);
+        &#{$mat-tab-label} {
+            flex-grow: 1;
         }
-    }
 
-    &:hover:not([class*='--disabled'], [class*='--active']) {
-        color: var(--adf-info-drawer-tab-hover-color);
-        background-color: var(--adf-info-drawer-tab-hover-background);
-        border-bottom: var(--adf-info-drawer-tab-hover-bottom-line);
-    }
+        &:has(span) {
+            height: 32px;
+        }
 
-    &--disabled {
-        color: var(--adf-info-drawer-tab-disabled-color);
-        background-color: var(--adf-info-drawer-tab-disabled-background);
-        border-bottom: var(--adf-info-drawer-tab-disabled-bottom-line);
+        &--active {
+            color: var(--adf-info-drawer-tab-active-unfocused-color);
+            background-color: var(--adf-info-drawer-tab-active-unfocused-background);
+            border-bottom: 1px solid var(--adf-info-drawer-tab-active-unfocused-bottom-line);
+
+            &:focus {
+                color: var(--adf-info-drawer-tab-active-focused-color);
+                border-bottom: var(--adf-info-drawer-tab-active-focused-bottom-line);
+            }
+        }
+
+        &:hover:not([class*='--disabled'], [class*='--active']) {
+            color: var(--adf-info-drawer-tab-hover-color);
+            background-color: var(--adf-info-drawer-tab-hover-background);
+            border-bottom: var(--adf-info-drawer-tab-hover-bottom-line);
+        }
+
+        &--disabled {
+            color: var(--adf-info-drawer-tab-disabled-color);
+            background-color: var(--adf-info-drawer-tab-disabled-background);
+            border-bottom: var(--adf-info-drawer-tab-disabled-bottom-line);
+        }
     }
 }

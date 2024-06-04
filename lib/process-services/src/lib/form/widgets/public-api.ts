@@ -15,15 +15,42 @@
  * limitations under the License.
  */
 
+import { UploadWidgetComponent } from './upload/upload.widget';
+import { DocumentWidgetComponent } from './document/document.widget';
+import { ContentWidgetComponent } from './document/content.widget';
+import { PeopleWidgetComponent } from './people/people.widget';
+import { FunctionalGroupWidgetComponent } from './functional-group/functional-group.widget';
+import { RadioButtonsWidgetComponent } from './radio-buttons/radio-buttons.widget';
+import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
+import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
+import { FileViewerWidgetComponent } from './file-viewer/file-viewer.widget';
+import { DYNAMIC_TABLE_WIDGET_DIRECTIVES } from './dynamic-table';
+import { AttachFileWidgetComponent, AttachFileWidgetDialogComponent, AttachFolderWidgetComponent } from './content-widget';
+
+export * from './content-widget/public-api';
 export * from './document/content.widget';
-export * from './content-widget/index';
+export * from './document/document.widget';
 export * from './people/people.widget';
 export * from './radio-buttons/radio-buttons.widget';
 export * from './functional-group/functional-group.widget';
 export * from './typeahead/typeahead.widget';
 export * from './dropdown/dropdown.widget';
 export * from './file-viewer/file-viewer.widget';
-
 export * from './dynamic-table/index';
-
 export * from './upload/upload.widget';
+
+export const WIDGET_DIRECTIVES = [
+    AttachFileWidgetComponent,
+    AttachFolderWidgetComponent,
+    AttachFileWidgetDialogComponent,
+    ContentWidgetComponent,
+    DocumentWidgetComponent,
+    DropdownWidgetComponent,
+    ...DYNAMIC_TABLE_WIDGET_DIRECTIVES,
+    FileViewerWidgetComponent,
+    FunctionalGroupWidgetComponent,
+    PeopleWidgetComponent,
+    RadioButtonsWidgetComponent,
+    TypeaheadWidgetComponent,
+    UploadWidgetComponent
+];

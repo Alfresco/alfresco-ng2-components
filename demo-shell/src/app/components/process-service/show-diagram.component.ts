@@ -17,18 +17,22 @@
 
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { DiagramComponent } from '@alfresco/adf-insights';
 
 @Component({
     selector: 'app-show-diagram',
+    standalone: true,
+    imports: [CommonModule, MatIconModule, MatButtonModule, DiagramComponent],
     templateUrl: './show-diagram.component.html'
 })
 export class ShowDiagramComponent {
-
     processDefinitionId: string;
     appId: string;
 
-    constructor(private route: ActivatedRoute,
-                private router: Router) {
+    constructor(private route: ActivatedRoute, private router: Router) {
         this.route.params.subscribe((params: Params) => {
             this.processDefinitionId = params['processDefinitionId'];
             this.appId = params['appId'];
@@ -38,5 +42,4 @@ export class ShowDiagramComponent {
     onClickBack() {
         this.router.navigate(['/activiti/apps/' + this.appId + '/processes']);
     }
-
 }

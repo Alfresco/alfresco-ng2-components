@@ -4,24 +4,26 @@
     <cdk-virtual-scroll-viewport #viewport itemSize="88" class="adf-version-list-viewport">
         <mat-list-item class="adf-version-list-item"
                        *cdkVirtualFor="let version of versionsDataSource; let idx = index; let latestVersion = first">
-            <mat-icon mat-list-icon>insert_drive_file</mat-icon>
-            <p mat-line class="adf-version-list-item-line adf-version-list-item-name"
-               [id]="'adf-version-list-item-name-' + version.entry.id">{{ version.entry.name }}</p>
-            <p mat-line>
-                <span class="adf-version-list-item-line adf-version-list-item-version"
-                      [id]="'adf-version-list-item-version-' + version.entry.id">{{ version.entry.id }}</span> -
-                <span class="adf-version-list-item-line adf-version-list-item-date"
-                      [id]="'adf-version-list-item-date-' + version.entry.id">{{ version.entry.modifiedAt | date }}</span>
-            </p>
-            <p mat-line
-               [id]="'adf-version-list-item-comment-' + version.entry.id"
-               class="adf-version-list-item-comment"
-               *ngIf="showComments"
-               [title]="version.entry.versionComment">
-                {{ version.entry.versionComment }}
-            </p>
-
-            <div *ngIf="showActions">
+            <mat-icon class="adf-version-list-icon" matListItemIcon>insert_drive_file</mat-icon>
+            <div class="adf-version-list-content">
+                <div class="adf-version-list-item-details">
+                    <p class="adf-version-list-item-line adf-version-list-item-name"
+                       [id]="'adf-version-list-item-name-' + version.entry.id">{{ version.entry.name }}</p>
+                    <p>
+                        <span class="adf-version-list-item-line adf-version-list-item-version"
+                          [id]="'adf-version-list-item-version-' + version.entry.id">{{ version.entry.id }}</span> -
+                        <span class="adf-version-list-item-line adf-version-list-item-date"
+                              [id]="'adf-version-list-item-date-' + version.entry.id">{{ version.entry.modifiedAt | date }}</span>
+                    </p>
+                    <p
+                        [id]="'adf-version-list-item-comment-' + version.entry.id"
+                        class="adf-version-list-item-comment"
+                        *ngIf="showComments"
+                        [title]="version.entry.versionComment">
+                        {{ version.entry.versionComment }}
+                    </p>
+                </div>
+                <ng-container *ngIf="showActions">
                 <mat-menu [id]="'adf-version-list-action-menu-' + version.entry.id"
                           #versionMenu="matMenu"
                           yPosition="below"
@@ -55,13 +57,13 @@
                         {{ 'ADF_VERSION_LIST.ACTIONS.DELETE' | translate }}
                     </button>
                 </mat-menu>
-
                 <button mat-icon-button
-                        [matMenuTriggerFor]="versionMenu"
-                        [id]="'adf-version-list-action-menu-button-' + version.entry.id"
-                        title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
+                            [matMenuTriggerFor]="versionMenu"
+                            [id]="'adf-version-list-action-menu-button-' + version.entry.id"
+                            title="{{ 'ADF_VERSION_LIST.MANAGE_VERSION_OPTIONS' | translate }}">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </ng-container>
             </div>
         </mat-list-item>
     </cdk-virtual-scroll-viewport>

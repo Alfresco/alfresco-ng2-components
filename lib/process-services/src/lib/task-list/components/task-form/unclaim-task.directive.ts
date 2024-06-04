@@ -20,7 +20,8 @@ import { TaskListService } from '../../services/tasklist.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-unclaim-task]'
+    selector: '[adf-unclaim-task]',
+    standalone: true
 })
 export class UnclaimTaskDirective implements OnInit {
     /** (Required) The id of the task. */

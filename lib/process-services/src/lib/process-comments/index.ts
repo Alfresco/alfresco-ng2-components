@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+import { ProcessCommentsComponent } from './process-comments.component';
+
 export * from './process-comments.component';
 export * from './services/comment-process.service';
-export * from './process-comments.module';
+
+export const PROCESS_COMMENTS_DIRECTIVES = [ProcessCommentsComponent] as const;

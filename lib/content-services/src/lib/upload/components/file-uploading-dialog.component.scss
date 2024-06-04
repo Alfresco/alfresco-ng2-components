@@ -25,13 +25,15 @@
         }
     }
 
-    &__header {
+    .adf-upload-dialog__header {
         padding: 1em;
         display: flex;
         align-items: center;
 
-        &-button:is(button) {
+        .adf-upload-dialog__header-button:is(button) {
             min-width: 0;
+            height: 24px;
+            width: 24px;
             padding: 0;
             line-height: 0;
             color: var(--adf-theme-foreground-text-color-054);
@@ -75,7 +77,10 @@
         padding: 1em;
 
         & > button {
+            width: auto;
+            min-width: 40px;
             text-transform: uppercase;
+            padding: 0 16px;
         }
     }
 }

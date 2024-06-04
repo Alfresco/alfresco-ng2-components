@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { RaphaelRectDirective } from '../raphael/raphael-rect.component';
+import { RaphaelTextDirective } from '../raphael/raphael-text.component';
 
 @Component({
     selector: 'diagram-pool',
+    standalone: true,
+    imports: [RaphaelRectDirective, RaphaelTextDirective],
     templateUrl: './diagram-pool.component.html'
 })
 export class DiagramPoolComponent implements OnInit {
@@ -37,14 +41,14 @@ export class DiagramPoolComponent implements OnInit {
     textPosition: any;
     text: string;
     textTransform: string;
-    options: any = {stroke: '#000000', fillColors: 'none', fillOpacity: '', strokeWidth: '1', radius: 0};
+    options: any = { stroke: '#000000', fillColors: 'none', fillOpacity: '', strokeWidth: '1', radius: 0 };
 
     ngOnInit() {
-        this.rectLeftCorner = {x: this.pool.x, y: this.pool.y};
+        this.rectLeftCorner = { x: this.pool.x, y: this.pool.y };
         this.width = this.pool.width;
         this.height = this.pool.height;
 
-        this.textPosition =  {x: this.pool.x + 14, y: this.pool.y + ( this.pool.height / 2 )};
+        this.textPosition = { x: this.pool.x + 14, y: this.pool.y + this.pool.height / 2 };
         this.text = this.pool.name;
         this.textTransform = 'r270';
     }

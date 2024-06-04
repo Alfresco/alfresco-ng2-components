@@ -16,9 +16,13 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RaphaelFlowArrowDirective } from './raphael/raphael-flow-arrow.component';
+import { DiagramTooltipComponent } from './tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'adf-diagram-sequence-flow',
+    standalone: true,
+    imports: [RaphaelFlowArrowDirective, DiagramTooltipComponent],
     templateUrl: './diagram-sequence-flow.component.html'
 })
 export class DiagramSequenceFlowComponent {

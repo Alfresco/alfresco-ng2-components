@@ -34,7 +34,7 @@ describe('TypeaheadWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, TypeaheadWidgetComponent]
         });
         translationService = TestBed.inject(TranslateService);
         taskFormService = TestBed.inject(TaskFormService);

@@ -15,6 +15,15 @@
  * limitations under the License.
  */
 
+import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
+import { AmountEditorComponent } from './editors/amount/amount.editor';
+import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
+import { DateEditorComponent } from './editors/date/date.editor';
+import { RowEditorComponent } from './editors/row-editor/row.editor';
+import { TextEditorComponent } from './editors/text/text.editor';
+import { DateTimeEditorComponent } from './editors/datetime/datetime.editor';
+import { DynamicTableWidgetComponent } from './dynamic-table.widget';
+
 export * from './editors/dropdown/dropdown.editor';
 export * from './editors/amount/amount.editor';
 export * from './editors/boolean/boolean.editor';
@@ -22,10 +31,16 @@ export * from './editors/date/date.editor';
 export * from './editors/datetime/datetime.editor';
 export * from './editors/row-editor/row.editor';
 export * from './editors/text/text.editor';
-
 export * from './editors/models/dynamic-table-row.model';
-
 export * from './dynamic-table.widget';
 
-
-export * from './dynamic-table.module';
+export const DYNAMIC_TABLE_WIDGET_DIRECTIVES = [
+    DynamicTableWidgetComponent,
+    DropdownEditorComponent,
+    AmountEditorComponent,
+    BooleanEditorComponent,
+    DateEditorComponent,
+    DateTimeEditorComponent,
+    RowEditorComponent,
+    TextEditorComponent
+] as const;

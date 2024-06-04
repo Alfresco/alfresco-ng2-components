@@ -15,24 +15,12 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
 import { TreeViewComponent } from './components/tree-view.component';
 
+/** @deprecated this module is deprecated and will be removed in future versions */
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule
-    ],
-    declarations: [
-        TreeViewComponent
-    ],
-    exports: [
-        TreeViewComponent
-    ]
+    imports: [TreeViewComponent],
+    exports: [TreeViewComponent]
 })
-export class TreeViewModule {
-}
+export class TreeViewModule {}

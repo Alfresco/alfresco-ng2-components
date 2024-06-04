@@ -1,0 +1,43 @@
+<div class="adf-checklist-control">
+    <mat-chip-listbox data-automation-id="checklist-label">
+        <span class="adf-activiti-label">{{ 'ADF_TASK_LIST.DETAILS.LABELS.CHECKLIST' | translate }}</span>
+        <mat-chip-option class="adf-process-badge" color="accent" selected="true">{{checklist?.length}}</mat-chip-option>
+    </mat-chip-listbox>
+
+
+    <button mat-icon-button *ngIf="!readOnly" matTooltip="Add a checklist" [matTooltipPosition]="'before'"
+            id="add-checklist" class="adf-add-to-checklist-button" (click)="showDialog()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div class="adf-checklist-menu-container" *ngIf="checklist?.length > 0">
+    <mat-chip-listbox class="mat-chip-list-stacked">
+        <mat-chip-option id="check-{{check.id}}" class="adf-checklist-chip" *ngFor="let check of checklist"
+                  (removed)="delete(check.id)">
+            <span>{{check.name}}</span>
+            <mat-icon *ngIf="!readOnly && !check.endDate" id="remove-{{check.id}}" matChipRemove>cancel
+            </mat-icon>
+        </mat-chip-option>
+    </mat-chip-listbox>
+
+</div>
+<div *ngIf="checklist?.length === 0" id="checklist-none-message" class="adf-checklist-none-message">
+    {{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.NONE' | translate }}
+</div>
+
+<ng-template #dialog>
+    <div class="adf-checklist-dialog" id="checklist-dialog">
+        <h4 matDialogTitle id="add-checklist-title">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.TITLE' | translate }}</h4>
+        <mat-dialog-content>
+            <mat-form-field>
+                <input matInput placeholder="{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.PLACEHOLDER' | translate }}" [(ngModel)]="taskName" id="checklist-name"
+                       data-automation-id="checklist-name">
+            </mat-form-field>
+        </mat-dialog-content>
+        <mat-dialog-actions class="adf-checklist-dialog-actions">
+            <button mat-button type="button" id="close-check-dialog" (click)="cancel()">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.CANCEL-BUTTON' | translate | uppercase }}</button>
+            <button mat-button type="button" id="add-check" (click)="add()">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.ADD-BUTTON' | translate | uppercase  }}</button>
+        </mat-dialog-actions>
+    </div>
+</ng-template>

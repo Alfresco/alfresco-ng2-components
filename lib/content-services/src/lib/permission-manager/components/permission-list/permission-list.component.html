@@ -40,15 +40,16 @@
             </div>
 
             <button
-                mat-button
+                mat-flat-button
                 data-automation-id="permission-info-button"
+                class="adf-permission-visibility-toggle"
                 [adf-pop-over]="inheritedPermission"
                 [target]="target"
                 #popOver="adfPopOver"
                 *ngIf="model.node.permissions.isInheritanceEnabled">
                 {{ (popOver.open ? 'PERMISSION_MANAGER.LABELS.HIDE' : 'PERMISSION_MANAGER.LABELS.SHOW') | translate }}
-                <mat-icon *ngIf="popOver.open"> keyboard_arrow_up </mat-icon>
-                <mat-icon *ngIf="!popOver.open"> keyboard_arrow_down </mat-icon>
+                <mat-icon class="adf-permission-visibility-toggle-icon" iconPositionEnd>
+                    {{ popOver.open ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }} </mat-icon>
             </button>
         </div>
 
@@ -73,20 +74,21 @@
                 <div class="adf-toolbar--spacer"></div>
 
                 <button
-                    mat-button
+                    mat-icon-button
                     title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
                     (click)="openAddPermissionDialog()"
+                    class="adf-add-permission-button"
                     data-automation-id="adf-add-permission-button">
                     <mat-icon>person_add_outline</mat-icon>
                 </button>
 
                 <button
-                    mat-button
+                    mat-icon-button
                     title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
                     [disabled]="!selectedPermissions?.length"
                     (click)="deleteSelection()"
                     data-automation-id="adf-delete-selected-permission">
-                    <mat-icon>delete_outline</mat-icon>
+                    <mat-icon class="adf-delete-selected-permission-icon">delete_outline</mat-icon>
                 </button>
             </section>
 

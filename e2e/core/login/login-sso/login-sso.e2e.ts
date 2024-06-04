@@ -21,7 +21,6 @@ import { NavigationBarPage } from '../../../core/pages/navigation-bar.page';
 import { LoginShellPage } from '../../../core/pages/login-shell.page';
 
 describe('Login component - SSO', () => {
-
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginPage();
     const loginPage = new LoginShellPage();
@@ -36,15 +35,22 @@ describe('Login component - SSO', () => {
         });
 
         it('[C261050] Should be possible login with SSO', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
+            await settingsPage.setProviderEcmSso(
+                browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost,
                 false,
                 true,
                 browser.params.testConfig.appConfig.oauth2.clientId,
-                browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout
+            );
 
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
+            await browser.refresh();
+
+            await loginSSOPage.loginSSOIdentityService(
+                browser.params.testConfig.users.admin.username,
+                browser.params.testConfig.users.admin.password
+            );
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
@@ -55,22 +61,31 @@ describe('Login component - SSO', () => {
                 true,
                 true,
                 browser.params.testConfig.appConfig.oauth2.clientId,
-                browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout
+            );
 
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
+            await browser.refresh();
+
+            await loginSSOPage.loginSSOIdentityService(
+                browser.params.testConfig.users.admin.username,
+                browser.params.testConfig.users.admin.password
+            );
         });
     });
 
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
+            await settingsPage.setProviderEcmSsoWithoutCodeFlow(
+                browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost,
                 false,
                 false,
                 browser.params.testConfig.appConfig.oauth2.clientId,
-                browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout
+            );
 
+            await browser.refresh();
             await loginPage.waitForElements();
 
             await loginPage.enterUsername(browser.params.testConfig.users.admin.username);

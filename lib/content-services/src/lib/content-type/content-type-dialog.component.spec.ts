@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TypeEntry } from '@alfresco/js-api';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentTypeDialogComponent } from './content-type-dialog.component';
-import { ContentTypeService } from './content-type.service';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
-import { TypeEntry } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatTableHarness } from '@angular/material/table/testing';
+import { ContentTypeService } from './content-type.service';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 const elementCustom: TypeEntry = {
     entry: {

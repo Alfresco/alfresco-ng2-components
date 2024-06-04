@@ -22,12 +22,12 @@ import { DropdownPage } from '../../../core/pages/material/dropdown.page';
 
 export class SearchSortingPickerPage {
 
-    sortingDropdown = new DropdownPage($('.adf-sorting-picker .mat-select-arrow'));
+    sortingDropdown = new DropdownPage($('.adf-sorting-picker .mat-mdc-select-arrow'));
     orderArrow = $('adf-sorting-picker button mat-icon');
 
     async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
         await this.sortingDropdown.clickDropdown();
-        const selectedSortingOption = element(by.cssContainingText('.mat-option-text', sortType));
+        const selectedSortingOption = element(by.cssContainingText('.mdc-list-item__primary-text', sortType));
         await BrowserActions.click(selectedSortingOption);
         await this.sortByOrder(sortOrder);
     }
@@ -53,7 +53,7 @@ export class SearchSortingPickerPage {
     }
 
     async clickSortingOption(option: string): Promise<void> {
-        const selectedSortingOption = element(by.cssContainingText('.mat-option-text', option));
+        const selectedSortingOption = element(by.cssContainingText('.mdc-list-item__primary-text', option));
         await BrowserActions.click(selectedSortingOption);
     }
 

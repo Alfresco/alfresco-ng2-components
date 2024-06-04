@@ -28,7 +28,7 @@ import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.t
 import { mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding, mockPreselectedFoodUsers } from '../mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 
 describe('PeopleCloudComponent', () => {
@@ -96,17 +96,17 @@ describe('PeopleCloudComponent', () => {
         component.title = 'TITLE_KEY';
         fixture.detectChanges();
 
-        const matLabel = element.querySelector<HTMLInputElement>('#adf-people-cloud-title-id');
+        const inputElement = element.querySelector<HTMLInputElement>('[data-automation-id="adf-people-cloud-search-input"]');
 
-        expect(matLabel.textContent).toEqual('TITLE_KEY');
+        expect(inputElement.placeholder).toEqual('TITLE_KEY');
     });
 
     it('should not populate placeholder when title is not present', () => {
         fixture.detectChanges();
 
-        const matLabel = element.querySelector<HTMLInputElement>('#adf-people-cloud-title-id');
+        const inputElement = element.querySelector<HTMLInputElement>('[data-automation-id="adf-people-cloud-search-input"]');
 
-        expect(matLabel.textContent).toEqual('');
+        expect(inputElement.placeholder).toEqual('');
     });
 
     describe('Search user', () => {
@@ -406,7 +406,7 @@ describe('PeopleCloudComponent', () => {
                 const chips = await loader.getAllHarnesses(MatChipHarness);
                 expect(chips.length).toBe(1);
 
-                const chipList = await loader.getHarness(MatChipListHarness);
+                const chipList = await loader.getHarness(MatChipGridHarness);
                 expect(await chipList.isDisabled()).toBe(true);
             });
 
@@ -421,7 +421,7 @@ describe('PeopleCloudComponent', () => {
                 const chips = await loader.getAllHarnesses(MatChipHarness);
                 expect(chips.length).toBe(2);
 
-                const chipList = await loader.getHarness(MatChipListHarness);
+                const chipList = await loader.getHarness(MatChipGridHarness);
                 expect(await chipList.isDisabled()).toBe(true);
             });
         });

@@ -1,0 +1,98 @@
+@import 'styles/flex';
+@import 'styles/mat-selectors';
+
+adf-task-details {
+    width: 100%;
+
+    .adf-activiti-task-details__header {
+        align-self: flex-end;
+        display: flex;
+        font-size: var(--theme-headline-font-size);
+        font-weight: 300;
+        line-height: normal;
+        overflow: hidden;
+        margin: 8px 0 16px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .adf-activiti-task-details__action-button {
+        text-transform: uppercase;
+    }
+
+    .adf-assignment-container {
+        padding: 10px 20px;
+        width: auto;
+    }
+
+    adf-task-header.adf-assign-edit-view adf-card-view .adf-property[data-automation-id='header-assignee'] {
+        display: none;
+    }
+
+    .adf-task-details {
+        &-header {
+            display: flex;
+            justify-content: space-between;
+
+            &-toggle {
+                position: relative;
+                top: 10px;
+                margin-right: 2px;
+                height: 23px;
+                cursor: pointer;
+                user-select: none;
+            }
+        }
+
+        &-toggle {
+            position: relative;
+        }
+
+        &-core {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &-sidebar {
+                &-drawer {
+                    @include layout-bp(lt-lg) {
+                        margin-left: 0;
+                    }
+                }
+
+                &-checklist {
+                    margin-top: 30px;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                }
+            }
+
+            &-form {
+                flex-grow: 1;
+                margin-bottom: 8px;
+
+                & .adf-form-debug-container {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 20px 0;
+
+                    #{$mat-slide-toggle} {
+                        margin-left: auto;
+
+                        & + div {
+                            background-color: black;
+                            padding: 20px;
+                            clear: both;
+                            margin-top: 30px;
+                            color: white;
+                        }
+                    }
+                }
+
+                & #{$mat-tab-label-text} {
+                    flex-grow: 1;
+                }
+            }
+        }
+    }
+}

@@ -2,12 +2,12 @@
 Title: Search number range component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2024-04-05
+Last reviewed: 2024-05-03
 ---
 
 # [Search number range component](../../../lib/content-services/src/lib/search/components/search-number-range/search-number-range.component.ts "Defined in search-number-range.component.ts")
 
-Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 4 inputs representing logical conditions to form search query from.
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 2 inputs accepting numerical values, representing start and end of a numerical parameter's range used as a search query parameter.
 
 ![Number Range Widget](../../docassets/images/search-number-range.png)
 

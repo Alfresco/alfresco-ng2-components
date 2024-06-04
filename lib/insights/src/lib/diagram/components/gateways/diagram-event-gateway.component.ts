@@ -15,20 +15,25 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { DiagramGatewayComponent } from './diagram-gateway.component';
+import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
+import { RaphaelPentagonDirective } from '../raphael/raphael-pentagon.component';
 
 @Component({
     selector: 'diagram-event-gateway',
+    standalone: true,
+    imports: [DiagramGatewayComponent, RaphaelCircleDirective, RaphaelPentagonDirective],
     templateUrl: './diagram-event-gateway.component.html'
 })
 export class DiagramEventGatewayComponent extends DiagramElement implements OnInit {
     center: any = {};
     centerPentagon: any = {};
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 0.5};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 0.5 };
 
     circleRadiusInner = 10.4;
     circleRadiusOuter = 11.7;
@@ -36,8 +41,8 @@ export class DiagramEventGatewayComponent extends DiagramElement implements OnIn
     pentaStrokeWidth = 1.39999998;
 
     ngOnInit() {
-        this.center.x = this.data.x + (this.data.width / 2);
-        this.center.y = this.data.y + (this.data.height / 2);
+        this.center.x = this.data.x + this.data.width / 2;
+        this.center.y = this.data.y + this.data.height / 2;
         this.centerPentagon.x = this.data.x;
         this.centerPentagon.y = this.data.y;
 

@@ -15,25 +15,29 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { DiagramGatewayComponent } from './diagram-gateway.component';
+import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
 
 @Component({
     selector: 'diagram-inclusive-gateway',
+    standalone: true,
+    imports: [DiagramGatewayComponent, RaphaelCircleDirective],
     templateUrl: './diagram-inclusive-gateway.component.html'
 })
 export class DiagramInclusiveGatewayComponent extends DiagramElement implements OnInit {
     center: any = {};
     width: any;
     height: any;
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 2.5, radius: 9.75};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 2.5, radius: 9.75 };
 
     ngOnInit() {
-        this.center.x = this.data.x + (this.data.width / 2);
-        this.center.y = this.data.y + (this.data.height / 2);
+        this.center.x = this.data.x + this.data.width / 2;
+        this.center.y = this.data.y + this.data.height / 2;
 
         this.options.stroke = this.diagramColorService.getBpmnColor(this.data, MAIN_STROKE_COLOR);
         this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);

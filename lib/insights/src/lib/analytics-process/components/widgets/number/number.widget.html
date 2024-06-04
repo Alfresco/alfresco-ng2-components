@@ -1,5 +1,5 @@
 <div class="adf-number-widget" [formGroup]="formGroup">
-    <mat-form-field class="example-full-width" floatPlaceholder="always">
+    <mat-form-field class="example-full-width" [floatLabel]="'always'">
         <input matInput
             placeholder="{{field.nameKey | translate}}"
             formControlName="{{controllerName}}"

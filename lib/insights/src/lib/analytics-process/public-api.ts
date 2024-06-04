@@ -15,6 +15,13 @@
  * limitations under the License.
  */
 
+import { WIDGET_DIRECTIVES } from './components/widgets';
+import { AnalyticsComponent } from './components/analytics.component';
+import { AnalyticsReportListComponent } from './components/analytics-report-list.component';
+import { AnalyticsReportParametersComponent } from './components/analytics-report-parameters.component';
+import { AnalyticsGeneratorComponent } from './components/analytics-generator.component';
+import { AnalyticsReportHeatMapComponent } from './components/analytics-report-heat-map.component';
+
 export * from './components/analytics.component';
 export * from './components/analytics-report-heat-map.component';
 export * from './components/analytics-generator.component';
@@ -22,13 +29,14 @@ export * from './components/analytics-report-list.component';
 export * from './components/analytics-report-parameters.component';
 export * from './components/analytics.component';
 
-export * from './components/widgets/checkbox/checkbox.widget';
-export * from './components/widgets/date-range/date-range.widget';
-export * from './components/widgets/dropdown/dropdown.widget';
-export * from './components/widgets/duration/duration.widget';
-export * from './components/widgets/number/number.widget';
-export * from './components/widgets/widget.component';
-
 export * from './services/analytics.service';
+export * from './components/widgets';
 
-export * from './analytics-process.module';
+export const ANALYTICS_PROCESS_DIRECTIVES = [
+    ...WIDGET_DIRECTIVES,
+    AnalyticsComponent,
+    AnalyticsReportListComponent,
+    AnalyticsReportParametersComponent,
+    AnalyticsGeneratorComponent,
+    AnalyticsReportHeatMapComponent
+] as const;

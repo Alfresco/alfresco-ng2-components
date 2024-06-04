@@ -15,10 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, SimpleChanges, OnChanges } from '@angular/core';
+import {
+    Component,
+    Input,
+    ViewChild,
+    ViewContainerRef,
+    OnInit,
+    OnDestroy,
+    ComponentRef,
+    SimpleChanges,
+    OnChanges,
+    Injector
+} from '@angular/core';
 import { SearchFilterService } from '../../services/search-filter.service';
 import { Observable } from 'rxjs';
-import { SearchQueryBuilderService } from '../../services';
+import {SearchHeaderQueryBuilderService, SearchQueryBuilderService} from '../../services';
 
 @Component({
     selector: 'adf-search-widget-container',
@@ -43,9 +54,13 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     @Input()
     value: any;
 
+    @Input()
+    useHeaderQueryBuilder: boolean;
+
     componentRef: ComponentRef<any>;
 
-    constructor(private searchFilterService: SearchFilterService, private queryBuilder: SearchQueryBuilderService) {}
+    constructor(private searchFilterService: SearchFilterService, private injector: Injector) {
+    }
 
     ngOnInit() {
         const componentType = this.searchFilterService.widgets[this.selector];
@@ -67,7 +82,11 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
         if (ref?.instance) {
             ref.instance.id = this.id;
             ref.instance.settings = { ...this.settings };
-            ref.instance.context = this.queryBuilder;
+            if (this.useHeaderQueryBuilder) {
+                ref.instance.context = this.injector.get(SearchHeaderQueryBuilderService);
+            } else {
+                ref.instance.context = this.injector.get(SearchQueryBuilderService);
+            }
             if (this.value) {
                 ref.instance.isActive = true;
                 ref.instance.startValue = this.value;

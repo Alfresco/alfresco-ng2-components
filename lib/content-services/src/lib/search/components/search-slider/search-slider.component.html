@@ -1,12 +1,11 @@
 <mat-slider
-    [(value)]="value"
-    [min]="min"
-    [max]="max"
-    [step]="step"
-    [thumbLabel]="thumbLabel"
-    (change)="onChangedHandler($event)"
     class="adf-search-slider"
-    data-automation-id="slider-range">
+    data-automation-id="slider-range"
+    [max]="max"
+    [min]="min"
+    [step]="step"
+    [discrete]="thumbLabel">
+    <input matSliderThumb (change)="onChangedHandler()" [(ngModel)]="value">
 </mat-slider>
 
 <div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">

@@ -1,0 +1,156 @@
+@import 'styles/flex';
+@import 'styles/mat-selectors';
+
+/* stylelint-disable no-descending-specificity */
+.adf-new-task-heading {
+    padding-top: 12px;
+    border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+
+    #{$mat-card-title} {
+        font-weight: bold;
+        font-size: var(--theme-adf-task-title-font-size);
+    }
+}
+
+.adf-new-task-layout-card {
+    margin: 10px auto;
+    flex: 1 1 100%;
+    max-width: 70%;
+
+    .adf-new-task-form {
+        flex-direction: column;
+        display: flex;
+
+        .adf-task-name,
+        .adf-task-description {
+            display: flex;
+            margin-bottom: 10px;
+
+            mat-form-field {
+                flex: 1;
+            }
+        }
+
+        .adf-input-row {
+            @include layout-bp(lt-md) {
+                flex-direction: column;
+            }
+
+            @include layout-bp(lt-md) {
+                mat-form-field {
+                    margin-right: 20px;
+                }
+            }
+        }
+
+        .adf-task-form {
+            flex: 1 1 100%;
+            box-sizing: border-box;
+            max-width: 48%;
+
+            @include layout-bp(lt-sm) {
+                max-width: 100%;
+            }
+        }
+    }
+}
+
+.adf-new-task-footer {
+    padding: 4px;
+    font-size: var(--theme-adf-task-footer-font-size);
+    border-top: 1px solid #eee;
+    display: flex;
+    place-content: flex-end;
+    align-items: flex-end;
+}
+
+.adf-mat-select {
+    padding-top: 0;
+}
+
+adf-start-task {
+    #{$mat-button}.adf-uppercase {
+        text-transform: uppercase;
+    }
+
+    people-widget.adf-people-widget-content {
+        width: 100%;
+
+        #{$mat-form-field-label} {
+            top: -14px;
+        }
+    }
+
+    .adf-people-widget-content {
+        #{$mat-form-field} {
+            width: 100%;
+        }
+
+        .adf-label {
+            line-height: 0;
+        }
+
+        .adf-error-container {
+            margin-top: -10px;
+        }
+    }
+
+    .adf {
+        &-start-task-input-container #{$mat-form-field-wrapper} {
+            padding-top: 8px;
+        }
+
+        &-error-text-container {
+            position: absolute;
+            height: 20px;
+            margin-top: 12px;
+            width: 100%;
+
+            & > div {
+                display: flex;
+                flex-flow: row;
+                justify-content: flex-start;
+            }
+        }
+
+        &-error-text {
+            padding-right: 8px;
+            height: 16px;
+            font-size: var(--theme-caption-font-size);
+            line-height: 1.33;
+            color: var(--theme-warn-color);
+            width: auto;
+        }
+
+        &-error-icon {
+            font-size: var(--theme-adf-icon-1-font-size);
+            color: var(--theme-warn-color);
+        }
+
+        &-label {
+            color: rgb(186, 186, 186);
+        }
+
+        &-invalid {
+            .adf-file {
+                border-color: var(--theme-warn-color);
+            }
+
+            #{$mat-form-field-prefix} {
+                color: var(--theme-warn-color);
+            }
+
+            .adf-input {
+                border-color: var(--theme-warn-color);
+            }
+
+            .adf-label {
+                color: var(--theme-warn-color);
+
+                &::after {
+                    background-color: var(--theme-warn-color);
+                }
+            }
+        }
+    }
+}

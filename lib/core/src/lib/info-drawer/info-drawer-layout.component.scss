@@ -1,4 +1,5 @@
 @import '../styles/mixins';
+@import 'styles/mat-selectors';
 
 $adf-info-drawer-layout-title-font-size: var(--theme-title-font-size) !default;
 $adf-info-drawer-icon-size: 48px !default;
@@ -17,10 +18,16 @@ $adf-info-drawer-icon-size-half: 24px !default;
         background-color: var(--theme-card-background-color);
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
-        & .mat-tab-label {
-            height: 32px;
+        & #{$mat-tab-label-text} {
+            font-weight: bold;
             text-align: left;
             opacity: 1;
+        }
+
+        #{$mat-tab-label}#{$mat-tab-label-active} {
+            & #{$mat-tab-label-text} {
+                color: inherit;
+            }
         }
 
         &-header {
@@ -68,7 +75,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 margin-bottom: 0;
             }
 
-            .adf-info-drawer-tabs .mat-tab-body-content {
+            .adf-info-drawer-tabs #{$mat-tab-body-content} {
                 .adf-manage-versions-empty,
                 .adf-manage-versions-no-permission {
                     margin: 0;

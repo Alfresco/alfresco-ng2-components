@@ -32,7 +32,8 @@ import {
     UploadWidgetContentLinkModel,
     WidgetVisibilityService,
     provideTranslations,
-    AuthModule
+    AuthModule,
+    FormFieldEvent
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -46,7 +47,6 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, of, throwError } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudModule } from '../form-cloud.module';
 import {
     cloudFormMock,
@@ -65,6 +65,7 @@ import { ProcessServicesCloudModule } from '../../process-services-cloud.module'
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 const mockOauth2Auth: any = {
@@ -990,6 +991,20 @@ describe('FormCloudComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(saveOutcome)).toBeTruthy();
     });
 
+    it('should enable outcome with skip validation property, even if the form is not valid', () => {
+        const formModel = new FormModel(cloudFormMock);
+        formComponent.form = formModel;
+        formModel.isValid = false;
+
+        const customOutcome = new FormOutcomeModel(new FormModel(), {
+            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
+            name: 'Custom',
+            skipValidation: true
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(customOutcome)).toBeTruthy();
+    });
+
     it('should disable start process outcome button when disableStartProcessButton is true', () => {
         const formModel = new FormModel(cloudFormMock);
         formComponent.form = formModel;
@@ -1619,7 +1634,7 @@ describe('retrieve metadata on submit', () => {
     it('should enable save button when form field value changed', () => {
         formComponent.disableSaveButton = true;
 
-        formService.formFieldValueChanged.next();
+        formService.formFieldValueChanged.next({} as FormFieldEvent);
 
         expect(formComponent.disableSaveButton).toBeFalse();
     });

@@ -32,7 +32,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, QueryList, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
 import { of, Subject, throwError } from 'rxjs';
@@ -60,10 +59,10 @@ import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
 import { DocumentListModule } from '../document-list.module';
 import { ContentActionModel } from '../models/content-action.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { CustomResourcesService } from '../services/custom-resources.service';
-import { DocumentListService } from '../services/document-list.service';
-import { DocumentListComponent } from './document-list.component';
+import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
+import { DocumentListComponent } from './document-list.component';
+import { CustomResourcesService, DocumentListService } from '../public-api';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
@@ -1432,7 +1431,7 @@ describe('DocumentList', () => {
         expect(documentList.reload).toHaveBeenCalled();
     });
 
-    it('should not show loading state if pagination is updated with merge setting as true', fakeAsync(() => {
+    it('should not show loading state if pagination is updated with merge setting as true', () => {
         spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
             of(
                 new DocumentLoaderNode(null, {
@@ -1457,7 +1456,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
 
         expect(element.querySelector('#adf-document-list-loading')).toBe(null);
-    }));
+    });
 
     it('should NOT reload data on first call of ngOnChanges', () => {
         spyOn(documentList, 'reload').and.stub();

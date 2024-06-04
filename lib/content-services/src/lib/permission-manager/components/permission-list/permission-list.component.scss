@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-permission-card {
         height: 100%;
@@ -5,6 +7,7 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        padding: 16px;
     }
 
     &-permission-loader {
@@ -19,6 +22,15 @@
         align-items: center;
         padding: 10px 15px;
         border: 1px solid var(--adf-theme-foreground-text-color-007);
+
+        .adf-permission-visibility-toggle {
+            .adf-permission-visibility-toggle-icon {
+                font-size: 24px;
+                height: 24px;
+                width: 24px;
+                margin: 1px 0 0 4px;
+            }
+        }
     }
 
     &-inherit-container {
@@ -34,6 +46,7 @@
 
     &-inherit-toggle {
         padding-left: 30px;
+        margin-top: -2px;
     }
 
     &-inherit-subtitle {
@@ -45,6 +58,11 @@
         flex-direction: row;
         align-items: center;
         padding: 5px 15px;
+
+        .adf-add-permission-button {
+            margin-left: 12px;
+            margin-right: 24px;
+        }
     }
 
     &-permission-role-column-header {
@@ -66,9 +84,14 @@
         height: calc(100% - 63px);
     }
 
-    &-local-permission-container {
+    &-local-permission-container#{$mat-card-content} {
         overflow: hidden;
         flex: 1 1 auto;
+        padding: 0;
+    }
+
+    &-delete-selected-permission-icon {
+        color: var(--theme-grey-divider-color);
     }
 }
 

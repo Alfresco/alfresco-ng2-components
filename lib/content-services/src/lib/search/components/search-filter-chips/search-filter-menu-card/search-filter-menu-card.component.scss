@@ -5,6 +5,7 @@
     .adf-search-filter-title {
         display: flex;
         justify-content: space-between;
+        color: var(--adf-theme-foreground-text-color-054);
         align-items: center;
         padding: 16px 12px;
         height: 32px;
@@ -14,6 +15,7 @@
         font-style: inherit;
 
         &-action {
+            color: var(--adf-theme-foreground-text-color-087);
             float: right;
         }
     }
