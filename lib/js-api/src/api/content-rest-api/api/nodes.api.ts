@@ -34,7 +34,6 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { buildCollectionParam } from '../../../alfrescoApiClient';
 import { ContentPagingQuery } from './types';
-import { NodeAssignedHoldPaging } from '../model/nodeAssinedHoldsPaging';
 
 export type NodesIncludeQuery = {
     /**
@@ -981,50 +980,6 @@ export class NodesApi extends BaseApi {
             path: '/nodes/{nodeId}/request-direct-access-url',
             pathParams,
             returnType: DirectAccessUrlEntry
-        });
-    }
-
-    /**
-     * List Assigned Holds
-     *
-     * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
-     *
-     * Gets a list of assigned holds that are associated with the current **nodeId**.
-     *
-     * @param nodeId The identifier of a child node. You can also use one of these well-known aliases:
-     * - -my-
-     * - -shared-
-     * - -root-
-     * @param opts Optional parameters
-     * @param opts.where Optionally filter the list by **frozenContent**:
-     * - where=(assocType='rma:frozenContent')
-     * @returns Promise<NodeAssignedHoldPaging>
-     */
-
-    listAssignedHolds(
-        nodeId: string,
-        opts?: {
-            where?: string;
-        } & ContentPagingQuery
-    ): Promise<NodeAssignedHoldPaging> {
-        throwIfNotDefined(nodeId, 'nodeId');
-        opts = opts || {};
-
-        const pathParams = {
-            nodeId
-        };
-
-        const queryParams = {
-            where: opts?.where,
-            skipCount: opts?.skipCount,
-            maxItems: opts?.maxItems
-        };
-
-        return this.get({
-            path: '/nodes/{nodeId}/parents',
-            pathParams,
-            queryParams,
-            returnType: NodeAssignedHoldPaging
         });
     }
 }
