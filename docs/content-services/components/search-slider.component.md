@@ -2,12 +2,12 @@
 Title: Search slider component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2024-04-05
+Last reviewed: 2024-05-13
 ---
 
 # [Search slider component](../../../lib/content-services/src/lib/search/components/search-slider/search-slider.component.ts "Defined in search-slider.component.ts")
 
-Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 4 inputs representing logical conditions to form search query from.
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of a slider for numerical parameter value selection used as a search query parameter.
 
 ![Slider Widget](../../docassets/images/search-slider.png)
 
