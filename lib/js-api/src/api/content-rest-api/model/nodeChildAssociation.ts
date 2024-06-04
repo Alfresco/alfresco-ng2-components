@@ -49,6 +49,8 @@ export class NodeChildAssociation {
     permissions?: PermissionsInfo;
     definition?: Definition;
     association?: ChildAssociationInfo;
+    reason?: string;
+    description?: string;
 
     constructor(input?: Partial<NodeChildAssociation>) {
         if (input) {

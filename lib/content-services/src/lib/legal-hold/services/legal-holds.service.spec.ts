@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-import { NodeAssignedHoldPagingList } from './nodeAssignedHoldPagingList';
+import { TestBed } from '@angular/core/testing';
+import { LegalHoldService } from './legal-hold.service';
 
-export class NodeAssignedHoldPaging {
-    list?: NodeAssignedHoldPagingList;
+describe('LegalHoldsService', () => {
+    let service: LegalHoldService;
 
-    constructor(input?: Partial<NodeAssignedHoldPaging>) {
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new NodeAssignedHoldPagingList(input.list) : undefined;
-        }
-    }
-}
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(LegalHoldService);
+    });
+
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
+});
