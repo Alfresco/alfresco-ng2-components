@@ -15,15 +15,19 @@
  * limitations under the License.
  */
 
-import { NodeAssignedHold } from './nodeAssignedHold';
+export class NodeHold {
+    id: string;
+    /**
+     * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
+     * The character . must not be used at the end of the name.
+     */
+    name: string;
+    reason: string;
+    description: string;
 
-export class NodeAssignedHoldEntry {
-    entry: NodeAssignedHold;
-
-    constructor(input?: Partial<NodeAssignedHoldEntry>) {
+    constructor(input?: Partial<NodeHold>) {
         if (input) {
             Object.assign(this, input);
-            this.entry = input.entry ? new NodeAssignedHold(input.entry) : undefined;
         }
     }
 }

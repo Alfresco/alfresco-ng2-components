@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export interface NodeHold {
+export interface Hold {
     id: string;
     name: string;
     reason?: string;
