@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AdfDateFnsAdapter, DownloadService } from '@alfresco/adf-core';
+import { AdfDateFnsAdapter, ButtonsMenuModule, DownloadService, ToolbarComponent } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -29,14 +29,22 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ReportParameterDetailsModel } from '../../diagram/models/report/report-parameter-details.model';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { AnalyticsService } from '../services/analytics.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { WIDGET_DIRECTIVES } from './widgets';
+import { MatButtonModule } from '@angular/material/button';
 
 const FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
 
@@ -98,6 +106,22 @@ export interface ReportFormValues {
 
 @Component({
     selector: 'adf-analytics-report-parameters',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        ToolbarComponent,
+        MatFormFieldModule,
+        MatInputModule,
+        MatMenuModule,
+        ...WIDGET_DIRECTIVES,
+        MatDialogModule,
+        FormsModule,
+        MatButtonModule,
+        ButtonsMenuModule
+    ],
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.scss'],
     encapsulation: ViewEncapsulation.None

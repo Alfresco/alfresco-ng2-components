@@ -16,12 +16,16 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { AnalyticsService } from '../services/analytics.service';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
+import { CommonModule } from '@angular/common';
+import { DropdownWidgetAnalyticsComponent } from './widgets/dropdown/dropdown.widget';
 
 @Component({
     selector: 'adf-analytics-report-heat-map, analytics-report-heat-map',
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, DropdownWidgetAnalyticsComponent],
     templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements OnInit {

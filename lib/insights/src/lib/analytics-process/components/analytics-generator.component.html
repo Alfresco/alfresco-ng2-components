@@ -37,7 +37,7 @@
                     <h4>{{ report.title }}</h4>
                     <div *ngIf="!report.hasDatasets()">{{ 'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate }}</div>
                     <div [attr.id]="'chart-table-' + report.id" *ngIf="report.hasDatasets()">
-                        <table class="adf-table adf-table-responsive adf-table-condensed" class="adf-partial-width">
+                        <table class="adf-table adf-table-responsive adf-table-condensed adf-partial-width">
                             <tr>
                                 <th *ngFor="let label of report.labels">{{ label | translate }}</th>
                             </tr>

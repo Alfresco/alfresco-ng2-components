@@ -19,40 +19,19 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, provideTranslations } from '@alfresco/adf-core';
-
 import { DiagramsModule } from './diagram/diagram.module';
-import { AnalyticsProcessModule } from './analytics-process/analytics-process.module';
-
 import { MaterialModule } from './material.module';
+import { ANALYTICS_PROCESS_DIRECTIVES } from './analytics-process/public-api';
 
 @NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        DiagramsModule,
-        AnalyticsProcessModule
-    ],
-    exports: [
-        DiagramsModule,
-        AnalyticsProcessModule
-    ]
+    imports: [CoreModule, CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, DiagramsModule, ...ANALYTICS_PROCESS_DIRECTIVES],
+    exports: [DiagramsModule, ...ANALYTICS_PROCESS_DIRECTIVES]
 })
 export class InsightsModule {
     static forRoot(): ModuleWithProviders<InsightsModule> {
         return {
             ngModule: InsightsModule,
-            providers: [
-                provideTranslations('adf-insights', 'assets/adf-insights')
-            ]
-        };
-    }
-
-    static forChild(): ModuleWithProviders<InsightsModule> {
-        return {
-            ngModule: InsightsModule
+            providers: [provideTranslations('adf-insights', 'assets/adf-insights')]
         };
     }
 }
