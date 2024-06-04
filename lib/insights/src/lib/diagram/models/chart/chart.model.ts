@@ -53,10 +53,6 @@ export class Chart {
         return this.datasets?.length > 0;
     }
 
-    hasDetailsTable(): boolean {
-        return !!this.detailsTable;
-    }
-
     hasZeroValues(): boolean {
         let isZeroValues = false;
 
