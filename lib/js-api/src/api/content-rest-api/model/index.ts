@@ -199,7 +199,4 @@ export * from './versionPagingList';
 export * from './deletedNode';
 export * from './nodeAssociation';
 export * from './nodeChildAssociation';
-export * from './nodeAssignedHoldPagingList';
-export * from './nodeAssinedHoldsPaging';
-export * from './nodeAssignedHoldEntry';
-export * from './nodeAssignedHold';
+export * from './nodeHold';
