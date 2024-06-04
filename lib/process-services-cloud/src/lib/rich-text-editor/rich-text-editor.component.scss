@@ -8,10 +8,14 @@
             }
         }
     }
+
+    .ce-inline-toolbar {
+        transform: scale(1);
+    }
 }
 
 xy-color-picker {
+    position: relative;
     background-color: transparent;
-    margin-left: 150px;
     width: 22px;
 }
