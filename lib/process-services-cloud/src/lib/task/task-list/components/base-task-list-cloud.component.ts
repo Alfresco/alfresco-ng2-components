@@ -350,7 +350,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     setSorting(sortDetail) {
         const sorting = sortDetail
             ? {
-                  orderBy: sortDetail.key,
+                  orderBy: sortDetail.sortingKey || sortDetail.key,
                   direction: sortDetail.direction.toUpperCase()
               }
             : { ...this.defaultSorting };
