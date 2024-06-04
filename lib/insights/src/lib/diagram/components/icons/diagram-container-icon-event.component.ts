@@ -15,13 +15,20 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, Input } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { CommonModule } from '@angular/common';
+import { DiagramIconTimerComponent } from './diagram-icon-timer.component';
+import { DiagramIconErrorComponent } from './diagram-icon-error.component';
+import { DiagramIconSignalComponent } from './diagram-icon-signal.component';
+import { DiagramIconMessageComponent } from './diagram-icon-message.component';
 
 @Component({
     selector: 'diagram-container-icon-event',
+    standalone: true,
+    imports: [CommonModule, DiagramIconTimerComponent, DiagramIconErrorComponent, DiagramIconSignalComponent, DiagramIconMessageComponent],
     templateUrl: './diagram-container-icon-event.component.html'
 })
 export class DiagramContainerIconEventTaskComponent extends DiagramElement {
@@ -30,5 +37,4 @@ export class DiagramContainerIconEventTaskComponent extends DiagramElement {
 
     @Input()
     fillColor: string;
-
 }

@@ -15,13 +15,17 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { DiagramTaskComponent } from './diagram-task.component';
+import { DiagramIconBoxPublishTaskComponent } from '../icons/diagram-icon-box-publish-task.component';
 
 @Component({
     selector: 'diagram-box-publish-task',
+    standalone: true,
+    imports: [DiagramTaskComponent, DiagramIconBoxPublishTaskComponent],
     templateUrl: './diagram-box-publish-task.component.html'
 })
 export class DiagramBoxPublishTaskComponent extends DiagramElement {}

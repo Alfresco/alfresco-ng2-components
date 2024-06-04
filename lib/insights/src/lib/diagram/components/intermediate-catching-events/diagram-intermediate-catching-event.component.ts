@@ -15,26 +15,31 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
+import { DiagramContainerIconEventTaskComponent } from '../icons/diagram-container-icon-event.component';
+import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-intermediate-catching-event',
+    standalone: true,
+    imports: [RaphaelCircleDirective, DiagramContainerIconEventTaskComponent, DiagramTooltipComponent],
     templateUrl: './diagram-intermediate-catching-event.component.html'
 })
 export class DiagramIntermediateCatchingEventComponent extends DiagramElement implements OnInit {
     center: any = {};
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1 };
 
     circleRadiusInner: number;
     circleRadiusOuter: number;
 
     ngOnInit() {
-        this.center.x = this.data.x + (this.data.width / 2);
-        this.center.y = this.data.y + (this.data.height / 2);
+        this.center.x = this.data.x + this.data.width / 2;
+        this.center.y = this.data.y + this.data.height / 2;
 
         this.circleRadiusInner = 12;
         this.circleRadiusOuter = 15;

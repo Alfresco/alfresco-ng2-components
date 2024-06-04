@@ -15,22 +15,25 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconMessageDirective } from '../raphael/icons/raphael-icon-message.component';
 
 @Component({
     selector: 'diagram-icon-message',
+    standalone: true,
+    imports: [RaphaelIconMessageDirective],
     templateUrl: './diagram-icon-message.component.html'
 })
 export class DiagramIconMessageComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 6, y: this.data.y + 6};
+        this.position = { x: this.data.x + 6, y: this.data.y + 6 };
 
         this.options.stroke = 'none';
         this.options.fillColors = '#585858';

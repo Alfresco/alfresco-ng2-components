@@ -18,6 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
 
 const POSITION = { bottom: 'bottom', left: 'left', right: 'right', top: 'top' };
 const STRATEGY = { cursor: 'cursor', element: 'element' };
@@ -25,7 +26,9 @@ const IS_ACTIVE_CLASS = 'adf-is-active';
 
 @Component({
     selector: 'diagram-tooltip',
+    standalone: true,
     templateUrl: './diagram-tooltip.component.html',
+    imports: [NgIf, NgForOf],
     styleUrls: ['./diagram-tooltip.component.scss']
 })
 export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
@@ -104,16 +107,16 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
         if (this.strategy === STRATEGY.element) {
             props = event.target.getBoundingClientRect();
         } else {
-            props = { top: (event.pageY - 150), left: event.pageX, width: event.layerX, height: 50 };
+            props = { top: event.pageY - 150, left: event.pageX, width: event.layerX, height: 50 };
         }
 
-        const top = props.top + (props.height / 2);
+        const top = props.top + props.height / 2;
         const marginLeft = -1 * (this.tooltipElement.offsetWidth / 2);
         const marginTop = -1 * (this.tooltipElement.offsetHeight / 2);
-        let left = props.left + (props.width / 2);
+        let left = props.left + props.width / 2;
 
         if (this.position === POSITION.left || this.position === POSITION.right) {
-            left = (props.width / 2);
+            left = props.width / 2;
             if (top + marginTop < 0) {
                 this.tooltipElement.style.top = '0';
                 this.tooltipElement.style.marginTop = '0';

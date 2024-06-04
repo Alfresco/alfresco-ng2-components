@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconBusinessRuleDirective } from '../raphael/icons/raphael-icon-business-rule.component';
 
 @Component({
     selector: 'diagram-icon-business-rule-task',
+    standalone: true,
+    imports: [RaphaelIconBusinessRuleDirective],
     templateUrl: './diagram-icon-business-rule-task.component.html'
 })
 export class DiagramIconBusinessRuleTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 4, y: this.data.y + 4};
-        this.options.stroke = 'none' ;
-        this.options.fillColors = '#72a7d0' ;
+        this.position = { x: this.data.x + 4, y: this.data.y + 4 };
+        this.options.stroke = 'none';
+        this.options.fillColors = '#72a7d0';
     }
 }

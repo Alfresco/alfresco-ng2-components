@@ -22,7 +22,10 @@ import { RaphaelBase } from './raphael-base';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-cross, raphael-cross'})
+@Directive({
+    selector: 'adf-raphael-cross, raphael-cross',
+    standalone: true
+})
 export class RaphaelCrossDirective extends RaphaelBase implements OnInit {
     @Input()
     center: Point;
@@ -62,11 +65,25 @@ export class RaphaelCrossDirective extends RaphaelBase implements OnInit {
         const quarterWidth = width / 4;
         const quarterHeight = height / 4;
 
-        return this.paper.path(
-            'M' + (center.x + quarterWidth + 3) + ' ' + (center.y + quarterHeight + 3) +
-            'L' + (center.x + 3 * quarterWidth - 3) + ' ' + (center.y + 3 * quarterHeight - 3) +
-            'M' + (center.x + quarterWidth + 3) + ' ' + (center.y + 3 * quarterHeight - 3) +
-            'L' + (center.x + 3 * quarterWidth - 3) + ' ' + (center.y + quarterHeight + 3)
-        ).attr(opts);
+        return this.paper
+            .path(
+                'M' +
+                    (center.x + quarterWidth + 3) +
+                    ' ' +
+                    (center.y + quarterHeight + 3) +
+                    'L' +
+                    (center.x + 3 * quarterWidth - 3) +
+                    ' ' +
+                    (center.y + 3 * quarterHeight - 3) +
+                    'M' +
+                    (center.x + quarterWidth + 3) +
+                    ' ' +
+                    (center.y + 3 * quarterHeight - 3) +
+                    'L' +
+                    (center.x + 3 * quarterWidth - 3) +
+                    ' ' +
+                    (center.y + quarterHeight + 3)
+            )
+            .attr(opts);
     }
 }

@@ -17,9 +17,13 @@
 
 import { Component } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { DiagramTaskComponent } from './diagram-task.component';
+import { DiagramIconAlfrescoPublishTaskComponent } from '../icons/diagram-icon-alfresco-publish-task.component';
 
 @Component({
     selector: 'adf-diagram-publish-task',
+    standalone: true,
+    imports: [DiagramTaskComponent, DiagramIconAlfrescoPublishTaskComponent],
     templateUrl: './diagram-alfresco-publish-task.component.html'
 })
 export class DiagramAlfrescoPublishTaskComponent extends DiagramElement {}

@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconBoxPublishDirective } from '../raphael/icons/raphael-icon-box-publish.component';
 
 @Component({
     selector: 'diagram-icon-box-publish-task',
+    standalone: true,
+    imports: [RaphaelIconBoxPublishDirective],
     templateUrl: './diagram-icon-box-publish-task.component.html'
 })
 export class DiagramIconBoxPublishTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 6, y: this.data.y + 6};
+        this.position = { x: this.data.x + 6, y: this.data.y + 6 };
     }
 }

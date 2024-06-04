@@ -15,18 +15,23 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, Input, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
+import { DiagramContainerIconEventTaskComponent } from '../icons/diagram-container-icon-event.component';
+import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
 
 @Component({
     selector: 'diagram-event',
+    standalone: true,
+    imports: [DiagramTooltipComponent, DiagramContainerIconEventTaskComponent, RaphaelCircleDirective],
     templateUrl: './diagram-event.component.html'
 })
 export class DiagramEventComponent extends DiagramElement implements OnInit {
     @Input()
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: '' };
 
     @Input()
     iconFillColor: any;
@@ -34,8 +39,7 @@ export class DiagramEventComponent extends DiagramElement implements OnInit {
     center: any = {};
 
     ngOnInit() {
-
-        this.center.x = this.data.x + (this.data.width / 2);
-        this.center.y = this.data.y + (this.data.height / 2);
+        this.center.x = this.data.x + this.data.width / 2;
+        this.center.y = this.data.y + this.data.height / 2;
     }
 }

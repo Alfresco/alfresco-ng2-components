@@ -15,21 +15,25 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { DiagramGatewayComponent } from './diagram-gateway.component';
+import { RaphaelPlusDirective } from '../raphael/raphael-plus.component';
 
 @Component({
     selector: 'diagram-parallel-gateway',
+    standalone: true,
+    imports: [DiagramGatewayComponent, RaphaelPlusDirective],
     templateUrl: './diagram-parallel-gateway.component.html'
 })
 export class DiagramParallelGatewayComponent extends DiagramElement implements OnInit {
     center: any = {};
     width: any;
     height: any;
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 3};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 3 };
 
     ngOnInit() {
         this.center.x = this.data.x;

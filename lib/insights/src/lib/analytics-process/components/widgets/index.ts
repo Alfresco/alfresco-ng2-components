@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    CheckboxWidgetAnalyticsComponent,
-    DateRangeWidgetComponent,
-    DropdownWidgetAnalyticsComponent,
-    DurationWidgetComponent,
-    NumberWidgetAnalyticsComponent
-} from '@alfresco/adf-insights';
+import { CheckboxWidgetAnalyticsComponent } from './checkbox/checkbox.widget';
+import { DateRangeWidgetComponent } from './date-range/date-range.widget';
+import { DropdownWidgetAnalyticsComponent } from './dropdown/dropdown.widget';
+import { DurationWidgetComponent } from './duration/duration.widget';
+import { NumberWidgetAnalyticsComponent } from './number/number.widget';
 
 export * from './checkbox/checkbox.widget';
 export * from './date-range/date-range.widget';

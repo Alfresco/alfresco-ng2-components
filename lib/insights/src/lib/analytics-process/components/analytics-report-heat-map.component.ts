@@ -20,12 +20,13 @@ import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, UntypedFor
 import { AnalyticsService } from '../services/analytics.service';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 import { CommonModule } from '@angular/common';
-import { DropdownWidgetAnalyticsComponent } from './widgets/dropdown/dropdown.widget';
+import { DropdownWidgetAnalyticsComponent } from './widgets';
+import { DiagramComponent } from '../../diagram/components/diagram.component';
 
 @Component({
     selector: 'adf-analytics-report-heat-map, analytics-report-heat-map',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, DropdownWidgetAnalyticsComponent],
+    imports: [CommonModule, ReactiveFormsModule, DropdownWidgetAnalyticsComponent, DiagramComponent],
     templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements OnInit {

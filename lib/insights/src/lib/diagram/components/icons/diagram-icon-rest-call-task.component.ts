@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconRestCallDirective } from '../raphael/icons/raphael-icon-rest-call.component';
 
 @Component({
     selector: 'diagram-icon-rest-call-task',
+    standalone: true,
+    imports: [RaphaelIconRestCallDirective],
     templateUrl: './diagram-icon-rest-call-task.component.html'
 })
 export class DiagramIconRestCallTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 2, y: this.data.y + 2};
-        this.options.stroke = 'none' ;
-        this.options.fillColors = '#bd4848' ;
+        this.position = { x: this.data.x + 2, y: this.data.y + 2 };
+        this.options.stroke = 'none';
+        this.options.fillColors = '#bd4848';
     }
 }

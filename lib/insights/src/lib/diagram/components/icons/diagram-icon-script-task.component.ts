@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconScriptDirective } from '../raphael/icons/raphael-icon-script.component';
 
 @Component({
     selector: 'diagram-icon-script-task',
+    standalone: true,
+    imports: [RaphaelIconScriptDirective],
     templateUrl: './diagram-icon-script-task.component.html'
 })
 export class DiagramIconScriptTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 4, y: this.data.y + 4};
-        this.options.stroke = 'none' ;
-        this.options.fillColors = '#72a7d0' ;
+        this.position = { x: this.data.x + 4, y: this.data.y + 4 };
+        this.options.stroke = 'none';
+        this.options.fillColors = '#72a7d0';
     }
 }

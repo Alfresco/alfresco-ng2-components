@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AdfDateFnsAdapter, ButtonsMenuModule, DownloadService, ToolbarComponent } from '@alfresco/adf-core';
+import { AdfDateFnsAdapter, ButtonsMenuModule, DownloadService, ToolbarComponent, ToolbarTitleComponent } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -116,6 +116,7 @@ export interface ReportFormValues {
         MatFormFieldModule,
         MatInputModule,
         MatMenuModule,
+        ToolbarTitleComponent,
         ...WIDGET_DIRECTIVES,
         MatDialogModule,
         FormsModule,

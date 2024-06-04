@@ -22,7 +22,10 @@ import { RaphaelBase } from './raphael-base';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-text, raphael-text'})
+@Directive({
+    selector: 'adf-raphael-text, raphael-text',
+    standalone: true
+})
 export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -40,7 +43,6 @@ export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     error = new EventEmitter();
 
     ngOnInit() {
-
         if (this.text === null || this.text === undefined) {
             this.text = '';
         }
@@ -49,10 +51,10 @@ export class RaphaelTextDirective extends RaphaelBase implements OnInit {
 
     public draw(position: Point, text: string) {
         const textPaper = this.paper.text(position.x, position.y, text).attr({
-            'text-anchor' : 'middle',
-            'font-family' : 'Arial',
-            'font-size' : '11',
-            fill : '#373e48'
+            'text-anchor': 'middle',
+            'font-family': 'Arial',
+            'font-size': '11',
+            fill: '#373e48'
         });
 
         textPaper.transform(this.transform);

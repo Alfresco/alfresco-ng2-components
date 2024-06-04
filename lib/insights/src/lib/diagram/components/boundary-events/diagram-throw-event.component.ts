@@ -15,19 +15,24 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
+import { DiagramContainerIconEventTaskComponent } from '../icons/diagram-container-icon-event.component';
+import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-throw-event',
+    standalone: true,
+    imports: [RaphaelCircleDirective, DiagramContainerIconEventTaskComponent, DiagramTooltipComponent],
     templateUrl: './diagram-throw-event.component.html'
 })
 export class DiagramThrowEventComponent extends DiagramElement implements OnInit {
     center: any = {};
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1 };
 
     signalFillColor: string;
 
@@ -35,8 +40,8 @@ export class DiagramThrowEventComponent extends DiagramElement implements OnInit
     circleRadiusOuter: number;
 
     ngOnInit() {
-        this.center.x = this.data.x + (this.data.width / 2);
-        this.center.y = this.data.y + (this.data.height / 2);
+        this.center.x = this.data.x + this.data.width / 2;
+        this.center.y = this.data.y + this.data.height / 2;
 
         this.circleRadiusInner = 12;
         this.circleRadiusOuter = 15;

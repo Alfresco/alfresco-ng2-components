@@ -15,17 +15,21 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DiagramLaneComponent } from './diagram-lane.component';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
     selector: 'diagram-lanes',
+    standalone: true,
+    imports: [DiagramLaneComponent, NgIf, NgForOf],
     templateUrl: './diagram-lanes.component.html'
 })
 export class DiagramLanesComponent {
     @Input()
-    lanes: any [];
+    lanes: any[];
 
     @Output()
     error = new EventEmitter();

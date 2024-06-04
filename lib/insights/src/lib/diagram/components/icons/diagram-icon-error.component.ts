@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, Input, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconErrorDirective } from '../raphael/icons/raphael-icon-error.component';
 
 @Component({
     selector: 'diagram-icon-error',
+    standalone: true,
+    imports: [RaphaelIconErrorDirective],
     templateUrl: './diagram-icon-error.component.html'
 })
 export class DiagramIconErrorComponent extends DiagramElement implements OnInit {
@@ -30,10 +33,10 @@ export class DiagramIconErrorComponent extends DiagramElement implements OnInit 
 
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x - 1, y: this.data.y - 1};
+        this.position = { x: this.data.x - 1, y: this.data.y - 1 };
 
         this.options.stroke = 'black';
         this.options.fillColors = this.fillColor;
