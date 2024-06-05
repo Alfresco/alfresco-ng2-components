@@ -16,7 +16,6 @@
  */
 
 import { NgModule } from '@angular/core';
-import { ColorSetDirective } from './color-set/color-set.directive';
 import { HighlightDirective } from './highlight.directive';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
 import { LogoutDirective } from './logout.directive';
@@ -25,24 +24,8 @@ import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
 import { UploadDirective } from './upload.directive';
 
 @NgModule({
-    imports: [
-        HighlightDirective,
-        LogoutDirective,
-        UploadDirective,
-        TooltipCardDirective,
-        TooltipCardComponent,
-        InfiniteSelectScrollDirective,
-        ColorSetDirective
-    ],
-    exports: [
-        HighlightDirective,
-        LogoutDirective,
-        UploadDirective,
-        TooltipCardDirective,
-        TooltipCardComponent,
-        InfiniteSelectScrollDirective,
-        ColorSetDirective
-    ]
+    imports: [HighlightDirective, LogoutDirective, UploadDirective, TooltipCardDirective, TooltipCardComponent, InfiniteSelectScrollDirective],
+    exports: [HighlightDirective, LogoutDirective, UploadDirective, TooltipCardDirective, TooltipCardComponent, InfiniteSelectScrollDirective]
 })
 /** @deprecated This module is deprecated and will be removed in a future release. Please consider importing standalone components and directives directly. */
 export class DirectiveModule {}

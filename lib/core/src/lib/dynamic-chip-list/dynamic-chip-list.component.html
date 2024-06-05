@@ -1,8 +1,8 @@
-<div class="adf-dynamic-chip-list-container"
+<div #nodeListContainer
+     class="adf-dynamic-chip-list-container"
      [class.adf-dynamic-chip-list-flex-column]="limitChipsDisplayed && (!calculationsDone || columnFlexDirection)"
      [class.adf-dynamic-chip-list-button-in-next-line]="moveLoadMoreButtonToNextRow"
-     [class.adf-dynamic-chip-list-paginated]="paginationData"
-     #nodeListContainer>
+     [class.adf-dynamic-chip-list-paginated]="paginationData">
     <mat-chip-list [class.adf-dynamic-chip-list-full-width]="limitChipsDisplayed && !calculationsDone"
                    role="listbox"
                    [attr.aria-label]="'METADATA.BASIC.TAGS' | translate">

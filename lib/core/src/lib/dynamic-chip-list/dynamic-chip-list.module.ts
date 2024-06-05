@@ -16,17 +16,10 @@
  */
 
 import { NgModule } from '@angular/core';
-import { ColorSetDirective } from '../directives/color-set/color-set.directive';
 import { DynamicChipListComponent } from './dynamic-chip-list.component';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
-    declarations: [DynamicChipListComponent],
-    imports: [MatChipsModule, MatIconModule, MatButtonModule, TranslateModule, CommonModule, ColorSetDirective],
+    imports: [DynamicChipListComponent],
     exports: [DynamicChipListComponent]
 })
 export class DynamicChipListModule {}
