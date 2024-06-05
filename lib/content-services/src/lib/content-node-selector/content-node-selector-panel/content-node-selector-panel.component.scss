@@ -52,8 +52,15 @@ h2.adf-search-results-label {
                 align-items: center;
 
                 #{$mat-form-field-infix} {
-                    padding-top: 0;
                     padding-bottom: 0;
+                }
+            }
+        }
+
+        .adf-sites-dropdown-form-field {
+            &#{$mat-form-field-hide-placeholder} {
+                #{$mat-form-field-infix} {
+                    padding-top: 0;
                 }
             }
         }
@@ -66,7 +73,7 @@ h2.adf-search-results-label {
 
         &-input {
             width: 100%;
-            margin: 16px 0;
+            margin-bottom: 8px;
 
             .adf-content-node-selector-content-input-icon {
                 color: var(--adf-theme-foreground-icon-color-054);
@@ -79,6 +86,10 @@ h2.adf-search-results-label {
                 &:hover {
                     color: var(--adf-theme-foreground-base-color);
                 }
+            }
+
+            #{$mat-form-field-subscript-wrapper} {
+                display: none;
             }
         }
 
