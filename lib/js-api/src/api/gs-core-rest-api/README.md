@@ -64,6 +64,7 @@ Class | Method | HTTP request | Description
  - [FilePlanComponentBodyUpdate](docs/FilePlanComponentBodyUpdate.md)
  - [FilePlanEntry](docs/FilePlanEntry.md)
  - [ModelError](docs/ModelError.md)
+ - [NodeChildAssociationPaging](../content-rest-api/docs/NodesApi.md#NodeChildAssociationPaging)
  - [Pagination](docs/Pagination.md)
  - [PathElement](docs/PathElement.md)
  - [PathInfo](docs/PathInfo.md)
