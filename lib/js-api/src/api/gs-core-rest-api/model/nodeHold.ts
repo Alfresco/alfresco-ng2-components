@@ -15,19 +15,10 @@
  * limitations under the License.
  */
 
-export class NodeHold {
+export interface Hold {
     id: string;
-    /**
-     * The name must not contain spaces or the following special characters: * \" < > \\ / ? : and |.
-     * The character . must not be used at the end of the name.
-     */
     name: string;
-    reason: string;
-    description: string;
-
-    constructor(input?: Partial<NodeHold>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
+    reason?: string;
+    description?: string;
+    selected?: string;
 }

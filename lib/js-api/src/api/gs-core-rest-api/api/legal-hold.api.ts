@@ -22,15 +22,15 @@ import { ContentPagingQuery, NodeChildAssociationPaging } from '../../content-re
 /**
  * Legal Holds service.
  *
- * @module RecordsApi
+ * @module LegalHoldApi
  */
 export class LegalHoldApi extends BaseApi {
     /**
      * List of legal holds
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-     * @param opts Optional parameters
-     * @returns Promise<RecordCategoryPaging>
+     * @param opt Optional parameters
+     * @returns Promise<NodeChildAssociationPaging>
      */
     getHolds(filePlanId: string = '-filePlan-', opts?: ContentPagingQuery): Promise<NodeChildAssociationPaging> {
         throwIfNotDefined(filePlanId, 'filePlanId');
