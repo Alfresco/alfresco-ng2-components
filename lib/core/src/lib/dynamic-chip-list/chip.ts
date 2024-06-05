@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { ColorSet } from '../directives/color-set/color-set.model';
-
 export interface Chip {
     name: string;
     id: string;
-    color?: ColorSet;
 }

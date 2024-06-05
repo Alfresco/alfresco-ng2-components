@@ -7,14 +7,12 @@
                    role="listbox"
                    [attr.aria-label]="'METADATA.BASIC.TAGS' | translate">
         <mat-chip *ngFor="let chip of chipsToDisplay; let idx = index"
-                  [adf-color-set]="chip.color || color"
                   [style.border-radius]="roundedChips ? '20px' : '10px'"
                   [style.font-weight]="'bold'"
                   class="adf-dynamic-chip-list-chip"
                   (removed)="removedChip.emit(chip.id)">
             <span id="adf-dynamic-chip-list-chip-name-{{ idx }}">{{ chip.name }}</span>
             <mat-icon *ngIf="showDelete"
-                      [style.color]="chip?.color?.text || color?.text"
                       id="adf-dynamic-chip-list-delete-{{ chip.name }}"
                       class="adf-dynamic-chip-list-delete-icon"
                       matChipRemove>

@@ -39,8 +39,6 @@ import { MatChip, MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { ColorSetDirective } from '../directives/color-set/color-set.directive';
-import { ColorSet } from '../directives/color-set/color-set.model';
 import { Chip } from './chip';
 
 /**
@@ -51,7 +49,7 @@ import { Chip } from './chip';
     standalone: true,
     templateUrl: './dynamic-chip-list.component.html',
     styleUrls: ['./dynamic-chip-list.component.scss'],
-    imports: [MatChipsModule, ColorSetDirective, TranslateModule, NgForOf, MatIconModule, NgIf, MatButtonModule],
+    imports: [MatChipsModule, TranslateModule, NgForOf, MatIconModule, NgIf, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
@@ -71,10 +69,6 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     /** Should limit number of chips displayed. */
     @Input()
     limitChipsDisplayed = false;
-
-    /** Apply color set to all chips */
-    @Input()
-    color: ColorSet;
 
     /** Round up chips */
     @Input()
