@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgForOf } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -26,6 +26,8 @@ import { TagNodeListComponent } from './tag-node-list.component';
 import { CoreModule } from '@alfresco/adf-core';
 import { TagsCreatorComponent } from './tags-creator/tags-creator.component';
 import { ContentDirectiveModule } from '../directives/content-directive.module';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     imports: [
@@ -34,19 +36,12 @@ import { ContentDirectiveModule } from '../directives/content-directive.module';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        MatChipsModule,
+        MatIconModule,
+        NgForOf
     ],
-    exports: [
-        TagActionsComponent,
-        TagListComponent,
-        TagNodeListComponent,
-        TagsCreatorComponent
-    ],
-    declarations: [
-        TagActionsComponent,
-        TagListComponent,
-        TagNodeListComponent,
-        TagsCreatorComponent
-    ]
+    exports: [TagActionsComponent, TagListComponent, TagNodeListComponent, TagsCreatorComponent],
+    declarations: [TagActionsComponent, TagListComponent, TagNodeListComponent, TagsCreatorComponent]
 })
 export class TagModule {}
