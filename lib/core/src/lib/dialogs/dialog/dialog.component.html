@@ -45,20 +45,23 @@
         class="adf-dialog-actions"
         [ngClass]="{ 'adf-additional-actions': data.actionsTemplate || additionalActionButtons }"
     >
-        <div *ngIf="!additionalActionButtons && data.actionsTemplate">
-            <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
-        </div>
+        <div>
 
-        <div *ngIf="!data.actionsTemplate && additionalActionButtons">
-            <button
-                *ngFor="let additionalButton of additionalActionButtons"
-                mat-button
-                color="primary"
-                class="{{ additionalButton.class }}"
-                (click)="additionalButton.onClick()"
-            >
-                {{ additionalButton.title | translate }}
-            </button>
+            <ng-container *ngIf="!additionalActionButtons && data.actionsTemplate">
+                <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="!data.actionsTemplate && additionalActionButtons">
+                <button
+                    *ngFor="let additionalButton of additionalActionButtons"
+                    mat-button
+                    color="primary"
+                    class="{{ additionalButton.class }}"
+                    (click)="additionalButton.onClick()"
+                >
+                    {{ additionalButton.title | translate }}
+                </button>
+            </ng-container>
         </div>
 
         <div>
