@@ -38,21 +38,16 @@ export class LegalHoldService {
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param options Optional parameters supported by JS-API
-     * @returns List of assigned holds
+     * @returns List of assigned holds Hold[]
      */
     getHolds(filePlanId: string, options: ContentPagingQuery = {}): Observable<Hold[]> {
-        const queryOptions = Object.assign({
-            maxItems: options?.maxItems,
-            skipCount: options?.skipCount
-        });
-
-        return from(this.legalHoldApi.getHolds(filePlanId, queryOptions)).pipe(
-            map((holds) =>
-                holds.list?.entries?.map((entity) => ({
-                    id: entity.entry.id,
-                    name: entity.entry.name,
-                    reason: entity.entry.reason,
-                    description: entity.entry.description
+        return from(this.legalHoldApi.getHolds(filePlanId, options)).pipe(
+            map(({ list }) =>
+                list?.entries?.map(({ entry }) => ({
+                    id: entry?.id,
+                    name: entry?.name,
+                    reason: entry?.reason,
+                    description: entry?.description
                 }))
             ),
             catchError((err) => throwError(err))
