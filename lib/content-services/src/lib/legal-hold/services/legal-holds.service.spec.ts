@@ -17,16 +17,56 @@
 
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
+import { ContentTestingModule } from '../../testing/content.testing.module';
+import { Hold, NodeChildAssociationPaging } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
     let service: LegalHoldService;
+    let legalHolds: NodeChildAssociationPaging;
+    let returnedHolds: Hold[];
+    const mockId = 'mockId';
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule]
+        });
         service = TestBed.inject(LegalHoldService);
+        legalHolds = {
+            list: {
+                entries: [
+                    {
+                        entry: {
+                            id: mockId,
+                            name: 'some name',
+                            reason: 'some description'
+                        }
+                    }
+                ]
+            }
+        } as NodeChildAssociationPaging;
+        returnedHolds = [
+            {
+                id: mockId,
+                name: 'some name',
+                reason: 'some description',
+                description: undefined
+            }
+        ];
     });
 
     it('should be created', () => {
         expect(service).toBeTruthy();
+    });
+
+    describe('getHolds', () => {
+        it('should return array of Hold interface', (done) => {
+            spyOn(service.legalHoldApi, 'getHolds').and.returnValue(Promise.resolve(legalHolds));
+
+            service.getHolds(mockId).subscribe((holds) => {
+                expect(holds).toEqual(returnedHolds);
+                expect(service.legalHoldApi.getHolds).toHaveBeenCalledWith(mockId, {});
+                done();
+            });
+        });
     });
 });
