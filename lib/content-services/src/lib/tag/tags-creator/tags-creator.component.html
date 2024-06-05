@@ -18,8 +18,16 @@
     <div class="adf-tags-list" [class.adf-tags-list-fixed]="!tagNameControlVisible" #tagsList>
         <mat-chip-listbox *ngIf="tags.length > 0" class="adf-tags-chips-container">
             <mat-chip-option *ngFor="let tag of tags" [disableRipple]="true" [title]="tag" class="adf-tags-chip">
-                    {{ tag }}
-                <mat-icon (click)="removeTag(tag)" matChipRemove>close</mat-icon>
+                {{ tag }}
+                <button
+                    data-automation-id="remove-tag-button"
+                    mat-icon-button
+                    (click)="removeTag(tag)"
+                    [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
+                    [disabled]="disabledTagsRemoving"
+                    matChipRemove>
+                    <mat-icon>close</mat-icon>
+                </button>
             </mat-chip-option>
         </mat-chip-listbox>
     </div>
