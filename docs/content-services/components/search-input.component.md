@@ -49,7 +49,7 @@ user types `test`
 user types `*`  
 
 ```text
-(cm:name:"**" OR cm:title:"**" OR cm:description:"**" OR TEXT:"**" OR TAG:"**")
+(cm:name:"*" OR cm:title:"*" OR cm:description:"*" OR TEXT:"*" OR TAG:"*")
 ```
 
 user types `one two`

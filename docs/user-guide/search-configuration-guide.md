@@ -34,8 +34,10 @@ ADF support single or multiple [search configurations](https://github.com/Alfres
 {
     "search": {
         "name": "Application search",
-        "query": [
-            { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" }
+        "default": true,
+        "filteredWithContaints": true,
+        "filterQueryies": [
+            { "query": "+TYPE:'cm:folder' OR +TYPE:'cm:content'" }
         ],
         "category": []
     }
@@ -50,16 +52,19 @@ This configuration considered for searching in the application.
 {
     "search": [
         {
-            "name": "Application search", 
-            "default": "true",
-            "query": [
-                { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" }
+            "name": "Application default search", 
+            "default": true,
+            "filteredWithContaints": true,
+            "filterQueries": [
+                { "query": "+TYPE:'cm:folder' OR +TYPE:'cm:content'" }
             ]
         }, 
         {
-            "name": "Customer payout", 
-            "query": [
-              { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" }
+            "name": "Application secondary search",
+            "default": false,
+            "filteredWithContaints": true,
+            "filterQueries": [
+              { "query": "+TYPE:'cm:folder' OR +TYPE:'cm:content'" }
               { "query": "-TYPE:'st:site' AND -ASPECT:'st:siteContainer' AND -ASPECT:'sys:hidden'" }
             ]
         }
@@ -108,41 +113,74 @@ A typical configuration is shown below:
 ```json
 {
     "search": {
+        "name": "Application search",
+        "default": true,
+        "filterWithContains": true,
         "sorting": {
             "options": [
-                { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
-                { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
-                { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true }
+                { 
+                    "key": "name",
+                    "label": "Name",
+                    "type": "FIELD",
+                    "field": "cm:name",
+                    "ascending": true 
+                },
             ],
             "defaults": [
-                { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
+                {
+                    "key": "name",
+                    "type": "FIELD",
+                    "field": "cm:name",
+                    "ascending": true 
+                }
             ]
         },
         "filterQueries": [
-            { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
-            { "query": "NOT cm:creator:System" }
+            { "query": "+TYPE:'cm:folder' OR +TYPE:'cm:content'" },
+            { "query": "-cm:creator:System" }
         ],
-        "facetFields": {
-          "expanded": true,
-          "fields": [
-            { "field": "content.mimetype", "mincount": 1, "label": "Type" },
-            { "field": "content.size", "mincount": 1, "label": "File Size" },
-            { "field": "creator", "mincount": 1, "label": "Creator" },
-            { "field": "modifier", "mincount": 1, "label": "Modifier" }
-          ]
-        },
         "facetQueries": {
+            "mincount": 1,
             "label": "My facet queries",
             "pageSize": 4,
+            "expanded": true,
             "queries": [
-                { "query": "created:2018", "label": "Created This Year" },
                 { "query": "content.mimetype:text/html", "label": "Type: HTML" },
-                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
-                { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
+                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small" },
+                { "query": "content.size:[10240 TO 102400]", "label": "Size: small" },
                 { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
-                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
+                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large"},
                 { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
                 { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
+            ],
+            "settings": {
+              "allowUpdateOnChange": false,
+              "hideDefaultAction": true
+            }
+        },
+        "facetFields": {
+            "expanded": true,
+            "fields": [
+                { 
+                    "field": "content.mimetype",
+                    "mincount": 1,
+                    "label": "Type",
+                    "settings": {
+                        "allowUpdateOnChange": false,
+                        "hideDefaultAction": true,
+                        "facetOrder": 100
+                    }
+                },
+                { 
+                    "field": "creator",
+                    "mincount": 1,
+                    "label": "Creator",
+                    "settings": {
+                        "allowUpdateOnChange": false,
+                        "hideDefaultAction": true,
+                        "facetOrder": 200
+                    }
+                },
             ]
         },
         "categories": [
@@ -150,10 +188,11 @@ A typical configuration is shown below:
                 "id": "queryName",
                 "name": "Name",
                 "enabled": true,
-                "expanded": true,
                 "component": {
-                    "selector": "adf-search-text",
+                    "selector": "text",
                     "settings": {
+                        "allowUpdateOnChange": false,
+                        "hideDefaultAction": true,
                         "pattern": "cm:name:'(.*?)'",
                         "field": "cm:name",
                         "placeholder": "Enter the name"
@@ -178,7 +217,9 @@ results:
 ```json
 {
     "search": {
+        ...
         "include": ["path", "allowableOperations"]
+        ...
     }
 }
 ```
@@ -188,7 +229,9 @@ You can choose to filter facet field results using 'contains' instead of 'starts
 ```json
 {
     "search": {
+        ...
         "filterWithContains": true
+        ...
     }
 }
 ```
@@ -199,7 +242,9 @@ This 'clean up' button would make it easier for the final user to remove all buc
 ```json
 {
     "search": {
+        ...
         "resetButton": true
+        ...
     }
 }
 ```
@@ -210,10 +255,12 @@ settings:
 ```json
 {
     "search": {
+        ...
         "filterQueries": [
-            { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
-            { "query": "NOT cm:creator:System" }
+            { "query": "+TYPE:'cm:folder' OR +TYPE:'cm:content'" },
+            { "query": "-cm:creator:System" }
         ]
+        ...
     }
 }
 ```
@@ -248,15 +295,13 @@ The properties of the `options` objects are as follows:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| key | string | Unique key to identify the entry. This can also be used to map [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) instances. |
-| label | string | Display text, which can also be an [i18n resource key](../../user-guide/internationalization.md). |
+| key | string | Unique key to identify the entry. This can also be used to map [`DataColumn`](../../lib/core/src/lib/datatable/data/data-column.model.ts) instances. |
+| label | string | Display text, which can also be an [i18n resource key](../user-guide/internationalization.md). |
 | type | string | This specifies how to order the results. It can be based on a field, based on the position of the document in the index, or by score/relevance. |
 | field | string | The name of the field. |
 | ascending | boolean | The sorting order defined as `true` for ascending order and `false` for descending order |
 
-See the [Sort](https://docs.alfresco.com/5.2/concepts/search-api-sort.html)
-element in the [ACS Search API](https://docs.alfresco.com/5.2/concepts/search-api.html)
-for further details.
+See the information on sorting in the [Search API](../../lib/js-api/src/api/search-rest-api/docs/SearchApi.md) for further details.
 
 ### Categories and widgets
 
@@ -295,9 +340,12 @@ The Search Filter supports a number of components out of the box, each implement
 | Widget name | Selector | Description                                                                  |
 |----------------------------------------------------------------------------------------------| -------- |------------------------------------------------------------------------------|
 | [Check List](../content-services/components/search-check-list.component.md) | `check-list` | Toggles individual query fragments for the search |
-| [Date Range](../content-services/components/search-date-range.component.md) | `date-range` | Specifies a varities of options for selecting dates that a field may contain |
+| [Date Range](../content-services/components/search-date-range.component.md) | `date-range` | Allows for selecting date range for a field containing dates |
+| [Date Time Range](../content-services/components/search-datetime-range.component.md) | `datetime-range` | Allows for selecting date and time rande for a field containing dates |
 | [Number Range](../content-services/components/search-number-range.component.md) | `number-range` | Specifies a range of numeric values that a field may contain |
 | [Radio List](../content-services/components/search-radio.component.md) | `radio` | Selects one query fragment from a list of options |
+| [Search Filter Autocomplete](../content-services/components/search-filter-autocomplete-chips.component.md) | `autocomplete-chips` | Provides an input with autocomplete options representing conditions to form search query | 
+| [Search Logical Filter](../content-services/components/search-logical-filter.component.md) | `logical-filter` | Provides 4 inputs representing logical conditions to form search query from |
 | [Slider](../content-services/components/search-slider.component.md) | `slider` | Selects a single numeric value in a given range that a field may contain |
 | [Text](../content-services/components/search-text.component.md) | `text` | Specifies a text value that a field may contain |
 
@@ -338,11 +386,26 @@ export interface SearchWidgetSettings {
         "facetFields": {
             "expanded": true,
             "fields": [
-                { "field": "content.mimetype", "mincount": 1, "label": "Type" },
-                { "field": "content.size", "mincount": 1, "label": "File Size" },
-                { "field": "creator", "mincount": 1, "label": "Creator" },
-                { "field": "modifier", "mincount": 1, "label": "Modifier" },
-                { "field": "created", "mincount": 1, "label": "Created" }
+                { 
+                    "field": "content.mimetype",
+                    "mincount": 1,
+                    "label": "Type",
+                    "settings": {
+                        "allowUpdateOnChange": false,
+                        "hideDefaultAction": true,
+                        "facetOrder": 100
+                    }
+                },
+                { 
+                    "field": "creator",
+                    "mincount": 1,
+                    "label": "Creator",
+                    "settings": {
+                        "allowUpdateOnChange": false,
+                        "hideDefaultAction": true,
+                        "facetOrder": 200
+                    }
+                },
             ]
         }
     }
@@ -370,6 +433,17 @@ Note: Facet Fields setting can be controlled by passing [settings](../../lib/con
 | limit | number |  | Maximum number of results |
 | pageSize | number | 5 | Display page size |
 | offset | number |  | Offset position |
+| settings | [FacetFieldSettings](../../lib/content-services/src/lib/search/models/facet-field.interface.ts) | | Settings allowing for controlling fields behavior and order |
+
+#### FacetFieldSetting
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+|allowUpdateOnChange|`boolean`|*false*|Specifies whether search should be executed automatically after FacetField value changes.|
+|hideDefaultAction|`boolean`|*true*|Specifies whether default field actions should be visible.|
+|facetOrder|`number`||Specifies the order of facets. Lower numbers are displayed first.|
+|bucketSortBy|`string`||Specifies sort criteria of facet queries. Possible values are "LABEL" and "COUNT".|
+|bucketSortDirection|`string`||Specifies sort order of facet queries. Possible values are "ASCENDING" and "DESCENDING".|
 
 ### Facet Queries
 
@@ -379,19 +453,23 @@ These provide custom categories based on admin-defined facet queries.
 {
     "search": {
         "facetQueries": {
-            "label": "Facet queries",
-            "pageSize": 5,
+            "mincount": 1,
+            "label": "My facet queries",
+            "pageSize": 4,
             "expanded": true,
             "queries": [
-                { "query": "created:2018", "label": "Created This Year" },
                 { "query": "content.mimetype:text/html", "label": "Type: HTML" },
-                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
-                { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
+                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small" },
+                { "query": "content.size:[10240 TO 102400]", "label": "Size: small" },
                 { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
-                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large" },
+                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large"},
                 { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large" },
                 { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large" }
-            ]
+            ],
+            "settings": {
+              "allowUpdateOnChange": false,
+              "hideDefaultAction": true
+            }
         }
     }
 }
@@ -414,17 +492,18 @@ If you need to display more resulting collapsible categories, you can group diff
             "expanded": true,
             "mincount": 0,
             "queries": [
-                { "query": "created:2018", "label": "Created This Year" },
-                { "query": "modifier:admin", "label": "Admin modifier" },
-                { "query": "content.mimetype:text/html", "label": "Type: HTML", "group":"Type facet queries" },
-                { "query": "content.mimetype:image/png", "label": "Type: PNG", "group":"Type facet queries" },
-                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small", "group":"Size facet queries"},
-                { "query": "content.size:[10240 TO 102400]", "label": "Size: small", "group":"Size facet queries"},
-                { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium", "group":"Size facet queries" },
-                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large", "group":"Size facet queries" },
-                { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large", "group":"Size facet queries" },
-                { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large", "group":"Size facet queries" }
-           ]
+                { "query": "content.mimetype:text/html", "label": "Type: HTML", "group": "Type facet queries" },
+                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small", "group": "Size facet queries"},
+                { "query": "content.size:[10240 TO 102400]", "label": "Size: small", "group": "Size facet queries"},
+                { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium", "group": "Size facet queries" },
+                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large", "group": "Size facet queries" },
+                { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large", "group": "Size facet queries" },
+                { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large", "group": "Size facet queries" }
+            ],
+            "settings": {
+              "allowUpdateOnChange": false,
+              "hideDefaultAction": true
+            }
         }
     }
 }
@@ -441,8 +520,8 @@ Note: `settings` property used to control UI actions and interaction. i.e
             "expanded": true,
             "mincount": 0,
             "queries": [
-                { "query": "created:2018", "label": "Created This Year" },
-                { "query": "modifier:admin", "label": "Admin modifier" }
+                { "query": "+created:2018", "label": "Created This Year" },
+                { "query": "+modifier:admin", "label": "Admin modifier" }
             ],
             "settings" : {
                 "allowUpdateOnChange": false,
@@ -467,6 +546,16 @@ The default page size of 5 will be used if you set the value to 0 or omit it ent
 
 ![Facet Queries](../docassets/images/search-facet-queries.png)
 
+#### FacetQueriesSettings
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+|allowUpdateOnChange|`boolean`|*false*|Specifies whether search should be executed automatically after FacetField value changes.|
+|hideDefaultAction|`boolean`|*true*|Specifies whether default field actions should be visible.|
+|facetOrder|`number`||Specifies the order of facets. Lower numbers are displayed first.|
+|bucketSortBy|`string`||Specifies sort criteria of facet queries. Possible values are "LABEL" and "COUNT".|
+|bucketSortDirection|`string`||Specifies sort order of facet queries. Possible values are "ASCENDING" and "DESCENDING".|
+
 ### Facet Intervals
 
 These provide custom categories based on admin defined ranges inside `intervals`.
@@ -481,7 +570,6 @@ use overlapping ranges if necessary.
 | expanded | boolean | Toggles expanded state of the facet intervals. |
 
 Note: Interval fields setting can be controlled by passing [settings](../../lib/content-services/src/lib/search/models/facet-field.interface.ts).
-
 Note: the `sets` parameter from the Search API (which sets the intervals for all fields)
 is not yet supported.
 
@@ -514,7 +602,6 @@ is not yet supported.
   }
 }
 ```
-
 
 You can specify a value for the `mincount` property inside each `intervals` item to set the minimum count required for a facet interval to be displayed. By default, only the intervals that have 1 or more response entries are displayed at runtime.
 Check the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json) file
@@ -578,10 +665,12 @@ then be added in each node entry response. An example partial response is shown 
         }
         ]
     },
+}
 ```
 
 ## See also
 
+-   [Search Building](search-building.md)
 -   [Search Query Builder](../content-services/services/search-query-builder.service.md)
 -   [Search Filter Component](../content-services/components/search-filter.component.md)
 -   [Search Filter Chips Component](../content-services/components/search-filter-chips.component.md)

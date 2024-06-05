@@ -2,12 +2,12 @@
 Title: Search check list component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2024-04-05
+Last reviewed: 2024-05-13
 ---
 
 # [Search check list component](../../../lib/content-services/src/lib/search/components/search-check-list/search-check-list.component.ts "Defined in search-check-list.component.ts")
 
-Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 4 inputs representing logical conditions to form search query from.
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of a list of checkboxes representing filters included in search query.
 
 ![Check list widget screenshot](../../docassets/images/search-check-list.png)
 

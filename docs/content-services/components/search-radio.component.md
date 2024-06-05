@@ -2,12 +2,12 @@
 Title: Search radio component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2024-04-05
+Last reviewed: 2024-05-13
 ---
 
 # [Search radio component](../../../lib/content-services/src/lib/search/components/search-radio/search-radio.component.ts "Defined in search-radio.component.ts")
 
-Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 4 inputs representing logical conditions to form search query from.
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of a list of radio buttons representing filters included in search query.
 
 ![Radio Widget screenshot](../../docassets/images/search-radio.png)
 
