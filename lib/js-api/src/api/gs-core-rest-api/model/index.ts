@@ -74,3 +74,4 @@ export * from './transferChildAssociation';
 export * from './transferContainerChildAssociation';
 export * from './unfiledContainerChildAssociation';
 export * from './unfiledRecordFolderChildAssociation';
+export * from './hold';
