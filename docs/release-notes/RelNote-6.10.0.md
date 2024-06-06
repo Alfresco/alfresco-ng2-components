@@ -13,6 +13,7 @@ The following components have been removed:
 - Content Services: `WebScriptComponent`
 - Content Services: `RatingComponent` 
 - Content Services: `LikeComponent`
+- Content Services: `adf-create-folder`, `adf-edit-folder` directives
 
 ## Changelog
 
