@@ -6,6 +6,14 @@ The following components have been deprecated and will be removed in the next ma
 
 - Content Services: `TreeViewComponent`
 
+## Removed Content
+
+The following components have been removed:
+
+- Content Services: `WebScriptComponent`
+- Content Services: `RatingComponent` 
+- Content Services: `LikeComponent`
+
 ## Changelog
 
 TBD
