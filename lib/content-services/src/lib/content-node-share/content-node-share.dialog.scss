@@ -37,6 +37,7 @@
 
             #{$mat-form-field-infix}:has(.adf-share-link__input) {
                 border-top: 0.9375em solid transparent;
+                border-bottom: 0.9375em solid transparent;
                 height: 16px;
             }
 
