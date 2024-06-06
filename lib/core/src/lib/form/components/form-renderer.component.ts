@@ -66,6 +66,9 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     @Input()
     formDefinition: FormModel;
 
+    @Input()
+    readOnly = false;
+
     debugMode: boolean;
 
     fields: FormFieldModel[];
@@ -79,7 +82,9 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.runMiddlewareServices();
-        this.formRulesManager.initialize(this.formDefinition);
+        if (!this.readOnly) {
+            this.formRulesManager.initialize(this.formDefinition);
+        }
     }
 
     ngOnDestroy() {
