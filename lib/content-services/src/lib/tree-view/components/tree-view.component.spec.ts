@@ -74,7 +74,7 @@ describe('TreeViewComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, TreeViewComponent]
         });
     });
 
