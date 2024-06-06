@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { RaphaelRectDirective } from '../raphael/raphael-rect.component';
+import { RaphaelTextDirective } from '../raphael/raphael-text.component';
 
 @Component({
     selector: 'diagram-lane',
+    standalone: true,
+    imports: [RaphaelRectDirective, RaphaelTextDirective],
     templateUrl: './diagram-lane.component.html'
 })
 export class DiagramLaneComponent implements OnInit {
@@ -37,14 +41,14 @@ export class DiagramLaneComponent implements OnInit {
     textPosition: any;
     text: string;
     textTransform: string;
-    options: any = {stroke: '#000000', fillColors: 'none', fillOpacity: '', strokeWidth: '1', radius: 0};
+    options: any = { stroke: '#000000', fillColors: 'none', fillOpacity: '', strokeWidth: '1', radius: 0 };
 
     ngOnInit() {
-        this.rectLeftCorner = {x: this.lane.x, y: this.lane.y};
+        this.rectLeftCorner = { x: this.lane.x, y: this.lane.y };
         this.width = this.lane.width;
         this.height = this.lane.height;
 
-        this.textPosition =  {x: this.lane.x + 10, y: this.lane.y + ( this.lane.height / 2 )};
+        this.textPosition = { x: this.lane.x + 10, y: this.lane.y + this.lane.height / 2 };
         this.text = this.lane.name;
         this.textTransform = 'r270';
     }

@@ -22,7 +22,10 @@ import { RaphaelBase } from './raphael-base';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-pentagon, raphael-pentagon'})
+@Directive({
+    selector: 'adf-raphael-pentagon, raphael-pentagon',
+    standalone: true
+})
 export class RaphaelPentagonDirective extends RaphaelBase implements OnInit {
     @Input()
     center: Point;
@@ -57,8 +60,12 @@ export class RaphaelPentagonDirective extends RaphaelBase implements OnInit {
     }
 
     draw(center: Point, opts?: any) {
-        const shape = this.paper.path('M 20.327514,22.344972 L 11.259248,22.344216 L 8.4577203,13.719549' +
-            ' L 15.794545,8.389969 L 23.130481,13.720774 L 20.327514,22.344972 z').attr(opts);
+        const shape = this.paper
+            .path(
+                'M 20.327514,22.344972 L 11.259248,22.344216 L 8.4577203,13.719549' +
+                    ' L 15.794545,8.389969 L 23.130481,13.720774 L 20.327514,22.344972 z'
+            )
+            .attr(opts);
         shape.transform('T' + (center.x + 4) + ',' + (center.y + 4));
     }
 }

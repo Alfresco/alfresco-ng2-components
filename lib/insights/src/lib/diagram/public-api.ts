@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+import { RAPHAEL_DIRECTIVES } from './components/raphael';
+import { DIAGRAM_COMPONENT_DIRECTIVES } from './components';
+
 export * from './components/diagram-sequence-flow.component';
 export * from './components/diagram.component';
 
@@ -136,4 +139,4 @@ export * from './models/report/report-parameter-details.model';
 export * from './models/report/report-parameters.model';
 export * from './models/report/report-query.model';
 
-export * from './diagram.module';
+export const DIAGRAM_DIRECTIVES = [...DIAGRAM_COMPONENT_DIRECTIVES, ...RAPHAEL_DIRECTIVES] as const;

@@ -15,13 +15,18 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
+import { RaphaelIconTimerDirective } from '../raphael/icons/raphael-icon-timer.component';
+import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-icon-timer',
+    standalone: true,
+    imports: [RaphaelCircleDirective, RaphaelIconTimerDirective, DiagramTooltipComponent],
     templateUrl: './diagram-icon-timer.component.html'
 })
 export class DiagramIconTimerComponent extends DiagramElement implements OnInit {
@@ -30,18 +35,18 @@ export class DiagramIconTimerComponent extends DiagramElement implements OnInit 
 
     circleRadius: number;
 
-    circleOptions: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
-    timerOptions: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    circleOptions: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
+    timerOptions: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.center.x = this.data.x + (this.data.width / 2);
-        this.center.y = this.data.y + (this.data.height / 2);
+        this.center.x = this.data.x + this.data.width / 2;
+        this.center.y = this.data.y + this.data.height / 2;
         this.circleRadius = 10;
-        this.position = {x: this.data.x + 5, y: this.data.y + 5};
+        this.position = { x: this.data.x + 5, y: this.data.y + 5 };
 
-        this.circleOptions.stroke = 'black' ;
-        this.circleOptions.fillColors = 'none' ;
-        this.timerOptions.stroke = 'none' ;
-        this.timerOptions.fillColors = '#585858' ;
+        this.circleOptions.stroke = 'black';
+        this.circleOptions.fillColors = 'none';
+        this.timerOptions.stroke = 'none';
+        this.timerOptions.fillColors = '#585858';
     }
 }

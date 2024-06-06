@@ -15,21 +15,25 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { DiagramGatewayComponent } from './diagram-gateway.component';
+import { RaphaelCrossDirective } from '../raphael/raphael-cross.component';
 
 @Component({
     selector: 'diagram-exclusive-gateway',
+    standalone: true,
+    imports: [DiagramGatewayComponent, RaphaelCrossDirective],
     templateUrl: './diagram-exclusive-gateway.component.html'
 })
 export class DiagramExclusiveGatewayComponent extends DiagramElement implements OnInit {
     center: any = {};
     width: any;
     height: any;
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 3};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 3 };
 
     ngOnInit() {
         this.center.x = this.data.x;

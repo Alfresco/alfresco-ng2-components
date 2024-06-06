@@ -15,24 +15,29 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { ACTIVITY_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelRectDirective } from '../raphael/raphael-rect.component';
+import { RaphaelMultilineTextDirective } from '../raphael/raphael-multiline-text.component';
+import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-task',
+    standalone: true,
+    imports: [RaphaelRectDirective, RaphaelMultilineTextDirective, DiagramTooltipComponent],
     templateUrl: './diagram-task.component.html'
 })
 export class DiagramTaskComponent extends DiagramElement implements OnInit {
     rectLeftCorner: any;
     textPosition: any;
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4 };
 
     ngOnInit() {
-        this.rectLeftCorner = {x: this.data.x, y: this.data.y};
-        this.textPosition =  {x: this.data.x + ( this.data.width / 2 ), y: this.data.y + ( this.data.height / 2 )};
+        this.rectLeftCorner = { x: this.data.x, y: this.data.y };
+        this.textPosition = { x: this.data.x + this.data.width / 2, y: this.data.y + this.data.height / 2 };
 
         this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);
         this.options.stroke = this.diagramColorService.getBpmnColor(this.data, ACTIVITY_STROKE_COLOR);

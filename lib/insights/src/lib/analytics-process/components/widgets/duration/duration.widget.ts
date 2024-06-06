@@ -18,13 +18,20 @@
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ParameterValueModel } from '../../../../diagram/models/report/parameter-value.model';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
 import { NumberWidgetAnalyticsComponent } from '../number/number.widget';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { DropdownWidgetAnalyticsComponent } from '../dropdown/dropdown.widget';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'duration-widget',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, TranslateModule, FormsModule, DropdownWidgetAnalyticsComponent, MatInputModule],
     templateUrl: './duration.widget.html',
     styleUrls: ['./duration.widget.scss'],
     encapsulation: ViewEncapsulation.None

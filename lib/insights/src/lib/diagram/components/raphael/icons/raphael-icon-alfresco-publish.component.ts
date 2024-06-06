@@ -22,7 +22,10 @@ import { RaphaelBase } from '../raphael-base';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({ selector: 'adf-raphael-icon-alfresco-publish, raphael-icon-alfresco-publish' })
+@Directive({
+    selector: 'adf-raphael-icon-alfresco-publish, raphael-icon-alfresco-publish',
+    standalone: true
+})
 export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;

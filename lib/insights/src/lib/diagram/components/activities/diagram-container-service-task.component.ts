@@ -15,13 +15,34 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { CommonModule } from '@angular/common';
+import { DiagramSendTaskComponent } from './diagram-send-task.component';
+import { DiagramCamelTaskComponent } from './diagram-camel-task.component';
+import { DiagramMuleTaskComponent } from './diagram-mule-task.component';
+import { DiagramAlfrescoPublishTaskComponent } from './diagram-alfresco-publish-task.component';
+import { DiagramRestCallTaskComponent } from './diagram-rest-call-task.component';
+import { DiagramGoogleDrivePublishTaskComponent } from './diagram-google-drive-publish-task.component';
+import { DiagramBoxPublishTaskComponent } from './diagram-box-publish-task.component';
+import { DiagramServiceTaskComponent } from './diagram-service-task.component';
 
 @Component({
     selector: 'diagram-container-service-task',
+    standalone: true,
+    imports: [
+        CommonModule,
+        DiagramSendTaskComponent,
+        DiagramCamelTaskComponent,
+        DiagramMuleTaskComponent,
+        DiagramAlfrescoPublishTaskComponent,
+        DiagramRestCallTaskComponent,
+        DiagramGoogleDrivePublishTaskComponent,
+        DiagramBoxPublishTaskComponent,
+        DiagramServiceTaskComponent
+    ],
     templateUrl: './diagram-container-service-task.component.html'
 })
 export class DiagramContainerServiceTaskComponent extends DiagramElement {}

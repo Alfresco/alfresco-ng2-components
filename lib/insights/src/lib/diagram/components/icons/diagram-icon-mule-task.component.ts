@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconMuleDirective } from '../raphael/icons/raphael-icon-mule.component';
 
 @Component({
     selector: 'diagram-icon-mule-task',
+    standalone: true,
+    imports: [RaphaelIconMuleDirective],
     templateUrl: './diagram-icon-mule-task.component.html'
 })
 export class DiagramIconMuleTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 2, y: this.data.y + 2};
-        this.options.stroke = 'none' ;
-        this.options.fillColors = '#bd4848' ;
+        this.position = { x: this.data.x + 2, y: this.data.y + 2 };
+        this.options.stroke = 'none';
+        this.options.fillColors = '#bd4848';
     }
 }
