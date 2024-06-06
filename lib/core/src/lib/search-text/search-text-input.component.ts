@@ -99,6 +99,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Input()
     placeholder: string = '';
 
+
+    /** Label text to show over the input field */
+    @Input()
+    label: string = '';
+
     /** Hint label */
     @Input()
     hintLabel = '';
