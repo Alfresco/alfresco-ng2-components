@@ -39,11 +39,11 @@ legalHoldApi.getHolds('-filePlan-', opts).then((data) => {
 
 ### Parameters
 
-Name | Type | Description  | Notes
+Name | Type | Default value  | Description
 ------------- | ------------- | ------------- | -------------
- **filePlanId** | **string** | The site details |
- **skipCount** | **number**| The number of entities that exist in the collection before those included in this list. | [optional] 
- **maxItems** | **number**| The maximum number of items to return in the list. | [optional] 
+ **filePlanId** | **string** | | The site details 
+ **skipCount** | **number**| `0` | The number of entities that exist in the collection before those included in this list. [optional] 
+ **maxItems** | **number**| `100` | The maximum number of items to return in the list. [optional] 
 
 ### Return type
 

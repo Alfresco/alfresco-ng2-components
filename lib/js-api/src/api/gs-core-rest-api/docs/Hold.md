@@ -13,9 +13,10 @@ export interface Hold {
 ```
 
 ## Properties
+
 Name | Type | Default value | Description
 ------------ | ------------- | ------------- | -------------
-**id** | **string** |  | hold id
-**name** | **string** |  | hold name
-**reason** | **string** |  | hold reason
-**description** | **string** |  | [optional] [additional information for a hold]
+**id** | **string** |  | Hold id
+**name** | **string** |  | Hold name
+**reason** | **string** |  | Hold reason
+**description** | **string** |  | [optional] [Additional information for a hold]
