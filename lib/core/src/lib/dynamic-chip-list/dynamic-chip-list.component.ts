@@ -72,7 +72,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
 
     /** Round up chips */
     @Input()
-    roundedChips = false;
+    roundUpChips = false;
 
     /** Emitted when button for view more is clicked. */
     @Output()
