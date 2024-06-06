@@ -31,6 +31,7 @@ describe('LegalHoldsService', () => {
             imports: [ContentTestingModule]
         });
         service = TestBed.inject(LegalHoldService);
+
         legalHolds = {
             list: {
                 entries: [
@@ -44,6 +45,7 @@ describe('LegalHoldsService', () => {
                 ]
             }
         } as NodeChildAssociationPaging;
+
         returnedHolds = [
             {
                 id: mockId,

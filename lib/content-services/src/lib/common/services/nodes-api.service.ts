@@ -248,16 +248,14 @@ export class NodesApiService {
      */
     getNodeAssignHolds(nodeId: string): Observable<Hold[]> {
         const queryOptions = Object.assign({
-            maxItems: this.preferences.paginationSize,
-            skipCount: 0,
             where: `(assocType='rma:frozenContent')`
         });
 
         return from(this.nodesApi.listParents(nodeId, queryOptions)).pipe(
-            map((holds) =>
-                holds.list?.entries?.map((entity) => ({
-                    id: entity.entry.id,
-                    name: entity.entry.name
+            map(({ list }) =>
+                list?.entries?.map(({ entry }) => ({
+                    id: entry?.id,
+                    name: entry?.name
                 }))
             ),
             catchError((err) => throwError(err))
