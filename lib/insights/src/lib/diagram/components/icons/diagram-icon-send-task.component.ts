@@ -15,23 +15,27 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconSendDirective } from '../raphael/icons/raphael-icon-send.component';
+import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-icon-send-task',
+    standalone: true,
+    imports: [RaphaelIconSendDirective, DiagramTooltipComponent],
     templateUrl: './diagram-icon-send-task.component.html'
 })
 export class DiagramIconSendTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 4, y: this.data.y + 4};
-        this.options.stroke = 'none' ;
-        this.options.fillColors = '#16964d' ;
+        this.position = { x: this.data.x + 4, y: this.data.y + 4 };
+        this.options.stroke = 'none';
+        this.options.fillColors = '#16964d';
     }
 }

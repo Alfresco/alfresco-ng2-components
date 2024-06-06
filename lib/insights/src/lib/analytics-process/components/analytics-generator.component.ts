@@ -19,9 +19,30 @@ import { Component, EventEmitter, inject, Input, OnChanges, Output, ViewEncapsul
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { Chart } from '../../diagram/models/chart/chart.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { NgChartsModule } from 'ng2-charts';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { AnalyticsReportHeatMapComponent } from './analytics-report-heat-map.component';
 
 @Component({
     selector: 'adf-analytics-generator',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MatIconModule,
+        NgChartsModule,
+        TranslateModule,
+        MatCheckboxModule,
+        FormsModule,
+        AnalyticsReportHeatMapComponent
+    ],
     templateUrl: './analytics-generator.component.html',
     styleUrls: ['./analytics-generator.component.scss'],
     encapsulation: ViewEncapsulation.None

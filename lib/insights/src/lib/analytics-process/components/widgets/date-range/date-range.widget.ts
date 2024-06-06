@@ -19,10 +19,16 @@
 
 import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
 import { isAfter } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const FORMAT_DATE_ACTIVITI = 'yyyy-MM-dd';
 const DISPLAY_FORMAT = 'dd/MM/yyyy';
@@ -34,6 +40,8 @@ interface DateRangeProps {
 
 @Component({
     selector: 'adf-date-range-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, ReactiveFormsModule, MatGridListModule, MatFormFieldModule, MatInputModule, MatDatepickerModule],
     templateUrl: './date-range.widget.html',
     styleUrls: ['./date-range.widget.scss'],
     providers: [

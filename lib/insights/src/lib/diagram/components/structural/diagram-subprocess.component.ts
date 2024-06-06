@@ -15,14 +15,18 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelRectDirective } from '../raphael/raphael-rect.component';
+import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
 
 @Component({
     selector: 'diagram-subprocess',
+    standalone: true,
+    imports: [RaphaelRectDirective, DiagramTooltipComponent],
     templateUrl: './diagram-subprocess.component.html'
 })
 export class DiagramSubprocessComponent extends DiagramElement implements OnInit {
@@ -30,10 +34,10 @@ export class DiagramSubprocessComponent extends DiagramElement implements OnInit
     width: any;
     height: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4 };
 
     ngOnInit() {
-        this.rectLeftCorner = {x: this.data.x, y: this.data.y};
+        this.rectLeftCorner = { x: this.data.x, y: this.data.y };
         this.width = this.data.width;
         this.height = this.data.height;
 

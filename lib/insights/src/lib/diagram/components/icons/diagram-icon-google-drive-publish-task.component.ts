@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconGoogleDrivePublishDirective } from '../raphael/icons/raphael-icon-google-drive-publish.component';
 
 @Component({
     selector: 'diagram-icon-google-drive-publish-task',
+    standalone: true,
+    imports: [RaphaelIconGoogleDrivePublishDirective],
     templateUrl: './diagram-icon-google-drive-publish-task.component.html'
 })
 export class DiagramIconGoogleDrivePublishTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 6, y: this.data.y + 6};
+        this.position = { x: this.data.x + 6, y: this.data.y + 6 };
     }
 }

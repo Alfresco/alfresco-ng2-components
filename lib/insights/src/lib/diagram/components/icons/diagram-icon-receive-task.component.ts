@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconReceiveDirective } from '../raphael/icons/raphael-icon-receive.component';
 
 @Component({
     selector: 'diagram-icon-receive-task',
+    standalone: true,
+    imports: [RaphaelIconReceiveDirective],
     templateUrl: './diagram-icon-receive-task.component.html'
 })
 export class DiagramIconReceiveTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 4, y: this.data.y + 2};
-        this.options.stroke = 'none' ;
-        this.options.fillColors = '#16964d' ;
+        this.position = { x: this.data.x + 4, y: this.data.y + 2 };
+        this.options.stroke = 'none';
+        this.options.fillColors = '#16964d';
     }
 }

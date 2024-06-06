@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { RaphaelIconManualDirective } from '../raphael/icons/raphael-icon-manual.component';
 
 @Component({
     selector: 'diagram-icon-manual-task',
+    standalone: true,
+    imports: [RaphaelIconManualDirective],
     templateUrl: './diagram-icon-manual-task.component.html'
 })
 export class DiagramIconManualTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '' };
 
     ngOnInit() {
-        this.position = {x: this.data.x + 4, y: this.data.y + 4};
-        this.options.stroke = 'none' ;
-        this.options.fillColors = '#d1b575' ;
+        this.position = { x: this.data.x + 4, y: this.data.y + 4 };
+        this.options.stroke = 'none';
+        this.options.fillColors = '#d1b575';
     }
 }

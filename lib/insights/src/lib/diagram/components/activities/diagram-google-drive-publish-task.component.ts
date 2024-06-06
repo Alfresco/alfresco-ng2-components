@@ -15,13 +15,17 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { DiagramTaskComponent } from './diagram-task.component';
+import { DiagramIconGoogleDrivePublishTaskComponent } from '../icons/diagram-icon-google-drive-publish-task.component';
 
 @Component({
     selector: 'diagram-google-drive-publish-task',
+    standalone: true,
+    imports: [DiagramTaskComponent, DiagramIconGoogleDrivePublishTaskComponent],
     templateUrl: './diagram-google-drive-publish-task.component.html'
 })
 export class DiagramGoogleDrivePublishTaskComponent extends DiagramElement {}

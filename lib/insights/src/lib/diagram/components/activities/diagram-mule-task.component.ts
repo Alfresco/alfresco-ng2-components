@@ -15,13 +15,17 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { DiagramTaskComponent } from './diagram-task.component';
+import { DiagramIconMuleTaskComponent } from '../icons/diagram-icon-mule-task.component';
 
 @Component({
     selector: 'diagram-mule-task',
+    standalone: true,
+    imports: [DiagramTaskComponent, DiagramIconMuleTaskComponent],
     templateUrl: './diagram-mule-task.component.html'
 })
 export class DiagramMuleTaskComponent extends DiagramElement {}

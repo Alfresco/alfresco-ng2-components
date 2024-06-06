@@ -22,7 +22,10 @@ import { RaphaelBase } from '../raphael-base';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({ selector: 'adf-raphael-icon-send, raphael-icon-send' })
+@Directive({
+    selector: 'adf-raphael-icon-send, raphael-icon-send',
+    standalone: true
+})
 export class RaphaelIconSendDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;

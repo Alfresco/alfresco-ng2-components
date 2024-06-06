@@ -2,7 +2,7 @@
 Title: Search filter tabbed component
 Added: v6.2.0
 Status: Active
-Last reviewed: 2023-07-10
+Last reviewed: 2024-05-14
 ---
 
 # [Search filter tabbed component](../../../lib/content-services/src/lib/search/components/search-filter-tabbed/search-filter-tabbed.component.ts "Defined in search-filter-tabbed.component.ts")
@@ -34,7 +34,7 @@ with the name input property being assigned the value of whatever name should be
 - [Search Widget Interface](../interfaces/search-widget.interface.md)
 - [Search check list component](search-check-list.component.md)
 - [Search date range component](search-date-range.component.md)
-- [Search date range component](search-date-range.component.md)
+- [Search date range tabbed component](search-date-range-tabbed.component.md)
 - [Search number range component](search-number-range.component.md)
 - [Search radio component](search-radio.component.md)
 - [Search slider component](search-slider.component.md)
