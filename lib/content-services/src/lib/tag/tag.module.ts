@@ -18,16 +18,16 @@
 import { CommonModule, NgForOf } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { MaterialModule } from '../material.module';
 import { TagActionsComponent } from './tag-actions.component';
 import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
-import { CoreModule } from '@alfresco/adf-core';
 import { TagsCreatorComponent } from './tags-creator/tags-creator.component';
 import { ContentDirectiveModule } from '../directives/content-directive.module';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+import { DynamicChipListModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
@@ -36,7 +36,8 @@ import { MatIconModule } from '@angular/material/icon';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule,
+        TranslateModule,
+        DynamicChipListModule,
         MatChipsModule,
         MatIconModule,
         NgForOf
