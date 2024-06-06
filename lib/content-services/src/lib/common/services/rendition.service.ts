@@ -257,17 +257,14 @@ export class RenditionService {
     printFile(url: string, type: string): void {
         const pwa = window.open(url, RenditionService.TARGET);
         if (pwa) {
-            // Because of the way chrome focus and close image window vs. pdf preview window
-            if (type === RenditionService.ContentGroup.IMAGE) {
-                pwa.onfocus = () => {
+            pwa.onload = () => {
+                pwa.print();
+                if (type === RenditionService.ContentGroup.IMAGE) {
+                    // Because of the way chrome focus and close image window vs. pdf preview window
                     setTimeout(() => {
                         pwa.close();
                     }, 500);
-                };
-            }
-
-            pwa.onload = () => {
-                pwa.print();
+                }
             };
         }
     }
