@@ -120,7 +120,7 @@ $notification-item-height: 72px;
     }
 }
 
-#{$mat-menu-panel}.adf-notification-history-menu.adf-notification-history-menu-panel {
+#{$mat-menu-panel}#{$mat-menu-surface}.adf-notification-history-menu {
     min-width: 320px;
     max-height: 500px;
 
