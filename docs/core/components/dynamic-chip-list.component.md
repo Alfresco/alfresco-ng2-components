@@ -28,13 +28,13 @@ This component shows dynamic list of chips which render depending on free space.
 
 ### Properties
 
-| Name                | Type                                                                            | Default value | Description                                 |
-|---------------------|---------------------------------------------------------------------------------|---------------|---------------------------------------------|
-| limitChipsDisplayed | `boolean`                                                                       | false         | Should limit number of chips displayed.     |
-| showDelete          | `boolean`                                                                       | true          | Show delete button.                         |
-| roundUpChips        | `boolean`                                                                       | false         | Round up chips.                             |
-| pagination          | [`Pagination`](../../../lib/js-api/src/api/content-rest-api/docs/Pagination.md) |               | Provide if you want to use paginated chips. |
-| chips               | [`Chip`](../../../lib/core/src/lib/dynamic-chip-list/chip.ts)`[]`               |               | List of chips to display.                   |
+| Name                | Type                                                                            | Default value | Description                                                    |
+|---------------------|---------------------------------------------------------------------------------|---------------|----------------------------------------------------------------|
+| limitChipsDisplayed | `boolean`                                                                       | false         | Should limit number of chips displayed.                        |
+| showDelete          | `boolean`                                                                       | true          | Show delete button.                                            |
+| roundUpChips        | `boolean`                                                                       | false         | Round up chips increasing the border radius of a chip to 20px. |
+| pagination          | [`Pagination`](../../../lib/js-api/src/api/content-rest-api/docs/Pagination.md) |               | Provide if you want to use paginated chips.                    |
+| chips               | [`Chip`](../../../lib/core/src/lib/dynamic-chip-list/chip.ts)`[]`               |               | List of chips to display.                                      |
 
 
 ### Events
