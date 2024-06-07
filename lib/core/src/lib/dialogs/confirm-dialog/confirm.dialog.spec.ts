@@ -19,7 +19,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { By } from '@angular/platform-browser';
-import { CoreTestingModule } from "@alfresco/adf-core";
+import { CoreTestingModule } from '@alfresco/adf-cor';
 
 describe('Confirm Dialog Component', () => {
     let fixture: ComponentFixture<ConfirmDialogComponent>;
