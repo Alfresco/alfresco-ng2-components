@@ -135,13 +135,13 @@ $notification-item-height: 72px;
         #{$mat-list} {
             padding: 8px 0 0;
 
+            #{$mat-list-item-unscoped-content} {
+                display: flex;
+            }
+
             #{$mat-list-item-content} {
                 display: flex;
                 align-items: center;
-            }
-
-            #{$mat-list-item-unscoped-content} {
-                display: flex;
             }
         }
     }
