@@ -15,13 +15,17 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { DiagramTaskComponent } from './diagram-task.component';
+import { DiagramIconBusinessRuleTaskComponent } from '../icons/diagram-icon-business-rule-task.component';
 
 @Component({
     selector: 'diagram-business-rule-task',
+    standalone: true,
+    imports: [DiagramTaskComponent, DiagramIconBusinessRuleTaskComponent],
     templateUrl: './diagram-business-rule-task.component.html'
 })
 export class DiagramBusinessRuleTaskComponent extends DiagramElement {}

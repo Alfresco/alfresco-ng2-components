@@ -15,13 +15,17 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component } from '@angular/core';
 import { DiagramElement } from '../diagram-element';
+import { DiagramTaskComponent } from './diagram-task.component';
+import { DiagramIconRestCallTaskComponent } from '../icons/diagram-icon-rest-call-task.component';
 
 @Component({
     selector: 'diagram-rest-call-task',
+    standalone: true,
+    imports: [DiagramTaskComponent, DiagramIconRestCallTaskComponent],
     templateUrl: './diagram-rest-call-task.component.html'
 })
 export class DiagramRestCallTaskComponent extends DiagramElement {}

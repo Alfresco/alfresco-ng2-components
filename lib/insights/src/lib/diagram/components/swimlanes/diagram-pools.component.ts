@@ -15,17 +15,22 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
+import { DiagramPoolComponent } from './diagram-pool.component';
+import { DiagramLanesComponent } from './diagram-lanes.component';
 
 @Component({
     selector: 'diagram-pools',
+    standalone: true,
+    imports: [NgIf, NgForOf, DiagramPoolComponent, DiagramLanesComponent],
     templateUrl: './diagram-pools.component.html'
 })
 export class DiagramPoolsComponent {
     @Input()
-    pools: any [];
+    pools: any[];
 
     @Output()
     error = new EventEmitter();

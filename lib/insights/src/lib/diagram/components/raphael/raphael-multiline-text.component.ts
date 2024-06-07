@@ -24,7 +24,10 @@ const TEXT_PADDING = 3;
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({ selector: 'adf-raphael-multiline-text, raphael-multiline-text' })
+@Directive({
+    selector: 'adf-raphael-multiline-text, raphael-multiline-text',
+    standalone: true
+})
 export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -80,7 +83,7 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
             const words = sentence.split(' ');
             words.forEach((word) => {
                 const length = word.length;
-                if (actualRowLength + (length * letterWidth) > elementWidth) {
+                if (actualRowLength + length * letterWidth > elementWidth) {
                     formattedText.push('\n');
                     actualRowLength = 0;
                 }

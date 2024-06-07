@@ -181,7 +181,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 const pdfOptions = {
                     ...this.pdfjsDefaultOptions,
                     data: reader.result,
-                    withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
+                    withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined),
+                    isEvalSupported: false
                 };
                 this.executePdf(pdfOptions);
             };
@@ -193,7 +194,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             const pdfOptions: any = {
                 ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
-                withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
+                withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined),
+                isEvalSupported: false
             };
             if (this.cacheType) {
                 pdfOptions.httpHeaders = {

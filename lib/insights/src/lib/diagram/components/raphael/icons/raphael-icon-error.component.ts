@@ -22,7 +22,10 @@ import { RaphaelBase } from '../raphael-base';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({ selector: 'adf-raphael-icon-error, raphael-icon-error' })
+@Directive({
+    selector: 'adf-raphael-icon-error, raphael-icon-error',
+    standalone: true
+})
 export class RaphaelIconErrorDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;

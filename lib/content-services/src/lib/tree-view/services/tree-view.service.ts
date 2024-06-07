@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { NodesApiService } from  '../../common/services/nodes-api.service';
-import { Injectable } from '@angular/core';
+import { NodesApiService } from '../../common/services/nodes-api.service';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { NodePaging, NodeEntry } from '@alfresco/js-api';
@@ -26,16 +26,12 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class TreeViewService {
+    private nodeApi = inject(NodesApiService);
 
-    constructor(private nodeApi: NodesApiService) {
+    getTreeNodes(nodeId: string): Observable<TreeBaseNode[]> {
+        return this.nodeApi.getNodeChildren(nodeId).pipe(
+            map((nodePage: NodePaging) => nodePage.list.entries.filter((node) => (node.entry.isFolder ? node : null))),
+            map((nodes: NodeEntry[]) => nodes.map((node) => new TreeBaseNode(node)))
+        );
     }
-
-    getTreeNodes(nodeId): Observable<TreeBaseNode[]> {
-        return this.nodeApi.getNodeChildren(nodeId)
-            .pipe(
-                map((nodePage: NodePaging) => nodePage.list.entries.filter((node) => node.entry.isFolder ? node : null)),
-                map((nodes: NodeEntry[]) => nodes.map((node) => new TreeBaseNode(node)))
-            );
-    }
-
 }

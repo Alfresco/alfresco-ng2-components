@@ -15,22 +15,24 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramElement } from '../diagram-element';
+import { DiagramEventComponent } from './diagram-event.component';
 
 @Component({
     selector: 'diagram-start-event',
+    standalone: true,
+    imports: [DiagramEventComponent],
     templateUrl: './diagram-start-event.component.html'
 })
 export class DiagramStartEventComponent extends DiagramElement implements OnInit {
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: ''};
+    options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: '' };
     iconFillColor: any;
 
     ngOnInit() {
-
         this.options.radius = 15;
         this.options.strokeWidth = 1;
         this.options.stroke = this.diagramColorService.getBpmnColor(this.data, MAIN_STROKE_COLOR);

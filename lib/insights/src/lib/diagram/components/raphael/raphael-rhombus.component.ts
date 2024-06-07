@@ -22,7 +22,10 @@ import { RaphaelBase } from './raphael-base';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-rhombus, raphael-rhombus'})
+@Directive({
+    selector: 'adf-raphael-rhombus, raphael-rhombus',
+    standalone: true
+})
 export class RaphaelRhombusDirective extends RaphaelBase implements OnInit {
     @Input()
     center: Point;
@@ -63,10 +66,26 @@ export class RaphaelRhombusDirective extends RaphaelBase implements OnInit {
     }
 
     draw(center: Point, width: number, height: number, opts?: any) {
-        return this.paper.path('M' + center.x + ' ' + (center.y + (height / 2)) +
-            'L' + (center.x + (width / 2)) + ' ' + (center.y + height) +
-            'L' + (center.x + width) + ' ' + (center.y + (height / 2)) +
-            'L' + (center.x + (width / 2)) + ' ' + center.y + 'z'
-        ).attr(opts);
+        return this.paper
+            .path(
+                'M' +
+                    center.x +
+                    ' ' +
+                    (center.y + height / 2) +
+                    'L' +
+                    (center.x + width / 2) +
+                    ' ' +
+                    (center.y + height) +
+                    'L' +
+                    (center.x + width) +
+                    ' ' +
+                    (center.y + height / 2) +
+                    'L' +
+                    (center.x + width / 2) +
+                    ' ' +
+                    center.y +
+                    'z'
+            )
+            .attr(opts);
     }
 }

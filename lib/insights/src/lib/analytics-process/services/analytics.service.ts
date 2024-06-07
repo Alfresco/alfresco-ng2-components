@@ -30,6 +30,7 @@ import { TableChart } from '../../diagram/models/chart/table-chart.model';
 import { map } from 'rxjs/operators';
 import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
+import { LineChart } from '../../diagram/models/chart/line-chart.model';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
@@ -186,6 +187,8 @@ export class AnalyticsService {
                         elements.push(new BarChart(chartData));
                     } else if (chartData.type === 'multiBarChart') {
                         elements.push(new MultiBarChart(chartData));
+                    } else if (chartData.type === 'line') {
+                        elements.push(new LineChart(chartData));
                     }
                 });
 
