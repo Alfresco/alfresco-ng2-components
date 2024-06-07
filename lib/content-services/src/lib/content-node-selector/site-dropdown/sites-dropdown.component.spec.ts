@@ -32,7 +32,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { SiteEntry } from '@alfresco/js-api';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 const customSiteList = {
     list: {
@@ -149,10 +148,10 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const selectFormField = await loader.getHarness(MatFormFieldHarness);
-                const label = await selectFormField.getLabel();
+                const select = await loader.getHarness(MatSelectHarness);
+                await select.open();
 
-                expect(label).toContain('DROPDOWN.PLACEHOLDER_LABEL');
+                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.LOCATION');
             });
 
             it('should show custom placeholder label when the "placeholder" input property is given a value', async () => {
@@ -161,10 +160,10 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const selectFormField = await loader.getHarness(MatFormFieldHarness);
-                const label = await selectFormField.getLabel();
+                const select = await loader.getHarness(MatSelectHarness);
+                await select.open();
 
-                expect(label).toContain('NODE_SELECTOR.SELECT_LIBRARY');
+                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.LOCATION');
             });
 
             it('should load custom sites when the "siteList" input property is given a value', async () => {
