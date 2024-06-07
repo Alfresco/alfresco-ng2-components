@@ -73,7 +73,7 @@ export class DataTableItem {
     async getColumnValueForRow(identifyingColumnName: string, identifyingColumnValue: string, columnName: string): Promise<string> {
         const row = await this.getRow(identifyingColumnName, identifyingColumnValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
-        const rowColumn = row.$(`div[title="${columnName}"] span`);
+        const rowColumn = row.$(`td[title="${columnName}"] span`);
         return BrowserActions.getText(rowColumn);
     }
 

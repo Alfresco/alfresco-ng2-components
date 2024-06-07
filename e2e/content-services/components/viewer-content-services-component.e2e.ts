@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
+import { BrowserActions, createApiService, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { browser, by, element, protractor } from 'protractor';
-import { createApiService, BrowserActions, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
-import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { VersionManagePage } from '../pages/version-manager.page';
-import { MetadataViewPage } from '../../core/pages/metadata-view.page';
+import { FileModel } from '../../models/ACS/file.model';
 
 describe('Content Services Viewer', () => {
     const acsUser = new UserModel();
@@ -29,8 +27,6 @@ describe('Content Services Viewer', () => {
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const versionManagePage = new VersionManagePage();
-    const metadataViewPage = new MetadataViewPage();
 
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -61,10 +57,6 @@ describe('Content Services Viewer', () => {
     });
     const unsupportedFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path,
-        name: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
-    });
-    const unsupportedFileByLocation = new FileModel({
-        location: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
         name: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
     const pptFile = new FileModel({
@@ -370,7 +362,7 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C269109] Should not be able to open thumbnail panel before the pdf is loaded', async () => {
-            const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${pdfFile.name}"]`)).first();
+            const fileView = element.all(by.css(`#document-list-container td[data-automation-id="${pdfFile.name}"]`)).first();
             await BrowserActions.click(fileView);
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 

@@ -66,12 +66,12 @@ export class DataTableComponentPage {
 
     async checkAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
-        await BrowserVisibility.waitUntilElementIsVisible(this.selectAll.$('input[aria-checked="true"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectAll.$('mat-checkbox[aria-checked="true"]'));
     }
 
     async uncheckAllRows(): Promise<void> {
         await BrowserActions.click(this.selectAll);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectAll.$('input[aria-checked="true"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.selectAll.$('mat-checkbox[aria-checked="true"]'));
     }
 
     async clickCheckbox(columnName: string, columnValue: string): Promise<void> {
@@ -80,12 +80,12 @@ export class DataTableComponentPage {
     }
 
     async checkRowIsNotChecked(columnName: string, columnValue: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(columnName, columnValue).$('input[aria-checked="true"]'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.getRowCheckbox(columnName, columnValue).$('mat-checkbox[aria-checked="true"]'));
     }
 
     async checkRowIsChecked(columnName: string, columnValue: string): Promise<void> {
         const rowCheckbox = this.getRowCheckbox(columnName, columnValue);
-        await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.$('input[aria-checked="true"]'));
+        await BrowserVisibility.waitUntilElementIsVisible(rowCheckbox.$('mat-checkbox[aria-checked="true"]'));
     }
 
     getRowCheckbox(columnName: string, columnValue: string): ElementFinder {
@@ -129,7 +129,7 @@ export class DataTableComponentPage {
     async getColumnValueForRow(identifyingColumn: string, identifyingValue: string, columnName: string): Promise<string> {
         const row = this.getRow(identifyingColumn, identifyingValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
-        const rowColumn = row.$(`div[title="${columnName}"] span`);
+        const rowColumn = row.$(`td[title="${columnName}"] span`);
         return BrowserActions.getText(rowColumn);
     }
 
@@ -434,11 +434,11 @@ export class DataTableComponentPage {
     }
 
     getCellByRowNumberAndColumnName(rowNumber: number, columnName: string): ElementFinder {
-        return this.list.get(rowNumber).$$(`div[title="${columnName}"] span`).first();
+        return this.list.get(rowNumber).$$(`td[title="${columnName}"] span`).first();
     }
 
     getCellByRowContentAndColumn(rowColumn: string, rowContent: string, columnName: string): ElementFinder {
-        return this.getRow(rowColumn, rowContent).$(`div[title='${columnName}']`);
+        return this.getRow(rowColumn, rowContent).$(`td[title='${columnName}']`);
     }
 
     async selectRowByContent(content: string): Promise<void> {
@@ -473,7 +473,7 @@ export class DataTableComponentPage {
     }
 
     async clickRowByContent(name: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`tr[data-automation-id='${name}']`).first();
+        const resultElement = this.rootElement.$$(`td[data-automation-id='${name}']`).first();
         await BrowserActions.click(resultElement);
     }
 
@@ -487,7 +487,7 @@ export class DataTableComponentPage {
     }
 
     async checkRowContentIsDisplayed(content: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`tr[data-automation-id='${content}']`).first();
+        const resultElement = this.rootElement.$$(`td[data-automation-id='${content}']`).first();
         await BrowserVisibility.waitUntilElementIsVisible(resultElement);
     }
 
@@ -502,7 +502,7 @@ export class DataTableComponentPage {
     }
 
     async doubleClickRowByContent(name: string): Promise<void> {
-        const resultElement = this.rootElement.$$(`tr[data-automation-id='${name}']`).first();
+        const resultElement = this.rootElement.$$(`td[data-automation-id='${name}']`).first();
         await BrowserActions.click(resultElement);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }

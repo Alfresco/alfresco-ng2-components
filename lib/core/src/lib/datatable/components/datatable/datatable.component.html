@@ -73,8 +73,8 @@
                         !isDraggingHeaderColumn &&
                         !isResizing && col.sortable}">
                 <ng-container *ngIf="!col.header">
-                        <span *ngIf="col.title" matTooltip="{{ col.title | translate }}"
-                              class="adf-datatable-cell-value">{{ col.title | translate }}</span>
+                    <span *ngIf="col.title" matTooltip="{{ col.title | translate }}"
+                          class="adf-datatable-cell-value">{{ col.title | translate }}</span>
 
                     <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn"
                           class="adf-sr-only"
@@ -160,7 +160,9 @@
                            (contextmenu)="markRowAsContextMenuSource(row)">
             <!-- Actions (left) -->
             <td *ngIf="actions && actionsPosition === 'left'" class="adf-datatable-cell">
-                <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"
+                <button mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        #actionsMenuTrigger="matMenuTrigger"
                         [ngClass]="getHideActionsWithoutHoverClass(actionsMenuTrigger)"
                         [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                         [attr.id]="'action_menu_left_' + idx"
@@ -168,7 +170,8 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngFor="let action of getRowActions(row)"
+                    <button mat-menu-item
+                            *ngFor="let action of getRowActions(row)"
                             [attr.data-automation-id]="action.title"
                             [disabled]="action.disabled"
                             (click)="onExecuteRowAction(row, action)">
@@ -210,8 +213,7 @@
                 <div *ngIf="!col.template" class="adf-datatable-cell-container">
                     <ng-container [ngSwitch]="data.getColumnType(row, col)">
                         <div *ngSwitchCase="'image'" class="adf-cell-value">
-                            <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
-                            </mat-icon>
+                            <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}</mat-icon>
                             <ng-template #no_iconvalue>
                                 <mat-icon class="adf-datatable-selected"
                                           *ngIf="row.isSelected && !multiselect; else no_selected_row"
