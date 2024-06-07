@@ -38,7 +38,7 @@ export class DataTableComponentPage {
     noContentContainer: ElementFinder;
     mainMenuButton: ElementFinder;
 
-    rows = `adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
+    rows = `adf-datatable tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
 
     constructor(rootElement = $$('adf-datatable').first()) {
         this.rootElement = rootElement;
@@ -233,7 +233,7 @@ export class DataTableComponentPage {
     async getAllRowsColumnValues(column: string): Promise<string[]> {
         let columnValues: string[] = [];
         const columnLocator = $$(
-            `adf-datatable tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title="${column}"] span`
+            `adf-datatable tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] th[title="${column}"] span`
         );
 
         await BrowserVisibility.waitUntilElementIsPresent(columnLocator.first(), 1000);
@@ -248,7 +248,7 @@ export class DataTableComponentPage {
     }
 
     async getRowsWithSameColumnValues(columnName: string, columnValue: string) {
-        const columnLocator = `div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`;
+        const columnLocator = `th[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`;
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$$(columnLocator).first());
         return this.rootElement.$$(columnLocator).getText();
     }
@@ -418,12 +418,10 @@ export class DataTableComponentPage {
 
     // @deprecated use Playwright instead
     async isColumnDisplayed(columnTitle: string): Promise<boolean> {
-        const isColumnDisplayed = (await this.allColumns).some(async (column) => {
+        return (await this.allColumns).some(async (column) => {
             const columnText = await column.getText();
             return columnText === columnTitle;
         });
-
-        return isColumnDisplayed;
     }
 
     // @deprecated use Playwright instead

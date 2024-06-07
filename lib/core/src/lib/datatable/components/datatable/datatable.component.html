@@ -76,10 +76,11 @@
                         <span *ngIf="col.title" matTooltip="{{ col.title | translate }}"
                               class="adf-datatable-cell-value">{{ col.title | translate }}</span>
 
-                    <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only"
+                    <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn"
+                          class="adf-sr-only"
                           aria-live="polite">
                             {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
-                        </span>
+                    </span>
 
                     <span *ngIf="!col.title && !col.sortable && !headerFilterTemplate"
                           [attr.title]="'ADF-DATATABLE.ACCESSIBILITY.EMPTY_HEADER' | translate"></span>
@@ -91,8 +92,7 @@
                 </div>
 
                 <span [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
-                      [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')">
-                    </span>
+                      [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"></span>
 
                 <ng-template *ngIf="allowFiltering"
                              [ngTemplateOutlet]="headerFilterTemplate"
@@ -101,11 +101,11 @@
                 <span *ngIf="col.draggable"
                       cdkDragHandle
                       [ngClass]="{ 'adf-datatable-cell-header-drag-icon': !isResizing }">
-                        <adf-icon *ngIf="hoveredHeaderColumnIndex === columnIndex && !isResizing"
-                                  value="adf:drag_indicator"
-                                  [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-' + col.key">
-                        </adf-icon>
-                    </span>
+                    <adf-icon *ngIf="hoveredHeaderColumnIndex === columnIndex && !isResizing"
+                              value="adf:drag_indicator"
+                              [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-' + col.key">
+                    </adf-icon>
+                </span>
             </div>
             <div *ngIf="isResizingEnabled && col.resizable && !lastColumn"
                  [ngClass]="hoveredHeaderColumnIndex === columnIndex && !isResizing || resizingColumnIndex === columnIndex ? 'adf-datatable__resize-handle-visible' : 'adf-datatable__resize-handle-hidden'"
