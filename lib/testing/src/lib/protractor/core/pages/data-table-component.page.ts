@@ -49,7 +49,7 @@ export class DataTableComponentPage {
         this.mainMenuButton = this.rootElement.$('[data-automation-id="adf-datatable-main-menu-button"]');
         this.selectedRowNumber = this.rootElement.$(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
         this.allSelectedRows = this.rootElement.$$(`adf-datatable-row[class*='is-selected']`);
-        this.selectAll = this.rootElement.$(`th[class*='adf-datatable-cell-header'] ${materialLocators.Checkbox.root}`);
+        this.selectAll = this.rootElement.$(`*[class*='adf-datatable-header'] ${materialLocators.Checkbox.root}`);
         this.emptyList = this.rootElement.$(`adf-empty-content`);
         this.emptyListTitle = this.rootElement.$(`.adf-empty-content__title`);
         this.emptyListSubtitle = this.rootElement.$(`.adf-empty-content__subtitle`);
@@ -233,7 +233,7 @@ export class DataTableComponentPage {
     async getAllRowsColumnValues(column: string): Promise<string[]> {
         let columnValues: string[] = [];
         const columnLocator = $$(
-            `adf-datatable tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] td[title="${column}"] span`
+            `adf-datatable tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] *[title="${column}"] span`
         );
 
         await BrowserVisibility.waitUntilElementIsPresent(columnLocator.first(), 1000);
@@ -248,7 +248,7 @@ export class DataTableComponentPage {
     }
 
     async getRowsWithSameColumnValues(columnName: string, columnValue: string) {
-        const columnLocator = `th[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`;
+        const columnLocator = `td[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`;
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$$(columnLocator).first());
         return this.rootElement.$$(columnLocator).getText();
     }
