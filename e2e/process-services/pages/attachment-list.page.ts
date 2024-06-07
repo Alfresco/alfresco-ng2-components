@@ -25,7 +25,7 @@ export class AttachmentListPage {
     viewButton = $('button[data-automation-id*="MENU_ACTIONS.VIEW_CONTENT"]');
     removeButton = $('button[data-automation-id*="MENU_ACTIONS.REMOVE_CONTENT"]');
     downloadButton = $('button[data-automation-id*="MENU_ACTIONS.DOWNLOAD_CONTENT"]');
-    noContentContainer = $('div[class*="adf-no-content-container"]');
+    noContentContainer = $('td[class*="adf-no-content-container"]');
 
     async checkEmptyAttachmentList(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noContentContainer);

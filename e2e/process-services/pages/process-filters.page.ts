@@ -73,7 +73,7 @@ export class ProcessFiltersPage {
 
     async selectFromProcessList(title: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const processName = $$(`td[data-automation-id="text_${title}"]`).first();
+        const processName = $$(`div[data-automation-id="text_${title}"]`).first();
         await BrowserActions.click(processName);
     }
 

@@ -306,7 +306,7 @@ export class ContentServicesPage {
     }
 
     async selectFolder(folderName: string): Promise<void> {
-        const folderSelected = $(`div[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`);
+        const folderSelected = $(`td[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`);
         await BrowserVisibility.waitUntilElementIsVisible(folderSelected);
         await BrowserActions.click(folderSelected);
     }
