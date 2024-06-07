@@ -79,7 +79,7 @@
                     <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn"
                           class="adf-sr-only"
                           aria-live="polite">
-                            {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
+                        {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
                     </span>
 
                     <span *ngIf="!col.title && !col.sortable && !headerFilterTemplate"

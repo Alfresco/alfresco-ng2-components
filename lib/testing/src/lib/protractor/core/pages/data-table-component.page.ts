@@ -233,7 +233,7 @@ export class DataTableComponentPage {
     async getAllRowsColumnValues(column: string): Promise<string[]> {
         let columnValues: string[] = [];
         const columnLocator = $$(
-            `adf-datatable tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] th[title="${column}"] span`
+            `adf-datatable tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] td[title="${column}"] span`
         );
 
         await BrowserVisibility.waitUntilElementIsPresent(columnLocator.first(), 1000);
@@ -248,7 +248,7 @@ export class DataTableComponentPage {
     }
 
     async getRowsWithSameColumnValues(columnName: string, columnValue: string) {
-        const columnLocator = `th[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`;
+        const columnLocator = `th[title='${columnName}'] td[data-automation-id="text_${columnValue}"] span`;
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$$(columnLocator).first());
         return this.rootElement.$$(columnLocator).getText();
     }
@@ -351,7 +351,7 @@ export class DataTableComponentPage {
     }
 
     getCellElementByValue(columnName: string, columnValue: string, columnPrefix = 'text_'): ElementFinder {
-        return this.rootElement.$$(`div[title="${columnName}"] div[data-automation-id="${columnPrefix}${columnValue}"] span`).first();
+        return this.rootElement.$$(`td[title="${columnName}"] div[data-automation-id="${columnPrefix}${columnValue}"] span`).first();
     }
 
     async tableIsLoaded(): Promise<void> {
