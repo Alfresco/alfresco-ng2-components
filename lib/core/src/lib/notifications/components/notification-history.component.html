@@ -8,6 +8,7 @@
             (menuOpened)="onMenuOpened()">
         <mat-icon matBadge="&#8288;"
                   [matBadgeHidden]="!notifications.length"
+                  class="adf-notification-history-menu_button-icon"
                   matBadgeColor="accent"
                   matBadgeSize="small">notifications
         </mat-icon>
@@ -16,16 +17,17 @@
               [xPosition]="menuPositionX"
               [yPosition]="menuPositionY"
               id="adf-notification-history-menu"
-              class="adf-notification-history-menu">
+              class="adf-notification-history-menu adf-notification-history-menu-panel">
         <div class="adf-notification-history-list"
              role="button"
              tabindex="0"
              (keyup.enter)="$event.stopPropagation()"
              (click)="$event.stopPropagation()">
             <div mat-subheader role="menuitem">
-                <span>{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
+                <span class="adf-notification-history-menu-title">{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
                 <button *ngIf="notifications.length"
                         id="adf-notification-history-mark-as-read"
+                        class="adf-notification-history-mark-as-read"
                         mat-icon-button
                         title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
                         (click)="markAsRead()">
