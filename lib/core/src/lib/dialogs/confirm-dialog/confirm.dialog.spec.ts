@@ -18,8 +18,8 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
+import { CoreTestingModule } from '@alfresco/adf-cor';
 
 describe('Confirm Dialog Component', () => {
     let fixture: ComponentFixture<ConfirmDialogComponent>;
@@ -38,7 +38,7 @@ describe('Confirm Dialog Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [CoreTestingModule],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: data }
