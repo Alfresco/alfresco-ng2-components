@@ -46,12 +46,6 @@
       "ARROW_ICON": "右矢印アイコン"
     }
   },
-  "ADF_CONFIRM_DIALOG": {
-    "TITLE": "確認",
-    "ACTION": "作業を続けますか?",
-    "YES_LABEL": "はい",
-    "NO_LABEL": "いいえ"
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "このフォルダは空です"

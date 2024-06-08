@@ -143,6 +143,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Confirm dialog component](core/dialogs/confirm.dialog.md) | Requests a yes/no choice from the user. | [Source](../lib/core/src/lib/dialogs/confirm-dialog/confirm.dialog.ts) |
 | [Edit JSON Dialog](core/dialogs/edit-json.dialog.md) | Allows a user to preview or edit a JSON content in a dialog. | [Source](../lib/testing/src/lib/core/dialog/edit-json-dialog.ts) |
 | [Unsaved Changes Dialog](core/dialogs/unsaved-changes-dialog.component.md) | Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding. | [Source](../lib/core/src/lib/dialogs/unsaved-changes-dialog/unsaved-changes-dialog.component.ts) | 
 
@@ -341,7 +342,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Dialog component](content-services/dialogs/dialog.md) | Dialog styled wrapper. | [Source](../lib/content-services/src/lib/dialogs/dialog/dialog.component.ts) |
-| [Confirm dialog component](content-services/dialogs/confirm.dialog.md) | Requests a yes/no choice from the user. | [Source](../lib/content-services/src/lib/dialogs/confirm.dialog.ts) |
 | [Library dialog component](content-services/dialogs/library.dialog.md) | Creates a new Content Services document library/site. | [Source](../lib/content-services/src/lib/dialogs/library/library.dialog.ts) |
 
 ### Interfaces

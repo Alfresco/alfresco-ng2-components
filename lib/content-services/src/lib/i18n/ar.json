@@ -46,12 +46,6 @@
       "ARROW_ICON": "أيقونة السهم الأيمن"
     }
   },
-  "ADF_CONFIRM_DIALOG": {
-    "TITLE": "تأكيد",
-    "ACTION": "هل تريد المتابعة؟",
-    "YES_LABEL": "نعم",
-    "NO_LABEL": "لا"
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "هذا المجلد فارغ"
