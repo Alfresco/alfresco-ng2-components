@@ -23,7 +23,6 @@ import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { FolderDialogComponent } from './folder.dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
-import { ConfirmDialogComponent } from './confirm.dialog';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { LibraryDialogComponent } from './library/library.dialog';
 import { ContentDirectiveModule } from '../directives';
@@ -46,14 +45,12 @@ import { CategoriesModule } from '../category';
     declarations: [
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ConfirmDialogComponent,
         LibraryDialogComponent,
         CategorySelectorDialogComponent
     ],
     exports: [
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ConfirmDialogComponent,
         LibraryDialogComponent,
         CategorySelectorDialogComponent
     ]

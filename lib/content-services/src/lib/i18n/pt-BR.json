@@ -46,12 +46,6 @@
       "ARROW_ICON": "Ícone de seta direita"
     }
   },
-  "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Confirmar",
-    "ACTION": "Deseja continuar?",
-    "YES_LABEL": "Sim",
-    "NO_LABEL": "Não"
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Esta pasta está vazia"
