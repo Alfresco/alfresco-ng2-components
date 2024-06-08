@@ -19,7 +19,7 @@ import { DateTimePipe } from './date-time.pipe';
 import { addMinutes, isValid } from 'date-fns';
 
 describe('DateTimePipe', () => {
-    let pipe = new DateTimePipe();
+    const pipe = new DateTimePipe();
 
     it('should transform string input to date format', () => {
         const value = '2023-08-24 12:00:00';
