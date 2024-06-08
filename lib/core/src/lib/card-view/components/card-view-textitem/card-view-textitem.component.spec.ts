@@ -41,7 +41,8 @@ describe('CardViewTextItemComponent', () => {
 
     const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
 
-    const getTextField = (key: string): HTMLInputElement => fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
+    const getTextField = (key: string): HTMLInputElement =>
+        fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
 
     const updateTextField = (key: string, value) => {
         const editInput = getTextField(key);
@@ -56,9 +57,8 @@ describe('CardViewTextItemComponent', () => {
         return textItemInput.value;
     };
 
-    const getErrorElements = (key: string, includeItems = false): DebugElement[] => {
-        return fixture.debugElement.queryAll(By.css(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`));
-    };
+    const getErrorElements = (key: string, includeItems = false): DebugElement[] =>
+        fixture.debugElement.queryAll(By.css(`[data-automation-id="card-textitem-error-${key}"]${includeItems ? ' li' : ''}`));
 
     const getTextFieldError = (key: string): string => {
         const textItemInputErrors = getErrorElements(key, true);
@@ -327,7 +327,7 @@ describe('CardViewTextItemComponent', () => {
                 multivalued: true
             };
 
-            component.editable =true;
+            component.editable = true;
             component.property = new CardViewTextItemModel(cardViewTextItemObject);
             component.displayLabelForChips = false;
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
