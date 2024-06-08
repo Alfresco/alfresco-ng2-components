@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Načítání...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Potvrdit",
+    "ACTION": "Chcete pokračovat?",
+    "YES_LABEL": "Ano",
+    "NO_LABEL": "Ne"
   }
 }

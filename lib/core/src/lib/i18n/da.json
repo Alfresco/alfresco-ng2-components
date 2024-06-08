@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Indlæser...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} kombiboks {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Bekræft",
+    "ACTION": "Vil du fortsætte?",
+    "YES_LABEL": "Ja",
+    "NO_LABEL": "Nej"
   }
 }

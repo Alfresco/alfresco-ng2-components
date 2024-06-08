@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Ladataan...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} yhdistelmäruutu {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Vahvista",
+    "ACTION": "Haluatko jatkaa?",
+    "YES_LABEL": "Kyllä",
+    "NO_LABEL": "Ei"
   }
 }
