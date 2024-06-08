@@ -17,7 +17,12 @@
 
 export * from './edit-json/edit-json.dialog';
 export * from './edit-json/edit-json.dialog.module';
+
 export * from './unsaved-changes-dialog/unsaved-changes-dialog.component';
 export * from './unsaved-changes-dialog/unsaved-changes-dialog.module';
 export * from './unsaved-changes-dialog/unsaved-changes.guard';
+
+export * from './confirm-dialog/confirm.dialog';
+export * from './confirm-dialog/confirm.dialog.module';
+
 export * from './dialog';
