@@ -32,7 +32,7 @@ describe('LayoutContainerComponent', () => {
 
     const checkContentAnimationState = (value: string, marginProperty: string, marginValue: number) => {
         expect(layoutContainerComponent.contentAnimationState).toEqual({
-            value: value,
+            value,
             params: { [marginProperty]: marginValue }
         });
     };
