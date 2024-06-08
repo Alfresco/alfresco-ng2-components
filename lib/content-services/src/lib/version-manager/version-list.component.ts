@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ConfirmDialogComponent } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { VersionsApi, Node, VersionEntry, NodesApi, NodeEntry, ContentApi, ContentPagingQuery } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from  '@alfresco/adf-core';
 import { ContentVersionService } from './content-version.service';
 import { ContentService } from '../common';
 import { InfiniteScrollDatasource } from '../infinite-scroll-datasource';
