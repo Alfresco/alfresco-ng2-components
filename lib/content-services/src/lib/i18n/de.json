@@ -46,12 +46,6 @@
       "ARROW_ICON": "Pfeil-nach-rechts-Symbol"
     }
   },
-  "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Bestätigen",
-    "ACTION": "Möchten Sie fortfahren?",
-    "YES_LABEL": "Ja",
-    "NO_LABEL": "Nein"
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Dieser Ordner ist leer"
