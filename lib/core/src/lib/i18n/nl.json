@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Laden...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} keuzelijst met invoervak {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Bevestigen",
+    "ACTION": "Wilt u doorgaan?",
+    "YES_LABEL": "Ja",
+    "NO_LABEL": "Nee"
   }
 }

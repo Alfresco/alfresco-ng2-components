@@ -175,7 +175,7 @@ Is now possible add an extra button in the Confirm Dialog
 
 For more details refer to the:
 
--   [Confirm Dialog](../content-services/dialogs/confirm.dialog.md) 
+-   [Confirm Dialog](../core/dialogs/confirm.dialog.md) 
 
 ### Configuration option to change the default viewer zoom
 

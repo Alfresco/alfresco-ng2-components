@@ -46,12 +46,6 @@
       "ARROW_ICON": "Icono de dirección a la derecha"
     }
   },
-  "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Confirmar",
-    "ACTION": "¿Desea continuar?",
-    "YES_LABEL": "Sí",
-    "NO_LABEL": "No"
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Esta carpeta está vacía"
