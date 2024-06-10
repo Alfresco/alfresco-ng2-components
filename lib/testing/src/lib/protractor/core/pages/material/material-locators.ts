@@ -39,7 +39,7 @@ export const materialLocators = {
             cell: {
                 root: 'mat-calendar-body-cell',
                 content: {
-                    class: '.mat-mdc-calendar-body-cell-content'
+                    class: '.mat-calendar-body-cell-content'
                 }
             },
             today: {
