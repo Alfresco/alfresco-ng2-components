@@ -51,4 +51,22 @@ export class LegalHoldApi extends BaseApi {
             returnType: NodeChildAssociationPaging
         });
     }
+
+    /**
+     * Adds to existiing hold
+     *
+     * @param holdId The identifier of a hold.
+     * @param ids list of ids of holds to add to existing hold
+     * @returns Promise<NodeChildAssociationPaging>
+     */
+    saveToExistingHolds(ids: string[], holdId: string): Promise<NodeChildAssociationPaging> {
+        throwIfNotDefined(holdId, 'holdId');
+
+        return this.post({
+            path: '/holds/{holdId}/children',
+            pathParams: { holdId },
+            bodyParam: ids,
+            returnType: NodeChildAssociationPaging
+        });
+    }
 }

@@ -53,4 +53,25 @@ export class LegalHoldService {
             catchError((err) => throwError(err))
         );
     }
+
+    /**
+     * Adds to hold to existing hold
+     *
+     * @param ids The list of manage hold Ids
+     * @param ids list of ids of holds to add to existing hold
+     * @returns List of assigned holds Hold[]
+     */
+    saveHold(ids: string[], holdId: string): Observable<Hold[]> {
+        return from(this.legalHoldApi.saveToExistingHolds(ids, holdId)).pipe(
+            map(({ list }) =>
+                list?.entries?.map(({ entry }) => ({
+                    id: entry?.id,
+                    name: entry?.name,
+                    reason: entry?.reason,
+                    description: entry?.description
+                }))
+            ),
+            catchError((err) => throwError(err))
+        );
+    }
 }
