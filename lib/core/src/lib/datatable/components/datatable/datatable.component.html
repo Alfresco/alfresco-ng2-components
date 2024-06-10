@@ -1,4 +1,4 @@
-<div role="grid"
+<table role="grid"
      *ngIf="data"
      class="adf-full-width adf-datatable-list"
      [class.adf-sticky-header]="isStickyHeaderEnabled()"
@@ -26,8 +26,9 @@
             <mat-checkbox [indeterminate]="isSelectAllIndeterminate"
                           [checked]="isSelectAllChecked"
                           (change)="onSelectAllClick($event)"
+                          [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate"
+                          [matTooltip]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate"
                           class="adf-checkbox-sr-only">
-                {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}
             </mat-checkbox>
         </th>
 
@@ -181,17 +182,17 @@
                 </mat-menu>
             </td>
 
-            <label *ngIf="multiselect"
-                   [for]="'select-file-' + idx"
-                   class="adf-datatable-cell adf-datatable-checkbox">
+            <td *ngIf="multiselect"
+                class="adf-datatable-cell adf-datatable-checkbox">
                 <mat-checkbox [id]="'select-file-' + idx"
                               [checked]="row.isSelected"
                               [attr.aria-checked]="row.isSelected"
                               (change)="onCheckboxChange(row, $event)"
+                              [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate"
+                              [matTooltip]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate"
                               class="adf-checkbox-sr-only">
-                    {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                 </mat-checkbox>
-            </label>
+            </td>
             <td *ngFor="
                 let col of (data.getColumns() | filterOutEvery:'isHidden':true),
                 let lastColumn = last;"
@@ -409,4 +410,4 @@
         </td>
     </tr>
     </tbody>
-</div>
+</table>

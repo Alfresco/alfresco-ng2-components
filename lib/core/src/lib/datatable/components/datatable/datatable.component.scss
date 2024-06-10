@@ -283,6 +283,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         padding-right: 15px;
     }
 
+    .adf-datatable-checkbox {
+        display: flex;
+        justify-content: center;
+    }
+
     .adf-cell-value {
         display: flex;
         min-height: inherit;
@@ -495,11 +500,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         right: -3px;
     }
 
-    &.adf-datatable-checkbox {
-        display: flex;
-        align-items: center;
-    }
-
     .adf-datatable-cell-header-content {
         display: flex;
         flex-grow: 1;
@@ -568,8 +568,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 /* [Accessibility] Material checkbox labels */
 .adf-checkbox-sr-only {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    width: auto;
+    height: auto;
     padding: 0;
     margin: -1px;
     overflow: hidden;
