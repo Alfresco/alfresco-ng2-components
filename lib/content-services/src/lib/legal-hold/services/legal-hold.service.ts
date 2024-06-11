@@ -45,9 +45,7 @@ export class LegalHoldService {
             map(({ list }) =>
                 list?.entries?.map(({ entry }) => ({
                     id: entry?.id,
-                    name: entry?.name,
-                    reason: entry?.reason,
-                    description: entry?.description
+                    name: entry?.name
                 }))
             ),
             catchError((err) => throwError(err))
