@@ -20,5 +20,5 @@ export interface Hold {
     name: string;
     reason?: string;
     description?: string;
-    selected?: string;
+    selected?: boolean;
 }
