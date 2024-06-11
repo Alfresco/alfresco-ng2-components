@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { CardViewItemMatchValidator, MatchValidatorParams } from './card-view-item-match.valiator';
-import { CardViewItemMinMaxValidator, MinMaxValidatorParams } from './card-view-item-minmax.valiator';
+import { CardViewItemMatchValidator, MatchValidatorParams } from './card-view-item-match.validator';
+import { CardViewItemMinMaxValidator, MinMaxValidatorParams } from './card-view-item-minmax.validator';
 import { CardViewItemLengthValidator, LengthValidatorParams } from './card-view-item-length.valiator';
 
 const validators = {

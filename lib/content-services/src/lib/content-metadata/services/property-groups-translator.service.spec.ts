@@ -29,7 +29,8 @@ import {
     CardViewDatetimeItemModel,
     CardViewSelectItemModel,
     CardViewSelectItemProperties,
-    LogService
+    LogService,
+    CardViewLongItemModel
 } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { Constraint, Definition, Property as PropertyBase } from '@alfresco/js-api';
@@ -427,6 +428,28 @@ describe('PropertyGroupTranslatorService', () => {
             expect(cardViewProperty.value).toBe('default');
             expect(cardViewProperty.key).toBe('properties.fk:emperor');
             expect(cardViewProperty.editable).toBe(false);
+        });
+
+        it('should translate properly the value attribute for d:long', () => {
+            property.dataType = 'd:long';
+
+            propertyValues = { 'FAS:PLAGUE': '1024' };
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
+
+            const cardViewProperty: CardViewLongItemModel = cardViewGroup[0].properties[0] as CardViewLongItemModel;
+            expect(cardViewProperty instanceof CardViewLongItemModel).toBeTruthy();
+            expect(cardViewProperty.value).toBe(1024);
+        });
+
+        it('should translate properly the value attribute for d:long and value is 0', () => {
+            property.dataType = 'd:long';
+
+            propertyValues = { 'FAS:PLAGUE': 0 };
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
+
+            const cardViewProperty: CardViewLongItemModel = cardViewGroup[0].properties[0] as CardViewLongItemModel;
+            expect(cardViewProperty instanceof CardViewLongItemModel).toBeTruthy();
+            expect(cardViewProperty.value).toBe(0);
         });
     });
 });
