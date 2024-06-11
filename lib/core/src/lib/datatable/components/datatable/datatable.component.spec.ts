@@ -1408,7 +1408,7 @@ describe('Accesibility', () => {
         expect(header.tagName).toEqual('THEAD');
         expect(headerCell.tagName).toEqual('TH');
         expect(body.tagName).toEqual('TBODY');
-        expect(row.tagName).toEqual('TR');
+        expect(row.tagName).toEqual('ADF-DATATABLE-ROW');
         expect(cell.tagName).toEqual('TD');
     });
 
