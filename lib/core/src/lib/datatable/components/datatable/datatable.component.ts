@@ -302,6 +302,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         const dataChanges = changes['data'];
         const rowChanges = changes['rows'];
         const columnChanges = changes['columns'];
+        const multiselectChanges = changes['multiselect'];
 
         if (this.isPropertyChanged(dataChanges) || this.isPropertyChanged(rowChanges) || this.isPropertyChanged(columnChanges)) {
             if (this.isTableEmpty()) {
@@ -332,6 +333,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (this.isPropertyChanged(changes['sorting'])) {
             this.setTableSorting(changes['sorting'].currentValue);
+        }
+
+        if (multiselectChanges.currentValue === false) {
+            this.resetSelection();
         }
     }
 
