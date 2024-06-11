@@ -43,6 +43,7 @@ import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyva
 import { CardViewSelectItemComponent } from './components/card-view-selectitem/card-view-selectitem.component';
 import { CardViewArrayItemComponent } from './components/card-view-arrayitem/card-view-arrayitem.component';
 import { SelectFilterInputComponent } from './components/card-view-selectitem/select-filter-input/select-filter-input.component';
+import { ContentEnrichmentMenuComponent } from '../prediction/components/content-enrichment-menu/content-enrichment-menu.component';
 
 @NgModule({
     imports: [
@@ -63,7 +64,8 @@ import { SelectFilterInputComponent } from './components/card-view-selectitem/se
         MatCardModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        ContentEnrichmentMenuComponent
     ],
     declarations: [
         CardViewComponent,

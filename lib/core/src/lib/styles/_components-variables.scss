@@ -89,7 +89,8 @@
         --adf-danger-button-background: $adf-danger-button-background,
         --adf-secondary-button-background: $adf-secondary-button-background,
 
-        --adf-display-external-property-widget-preview-selection-color: mat.get-color-from-palette($foreground, secondary-text)
+        --adf-display-external-property-widget-preview-selection-color: mat.get-color-from-palette($foreground, secondary-text),
+        --adf-ai-border-gradient: $adf-ref-ai-border-gradient
     );
 
     // propagates SCSS variables into the CSS variables scope

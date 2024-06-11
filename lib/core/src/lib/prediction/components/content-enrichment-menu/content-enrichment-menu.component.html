@@ -1,0 +1,49 @@
+<button mat-icon-button [attr.aria-label]="'CORE.METADATA.CONTENT_ENRICHMENT.ACTIONS.CONFIRM' | translate" #menuTrigger="matMenuTrigger" class="adf-ai-button" [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen()">
+    <adf-icon [value]="'adf:ai-sparkles'"></adf-icon>
+</button>
+
+<mat-menu #menu="matMenu" class="adf-ai-mat-menu" (closed)="onClosed()">
+    <div class="adf-content-enrichment-menu" #menuContainer (click)="$event.stopPropagation()" (keydown.tab)="$event.stopPropagation()" (keydown.shift.tab)="$event.stopPropagation()" tabindex="-1">
+        <div class="adf-content-enrichment-menu__accuracy">
+            <div class="adf-content-enrichment-menu__accuracy__title">
+                <span>{{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACCURACY_LEVEL' | translate }}</span>
+                <p>{{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACCURACY_DESCRIPTION' | translate }}</p>
+            </div>
+            <div class="adf-content-enrichment-menu__accuracy__level">
+                <span>{{ confidencePercentage }}</span>
+                <mat-progress-spinner
+                    class="adf-accuracy-level-spinner"
+                    diameter="49"
+                    title="{{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACCURACY_LEVEL' | translate }}"
+                    color="primary"
+                    mode="determinate"
+                    [value]="confidencePercentage">
+                </mat-progress-spinner>
+            </div>
+        </div>
+        <div class="adf-content-enrichment-menu__content">
+            <div class="adf-content-enrichment-menu__content__last">
+                <p class="adf-content-enrichment-menu__content__label">{{ 'CORE.METADATA.CONTENT_ENRICHMENT.LAST_VALUE' | translate }}</p>
+                <div class="adf-content-enrichment-menu__content__last__value">{{ previousValue || 'None' }}</div>
+            </div>
+            <mat-icon>arrow_downward</mat-icon>
+            <div class="adf-content-enrichment-menu__content__current">
+                <p class="adf-content-enrichment-menu__content__label">{{ 'CORE.METADATA.CONTENT_ENRICHMENT.CURRENT_VALUE' | translate }}
+                    <span>({{ predictionDateTime | adfLocalizedDate: 'MM/dd/yyyy' }})</span>
+                </p>
+                <div class="adf-content-enrichment-menu__content__current__value">
+                    <adf-icon [value]="'adf:ai-sparkles'"></adf-icon>
+                    <span>{{ predictionValue }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="adf-content-enrichment-menu__footer">
+            <button mat-flat-button (click)="onRevert()">
+                {{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACTIONS.REVERT' | translate  }}
+            </button>
+            <button mat-button color="primary" (click)="onConfirm()" class="adf-confirm-button">
+                {{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACTIONS.CONFIRM' | translate }}
+            </button>
+        </div>
+    </div>
+</mat-menu>

@@ -2,7 +2,7 @@
 Title: Card View Item interface
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-08
+Last reviewed: 2024-06-11
 ---
 
 # [Card View Item interface](../../../lib/core/src/lib/card-view/interfaces/card-view-item.interface.ts "Defined in card-view-item.interface.ts")
@@ -22,22 +22,24 @@ export interface CardViewItem {
     editable?: boolean;
     icon?: string;
     data?: any;
+    prediction?: Prediction;
 }
 ```
 
 ### Properties
 
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| label | string | "" | Item label |
-| value | any |  | The original data value for the item |
-| key | string | "" | Identifying key (important when editing the item) |
-| default | any |  | The default value to display if the value is empty |
-| displayValue | string | "" | The value to display |
-| editable | boolean | false | Toggles whether the item is editable |
-| clickable | boolean | false | Toggles whether the item is clickable |
-| icon | string |  | The material icon to show beside clickable items |
-| data | any | null | Any custom data which is needed to be provided and stored in the model for any reason. During an update or a click event this can be a container of any custom data which can be useful for 3rd party codes. |
+| Name         | Type       | Default | Description                                                                                                                                                                                                  |
+|--------------|------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| label        | string     | ""      | Item label                                                                                                                                                                                                   |
+| value        | any        |         | The original data value for the item                                                                                                                                                                         |
+| key          | string     | ""      | Identifying key (important when editing the item)                                                                                                                                                            |
+| default      | any        |         | The default value to display if the value is empty                                                                                                                                                           |
+| displayValue | string     | ""      | The value to display                                                                                                                                                                                         |
+| editable     | boolean    | false   | Toggles whether the item is editable                                                                                                                                                                         |
+| clickable    | boolean    | false   | Toggles whether the item is clickable                                                                                                                                                                        |
+| icon         | string     |         | The material icon to show beside clickable items                                                                                                                                                             |
+| data         | any        | null    | Any custom data which is needed to be provided and stored in the model for any reason. During an update or a click event this can be a container of any custom data which can be useful for 3rd party codes. |
+| prediction   | Prediction |         | Property prediction                                                                                                                                                                                          |
 
 ## Details
 

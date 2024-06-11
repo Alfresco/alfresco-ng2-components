@@ -37,6 +37,7 @@
                 [attr.data-automation-id]="'card-textitem-value-' + property.key"
                 (keydown)="undoText($event)"
             />
+            <adf-content-enrichment-menu matPrefix *ngIf="hasContentEnrichment" [prediction]="property.prediction"></adf-content-enrichment-menu>
             <textarea
                 matInput
                 *ngIf="property.multiline"
@@ -119,6 +120,7 @@
             >
                 {{ property.label | translate }}
             </mat-label>
+<!--            <adf-content-enrichment-menu matPrefix *ngIf="hasContentEnrichment && !isEditable" [prediction]="property.prediction"></adf-content-enrichment-menu>-->
             <input
                 matInput
                 [type]="property.inputType"

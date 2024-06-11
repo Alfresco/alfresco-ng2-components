@@ -248,6 +248,19 @@
         "DATEPICKER": "Use the arrow keys to navigate between dates. Up and down move to the next or previous week but on the same day. Left and right move to the next or previous day. Press Enter or Return to select a date.",
         "COPY_TO_CLIPBOARD_MESSAGE": "Value copied to clipboard",
         "EDIT_ASPECTS": "Edit Aspect"
+      },
+      "CONTENT_ENRICHMENT": {
+        "ACCURACY_LEVEL": "Accuracy Level",
+        "ACCURACY_DESCRIPTION": "This score represents the quality of the suggestion.",
+        "LAST_VALUE": "Last user value",
+        "CURRENT_VALUE": "Current Value",
+        "ACTIONS": {
+          "REVERT": "Revert",
+          "CONFIRM": "Confirm"
+        },
+        "ARIA-LABEL": {
+          "OPEN-MENU": "Open content enrichment menu"
+        }
       }
     },
     "SEARCH": {

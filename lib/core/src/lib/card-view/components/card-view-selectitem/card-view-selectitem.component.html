@@ -12,9 +12,12 @@
             *ngIf="!isEditable"
             class="adf-property-value adf-property-read-only"
             [attr.data-automation-id]="'select-readonly-value-' + property.key"
-            data-automation-class="read-only-value">{{ (property.displayValue | async) | translate }}
+            data-automation-class="read-only-value">
+            <adf-content-enrichment-menu *ngIf="hasContentEnrichment" [prediction]="property.prediction" class="adf-content-enrichment-trigger"></adf-content-enrichment-menu>
+            {{ (property.displayValue | async) | translate }}
         </div>
-        <div *ngIf="isEditable">
+        <div *ngIf="isEditable" class="adf-property-editable">
+            <adf-content-enrichment-menu matPrefix *ngIf="hasContentEnrichment" [prediction]="property.prediction"></adf-content-enrichment-menu>
             <mat-form-field class="adf-property-value" [ngClass]="{'adf-property-value-editable': isEditable}">
                 <mat-select
                     [(value)]="value"

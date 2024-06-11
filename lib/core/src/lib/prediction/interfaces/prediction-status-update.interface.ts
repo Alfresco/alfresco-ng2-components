@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
-export * from './services';
+export interface PredictionStatusUpdate {
+    key: string;
+    previousValue?: any;
+}

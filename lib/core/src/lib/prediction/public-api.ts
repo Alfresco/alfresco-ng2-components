@@ -15,16 +15,5 @@
  * limitations under the License.
  */
 
-import { Prediction } from '@alfresco/js-api';
-
-export interface CardViewItem {
-    label: string;
-    value: any;
-    key: string;
-    default?: any;
-    type: string;
-    displayValue: any;
-    editable?: boolean;
-    icon?: string;
-    prediction?: Prediction;
-}
+export * from './services';
+export * from './interfaces/prediction-status-update.interface';

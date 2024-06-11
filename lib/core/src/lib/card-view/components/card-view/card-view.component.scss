@@ -24,6 +24,16 @@
         margin-bottom: 12px;
     }
 
+    .adf-property-value-wrapper {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+
+        adf-content-enrichment-menu button.adf-ai-button {
+            margin-left: -10px;
+        }
+    }
+
     .adf-property {
         .adf-property-field {
             width: 100%;
@@ -48,6 +58,7 @@
 
             #{$mat-form--text-field-infix} {
                 border-top-width: 0;
+                position: initial;
             }
 
             #{$mat-form-field-flex} {

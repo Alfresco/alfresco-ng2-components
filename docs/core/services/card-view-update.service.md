@@ -137,8 +137,27 @@ Example
    this.cardViewUpdateService.updateElement(cardViewBaseItemModel)
 ```
 
+## Clear predictions for properties and set previous value
+
+`onPredictionStatusChanged` function helps to clear predictions and set previous value (if provided) for the card view item. It takes the [`PredictionStatusUpdate[]`](../interfaces/prediction-status-update.interface.md) as a parameter.
+
+Example
+
+```javascript
+   this.cardViewUpdateService.onPredictionStatusChanged(notification);
+```
+
+You can subscribe to the `predictionStatusChanged$` to be informed about prediction status changes. 
+
+```ts
+ngOnInit() {
+    this.cardViewUpdateService.predictionStatusChanged$.subscribe(this.respondToPredictionStatusChange.bind(this));
+}
+```
+
 ## See also
 
 -   [Card view component](../components/card-view.component.md)
 -   [UpdateNotification interface](../interfaces/update-notification.interface.md)
 -   [ClickNotification interface](../interfaces/click-notification.interface.md)
+-   [PredictionStatusUpdate interface](../interfaces/prediction-status-update.interface.md)

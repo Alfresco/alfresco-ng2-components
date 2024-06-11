@@ -18,6 +18,7 @@
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { CardViewUpdateService, transformKeyToObject } from './card-view-update.service';
+import { PredictionStatusUpdate } from '@alfresco/adf-core';
 
 describe('CardViewUpdateService', () => {
 
@@ -82,5 +83,14 @@ describe('CardViewUpdateService', () => {
             );
             cardViewUpdateService.clicked(property);
         }));
+
+        it('should emit predictionStatusChanged$ when onPredictionStatusChanged is called', (done) => {
+            const mockPredictionStatusUpdate: PredictionStatusUpdate[] = [{ key: 'test', previousValue: 'value' }];
+            cardViewUpdateService.predictionStatusChanged$.subscribe((value) => {
+                expect(value).toEqual(mockPredictionStatusUpdate);
+                done();
+            });
+            cardViewUpdateService.onPredictionStatusChanged(mockPredictionStatusUpdate);
+        });
     });
 });

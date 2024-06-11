@@ -16,20 +16,23 @@ export interface BaseCardViewUpdate {
     itemUpdated$: Subject<UpdateNotification>;
     itemClicked$: Subject<ClickNotification>;
     updateItem$: Subject<CardViewBaseItemModel>;
+    predictionStatusChanged$: Subject<PredictionStatusUpdate[]>;
 
     update(property: CardViewBaseItemModel, newValue: any);
     clicked(property: CardViewBaseItemModel);
     updateElement(notification: CardViewBaseItemModel);
+    onPredictionStatusChanged(notification: PredictionStatusUpdate[]);
 }
 ```
 
 ## Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| itemUpdated$ | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`UpdateNotification`](../../../lib/core/src/lib/card-view/interfaces/update-notification.interface.ts)`>` | The current updated item. |
-| itemClicked$ | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`ClickNotification`](../../../lib/core/src/lib/card-view/interfaces/click-notification.interface.ts)`>` | The current clicked item. |
-| updateItem$ | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)`>` | The current model for the update item. |
+| Name                     | Type                                                                                                                                                                     | Description                                              |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|
+| itemUpdated$             | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`UpdateNotification`](../../../lib/core/src/lib/card-view/interfaces/update-notification.interface.ts)`>` | The current updated item.                                |
+| itemClicked$             | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`ClickNotification`](../../../lib/core/src/lib/card-view/interfaces/click-notification.interface.ts)`>`   | The current clicked item.                                |
+| updateItem$              | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)`>`       | The current model for the update item.                   |
+| predictionStatusChanged$ | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`PredictionStatusUpdate[]`](./prediction-status-update.interface.md)`>`                                   | The current model for items with irrelevant predictions. |
 
 ### Methods
 
@@ -47,6 +50,10 @@ export interface BaseCardViewUpdate {
 -   **updateElement**(notification: [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts))<br/>
     Update updateItem$ observable.
     -   notification:\_ [`CardViewBaseItemModel`](../../../lib/core/src/lib/card-view/models/card-view-baseitem.model.ts)  - The notification.
+
+-   **onPredictionStatusChanged**(notification: [`PredictionStatusUpdate[]`](./prediction-status-update.interface.md))<br/>
+    Update predictionStatusChanged$ observable.
+    -   notification:\_ [`PredictionStatusUpdate[]`](./prediction-status-update.interface.md)  - The notification.
 
 ## See also
 
