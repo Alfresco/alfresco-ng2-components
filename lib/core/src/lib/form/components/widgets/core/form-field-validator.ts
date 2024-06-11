@@ -77,7 +77,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
             }
 
             if (field.type === FormFieldTypes.UPLOAD) {
-                return !!field.value && field.value.length > 0;
+                return !!field.value && field.value?.length > 0;
             }
 
             if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
