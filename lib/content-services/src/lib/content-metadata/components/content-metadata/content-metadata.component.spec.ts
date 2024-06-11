@@ -22,7 +22,10 @@ import {
     Category,
     CategoryPaging,
     ClassesApi,
-    Node, Prediction, PredictionPaging, ReviewStatus,
+    Node,
+    Prediction,
+    PredictionPaging,
+    ReviewStatus,
     Tag,
     TagBody,
     TagEntry,
@@ -1679,20 +1682,20 @@ describe('ContentMetadataComponent', () => {
 
     describe('Predictions', () => {
         const getMockPrediction = (reviewStatus: ReviewStatus): Prediction => ({
-                confidenceLevel: 0.9,
-                predictionDateTime: new Date(2024, 1, 1),
-                modelId: 'test-model-id',
-                property: 'test:test',
-                id: 'test-prediction-id',
-                previousValue: 'previous value',
-                predictionValue: 'new value',
-                updateType: 'AUTOCORRECT',
-                reviewStatus: reviewStatus
+            confidenceLevel: 0.9,
+            predictionDateTime: new Date(2024, 1, 1),
+            modelId: 'test-model-id',
+            property: 'test:test',
+            id: 'test-prediction-id',
+            previousValue: 'previous value',
+            predictionValue: 'new value',
+            updateType: 'AUTOCORRECT',
+            reviewStatus: reviewStatus
         });
 
         const getMockPredictionPaging = (predictions: Prediction[]): PredictionPaging => ({
             list: {
-                entries: predictions.map(prediction => ({entry: prediction}))
+                entries: predictions.map((prediction) => ({ entry: prediction }))
             }
         });
 
@@ -1701,7 +1704,9 @@ describe('ContentMetadataComponent', () => {
         beforeEach(() => {
             component.node = node;
             component.displayPredictions = true;
-            getPredictionsSpy = spyOn(predictionService, 'getPredictions').and.returnValue(of(getMockPredictionPaging([getMockPrediction(ReviewStatus.UNREVIEWED)])));
+            getPredictionsSpy = spyOn(predictionService, 'getPredictions').and.returnValue(
+                of(getMockPredictionPaging([getMockPrediction(ReviewStatus.UNREVIEWED)]))
+            );
             fixture.detectChanges();
         });
 
@@ -1723,7 +1728,7 @@ describe('ContentMetadataComponent', () => {
             );
             component.ngOnInit();
 
-            component.basicProperties$.subscribe(properties => {
+            component.basicProperties$.subscribe((properties) => {
                 expect(properties[0].prediction).toEqual(getMockPrediction(ReviewStatus.UNREVIEWED));
                 done();
             });
@@ -1735,25 +1740,29 @@ describe('ContentMetadataComponent', () => {
                     {
                         editable: true,
                         title: 'test',
-                        properties: [{
-                            key: 'properties.test:test',
-                            editable: true,
-                            value: 'new value',
-                            title: 'test'
-                        }]
+                        properties: [
+                            {
+                                key: 'properties.test:test',
+                                editable: true,
+                                value: 'new value',
+                                title: 'test'
+                            }
+                        ]
                     }
                 ])
             );
             component.ngOnInit();
 
-            component.groupedProperties$.subscribe(properties => {
+            component.groupedProperties$.subscribe((properties) => {
                 expect(properties[0].properties[0].prediction).toEqual(getMockPrediction(ReviewStatus.UNREVIEWED));
                 done();
             });
         });
 
         it('should not map predictions when reviewStatus other then UNREVIEWED', (done) => {
-            getPredictionsSpy.and.returnValue(of(getMockPredictionPaging([getMockPrediction(ReviewStatus.REJECTED), getMockPrediction(ReviewStatus.CONFIRMED)])));
+            getPredictionsSpy.and.returnValue(
+                of(getMockPredictionPaging([getMockPrediction(ReviewStatus.REJECTED), getMockPrediction(ReviewStatus.CONFIRMED)]))
+            );
             getBasicPropertiesSpy.and.returnValue(
                 of([
                     {
@@ -1766,7 +1775,7 @@ describe('ContentMetadataComponent', () => {
             );
             component.ngOnInit();
 
-            component.basicProperties$.subscribe(properties => {
+            component.basicProperties$.subscribe((properties) => {
                 expect(properties[0].prediction).toBeNull();
                 done();
             });
@@ -1785,24 +1794,24 @@ describe('ContentMetadataComponent', () => {
             );
             component.ngOnInit();
 
-            component.basicProperties$.subscribe(properties => {
+            component.basicProperties$.subscribe((properties) => {
                 expect(properties[0].prediction).toBeNull();
                 done();
             });
         });
 
         it('should set updated node when prediction status has changed', () => {
-            const updatedNode = {...node, name: 'new test name'};
+            const updatedNode = { ...node, name: 'new test name' };
             const getNodeSpy = spyOn(nodesApiService, 'getNode').and.returnValue(of(updatedNode));
             component.ngOnInit();
-            predictionService.predictionStatusUpdated$.next({key: 'test:test', previousValue: 'previous value'});
+            predictionService.predictionStatusUpdated$.next({ key: 'test:test', previousValue: 'previous value' });
             expect(getNodeSpy).toHaveBeenCalledWith(node.id);
             expect(component.node).toEqual(updatedNode);
         });
 
         it('should call onPredictionStatusChanged when prediction status has changed', () => {
             const onPredictionStatusChangedSpy = spyOn(updateService, 'onPredictionStatusChanged');
-            const notification = {key: 'test:test', previousValue: 'previous value'};
+            const notification = { key: 'test:test', previousValue: 'previous value' };
             component.ngOnInit();
             predictionService.predictionStatusUpdated$.next(notification);
             expect(onPredictionStatusChangedSpy).toHaveBeenCalledWith([notification]);
