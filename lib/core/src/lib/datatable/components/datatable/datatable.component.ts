@@ -335,7 +335,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             this.setTableSorting(changes['sorting'].currentValue);
         }
 
-        if (multiselectChanges.currentValue === false) {
+        if (multiselectChanges?.currentValue === false) {
             this.resetSelection();
         }
     }
