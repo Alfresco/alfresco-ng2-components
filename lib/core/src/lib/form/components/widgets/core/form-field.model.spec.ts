@@ -122,6 +122,43 @@ describe('FormFieldModel', () => {
         expect(field.value).toBe('deferred');
     });
 
+    it('should add value to field options if NOT present', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [],
+            value: { id: 'id_one', name: 'One' }
+        });
+
+        expect(field.options).toEqual([{ id: 'id_one', name: 'One' }]);
+        expect(field.value).toEqual('id_one');
+    });
+
+    it('should assign "empty" option as value if value is null and "empty" option is present in options', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [
+                { id: 'empty', name: 'Chose option...' },
+                { id: 'one', name: 'One' }
+            ],
+            value: null
+        });
+
+        expect(field.hasEmptyValue).toBe(true);
+        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose option...' });
+        // expect(field.value).toEqual('empty');
+    });
+
+    it('should set hasEmptyValue to true if "empty" option is present in options', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [{ id: 'empty', name: 'Chose option...' }],
+            value: null
+        });
+
+        expect(field.hasEmptyValue).toBe(true);
+        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose option...' });
+    });
+
     it('should parse the date with the default format (D-M-YYYY) if the display format is missing', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
