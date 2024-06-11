@@ -45,7 +45,7 @@ export class PredictionsApi extends BaseApi {
      *
      * @param predictionId The identifier of a prediction.
      * @param reviewStatus New status to apply for prediction. Can be either 'confirmed' or 'rejected'.
-     * @returns Promise<{}>
+     * @returns Promise<void>
      */
     reviewPrediction(predictionId: string, reviewStatus: ReviewStatus): Promise<void> {
         throwIfNotDefined(predictionId, 'predictionId');

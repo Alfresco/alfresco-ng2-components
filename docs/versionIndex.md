@@ -51,6 +51,7 @@ backend services have been tested with each released version of ADF.
 <!--6100 start-->
 
 -   [Content Enrichment Menu Component](core/components/content-enrichment-menu.component.md)
+-   [Prediction Status Update Interface](core/interfaces/prediction-status-update.interface.md)
 
 <!--6100 end-->
 

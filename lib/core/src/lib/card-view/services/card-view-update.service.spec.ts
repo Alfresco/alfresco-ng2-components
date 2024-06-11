@@ -18,7 +18,7 @@
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { CardViewUpdateService, transformKeyToObject } from './card-view-update.service';
-import { PredictionStatusUpdate } from '@alfresco/adf-core';
+import { PredictionStatusUpdate } from '../../prediction/interfaces/prediction-status-update.interface';
 
 describe('CardViewUpdateService', () => {
 
