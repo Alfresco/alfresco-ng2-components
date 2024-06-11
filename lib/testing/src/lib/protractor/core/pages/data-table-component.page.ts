@@ -49,7 +49,7 @@ export class DataTableComponentPage {
         this.mainMenuButton = this.rootElement.$('[data-automation-id="adf-datatable-main-menu-button"]');
         this.selectedRowNumber = this.rootElement.$(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
         this.allSelectedRows = this.rootElement.$$(`adf-datatable-row[class*='is-selected']`);
-        this.selectAll = this.rootElement.$(`th[class*='adf-datatable-header'] ${materialLocators.Checkbox.root}`);
+        this.selectAll = this.rootElement.$(`thead[class*='adf-datatable-header'] ${materialLocators.Checkbox.root}`);
         this.emptyList = this.rootElement.$(`adf-empty-content`);
         this.emptyListTitle = this.rootElement.$(`.adf-empty-content__title`);
         this.emptyListSubtitle = this.rootElement.$(`.adf-empty-content__subtitle`);
