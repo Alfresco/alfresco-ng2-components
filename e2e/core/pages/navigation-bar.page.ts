@@ -32,7 +32,7 @@ export class NavigationBarPage {
     async clickNavigationBarItem(title: string, untilElementIsVisible?: ElementFinder): Promise<void> {
         Logger.log(`clickNavigationBarItem ${title}`);
 
-        const menu = $(`.app-sidenav-link[data-automation-id="${title}"]`);
+        const menu = this.getMenuItemLocator(title);
         await BrowserActions.closeMenuAndDialogs();
 
         if (untilElementIsVisible) {
