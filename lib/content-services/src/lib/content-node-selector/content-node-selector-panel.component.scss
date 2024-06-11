@@ -58,9 +58,9 @@ h2.adf-search-results-label {
         }
 
         .adf-sites-dropdown-form-field {
-            &#{$mat-form-field-hide-placeholder} {
-                #{$mat-form-field-infix} {
-                    padding-top: 0;
+            label {
+                &#{$mat-form-field-label} {
+                    top: 32px;
                 }
             }
         }
