@@ -38,6 +38,7 @@ export class FormFieldModel extends FormWidgetModel {
     private _isValid: boolean = true;
     private _required: boolean = false;
 
+    private readonly emptyValueOptionId = 'empty';
     readonly defaultDateFormat: string = 'D-M-YYYY';
     readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
     private readonly defaultEmptyOptionId = 'empty';
@@ -96,7 +97,7 @@ export class FormFieldModel extends FormWidgetModel {
     columns: ContainerColumnModel[] = [];
 
     // util members
-    emptyOption: FormFieldOption;
+    emptyValueOption: FormFieldOption;
     validationSummary: ErrorMessageModel;
 
     get value(): any {
@@ -189,9 +190,9 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxDateRangeValue = json.maxDateRangeValue;
             this.dynamicDateRangeSelection = json.dynamicDateRangeSelection;
             this.regexPattern = json.regexPattern;
-            this.options = this.parseValidOptions(json.options);
-            this.emptyOption = this.getEmptyOption(this.options);
-            this.hasEmptyValue = json?.hasEmptyValue ?? !!this.emptyOption;
+            this.options = Array.isArray(json.options) ? json.options.filter((option) => this.isValidOption(option)) : [];
+            this.hasEmptyValue = json?.hasEmptyValue ?? this.hasEmptyValueOption(this.options);
+            this.emptyValueOption = this.hasEmptyValue ? this.getEmptyValueOption(this.options) : undefined;
             this.className = json.className;
             this.optionType = json.optionType;
             this.params = json.params || {};
@@ -236,8 +237,12 @@ export class FormFieldModel extends FormWidgetModel {
         this.updateForm();
     }
 
-    private getEmptyOption(options: FormFieldOption[]): FormFieldOption {
-        return options.find((option) => option?.id === this.defaultEmptyOptionId);
+    private getEmptyValueOption(options: FormFieldOption[]): FormFieldOption {
+        return options.find((option) => option?.id === this.emptyValueOptionId);
+    }
+
+    private hasEmptyValueOption(options: FormFieldOption[]): boolean {
+        return options.some((option) => option?.id === this.emptyValueOptionId);
     }
 
     private setValueForReadonlyType(form: any) {
@@ -304,41 +309,42 @@ export class FormFieldModel extends FormWidgetModel {
         /*
          This is needed due to Activiti issue related to reading dropdown values as value string
          but saving back as object: { id: <id>, name: <name> }
+         Side note: Probably not valid anymore
          */
         if (json.type === FormFieldTypes.DROPDOWN) {
-            if (this.hasEmptyValue) {
-                if (!this.emptyOption) {
-                    this.emptyOption = {
+            if (this.hasEmptyValue && value === null) {
+                if (!this.emptyValueOption) {
+                    this.emptyValueOption = {
                         id: this.defaultEmptyOptionId,
                         name: this.defaultEmptyOptionName
                     };
-                    this.options.unshift(this.emptyOption);
+                    this.options.unshift(this.emptyValueOption);
                 }
 
-                const isEmptyValue = !value || [this.emptyOption.id, this.emptyOption.name].includes(value);
-                if (isEmptyValue) {
-                    return this.emptyOption.id;
-                }
+                value = this.emptyValueOption;
+                return value;
             }
 
             if (this.isValidOption(value)) {
                 this.addOption(value);
-                return value.id;
+                return value;
             }
 
             if (this.hasMultipleValues) {
-                const validSelectedOptions = (Array.isArray(json.value) ? json.value : []).filter((option) => this.isValidOption(option));
+                let arrayOfSelectedOptions = Array.isArray(json.value) ? json.value : [];
+                arrayOfSelectedOptions = arrayOfSelectedOptions.filter((option) => this.isValidOption(option));
 
-                this.addOptions(validSelectedOptions);
-                return validSelectedOptions;
+                this.addOptions(arrayOfSelectedOptions);
+                value = arrayOfSelectedOptions;
+                return value;
             }
-
-            return value;
+            return null;
         }
 
         /*
          This is needed due to Activiti issue related to reading radio button values as value string
          but saving back as object: { id: <id>, name: <name> }
+         Side note: Probably not valid anymore
          */
         if (json.type === FormFieldTypes.RADIO_BUTTONS) {
             // Activiti has a bug with default radio button value where initial selection passed as `name` value
@@ -385,31 +391,7 @@ export class FormFieldModel extends FormWidgetModel {
 
         switch (this.type) {
             case FormFieldTypes.DROPDOWN: {
-                if (!this.value) {
-                    this.form.values[this.id] = null;
-                    break;
-                }
-
-                /*
-                 This is needed due to Activiti reading dropdown values as string
-                 but saving back as object: { id: <id>, name: <name> }
-                 */
-                if (Array.isArray(this.value)) {
-                    this.form.values[this.id] = this.value;
-                    break;
-                }
-
-                if (typeof this.value === 'string') {
-                    if (this.value === 'empty' || this.value === '') {
-                        this.form.values[this.id] = null;
-                        break;
-                    }
-
-                    const entry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
-                    if (entry.length > 0) {
-                        this.form.values[this.id] = entry[0];
-                    }
-                }
+                this.form.values[this.id] = this.isEmptyValueOption(this.value) ? null : this.value;
                 break;
             }
             case FormFieldTypes.RADIO_BUTTONS: {
@@ -509,9 +491,8 @@ export class FormFieldModel extends FormWidgetModel {
         return type === 'container';
     }
 
-    getOptionName(): string {
-        const option: FormFieldOption = this.options.find((opt) => opt.id === this.value);
-        return option ? option.name : null;
+    getOptionName(): null | string {
+        return this.value ? this.value?.name : null;
     }
 
     hasOptions() {
@@ -519,7 +500,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     isEmptyValueOption(option: FormFieldOption): boolean {
-        return this.hasEmptyValue && option?.id === this.defaultEmptyOptionId;
+        return this.hasEmptyValueOption && option?.id === this.emptyValueOptionId;
     }
 
     private addOptions(options: FormFieldOption[]) {
