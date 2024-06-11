@@ -306,11 +306,6 @@ export class FormFieldModel extends FormWidgetModel {
     parseValue(json: any): any {
         let value = Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null;
 
-        /*
-         This is needed due to Activiti issue related to reading dropdown values as value string
-         but saving back as object: { id: <id>, name: <name> }
-         Side note: Probably not valid anymore
-         */
         if (json.type === FormFieldTypes.DROPDOWN) {
             if (this.hasEmptyValue && value === null) {
                 if (!this.emptyValueOption) {
@@ -341,11 +336,6 @@ export class FormFieldModel extends FormWidgetModel {
             return null;
         }
 
-        /*
-         This is needed due to Activiti issue related to reading radio button values as value string
-         but saving back as object: { id: <id>, name: <name> }
-         Side note: Probably not valid anymore
-         */
         if (json.type === FormFieldTypes.RADIO_BUTTONS) {
             // Activiti has a bug with default radio button value where initial selection passed as `name` value
             // so try resolving current one with a fallback to first entry via name or id
