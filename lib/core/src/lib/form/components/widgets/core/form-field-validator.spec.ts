@@ -77,10 +77,10 @@ describe('FormFieldValidator', () => {
             });
 
             expect(field.value).toEqual({ id: 'empty', name: 'Choose option...' });
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
 
             field.value = { id: 'noneEmpty', name: 'None empty' };
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should fail (display error) for multiple type dropdown with zero selection', () => {
@@ -114,7 +114,7 @@ describe('FormFieldValidator', () => {
                 hasEmptyValue: false
             });
 
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
         });
 
         it('should fail (display error) for dropdown with empty object', () => {
