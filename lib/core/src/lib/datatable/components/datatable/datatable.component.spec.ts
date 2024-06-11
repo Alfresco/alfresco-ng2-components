@@ -415,6 +415,24 @@ describe('DataTable', () => {
         expect(dataTable.resetSelection).toHaveBeenCalled();
     });
 
+    it('should reset selection on multiselect change', () => {
+        spyOn(dataTable, 'resetSelection').and.callThrough();
+
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
+        const rows = dataTable.data.getRows();
+        rows[0].isSelected = true;
+        rows[1].isSelected = true;
+
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeTruthy();
+
+        dataTable.ngOnChanges({
+            multiselect: new SimpleChange(true, false, false)
+        });
+
+        expect(dataTable.resetSelection).toHaveBeenCalled();
+    });
+
     it('should select the row where isSelected is true', () => {
         dataTable.rows = [{ name: 'TEST1' }, { name: 'FAKE2' }, { name: 'TEST2', isSelected: true }, { name: 'FAKE2' }];
         dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
