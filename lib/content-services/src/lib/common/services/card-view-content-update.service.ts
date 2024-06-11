@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UpdateNotification, CardViewBaseItemModel, CardViewUpdateService } from '@alfresco/adf-core';
+import { UpdateNotification, CardViewBaseItemModel, CardViewUpdateService, PredictionStatusUpdate } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -38,6 +38,10 @@ export class CardViewContentUpdateService implements BaseCardViewContentUpdate {
 
     updateElement(notification: CardViewBaseItemModel) {
         this.cardViewUpdateService.updateElement(notification);
+    }
+
+    onPredictionStatusChanged(notification: PredictionStatusUpdate[]) {
+        this.cardViewUpdateService.onPredictionStatusChanged(notification);
     }
 
     updateNodeAspect(node: Node) {

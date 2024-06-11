@@ -16,8 +16,8 @@
  */
 
 import { PredictionService } from './prediction.service';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TestBed } from '@angular/core/testing';
-import { ContentTestingModule } from '../../testing/content.testing.module';
 import { Prediction, PredictionEntry, PredictionPaging, PredictionPagingList, ReviewStatus } from '@alfresco/js-api';
 
 describe('PredictionService', () => {
@@ -33,7 +33,7 @@ describe('PredictionService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(PredictionService);
     });

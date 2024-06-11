@@ -18,12 +18,15 @@
 import { Node } from '@alfresco/js-api';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CardViewContentUpdateService } from './card-view-content-update.service';
+import { CardViewUpdateService, PredictionStatusUpdate } from '@alfresco/adf-core';
 
 describe('CardViewContentUpdateService', () => {
     let cardViewContentUpdateService: CardViewContentUpdateService;
+    let cardViewUpdateService: CardViewUpdateService;
 
     beforeEach(() => {
         cardViewContentUpdateService = TestBed.inject(CardViewContentUpdateService);
+        cardViewUpdateService = TestBed.inject(CardViewUpdateService);
     });
 
     it('should send updated node when aspect changed', fakeAsync(() => {
@@ -34,4 +37,12 @@ describe('CardViewContentUpdateService', () => {
 
         cardViewContentUpdateService.updateNodeAspect(fakeNode);
     }));
+
+    it('should call onPredictionStatusChanged on cardViewUpdateService', () => {
+        spyOn(cardViewUpdateService, 'onPredictionStatusChanged');
+        const mockNotification: PredictionStatusUpdate[] = [{ key: 'test', previousValue: 'value' }];
+        cardViewContentUpdateService.onPredictionStatusChanged(mockNotification);
+
+        expect(cardViewUpdateService.onPredictionStatusChanged).toHaveBeenCalledWith(mockNotification);
+    });
 });

@@ -46,6 +46,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v6.10.0
+
+<!--6100 start-->
+
+-   [Content Enrichment Menu Component](core/components/content-enrichment-menu.component.md)
+
+<!--6100 end-->
+
 ## v6.8.0
 
 <!--680 start-->

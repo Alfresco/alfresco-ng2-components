@@ -18,12 +18,29 @@
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
+import {
+    Category,
+    CategoryPaging,
+    ClassesApi,
+    Node, Prediction, PredictionPaging, ReviewStatus,
+    Tag,
+    TagBody,
+    TagEntry,
+    TagPaging,
+    TagPagingList
+} from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { AppConfigService, CardViewBaseItemModel, CardViewComponent, NotificationService, UpdateNotification } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    CardViewBaseItemModel,
+    CardViewComponent,
+    NotificationService,
+    PredictionService,
+    UpdateNotification
+} from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-import { EMPTY, of, throwError } from 'rxjs';
+import { EMPTY, of, Subject, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
@@ -37,18 +54,24 @@ import {
     TagService
 } from '@alfresco/adf-content-services';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import {
+    PredictionStatusUpdate
+} from '../../../../../../core/src/lib/prediction/interfaces/prediction-status-update.interface';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
     let fixture: ComponentFixture<ContentMetadataComponent>;
     let contentMetadataService: ContentMetadataService;
     let updateService: CardViewContentUpdateService;
+    let predictionService: PredictionService;
     let nodesApiService: NodesApiService;
     let node: Node;
     let folderNode: Node;
     let tagService: TagService;
     let categoryService: CategoryService;
     let getClassSpy: jasmine.Spy;
+    let getGroupedPropertiesSpy: jasmine.Spy;
+    let getBasicPropertiesSpy: jasmine.Spy;
     let notificationService: NotificationService;
 
     const preset = 'custom-preset';
@@ -175,6 +198,13 @@ describe('ContentMetadataComponent', () => {
                         linkNodeToCategory: () => EMPTY,
                         unlinkNodeFromCategory: () => EMPTY
                     }
+                },
+                {
+                    provide: PredictionService,
+                    useValue: {
+                        getPredictions: () => EMPTY,
+                        predictionStatusUpdated$: new Subject<PredictionStatusUpdate>()
+                    }
                 }
             ]
         });
@@ -182,6 +212,7 @@ describe('ContentMetadataComponent', () => {
         component = fixture.componentInstance;
         contentMetadataService = TestBed.inject(ContentMetadataService);
         updateService = TestBed.inject(CardViewContentUpdateService);
+        predictionService = TestBed.inject(PredictionService);
         nodesApiService = TestBed.inject(NodesApiService);
         tagService = TestBed.inject(TagService);
         categoryService = TestBed.inject(CategoryService);
@@ -210,6 +241,8 @@ describe('ContentMetadataComponent', () => {
         component.node = node;
         component.preset = preset;
         spyOn(contentMetadataService, 'getContentTypeProperty').and.returnValue(of([]));
+        getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([]));
+        getBasicPropertiesSpy = spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
         getClassSpy = spyOn(classesApi, 'getClass');
         fixture.detectChanges();
     });
@@ -225,6 +258,10 @@ describe('ContentMetadataComponent', () => {
 
         it('should have expanded input param as false by default', () => {
             expect(component.expanded).toBeFalse();
+        });
+
+        it('should have display predictions param as false by default', () => {
+            expect(component.displayPredictions).toBeFalse();
         });
     });
 
@@ -258,8 +295,6 @@ describe('ContentMetadataComponent', () => {
 
         it('nodeAspectUpdate', fakeAsync(() => {
             const fakeNode = { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node' } as Node;
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
-            spyOn(contentMetadataService, 'getBasicProperties').and.stub();
             updateService.updateNodeAspect(fakeNode);
 
             tick(600);
@@ -268,7 +303,7 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should save changedProperties on save click', fakeAsync(() => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
+            getGroupedPropertiesSpy.and.returnValue(
                 of([
                     {
                         editable: true,
@@ -292,6 +327,18 @@ describe('ContentMetadataComponent', () => {
             expect(nodesApiService.updateNode).toHaveBeenCalled();
             expect(component.node).toEqual(expectedNode);
         }));
+
+        it('should call onPredictionStatusChanged with updated property keys to clear predictions if displayPredictions=true', () => {
+            spyOn(updateService, 'onPredictionStatusChanged');
+            const expectedNode: Node = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+
+            component.displayPredictions = true;
+            component.changedProperties = { properties: { key1: 'value1', key2: 'value2' } };
+
+            component.saveChanges();
+            expect(updateService.onPredictionStatusChanged).toHaveBeenCalledWith([{ key: 'key1' }, { key: 'key2' }]);
+        });
 
         it('should call removeTag and assignTagsToNode on TagService on save click', fakeAsync(() => {
             component.displayTags = true;
@@ -456,7 +503,7 @@ describe('ContentMetadataComponent', () => {
 
         beforeEach(() => {
             showErrorSpy = spyOn(notificationService, 'showError').and.stub();
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
+            getGroupedPropertiesSpy.and.returnValue(
                 of([
                     {
                         editable: true,
@@ -612,7 +659,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reset group edit ability on reset click', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
+            getGroupedPropertiesSpy.and.returnValue(
                 of([
                     {
                         editable: true,
@@ -643,8 +690,6 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should load the basic properties on node change', () => {
-            spyOn(contentMetadataService, 'getBasicProperties');
-
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             expect(contentMetadataService.getContentTypeProperty).toHaveBeenCalledWith(expectedNode);
@@ -655,7 +700,7 @@ describe('ContentMetadataComponent', () => {
             const expectedProperties = [];
             component.expanded = false;
 
-            spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of(expectedProperties));
+            getBasicPropertiesSpy.and.returnValue(of(expectedProperties));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -672,7 +717,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            spyOn(contentMetadataService, 'getBasicProperties').and.returnValue(of([]));
+            getBasicPropertiesSpy.and.returnValue(of([]));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -684,10 +729,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should load the group properties on node change', () => {
-            spyOn(contentMetadataService, 'getGroupedProperties');
-
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
-
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
         });
 
@@ -708,8 +750,6 @@ describe('ContentMetadataComponent', () => {
                 }
             ];
             component.preset = presetConfig;
-            spyOn(contentMetadataService, 'getGroupedProperties');
-
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, presetConfig);
@@ -719,7 +759,7 @@ describe('ContentMetadataComponent', () => {
             const expectedProperties = [];
             component.expanded = true;
 
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: expectedProperties } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: expectedProperties } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -733,7 +773,7 @@ describe('ContentMetadataComponent', () => {
             component.expanded = true;
             component.displayEmpty = false;
 
-            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] } as any]));
+            getGroupedPropertiesSpy.and.returnValue(of([{ properties: [] } as any]));
             spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -744,7 +784,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should hide card views group when the grouped properties are empty', async () => {
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -757,7 +797,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should display card views group when there is at least one property that is not empty', async () => {
             component.expanded = true;
-            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
+            getGroupedPropertiesSpy.and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -771,7 +811,6 @@ describe('ContentMetadataComponent', () => {
         it('should revert reload properties for general info panel on cancel', () => {
             component.readOnly = false;
             fixture.detectChanges();
-            spyOn(contentMetadataService, 'getBasicProperties');
             toggleEditModeForGeneralInfo();
 
             findCancelButton().click();
@@ -779,7 +818,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reload properties for group panel on cancel', () => {
-            const getGroupedPropertiesSpy = spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(
+            getGroupedPropertiesSpy.and.returnValue(
                 of([
                     {
                         editable: true,
@@ -959,6 +998,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
+            await fixture.whenStable();
 
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
@@ -979,6 +1019,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
+            await fixture.whenStable();
 
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
@@ -999,6 +1040,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
+            await fixture.whenStable();
 
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
@@ -1020,6 +1062,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
+            await fixture.whenStable();
 
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
@@ -1040,6 +1083,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
+            await fixture.whenStable();
 
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
@@ -1064,6 +1108,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
+            await fixture.whenStable();
 
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
@@ -1098,6 +1143,7 @@ describe('ContentMetadataComponent', () => {
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
+            await fixture.whenStable();
 
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
@@ -1595,6 +1641,138 @@ describe('ContentMetadataComponent', () => {
             const customComponent = fixture.debugElement.query(By.css('adf-dynamic-component')).nativeElement;
             expect(panelTitle.innerText).toEqual('testTitle');
             expect(customComponent).toBeDefined();
+        });
+    });
+
+    describe('Predictions', () => {
+        const getMockPrediction = (reviewStatus: ReviewStatus): Prediction => ({
+                confidenceLevel: 0.9,
+                predictionDateTime: new Date(2024, 1, 1),
+                modelId: 'test-model-id',
+                property: 'test:test',
+                id: 'test-prediction-id',
+                previousValue: 'previous value',
+                predictionValue: 'new value',
+                updateType: 'AUTOCORRECT',
+                reviewStatus: reviewStatus
+        });
+
+        const getMockPredictionPaging = (predictions: Prediction[]): PredictionPaging => ({
+            list: {
+                entries: predictions.map(prediction => ({entry: prediction}))
+            }
+        });
+
+        let getPredictionsSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            component.node = node;
+            component.displayPredictions = true;
+            getPredictionsSpy = spyOn(predictionService, 'getPredictions').and.returnValue(of(getMockPredictionPaging([getMockPrediction(ReviewStatus.UNREVIEWED)])));
+            fixture.detectChanges();
+        });
+
+        it('should load predictions when displayPredictions is true', () => {
+            component.ngOnInit();
+            expect(predictionService.getPredictions).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should map predictions to basic properties', (done) => {
+            getBasicPropertiesSpy.and.returnValue(
+                of([
+                    {
+                        key: 'properties.test:test',
+                        editable: true,
+                        value: 'new value',
+                        title: 'test'
+                    }
+                ])
+            );
+            component.ngOnInit();
+
+            component.basicProperties$.subscribe(properties => {
+                expect(properties[0].prediction).toEqual(getMockPrediction(ReviewStatus.UNREVIEWED));
+                done();
+            });
+        });
+
+        it('should map predictions to grouped properties', (done) => {
+            getGroupedPropertiesSpy.and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: [{
+                            key: 'properties.test:test',
+                            editable: true,
+                            value: 'new value',
+                            title: 'test'
+                        }]
+                    }
+                ])
+            );
+            component.ngOnInit();
+
+            component.groupedProperties$.subscribe(properties => {
+                expect(properties[0].properties[0].prediction).toEqual(getMockPrediction(ReviewStatus.UNREVIEWED));
+                done();
+            });
+        });
+
+        it('should not map predictions when reviewStatus other then UNREVIEWED', (done) => {
+            getPredictionsSpy.and.returnValue(of(getMockPredictionPaging([getMockPrediction(ReviewStatus.REJECTED), getMockPrediction(ReviewStatus.CONFIRMED)])));
+            getBasicPropertiesSpy.and.returnValue(
+                of([
+                    {
+                        key: 'properties.test:test',
+                        editable: true,
+                        value: 'new value',
+                        title: 'test'
+                    }
+                ])
+            );
+            component.ngOnInit();
+
+            component.basicProperties$.subscribe(properties => {
+                expect(properties[0].prediction).toBeNull();
+                done();
+            });
+        });
+
+        it('should not map predictions to properties if the property value is different from the prediction value', (done) => {
+            getBasicPropertiesSpy.and.returnValue(
+                of([
+                    {
+                        key: 'properties.test:test',
+                        editable: true,
+                        value: 'different value',
+                        title: 'test'
+                    }
+                ])
+            );
+            component.ngOnInit();
+
+            component.basicProperties$.subscribe(properties => {
+                expect(properties[0].prediction).toBeNull();
+                done();
+            });
+        });
+
+        it('should set updated node when prediction status has changed', () => {
+            const updatedNode = {...node, name: 'new test name'};
+            const getNodeSpy = spyOn(nodesApiService, 'getNode').and.returnValue(of(updatedNode));
+            component.ngOnInit();
+            predictionService.predictionStatusUpdated$.next({key: 'test:test', previousValue: 'previous value'});
+            expect(getNodeSpy).toHaveBeenCalledWith(node.id);
+            expect(component.node).toEqual(updatedNode);
+        });
+
+        it('should call onPredictionStatusChanged when prediction status has changed', () => {
+            const onPredictionStatusChangedSpy = spyOn(updateService, 'onPredictionStatusChanged');
+            const notification = {key: 'test:test', previousValue: 'previous value'};
+            component.ngOnInit();
+            predictionService.predictionStatusUpdated$.next(notification);
+            expect(onPredictionStatusChangedSpy).toHaveBeenCalledWith([notification]);
         });
     });
 });

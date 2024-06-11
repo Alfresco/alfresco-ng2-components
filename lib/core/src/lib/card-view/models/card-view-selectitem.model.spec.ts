@@ -57,5 +57,14 @@ describe('CardViewSelectItemModel', () => {
 
             expect(itemModel.displayNoneOption).toBe(false);
         }));
+
+        it('should update the value when new value is set', (done) => {
+            const itemModel = new CardViewSelectItemModel(properties);
+            itemModel.setValue('three');
+            itemModel.displayValue.subscribe((value) => {
+                expect(value).toBe(mockData[2].label);
+                done();
+            });
+        });
     });
 });

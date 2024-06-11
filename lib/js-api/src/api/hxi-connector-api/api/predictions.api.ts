@@ -45,21 +45,24 @@ export class PredictionsApi extends BaseApi {
      *
      * @param predictionId The identifier of a prediction.
      * @param reviewStatus New status to apply for prediction. Can be either 'confirmed' or 'rejected'.
-     * @returns Promise<void>
+     * @returns Promise<{}>
      */
     reviewPrediction(predictionId: string, reviewStatus: ReviewStatus): Promise<void> {
         throwIfNotDefined(predictionId, 'predictionId');
         throwIfNotDefined(reviewStatus, 'reviewStatus');
 
         const pathParams = {
-            predictionId,
-            reviewStatus
+            predictionId
         };
+
+        const queryParams = {
+            reviewStatus
+        }
 
         return this.post({
             path: '/predictions/{predictionId}/review',
             pathParams,
-            returnType: Promise<void>
+            queryParams
         });
     }
 }

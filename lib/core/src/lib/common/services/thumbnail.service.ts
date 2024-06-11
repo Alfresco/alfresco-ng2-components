@@ -158,7 +158,8 @@ export class ThumbnailService {
         'save-as': './assets/images/save-as.svg',
         save: './assets/images/save.svg',
         task: './assets/images/task.svg',
-        'multipart/related': './assets/images/ft_ic_website.svg'
+        'multipart/related': './assets/images/ft_ic_website.svg',
+        'ai-sparkles': './assets/images/ai-sparkles.svg'
     };
 
     constructor(matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {

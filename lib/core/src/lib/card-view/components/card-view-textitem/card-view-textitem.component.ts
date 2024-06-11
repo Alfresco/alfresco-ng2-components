@@ -57,6 +57,9 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     @Input()
     displayLabelForChips = false;
 
+    @Input()
+    hasContentEnrichment = false;
+
     editedValue: string | string[];
     errors: CardViewItemValidator[];
     templateType: string;
