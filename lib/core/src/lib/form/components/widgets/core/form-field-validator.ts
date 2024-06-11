@@ -60,8 +60,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
                     return Array.isArray(field.value) && !!field.value.length;
                 }
 
-                if (field.hasEmptyValue && field.emptyOption) {
-                    if (field.value === field.emptyOption.id) {
+                if (field.hasEmptyValue && field.emptyValueOption) {
+                    if (field.value.id === field.emptyValueOption.id) {
                         return false;
                     }
                 }
