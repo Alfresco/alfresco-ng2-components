@@ -17,8 +17,11 @@
         }
 
         &-content-actions {
+            padding-bottom: 16px;
+            padding-right: 16px;
             text-align: right;
         }
+
         #{$mat-button} {
             width: auto;
             padding: 0 16px;
@@ -35,16 +38,20 @@
         mat-form-field {
             width: 100%;
         }
+
+        &-process-name {
+            margin-top: 16px
+        }
     }
 
     &-process-input-autocomplete {
         display: flex;
         padding-bottom: 2px;
 
-        button {
+        .adf-start-process-button {
             position: absolute;
             right: -14px;
-            top: 0;
+            top: 10px;
         }
 
         mat-spinner {
@@ -55,6 +62,14 @@
     }
 
     &-start-form-container {
+        #{$mat-card} {
+            height: 100%;
+        }
+
+        #{$mat-card-header} {
+            display: none;
+        }
+
         .adf-start-form-card:has(.adf-start-form-header) {
             box-shadow: none;
             padding: 0;
@@ -63,6 +78,11 @@
 
     &-start-form-actions:has(.adf-start-form-actions-button) {
         text-align: right;
+        padding-bottom: 16px;
+
+        button {
+            text-wrap: none;
+        }
     }
 
     &-start-process-definition-container {
@@ -70,6 +90,16 @@
         flex-direction: row;
         justify-content: space-around;
         align-items: baseline;
+
+        .adf-start-process-definition-select {
+            .mat-mdc-select-arrow-wrapper {
+                transform:  none;
+
+                svg {
+                    fill: initial;
+                }
+            }
+        }
     }
 
     &-start-process-app-list {
