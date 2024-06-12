@@ -245,7 +245,7 @@ export class NodesApiService {
      *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
-     * @returns List of assigned holds
+     * @returns List of assigned holds Observable<Hold[]>
      */
     getNodeAssignHolds(nodeId: string, options?: any): Observable<Hold[]> {
         const queryOptions = Object.assign({ where: `(assocType='rma:frozenContent')` }, options);

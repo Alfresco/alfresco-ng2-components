@@ -34,11 +34,11 @@ export class LegalHoldService {
     constructor(private apiService: AlfrescoApiService) {}
 
     /**
-     * Gets the list of holds assigned to the node.
+     * Gets the list of holds.
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param options Optional parameters supported by JS-API
-     * @returns List of assigned holds Hold[]
+     * @returns List of holds Observable<Hold[]>
      */
     getHolds(filePlanId: string, options?: ContentPagingQuery): Observable<Hold[]> {
         return from(this.legalHoldApi.getHolds(filePlanId, options)).pipe(
