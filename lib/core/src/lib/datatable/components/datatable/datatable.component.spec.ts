@@ -1397,14 +1397,14 @@ describe('Accesibility', () => {
         });
 
         fixture.detectChanges();
-        const datatable = element.querySelector('.adf-datatable-list');
+        const datatable = element.querySelector('.adf-datatable-list').attributes;
         const header = element.querySelector('.adf-datatable-list .adf-datatable-header');
         const headerCell = element.querySelector('.adf-datatable-cell-header');
         const body = element.querySelector('.adf-datatable-body');
         const row = element.querySelector('.adf-datatable-body .adf-datatable-row');
         const cell = element.querySelector('.adf-datatable-body .adf-datatable-cell');
 
-        expect(datatable.tagName).toEqual('TABLE');
+        expect(datatable.getNamedItem('role').value).toEqual('table');
         expect(header.tagName).toEqual('THEAD');
         expect(headerCell.tagName).toEqual('TH');
         expect(body.tagName).toEqual('TBODY');
