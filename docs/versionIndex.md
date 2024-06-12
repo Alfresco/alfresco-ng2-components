@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v6.10.0](#v6100)
 -   [v6.8.0](#v680)
 -   [v6.7.0](#v670)
 -   [v6.4.0](#v640)

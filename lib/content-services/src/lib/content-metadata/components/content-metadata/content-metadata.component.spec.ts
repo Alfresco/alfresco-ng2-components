@@ -1759,7 +1759,7 @@ describe('ContentMetadataComponent', () => {
             });
         });
 
-        it('should not map predictions when reviewStatus other then UNREVIEWED', (done) => {
+        it('should not map predictions when reviewStatus other than UNREVIEWED', (done) => {
             getPredictionsSpy.and.returnValue(
                 of(getMockPredictionPaging([getMockPrediction(ReviewStatus.REJECTED), getMockPrediction(ReviewStatus.CONFIRMED)]))
             );
