@@ -15,6 +15,7 @@
                             placeholder="{{ 'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION' | translate }}"
                             (selectionChange)="onAppSelectionChange($event)"
                             [(ngModel)]="selectedApplication"
+                            class="adf-start-process-definition-select"
                             data-automation-id="adf-start-process-apps-drop-down">
                             <mat-option
                                 *ngFor="let application of applications"
@@ -61,7 +62,7 @@
                         </div>
                     </mat-form-field>
                 </div>
-                <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
+                <mat-form-field class="adf-process-input-container adf-process-input-container-process-name" [floatLabel]="'always'">
                     <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME' | translate}}</mat-label>
                     <input
                         matInput
