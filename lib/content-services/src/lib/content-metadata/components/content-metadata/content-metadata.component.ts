@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import {
     Category,
     CategoryEntry,
@@ -190,19 +182,20 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this.updateChanges(updatedNode.changed);
             });
 
-        this.cardViewContentUpdateService.updatedAspect$
-            .pipe(debounceTime(500), takeUntil(this.onDestroy$))
-            .subscribe((node) => {
-                this.node.aspectNames = node?.aspectNames;
-                this.loadProperties(node);
-            });
+        this.cardViewContentUpdateService.updatedAspect$.pipe(debounceTime(500), takeUntil(this.onDestroy$)).subscribe((node) => {
+            this.node.aspectNames = node?.aspectNames;
+            this.loadProperties(node);
+        });
 
         if (this.displayPredictions) {
-            this.predictionService.predictionStatusUpdated$.pipe(takeUntil(this.onDestroy$)).subscribe(({key, previousValue}) => {
-                this.cardViewContentUpdateService.onPredictionStatusChanged([{key, previousValue}]);
-                this.nodesApiService.getNode(this.node.id).subscribe((node) => {
-                    Object.assign(this.node, node);
-                });
+            this.predictionService.predictionStatusUpdated$.pipe(takeUntil(this.onDestroy$)).subscribe(({ key, previousValue }) => {
+                this.cardViewContentUpdateService.onPredictionStatusChanged([{ key, previousValue }]);
+                this.nodesApiService
+                    .getNode(this.node.id)
+                    .pipe(takeUntil(this.onDestroy$))
+                    .subscribe((node) => {
+                        Object.assign(this.node, node);
+                    });
             });
         }
 
@@ -236,7 +229,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     isPanelEditing(panelTitle: string): boolean {
-        return this.editing && ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle);
+        return (
+            this.editing &&
+            ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle)
+        );
     }
 
     protected handleUpdateError(error: Error) {
@@ -276,7 +272,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.displayDefaultProperties?.currentValue) {
             this.expandPanel(this.DefaultPanels.PROPERTIES);
         }
-
     }
 
     ngOnDestroy() {
@@ -391,7 +386,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
+        if (event.keyCode === 37 || event.keyCode === 39) {
+            // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }
@@ -414,7 +410,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             .subscribe((result: any) => {
                 if (result) {
                     if (this.displayPredictions) {
-                        this.cardViewContentUpdateService.onPredictionStatusChanged(Object.keys(this.changedProperties['properties']).map(key => ({key})));
+                        this.cardViewContentUpdateService.onPredictionStatusChanged(
+                            Object.keys(this.changedProperties['properties']).map((key) => ({ key }))
+                        );
                     }
                     this.updateUndefinedNodeProperties(result.updatedNode);
                     if (this.hasContentTypeChanged(this.changedProperties)) {
@@ -462,22 +460,34 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 requests['predictions'] = this.loadPredictionsForNode(this.node.id);
             }
 
-            forkJoin(requests).subscribe(({ predictions, properties, groupedProperties }: ({ predictions: Prediction[]; properties: CardViewItem[]; groupedProperties: CardViewGroup[] })) => {
-                if (loadBasicProps && properties) {
-                    this.basicProperties$ = predictions
-                        ? of(properties.map(property => this.mapPredictionsToProperty(property, predictions)))
-                        : of(properties);
-                }
+            forkJoin(requests).subscribe(
+                ({
+                    predictions,
+                    properties,
+                    groupedProperties
+                }: {
+                    predictions: Prediction[];
+                    properties: CardViewItem[];
+                    groupedProperties: CardViewGroup[];
+                }) => {
+                    if (loadBasicProps && properties) {
+                        this.basicProperties$ = predictions
+                            ? of(properties.map((property) => this.mapPredictionsToProperty(property, predictions)))
+                            : of(properties);
+                    }
 
-                if (loadGroupedProps && groupedProperties) {
-                    this.groupedProperties$ = predictions
-                        ? of(groupedProperties.map(group => {
-                            group.properties = group.properties.map(property => this.mapPredictionsToProperty(property, predictions));
-                            return group;
-                        }))
-                        : of(groupedProperties);
+                    if (loadGroupedProps && groupedProperties) {
+                        this.groupedProperties$ = predictions
+                            ? of(
+                                  groupedProperties.map((group) => {
+                                      group.properties = group.properties.map((property) => this.mapPredictionsToProperty(property, predictions));
+                                      return group;
+                                  })
+                              )
+                            : of(groupedProperties);
+                    }
                 }
-            });
+            );
 
             if (this.displayTags && loadTags) {
                 this.loadTagsForNode(node.id);
@@ -576,15 +586,20 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private mapPredictionsToProperty(property: CardViewItem, predictions: Prediction[]): CardViewItem {
         const propertyKey = property.key.split('.')[1];
-        const filteredPrediction = predictions.find(prediction => prediction.property === propertyKey && prediction.reviewStatus === ReviewStatus.UNREVIEWED && prediction.predictionValue === property.value);
+        const filteredPrediction = predictions.find(
+            (prediction) =>
+                prediction.property === propertyKey &&
+                prediction.reviewStatus === ReviewStatus.UNREVIEWED &&
+                prediction.predictionValue === property.value
+        );
 
         property.prediction = filteredPrediction || null;
         return property;
     }
 
     private loadPredictionsForNode(nodeId: string): Observable<Prediction[]> {
-        return this.predictionService.getPredictions(nodeId).pipe(
-            map(predictionPaging => predictionPaging.list.entries.map(predictionEntry => predictionEntry.entry))
-        );
+        return this.predictionService
+            .getPredictions(nodeId)
+            .pipe(map((predictionPaging) => predictionPaging.list.entries.map((predictionEntry) => predictionEntry.entry)));
     }
 }
