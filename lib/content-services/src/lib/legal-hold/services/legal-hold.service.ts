@@ -40,7 +40,7 @@ export class LegalHoldService {
      * @param options Optional parameters supported by JS-API
      * @returns List of assigned holds Hold[]
      */
-    getHolds(filePlanId: string, options: ContentPagingQuery = {}): Observable<Hold[]> {
+    getHolds(filePlanId: string, options?: ContentPagingQuery): Observable<Hold[]> {
         return from(this.legalHoldApi.getHolds(filePlanId, options)).pipe(
             map(({ list }) =>
                 list?.entries?.map(({ entry }) => ({
