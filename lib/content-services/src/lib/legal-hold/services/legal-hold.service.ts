@@ -34,7 +34,7 @@ export class LegalHoldService {
     constructor(private readonly apiService: AlfrescoApiService) {}
 
     /**
-     * Gets the list of holds.
+     * Gets the list of holds to the node.
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param options Optional parameters supported by JS-API
@@ -82,5 +82,27 @@ export class LegalHoldService {
      */
     unassignHold(holdId: string, nodeId: string): Observable<void> {
         return from(this.legalHoldApi.unassignHold(holdId, nodeId));
+    }
+
+    /**
+     * Gets the list of holds assigned to the node.
+     *
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param holds holds to create
+     * @returns List of created holds Observable<Hold[]>
+     */
+    createHold(filePlanId: string, holds: Hold[]): Observable<CreateHoldEntry> {
+        return from(this.legalHoldApi.createHold(filePlanId, holds)).pipe(catchError((err) => throwError(err)));
+    }
+
+    /**
+     * Gets the list of holds assigned to the node.
+     *
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param nodesIds holds to create
+     * @returns List of created holds Observable<Hold[]>
+     */
+    assignHold(filePlanId: string, nodesIds: AssignedHold[]): Observable<AssignedHoldEntry> {
+        return from(this.legalHoldApi.assignHold(filePlanId, nodesIds)).pipe(catchError((err) => throwError(err)));
     }
 }
