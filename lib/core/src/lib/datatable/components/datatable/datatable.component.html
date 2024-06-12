@@ -1,8 +1,9 @@
-<table *ngIf="data"
-       class="adf-full-width adf-datatable-list"
-       [class.adf-sticky-header]="isStickyHeaderEnabled()"
-       [class.adf-datatable--empty]="(isEmpty() && !isHeaderVisible()) || loading"
-       [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
+<div *ngIf="data"
+     role="table"
+     class="adf-full-width adf-datatable-list"
+     [class.adf-sticky-header]="isStickyHeaderEnabled()"
+     [class.adf-datatable--empty]="(isEmpty() && !isHeaderVisible()) || loading"
+     [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
     <thead *ngIf="isHeaderVisible()"
            class="adf-datatable-header"
            [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }">
@@ -408,4 +409,4 @@
         </td>
     </tr>
     </tbody>
-</table>
+</div>
