@@ -244,12 +244,11 @@ export class NodesApiService {
      * Gets the list of holds assigned to the node.
      *
      * @param nodeId ID of the target node
+     * @param options Optional parameters supported by JS-API
      * @returns List of assigned holds
      */
-    getNodeAssignHolds(nodeId: string): Observable<Hold[]> {
-        const queryOptions = Object.assign({
-            where: `(assocType='rma:frozenContent')`
-        });
+    getNodeAssignHolds(nodeId: string, options?: any): Observable<Hold[]> {
+        const queryOptions = Object.assign({ where: `(assocType='rma:frozenContent')` }, options);
 
         return from(this.nodesApi.listParents(nodeId, queryOptions)).pipe(
             map(({ list }) =>
