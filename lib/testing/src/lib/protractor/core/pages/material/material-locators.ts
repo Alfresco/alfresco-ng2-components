@@ -35,6 +35,7 @@ export const materialLocators = {
     },
     Calendar: {
         root: 'mat-calendar',
+        focus: '.mat-focus-indicator',
         body: {
             cell: {
                 root: 'mat-calendar-body-cell',
