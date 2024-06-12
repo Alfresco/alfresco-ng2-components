@@ -40,7 +40,8 @@ export class FormFieldModel extends FormWidgetModel {
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
     readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
-    private readonly emptyValueOptionId = 'empty';
+    private readonly defaultEmptyOptionId = 'empty';
+    private readonly defaultEmptyOptionName = 'Choose one...';
 
     // model members
     fieldType: string;
@@ -236,11 +237,11 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getEmptyOption(options: FormFieldOption[]): FormFieldOption {
-        return options.find((option) => option?.id === this.emptyValueOptionId);
+        return options.find((option) => option?.id === this.defaultEmptyOptionId);
     }
 
     private hasEmptyOption(options: FormFieldOption[]): boolean {
-        return options.some((option) => option?.id === this.emptyValueOptionId);
+        return options.some((option) => option?.id === this.defaultEmptyOptionId);
     }
 
     private setValueForReadonlyType(form: any) {
@@ -310,6 +311,14 @@ export class FormFieldModel extends FormWidgetModel {
          */
         if (json.type === FormFieldTypes.DROPDOWN) {
             if (this.hasEmptyValue) {
+                if (this.emptyOption === undefined) {
+                    this.emptyOption = {
+                        id: this.defaultEmptyOptionId,
+                        name: this.defaultEmptyOptionName
+                    };
+                    this.options.unshift(this.emptyOption);
+                }
+
                 if (value === '' || value === this.emptyOption.id || value === this.emptyOption.name || value === null) {
                     return this.emptyOption.id;
                 }
@@ -521,7 +530,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     isEmptyValueOption(option: FormFieldOption): boolean {
-        return this.hasEmptyValue && option?.id === this.emptyValueOptionId;
+        return this.hasEmptyValue && option?.id === this.defaultEmptyOptionId;
     }
 
     private addOptions(options: FormFieldOption[]) {

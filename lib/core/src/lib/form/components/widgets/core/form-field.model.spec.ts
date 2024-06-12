@@ -137,26 +137,42 @@ describe('FormFieldModel', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
             options: [
-                { id: 'empty', name: 'Chose option...' },
+                { id: 'empty', name: 'Chose one...' },
                 { id: 'one', name: 'One' }
             ],
             value: null
         });
 
         expect(field.hasEmptyValue).toBe(true);
-        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose option...' });
-        // expect(field.value).toEqual('empty');
+        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose one...' });
+        expect(field.value).toEqual('empty');
     });
 
     it('should set hasEmptyValue to true if "empty" option is present in options', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
-            options: [{ id: 'empty', name: 'Chose option...' }],
+            options: [{ id: 'empty', name: 'Choose one...' }],
             value: null
         });
 
         expect(field.hasEmptyValue).toBe(true);
-        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose option...' });
+        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Choose one...' });
+    });
+
+    it('should add default "empty" option to the options if hasEmptyValue is true but "empty" option is not present', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [{ id: 'one', name: 'One' }],
+            value: null,
+            hasEmptyValue: true
+        });
+
+        expect(field.hasEmptyValue).toBe(true);
+        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Choose one...' });
+        expect(field.options).toEqual([
+            { id: 'empty', name: 'Choose one...' },
+            { id: 'one', name: 'One' }
+        ]);
     });
 
     it('should parse the date with the default format (D-M-YYYY) if the display format is missing', () => {
