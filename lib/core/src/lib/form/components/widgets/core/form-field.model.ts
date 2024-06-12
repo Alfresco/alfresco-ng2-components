@@ -307,7 +307,7 @@ export class FormFieldModel extends FormWidgetModel {
          */
         if (json.type === FormFieldTypes.DROPDOWN) {
             if (this.hasEmptyValue) {
-                if (this.emptyOption === undefined) {
+                if (!this.emptyOption) {
                     this.emptyOption = {
                         id: this.defaultEmptyOptionId,
                         name: this.defaultEmptyOptionName
