@@ -70,7 +70,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
                     }
                 }
 
-                if (field.required && typeof field.value === 'object' && !!field.value && !Object.keys(field.value).length) {
+                if (field.required && typeof field.value === 'object' && !Object.keys(field.value).length) {
                     return false;
                 }
             }

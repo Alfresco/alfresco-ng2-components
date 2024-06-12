@@ -190,8 +190,8 @@ export class FormFieldModel extends FormWidgetModel {
             this.dynamicDateRangeSelection = json.dynamicDateRangeSelection;
             this.regexPattern = json.regexPattern;
             this.options = json.options || [];
-            this.hasEmptyValue = json?.hasEmptyValue ?? this.hasEmptyOption(this.options);
-            this.emptyOption = this.hasEmptyValue ? this.getEmptyOption(this.options) : undefined;
+            this.emptyOption = this.getEmptyOption(this.options);
+            this.hasEmptyValue = json?.hasEmptyValue ?? !!this.emptyOption;
             this.className = json.className;
             this.optionType = json.optionType;
             this.params = json.params || {};
@@ -238,10 +238,6 @@ export class FormFieldModel extends FormWidgetModel {
 
     private getEmptyOption(options: FormFieldOption[]): FormFieldOption {
         return options.find((option) => option?.id === this.defaultEmptyOptionId);
-    }
-
-    private hasEmptyOption(options: FormFieldOption[]): boolean {
-        return options.some((option) => option?.id === this.defaultEmptyOptionId);
     }
 
     private setValueForReadonlyType(form: any) {
@@ -319,7 +315,8 @@ export class FormFieldModel extends FormWidgetModel {
                     this.options.unshift(this.emptyOption);
                 }
 
-                if (value === '' || value === this.emptyOption.id || value === this.emptyOption.name || value === null) {
+                const isEmptyValue = !value || [this.emptyOption.id, this.emptyOption.name].includes(value);
+                if (isEmptyValue) {
                     return this.emptyOption.id;
                 }
             }
@@ -330,11 +327,10 @@ export class FormFieldModel extends FormWidgetModel {
             }
 
             if (this.hasMultipleValues) {
-                let arrayOfSelectedOptions = Array.isArray(json.value) ? json.value : [];
-                arrayOfSelectedOptions = arrayOfSelectedOptions.filter((option) => this.isValidOption(option));
+                const validSelectedOptions = (Array.isArray(json.value) ? json.value : []).filter((option) => this.isValidOption(option));
 
-                this.addOptions(arrayOfSelectedOptions);
-                return arrayOfSelectedOptions;
+                this.addOptions(validSelectedOptions);
+                return validSelectedOptions;
             }
 
             return value;
@@ -351,11 +347,8 @@ export class FormFieldModel extends FormWidgetModel {
             const entry: FormFieldOption[] = this.options.filter(
                 (opt) => opt.id === value || opt.name === value || (value && (opt.id === value.id || opt.name === value.name))
             );
-            if (entry.length > 0) {
-                value = entry[0].id;
-            }
 
-            return value;
+            return entry.length > 0 ? entry[0].id : value;
         }
 
         /*
@@ -375,7 +368,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
 
                 if (isValidDate(dateValue)) {
-                    value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
+                    return DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
                 }
             }
 
@@ -383,7 +376,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         if (this.isCheckboxField(json)) {
-            value = json.value === 'true' || json.value === true;
+            return json.value === 'true' || json.value === true;
         }
 
         return value;
@@ -538,7 +531,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private addOption(option: FormFieldOption) {
-        const alreadyExists = this.options.find((opt) => opt.id === option.id);
+        const alreadyExists = this.options.find((opt) => opt?.id === option?.id);
         if (!alreadyExists) {
             this.options.push(option);
         }
