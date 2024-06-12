@@ -25,11 +25,11 @@ import { isValid as isDateValid, isBefore, isAfter } from 'date-fns';
 
 export interface FormFieldValidator {
     isSupported(field: FormFieldModel): boolean;
-
     validate(field: FormFieldModel): boolean;
 }
 
 export class RequiredFieldValidator implements FormFieldValidator {
+
     private supportedTypes = [
         FormFieldTypes.TEXT,
         FormFieldTypes.MULTILINE_TEXT,
@@ -51,11 +51,14 @@ export class RequiredFieldValidator implements FormFieldValidator {
     ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && field.required;
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            field.required;
     }
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.isVisible) {
+
             if (field.type === FormFieldTypes.DROPDOWN) {
                 if (field.hasMultipleValues) {
                     return Array.isArray(field.value) && !!field.value.length;
@@ -95,10 +98,15 @@ export class RequiredFieldValidator implements FormFieldValidator {
         }
         return true;
     }
+
 }
 
 export class NumberFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.AMOUNT];
+
+    private supportedTypes = [
+        FormFieldTypes.NUMBER,
+        FormFieldTypes.AMOUNT
+    ];
 
     static isNumber(value: any): boolean {
         return isNumberValue(value);
@@ -110,7 +118,9 @@ export class NumberFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.isVisible) {
-            if (field.value === null || field.value === undefined || field.value === '') {
+            if (field.value === null ||
+                field.value === undefined ||
+                field.value === '') {
                 return true;
             }
             const valueStr = '' + field.value;
@@ -129,7 +139,10 @@ export class NumberFieldValidator implements FormFieldValidator {
 }
 
 export class DateFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATE];
+
+    private supportedTypes = [
+        FormFieldTypes.DATE
+    ];
 
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
@@ -153,7 +166,10 @@ export class DateFieldValidator implements FormFieldValidator {
 }
 
 export class DateTimeFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATETIME];
+
+    private supportedTypes = [
+        FormFieldTypes.DATETIME
+    ];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
@@ -177,10 +193,13 @@ export class DateTimeFieldValidator implements FormFieldValidator {
 }
 
 export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
+
     DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
     DATE_FORMAT = 'DD-MM-YYYY';
 
-    supportedTypes = [FormFieldTypes.DATE];
+    supportedTypes = [
+        FormFieldTypes.DATE
+    ];
 
     validate(field: FormFieldModel): boolean {
         let isValid = true;
@@ -204,9 +223,11 @@ export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
 
     abstract checkDate(field: FormFieldModel, dateFormat: string);
     abstract isSupported(field: FormFieldModel);
+
 }
 
 export class MinDateFieldValidator extends BoundaryDateFieldValidator {
+
     checkDate(field: FormFieldModel, dateFormat: string): boolean {
         let isValid = true;
         const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
@@ -215,18 +236,23 @@ export class MinDateFieldValidator extends BoundaryDateFieldValidator {
 
         if (DateFnsUtils.isBeforeDate(fieldValueData, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat).toLocaleUpperCase());
+            field.validationSummary.attributes.set(
+                'minValue',
+                DateFnsUtils.formatDate(min, field.dateDisplayFormat).toLocaleUpperCase()
+            );
             isValid = false;
         }
         return isValid;
     }
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
     }
 }
 
 export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
+
     checkDate(field: FormFieldModel, dateFormat: string): boolean {
         let isValid = true;
         const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
@@ -235,14 +261,18 @@ export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
 
         if (DateFnsUtils.isAfterDate(fieldValueData, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat).toLocaleUpperCase());
+            field.validationSummary.attributes.set(
+                'maxValue',
+                DateFnsUtils.formatDate(max, field.dateDisplayFormat).toLocaleUpperCase()
+            );
             isValid = false;
         }
         return isValid;
     }
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
     }
 }
 
@@ -255,10 +285,14 @@ export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
  *
  */
 export class MinDateTimeFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATETIME];
+
+    private supportedTypes = [
+        FormFieldTypes.DATETIME
+    ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -281,7 +315,10 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
 
         if (isBefore(fieldValueDate, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat).replace(':', '-'));
+            field.validationSummary.attributes.set(
+                'minValue',
+                DateFnsUtils.formatDate(min, field.dateDisplayFormat).replace(':', '-')
+            );
             isValid = false;
         }
         return isValid;
@@ -297,10 +334,14 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
  *
  */
 export class MaxDateTimeFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATETIME];
+
+    private supportedTypes = [
+        FormFieldTypes.DATETIME
+    ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -323,7 +364,10 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
         if (isAfter(fieldValueDate, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat).replace(':', '-'));
+            field.validationSummary.attributes.set(
+                'maxValue',
+                DateFnsUtils.formatDate(max, field.dateDisplayFormat).replace(':', '-')
+            );
             isValid = false;
         }
         return isValid;
@@ -331,10 +375,16 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 }
 
 export class MinLengthFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
+
+    private supportedTypes = [
+        FormFieldTypes.TEXT,
+        FormFieldTypes.MULTILINE_TEXT
+    ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && field.minLength > 0;
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            field.minLength > 0;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -351,10 +401,16 @@ export class MinLengthFieldValidator implements FormFieldValidator {
 }
 
 export class MaxLengthFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
+
+    private supportedTypes = [
+        FormFieldTypes.TEXT,
+        FormFieldTypes.MULTILINE_TEXT
+    ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && field.maxLength > 0;
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            field.maxLength > 0;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -371,10 +427,17 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
 }
 
 export class MinValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
+
+    private supportedTypes = [
+        FormFieldTypes.NUMBER,
+        FormFieldTypes.DECIMAL,
+        FormFieldTypes.AMOUNT
+    ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && NumberFieldValidator.isNumber(field.minValue);
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            NumberFieldValidator.isNumber(field.minValue);
     }
 
     validate(field: FormFieldModel): boolean {
@@ -395,10 +458,17 @@ export class MinValueFieldValidator implements FormFieldValidator {
 }
 
 export class MaxValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.NUMBER, FormFieldTypes.DECIMAL, FormFieldTypes.AMOUNT];
+
+    private supportedTypes = [
+        FormFieldTypes.NUMBER,
+        FormFieldTypes.DECIMAL,
+        FormFieldTypes.AMOUNT
+    ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && NumberFieldValidator.isNumber(field.maxValue);
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            NumberFieldValidator.isNumber(field.maxValue);
     }
 
     validate(field: FormFieldModel): boolean {
@@ -419,10 +489,15 @@ export class MaxValueFieldValidator implements FormFieldValidator {
 }
 
 export class RegExFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TEXT, FormFieldTypes.MULTILINE_TEXT];
+
+    private supportedTypes = [
+        FormFieldTypes.TEXT,
+        FormFieldTypes.MULTILINE_TEXT
+    ];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.regexPattern;
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.regexPattern;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -435,10 +510,14 @@ export class RegExFieldValidator implements FormFieldValidator {
         }
         return true;
     }
+
 }
 
 export class FixedValueFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.TYPEAHEAD];
+
+    private supportedTypes = [
+        FormFieldTypes.TYPEAHEAD
+    ];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
@@ -476,7 +555,10 @@ export class FixedValueFieldValidator implements FormFieldValidator {
 }
 
 export class DecimalFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DECIMAL];
+
+    private supportedTypes = [
+        FormFieldTypes.DECIMAL
+    ];
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.value;
