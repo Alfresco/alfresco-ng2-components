@@ -23,9 +23,9 @@ Allows the user to handle AI predictions by confirming or rejecting changes.
 
 ### Properties
 
-| Name       | Type                                                                                                                                     | Default value | Description                       |
-|------------|------------------------------------------------------------------------------------------------------------------------------------------|---------------|-----------------------------------|
-| prediction | [`Prediction`](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/js-api/src/api/hxi-connector-api/docs/Prediction.md) |               | Prediction for the node property. |
+| Name       | Type                                                                             | Default value | Description                       |
+|------------|----------------------------------------------------------------------------------|---------------|-----------------------------------|
+| prediction | [`Prediction`](../../../lib/js-api/src/api/hxi-connector-api/docs/Prediction.md) |               | Prediction for the node property. |
 
 ## See also
 

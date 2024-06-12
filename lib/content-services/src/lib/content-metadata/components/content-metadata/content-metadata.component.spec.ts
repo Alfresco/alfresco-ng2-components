@@ -40,7 +40,8 @@ import {
     CardViewComponent,
     NotificationService,
     PredictionService,
-    UpdateNotification
+    UpdateNotification,
+    PredictionStatusUpdate
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { EMPTY, of, Subject, throwError } from 'rxjs';
@@ -57,7 +58,6 @@ import {
     TagService
 } from '@alfresco/adf-content-services';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { PredictionStatusUpdate } from '../../../../../../core/src/lib/prediction/interfaces/prediction-status-update.interface';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -1724,7 +1724,7 @@ describe('ContentMetadataComponent', () => {
             });
         });
 
-        it('should not map predictions when reviewStatus other then UNREVIEWED', (done) => {
+        it('should not map predictions when reviewStatus other than UNREVIEWED', (done) => {
             getPredictionsSpy.and.returnValue(
                 of(getMockPredictionPaging([getMockPrediction(ReviewStatus.REJECTED), getMockPrediction(ReviewStatus.CONFIRMED)]))
             );

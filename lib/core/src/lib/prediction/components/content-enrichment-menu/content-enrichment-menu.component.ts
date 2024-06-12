@@ -34,10 +34,18 @@ import { PredictionService } from '../../services';
     templateUrl: './content-enrichment-menu.component.html',
     styleUrls: ['./content-enrichment-menu.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [MatProgressSpinnerModule, MatTooltipModule, MatButtonModule, IconComponent, MatMenuModule, MatIconModule, TranslateModule, LocalizedDatePipe]
+    imports: [
+        MatProgressSpinnerModule,
+        MatTooltipModule,
+        MatButtonModule,
+        IconComponent,
+        MatMenuModule,
+        MatIconModule,
+        TranslateModule,
+        LocalizedDatePipe
+    ]
 })
 export class ContentEnrichmentMenuComponent implements OnInit {
-
     @Input()
     prediction: Prediction;
 
@@ -70,14 +78,14 @@ export class ContentEnrichmentMenuComponent implements OnInit {
 
     onRevert() {
         this.predictionService.reviewPrediction(this.prediction.id, ReviewStatus.REJECTED).subscribe(() => {
-            this.predictionService.predictionStatusUpdated$.next({key: this.prediction.property, previousValue: this.previousValue});
+            this.predictionService.predictionStatusUpdated$.next({ key: this.prediction.property, previousValue: this.previousValue });
             this.menuTrigger.closeMenu();
         });
     }
 
     onConfirm() {
         this.predictionService.reviewPrediction(this.prediction.id, ReviewStatus.CONFIRMED).subscribe(() => {
-            this.predictionService.predictionStatusUpdated$.next({key: this.prediction.property});
+            this.predictionService.predictionStatusUpdated$.next({ key: this.prediction.property });
             this.menuTrigger.closeMenu();
         });
     }
@@ -87,7 +95,7 @@ export class ContentEnrichmentMenuComponent implements OnInit {
         this.focusTrap = null;
     }
 
-    private isDefined(value: string): boolean {
+    private isDefined(value: any): boolean {
         return value !== undefined && value !== null;
     }
 }

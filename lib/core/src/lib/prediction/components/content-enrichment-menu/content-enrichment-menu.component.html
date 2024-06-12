@@ -1,9 +1,16 @@
-<button mat-icon-button [attr.aria-label]="'CORE.METADATA.CONTENT_ENRICHMENT.ACTIONS.CONFIRM' | translate" #menuTrigger="matMenuTrigger" class="adf-ai-button" [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen()">
+<button
+    mat-icon-button
+    [attr.aria-label]="'CORE.METADATA.CONTENT_ENRICHMENT.ACTIONS.CONFIRM' | translate"
+    #menuTrigger="matMenuTrigger"
+    class="adf-ai-button"
+    [matMenuTriggerFor]="menu"
+    (menuOpened)="onMenuOpen()">
     <adf-icon [value]="'adf:ai-sparkles'"></adf-icon>
 </button>
 
 <mat-menu #menu="matMenu" class="adf-ai-mat-menu" (closed)="onClosed()">
-    <div class="adf-content-enrichment-menu" #menuContainer (click)="$event.stopPropagation()" (keydown.tab)="$event.stopPropagation()" (keydown.shift.tab)="$event.stopPropagation()" tabindex="-1">
+    <div class="adf-content-enrichment-menu" #menuContainer (click)="$event.stopPropagation()"
+         (keydown.tab)="$event.stopPropagation()" (keydown.shift.tab)="$event.stopPropagation()" tabindex="-1">
         <div class="adf-content-enrichment-menu__accuracy">
             <div class="adf-content-enrichment-menu__accuracy__title">
                 <span>{{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACCURACY_LEVEL' | translate }}</span>
@@ -39,7 +46,7 @@
         </div>
         <div class="adf-content-enrichment-menu__footer">
             <button mat-flat-button (click)="onRevert()">
-                {{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACTIONS.REVERT' | translate  }}
+                {{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACTIONS.REVERT' | translate }}
             </button>
             <button mat-button color="primary" (click)="onConfirm()" class="adf-confirm-button">
                 {{ 'CORE.METADATA.CONTENT_ENRICHMENT.ACTIONS.CONFIRM' | translate }}
