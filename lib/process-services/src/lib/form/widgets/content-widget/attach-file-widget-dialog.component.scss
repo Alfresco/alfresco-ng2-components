@@ -22,4 +22,15 @@
             }
         }
     }
+
+    .adf-login-dialog-actions {
+        margin-left: -25px;
+        margin-right: -25px;
+        padding-right: 25px;
+    }
 }
+
+#{$mat-dialog-surface} {
+    overflow-x: hidden;
+}
+
