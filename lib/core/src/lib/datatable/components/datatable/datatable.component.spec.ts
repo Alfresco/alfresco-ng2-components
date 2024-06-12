@@ -430,7 +430,7 @@ describe('DataTable', () => {
             multiselect: new SimpleChange(true, false, false)
         });
 
-        expect(dataTable.resetSelection).toHaveBeenCalled();
+        expect(dataTable.selection).toEqual([]);
     });
 
     it('should select the row where isSelected is true', () => {
