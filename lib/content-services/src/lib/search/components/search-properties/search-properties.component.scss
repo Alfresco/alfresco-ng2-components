@@ -31,7 +31,7 @@ adf-search-properties {
                 width: 16px;
             }
 
-            #{$mat-form-field-underline} {
+            #{$mat-line-ripple} {
                 &::before {
                     display: none;
                 }
