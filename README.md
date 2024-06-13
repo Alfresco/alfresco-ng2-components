@@ -19,7 +19,7 @@ for full details on what you may need to install before using ADF.
 ### See also
 
 - [Node Version Manager](docs/tutorials/nvm.md)
-- [CORS guide](ALFRESCOCORS.md)
+- [CORS guide](docs/ALFRESCOCORS.md)
 
 ## Components
 
