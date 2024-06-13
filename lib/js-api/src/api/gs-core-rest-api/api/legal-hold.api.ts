@@ -17,7 +17,8 @@
 
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
-import { ContentPagingQuery, NodeChildAssociationPaging } from '../../content-rest-api';
+import { ContentPagingQuery } from '../../content-rest-api';
+import { HoldPaging } from '../model/holdPaging';
 
 /**
  * Legal Holds service.
@@ -29,10 +30,10 @@ export class LegalHoldApi extends BaseApi {
      * List of legal holds
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-     * @param opt Optional parameters
-     * @returns Promise<NodeChildAssociationPaging>
+     * @param options Optional parameters
+     * @returns Promise<HoldPaging>
      */
-    getHolds(filePlanId: string = '-filePlan-', opts?: ContentPagingQuery): Promise<NodeChildAssociationPaging> {
+    getHolds(filePlanId: string = '-filePlan-', options?: ContentPagingQuery): Promise<HoldPaging> {
         throwIfNotDefined(filePlanId, 'filePlanId');
 
         const pathParams = {
@@ -40,15 +41,15 @@ export class LegalHoldApi extends BaseApi {
         };
 
         const queryParams = {
-            skipCount: opts?.skipCount,
-            maxItems: opts?.maxItems
+            skipCount: options?.skipCount,
+            maxItems: options?.maxItems
         };
 
         return this.get({
             path: '/file-plans/{filePlanId}/holds',
             pathParams,
             queryParams,
-            returnType: NodeChildAssociationPaging
+            returnType: HoldPaging
         });
     }
 }
