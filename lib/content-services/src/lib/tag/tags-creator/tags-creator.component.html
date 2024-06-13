@@ -16,19 +16,20 @@
         {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
     <div class="adf-tags-list" [class.adf-tags-list-fixed]="!tagNameControlVisible" #tagsList>
-        <span *ngFor="let tag of tags" class="adf-tag adf-label-with-icon-button">
-            {{ tag }}
-            <button
-                data-automation-id="remove-tag-button"
-                mat-icon-button
-                (click)="removeTag(tag)"
-                [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
-                [disabled]="disabledTagsRemoving"
-                class="adf-remove-tag"
-            >
-                <mat-icon>close</mat-icon>
-            </button>
-        </span>
+        <mat-chip-listbox *ngIf="tags.length > 0" class="adf-tags-chips-container">
+            <mat-chip-option *ngFor="let tag of tags" [disableRipple]="true" [title]="tag" class="adf-tags-chip">
+                {{ tag }}
+                <button
+                    data-automation-id="remove-tag-button"
+                    mat-icon-button
+                    (click)="removeTag(tag)"
+                    [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
+                    [disabled]="disabledTagsRemoving"
+                    matChipRemove>
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-chip-option>
+        </mat-chip-listbox>
     </div>
 </div>
 <div class="adf-existing-tags-panel" *ngIf="existingTagsPanelVisible">
