@@ -2,20 +2,22 @@
 
 .adf-categories-management {
     .adf-category-name-field {
-        justify-content: space-between;
-        padding: 0 10px;
-        background: var(--adf-metadata-buttons-background-color);
-        height: 32px;
-        border-radius: 12px;
-        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-right: 12px;
 
         input {
-            background-color: transparent;
-            color: var(--adf-metadata-property-panel-text-color);
-            padding: 7px 0;
-            width: 100%;
+            background: var(--adf-metadata-buttons-background-color);
+            border-radius: 12px;
+            padding: 7px 8px;
             border: none;
             outline: none;
+            font: inherit;
+            color: currentcolor;
+            margin: 0;
+            vertical-align: bottom;
+            text-align: inherit;
+            box-sizing: content-box;
         }
 
         #{$mat-form-field-error} {
@@ -76,6 +78,8 @@
 }
 
 .adf-existing-categories-panel {
+    min-height: 22vh;
+
     .adf-create-category-label {
         color: var(--theme-primary-color);
         cursor: pointer;
