@@ -40,7 +40,7 @@ ul > li > form-field > .adf-focus {
             padding-bottom: 12px;
         }
 
-        #{$mat-form-field-underline} {
+        #{$mat-line-ripple} {
             background-color: var(--theme-warn-color) !important;
         }
 
