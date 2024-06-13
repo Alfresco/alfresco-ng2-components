@@ -1,23 +1,7 @@
+@import 'styles/mat-selectors';
+
 adf-tags-creator {
     display: block;
-
-    .adf-label-with-icon-button {
-        background: var(--adf-metadata-buttons-background-color);
-        width: fit-content;
-        min-height: 32px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 16px;
-        padding: 6px 0;
-        padding-left: 12px;
-
-        .adf-remove-tag {
-            line-height: 24px;
-            height: 24px;
-            transform: scale(0.7);
-        }
-    }
 
     .adf-no-tags-message {
         margin-top: 28.5px;
@@ -27,15 +11,23 @@ adf-tags-creator {
 
     .adf-tag-name-field,
     .adf-tag-name-field[hidden] {
-        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
         margin-right: 12px;
     }
 
     .adf-tag-search-field {
         background: var(--adf-metadata-buttons-background-color);
-        height: 32px;
         border-radius: 12px;
-        padding: 0 6px;
+        padding: 5px 6px;
+        border: none;
+        outline: none;
+        font: inherit;
+        color: currentcolor;
+        margin: 0;
+        vertical-align: bottom;
+        text-align: inherit;
+        box-sizing: content-box;
     }
 
     .adf-create-tag-label {
@@ -47,7 +39,6 @@ adf-tags-creator {
         display: inline-block;
         padding-right: 12px;
         overflow: auto;
-        max-height: 7vh;
     }
 
     .adf-tags-list {
@@ -57,19 +48,18 @@ adf-tags-creator {
         gap: 8px;
     }
 
-    .adf-tag {
+    .adf-tags-chips-container {
         margin-top: 8px;
-        overflow-wrap: anywhere;
 
-        & + .adf-tag {
-            margin-top: 8px;
+        .adf-tags-chip {
+            background: var(--adf-metadata-buttons-background-color);
+            height: unset;
         }
     }
 
     .adf-existing-tags-panel {
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
-        padding-top: 12px;
         width: 100%;
 
         .adf-existing-tags-label {
@@ -87,16 +77,15 @@ adf-tags-creator {
             flex-direction: column;
 
             .adf-tag {
-                margin-bottom: 18px;
-                margin-top: 0;
-                padding-right: 12px;
+                margin: 0;
+                padding: 4px;
                 font-size: 14px;
                 height: auto;
                 width: unset;
                 background-color: inherit;
                 color: inherit;
 
-                &:hover {
+                &:not(#{$mat-list-item-disabled}):hover {
                     cursor: pointer;
                     background: var(--adf-theme-mat-grey-color-a200);
                 }
@@ -104,16 +93,16 @@ adf-tags-creator {
                 & span {
                     padding: 0;
                 }
-
-                & + .adf-tag {
-                    margin-top: -10px;
-                }
             }
 
             .adf-tags-creator-spinner {
                 margin: auto;
                 overflow: unset;
                 min-height: 62px;
+            }
+
+            #{$mat-list-item-disabled} #{$mat-list-item-primary-text} {
+                opacity: 1;
             }
         }
     }
