@@ -402,8 +402,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) {
-            // ArrowLeft && ArrowRight
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
             event.stopPropagation();
         }
     }
