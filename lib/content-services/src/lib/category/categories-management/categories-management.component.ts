@@ -227,10 +227,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      * Adds existing category to categories list and removes it from existing categories list.
      *
      * @param category - selection list change containing selected category
-     * @param disableAddCategory - allow or disallow the ability to add a new category for assigning
      */
-    addCategoryToAssign(category: Category, disableAddCategory: boolean) {
-        if (!disableAddCategory) {
+    addCategoryToAssign(category: Category) {
+        if (!(this.isCRUDMode || (!this.multiSelect && this.categories.length > 0))) {
             const selectedCategory: Category = category;
             this.categories.push(selectedCategory);
             this._existingCategories.splice(this._existingCategories.indexOf(selectedCategory), 1);

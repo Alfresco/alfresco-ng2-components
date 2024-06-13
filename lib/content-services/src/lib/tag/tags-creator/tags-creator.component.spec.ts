@@ -122,7 +122,7 @@ describe('TagsCreatorComponent', () => {
      * @returns list of tags
      */
     function getAddedTags(): string[] {
-        const tagElements = fixture.debugElement.queryAll(By.css(`.adf-tags-creation .adf-tag`));
+        const tagElements = fixture.debugElement.queryAll(By.css(`.adf-tags-creation .adf-tags-chip`));
         return tagElements.map((el) => el.nativeElement.firstChild.nodeValue.trim());
     }
 

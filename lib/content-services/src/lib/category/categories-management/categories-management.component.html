@@ -8,7 +8,7 @@
             />
         <mat-error *ngIf="categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
     </div>
-    <div class="adf-categories-list" [class.adf-categories-list-fixed]="!categoryNameControlVisible">
+    <div class="adf-categories-list" *ngIf="categories?.length > 0" [class.adf-categories-list-fixed]="!categoryNameControlVisible">
         <span
             *ngFor="let category of categories"
             [class.adf-categories-padded]="!isCRUDMode"
@@ -50,7 +50,7 @@
                 <mat-list-item
                     *ngFor="let category of existingCategories"
                     class="adf-category"
-                    (click)='addCategoryToAssign(category, isCRUDMode || !multiSelect && categories.length > 0)'>
+                    (click)='addCategoryToAssign(category)'>
                         {{ category.name }}
                 </mat-list-item>
                 <p *ngIf="!existingCategories?.length && !existingCategoriesLoading"
