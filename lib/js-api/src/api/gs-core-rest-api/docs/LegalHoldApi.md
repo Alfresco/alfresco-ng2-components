@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 <a name="getHolds"></a>
 # **getHolds**
-> NodeChildAssociationPaging getHolds(filePlanId, opts)
+> HoldPaging getHolds(filePlanId, opts)
 
 Get legal holds list.
 
@@ -47,4 +47,4 @@ Name | Type | Default value  | Description
 
 ### Return type
 
-[**NodeChildAssociationPaging**](NodeChildAssociationPaging.md)
+[**HoldPaging**](HoldPaging.md)
