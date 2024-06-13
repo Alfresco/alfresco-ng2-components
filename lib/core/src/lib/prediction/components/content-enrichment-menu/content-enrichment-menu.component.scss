@@ -9,7 +9,7 @@ adf-content-enrichment-menu {
     border: 1px solid transparent;
     border-radius: 6px;
     background-image: linear-gradient(var(--adf-theme-background-dialog-color), var(--adf-theme-background-dialog-color)),
-    var(--adf-ai-border-gradient);
+        var(--adf-ai-border-gradient);
     background-origin: border-box;
     background-clip: content-box, border-box;
 }
@@ -58,7 +58,6 @@ adf-content-enrichment-menu {
 
             .adf-accuracy-level-spinner circle {
                 stroke: var(--theme-accent-color);
-
             }
         }
     }
@@ -127,7 +126,7 @@ adf-content-enrichment-menu {
         margin-top: 18px;
         text-align: end;
 
-        .adf-confirm-button{
+        .adf-confirm-button {
             margin-left: 8px;
             color: var(--adf-theme-foreground-base-color);
             background-color: var(--theme-grey-text-background-color);
