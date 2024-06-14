@@ -1,19 +1,6 @@
-# Alfresco insights
+# Alfresco Insights Components
 
-Contains a variety of components, directives and services used throughout ADF
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Documentation](#documentation)
-- [Prerequisites](#prerequisites)
-- [Install](#install)
-- [License](#license)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
+Contains a variety of components, directives and services used throughout ADF to provide insights into the data stored in Alfresco.
 
 ## Documentation
 
@@ -33,6 +20,11 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 npm install @alfresco/adf-insights
 ```
 
-## License
+## Components
 
-[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)
+| Name                                                                               | Description                                              |
+|------------------------------------------------------------------------------------|----------------------------------------------------------|
+| [Analytics Generator Component](docs/components/analytics-generator.component.md)  | Generates and shows charts                               |
+| [APS Analytics List Component](docs/components/analytics-report-list.component.md) | Shows a list of all available reports                    |
+| [APS Analytics Component](docs/components/analytics.component.md)                  | Shows the charts related to the reportId passed as input |
+| [Diagram Component](docs/components/diagram.component.md)                          | Displays process diagrams.                               |
