@@ -1,1 +1,1 @@
-lib/insights/docs/components/diagram.component.md
+../../../lib/insights/docs/components/diagram.component.md
