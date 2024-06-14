@@ -27,8 +27,16 @@ export class CardViewItemLengthValidator implements CardViewItemValidator {
 
     constructor(private minLength: number, private maxLength: number) {}
 
-    isValid(value: string = ''): boolean {
-        const stringLength = value.length;
-        return stringLength >= this.minLength && stringLength <= this.maxLength;
+    isValid(value: string | string[]): boolean {
+        if (Array.isArray(value)) {
+            return value.every((val) => this.isCorrectLength(val, this.minLength, this.maxLength));
+        }
+
+        return value === '' || this.isCorrectLength(value, this.minLength, this.maxLength);
+    }
+
+    private isCorrectLength(value: string, min: number, max: number): boolean {
+        const length = value.length;
+        return length >= min && length <= max;
     }
 }
