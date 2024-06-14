@@ -2,8 +2,6 @@
 
 Shows the charts for a specific report and application.
 
-![Analytics-without-parameters](../images/analytics-without-parameters.png)
-
 ## Basic Usage
 
 ```html
