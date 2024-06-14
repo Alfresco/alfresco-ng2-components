@@ -1,10 +1,4 @@
----
-Title: Diagram Component
-Added: v2.0.0
-Status: Active
----
-
-# [Diagram Component](../../../lib/insights/src/lib/diagram/components/diagram.component.ts "Defined in diagram.component.ts")
+# Diagram Component
 
 Displays process diagrams.
 
@@ -26,23 +20,27 @@ The below component shows the diagram of a running process instance with the act
 </adf-diagram>
 ```
 
-## Class members
+## API
+
+```ts
+import { DiagramComponent } from '@alfresco/adf-insights';
+```
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| height | `number` | 500 | height. |
-| metricColor | `any` |  | metricColor. |
-| metricPercentages | `any` |  | metricPercentages. |
-| metricType | `string` | "" | metricType. |
-| processDefinitionId | `any` |  | processDefinitionId. |
-| processInstanceId | `any` |  | processInstanceId. |
-| width | `number` | 1000 | width. |
+| Name                | Type     | Default value | Description          |
+|---------------------|----------|---------------|----------------------|
+| height              | `number` | 500           | height.              |
+| metricColor         | `any`    |               | metricColor.         |
+| metricPercentages   | `any`    |               | metricPercentages.   |
+| metricType          | `string` | ""            | metricType.          |
+| processDefinitionId | `any`    |               | processDefinitionId. |
+| processInstanceId   | `any`    |               | processInstanceId.   |
+| width               | `number` | 1000          | width.               |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success. |
+| Name    | Type                | Description |
+|---------|---------------------|-------------|
+| error   | `EventEmitter<any>` | error.      |
+| success | `EventEmitter<any>` | success.    |

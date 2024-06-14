@@ -1,12 +1,6 @@
----
-Title: Analytics Generator Component
-Added: v2.0.0
-Status: Active
----
+# Analytics Generator Component
 
-# [Analytics Generator Component](../../../lib/insights/src/lib/analytics-process/components/analytics-generator.component.ts "Defined in analytics-generator.component.ts")
-
-Generates and shows charts
+Generates and shows charts for a specific report.
 
 ## Basic Usage
 
@@ -17,18 +11,22 @@ Generates and shows charts
 </adf-analytics>
 ```
 
-## Class members
+## API
+
+```ts
+import { AnalyticsGeneratorComponent } from '@alfresco/adf-insights';
+```
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| reportId | `string` |  | reportId. |
-| reportParamQuery | [`ReportQuery`](../../../lib/insights/src/lib/diagram/models/report/report-query.model.ts) | undefined | reportParamQuery. |
+| Name             | Type          | Default value | Description       |
+|------------------|---------------|---------------|-------------------|
+| reportId         | `string`      |               | reportId.         |
+| reportParamQuery | `ReportQuery` | undefined     | reportParamQuery. |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success. |
+| Name    | Type                | Description |
+|---------|---------------------|-------------|
+| error   | `EventEmitter<any>` | error.      |
+| success | `EventEmitter<any>` | success.    |
