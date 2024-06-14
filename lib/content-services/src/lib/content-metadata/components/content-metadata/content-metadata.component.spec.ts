@@ -785,8 +785,6 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should hide card views group when the grouped properties are empty', async () => {
-            getGroupedPropertiesSpy.and.stub();
-
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             fixture.detectChanges();
@@ -798,8 +796,6 @@ describe('ContentMetadataComponent', () => {
 
         it('should display card views group when there is at least one property that is not empty', async () => {
             component.expanded = true;
-            getGroupedPropertiesSpy.and.stub();
-
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
             fixture.detectChanges();
@@ -987,6 +983,8 @@ describe('ContentMetadataComponent', () => {
 
             component.expanded = true;
             component.preset = 'default';
+            getGroupedPropertiesSpy.and.callThrough();
+            getBasicPropertiesSpy.and.callThrough();
         });
 
         it('should show Versionable with given content-metadata config', async () => {
