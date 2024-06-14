@@ -4,6 +4,9 @@ inputs:
   e2e-test-id:
     description: "Test id"
     required: true
+  e2e-artifact-id:
+    description: "Artifact id"
+    required: true
   e2e-test-folder:
     description: "Test folder"
     required: true

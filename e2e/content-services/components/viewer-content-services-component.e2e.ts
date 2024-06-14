@@ -20,8 +20,6 @@ import { createApiService, BrowserActions, LoginPage, UploadActions, UserModel, 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { VersionManagePage } from '../pages/version-manager.page';
-import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 
 describe('Content Services Viewer', () => {
     const acsUser = new UserModel();
@@ -29,8 +27,6 @@ describe('Content Services Viewer', () => {
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const versionManagePage = new VersionManagePage();
-    const metadataViewPage = new MetadataViewPage();
 
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -61,10 +57,6 @@ describe('Content Services Viewer', () => {
     });
     const unsupportedFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path,
-        name: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
-    });
-    const unsupportedFileByLocation = new FileModel({
-        location: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
         name: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
     const pptFile = new FileModel({
