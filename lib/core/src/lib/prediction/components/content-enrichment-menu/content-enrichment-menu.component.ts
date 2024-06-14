@@ -27,6 +27,7 @@ import { Prediction, ReviewStatus } from '@alfresco/js-api';
 import { IconComponent } from '../../../icon';
 import { LocalizedDatePipe } from '../../../pipes';
 import { PredictionService } from '../../services';
+import { ObjectUtils } from '../../../common';
 
 @Component({
     standalone: true,
@@ -65,8 +66,8 @@ export class ContentEnrichmentMenuComponent implements OnInit {
 
     ngOnInit() {
         this.confidencePercentage = this.prediction?.confidenceLevel * 100 || 0;
-        this.previousValue = this.isDefined(this.prediction?.previousValue) ? this.prediction.previousValue : '';
-        this.predictionValue = this.isDefined(this.prediction?.predictionValue) ? this.prediction.predictionValue : '';
+        this.previousValue = ObjectUtils.isValueDefined(this.prediction?.previousValue) ? this.prediction.previousValue : '';
+        this.predictionValue = ObjectUtils.isValueDefined(this.prediction?.predictionValue) ? this.prediction.predictionValue : '';
         this.predictionDateTime = this.prediction?.predictionDateTime || null;
     }
 
@@ -93,9 +94,5 @@ export class ContentEnrichmentMenuComponent implements OnInit {
     onClosed() {
         this.focusTrap.destroy();
         this.focusTrap = null;
-    }
-
-    private isDefined(value: any): boolean {
-        return value !== undefined && value !== null;
     }
 }

@@ -18,7 +18,6 @@
 import { ObjectUtils } from './object-utils';
 
 describe('ObjectUtils', () => {
-
     it('should get top level property value', () => {
         const obj = {
             id: 1
@@ -244,6 +243,21 @@ describe('ObjectUtils', () => {
             const enhancer = (e: string) => e + 'test';
 
             expect(ObjectUtils.booleanPrettify(obj, enhancer)).toBe('&#9989 testOnetest\n&#10060 testTwotest');
+        });
+    });
+
+    describe('isValueDefined', () => {
+        it('should return true for defined values', () => {
+            expect(ObjectUtils.isValueDefined(0)).toBe(true);
+            expect(ObjectUtils.isValueDefined('')).toBe(true);
+            expect(ObjectUtils.isValueDefined([])).toBe(true);
+            expect(ObjectUtils.isValueDefined({})).toBe(true);
+            expect(ObjectUtils.isValueDefined(false)).toBe(true);
+        });
+
+        it('should return false for undefined or null values', () => {
+            expect(ObjectUtils.isValueDefined(undefined)).toBe(false);
+            expect(ObjectUtils.isValueDefined(null)).toBe(false);
         });
     });
 });
