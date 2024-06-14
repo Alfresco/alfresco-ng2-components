@@ -171,5 +171,3 @@ docs to find out how you can change the logo and background image!
 We have some tutorials for you to explore. Here are a few suggested ones to try next:
 
 -   [Basic theming](basic-theming.md)
--   [Create a new page](new-view.md)
--   [Adding a new component](new-component.md)

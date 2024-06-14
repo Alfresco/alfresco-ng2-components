@@ -19,7 +19,7 @@ This is an example of replacing the standard `Text` [widget](../../lib/testing/s
 
     ![default text widget](../docassets/images/apa-simple-form.png)
 
-    Every custom widget component must inherit the [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
+    Every custom widget component must inherit the [`WidgetComponent`](../core/services/widget.component.md) class in order to function properly:
 
     ```ts
     import { Component } from '@angular/core';
@@ -169,4 +169,4 @@ At runtime you should now see your custom Angular component rendered in place of
 -   [Form field model](../core/models/form-field.model.md)
 -   [Form rendering service](../core/services/form-rendering.service.md)
 -   [Form component](../core/components/form.component.md)
--   [Widget component](../insights/components/widget.component.md)
+-   [Widget component](../core/services/widget.component.md)
