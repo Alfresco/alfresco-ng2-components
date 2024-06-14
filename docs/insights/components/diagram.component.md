@@ -1,0 +1,1 @@
+lib/insights/docs/components/diagram.component.md
