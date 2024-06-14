@@ -16,12 +16,22 @@
  */
 
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { DebugElement, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { AppConfigService, AuthModule, CardViewBaseItemModel, CardViewComponent, NotificationService, PipeModule, TranslationMock, TranslationService, UpdateNotification } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    AuthModule,
+    CardViewBaseItemModel,
+    CardViewComponent,
+    NotificationService,
+    PipeModule,
+    TranslationMock,
+    TranslationService,
+    UpdateNotification
+} from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { EMPTY, of, throwError } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -43,6 +53,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness } from '@angular/material/chips/testing';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -79,7 +91,16 @@ describe('ContentMetadataComponent', () => {
     const category2 = new Category({ id: 'test2', name: 'testCat2' });
     const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [{ entry: category1 }, { entry: category2 }] } };
 
-    const findTagElements = (): DebugElement[] => fixture.debugElement.queryAll(By.css('.adf-metadata-properties .adf-metadata-properties-tag'));
+    const findTagElements = async (): Promise<string[]> => {
+        const matChipHarnessList = await TestbedHarnessEnvironment.loader(fixture).getAllHarnesses(
+            MatChipHarness.with({ selector: '[data-automation-id="metadata-properties-tag-chip"]' })
+        );
+        const tags = [];
+        for (const matChip of matChipHarnessList) {
+            tags.push(await matChip.getText());
+        }
+        return tags;
+    };
 
     const findCancelButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=reset-metadata]')).nativeElement;
     const findCancelTagsButton = (): HTMLButtonElement =>
@@ -165,15 +186,17 @@ describe('ContentMetadataComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(),
-                      NoopAnimationsModule,
-                      AuthModule.forRoot({ useHash: true }),
-                      HttpClientModule,
-                      MatDialogModule,
-                      MatSnackBarModule,
-                      MatProgressBarModule,
-                      MatTooltipModule,
-                      PipeModule],
+            imports: [
+                TranslateModule.forRoot(),
+                NoopAnimationsModule,
+                AuthModule.forRoot({ useHash: true }),
+                HttpClientModule,
+                MatDialogModule,
+                MatSnackBarModule,
+                MatProgressBarModule,
+                MatTooltipModule,
+                PipeModule
+            ],
             providers: [
                 { provide: TranslationService, useClass: TranslationMock },
                 {
@@ -286,11 +309,15 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should save changedProperties on save click', fakeAsync(() => {
-            getGroupedPropertiesSpy.and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+            getGroupedPropertiesSpy.and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: []
+                    }
+                ])
+            );
             updateService.itemUpdated$.next({
                 changed: {}
             } as UpdateNotification);
@@ -374,7 +401,6 @@ describe('ContentMetadataComponent', () => {
                 expect(err.message).toBe('METADATA.ERRORS.GENERIC');
                 sub.unsubscribe();
             });
-
 
             fixture.detectChanges();
             toggleEditModeForGeneralInfo();
@@ -471,11 +497,15 @@ describe('ContentMetadataComponent', () => {
 
         beforeEach(() => {
             showErrorSpy = spyOn(notificationService, 'showError').and.stub();
-            getGroupedPropertiesSpy.and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+            getGroupedPropertiesSpy.and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: []
+                    }
+                ])
+            );
             component.displayCategories = true;
             component.displayTags = true;
             component.ngOnInit();
@@ -623,11 +653,15 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reset group edit ability on reset click', () => {
-            getGroupedPropertiesSpy.and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+            getGroupedPropertiesSpy.and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: []
+                    }
+                ])
+            );
             component.ngOnInit();
             component.readOnly = false;
             fixture.detectChanges();
@@ -786,11 +820,15 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should reload properties for group panel on cancel', () => {
-            getGroupedPropertiesSpy.and.returnValue(of([{
-                editable: true,
-                title: 'test',
-                properties: []
-            }]));
+            getGroupedPropertiesSpy.and.returnValue(
+                of([
+                    {
+                        editable: true,
+                        title: 'test',
+                        properties: []
+                    }
+                ])
+            );
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             component.readOnly = false;
             fixture.detectChanges();
@@ -1204,32 +1242,32 @@ describe('ContentMetadataComponent', () => {
             component.displayTags = true;
         });
 
-        it('should render tags after loading tags in ngOnInit', () => {
+        it('should render tags after loading tags in ngOnInit', async () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
             fixture.detectChanges();
 
             expandTagsPanel();
-            const tagElements = findTagElements();
+            const tagElements = await findTagElements();
             expect(tagElements).toHaveSize(2);
-            expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
-            expect(tagElements[1].nativeElement.textContent).toBe(tagPaging.list.entries[1].entry.tag);
+            expect(tagElements[0]).toBe(tagPaging.list.entries[0].entry.tag);
+            expect(tagElements[1]).toBe(tagPaging.list.entries[1].entry.tag);
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
         });
 
-        it('should not render tags after loading tags in ngOnInit if displayTags is false', () => {
+        it('should not render tags after loading tags in ngOnInit if displayTags is false', async () => {
             component.displayTags = false;
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
             fixture.detectChanges();
 
             expandTagsPanel();
-            const tagElements = findTagElements();
+            const tagElements = await findTagElements();
             expect(tagElements).toHaveSize(0);
             expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
         });
 
-        it('should render tags after loading tags in ngOnChanges', () => {
+        it('should render tags after loading tags in ngOnChanges', async () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
 
             component.ngOnChanges({
@@ -1238,14 +1276,14 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
 
             expandTagsPanel();
-            const tagElements = findTagElements();
+            const tagElements = await findTagElements();
             expect(tagElements).toHaveSize(2);
-            expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
-            expect(tagElements[1].nativeElement.textContent).toBe(tagPaging.list.entries[1].entry.tag);
+            expect(tagElements[0]).toBe(tagPaging.list.entries[0].entry.tag);
+            expect(tagElements[1]).toBe(tagPaging.list.entries[1].entry.tag);
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
         });
 
-        it('should not render tags after loading tags in ngOnChanges if displayTags is false', () => {
+        it('should not render tags after loading tags in ngOnChanges if displayTags is false', async () => {
             component.displayTags = false;
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnChanges({
@@ -1254,23 +1292,23 @@ describe('ContentMetadataComponent', () => {
 
             expandTagsPanel();
             fixture.detectChanges();
-            const tagElements = findTagElements();
+            const tagElements = await findTagElements();
             expect(tagElements).toHaveSize(0);
             expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
         });
 
-        it('should not render tags after loading tags in ngOnChanges if node is not changed', () => {
+        it('should not render tags after loading tags in ngOnChanges if node is not changed', async () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnChanges({});
 
             expandTagsPanel();
             fixture.detectChanges();
-            const tagElements = findTagElements();
+            const tagElements = await findTagElements();
             expect(tagElements).toHaveSize(0);
             expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
         });
 
-        it('should not render tags after loading tags in ngOnChanges if node is changed first time', () => {
+        it('should not render tags after loading tags in ngOnChanges if node is changed first time', async () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnChanges({
                 node: new SimpleChange(undefined, node, true)
@@ -1278,12 +1316,12 @@ describe('ContentMetadataComponent', () => {
 
             expandTagsPanel();
             fixture.detectChanges();
-            const tagElements = findTagElements();
+            const tagElements = await findTagElements();
             expect(tagElements).toHaveSize(0);
             expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
         });
 
-        it('should render tags after loading tags after clicking on Cancel button', fakeAsync(() => {
+        it('should render tags after loading tags after clicking on Cancel button', fakeAsync(async () => {
             component.readOnly = false;
             fixture.detectChanges();
             toggleEditModeForTags();
@@ -1297,14 +1335,14 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
 
             expandTagsPanel();
-            const tagElements = findTagElements();
+            const tagElements = await findTagElements();
             expect(tagElements).toHaveSize(2);
-            expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
-            expect(tagElements[1].nativeElement.textContent).toBe(tagPaging.list.entries[1].entry.tag);
+            expect(tagElements[0]).toBe(tagPaging.list.entries[0].entry.tag);
+            expect(tagElements[1]).toBe(tagPaging.list.entries[1].entry.tag);
             expect(tagService.getTagsByNodeId).toHaveBeenCalledOnceWith(node.id);
         }));
 
-        it('should be hidden when editable is true', () => {
+        it('should be hidden when editable is true', async () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
             component.readOnly = false;
@@ -1312,7 +1350,7 @@ describe('ContentMetadataComponent', () => {
 
             toggleEditModeForTags();
             fixture.detectChanges();
-            expect(findTagElements()).toHaveSize(0);
+            expect(await findTagElements()).toHaveSize(0);
         });
     });
 

@@ -64,17 +64,9 @@ $panel-properties-height: 56px !default;
             color: var(--adf-theme-foreground-text-color-054);
         }
 
-        .adf-metadata-properties-tag {
-            min-height: 32px;
-            display: inline-flex;
-            align-items: center;
-            border-radius: 16px;
-            width: fit-content;
+        #{$mat-chip} {
             background: var(--adf-metadata-buttons-background-color);
-            padding: 6px 12px;
-            justify-content: center;
-            margin-left: 8px;
-            overflow-wrap: anywhere;
+            padding: 6px;
         }
 
         .adf-metadata-no-item-added {
