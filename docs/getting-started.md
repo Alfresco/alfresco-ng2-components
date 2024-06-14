@@ -9,9 +9,9 @@ The first thing to do is to check the prerequisites and the requirements to run 
 
 More in particular check that you have:
 
--   Alfresco Content Services (alias ACS) Community or Enterprise edition up and running (identify the URL that will be required as configuration).
+-   Alfresco Content Services (ACS) Community or Enterprise edition up and running (identify the URL that will be required as configuration).
 -   The latest lts version of NodeJs.
--   A recent (and supported) version of a browser (see here for further details).
+-   A recent (and supported) version of a browser.
 
 # Cloning and launching the front-end application
 
@@ -41,6 +41,7 @@ If you are an Alfresco Customer or an Official Partner, you might be interested 
 -   Use the `alfresco-digital-workspace-app` GitHub repository (this is a private repository so you may require to get a local copy of the project raising a request into the Alfresco Support Portal).
 -   Use the following `.env` file.
 
+```yaml
     AUTH_TYPE="BASIC"
     PROVIDER="ECM"
     API_CONTENT_HOST="<https://...>"
@@ -52,9 +53,14 @@ If you are an Alfresco Customer or an Official Partner, you might be interested 
     ADF_PATH="../alfresco-ng2-components"
     ACA_BRANCH="develop"
     MAXINSTANCES=3
+```
 
 -   Run the application using `npm start content-ee`.
 
 # Conclusion
 
-In this tutorial you learned how to launch a fully-featured ADF-based application on your development environment, starting from the source code, with the purpose to have a first experience with the development principles and the best practices suggested to create front-end applications working on top of the Alfresco backend services. This is only the first success that you can do with the Alfresco technology. Continue to learn on how to develop front-end applications using Alfresco, in the following sections of the official documentation.
+In this tutorial you learned how to launch a fully-featured ADF-based application on your development environment,
+starting from the source code, with the purpose to have a first experience with the development principles and the best practices suggested to create front-end applications working on top of the Alfresco backend services. 
+
+This is only the first success that you can do with the Alfresco technology.
+Continue to learn on how to develop front-end applications using Alfresco, in the following sections of the official documentation.
