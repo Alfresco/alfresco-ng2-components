@@ -592,7 +592,7 @@ for more information about installing and using the source code.
 | [APS Analytics List Component](insights/components/analytics-report-list.component.md) | Shows a list of all available reports | [Source](../lib/insights/src/lib/analytics-process/components/analytics-report-list.component.ts) |
 | [APS Analytics Component](insights/components/analytics.component.md) | Shows the charts related to the reportId passed as input | [Source](../lib/insights/src/lib/analytics-process/components/analytics.component.ts) |
 | [Diagram Component](insights/components/diagram.component.md) | Displays process diagrams. | [Source](../lib/insights/src/lib/diagram/components/diagram.component.ts) |
-| [Widget component](insights/components/widget.component.md) | Base class for standard and custom widget classes. | [Source](../lib/insights/src/lib/analytics-process/components/widgets/widget.component.ts) |
+| [Widget component](core/services/widget.component.md) | Base class for standard and custom widget classes. | [Source](../lib/insights/src/lib/analytics-process/components/widgets/widget.component.ts) |
 
 <!--insights end-->
 
