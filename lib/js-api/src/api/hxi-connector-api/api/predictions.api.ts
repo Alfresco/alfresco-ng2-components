@@ -57,7 +57,7 @@ export class PredictionsApi extends BaseApi {
 
         const queryParams = {
             reviewStatus
-        }
+        };
 
         return this.post({
             path: '/predictions/{predictionId}/review',
