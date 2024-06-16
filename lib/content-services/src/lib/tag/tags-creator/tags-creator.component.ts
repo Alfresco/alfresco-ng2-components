@@ -94,6 +94,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             this._existingTagsPanelVisible = true;
             setTimeout(() => {
                 this.tagNameInputElement?.nativeElement?.scrollIntoView();
+                if (!this.tags.length) {
+                    this.tagNameInputElement?.nativeElement?.focus();
+                }
             });
         } else {
             this._existingTagsPanelVisible = false;
@@ -247,7 +250,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      */
     removeTag(tag: string): void {
         this.removeTagFromArray(this.tags, tag);
-        this.tagNameControl.updateValueAndValidity();
+        this.tagNameControl.updateValueAndValidity({ emitEvent: false });
         this.updateExistingTagsListOnRemoveFromTagsToConfirm(tag);
         this.exactTagSet$.next();
         this.checkScrollbarVisibility();
