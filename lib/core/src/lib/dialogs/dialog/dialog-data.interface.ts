@@ -35,6 +35,7 @@ export interface DialogData {
     descriptionTemplate?: TemplateRef<any>;
     headerIcon?: string;
     additionalActionButtons?: AdditionalDialogActionButton[];
+    componentData?: any;
 }
 
 export interface AdditionalDialogActionButton {

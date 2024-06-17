@@ -52,7 +52,6 @@ export class LegalHoldService {
         );
     }
 
-
     /**
      * Add a child of a hold with id holdId.
      *
