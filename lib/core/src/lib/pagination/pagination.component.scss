@@ -3,8 +3,6 @@
 $adf-pagination-height: 48px !default;
 $adf-pagination-icon-button-size: 32px !default;
 $adf-pagination-border: none !default;
-$adf-pagination-empty-height: 48px !default;
-$adf-pagination-empty-border: none !default;
 
 .adf-pagination {
     display: flex;
@@ -78,13 +76,11 @@ $adf-pagination-empty-border: none !default;
     }
 
     &.adf-pagination__empty {
-        border-top: $adf-pagination-empty-border;
-        height: $adf-pagination-empty-height;
+        border-top: $adf-pagination-border;
+        height: $adf-pagination-height;
     }
 
     button[mat-icon-button] {
-        width: $adf-pagination-icon-button-size;
-        height: $adf-pagination-icon-button-size;
         line-height: $adf-pagination-icon-button-size;
     }
 }
