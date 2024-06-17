@@ -32,8 +32,8 @@ export class SettingsPage {
     silentLoginToggleLabel = $(`${materialLocators.Slide.toggle.root}[formcontrolname="silentLogin"] label`);
     silentLoginToggleElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="silentLogin"]`);
     implicitFlowLabel = $(`${materialLocators.Slide.toggle.root}[formcontrolname="implicitFlow"] label`);
-    implicitFlowElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="implicitFlow"]`);
     codeFlowElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="codeFlow"]`);
+    codeFlowLabel = $(`${materialLocators.Slide.toggle.root}[formcontrolname="codeFlow"] label`);
     applyButton = $('button[data-automation-id="settings-apply-button"]');
     providerDropdown = new DropdownPage($(`${materialLocators.Select.root}[id="adf-provider-selector"]`));
 
@@ -64,10 +64,9 @@ export class SettingsPage {
         authHost,
         identityHost,
         silentLogin = true,
-        implicitFlow = true,
+        codeFlow = true,
         clientId?: string,
-        logoutUrl: string = '/logout',
-        codeFlow = true
+        logoutUrl: string = '/logout'
     ) {
         await this.goToSettingsPage();
         await this.setProvider('ECM');
@@ -75,9 +74,8 @@ export class SettingsPage {
         await this.setContentServicesURL(contentServiceURL);
         await this.setAuthHost(authHost);
         await this.setIdentityHost(identityHost);
-        await this.setSilentLogin(silentLogin);
-        await this.setImplicitFlow(implicitFlow);
         await this.setCodeFlow(codeFlow);
+        await this.setSilentLogin(silentLogin);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
@@ -89,7 +87,7 @@ export class SettingsPage {
         authHost,
         identityHost,
         silentLogin = true,
-        implicitFlow = true,
+        codeFlow = true,
         clientId?: string,
         logoutUrl: string = '/logout'
     ) {
@@ -99,9 +97,8 @@ export class SettingsPage {
         await this.setContentServicesURL(contentServiceURL);
         await this.setAuthHost(authHost);
         await this.setIdentityHost(identityHost);
+        await this.setCodeFlow(codeFlow);
         await this.setSilentLogin(silentLogin);
-        await this.setCodeFlow(false);
-        await this.setImplicitFlow(implicitFlow);
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
@@ -143,23 +140,14 @@ export class SettingsPage {
         }
     }
 
-    async setImplicitFlow(enableToggle) {
-        await BrowserVisibility.waitUntilElementIsVisible(this.implicitFlowElement);
-
-        const isChecked = (await BrowserActions.getAttribute(this.implicitFlowElement, 'class')).includes(materialLocators.Slide.toggle.checked);
-
-        if ((isChecked && !enableToggle) || (!isChecked && enableToggle)) {
-            await BrowserActions.click(this.implicitFlowLabel);
-        }
-    }
-
     async setCodeFlow(enableToggle) {
         await BrowserVisibility.waitUntilElementIsVisible(this.codeFlowElement);
 
-        const isChecked = (await BrowserActions.getAttribute(this.codeFlowElement, 'class')).includes(materialLocators.Checked.root);
+        const classElements = await BrowserActions.getAttribute(this.codeFlowElement, 'class');
+        const isChecked = classElements.includes(materialLocators.Slide.toggle.checked);
 
         if ((isChecked && !enableToggle) || (!isChecked && enableToggle)) {
-            await BrowserActions.click(this.codeFlowElement);
+            await BrowserActions.click(this.codeFlowLabel);
         }
     }
 }
