@@ -71,4 +71,30 @@ describe('LegalHoldsService', () => {
             });
         });
     });
+
+    describe('addHoldsToExistingHold', () => {
+        it('should add holds to existing hold', (done) => {
+            const childrenIds = ['abc', 'qwe'];
+            spyOn(service.legalHoldApi, 'saveToExistingHolds').and.returnValue(Promise.resolve(legalHolds));
+
+            service.addHoldsToExistingHold(childrenIds, mockId).subscribe((holds) => {
+                expect(holds).toEqual(returnedHolds);
+                expect(service.legalHoldApi.saveToExistingHolds).toHaveBeenCalledWith(mockId, childrenIds);
+                done();
+            });
+        });
+    });
+
+    describe('deleteHoldFromExistingHold', () => {
+        it('should delete hold from existing hold', (done) => {
+            const childrenId = 'qwe';
+            spyOn(service.legalHoldApi, 'deleteFromExistingHolds').and.returnValue(Promise.resolve(legalHolds));
+
+            service.deleteHoldFromExistingHold(mockId, childrenId).subscribe((holds) => {
+                expect(holds).toEqual(returnedHolds);
+                expect(service.legalHoldApi.deleteFromExistingHolds).toHaveBeenCalledWith(mockId, childrenId);
+                done();
+            });
+        });
+    });
 });
