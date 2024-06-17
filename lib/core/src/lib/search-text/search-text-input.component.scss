@@ -22,7 +22,7 @@
     }
 
     &-input-form-field-divider {
-        #{$mat-form-field-underline} {
+        #{$mat-line-ripple} {
             background-color: var(--adf-theme-primary-50);
         }
 
