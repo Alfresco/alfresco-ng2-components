@@ -67,7 +67,7 @@
         color: var(--adf-metadata-property-panel-title-color);
     }
 
-    #{$mat-form-field-underline} {
+    #{$mat-line-ripple} {
         &::before,
         &::after {
             display: none;
