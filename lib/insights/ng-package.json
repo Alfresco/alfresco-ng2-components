@@ -19,5 +19,12 @@
     "styleIncludePaths": [
       "../core/src/lib"
     ]
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "@alfresco/adf-core",
+    "@ngx-translate/core",
+    "chart.js",
+    "ng2-charts",
+    "raphael"
+  ]
 }

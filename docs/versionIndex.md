@@ -655,7 +655,7 @@ backend services have been tested with each released version of ADF.
 -   [Version manager component](content-services/components/version-manager.component.md)
 -   [Viewer component](core/components/viewer.component.md)
 -   [Webscript component](content-services/components/webscript.component.md)
--   [Widget component](insights/components/widget.component.md)
+-   [Widget component](core/services/widget.component.md)
 
 <!--v200 end-->
 

@@ -578,21 +578,19 @@ for more information about installing and using the source code.
 ## Insights API
 
 Contains components for Process Services analytics and diagrams.
-See the library's
-[README file](../lib/insights/README.md)
-for more information about installing and using the source code.
+See the library [README](../lib/insights/README.md) for more details.
 
 <!--insights start-->
 
 ### Components
 
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [Analytics Generator Component](insights/components/analytics-generator.component.md) | Generates and shows charts | [Source](../lib/insights/src/lib/analytics-process/components/analytics-generator.component.ts) |
-| [APS Analytics List Component](insights/components/analytics-report-list.component.md) | Shows a list of all available reports | [Source](../lib/insights/src/lib/analytics-process/components/analytics-report-list.component.ts) |
-| [APS Analytics Component](insights/components/analytics.component.md) | Shows the charts related to the reportId passed as input | [Source](../lib/insights/src/lib/analytics-process/components/analytics.component.ts) |
-| [Diagram Component](insights/components/diagram.component.md) | Displays process diagrams. | [Source](../lib/insights/src/lib/diagram/components/diagram.component.ts) |
-| [Widget component](insights/components/widget.component.md) | Base class for standard and custom widget classes. | [Source](../lib/insights/src/lib/analytics-process/components/widgets/widget.component.ts) |
+| Name                                                                                   | Description                                              |
+|----------------------------------------------------------------------------------------|----------------------------------------------------------|
+| [Analytics Generator Component](insights/components/analytics-generator.component.md)  | Generates and shows charts                               |
+| [APS Analytics List Component](insights/components/analytics-report-list.component.md) | Shows a list of all available reports                    |
+| [APS Analytics Component](insights/components/analytics.component.md)                  | Shows the charts related to the reportId passed as input |
+| [Diagram Component](insights/components/diagram.component.md)                          | Displays process diagrams.                               |
+| [Widget component](core/services/widget.component.md)                                  | Base class for standard and custom widget classes.       |
 
 <!--insights end-->
 
