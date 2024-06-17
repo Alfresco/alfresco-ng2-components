@@ -17,10 +17,19 @@
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DialogComponent } from './dialog.component';
+import { By } from '@angular/platform-browser';
+import { DIALOG_COMPONENT_DATA, DialogComponent } from './dialog.component';
 import { DialogData } from './dialog-data.interface';
 import { DialogSize } from './dialog.model';
 import { CoreTestingModule } from '../../testing';
+import { Component, DebugElement, inject } from '@angular/core';
+
+@Component({
+    selector: 'adf-dummy-component'
+})
+class DummyComponent {
+    data = inject(DIALOG_COMPONENT_DATA);
+}
 
 describe('DialogComponent', () => {
     let component: DialogComponent;
@@ -43,11 +52,13 @@ describe('DialogComponent', () => {
     const setupBeforeEach = (dialogOptions: DialogData = data) => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule],
+            declarations: [DummyComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: dialogOptions },
                 { provide: MatDialogRef, useValue: dialogRef }
             ]
         }).compileComponents();
+
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(DialogComponent);
         component = fixture.componentInstance;
@@ -252,6 +263,26 @@ describe('DialogComponent', () => {
 
                 expect(header).toBeDefined();
             });
+        });
+    });
+
+    describe('when contentComponent with contentData was passed', () => {
+        const mockData = 'Injected Data';
+
+        beforeEach(() => {
+            setupBeforeEach({
+                ...data,
+                contentComponent: DummyComponent,
+                componentData: mockData
+            });
+        });
+
+        it('should generate component with injectoted data', () => {
+            const debugElement: DebugElement = fixture.debugElement.query(By.directive(DummyComponent));
+            const dummyComponentInstance = debugElement.componentInstance;
+
+            expect(dummyComponentInstance).toBeTruthy();
+            expect(dummyComponentInstance.data).toEqual(mockData);
         });
     });
 });
