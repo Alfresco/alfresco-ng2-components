@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Hold } from '..';
+import { Hold } from './hold';
 
 export class HoldEntry {
     entry: Hold;
