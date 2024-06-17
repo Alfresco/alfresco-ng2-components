@@ -18,11 +18,11 @@
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { Hold, NodeChildAssociationPaging } from '@alfresco/js-api';
+import { Hold, HoldPaging } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
     let service: LegalHoldService;
-    let legalHolds: NodeChildAssociationPaging;
+    let legalHolds: HoldPaging;
     let returnedHolds: Hold[];
     const mockId = 'mockId';
 
@@ -44,7 +44,7 @@ describe('LegalHoldsService', () => {
                     }
                 ]
             }
-        } as NodeChildAssociationPaging;
+        } as HoldPaging;
 
         returnedHolds = [
             {
