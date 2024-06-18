@@ -98,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Ensure SHA pinned actions
         uses: zgosalvez/github-actions-ensure-sha-pinned-actions@2f2ebc6d914ab515939dc13f570f91baeb2c194c # v3.0.6
@@ -116,7 +116,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
          fetch-depth: 0
 
@@ -199,7 +199,7 @@ jobs:
     needs: [check-if-pr-is-approved, pre-checks]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
@@ -236,7 +236,7 @@ jobs:
             exclude: "insights,core,extensions,content-services,process-services,eslint-plugin-eslint-angular,js-api"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
@@ -253,7 +253,7 @@ jobs:
     needs: [setup]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
@@ -268,7 +268,7 @@ jobs:
     needs: [setup]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
@@ -285,7 +285,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
@@ -443,7 +443,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0 # Fetch all history for all
       - uses: ./.github/actions/setup
@@ -472,7 +472,7 @@ jobs:
     steps:
       - id: checkoutRepo
         name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 1
       - name: PR contains forbidden labels
@@ -499,7 +499,7 @@ jobs:
     name: Final Results
     needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
     steps:
-      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: identify-slack-group
         id: groups
         if: ${{ github.event_name == 'schedule' }}
