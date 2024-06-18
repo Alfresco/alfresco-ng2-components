@@ -103,6 +103,7 @@ describe('Task filters cloud', () => {
             await taskList.getDataTable().waitTillContentLoaded();
 
             expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
+
             await taskList.checkContentIsNotDisplayedByName(completedTask);
 
             await taskFilter.clickTaskFilter('completed-tasks');
