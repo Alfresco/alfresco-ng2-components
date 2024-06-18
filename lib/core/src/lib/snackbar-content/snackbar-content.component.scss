@@ -17,10 +17,13 @@
 
     .adf-snackbar-message-content-action {
         margin-left: 24px;
+        display: flex;
+        flex-direction: row;
 
         #{$mat-button} {
             min-width: 0;
             margin: -8px;
+            height: unset;
 
             &.adf-snackbar-message-content-action-button {
                 margin-right: 8px;
