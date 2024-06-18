@@ -226,7 +226,7 @@
         }
 
         & #{$mat-button-label} {
-            width: 58px;
+            min-width: 58px;
             height: 20px;
             opacity: 0.54;
             font-size: var(--theme-body-2-font-size);
