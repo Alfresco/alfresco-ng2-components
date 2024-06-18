@@ -150,6 +150,7 @@ export class HostSettingsComponent implements OnInit {
             scope: [oauth.scope, Validators.required],
             secret: oauth.secret,
             silentLogin: oauth.silentLogin,
+            implicitFlow: oauth.implicitFlow,
             codeFlow: oauth.codeFlow,
             publicUrls: [oauth.publicUrls]
         });
@@ -160,10 +161,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createIdentityFormControl(): UntypedFormControl {
-        return new UntypedFormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [
-            Validators.required,
-            Validators.pattern(HOST_REGEX)
-        ]);
+        return new UntypedFormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [Validators.required, Validators.pattern(HOST_REGEX)]);
     }
 
     private createECMFormControl(): UntypedFormControl {
@@ -205,7 +203,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private saveOAuthValues(values: any) {
-        if (values.oauthConfig.publicUrls && typeof values.oauthConfig.publicUrls === 'string') {
+        if (values.oauthConfig.publicUrls && (typeof values.oauthConfig.publicUrls === 'string')) {
             values.oauthConfig.publicUrls = values.oauthConfig.publicUrls.split(',');
         }
 
@@ -280,4 +278,5 @@ export class HostSettingsComponent implements OnInit {
     get oauthConfig(): UntypedFormControl {
         return this.form.get('oauthConfig') as UntypedFormControl;
     }
+
 }
