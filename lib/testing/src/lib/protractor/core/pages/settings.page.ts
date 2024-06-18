@@ -35,6 +35,7 @@ export class SettingsPage {
     implicitFlowElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="implicitFlow"]`);
     codeFlowElement = $(`${materialLocators.Slide.toggle.root}[formcontrolname="codeFlow"]`);
     applyButton = $('button[data-automation-id="settings-apply-button"]');
+    ssoSignInButton = $('[id="login-button-sso"]');
     providerDropdown = new DropdownPage($(`${materialLocators.Select.root}[id="adf-provider-selector"]`));
 
     async goToSettingsPage(): Promise<void> {
@@ -79,6 +80,8 @@ export class SettingsPage {
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
+        await browser.sleep(1000);
+        await this.clickSignInSSO();
         await browser.sleep(1000);
     }
 
@@ -129,6 +132,10 @@ export class SettingsPage {
 
     async clickApply() {
         await BrowserActions.click(this.applyButton);
+    }
+
+    async clickSignInSSO() {
+        await BrowserActions.click(this.ssoSignInButton);
     }
 
     async setSilentLogin(enableToggle) {
