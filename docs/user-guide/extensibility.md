@@ -109,4 +109,4 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 -   [Form field model](../core/models/form-field.model.md)
 -   [Form rendering service](../core/services/form-rendering.service.md)
 -   [Form component](../core/components/form.component.md)
--   [Widget component](../insights/components/widget.component.md)
+-   [Widget component](../core/services/widget.component.md)
