@@ -259,12 +259,11 @@ export class NodesApiService {
 
         return from(this.nodesApi.listParents(nodeId, queryOptions)).pipe(
             map(({ list }) =>
-                list?.entries?.map(({ entry }) => ({
-                    id: entry?.id,
-                    name: entry?.name
+                list.entries?.map(({ entry }) => ({
+                    id: entry.id,
+                    name: entry.name
                 }))
-            ),
-            catchError((err) => throwError(err))
+            )
         );
     }
 }

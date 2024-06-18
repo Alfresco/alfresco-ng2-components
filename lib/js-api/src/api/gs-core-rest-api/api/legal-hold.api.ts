@@ -33,7 +33,7 @@ export class LegalHoldApi extends BaseApi {
      * @param options Optional parameters
      * @returns Promise<HoldPaging>
      */
-    getHolds(filePlanId: string = '-filePlan-', options?: ContentPagingQuery): Promise<HoldPaging> {
+    getHolds(filePlanId = '-filePlan-', options?: ContentPagingQuery): Promise<HoldPaging> {
         throwIfNotDefined(filePlanId, 'filePlanId');
 
         const pathParams = {

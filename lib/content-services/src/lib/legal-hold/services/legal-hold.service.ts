@@ -18,8 +18,8 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentPagingQuery, Hold, LegalHoldApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +31,7 @@ export class LegalHoldService {
         return this._legalHoldApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private readonly apiService: AlfrescoApiService) {}
 
     /**
      * Gets the list of holds.
@@ -43,12 +43,11 @@ export class LegalHoldService {
     getHolds(filePlanId: string, options?: ContentPagingQuery): Observable<Hold[]> {
         return from(this.legalHoldApi.getHolds(filePlanId, options)).pipe(
             map(({ list }) =>
-                list?.entries?.map(({ entry }) => ({
-                    id: entry?.id,
-                    name: entry?.name
+                list.entries?.map(({ entry }) => ({
+                    id: entry.id,
+                    name: entry.name
                 }))
-            ),
-            catchError((err) => throwError(err))
+            )
         );
     }
 }
