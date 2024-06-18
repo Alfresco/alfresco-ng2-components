@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProcessAttachmentListComponent, ProcessService, ProcessUploadService } from '@alfresco/adf-process-services';
 import { UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
@@ -27,12 +27,7 @@ import { ProcessInstanceRepresentation } from '@alfresco/js-api';
     selector: 'app-process-attachments',
     templateUrl: './process-attachments.component.html',
     styleUrls: ['./process-attachments.component.css'],
-    providers: [
-        {
-            provide: UploadService,
-            useClass: ProcessUploadService
-        }
-    ],
+    providers: [{ provide: UploadService, useClass: ProcessUploadService }],
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
@@ -44,9 +39,11 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
 
     processInstance: ProcessInstanceRepresentation;
 
-    private onDestroy$ = new Subject<boolean>();
+    private uploadService = inject(UploadService);
+    private processService = inject(ProcessService);
+    private preview = inject(PreviewService);
 
-    constructor(private uploadService: UploadService, private processService: ProcessService, private preview: PreviewService) {}
+    private onDestroy$ = new Subject<boolean>();
 
     ngOnInit() {
         this.uploadService.fileUploadComplete.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.onFileUploadComplete(value.data));

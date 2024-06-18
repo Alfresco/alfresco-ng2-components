@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, inject, Injectable } from '@angular/core';
 import { Minimatch } from 'minimatch';
 import { Subject } from 'rxjs';
 import { FileUploadCompleteEvent, FileUploadDeleteEvent, FileUploadErrorEvent, FileUploadEvent } from '../events/file.event';
@@ -73,11 +73,11 @@ export class UploadService {
         return this._versionsApi;
     }
 
-    constructor(
-        protected apiService: AlfrescoApiService,
-        private appConfigService: AppConfigService,
-        private discoveryApiService: DiscoveryApiService
-    ) {
+    protected apiService = inject(AlfrescoApiService);
+    protected appConfigService = inject(AppConfigService);
+    protected discoveryApiService = inject(DiscoveryApiService);
+
+    constructor() {
         this.discoveryApiService.ecmProductInfo$.pipe(filter((info) => !!info)).subscribe(({ status }) => {
             this.isThumbnailGenerationEnabled = status.isThumbnailGenerationEnabled;
         });

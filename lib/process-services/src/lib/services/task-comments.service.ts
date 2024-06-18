@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, CommentModel, CommentsService } from '@alfresco/adf-core';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PeopleProcessService } from './people-process.service';
@@ -32,7 +32,8 @@ export class TaskCommentsService implements CommentsService {
         return this._commentsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private peopleProcessService: PeopleProcessService) {}
+    protected apiService = inject(AlfrescoApiService);
+    protected peopleProcessService = inject(PeopleProcessService);
 
     /**
      * Gets all comments that have been added to a task.

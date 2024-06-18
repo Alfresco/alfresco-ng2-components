@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges, inject } from '@angular/core';
 import {
     FormModel,
     ContentLinkModel,
@@ -154,11 +154,9 @@ export class TaskFormComponent implements OnInit, OnChanges {
     loading: boolean = false;
     internalReadOnlyForm: boolean = false;
 
-    constructor(
-        private taskListService: TaskListService,
-        private peopleProcessService: PeopleProcessService,
-        private translationService: TranslationService
-    ) {}
+    private taskListService = inject(TaskListService);
+    private peopleProcessService = inject(PeopleProcessService);
+    private translationService = inject(TranslationService);
 
     ngOnInit() {
         this.peopleProcessService.getCurrentUserInfo().subscribe((user) => {
