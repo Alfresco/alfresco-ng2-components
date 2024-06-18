@@ -67,9 +67,15 @@
             <mat-slide-toggle class="adf-full-width" name="silentLogin" formControlName="silentLogin">
             </mat-slide-toggle>
 
-            <mat-label>Code Flow</mat-label>
-            <mat-slide-toggle class="adf-full-width" name="codeFlow" formControlName="codeFlow">
+            <mat-label>Implicit Flow</mat-label>
+            <mat-slide-toggle class="adf-full-width" name="implicitFlow" formControlName="implicitFlow">
             </mat-slide-toggle>
+
+            <ng-container *ngIf="isOAUTH">
+                <mat-label>Code Flow</mat-label>
+                <mat-slide-toggle class="adf-full-width" name="codeFlow" formControlName="codeFlow">
+                </mat-slide-toggle>
+            </ng-container>
 
             <mat-form-field class="adf-full-width">
                 <mat-label>Redirect URI</mat-label>
