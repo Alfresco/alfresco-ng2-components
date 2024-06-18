@@ -20,7 +20,7 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, CommentModel, User } from '@alfresco/adf-core';
-import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../../mock';
+import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../../testing/mock';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';

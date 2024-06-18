@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { taskDetailsMock } from '../../../mock';
+import { taskDetailsMock } from '../../../testing/mock';
 import { ProcessService } from '../../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';

@@ -20,7 +20,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppsProcessService } from '../../services/apps-process.service';
-import { deployedApps } from '../../mock/apps-list.mock';
+import { deployedApps } from '../../testing/mock/apps-list.mock';
 import { of } from 'rxjs';
 import { SelectAppsDialogComponent } from './select-apps-dialog.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';

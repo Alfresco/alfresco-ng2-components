@@ -21,7 +21,7 @@ import { of, throwError } from 'rxjs';
 import { CommentProcessService } from './services/comment-process.service';
 import { ProcessCommentsComponent } from './process-comments.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
-import { mockProcessInstanceComments } from '../mock/process/process-comments.mock';
+import { mockProcessInstanceComments } from '../testing/mock/process/process-comments.mock';
 
 describe('ProcessCommentsComponent', () => {
     let component: ProcessCommentsComponent;

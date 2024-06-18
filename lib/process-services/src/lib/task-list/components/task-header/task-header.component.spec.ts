@@ -26,7 +26,7 @@ import {
     claimedTaskDetailsMock,
     claimedByGroupMemberMock,
     taskDetailsWithOutCandidateGroup
-} from '../../../mock';
+} from '../../../testing/mock';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';

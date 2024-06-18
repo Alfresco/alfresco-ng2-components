@@ -40,7 +40,7 @@ import {
     taskDetailsWithOutCandidateGroup,
     taskDetailsWithOutFormMock,
     taskFormMock
-} from '../../../mock/task/task-details.mock';
+} from '../../../testing/mock/task/task-details.mock';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TaskFormService } from '../../../form/services/task-form.service';
