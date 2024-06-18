@@ -23,6 +23,10 @@ import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { OAuthEvent } from 'angular-oauth2-oidc';
+import { Subject } from 'rxjs';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
+import { Injector } from '@angular/core';
 
 declare let jasmine: any;
 
@@ -505,6 +509,29 @@ describe('AuthenticationService', () => {
             spyOn(basicAlfrescoAuthService, 'getUsername').and.returnValue('john.petrucci');
             const username = authService.getUsername();
             expect(username).toEqual('john.petrucci');
+        });
+    });
+
+    describe('onTokenReceived', () => {
+        let redirectAuthService: RedirectAuthService;
+        let authenticationService: AuthenticationService;
+        const onTokenReceived$: Subject<OAuthEvent> = new Subject<OAuthEvent>();
+
+        beforeEach(() => {
+            redirectAuthService = TestBed.inject(RedirectAuthService);
+            redirectAuthService.onTokenReceived = onTokenReceived$;
+
+            const injector = TestBed.inject(Injector);
+            authenticationService = new AuthenticationService(injector, redirectAuthService);
+        });
+
+        it('should emit event when RedirectAuthService onTokenReceived emits', () => {
+            const onTokenReceivedSpy = jasmine.createSpy();
+            authenticationService.onTokenReceived.subscribe(onTokenReceivedSpy);
+
+            onTokenReceived$.next();
+
+            expect(onTokenReceivedSpy).toHaveBeenCalled();
         });
     });
 });
