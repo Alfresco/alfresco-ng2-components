@@ -137,7 +137,8 @@ export class SettingsPage {
     }
 
     async clickSignInSSO() {
-        if (this.ssoSignInButton.isDisplayed) {
+        const isPresent = await this.ssoSignInButton.isPresent();
+        if (isPresent) {
             await BrowserActions.click(this.ssoSignInButton);
         }
     }
