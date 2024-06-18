@@ -107,6 +107,8 @@ export class SettingsPage {
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
         await browser.sleep(1000);
+        await this.clickSignInSSO();
+        await browser.sleep(1000);
     }
 
     async setLogoutUrl(logoutUrl) {
@@ -135,7 +137,9 @@ export class SettingsPage {
     }
 
     async clickSignInSSO() {
-        await BrowserActions.click(this.ssoSignInButton);
+        if (this.ssoSignInButton.isDisplayed) {
+            await BrowserActions.click(this.ssoSignInButton);
+        }
     }
 
     async setSilentLogin(enableToggle) {
