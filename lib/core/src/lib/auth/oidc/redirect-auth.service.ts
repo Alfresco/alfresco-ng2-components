@@ -16,7 +16,7 @@
  */
 
 import { Inject, Injectable, inject } from '@angular/core';
-import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions } from 'angular-oauth2-oidc';
+import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
@@ -31,6 +31,8 @@ export class RedirectAuthService extends AuthService {
   readonly authModuleConfig: AuthModuleConfig = inject(AUTH_MODULE_CONFIG);
 
   onLogin: Observable<any>;
+
+  onTokenReceived: Observable<any>;
 
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
 
@@ -69,6 +71,11 @@ export class RedirectAuthService extends AuthService {
 
     this.onLogin = this.authenticated$.pipe(
         filter((authenticated) => authenticated),
+        map(() => undefined)
+    );
+
+    this.onTokenReceived = this.oauthService.events.pipe(
+        filter((event: OAuthEvent) => event.type === 'token_received'),
         map(() => undefined)
     );
 
