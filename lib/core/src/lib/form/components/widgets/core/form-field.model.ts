@@ -407,7 +407,7 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.RADIO_BUTTONS: {
                 const radioButton: FormFieldOption = this.options.find((opt) => opt.id === this.value);
-                this.form.values[this.id] = radioButton ? radioButton : null;
+                this.form.values[this.id] = radioButton || null;
                 break;
             }
             case FormFieldTypes.UPLOAD: {
