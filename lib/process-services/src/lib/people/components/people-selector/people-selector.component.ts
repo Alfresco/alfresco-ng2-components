@@ -22,7 +22,7 @@ import { PeopleSearchFieldComponent } from '../people-search-field/people-search
 import { getDisplayUser } from '../../helpers/get-display-user';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';

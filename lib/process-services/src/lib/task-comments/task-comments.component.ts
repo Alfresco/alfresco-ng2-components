@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ADF_COMMENTS_SERVICE, CommentsModule } from '@alfresco/adf-core';
-import { TaskCommentsService } from './task-comments.service';
+import { TaskCommentsService } from '../services/task-comments.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

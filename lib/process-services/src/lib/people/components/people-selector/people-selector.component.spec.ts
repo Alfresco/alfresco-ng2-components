@@ -20,7 +20,7 @@ import { PeopleSelectorComponent } from './people-selector.component';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 
 describe('PeopleSelectorComponent', () => {
     let component: PeopleSelectorComponent;

@@ -28,7 +28,7 @@ import {
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
-import { PeopleProcessService } from '../../../common';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';

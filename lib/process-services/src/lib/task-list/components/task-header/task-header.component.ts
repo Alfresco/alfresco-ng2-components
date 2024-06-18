@@ -27,7 +27,7 @@ import {
     CardViewItemLengthValidator,
     CardViewModule
 } from '@alfresco/adf-core';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskDescriptionValidator } from '../../validators/task-description.validator';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';

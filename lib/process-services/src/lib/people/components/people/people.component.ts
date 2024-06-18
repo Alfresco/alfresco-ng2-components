@@ -20,7 +20,7 @@ import { Observable, Observer } from 'rxjs';
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleSearchComponent } from '../people-search/people-search.component';
 import { share } from 'rxjs/operators';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';

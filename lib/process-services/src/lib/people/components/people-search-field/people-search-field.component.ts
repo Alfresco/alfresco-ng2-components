@@ -22,7 +22,7 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { PerformSearchCallback } from '../../interfaces/perform-search-callback.interface';
 import { getDisplayUser } from '../../helpers/get-display-user';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';

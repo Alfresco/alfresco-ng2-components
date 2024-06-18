@@ -43,7 +43,7 @@ import { Observable, Observer, of, Subject } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from '../task-form/task-form.component';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation, TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
