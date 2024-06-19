@@ -15,8 +15,8 @@ Manages holds for nodes.
 
 -   **getHolds**(filePlanId: `string`, options?: `ContentPagingQuery`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>`<br/>
     Gets the list of holds for a node.
-    -   filePlanId: `string` - The identifier of a file plan. You can also use the -filePlan- alias
-    -   options: `ContentPagingQuery` - Optional parameters supported by JS-API
+    -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
+    -   _options_: `ContentPagingQuery` - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - List of holds
 
 ## Details
