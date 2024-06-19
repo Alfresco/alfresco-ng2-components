@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging, NodesApi, TrashcanApi, Node } from '@alfresco/js-api';
+import { NodeEntry, NodePaging, NodesApi, TrashcanApi, Node, Hold, ContentPagingQuery, NodesIncludeQuery } from '@alfresco/js-api';
 import { Subject, from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { catchError, map } from 'rxjs/operators';
@@ -238,5 +238,32 @@ export class NodesApiService {
         }
 
         return new NodeMetadata(metadata, nodeEntry.entry.nodeType);
+    }
+
+    /**
+     * Gets the list of holds assigned to the node.
+     *
+     * @param nodeId ID of the target node
+     * @param options Optional parameters supported by JS-API
+     * @param options.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
+     * @returns List of assigned holds Observable<Hold[]>
+     */
+    getNodeAssignHolds(
+        nodeId: string,
+        options?: {
+            includeSource?: boolean;
+        } & NodesIncludeQuery &
+            ContentPagingQuery
+    ): Observable<Hold[]> {
+        const queryOptions = Object.assign({ where: `(assocType='rma:frozenContent')` }, options);
+
+        return from(this.nodesApi.listParents(nodeId, queryOptions)).pipe(
+            map(({ list }) =>
+                list.entries?.map(({ entry }) => ({
+                    id: entry.id,
+                    name: entry.name
+                }))
+            )
+        );
     }
 }
