@@ -26,11 +26,13 @@
             [attr.aria-label]="placeholder | translate"
             (matChipInputTokenEnd)="add($event)"
             (blur)="activeAnyOption = false"
+            (focus)="activeAnyOption = true"
             data-automation-id="adf-search-chip-autocomplete-input">
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete"
                       (optionActivated)="activeAnyOption = true" (closed)="activeAnyOption = false">
-        <ng-container *ngIf="optionInput.value.length > 0">
+
+        <ng-container *ngIf="optionInput.value.length > 0 || filteredOptions?.length > 0 && activeAnyOption">
             <mat-option
                 [disabled]="option | adfIsIncluded: selectedOptions : compareOption"
                 *ngFor="let option of filteredOptions" [value]="option" [matTooltipShowDelay]="tooltipShowDelay"
@@ -42,5 +44,17 @@
                 {{ option.fullPath || option.value }}
             </mat-option>
         </ng-container>
+<!--        <ng-container *ngIf="optionInput.value.length > 0">-->
+<!--            <mat-option-->
+<!--                [disabled]="option | adfIsIncluded: selectedOptions : compareOption"-->
+<!--                *ngFor="let option of filteredOptions" [value]="option" [matTooltipShowDelay]="tooltipShowDelay"-->
+<!--                [matTooltipDisabled]="!option.fullPath" matTooltipPosition="right"-->
+<!--                [attr.data-automation-id]="'option-' + (option.value)"-->
+<!--                [matTooltip]="'SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath || option.value}"-->
+<!--                class="adf-search-chip-autocomplete-added-option"-->
+<!--                [ngClass]="(option | adfIsIncluded: selectedOptions : compareOption) && 'adf-autocomplete-added-option'">-->
+<!--                {{ option.fullPath || option.value }}-->
+<!--            </mat-option>-->
+<!--        </ng-container>-->
     </mat-autocomplete>
 </mat-form-field>

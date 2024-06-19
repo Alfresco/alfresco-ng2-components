@@ -17,9 +17,9 @@
 
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import {AlfrescoApiService, UserPreferencesService} from '@alfresco/adf-core';
 import {
-    Node,
+    Node, ResultSetPaging, SearchApi,
     SiteBodyCreate,
     SiteEntry,
     SiteGroupEntry,
@@ -38,12 +38,19 @@ import {
 })
 export class SitesService {
     private _sitesApi: SitesApi;
+    private _searchApi: SearchApi;
+
     get sitesApi(): SitesApi {
         this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
         return this._sitesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    get searchApi(): SearchApi {
+        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
+        return this._searchApi;
+    }
+
+    constructor(private apiService: AlfrescoApiService,         private userPreferencesService: UserPreferencesService) {}
 
     /**
      * Create a site
@@ -214,6 +221,32 @@ export class SitesService {
      */
     rejectSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
         return from(this.sitesApi.rejectSiteMembershipRequest(siteId, inviteeId, opts));
+    }
+
+    /**
+     * Searches sites by their name.
+     *
+     * @param name Value for name which should be used during searching categories.
+     * @param skipCount Specify how many first results should be skipped. Default 0.
+     * @param maxItems Specify max number of returned categories. Default is specified by UserPreferencesService.
+     * @returns Observable<ResultSetPaging> Found categories which name contains searched name.
+     */
+    searchSite(name: string, skipCount = 0, maxItems?: number): Observable<ResultSetPaging> {
+        maxItems = maxItems || this.userPreferencesService.paginationSize;
+        console.log(name)
+        return from(
+            this.searchApi.search({
+                query: {
+                    language: 'afts',
+                    query: `*`
+                },
+                paging: {
+                    skipCount,
+                    maxItems
+                },
+                include: ['path']
+            })
+        );
     }
 
     /**

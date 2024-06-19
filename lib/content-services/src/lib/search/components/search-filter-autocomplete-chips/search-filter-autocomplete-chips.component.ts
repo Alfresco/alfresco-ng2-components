@@ -24,6 +24,8 @@ import { SearchFilterList } from '../../models/search-filter-list.model';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { AutocompleteField, AutocompleteOption } from '../../models/autocomplete-option.interface';
+import {SitesService} from "../../../common";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
@@ -45,7 +47,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
 
-    constructor(private tagService: TagService, private categoryService: CategoryService) {
+    constructor(private tagService: TagService, private categoryService: CategoryService, private sitesService: SitesService, private route: ActivatedRoute) {
         this.options = new SearchFilterList<AutocompleteOption[]>();
     }
 
@@ -56,6 +58,11 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                 this.setValue(this.startValue);
             }
             this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
+        }
+
+        if (this.settings.field === AutocompleteField.SITE) {
+            console.log(this.route.snapshot.params)
+            this.searchForExistingLocations('*');
         }
     }
 
@@ -129,6 +136,9 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             case AutocompleteField.CATEGORIES:
                 this.autocompleteOptionsSubject$.next([]);
                 break;
+            case AutocompleteField.SITE:
+                this.autocompleteOptionsSubject$.next(this.settings.autocompleteOptions);
+                break;
             default:
                 this.autocompleteOptionsSubject$.next(this.settings.autocompleteOptions);
         }
@@ -141,6 +151,16 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                 const fullPath = path ? `${path}/${rowEntry.entry.name}` : rowEntry.entry.name;
                 return {id: rowEntry.entry.id, value: rowEntry.entry.name, fullPath};
             }));
+        });
+    }
+
+    private searchForExistingLocations(searchTerm: string) {
+        this.sitesService.searchSite(searchTerm, 0, 15).subscribe((existingSiteResult) => {
+            console.log(existingSiteResult.list.entries.map((rowEntry) => {
+                const path = rowEntry.entry.path.name;
+                const fullPath = path ? `${path}/${rowEntry.entry.name}` : rowEntry.entry.name;
+                return fullPath;
+            }))
         });
     }
 }
