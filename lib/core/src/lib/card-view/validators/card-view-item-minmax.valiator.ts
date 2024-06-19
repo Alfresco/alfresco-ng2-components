@@ -31,7 +31,15 @@ export class CardViewItemMinMaxValidator implements CardViewItemValidator {
         this.intValidator = new CardViewItemIntValidator();
     }
 
-    isValid(value: number): boolean {
-        return this.intValidator.isValid(value) && (value >= this.minValue && value <= this.maxValue);
+    isValid(value: number | number[] | ''): boolean {
+        if (Array.isArray(value)) {
+            return value.every((val) => this.isInRange(val, this.minValue, this.maxValue));
+        }
+
+        return value === '' || (this.intValidator.isValid(value) && this.isInRange(value, this.minValue, this.maxValue));
+    }
+
+    private isInRange(value: number, min: number, max: number): boolean {
+        return value >= min && value <= max;
     }
 }

@@ -26,11 +26,19 @@ export interface MatchValidatorParams {
 export class CardViewItemMatchValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.MATCH_VALIDATION_ERROR';
 
-    constructor(private expression: string, private flags?: string, private requiresMatch?: boolean) {
+    constructor(private expression: string, private flags?: string, private requiresMatch?: boolean) {}
+
+    isValid(value: string | string[]): boolean {
+        const regex = new RegExp(this.expression, this?.flags);
+
+        if (Array.isArray(value)) {
+            return value.every((val) => (this.requiresMatch ? this.matchRegex(val, regex) : !this.matchRegex(val, regex)));
+        }
+
+        return value === '' || (this.requiresMatch ? this.matchRegex(value, regex) : !this.matchRegex(value, regex));
     }
 
-    isValid(value: string): boolean {
-        const regex = new RegExp(this.expression, this.flags);
-        return value === '' || this.requiresMatch ? regex.test(value) : !regex.test(value);
+    private matchRegex(value: string, regex: RegExp): boolean {
+        return regex.test(value);
     }
 }
