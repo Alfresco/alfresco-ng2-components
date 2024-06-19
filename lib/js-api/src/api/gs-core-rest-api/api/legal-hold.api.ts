@@ -52,4 +52,45 @@ export class LegalHoldApi extends BaseApi {
             returnType: HoldPaging
         });
     }
+
+    /**
+     * Adds to existing hold
+     *
+     * @param holdId The identifier of a hold.
+     * @param ids list of ids of holds to add to existing hold
+     * @returns Promise<NodeChildAssociationPaging>
+     */
+    saveToExistingHolds(ids: string[], holdId: string): Promise<HoldPaging> {
+        throwIfNotDefined(holdId, 'holdId');
+        if (ids.length === 0) {
+            throwIfNotDefined(null, 'holds to save');
+        }
+
+        return this.post({
+            path: `/holds/{holdId}/children`,
+            pathParams: { holdId },
+            bodyParam: ids.map((id) => ({
+                id
+            })),
+            returnType: HoldPaging
+        });
+    }
+
+    /**
+     * Deletes the relationship between a child with id holdChildId and a parent hold with id holdId.
+     *
+     * @param holdId The handled hold Id
+     * @param holdChildId The Id of the child hold which is removed
+     * @returns List of assigned holds Hold[]
+     */
+    deleteFromExistingHold(holdId: string, holdChildId: string): Promise<undefined> {
+        throwIfNotDefined(holdId, 'holdId');
+        throwIfNotDefined(holdChildId, 'holdChildId');
+
+        return this.delete({
+            path: `/holds/{holdId}/children/{holdChildId}`,
+            pathParams: { holdId, holdChildId },
+            returnType: undefined
+        });
+    }
 }
