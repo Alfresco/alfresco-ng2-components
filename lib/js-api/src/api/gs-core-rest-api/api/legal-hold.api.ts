@@ -80,8 +80,8 @@ export class LegalHoldApi extends BaseApi {
      * Deletes the relationship between a child with id holdChildId and a parent hold with id holdId.
      *
      * @param holdId The handled hold Id
-     * @param holdChildId The Id of the child hold which is removed
-     * @returns List of assigned holds Hold[]
+     * @param holdChildId The Id of the child hold which is deleted
+     * @returns Empty response
      */
     deleteFromExistingHold(holdId: string, holdChildId: string): Promise<undefined> {
         throwIfNotDefined(holdId, 'holdId');
