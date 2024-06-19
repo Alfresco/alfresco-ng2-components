@@ -150,6 +150,7 @@ jobs:
           echo "PR: ${{ steps.action.outputs.number }}"
 
       - name: check if pr is approved
+        if: ${{ github.event_name != 'schedule' }}
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
