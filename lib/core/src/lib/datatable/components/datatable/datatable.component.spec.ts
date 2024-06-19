@@ -397,40 +397,35 @@ describe('DataTable', () => {
         expect(dataSort).toEqual(dataSortObj);
     });
 
-    it('should reset selection on mode change', () => {
-        spyOn(dataTable, 'resetSelection').and.callThrough();
+    describe('Selection reset', () => {
+        beforeEach(() => {
+            spyOn(dataTable, 'resetSelection').and.callThrough();
 
-        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
-        const rows = dataTable.data.getRows();
-        rows[0].isSelected = true;
-        rows[1].isSelected = true;
+            dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
+            const rows = dataTable.data.getRows();
 
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeTruthy();
+            rows[0].isSelected = true;
+            rows[1].isSelected = true;
 
-        dataTable.ngOnChanges({
-            selectionMode: new SimpleChange(null, 'multiple', false)
+            expect(rows[0].isSelected).toBeTruthy();
+            expect(rows[1].isSelected).toBeTruthy();
         });
 
-        expect(dataTable.resetSelection).toHaveBeenCalled();
-    });
+        it('should reset selection on mode change', () => {
+            dataTable.ngOnChanges({
+                selectionMode: new SimpleChange(null, 'multiple', false)
+            });
 
-    it('should reset selection on multiselect change', () => {
-        spyOn(dataTable, 'resetSelection').and.callThrough();
-
-        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
-        const rows = dataTable.data.getRows();
-        rows[0].isSelected = true;
-        rows[1].isSelected = true;
-
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeTruthy();
-
-        dataTable.ngOnChanges({
-            multiselect: new SimpleChange(true, false, false)
+            expect(dataTable.selection).toEqual([]);
         });
 
-        expect(dataTable.selection).toEqual([]);
+        it('should reset selection on multiselect change', () => {
+            dataTable.ngOnChanges({
+                multiselect: new SimpleChange(true, false, false)
+            });
+
+            expect(dataTable.selection).toEqual([]);
+        });
     });
 
     it('should select the row where isSelected is true', () => {
