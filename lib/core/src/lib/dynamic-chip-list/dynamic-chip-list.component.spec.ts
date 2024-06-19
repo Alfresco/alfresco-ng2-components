@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Chip, CoreTestingModule, DynamicChipListComponent } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 describe('DynamicChipListComponent', () => {
     let chips: Chip[] = [
@@ -130,6 +131,19 @@ describe('DynamicChipListComponent', () => {
 
             const deleteButton: any = element.querySelector('#adf-dynamic-chip-list-delete-test1');
             expect(deleteButton).not.toBeNull();
+        });
+
+        it('should round up chips if roundUpChips is true', async () => {
+            component.roundUpChips = true;
+
+            component.ngOnChanges({
+                chips: new SimpleChange(undefined, component.chips, true)
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const chip = fixture.debugElement.query(By.css('.adf-dynamic-chip-list-chip'));
+            expect(getComputedStyle(chip.nativeElement).borderRadius).toBe('20px');
         });
 
         it('should not render view more button by default', async () => {

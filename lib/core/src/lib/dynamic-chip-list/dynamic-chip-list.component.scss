@@ -6,7 +6,7 @@
     padding-bottom: 12px;
 
     .adf-dynamic-chip-list-view-more-button {
-        color: var(--adf-theme-foreground-text-color-054);
+        margin-left: 5px;
         position: absolute;
 
         &[hidden] {
@@ -64,19 +64,8 @@
     }
 
     .adf-dynamic-chip-list-chip {
-        color: var(--theme-primary-color-default-contrast);
-        background-color: var(--theme-primary-color);
         height: auto;
         word-break: break-word;
-    }
-
-    .adf-dynamic-chip-list-delete-icon {
-        font-size: var(--theme-title-font-size);
-        background-repeat: no-repeat;
-        display: inline-block;
-        fill: currentcolor;
-        height: 20px;
-        width: 20px;
-        color: var(--theme-primary-color-default-contrast);
+        padding: 6px 11px;
     }
 }

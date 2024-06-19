@@ -17,11 +17,11 @@
 
 import { NgModule } from '@angular/core';
 import { HighlightDirective } from './highlight.directive';
-import { LogoutDirective } from './logout.directive';
-import { UploadDirective } from './upload.directive';
-import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
-import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
+import { LogoutDirective } from './logout.directive';
+import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
+import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
+import { UploadDirective } from './upload.directive';
 
 @NgModule({
     imports: [HighlightDirective, LogoutDirective, UploadDirective, TooltipCardDirective, TooltipCardComponent, InfiniteSelectScrollDirective],
