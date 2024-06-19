@@ -26,10 +26,11 @@ import { ContentApi, NodeEntry, VersionEntry } from '@alfresco/js-api';
  */
 @Directive({
     standalone: true,
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
-    _contentApi: ContentApi;
+    private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
