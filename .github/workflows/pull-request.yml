@@ -138,7 +138,7 @@ jobs:
           fi
 
       - name: Get PR number
-        if: ${{ github.event_name != 'schedule' }}
+        if: ${{ github.event_name != 'schedule' || github.event_name != 'workflow_call' }}
         uses: kamatama41/get-pr-number-action@0bcaab5752c0b699149e74667c8ce2f764cbb7fa # v0.9.1
         id: action
         with:
@@ -150,7 +150,6 @@ jobs:
           echo "PR: ${{ steps.action.outputs.number }}"
 
       - name: check if pr is approved
-        if: ${{ github.event_name != 'schedule' }}
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
@@ -168,8 +167,7 @@ jobs:
             echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
             skip_check="true"
           fi
-
-          if [ "${{ github.event_name }}" == "schedule" ]; then
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_call" ]; then
             echo -e "\033[32mSchedule event\033[0m"
             skip_check="true"
           fi
