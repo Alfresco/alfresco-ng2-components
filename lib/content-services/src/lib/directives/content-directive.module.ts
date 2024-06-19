@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { TranslateModule } from '@ngx-translate/core';
-
 import { NodeLockDirective } from './node-lock.directive';
 import { NodeCounterComponent, NodeCounterDirective } from './node-counter.directive';
 import { AutoFocusDirective } from './auto-focus.directive';
@@ -31,37 +27,23 @@ import { NodeFavoriteDirective } from './node-favorite.directive';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { NodeDownloadDirective } from './node-download.directive';
 
+export const CONTENT_DIRECTIVES = [
+    NodeLockDirective,
+    NodeCounterDirective,
+    NodeCounterComponent,
+    AutoFocusDirective,
+    CheckAllowableOperationDirective,
+    LibraryFavoriteDirective,
+    LibraryMembershipDirective,
+    NodeDeleteDirective,
+    NodeFavoriteDirective,
+    NodeRestoreDirective,
+    NodeDownloadDirective
+];
+
+/** @deprecated import CONTENT_DIRECTIVES or standalone directives instead */
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        TranslateModule
-    ],
-    declarations: [
-        NodeLockDirective,
-        NodeCounterDirective,
-        NodeCounterComponent,
-        AutoFocusDirective,
-        CheckAllowableOperationDirective,
-        LibraryFavoriteDirective,
-        LibraryMembershipDirective,
-        NodeDeleteDirective,
-        NodeFavoriteDirective,
-        NodeRestoreDirective,
-        NodeDownloadDirective
-    ],
-    exports: [
-        NodeLockDirective,
-        NodeCounterDirective,
-        AutoFocusDirective,
-        CheckAllowableOperationDirective,
-        LibraryFavoriteDirective,
-        LibraryMembershipDirective,
-        NodeDeleteDirective,
-        NodeFavoriteDirective,
-        NodeRestoreDirective,
-        NodeDownloadDirective
-    ]
+    imports: [...CONTENT_DIRECTIVES],
+    exports: [...CONTENT_DIRECTIVES]
 })
-export class ContentDirectiveModule {
-}
+export class ContentDirectiveModule {}

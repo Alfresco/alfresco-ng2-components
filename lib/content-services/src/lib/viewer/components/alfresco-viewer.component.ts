@@ -51,9 +51,15 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
 import { NodeActionsService } from '../../document-list';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-alfresco-viewer',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, ViewerComponent],
     templateUrl: './alfresco-viewer.component.html',
     styleUrls: ['./alfresco-viewer.component.scss'],
     host: { class: 'adf-alfresco-viewer' },

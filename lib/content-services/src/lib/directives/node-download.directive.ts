@@ -25,7 +25,7 @@ import { ContentApi, NodeEntry, VersionEntry } from '@alfresco/js-api';
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    // eslint-disable-next-line @angular-eslint/directive-selector
+    standalone: true,
     selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
