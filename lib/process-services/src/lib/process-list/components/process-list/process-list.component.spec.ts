@@ -30,7 +30,7 @@ import {
     DataCellEvent,
     ObjectDataColumn
 } from '@alfresco/adf-core';
-import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessColumnSchema } from '../../../mock';
+import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessColumnSchema } from '../../../testing/mock';
 import { ProcessService } from '../../services/process.service';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';

@@ -22,10 +22,17 @@ import { AppsProcessService } from '../../../services/apps-process.service';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessService } from '../../services/process.service';
-import { newProcess, taskFormMock, testProcessDef, testMultipleProcessDefs, testProcessDefWithForm, testProcessDefinitions } from '../../../mock';
+import {
+    newProcess,
+    taskFormMock,
+    testProcessDef,
+    testMultipleProcessDefs,
+    testProcessDefWithForm,
+    testProcessDefinitions
+} from '../../../testing/mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { deployedApps } from '../../../mock/apps-list.mock';
+import { deployedApps } from '../../../testing/mock/apps-list.mock';
 import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';

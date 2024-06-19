@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewEncapsulation, OnChanges, inject } from '@angular/core';
 import {
     FormModel,
     ContentLinkModel,
@@ -28,7 +28,7 @@ import {
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
-import { PeopleProcessService } from '../../../common';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -154,11 +154,9 @@ export class TaskFormComponent implements OnInit, OnChanges {
     loading: boolean = false;
     internalReadOnlyForm: boolean = false;
 
-    constructor(
-        private taskListService: TaskListService,
-        private peopleProcessService: PeopleProcessService,
-        private translationService: TranslationService
-    ) {}
+    private taskListService = inject(TaskListService);
+    private peopleProcessService = inject(PeopleProcessService);
+    private translationService = inject(TranslationService);
 
     ngOnInit() {
         this.peopleProcessService.getCurrentUserInfo().subscribe((user) => {

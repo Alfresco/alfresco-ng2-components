@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError, flatMap, filter } from 'rxjs/operators';
 import { Form } from '../models/form.model';
@@ -36,6 +36,8 @@ import {
     providedIn: 'root'
 })
 export class TaskListService {
+    protected apiService = inject(AlfrescoApiService);
+
     private _modelsApi: ModelsApi;
     get modelsApi(): ModelsApi {
         this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
@@ -59,8 +61,6 @@ export class TaskListService {
         this._checklistsApi = this._checklistsApi ?? new ChecklistsApi(this.apiService.getInstance());
         return this._checklistsApi;
     }
-
-    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets all the filters in the list that belong to a task.

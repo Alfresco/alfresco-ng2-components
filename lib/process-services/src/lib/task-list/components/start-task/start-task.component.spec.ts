@@ -20,7 +20,7 @@ import { of, throwError } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { taskDetailsMock } from '../../../mock/task/task-details.mock';
+import { taskDetailsMock } from '../../../testing/mock/task/task-details.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatButtonHarness } from '@angular/material/button/testing';

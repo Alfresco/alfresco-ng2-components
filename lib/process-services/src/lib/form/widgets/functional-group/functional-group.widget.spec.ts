@@ -19,7 +19,7 @@ import { of, timer } from 'rxjs';
 import { FormFieldModel, FormModel, GroupModel, CoreTestingModule, FormFieldTypes } from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 
 describe('FunctionalGroupWidgetComponent', () => {
     let fixture: ComponentFixture<FunctionalGroupWidgetComponent>;

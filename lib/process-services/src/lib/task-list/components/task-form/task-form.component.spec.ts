@@ -40,12 +40,12 @@ import {
     taskDetailsWithOutCandidateGroup,
     taskDetailsWithOutFormMock,
     taskFormMock
-} from '../../../mock/task/task-details.mock';
+} from '../../../testing/mock/task/task-details.mock';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TaskFormService } from '../../../form/services/task-form.service';
 import { TaskService } from '../../../form/services/task.service';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('TaskFormComponent', () => {

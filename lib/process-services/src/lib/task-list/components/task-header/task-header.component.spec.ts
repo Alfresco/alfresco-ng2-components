@@ -26,11 +26,11 @@ import {
     claimedTaskDetailsMock,
     claimedByGroupMemberMock,
     taskDetailsWithOutCandidateGroup
-} from '../../../mock';
+} from '../../../testing/mock';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskHeaderComponent } from './task-header.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('TaskHeaderComponent', () => {

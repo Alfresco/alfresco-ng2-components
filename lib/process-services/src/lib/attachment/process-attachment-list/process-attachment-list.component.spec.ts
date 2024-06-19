@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { mockEmittedProcessAttachments, mockProcessAttachments } from '../../mock/process/process-attachments.mock';
+import { mockEmittedProcessAttachments, mockProcessAttachments } from '../../testing/mock/process/process-attachments.mock';
 import { ProcessContentService } from '../../form/services/process-content.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
