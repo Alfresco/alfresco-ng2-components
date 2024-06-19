@@ -97,6 +97,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
                 externalProperty: 'fruitName',
+                params: { externalPropertyLabel: 'Fruit Name' },
                 value: null
             });
 
@@ -111,7 +112,7 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
         it('should display external property name', () => {
             const externalPropertyPreview = fixture.debugElement.query(By.css('[data-automation-id="adf-display-external-property-widget-preview"]'));
-            expect(externalPropertyPreview.nativeElement.textContent.trim()).toBe('fruitName');
+            expect(externalPropertyPreview.nativeElement.textContent.trim()).toBe('Fruit Name');
         });
     });
 

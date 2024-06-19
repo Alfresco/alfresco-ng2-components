@@ -8,6 +8,7 @@
 
         &-preview {
             color: var(--adf-display-external-property-widget-preview-selection-color);
+            word-break: break-all;
         }
     }
 }
