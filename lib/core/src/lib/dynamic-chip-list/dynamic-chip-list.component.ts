@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Pagination } from '@alfresco/js-api';
+import { NgForOf, NgIf } from '@angular/common';
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -32,18 +34,22 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChip, MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { MatChip } from '@angular/material/chips';
 import { Chip } from './chip';
-import { Pagination } from '@alfresco/js-api';
 
 /**
  * This component shows dynamic list of chips which render depending on free space.
  */
 @Component({
     selector: 'adf-dynamic-chip-list',
+    standalone: true,
     templateUrl: './dynamic-chip-list.component.html',
     styleUrls: ['./dynamic-chip-list.component.scss'],
+    imports: [MatChipsModule, TranslateModule, NgForOf, MatIconModule, NgIf, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
@@ -63,6 +69,10 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     /** Should limit number of chips displayed. */
     @Input()
     limitChipsDisplayed = false;
+
+    /** Round up chips */
+    @Input()
+    roundUpChips = false;
 
     /** Emitted when button for view more is clicked. */
     @Output()
@@ -166,20 +176,24 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         const chips = this.matChips.toArray();
         let lastIndex = 0;
         do {
-            chipsWidth = Math.max(chips.reduce((width, val, index) => {
-                width += val._elementRef.nativeElement.getBoundingClientRect().width + chipMargin;
-                const availableSpace = index && index === chips.length - 1 || !this.paginationData ? containerWidth - viewMoreBtnWidth : containerWidth;
-                if (availableSpace >= width) {
-                    chipsToDisplay = (this.paginationData ? chipsToDisplay : index) + 1;
-                    lastIndex++;
-                    this.viewMoreButtonLeftOffset = width;
-                    this.viewMoreButtonLeftOffsetBeforeFlexDirection = width;
-                }
-                return width;
-            }, 0), chipsWidth);
+            chipsWidth = Math.max(
+                chips.reduce((width, val, index) => {
+                    width += val._elementRef.nativeElement.getBoundingClientRect().width + chipMargin;
+                    const availableSpace =
+                        (index && index === chips.length - 1) || !this.paginationData ? containerWidth - viewMoreBtnWidth : containerWidth;
+                    if (availableSpace >= width) {
+                        chipsToDisplay = (this.paginationData ? chipsToDisplay : index) + 1;
+                        lastIndex++;
+                        this.viewMoreButtonLeftOffset = width;
+                        this.viewMoreButtonLeftOffsetBeforeFlexDirection = width;
+                    }
+                    return width;
+                }, 0),
+                chipsWidth
+            );
             chips.splice(0, lastIndex);
             lastIndex = 0;
-        } while ((chips.length || chipsToDisplay < this.matChips.length && this.matChips.length) && this.paginationData);
+        } while ((chips.length || (chipsToDisplay < this.matChips.length && this.matChips.length)) && this.paginationData);
         this.arrangeElements(containerWidth, chipsWidth, viewMoreBtnWidth, chipsToDisplay, viewMoreButton);
         this.calculationsDone = true;
     }
@@ -189,11 +203,17 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         return parseInt(chipStyles.marginLeft, 10) + parseInt(chipStyles.marginRight, 10);
     }
 
-    private arrangeElements(containerWidth: number, chipsWidth: number, viewMoreBtnWidth: number, chipsToDisplay: number,
-                            viewMoreButton: HTMLButtonElement): void {
-        if ((containerWidth - chipsWidth - viewMoreBtnWidth) <= 0) {
+    private arrangeElements(
+        containerWidth: number,
+        chipsWidth: number,
+        viewMoreBtnWidth: number,
+        chipsToDisplay: number,
+        viewMoreButton: HTMLButtonElement
+    ): void {
+        if (containerWidth - chipsWidth - viewMoreBtnWidth <= 0) {
             const chip = this.paginationData ? this.matChips.last : this.matChips.first;
-            const hasNotEnoughSpaceForMoreButton = (containerWidth < (chip?._elementRef.nativeElement.offsetWidth + chip?._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth));
+            const hasNotEnoughSpaceForMoreButton =
+                containerWidth < chip?._elementRef.nativeElement.offsetWidth + chip?._elementRef.nativeElement.offsetLeft + viewMoreBtnWidth;
             this.columnFlexDirection = chipsToDisplay === 1 && !this.paginationData && hasNotEnoughSpaceForMoreButton;
             this.moveLoadMoreButtonToNextRow = this.paginationData && hasNotEnoughSpaceForMoreButton;
             this.undisplayedChipsCount = this.chipsToDisplay.length - chipsToDisplay;
