@@ -22,6 +22,8 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone: true,
+    imports: [NodeCounterDirective],
     template: `<div [adf-node-counter]="count"></div>`
 })
 class TestComponent {
@@ -33,14 +35,7 @@ describe('NodeCounterDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot()
-            ],
-            declarations: [
-                NodeCounterDirective,
-                NodeCounterComponent,
-                TestComponent
-            ]
+            imports: [TranslateModule.forRoot(), NodeCounterDirective, NodeCounterComponent, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         fixture.detectChanges();

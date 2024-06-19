@@ -22,8 +22,10 @@ import { CoreTestingModule } from '@alfresco/adf-core';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
 
 @Component({
+    standalone: true,
+    imports: [LibraryFavoriteDirective],
     selector: 'app-test-component',
-    template: ` <button #favoriteLibrary="favoriteLibrary" [adf-favorite-library]="selection">Favorite</button> `
+    template: `<button #favoriteLibrary="favoriteLibrary" [adf-favorite-library]="selection">Favorite</button>`
 })
 class TestComponent {
     @ViewChild('favoriteLibrary', { static: true })
@@ -39,8 +41,7 @@ describe('LibraryFavoriteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [TestComponent, LibraryFavoriteDirective]
+            imports: [CoreTestingModule, LibraryFavoriteDirective, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

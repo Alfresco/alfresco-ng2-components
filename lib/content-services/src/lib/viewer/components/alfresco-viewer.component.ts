@@ -34,6 +34,7 @@ import {
     CloseButtonPosition,
     Track,
     ViewerComponent,
+    ViewerModule,
     ViewerMoreActionsComponent,
     ViewerOpenWithComponent,
     ViewerSidebarComponent,
@@ -55,11 +56,12 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { NodeDownloadDirective } from '../../directives';
 
 @Component({
     selector: 'adf-alfresco-viewer',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, ViewerComponent],
+    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, ViewerModule, NodeDownloadDirective],
     templateUrl: './alfresco-viewer.component.html',
     styleUrls: ['./alfresco-viewer.component.scss'],
     host: { class: 'adf-alfresco-viewer' },
@@ -121,7 +123,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * If `true` then show the Viewer as a full page over the current content.
-     * Otherwise fit inside the parent div.
+     * Otherwise, fit inside the parent div.
      */
     @Input()
     overlayMode = false;
@@ -217,25 +219,25 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     sidebarRightTemplateContext: { node: Node } = { node: null };
     sidebarLeftTemplateContext: { node: Node } = { node: null };
 
-    _sharedLinksApi: SharedlinksApi;
+    private _sharedLinksApi: SharedlinksApi;
     get sharedLinksApi(): SharedlinksApi {
         this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
         return this._sharedLinksApi;
     }
 
-    _versionsApi: VersionsApi;
+    private _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    _contentApi: ContentApi;
+    private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
