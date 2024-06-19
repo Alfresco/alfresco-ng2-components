@@ -1,7 +1,8 @@
 {
   "COMMON": {
     "APPLY": "Apply",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "NAME": "Name"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {

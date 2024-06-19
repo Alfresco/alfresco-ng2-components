@@ -15,15 +15,20 @@
  * limitations under the License.
  */
 
-export * from './types';
-export * from './filePlans.api';
-export * from './files.api';
-export * from './gsSites.api';
-export * from './recordCategories.api';
-export * from './recordFolders.api';
-export * from './records.api';
-export * from './transferContainers.api';
-export * from './transfers.api';
-export * from './unfiledContainers.api';
-export * from './unfiledRecordFolders.api';
-export * from './legal-hold.api';
+import { Pagination } from '../../content-rest-api';
+import { HoldEntry } from './holdEntry';
+
+export class HoldPagingList {
+    pagination?: Pagination;
+    entries?: HoldEntry[];
+
+    constructor(input?: Partial<HoldPagingList>) {
+        if (input) {
+            Object.assign(this, input);
+            this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
+            if (input.entries) {
+                this.entries = input.entries.map((item) => new HoldEntry(item));
+            }
+        }
+    }
+}
