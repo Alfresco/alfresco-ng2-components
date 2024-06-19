@@ -15,125 +15,129 @@
  * limitations under the License.
  */
 
-import { AppConfigService, SidenavLayoutComponent } from '@alfresco/adf-core';
+import { AppConfigService, SidenavLayoutComponent, SidenavLayoutModule } from '@alfresco/adf-core';
+import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { Component, Inject, OnDestroy, OnInit, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 import { filter, takeUntil, map, withLatestFrom } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Directionality } from '@angular/cdk/bidi';
 import { SHELL_APP_SERVICE, ShellAppService, SHELL_NAVBAR_MIN_WIDTH, SHELL_NAVBAR_MAX_WIDTH } from '../../services/shell-app.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-shell',
-  templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  host: { class: 'app-shell' }
+    selector: 'app-shell',
+    standalone: true,
+    imports: [CommonModule, SidenavLayoutModule, RouterModule, DynamicExtensionComponent],
+    templateUrl: './shell.component.html',
+    styleUrls: ['./shell.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'app-shell' }
 })
 export class ShellLayoutComponent implements OnInit, OnDestroy {
-  @ViewChild('layout', { static: true })
-  layout: SidenavLayoutComponent;
+    @ViewChild('layout', { static: true })
+    layout: SidenavLayoutComponent;
 
-  onDestroy$: Subject<boolean> = new Subject<boolean>();
-  isSmallScreen$: Observable<boolean>;
+    onDestroy$: Subject<boolean> = new Subject<boolean>();
+    isSmallScreen$: Observable<boolean>;
 
-  expandedSidenav: boolean;
-  minimizeSidenav = false;
-  hideSidenav = false;
-  sidenavMin: number;
-  sidenavMax: number;
-  direction: Directionality;
+    expandedSidenav: boolean;
+    minimizeSidenav = false;
+    hideSidenav = false;
+    sidenavMin: number;
+    sidenavMax: number;
+    direction: Directionality;
 
-  constructor(
-    private router: Router,
-    private appConfigService: AppConfigService,
-    private breakpointObserver: BreakpointObserver,
-    @Inject(SHELL_APP_SERVICE) private shellService: ShellAppService,
-    @Optional() @Inject(SHELL_NAVBAR_MIN_WIDTH) navBarMinWidth: number,
-    @Optional() @Inject(SHELL_NAVBAR_MAX_WIDTH) navbarMaxWidth: number
-  ) {
-    this.sidenavMin = navBarMinWidth ?? 70;
-    this.sidenavMax = navbarMaxWidth ?? 320;
-  }
-
-  ngOnInit() {
-    this.isSmallScreen$ = this.breakpointObserver.observe(['(max-width: 600px)']).pipe(map((result) => result.matches));
-
-    this.hideSidenav = this.shellService.hideSidenavConditions.some((el) => this.router.routerState.snapshot.url.includes(el));
-    this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => this.router.routerState.snapshot.url.includes(el));
-
-    if (!this.minimizeSidenav) {
-      this.expandedSidenav = this.getSidenavState();
-    } else {
-      this.expandedSidenav = false;
+    constructor(
+        private router: Router,
+        private appConfigService: AppConfigService,
+        private breakpointObserver: BreakpointObserver,
+        @Inject(SHELL_APP_SERVICE) private shellService: ShellAppService,
+        @Optional() @Inject(SHELL_NAVBAR_MIN_WIDTH) navBarMinWidth: number,
+        @Optional() @Inject(SHELL_NAVBAR_MAX_WIDTH) navbarMaxWidth: number
+    ) {
+        this.sidenavMin = navBarMinWidth ?? 70;
+        this.sidenavMax = navbarMaxWidth ?? 320;
     }
 
-    this.router.events
-      .pipe(
-        withLatestFrom(this.isSmallScreen$),
-        filter(([event, isSmallScreen]) => isSmallScreen && event instanceof NavigationEnd),
-        takeUntil(this.onDestroy$)
-      )
-      .subscribe(() => {
-        this.layout.container.sidenav.close();
-      });
+    ngOnInit() {
+        this.isSmallScreen$ = this.breakpointObserver.observe(['(max-width: 600px)']).pipe(map((result) => result.matches));
 
-    this.router.events
-      .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        takeUntil(this.onDestroy$)
-      )
-      .subscribe((event: NavigationEnd) => {
-        this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => event.urlAfterRedirects.includes(el));
-        this.hideSidenav = this.shellService.hideSidenavConditions.some((el) => event.urlAfterRedirects.includes(el));
+        this.hideSidenav = this.shellService.hideSidenavConditions.some((el) => this.router.routerState.snapshot.url.includes(el));
+        this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => this.router.routerState.snapshot.url.includes(el));
 
-        this.updateState();
-      });
-  }
+        if (!this.minimizeSidenav) {
+            this.expandedSidenav = this.getSidenavState();
+        } else {
+            this.expandedSidenav = false;
+        }
 
-  ngOnDestroy() {
-    this.onDestroy$.next(true);
-    this.onDestroy$.complete();
-  }
+        this.router.events
+            .pipe(
+                withLatestFrom(this.isSmallScreen$),
+                filter(([event, isSmallScreen]) => isSmallScreen && event instanceof NavigationEnd),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                this.layout.container.sidenav.close();
+            });
 
-  hideMenu(event: Event) {
-    if (this.layout.container.isMobileScreenSize) {
-      event.preventDefault();
-      this.layout.container.toggleMenu();
-    }
-  }
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof NavigationEnd),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe((event: NavigationEnd) => {
+                this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => event.urlAfterRedirects.includes(el));
+                this.hideSidenav = this.shellService.hideSidenavConditions.some((el) => event.urlAfterRedirects.includes(el));
 
-  private updateState() {
-    if (this.minimizeSidenav && !this.layout.isMenuMinimized) {
-      this.layout.isMenuMinimized = true;
-      if (!this.layout.container.isMobileScreenSize) {
-        this.layout.container.toggleMenu();
-      }
+                this.updateState();
+            });
     }
 
-    if (!this.minimizeSidenav) {
-      if (this.getSidenavState() && this.layout.isMenuMinimized) {
-        this.layout.isMenuMinimized = false;
-        this.layout.container.toggleMenu();
-      }
-    }
-  }
-
-  onExpanded(state: boolean) {
-    if (!this.minimizeSidenav && this.appConfigService.get('sideNav.preserveState')) {
-      this.shellService.preferencesService.set('expandedSidenav', state);
-    }
-  }
-
-  private getSidenavState(): boolean {
-    const expand = this.appConfigService.get<boolean>('sideNav.expandedSidenav', true);
-    const preserveState = this.appConfigService.get<boolean>('sideNav.preserveState', true);
-
-    if (preserveState) {
-      return this.shellService.preferencesService.get('expandedSidenav', expand.toString()) === 'true';
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
-    return expand;
-  }
+    hideMenu(event: Event) {
+        if (this.layout.container.isMobileScreenSize) {
+            event.preventDefault();
+            this.layout.container.toggleMenu();
+        }
+    }
+
+    private updateState() {
+        if (this.minimizeSidenav && !this.layout.isMenuMinimized) {
+            this.layout.isMenuMinimized = true;
+            if (!this.layout.container.isMobileScreenSize) {
+                this.layout.container.toggleMenu();
+            }
+        }
+
+        if (!this.minimizeSidenav) {
+            if (this.getSidenavState() && this.layout.isMenuMinimized) {
+                this.layout.isMenuMinimized = false;
+                this.layout.container.toggleMenu();
+            }
+        }
+    }
+
+    onExpanded(state: boolean) {
+        if (!this.minimizeSidenav && this.appConfigService.get('sideNav.preserveState')) {
+            this.shellService.preferencesService.set('expandedSidenav', state);
+        }
+    }
+
+    private getSidenavState(): boolean {
+        const expand = this.appConfigService.get<boolean>('sideNav.expandedSidenav', true);
+        const preserveState = this.appConfigService.get<boolean>('sideNav.preserveState', true);
+
+        if (preserveState) {
+            return this.shellService.preferencesService.get('expandedSidenav', expand.toString()) === 'true';
+        }
+
+        return expand;
+    }
 }
