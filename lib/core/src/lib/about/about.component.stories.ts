@@ -20,10 +20,28 @@ import { AboutComponent } from './about.component';
 import { AboutModule } from './about.module';
 import { AuthenticationService } from '../auth/services/authentication.service';
 import { AuthenticationMock } from '../auth/mock/authentication.service.mock';
-import { AppExtensionService, AppExtensionServiceMock } from '@alfresco/adf-extensions';
+import { AppExtensionService, ExtensionRef, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
 import { CoreStoryModule } from '../testing/core.story.module';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class AppExtensionServiceMock {
+    references$: Observable<ExtensionRef[]>;
+    private _references = new BehaviorSubject<ExtensionRef[]>([]);
+
+    constructor() {
+        this.references$ = this._references.asObservable();
+    }
+
+    getViewerExtensions(): ViewerExtensionRef[] {
+        return [];
+    }
+}
 
 export default {
     component: AboutComponent,
@@ -74,7 +92,10 @@ const template: Story<AboutComponent> = (args: AboutComponent) => ({
 export const about = template.bind({});
 about.args = {
     pkg: {
-        name: 'My Storybook App', commit: 'my-commit-value', version: '1.0.0', dependencies: {
+        name: 'My Storybook App',
+        commit: 'my-commit-value',
+        version: '1.0.0',
+        dependencies: {
             '@alfresco/adf-content-services': '4.7.0',
             '@alfresco/adf-core': '4.7.0',
             '@alfresco/adf-extensions': '4.7.0',

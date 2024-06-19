@@ -21,6 +21,7 @@ import { ExtensionService } from '../../services/extension.service';
 
 @Component({
     selector: 'adf-dynamic-tab',
+    standalone: true,
     template: `<div #content></div>`
 })
 export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
