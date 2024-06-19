@@ -42,7 +42,7 @@ describe('AuthBearerInterceptor', () => {
                 HttpHandler,
                 AuthBearerInterceptor,
                 AuthenticationService,
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
 
