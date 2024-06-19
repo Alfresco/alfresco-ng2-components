@@ -19,13 +19,16 @@ import { Subject } from 'rxjs';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { UpdateNotification } from './update-notification.interface';
 import { ClickNotification } from './click-notification.interface';
+import { PredictionStatusUpdate } from '../../prediction';
 
 export interface BaseCardViewUpdate {
     itemUpdated$: Subject<UpdateNotification>;
     itemClicked$: Subject<ClickNotification>;
     updateItem$: Subject<CardViewBaseItemModel>;
+    predictionStatusChanged$: Subject<PredictionStatusUpdate[]>;
 
     update(property: CardViewBaseItemModel, newValue: any);
     clicked(property: CardViewBaseItemModel);
     updateElement(notification: CardViewBaseItemModel);
+    onPredictionStatusChanged(notification: PredictionStatusUpdate[]);
 }

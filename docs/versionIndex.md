@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v6.10.0](#v6100)
 -   [v6.8.0](#v680)
 -   [v6.7.0](#v670)
 -   [v6.4.0](#v640)
@@ -45,6 +46,15 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v6.10.0
+
+<!--6100 start-->
+
+-   [Content Enrichment Menu Component](core/components/content-enrichment-menu.component.md)
+-   [Prediction Status Update Interface](core/interfaces/prediction-status-update.interface.md)
+
+<!--6100 end-->
 
 ## v6.8.0
 

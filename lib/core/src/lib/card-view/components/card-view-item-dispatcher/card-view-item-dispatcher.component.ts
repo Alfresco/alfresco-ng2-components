@@ -32,27 +32,30 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     editable: boolean;
 
     @Input()
-    displayEmpty: boolean = true;
+    displayEmpty = true;
 
     @Input()
-    displayNoneOption: boolean = true;
+    displayNoneOption = true;
 
     @Input()
-    displayClearAction: boolean = true;
+    displayClearAction = true;
 
     @Input()
-    copyToClipboardAction: boolean = true;
+    copyToClipboardAction = true;
 
     @Input()
-    useChipsForMultiValueProperty: boolean = true;
+    useChipsForMultiValueProperty = true;
 
     @Input()
-    multiValueSeparator: string = DEFAULT_SEPARATOR;
+    multiValueSeparator = DEFAULT_SEPARATOR;
 
     @Input()
-    displayLabelForChips: boolean = false;
+    displayLabelForChips = false;
 
-    private loaded: boolean = false;
+    @Input()
+    hasContentEnrichment = false;
+
+    private loaded = false;
     private componentReference: any = null;
 
     public ngOnInit;
@@ -104,6 +107,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.useChipsForMultiValueProperty = this.useChipsForMultiValueProperty;
         this.componentReference.instance.multiValueSeparator = this.multiValueSeparator;
         this.componentReference.instance.displayLabelForChips = this.displayLabelForChips;
+        this.componentReference.instance.hasContentEnrichment = this.hasContentEnrichment;
     }
 
     private proxy(methodName, ...args) {

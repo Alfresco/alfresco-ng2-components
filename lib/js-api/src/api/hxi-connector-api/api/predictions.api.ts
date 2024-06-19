@@ -52,14 +52,17 @@ export class PredictionsApi extends BaseApi {
         throwIfNotDefined(reviewStatus, 'reviewStatus');
 
         const pathParams = {
-            predictionId,
+            predictionId
+        };
+
+        const queryParams = {
             reviewStatus
         };
 
         return this.post({
             path: '/predictions/{predictionId}/review',
             pathParams,
-            returnType: Promise<void>
+            queryParams
         });
     }
 }

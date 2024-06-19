@@ -19,8 +19,8 @@ import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewSelectItemProperties, CardViewSelectItemOption } from '../interfaces/card-view.interfaces';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'select';
@@ -29,6 +29,8 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
 
     valueFetch$: Observable<string> = null;
 
+    private valueSubject = new BehaviorSubject<any>(this.value);
+
     constructor(cardViewSelectItemProperties: CardViewSelectItemProperties<T>) {
         super(cardViewSelectItemProperties);
 
@@ -36,11 +38,14 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
 
         this.options$ = cardViewSelectItemProperties.options$;
 
-        this.valueFetch$ = this.options$.pipe(
-            switchMap((options) => {
-                const option = options.find((o) => o.key === this.value?.toString());
-                return of(option ? option.label : '');
-        }));
+        this.valueFetch$ = this.valueSubject.pipe(
+            switchMap((value) => this.options$.pipe(
+                map((options) => {
+                    const option = options.find((o) => o.key === value?.toString());
+                    return option ? option.label : '';
+                })
+            ))
+        );
     }
 
     get displayValue() {
@@ -49,5 +54,6 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
 
     setValue(value: any) {
         this.value = value;
+        this.valueSubject.next(value);
     }
 }

@@ -2,7 +2,7 @@
 Title: Card View Content Update Service
 Added: v6.0.0
 Status: Active
-Last reviewed: 2022-11-25
+Last reviewed: 2024-06-11
 ---
 
 # [Card View Content Update Service](../../../lib/content-services/src/lib/common/services/card-view-content-update.service.ts "Defined in card-view-content-update.service.ts")
@@ -25,6 +25,9 @@ Implements [`BaseCardViewContentUpdate`](../../../lib/content-services/src/lib/i
 -   **updateNodeAspect**(node: [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md))<br/>
     Update node aspect observable.
     -   _node:_ [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)  -
+-   **onPredictionStatusChanged**(notification: [`PredictionStatusUpdate[]`](../../core/interfaces/prediction-status-update.interface.md))<br/>
+    Clears predictions for properties and sets the previous value, if provided.
+    -   _notification:_ [`PredictionStatusUpdate[]`](../../core/interfaces/prediction-status-update.interface.md)  -    
 
 ## Properties
 

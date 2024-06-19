@@ -16,13 +16,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { PredictionsApi, PredictionPaging, ReviewStatus } from '@alfresco/js-api';
-import { from, Observable } from 'rxjs';
+import { from, Observable, Subject } from 'rxjs';
+import { PredictionStatusUpdate } from '../interfaces/prediction-status-update.interface';
 
 @Injectable({ providedIn: 'root' })
 export class PredictionService {
     private _predictionsApi: PredictionsApi;
+
+    /**
+     * Gets emitted when prediction status updated
+     */
+    predictionStatusUpdated$ = new Subject<PredictionStatusUpdate>();
 
     get predictionsApi(): PredictionsApi {
         this._predictionsApi = this._predictionsApi ?? new PredictionsApi(this.apiService.getInstance());

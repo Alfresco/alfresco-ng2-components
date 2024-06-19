@@ -21,6 +21,7 @@ import { BaseCardViewUpdate } from '../interfaces/base-card-view-update.interfac
 import { ClickNotification } from '../interfaces/click-notification.interface';
 import { UpdateNotification } from '../interfaces/update-notification.interface';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
+import { PredictionStatusUpdate } from '../../prediction/interfaces/prediction-status-update.interface';
 
 export const transformKeyToObject = (key: string, value): any => {
     const objectLevels: string[] = key.split('.').reverse();
@@ -36,6 +37,7 @@ export class CardViewUpdateService implements BaseCardViewUpdate {
     itemUpdated$ = new Subject<UpdateNotification>();
     itemClicked$ = new Subject<ClickNotification>();
     updateItem$ = new Subject<CardViewBaseItemModel>();
+    predictionStatusChanged$ = new Subject<PredictionStatusUpdate[]>();
 
     update(property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdated$.next({
@@ -59,4 +61,7 @@ export class CardViewUpdateService implements BaseCardViewUpdate {
         this.updateItem$.next(notification);
     }
 
+    onPredictionStatusChanged(notification: PredictionStatusUpdate[]) {
+        this.predictionStatusChanged$.next(notification);
+    }
 }

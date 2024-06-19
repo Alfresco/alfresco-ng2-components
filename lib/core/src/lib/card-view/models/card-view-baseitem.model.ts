@@ -17,6 +17,7 @@
 
 import { CardViewItemProperties, CardViewItemValidator } from '../interfaces/card-view.interfaces';
 import validatorsMap from '../validators/validators.map';
+import { Prediction } from '@alfresco/js-api';
 
 export abstract class CardViewBaseItemModel<T = any> {
     label: string;
@@ -31,6 +32,7 @@ export abstract class CardViewBaseItemModel<T = any> {
     data?: any;
     type?: string;
     multivalued?: boolean;
+    prediction?: Prediction;
 
     constructor(props: CardViewItemProperties) {
         this.label = props.label || '';
@@ -44,6 +46,7 @@ export abstract class CardViewBaseItemModel<T = any> {
         this.validators = props.validators || [];
         this.data = props.data || null;
         this.multivalued = !!props.multivalued;
+        this.prediction = props.prediction || null;
 
         if (props?.constraints?.length ?? 0) {
             for (const constraint of props.constraints) {

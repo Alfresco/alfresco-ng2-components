@@ -40,6 +40,18 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
                 this.property.value = itemModel.value;
             }
         });
+
+        this.cardViewUpdateService.predictionStatusChanged$.pipe(takeUntil(this.destroy$)).subscribe((items) => {
+            items.map(item => {
+                if (this.property.key.split('.')[1] === item.key) {
+                    this.property.prediction = null;
+
+                    if (item.previousValue !== null && item.previousValue !== undefined) {
+                        this.property.value = item.previousValue;
+                    }
+                }
+            });
+        });
     }
 
     get isEditable(): boolean {

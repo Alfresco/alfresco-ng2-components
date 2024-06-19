@@ -16,6 +16,7 @@
  */
 
 import { CardViewItemValidator } from './card-view-item-validator.interface';
+import { Prediction } from '@alfresco/js-api';
 
 export interface CardViewItemProperties {
     label: string;
@@ -36,4 +37,5 @@ export interface CardViewItemProperties {
         parameters?: { [key: string]: any };
     }>;
     multivalued?: boolean;
+    prediction?: Prediction;
 }
