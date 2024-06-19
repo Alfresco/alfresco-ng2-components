@@ -289,11 +289,19 @@ describe('TagsCreatorComponent', () => {
     });
 
     describe('Tag name field', () => {
-        it('should input be autofocused', fakeAsync(() => {
+        it('should input be autofocused when there are no tags present', fakeAsync(() => {
             component.tagNameControlVisible = true;
             fixture.detectChanges();
             tick(100);
             expect(getNameInput()).toBe(document.activeElement as HTMLInputElement);
+        }));
+
+        it('should input not be autofocused when there are tags present', fakeAsync(() => {
+            component.tags = ['Tag 1'];
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
+            tick(100);
+            expect(getNameInput()).not.toBe(document.activeElement as HTMLInputElement);
         }));
 
         it('should input be autofocused after showing input second time', fakeAsync(() => {
