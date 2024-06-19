@@ -22,7 +22,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEnc
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { catchError, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';

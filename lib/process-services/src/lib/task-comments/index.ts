@@ -18,6 +18,6 @@
 import { TaskCommentsComponent } from './task-comments.component';
 
 export * from './task-comments.component';
-export * from './task-comments.service';
+export * from '../services/task-comments.service';
 
 export const TASK_COMMENTS_DIRECTIVES = [TaskCommentsComponent] as const;

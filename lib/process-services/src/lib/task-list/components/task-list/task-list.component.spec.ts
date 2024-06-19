@@ -22,7 +22,7 @@ import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDat
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
-import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../mock';
+import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../testing/mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';

@@ -21,7 +21,7 @@ import { FormFieldTypes, FormFieldModel, FormModel, CoreTestingModule } from '@a
 import { Observable, of } from 'rxjs';
 import { PeopleWidgetComponent } from './people.widget';
 import { TranslateService } from '@ngx-translate/core';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { LightUserRepresentation } from '@alfresco/js-api';
 
 describe('PeopleWidgetComponent', () => {

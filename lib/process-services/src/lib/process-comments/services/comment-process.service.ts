@@ -20,7 +20,7 @@ import { Observable, from } from 'rxjs';
 import { CommentModel, AlfrescoApiService, CommentsService, User } from '@alfresco/adf-core';
 import { map } from 'rxjs/operators';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
-import { PeopleProcessService } from '../../common/services/people-process.service';
+import { PeopleProcessService } from '../../services/people-process.service';
 
 @Injectable({
     providedIn: 'root'

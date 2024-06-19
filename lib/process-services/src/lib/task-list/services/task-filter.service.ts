@@ -25,7 +25,7 @@ import { UserFiltersApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class TaskFilterService {
-    private apiService = inject(AlfrescoApiService);
+    protected apiService = inject(AlfrescoApiService);
 
     private _userFiltersApi: UserFiltersApi;
     get userFiltersApi(): UserFiltersApi {

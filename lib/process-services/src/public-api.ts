@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './lib/common/index';
 export * from './lib/process-list/index';
 export * from './lib/task-list/index';
 export * from './lib/app-list/index';
@@ -27,3 +26,6 @@ export * from './lib/form/index';
 export * from './lib/task-comments/index';
 export * from './lib/process.module';
 export * from './lib/compat/types';
+export * from './lib/services/apps-process.service';
+export * from './lib/services/people-process.service';
+export * from './lib/services/task-comments.service';

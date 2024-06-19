@@ -229,7 +229,7 @@ The model to update the DataTable require the ID of the row you want change and 
 | [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/src/lib/notifications/services/notification.service.ts) |
 | [Page Title service](core/services/page-title.service.md) | Sets the page title. | [Source](../lib/core/src/lib/common/services/page-title.service.ts) |
 | [People Content service](core/services/people-content.service.md) | Gets information about a Content Services user. | [Source](../lib/content-services/src/lib/common/services/people-content.service.ts) |
-| [People Process service](core/services/people-process.service.md) | Gets information about Process Services users. | [Source](../lib/process-services/src/lib/common/services/people-process.service.ts) |
+| [People Process service](core/services/people-process.service.md) | Gets information about Process Services users. | [Source](../lib/process-services/src/lib/services/people-process.service.ts) |
 | [Process Content Service](core/services/process-content.service.md) | Manipulates content related to a Process Instance or Task Instance in APS. | [Source](../lib/process-services/src/lib/form/services/process-content.service.ts) |
 | [Renditions service](core/services/renditions.service.md) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/src/lib/services/renditions.service.ts) |
 | [Search Configuration service](core/services/search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/content-services/src/lib/search/services/search-configuration.service.ts) |
@@ -394,7 +394,7 @@ for more information about installing and using the source code.
 | [Security Controls service](content-services/services/security-controls.service.md) | Manages security groups & marks in Content Services. | [Source](../lib/content-services/src/lib/security/services/security-controls-groups-marks-security.service.ts) |
 | [Sites service](content-services/services/sites.service.md) | Accesses and manipulates sites from a Content Services repository. | [Source](../lib/content-services/src/lib/common/services/sites.service.ts) |
 | [Tag service](content-services/services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/src/lib/tag/services/tag.service.ts) |
-| [Task Comments service](content-services/services/task-comments.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/process-services/src/lib/task-comments/task-comments.service.ts) |
+| [Task Comments service](content-services/services/task-comments.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/process-services/src/lib/services/task-comments.service.ts) |
 
 <!--content-services end-->
 

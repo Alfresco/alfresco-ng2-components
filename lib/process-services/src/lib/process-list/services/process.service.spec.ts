@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { exampleProcess } from '../../mock';
+import { exampleProcess } from '../../testing/mock';
 import { ProcessService } from './process.service';
 import { CoreModule, DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';

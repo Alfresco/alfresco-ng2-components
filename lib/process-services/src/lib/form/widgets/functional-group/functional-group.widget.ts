@@ -22,7 +22,7 @@ import { ErrorWidgetComponent, FormService, GroupModel, WidgetComponent } from '
 import { catchError, debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { merge, of } from 'rxjs';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { PeopleProcessService } from '../../../common/services/people-process.service';
+import { PeopleProcessService } from '../../../services/people-process.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
