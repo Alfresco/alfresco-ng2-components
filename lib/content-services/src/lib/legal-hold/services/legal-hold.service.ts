@@ -95,8 +95,19 @@ export class LegalHoldService {
      * @param holds holds to create
      * @returns List of created holds Observable<Hold[]>
      */
-    createHold(filePlanId: string, holds: Hold[]): Observable<CreateHoldEntry> {
-        return from(this.legalHoldApi.createHold(filePlanId, holds)).pipe(catchError((err) => throwError(err)));
+    createHold(filePlanId: string, holds: Hold[]): Observable<HoldEntry> {
+        return from(this.legalHoldApi.createHold(filePlanId, holds));
+    }
+
+    /**
+     * Gets the list of holds assigned to the node.
+     *
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param holds holds to create
+     * @returns List of created holds Observable<Hold[]>
+     */
+    createHolds(filePlanId: string, holds: Hold[]): Observable<HoldPaging> {
+        return from(this.legalHoldApi.createHolds(filePlanId, holds));
     }
 
     /**
@@ -107,6 +118,6 @@ export class LegalHoldService {
      * @returns List of created holds Observable<Hold[]>
      */
     assignHold(filePlanId: string, nodesIds: AssignedHold[]): Observable<AssignedHoldEntry> {
-        return from(this.legalHoldApi.assignHold(filePlanId, nodesIds)).pipe(catchError((err) => throwError(err)));
+        return from(this.legalHoldApi.assignHold(filePlanId, nodesIds));
     }
 }

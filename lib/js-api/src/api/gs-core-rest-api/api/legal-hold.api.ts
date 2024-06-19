@@ -121,7 +121,7 @@ export class LegalHoldApi extends BaseApi {
      * @param holds array of holds
      * @returns Promise<NodeChildAssociationPaging>
      */
-    createHold(filePlanId: string, holds: Hold[]): Promise<CreateHoldEntry> {
+    createHold(filePlanId: string, holds: Hold[]): Promise<HoldEntry> {
         throwIfNotDefined(filePlanId, 'filePlanId');
         throwIfNotDefined(holds, 'holds');
 
@@ -133,7 +133,30 @@ export class LegalHoldApi extends BaseApi {
             path: '/file-plans/{filePlanId}/holds',
             pathParams,
             bodyParam: holds,
-            returnType: CreateHoldEntry
+            returnType: HoldEntry
+        });
+    }
+
+    /**
+     * List of legal holds
+     *
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param holds array of holds
+     * @returns Promise<NodeChildAssociationPaging>
+     */
+    createHolds(filePlanId: string, holds: Hold[]): Promise<HoldPaging> {
+        throwIfNotDefined(filePlanId, 'filePlanId');
+        throwIfNotDefined(holds, 'holds');
+
+        const pathParams = {
+            filePlanId
+        };
+
+        return this.post({
+            path: '/file-plans/{filePlanId}/holds',
+            pathParams,
+            bodyParam: holds,
+            returnType: HoldPaging
         });
     }
 
