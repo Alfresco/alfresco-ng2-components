@@ -15,15 +15,10 @@
  * limitations under the License.
  */
 
-export * from './types';
-export * from './filePlans.api';
-export * from './files.api';
-export * from './gsSites.api';
-export * from './recordCategories.api';
-export * from './recordFolders.api';
-export * from './records.api';
-export * from './transferContainers.api';
-export * from './transfers.api';
-export * from './unfiledContainers.api';
-export * from './unfiledRecordFolders.api';
-export * from './legal-hold.api';
+export interface Hold {
+    name: string;
+    id?: string;
+    reason?: string;
+    description?: string;
+    selected?: boolean;
+}
