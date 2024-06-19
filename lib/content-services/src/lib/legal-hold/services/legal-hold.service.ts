@@ -55,7 +55,7 @@ export class LegalHoldService {
      * Add a child of a hold with id holdId.
      *
      * @param ids The list of manage hold Ids
-     * @param holdId The Id of the hold to witch children will be added
+     * @param holdId The Id of the hold to which children will be added
      * @returns List of assigned holds Hold[]
      */
     addHoldsToExistingHold(ids: string[], holdId: string): Observable<Hold[]> {
@@ -73,8 +73,8 @@ export class LegalHoldService {
      * Deletes the relationship between a child with id holdChildId and a parent hold with id holdId.
      *
      * @param holdId The handled hold Id
-     * @param holdChildId The Id of the child hold which is removed
-     * @returns List of assigned holds Hold[]
+     * @param holdChildId The Id of the child hold which is deleted
+     * @returns Empty response
      */
     deleteHoldFromExistingHold(holdId: string, holdChildId: string): Observable<undefined> {
         return from(this.legalHoldApi.deleteFromExistingHold(holdId, holdChildId));
