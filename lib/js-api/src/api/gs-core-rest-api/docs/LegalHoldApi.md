@@ -8,7 +8,8 @@ All URIs are relative to _https://localhost/alfresco/api/-default-/public/gs/ver
 | [**assignHold**](LegalHoldApi.md#assignHold)     | **POST** /holds/{holdId}/children            | Assign node to legal hold     |
 | [**assignHolds**](LegalHoldApi.md#assignHolds)   | **POST** /holds/{holdId}/children            | Assign nodes to legal hold    |
 | [**unassignHold**](LegalHoldApi.md#unassignHold) | **DELETE** /holds/{holdId}/children/{nodeId} | Unassign node from legal hold |
-[**createHold**](LegalHoldApi.md#createHold) | **POST** /file-plans/{filePlanId}/holds | Create legal holds
+[**createHold**](LegalHoldApi.md#createHold) | **POST** /file-plans/{filePlanId}/holds | Create one hold
+[**createHolds**](LegalHoldApi.md#createHolds) | **POST** /file-plans/{filePlanId}/holds | Create list of holds
 
 <a name="getHolds"></a>
 
@@ -219,7 +220,7 @@ legalHoldApi.createHold('-filePlan-', holds).then((data) => {
 Name | Type | Default value  | Description
 ------------- | ------------- | ------------- | -------------
  **filePlanId** | **string** | | The site details 
- **holds** | **Hold[]**| `0` | Array of one new hold.
+ **holds** | **Hold[]**|  | Array of one new hold.
 
 ### Return type
 
@@ -229,7 +230,7 @@ Name | Type | Default value  | Description
 # **createHolds**
 > HoldPaging createHolds(filePlanId, holds)
 
-Create legal holds.
+Create legal holds list.
 
 ### Example
 
@@ -256,7 +257,7 @@ let opts = [
     }
 ];
 
-legalHoldApi.createHold('-filePlan-', holds).then((data) => {
+legalHoldApi.createHolds('-filePlan-', holds).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
 }, function(error) {
   console.error(error);
@@ -269,7 +270,7 @@ legalHoldApi.createHold('-filePlan-', holds).then((data) => {
 Name | Type | Default value  | Description
 ------------- | ------------- | ------------- | -------------
  **filePlanId** | **string** | | The site details 
- **holds** | **Hold[]**| `0` | Array of new holds.
+ **holds** | **Hold[]**|  | Array of new holds.
 
 ### Return type
 
