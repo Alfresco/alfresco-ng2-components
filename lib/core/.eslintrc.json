@@ -5,6 +5,10 @@
     {
       "files": ["*.ts"],
       "extends": ["plugin:@nrwl/nx/angular"],
+      "parserOptions": {
+        "project": ["lib/core/tsconfig.lib.json", "lib/core/tsconfig.spec.json"],
+        "createDefaultProgram": true
+      },
       "rules": {
         "jsdoc/newline-after-description": "warn",
         "@typescript-eslint/naming-convention": "off",

@@ -5,6 +5,10 @@
     {
       "files": ["*.ts"],
       "extends": ["plugin:@nrwl/nx/angular"],
+      "parserOptions": {
+        "project": ["lib/content-services/tsconfig.lib.json", "lib/content-services/tsconfig.spec.json"],
+        "createDefaultProgram": true
+      },
       "rules": {
         "jsdoc/newline-after-description": "warn",
         "@typescript-eslint/naming-convention": "warn",
@@ -72,6 +76,10 @@
     },
     {
       "files": ["*.html"],
+      "parserOptions": {
+        "project": ["lib/content-services/tsconfig.lib.json", "lib/content-services/tsconfig.spec.json"],
+        "createDefaultProgram": true
+      },
       "extends": ["plugin:@nrwl/nx/angular-template"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
