@@ -19,6 +19,7 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ContentPagingQuery } from '../../content-rest-api';
 import { HoldPaging } from '../model/holdPaging';
+import { HoldEntry } from '../model';
 
 /**
  * Legal Holds service.
@@ -53,18 +54,38 @@ export class LegalHoldApi extends BaseApi {
         });
     }
 
+    ////
     /**
-     * Adds to existing hold
+     * Assign hold to existing hold
      *
      * @param holdId The identifier of a hold.
-     * @param ids list of ids of holds to add to existing hold
-     * @returns Promise<NodeChildAssociationPaging>
+     * @param ids one element list with id of hold to assign to existing hold
+     * @returns Promise<HoldEntry>
      */
-    saveToExistingHolds(ids: string[], holdId: string): Promise<HoldPaging> {
+    assignHold(ids: [string], holdId: string): Promise<HoldEntry> {
         throwIfNotDefined(holdId, 'holdId');
-        if (ids.length === 0) {
-            throwIfNotDefined(null, 'holds to save');
-        }
+        throwIfNotDefined(ids, 'ids');
+
+        return this.post({
+            path: `/holds/{holdId}/children`,
+            pathParams: { holdId },
+            bodyParam: ids.map((id) => ({
+                id
+            })),
+            returnType: HoldEntry
+        });
+    }
+
+    /**
+     * Assign holds of legal holds
+     *
+     * @param holdId The identifier of a hold.
+     * @param ids list of ids of holds to assign to existing hold
+     * @returns Promise<HoldPaging>
+     */
+    assignHolds(ids: string[], holdId: string): Promise<HoldPaging> {
+        throwIfNotDefined(holdId, 'holdId');
+        throwIfNotDefined(ids, 'ids');
 
         return this.post({
             path: `/holds/{holdId}/children`,
@@ -83,7 +104,7 @@ export class LegalHoldApi extends BaseApi {
      * @param holdChildId The Id of the child hold which is deleted
      * @returns Empty response
      */
-    deleteFromExistingHold(holdId: string, holdChildId: string): Promise<undefined> {
+    unassignHold(holdId: string, holdChildId: string): Promise<undefined> {
         throwIfNotDefined(holdId, 'holdId');
         throwIfNotDefined(holdChildId, 'holdChildId');
 
