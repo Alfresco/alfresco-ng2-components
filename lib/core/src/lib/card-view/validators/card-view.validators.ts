@@ -22,5 +22,5 @@ export * from './card-view-item-long.validator';
 export * from './card-view-item-only-positive-long.validator';
 export * from './card-view-item-match.validator';
 export * from './card-view-item-minmax.validator';
-export * from './card-view-item-length.valiator';
+export * from './card-view-item-length.validator';
 export * from './validators.map';

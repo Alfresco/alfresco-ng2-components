@@ -76,5 +76,8 @@ describe('CardViewLongItemModel', () => {
 
         itemModel.value = '5';
         expect(itemModel.isValid(itemModel.value)).toBe(false, '5 is less than minimum allowed');
+
+        itemModel.value = '13';
+        expect(itemModel.isValid(itemModel.value)).toBe(true, '13 is within the allowed range');
     });
 });

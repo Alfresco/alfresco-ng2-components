@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CardViewItemMatchValidator } from './card-view-item-match.valiator';
+import { CardViewItemMatchValidator } from './card-view-item-match.validator';
 
 describe('CardViewItemMatchValidator', () => {
     const validator = new CardViewItemMatchValidator('^[a-zA-Z]+$', undefined, true);

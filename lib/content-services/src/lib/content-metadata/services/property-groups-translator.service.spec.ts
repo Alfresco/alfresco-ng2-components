@@ -28,7 +28,6 @@ import {
     CardViewBoolItemModel,
     CardViewDatetimeItemModel,
     CardViewSelectItemModel,
-    CardViewSelectItemProperties,
     LogService,
     CardViewLongItemModel
 } from '@alfresco/adf-core';
@@ -172,7 +171,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
-            const cardViewProperty: CardViewTextItemModel = cardViewGroup[0].properties[0] as CardViewTextItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy();
         });
 
@@ -190,7 +189,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAKE:NAME': 'API Fake response' };
 
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
-            const cardViewProperty: CardViewTextItemModel = cardViewGroup[0].properties[0] as CardViewTextItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy();
             expect(cardViewProperty.editable).toBe(false);
         });
@@ -225,10 +224,10 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewTextItemModel = cardViewGroup[0].properties[0] as CardViewTextItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe('The Chariot Line');
-            expect(cardViewProperty.multiline).toBeFalsy();
+            expect((cardViewProperty as CardViewTextItemModel).multiline).toBeFalsy();
         });
 
         it('should translate properly the multiline and value attributes for d:mltext', () => {
@@ -237,10 +236,10 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewTextItemModel = cardViewGroup[0].properties[0] as CardViewTextItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe('The Chariot Line');
-            expect(cardViewProperty.multiline).toBeTruthy();
+            expect((cardViewProperty as CardViewTextItemModel).multiline).toBeTruthy();
         });
 
         it('should translate properly the value attribute for d:date', () => {
@@ -250,7 +249,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': expectedValue };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewDateItemModel = cardViewGroup[0].properties[0] as CardViewDateItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewDateItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(expectedValue);
         });
@@ -262,7 +261,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': expectedValue };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewDatetimeItemModel = cardViewGroup[0].properties[0] as CardViewDatetimeItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewDatetimeItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(expectedValue);
         });
@@ -273,7 +272,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': '1024' };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewIntItemModel = cardViewGroup[0].properties[0] as CardViewIntItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewIntItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(1024);
         });
@@ -284,7 +283,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': 0 };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewIntItemModel = cardViewGroup[0].properties[0] as CardViewIntItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewIntItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(0);
         });
@@ -295,8 +294,8 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': '1024' };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewIntItemModel = cardViewGroup[0].properties[0] as CardViewIntItemModel;
-            expect(cardViewProperty instanceof CardViewIntItemModel).toBeTruthy();
+            const cardViewProperty = cardViewGroup[0].properties[0];
+            expect(cardViewProperty instanceof CardViewLongItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(1024);
         });
 
@@ -306,7 +305,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': '1024.24' };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewFloatItemModel = cardViewGroup[0].properties[0] as CardViewFloatItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewFloatItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(1024.24);
         });
@@ -317,7 +316,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': 0 };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewFloatItemModel = cardViewGroup[0].properties[0] as CardViewFloatItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewFloatItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(0);
         });
@@ -328,8 +327,8 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': '1024.24' };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewFloatItemModel = cardViewGroup[0].properties[0] as CardViewFloatItemModel;
-            expect(cardViewProperty instanceof CardViewFloatItemModel).toBeTruthy();
+            const cardViewProperty = cardViewGroup[0].properties[0];
+            expect(cardViewProperty instanceof CardViewFloatItemModel).toBeTrue();
             expect(cardViewProperty.value).toBe(1024.24);
         });
 
@@ -339,7 +338,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': true };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewBoolItemModel = cardViewGroup[0].properties[0] as CardViewBoolItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewBoolItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(true);
         });
@@ -364,7 +363,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': 'two' };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, definition);
 
-            const cardViewProperty = cardViewGroup[0].properties[0] as CardViewSelectItemModel<CardViewSelectItemProperties<string>>;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewSelectItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe('two');
         });
@@ -436,7 +435,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': '1024' };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewLongItemModel = cardViewGroup[0].properties[0] as CardViewLongItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewLongItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(1024);
         });
@@ -447,7 +446,7 @@ describe('PropertyGroupTranslatorService', () => {
             propertyValues = { 'FAS:PLAGUE': 0 };
             const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
-            const cardViewProperty: CardViewLongItemModel = cardViewGroup[0].properties[0] as CardViewLongItemModel;
+            const cardViewProperty = cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewLongItemModel).toBeTruthy();
             expect(cardViewProperty.value).toBe(0);
         });
