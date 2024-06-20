@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-20
 ---
 
-# [Content Node Selector Panel component](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts "Defined in content-node-selector-panel.component.ts")
+# [Content Node Selector Panel component](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel/content-node-selector-panel.component.ts "Defined in content-node-selector-panel.component.ts")
 
 Opens a [Content Node Selector](content-node-selector.component.md)  in its own dialog window.
 
@@ -35,7 +35,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | dropdownHideMyFiles | `boolean` | false | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | null | Custom site for site dropdown. This is the same as the `siteList`. property of the Sites Dropdown component (see its doc page for more information). |
 | imageResolver | [`ImageResolver`](../../../lib/content-services/src/lib/document-list/data/image-resolver.model.ts) | null | Custom image resolver function. See the [Image Resolver Model](image-resolver.model.md) page for more information. |
-| isSelectionValid | [`ValidationFunction`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts) | defaultValidation | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
+| isSelectionValid | [`ValidationFunction`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel/content-node-selector-panel.component.ts) | defaultValidation | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
 | restrictRootToCurrentFolderId | `boolean` | false | If true will restrict the search and breadcrumbs to the currentFolderId |
 | selectionMode | `"single" \| "multiple"` | "single" | Define the selection mode for document list. The allowed values are single or multiple |

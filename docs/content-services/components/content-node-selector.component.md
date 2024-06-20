@@ -66,7 +66,7 @@ The properties are described in the table below:
 | where | `string` | `null` | Custom _where_ filter function. See the [Document List component](document-list.component.md) for more information. |
 | imageResolver | [`ImageResolver`](../../../lib/content-services/src/lib/document-list/data/image-resolver.model.ts) | `null` | Custom image resolver function. See the [Image Resolver Model](../models/image-resolver.model.md) page for more information. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
-| isSelectionValid | [`ValidationFunction`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
+| isSelectionValid | [`ValidationFunction`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | breadcrumbTransform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
 | select | [`Subject<Node>`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | Event emitted with the current node selection when the dialog closes |
 | showSearch | `boolean` | `true` | Render search input |

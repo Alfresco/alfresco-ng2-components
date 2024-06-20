@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
-import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
+import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
 import { SearchModule } from '../search/search.module';

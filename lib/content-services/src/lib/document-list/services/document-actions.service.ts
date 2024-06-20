@@ -30,18 +30,19 @@ import { ContentNodeDialogService } from '../../content-node-selector/content-no
     providedIn: 'root'
 })
 export class DocumentActionsService {
-
     permissionEvent = new Subject<PermissionModel>();
     error = new Subject<Error>();
     success = new Subject<string>();
 
     private handlers: { [id: string]: ContentActionHandler } = {};
 
-    constructor(private nodeActionsService: NodeActionsService,
-                private contentNodeDialogService: ContentNodeDialogService,
-                private translation: TranslationService,
-                private documentListService?: DocumentListService,
-                private contentService?: ContentService) {
+    constructor(
+        private nodeActionsService: NodeActionsService,
+        private contentNodeDialogService: ContentNodeDialogService,
+        private translation: TranslationService,
+        private documentListService?: DocumentListService,
+        private contentService?: ContentService
+    ) {
         this.setupActionHandlers();
     }
 
@@ -114,32 +115,34 @@ export class DocumentActionsService {
     }
 
     private prepareHandlers(actionObservable: Subject<string>): void {
-        actionObservable.subscribe(
-            (fileOperationMessage) => {
-                this.success.next(fileOperationMessage);
-            },
-            this.error.next.bind(this.error)
-        );
+        actionObservable.subscribe((fileOperationMessage) => {
+            this.success.next(fileOperationMessage);
+        }, this.error.next.bind(this.error));
     }
 
     private deleteNode(node: NodeEntry, _target?: any, permission?: string): Observable<any> {
         if (this.canExecuteAction(node)) {
             if (this.contentService.hasAllowableOperations(node.entry, permission)) {
                 const handlerObservable = this.documentListService.deleteNode(node.entry.id);
-                handlerObservable.subscribe(() => {
-                    const message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
-                    this.success.next(message);
-                }, () => {
-                    const message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
-                    this.error.next(message);
-                });
+                handlerObservable.subscribe(
+                    () => {
+                        const message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
+                        this.success.next(message);
+                    },
+                    () => {
+                        const message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
+                        this.error.next(message);
+                    }
+                );
                 return handlerObservable;
             } else {
-                this.permissionEvent.next(new PermissionModel({
-                    type: 'content',
-                    action: 'delete',
-                    permission
-                }));
+                this.permissionEvent.next(
+                    new PermissionModel({
+                        type: 'content',
+                        action: 'delete',
+                        permission
+                    })
+                );
                 return throwError(new Error('No permission to delete'));
             }
         }

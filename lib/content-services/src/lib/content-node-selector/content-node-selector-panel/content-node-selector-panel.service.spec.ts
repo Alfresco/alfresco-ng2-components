@@ -16,10 +16,9 @@
  */
 
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
-import { mockContentModelDateProperty, mockContentModelTextProperty, mockConvertedSearchCategoriesFromModels } from '../mock/content-model.mock';
+import { mockContentModelDateProperty, mockContentModelTextProperty, mockConvertedSearchCategoriesFromModels } from '../../mock/content-model.mock';
 
 describe('ContentNodeSelectorPanelService', () => {
-
     const contentNodeSelectorPanelService = new ContentNodeSelectorPanelService();
 
     it('should support text type', () => {
@@ -42,7 +41,7 @@ describe('ContentNodeSelectorPanelService', () => {
     });
 
     it('should modelPropertyTypeToSearchFilterTypeMap contain only the supported types', () => {
-        const expectedSupportedTypesMap = new Map<string, string> ();
+        const expectedSupportedTypesMap = new Map<string, string>();
         expectedSupportedTypesMap.set('d:text', 'text');
         expectedSupportedTypesMap.set('d:date', 'date-range');
         expectedSupportedTypesMap.set('d:datetime', 'datetime-range');
