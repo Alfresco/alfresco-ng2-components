@@ -25,7 +25,7 @@ export class CardViewItemLongValidator implements CardViewItemValidator {
             return value.every(this.isLongNumber);
         }
 
-        return value === '' || (!isNaN(value) && this.isLongNumber(value) && this.isNotEmpty(value));
+        return value === '' || (!isNaN(value) && this.isLongNumber(value) && this.isNotSpaceOnly(value));
     }
 
     private isLongNumber(value: any): boolean {
@@ -33,7 +33,7 @@ export class CardViewItemLongValidator implements CardViewItemValidator {
         return Math.floor(longNumber) === longNumber && longNumber >= Number.MIN_SAFE_INTEGER && longNumber <= Number.MAX_SAFE_INTEGER;
     }
 
-    private isNotEmpty(value: any): boolean {
+    private isNotSpaceOnly(value: any): boolean {
         return String(value).trim() !== '';
     }
 }
