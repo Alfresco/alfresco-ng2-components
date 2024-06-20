@@ -72,23 +72,37 @@ describe('LegalHoldsService', () => {
         });
     });
 
-    describe('addHoldsToExistingHold', () => {
-        it('should add holds to existing hold', (done) => {
-            const childrenIds = ['abc', 'qwe'];
-            spyOn(service.legalHoldApi, 'saveToExistingHolds').and.returnValue(Promise.resolve(legalHolds));
+    describe('assignHold', () => {
+        it('should add hold to existing hold', (done) => {
+            const childrenId: [string] = ['qwe'];
+            const mockEntryResponse = { entry: { id: '123', name: 'aaaa ' } };
+            spyOn(service.legalHoldApi, 'assignHold').and.returnValue(Promise.resolve(mockEntryResponse));
 
-            service.assignHold(childrenIds, mockId).subscribe((holds) => {
+            service.assignHold(childrenId, mockId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);
-                expect(service.legalHoldApi.assignHold).toHaveBeenCalledWith(mockId, childrenIds);
+                expect(service.legalHoldApi.assignHold).toHaveBeenCalledWith(mockId, childrenId);
                 done();
             });
         });
     });
 
-    describe('deleteHoldFromExistingHold', () => {
+    describe('assignHolds', () => {
+        it('should add holds to existing hold', (done) => {
+            const childrenId = ['qwe', 'abc'];
+            spyOn(service.legalHoldApi, 'assignHolds').and.returnValue(Promise.resolve(legalHolds));
+
+            service.assignHolds(childrenId, mockId).subscribe((holds) => {
+                expect(holds).toEqual(returnedHolds);
+                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(mockId, childrenId);
+                done();
+            });
+        });
+    });
+
+    describe('unassignHold', () => {
         it('should delete hold from existing hold', (done) => {
             const childrenId = 'qwe';
-            spyOn(service.legalHoldApi, 'deleteFromExistingHolds').and.returnValue(Promise.resolve(legalHolds));
+            spyOn(service.legalHoldApi, 'unassignHold').and.returnValue(Promise.resolve(undefined));
 
             service.unassignHold(mockId, childrenId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);

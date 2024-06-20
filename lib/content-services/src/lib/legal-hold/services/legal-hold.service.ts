@@ -56,7 +56,7 @@ export class LegalHoldService {
      *
      * @param ids The one element list of manage hold Ids
      * @param holdId The Id of the hold to which children will be added
-     * @returns List entry with hold Id
+     * @returns Entry with hold Id
      */
     assignHold(ids: [string], holdId: string): Observable<{ entry: { id: string } }> {
         return from(this.legalHoldApi.assignHold(ids, holdId)).pipe(
