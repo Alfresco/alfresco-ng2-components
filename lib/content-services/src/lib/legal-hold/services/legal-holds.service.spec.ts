@@ -77,9 +77,9 @@ describe('LegalHoldsService', () => {
             const childrenIds = ['abc', 'qwe'];
             spyOn(service.legalHoldApi, 'saveToExistingHolds').and.returnValue(Promise.resolve(legalHolds));
 
-            service.addHoldsToExistingHold(childrenIds, mockId).subscribe((holds) => {
+            service.assignHold(childrenIds, mockId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);
-                expect(service.legalHoldApi.saveToExistingHolds).toHaveBeenCalledWith(mockId, childrenIds);
+                expect(service.legalHoldApi.assignHold).toHaveBeenCalledWith(mockId, childrenIds);
                 done();
             });
         });
@@ -90,9 +90,9 @@ describe('LegalHoldsService', () => {
             const childrenId = 'qwe';
             spyOn(service.legalHoldApi, 'deleteFromExistingHolds').and.returnValue(Promise.resolve(legalHolds));
 
-            service.deleteHoldFromExistingHold(mockId, childrenId).subscribe((holds) => {
+            service.unassignHold(mockId, childrenId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);
-                expect(service.legalHoldApi.deleteFromExistingHold).toHaveBeenCalledWith(mockId, childrenId);
+                expect(service.legalHoldApi.unassignHold).toHaveBeenCalledWith(mockId, childrenId);
                 done();
             });
         });
