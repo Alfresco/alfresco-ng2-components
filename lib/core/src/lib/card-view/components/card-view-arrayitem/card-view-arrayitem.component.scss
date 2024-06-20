@@ -1,9 +1,25 @@
 @import 'styles/mat-selectors';
 
 .adf {
+    &-array-item-container {
+        display: flex;
+        align-items: center;
+
+        #{$mat-icon} {
+            display: flex;
+            align-items: center;
+            height: inherit;
+            width: inherit;
+            max-width: 24px;
+            max-height: 24px;
+            margin-right: 3px;
+        }
+    }
+
     &-array-item-icon {
         font-size: var(--theme-subheading-2-font-size);
-        padding-top: 8px;
+        display: flex;
+        align-items: center;
     }
 
     &-array-item-action {
