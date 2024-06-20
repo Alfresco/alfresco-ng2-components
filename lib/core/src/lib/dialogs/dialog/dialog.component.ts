@@ -73,7 +73,7 @@ export class DialogComponent implements OnDestroy {
 
     onConfirm() {
         this.isConfirmButtonDisabled$.next(true);
-        this.dialogRef.close(true);
+        this.dialogRef.close(this.data.dataOnConfirm$ || true);
     }
 
     ngOnDestroy() {

@@ -50,4 +50,4 @@ function openDialog() {
 
 - [Dialog Component](../dialogs/dialog.md)
 - [Dialog Data Interface](../interfaces/dialog.interface.md)
-- [AdditionalDialogActionButton Interface](./additional-dialog-action-button.md)
+- [AdditionalDialogActionButton Interface](../interfaces/additional-dialog-action-button.interface.md)

@@ -89,9 +89,12 @@ function openDialog() {
         title: 'Dialog title',
         contentComponent: ExampleDialogComponent,
         componentData: { nodeId: 'nodeId', name: 'node name' } // any data can be passed
+        dataOnConfirm$: of({ nodeId, data: {} })
     };
 
-    this.dialog.open(DialogComponent, { data });
+    const dialogInstance = this.dialog.open(DialogComponent, { data });
+
+    dialogInstance.afterClosed().subscribe((data) => data) // data = { nodeId, data: {} }
 }
 ```
 

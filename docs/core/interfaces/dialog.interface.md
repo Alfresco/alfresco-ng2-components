@@ -26,7 +26,8 @@ interface DialogData {
     descriptionTemplate?: TemplateRef<any>;
     headerIcon?: string;
     additionalActionButtons?: AdditionalDialogActionButton[];
-    componentData: any;
+    componentData?: any;
+    dataOnConfirm$?: Subject<any>
 }
 ```
 
@@ -50,6 +51,7 @@ interface DialogData {
 | descriptionTemplate | `TemplateRef<any>` |    | Inserts a description template. (optional) |
 | additionalActionButtons | `AdditionalDialogActionButton[]` |    | Inserts additional base-styled buttons into the action bar on the left. (optional) |
 | componentData | `any` |    | Data that injected in contentComponent. (optional) |
+| dataOnConfirm$ | `Subject<any>` |    | Data to be passed on confirm action after dialog closed. (optional) |
 
 ## See also
 
