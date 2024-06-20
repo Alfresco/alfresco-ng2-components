@@ -54,7 +54,6 @@ export class LegalHoldApi extends BaseApi {
         });
     }
 
-    ////
     /**
      * Assign node to legal hold
      *
