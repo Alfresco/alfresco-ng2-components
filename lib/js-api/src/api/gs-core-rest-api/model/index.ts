@@ -78,4 +78,3 @@ export * from './hold';
 export * from './holdEntry';
 export * from './holdPaging';
 export * from './holdPagingList';
-export * from './assignedHold';
