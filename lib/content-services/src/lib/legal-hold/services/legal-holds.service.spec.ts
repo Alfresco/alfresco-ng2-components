@@ -18,11 +18,12 @@
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { Hold, HoldPaging } from '@alfresco/js-api';
+import { Hold, HoldEntry, HoldPaging } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
     let service: LegalHoldService;
     let legalHolds: HoldPaging;
+    let legalHoldEntry: HoldEntry;
     let returnedHolds: Hold[];
     const mockId = 'mockId';
 
@@ -34,24 +35,25 @@ describe('LegalHoldsService', () => {
 
         legalHolds = {
             list: {
-                entries: [
-                    {
-                        entry: {
-                            id: mockId,
-                            name: 'some name',
-                            reason: 'some description'
-                        }
-                    }
-                ]
+                entries: [legalHoldEntry]
             }
         } as HoldPaging;
+
+        legalHoldEntry = {
+            entry: {
+                id: mockId,
+                name: 'some name',
+                reason: 'some reason',
+                description: 'some description'
+            }
+        };
 
         returnedHolds = [
             {
                 id: mockId,
                 name: 'some name',
-                reason: 'some description',
-                description: undefined
+                reason: 'some reason',
+                description: 'some description'
             }
         ];
     });
@@ -107,6 +109,46 @@ describe('LegalHoldsService', () => {
             service.unassignHold(mockId, childrenId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);
                 expect(service.legalHoldApi.unassignHold).toHaveBeenCalledWith(mockId, childrenId);
+                done();
+            });
+        });
+    });
+
+    describe('createHold', () => {
+        it('should create new hold', (done) => {
+            const mockHold = [
+                {
+                    name: 'Hold 1',
+                    reason: 'reason 1'
+                }
+            ];
+            spyOn(service.legalHoldApi, 'createHold').and.returnValue(Promise.resolve(legalHoldEntry));
+
+            service.createHold(mockId, mockHold).subscribe((holds) => {
+                expect(holds).toEqual(legalHoldEntry);
+                expect(service.legalHoldApi.createHold).toHaveBeenCalledWith(mockId, mockHold);
+                done();
+            });
+        });
+    });
+
+    describe('createHolds', () => {
+        it('should creaet list of holds', (done) => {
+            const mockHolds = [
+                {
+                    name: 'Hold 1',
+                    reason: 'reason 1'
+                },
+                {
+                    name: 'Hold 2',
+                    reason: 'reason 2'
+                }
+            ];
+            spyOn(service.legalHoldApi, 'createHolds').and.returnValue(Promise.resolve(legalHolds));
+
+            service.createHolds(mockId, mockHolds).subscribe((holds) => {
+                expect(holds).toEqual(legalHolds);
+                expect(service.legalHoldApi.createHolds).toHaveBeenCalledWith(mockId, mockHolds);
                 done();
             });
         });

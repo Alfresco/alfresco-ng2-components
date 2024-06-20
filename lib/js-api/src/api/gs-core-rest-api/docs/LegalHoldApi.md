@@ -51,12 +51,6 @@ Name | Type | Default value  | Description
 
 [**HoldPaging**](HoldPaging.md)
 
-
-
-
-
-
-
 <a name="createHold"></a>
 # **createHold**
 > HoldEntry createHold(filePlanId, holds)
