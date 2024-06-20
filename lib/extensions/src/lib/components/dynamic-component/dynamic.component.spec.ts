@@ -26,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 @Component({
     selector: 'test-component',
+    standalone: true,
     template: '<div data-automation-id="found-me">Hey I am the mighty test component!</div>'
 })
 export class TestComponent implements OnChanges {
@@ -47,8 +48,7 @@ describe('DynamicExtensionComponent', () => {
         componentRegister.setComponents({ 'test-component': TestComponent });
 
         TestBed.configureTestingModule({
-            imports: [HttpClientModule],
-            declarations: [DynamicExtensionComponent, TestComponent],
+            imports: [HttpClientModule, DynamicExtensionComponent, TestComponent],
             providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
         });
 

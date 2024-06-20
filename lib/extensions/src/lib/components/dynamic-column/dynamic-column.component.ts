@@ -32,7 +32,8 @@ import { ExtensionService } from '../../services/extension.service';
 
 @Component({
     selector: 'adf-dynamic-column',
-    template: ` <ng-container #content></ng-container> `,
+    standalone: true,
+    template: `<ng-container #content></ng-container>`,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-dynamic-column' },

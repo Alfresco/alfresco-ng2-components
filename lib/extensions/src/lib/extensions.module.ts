@@ -23,19 +23,12 @@ import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { AppExtensionService } from './services/app-extension.service';
 import { setupExtensions } from './services/startup-extension-factory';
 
+export const EXTENSION_DIRECTIVES = [DynamicExtensionComponent, DynamicTabComponent, DynamicColumnComponent, PreviewExtensionComponent] as const;
+
+/** @deprecated import EXTENSION_DIRECTIVES or standalone components instead */
 @NgModule({
-    declarations: [
-        DynamicExtensionComponent,
-        DynamicTabComponent,
-        DynamicColumnComponent,
-        PreviewExtensionComponent
-    ],
-    exports: [
-        DynamicExtensionComponent,
-        DynamicTabComponent,
-        DynamicColumnComponent,
-        PreviewExtensionComponent
-    ]
+    imports: [...EXTENSION_DIRECTIVES],
+    exports: [...EXTENSION_DIRECTIVES]
 })
 export class ExtensionsModule {
     static forRoot(): ModuleWithProviders<ExtensionsModule> {
@@ -49,12 +42,6 @@ export class ExtensionsModule {
                     multi: true
                 }
             ]
-        };
-    }
-
-    static forChild(): ModuleWithProviders<ExtensionsModule> {
-        return {
-            ngModule: ExtensionsModule
         };
     }
 }

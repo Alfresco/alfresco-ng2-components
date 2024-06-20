@@ -23,7 +23,7 @@ import { CoreTestingModule } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from './content-directive.module';
 
 @Component({
-    template: ` <div id="delete-component" [adf-delete]="selection" (delete)="onDelete()"></div>`
+    template: `<div id="delete-component" [adf-delete]="selection" (delete)="onDelete()"></div>`
 })
 class TestComponent {
     selection = [];
@@ -35,7 +35,7 @@ class TestComponent {
 }
 
 @Component({
-    template: ` <div id="delete-component" [adf-check-allowable-operation]="selection" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
+    template: `<div id="delete-component" [adf-check-allowable-operation]="selection" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
 })
 class TestWithPermissionsComponent {
     selection = [];
