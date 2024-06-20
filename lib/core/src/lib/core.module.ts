@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
-import { AboutModule } from './about/about.module';
+import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
 import { DataTableModule } from './datatable/datatable.module';
@@ -73,7 +73,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
     imports: [
         TranslateModule,
         ExtensionsModule,
-        AboutModule,
+        ...ABOUT_DIRECTIVES,
         ViewerModule,
         SidenavLayoutModule,
         PipeModule,
@@ -111,7 +111,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         })
     ],
     exports: [
-        AboutModule,
+        ...ABOUT_DIRECTIVES,
         ViewerModule,
         SidenavLayoutModule,
         PipeModule,

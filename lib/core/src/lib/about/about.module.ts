@@ -26,28 +26,21 @@ import { AboutComponent } from './about.component';
 import { AboutPanelDirective } from './about-panel.directive';
 import { AboutRepositoryInfoComponent } from './about-repository-info/about-repository-info.component';
 
+export const ABOUT_DIRECTIVES = [
+    AboutExtensionListComponent,
+    AboutLicenseListComponent,
+    ModuleListComponent,
+    AboutRepositoryInfoComponent,
+    PackageListComponent,
+    AboutStatusListComponent,
+    AboutServerSettingsComponent,
+    AboutPanelDirective,
+    AboutComponent
+] as const;
+
+/** @deprecated import `ABOUT_DIRECTIVES` or standalone components instead */
 @NgModule({
-    imports: [
-        AboutExtensionListComponent,
-        AboutLicenseListComponent,
-        ModuleListComponent,
-        AboutRepositoryInfoComponent,
-        PackageListComponent,
-        AboutStatusListComponent,
-        AboutServerSettingsComponent,
-        AboutPanelDirective,
-        AboutComponent
-    ],
-    exports: [
-        AboutComponent,
-        AboutPanelDirective,
-        AboutRepositoryInfoComponent,
-        AboutServerSettingsComponent,
-        AboutExtensionListComponent,
-        AboutLicenseListComponent,
-        PackageListComponent,
-        AboutStatusListComponent,
-        ModuleListComponent
-    ]
+    imports: [...ABOUT_DIRECTIVES],
+    exports: [...ABOUT_DIRECTIVES]
 })
 export class AboutModule {}
