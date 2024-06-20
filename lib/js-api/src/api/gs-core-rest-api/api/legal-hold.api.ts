@@ -140,7 +140,7 @@ export class LegalHoldApi extends BaseApi {
      * @param holds array of holds
      * @returns Promise<HoldPaging>
      */
-    createHolds(filePlanId: string, holds: Hold[]): Promise<HoldPaging> {
+    createHolds(filePlanId = '-filePlan-', holds: Hold[]): Promise<HoldPaging> {
         throwIfNotDefined(filePlanId, 'filePlanId');
         throwIfNotDefined(holds, 'holds');
 
