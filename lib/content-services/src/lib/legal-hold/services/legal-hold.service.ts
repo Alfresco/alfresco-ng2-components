@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { ContentPagingQuery, Hold, LegalHoldApi } from '@alfresco/js-api';
+import { ContentPagingQuery, Hold, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -52,31 +52,39 @@ export class LegalHoldService {
     }
 
     /**
-     * Add a child of a hold with id holdId.
+     * Assign a child of a hold with id holdId.
+     *
+     * @param ids The one element list of manage hold Ids
+     * @param holdId The Id of the hold to which children will be added
+     * @returns List entry with hold Id
+     */
+    assignHold(ids: [string], holdId: string): Observable<{ entry: { id: string } }> {
+        return from(this.legalHoldApi.assignHold(ids, holdId)).pipe(
+            map((response) => ({
+                entry: { id: response.entry.id }
+            }))
+        );
+    }
+
+    /**
+     * Assign a child of a hold with id holdId.
      *
      * @param ids The list of manage hold Ids
      * @param holdId The Id of the hold to which children will be added
      * @returns List of assigned holds Hold[]
      */
-    addHoldsToExistingHold(ids: string[], holdId: string): Observable<Hold[]> {
-        return from(this.legalHoldApi.saveToExistingHolds(ids, holdId)).pipe(
-            map(({ list }) =>
-                list?.entries?.map(({ entry }) => ({
-                    id: entry?.id,
-                    name: entry?.name
-                }))
-            )
-        );
+    assignHolds(ids: string[], holdId: string): Observable<HoldPaging> {
+        return from(this.legalHoldApi.assignHolds(ids, holdId));
     }
 
     /**
-     * Deletes the relationship between a child with id holdChildId and a parent hold with id holdId.
+     * Unassign the relationship between a child with id holdChildId and a parent hold with id holdId.
      *
      * @param holdId The handled hold Id
      * @param holdChildId The Id of the child hold which is deleted
      * @returns Empty response
      */
-    deleteHoldFromExistingHold(holdId: string, holdChildId: string): Observable<undefined> {
-        return from(this.legalHoldApi.deleteFromExistingHold(holdId, holdChildId));
+    unassignHold(holdId: string, holdChildId: string): Observable<undefined> {
+        return from(this.legalHoldApi.unassignHold(holdId, holdChildId));
     }
 }
