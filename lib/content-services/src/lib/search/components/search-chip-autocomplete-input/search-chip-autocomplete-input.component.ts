@@ -88,7 +88,13 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
         this._activeAnyOption = active;
     }
 
+    get activeAnyOption() {
+        return this._activeAnyOption;
+    }
+
     ngOnInit() {
+        this.filteredOptions = this.autocompleteOptions;
+
         this.formCtrl.valueChanges
             .pipe(
                 startWith(''),
