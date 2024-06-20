@@ -18,8 +18,7 @@
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ContentPagingQuery } from '../../content-rest-api';
-import { HoldPaging } from '../model/holdPaging';
-import { HoldEntry } from '../model';
+import { Hold, HoldEntry, HoldPaging } from './../model';
 
 /**
  * Legal Holds service.
@@ -115,11 +114,11 @@ export class LegalHoldApi extends BaseApi {
     }
 
     /**
-     * List of legal holds
+     * Create new hold
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-     * @param holds array of holds
-     * @returns Promise<NodeChildAssociationPaging>
+     * @param holds array of one hold
+     * @returns Promise<HoldEntry>
      */
     createHold(filePlanId: string, holds: Hold[]): Promise<HoldEntry> {
         throwIfNotDefined(filePlanId, 'filePlanId');
@@ -138,11 +137,11 @@ export class LegalHoldApi extends BaseApi {
     }
 
     /**
-     * List of legal holds
+     * Create list of new holds
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param holds array of holds
-     * @returns Promise<NodeChildAssociationPaging>
+     * @returns Promise<HoldPaging>
      */
     createHolds(filePlanId: string, holds: Hold[]): Promise<HoldPaging> {
         throwIfNotDefined(filePlanId, 'filePlanId');
@@ -157,29 +156,6 @@ export class LegalHoldApi extends BaseApi {
             pathParams,
             bodyParam: holds,
             returnType: HoldPaging
-        });
-    }
-
-    /**
-     * Assign legal hold to a node
-     *
-     * @param holdId Hold id assigned to a node.
-     * @param nodesIds Nodes ids assigned to a hold.
-     * @returns Promise<NodeChildAssociationPaging>
-     */
-    assignHold(holdId: string, nodesIds: AssignedHold[]): Promise<AssignedHoldEntry> {
-        throwIfNotDefined(holdId, 'holdId');
-        throwIfNotDefined(nodesIds, 'nodesIds');
-
-        const pathParams = {
-            holdId
-        };
-
-        return this.post({
-            path: '/holds/{holdId}/children',
-            pathParams,
-            bodyParam: nodesIds,
-            returnType: AssignedHoldEntry
         });
     }
 }
