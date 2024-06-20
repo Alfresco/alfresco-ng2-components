@@ -4,9 +4,9 @@ All URIs are relative to *https://localhost/alfresco/api/-default-/public/gs/ver
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getHolds**](LegalHoldApi.md#getHolds) | **GET** /file-plans/{filePlanId}/holds | Get legal holds list
-[**createHold**](LegalHoldApi.md#createHold) | **POST** /file-plans/{filePlanId}/holds | Create legal holds
-[**assignHold**](LegalHoldApi.md#assignHold) | **POST** /holds/{holdId}/children | Assign nodes to legal hold
+[**getHolds**](LegalHoldApi.md#getHolds) | **GET** /file-plans/{filePlanId}/holds | Get holds list
+[**createHold**](LegalHoldApi.md#createHold) | **POST** /file-plans/{filePlanId}/holds | Create one hold
+[**createHolds**](LegalHoldApi.md#createHolds) | **POST** /file-plans/{filePlanId}/holds | Create list of holds
 
 <a name="getHolds"></a>
 # **getHolds**
@@ -88,7 +88,7 @@ legalHoldApi.createHold('-filePlan-', holds).then((data) => {
 Name | Type | Default value  | Description
 ------------- | ------------- | ------------- | -------------
  **filePlanId** | **string** | | The site details 
- **holds** | **Hold[]**| `0` | Array of one new hold.
+ **holds** | **Hold[]**|  | Array of one new hold.
 
 ### Return type
 
@@ -98,7 +98,7 @@ Name | Type | Default value  | Description
 # **createHolds**
 > HoldPaging createHolds(filePlanId, holds)
 
-Create legal holds.
+Create legal holds list.
 
 ### Example
 
@@ -125,7 +125,7 @@ let opts = [
     }
 ];
 
-legalHoldApi.createHold('-filePlan-', holds).then((data) => {
+legalHoldApi.createHolds('-filePlan-', holds).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
 }, function(error) {
   console.error(error);
@@ -138,7 +138,7 @@ legalHoldApi.createHold('-filePlan-', holds).then((data) => {
 Name | Type | Default value  | Description
 ------------- | ------------- | ------------- | -------------
  **filePlanId** | **string** | | The site details 
- **holds** | **Hold[]**| `0` | Array of new holds.
+ **holds** | **Hold[]**|  | Array of new holds.
 
 ### Return type
 

@@ -117,7 +117,7 @@ export class LegalHoldApi extends BaseApi {
      * Create new hold
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-     * @param holds array of one hold
+     * @param holds Array of one hold
      * @returns Promise<HoldEntry>
      */
     createHold(filePlanId: string, holds: Hold[]): Promise<HoldEntry> {
@@ -140,7 +140,7 @@ export class LegalHoldApi extends BaseApi {
      * Create list of new holds
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-     * @param holds array of holds
+     * @param holds Array of holds
      * @returns Promise<HoldPaging>
      */
     createHolds(filePlanId = '-filePlan-', holds: Hold[]): Promise<HoldPaging> {

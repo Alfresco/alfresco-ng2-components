@@ -92,8 +92,8 @@ export class LegalHoldService {
      * Create hold.
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-     * @param holds holds to create
-     * @returns List of created holds Observable<Hold[]>
+     * @param holds Holds to create
+     * @returns List of created holds Observable<HoldEntry[]>
      */
     createHold(filePlanId: string, holds: Hold[]): Observable<HoldEntry> {
         return from(this.legalHoldApi.createHold(filePlanId, holds));
@@ -103,8 +103,8 @@ export class LegalHoldService {
      * Create list of holds.
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-     * @param holds holds to create
-     * @returns List of created holds Observable<Hold[]>
+     * @param holds Holds to create
+     * @returns List of created holds Observable<HoldPaging[]>
      */
     createHolds(filePlanId: string, holds: Hold[]): Observable<HoldPaging> {
         return from(this.legalHoldApi.createHolds(filePlanId, holds));
