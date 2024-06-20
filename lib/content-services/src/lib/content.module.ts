@@ -48,7 +48,7 @@ import { ContentUserInfoModule } from './content-user-info/content-user-info.mod
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
-import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component';
+import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
 
 @NgModule({
     imports: [

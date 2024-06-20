@@ -26,7 +26,7 @@ import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
-import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
+import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component';
 import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../document-list';
 import { SearchQueryBuilderService } from '../search';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';

@@ -29,8 +29,11 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
 import { UploadModule } from '../upload/upload.module';
 import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
 import { ContentDirectiveModule } from '../directives/content-directive.module';
-import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
+import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component';
 
+export const CONTENT_NODE_SELECTOR_DIRECTIVES = [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent];
+
+/** @deprecated import `CONTENT_NODE_SELECTOR_DIRECTIVES` or standalone components directly  */
 @NgModule({
     imports: [
         FormsModule,

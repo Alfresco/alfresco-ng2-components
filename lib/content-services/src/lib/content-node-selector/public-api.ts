@@ -16,6 +16,7 @@
  */
 
 export * from './name-location-cell/name-location-cell.component';
+export * from './site-dropdown/sites-dropdown.component';
 export * from './content-node-selector.component-data.interface';
 export * from './content-node-selector-panel.component';
 export * from './content-node-selector.component';
