@@ -189,7 +189,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxDateRangeValue = json.maxDateRangeValue;
             this.dynamicDateRangeSelection = json.dynamicDateRangeSelection;
             this.regexPattern = json.regexPattern;
-            this.options = json.options || [];
+            this.options = this.parseValidOptions(json.options);
             this.emptyOption = this.getEmptyOption(this.options);
             this.hasEmptyValue = json?.hasEmptyValue ?? !!this.emptyOption;
             this.className = json.className;
@@ -535,6 +535,10 @@ export class FormFieldModel extends FormWidgetModel {
         if (!alreadyExists) {
             this.options.push(option);
         }
+    }
+
+    private parseValidOptions(options: any): FormFieldOption[] {
+        return Array.isArray(options) ? options.filter((option) => this.isValidOption(option)) : [];
     }
 
     private isValidOption(option: any): boolean {

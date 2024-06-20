@@ -60,7 +60,7 @@ describe('FormFieldModel', () => {
         };
         const field = new FormFieldModel(new FormModel(), json);
         Object.keys(json).forEach((key) => {
-            expect(field[key]).toBe(json[key]);
+            expect(field[key]).toEqual(json[key]);
         });
     });
 
