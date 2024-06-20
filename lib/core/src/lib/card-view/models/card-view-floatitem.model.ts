@@ -22,8 +22,8 @@ import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 import { CardViewItemFloatValidator } from '../validators/card-view.validators';
 
 export class CardViewFloatItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'float';
-    inputType: string = 'number';
+    type = 'float';
+    inputType = 'number';
 
     constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);

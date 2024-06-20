@@ -20,7 +20,7 @@ import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 export class CardViewItemLongValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.LONG_VALIDATION_ERROR';
 
-    isValid(value: any | any[]): boolean {
+    isValid(value: number | number[] | ''): boolean {
         if (Array.isArray(value)) {
             return value.every(this.isLongNumber);
         }
@@ -28,12 +28,12 @@ export class CardViewItemLongValidator implements CardViewItemValidator {
         return value === '' || (!isNaN(value) && this.isLongNumber(value) && this.isNotSpaceOnly(value));
     }
 
-    private isLongNumber(value: any): boolean {
+    private isLongNumber(value: number): boolean {
         const longNumber = Number(value);
-        return Math.floor(longNumber) === longNumber && longNumber >= Number.MIN_SAFE_INTEGER && longNumber <= Number.MAX_SAFE_INTEGER;
+        return Math.trunc(longNumber) === longNumber && longNumber >= Number.MIN_SAFE_INTEGER && longNumber <= Number.MAX_SAFE_INTEGER;
     }
 
-    private isNotSpaceOnly(value: any): boolean {
+    private isNotSpaceOnly(value: number): boolean {
         return String(value).trim() !== '';
     }
 }

@@ -22,8 +22,8 @@ import { CardViewIntItemProperties } from '../interfaces/card-view.interfaces';
 import { CardViewItemLongValidator, CardViewItemPositiveLongValidator } from '../validators/card-view.validators';
 
 export class CardViewLongItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'long';
-    inputType: string = 'number';
+    type = 'long';
+    inputType = 'number';
 
     constructor(cardViewIntItemProperties: CardViewIntItemProperties) {
         super(cardViewIntItemProperties);

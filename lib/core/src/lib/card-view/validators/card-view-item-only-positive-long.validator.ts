@@ -20,7 +20,7 @@ import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 export class CardViewItemPositiveLongValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.ONLY_POSITIVE_NUMBER';
 
-    isValid(value: any | any[]): boolean {
+    isValid(value: number | number[] | ''): boolean {
         if (Array.isArray(value)) {
             return value.every(this.isPositiveNumber);
         }
@@ -28,7 +28,7 @@ export class CardViewItemPositiveLongValidator implements CardViewItemValidator 
         return value === '' || (!isNaN(value) && this.isPositiveNumber(value));
     }
 
-    private isPositiveNumber(value: any): boolean {
+    private isPositiveNumber(value: number): boolean {
         return Number(value) >= 0;
     }
 }
