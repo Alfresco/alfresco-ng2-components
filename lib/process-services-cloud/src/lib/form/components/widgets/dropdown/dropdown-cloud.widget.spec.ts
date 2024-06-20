@@ -326,22 +326,22 @@ describe('DropdownCloudWidgetComponent', () => {
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
             expect(requiredErrorElement.nativeElement.innerText).toEqual('FORM.FIELD.REQUIRED');
         });
-    });
 
-    it('should NOT display a required error when dropdown is readonly', async () => {
-        widget.field.readOnly = true;
-        fixture.detectChanges();
-        await fixture.whenStable();
+        it('should NOT display a required error when dropdown is readonly', async () => {
+            widget.field.readOnly = true;
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        expect(element.querySelector('.adf-invalid')).toBeFalsy();
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
-        const dropdownSelect = element.querySelector('.adf-select');
-        dropdownSelect.dispatchEvent(new Event('blur'));
+            const dropdownSelect = element.querySelector('.adf-select');
+            dropdownSelect.dispatchEvent(new Event('blur'));
 
-        fixture.detectChanges();
-        await fixture.whenStable();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-        expect(element.querySelector('.adf-invalid')).toBeFalsy();
+            expect(element.querySelector('.adf-invalid')).toBeFalsy();
+        });
     });
 
     describe('filter', () => {
