@@ -54,9 +54,8 @@ export class LegalHoldApi extends BaseApi {
         });
     }
 
-    ////
     /**
-     * Assign hold to existing hold
+     * Assign hold of legal holds
      *
      * @param holdId The identifier of a hold.
      * @param ids one element list with id of hold to assign to existing hold
