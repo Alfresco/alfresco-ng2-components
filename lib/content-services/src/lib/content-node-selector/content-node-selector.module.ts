@@ -19,10 +19,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
-
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
 import { SearchModule } from '../search/search.module';
 import { CoreModule } from '@alfresco/adf-core';
@@ -31,6 +29,7 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
 import { UploadModule } from '../upload/upload.module';
 import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
 import { ContentDirectiveModule } from '../directives/content-directive.module';
+import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 
 @NgModule({
     imports: [
@@ -39,23 +38,15 @@ import { ContentDirectiveModule } from '../directives/content-directive.module';
         CoreModule,
         CommonModule,
         MaterialModule,
-        SitesDropdownModule,
+        DropdownSitesComponent,
         BreadcrumbModule,
         SearchModule,
         DocumentListModule,
         UploadModule,
         ContentDirectiveModule
     ],
-    exports: [
-        ContentNodeSelectorPanelComponent,
-        NameLocationCellComponent,
-        ContentNodeSelectorComponent
-    ],
-    declarations: [
-        ContentNodeSelectorPanelComponent,
-        NameLocationCellComponent,
-        ContentNodeSelectorComponent
-    ],
+    exports: [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent],
+    declarations: [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent],
     providers: [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorModule {}
