@@ -20,7 +20,6 @@ export * from './about-github-link/about-github-link.component';
 export * from './about-license-list/about-license-list.component';
 export * from './about-module-list/module-list.component';
 export * from './about-package/package-list.component';
-export * from './about-platform-version/about-platform-version.component';
 export * from './about-server-settings/about-server-settings.component';
 export * from './about-status-list/about-status-list.component';
 export * from './about.component';

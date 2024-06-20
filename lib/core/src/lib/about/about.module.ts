@@ -23,7 +23,6 @@ import { AboutLicenseListComponent } from './about-license-list/about-license-li
 import { PackageListComponent } from './about-package/package-list.component';
 import { AboutStatusListComponent } from './about-status-list/about-status-list.component';
 import { ModuleListComponent } from './about-module-list/module-list.component';
-import { AboutPlatformVersionComponent } from './about-platform-version/about-platform-version.component';
 import { AboutComponent } from './about.component';
 import { AboutPanelDirective } from './about-panel.directive';
 import { AboutRepositoryInfoComponent } from './about-repository-info/about-repository-info.component';
@@ -35,7 +34,6 @@ import { AboutRepositoryInfoComponent } from './about-repository-info/about-repo
         AboutLicenseListComponent,
         ModuleListComponent,
         AboutRepositoryInfoComponent,
-        AboutPlatformVersionComponent,
         PackageListComponent,
         AboutStatusListComponent,
         AboutServerSettingsComponent,
@@ -46,7 +44,6 @@ import { AboutRepositoryInfoComponent } from './about-repository-info/about-repo
         AboutComponent,
         AboutPanelDirective,
         AboutRepositoryInfoComponent,
-        AboutPlatformVersionComponent,
         AboutGithubLinkComponent,
         AboutServerSettingsComponent,
         AboutExtensionListComponent,
