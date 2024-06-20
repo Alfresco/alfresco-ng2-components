@@ -44,4 +44,14 @@ export class ExtensionsModule {
             ]
         };
     }
+
+    /**
+     * @deprecated use `ExtensionsModule` instead, `EXTENSION_DIRECTIVES` or direct standalone components
+     * @returns Module with providers
+     */
+    static forChild(): ModuleWithProviders<ExtensionsModule> {
+        return {
+            ngModule: ExtensionsModule
+        };
+    }
 }
