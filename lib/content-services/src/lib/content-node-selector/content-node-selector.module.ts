@@ -46,10 +46,11 @@ export const CONTENT_NODE_SELECTOR_DIRECTIVES = [ContentNodeSelectorPanelCompone
         SearchModule,
         DocumentListModule,
         UploadModule,
-        ContentDirectiveModule
+        ContentDirectiveModule,
+        NameLocationCellComponent
     ],
     exports: [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent],
-    declarations: [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent],
+    declarations: [ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent],
     providers: [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorModule {}
