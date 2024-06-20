@@ -16,7 +16,6 @@
  */
 
 export * from './about-extension-list/about-extension-list.component';
-export * from './about-github-link/about-github-link.component';
 export * from './about-license-list/about-license-list.component';
 export * from './about-module-list/module-list.component';
 export * from './about-package/package-list.component';

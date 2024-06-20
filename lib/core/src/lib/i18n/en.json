@@ -514,10 +514,6 @@
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
     "REPOSITORY": "Repository",
-    "SOURCE_CODE": {
-      "TITLE": "Source code",
-      "DESCRIPTION": "You are running the project based on the following commit:"
-    },
     "PACKAGES": {
       "TITLE": "Packages",
       "NAME": "Name",

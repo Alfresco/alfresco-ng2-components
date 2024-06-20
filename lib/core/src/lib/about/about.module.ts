@@ -16,7 +16,6 @@
  */
 
 import { NgModule } from '@angular/core';
-import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
 import { AboutServerSettingsComponent } from './about-server-settings/about-server-settings.component';
 import { AboutExtensionListComponent } from './about-extension-list/about-extension-list.component';
 import { AboutLicenseListComponent } from './about-license-list/about-license-list.component';
@@ -30,7 +29,6 @@ import { AboutRepositoryInfoComponent } from './about-repository-info/about-repo
 @NgModule({
     imports: [
         AboutExtensionListComponent,
-        AboutGithubLinkComponent,
         AboutLicenseListComponent,
         ModuleListComponent,
         AboutRepositoryInfoComponent,
@@ -44,7 +42,6 @@ import { AboutRepositoryInfoComponent } from './about-repository-info/about-repo
         AboutComponent,
         AboutPanelDirective,
         AboutRepositoryInfoComponent,
-        AboutGithubLinkComponent,
         AboutServerSettingsComponent,
         AboutExtensionListComponent,
         AboutLicenseListComponent,
