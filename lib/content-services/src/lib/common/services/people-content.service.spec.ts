@@ -70,7 +70,7 @@ describe('PeopleContentService', () => {
             providers: [
                 PeopleContentService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
 

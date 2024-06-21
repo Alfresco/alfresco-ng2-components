@@ -542,7 +542,7 @@ describe('AuthenticationService', () => {
             const onTokenReceivedSpy = jasmine.createSpy();
             authenticationService.onTokenReceived.subscribe(onTokenReceivedSpy);
 
-            onTokenReceived$.next();
+            onTokenReceived$.next({ type: 'token_received' });
 
             expect(onTokenReceivedSpy).toHaveBeenCalled();
         });

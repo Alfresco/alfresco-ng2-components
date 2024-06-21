@@ -23,7 +23,7 @@ import { ContentDirectiveModule } from './content-directive.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { RedirectAuthService, TranslationMock, TranslationService } from '@alfresco/adf-core';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 @Component({
     template: `<div id="delete-component" [adf-delete]="selection" (delete)="onDelete()"></div>`
@@ -82,7 +82,7 @@ describe('NodeDeleteDirective', () => {
             imports: [ContentDirectiveModule, HttpClientTestingModule, TranslateModule.forRoot()],
             providers: [
                 { provide: TranslationService, useClass: TranslationMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ],
             declarations: [TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent]
         });
