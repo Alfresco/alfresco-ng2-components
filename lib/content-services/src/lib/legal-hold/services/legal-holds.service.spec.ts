@@ -72,20 +72,6 @@ describe('LegalHoldsService', () => {
         });
     });
 
-    describe('assignHold', () => {
-        it('should add hold to existing hold', (done) => {
-            const childrenId: [string] = ['qwe'];
-            const mockEntryResponse = { entry: { id: '123', name: 'aaaa ' } };
-            spyOn(service.legalHoldApi, 'assignHold').and.returnValue(Promise.resolve(mockEntryResponse));
-
-            service.assignHold(childrenId, mockId).subscribe((holds) => {
-                expect(holds).toEqual(returnedHolds);
-                expect(service.legalHoldApi.assignHold).toHaveBeenCalledWith(mockId, childrenId);
-                done();
-            });
-        });
-    });
-
     describe('assignHolds', () => {
         it('should add holds to existing hold', (done) => {
             const childrenId = ['qwe', 'abc'];

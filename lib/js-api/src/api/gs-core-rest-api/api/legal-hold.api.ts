@@ -58,58 +58,35 @@ export class LegalHoldApi extends BaseApi {
      * Assign hold of legal holds
      *
      * @param holdId The identifier of a hold.
-     * @param ids one element list with id of hold to assign to existing hold
+     * @param nodeIds one element list with id of nodes to assign to existing hold
      * @returns Promise<HoldEntry>
      */
-    assignHold(ids: [string], holdId: string): Promise<HoldEntry> {
+    assignHolds(nodeIds: {id: string}[], holdId: string): Promise<HoldEntry | HoldPaging> {
         throwIfNotDefined(holdId, 'holdId');
-        throwIfNotDefined(ids, 'ids');
+        throwIfNotDefined(nodeIds, 'nodeIds');
 
         return this.post({
             path: `/holds/{holdId}/children`,
             pathParams: { holdId },
-            bodyParam: ids.map((id) => ({
-                id
-            })),
-            returnType: HoldEntry
+            bodyParam: nodeIds,
+            returnType: nodeIds.length === 1 ? HoldEntry : HoldPaging,
         });
     }
 
     /**
-     * Assign holds of legal holds
-     *
-     * @param holdId The identifier of a hold.
-     * @param ids list of ids of holds to assign to existing hold
-     * @returns Promise<HoldPaging>
-     */
-    assignHolds(ids: string[], holdId: string): Promise<HoldPaging> {
-        throwIfNotDefined(holdId, 'holdId');
-        throwIfNotDefined(ids, 'ids');
-
-        return this.post({
-            path: `/holds/{holdId}/children`,
-            pathParams: { holdId },
-            bodyParam: ids.map((id) => ({
-                id
-            })),
-            returnType: HoldPaging
-        });
-    }
-
-    /**
-     * Deletes the relationship between a child with id holdChildId and a parent hold with id holdId.
+     * Deletes the relationship between a child with id nodeId and a parent hold with id holdId.
      *
      * @param holdId The handled hold Id
-     * @param holdChildId The Id of the child hold which is deleted
+     * @param nodeId The Id of the node which is deleted
      * @returns Empty response
      */
-    unassignHold(holdId: string, holdChildId: string): Promise<void> {
+    unassignHold(holdId: string, nodeId: string): Promise<void> {
         throwIfNotDefined(holdId, 'holdId');
-        throwIfNotDefined(holdChildId, 'holdChildId');
+        throwIfNotDefined(nodeId, 'nodeId');
 
         return this.delete({
             path: `/holds/{holdId}/children/{holdChildId}`,
-            pathParams: { holdId, holdChildId },
+            pathParams: { holdId, holdChildId: nodeId },
             returnType: undefined
         });
     }
