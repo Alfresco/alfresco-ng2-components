@@ -41,5 +41,6 @@ export class ButtonComponent {
     @Input() disableRipple: boolean;
     @Input() disabled: boolean;
     @Input() ariaLabel?: string;
+    @Input() ariaHidden?: boolean;
     @Input() testId?: string;
 }

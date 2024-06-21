@@ -66,8 +66,14 @@ import { ButtonComponent } from '@alfresco/adf-core';
 | `icon`          | string  |         | The button icon.                                                                                         |
 | `disableRipple` | boolean | `false` | Whether the ripple effect should be disabled.                                                            |
 | `disabled`      | boolean | `false` | Whether the button should be disabled.                                                                   |
-| `ariaLabel`     | string  |         | The button aria label.                                                                                   |
 | `testId`        | string  |         | The button test id (uses `data-automation-id` attribute).                                                |
+
+### Accessibility
+
+The button component has been designed to be accessible. The following attributes are available:
+
+- `ariaLabel`: The button aria label.
+- `ariaHidden`: Whether the button should be hidden from the accessibility tree.
 
 ## Events
 
