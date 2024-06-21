@@ -37,8 +37,8 @@ describe('FileAutoDownloadComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TranslateModule.forRoot(), MatDialogModule, MatButtonModule],
-            declarations: [FileAutoDownloadComponent, NodeDownloadDirective],
+            imports: [HttpClientTestingModule, TranslateModule.forRoot(), MatDialogModule, MatButtonModule, NodeDownloadDirective],
+            declarations: [FileAutoDownloadComponent],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialog },
                 { provide: MAT_DIALOG_DATA, useValue: null },

@@ -20,7 +20,7 @@ import { AlfrescoApiService, AlfrescoApiServiceMock, CommentModel, RedirectAuthS
 import { fakeContentComment, fakeContentComments } from '../mocks/node-comments.mock';
 import { NodeCommentsService } from './node-comments.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -32,7 +32,7 @@ describe('NodeCommentsService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
         service = TestBed.inject(NodeCommentsService);
