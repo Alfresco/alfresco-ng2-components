@@ -84,7 +84,7 @@ export class LegalHoldService {
      * @param holdChildId The Id of the child hold which is deleted
      * @returns Empty response
      */
-    unassignHold(holdId: string, holdChildId: string): Observable<undefined> {
+    unassignHold(holdId: string, holdChildId: string): Observable<void> {
         return from(this.legalHoldApi.unassignHold(holdId, holdChildId));
     }
 }
