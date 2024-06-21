@@ -87,7 +87,6 @@ export class LegalHoldApi extends BaseApi {
         return this.delete({
             path: `/holds/{holdId}/children/{holdChildId}`,
             pathParams: { holdId, holdChildId: nodeId },
-            returnType: undefined
         });
     }
 }
