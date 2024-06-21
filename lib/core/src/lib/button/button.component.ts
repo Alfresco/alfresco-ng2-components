@@ -45,5 +45,9 @@ export class ButtonComponent {
     @Input()
     icon?: string;
 
-    // aria-label
+    @Input()
+    disableRipple: boolean;
+
+    @Input()
+    disabled: boolean;
 }

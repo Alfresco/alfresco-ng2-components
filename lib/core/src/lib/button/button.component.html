@@ -1,44 +1,46 @@
 <ng-container [ngSwitch]="variant">
     <ng-container *ngSwitchDefault>
-        <button mat-button [title]="tooltip" [color]="color">
+        <button mat-button [title]="tooltip" [color]="color" [disabled]="disabled" [disableRipple]="disableRipple">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'raised'">
-        <button mat-raised-button [title]="tooltip" [color]="color">
+        <button mat-raised-button [title]="tooltip" [color]="color" [disabled]="disabled" [disableRipple]="disableRipple">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'stroked'">
-        <button mat-stroked-button [title]="tooltip" [color]="color">
+        <button mat-stroked-button [title]="tooltip" [color]="color" [disabled]="disabled" [disableRipple]="disableRipple">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'flat'">
-        <button mat-flat-button [title]="tooltip" [color]="color">
+        <button mat-flat-button [title]="tooltip" [color]="color" [disabled]="disabled" [disableRipple]="disableRipple">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'icon'">
-        <button mat-icon-button [title]="tooltip" [color]="color">
+        <button mat-icon-button [title]="tooltip" [color]="color" [disabled]="disabled" [disableRipple]="disableRipple">
             <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
             <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'fab'">
-        <button mat-fab [title]="tooltip" [color]="color">
-            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+        <button mat-fab [title]="tooltip" [color]="color" [disabled]="disabled" [disableRipple]="disableRipple">
+            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'mini-fab'">
-        <button mat-mini-fab [title]="tooltip" [color]="color">
-            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+        <button mat-mini-fab [title]="tooltip" [color]="color" [disabled]="disabled" [disableRipple]="disableRipple">
+            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 </ng-container>

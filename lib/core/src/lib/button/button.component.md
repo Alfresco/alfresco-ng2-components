@@ -29,8 +29,8 @@ The button supports the following variants:
 <adf-button variant="flat">Flat</adf-button>
 <adf-button variant="icon" icon="home">Icon</adf-button>
 <adf-button variant="icon"><mat-icon>more_vert</mat-icon></adf-button>
-<adf-button variant="fab">Fab</adf-button>
-<adf-button variant="mini-fab">Mini Fab</adf-button>
+<adf-button variant="fab" icon="plus_one">Fab</adf-button>
+<adf-button variant="mini-fab" icon="menu">Mini Fab</adf-button>
 ```
 
 ### Color
@@ -57,9 +57,11 @@ import { ButtonComponent } from '@alfresco/adf-core';
 
 ## Properties
 
-| Name      | Type   | Default | Description                                                                                              |
-|-----------|--------|---------|----------------------------------------------------------------------------------------------------------|
-| `variant` | string | `basic` | The button variant. Possible values are `basic`, `raised`, `stroked`, `flat`, `icon`, `fab`, `mini-fab`. |
-| `tooltip` | string |         | The button tooltip.                                                                                      |
-| `color`   | string |         | The button color. Possible values are `primary`, `accent`, `warn`.                                       |
-| `icon`    | string |         | The button icon.                                                                                         |
+| Name            | Type    | Default | Description                                                                                              |
+|-----------------|---------|---------|----------------------------------------------------------------------------------------------------------|
+| `variant`       | string  | `basic` | The button variant. Possible values are `basic`, `raised`, `stroked`, `flat`, `icon`, `fab`, `mini-fab`. |
+| `tooltip`       | string  |         | The button tooltip.                                                                                      |
+| `color`         | string  |         | The button color. Possible values are `primary`, `accent`, `warn`.                                       |
+| `icon`          | string  |         | The button icon.                                                                                         |
+| `disableRipple` | boolean | `false` | Whether the ripple effect should be disabled.                                                            |
+| `disabled`      | boolean | `false` | Whether the button should be disabled.                                                                   |
