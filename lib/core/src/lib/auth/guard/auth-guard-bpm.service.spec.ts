@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 describe('AuthGuardService BPM', () => {
@@ -41,7 +41,7 @@ describe('AuthGuardService BPM', () => {
         TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule],
             providers: [
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
                 {
                     provide: OidcAuthenticationService,
                     useValue: {

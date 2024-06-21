@@ -22,7 +22,7 @@ import { TestBed } from '@angular/core/testing';
 import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-operation-subject.interface';
 import { ContentDirectiveModule } from './content-directive.module';
 import { RedirectAuthService } from '@alfresco/adf-core';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
@@ -39,7 +39,7 @@ describe('CheckAllowableOperationDirective', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentDirectiveModule, HttpClientTestingModule],
-            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY } }]
+            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
         });
         changeDetectorMock = { detectChanges: () => {} } as ChangeDetectorRef;
     });
