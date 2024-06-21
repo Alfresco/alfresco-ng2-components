@@ -35,45 +35,29 @@ import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
 import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 
+export const VIEWER_DIRECTIVES = [
+    PdfPasswordDialogComponent,
+    ViewerRenderComponent,
+    ImgViewerComponent,
+    TxtViewerComponent,
+    MediaPlayerComponent,
+    PdfViewerComponent,
+    PdfThumbComponent,
+    PdfThumbListComponent,
+    ViewerExtensionDirective,
+    UnknownFormatComponent,
+    ViewerToolbarComponent,
+    ViewerSidebarComponent,
+    ViewerOpenWithComponent,
+    ViewerMoreActionsComponent,
+    ViewerToolbarActionsComponent,
+    ViewerComponent,
+    ViewerToolbarCustomActionsComponent,
+    DownloadPromptDialogComponent
+] as const;
+
 @NgModule({
-    imports: [
-        PdfPasswordDialogComponent,
-        ViewerRenderComponent,
-        ImgViewerComponent,
-        TxtViewerComponent,
-        MediaPlayerComponent,
-        PdfViewerComponent,
-        PdfThumbComponent,
-        PdfThumbListComponent,
-        ViewerExtensionDirective,
-        UnknownFormatComponent,
-        ViewerToolbarComponent,
-        ViewerSidebarComponent,
-        ViewerOpenWithComponent,
-        ViewerMoreActionsComponent,
-        ViewerToolbarActionsComponent,
-        ViewerComponent,
-        ViewerToolbarCustomActionsComponent,
-        DownloadPromptDialogComponent
-    ],
-    exports: [
-        ViewerRenderComponent,
-        ImgViewerComponent,
-        TxtViewerComponent,
-        MediaPlayerComponent,
-        PdfViewerComponent,
-        PdfPasswordDialogComponent,
-        PdfThumbComponent,
-        PdfThumbListComponent,
-        ViewerExtensionDirective,
-        UnknownFormatComponent,
-        ViewerToolbarComponent,
-        ViewerSidebarComponent,
-        ViewerOpenWithComponent,
-        ViewerMoreActionsComponent,
-        ViewerToolbarActionsComponent,
-        ViewerComponent,
-        ViewerToolbarCustomActionsComponent
-    ]
+    imports: [...VIEWER_DIRECTIVES],
+    exports: [...VIEWER_DIRECTIVES]
 })
 export class ViewerModule {}

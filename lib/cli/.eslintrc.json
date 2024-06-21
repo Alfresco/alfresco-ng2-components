@@ -5,6 +5,10 @@
     {
       "files": ["*.ts"],
       "extends": ["plugin:@nrwl/nx/angular"],
+      "parserOptions": {
+        "project": ["lib/cli/tsconfig.json"],
+        "createDefaultProgram": true
+      },
       "rules": {
         "prefer-arrow/prefer-arrow-functions": "off",
         "@typescript-eslint/no-var-requires": "off",
@@ -36,6 +40,10 @@
     },
     {
       "files": ["*.html"],
+      "parserOptions": {
+        "project": ["lib/cli/tsconfig.json"],
+        "createDefaultProgram": true
+      },
       "extends": ["plugin:@nrwl/nx/angular-template"],
       "rules": {}
     }

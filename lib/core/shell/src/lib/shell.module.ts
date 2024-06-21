@@ -15,32 +15,28 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { Routes, provideRoutes, RouterModule, Route } from '@angular/router';
+import { Routes, provideRoutes, Route } from '@angular/router';
 import { SHELL_LAYOUT_ROUTE } from './shell.routes';
-import { SidenavLayoutModule } from '@alfresco/adf-core';
-import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { ShellLayoutComponent } from './components/shell/shell.component';
 
 export interface AppShellRoutesConfig {
-  shellParentRoute?: Route;
-  shellChildren: Routes;
+    shellParentRoute?: Route;
+    shellChildren: Routes;
 }
 
 @NgModule({
-  imports: [SidenavLayoutModule, ExtensionsModule, RouterModule.forChild([]), CommonModule],
-  exports: [ShellLayoutComponent],
-  declarations: [ShellLayoutComponent]
+    imports: [ShellLayoutComponent],
+    exports: [ShellLayoutComponent]
 })
 export class ShellModule {
-  static withRoutes(routes: Routes | AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
-    if (Array.isArray(routes)) {
-      return getModuleForRoutes(routes);
-    }
+    static withRoutes(routes: Routes | AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
+        if (Array.isArray(routes)) {
+            return getModuleForRoutes(routes);
+        }
 
-    return getModuleForRouteConfig(routes);
-  }
+        return getModuleForRouteConfig(routes);
+    }
 }
 
 /**
@@ -50,16 +46,16 @@ export class ShellModule {
  * @returns module with providers
  */
 function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
-  const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
+    const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
 
-  routes.forEach((childRoute) => {
-    shellLayoutRoute.children.push(childRoute);
-  });
+    routes.forEach((childRoute) => {
+        shellLayoutRoute.children.push(childRoute);
+    });
 
-  return {
-    ngModule: ShellModule,
-    providers: provideRoutes([shellLayoutRoute])
-  };
+    return {
+        ngModule: ShellModule,
+        providers: provideRoutes([shellLayoutRoute])
+    };
 }
 
 /**
@@ -69,25 +65,25 @@ function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
  * @returns module with providers
  */
 function getModuleForRouteConfig(config: AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
-  const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
+    const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
 
-  const shellParentRoute = config.shellParentRoute;
-  const shellChildrenRoutes = config.shellChildren;
+    const shellParentRoute = config.shellParentRoute;
+    const shellChildrenRoutes = config.shellChildren;
 
-  shellLayoutRoute.children.push(...shellChildrenRoutes);
+    shellLayoutRoute.children.push(...shellChildrenRoutes);
 
-  const rootRoute = shellParentRoute ? shellParentRoute : shellLayoutRoute;
+    const rootRoute = shellParentRoute ? shellParentRoute : shellLayoutRoute;
 
-  if (config.shellParentRoute) {
-    if (rootRoute.children === undefined) {
-      rootRoute.children = [];
+    if (config.shellParentRoute) {
+        if (rootRoute.children === undefined) {
+            rootRoute.children = [];
+        }
+
+        rootRoute.children.push(shellLayoutRoute);
     }
 
-    rootRoute.children.push(shellLayoutRoute);
-  }
-
-  return {
-    ngModule: ShellModule,
-    providers: provideRoutes([rootRoute])
-  };
+    return {
+        ngModule: ShellModule,
+        providers: provideRoutes([rootRoute])
+    };
 }

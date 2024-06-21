@@ -29,154 +29,154 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
 class MockRouter {
-  private url = 'some-url';
-  private subject = new Subject();
-  events = this.subject.asObservable();
-  routerState = { snapshot: { url: this.url } };
+    private url = 'some-url';
+    private subject = new Subject();
+    events = this.subject.asObservable();
+    routerState = { snapshot: { url: this.url } };
 
-  navigateByUrl(url: string) {
-    const navigationStart = new NavigationStart(0, url);
-    this.subject.next(navigationStart);
-  }
+    navigateByUrl(url: string) {
+        const navigationStart = new NavigationStart(0, url);
+        this.subject.next(navigationStart);
+    }
 }
 
 describe('AppLayoutComponent', () => {
-  let fixture: ComponentFixture<ShellLayoutComponent>;
-  let component: ShellLayoutComponent;
-  let appConfig: AppConfigService;
-  let shellAppService: ShellAppService;
+    let fixture: ComponentFixture<ShellLayoutComponent>;
+    let component: ShellLayoutComponent;
+    let appConfig: AppConfigService;
+    let shellAppService: ShellAppService;
 
-  beforeEach(() => {
-    const shellService: ShellAppService = {
-      pageHeading$: of('Title'),
-      hideSidenavConditions: [],
-      minimizeSidenavConditions: [],
-      preferencesService: {
-        get: () => 'true',
-        set: () => {}
-      }
-    };
+    beforeEach(() => {
+        const shellService: ShellAppService = {
+            pageHeading$: of('Title'),
+            hideSidenavConditions: [],
+            minimizeSidenavConditions: [],
+            preferencesService: {
+                get: () => 'true',
+                set: () => {}
+            }
+        };
 
-    TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        NoopAnimationsModule,
-        HttpClientModule,
-        SidenavLayoutModule,
-        ExtensionsModule,
-        RouterModule.forChild([]),
-        TranslateModule.forRoot()
-      ],
-      providers: [
-        {
-          provide: Router,
-          useClass: MockRouter
-        },
-        {
-          provide: SHELL_APP_SERVICE,
-          useValue: shellService
-        }
-      ],
-      declarations: [ShellLayoutComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+        TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                NoopAnimationsModule,
+                HttpClientModule,
+                SidenavLayoutModule,
+                ExtensionsModule,
+                RouterModule.forChild([]),
+                TranslateModule.forRoot(),
+                ShellLayoutComponent
+            ],
+            providers: [
+                {
+                    provide: Router,
+                    useClass: MockRouter
+                },
+                {
+                    provide: SHELL_APP_SERVICE,
+                    useValue: shellService
+                }
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
+
+        fixture = TestBed.createComponent(ShellLayoutComponent);
+        component = fixture.componentInstance;
+        appConfig = TestBed.inject(AppConfigService);
+        shellAppService = TestBed.inject(SHELL_APP_SERVICE);
     });
 
-    fixture = TestBed.createComponent(ShellLayoutComponent);
-    component = fixture.componentInstance;
-    appConfig = TestBed.inject(AppConfigService);
-    shellAppService = TestBed.inject(SHELL_APP_SERVICE);
-  });
-
-  beforeEach(() => {
-    appConfig.config.languages = [];
-    appConfig.config.locale = 'en';
-  });
-
-  describe('sidenav state', () => {
-    it('should get state from configuration', () => {
-      appConfig.config.sideNav = {
-        expandedSidenav: false,
-        preserveState: false
-      };
-
-      fixture.detectChanges();
-
-      expect(component.expandedSidenav).toBe(false);
+    beforeEach(() => {
+        appConfig.config.languages = [];
+        appConfig.config.locale = 'en';
     });
 
-    it('should resolve state to true is no configuration', () => {
-      appConfig.config.sidenav = {};
+    describe('sidenav state', () => {
+        it('should get state from configuration', () => {
+            appConfig.config.sideNav = {
+                expandedSidenav: false,
+                preserveState: false
+            };
 
-      fixture.detectChanges();
+            fixture.detectChanges();
 
-      expect(component.expandedSidenav).toBe(true);
+            expect(component.expandedSidenav).toBe(false);
+        });
+
+        it('should resolve state to true is no configuration', () => {
+            appConfig.config.sidenav = {};
+
+            fixture.detectChanges();
+
+            expect(component.expandedSidenav).toBe(true);
+        });
+
+        it('should get state from user settings as true', () => {
+            appConfig.config.sideNav = {
+                expandedSidenav: false,
+                preserveState: true
+            };
+
+            spyOn(shellAppService.preferencesService, 'get').and.callFake((key) => {
+                if (key === 'expandedSidenav') {
+                    return 'true';
+                }
+                return 'false';
+            });
+
+            fixture.detectChanges();
+
+            expect(component.expandedSidenav).toBe(true);
+        });
+
+        it('should get state from user settings as false', () => {
+            appConfig.config.sidenav = {
+                expandedSidenav: false,
+                preserveState: true
+            };
+
+            spyOn(shellAppService.preferencesService, 'get').and.callFake((key) => {
+                if (key === 'expandedSidenav') {
+                    return 'false';
+                }
+                return 'true';
+            });
+
+            fixture.detectChanges();
+
+            expect(component.expandedSidenav).toBe(false);
+        });
     });
 
-    it('should get state from user settings as true', () => {
-      appConfig.config.sideNav = {
-        expandedSidenav: false,
-        preserveState: true
-      };
+    it('should close menu on mobile screen size', () => {
+        component.minimizeSidenav = false;
+        component.layout.container = {
+            isMobileScreenSize: true,
+            toggleMenu: () => {}
+        };
 
-      spyOn(shellAppService.preferencesService, 'get').and.callFake((key) => {
-        if (key === 'expandedSidenav') {
-          return 'true';
-        }
-        return 'false';
-      });
+        spyOn(component.layout.container, 'toggleMenu');
+        fixture.detectChanges();
 
-      fixture.detectChanges();
+        component.hideMenu({ preventDefault: () => {} } as any);
 
-      expect(component.expandedSidenav).toBe(true);
+        expect(component.layout.container.toggleMenu).toHaveBeenCalled();
     });
 
-    it('should get state from user settings as false', () => {
-      appConfig.config.sidenav = {
-        expandedSidenav: false,
-        preserveState: true
-      };
+    it('should close menu on mobile screen size also when minimizeSidenav true', () => {
+        fixture.detectChanges();
+        component.minimizeSidenav = true;
+        component.layout.container = {
+            isMobileScreenSize: true,
+            toggleMenu: () => {}
+        };
 
-      spyOn(shellAppService.preferencesService, 'get').and.callFake((key) => {
-        if (key === 'expandedSidenav') {
-          return 'false';
-        }
-        return 'true';
-      });
+        spyOn(component.layout.container, 'toggleMenu');
+        fixture.detectChanges();
 
-      fixture.detectChanges();
+        component.hideMenu({ preventDefault: () => {} } as any);
 
-      expect(component.expandedSidenav).toBe(false);
+        expect(component.layout.container.toggleMenu).toHaveBeenCalled();
     });
-  });
-
-  it('should close menu on mobile screen size', () => {
-    component.minimizeSidenav = false;
-    component.layout.container = {
-      isMobileScreenSize: true,
-      toggleMenu: () => {}
-    };
-
-    spyOn(component.layout.container, 'toggleMenu');
-    fixture.detectChanges();
-
-    component.hideMenu({ preventDefault: () => {} } as any);
-
-    expect(component.layout.container.toggleMenu).toHaveBeenCalled();
-  });
-
-  it('should close menu on mobile screen size also when minimizeSidenav true', () => {
-    fixture.detectChanges();
-    component.minimizeSidenav = true;
-    component.layout.container = {
-      isMobileScreenSize: true,
-      toggleMenu: () => {}
-    };
-
-    spyOn(component.layout.container, 'toggleMenu');
-    fixture.detectChanges();
-
-    component.hideMenu({ preventDefault: () => {} } as any);
-
-    expect(component.layout.container.toggleMenu).toHaveBeenCalled();
-  });
 });

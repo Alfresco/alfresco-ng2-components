@@ -22,7 +22,9 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    template: `<div tabindex="0" adf-auto-focus> Test</div>`
+    standalone: true,
+    imports: [AutoFocusDirective],
+    template: ` <div tabindex="0" adf-auto-focus>Test</div>`
 })
 class AutoFocusTestComponent {}
 
@@ -31,13 +33,7 @@ describe('AutoFocusDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot()
-            ],
-            declarations: [
-                AutoFocusDirective,
-                AutoFocusTestComponent
-            ]
+            imports: [TranslateModule.forRoot(), AutoFocusDirective, AutoFocusTestComponent]
         });
         fixture = TestBed.createComponent(AutoFocusTestComponent);
     });

@@ -406,10 +406,8 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             }
             case FormFieldTypes.RADIO_BUTTONS: {
-                const radioButton: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
-                if (radioButton.length > 0) {
-                    this.form.values[this.id] = radioButton[0];
-                }
+                const radioButton: FormFieldOption = this.options.find((opt) => opt.id === this.value);
+                this.form.values[this.id] = radioButton || null;
                 break;
             }
             case FormFieldTypes.UPLOAD: {
@@ -472,7 +470,7 @@ export class FormFieldModel extends FormWidgetModel {
             case FormFieldTypes.DECIMAL: {
                 this.form.values[this.id] = parseFloat(this.value);
                 break;
-            };
+            }
             case FormFieldTypes.BOOLEAN: {
                 this.form.values[this.id] = this.value !== null && this.value !== undefined ? this.value : false;
                 break;

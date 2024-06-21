@@ -17,37 +17,39 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2,  SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2, SimpleChanges } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
 import { ContentService } from '../common/services/content.service';
 import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-operation-subject.interface';
 
 @Directive({
+    standalone: true,
     selector: '[adf-check-allowable-operation]'
 })
 export class CheckAllowableOperationDirective implements OnChanges {
-
     /**
      * Node permission to check (create, delete, update, updatePermissions,
      * !create, !delete, !update, !updatePermissions).
      */
     @Input('adf-check-allowable-operation')
-    permission: string  = null;
+    permission: string = null;
 
     /** Nodes to check permission for. */
     @Input('adf-nodes')
     nodes: NodeEntry[] = [];
 
-    constructor(private elementRef: ElementRef,
-                private renderer: Renderer2,
-                private contentService: ContentService,
-                private changeDetector: ChangeDetectorRef,
+    constructor(
+        private elementRef: ElementRef,
+        private renderer: Renderer2,
+        private contentService: ContentService,
+        private changeDetector: ChangeDetectorRef,
 
-                @Host()
-                @Optional()
-                @Inject(EXTENDIBLE_COMPONENT) private parentComponent?: NodeAllowableOperationSubject) {
-    }
+        @Host()
+        @Optional()
+        @Inject(EXTENDIBLE_COMPONENT)
+        private parentComponent?: NodeAllowableOperationSubject
+    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.nodes && !changes.nodes.firstChange) {
