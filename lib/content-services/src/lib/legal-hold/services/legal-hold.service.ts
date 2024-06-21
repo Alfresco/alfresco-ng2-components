@@ -56,9 +56,21 @@ export class LegalHoldService {
      *
      * @param nodeIds The list of managed node Ids
      * @param holdId The Id of the hold to which nodes will be assigned
-     * @returns List of assigned holds Hold[] or assigned HoldEntry
+     * @returns Observable<HoldEntry>
      */
-    assignHolds(nodeIds: string[], holdId: string): Observable<HoldEntry | HoldPaging> {
+    assignHold(nodeIds: string[], holdId: string): Observable<HoldEntry> {
+        const nodeIdItems = nodeIds.map((id) => ({ id }));
+        return from(this.legalHoldApi.assignHold(nodeIdItems, holdId));
+    }
+
+    /**
+     * Assign a node to a hold.
+     *
+     * @param nodeIds The list of managed node Ids
+     * @param holdId The Id of the hold to which nodes will be assigned
+     * @returns Observable<HoldPaging>
+     */
+    assignHolds(nodeIds: string[], holdId: string): Observable<HoldPaging> {
         const nodeIdItems = nodeIds.map((id) => ({ id }));
         return from(this.legalHoldApi.assignHolds(nodeIdItems, holdId));
     }
