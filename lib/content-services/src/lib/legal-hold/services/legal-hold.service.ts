@@ -34,7 +34,7 @@ export class LegalHoldService {
     constructor(private readonly apiService: AlfrescoApiService) {}
 
     /**
-     * Gets the list of holds to the node.
+     * Gets the list of holds available in the file plan.
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param options Optional parameters supported by JS-API
