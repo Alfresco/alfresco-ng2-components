@@ -15,15 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { ButtonComponent } from '@alfresco/adf-core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+
+export type ButtonVariant = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | 'fab' | 'mini-fab';
 
 @Component({
+    selector: 'adf-button',
     standalone: true,
-    selector: 'app-home-view',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
-    imports: [ButtonComponent],
+    imports: [CommonModule, MatButtonModule],
+    templateUrl: './button.component.html',
+    styleUrls: ['./button.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class HomeComponent {}
+export class ButtonComponent {
+    @Input()
+    variant: ButtonVariant = 'basic';
+
+    @Input()
+    tooltip?: string;
+}
