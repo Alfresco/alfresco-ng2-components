@@ -43,6 +43,7 @@ export class DialogComponent implements OnDestroy {
     cancelButtonTitle: string;
     dialogSize: DialogSizes;
     additionalActionButtons: AdditionalDialogActionButton[];
+    dataOnConfirm: any;
 
     dataInjector: Injector;
 
@@ -68,12 +69,16 @@ export class DialogComponent implements OnDestroy {
             if (data.isConfirmButtonDisabled$) {
                 data.isConfirmButtonDisabled$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.isConfirmButtonDisabled$.next(value));
             }
+
+            if (data.dataOnConfirm$) {
+                data.dataOnConfirm$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => (this.dataOnConfirm = value));
+            }
         }
     }
 
     onConfirm() {
         this.isConfirmButtonDisabled$.next(true);
-        this.dialogRef.close(true);
+        this.dialogRef.close(this.dataOnConfirm || true);
     }
 
     ngOnDestroy() {

@@ -23,6 +23,7 @@ import { DialogData } from './dialog-data.interface';
 import { DialogSize } from './dialog.model';
 import { CoreTestingModule } from '../../testing';
 import { Component, DebugElement, inject } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'adf-dummy-component'
@@ -38,6 +39,8 @@ describe('DialogComponent', () => {
     let cancelButton: HTMLButtonElement;
     let confirmButton: HTMLButtonElement;
     let dialogContainer: HTMLElement;
+    const mockId = 'mockId';
+    const mockDataOnConfirm$ = new Subject();
 
     const data: DialogData = {
         title: 'Title',
@@ -96,7 +99,7 @@ describe('DialogComponent', () => {
     describe('confirm action', () => {
         const mockButtonTitle = 'mockTitle';
         beforeEach(() => {
-            setupBeforeEach({ ...data, confirmButtonTitle: mockButtonTitle });
+            setupBeforeEach({ ...data, confirmButtonTitle: mockButtonTitle, dataOnConfirm$: mockDataOnConfirm$ });
             fixture.detectChanges();
         });
 
@@ -124,9 +127,17 @@ describe('DialogComponent', () => {
             expect(confirmButton.getAttribute('disabled')).toBeTruthy();
         });
 
-        it('should close dialog', () => {
+        it('should close dialog and pass default value', () => {
             component.onConfirm();
             expect(dialogRef.close).toHaveBeenCalledWith(true);
+        });
+
+        it('should close dialog and pass dataOnConfirm$', () => {
+            mockDataOnConfirm$.next(mockId);
+
+            component.onConfirm();
+
+            expect(dialogRef.close).toHaveBeenCalledWith(mockId);
         });
 
         it('should set correct button title', () => {
