@@ -59,7 +59,7 @@ import { ButtonComponent } from '@alfresco/adf-core';
 
 | Name            | Type    | Default | Description                                                                                              |
 |-----------------|---------|---------|----------------------------------------------------------------------------------------------------------|
-| `id`            | string  |         | The button id.                                                                                           |
+| `uid`           | string  |         | The button id.                                                                                           |
 | `variant`       | string  | `basic` | The button variant. Possible values are `basic`, `raised`, `stroked`, `flat`, `icon`, `fab`, `mini-fab`. |
 | `tooltip`       | string  |         | The button tooltip.                                                                                      |
 | `color`         | string  |         | The button color. Possible values are `primary`, `accent`, `warn`.                                       |

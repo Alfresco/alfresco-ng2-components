@@ -33,7 +33,7 @@ export type ButtonColor = ThemePalette;
     encapsulation: ViewEncapsulation.None
 })
 export class ButtonComponent {
-    @Input() id?: string;
+    @Input() uid?: string;
     @Input() variant: ButtonVariant;
     @Input() color?: ButtonColor;
     @Input() tooltip?: string;
