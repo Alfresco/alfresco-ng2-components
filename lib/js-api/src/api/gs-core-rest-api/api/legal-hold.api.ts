@@ -92,6 +92,7 @@ export class LegalHoldApi extends BaseApi {
         });
     }
 
+
     /**
      * Deletes the relationship between a child with id nodeId and a parent hold with id holdId
      *
