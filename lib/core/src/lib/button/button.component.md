@@ -59,6 +59,7 @@ import { ButtonComponent } from '@alfresco/adf-core';
 
 | Name            | Type    | Default | Description                                                                                              |
 |-----------------|---------|---------|----------------------------------------------------------------------------------------------------------|
+| `id`            | string  |         | The button id.                                                                                           |
 | `variant`       | string  | `basic` | The button variant. Possible values are `basic`, `raised`, `stroked`, `flat`, `icon`, `fab`, `mini-fab`. |
 | `tooltip`       | string  |         | The button tooltip.                                                                                      |
 | `color`         | string  |         | The button color. Possible values are `primary`, `accent`, `warn`.                                       |
@@ -66,3 +67,4 @@ import { ButtonComponent } from '@alfresco/adf-core';
 | `disableRipple` | boolean | `false` | Whether the ripple effect should be disabled.                                                            |
 | `disabled`      | boolean | `false` | Whether the button should be disabled.                                                                   |
 | `ariaLabel`     | string  |         | The button aria label.                                                                                   |
+| `testId`        | string  |         | The button test id (uses `data-automation-id` attribute).                                                |

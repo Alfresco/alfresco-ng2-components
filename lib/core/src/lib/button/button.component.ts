@@ -33,24 +33,13 @@ export type ButtonColor = ThemePalette;
     encapsulation: ViewEncapsulation.None
 })
 export class ButtonComponent {
-    @Input()
-    variant: ButtonVariant;
-
-    @Input()
-    color?: ButtonColor;
-
-    @Input()
-    tooltip?: string;
-
-    @Input()
-    icon?: string;
-
-    @Input()
-    disableRipple: boolean;
-
-    @Input()
-    disabled: boolean;
-
-    @Input()
-    ariaLabel?: string;
+    @Input() id?: string;
+    @Input() variant: ButtonVariant;
+    @Input() color?: ButtonColor;
+    @Input() tooltip?: string;
+    @Input() icon?: string;
+    @Input() disableRipple: boolean;
+    @Input() disabled: boolean;
+    @Input() ariaLabel?: string;
+    @Input() testId?: string;
 }
