@@ -1,3 +1,10 @@
+---
+Title: Content Node Selector Panel component
+Added: v2.1.0
+Status: Active
+Last reviewed: 2024-06-21
+---
+
 # Content Node Selector Panel Component
 
 Opens a [Content Node Selector](content-node-selector.component.md)  in its own dialog window.
