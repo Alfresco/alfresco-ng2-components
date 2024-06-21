@@ -31,7 +31,6 @@ export * from './lib/app-config/index';
 export * from './lib/form/index';
 export * from './lib/layout/index';
 export * from './lib/comments/index';
-export * from './lib/buttons-menu/index';
 export * from './lib/sorting-picker/index';
 export * from './lib/templates/index';
 export * from './lib/pipes/index';
