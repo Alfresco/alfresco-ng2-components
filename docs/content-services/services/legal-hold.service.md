@@ -17,7 +17,12 @@ Manages holds for nodes.
     Gets the list of holds for a node.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
     -   _options_: `ContentPagingQuery` - Optional parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - List of holds
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - List of holds <br/>
+-   **createHold**(filePlanId: `string`, holds: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>`<br/>
+    Gets the list of holds for a node.
+    -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
+    -   _holds_: `<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - Array of holds that should be created
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>` - Hold entry
 
 -   **assignHold**(nodeId: `string`, holdId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>`<br/>
     Assign a node to a hold.
