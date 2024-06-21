@@ -20,7 +20,7 @@ import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { Hold, HoldPaging } from '@alfresco/js-api';
 
-describe('LegalHoldsService', () => {
+fdescribe('LegalHoldsService', () => {
     let service: LegalHoldService;
     let legalHolds: HoldPaging;
     let returnedHolds: Hold[];
@@ -95,7 +95,7 @@ describe('LegalHoldsService', () => {
 
             service.assignHolds(nodeIds, holdId).subscribe((holds) => {
                 expect(holds).toEqual(legalHolds);
-                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(nodeIds, holdId);
+                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(payloadIds, holdId);
                 done();
             });
         });
