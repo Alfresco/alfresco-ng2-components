@@ -18,20 +18,24 @@
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../common/services/dynamic-component-mapper.service';
 import { CardViewTextItemModel } from './card-view-textitem.model';
-import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
-import { CardViewItemFloatValidator } from '../validators/card-view.validators';
+import { CardViewIntItemProperties } from '../interfaces/card-view.interfaces';
+import { CardViewItemLongValidator, CardViewItemPositiveLongValidator } from '../validators/card-view.validators';
 
-export class CardViewFloatItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
-    type = 'float';
+export class CardViewLongItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
+    type = 'long';
     inputType = 'number';
 
-    constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
-        super(cardViewTextItemProperties);
+    constructor(cardViewIntItemProperties: CardViewIntItemProperties) {
+        super(cardViewIntItemProperties);
 
-        this.validators.push(new CardViewItemFloatValidator());
+        this.validators.push(new CardViewItemLongValidator());
 
-        if (cardViewTextItemProperties.value && !cardViewTextItemProperties.multivalued) {
-            this.value = parseFloat(cardViewTextItemProperties.value);
+        if (cardViewIntItemProperties.allowOnlyPositiveNumbers) {
+            this.validators.push(new CardViewItemPositiveLongValidator());
+        }
+
+        if (cardViewIntItemProperties.value && !cardViewIntItemProperties.multivalued) {
+            this.value = Number(cardViewIntItemProperties.value);
         }
     }
 

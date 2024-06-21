@@ -15,12 +15,20 @@
  * limitations under the License.
  */
 
-export * from './card-view-item-int.validator';
-export * from './card-view-item-only-positive-int.validator';
-export * from './card-view-item-float.validator';
-export * from './card-view-item-long.validator';
-export * from './card-view-item-only-positive-long.validator';
-export * from './card-view-item-match.validator';
-export * from './card-view-item-minmax.validator';
-export * from './card-view-item-length.validator';
-export * from './validators.map';
+import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
+
+export class CardViewItemPositiveLongValidator implements CardViewItemValidator {
+    message = 'CORE.CARDVIEW.VALIDATORS.ONLY_POSITIVE_NUMBER';
+
+    isValid(value: number | number[] | ''): boolean {
+        if (Array.isArray(value)) {
+            return value.every(this.isPositiveNumber);
+        }
+
+        return value === '' || (!isNaN(value) && this.isPositiveNumber(value));
+    }
+
+    private isPositiveNumber(value: number): boolean {
+        return Number(value) >= 0;
+    }
+}

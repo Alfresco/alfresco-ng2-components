@@ -25,7 +25,7 @@ import { DateFnsUtils } from '../../common/utils/date-fns-utils';
 type DateItemType = Date | Date[] | null;
 
 export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> implements CardViewItem, DynamicComponentModel {
-    type: string = 'date';
+    type = 'date';
     format: string;
     locale: string;
 
@@ -51,9 +51,7 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
                 return this.default ? [this.default] : [];
             }
         } else {
-            return this.value && !Array.isArray(this.value)
-                ? this.transformDate(this.prepareDate(this.value))
-                : this.default;
+            return this.value && !Array.isArray(this.value) ? this.transformDate(this.prepareDate(this.value)) : this.default;
         }
     }
 

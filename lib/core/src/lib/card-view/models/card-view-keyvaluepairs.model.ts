@@ -21,7 +21,7 @@ import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewKeyValuePairsItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewKeyValuePairsItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'keyvaluepairs';
+    type = 'keyvaluepairs';
 
     constructor(cardViewKeyValuePairsItemProperties: CardViewKeyValuePairsItemProperties) {
         super(cardViewKeyValuePairsItemProperties);
