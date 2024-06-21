@@ -50,4 +50,7 @@ export class ButtonComponent {
 
     @Input()
     disabled: boolean;
+
+    @Input()
+    ariaLabel?: string;
 }

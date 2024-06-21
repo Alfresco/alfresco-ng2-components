@@ -65,3 +65,4 @@ import { ButtonComponent } from '@alfresco/adf-core';
 | `icon`          | string  |         | The button icon.                                                                                         |
 | `disableRipple` | boolean | `false` | Whether the ripple effect should be disabled.                                                            |
 | `disabled`      | boolean | `false` | Whether the button should be disabled.                                                                   |
+| `ariaLabel`     | string  |         | The button aria label.                                                                                   |
