@@ -19,6 +19,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 export type ButtonVariant = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | 'fab' | 'mini-fab' | undefined;
 export type ButtonColor = ThemePalette;
@@ -26,7 +27,7 @@ export type ButtonColor = ThemePalette;
 @Component({
     selector: 'adf-button',
     standalone: true,
-    imports: [CommonModule, MatButtonModule],
+    imports: [CommonModule, MatButtonModule, MatIconModule],
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -40,4 +41,9 @@ export class ButtonComponent {
 
     @Input()
     tooltip?: string;
+
+    @Input()
+    icon?: string;
+
+    // aria-label
 }

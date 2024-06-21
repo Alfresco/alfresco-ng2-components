@@ -17,13 +17,14 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ButtonComponent } from '@alfresco/adf-core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     standalone: true,
     selector: 'app-home-view',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
-    imports: [ButtonComponent],
+    imports: [ButtonComponent, MatIconModule],
     encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent {}

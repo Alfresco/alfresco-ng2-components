@@ -25,7 +25,8 @@
 
     <ng-container *ngSwitchCase="'icon'">
         <button mat-icon-button [title]="tooltip" [color]="color">
-            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
