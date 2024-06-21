@@ -20,7 +20,7 @@ import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { Hold, HoldPaging } from '@alfresco/js-api';
 
-fdescribe('LegalHoldsService', () => {
+describe('LegalHoldsService', () => {
     let service: LegalHoldService;
     let legalHolds: HoldPaging;
     let returnedHolds: Hold[];
