@@ -18,19 +18,20 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf } from '@angular/common';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { isValid } from 'date-fns';
 import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '../../../../common';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'date-time-widget',
@@ -49,70 +50,71 @@ import { WidgetComponent } from '../widget.component';
         MatFormFieldModule,
         MatInputModule,
         MatDatetimepickerModule,
-        FormsModule,
+        ReactiveFormsModule,
         MatTooltipModule,
         ErrorWidgetComponent
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
+export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     minDate: Date;
     maxDate: Date;
 
-    @Input()
-    value: any = null;
+    datetimeInputControl: FormControl;
+
+    private datetimeChangesSubscription: Subscription;
 
     constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {
         super(formService);
     }
 
     ngOnInit() {
-        if (this.field.dateDisplayFormat) {
+        this.initFormControl();
+        this.initDateAdapter();
+        this.initDateRange();
+        this.subscribeToDateChanges();
+    }
+
+    private subscribeToDateChanges(): void {
+        this.datetimeChangesSubscription = this.datetimeInputControl.valueChanges.subscribe((newDate: Date) => {
+            if (newDate && isValid(newDate)) {
+                this.field.value = newDate;
+                this.onFieldChanged(this.field);
+            }
+        });
+    }
+
+    private initDateAdapter(): void {
+        if (this.field?.dateDisplayFormat) {
             const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;
             dateAdapter.displayFormat = this.field.dateDisplayFormat;
 
             const dateTimeAdapter = this.dateTimeAdapter as AdfDateTimeFnsAdapter;
             dateTimeAdapter.displayFormat = this.field.dateDisplayFormat;
         }
+    }
 
-        if (this.field) {
-            if (this.field.minValue) {
-                this.minDate = DateFnsUtils.localToUtc(new Date(this.field.minValue));
-            }
+    private initDateRange(): void {
+        if (this.field?.minValue) {
+            this.minDate = DateFnsUtils.localToUtc(new Date(this.field.minValue));
+        }
 
-            if (this.field.maxValue) {
-                this.maxDate = DateFnsUtils.localToUtc(new Date(this.field.maxValue));
-            }
-
-            if (this.field.value) {
-                this.value = DateFnsUtils.localToUtc(new Date(this.field.value));
-            }
+        if (this.field?.maxValue) {
+            this.maxDate = DateFnsUtils.localToUtc(new Date(this.field.maxValue));
         }
     }
 
-    onValueChanged(event: Event) {
-        const input = event.target as HTMLInputElement;
-        const newValue = this.dateTimeAdapter.parse(input.value, this.field.dateDisplayFormat);
-
-        if (isValid(newValue)) {
-            this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
-        } else {
-            this.field.value = input.value;
-        }
-
-        this.onFieldChanged(this.field);
+    private initFormControl(): void {
+        this.datetimeInputControl = new FormControl(
+            {
+                value: this.field?.value,
+                disabled: this.field?.readOnly || this.readOnly
+            },
+            this.isRequired() ? [Validators.required] : []
+        );
     }
 
-    onDateChanged(event: MatDatetimepickerInputEvent<Date>) {
-        const newValue = event.value;
-        const input = event.targetElement as HTMLInputElement;
-
-        if (newValue && isValid(newValue)) {
-            this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
-        } else {
-            this.field.value = input.value;
-        }
-
-        this.onFieldChanged(this.field);
+    ngOnDestroy(): void {
+        this.datetimeChangesSubscription?.unsubscribe();
     }
 }

@@ -24,8 +24,6 @@ import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
 import { AlfrescoViewerModule, ContentMetadataModule, ContentNodeSelectorModule, UploadModule } from '@alfresco/adf-content-services';
-
-import { DateCloudWidgetComponent } from './components/widgets/date/date-cloud.widget';
 import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
@@ -73,7 +71,6 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         DropdownCloudWidgetComponent,
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
-        DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
         PropertiesViewerWrapperComponent,
@@ -91,7 +88,6 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         DropdownCloudWidgetComponent,
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
-        DateCloudWidgetComponent,
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
         PropertiesViewerWidgetComponent,

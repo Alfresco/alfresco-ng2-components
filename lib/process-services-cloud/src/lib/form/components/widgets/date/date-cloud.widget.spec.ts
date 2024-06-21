@@ -89,7 +89,7 @@ describe('DateWidgetComponent', () => {
         expect(isEqual(widget.maxDate, expected)).toBeTrue();
     });
 
-    it('should eval visibility on date changed', () => {
+    it('should eval visibility on date changed', async () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
         const field = new FormFieldModel(form, {
@@ -101,7 +101,11 @@ describe('DateWidgetComponent', () => {
         });
 
         widget.field = field;
-        widget.onDateChanged({ value: adapter.today() } as any);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        widget.dateInputControl.setValue(new Date('9999-9-9'));
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
@@ -116,7 +120,6 @@ describe('DateWidgetComponent', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
-                // always stored as dd-MM-yyyy
                 value: '9999-9-9',
                 type: FormFieldTypes.DATE
             });
@@ -134,10 +137,9 @@ describe('DateWidgetComponent', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
-                // always stored as dd-MM-yyyy
-                value: '30-12-9999',
+                value: new Date('12-30-9999'),
                 type: FormFieldTypes.DATE,
-                dateDisplayFormat: 'YYYY-DD-MM'
+                dateDisplayFormat: 'yyyy-dd-MM'
             });
 
             fixture.detectChanges();
@@ -153,7 +155,7 @@ describe('DateWidgetComponent', () => {
                 name: 'date-name',
                 value: '9999-9-9',
                 type: FormFieldTypes.DATE,
-                readOnly: 'false'
+                readOnly: false
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
@@ -193,11 +195,10 @@ describe('DateWidgetComponent', () => {
         const field = new FormFieldModel(form, {
             id: 'date-field-id',
             name: 'date-name',
-            // always stored as dd-MM-yyyy
-            value: '30-12-9999',
+            value: new Date('12-30-9999'),
             type: FormFieldTypes.DATE,
-            readOnly: 'false',
-            dateDisplayFormat: 'MM-DD-YYYY'
+            readOnly: false,
+            dateDisplayFormat: 'MM-dd-yyyy'
         });
         widget.field = field;
 
@@ -208,7 +209,8 @@ describe('DateWidgetComponent', () => {
         expect(dateElement).toBeDefined();
         expect(dateElement.value).toContain('12-30-9999');
 
-        widget.field.value = '03-02-2020';
+        dateElement.value = '03-02-2020';
+        dateElement.dispatchEvent(new Event('input'));
 
         fixture.componentInstance.ngOnInit();
         fixture.detectChanges();
