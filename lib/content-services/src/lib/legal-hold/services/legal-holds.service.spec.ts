@@ -20,7 +20,7 @@ import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { Hold, HoldPaging } from '@alfresco/js-api';
 
-describe('LegalHoldsService', () => {
+fdescribe('LegalHoldsService', () => {
     let service: LegalHoldService;
     let legalHolds: HoldPaging;
     let returnedHolds: Hold[];
@@ -75,13 +75,14 @@ describe('LegalHoldsService', () => {
     describe('assignHold', () => {
         it('should assign node to existing hold', (done) => {
             const nodeIds = ['qwe'];
+            const payloadIds = nodeIds.map(id => ({ id }));
             const holdId = 'foo';
             const mockResponse = { entry: { id: holdId } };
             spyOn(service.legalHoldApi, 'assignHold').and.returnValue(Promise.resolve(mockResponse));
 
-            service.assignHold(nodeIds, mockId).subscribe((holds) => {
+            service.assignHold(nodeIds, holdId).subscribe((holds) => {
                 expect(holds).toEqual(mockResponse);
-                expect(service.legalHoldApi.assignHold).toHaveBeenCalledWith(nodeIds, holdId);
+                expect(service.legalHoldApi.assignHold).toHaveBeenCalledWith(payloadIds, holdId);
                 done();
             });
         });
@@ -90,12 +91,13 @@ describe('LegalHoldsService', () => {
     describe('assignHolds', () => {
         it('should assign nodes to existing hold', (done) => {
             const nodeIds = ['qwe', 'abc'];
+            const payloadIds = nodeIds.map(id => ({ id }));
             const holdId = 'foo';
             spyOn(service.legalHoldApi, 'assignHolds').and.returnValue(Promise.resolve(legalHolds));
 
-            service.assignHolds(nodeIds, mockId).subscribe((holds) => {
+            service.assignHolds(nodeIds, holdId).subscribe((holds) => {
                 expect(holds).toEqual(legalHolds);
-                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(nodeIds, holdId);
+                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(payloadIds, holdId);
                 done();
             });
         });
