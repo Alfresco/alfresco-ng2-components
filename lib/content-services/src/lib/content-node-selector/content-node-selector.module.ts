@@ -31,9 +31,6 @@ import { SearchQueryBuilderService } from '../search/services/search-query-build
 import { ContentDirectiveModule } from '../directives/content-directive.module';
 import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component';
 
-export const CONTENT_NODE_SELECTOR_DIRECTIVES = [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent];
-
-/** @deprecated import `CONTENT_NODE_SELECTOR_DIRECTIVES` or standalone components directly  */
 @NgModule({
     imports: [
         FormsModule,
