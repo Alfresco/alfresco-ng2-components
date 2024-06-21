@@ -61,7 +61,7 @@ export class LegalHoldApi extends BaseApi {
      * @param nodeIds one element list with id of nodes to assign to existing hold
      * @returns Promise<HoldEntry>
      */
-    assignHolds(nodeIds: {id: string}[], holdId: string): Promise<HoldEntry | HoldPaging> {
+    assignHold(nodeIds: {id: string}[], holdId: string): Promise<HoldEntry> {
         throwIfNotDefined(holdId, 'holdId');
         throwIfNotDefined(nodeIds, 'nodeIds');
 
@@ -69,7 +69,27 @@ export class LegalHoldApi extends BaseApi {
             path: `/holds/{holdId}/children`,
             pathParams: { holdId },
             bodyParam: nodeIds,
-            returnType: nodeIds.length === 1 ? HoldEntry : HoldPaging,
+            returnType: HoldEntry,
+        });
+    }
+
+
+    /**
+     * Assign hold of legal holds
+     *
+     * @param holdId The identifier of a hold.
+     * @param nodeIds one element list with id of nodes to assign to existing hold
+     * @returns Promise<HoldPaging>
+     */
+    assignHolds(nodeIds: {id: string}[], holdId: string): Promise<HoldPaging> {
+        throwIfNotDefined(holdId, 'holdId');
+        throwIfNotDefined(nodeIds, 'nodeIds');
+
+        return this.post({
+            path: `/holds/{holdId}/children`,
+            pathParams: { holdId },
+            bodyParam: nodeIds,
+            returnType: HoldPaging,
         });
     }
 

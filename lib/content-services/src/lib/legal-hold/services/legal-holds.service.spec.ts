@@ -72,14 +72,29 @@ describe('LegalHoldsService', () => {
         });
     });
 
-    describe('assignHolds', () => {
+    describe('assignHold', () => {
         it('should assign node to existing hold', (done) => {
+            const nodeIds = ['qwe'];
+            const holdId = 'foo';
+            const mockResponse = { entry: { id: holdId } };
+            spyOn(service.legalHoldApi, 'assignHold').and.returnValue(Promise.resolve(mockResponse));
+
+            service.assignHold(nodeIds, mockId).subscribe((holds) => {
+                expect(holds).toEqual(mockResponse);
+                expect(service.legalHoldApi.assignHold).toHaveBeenCalledWith(nodeIds, holdId);
+                done();
+            });
+        });
+    });
+
+    describe('assignHolds', () => {
+        it('should assign nodes to existing hold', (done) => {
             const nodeIds = ['qwe', 'abc'];
             const holdId = 'foo';
             spyOn(service.legalHoldApi, 'assignHolds').and.returnValue(Promise.resolve(legalHolds));
 
             service.assignHolds(nodeIds, mockId).subscribe((holds) => {
-                expect(holds).toEqual(returnedHolds);
+                expect(holds).toEqual(legalHolds);
                 expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(nodeIds, holdId);
                 done();
             });
