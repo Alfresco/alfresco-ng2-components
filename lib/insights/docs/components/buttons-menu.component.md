@@ -1,3 +1,10 @@
+---
+Title: Buttons Menu Component
+Added: v2.4.0
+Status: Active
+Last reviewed: 2024-06-21
+---
+
 # Buttons Menu Component
 
 Displays buttons on a responsive menu. 
