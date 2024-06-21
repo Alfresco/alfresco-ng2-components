@@ -18,20 +18,20 @@
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import {
-    TrashcanApi, DeletedNodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
+import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { tap, mergeMap, map, catchError } from 'rxjs/operators';
 import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 import { RestoreMessageModel } from '../interfaces/restore-message-model.interface';
 
 @Directive({
+    standalone: true,
     selector: '[adf-restore]'
 })
 export class NodeRestoreDirective {
     private readonly restoreProcessStatus;
 
-    _trashcanApi: TrashcanApi;
+    private _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {
         this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
         return this._trashcanApi;
@@ -50,8 +50,7 @@ export class NodeRestoreDirective {
         this.recover(this.selection);
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private translation: TranslationService) {
+    constructor(private alfrescoApiService: AlfrescoApiService, private translation: TranslationService) {
         this.restoreProcessStatus = this.processStatus();
     }
 
@@ -63,28 +62,28 @@ export class NodeRestoreDirective {
         const nodesWithPath = this.getNodesWithPath(selection);
 
         if (selection.length && nodesWithPath.length) {
+            this.restoreNodesBatch(nodesWithPath)
+                .pipe(
+                    tap((restoredNodes) => {
+                        const status = this.processStatus(restoredNodes);
 
-            this.restoreNodesBatch(nodesWithPath).pipe(
-                tap((restoredNodes) => {
-                    const status = this.processStatus(restoredNodes);
+                        this.restoreProcessStatus.fail.push(...status.fail);
+                        this.restoreProcessStatus.success.push(...status.success);
+                    }),
+                    mergeMap(() => this.getDeletedNodes())
+                )
+                .subscribe((deletedNodesList) => {
+                    const { entries: nodeList } = deletedNodesList.list;
+                    const { fail: restoreErrorNodes } = this.restoreProcessStatus;
+                    const selectedNodes = this.diff(restoreErrorNodes, selection, false);
+                    const remainingNodes = this.diff(selectedNodes, nodeList);
 
-                    this.restoreProcessStatus.fail.push(...status.fail);
-                    this.restoreProcessStatus.success.push(...status.success);
-                }),
-                mergeMap(() => this.getDeletedNodes())
-            )
-            .subscribe((deletedNodesList) => {
-                const { entries: nodeList } = deletedNodesList.list;
-                const { fail: restoreErrorNodes } = this.restoreProcessStatus;
-                const selectedNodes = this.diff(restoreErrorNodes, selection, false);
-                const remainingNodes = this.diff(selectedNodes, nodeList);
-
-                if (!remainingNodes.length) {
-                    this.notification();
-                } else {
-                    this.recover(remainingNodes);
-                }
-            });
+                    if (!remainingNodes.length) {
+                        this.notification();
+                    } else {
+                        this.recover(remainingNodes);
+                    }
+                });
         } else {
             this.restoreProcessStatus.fail.push(...selection);
             this.notification();
@@ -117,7 +116,7 @@ export class NodeRestoreDirective {
                 entry
             })),
             catchError((error) => {
-                const { statusCode } = (JSON.parse(error.message)).error;
+                const { statusCode } = JSON.parse(error.message).error;
 
                 return of({
                     status: 0,
@@ -145,10 +144,10 @@ export class NodeRestoreDirective {
             fail: [],
             success: [],
             get someFailed() {
-                return !!(this.fail.length);
+                return !!this.fail.length;
             },
             get someSucceeded() {
-                return !!(this.success.length);
+                return !!this.success.length;
             },
             get oneFailed() {
                 return this.fail.length === 1;
@@ -168,58 +167,43 @@ export class NodeRestoreDirective {
             }
         };
 
-        return data.reduce(
-            (acc, node) => {
-                if (node.status) {
-                    acc.success.push(node);
-                } else {
-                    acc.fail.push(node);
-                }
+        return data.reduce((acc, node) => {
+            if (node.status) {
+                acc.success.push(node);
+            } else {
+                acc.fail.push(node);
+            }
 
-                return acc;
-            },
-            status
-        );
+            return acc;
+        }, status);
     }
 
     private getRestoreMessage(): string | null {
         const { restoreProcessStatus: status } = this;
 
         if (status.someFailed && !status.oneFailed) {
-            return this.translation.instant(
-                'CORE.RESTORE_NODE.PARTIAL_PLURAL',
-                {
-                    // eslint-disable-next-line id-blacklist
-                    number: status.fail.length
-                }
-            );
+            return this.translation.instant('CORE.RESTORE_NODE.PARTIAL_PLURAL', {
+                // eslint-disable-next-line id-blacklist
+                number: status.fail.length
+            });
         }
 
         if (status.oneFailed && status.fail[0].statusCode) {
             if (status.fail[0].statusCode === 409) {
-                return this.translation.instant(
-                    'CORE.RESTORE_NODE.NODE_EXISTS',
-                    {
-                        name: status.fail[0].entry.name
-                    }
-                );
+                return this.translation.instant('CORE.RESTORE_NODE.NODE_EXISTS', {
+                    name: status.fail[0].entry.name
+                });
             } else {
-                return this.translation.instant(
-                    'CORE.RESTORE_NODE.GENERIC',
-                    {
-                        name: status.fail[0].entry.name
-                    }
-                );
+                return this.translation.instant('CORE.RESTORE_NODE.GENERIC', {
+                    name: status.fail[0].entry.name
+                });
             }
         }
 
         if (status.oneFailed && !status.fail[0].statusCode) {
-            return this.translation.instant(
-                'CORE.RESTORE_NODE.LOCATION_MISSING',
-                {
-                    name: status.fail[0].entry.name
-                }
-            );
+            return this.translation.instant('CORE.RESTORE_NODE.LOCATION_MISSING', {
+                name: status.fail[0].entry.name
+            });
         }
 
         if (status.allSucceeded && !status.oneSucceeded) {
@@ -227,12 +211,9 @@ export class NodeRestoreDirective {
         }
 
         if (status.allSucceeded && status.oneSucceeded) {
-            return this.translation.instant(
-                'CORE.RESTORE_NODE.SINGULAR',
-                {
-                    name: status.success[0].entry.name
-                }
-            );
+            return this.translation.instant('CORE.RESTORE_NODE.SINGULAR', {
+                name: status.success[0].entry.name
+            });
         }
 
         return null;
@@ -244,7 +225,7 @@ export class NodeRestoreDirective {
         const message = this.getRestoreMessage();
         this.reset();
 
-        const action = (status.oneSucceeded && !status.someFailed) ? this.translation.instant('CORE.RESTORE_NODE.VIEW') : '';
+        const action = status.oneSucceeded && !status.someFailed ? this.translation.instant('CORE.RESTORE_NODE.VIEW') : '';
 
         let path;
         if (status.success && status.success.length > 0) {

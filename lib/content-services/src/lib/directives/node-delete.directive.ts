@@ -46,6 +46,7 @@ interface ProcessStatus {
 }
 
 @Directive({
+    standalone: true,
     selector: '[adf-delete]'
 })
 export class NodeDeleteDirective implements OnChanges {
@@ -61,13 +62,13 @@ export class NodeDeleteDirective implements OnChanges {
     @Output()
     delete: EventEmitter<any> = new EventEmitter();
 
-    _trashcanApi: TrashcanApi;
+    private _trashcanApi: TrashcanApi;
     get trashcanApi(): TrashcanApi {
         this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.alfrescoApiService.getInstance());
         return this._trashcanApi;
     }
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
         return this._nodesApi;

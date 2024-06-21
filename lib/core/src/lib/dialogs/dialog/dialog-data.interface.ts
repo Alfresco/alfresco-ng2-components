@@ -36,6 +36,7 @@ export interface DialogData {
     headerIcon?: string;
     additionalActionButtons?: AdditionalDialogActionButton[];
     componentData?: any;
+    dataOnConfirm$?: Subject<any>;
 }
 
 export interface AdditionalDialogActionButton {

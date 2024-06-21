@@ -24,6 +24,7 @@ import { catchError, map } from 'rxjs/operators';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Directive({
+    standalone: true,
     selector: '[adf-node-favorite]',
     exportAs: 'adfFavorite'
 })

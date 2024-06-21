@@ -20,7 +20,8 @@ import { ExtensionService } from '../../services/extension.service';
 
 @Component({
     selector: 'adf-preview-extension',
-    template: ` <div #content></div> `
+    standalone: true,
+    template: `<div #content></div>`
 })
 export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('content', { read: ViewContainerRef, static: true })
