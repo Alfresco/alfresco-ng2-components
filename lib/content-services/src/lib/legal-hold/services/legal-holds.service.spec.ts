@@ -73,26 +73,29 @@ describe('LegalHoldsService', () => {
     });
 
     describe('assignHolds', () => {
-        it('should add holds to existing hold', (done) => {
-            const childrenId = ['qwe', 'abc'];
+        it('should assign node to existing hold', (done) => {
+            const nodeIds = ['qwe', 'abc'];
+            const holdId = 'foo';
             spyOn(service.legalHoldApi, 'assignHolds').and.returnValue(Promise.resolve(legalHolds));
 
-            service.assignHolds(childrenId, mockId).subscribe((holds) => {
+            service.assignHolds(nodeIds, mockId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);
-                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(mockId, childrenId);
+                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(nodeIds, holdId);
                 done();
             });
         });
     });
 
     describe('unassignHold', () => {
-        it('should delete hold from existing hold', (done) => {
-            const childrenId = 'qwe';
+        it('should unassign node from existing hold', (done) => {
+            const nodeId = 'qwe';
+            const holdId = 'foo';
+
             spyOn(service.legalHoldApi, 'unassignHold').and.returnValue(Promise.resolve(undefined));
 
-            service.unassignHold(mockId, childrenId).subscribe((holds) => {
+            service.unassignHold(holdId, nodeId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);
-                expect(service.legalHoldApi.unassignHold).toHaveBeenCalledWith(mockId, childrenId);
+                expect(service.legalHoldApi.unassignHold).toHaveBeenCalledWith(holdId, nodeId);
                 done();
             });
         });

@@ -66,11 +66,11 @@ export class LegalHoldService {
     /**
      * Unassign the relationship between a child with id nodeId and a parent hold with id holdId.
      *
-     * @param nodeIds The handled node Id
-     * @param holdChildId The Id of the child hold which is deleted
+     * @param holdId The hold Id
+     * @param nodeId The Id of the node which is unassigned
      * @returns Empty response
      */
-    unassignHold(nodeIds: string, nodeId: string): Observable<void> {
-        return from(this.legalHoldApi.unassignHold(nodeIds, nodeId));
+    unassignHold(holdId: string, nodeId: string): Observable<void> {
+        return from(this.legalHoldApi.unassignHold(holdId, nodeId));
     }
 }
