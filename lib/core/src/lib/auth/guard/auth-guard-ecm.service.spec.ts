@@ -26,7 +26,7 @@ import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.serv
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 describe('AuthGuardService ECM', () => {
@@ -52,7 +52,7 @@ describe('AuthGuardService ECM', () => {
                         isLoggedIn: () => false
                     }
                 },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
         localStorage.clear();

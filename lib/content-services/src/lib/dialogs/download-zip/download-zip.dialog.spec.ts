@@ -19,7 +19,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { DownloadZipService } from './services/download-zip.service';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -47,7 +47,7 @@ describe('DownloadZipDialogComponent', () => {
                 { provide: TranslationService, useClass: TranslationMock },
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: dataMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
         dialogRef.close.calls.reset();

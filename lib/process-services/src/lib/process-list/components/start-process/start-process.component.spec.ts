@@ -53,9 +53,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RestVariable } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
-import { deployedApps } from '../../../mock/apps-list.mock';
+
 import { ProcessFormRenderingService } from '../../../form';
 import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from 'lib/core/src/lib/form/components/middlewares/middleware';
+import { deployedApps } from '../../../testing/mock/apps-list.mock';
 
 describe('StartProcessComponent', () => {
     let appConfig: AppConfigService;
