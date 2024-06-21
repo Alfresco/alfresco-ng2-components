@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { A11yModule } from '@angular/cdk/a11y';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import {
@@ -41,7 +40,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { fromEvent, Subject } from 'rxjs';
 import { filter, first, skipWhile, takeUntil } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config';
-import { PipeModule } from '../../pipes';
 import { ToolbarComponent, ToolbarDividerComponent, ToolbarTitleComponent } from '../../toolbar';
 import { DownloadPromptActions } from '../models/download-prompt.actions';
 import { CloseButtonPosition, Track } from '../models/viewer.model';
@@ -52,6 +50,9 @@ import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerRenderComponent } from './viewer-render/viewer-render.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
+import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
+import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
+import { MimeTypeIconPipe } from '../../pipes';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
     enableDownloadPrompt: false,
@@ -75,12 +76,15 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         MatButtonModule,
         TranslateModule,
         MatIconModule,
-        PipeModule,
         MatMenuModule,
         ToolbarDividerComponent,
         ViewerRenderComponent,
         NgTemplateOutlet,
-        ExtensionsModule
+        ViewerToolbarComponent,
+        ViewerSidebarComponent,
+        ViewerToolbarActionsComponent,
+        ViewerToolbarCustomActionsComponent,
+        MimeTypeIconPipe
     ],
     providers: [ViewUtilService]
 })
@@ -137,7 +141,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     /**
      * If `true` then show the Viewer as a full page over the current content.
-     * Otherwise fit inside the parent div.
+     * Otherwise, fit inside the parent div.
      */
     @Input()
     overlayMode = false;

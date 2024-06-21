@@ -21,6 +21,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
 
 @Directive({
+    standalone: true,
     selector: '[adf-favorite-library]',
     exportAs: 'favoriteLibrary'
 })

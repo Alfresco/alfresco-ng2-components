@@ -40,6 +40,8 @@ export class FormFieldModel extends FormWidgetModel {
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
     readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
+    private readonly defaultEmptyOptionId = 'empty';
+    private readonly defaultEmptyOptionName = 'Choose one...';
 
     // model members
     fieldType: string;
@@ -187,8 +189,9 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxDateRangeValue = json.maxDateRangeValue;
             this.dynamicDateRangeSelection = json.dynamicDateRangeSelection;
             this.regexPattern = json.regexPattern;
-            this.options = json.options || [];
-            this.hasEmptyValue = json.hasEmptyValue;
+            this.options = this.parseValidOptions(json.options);
+            this.emptyOption = this.getEmptyOption(this.options);
+            this.hasEmptyValue = json?.hasEmptyValue ?? !!this.emptyOption;
             this.className = json.className;
             this.optionType = json.optionType;
             this.params = json.params || {};
@@ -198,7 +201,6 @@ export class FormFieldModel extends FormWidgetModel {
             this.enableFractions = json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
-            this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
             this.tooltip = json.tooltip;
             this.selectionType = json.selectionType;
@@ -210,6 +212,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.schemaDefinition = json.schemaDefinition;
             this.precision = json.precision;
             this.externalProperty = json.externalProperty;
+            this._value = this.parseValue(json);
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;
@@ -230,16 +233,11 @@ export class FormFieldModel extends FormWidgetModel {
             this.leftLabels = form.json.leftLabels || false;
         }
 
-        const emptyOption = Array.isArray(this.options) ? this.options.find(({ id }) => id === 'empty') : undefined;
-        if (this.hasEmptyValue === undefined) {
-            this.hasEmptyValue = json?.hasEmptyValue ?? !!emptyOption;
-        }
-
-        if (this.options && this.options.length > 0 && this.hasEmptyValue) {
-            this.emptyOption = emptyOption;
-        }
-
         this.updateForm();
+    }
+
+    private getEmptyOption(options: FormFieldOption[]): FormFieldOption {
+        return options.find((option) => option?.id === this.defaultEmptyOptionId);
     }
 
     private setValueForReadonlyType(form: any) {
@@ -308,22 +306,34 @@ export class FormFieldModel extends FormWidgetModel {
          but saving back as object: { id: <id>, name: <name> }
          */
         if (json.type === FormFieldTypes.DROPDOWN) {
-            if (json.options) {
-                if (json.hasEmptyValue) {
-                    const emptyOption = json.options[0];
-                    if (value === '' || value === emptyOption.id || value === emptyOption.name) {
-                        value = emptyOption.id;
-                    }
-                } else {
-                    if (value?.id && value?.name) {
-                        value = value.id;
-                    }
+            if (this.hasEmptyValue) {
+                if (!this.emptyOption) {
+                    this.emptyOption = {
+                        id: this.defaultEmptyOptionId,
+                        name: this.defaultEmptyOptionName
+                    };
+                    this.options.unshift(this.emptyOption);
+                }
+
+                const isEmptyValue = !value || [this.emptyOption.id, this.emptyOption.name].includes(value);
+                if (isEmptyValue) {
+                    return this.emptyOption.id;
                 }
             }
 
-            if (this.hasMultipleValues) {
-                value = Array.isArray(json.value) ? json.value : [];
+            if (this.isValidOption(value)) {
+                this.addOption(value);
+                return value.id;
             }
+
+            if (this.hasMultipleValues) {
+                const validSelectedOptions = (Array.isArray(json.value) ? json.value : []).filter((option) => this.isValidOption(option));
+
+                this.addOptions(validSelectedOptions);
+                return validSelectedOptions;
+            }
+
+            return value;
         }
 
         /*
@@ -337,9 +347,8 @@ export class FormFieldModel extends FormWidgetModel {
             const entry: FormFieldOption[] = this.options.filter(
                 (opt) => opt.id === value || opt.name === value || (value && (opt.id === value.id || opt.name === value.name))
             );
-            if (entry.length > 0) {
-                value = entry[0].id;
-            }
+
+            return entry.length > 0 ? entry[0].id : value;
         }
 
         /*
@@ -359,13 +368,15 @@ export class FormFieldModel extends FormWidgetModel {
                 }
 
                 if (isValidDate(dateValue)) {
-                    value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
+                    return DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
                 }
             }
+
+            return value;
         }
 
         if (this.isCheckboxField(json)) {
-            value = json.value === 'true' || json.value === true;
+            return json.value === 'true' || json.value === true;
         }
 
         return value;
@@ -406,10 +417,8 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             }
             case FormFieldTypes.RADIO_BUTTONS: {
-                const radioButton: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
-                if (radioButton.length > 0) {
-                    this.form.values[this.id] = radioButton[0];
-                }
+                const radioButton: FormFieldOption = this.options.find((opt) => opt.id === this.value);
+                this.form.values[this.id] = radioButton || null;
                 break;
             }
             case FormFieldTypes.UPLOAD: {
@@ -472,7 +481,7 @@ export class FormFieldModel extends FormWidgetModel {
             case FormFieldTypes.DECIMAL: {
                 this.form.values[this.id] = parseFloat(this.value);
                 break;
-            };
+            }
             case FormFieldTypes.BOOLEAN: {
                 this.form.values[this.id] = this.value !== null && this.value !== undefined ? this.value : false;
                 break;
@@ -511,6 +520,29 @@ export class FormFieldModel extends FormWidgetModel {
 
     hasOptions() {
         return this.options?.length > 0;
+    }
+
+    isEmptyValueOption(option: FormFieldOption): boolean {
+        return this.hasEmptyValue && option?.id === this.defaultEmptyOptionId;
+    }
+
+    private addOptions(options: FormFieldOption[]) {
+        options.forEach((option) => this.addOption(option));
+    }
+
+    private addOption(option: FormFieldOption) {
+        const alreadyExists = this.options.find((opt) => opt?.id === option?.id);
+        if (!alreadyExists) {
+            this.options.push(option);
+        }
+    }
+
+    private parseValidOptions(options: any): FormFieldOption[] {
+        return Array.isArray(options) ? options.filter((option) => this.isValidOption(option)) : [];
+    }
+
+    private isValidOption(option: any): boolean {
+        return typeof option === 'object' && !Array.isArray(option) && option?.id && option?.name;
     }
 
     private isDateField(json: any) {

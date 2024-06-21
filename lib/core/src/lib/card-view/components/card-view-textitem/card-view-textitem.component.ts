@@ -135,8 +135,12 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     prepareValueForUpload(property: CardViewTextItemModel, value: string | string[]): string | string[] {
-        if (property.multivalued && typeof value === 'string') {
-            return value.split(this.multiValueSeparator.trim()).map((item) => item.trim());
+        if (typeof value === 'string') {
+            if (property.multivalued) {
+                return value.split(this.multiValueSeparator.trim()).map((item) => item.trim());
+            } else if (property.type === 'int' || property.type === 'long') {
+                return this.prepareIntLongValue(value);
+            }
         }
         return value;
     }
@@ -151,11 +155,14 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     addValueToList(newListItem: MatChipInputEvent) {
         const chipInput = newListItem.chipInput.inputElement;
-        const chipValue = newListItem.value.trim() || '';
+        let chipValue = newListItem.value.trim() || '';
 
         if (typeof this.editedValue !== 'string') {
             if (this.property.isValid(chipValue)) {
                 if (chipValue) {
+                    if (this.property.type === 'int' || this.property.type === 'long') {
+                        chipValue = this.prepareIntLongValue(chipValue);
+                    }
                     this.editedValue.push(chipValue);
                     this.update();
                 }
@@ -222,5 +229,9 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     get showLabelForChips(): boolean {
         return this.displayLabelForChips;
+    }
+
+    private prepareIntLongValue(value: string): string {
+        return String(Math.trunc(Number(value)));
     }
 }

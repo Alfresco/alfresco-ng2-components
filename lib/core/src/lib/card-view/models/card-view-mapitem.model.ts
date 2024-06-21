@@ -20,7 +20,7 @@ import { DynamicComponentModel } from '../../common/services/dynamic-component-m
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 
 export class CardViewMapItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'map';
+    type = 'map';
     value: Map<string, string>;
 
     get displayValue() {

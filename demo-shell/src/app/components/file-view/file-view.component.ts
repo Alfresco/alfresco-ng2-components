@@ -17,18 +17,44 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, PRIMARY_OUTLET, Router } from '@angular/router';
-import { NotificationService } from '@alfresco/adf-core';
+import { InfoDrawerComponent, InfoDrawerTabComponent, NotificationService, ViewerComponent } from '@alfresco/adf-core';
 import {
+    AlfrescoViewerComponent,
     AllowableOperationsEnum,
+    ContentMetadataModule,
     ContentService,
     FileUploadErrorEvent,
+    NodeCommentsModule,
     NodesApiService,
-    PermissionsEnum
+    PermissionsEnum,
+    VersionManagerModule
 } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
+import { CommonModule } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-file-view',
+    standalone: true,
+    imports: [
+        CommonModule,
+        AlfrescoViewerComponent,
+        ViewerComponent,
+        InfoDrawerComponent,
+        InfoDrawerTabComponent,
+        NodeCommentsModule,
+        ContentMetadataModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        VersionManagerModule
+    ],
     templateUrl: './file-view.component.html',
     encapsulation: ViewEncapsulation.None
 })

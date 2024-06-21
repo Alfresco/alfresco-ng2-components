@@ -84,7 +84,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private checkFieldOptionsSource(): void {
         switch (true) {
-            case this.field.restUrl && !this.isLinkedWidget():
+            case this.isReadOnly():
+                break;
+            case this.hasRestUrl() && !this.isLinkedWidget():
                 this.persistFieldOptionsFromRestApi();
                 break;
 
@@ -377,7 +379,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private isValidRestType(): boolean {
-        return this.field.optionType === 'rest' && !!this.field.restUrl;
+        return this.field.optionType === 'rest' && this.hasRestUrl();
     }
 
     private setPreviewState(): void {
@@ -390,6 +392,14 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
+    private isReadOnly(): boolean {
+        return this.field.readOnly;
+    }
+
+    private hasRestUrl(): boolean {
+        return !!this.field.restUrl;
+    }
+
     isReadOnlyType(): boolean {
         return this.field.type === 'readonly';
     }
@@ -400,6 +410,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     updateOptions(): void {
+        if (this.isReadOnly()) {
+            this.list$ = of(this.field.options);
+        }
+
         this.showInputFilter = this.field.options.length > this.appConfig.get<number>('form.dropDownFilterLimit', HIDE_FILTER_LIMIT);
         this.list$ = combineLatest([of(this.field.options), this.filter$]).pipe(
             map(([items, search]) => {

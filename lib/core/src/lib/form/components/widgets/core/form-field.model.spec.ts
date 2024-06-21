@@ -22,7 +22,6 @@ import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 
 describe('FormFieldModel', () => {
-
     it('should store the form reference', () => {
         const form = new FormModel();
         const model = new FormFieldModel(form);
@@ -61,7 +60,7 @@ describe('FormFieldModel', () => {
         };
         const field = new FormFieldModel(new FormModel(), json);
         Object.keys(json).forEach((key) => {
-            expect(field[key]).toBe(json[key]);
+            expect(field[key]).toEqual(json[key]);
         });
     });
 
@@ -70,7 +69,7 @@ describe('FormFieldModel', () => {
         expect(field.options).toBeDefined();
         expect(field.options.length).toBe(0);
 
-        field = new FormFieldModel(new FormModel(), {options: null});
+        field = new FormFieldModel(new FormModel(), { options: null });
         expect(field.options).toBeDefined();
         expect(field.options.length).toBe(0);
     });
@@ -79,13 +78,13 @@ describe('FormFieldModel', () => {
         let field = new FormFieldModel(new FormModel(), null);
         expect(field.params).toEqual({});
 
-        field = new FormFieldModel(new FormModel(), {params: null});
+        field = new FormFieldModel(new FormModel(), { params: null });
         expect(field.params).toEqual({});
     });
 
     it('should update form on every value change', () => {
         const form = new FormModel();
-        const field = new FormFieldModel(form, {id: 'field1'});
+        const field = new FormFieldModel(form, { id: 'field1' });
         const value = 10;
 
         spyOn(field, 'updateForm').and.callThrough();
@@ -107,7 +106,7 @@ describe('FormFieldModel', () => {
 
     it('should take own readonly state if form is writable', () => {
         const form = new FormModel();
-        const field = new FormFieldModel(form, {readOnly: true});
+        const field = new FormFieldModel(form, { readOnly: true });
 
         expect(form.readOnly).toBeFalsy();
         expect(field.readOnly).toBeTruthy();
@@ -121,6 +120,59 @@ describe('FormFieldModel', () => {
         });
 
         expect(field.value).toBe('deferred');
+    });
+
+    it('should add value to field options if NOT present', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [],
+            value: { id: 'id_one', name: 'One' }
+        });
+
+        expect(field.options).toEqual([{ id: 'id_one', name: 'One' }]);
+        expect(field.value).toEqual('id_one');
+    });
+
+    it('should assign "empty" option as value if value is null and "empty" option is present in options', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [
+                { id: 'empty', name: 'Chose one...' },
+                { id: 'one', name: 'One' }
+            ],
+            value: null
+        });
+
+        expect(field.hasEmptyValue).toBe(true);
+        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose one...' });
+        expect(field.value).toEqual('empty');
+    });
+
+    it('should set hasEmptyValue to true if "empty" option is present in options', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [{ id: 'empty', name: 'Choose one...' }],
+            value: null
+        });
+
+        expect(field.hasEmptyValue).toBe(true);
+        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Choose one...' });
+    });
+
+    it('should add default "empty" option to the options if hasEmptyValue is true but "empty" option is not present', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [{ id: 'one', name: 'One' }],
+            value: null,
+            hasEmptyValue: true
+        });
+
+        expect(field.hasEmptyValue).toBe(true);
+        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Choose one...' });
+        expect(field.options).toEqual([
+            { id: 'empty', name: 'Choose one...' },
+            { id: 'one', name: 'One' }
+        ]);
     });
 
     it('should parse the date with the default format (D-M-YYYY) if the display format is missing', () => {
@@ -251,7 +303,7 @@ describe('FormFieldModel', () => {
         expect(field.value).toBe('28-04-2017');
     });
 
-    it('should set the value to today\'s date when the value is today', () => {
+    it('should set the value to todays date when the value is today', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
@@ -488,9 +540,9 @@ describe('FormFieldModel', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
             options: [
-                {id: 'empty', name: 'Choose option...'},
-                {id: 'fake-option-2', name: 'fake label 2'},
-                {id: 'fake-option-3', name: 'fake label 3'}
+                { id: 'empty', name: 'Choose option...' },
+                { id: 'fake-option-2', name: 'fake label 2' },
+                { id: 'fake-option-3', name: 'fake label 3' }
             ],
             value: 'fake-option-2'
         });
@@ -502,9 +554,9 @@ describe('FormFieldModel', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
             options: [
-                {id: 'fake-option-1', name: 'fake label 1'},
-                {id: 'fake-option-2', name: 'fake label 2'},
-                {id: 'fake-option-3', name: 'fake label 3'}
+                { id: 'fake-option-1', name: 'fake label 1' },
+                { id: 'fake-option-2', name: 'fake label 2' },
+                { id: 'fake-option-3', name: 'fake label 3' }
             ],
             value: [],
             selectionType: 'multiple'
@@ -517,8 +569,8 @@ describe('FormFieldModel', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ],
             value: 'opt2'
         });
@@ -582,8 +634,8 @@ describe('FormFieldModel', () => {
             id: 'dropdown-2',
             type: FormFieldTypes.DROPDOWN,
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
 
@@ -597,8 +649,8 @@ describe('FormFieldModel', () => {
             id: 'radio-1',
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
 
@@ -606,19 +658,34 @@ describe('FormFieldModel', () => {
         expect(form.values['radio-1']).toEqual(field.options[1]);
     });
 
-    it('radio button value should be null when no default is set', () => {
+    it('should update form with null when radio button value does NOT match any option', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             id: 'radio-2',
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
 
         field.value = 'missing';
-        expect(form.values['radio-2']).toBeUndefined();
+        expect(form.values['radio-2']).toBe(null);
+    });
+
+    it('should update form with null when radio button value is null', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            id: 'radio-2',
+            type: FormFieldTypes.RADIO_BUTTONS,
+            options: [
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
+            ]
+        });
+
+        field.value = null;
+        expect(form.values['radio-2']).toBe(null);
     });
 
     it('should not update form with display-only field value', () => {
@@ -641,8 +708,8 @@ describe('FormFieldModel', () => {
             id: 'dropdown-happy',
             type: FormFieldTypes.DROPDOWN,
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
 
@@ -714,8 +781,8 @@ describe('FormFieldModel', () => {
             required: false,
             readOnly: true,
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
         field.updateForm();
@@ -737,8 +804,8 @@ describe('FormFieldModel', () => {
             restIdProperty: 'fake-id-property',
             restLabelProperty: 'fake-label-property',
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
         field.updateForm();
@@ -759,8 +826,8 @@ describe('FormFieldModel', () => {
             restUrl: 'fake-url-just-to-show',
             optionType: 'rest',
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
         field.updateForm();
@@ -783,8 +850,8 @@ describe('FormFieldModel', () => {
             restLabelProperty: 'banLabel',
             optionType: 'rest',
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
         field.updateForm();
@@ -805,8 +872,8 @@ describe('FormFieldModel', () => {
             restUrl: '<whatever-url-you-like-we-do-not-mind>',
             optionType: 'rest',
             options: [
-                {id: 'opt1', name: 'Option 1'},
-                {id: 'opt2', name: 'Option 2'}
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
         field.updateForm();
@@ -840,7 +907,6 @@ describe('FormFieldModel', () => {
     });
 
     describe('variables', () => {
-
         let form: FormModel;
 
         beforeEach(() => {
@@ -907,7 +973,6 @@ describe('FormFieldModel', () => {
 
             expect(field.value).toBe('default hello');
         });
-
     });
 
     it('should validate readOnly field if it is validatable', () => {

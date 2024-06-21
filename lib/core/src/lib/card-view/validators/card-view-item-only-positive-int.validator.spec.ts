@@ -18,11 +18,7 @@
 import { CardViewItemPositiveIntValidator } from './card-view-item-only-positive-int.validator';
 
 describe('CardViewItemPositiveIntValidator', () => {
-    let validator: CardViewItemPositiveIntValidator;
-
-    beforeEach(() => {
-        validator = new CardViewItemPositiveIntValidator();
-    });
+    const validator = new CardViewItemPositiveIntValidator();
 
     it('should return false for invalid integer value', () => {
         expect(validator.isValid('a')).toBeFalse();
@@ -46,5 +42,10 @@ describe('CardViewItemPositiveIntValidator', () => {
 
     it('should work for positive string value', () => {
         expect(validator.isValid('1')).toBeTrue();
+    });
+
+    it('should validate arrays', () => {
+        expect(validator.isValid(['-1', 1])).toBeFalse();
+        expect(validator.isValid(['1', 2])).toBeTrue();
     });
 });

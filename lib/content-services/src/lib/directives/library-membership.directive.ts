@@ -25,6 +25,7 @@ import { VersionCompatibilityService } from '../version-compatibility/version-co
 import { SitesService } from '../common/services/sites.service';
 
 @Directive({
+    standalone: true,
     selector: '[adf-library-membership]',
     exportAs: 'libraryMembership'
 })

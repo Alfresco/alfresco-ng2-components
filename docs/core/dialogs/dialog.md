@@ -79,6 +79,33 @@ function openDialog() {
 }
 ```
 
+To use dialog with provided component as a content `componentData` should be passed as data parameter. Inside component `DIALOG_COMPONENT_DATA` should be injected.
+
+```ts
+//...
+
+function openDialog() {
+    const data: DialogData = {
+        title: 'Dialog title',
+        contentComponent: ExampleDialogComponent,
+        componentData: { nodeId: 'nodeId', name: 'node name' } // any data can be passed
+        dataOnConfirm$: of({ nodeId, data: {} })
+    };
+
+    const dialogInstance = this.dialog.open(DialogComponent, { data });
+
+    dialogInstance.afterClosed().subscribe((data) => data) // data = { nodeId, data: {} }
+}
+```
+
+in `ExampleDialogComponent`:
+```ts
+export class ManageHoldsDialogComponent {
+    inputs = inject(DIALOG_COMPONENT_DATA); // inputs = { nodeId: 'nodeId',  name: 'node name' }
+}
+```
+
+
 Note that **fixed width** may be provided which will work correctly on smaller screens. But don't specify any values ​​for **height**, as this may break the scrollable content and hide the buttons.
 To display the design well, it is necessary to provide no more than 2 additional buttons.
 

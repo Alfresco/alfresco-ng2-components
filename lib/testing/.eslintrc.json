@@ -5,6 +5,10 @@
     {
       "files": ["*.ts"],
       "extends": ["plugin:@nrwl/nx/angular"],
+      "parserOptions": {
+        "project": ["lib/testing/tsconfig.lib.json"],
+        "createDefaultProgram": true
+      },
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
@@ -59,6 +63,10 @@
     },
     {
       "files": ["*.html"],
+      "parserOptions": {
+        "project": ["lib/testing/tsconfig.lib.json"],
+        "createDefaultProgram": true
+      },
       "extends": ["plugin:@nrwl/nx/angular-template"],
       "rules": {}
     }

@@ -19,7 +19,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { aboutGithubDetails } from '../about.mock';
+
+const aboutGithubDetails = {
+    url: 'https://github.com/componany/repository/commits/',
+    defaultUrl: 'https://github.com/Alfresco/alfresco-ng2-components/commits/',
+    version: '0.0.7',
+    ecmHost: 'https://mock.ecmhost.com',
+    bpmHost: 'https://mock.bpmhost.com',
+    appName: 'mock-application-name'
+};
 
 describe('AboutServerSettingsComponent', () => {
     let fixture: ComponentFixture<AboutServerSettingsComponent>;

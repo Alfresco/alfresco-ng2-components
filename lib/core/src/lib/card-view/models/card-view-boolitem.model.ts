@@ -21,8 +21,8 @@ import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewBoolItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewBoolItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'bool';
-    value: boolean = false;
+    type = 'bool';
+    value = false;
     default: boolean;
 
     constructor(cardViewBoolItemProperties: CardViewBoolItemProperties) {

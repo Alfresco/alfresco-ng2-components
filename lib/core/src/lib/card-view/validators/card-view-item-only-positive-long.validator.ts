@@ -16,22 +16,19 @@
  */
 
 import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
-import { CardViewItemIntValidator } from './card-view-item-int.validator';
 
-export interface MinMaxValidatorParams {
-    minValue: number;
-    maxValue: number;
-}
+export class CardViewItemPositiveLongValidator implements CardViewItemValidator {
+    message = 'CORE.CARDVIEW.VALIDATORS.ONLY_POSITIVE_NUMBER';
 
-export class CardViewItemMinMaxValidator implements CardViewItemValidator {
-    message = 'CORE.CARDVIEW.VALIDATORS.MINMAX_VALIDATION_ERROR';
-    private intValidator: CardViewItemIntValidator;
+    isValid(value: number | number[] | ''): boolean {
+        if (Array.isArray(value)) {
+            return value.every(this.isPositiveNumber);
+        }
 
-    constructor(private minValue: number, private maxValue: number) {
-        this.intValidator = new CardViewItemIntValidator();
+        return value === '' || (!isNaN(value) && this.isPositiveNumber(value));
     }
 
-    isValid(value: number): boolean {
-        return this.intValidator.isValid(value) && (value >= this.minValue && value <= this.maxValue);
+    private isPositiveNumber(value: number): boolean {
+        return Number(value) >= 0;
     }
 }

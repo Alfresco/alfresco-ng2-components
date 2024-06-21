@@ -15,37 +15,12 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { ExtensionsModule } from '@alfresco/adf-extensions';
-
-import { MaterialModule } from '../material.module';
-import { A11yModule } from '@angular/cdk/a11y';
 import { AlfrescoViewerComponent } from './components/alfresco-viewer.component';
-import { CoreModule } from '@alfresco/adf-core';
-import { ContentDirectiveModule } from '../directives';
 
+/** @deprecated import AlfrescoViewerComponent instead */
 @NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        MaterialModule,
-        TranslateModule,
-        FormsModule,
-        ReactiveFormsModule,
-        A11yModule,
-        ExtensionsModule,
-        ContentDirectiveModule
-    ],
-    declarations: [
-        AlfrescoViewerComponent
-    ],
-    exports: [
-        AlfrescoViewerComponent
-    ]
+    imports: [AlfrescoViewerComponent],
+    exports: [AlfrescoViewerComponent]
 })
-export class AlfrescoViewerModule {
-}
+export class AlfrescoViewerModule {}

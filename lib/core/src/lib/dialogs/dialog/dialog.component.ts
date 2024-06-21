@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, InjectionToken, Injector, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AdditionalDialogActionButton, DialogData } from './dialog-data.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -24,6 +24,8 @@ import { MaterialModule } from '../../material.module';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
+
+export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component data');
 
 @Component({
     standalone: true,
@@ -41,6 +43,9 @@ export class DialogComponent implements OnDestroy {
     cancelButtonTitle: string;
     dialogSize: DialogSizes;
     additionalActionButtons: AdditionalDialogActionButton[];
+    dataOnConfirm: any;
+
+    dataInjector: Injector;
 
     private onDestroy$ = new Subject<void>();
 
@@ -57,16 +62,23 @@ export class DialogComponent implements OnDestroy {
             this.cancelButtonTitle = data.cancelButtonTitle || 'COMMON.CANCEL';
             this.additionalActionButtons = data.additionalActionButtons;
             this.dialogRef.addPanelClass(`${this.dialogSize}-dialog-panel`);
+            this.dataInjector = Injector.create({
+                providers: [{ provide: DIALOG_COMPONENT_DATA, useValue: data.componentData }]
+            });
 
             if (data.isConfirmButtonDisabled$) {
                 data.isConfirmButtonDisabled$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.isConfirmButtonDisabled$.next(value));
+            }
+
+            if (data.dataOnConfirm$) {
+                data.dataOnConfirm$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => (this.dataOnConfirm = value));
             }
         }
     }
 
     onConfirm() {
         this.isConfirmButtonDisabled$.next(true);
-        this.dialogRef.close(true);
+        this.dialogRef.close(this.dataOnConfirm || true);
     }
 
     ngOnDestroy() {

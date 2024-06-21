@@ -5,6 +5,10 @@
     {
       "files": ["*.ts"],
       "extends": ["plugin:@nrwl/nx/angular"],
+      "parserOptions": {
+        "project": ["lib/extensions/tsconfig.lib.json", "lib/extensions/tsconfig.spec.json"],
+        "createDefaultProgram": true
+      },
       "rules": {
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
 
