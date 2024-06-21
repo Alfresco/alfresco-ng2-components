@@ -1,12 +1,26 @@
 #!/usr/bin/env bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+if [ "$(uname)" == "Darwin" ]; then
+    BROWSER_TYPE="mac-x64"
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    BROWSER_TYPE="linux64"
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
+    BROWSER_TYPE="win32"
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
+    BROWSER_TYPE="win64"
+fi
+
 echo "Getting currently installed Chrome Version"
 
 if [ "$CI" = "true" ]; then
     chromeVersion=$(google-chrome --version )
 else
-    chromeVersion=$(/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version )
+    if [ "$BROWSER_TYPE" = "mac-x64" ]; then
+        chromeVersion=$(/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version )
+    elif [ "$BROWSER_TYPE" = "linux64" ]; then
+        chromeVersion=$( /usr/bin/google-chrome-stable --version )
+    fi
 fi
 
 chromeVersion=${chromeVersion:14:20}
@@ -28,16 +42,6 @@ function show_error() {
 }
 
 ROOTDIR="$DIR/.."
-
-if [ "$(uname)" == "Darwin" ]; then
-    BROWSER_TYPE="mac-x64"
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    BROWSER_TYPE="linux64"
-elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
-    BROWSER_TYPE="win32"
-elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
-    BROWSER_TYPE="win64"
-fi
 
 echo "BROWSER => $BROWSER_TYPE"
 
