@@ -41,8 +41,8 @@ describe('LibraryFavoriteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            declarations: [TestComponent, LibraryFavoriteDirective]
+            imports: [HttpClientTestingModule, TestComponent],
+            declarations: [LibraryFavoriteDirective]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
