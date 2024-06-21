@@ -68,3 +68,9 @@ import { ButtonComponent } from '@alfresco/adf-core';
 | `disabled`      | boolean | `false` | Whether the button should be disabled.                                                                   |
 | `ariaLabel`     | string  |         | The button aria label.                                                                                   |
 | `testId`        | string  |         | The button test id (uses `data-automation-id` attribute).                                                |
+
+## Events
+
+| Name    | Description                         |
+|---------|-------------------------------------|
+| `click` | Emitted when the button is clicked. |
