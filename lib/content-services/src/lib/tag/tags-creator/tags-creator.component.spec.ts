@@ -308,7 +308,7 @@ describe('TagsCreatorComponent', () => {
             component.tagNameControlVisible = true;
             fixture.detectChanges();
             tick(100);
-            expect(getNameInput()).not.toBe(document.activeElement as HTMLInputElement);
+            expect(getNameInput()).not.toEqual(document.activeElement as HTMLInputElement);
         }));
 
         it('should input be autofocused after showing input second time', fakeAsync(() => {
