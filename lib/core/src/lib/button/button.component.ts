@@ -18,8 +18,10 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { ThemePalette } from '@angular/material/core';
 
-export type ButtonVariant = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | 'fab' | 'mini-fab';
+export type ButtonVariant = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | 'fab' | 'mini-fab' | undefined;
+export type ButtonColor = ThemePalette;
 
 @Component({
     selector: 'adf-button',
@@ -31,7 +33,10 @@ export type ButtonVariant = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | '
 })
 export class ButtonComponent {
     @Input()
-    variant: ButtonVariant = 'basic';
+    variant: ButtonVariant;
+
+    @Input()
+    color?: ButtonColor;
 
     @Input()
     tooltip?: string;

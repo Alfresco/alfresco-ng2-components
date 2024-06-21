@@ -1,42 +1,42 @@
 <ng-container [ngSwitch]="variant">
     <ng-container *ngSwitchDefault>
-        <button mat-button [title]="tooltip">
+        <button mat-button [title]="tooltip" [color]="color">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'raised'">
-        <button mat-raised-button [title]="tooltip">
+        <button mat-raised-button [title]="tooltip" [color]="color">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'stroked'">
-        <button mat-stroked-button [title]="tooltip">
+        <button mat-stroked-button [title]="tooltip" [color]="color">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'flat'">
-        <button mat-flat-button [title]="tooltip">
+        <button mat-flat-button [title]="tooltip" [color]="color">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'icon'">
-        <button mat-icon-button [title]="tooltip">
+        <button mat-icon-button [title]="tooltip" [color]="color">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'fab'">
-        <button mat-fab [title]="tooltip">
+        <button mat-fab [title]="tooltip" [color]="color">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'mini-fab'">
-        <button mat-mini-fab [title]="tooltip">
+        <button mat-mini-fab [title]="tooltip" [color]="color">
             <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
