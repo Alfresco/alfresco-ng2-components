@@ -29,7 +29,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -59,7 +59,7 @@ describe('FileViewerWidgetComponent', () => {
                 { provide: FormService, useValue: formServiceStub },
                 { provide: TranslationService, useClass: TranslationMock },
                 AuthenticationService,
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });

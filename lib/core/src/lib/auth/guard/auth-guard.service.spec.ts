@@ -25,7 +25,7 @@ import { StorageService } from '../../common/services/storage.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -46,7 +46,7 @@ describe('AuthGuardService', () => {
             providers: [
                 AppConfigService,
                 StorageService,
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
