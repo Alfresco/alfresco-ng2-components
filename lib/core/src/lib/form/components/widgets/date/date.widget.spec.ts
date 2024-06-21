@@ -81,9 +81,7 @@ describe('DateWidgetComponent', () => {
         widget.field = field;
         widget.ngOnInit();
 
-        widget.onDateChange({
-            value: new Date('1982/03/12')
-        } as any);
+        widget.dateInputControl.setValue(new Date('1982/03/12'));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -107,9 +105,7 @@ describe('DateWidgetComponent', () => {
         widget.field = field;
         widget.ngOnInit();
 
-        widget.onDateChange({
-            value: new Date('2023/03/13')
-        } as any);
+        widget.dateInputControl.setValue(new Date('2023/03/13'));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -142,7 +138,7 @@ describe('DateWidgetComponent', () => {
         expect(adapter.compareDate(widget.maxDate, expected)).toBe(0);
     });
 
-    it('should eval visibility on date changed', () => {
+    it('should eval visibility on date changed', async () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
         const field = new FormFieldModel(form, {
@@ -153,9 +149,11 @@ describe('DateWidgetComponent', () => {
         });
 
         widget.field = field;
-        widget.onDateChange({
-            value: new Date('12/12/2012')
-        } as any);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        widget.dateInputControl.setValue(new Date('12/12/2012'));
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
@@ -191,8 +189,8 @@ describe('DateWidgetComponent', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
-                value: '9-9-9999',
-                type: 'date'
+                value: new Date('9-9-9999'),
+                type: FormFieldTypes.DATE
             });
 
             fixture.detectChanges();
@@ -208,9 +206,9 @@ describe('DateWidgetComponent', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
-                value: '30-12-9999',
-                type: 'date',
-                dateDisplayFormat: 'MM-DD-YYYY'
+                value: new Date('12-30-9999'),
+                type: FormFieldTypes.DATE,
+                dateDisplayFormat: 'MM-dd-yyyy'
             });
 
             fixture.detectChanges();
@@ -219,8 +217,9 @@ describe('DateWidgetComponent', () => {
             let dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
             expect(dateElement?.value).toContain('12-30-9999');
 
-            widget.field.value = '05-06-2019';
-            widget.field.dateDisplayFormat = 'DD.MM.YYYY';
+            dateElement.value = '05-06-2019';
+            dateElement.dispatchEvent(new Event('input'));
+            widget.field.dateDisplayFormat = 'dd.MM.yyyy';
 
             fixture.componentInstance.ngOnInit();
             fixture.detectChanges();
@@ -272,9 +271,9 @@ describe('DateWidgetComponent', () => {
         const field = new FormFieldModel(form, {
             id: 'date-field-id',
             name: 'date-name',
-            value: '30-12-9999',
-            type: 'date',
-            dateDisplayFormat: 'MM-DD-YYYY'
+            value: new Date('12-30-9999'),
+            type: FormFieldTypes.DATE,
+            dateDisplayFormat: 'MM-dd-yyyy'
         });
 
         widget.field = field;
@@ -286,7 +285,8 @@ describe('DateWidgetComponent', () => {
         expect(dateElement).toBeDefined();
         expect(dateElement.value).toContain('12-30-9999');
 
-        widget.field.value = '03-02-2020';
+        dateElement.value = '03-02-2020';
+        dateElement.dispatchEvent(new Event('input'));
 
         fixture.componentInstance.ngOnInit();
         fixture.detectChanges();

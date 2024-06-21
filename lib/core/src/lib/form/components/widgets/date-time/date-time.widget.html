@@ -17,11 +17,7 @@
             <input matInput
                    [matDatetimepicker]="datetimePicker"
                    [id]="field.id"
-                   [(ngModel)]="value"
-                   [required]="isRequired()"
-                   [disabled]="field.readOnly"
-                   (change)="onValueChanged($event)"
-                   (dateChange)="onDateChanged($event)"
+                   [formControl]="datetimeInputControl"
                    (keydown.enter)="datetimePicker.open()"
                    [placeholder]="field.placeholder"
                    [title]="field.tooltip"

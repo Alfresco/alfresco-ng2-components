@@ -8,13 +8,10 @@
         <input matInput
                [matDatepicker]="datePicker"
                [id]="field.id"
-               [(ngModel)]="value"
-               [required]="field.required"
+               [formControl]="dateInputControl"
                [placeholder]="field.placeholder"
                [min]="minDate"
                [max]="maxDate"
-               [disabled]="field.readOnly"
-               (dateChange)="onDateChange($event)"
                (blur)="markAsTouched()">
         <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly"></mat-datepicker-toggle>
         <mat-datepicker #datePicker
