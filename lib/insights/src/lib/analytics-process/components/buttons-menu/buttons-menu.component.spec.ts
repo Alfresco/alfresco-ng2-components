@@ -18,12 +18,17 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { ButtonsMenuComponent } from '@alfresco/adf-insights';
+import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-custom-container',
+    standalone: true,
+    imports: [CommonModule, ButtonsMenuComponent, MatMenuModule, MatIconModule],
     template: `
         <adf-buttons-action-menu>
-            <button mat-menu-item (click)="assignValue()"><mat-icon>settings</mat-icon><span> Button </span></button>
+            <button mat-menu-item (click)="assignValue()"><mat-icon>settings</mat-icon><span>Button</span></button>
         </adf-buttons-action-menu>
     `
 })
@@ -44,15 +49,16 @@ export class CustomEmptyContainerComponent {}
 describe('ButtonsMenuComponent', () => {
     describe('When Buttons are injected', () => {
         let fixture: ComponentFixture<CustomContainerComponent>;
+        let component: CustomContainerComponent;
         let element: HTMLElement;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ButtonsMenuComponent],
-                declarations: [CustomContainerComponent]
+                imports: [ButtonsMenuComponent, CustomContainerComponent]
             });
             fixture = TestBed.createComponent(CustomContainerComponent);
             element = fixture.debugElement.nativeElement;
+            component = fixture.componentInstance;
         });
 
         afterEach(() => {
@@ -65,6 +71,21 @@ describe('ButtonsMenuComponent', () => {
 
             const buttonsMenuElement = element.querySelector('#adf-buttons-menu');
             expect(buttonsMenuElement).toBeDefined();
+        });
+
+        it('should trigger event when a specific button is clicked', async () => {
+            expect(component.value).toBeUndefined();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const button = element.querySelector('button');
+            button.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.value).toBe(1);
         });
     });
 
