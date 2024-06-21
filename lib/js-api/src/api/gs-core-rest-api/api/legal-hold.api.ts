@@ -103,7 +103,7 @@ export class LegalHoldApi extends BaseApi {
      * @param holdChildId The Id of the child hold which is deleted
      * @returns Empty response
      */
-    unassignHold(holdId: string, holdChildId: string): Promise<undefined> {
+    unassignHold(holdId: string, holdChildId: string): Promise<void> {
         throwIfNotDefined(holdId, 'holdId');
         throwIfNotDefined(holdChildId, 'holdChildId');
 
