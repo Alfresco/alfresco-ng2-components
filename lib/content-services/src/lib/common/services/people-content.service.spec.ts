@@ -20,7 +20,7 @@ import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService } from 
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 describe('PeopleContentService', () => {
     let peopleContentService: PeopleContentService;
@@ -31,7 +31,7 @@ describe('PeopleContentService', () => {
             providers: [
                 PeopleContentService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
 
