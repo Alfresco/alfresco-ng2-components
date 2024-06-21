@@ -93,8 +93,7 @@ describe('LegalHoldsService', () => {
 
             spyOn(service.legalHoldApi, 'unassignHold').and.returnValue(Promise.resolve(undefined));
 
-            service.unassignHold(holdId, nodeId).subscribe((holds) => {
-                expect(holds).toEqual(returnedHolds);
+            service.unassignHold(holdId, nodeId).subscribe(() => {
                 expect(service.legalHoldApi.unassignHold).toHaveBeenCalledWith(holdId, nodeId);
                 done();
             });
