@@ -33,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
 import { DirectionalityConfigService } from '../common/services/directionality-config.service';
 import { AuthModule, RedirectAuthService } from '../auth';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 @NgModule({
     imports: [
@@ -56,7 +56,7 @@ import { EMPTY } from 'rxjs';
             deps: [DirectionalityConfigService],
             multi: true
         },
-        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {} } }
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {}, onTokenReceived: of() } }
     ],
     exports: [NoopAnimationsModule, CoreModule, TranslateModule, RouterTestingModule]
 })
