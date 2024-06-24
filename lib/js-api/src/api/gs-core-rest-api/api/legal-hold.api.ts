@@ -114,12 +114,12 @@ export class LegalHoldApi extends BaseApi {
      * Create new hold
      *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
-     * @param holds Array of one hold
+     * @param hold Hold to create
      * @returns Promise<HoldEntry>
      */
-    createHold(filePlanId: string, holds: Hold[]): Promise<HoldEntry> {
+    createHold(filePlanId: string, hold: Hold): Promise<HoldEntry> {
         throwIfNotDefined(filePlanId, 'filePlanId');
-        throwIfNotDefined(holds, 'holds');
+        throwIfNotDefined(hold, 'hold');
 
         const pathParams = {
             filePlanId
@@ -128,7 +128,7 @@ export class LegalHoldApi extends BaseApi {
         return this.post({
             path: '/file-plans/{filePlanId}/holds',
             pathParams,
-            bodyParam: holds,
+            bodyParam: [hold],
             returnType: HoldEntry
         });
     }

@@ -18,13 +18,13 @@ Manages holds for nodes.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
     -   _options_: `ContentPagingQuery` - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - List of holds <br/>
--   **createHold**(filePlanId: `string`, holds: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>`<br/>
-    Gets the list of holds for a node.
+-   **createHold**(filePlanId: `string`, holds: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>`<br/>
+    Create new hold in File Plan.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
-    -   _holds_: `<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - Array of one hold that should be created
+    -   _hold_: `<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>` - Hold that should be created
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>` - Hold entry<br/>
 -   **createHolds**(filePlanId: `string`, holds: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>`<br/>
-    Gets the list of holds for a node.
+    Create new holds in File Plan.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
     -   _holds_: `<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - Array of holds that should be created
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldPaging.md)`>` - List of paginated holds entries

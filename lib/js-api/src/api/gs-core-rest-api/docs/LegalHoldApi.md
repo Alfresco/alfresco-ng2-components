@@ -202,12 +202,12 @@ this.alfrescoApi.setConfig({
 
 const legalHoldApi = new LegalHoldApi(this.alfrescoApi);
 
-const holds = [{ 
+const hold = { 
   name: 'Hold 1',
   reason: 'Reason 1'
-}];
+};
 
-legalHoldApi.createHold('-filePlan-', holds).then((data) => {
+legalHoldApi.createHold('-filePlan-', hold).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
 }, function(error) {
   console.error(error);
@@ -220,7 +220,7 @@ legalHoldApi.createHold('-filePlan-', holds).then((data) => {
 Name | Type | Default value  | Description
 ------------- | ------------- | ------------- | -------------
  **filePlanId** | **string** | | The site details 
- **holds** | **Hold[]**|  | Array of one new hold.
+ **hold** | **Hold**|  | Hold to create.
 
 ### Return type
 
