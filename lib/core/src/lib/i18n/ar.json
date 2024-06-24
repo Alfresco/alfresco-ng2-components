@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "جار التحميل...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} مربع تحرير وسرد {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "تأكيد",
+    "ACTION": "هل تريد المتابعة؟",
+    "YES_LABEL": "نعم",
+    "NO_LABEL": "لا"
   }
 }

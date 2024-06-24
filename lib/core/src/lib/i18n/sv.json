@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Läser in...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} kombinationsrutan {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Bekräfta",
+    "ACTION": "Vill du fortsätta?",
+    "YES_LABEL": "Ja",
+    "NO_LABEL": "Nej"
   }
 }

@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Caricamento in corso...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} casella combinata {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Conferma",
+    "ACTION": "Procedere?",
+    "YES_LABEL": "Sì",
+    "NO_LABEL": "No"
   }
 }
