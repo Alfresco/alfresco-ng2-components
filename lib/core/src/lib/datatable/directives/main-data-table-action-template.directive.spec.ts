@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { DataTableComponent } from '../components/datatable/datatable.component';
-import { MainMenuDataTableTemplateDirective } from './main-data-table-action-template.directive';
+import { DataTableComponent, MainMenuDataTableTemplateDirective } from '@alfresco/adf-core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 describe('MainMenuDataTableTemplateDirective', () => {
-
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let directive: MainMenuDataTableTemplateDirective;

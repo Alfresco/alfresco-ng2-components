@@ -17,12 +17,8 @@
 
 import { Directive } from '@angular/core';
 
-/**
- * Directive selectors without adf- prefix will be deprecated on 3.0.0.
- * The no-permission-content selector will be deprecated as it has been replace by
- * adf-custom-no-permission-template.
- */
 @Directive({
-    selector: 'adf-custom-no-permission-template, no-permission-content'
+    selector: 'adf-custom-no-permission-template',
+    standalone: true
 })
 export class CustomNoPermissionTemplateDirective {}
