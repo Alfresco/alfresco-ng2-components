@@ -51,9 +51,7 @@ describe('LegalHoldsService', () => {
         returnedHolds = [
             {
                 id: mockId,
-                name: 'some name',
-                reason: 'some reason',
-                description: 'some description'
+                name: 'some name'
             }
         ];
     });
@@ -68,7 +66,7 @@ describe('LegalHoldsService', () => {
 
             service.getHolds(mockId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);
-                expect(service.legalHoldApi.getHolds).toHaveBeenCalledWith(mockId, {});
+                expect(service.legalHoldApi.getHolds).toHaveBeenCalledWith(mockId, undefined);
                 done();
             });
         });
