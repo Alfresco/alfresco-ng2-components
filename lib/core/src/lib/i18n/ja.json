@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "読み込んでいます...",
     "SELECTION_ARIA_LABEL": "{{placeholder}}コンボボックス{{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "確認",
+    "ACTION": "作業を続けますか?",
+    "YES_LABEL": "はい",
+    "NO_LABEL": "いいえ"
   }
 }
