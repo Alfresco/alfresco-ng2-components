@@ -127,8 +127,8 @@ describe('LegalHoldsService', () => {
             ];
             spyOn(service.legalHoldApi, 'createHold').and.returnValue(Promise.resolve(legalHoldEntry));
 
-            service.createHold(mockId, mockHold).subscribe((holds) => {
-                expect(holds).toEqual(legalHoldEntry);
+            service.createHold(mockId, mockHold).subscribe((hold) => {
+                expect(hold).toEqual(legalHoldEntry);
                 expect(service.legalHoldApi.createHold).toHaveBeenCalledWith(mockId, mockHold);
                 done();
             });
@@ -136,7 +136,7 @@ describe('LegalHoldsService', () => {
     });
 
     describe('createHolds', () => {
-        it('should creaet list of holds', (done) => {
+        it('should create list of holds', (done) => {
             const mockHolds = [
                 {
                     name: 'Hold 1',
