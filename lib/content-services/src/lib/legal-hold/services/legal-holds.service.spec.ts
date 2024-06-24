@@ -119,12 +119,10 @@ describe('LegalHoldsService', () => {
 
     describe('createHold', () => {
         it('should create new hold', (done) => {
-            const mockHold = [
-                {
-                    name: 'Hold 1',
-                    reason: 'reason 1'
-                }
-            ];
+            const mockHold = {
+                name: 'Hold 1',
+                reason: 'reason 1'
+            };
             spyOn(service.legalHoldApi, 'createHold').and.returnValue(Promise.resolve(legalHoldEntry));
 
             service.createHold(mockId, mockHold).subscribe((hold) => {
