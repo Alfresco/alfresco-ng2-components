@@ -15,47 +15,48 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewSelectItemModel, CardViewModule } from '../../public-api';
 import { of } from 'rxjs';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CardViewSelectItemComponent,
     title: 'Core/Card View/Card View Select Item',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            imports: [CardViewModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         editable: {
             control: 'boolean',
             description: 'Defines if CardView item is editable',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         },
         displayNoneOption: {
             control: 'boolean',
             description: 'Shows None option inside select element',
-            defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         displayEmpty: {
             control: 'boolean',
             description:
                 'Defines if it should display CardView item when data is empty',
-            defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         options$: {
@@ -63,8 +64,7 @@ export default {
             description: 'Data displayed in select element',
             table: {
                 type: {
-                    summary:
-                        'Observable<CardViewSelectItemOption<string | number>[]>'
+                    summary: 'Observable<CardViewSelectItemOption<string | number>[]>'
                 }
             }
         },
@@ -74,17 +74,20 @@ export default {
                 type: { summary: 'CardViewSelectItemModel' }
             }
         }
+    },
+    args: {
+        editable: false,
+        displayNoneOption: true,
+        displayEmpty: true
     }
-} as Meta;
+} as Meta<CardViewSelectItemComponent>;
 
-const template: Story<CardViewSelectItemComponent> = (
-    args: CardViewSelectItemComponent
-) => ({
+const template: StoryFn<CardViewSelectItemComponent> = (args) => ({
     props: args
 });
 
-export const cardViewSelectItem = template.bind({});
-cardViewSelectItem.args = {
+export const CardViewSelectItem = template.bind({});
+CardViewSelectItem.args = {
     property: new CardViewSelectItemModel({
         label: 'CardView Select Item',
         value: 'one',
@@ -96,4 +99,4 @@ cardViewSelectItem.args = {
         editable: true
     })
 };
-cardViewSelectItem.parameters = { layout: 'centered' };
+CardViewSelectItem.parameters = { layout: 'centered' };

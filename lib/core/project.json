@@ -58,14 +58,15 @@
       "executor": "@storybook/angular:start-storybook",
       "options": {
         "port": 4400,
-        "browserTarget": "core:storybook",
+        "browserTarget": "core:build",
         "configDir": "lib/core/.storybook",
         "compodoc": false,
         "styles": [
           "demo-shell/src/styles.scss",
           "demo-shell/src/custom-style-dev.scss",
           "node_modules/cropperjs/dist/cropper.min.css",
-          "node_modules/pdfjs-dist/web/pdf_viewer.css"
+          "node_modules/pdfjs-dist/web/pdf_viewer.css",
+          
         ],
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
@@ -80,7 +81,7 @@
     "build-storybook": {
       "executor": "@storybook/angular:build-storybook",
       "options": {
-        "browserTarget": "core:build-storybook",
+        "browserTarget": "core:build",
         "configDir": "lib/core/.storybook",
         "outputDir": "dist/storybook/core",
         "compodoc": false,
@@ -88,7 +89,8 @@
           "demo-shell/src/styles.scss",
           "demo-shell/src/custom-style-dev.scss",
           "node_modules/cropperjs/dist/cropper.min.css",
-          "node_modules/pdfjs-dist/web/pdf_viewer.css"
+          "node_modules/pdfjs-dist/web/pdf_viewer.css",
+          "lib/core/src/lib/styles/prebuilt/adf-blue-orange.scss"
         ],
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]

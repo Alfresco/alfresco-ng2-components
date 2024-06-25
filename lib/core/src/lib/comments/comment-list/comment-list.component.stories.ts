@@ -15,22 +15,29 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { CommentListComponent } from './comment-list.component';
-import { CommentsModule } from '../comments.module';
 import { commentsTaskData, commentsNodeData } from '../mocks/comments.stories.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
+import { importProvidersFrom } from '@angular/core';
+import { CommentListModule } from './comment-list.module';
+import { CommentsServiceStoriesMock } from '../mocks/comments.service.stories.mock';
+import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 export default {
     component: CommentListComponent,
     title: 'Core/Comments/Comment List',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CommentsModule],
+            imports: [CommentListModule],
             providers: [
-                { provide: CommentListServiceMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } }
+                { provide: CommentListServiceMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
+                { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
             ]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -54,21 +61,21 @@ export default {
             table: {
                 category: 'Actions',
                 type: { summary: 'EventEmitter <CommentModel>' }
-             }
+            }
         }
     }
-} as Meta;
+} as Meta<CommentListComponent>;
 
-const template: Story<CommentListComponent> = (args: CommentListComponent) => ({
+const template: StoryFn<CommentListComponent> = (args) => ({
     props: args
 });
 
-export const taskBased = template.bind({});
-taskBased.args = {
+export const TaskBased = template.bind({});
+TaskBased.args = {
     comments: commentsTaskData
 };
 
-export const nodeBased = template.bind({});
-nodeBased.args = {
+export const NodeBased = template.bind({});
+NodeBased.args = {
     comments: commentsNodeData
 };

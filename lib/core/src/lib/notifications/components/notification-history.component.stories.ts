@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { NotificationHistoryModule } from '../notification-history.module';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: NotificationHistoryComponent,
@@ -26,6 +27,9 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, NotificationHistoryModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -40,7 +44,6 @@ export default {
             control: 'inline-radio',
             options: ['before', 'after'],
             description: 'Custom choice for opening the menu at the bottom.',
-            defaultValue: 'after',
             table: {
                 type: { summary: 'MenuPositionX' },
                 defaultValue: { summary: 'after' }
@@ -50,7 +53,6 @@ export default {
             control: 'inline-radio',
             options: ['below', 'above'],
             description: 'Custom choice for opening the menu at the bottom.',
-            defaultValue: 'below',
             table: {
                 type: { summary: 'MenuPositionY' },
                 defaultValue: { summary: 'below' }
@@ -58,17 +60,21 @@ export default {
         },
         maxNotifications: {
             control: 'number',
-            defaultValue: 5,
             description: 'Maximum number of notifications to display. The rest will remain hidden until load more is clicked.',
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: '5' }
             }
         }
+    },
+    args: {
+        menuPositionX: 'after',
+        menuPositionY: 'below',
+        maxNotifications: 5
     }
-} as Meta;
+} as Meta<NotificationHistoryComponent>;
 
-const template: Story<NotificationHistoryComponent> = (args: NotificationHistoryComponent) => ({
+const template: StoryFn<NotificationHistoryComponent> = (args) => ({
     props: args,
     template: `
     <div style="display:flex;flex-direction:column;align-items:center;">
@@ -82,5 +88,5 @@ const template: Story<NotificationHistoryComponent> = (args: NotificationHistory
     </div>`
 });
 
-export const notificationHistory = template.bind({});
-notificationHistory.parameters = { layout: 'centered' };
+export const NotificationHistory = template.bind({});
+NotificationHistory.parameters = { layout: 'centered' };
