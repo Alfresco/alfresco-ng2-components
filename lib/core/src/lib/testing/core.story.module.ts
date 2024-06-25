@@ -20,9 +20,10 @@ import { CoreModule } from '../core.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideTranslations } from '../translation/translation.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { AuthModule } from '../auth/oidc/auth.module';
 
 @NgModule({
-    imports: [TranslateModule.forRoot(), CoreModule.forRoot()],
+    imports: [AuthModule.forRoot(), TranslateModule.forRoot(), CoreModule.forRoot()],
     providers: [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations()]
 })
 export class CoreStoryModule {}
