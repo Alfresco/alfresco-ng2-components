@@ -15,26 +15,28 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ButtonsMenuComponent } from './buttons-menu.component';
 import { ButtonsMenuModule } from './buttons-menu.module';
+import { importProvidersFrom } from '@angular/core';
+import { CoreStoryModule } from '../../..';
 
 export default {
     component: ButtonsMenuComponent,
     title: 'Core/Buttons Menu/Buttons Menu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ButtonsMenuModule]
+            imports: [ButtonsMenuModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         mobile: {
             type: { name: 'boolean' },
             name: 'isMobile',
-            description:
-                'Determines whether it is displayed on a mobile device',
-            defaultValue: true,
+            description: 'Determines whether it is displayed on a mobile device',
             control: {
                 disable: false
             },
@@ -54,10 +56,13 @@ export default {
                 }
             }
         }
+    },
+    args: {
+        mobile: true
     }
-} as Meta;
+} as Meta<ButtonsMenuComponent>;
 
-export const sixButtons: Story = args => ({
+export const SixButtons: StoryFn = (args) => ({
     props: {
         ...args,
         isMenuEmpty: false,
@@ -89,7 +94,7 @@ export const sixButtons: Story = args => ({
 `
 });
 
-export const oneButton: Story = args => ({
+export const OneButton: StoryFn = (args) => ({
     props: {
         ...args,
         isMenuEmpty: false,
@@ -106,7 +111,7 @@ export const oneButton: Story = args => ({
 `
 });
 
-export const noButtons: Story = args => ({
+export const NoButtons: StoryFn = (args) => ({
     props: {
         ...args,
         isMenuEmpty: true,
