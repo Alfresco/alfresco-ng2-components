@@ -40,9 +40,7 @@ export class BaseStories extends PlaywrightBase {
     }
 
     async navigateTo(navigationParameters: NavigationParameters): Promise<void> {
-        await this.page.goto(`/iframe.html?args=&viewMode=story&id=${this.buildStoryId(navigationParameters)}`, {
-            waitUntil: 'networkidle',
-            timeout: timeouts.large
-        });
+        await this.page.goto(`/iframe.html?viewMode=story&id=${this.buildStoryId(navigationParameters)}`);
+        await this.page.waitForSelector('storybook-root', { timeout: timeouts.large });
     }
 }
