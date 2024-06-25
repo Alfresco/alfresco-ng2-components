@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import { DateTimePipe } from './date-time.pipe';
 import { addMinutes, isValid } from 'date-fns';
 

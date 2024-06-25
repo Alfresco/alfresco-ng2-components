@@ -40,8 +40,8 @@ import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details
 import { MatDialog } from '@angular/material/dialog';
 import { v4 as uuidGeneration } from 'uuid';
 import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
-import { DisplayModeService } from '../public-api';
 import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.service';
+import { DisplayModeService } from '../services/display-mode.service';
 
 @Component({
     selector: 'adf-cloud-form',

@@ -15,28 +15,30 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewMapItemModel, CardViewModule } from '../../public-api';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CardViewMapItemComponent,
     title: 'Core/Card View/Card View Map Item',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            imports: [CardViewModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         displayEmpty: {
             control: 'boolean',
-            description:
-                'Defines if it should display CardView item when data is empty',
-            defaultValue: true,
+            description: 'Defines if it should display CardView item when data is empty',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         property: {
@@ -45,17 +47,18 @@ export default {
                 type: { summary: 'CardViewMapItemModel' }
             }
         }
+    },
+    args: {
+        displayEmpty: true
     }
-} as Meta;
+} as Meta<CardViewMapItemComponent>;
 
-const template: Story<CardViewMapItemComponent> = (
-    args: CardViewMapItemComponent
-) => ({
+const template: StoryFn<CardViewMapItemComponent> = (args) => ({
     props: args
 });
 
-export const cardViewMapItem = template.bind({});
-cardViewMapItem.args = {
+export const CardViewMapItem = template.bind({});
+CardViewMapItem.args = {
     property: new CardViewMapItemModel({
         label: 'My map',
         value: new Map([['999', 'My Value']]),
@@ -63,10 +66,10 @@ cardViewMapItem.args = {
         default: 'default map value'
     })
 };
-cardViewMapItem.parameters = { layout: 'centered' };
+CardViewMapItem.parameters = { layout: 'centered' };
 
-export const emptyCardViewMapItem = template.bind({});
-emptyCardViewMapItem.args = {
+export const EmptyCardViewMapItem = template.bind({});
+EmptyCardViewMapItem.args = {
     property: new CardViewMapItemModel({
         label: 'My map',
         value: [],
@@ -74,4 +77,4 @@ emptyCardViewMapItem.args = {
         default: 'default map value'
     })
 };
-emptyCardViewMapItem.parameters = { layout: 'centered' };
+EmptyCardViewMapItem.parameters = { layout: 'centered' };
