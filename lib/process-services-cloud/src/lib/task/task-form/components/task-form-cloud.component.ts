@@ -169,7 +169,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private initFieldValidators() {
-        this.fieldValidators = this.fieldValidators ? [...FORM_FIELD_VALIDATORS, ...this.fieldValidators] : FORM_FIELD_VALIDATORS;
+        this.fieldValidators = this.fieldValidators ? [...FORM_FIELD_VALIDATORS, ...this.fieldValidators] : [...FORM_FIELD_VALIDATORS];
     }
 
     private loadTask() {
