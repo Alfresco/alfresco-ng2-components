@@ -15,71 +15,70 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import {
-    CardViewDateItemModel,
-    CardViewDatetimeItemModel,
-    CardViewModule
-} from '../../public-api';
+import { CardViewDateItemModel, CardViewDatetimeItemModel, CardViewModule } from '../../public-api';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CardViewDateItemComponent,
     title: 'Core/Card View/Card View Date Item',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            imports: [CardViewModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         editable: {
             control: 'boolean',
             description: 'Defines if CardView item is editable',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         },
         displayEmpty: {
             control: 'boolean',
-            description:
-                'Defines if it should display CardView item when data is empty',
-            defaultValue: true,
+            description: 'Defines if it should display CardView item when data is empty',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         displayClearAction: {
             control: 'boolean',
-            description:
-                'Defines if it should display clear input action (only with SingleValued components)',
-            defaultValue: true,
+            description: 'Defines if it should display clear input action (only with SingleValued components)',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         property: {
             description: 'Card View Item Model with data',
             table: {
                 type: {
-                    summary:
-                        'CardViewDateItemModel | CardViewDatetimeItemModel'
+                    summary: 'CardViewDateItemModel | CardViewDatetimeItemModel'
                 }
             }
         }
+    },
+    args: {
+        editable: true,
+        displayEmpty: true,
+        displayClearAction: true
     }
-} as Meta;
+} as Meta<CardViewDateItemComponent>;
 
-const template: Story = (args) => ({
+const template: StoryFn = (args) => ({
     props: args
 });
 
-export const singleValuedDateItemCardView = template.bind({});
-singleValuedDateItemCardView.args = {
+export const SingleValuedDateItemCardView = template.bind({});
+SingleValuedDateItemCardView.args = {
     property: new CardViewDateItemModel({
         label: 'CardView Date Item',
         value: [new Date(1983, 11, 24, 10, 0, 30)],
@@ -89,10 +88,10 @@ singleValuedDateItemCardView.args = {
         editable: true
     })
 };
-singleValuedDateItemCardView.parameters = { layout: 'centered' };
+SingleValuedDateItemCardView.parameters = { layout: 'centered' };
 
-export const multiValuedDateItemCardView = template.bind({});
-multiValuedDateItemCardView.args = {
+export const MultiValuedDateItemCardView = template.bind({});
+MultiValuedDateItemCardView.args = {
     property: new CardViewDateItemModel({
         label: 'CardView Date Item - Multivalue (chips)',
         value: [new Date(1983, 11, 24, 10, 0, 30)],
@@ -103,10 +102,10 @@ multiValuedDateItemCardView.args = {
         multivalued: true
     })
 };
-multiValuedDateItemCardView.parameters = { layout: 'centered' };
+MultiValuedDateItemCardView.parameters = { layout: 'centered' };
 
-export const singleValuedDatetimeItemCardView = template.bind({});
-singleValuedDatetimeItemCardView.args = {
+export const SingleValuedDatetimeItemCardView = template.bind({});
+SingleValuedDatetimeItemCardView.args = {
     property: new CardViewDatetimeItemModel({
         label: 'CardView Datetime Item',
         value: undefined,
@@ -116,10 +115,10 @@ singleValuedDatetimeItemCardView.args = {
         editable: true
     })
 };
-singleValuedDatetimeItemCardView.parameters = { layout: 'centered' };
+SingleValuedDatetimeItemCardView.parameters = { layout: 'centered' };
 
-export const multiValuedDatetimeItemCardView = template.bind({});
-multiValuedDatetimeItemCardView.args = {
+export const MultiValuedDatetimeItemCardView = template.bind({});
+MultiValuedDatetimeItemCardView.args = {
     property: new CardViewDatetimeItemModel({
         label: 'CardView Datetime Item - Multivalue (chips)',
         value: undefined,
@@ -130,4 +129,4 @@ multiValuedDatetimeItemCardView.args = {
         multivalued: true
     })
 };
-multiValuedDatetimeItemCardView.parameters = { layout: 'centered' };
+MultiValuedDatetimeItemCardView.parameters = { layout: 'centered' };
