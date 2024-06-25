@@ -36,6 +36,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { addMinutes } from 'date-fns';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
