@@ -15,26 +15,30 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewBoolItemModel, CardViewModule } from '../../public-api';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CardViewBoolItemComponent,
     title: 'Core/Card View/Card View Bool Item',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            imports: [CardViewModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         editable: {
             control: 'boolean',
             description: 'Defines if CardView item is editable',
-            defaultValue: true,
             table: {
-                type: { summary: 'boolean' }
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
             }
         },
         property: {
@@ -43,15 +47,16 @@ export default {
                 type: { summary: 'CardViewBoolItemModel' }
             }
         }
+    },
+    args: {
+        editable: true
     }
-} as Meta;
+} as Meta<CardViewBoolItemComponent>;
 
-export const cardViewBoolItem: Story<CardViewBoolItemComponent> = (
-    args: CardViewBoolItemComponent
-) => ({
+export const CardViewBoolItem: StoryFn<CardViewBoolItemComponent> = (args) => ({
     props: args
 });
-cardViewBoolItem.args = {
+CardViewBoolItem.args = {
     property: new CardViewBoolItemModel({
         label: 'Agree to all terms and conditions',
         value: true,
@@ -60,4 +65,4 @@ cardViewBoolItem.args = {
         editable: true
     })
 };
-cardViewBoolItem.parameters = { layout: 'centered' };
+CardViewBoolItem.parameters = { layout: 'centered' };
