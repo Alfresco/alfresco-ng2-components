@@ -15,20 +15,24 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
 import { SidenavLayoutModule } from '../../layout.module';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: SidenavLayoutComponent,
     title: 'Core/Layout/Sidenav Layout',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, SidenavLayoutModule, RouterTestingModule, MatIconModule, MatListModule]
+            imports: [SidenavLayoutModule, RouterTestingModule, MatIconModule, MatListModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -73,7 +77,6 @@ export default {
         sidenavMax: {
             control: 'number',
             description: 'Maximum size of the navigation region',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: 'undefined' },
@@ -83,7 +86,6 @@ export default {
         sidenavMin: {
             control: 'number',
             description: 'Minimum size of the navigation region',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: 'undefined' },
@@ -93,7 +95,6 @@ export default {
         stepOver: {
             control: 'number',
             description: 'Screen size at which display switches from small screen to large screen configuration',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: 'undefined' }
@@ -102,7 +103,6 @@ export default {
         title: {
             control: 'text',
             description: 'Title of the application',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' },
@@ -112,7 +112,6 @@ export default {
         color: {
             control: 'radio',
             options: ['primary', 'accent', 'warn', undefined],
-            defaultValue: undefined,
             description: `Background color for the header.
                 It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'`,
             table: {
@@ -129,10 +128,15 @@ export default {
                 category: 'Actions'
             }
         }
+    },
+    args: {
+        expandedSidenav: true,
+        hideSidenav: false,
+        position: 'start'
     }
-} as Meta;
+} as Meta<SidenavLayoutComponent>;
 
-const template: Story<SidenavLayoutModule> = (args: SidenavLayoutComponent) => ({
+const template: StoryFn<SidenavLayoutModule> = (args) => ({
     props: args,
     template: `
     <adf-sidenav-layout
@@ -220,8 +224,8 @@ const template: Story<SidenavLayoutModule> = (args: SidenavLayoutComponent) => (
     </adf-sidenav-layout>`
 });
 
-export const sidenavLayout = template.bind({});
-sidenavLayout.args = {
+export const SidenavLayout = template.bind({});
+SidenavLayout.args = {
     sidenavMin: 85,
     sidenavMax: 250,
     stepOver: 600,

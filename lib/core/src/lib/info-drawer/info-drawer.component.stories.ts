@@ -15,18 +15,22 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { CoreStoryModule } from '../testing/core.story.module';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { InfoDrawerModule } from './info-drawer.module';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
+import { importProvidersFrom } from '@angular/core';
+import { CoreStoryModule } from '../../..';
 
 export default {
     component: InfoDrawerComponent,
     title: 'Core/Info Drawer/Info Drawer',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, InfoDrawerModule]
+            imports: [InfoDrawerModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -197,10 +201,16 @@ export default {
                 category: 'Actions'
             }
         }
+    },
+    args: {
+        selectedIndex: 0,
+        showHeader: true,
+        showSecondTab: true,
+        showThirdTab: true
     }
-} as Meta;
+} as Meta<InfoDrawerComponent>;
 
-const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
+const tabLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
     props: args,
     template:
         `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
@@ -223,7 +233,7 @@ const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) =
         </adf-info-drawer>`
 });
 
-const singleLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
+const singleLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
     props: args,
     template:
         `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
@@ -241,8 +251,8 @@ const singleLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent
         </adf-info-drawer>`
 });
 
-export const tabLayoutWithTextLabels = tabLayoutTemplate.bind({});
-tabLayoutWithTextLabels.args = {
+export const TabLayoutWithTextLabels = tabLayoutTemplate.bind({});
+TabLayoutWithTextLabels.args = {
     title: 'Activities',
     label1: 'Activity',
     label2: 'Details',
@@ -252,12 +262,12 @@ tabLayoutWithTextLabels.args = {
     tab3Text: mockTabText
 };
 
-tabLayoutWithTextLabels.parameters = {
+TabLayoutWithTextLabels.parameters = {
     controls: { exclude: ['cardText'] }
 };
 
-export const tabLayoutWithIconLabels = tabLayoutTemplate.bind({});
-tabLayoutWithIconLabels.args = {
+export const TabLayoutWithIconLabels = tabLayoutTemplate.bind({});
+TabLayoutWithIconLabels.args = {
     title: 'Activities',
     icon1: 'people',
     icon2: 'android',
@@ -267,12 +277,12 @@ tabLayoutWithIconLabels.args = {
     tab3Text: mockTabText
 };
 
-tabLayoutWithIconLabels.parameters = {
+TabLayoutWithIconLabels.parameters = {
     controls: { exclude: ['cardText'] }
 };
 
-export const singleLayout = singleLayoutTemplate.bind({});
-singleLayout.args = {
+export const SingleLayout = singleLayoutTemplate.bind({});
+SingleLayout.args = {
     title: 'Single Activities',
     cardText: mockCardText,
     showHeader: true,
