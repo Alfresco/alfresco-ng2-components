@@ -15,24 +15,27 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: AppDetailsCloudComponent,
     title: 'Process Services Cloud/App List Cloud/App Details Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, AppListCloudModule]
+            imports: [AppListCloudModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
         applicationInstance: {
             control: 'object',
-            defaultValue: fakeApplicationInstance[0],
             table: {
                 type: { summary: 'ApplicationInstanceModel' }
             }
@@ -42,11 +45,14 @@ export default {
             description: 'Emitted when an app entry is clicked.',
             table: { category: 'Actions' }
         }
+    },
+    args: {
+        applicationInstance: fakeApplicationInstance[0]
     }
-} as Meta;
+} as Meta<AppDetailsCloudComponent>;
 
-const template: Story<AppDetailsCloudComponent> = (args: AppDetailsCloudComponent) => ({
+const template: StoryFn<AppDetailsCloudComponent> = (args) => ({
     props: args
 });
 
-export const appDetailsCloud = template.bind({});
+export const AppDetailsCloud = template.bind({});

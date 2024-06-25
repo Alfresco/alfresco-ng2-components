@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { AboutComponent } from './about.component';
 import { ABOUT_DIRECTIVES } from './about.module';
 import { AuthenticationService } from '../auth/services/authentication.service';
@@ -23,7 +23,6 @@ import { AuthenticationMock } from '../auth/mock/authentication.service.mock';
 import { AppExtensionService, ExtensionRef, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
-import { CoreStoryModule } from '../testing/core.story.module';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -48,7 +47,7 @@ export default {
     title: 'Core/About/About',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...ABOUT_DIRECTIVES],
+            imports: [...ABOUT_DIRECTIVES],
             providers: [
                 { provide: AuthenticationService, useClass: AuthenticationMock },
                 { provide: AppExtensionService, useClass: AppExtensionServiceMock },
@@ -83,14 +82,14 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<AboutComponent>;
 
-const template: Story<AboutComponent> = (args: AboutComponent) => ({
+const template: StoryFn<AboutComponent> = (args) => ({
     props: args
 });
 
-export const about = template.bind({});
-about.args = {
+export const About = template.bind({});
+About.args = {
     pkg: {
         name: 'My Storybook App',
         commit: 'my-commit-value',

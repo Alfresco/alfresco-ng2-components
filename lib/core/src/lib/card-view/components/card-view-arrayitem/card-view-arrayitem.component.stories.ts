@@ -15,18 +15,22 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewArrayItemModel, CardViewModule } from '../../public-api';
 import { of } from 'rxjs';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CardViewArrayItemComponent,
     title: 'Core/Card View/Card View Array Item',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            imports: [CardViewModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
@@ -37,14 +41,12 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<CardViewArrayItemComponent>;
 
-export const cardViewArrayItem: Story<CardViewArrayItemComponent> = (
-    args: CardViewArrayItemComponent
-) => ({
+export const CardViewArrayItem: StoryFn<CardViewArrayItemComponent> = (args) => ({
     props: args
 });
-cardViewArrayItem.args = {
+CardViewArrayItem.args = {
     property: new CardViewArrayItemModel({
         label: 'CardView Array of items',
         value: of([
@@ -59,4 +61,4 @@ cardViewArrayItem.args = {
         noOfItemsToDisplay: 2
     })
 };
-cardViewArrayItem.parameters = { layout: 'centered' };
+CardViewArrayItem.parameters = { layout: 'centered' };

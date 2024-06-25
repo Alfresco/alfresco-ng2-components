@@ -4,9 +4,7 @@ module.exports = {
         options: {}
     },
     staticDirs: [{ from: '../../../demo-shell/src/app.config.json', to: 'app.config.json' }],
-    docs: {
-        autodocs: true
-    },
+    docs: {},
     stories: [],
-    addons:[],
+    addons: []
 };

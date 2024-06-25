@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
 import { SidenavLayoutModule } from '../../layout.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: SidebarActionMenuComponent,
@@ -26,6 +27,9 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, SidenavLayoutModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -39,7 +43,6 @@ export default {
         expanded: {
             control: 'boolean',
             description: 'Toggle the sidebar action menu on expand',
-            defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'true' }
@@ -48,7 +51,6 @@ export default {
         title: {
             control: 'text',
             description: 'The title of the sidebar action',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
@@ -57,16 +59,19 @@ export default {
         width: {
             control: 'number',
             description: 'Width in pixels for sidebar action menu options',
-            defaultValue: 272,
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: '272' }
             }
         }
+    },
+    args: {
+        expanded: true,
+        width: 272
     }
-} as Meta;
+} as Meta<SidebarActionMenuComponent>;
 
-const template: Story<SidenavLayoutModule> = (args: SidebarActionMenuComponent) => ({
+const template: StoryFn<SidenavLayoutModule> = (args) => ({
     props: args
 });
 

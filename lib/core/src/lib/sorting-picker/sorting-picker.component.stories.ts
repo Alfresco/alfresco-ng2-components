@@ -15,18 +15,22 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { SortingPickerModule } from './sorting-picker.module';
 import { SortingPickerComponent } from './sorting-picker.component';
 import { initialOptionKeys, initialSortingTypes } from './mock/sorting-picker.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: SortingPickerComponent,
     title: 'Core/Sorting Picker/Sorting Picker',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, SortingPickerModule]
+            imports: [SortingPickerModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -43,7 +47,6 @@ export default {
             control: 'select',
             options: initialOptionKeys,
             description: 'Currently selected option key',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
@@ -52,7 +55,6 @@ export default {
         ascending: {
             control: 'boolean',
             description: 'Current sorting direction',
-            defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'true' }
@@ -60,7 +62,6 @@ export default {
         },
         options: {
             description: 'Available sorting options',
-            defaultValue: [],
             table: {
                 type: { summary: 'Array<{key: string; label: string}>' },
                 defaultValue: { summary: '[]' }
@@ -82,15 +83,19 @@ export default {
                 category: 'Actions'
             }
         }
+    },
+    args: {
+        ascending: true,
+        options: []
     }
-} as Meta;
+} as Meta<SortingPickerComponent>;
 
-const template: Story<SortingPickerModule> = (args: SortingPickerComponent) => ({
+const template: StoryFn<SortingPickerModule> = (args) => ({
     props: args
 });
 
-export const sortingPicker = template.bind({});
-sortingPicker.args = {
+export const SortingPicker = template.bind({});
+SortingPicker.args = {
     options: initialSortingTypes
 };
-sortingPicker.parameters = { layout: 'centered' };
+SortingPicker.parameters = { layout: 'centered' };
