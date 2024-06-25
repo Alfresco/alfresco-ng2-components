@@ -6,5 +6,5 @@ module.exports = {
     staticDirs: [{ from: '../../../demo-shell/src/app.config.json', to: 'app.config.json' }],
     docs: {},
     stories: [],
-    addons: []
+    addons: ['@chromatic-com/storybook']
 };

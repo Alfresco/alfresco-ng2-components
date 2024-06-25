@@ -4,39 +4,28 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": [
-        "plugin:@nrwl/nx/angular"
-      ],
-      "parserOptions": {
-        "project": ["lib/insights/tsconfig.lib.json", "lib/insights/tsconfig.spec.json"],
-        "createDefaultProgram": true
-      },
+      "extends": ["plugin:@nx/angular"],
       "rules": {
-        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+        "no-underscore-dangle": [
+          "error",
+          {
+            "allowAfterThis": true
+          }
+        ],
         "@angular-eslint/no-output-native": "off",
-
         "@angular-eslint/component-selector": [
           "error",
           {
             "type": "element",
-            "prefix": [
-              "adf",
-              "app"
-            ],
+            "prefix": ["adf", "app"],
             "style": "kebab-case"
           }
         ],
         "@angular-eslint/directive-selector": [
           "error",
           {
-            "type": [
-              "element",
-              "attribute"
-            ],
-            "prefix": [
-              "adf",
-              "app"
-            ],
+            "type": ["element", "attribute"],
+            "prefix": ["adf", "app"],
             "style": "kebab-case"
           }
         ],
@@ -77,11 +66,7 @@
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
-      "parserOptions": {
-        "project": ["lib/insights/tsconfig.lib.json", "lib/insights/tsconfig.spec.json"],
-        "createDefaultProgram": true
-      },
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
         "@angular-eslint/template/no-positive-tabindex": "error"

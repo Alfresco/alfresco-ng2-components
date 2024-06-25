@@ -4,11 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular"],
-      "parserOptions": {
-        "project": ["lib/testing/tsconfig.lib.json"],
-        "createDefaultProgram": true
-      },
+      "extends": ["plugin:@nx/angular"],
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
@@ -63,11 +59,7 @@
     },
     {
       "files": ["*.html"],
-      "parserOptions": {
-        "project": ["lib/testing/tsconfig.lib.json"],
-        "createDefaultProgram": true
-      },
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {}
     }
   ]
