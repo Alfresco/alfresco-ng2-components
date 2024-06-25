@@ -4,11 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular"],
-      "parserOptions": {
-        "project": ["lib/cli/tsconfig.json"],
-        "createDefaultProgram": true
-      },
+      "extends": ["plugin:@nx/angular"],
       "rules": {
         "prefer-arrow/prefer-arrow-functions": "off",
         "@typescript-eslint/no-var-requires": "off",
@@ -40,11 +36,7 @@
     },
     {
       "files": ["*.html"],
-      "parserOptions": {
-        "project": ["lib/cli/tsconfig.json"],
-        "createDefaultProgram": true
-      },
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {}
     }
   ]
