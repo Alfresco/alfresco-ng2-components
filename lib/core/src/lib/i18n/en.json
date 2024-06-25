@@ -196,6 +196,7 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Use a number format",
         "INT_VALIDATION_ERROR": "Use an integer format",
+        "LONG_VALIDATION_ERROR": "Use a long format",
         "LENGTH_VALIDATION_ERROR": "Value should be between {{ minLength }} and {{ maxLength }} in length",
         "MATCH_VALIDATION_ERROR": "Value doesn't match pattern: {{ expression }}",
         "MINMAX_VALIDATION_ERROR": "Value should be between {{ minValue }} and {{ maxValue }}",
@@ -514,26 +515,6 @@
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
     "REPOSITORY": "Repository",
-    "VERSIONS": {
-      "TITLE": "Product Versions",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Modeling Services",
-      "DEPLOYMENT_SERVICE": "Deployment Services",
-      "QUERY_SERVICE": "Deployment Services",
-      "RB": "Runtime",
-      "LABELS": {
-        "EDITION": "Edition",
-        "VERSION": "Version",
-        "LICENSE": "License",
-        "STATUS": "Status",
-        "MODULES": "Modules"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Source code",
-      "DESCRIPTION": "You are running the project based on the following commit:"
-    },
     "PACKAGES": {
       "TITLE": "Packages",
       "NAME": "Name",
@@ -594,5 +575,11 @@
   },
   "DYNAMIC_CHIP_LIST": {
     "LOAD_MORE": "Load more"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Confirm",
+    "ACTION": "Do you want to proceed?",
+    "YES_LABEL": "Yes",
+    "NO_LABEL": "No"
   }
 }

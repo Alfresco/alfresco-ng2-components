@@ -17,13 +17,8 @@
 
 import { Directive } from '@angular/core';
 
-/**
- * Directive selectors without adf- prefix will be deprecated on 3.0.0.
- * The empty-folder-content selector will be deprecated as it has been replace by
- * adf-custom-empty-content-template.
- */
 @Directive({
-    selector: 'adf-custom-empty-content-template, empty-folder-content'
+    selector: 'adf-custom-empty-content-template',
+    standalone: true
 })
-
 export class CustomEmptyContentTemplateDirective {}

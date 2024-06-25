@@ -21,8 +21,8 @@ import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewTextItemPipeProperty, CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'text';
-    inputType: string = 'text';
+    type = 'text';
+    inputType = 'text';
     multiline?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
     clickCallBack?: any;

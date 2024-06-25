@@ -121,10 +121,10 @@ jobs:
          fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@0502f171476b8af38e82ce87e5fba45ecd9b17d1 # v5.28.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@7c08513b5d33b682ac518b369e5e7b8454f2fd96 # v5.29.3
 
       - name: Save commit message
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@0502f171476b8af38e82ce87e5fba45ecd9b17d1 # v5.28.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@7c08513b5d33b682ac518b369e5e7b8454f2fd96 # v5.29.3
 
       - name: ci:force flag parser
         shell: bash
@@ -138,7 +138,7 @@ jobs:
           fi
 
       - name: Get PR number
-        if: ${{ github.event_name != 'schedule' }}
+        if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
         uses: kamatama41/get-pr-number-action@0bcaab5752c0b699149e74667c8ce2f764cbb7fa # v0.9.1
         id: action
         with:
@@ -167,8 +167,7 @@ jobs:
             echo -e "\033[32mCommit by ${{ github.actor }}. No need for approval.\033[0m"
             skip_check="true"
           fi
-
-          if [ "${{ github.event_name }}" == "schedule" ]; then
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             echo -e "\033[32mSchedule event\033[0m"
             skip_check="true"
           fi

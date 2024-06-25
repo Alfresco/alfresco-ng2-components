@@ -25,6 +25,7 @@ import {
     CardViewSelectItemModel,
     CardViewDatetimeItemModel,
     CardViewIntItemModel,
+    CardViewLongItemModel,
     CardViewFloatItemModel,
     MultiValuePipe,
     AppConfigService,
@@ -53,10 +54,12 @@ export const RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT
 export class PropertyGroupTranslatorService {
     valueSeparator: string;
 
-    constructor(private multiValuePipe: MultiValuePipe,
-                private decimalNumberPipe: DecimalNumberPipe,
-                private appConfig: AppConfigService,
-                private logService: LogService) {
+    constructor(
+        private multiValuePipe: MultiValuePipe,
+        private decimalNumberPipe: DecimalNumberPipe,
+        private appConfig: AppConfigService,
+        private logService: LogService
+    ) {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
@@ -123,42 +126,57 @@ export class PropertyGroupTranslatorService {
         } else {
             switch (dataType) {
                 case D_MLTEXT:
-                    cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
-                        multiline: true
-                    }));
+                    cardViewItemProperty = new CardViewTextItemModel(
+                        Object.assign(propertyDefinition, {
+                            multiline: true
+                        })
+                    );
                     break;
 
                 case D_INT:
+                    cardViewItemProperty = new CardViewIntItemModel(
+                        Object.assign(propertyDefinition, {
+                            multivalued: isMultiValued,
+                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                        })
+                    );
+                    break;
+
                 case D_LONG:
-                    cardViewItemProperty = new CardViewIntItemModel(Object.assign(propertyDefinition, {
-                        multivalued: isMultiValued,
-                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
-                    }));
+                    cardViewItemProperty = new CardViewLongItemModel(
+                        Object.assign(propertyDefinition, {
+                            multivalued: isMultiValued,
+                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                        })
+                    );
                     break;
 
                 case D_FLOAT:
                 case D_DOUBLE:
-                    cardViewItemProperty = new CardViewFloatItemModel(Object.assign(propertyDefinition, {
-                        multivalued: isMultiValued,
-                        pipes: [
-                            { pipe: this.decimalNumberPipe },
-                            { pipe: this.multiValuePipe, params: [this.valueSeparator] }
-                        ]
-                    }));
+                    cardViewItemProperty = new CardViewFloatItemModel(
+                        Object.assign(propertyDefinition, {
+                            multivalued: isMultiValued,
+                            pipes: [{ pipe: this.decimalNumberPipe }, { pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                        })
+                    );
                     break;
 
                 case D_DATE:
-                    cardViewItemProperty = new CardViewDateItemModel(Object.assign(propertyDefinition, {
-                        multivalued: isMultiValued,
-                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
-                    }));
+                    cardViewItemProperty = new CardViewDateItemModel(
+                        Object.assign(propertyDefinition, {
+                            multivalued: isMultiValued,
+                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                        })
+                    );
                     break;
 
                 case D_DATETIME:
-                    cardViewItemProperty = new CardViewDatetimeItemModel(Object.assign(propertyDefinition, {
-                        multivalued: isMultiValued,
-                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
-                    }));
+                    cardViewItemProperty = new CardViewDatetimeItemModel(
+                        Object.assign(propertyDefinition, {
+                            multivalued: isMultiValued,
+                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                        })
+                    );
                     break;
 
                 case D_BOOLEAN:
@@ -167,11 +185,13 @@ export class PropertyGroupTranslatorService {
 
                 case D_TEXT:
                 default:
-                    cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
-                        multivalued: isMultiValued,
-                        multiline: isMultiValued,
-                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
-                    }));
+                    cardViewItemProperty = new CardViewTextItemModel(
+                        Object.assign(propertyDefinition, {
+                            multivalued: isMultiValued,
+                            multiline: isMultiValued,
+                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                        })
+                    );
             }
         }
 

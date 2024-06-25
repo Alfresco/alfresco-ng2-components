@@ -21,6 +21,7 @@ export * from './card-view-dateitem.model';
 export * from './card-view-datetimeitem.model';
 export * from './card-view-floatitem.model';
 export * from './card-view-intitem.model';
+export * from './card-view-longitem.model';
 export * from './card-view-mapitem.model';
 export * from './card-view-textitem.model';
 export * from './card-view-keyvaluepairs.model';

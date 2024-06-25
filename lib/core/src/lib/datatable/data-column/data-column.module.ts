@@ -15,26 +15,13 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
+import { DateColumnHeaderComponent } from './data-column-header.component';
 import { DataColumnListComponent } from './data-column-list.component';
 import { DataColumnComponent } from './data-column.component';
-import { DateColumnHeaderComponent } from './data-column-header.component';
 
 @NgModule({
-    imports: [
-        CommonModule
-    ],
-    declarations: [
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
-    ],
-    exports: [
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
-    ]
+    imports: [DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent],
+    exports: [DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent]
 })
 export class DataColumnModule {}

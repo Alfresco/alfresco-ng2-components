@@ -22,8 +22,8 @@ import { CardViewIntItemProperties } from '../interfaces/card-view.interfaces';
 import { CardViewItemIntValidator, CardViewItemPositiveIntValidator } from '../validators/card-view.validators';
 
 export class CardViewIntItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
-    type: string = 'int';
-    inputType: string = 'number';
+    type = 'int';
+    inputType = 'number';
 
     constructor(cardViewIntItemProperties: CardViewIntItemProperties) {
         super(cardViewIntItemProperties);

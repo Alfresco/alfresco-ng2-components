@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Cargando...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Confirmar",
+    "ACTION": "¿Desea continuar?",
+    "YES_LABEL": "Sí",
+    "NO_LABEL": "No"
   }
 }

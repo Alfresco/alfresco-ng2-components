@@ -944,10 +944,13 @@ describe('FormComponent', () => {
 
         const formValues: any = {};
         formValues.dropdownId = {
-            id: 'option_2',
-            name: 'test2'
+            id: 'dropdown_option_2',
+            name: 'Dropdown option 2'
         };
-        formValues.radio = { id: 'option_2', name: 'Option 2' };
+        formValues.radio = {
+            id: 'radio_option_3',
+            name: 'Radio option 3'
+        };
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ data: change });
@@ -956,9 +959,9 @@ describe('FormComponent', () => {
         dropdownField = formFields.find((field) => field.id === 'dropdownId');
         radioField = formFields.find((field) => field.id === 'radio');
 
-        expect(dropdownField.value.id).toBe('option_2');
-        expect(dropdownField.value.name).toBe('test2');
-        expect(radioField.value).toBe('option_2');
+        expect(dropdownField.value).toBe('dropdown_option_2');
+        expect(radioField.value.id).toBe('radio_option_3');
+        expect(radioField.value.name).toBe('Radio option 3');
     });
 
     it('should refresh radio buttons value when id is given to data', () => {
