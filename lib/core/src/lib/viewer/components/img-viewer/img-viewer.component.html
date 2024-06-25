@@ -58,7 +58,7 @@
 
     </adf-toolbar>
 
-    <adf-toolbar class="adf-secondary-toolbar" *ngIf="!readOnly && isEditing || allowRotateInReadOnly">
+    <adf-toolbar class="adf-secondary-toolbar" *ngIf="isEditing && (!readOnly || allowRotateInReadOnly)">
         <button id="viewer-cancel-button"
                 title="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"
