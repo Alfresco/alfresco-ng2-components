@@ -15,22 +15,24 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
 import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: TaskHeaderCloudComponent,
     title: 'Process Services Cloud/Task Cloud/Task Header Cloud/Task Header Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, TaskHeaderCloudModule],
-            providers: [
-                { provide: TaskCloudService, useClass: TaskCloudServiceMock }
-            ]
+            imports: [TaskHeaderCloudModule],
+            providers: [{ provide: TaskCloudService, useClass: TaskCloudServiceMock }]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
@@ -75,62 +77,62 @@ export default {
             table: { category: 'Actions' }
         }
     }
-} as Meta;
+} as Meta<TaskHeaderCloudComponent>;
 
-const template: Story<TaskHeaderCloudComponent> = (args: TaskHeaderCloudComponent) => ({
+const template: StoryFn<TaskHeaderCloudComponent> = (args) => ({
     props: args
 });
 
-export const assignedAndEditable = template.bind({});
-assignedAndEditable.args = {
+export const AssignedAndEditable = template.bind({});
+AssignedAndEditable.args = {
     appName: 'app',
     taskId: 'mock-assigned-task'
 };
 
-export const completedAndReadonly = template.bind({});
-completedAndReadonly.args = {
-    ...assignedAndEditable.args,
+export const CompletedAndReadonly = template.bind({});
+CompletedAndReadonly.args = {
+    ...AssignedAndEditable.args,
     taskId: 'mock-completed-task'
 };
 
-export const suspended = template.bind({});
-suspended.args = {
-    ...assignedAndEditable.args,
+export const Suspended = template.bind({});
+Suspended.args = {
+    ...AssignedAndEditable.args,
     taskId: 'mock-suspended-task'
 };
 
-export const withParentId = template.bind({});
-withParentId.args = {
-    ...assignedAndEditable.args,
+export const WithParentId = template.bind({});
+WithParentId.args = {
+    ...AssignedAndEditable.args,
     taskId: 'mock-parent-task-id'
 };
 
-export const withoutAssignee = template.bind({});
-withoutAssignee.args = {
-    ...assignedAndEditable.args,
+export const WithoutAssignee = template.bind({});
+WithoutAssignee.args = {
+    ...AssignedAndEditable.args,
     taskId: 'mock-created-task'
 };
 
-export const notClaimableByUser = template.bind({});
-notClaimableByUser.args = {
-    ...assignedAndEditable.args,
+export const NotClaimableByUser = template.bind({});
+NotClaimableByUser.args = {
+    ...AssignedAndEditable.args,
     taskId: 'mock-no-candidate-users'
 };
 
-export const taskNotClaimableByGroupUser = template.bind({});
-taskNotClaimableByGroupUser.args = {
-    ...assignedAndEditable.args,
+export const TaskNotClaimableByGroupUser = template.bind({});
+TaskNotClaimableByGroupUser.args = {
+    ...AssignedAndEditable.args,
     taskId: 'mock-no-candidate-groups'
 };
 
-export const invalidForMissingApp = template.bind({});
-invalidForMissingApp.args = {
-    ...assignedAndEditable.args,
+export const InvalidForMissingApp = template.bind({});
+InvalidForMissingApp.args = {
+    ...AssignedAndEditable.args,
     appName: undefined
 };
 
-export const invalidForMissingTaskId = template.bind({});
-invalidForMissingTaskId.args = {
-    ...assignedAndEditable.args,
+export const InvalidForMissingTaskId = template.bind({});
+InvalidForMissingTaskId.args = {
+    ...AssignedAndEditable.args,
     taskId: undefined
 };

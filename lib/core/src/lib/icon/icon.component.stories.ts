@@ -15,17 +15,20 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { IconComponent } from './icon.component';
-import { IconModule } from './icon.module';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: IconComponent,
     title: 'Core/Icon/Icon',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, IconModule]
+            imports: [IconComponent]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -54,20 +57,20 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<IconComponent>;
 
-const template: Story<IconComponent> = (args: IconComponent) => ({
+const template: StoryFn<IconComponent> = (args) => ({
     props: args
 });
 
-export const defaultIcon = template.bind({});
-defaultIcon.args = {
+export const DefaultIcon = template.bind({});
+DefaultIcon.args = {
     value: ''
 };
-defaultIcon.parameters = { layout: 'centered' };
+DefaultIcon.parameters = { layout: 'centered' };
 
-export const customIcon = template.bind({});
-customIcon.args = {
+export const CustomIcon = template.bind({});
+CustomIcon.args = {
     value: 'cloud_download'
 };
-customIcon.parameters = { layout: 'centered' };
+CustomIcon.parameters = { layout: 'centered' };

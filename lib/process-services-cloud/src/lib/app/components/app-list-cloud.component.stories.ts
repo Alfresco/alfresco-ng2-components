@@ -15,24 +15,27 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
 import { AppListCloudComponent } from './app-list-cloud.component';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: AppListCloudComponent,
     title: 'Process Services Cloud/App List Cloud/App List Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, AppListCloudModule]
+            imports: [AppListCloudModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
         layoutType: {
             control: 'radio',
             options: ['GRID', 'LIST'],
-            defaultValue: 'GRID',
             description: 'Defines the layout of the apps.',
             table: {
                 type: { summary: 'string' },
@@ -44,11 +47,14 @@ export default {
             description: 'Emitted when an app entry is clicked.',
             table: { category: 'Actions' }
         }
+    },
+    args: {
+        layoutType: 'GRID'
     }
-} as Meta;
+} as Meta<AppListCloudComponent>;
 
-const template: Story<AppListCloudComponent> = (args) => ({
+const template: StoryFn<AppListCloudComponent> = (args) => ({
     props: args
 });
 
-export const appListCloud = template.bind({});
+export const AppListCloud = template.bind({});
