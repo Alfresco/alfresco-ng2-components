@@ -16,7 +16,7 @@
  */
 
 export interface Hold {
-    id: string;
+    id?: string;
     name?: string;
     reason?: string;
     description?: string;

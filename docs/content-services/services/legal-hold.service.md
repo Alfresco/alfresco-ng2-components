@@ -19,6 +19,25 @@ Manages holds for nodes.
     -   _options_: `ContentPagingQuery` - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - List of holds
 
+-   **assignHold**(nodeId: `string`, holdId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>`<br/>
+    Assign a node to a hold.
+    -   _nodeId_: `string` - The Id of the node which will be assigned to a hold
+    -   _holdId_: `string` - The Id of the hold to which nodes will be assigned
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>` - Entry with the hold
+
+-   **assignHolds**(nodeIds: `<{id: string}[]>`, holdId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldPaging.md)`>`<br/>
+    Assign a node to a hold.
+    -   _nodeIds_: `<{id: string}[]>` - The Ids of the nodes which will be assigned to a hold
+    -   _holdId_: `string` - The Id of the hold to which nodes will be assigned
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>` - Hold paging
+
+-   *unassignHold**(holdId: `string`, nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+    Assign a node to a hold.
+    -   _holdId_: `string` - The hold Id
+    -   _nodeId_: `string` - The Id of the node which is unassigned
+    -   **Returns** [`void`]
+
+
 ## Details
 
 To create, delete or get holds Records Management should be created and user should be added to it.

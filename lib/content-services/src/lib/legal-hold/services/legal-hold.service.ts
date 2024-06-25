@@ -16,6 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
+
 import { ContentPagingQuery, Hold, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
@@ -54,13 +55,12 @@ export class LegalHoldService {
     /**
      * Assign a node to a hold.
      *
-     * @param nodeIds The list of managed node Ids
+     * @param nodeId The Id of the node which will be assigned to a hold
      * @param holdId The Id of the hold to which nodes will be assigned
      * @returns Observable<HoldEntry>
      */
-    assignHold(nodeIds: string[], holdId: string): Observable<HoldEntry> {
-        const nodeIdItems = nodeIds.map((id) => ({ id }));
-        return from(this.legalHoldApi.assignHold(nodeIdItems, holdId));
+    assignHold(nodeId: string, holdId: string): Observable<HoldEntry> {
+        return from(this.legalHoldApi.assignHold(nodeId, holdId));
     }
 
     /**
@@ -70,9 +70,8 @@ export class LegalHoldService {
      * @param holdId The Id of the hold to which nodes will be assigned
      * @returns Observable<HoldPaging>
      */
-    assignHolds(nodeIds: string[], holdId: string): Observable<HoldPaging> {
-        const nodeIdItems = nodeIds.map((id) => ({ id }));
-        return from(this.legalHoldApi.assignHolds(nodeIdItems, holdId));
+    assignHolds(nodeIds: { id: string }[], holdId: string): Observable<HoldPaging> {
+        return from(this.legalHoldApi.assignHolds(nodeIds, holdId));
     }
 
     /**

@@ -58,21 +58,20 @@ export class LegalHoldApi extends BaseApi {
      * Assign hold of legal holds
      *
      * @param holdId The identifier of a hold.
-     * @param nodeIds one element list with id of nodes to assign to existing hold
+     * @param nodeId The id of the node to be assigned to existing hold
      * @returns Promise<HoldEntry>
      */
-    assignHold(nodeIds: {id: string}[], holdId: string): Promise<HoldEntry> {
+    assignHold(nodeId: string, holdId: string): Promise<HoldEntry> {
         throwIfNotDefined(holdId, 'holdId');
-        throwIfNotDefined(nodeIds, 'nodeIds');
+        throwIfNotDefined(nodeId, 'nodeId');
 
         return this.post({
             path: `/holds/{holdId}/children`,
             pathParams: { holdId },
-            bodyParam: nodeIds,
-            returnType: HoldEntry,
+            bodyParam: [nodeId],
+            returnType: HoldEntry
         });
     }
-
 
     /**
      * Assign hold of legal holds
@@ -81,7 +80,7 @@ export class LegalHoldApi extends BaseApi {
      * @param nodeIds one element list with id of nodes to assign to existing hold
      * @returns Promise<HoldPaging>
      */
-    assignHolds(nodeIds: {id: string}[], holdId: string): Promise<HoldPaging> {
+    assignHolds(nodeIds: { id: string }[], holdId: string): Promise<HoldPaging> {
         throwIfNotDefined(holdId, 'holdId');
         throwIfNotDefined(nodeIds, 'nodeIds');
 
@@ -89,7 +88,7 @@ export class LegalHoldApi extends BaseApi {
             path: `/holds/{holdId}/children`,
             pathParams: { holdId },
             bodyParam: nodeIds,
-            returnType: HoldPaging,
+            returnType: HoldPaging
         });
     }
 
@@ -105,8 +104,8 @@ export class LegalHoldApi extends BaseApi {
         throwIfNotDefined(nodeId, 'nodeId');
 
         return this.delete({
-            path: `/holds/{holdId}/children/{holdChildId}`,
-            pathParams: { holdId, holdChildId: nodeId },
+            path: `/holds/{holdId}/children/{nodeId}`,
+            pathParams: { holdId, nodeId }
         });
     }
 }
