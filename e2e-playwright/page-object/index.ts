@@ -16,4 +16,4 @@
  */
 
 export * from './components';
-export * from './stories/base.stories';
+export * from './stories/base-stories';
