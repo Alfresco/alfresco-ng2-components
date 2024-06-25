@@ -26,7 +26,6 @@ import { ProcessTestingModule } from '../testing/process.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { AppDefinitionRepresentation } from '@alfresco/js-api';
 
 describe('AppsListComponent', () => {
     let loader: HarnessLoader;
