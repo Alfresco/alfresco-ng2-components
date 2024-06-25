@@ -28,13 +28,10 @@ export default {
     title: 'Process Services Cloud/Process Cloud/Process Header Cloud/Process Header Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessHeaderCloudModule],
+            imports: [ProcessHeaderCloudModule]
         }),
         applicationConfig({
-            providers: [
-                { provide: ProcessCloudService, useClass: ProcessCloudServiceMock },
-                importProvidersFrom(ProcessServicesCloudStoryModule)
-            ]
+            providers: [{ provide: ProcessCloudService, useClass: ProcessCloudServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
