@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent } from '@alfresco/adf-core';
+import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent, FormFieldValidator, FORM_FIELD_VALIDATORS } from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
@@ -71,6 +71,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
      */
     @Input()
     displayModeConfigurations: FormCloudDisplayModeConfiguration[];
+
+    /** FormFieldValidator allow to provide additional validators to the form field. */
+    @Input()
+    fieldValidators: FormFieldValidator[];
 
     /** Emitted when the form is saved. */
     @Output()
@@ -143,6 +147,8 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
+        this.initFieldValidators();
+
         if (this.appName === '' && this.taskId) {
             this.loadTask();
         }
@@ -160,6 +166,10 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
             this.loadTask();
             return;
         }
+    }
+
+    private initFieldValidators() {
+        this.fieldValidators = this.fieldValidators ? [...FORM_FIELD_VALIDATORS, ...this.fieldValidators] : [...FORM_FIELD_VALIDATORS];
     }
 
     private loadTask() {
@@ -254,11 +264,11 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.adfCloudForm.switchToDisplayMode(newDisplayMode);
     }
 
-    onDisplayModeOn(displayModeConfiguration: FormCloudDisplayModeConfiguration){
+    onDisplayModeOn(displayModeConfiguration: FormCloudDisplayModeConfiguration) {
         this.displayModeOn.emit(displayModeConfiguration);
     }
 
-    onDisplayModeOff(displayModeConfiguration: FormCloudDisplayModeConfiguration){
+    onDisplayModeOff(displayModeConfiguration: FormCloudDisplayModeConfiguration) {
         this.displayModeOff.emit(displayModeConfiguration);
     }
 
