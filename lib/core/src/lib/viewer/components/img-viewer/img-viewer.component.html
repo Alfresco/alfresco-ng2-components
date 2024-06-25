@@ -33,7 +33,7 @@
             <mat-icon>zoom_in</mat-icon>
         </button>
 
-        <button *ngIf="!readOnly" id="viewer-rotate-button"
+        <button *ngIf="!readOnly || allowRotateInReadOnly" id="viewer-rotate-button"
                 title="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
                 mat-icon-button
@@ -58,7 +58,7 @@
 
     </adf-toolbar>
 
-    <adf-toolbar class="adf-secondary-toolbar" *ngIf="!readOnly && isEditing">
+    <adf-toolbar class="adf-secondary-toolbar" *ngIf="!readOnly && isEditing || allowRotateInReadOnly">
         <button id="viewer-cancel-button"
                 title="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"

@@ -189,6 +189,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     readOnly = true;
 
+    /** Enable rotation functionality in read-only mode  */
+    @Input()
+    allowRotateInReadOnly = false;
+
     /** media subtitles for the media player*/
     @Input()
     tracks: Track[] = [];

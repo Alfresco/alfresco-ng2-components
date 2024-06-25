@@ -218,6 +218,24 @@ describe('Test Img viewer component ', () => {
             expect(rotateButtonElement).not.toEqual(null);
         });
 
+        it('should show rotate button if allowRotateInReadOnly is true and in read only mode', () => {
+            component.readOnly = true;
+            component.allowRotateInReadOnly = true;
+            fixture.detectChanges();
+            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
+
+            expect(rotateButtonElement).not.toEqual(null);
+        });
+
+        it('should not show rotate button if allowRotateInReadOnly is false and in read only mode', () => {
+            component.readOnly = true;
+            component.allowRotateInReadOnly = false;
+            fixture.detectChanges();
+            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
+
+            expect(rotateButtonElement).toEqual(null);
+        });
+
         it('should not show rotate button by default', () => {
             const rotateButtonElement = element.querySelector('#viewer-rotate-button');
             expect(rotateButtonElement).toEqual(null);

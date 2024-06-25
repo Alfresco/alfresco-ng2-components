@@ -95,6 +95,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     readOnly = true;
 
+    /** Enable rotation functionality in read-only mode  */
+    @Input()
+    allowRotateInReadOnly = false;
+
     /** media subtitles for the media player*/
     @Input()
     tracks: Track[] = [];
