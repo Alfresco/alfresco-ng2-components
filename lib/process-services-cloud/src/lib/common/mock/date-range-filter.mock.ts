@@ -26,7 +26,6 @@ export const mockFilterProperty = {
         _startTo: new Date().toISOString()
     },
     type: 'dateRange',
-    options: null,
     attributes: {
         dateType: 'createdDateType',
         from: '_startFrom',

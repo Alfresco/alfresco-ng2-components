@@ -16,16 +16,20 @@
  */
 
 import { RichTextEditorModule } from './rich-text-editor.module';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../testing/process-services-cloud-story.module';
 import { RichTextEditorComponent } from './rich-text-editor.component';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: RichTextEditorComponent,
     title: 'Process Services Cloud/Rich Text Editor',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, RichTextEditorModule]
+            imports: [RichTextEditorModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
@@ -37,9 +41,9 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<RichTextEditorComponent>;
 
-const template: Story<RichTextEditorComponent> = (args: RichTextEditorComponent) => ({
+const template: StoryFn<RichTextEditorComponent> = (args) => ({
     props: args,
     template: `
     <adf-cloud-rich-text-editor [data]=data #editor>
@@ -50,8 +54,8 @@ const template: Story<RichTextEditorComponent> = (args: RichTextEditorComponent)
     `
 });
 
-export const defaultRichTextEditor = template.bind({});
-defaultRichTextEditor.args = {
+export const DefaultRichTextEditor = template.bind({});
+DefaultRichTextEditor.args = {
     data: {
         time: 1550476186479,
         blocks: [
