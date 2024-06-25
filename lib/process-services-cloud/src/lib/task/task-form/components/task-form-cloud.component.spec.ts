@@ -19,7 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
+import { FORM_FIELD_VALIDATORS, FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import {
@@ -37,6 +37,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { DisplayModeService } from '../../../form/services/display-mode.service';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
+import { MockFormFieldValidator } from '../mocks/task-form-cloud.mock';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -279,6 +280,22 @@ describe('TaskFormCloudComponent', () => {
         it('should not load data when taskId changes and appName is not defined', () => {
             component.ngOnChanges({ taskId: new SimpleChange(null, 'task1', false) });
             expect(getTaskSpy).not.toHaveBeenCalled();
+        });
+
+        it('should append additional field validators to the default ones when provided', () => {
+            const mockFirstCustomFieldValidator = new MockFormFieldValidator();
+            const mockSecondCustomFieldValidator = new MockFormFieldValidator();
+
+            component.fieldValidators = [mockFirstCustomFieldValidator, mockSecondCustomFieldValidator];
+            fixture.detectChanges();
+
+            expect(component.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, mockFirstCustomFieldValidator, mockSecondCustomFieldValidator]);
+        });
+
+        it('should use default field validators when no additional validators are provided', () => {
+            fixture.detectChanges();
+
+            expect(component.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS]);
         });
     });
 

@@ -11,6 +11,7 @@
                     [showCompleteButton]="canCompleteTask()"
                     [showSaveButton]="canCompleteTask()"
                     [displayModeConfigurations]="displayModeConfigurations"
+                    [fieldValidators]="fieldValidators"
                     (formSaved)="onFormSaved($event)"
                     (formCompleted)="onFormCompleted($event)"
                     (formError)="onError($event)"
