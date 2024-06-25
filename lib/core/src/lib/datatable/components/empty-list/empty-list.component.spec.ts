@@ -16,8 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../testing';
 import { EmptyListComponent } from './empty-list.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('EmptyListComponentComponent', () => {
     let fixture: ComponentFixture<EmptyListComponent>;

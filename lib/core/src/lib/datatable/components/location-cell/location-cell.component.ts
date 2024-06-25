@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { PathInfo } from '@alfresco/js-api';
-import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { AsyncPipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { PathInfo } from '@alfresco/js-api';
 
 @Component({
-    imports: [AsyncPipe, RouterModule],
     standalone: true,
+    imports: [AsyncPipe, RouterModule],
     selector: 'adf-location-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

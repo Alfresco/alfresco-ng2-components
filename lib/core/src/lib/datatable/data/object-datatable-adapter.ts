@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Subject } from 'rxjs';
 import { DataColumn } from './data-column.model';
 import { DataRow } from './data-row.model';
+import { ObjectDataRow } from './object-datarow.model';
+import { ObjectDataColumn } from './object-datacolumn.model';
 import { DataSorting } from './data-sorting.model';
 import { DataTableAdapter } from './datatable-adapter';
-import { ObjectDataColumn } from './object-datacolumn.model';
-import { ObjectDataRow } from './object-datarow.model';
+import { Subject } from 'rxjs';
 
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
