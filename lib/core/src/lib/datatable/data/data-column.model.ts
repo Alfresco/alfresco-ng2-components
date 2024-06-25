@@ -17,8 +17,8 @@
 
 /* eslint-disable id-blacklist */
 
-import { DataColumnType } from '@alfresco/adf-extensions';
 import { TemplateRef } from '@angular/core';
+import { DataColumnType } from '@alfresco/adf-extensions';
 
 export interface DataColumn<T = unknown> {
     id?: string;

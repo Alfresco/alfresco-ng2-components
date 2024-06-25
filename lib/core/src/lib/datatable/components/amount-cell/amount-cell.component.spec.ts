@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AmountCellComponent } from './amount-cell.component';
+import { CurrencyConfig } from '../../data/data-column.model';
+import { BehaviorSubject } from 'rxjs';
+import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
-import { LOCALE_ID } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
-import { CurrencyConfig } from '../../data/data-column.model';
-import { AmountCellComponent } from './amount-cell.component';
 
 describe('AmountCellComponent', () => {
     let component: AmountCellComponent;
@@ -58,14 +58,7 @@ describe('AmountCellComponent', () => {
     });
 
     it('should render currency value with custom currency code', () => {
-        renderAndCheckCurrencyValue(
-            {
-                code: 'MY CUSTOM CURRENCY',
-                display: 'symbol'
-            },
-            123.45,
-            'MY CUSTOM CURRENCY123.45'
-        );
+        renderAndCheckCurrencyValue({ code: 'MY CUSTOM CURRENCY', display: 'symbol' }, 123.45, 'MY CUSTOM CURRENCY123.45');
     });
 
     it('should render currency value with custom display code', () => {

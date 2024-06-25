@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { ResizableDirective } from './resizable.directive';
-import { ResizeHandleDirective } from './resize-handle.directive';
+import { FormFieldModel, FormFieldValidator } from '@alfresco/adf-core';
 
-@NgModule({
-  declarations: [ResizableDirective, ResizeHandleDirective],
-  exports: [ResizableDirective, ResizeHandleDirective]
-})
-export class ResizableModule {}
+export class MockFormFieldValidator implements FormFieldValidator {
+    isSupported(_field: FormFieldModel): boolean {
+        return true;
+    }
+
+    validate(_field: FormFieldModel): boolean {
+        return true;
+    }
+}

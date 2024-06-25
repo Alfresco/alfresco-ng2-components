@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { By } from '@angular/platform-browser';
-import { Observable, Subject } from 'rxjs';
-import { CoreTestingModule } from '../../../testing';
-import { DataColumn } from '../../data/data-column.model';
 import { ColumnsSelectorComponent } from './columns-selector.component';
+import { DataColumn } from '../../data/data-column.model';
+import { Observable, Subject } from 'rxjs';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { CoreTestingModule } from '../../../testing';
+import { By } from '@angular/platform-browser';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
 describe('ColumnsSelectorComponent', () => {
     let fixture: ComponentFixture<ColumnsSelectorComponent>;
@@ -40,7 +40,8 @@ describe('ColumnsSelectorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ColumnsSelectorComponent]
+            imports: [CoreTestingModule],
+            declarations: [ColumnsSelectorComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(ColumnsSelectorComponent);

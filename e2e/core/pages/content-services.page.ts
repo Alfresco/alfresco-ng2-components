@@ -271,7 +271,7 @@ export class ContentServicesPage {
     }
 
     async checkLockIsDisplayedForElement(name: string): Promise<void> {
-        const lockButton = $(`td.adf-datatable-cell[data-automation-id="${name}"] button`);
+        const lockButton = $(`div.adf-datatable-cell[data-automation-id="${name}"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(lockButton);
     }
 
@@ -290,7 +290,7 @@ export class ContentServicesPage {
 
     async getAttributeValueForElement(elementName: string, propertyName: string): Promise<string> {
         const elementSize = $(
-            `.app-document-list-container td.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`
+            `.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`
         );
         return BrowserActions.getText(elementSize);
     }
@@ -306,7 +306,7 @@ export class ContentServicesPage {
     }
 
     async selectFolder(folderName: string): Promise<void> {
-        const folderSelected = $(`td[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`);
+        const folderSelected = $(`div[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`);
         await BrowserVisibility.waitUntilElementIsVisible(folderSelected);
         await BrowserActions.click(folderSelected);
     }

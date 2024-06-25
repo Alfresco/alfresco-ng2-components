@@ -88,7 +88,7 @@
 
             <p class="toggle">
 
-                <mat-form-field>
+                <mat-form-field floatPlaceholder="float">
                     <input matInput placeholder="Display Aspect" [(ngModel)]="desiredAspect">
                 </mat-form-field>
 
@@ -97,7 +97,7 @@
 
             <p class="toggle">
                 <ng-container *ngIf="isPreset">
-                    <mat-form-field>
+                    <mat-form-field floatPlaceholder="float">
                         <input matInput placeholder="Custom Preset" [(ngModel)]="customPreset" data-automation-id="adf-text-custom-preset">
                     </mat-form-field>
                     <button mat-raised-button id="adf-metadata-aplly" (click)="applyCustomPreset()">Apply</button>

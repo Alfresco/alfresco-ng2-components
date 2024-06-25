@@ -15,50 +15,85 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { LocalizedDatePipe } from '../pipes';
-import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
-import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
-import { ColumnsSelectorComponent } from './components/columns-selector/columns-selector.component';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { MaterialModule } from '../material.module';
+import { ContextMenuModule } from '../context-menu/context-menu.module';
+import { PipeModule } from '../pipes/pipe.module';
+
+import { DirectiveModule } from '../directives/directive.module';
 import { DataTableCellComponent } from './components/datatable-cell/datatable-cell.component';
 import { DataTableRowComponent } from './components/datatable-row/datatable-row.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { DateCellComponent } from './components/date-cell/date-cell.component';
-import {
-    EmptyListBodyDirective,
+import { ColumnsSelectorComponent } from './components/columns-selector/columns-selector.component';
+import { EmptyListBodyDirective,
     EmptyListComponent,
     EmptyListFooterDirective,
-    EmptyListHeaderDirective
-} from './components/empty-list/empty-list.component';
+    EmptyListHeaderDirective } from './components/empty-list/empty-list.component';
 import { FileSizeCellComponent } from './components/filesize-cell/filesize-cell.component';
-import { IconCellComponent } from './components/icon-cell/icon-cell.component';
-import { JsonCellComponent } from './components/json-cell/json-cell.component';
 import { LocationCellComponent } from './components/location-cell/location-cell.component';
-import { NumberCellComponent } from './components/number-cell/number-cell.component';
-import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
+import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
+import { NoContentTemplateDirective } from './directives/no-content-template.directive';
+import { NoPermissionTemplateDirective } from './directives/no-permission-template.directive';
+import { HeaderFilterTemplateDirective } from './directives/header-filter-template.directive';
 import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-content-template.directive';
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
-import { DropZoneDirective } from './directives/drop-zone.directive';
-import { HeaderFilterTemplateDirective } from './directives/header-filter-template.directive';
-import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
 import { MainMenuDataTableTemplateDirective } from './directives/main-data-table-action-template.directive';
-import { NoContentTemplateDirective } from './directives/no-content-template.directive';
-import { NoPermissionTemplateDirective } from './directives/no-permission-template.directive';
+import { JsonCellComponent } from './components/json-cell/json-cell.component';
+import { ClipboardModule } from '../clipboard/clipboard.module';
+import { DropZoneDirective } from './directives/drop-zone.directive';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { IconModule } from '../icon/icon.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
+import { ResizableModule } from './directives/resizable/resizable.module';
+import { DataColumnModule } from './data-column/data-column.module';
+import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
+import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
+import { NumberCellComponent } from './components/number-cell/number-cell.component';
+import { LocalizedDatePipe } from '../pipes';
+import { IconCellComponent } from './components/icon-cell/icon-cell.component';
 
 @NgModule({
     imports: [
+        RouterModule,
+        MaterialModule,
+        CommonModule,
+        TranslateModule,
+        ContextMenuModule,
+        PipeModule,
+        DirectiveModule,
+        ClipboardModule,
+        DragDropModule,
+        IconModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ResizableModule,
+        DataColumnModule,
+        BooleanCellComponent,
+        AmountCellComponent,
+        NumberCellComponent,
+        LocationCellComponent,
+        DateCellComponent,
+        LocalizedDatePipe,
+        IconCellComponent
+    ],
+    declarations: [
         DataTableComponent,
+        EmptyListComponent,
+        EmptyListHeaderDirective,
+        EmptyListBodyDirective,
+        EmptyListFooterDirective,
         DataTableCellComponent,
         DataTableRowComponent,
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent,
-        ColumnsSelectorComponent,
-        EmptyListComponent,
         FileSizeCellComponent,
         JsonCellComponent,
-        DropZoneDirective,
+        ColumnsSelectorComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,
@@ -67,16 +102,7 @@ import { NoPermissionTemplateDirective } from './directives/no-permission-templa
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        BooleanCellComponent,
-        AmountCellComponent,
-        NumberCellComponent,
-        LocationCellComponent,
-        DateCellComponent,
-        LocalizedDatePipe,
-        IconCellComponent,
-        EmptyListHeaderDirective,
-        EmptyListBodyDirective,
-        EmptyListFooterDirective
+        DropZoneDirective
     ],
     exports: [
         DataTableComponent,

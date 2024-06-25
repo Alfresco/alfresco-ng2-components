@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { DataColumn } from '../data/data-column.model';
+import { Directive, Input, ElementRef, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { DataRow } from '../data/data-row.model';
+import { DataColumn } from '../data/data-column.model';
 
 @Directive({
-    selector: '[adf-drop-zone]',
-    standalone: true
+    selector: '[adf-drop-zone]'
 })
 export class DropZoneDirective implements OnInit, OnDestroy {
     private element: HTMLElement;
