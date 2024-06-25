@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconHarness } from '@angular/material/icon/testing';
-import { ObjectDataColumn } from '../../data/object-datacolumn.model';
-import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 
 import { IconCellComponent } from './icon-cell.component';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('IconCellComponent', () => {
     let component: IconCellComponent;

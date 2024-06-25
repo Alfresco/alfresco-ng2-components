@@ -1,7 +1,0 @@
-<ng-container *ngIf="value$ | async as value; else editEmpty">
-    <button mat-button color="primary" (click)="view()">json</button>
-</ng-container>
-
-<ng-template #editEmpty>
-    <button *ngIf="editable" mat-button color="primary" (click)="view()">json</button>
-</ng-template>

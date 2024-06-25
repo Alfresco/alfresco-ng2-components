@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../testing';
 import { DataColumnComponent } from './data-column.component';
+import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TestBed } from '@angular/core/testing';
 
 describe('DataColumnListComponent', () => {
     beforeEach(() => {

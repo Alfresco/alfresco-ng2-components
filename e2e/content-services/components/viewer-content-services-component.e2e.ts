@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { BrowserActions, createApiService, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { browser, by, element, protractor } from 'protractor';
+import { createApiService, BrowserActions, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Content Services Viewer', () => {
     const acsUser = new UserModel();
@@ -362,7 +362,7 @@ describe('Content Services Viewer', () => {
         });
 
         it('[C269109] Should not be able to open thumbnail panel before the pdf is loaded', async () => {
-            const fileView = element.all(by.css(`#document-list-container td[data-automation-id="${pdfFile.name}"]`)).first();
+            const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${pdfFile.name}"]`)).first();
             await BrowserActions.click(fileView);
             await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 

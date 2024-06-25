@@ -18,8 +18,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { takeUntil } from 'rxjs/operators';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     standalone: true,

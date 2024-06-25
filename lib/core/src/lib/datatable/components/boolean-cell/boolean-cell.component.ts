@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { AsyncPipe, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BooleanPipe } from '../../../pipes';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { CommonModule } from '@angular/common';
+import { BooleanPipe } from '../../../pipes/boolean.pipe';
 
 @Component({
-    selector: 'adf-boolean-cell',
     standalone: true,
-    imports: [AsyncPipe, BooleanPipe, NgIf],
+    imports: [CommonModule, BooleanPipe],
+    selector: 'adf-boolean-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container *ngIf="value$ | async | adfBoolean as value">
@@ -36,6 +36,7 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
     host: { class: 'adf-datatable-content-cell' }
 })
 export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
+
     ngOnInit() {
         super.ngOnInit();
     }

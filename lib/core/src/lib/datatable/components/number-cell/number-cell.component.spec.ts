@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NumberCellComponent } from './number-cell.component';
+import { DecimalConfig } from '../../data/data-column.model';
+import { BehaviorSubject } from 'rxjs';
+import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
-import { LOCALE_ID } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
-import { DecimalConfig } from '../../data/data-column.model';
-import { NumberCellComponent } from './number-cell.component';
 
 describe('NumberCellComponent', () => {
     let component: NumberCellComponent;
