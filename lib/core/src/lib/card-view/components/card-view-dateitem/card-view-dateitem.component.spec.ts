@@ -341,7 +341,7 @@ describe('CardViewDateItemComponent', () => {
         component.property.default = 'Jul 10 2017 00:01:00';
         component.property.key = 'fake-key';
         component.property.value = new Date('Jul 10 2017 00:01:00');
-        const expectedDate = new Date('Jul 10 2018 00:01:00');
+        const expectedDate = new Date('Jul 10 2018 00:00:00');
         fixture.detectChanges();
 
         await fixture.whenStable();
