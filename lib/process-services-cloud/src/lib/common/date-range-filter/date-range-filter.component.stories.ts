@@ -15,24 +15,27 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
 import { ProcessCommonModule } from '../process-common.module';
 import { DateRangeFilterComponent } from './date-range-filter.component';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: DateRangeFilterComponent,
     title: 'Process Services Cloud/Process Common/Date Range Filter',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, ProcessCommonModule]
+            imports: [ProcessCommonModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
         processFilterProperty: {
             control: 'object',
-            defaultValue: mockFilterProperty,
             table: {
                 type: { summary: 'ApplicationInstanceModel' }
             }
@@ -51,11 +54,14 @@ export default {
             action: 'dateTypeChange',
             table: { category: 'Actions' }
         }
+    },
+    args: {
+        processFilterProperty: mockFilterProperty
     }
-} as Meta;
+} as Meta<DateRangeFilterComponent>;
 
-const template: Story<DateRangeFilterComponent> = (args: DateRangeFilterComponent) => ({
+const template: StoryFn<DateRangeFilterComponent> = (args) => ({
     props: args
 });
 
-export const dateRangeFilter = template.bind({});
+export const DateRangeFilter = template.bind({});

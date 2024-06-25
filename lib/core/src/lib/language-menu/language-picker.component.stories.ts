@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, componentWrapperDecorator, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 
 import { LanguageMenuModule } from './language-menu.module';
@@ -23,16 +23,18 @@ import { LanguagePickerComponent } from './language-picker.component';
 
 import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: LanguagePickerComponent,
     title: 'Core/Language Menu/Language Picker',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LanguageMenuModule],
-            providers: [
-                { provide: LanguageService, useClass: LanguageServiceMock }
-            ]
+            imports: [LanguageMenuModule],
+            providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
@@ -45,24 +47,26 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<LanguagePickerComponent>;
 
-const languagePickerComponentTemplate: Story<LanguagePickerComponent> = (args: LanguagePickerComponent) => ({
+const languagePickerComponentTemplate: StoryFn<LanguagePickerComponent> = (args) => ({
     props: args
 });
 
-export const primary = languagePickerComponentTemplate.bind({});
-primary.parameters = { layout: 'centered' };
+export const Primary = languagePickerComponentTemplate.bind({});
+Primary.parameters = { layout: 'centered' };
 
-export const asNestedMenu = languagePickerComponentTemplate.bind({});
-asNestedMenu.decorators = [
-    componentWrapperDecorator(story => `
+export const AsNestedMenu = languagePickerComponentTemplate.bind({});
+AsNestedMenu.decorators = [
+    componentWrapperDecorator(
+        (story) => `
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         ${story}
       </mat-menu>
-    `)
+    `
+    )
 ];
-asNestedMenu.parameters = { layout: 'centered' };
+AsNestedMenu.parameters = { layout: 'centered' };
