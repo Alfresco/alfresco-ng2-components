@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { ElementRef, NgZone, Renderer2 } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { ResizeHandleDirective } from './resize-handle.directive';
 
 describe('ResizeHandleDirective', () => {
@@ -30,12 +30,14 @@ describe('ResizeHandleDirective', () => {
     };
 
     const elementRefMock = {
-        nativeElement: { dispatchEvent: () => { } }
+        nativeElement: {
+            dispatchEvent: () => {}
+        }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ResizeHandleDirective],
+            imports: [ResizeHandleDirective],
             providers: [
                 { provide: Renderer2, useValue: rendererMock },
                 { provide: ElementRef, useValue: elementRefMock }

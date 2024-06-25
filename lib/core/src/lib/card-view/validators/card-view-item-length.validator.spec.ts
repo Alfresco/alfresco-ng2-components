@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { CardViewItemLengthValidator } from './card-view-item-length.valiator';
+import { CardViewItemLengthValidator } from './card-view-item-length.validator';
 
-describe('CardViewItemPositiveIntValidator', () => {
+describe('CardViewItemLengthValidator', () => {
     const validator = new CardViewItemLengthValidator(2, 3);
 
     it('should validate empty value', () => {

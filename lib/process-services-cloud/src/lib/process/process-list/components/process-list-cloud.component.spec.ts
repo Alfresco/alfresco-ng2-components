@@ -15,35 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import {
-    AppConfigService,
-    ColumnsSelectorComponent,
-    CustomEmptyContentTemplateDirective,
-    DataColumn,
-    DataRowEvent,
-    DataTableModule,
-    getDataColumnMock,
-    ObjectDataRow,
-    User
-} from '@alfresco/adf-core';
-import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { ProcessListCloudComponent } from './process-list-cloud.component';
-import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
-import { of } from 'rxjs';
-import { shareReplay, skip } from 'rxjs/operators';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
-import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AppConfigService, ColumnsSelectorComponent, DataColumn, DataRowEvent, getDataColumnMock, ObjectDataRow, User } from '@alfresco/adf-core';
 import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { shareReplay, skip } from 'rxjs/operators';
+import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
+import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
+import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
+import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
+import { ProcessListCloudService } from '../services/process-list-cloud.service';
+import { ProcessListCloudComponent } from './process-list-cloud.component';
 
 @Component({
     template: ` <adf-cloud-process-list #processListCloud>
@@ -636,9 +626,9 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, DataTableModule, MatProgressSpinnerModule],
+            imports: [ProcessServiceCloudTestingModule, MatProgressSpinnerModule],
             providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
-            declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
+            declarations: [EmptyTemplateComponent, ProcessListCloudComponent]
         });
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
         fixtureEmpty.detectChanges();

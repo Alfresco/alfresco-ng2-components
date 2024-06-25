@@ -566,5 +566,11 @@
   "ADF_DROPDOWN": {
     "LOADING": "Chargement...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} zone de liste déroulante {{selectedOption}}"
+  },
+  "ADF_CONFIRM_DIALOG": {
+    "TITLE": "Confirmer",
+    "ACTION": "Voulez-vous continuer ?",
+    "YES_LABEL": "Oui",
+    "NO_LABEL": "Non"
   }
 }

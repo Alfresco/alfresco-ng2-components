@@ -1,7 +1,10 @@
 <mat-toolbar class="adf-feature-flags-overrides-header">
   <div class="adf-feature-flags-overrides-header-text">
-    <adf-feature-flags-override-indicator></adf-feature-flags-override-indicator>
-    <span>{{ "CORE.FEATURE-FLAGS.OVERRIDE" | translate }}</span>
+    <adf-feature-flags-override-indicator
+      class="adf-activity-indicator"
+      size='large'>
+    </adf-feature-flags-override-indicator>
+    <span>{{ "CORE.FEATURE-FLAGS.OVERRIDES" | translate }}</span>
   </div>
   <mat-slide-toggle
     color="warning"

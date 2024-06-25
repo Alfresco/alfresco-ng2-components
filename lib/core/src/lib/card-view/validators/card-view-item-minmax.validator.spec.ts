@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CardViewItemMinMaxValidator } from './card-view-item-minmax.valiator';
+import { CardViewItemMinMaxValidator } from './card-view-item-minmax.validator';
 
 describe('CardViewItemMinMaxValidator', () => {
     const validator = new CardViewItemMinMaxValidator(1, 3);

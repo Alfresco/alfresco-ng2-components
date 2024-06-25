@@ -16,44 +16,31 @@
  */
 
 import { NgModule } from '@angular/core';
-import { AboutGithubLinkComponent } from './about-github-link/about-github-link.component';
 import { AboutServerSettingsComponent } from './about-server-settings/about-server-settings.component';
 import { AboutExtensionListComponent } from './about-extension-list/about-extension-list.component';
 import { AboutLicenseListComponent } from './about-license-list/about-license-list.component';
 import { PackageListComponent } from './about-package/package-list.component';
 import { AboutStatusListComponent } from './about-status-list/about-status-list.component';
 import { ModuleListComponent } from './about-module-list/module-list.component';
-import { AboutPlatformVersionComponent } from './about-platform-version/about-platform-version.component';
 import { AboutComponent } from './about.component';
 import { AboutPanelDirective } from './about-panel.directive';
 import { AboutRepositoryInfoComponent } from './about-repository-info/about-repository-info.component';
 
+export const ABOUT_DIRECTIVES = [
+    AboutExtensionListComponent,
+    AboutLicenseListComponent,
+    ModuleListComponent,
+    AboutRepositoryInfoComponent,
+    PackageListComponent,
+    AboutStatusListComponent,
+    AboutServerSettingsComponent,
+    AboutPanelDirective,
+    AboutComponent
+] as const;
+
+/** @deprecated import `ABOUT_DIRECTIVES` or standalone components instead */
 @NgModule({
-    imports: [
-        AboutExtensionListComponent,
-        AboutGithubLinkComponent,
-        AboutLicenseListComponent,
-        ModuleListComponent,
-        AboutRepositoryInfoComponent,
-        AboutPlatformVersionComponent,
-        PackageListComponent,
-        AboutStatusListComponent,
-        AboutServerSettingsComponent,
-        AboutPanelDirective,
-        AboutComponent
-    ],
-    exports: [
-        AboutComponent,
-        AboutPanelDirective,
-        AboutRepositoryInfoComponent,
-        AboutPlatformVersionComponent,
-        AboutGithubLinkComponent,
-        AboutServerSettingsComponent,
-        AboutExtensionListComponent,
-        AboutLicenseListComponent,
-        PackageListComponent,
-        AboutStatusListComponent,
-        ModuleListComponent
-    ]
+    imports: [...ABOUT_DIRECTIVES],
+    exports: [...ABOUT_DIRECTIVES]
 })
 export class AboutModule {}

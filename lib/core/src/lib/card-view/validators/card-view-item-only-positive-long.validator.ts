@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
-export const aboutGithubDetails = {
-    url: 'https://github.com/componany/repository/commits/',
-    defaultUrl: 'https://github.com/Alfresco/alfresco-ng2-components/commits/',
-    version: '0.0.7',
-    ecmHost: 'https://mock.ecmhost.com',
-    bpmHost: 'https://mock.bpmhost.com',
-    appName: 'mock-application-name'
-};
+import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
+
+export class CardViewItemPositiveLongValidator implements CardViewItemValidator {
+    message = 'CORE.CARDVIEW.VALIDATORS.ONLY_POSITIVE_NUMBER';
+
+    isValid(value: number | number[] | ''): boolean {
+        if (Array.isArray(value)) {
+            return value.every(this.isPositiveNumber);
+        }
+
+        return value === '' || (!isNaN(value) && this.isPositiveNumber(value));
+    }
+
+    private isPositiveNumber(value: number): boolean {
+        return Number(value) >= 0;
+    }
+}

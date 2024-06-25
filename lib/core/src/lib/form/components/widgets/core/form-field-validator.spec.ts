@@ -52,20 +52,20 @@ describe('FormFieldValidator', () => {
             });
 
             field.required = false;
-            expect(validator.isSupported(field)).toBeFalsy();
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(false);
+            expect(validator.validate(field)).toBe(true);
 
             field.required = true;
-            expect(validator.isSupported(field)).toBeTruthy();
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should skip unsupported type', () => {
             const field = new FormFieldModel(new FormModel(), { type: 'wrong-type' });
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail for dropdown with empty value', () => {
+        it('should fail (display error) for dropdown with empty value', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
                 value: '<empty>',
@@ -75,29 +75,34 @@ describe('FormFieldValidator', () => {
             });
 
             field.emptyOption = { id: '<empty>' } as FormFieldOption;
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
 
             field.value = '<non-empty>';
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail for dropdown with zero selection', () => {
+        it('should fail (display error) for multiple type dropdown with zero selection', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
-                value: [],
-                hasEmptyValue: true,
+                value: [{ id: 'id_cat', name: 'Cat' }],
                 required: true,
-                selectionType: 'multiple'
+                selectionType: 'multiple',
+                hasEmptyValue: false,
+                options: [
+                    { id: 'id_cat', name: 'Cat' },
+                    { id: 'id_dog', name: 'Dog' }
+                ]
             });
 
-            field.emptyOption = { id: 'empty' } as FormFieldOption;
-            expect(validator.validate(field)).toBeFalsy();
-
+            const validateBeforeUnselect = validator.validate(field);
             field.value = [];
-            expect(validator.validate(field)).toBe(false);
+            const validateAfterUnselect = validator.validate(field);
+
+            expect(validateBeforeUnselect).toBe(true);
+            expect(validateAfterUnselect).toBe(false);
         });
 
-        it('should fail for dropdown with null value', () => {
+        it('should fail (display error) for dropdown with null value', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
                 value: null,
@@ -109,7 +114,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(false);
         });
 
-        it('should fail for dropdown with empty object', () => {
+        it('should fail (display error) for dropdown with empty object', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
                 value: {},
@@ -121,7 +126,7 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBe(false);
         });
 
-        it('should fail for radio buttons', () => {
+        it('should fail (display error) for radio buttons', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.RADIO_BUTTONS,
                 required: true,
@@ -129,7 +134,7 @@ describe('FormFieldValidator', () => {
             });
             field.value = 'one';
 
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
         });
 
         it('should succeed for radio buttons', () => {
@@ -140,10 +145,10 @@ describe('FormFieldValidator', () => {
                 options: [{ id: 'two', name: 'two' }]
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail for upload', () => {
+        it('should fail (display error) for upload', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: null,
@@ -151,10 +156,10 @@ describe('FormFieldValidator', () => {
             });
 
             field.value = null;
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
 
             field.value = [];
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
         });
 
         it('should succeed for upload', () => {
@@ -164,10 +169,10 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail for text', () => {
+        it('should fail (display error) for text', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: null,
@@ -175,10 +180,10 @@ describe('FormFieldValidator', () => {
             });
 
             field.value = null;
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
 
             field.value = '';
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
         });
 
         it('should succeed for date', () => {
@@ -188,10 +193,10 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail for date', () => {
+        it('should fail (display error) for date', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE,
                 value: null,
@@ -199,10 +204,10 @@ describe('FormFieldValidator', () => {
             });
 
             field.value = null;
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
 
             field.value = '';
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
         });
 
         it('should succeed for text', () => {
@@ -212,7 +217,7 @@ describe('FormFieldValidator', () => {
                 required: true
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed for check box', () => {
@@ -223,10 +228,10 @@ describe('FormFieldValidator', () => {
                 options: [{ id: 'two', name: 'two' }]
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail for check box', () => {
+        it('should fail (display error) for check box', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.BOOLEAN,
                 required: true,
@@ -235,7 +240,7 @@ describe('FormFieldValidator', () => {
             });
             field.value = false;
 
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
         });
     });
 
@@ -247,20 +252,20 @@ describe('FormFieldValidator', () => {
         });
 
         it('should verify number', () => {
-            expect(NumberFieldValidator.isNumber('1')).toBeTruthy();
-            expect(NumberFieldValidator.isNumber('1.0')).toBeTruthy();
-            expect(NumberFieldValidator.isNumber('-1')).toBeTruthy();
-            expect(NumberFieldValidator.isNumber(1)).toBeTruthy();
-            expect(NumberFieldValidator.isNumber(0)).toBeTruthy();
-            expect(NumberFieldValidator.isNumber(-1)).toBeTruthy();
+            expect(NumberFieldValidator.isNumber('1')).toBe(true);
+            expect(NumberFieldValidator.isNumber('1.0')).toBe(true);
+            expect(NumberFieldValidator.isNumber('-1')).toBe(true);
+            expect(NumberFieldValidator.isNumber(1)).toBe(true);
+            expect(NumberFieldValidator.isNumber(0)).toBe(true);
+            expect(NumberFieldValidator.isNumber(-1)).toBe(true);
         });
 
         it('should not verify number', () => {
-            expect(NumberFieldValidator.isNumber(null)).toBeFalsy();
-            expect(NumberFieldValidator.isNumber(undefined)).toBeFalsy();
-            expect(NumberFieldValidator.isNumber('')).toBeFalsy();
-            expect(NumberFieldValidator.isNumber('one')).toBeFalsy();
-            expect(NumberFieldValidator.isNumber('1q')).toBeFalsy();
+            expect(NumberFieldValidator.isNumber(null)).toBe(false);
+            expect(NumberFieldValidator.isNumber(undefined)).toBe(false);
+            expect(NumberFieldValidator.isNumber('')).toBe(false);
+            expect(NumberFieldValidator.isNumber('one')).toBe(false);
+            expect(NumberFieldValidator.isNumber('1q')).toBe(false);
         });
 
         it('should allow empty number value', () => {
@@ -269,7 +274,7 @@ describe('FormFieldValidator', () => {
                 value: null
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should allow number value', () => {
@@ -278,7 +283,7 @@ describe('FormFieldValidator', () => {
                 value: 44
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should allow zero number value', () => {
@@ -287,17 +292,17 @@ describe('FormFieldValidator', () => {
                 value: 0
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail for wrong number value', () => {
+        it('should fail (display error) for wrong number value', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: '<value>'
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -314,10 +319,10 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT
             });
 
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.minLength = 10;
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should allow empty values', () => {
@@ -327,7 +332,7 @@ describe('FormFieldValidator', () => {
                 value: null
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed text validation', () => {
@@ -337,10 +342,10 @@ describe('FormFieldValidator', () => {
                 value: '1234'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail text validation', () => {
+        it('should fail (display error) text validation', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 minLength: 3,
@@ -348,7 +353,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -365,10 +370,10 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT
             });
 
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.maxLength = 10;
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should allow empty values', () => {
@@ -378,7 +383,7 @@ describe('FormFieldValidator', () => {
                 value: null
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed text validation', () => {
@@ -388,10 +393,10 @@ describe('FormFieldValidator', () => {
                 value: '123'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail text validation', () => {
+        it('should fail (display error) text validation', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 maxLength: 3,
@@ -399,7 +404,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -415,10 +420,10 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER
             });
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.minValue = '1';
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should support numeric widgets only', () => {
@@ -427,10 +432,10 @@ describe('FormFieldValidator', () => {
                 minValue: '1'
             });
 
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
 
             field.type = FormFieldTypes.TEXT;
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
         });
 
         it('should allow empty values', () => {
@@ -440,7 +445,7 @@ describe('FormFieldValidator', () => {
                 minValue: '1'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed for unsupported types', () => {
@@ -448,7 +453,7 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed validating value', () => {
@@ -458,10 +463,10 @@ describe('FormFieldValidator', () => {
                 minValue: '10'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating value', () => {
+        it('should fail (display error) validating value', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: '9',
@@ -469,7 +474,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -485,10 +490,10 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER
             });
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.maxValue = '1';
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should support numeric widgets only', () => {
@@ -497,10 +502,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '1'
             });
 
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
 
             field.type = FormFieldTypes.TEXT;
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
         });
 
         it('should allow empty values', () => {
@@ -510,7 +515,7 @@ describe('FormFieldValidator', () => {
                 maxValue: '1'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed for unsupported types', () => {
@@ -518,7 +523,7 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed validating value', () => {
@@ -528,10 +533,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '10'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating value', () => {
+        it('should fail (display error) validating value', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: '11',
@@ -539,7 +544,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -555,10 +560,10 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.regexPattern = '<pattern>';
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should allow empty values', () => {
@@ -568,7 +573,7 @@ describe('FormFieldValidator', () => {
                 regexPattern: 'pattern'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should allow empty string values', () => {
@@ -578,7 +583,7 @@ describe('FormFieldValidator', () => {
                 regexPattern: 'pattern'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed validating regex', () => {
@@ -588,17 +593,17 @@ describe('FormFieldValidator', () => {
                 regexPattern: 'pattern'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating regex', () => {
+        it('should fail (display error) validating regex', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,
                 value: 'some value',
                 regexPattern: 'pattern'
             });
 
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
         });
     });
 
@@ -613,13 +618,13 @@ describe('FormFieldValidator', () => {
             let field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT
             });
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TYPEAHEAD
             });
 
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should allow empty values', () => {
@@ -629,7 +634,7 @@ describe('FormFieldValidator', () => {
                 regexPattern: 'pattern'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed for a valid input value in options', () => {
@@ -642,10 +647,10 @@ describe('FormFieldValidator', () => {
                 ]
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail for an invalid input value in options', () => {
+        it('should fail (display error) for an invalid input value in options', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TYPEAHEAD,
                 value: 'Lean',
@@ -655,7 +660,7 @@ describe('FormFieldValidator', () => {
                 ]
             });
 
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
         });
     });
 
@@ -670,10 +675,10 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME
             });
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.maxValue = '9999-02-08 10:10 AM';
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should support date time widgets only', () => {
@@ -682,10 +687,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '9999-02-08 10:10 AM'
             });
 
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
 
             field.type = FormFieldTypes.TEXT;
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
         });
 
         it('should allow empty values', () => {
@@ -695,7 +700,7 @@ describe('FormFieldValidator', () => {
                 maxValue: '9999-02-08 10:10 AM'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed for unsupported types', () => {
@@ -703,10 +708,10 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should take into account that max value is in UTC and NOT fail validating value checking the time', () => {
+        it('should take into account that max value is in UTC and NOT fail (display error) validating value checking the time', () => {
             const localValidValue = '2018-03-30T22:59:00.000Z';
 
             const field = new FormFieldModel(new FormModel(), {
@@ -715,10 +720,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '2018-03-31T23:00:00.000Z'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should take into account that max value is in UTC and fail validating value checking the time', () => {
+        it('should take into account that max value is in UTC and fail (display error) validating value checking the time', () => {
             const localInvalidValue = '2018-03-30T23:01:00.000Z';
 
             const field = new FormFieldModel(new FormModel(), {
@@ -728,7 +733,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
             expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
         });
@@ -740,10 +745,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '9999-02-08T10:10:00.000Z'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating value checking the time', () => {
+        it('should fail (display error) validating value checking the time', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '9999-02-08T11:10:00.000Z',
@@ -751,7 +756,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
 
@@ -762,10 +767,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '9999-02-08T10:10:00.000Z'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating value checking the date', () => {
+        it('should fail (display error) validating value checking the date', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '08-02-9999 12:10 AM',
@@ -773,7 +778,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -789,10 +794,10 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME
             });
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.minValue = '9999-02-08 09:10 AM';
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should support date time widgets only', () => {
@@ -801,10 +806,10 @@ describe('FormFieldValidator', () => {
                 minValue: '9999-02-08 09:10 AM'
             });
 
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
 
             field.type = FormFieldTypes.TEXT;
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
         });
 
         it('should allow empty values', () => {
@@ -814,7 +819,7 @@ describe('FormFieldValidator', () => {
                 minValue: '9999-02-08 09:10 AM'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed for unsupported types', () => {
@@ -822,10 +827,10 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should take into account that min value is in UTC and NOT fail validating value checking the time', () => {
+        it('should take into account that min value is in UTC and NOT fail (display error) validating value checking the time', () => {
             const localValidValue = '2018-03-02T06:01:00.000Z';
 
             const field = new FormFieldModel(new FormModel(), {
@@ -834,10 +839,10 @@ describe('FormFieldValidator', () => {
                 minValue: '2018-03-02T06:00:00.000Z'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should take into account that min value is in UTC and fail validating value checking the time', () => {
+        it('should take into account that min value is in UTC and fail (display error) validating value checking the time', () => {
             const localInvalidValue = '2018-3-02 05:59 AM';
 
             const field = new FormFieldModel(new FormModel(), {
@@ -847,7 +852,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
             expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
         });
@@ -859,7 +864,7 @@ describe('FormFieldValidator', () => {
                 minValue: '9999-02-08 09:00 AM'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed validating value by date', () => {
@@ -869,10 +874,10 @@ describe('FormFieldValidator', () => {
                 minValue: '9999-02-08 09:10 AM'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating value by time', () => {
+        it('should fail (display error) validating value by time', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '9999-08-02T08:10:00.000Z',
@@ -880,11 +885,11 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
 
-        it('should fail validating value by date', () => {
+        it('should fail (display error) validating value by date', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '9999-02-07T09:10:00.000Z',
@@ -892,7 +897,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -908,10 +913,10 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE
             });
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.maxValue = '9999-02-08';
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should support date widgets only', () => {
@@ -920,10 +925,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '9999-02-08'
             });
 
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
 
             field.type = FormFieldTypes.TEXT;
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
         });
 
         it('should allow empty values', () => {
@@ -933,7 +938,7 @@ describe('FormFieldValidator', () => {
                 maxValue: '9999-02-08'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed for unsupported types', () => {
@@ -941,7 +946,7 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed validating value checking the date', () => {
@@ -951,10 +956,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '9999-02-09'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating value checking the date', () => {
+        it('should fail (display error) validating value checking the date', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE,
                 value: '9999-02-08T00:00:00',
@@ -962,7 +967,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
 
@@ -973,10 +978,10 @@ describe('FormFieldValidator', () => {
                 maxValue: '09-02-9999'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating with APS1 format', () => {
+        it('should fail (display error) validating with APS1 format', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE,
                 value: '9999-02-08T00:00:00',
@@ -984,7 +989,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -1000,10 +1005,10 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE
             });
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
 
             field.minValue = '9999-02-08';
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
         });
 
         it('should support date widgets only', () => {
@@ -1012,10 +1017,10 @@ describe('FormFieldValidator', () => {
                 minValue: '9999-02-08'
             });
 
-            expect(validator.isSupported(field)).toBeTruthy();
+            expect(validator.isSupported(field)).toBe(true);
 
             field.type = FormFieldTypes.TEXT;
-            expect(validator.isSupported(field)).toBeFalsy();
+            expect(validator.isSupported(field)).toBe(false);
         });
 
         it('should allow empty values', () => {
@@ -1025,7 +1030,7 @@ describe('FormFieldValidator', () => {
                 minValue: '9999-02-08'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed for unsupported types', () => {
@@ -1033,7 +1038,7 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should succeed validating value checking the date', () => {
@@ -1043,10 +1048,10 @@ describe('FormFieldValidator', () => {
                 minValue: '9999-02-07'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating value checking the date', () => {
+        it('should fail (display error) validating value checking the date', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE,
                 value: '9999-02-08T00:00:00',
@@ -1054,7 +1059,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
 
@@ -1065,10 +1070,10 @@ describe('FormFieldValidator', () => {
                 minValue: '07-02-9999'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
-        it('should fail validating with APS1 format', () => {
+        it('should fail (display error) validating with APS1 format', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATE,
                 value: '9999-02-08T00:00:00',
@@ -1076,7 +1081,7 @@ describe('FormFieldValidator', () => {
             });
 
             field.validationSummary = new ErrorMessageModel();
-            expect(validator.validate(field)).toBeFalsy();
+            expect(validator.validate(field)).toBe(false);
             expect(field.validationSummary).not.toBeNull();
         });
     });
@@ -1095,7 +1100,7 @@ describe('FormFieldValidator', () => {
                 dateDisplayFormat: 'YYYY-MM-DD HH:mm'
             });
 
-            expect(validator.validate(field)).toBeTruthy();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should validate dateTime format with default format', () => {
@@ -1105,7 +1110,7 @@ describe('FormFieldValidator', () => {
             });
             expect(field.value).toBe('9-6-2021 11:10 AM');
             expect(field.dateDisplayFormat).toBe('D-M-YYYY hh:mm A');
-            expect(validator.validate(field)).toBeTrue();
+            expect(validator.validate(field)).toBe(true);
         });
 
         it('should not validate dateTime format with default format', () => {
@@ -1115,7 +1120,7 @@ describe('FormFieldValidator', () => {
             });
             expect(field.value).toBe('2021-06-09 14:10 AM');
             expect(field.dateDisplayFormat).toBe('D-M-YYYY hh:mm A');
-            expect(validator.validate(field)).toBeFalse();
+            expect(validator.validate(field)).toBe(false);
         });
     });
 
@@ -1133,7 +1138,7 @@ describe('FormFieldValidator', () => {
                 precision: 2
             });
 
-            expect(decimalValidator.validate(field)).toBeTrue();
+            expect(decimalValidator.validate(field)).toBe(true);
         });
 
         it('should return true when value is of lower precision', () => {
@@ -1143,7 +1148,7 @@ describe('FormFieldValidator', () => {
                 precision: 2
             });
 
-            expect(decimalValidator.validate(field)).toBeTrue();
+            expect(decimalValidator.validate(field)).toBe(true);
         });
 
         it('should return false when value is of higher precision', () => {
@@ -1153,7 +1158,7 @@ describe('FormFieldValidator', () => {
                 precision: 1
             });
 
-            expect(decimalValidator.validate(field)).toBeFalse();
+            expect(decimalValidator.validate(field)).toBe(false);
         });
 
         it('should validate decimal of wrong precision when value is of type string', () => {
@@ -1163,7 +1168,7 @@ describe('FormFieldValidator', () => {
                 precision: 1
             });
 
-            expect(decimalValidator.validate(field)).toBeFalse();
+            expect(decimalValidator.validate(field)).toBe(false);
         });
 
         it('should return false, when value is a negative number and of correct precission', () => {
@@ -1173,7 +1178,7 @@ describe('FormFieldValidator', () => {
                 precision: 1
             });
 
-            expect(decimalValidator.validate(field)).toBeFalse();
+            expect(decimalValidator.validate(field)).toBe(false);
         });
 
         it('should return true, when value is a positive number and of correct precission', () => {
@@ -1183,8 +1188,7 @@ describe('FormFieldValidator', () => {
                 precision: 3
             });
 
-            expect(decimalValidator.validate(field)).toBeTrue();
+            expect(decimalValidator.validate(field)).toBe(true);
         });
-
     });
 });
