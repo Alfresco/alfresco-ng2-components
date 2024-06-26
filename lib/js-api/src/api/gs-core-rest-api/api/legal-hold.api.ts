@@ -19,6 +19,7 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ContentPagingQuery } from '../../content-rest-api';
 import { HoldPaging } from '../model/holdPaging';
+import { HoldEntry } from '../model';
 
 /**
  * Legal Holds service.
@@ -50,6 +51,61 @@ export class LegalHoldApi extends BaseApi {
             pathParams,
             queryParams,
             returnType: HoldPaging
+        });
+    }
+
+    /**
+     * Assign node to legal hold
+     *
+     * @param holdId The identifier of a hold
+     * @param nodeId The id of the node to be assigned to existing hold
+     * @returns Promise<HoldEntry>
+     */
+    assignHold(nodeId: string, holdId: string): Promise<HoldEntry> {
+        throwIfNotDefined(holdId, 'holdId');
+        throwIfNotDefined(nodeId, 'nodeId');
+
+        return this.post({
+            path: `/holds/{holdId}/children`,
+            pathParams: { holdId },
+            bodyParam: [nodeId],
+            returnType: HoldEntry
+        });
+    }
+
+    /**
+     * Assign nodes to legal hold
+     *
+     * @param holdId The identifier of a hold
+     * @param nodeIds The list with id of nodes to assign to existing hold
+     * @returns Promise<HoldPaging>
+     */
+    assignHolds(nodeIds: { id: string }[], holdId: string): Promise<HoldPaging> {
+        throwIfNotDefined(holdId, 'holdId');
+        throwIfNotDefined(nodeIds, 'nodeIds');
+
+        return this.post({
+            path: `/holds/{holdId}/children`,
+            pathParams: { holdId },
+            bodyParam: nodeIds,
+            returnType: HoldPaging
+        });
+    }
+
+    /**
+     * Deletes the relationship between a child with id nodeId and a parent hold with id holdId
+     *
+     * @param holdId The identifier of a hold
+     * @param nodeId The Id of the node which is unassigned
+     * @returns Empty response
+     */
+    unassignHold(holdId: string, nodeId: string): Promise<void> {
+        throwIfNotDefined(holdId, 'holdId');
+        throwIfNotDefined(nodeId, 'nodeId');
+
+        return this.delete({
+            path: `/holds/{holdId}/children/{nodeId}`,
+            pathParams: { holdId, nodeId }
         });
     }
 }
