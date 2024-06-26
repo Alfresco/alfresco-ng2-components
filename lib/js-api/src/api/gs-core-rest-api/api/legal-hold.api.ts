@@ -55,9 +55,9 @@ export class LegalHoldApi extends BaseApi {
     }
 
     /**
-     * Assign hold of legal holds
+     * Assign node to legal hold
      *
-     * @param holdId The identifier of a hold.
+     * @param holdId The identifier of a hold
      * @param nodeId The id of the node to be assigned to existing hold
      * @returns Promise<HoldEntry>
      */
@@ -74,10 +74,10 @@ export class LegalHoldApi extends BaseApi {
     }
 
     /**
-     * Assign hold of legal holds
+     * Assign nodes to legal hold
      *
-     * @param holdId The identifier of a hold.
-     * @param nodeIds one element list with id of nodes to assign to existing hold
+     * @param holdId The identifier of a hold
+     * @param nodeIds The list with id of nodes to assign to existing hold
      * @returns Promise<HoldPaging>
      */
     assignHolds(nodeIds: { id: string }[], holdId: string): Promise<HoldPaging> {
@@ -93,10 +93,10 @@ export class LegalHoldApi extends BaseApi {
     }
 
     /**
-     * Deletes the relationship between a child with id nodeId and a parent hold with id holdId.
+     * Deletes the relationship between a child with id nodeId and a parent hold with id holdId
      *
-     * @param holdId The handled hold Id
-     * @param nodeId The Id of the node which is deleted
+     * @param holdId The identifier of a hold
+     * @param nodeId The Id of the node which is unassigned
      * @returns Empty response
      */
     unassignHold(holdId: string, nodeId: string): Promise<void> {

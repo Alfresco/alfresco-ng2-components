@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2024-06-19
 ---
 
-# [Legal Hold service](../../../lib/content-services/src/lib/legal-hold/services/legal-hold.service.ts "Defined in legal-hold.service.ts")
+# [Legal Hold service](../../../lib/content-services/src/lib/legal-hold/services/legal-hold.service.ts) "Defined in legal-hold.service.ts"
 
 Manages holds for nodes.
 
@@ -31,7 +31,7 @@ Manages holds for nodes.
     -   _holdId_: `string` - The Id of the hold to which nodes will be assigned
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>` - Hold paging
 
--   *unassignHold**(holdId: `string`, nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+-   **unassignHold**(holdId: `string`, nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
     Assign a node to a hold.
     -   _holdId_: `string` - The hold Id
     -   _nodeId_: `string` - The Id of the node which is unassigned
