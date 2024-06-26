@@ -15,17 +15,11 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, Optional, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { FlagsOverrideToken } from '../interfaces/features.interface';
-import { CanMatch } from '@angular/router';
 
 export const isFlagsOverrideOn = () => () => inject(FlagsOverrideToken) ?? false;
 
-@Injectable({ providedIn: 'root' })
-export class IsFlagsOverrideOn implements CanMatch {
-    constructor(@Optional() @Inject(FlagsOverrideToken) private devToolsToken: boolean) {}
-
-    canMatch(): boolean {
-        return !!this.devToolsToken;
-    }
-}
+export const IsFlagsOverrideOn = (): boolean => {
+    return !!inject(FlagsOverrideToken);
+};
