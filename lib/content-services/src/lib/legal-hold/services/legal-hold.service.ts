@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { ContentPagingQuery, Hold, LegalHoldApi } from '@alfresco/js-api';
+import { ContentPagingQuery, Hold, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -49,5 +49,38 @@ export class LegalHoldService {
                 }))
             )
         );
+    }
+
+    /**
+     * Assign a node to a hold.
+     *
+     * @param nodeId The Id of the node which will be assigned to a hold
+     * @param holdId The Id of the hold to which nodes will be assigned
+     * @returns Observable<HoldEntry>
+     */
+    assignHold(nodeId: string, holdId: string): Observable<HoldEntry> {
+        return from(this.legalHoldApi.assignHold(nodeId, holdId));
+    }
+
+    /**
+     * Assign a node to a hold.
+     *
+     * @param nodeIds The list of managed node Ids
+     * @param holdId The Id of the hold to which nodes will be assigned
+     * @returns Observable<HoldPaging>
+     */
+    assignHolds(nodeIds: { id: string }[], holdId: string): Observable<HoldPaging> {
+        return from(this.legalHoldApi.assignHolds(nodeIds, holdId));
+    }
+
+    /**
+     * Unassign the relationship between a child with id nodeId and a parent hold with id holdId.
+     *
+     * @param holdId The hold Id
+     * @param nodeId The Id of the node which is unassigned
+     * @returns Empty response
+     */
+    unassignHold(holdId: string, nodeId: string): Observable<void> {
+        return from(this.legalHoldApi.unassignHold(holdId, nodeId));
     }
 }
