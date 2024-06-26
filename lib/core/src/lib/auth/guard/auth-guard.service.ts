@@ -15,36 +15,26 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
+import { inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthGuardBase } from './auth-guard-base';
+import { isLoginFragmentPresent, navigate, redirectSSOSuccessURL, redirectToUrl, withCredentials } from './auth-guard-functions';
 import { JwtHelperService } from '../services/jwt-helper.service';
-import { MatDialog } from '@angular/material/dialog';
-import { StorageService } from '../../common/services/storage.service';
-import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { Observable } from 'rxjs';
+
+const authenticationService = inject(AuthenticationService);
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard extends AuthGuardBase {
+class TicketChangeRedirectService {
     ticketChangeBind: any;
 
     constructor(
         private jwtHelperService: JwtHelperService,
-        authenticationService: AuthenticationService,
-        basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        oidcAuthenticationService: OidcAuthenticationService,
-        router: Router,
-        appConfigService: AppConfigService,
-        dialog: MatDialog,
-        storageService: StorageService
+        private router: Router
     ) {
-        super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
         this.ticketChangeBind = this.ticketChange.bind(this);
-
         window.addEventListener('storage', this.ticketChangeBind);
     }
 
@@ -68,16 +58,27 @@ export class AuthGuard extends AuthGuardBase {
 
     private ticketChangeRedirect(event: StorageEvent) {
         if (event.newValue) {
-            this.navigate(this.router.url);
+            navigate(this.router.url);
         } else {
             window.location.reload();
         }
     }
-
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
-        if (this.authenticationService.isLoggedIn() || this.withCredentials) {
-            return true;
-        }
-        return this.redirectToUrl(redirectUrl);
-    }
 }
+
+const checkLogin = async (_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> => {
+    if (authenticationService.isLoggedIn() || withCredentials()) {
+        return true;
+    }
+    return redirectToUrl(redirectUrl);
+};
+
+export const AuthGuard = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    inject(TicketChangeRedirectService);
+    if (authenticationService.isLoggedIn() && authenticationService.isOauth() && isLoginFragmentPresent()) {
+        return redirectSSOSuccessURL();
+    }
+    return checkLogin(route, state.url);
+};
