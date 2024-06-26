@@ -130,10 +130,10 @@ legalHoldApi.assignHolds([{ id: 'foo' }, { id: 'bar' }], 'holdId').then(
 
 ### Parameters
 
-| Name        | Type                      | Default value | Description                                          |
-| ----------- | ------------------------- | ------------- | ---------------------------------------------------- |
-| **nodeIds** | **Array<{ id: string }>** |               | The list with id of nodes to assign to existing hold |
-| **holdId**  | **string**                |               | The identifier of a hold.                            |
+| Name        | Type                 | Default value | Description                                          |
+| ----------- |----------------------| ------------- | ---------------------------------------------------- |
+| **nodeIds** | **{ id: string }[]** |               | The list with id of nodes to assign to existing hold |
+| **holdId**  | **string**           |               | The identifier of a hold.                            |
 
 ### Return type
 
