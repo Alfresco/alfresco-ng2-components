@@ -15,37 +15,27 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
+import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthGuardBase } from './auth-guard-base';
-import { MatDialog } from '@angular/material/dialog';
-import { StorageService } from '../../common/services/storage.service';
-import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { isLoginFragmentPresent, redirectSSOSuccessURL, redirectToUrl, withCredentials } from './auth-guard-functions';
+import { Observable } from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class AuthGuardEcm extends AuthGuardBase {
-    constructor(
-        authenticationService: AuthenticationService,
-        basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        oidcAuthenticationService: OidcAuthenticationService,
-        router: Router,
-        appConfigService: AppConfigService,
-        dialog: MatDialog,
-        storageService: StorageService
-    ) {
-        super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
+const authenticationService = inject(AuthenticationService);
+
+const checkLogin = async (_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> => {
+    if (authenticationService.isEcmLoggedIn() || withCredentials()) {
+        return true;
     }
+    return redirectToUrl(redirectUrl);
+};
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
-        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
-            return true;
-        }
-
-        return this.redirectToUrl(redirectUrl);
+export const AuthGuardEcm = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    if (authenticationService.isLoggedIn() && authenticationService.isOauth() && isLoginFragmentPresent()) {
+        return redirectSSOSuccessURL();
     }
-}
+    return checkLogin(route, state.url);
+};
