@@ -10,7 +10,8 @@ I order to attach routes to appShell, `withRoutes(routes: Routes | AppShellRoute
 
 Passed routes are going to be attached to [shell main route](./src/lib/shell.routes.ts)
 
-If you would like to provide custom app guard, you can provide your own using [SHELL_AUTH_TOKEN](./src/lib/shell.routes.ts)
+If you would like to provide custom app guard, you can provide your own using [SHELL_AUTH_TOKEN](./src/lib/shell.routes.ts). Keep in mind that
+the custom app guard must be a functional route guard, instead of a class based one. 
 
 ## Shell Service
 
