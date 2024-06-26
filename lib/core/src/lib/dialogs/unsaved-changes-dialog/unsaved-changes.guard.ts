@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { CanDeactivate } from '@angular/router';
+import { inject } from '@angular/core';
+
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
@@ -24,24 +24,18 @@ import { tap } from 'rxjs/operators';
 
 /**
  * Guard responsible for protecting leaving page with unsaved changes.
+ *
+ * @returns boolean | Observable<boolean> flag indicating whether user has unsaved changes or not
  */
-@Injectable({
-    providedIn: 'root'
-})
-export class UnsavedChangesGuard implements CanDeactivate<any> {
-    unsaved = false;
-
-    constructor(private dialog: MatDialog) {}
-
-    /**
-     * Allows to deactivate route when there is no unsaved changes, otherwise displays dialog to confirm discarding changes.
-     *
-     * @returns boolean | Observable<boolean> true when there is no unsaved changes or changes can be discarded, false otherwise.
-     */
-    canDeactivate(): boolean | Observable<boolean> {
-        return this.unsaved ?
-            this.dialog.open<UnsavedChangesDialogComponent, undefined, boolean>(UnsavedChangesDialogComponent, {
-                maxWidth: 346
-            }).afterClosed().pipe(tap((confirmed) => this.unsaved = !confirmed)) : true;
-    }
-}
+export const UnsavedChangesGuard = (): boolean | Observable<boolean> => {
+    let unsaved = false;
+    const dialog = inject(MatDialog);
+    return unsaved
+        ? dialog
+              .open<UnsavedChangesDialogComponent, undefined, boolean>(UnsavedChangesDialogComponent, {
+                  maxWidth: 346
+              })
+              .afterClosed()
+              .pipe(tap((confirmed) => (unsaved = !confirmed)))
+        : true;
+};

@@ -26,6 +26,7 @@ const dialog = inject(MatDialog);
 
 /**
  * Function to validate if the current user has/does not have the provided set of roles
+ *
  * @param rolesToCheck list of roles that the user needs to be checked
  * @param excludedRoles list of roles that the user should not have
  * @returns boolean flag corresponding to whether the user has/does not have the provided set of roles/excluded roles
