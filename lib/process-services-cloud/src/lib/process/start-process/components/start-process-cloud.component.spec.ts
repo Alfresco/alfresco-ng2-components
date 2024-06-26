@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormModel } from '@alfresco/adf-core';
+import { FORM_FIELD_VALIDATORS, FormModel } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -38,7 +38,8 @@ import {
     fakeNoNameProcessDefinitions,
     fakeSingleProcessDefinition,
     fakeSingleProcessDefinitionWithoutForm,
-    fakeFormModelJson
+    fakeFormModelJson,
+    MockFormFieldValidator
 } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
@@ -526,7 +527,6 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.name = 'My new process';
             component.appName = 'myApp';
-            fixture.detectChanges();
         });
 
         it('should reload processes when appName input changed', async () => {
@@ -587,6 +587,22 @@ describe('StartProcessCloudComponent', () => {
 
             const processDefinitionInput = fixture.nativeElement.querySelector('#processDefinitionName');
             expect(processDefinitionInput.textContent).toEqual('');
+        });
+
+        it('should append additional field validators to the default ones when provided', () => {
+            const mockFirstCustomFieldValidator = new MockFormFieldValidator();
+            const mockSecondCustomFieldValidator = new MockFormFieldValidator();
+
+            component.fieldValidators = [mockFirstCustomFieldValidator, mockSecondCustomFieldValidator];
+            fixture.detectChanges();
+
+            expect(component.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS, mockFirstCustomFieldValidator, mockSecondCustomFieldValidator]);
+        });
+
+        it('should use default field validators when no additional validators are provided', () => {
+            fixture.detectChanges();
+
+            expect(component.fieldValidators).toEqual([...FORM_FIELD_VALIDATORS]);
         });
     });
 
