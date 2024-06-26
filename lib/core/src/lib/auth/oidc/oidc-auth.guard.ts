@@ -15,37 +15,31 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 const ROUTE_DEFAULT = '/';
+const auth = inject(AuthService);
+const router = inject(Router);
 
-@Injectable({
-    providedIn: 'root'
-})
-export class OidcAuthGuard implements CanActivate {
-    constructor(private auth: AuthService, private _router: Router) { }
-
-    canActivate(
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this._isAuthenticated();
+/**
+ * Function to check if the user is successfully authenticated or not
+ *
+ * @returns boolean | Promise<boolean> flag indicating if the user was successfully authenticated
+ */
+function isAuthenticated() {
+    if (this.auth.authenticated) {
+        return true;
     }
 
-    canActivateChild() {
-        return this._isAuthenticated();
-    }
-
-    private _isAuthenticated() {
-        if (this.auth.authenticated) {
-            return true;
-        }
-
-        return this.auth.loginCallback({ customHashFragment: window.location.search })
-            .then(route => this._router.navigateByUrl(route, { replaceUrl: true }))
-            .catch(() => this._router.navigateByUrl(ROUTE_DEFAULT, { replaceUrl: true }));
-    }
-
+    return auth
+        .loginCallback({ customHashFragment: window.location.search })
+        .then((route) => router.navigateByUrl(route, { replaceUrl: true }))
+        .catch(() => router.navigateByUrl(ROUTE_DEFAULT, { replaceUrl: true }));
 }
 
+export const OidcAuthGuard = (): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    return isAuthenticated();
+};
