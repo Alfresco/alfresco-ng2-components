@@ -18,8 +18,7 @@
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ContentPagingQuery } from '../../content-rest-api';
-import { HoldPaging } from '../model/holdPaging';
-import { HoldEntry } from '../model';
+import { Hold, HoldEntry, HoldPaging } from './../model';
 
 /**
  * Legal Holds service.
@@ -106,6 +105,52 @@ export class LegalHoldApi extends BaseApi {
         return this.delete({
             path: `/holds/{holdId}/children/{nodeId}`,
             pathParams: { holdId, nodeId }
+        });
+    }
+
+    /**
+     * Create new hold
+     *
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param hold Hold to create
+     * @returns Promise<HoldEntry>
+     */
+    createHold(filePlanId: string, hold: Hold): Promise<HoldEntry> {
+        throwIfNotDefined(filePlanId, 'filePlanId');
+        throwIfNotDefined(hold, 'hold');
+
+        const pathParams = {
+            filePlanId
+        };
+
+        return this.post({
+            path: '/file-plans/{filePlanId}/holds',
+            pathParams,
+            bodyParam: [hold],
+            returnType: HoldEntry
+        });
+    }
+
+    /**
+     * Create list of new holds
+     *
+     * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
+     * @param holds Array of holds
+     * @returns Promise<HoldPaging>
+     */
+    createHolds(filePlanId = '-filePlan-', holds: Hold[]): Promise<HoldPaging> {
+        throwIfNotDefined(filePlanId, 'filePlanId');
+        throwIfNotDefined(holds, 'holds');
+
+        const pathParams = {
+            filePlanId
+        };
+
+        return this.post({
+            path: '/file-plans/{filePlanId}/holds',
+            pathParams,
+            bodyParam: holds,
+            returnType: HoldPaging
         });
     }
 }
