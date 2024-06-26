@@ -67,7 +67,7 @@ export class LegalHoldApi extends BaseApi {
         return this.post({
             path: `/holds/{holdId}/children`,
             pathParams: { holdId },
-            bodyParam: [nodeId],
+            bodyParam: [{ id: nodeId }],
             returnType: HoldEntry
         });
     }
