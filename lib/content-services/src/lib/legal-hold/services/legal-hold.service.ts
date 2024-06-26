@@ -16,7 +16,6 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-
 import { ContentPagingQuery, Hold, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
