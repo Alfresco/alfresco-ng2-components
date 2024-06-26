@@ -527,7 +527,6 @@ describe('StartProcessCloudComponent', () => {
         beforeEach(() => {
             component.name = 'My new process';
             component.appName = 'myApp';
-            fixture.detectChanges();
         });
 
         it('should reload processes when appName input changed', async () => {
