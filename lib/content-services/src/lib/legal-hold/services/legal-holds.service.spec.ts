@@ -71,4 +71,47 @@ describe('LegalHoldsService', () => {
             });
         });
     });
+
+    describe('assignHold', () => {
+        it('should assign node to existing hold', (done) => {
+            const nodeId = 'qwe';
+            const holdId = 'foo';
+            const mockResponse = { entry: { id: holdId } };
+            spyOn(service.legalHoldApi, 'assignHold').and.returnValue(Promise.resolve(mockResponse));
+
+            service.assignHold(nodeId, holdId).subscribe((holds) => {
+                expect(holds).toEqual(mockResponse);
+                expect(service.legalHoldApi.assignHold).toHaveBeenCalledWith(nodeId, holdId);
+                done();
+            });
+        });
+    });
+
+    describe('assignHolds', () => {
+        it('should assign nodes to existing hold', (done) => {
+            const nodeIds = [{ id: 'qwe' }, { id: 'abc'}];
+            const holdId = 'foo';
+            spyOn(service.legalHoldApi, 'assignHolds').and.returnValue(Promise.resolve(legalHolds));
+
+            service.assignHolds(nodeIds, holdId).subscribe((holds) => {
+                expect(holds).toEqual(legalHolds);
+                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(nodeIds, holdId);
+                done();
+            });
+        });
+    });
+
+    describe('unassignHold', () => {
+        it('should unassign node from existing hold', (done) => {
+            const nodeId = 'qwe';
+            const holdId = 'foo';
+
+            spyOn(service.legalHoldApi, 'unassignHold').and.returnValue(Promise.resolve(undefined));
+
+            service.unassignHold(holdId, nodeId).subscribe(() => {
+                expect(service.legalHoldApi.unassignHold).toHaveBeenCalledWith(holdId, nodeId);
+                done();
+            });
+        });
+    });
 });
