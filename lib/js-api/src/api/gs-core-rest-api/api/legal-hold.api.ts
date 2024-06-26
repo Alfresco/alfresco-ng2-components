@@ -53,7 +53,6 @@ export class LegalHoldApi extends BaseApi {
         });
     }
 
-    ////
     /**
      * Assign node to legal hold
      *
@@ -91,7 +90,6 @@ export class LegalHoldApi extends BaseApi {
             returnType: HoldPaging
         });
     }
-
 
     /**
      * Deletes the relationship between a child with id nodeId and a parent hold with id holdId

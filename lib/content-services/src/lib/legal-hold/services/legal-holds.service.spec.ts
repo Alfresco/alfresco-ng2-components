@@ -89,13 +89,13 @@ describe('LegalHoldsService', () => {
 
     describe('assignHolds', () => {
         it('should assign nodes to existing hold', (done) => {
-            const nodeIds = [{ id: 'qwe' }, { id: 'abc'}];
+            const nodeIds = [{ id: 'qwe' }, { id: 'abc' }];
             const holdId = 'foo';
             spyOn(service.legalHoldApi, 'assignHolds').and.returnValue(Promise.resolve(legalHolds));
 
             service.assignHolds(nodeIds, holdId).subscribe((holds) => {
                 expect(holds).toEqual(legalHolds);
-                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(payloadIds, holdId);
+                expect(service.legalHoldApi.assignHolds).toHaveBeenCalledWith(nodeIds, holdId);
                 done();
             });
         });
