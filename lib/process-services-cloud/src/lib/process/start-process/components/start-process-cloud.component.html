@@ -1,5 +1,5 @@
 <mat-card
-    *ngIf="(loading$ | async) === false; else spinner"
+    *ngIf="areProcessDefinitionsLoaded else spinner"
     class="adf-start-process"
 >
 
@@ -35,7 +35,7 @@
                                 [displayWith]="displayProcessNameOnDropdown"
                                 (optionSelected)="setProcessDefinitionOnForm($event.option.value)" >
                                     <mat-option
-                                        *ngFor="let processDef of filteredProcesses"
+                                        *ngFor="let processDef of processDefinitionListFiltered"
                                         [value]="getProcessDefinitionValue(processDef)"
                                         (click)="processDefinitionSelectionChanged(processDef)">
                                             {{ getProcessDefinitionValue(processDef) }}
@@ -75,8 +75,9 @@
                 </adf-inplace-form-input>
             </form>
 
-            <ng-container *ngIf="hasForm() else taskFormCloudButtons">
+            <ng-container *ngIf="hasCloudForm else taskFormCloudButtons">
                 <adf-cloud-form
+                    *ngIf="isCloudFormReadyToRender else spinner"
                     [appName]="appName"
                     [appVersion]="processDefinitionCurrent.appVersion"
                     [data]="resolvedValues"
@@ -89,7 +90,7 @@
                     [showTitle]="false"
                     (formContentClicked)="onFormContentClicked($event)"
                     (formLoaded)="onFormLoaded($event)">
-                        <adf-cloud-form-custom-outcomes>
+                        <adf-cloud-form-custom-outcomes *ngIf="isCloudFormLoaded">
                             <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
                             </ng-template>
                         </adf-cloud-form-custom-outcomes>
@@ -114,7 +115,7 @@
         <button
             color="primary"
             mat-raised-button
-            [disabled]="disableStartButton() || !isProcessFormValid()"
+            [disabled]="disableStartButton()"
             (click)="startProcess()"
             data-automation-id="btn-start"
             id="button-start"
@@ -126,7 +127,7 @@
 </ng-template>
 
 <ng-template #emptyProcessDefinitionsList>
-    <mat-card-content *ngIf="processDefinitionLoaded">
+    <mat-card-content *ngIf="areProcessDefinitionsLoaded">
         <mat-card-subtitle class="error-message" id="no-process-message">
             {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.NO_PROCESS_DEFINITIONS' | translate | uppercase}}
         </mat-card-subtitle>
