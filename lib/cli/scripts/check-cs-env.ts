@@ -50,7 +50,7 @@ export default async function main() {
         .option('-r, --retry [type]', 'retry ')
         .parse(argv);
 
-    const opts = program.opts<CheckCsEnvArgs>();
+    const opts = program.opts();
     await checkEnv(opts);
     // TODO: https://alfresco.atlassian.net/browse/ACS-5873
     // await checkDiskSpaceFullEnv();
