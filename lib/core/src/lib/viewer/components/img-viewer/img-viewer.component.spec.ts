@@ -218,24 +218,6 @@ describe('Test Img viewer component ', () => {
             expect(rotateButtonElement).not.toEqual(null);
         });
 
-        it('should show rotate button if allowRotateInReadOnly is true and in read only mode', () => {
-            component.readOnly = true;
-            component.allowRotateInReadOnly = true;
-            fixture.detectChanges();
-            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
-
-            expect(rotateButtonElement).not.toEqual(null);
-        });
-
-        it('should not show rotate button if allowRotateInReadOnly is false and in read only mode', () => {
-            component.readOnly = true;
-            component.allowRotateInReadOnly = false;
-            fixture.detectChanges();
-            const rotateButtonElement = element.querySelector('#viewer-rotate-button');
-
-            expect(rotateButtonElement).toEqual(null);
-        });
-
         it('should not show rotate button by default', () => {
             const rotateButtonElement = element.querySelector('#viewer-rotate-button');
             expect(rotateButtonElement).toEqual(null);
@@ -386,6 +368,38 @@ describe('Test Img viewer component ', () => {
             document.dispatchEvent(new Event('fullscreenchange'));
 
             expect(component.reset).toHaveBeenCalled();
+        });
+    });
+
+    describe('allowedActions', () => {
+        beforeEach(() => {
+            fixture = TestBed.createComponent(ImgViewerComponent);
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
+        });
+
+        it('should conditionally display rotate and crop buttons based on allowedActions', () => {
+            component.readOnly = false;
+            component.allowedActions = { rotate: true, crop: true };
+            fixture.detectChanges();
+
+            let rotateButton = element.querySelector('#viewer-rotate-button');
+            let cropButton = element.querySelector('#viewer-crop-button');
+
+            // Check both buttons are visible when allowed
+            expect(rotateButton).not.toBeNull('Rotate button should be visible when allowed');
+            expect(cropButton).not.toBeNull('Crop button should be visible when allowed');
+
+            // Change allowedActions to disallow both actions
+            component.allowedActions = { rotate: false, crop: false };
+            fixture.detectChanges();
+
+            rotateButton = element.querySelector('#viewer-rotate-button');
+            cropButton = element.querySelector('#viewer-crop-button');
+
+            // Check both buttons are not visible when not allowed
+            expect(rotateButton).toBeNull('Rotate button should not be visible when disallowed');
+            expect(cropButton).toBeNull('Crop button should not be visible when disallowed');
         });
     });
 });

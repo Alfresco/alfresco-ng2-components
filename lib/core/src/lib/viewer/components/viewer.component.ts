@@ -189,9 +189,16 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     readOnly = true;
 
-    /** Enable rotation functionality in read-only mode  */
+    /**
+     * Controls which actions are enabled in the viewer.
+     * Example:
+     * { rotate: true, crop: false } will enable rotation but disable cropping.
+     */
     @Input()
-    allowRotateInReadOnly = false;
+    allowedActions: { [key: string]: boolean } = {
+        rotate: true,
+        crop: true
+    };
 
     /** media subtitles for the media player*/
     @Input()
