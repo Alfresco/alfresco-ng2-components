@@ -65,7 +65,7 @@ export default async function main() {
         .option('--license [type]', 'APS license S3 path ')
         .parse(argv);
 
-    const opts = program.opts<InitApsEnvArgs>();
+    const opts = program.opts();
     await checkEnv(opts);
 
     logger.info(`***** Step 1 - Check License *****`);
