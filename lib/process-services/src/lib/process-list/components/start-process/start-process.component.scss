@@ -62,8 +62,8 @@
     }
 
     &-start-form-container {
-        #{$mat-card} {
-            height: 100%;
+        #{$mat-card-content} {
+            margin-bottom: 100px;
         }
 
         #{$mat-card-header} {
