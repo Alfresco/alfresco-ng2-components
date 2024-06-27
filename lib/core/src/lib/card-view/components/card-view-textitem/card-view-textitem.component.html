@@ -42,7 +42,7 @@
                 *ngIf="property.multiline"
                 title="{{ property.label | translate }}"
                 [cdkTextareaAutosize]="true"
-                [cdkAutosizeMaxRows]="1"
+                [cdkAutosizeMinRows]="1"
                 [cdkAutosizeMaxRows]="5"
                 class="adf-property-value"
                 [ngClass]="{
