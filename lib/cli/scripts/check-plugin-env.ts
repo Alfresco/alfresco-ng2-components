@@ -50,7 +50,7 @@ export default async function main() {
         .option('--ui, --uiName [type]', 'uiName', 'Deployed app UI type on activiti-cloud')
         .parse(argv);
 
-    const options = program.opts<CheckPluginArgs>();
+    const options = program.opts();
 
     pluginEnv = new CheckEnv(options.host, options.username, options.password, options.clientId);
     await pluginEnv.checkEnv();

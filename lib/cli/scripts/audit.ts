@@ -26,11 +26,6 @@ import { Command } from 'commander';
 
 const program = new Command();
 
-interface AuditCommandArgs {
-    package?: string;
-    outDir?: string;
-}
-
 /**
  * Audit report command
  *
@@ -51,7 +46,7 @@ export default function main(_args: string[], workingDir: string) {
         exit(0);
     }
 
-    const options = program.opts<AuditCommandArgs>();
+    const options = program.opts();
 
     let packagePath = path.resolve(workingDir, 'package.json');
 
