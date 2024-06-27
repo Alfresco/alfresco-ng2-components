@@ -15,19 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Compiler,
-    Component,
-    ComponentFactory,
-    ComponentRef,
-    Input,
-    NgModule,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, ComponentRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { FormRenderingService } from '../../services/form-rendering.service';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
 import { FormFieldModel } from '../widgets';
@@ -57,7 +45,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     focus: boolean = false;
 
-    constructor(private formRenderingService: FormRenderingService, private visibilityService: WidgetVisibilityService, private compiler: Compiler) {}
+    constructor(private formRenderingService: FormRenderingService, private visibilityService: WidgetVisibilityService) {}
 
     ngOnInit() {
         const w: any = window;
@@ -68,8 +56,8 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         if (originalField) {
             const customTemplate = this.field.form.customFieldTemplates[originalField.type];
             if (customTemplate && this.hasController(originalField.type)) {
-                const factory = this.getComponentFactorySync(originalField.type, customTemplate);
-                this.componentRef = this.container.createComponent(factory);
+                const componentClass = adf.components[originalField.type].class || class RuntimeComponent {};
+                this.componentRef = this.container.createComponent(componentClass);
                 const instance: any = this.componentRef.instance;
                 if (instance) {
                     instance.field = originalField;
@@ -116,32 +104,5 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     private hasController(type: string): boolean {
         return adf?.components?.[type];
-    }
-
-    private getComponentFactorySync(type: string, template: string): ComponentFactory<any> {
-        const componentInfo = adf.components[type];
-
-        if (componentInfo.factory) {
-            return componentInfo.factory;
-        }
-
-        const metadata = {
-            selector: `runtime-component-${type}`,
-            template
-        };
-
-        const factory = this.createComponentFactorySync(this.compiler, metadata, componentInfo.class);
-        componentInfo.factory = factory;
-        return factory;
-    }
-
-    private createComponentFactorySync(compiler: Compiler, metadata: Component, componentClass: any): ComponentFactory<any> {
-        const cmpClass = componentClass || class RuntimeComponent {};
-        const decoratedCmp = Component(metadata)(cmpClass);
-        const moduleClass = class RuntimeComponentModule {};
-        const decoratedNgModule = NgModule({ imports: [], declarations: [decoratedCmp] })(moduleClass);
-        const module = compiler.compileModuleAndAllComponentsSync(decoratedNgModule);
-
-        return module.componentFactories.find((x) => x.componentType === decoratedCmp);
     }
 }
