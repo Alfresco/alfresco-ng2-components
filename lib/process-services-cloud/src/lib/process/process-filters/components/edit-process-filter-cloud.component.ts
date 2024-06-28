@@ -37,6 +37,8 @@ import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { Environment } from '../../../common/interface/environment.interface';
 import { endOfDay, isValid, startOfDay } from 'date-fns';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -197,7 +199,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         private translateService: TranslationService,
         private processFilterCloudService: ProcessFilterCloudService,
         private appsProcessCloudService: AppsProcessCloudService,
-        private processCloudService: ProcessCloudService
+        private processCloudService: ProcessCloudService,
+        private matIconRegistry: MatIconRegistry,
+        private sanitizer: DomSanitizer
     ) {}
 
     ngOnInit() {
@@ -205,6 +209,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((locale) => this.dateAdapter.setLocale(locale));
+
+        this.registerSaveIcon();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -864,5 +870,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 }
             }
         ];
+    }
+
+    private registerSaveIcon(): void {
+        const iconUrl = this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/save.svg');
+
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'save', iconUrl);
     }
 }
