@@ -13,6 +13,7 @@
         "main": "lib/testing/index.ts",
         "generatePackageJson": true,
         "tsConfig": "lib/testing/tsconfig.lib.prod.json",
+        "isolatedConfig": false,
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         },
