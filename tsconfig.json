@@ -18,7 +18,7 @@
     "target": "es2015",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [ "./node_modules/@types", "../node_modules/@types", "../../node_modules/@types" ],
     "types": ["jasmine", "node", "jasminewd2"],
     "lib": ["es2018", "esnext.array", "esnext.asynciterable", "dom"],
     "paths": {
