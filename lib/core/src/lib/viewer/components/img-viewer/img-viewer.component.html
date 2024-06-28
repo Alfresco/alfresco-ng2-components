@@ -33,14 +33,14 @@
             <mat-icon>zoom_in</mat-icon>
         </button>
 
-        <button *ngIf="!readOnly && allowedActions.rotate" id="viewer-rotate-button"
+        <button *ngIf="!readOnly && allowedEditActions.rotate" id="viewer-rotate-button"
                 title="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
                 mat-icon-button
                 (click)="rotateImage()">
             <mat-icon>rotate_left</mat-icon>
         </button>
-        <button *ngIf="!readOnly && allowedActions.crop" id="viewer-crop-button"
+        <button *ngIf="!readOnly && allowedEditActions.crop" id="viewer-crop-button"
                 title="{{ 'ADF_VIEWER.ARIA.CROP' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.CROP' | translate }}"
                 mat-icon-button

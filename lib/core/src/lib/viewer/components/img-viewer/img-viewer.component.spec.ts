@@ -371,16 +371,16 @@ describe('Test Img viewer component ', () => {
         });
     });
 
-    describe('allowedActions', () => {
+    describe('allowedEditActions', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(ImgViewerComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
         });
 
-        it('should conditionally display rotate and crop buttons based on allowedActions', () => {
+        it('should conditionally display rotate and crop buttons based on allowedEditActions', () => {
             component.readOnly = false;
-            component.allowedActions = { rotate: true, crop: true };
+            component.allowedEditActions = { rotate: true, crop: true };
             fixture.detectChanges();
 
             let rotateButton = element.querySelector('#viewer-rotate-button');
@@ -390,8 +390,8 @@ describe('Test Img viewer component ', () => {
             expect(rotateButton).not.toBeNull('Rotate button should be visible when allowed');
             expect(cropButton).not.toBeNull('Crop button should be visible when allowed');
 
-            // Change allowedActions to disallow both actions
-            component.allowedActions = { rotate: false, crop: false };
+            // Change allowedEditActions to disallow both actions
+            component.allowedEditActions = { rotate: false, crop: false };
             fixture.detectChanges();
 
             rotateButton = element.querySelector('#viewer-rotate-button');

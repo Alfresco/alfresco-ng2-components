@@ -101,7 +101,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
      * { rotate: true, crop: false } will enable rotation but disable cropping.
      */
     @Input()
-    allowedActions: { [key: string]: boolean } = {
+    allowedEditActions: { [key: string]: boolean } = {
         rotate: true,
         crop: true
     };
