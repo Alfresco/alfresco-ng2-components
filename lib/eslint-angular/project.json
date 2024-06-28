@@ -12,6 +12,7 @@
         "outputPath": "dist/libs/eslint-plugin-eslint-angular",
         "main": "lib/eslint-angular/index.ts",
         "generatePackageJson": true,
+        "isolatedConfig": false,
         "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json",
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
