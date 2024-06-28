@@ -18,7 +18,7 @@
     "target": "es2015",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [ "./node_modules/@types", "../node_modules/@types", "../../node_modules/@types" ],
     "types": ["jasmine", "node", "jasminewd2"],
     "lib": ["es2018", "esnext.array", "esnext.asynciterable", "dom"],
     "paths": {
@@ -35,7 +35,7 @@
       "@alfresco/adf-process-services": ["lib/process-services/src/public-api.ts"],
       "@alfresco/adf-process-services-cloud": ["lib/process-services-cloud/src/public-api.ts"],
       "@alfresco/adf-testing": ["lib/testing/src/public-api.ts"],
-      "@alfresco/js-api": ["lib/js-api/src/index.ts"]
+      "@alfresco/js-api": ["lib/js-api/index.ts"]
     }
   },
   "exclude": ["lib/config", "integration", "scripts", "assets", "tools", "node_modules"],

@@ -17,7 +17,7 @@
     "target": "es2015",
     "outDir": "./.out",
     "lib": ["es2018", "dom"],
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [ "./node_modules/@types", "../node_modules/@types", "../../node_modules/@types" ],
     "types": []
   },
   "exclude": [".history", "*/node_modules", "config", "performance", "coverage", "node_modules", "package", "dist", "test"]
