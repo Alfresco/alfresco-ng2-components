@@ -340,6 +340,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     blurOnResize = true;
 
+    /** Display checkboxes in datatable rows on hover only */
+    @Input()
+    displayCheckboxesOnHover = false;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick = new EventEmitter<NodeEntityEvent>();
@@ -387,6 +391,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     /** Emitted when columns order change */
     @Output()
     columnsOrderChanged = new EventEmitter<string[] | undefined>();
+
+    /** Emitted when the selected row items count in the table changed. */
+    @Output()
+    selectedItemsCountChanged = new EventEmitter<number | undefined>();
 
     @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
@@ -830,6 +838,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.columnsWidths = { ...this.columnsWidths, ...newColumnsWidths };
         this.createColumns();
         this.columnsWidthChanged.emit(this.columnsWidths);
+    }
+
+    onSelectedItemsCountChanged(count: number) {
+        this.selectedItemsCountChanged.emit(count);
     }
 
     onNodeClick(nodeEntry: NodeEntry) {

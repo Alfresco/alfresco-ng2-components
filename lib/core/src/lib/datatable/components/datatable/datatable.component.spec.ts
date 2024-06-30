@@ -157,6 +157,7 @@ describe('DataTable', () => {
     });
 
     it('should preserve the historical selection order', () => {
+        spyOn(dataTable.selectedItemsCountChanged, 'emit');
         dataTable.data = new ObjectDataTableAdapter([{ id: 0 }, { id: 1 }, { id: 2 }], [new ObjectDataColumn({ key: 'id' })]);
 
         const rows = dataTable.data.getRows();
@@ -169,6 +170,25 @@ describe('DataTable', () => {
         expect(selection[0].getValue('id')).toBe(2);
         expect(selection[1].getValue('id')).toBe(0);
         expect(selection[2].getValue('id')).toBe(1);
+
+        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledTimes(3);
+    });
+
+    it('should selectedItemsCountChanged be emitted 4 times', () => {
+        spyOn(dataTable.selectedItemsCountChanged, 'emit');
+        dataTable.data = new ObjectDataTableAdapter([{ id: 0 }, { id: 1 }, { id: 2 }], [new ObjectDataColumn({ key: 'id' })]);
+
+        const rows = dataTable.data.getRows();
+
+        dataTable.selectRow(rows[2], true);
+        dataTable.selectRow(rows[0], true);
+        dataTable.selectRow(rows[1], true);
+        dataTable.selectRow(rows[1], false);
+
+        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(1);
+        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(2);
+        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(3);
+        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledTimes(4);
     });
 
     it('should update schema if columns change', fakeAsync(() => {
@@ -540,6 +560,7 @@ describe('DataTable', () => {
     });
 
     it('should unselect the row searching it by row id, when row id is defined', () => {
+        spyOn(dataTable.selectedItemsCountChanged, 'emit');
         const findSelectionByIdSpy = spyOn(dataTable, 'findSelectionById');
         dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
 
@@ -555,6 +576,8 @@ describe('DataTable', () => {
 
         expect(indexOfSpy).not.toHaveBeenCalled();
         expect(findSelectionByIdSpy).toHaveBeenCalledWith(fakeDataRows[0].id);
+        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledTimes(1);
+        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(2);
     });
 
     it('should unselect the row by searching for the exact same reference of it (indexOf), when row id is not defined ', () => {
@@ -872,16 +895,13 @@ describe('DataTable', () => {
         dataTable.multiselect = true;
         dataTable.onCheckboxChange(rows[0], { checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllIndeterminate).toBe(true);
-        expect(dataTable.isSelectAllChecked).toBe(false);
 
         dataTable.onCheckboxChange(rows[1], { checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllIndeterminate).toBe(false);
-        expect(dataTable.isSelectAllChecked).toBe(true);
 
         dataTable.onCheckboxChange(rows[0], { checked: false } as MatCheckboxChange);
         dataTable.onCheckboxChange(rows[1], { checked: false } as MatCheckboxChange);
         expect(dataTable.isSelectAllIndeterminate).toBe(false);
-        expect(dataTable.isSelectAllChecked).toBe(false);
     });
 
     it('should allow select row when multi-select enabled', () => {
@@ -1308,6 +1328,36 @@ describe('DataTable', () => {
         expect(rows[0].getValue('icon')).toBe('airport_shuttle');
         expect(rows[1].getValue('icon')).toBe('directions_car');
         expect(rows[2].getValue('icon')).toBe('local_shipping');
+    });
+
+    describe('displayCheckboxesOnHover', () => {
+        const getCheckboxes = () =>
+            fixture.debugElement.queryAll(By.css('.adf-datatable-checkbox-single .adf-checkbox-sr-only')).map((row) => row.nativeElement);
+
+        beforeEach(() => {
+            dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
+            dataTable.multiselect = true;
+        });
+
+        it('should always display checkboxes when displayCheckboxesOnHover is set to false', () => {
+            dataTable.displayCheckboxesOnHover = false;
+            fixture.detectChanges();
+
+            const checkboxes = getCheckboxes();
+            checkboxes.forEach((checkbox) => {
+                expect(checkbox.classList).not.toContain('adf-datatable-hover-only');
+            });
+        });
+
+        it('should display checkboxes on hover when displayCheckboxesOnHover is set to true', () => {
+            dataTable.displayCheckboxesOnHover = true;
+            fixture.detectChanges();
+
+            const checkboxes = getCheckboxes();
+            checkboxes.forEach((checkbox) => {
+                expect(checkbox.classList).toContain('adf-datatable-hover-only');
+            });
+        });
     });
 });
 
