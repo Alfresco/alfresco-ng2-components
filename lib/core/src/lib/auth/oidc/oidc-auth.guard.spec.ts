@@ -39,10 +39,8 @@ describe('OidcAuthGuard', () => {
         authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     });
 
-    const runGuardWithContext = async (
-        guard: () => Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
-    ): Promise<boolean | UrlTree> => {
-        const result = TestBed.runInInjectionContext(guard);
+    const runOidcGuardWithContext = async (): Promise<boolean | UrlTree> => {
+        const result = TestBed.runInInjectionContext(OidcAuthGuard);
         if (result instanceof Observable) {
             return handleObservableResult(result);
         } else {
@@ -61,7 +59,7 @@ describe('OidcAuthGuard', () => {
     describe('canActivate', () => {
         it('should return true if is authenticated', async () => {
             authServiceSpy.authenticated = true;
-            expect(await runGuardWithContext(OidcAuthGuard)).toBe(true);
+            expect(await runOidcGuardWithContext()).toBe(true);
         });
     });
 
@@ -70,7 +68,7 @@ describe('OidcAuthGuard', () => {
             authServiceSpy.authenticated = false;
             authServiceSpy.loginCallback.and.returnValue(Promise.resolve('/fake-route'));
 
-            await runGuardWithContext(OidcAuthGuard);
+            await runOidcGuardWithContext();
 
             expect(authServiceSpy.loginCallback).toHaveBeenCalled();
             expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/fake-route', { replaceUrl: true });
@@ -80,7 +78,7 @@ describe('OidcAuthGuard', () => {
             authServiceSpy.authenticated = false;
             authServiceSpy.loginCallback.and.returnValue(Promise.reject(new Error()));
 
-            await runGuardWithContext(OidcAuthGuard);
+            await runOidcGuardWithContext();
 
             expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/', { replaceUrl: true });
         });
