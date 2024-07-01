@@ -24,13 +24,8 @@ const ROUTE_DEFAULT = '/';
 const auth = inject(AuthService);
 const router = inject(Router);
 
-/**
- * Function to check if the user is successfully authenticated or not
- *
- * @returns boolean | Promise<boolean> flag indicating if the user was successfully authenticated
- */
-function isAuthenticated() {
-    if (this.auth.authenticated) {
+export const OidcAuthGuard = (): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    if (auth.authenticated) {
         return true;
     }
 
@@ -38,8 +33,4 @@ function isAuthenticated() {
         .loginCallback({ customHashFragment: window.location.search })
         .then((route) => router.navigateByUrl(route, { replaceUrl: true }))
         .catch(() => router.navigateByUrl(ROUTE_DEFAULT, { replaceUrl: true }));
-}
-
-export const OidcAuthGuard = (): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-    return isAuthenticated();
 };
