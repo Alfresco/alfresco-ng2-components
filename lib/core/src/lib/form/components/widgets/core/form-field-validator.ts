@@ -132,6 +132,7 @@ export class DateFieldValidator implements FormFieldValidator {
 
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
+        // debugger;
         return DateFnsUtils.isValidDate(inputDate, dateFormat);
     }
 
