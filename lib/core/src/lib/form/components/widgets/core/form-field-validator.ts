@@ -280,7 +280,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
 
         if (isBefore(fieldValueDate, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat).replace(':', '-'));
+            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(DateFnsUtils.utcToLocal(min), field.dateDisplayFormat));
             isValid = false;
         }
         return isValid;
@@ -322,7 +322,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
         if (isAfter(fieldValueDate, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat).replace(':', '-'));
+            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(DateFnsUtils.utcToLocal(max), field.dateDisplayFormat));
             isValid = false;
         }
         return isValid;
