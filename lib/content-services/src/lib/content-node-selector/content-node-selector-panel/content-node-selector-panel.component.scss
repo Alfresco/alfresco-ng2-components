@@ -214,25 +214,24 @@ h2.adf-search-results-label {
             .adf-datatable-list .adf-datatable-body .adf-datatable-row {
                 min-height: 65px;
 
-                    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-                        padding-top: 15px;
-                    }
+                @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+                    padding-top: 15px;
+                }
 
-                    .adf-name-location-cell-name {
-                        padding: 5px 10px 2px;
-                    }
+                .adf-name-location-cell-name {
+                    padding: 5px 10px 2px;
+                }
 
-                    &.adf-content-selector-modified-cell {
-                        display: none;
-                    }
+                &.adf-content-selector-modified-cell {
+                    display: none;
+                }
 
-                    &.adf-content-selector-modifier-cell {
-                        display: none;
-                    }
+                &.adf-content-selector-modifier-cell {
+                    display: none;
+                }
 
-                    &.adf-content-selector-visibility-cell {
-                        display: none;
-                    }
+                &.adf-content-selector-visibility-cell {
+                    display: none;
                 }
             }
         }
