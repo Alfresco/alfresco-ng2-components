@@ -12,6 +12,7 @@
         &.adf-property-value-editable {
             display: flex;
             align-items: center;
+            justify-content: flex-end;
             border-radius: 6px;
             border-bottom: inherit;
             margin-bottom: 18px;
@@ -41,24 +42,16 @@
 
     .adf-dateitem-editable {
         cursor: pointer;
-        padding: 0 12px;
+        width: 100%;
+        padding: 0 5px;
 
         /* stylelint-disable-next-line no-descending-specificity */
         &-controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 6px;
-
-            button#{$mat-icon-button} {
-                line-height: 20px;
-                height: 20px;
-                width: 20px;
-            }
 
             #{$mat-icon} {
-                width: 16px;
-                height: 16px;
                 opacity: 0.5;
 
                 &:hover {
@@ -66,15 +59,17 @@
                 }
             }
 
+            mat-datetimepicker-toggle {
+                transform: scale(0.8);
+            }
+
             .adf-datepicker-toggle {
                 flex: 1 0 auto;
+                font-size: 14px;
             }
 
             .adf-date-reset-icon {
-                line-height: 10px;
                 position: relative;
-                top: 4px;
-                padding: 0 8px;
             }
         }
     }
