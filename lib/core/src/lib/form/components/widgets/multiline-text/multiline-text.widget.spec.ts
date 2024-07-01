@@ -19,7 +19,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
@@ -38,33 +37,6 @@ describe('MultilineTextWidgetComponentComponent', () => {
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
-    });
-
-    describe('when tooltip is set', () => {
-        beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.MULTILINE_TEXT,
-                tooltip: 'my custom tooltip'
-            });
-            fixture.detectChanges();
-        });
-
-        it('should show tooltip', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            await (await input.host()).hover();
-
-            const tooltip = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
-        });
-
-        it('should hide tooltip', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            await (await input.host()).hover();
-            await (await input.host()).mouseAway();
-
-            const tooltip = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltip.isOpen()).toBe(false);
-        });
     });
 
     describe('when is required', () => {

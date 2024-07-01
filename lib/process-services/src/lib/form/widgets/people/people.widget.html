@@ -14,9 +14,7 @@
                [placeholder]="field.placeholder"
                [matAutocomplete]="auto"
                (blur)="markAsTouched()"
-               [matTooltip]="field.tooltip"
-               matTooltipPosition="above"
-               matTooltipShowDelay="1000">
+               [title]="field.tooltip">
         <mat-autocomplete class="adf-people-widget-list"
                           #auto="matAutocomplete"
                           (optionSelected)="onItemSelect($event.option.value)"

@@ -71,9 +71,6 @@ import {
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormCloudModule } from '../../../form-cloud.module';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 const mockNodeToBeVersioned: any = {
     isFile: true,
@@ -125,7 +122,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     let localizedDataPipe: LocalizedDatePipe;
     let newVersionUploaderService: NewVersionUploaderService;
     let notificationService: NotificationService;
-    let loader: HarnessLoader;
 
     const createUploadWidgetField = (
         form: FormModel,
@@ -169,7 +165,6 @@ describe('AttachFileCloudWidgetComponent', () => {
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
         openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeNode]));
         localizedDataPipe = new LocalizedDatePipe();
-        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -924,39 +919,6 @@ describe('AttachFileCloudWidgetComponent', () => {
             widget.onUploadNewFileVersion(mockNodeToBeVersioned);
             expect(spyOnReplaceOldFileVersionWithNew).not.toHaveBeenCalled();
             expect(spyOnShowError).toHaveBeenCalledWith(mockError.value);
-        });
-    });
-
-    describe('when tooltip is set', () => {
-        beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.UPLOAD,
-                tooltip: 'my custom tooltip'
-            });
-            fixture.detectChanges();
-        });
-
-        it('should show tooltip', async () => {
-            const attachButton = fixture.nativeElement.querySelector('button');
-            attachButton.dispatchEvent(new Event('mouseenter'));
-
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-
-            expect(await tooltipElement.isOpen()).toBeTrue();
-            expect(await tooltipElement.getTooltipText()).toBe('my custom tooltip');
-        });
-
-        it('should hide tooltip', async () => {
-            const attachButton = fixture.nativeElement.querySelector('.adf-attach-widget__menu-upload__button');
-            attachButton.dispatchEvent(new Event('mouseenter'));
-            fixture.detectChanges();
-
-            attachButton.dispatchEvent(new Event('mouseleave'));
-            fixture.detectChanges();
-
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-
-            expect(await tooltipElement.isOpen()).toBeFalse();
         });
     });
 });

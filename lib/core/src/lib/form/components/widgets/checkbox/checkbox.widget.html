@@ -6,10 +6,8 @@
                   [disabled]="field.readOnly || readOnly"
                   [(ngModel)]="field.value"
                   (ngModelChange)="onFieldChanged(field)"
-                  [matTooltip]="field.tooltip"
-                  (click)="markAsTouched()"
-                  matTooltipPosition="right"
-                  [matTooltipShowDelay]="1000">
+                  [title]="field.tooltip"
+                  (click)="markAsTouched()">
         {{ field.name | translate }}
         <span class="adf-asterisk" *ngIf="isRequired()">*</span>
     </mat-checkbox>

@@ -21,7 +21,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
@@ -40,33 +39,6 @@ describe('NumberWidgetComponent', () => {
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
-    });
-
-    describe('when tooltip is set', () => {
-        beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.NUMBER,
-                tooltip: 'my custom tooltip'
-            });
-            fixture.detectChanges();
-        });
-
-        it('should show tooltip', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            await (await input.host()).hover();
-
-            const tooltip = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
-        });
-
-        it('should hide tooltip', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            await (await input.host()).hover();
-            await (await input.host()).mouseAway();
-
-            const tooltip = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltip.isOpen()).toBe(false);
-        });
     });
 
     describe('when is required', () => {

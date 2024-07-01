@@ -16,12 +16,10 @@
                         [disabled]="field.readOnly"
                         [compareWith]="compareDropdownValues"
                         (ngModelChange)="selectionChangedForField(field)"
-                        [matTooltip]="field.tooltip"
+                        [title]="field.tooltip"
                         [required]="isRequired()"
                         panelClass="adf-select-filter"
                         (blur)="markAsTouched()"
-                        matTooltipPosition="above"
-                        matTooltipShowDelay="1000"
                         [multiple]="field.hasMultipleValues">
                 <adf-select-filter-input *ngIf="showInputFilter" (change)="filter$.next($event)"></adf-select-filter-input>
 

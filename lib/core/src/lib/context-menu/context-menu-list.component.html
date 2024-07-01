@@ -5,7 +5,7 @@
                     [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"
                     mat-menu-item
                     [disabled]="link.model?.disabled"
-                    [matTooltip]="link.model?.tooltip | translate"
+                    [title]="link.model?.tooltip | translate"
                     (click)="onMenuItemClick($event, link)">
                 <mat-icon *ngIf="link.model?.icon">{{ link.model.icon }}</mat-icon>
                 <span>{{ link.title || link.model?.title | translate }}</span>

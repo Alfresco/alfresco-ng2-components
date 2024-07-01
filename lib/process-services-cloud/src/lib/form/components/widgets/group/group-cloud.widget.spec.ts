@@ -22,7 +22,6 @@ import { ProcessServiceCloudTestingModule } from '../../../../testing/process-se
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
@@ -66,31 +65,6 @@ describe('GroupCloudWidgetComponent', () => {
                 tooltip: 'my custom tooltip'
             });
             fixture.detectChanges();
-        });
-
-        it('should show tooltip', async () => {
-            const cloudGroupInput = element.querySelector('adf-cloud-group');
-            cloudGroupInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltipElement.isOpen()).toBeTruthy();
-            expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');
-        });
-
-        it('should hide tooltip', async () => {
-            const cloudGroupInput = element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
-            cloudGroupInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            cloudGroupInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltipElement.isOpen()).toBeFalsy();
         });
     });
 

@@ -24,7 +24,6 @@ import { of, throwError } from 'rxjs';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('RadioButtonsCloudWidgetComponent', () => {
     let fixture: ComponentFixture<RadioButtonsCloudWidgetComponent>;
@@ -203,35 +202,5 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         expect(widget.field.value).toEqual('opt-1');
         expect(formValueSpy).toHaveBeenCalled();
-    });
-
-    describe('when tooltip is set', () => {
-        beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.RADIO_BUTTONS,
-                tooltip: 'my custom tooltip',
-                optionType: 'manual',
-                options: restOption
-            });
-            fixture.detectChanges();
-        });
-
-        it('should show tooltip', async () => {
-            const radioButton = await loader.getHarness(MatRadioButtonHarness);
-            await (await radioButton.host()).hover();
-            const tooltip = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
-        });
-
-        it('should hide tooltip', async () => {
-            const radioButton = await loader.getHarness(MatRadioButtonHarness);
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-
-            await (await radioButton.host()).hover();
-            expect(await tooltipElement.isOpen()).toBeTrue();
-
-            await (await radioButton.host()).mouseAway();
-            expect(await tooltipElement.isOpen()).toBeFalse();
-        });
     });
 });

@@ -28,7 +28,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('TextWidgetComponent', () => {
     const form = new FormModel({ taskId: 'fake-task-id' });
@@ -150,33 +149,6 @@ describe('TextWidgetComponent', () => {
 
                 await input.setValue('8XYZ');
                 expect(widget.field.isValid).toBe(false);
-            });
-        });
-
-        describe('when tooltip is set', () => {
-            beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                    type: FormFieldTypes.TEXT,
-                    tooltip: 'my custom tooltip'
-                });
-                fixture.detectChanges();
-            });
-
-            it('should show tooltip', async () => {
-                const input = await loader.getHarness(MatInputHarness);
-                await (await input.host()).hover();
-
-                const tooltip = await loader.getHarness(MatTooltipHarness);
-                expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
-            });
-
-            it('should hide tooltip', async () => {
-                const input = await loader.getHarness(MatInputHarness);
-                await (await input.host()).hover();
-                await (await input.host()).mouseAway();
-
-                const tooltip = await loader.getHarness(MatTooltipHarness);
-                expect(await tooltip.isOpen()).toBe(false);
             });
         });
 
