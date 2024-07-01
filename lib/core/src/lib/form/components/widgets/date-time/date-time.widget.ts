@@ -67,15 +67,15 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = DateFnsUtils.localToUtc(new Date(this.field.minValue));
+                this.minDate = DateFnsUtils.utcToLocal(new Date(this.field.minValue));
             }
 
             if (this.field.maxValue) {
-                this.maxDate = DateFnsUtils.localToUtc(new Date(this.field.maxValue));
+                this.maxDate = DateFnsUtils.utcToLocal(new Date(this.field.maxValue));
             }
 
             if (this.field.value) {
-                this.value = DateFnsUtils.localToUtc(new Date(this.field.value));
+                this.value = new Date(this.field.value);
             }
         }
     }
@@ -85,7 +85,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         const newValue = this.dateTimeAdapter.parse(input.value, this.field.dateDisplayFormat);
 
         if (isValid(newValue)) {
-            this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
+            this.field.value = DateFnsUtils.localToUtc(newValue).toISOString();
         } else {
             this.field.value = input.value;
         }
@@ -98,7 +98,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         const input = event.targetElement as HTMLInputElement;
 
         if (newValue && isValid(newValue)) {
-            this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
+            this.field.value = DateFnsUtils.localToUtc(newValue).toISOString();
         } else {
             this.field.value = input.value;
         }
