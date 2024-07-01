@@ -99,7 +99,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Input()
     placeholder: string = '';
 
-
     /** Label text to show over the input field */
     @Input()
     label: string = '';
@@ -144,11 +143,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     animationStates: SearchAnimationDirection = {
         ltr: {
             active: { value: 'active', params: { 'margin-left': 13 } },
-            inactive: { value: 'inactive', params: { transform: 'translateX(82%)' } }
+            inactive: { value: 'inactive', params: { transform: 'translateX(95%)' } }
         },
         rtl: {
             active: { value: 'active', params: { 'margin-right': 13 } },
-            inactive: { value: 'inactive', params: { transform: 'translateX(-82%)' } }
+            inactive: { value: 'inactive', params: { transform: 'translateX(-95%)' } }
         }
     };
 
@@ -202,11 +201,11 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
         if (this.dir === 'ltr') {
             return this.subscriptAnimationState.value === 'inactive'
                 ? { value: 'active', params: { 'margin-left': 13 } }
-                : { value: 'inactive', params: { transform: 'translateX(82%)' } };
+                : { value: 'inactive', params: { transform: 'translateX(95%)' } };
         } else {
             return this.subscriptAnimationState.value === 'inactive'
                 ? { value: 'active', params: { 'margin-right': 13 } }
-                : { value: 'inactive', params: { transform: 'translateX(-82%)' } };
+                : { value: 'inactive', params: { transform: 'translateX(-95%)' } };
         }
     }
 
