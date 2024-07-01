@@ -21,12 +21,9 @@
         line-height: normal;
     }
 
-    &-input-form-field-divider {
-        #{$mat-line-ripple} {
-            background-color: var(--adf-theme-primary-50);
-        }
-
-        font-size: var(--theme-subheading-2-font-size);
+    &-clear-search-button {
+        font-size: var(--theme-button-font-size);
+        cursor: pointer;
     }
 }
 
