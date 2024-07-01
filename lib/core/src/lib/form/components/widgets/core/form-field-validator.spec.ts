@@ -16,7 +16,6 @@
  */
 
 import { ErrorMessageModel } from './error-message.model';
-import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import {
     FixedValueFieldValidator,
@@ -68,16 +67,19 @@ describe('FormFieldValidator', () => {
         it('should fail (display error) for dropdown with empty value', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
-                value: '<empty>',
-                options: [{ id: 'empty', name: 'Choose option...' }],
+                value: null,
+                options: [
+                    { id: 'empty', name: 'Choose option...' },
+                    { id: 'none_empty', name: 'None empty' }
+                ],
                 hasEmptyValue: true,
                 required: true
             });
 
-            field.emptyOption = { id: '<empty>' } as FormFieldOption;
+            expect(field.value).toEqual({ id: 'empty', name: 'Choose option...' });
             expect(validator.validate(field)).toBe(false);
 
-            field.value = '<non-empty>';
+            field.value = { id: 'noneEmpty', name: 'None empty' };
             expect(validator.validate(field)).toBe(true);
         });
 
@@ -107,8 +109,9 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.DROPDOWN,
                 value: null,
                 required: true,
-                options: [{ id: 'one', name: 'one' }],
-                selectionType: 'multiple'
+                options: [{ id: 'id_dog', name: 'Dog' }],
+                selectionType: 'multiple',
+                hasEmptyValue: false
             });
 
             expect(validator.validate(field)).toBe(false);
@@ -119,7 +122,7 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.DROPDOWN,
                 value: {},
                 required: true,
-                options: [{ id: 'one', name: 'one' }],
+                options: [{ id: 'one', name: 'One' }],
                 selectionType: 'multiple'
             });
 
