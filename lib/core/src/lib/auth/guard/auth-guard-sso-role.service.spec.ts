@@ -24,7 +24,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('Auth Guard SSO role service', () => {
-    let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
 
@@ -33,7 +32,6 @@ describe('Auth Guard SSO role service', () => {
             imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule]
         });
         localStorage.clear();
-        authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
         routerService = TestBed.inject(Router);
     });
@@ -57,7 +55,8 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(router)).toBeTruthy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+        expect(result).toBeTruthy();
     });
 
     it('Should canActivate be true if case of empty roles to check', async () => {
@@ -65,7 +64,8 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: [] };
 
-        expect(authGuard.canActivate(router)).toBeTruthy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+        expect(result).toBeTruthy();
     });
 
     it('Should canActivate be false if the Role is not present int the JWT token', async () => {
@@ -73,7 +73,8 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+        expect(result).toBeFalsy();
     });
 
     it('Should not redirect if canActivate is', async () => {
@@ -83,7 +84,8 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(router)).toBeTruthy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+        expect(result).toBeTruthy();
         expect(routerService.navigate).not.toHaveBeenCalled();
     });
 
@@ -91,7 +93,8 @@ describe('Auth Guard SSO role service', () => {
         spyUserAccess(['MOCK_USER_ROLE', 'MOCK_ROOT_USER_ROLE'], {});
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+        expect(result).toBeFalsy();
     });
 
     it('Should redirect to the redirectURL if canActivate is false and redirectUrl is in data', async () => {
@@ -101,7 +104,8 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], redirectUrl: 'no-role-url' };
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+        expect(result).toBeFalsy();
         expect(routerService.navigate).toHaveBeenCalledWith(['/no-role-url']);
     });
 
@@ -112,7 +116,8 @@ describe('Auth Guard SSO role service', () => {
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(router)).toBeFalsy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+        expect(result).toBeFalsy();
         expect(routerService.navigate).not.toHaveBeenCalled();
     });
 
@@ -123,7 +128,8 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(route)).toBeFalsy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route));
+        expect(result).toBeFalsy();
     });
 
     it('Should canActivate be false if hasRealm is false and hasClientRole is true', async () => {
@@ -133,7 +139,8 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['mockApp'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(route)).toBeFalsy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route));
+        expect(result).toBeFalsy();
     });
 
     it('Should canActivate be true if both Real Role and Client Role are present int the JWT token', async () => {
@@ -143,7 +150,8 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(route)).toBeTruthy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route));
+        expect(result).toBeTruthy();
     });
 
     it('Should canActivate be false if the Client Role is not present int the JWT token with the correct role', async () => {
@@ -153,7 +161,8 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(route)).toBeFalsy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route));
+        expect(result).toBeFalsy();
     });
 
     it('Should canActivate be false hasRealm is true and hasClientRole is false', async () => {
@@ -167,7 +176,8 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        expect(authGuard.canActivate(route)).toBeFalsy();
+        const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route));
+        expect(result).toBeFalsy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
     });
 
@@ -178,7 +188,8 @@ describe('Auth Guard SSO role service', () => {
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['MOCK_ANOTHER_ROLE'], excludedRoles: ['MOCK_USER_ROLE'] };
 
-            expect(authGuard.canActivate(router)).toBe(false);
+            const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+            expect(result).toBe(false);
         });
 
         it('Should canActivate be true when the user has none of the excluded roles', async () => {
@@ -186,7 +197,8 @@ describe('Auth Guard SSO role service', () => {
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], excludedRoles: ['MOCK_ROOT_USER_ROLE'] };
-            expect(authGuard.canActivate(router)).toBeTruthy();
+            const result = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(router));
+            expect(result).toBeTruthy();
         });
     });
 });
