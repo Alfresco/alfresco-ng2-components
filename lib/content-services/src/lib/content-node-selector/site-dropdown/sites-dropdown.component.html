@@ -4,12 +4,10 @@
         <mat-select
             adf-infinite-select-scroll
             (scrollEnd)="loadAllOnScroll()"
-            #siteSelect
             data-automation-id="site-my-files-option"
             class="adf-site-dropdown-list-element"
             id="site-dropdown"
             placeholder="{{placeholder | translate}}"
-            floatPlaceholder="never"
             [(value)]="selected"
             (selectionChange)="selectedSite($event)">
             <mat-select-trigger class="adf-sites-dropdown-select-trigger">
