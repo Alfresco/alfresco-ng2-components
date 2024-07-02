@@ -56,7 +56,9 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     }
 
     onInputChange() {
-        this.updateDisplayValue();
+        if(!this.hasValidValue()) {
+            this.displayValue$.next('');
+        }
     }
 
     submitValues() {
