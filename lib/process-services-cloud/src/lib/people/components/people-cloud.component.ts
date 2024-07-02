@@ -38,6 +38,7 @@ import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
 import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
+import { UserLike } from '../../../../../core/src/lib/pipes/user-like.interface';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -141,6 +142,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
+    private fullNamePipe = new FullNamePipe();
     private searchUsers: IdentityUserModel[] = [];
     private onDestroy$ = new Subject<boolean>();
 
@@ -409,8 +411,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         return this.invalidUsers && this.invalidUsers.length > 0;
     }
 
-    getDisplayName(user): string {
-        return FullNamePipe.prototype.transform(user);
+    getDisplayName(user: UserLike): string {
+        return this.fullNamePipe.transform(user);
     }
 
     private isMultipleMode(): boolean {

@@ -19,20 +19,7 @@
 
 import { ExtensionElement } from './extension-element';
 
-export interface DataColumnTypes {
-    text: string;
-    image: string;
-    date: string;
-    json: string;
-    icon: string;
-    fileSize: string;
-    location: string;
-    boolean: string;
-    amount: string;
-    number: string;
-}
-
-export type DataColumnType = keyof DataColumnTypes;
+export type DataColumnType = 'text' | 'image' | 'date' | 'json' | 'icon' | 'fileSize' | 'location' | 'boolean' | 'amount' | 'number';
 
 export interface DocumentListPresetRef extends ExtensionElement {
     key: string;

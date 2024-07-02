@@ -22,21 +22,13 @@ import { UserLike } from './user-like.interface';
     name: 'fullName',
     standalone: true
 })
+@Pipe({
+    name: 'fullName',
+    standalone: true
+})
 export class FullNamePipe implements PipeTransform {
     transform(user: UserLike): string {
-        return this.buildFullName(user) ? this.buildFullName(user) : this.buildFromUsernameOrEmail(user);
-    }
-
-    buildFullName(user: UserLike): string {
-        const fullName: string[] = [];
-
-        fullName.push(user?.firstName);
-        fullName.push(user?.lastName);
-
-        return fullName.join(' ').trim();
-    }
-
-    buildFromUsernameOrEmail(user: UserLike): string {
-        return (user?.username || user?.email) ?? '';
+        const fullName = `${user?.firstName || ''} ${user?.lastName || ''}`.trim();
+        return fullName || user?.username || user?.email || '';
     }
 }
