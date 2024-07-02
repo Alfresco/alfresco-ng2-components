@@ -153,6 +153,16 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
         this.optionsChanged.emit(this.selectedOptions);
     }
 
+    /**
+     * Determines if a given option is already selected.
+     *
+     * This method checks if the provided `option` is present in the `selectedOptions` array.
+     * If a custom comparison function (`compareOption`) is provided, it uses this function to determine equality.
+     * Otherwise, it falls back to using strict equality comparison.
+     *
+     * @param option - The option to check for selection.
+     * @returns `true` if the option is selected, `false` otherwise.
+     */
     isOptionSelected(option: AutocompleteOption): boolean {
         const compare = this.compareOption;
         const array = this.selectedOptions;
