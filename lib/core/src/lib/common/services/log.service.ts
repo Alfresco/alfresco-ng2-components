@@ -33,7 +33,7 @@ export class LogService {
         const configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
 
         if (configLevel) {
-            return this.getLogLevel(configLevel);
+            return this.getLogLevel(configLevel) as number;
         }
 
         return LogLevelsEnum.TRACE;
