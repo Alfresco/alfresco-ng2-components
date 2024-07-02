@@ -119,13 +119,13 @@ If you want to install manually, you can follow the instructions on the
 
 #### Start nginx
 
-Start nginx using the supplied configuration in [nginx.conf](nginx.conf)
+Start nginx using the supplied configuration in [nginx.conf](../nginx.conf)
 
     nginx -c nginx.conf
 
 #### Review nginx configuration
 
-To correctly configure nginx, use the [nginx.conf](nginx.conf) file in the project root folder.
+To correctly configure nginx, use the [nginx.conf](../nginx.conf) file in the project root folder.
 This will host Activiti, Alfresco and the app dev framework under the same origin.
 
 * ECM : http://localhost:8888/alfresco/
