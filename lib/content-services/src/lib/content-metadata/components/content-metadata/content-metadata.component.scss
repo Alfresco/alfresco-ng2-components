@@ -67,6 +67,10 @@ $panel-properties-height: 56px !default;
         #{$mat-chip} {
             background: var(--adf-metadata-buttons-background-color);
             padding: 6px;
+
+            &.metadata-properties-tag-chip {
+                overflow: hidden;
+            }
         }
 
         .adf-metadata-no-item-added {
