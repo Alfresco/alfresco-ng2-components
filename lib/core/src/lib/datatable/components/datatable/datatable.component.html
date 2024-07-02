@@ -68,7 +68,7 @@
                         !isResizing && col.sortable}"
                 >
                     <ng-container *ngIf="!col.header">
-                        <span *ngIf="col.title" matTooltip="{{col.title | translate}}" class="adf-datatable-cell-value">{{col.title | translate}}</span>
+                        <span *ngIf="col.title" title="{{col.title | translate}}" class="adf-datatable-cell-value">{{col.title | translate}}</span>
 
                         <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
                             {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
@@ -124,7 +124,7 @@
                 <ng-container *ngIf="mainActionTemplate">
                     <button
                         data-automation-id="adf-datatable-main-menu-button"
-                        matTooltip="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
+                        title="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
                         mat-icon-button
                         #mainMenuTrigger="matMenuTrigger"
                         (keydown.enter)="mainMenuTrigger.openMenu()"

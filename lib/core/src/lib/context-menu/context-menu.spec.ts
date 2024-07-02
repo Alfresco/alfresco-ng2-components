@@ -21,7 +21,6 @@ import { ContextMenuModule } from './context-menu.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
@@ -196,28 +195,6 @@ describe('ContextMenuDirective', () => {
                     )
                 ).length
             ).toBe(0);
-        });
-
-        it('should show tooltip if is set', async () => {
-            const expectedTooltipText = 'Action 5 tooltip';
-            const tooltip = await loader.getHarness(
-                MatTooltipHarness.with({
-                    selector: '[data-automation-id="context-action-5"]'
-                })
-            );
-            await tooltip.show();
-            expect(await tooltip.isOpen()).toBeTrue();
-            expect(await tooltip.getTooltipText()).toEqual(expectedTooltipText);
-        });
-
-        it('should not show tooltip if is not set', async () => {
-            const tooltip = await loader.getHarness(
-                MatTooltipHarness.with({
-                    selector: '[data-automation-id="context-action-6"]'
-                })
-            );
-            await tooltip.show();
-            expect(await tooltip.isOpen()).toBeFalse();
         });
     });
 });

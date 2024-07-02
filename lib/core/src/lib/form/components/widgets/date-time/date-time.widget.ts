@@ -23,7 +23,6 @@ import { FormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { isValid } from 'date-fns';
@@ -43,16 +42,7 @@ import { WidgetComponent } from '../widget.component';
     ],
     templateUrl: './date-time.widget.html',
     styleUrls: ['./date-time.widget.scss'],
-    imports: [
-        NgIf,
-        TranslateModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatetimepickerModule,
-        FormsModule,
-        MatTooltipModule,
-        ErrorWidgetComponent
-    ],
+    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, FormsModule, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {

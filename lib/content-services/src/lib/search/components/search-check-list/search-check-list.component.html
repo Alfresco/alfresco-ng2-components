@@ -8,9 +8,7 @@
         [attr.aria-label]="option.name | translate"
         (change)="changeHandler($event, option)"
         class="adf-facet-filter">
-        <div matTooltip="{{ option.name | translate }}"
-            matTooltipPosition="before"
-            class="adf-search-check-list-label">
+        <div title="{{ option.name | translate }}" class="adf-search-check-list-label">
             {{ option.name | translate }}
         </div>
 

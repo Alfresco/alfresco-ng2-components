@@ -4,14 +4,11 @@
             class="adf-option-chips adf-autocomplete-added-option-chips"
             *ngFor="let option of selectedOptions"
             (removed)="remove(option)">
-            <span [matTooltip]="'SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath}"
-                  [matTooltipDisabled]="!option.fullPath" [matTooltipShowDelay]="tooltipShowDelay">
+            <span [title]="option.fullPath ? ('SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath}) : undefined">
                 {{ option.value }}
             </span>
-            <button matChipRemove class="adf-option-chips-delete-button adf-autocomplete-added-option-chips-delete-button" [matTooltipDisabled]="!option.fullPath"
-                    [matTooltip]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' \'' + option.fullPath + '\''"
-                    [matTooltipShowDelay]="tooltipShowDelay"
-                    [attr.aria-label]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' ' + option.value">
+            <button matChipRemove class="adf-option-chips-delete-button adf-autocomplete-added-option-chips-delete-button"
+                    [title]="'SEARCH.FILTER.BUTTONS.REMOVE' | translate">
                 <mat-icon class="adf-option-chips-delete-icon adf-autocomplete-added-option-chips-delete-icon">close</mat-icon>
             </button>
         </mat-chip>
@@ -33,10 +30,9 @@
         <ng-container *ngIf="optionInput.value.length > 0">
             <mat-option
                 [disabled]="option | adfIsIncluded: selectedOptions : compareOption"
-                *ngFor="let option of filteredOptions" [value]="option" [matTooltipShowDelay]="tooltipShowDelay"
-                [matTooltipDisabled]="!option.fullPath" matTooltipPosition="right"
+                *ngFor="let option of filteredOptions" [value]="option"
                 [attr.data-automation-id]="'option-' + (option.value)"
-                [matTooltip]="'SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath || option.value}"
+                [title]="option.fullPath ? ('SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath || option.value}): undefined"
                 class="adf-search-chip-autocomplete-added-option"
                 [ngClass]="(option | adfIsIncluded: selectedOptions : compareOption) && 'adf-autocomplete-added-option'">
                 {{ option.fullPath || option.value }}

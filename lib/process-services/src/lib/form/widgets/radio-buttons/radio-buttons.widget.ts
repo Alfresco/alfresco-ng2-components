@@ -25,12 +25,11 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'radio-buttons-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatRadioModule, FormsModule, MatTooltipModule, ErrorWidgetComponent],
+    imports: [CommonModule, TranslateModule, MatRadioModule, FormsModule, ErrorWidgetComponent],
     templateUrl: './radio-buttons.widget.html',
     styleUrls: ['./radio-buttons.widget.scss'],
     host: {

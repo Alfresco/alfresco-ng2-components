@@ -37,7 +37,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('DropdownCloudWidgetComponent', () => {
     let formService: FormService;
@@ -256,38 +255,6 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(dropdownLabel).toEqual('This is a mock none option');
             expect(widget.fieldValue).toEqual(undefined);
             expect(await dropdown.getValueText()).toEqual('');
-        });
-    });
-
-    describe('when tooltip is set', () => {
-        beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DROPDOWN,
-                tooltip: 'my custom tooltip'
-            });
-            fixture.detectChanges();
-        });
-
-        it('should show tooltip', async () => {
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
-            const dropdownInput = await dropdown.host();
-            dropdownInput.dispatchEvent('mouseenter');
-
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-            expect(tooltipElement).toBeTruthy();
-            expect(await tooltipElement.getTooltipText()).toBe('my custom tooltip');
-            expect(await tooltipElement.isOpen()).toBeTruthy();
-        });
-
-        it('should hide tooltip', async () => {
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
-            const dropdownInput = await dropdown.host();
-            await dropdownInput.dispatchEvent('mouseenter');
-
-            await dropdownInput.dispatchEvent('mouseleave');
-
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltipElement.isOpen()).toBeFalsy();
         });
     });
 
