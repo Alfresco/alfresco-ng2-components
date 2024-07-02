@@ -51,6 +51,8 @@ $search-result-height: calc(100% - 60px);
     &-permission-search {
         &-input {
             width: 100%;
+            padding-bottom: 0;
+            padding-top: 12px;
 
             #{$mat-form-field-wrapper} {
                 #{$mat-form-field-flex} {
@@ -73,7 +75,7 @@ $search-result-height: calc(100% - 60px);
                 }
             }
 
-            .adf-permission-search-icon {
+            .adf-permission-search-icon:is(mat-icon) {
                 padding: 0 0 12px;
                 width: 1em;
                 height: 1em;
