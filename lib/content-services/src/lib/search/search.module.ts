@@ -56,10 +56,9 @@ import { SearchFilterTabDirective } from './components/search-filter-tabbed/sear
 import { SearchFacetChipTabbedComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
 import { SearchInputComponent } from './components/search-input';
-import { TabLabelsPipe } from '../pipes';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, CoreModule, SearchTextModule, SearchInputComponent, TabLabelsPipe],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, CoreModule, SearchTextModule, SearchInputComponent],
     declarations: [
         SearchComponent,
         SearchControlComponent,

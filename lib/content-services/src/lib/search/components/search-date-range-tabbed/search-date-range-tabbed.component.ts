@@ -24,25 +24,14 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { InLastDateType } from './search-date-range/in-last-date-type';
 import { TranslationService } from '@alfresco/adf-core';
-import {
-    endOfDay,
-    endOfToday,
-    format,
-    formatISO,
-    startOfDay,
-    startOfMonth,
-    startOfWeek,
-    subDays,
-    subMonths,
-    subWeeks
-} from 'date-fns';
+import { endOfDay, endOfToday, format, formatISO, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from 'date-fns';
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
-  selector: 'adf-search-date-range-tabbed',
-  templateUrl: './search-date-range-tabbed.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-search-date-range-tabbed',
+    templateUrl: './search-date-range-tabbed.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     displayValue$ = new Subject<string>();
@@ -68,7 +57,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     constructor(private translateService: TranslationService) {}
 
     ngOnInit(): void {
-        this.fields = this.settings?.field.split(',').map(field => field.trim());
+        this.fields = this.settings?.field.split(',').map((field) => field.trim());
         this.setDefaultDateFormatSettings();
     }
 
@@ -99,6 +88,10 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         this.value = value;
     }
 
+    getTabLabel(field: string): string {
+        return this.settings?.displayedLabelsByField?.[field] ? this.settings.displayedLabelsByField[field] : field;
+    }
+
     submitValues() {
         this.context.queryFragments[this.id] = this.combinedQuery;
         this.displayValue$.next(this.combinedDisplayValue);
@@ -118,7 +111,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         let endDate: Date;
         if (value.dateRangeType === DateRangeType.IN_LAST) {
             if (value.inLastValue) {
-                switch(value.inLastValueType) {
+                switch (value.inLastValueType) {
                     case InLastDateType.DAYS:
                         startDate = startOfDay(subDays(new Date(), parseInt(value.inLastValue, 10)));
                         break;
@@ -152,7 +145,10 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
                 value: value.inLastValue
             });
         } else if (value.dateRangeType === DateRangeType.BETWEEN && value.betweenStartDate && value.betweenEndDate) {
-            displayValue = `${format(startOfDay(value.betweenStartDate), this.settings.dateFormat)} - ${format(endOfDay(value.betweenEndDate), this.settings.dateFormat)}`;
+            displayValue = `${format(startOfDay(value.betweenStartDate), this.settings.dateFormat)} - ${format(
+                endOfDay(value.betweenEndDate),
+                this.settings.dateFormat
+            )}`;
         }
         return displayValue;
     }
@@ -172,13 +168,19 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         this.displayValueMapByField.set(field, this.generateDisplayValue(value));
         this.displayValueMapByField.forEach((displayValue: string, fieldForDisplayLabel: string) => {
             if (displayValue) {
-                const displayLabelForField = `${this.translateService.instant(this.getDisplayLabelForField(fieldForDisplayLabel)).toUpperCase()}: ${displayValue}`;
-                this.combinedDisplayValue = this.combinedDisplayValue ? `${this.combinedDisplayValue} ${displayLabelForField}` : `${displayLabelForField}`;
+                const displayLabelForField = `${this.translateService
+                    .instant(this.getDisplayLabelForField(fieldForDisplayLabel))
+                    .toUpperCase()}: ${displayValue}`;
+                this.combinedDisplayValue = this.combinedDisplayValue
+                    ? `${this.combinedDisplayValue} ${displayLabelForField}`
+                    : `${displayLabelForField}`;
             }
         });
     }
 
     private getDisplayLabelForField(fieldForDisplayLabel: string): string {
-        return this.settings?.displayedLabelsByField?.[fieldForDisplayLabel] ? this.settings.displayedLabelsByField[fieldForDisplayLabel] : fieldForDisplayLabel;
+        return this.settings?.displayedLabelsByField?.[fieldForDisplayLabel]
+            ? this.settings.displayedLabelsByField[fieldForDisplayLabel]
+            : fieldForDisplayLabel;
     }
 }

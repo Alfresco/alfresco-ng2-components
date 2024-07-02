@@ -51,6 +51,7 @@ export class MockSearchDateRangeComponent {
     @Output()
     valid = new EventEmitter<boolean>();
 }
+
 describe('SearchDateRangeTabbedComponent', () => {
     let component: SearchDateRangeTabbedComponent;
     let fixture: ComponentFixture<SearchDateRangeTabbedComponent>;
@@ -224,5 +225,42 @@ describe('SearchDateRangeTabbedComponent', () => {
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
         expect(component.context.queryFragments['dateRange']).toEqual('');
         expect(component.context.update).toHaveBeenCalled();
+    });
+
+    describe('SearchDateRangeTabbedComponent getTabLabel', () => {
+        beforeEach(() => {
+            component.settings = {
+                displayedLabelsByField: {
+                    createdDate: 'Created Date',
+                    modifiedDate: 'Modified Date'
+                }
+            } as any;
+        });
+
+        it('should return the custom label if it is defined in settings', () => {
+            const label = component.getTabLabel('createdDate');
+            expect(label).toEqual('Created Date');
+        });
+
+        it('should return the field name if no custom label is defined in settings', () => {
+            const label = component.getTabLabel('someOtherField');
+            expect(label).toEqual('someOtherField');
+        });
+
+        it('should handle undefined settings gracefully', () => {
+            component.settings = undefined;
+            const label = component.getTabLabel('createdDate');
+            expect(label).toEqual('createdDate');
+        });
+
+        it('should handle null field input gracefully', () => {
+            const label = component.getTabLabel(null);
+            expect(label).toBeNull();
+        });
+
+        it('should handle undefined field input gracefully', () => {
+            const label = component.getTabLabel(undefined);
+            expect(label).toBeUndefined();
+        });
     });
 });

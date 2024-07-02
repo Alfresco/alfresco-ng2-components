@@ -16,5 +16,4 @@
  */
 
 export * from './node-name-tooltip.pipe';
-export * from './tab-labels.pipe';
 export * from './content-pipe.module';
