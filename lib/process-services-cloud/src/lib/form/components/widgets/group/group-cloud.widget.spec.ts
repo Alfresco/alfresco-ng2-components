@@ -66,6 +66,16 @@ describe('GroupCloudWidgetComponent', () => {
             });
             fixture.detectChanges();
         });
+
+        it('should show tooltip', async () => {
+            const cloudGroupInput = element.querySelector('adf-cloud-group');
+            cloudGroupInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltip = cloudGroupInput.getAttribute('title');
+            expect(tooltip).toEqual('my custom tooltip');
+        });
     });
 
     describe('when is required', () => {
@@ -141,8 +151,8 @@ describe('GroupCloudWidgetComponent', () => {
             const formField = await loader.getHarness(MatFormFieldHarness);
             expect(await formField.isDisabled()).toBeTrue();
 
-            const gtoupChip = await loader.getHarness(MatChipHarness);
-            expect(await gtoupChip.isDisabled()).toBeTrue();
+            const groupChip = await loader.getHarness(MatChipHarness);
+            expect(await groupChip.isDisabled()).toBeTrue();
         });
 
         it('should multi chips be disabled', async () => {
