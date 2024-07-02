@@ -198,7 +198,7 @@ describe('HyperlinkWidgetComponent', () => {
 
         fixture.detectChanges();
         const checkbox = fixture.debugElement.nativeElement.querySelector('.adf-hyperlink-widget div');
-        const tooltip = checkbox.getAttribute('ng-reflect-message');
+        const tooltip = checkbox.getAttribute('title');
 
         expect(tooltip).toEqual(widget.field.tooltip);
     });

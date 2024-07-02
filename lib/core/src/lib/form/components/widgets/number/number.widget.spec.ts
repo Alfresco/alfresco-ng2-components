@@ -41,6 +41,24 @@ describe('NumberWidgetComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
+    describe('when tooltip is set', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.NUMBER,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
+
+            const tooltip = await (await input.host()).getAttribute('title');
+            expect(tooltip).toBe('my custom tooltip');
+        });
+    });
+
     describe('when is required', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {

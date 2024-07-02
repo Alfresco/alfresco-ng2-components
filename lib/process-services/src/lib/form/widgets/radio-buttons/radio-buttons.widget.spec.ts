@@ -226,6 +226,26 @@ describe('RadioButtonsWidgetComponent', () => {
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
 
+        it('should display tooltip when tooltip is set', async () => {
+            radioButtonWidget.field = new FormFieldModel(new FormModel(), {
+                id: 'radio-id',
+                name: 'radio-name-label',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                readOnly: false,
+                required: true,
+                optionType: 'manual',
+                options: restOption,
+                value: 'opt-name-2',
+                tooltip: 'radio widget'
+            });
+
+            fixture.detectChanges();
+
+            const option = await loader.getHarness(MatRadioButtonHarness.with({ selector: '#radio-id-opt-1' }));
+            const tooltip = await (await option.host()).getAttribute('title');
+            expect(tooltip).toEqual(radioButtonWidget.field.tooltip);
+        });
+
         describe('and radioButton is populated via taskId', () => {
             beforeEach(() => {
                 spyOn(taskFormService, 'getRestFieldValues').and.returnValue(of(restOption));

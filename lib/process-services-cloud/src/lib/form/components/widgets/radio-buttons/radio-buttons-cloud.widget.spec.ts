@@ -203,4 +203,23 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widget.field.value).toEqual('opt-1');
         expect(formValueSpy).toHaveBeenCalled();
     });
+
+    describe('when tooltip is set', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.RADIO_BUTTONS,
+                tooltip: 'my custom tooltip',
+                optionType: 'manual',
+                options: restOption
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const radioButton = await loader.getHarness(MatRadioButtonHarness);
+            await (await radioButton.host()).hover();
+            const tooltip = await (await radioButton.host()).getAttribute('title');
+            expect(tooltip).toBe('my custom tooltip');
+        });
+    });
 });
