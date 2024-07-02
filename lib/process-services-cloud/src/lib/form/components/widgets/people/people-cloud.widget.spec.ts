@@ -94,6 +94,16 @@ describe('PeopleCloudWidgetComponent', () => {
             });
             fixture.detectChanges();
         });
+
+        it('should show tooltip', async () => {
+            const cloudPeopleInput = element.querySelector('adf-cloud-people');
+            cloudPeopleInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltip = cloudPeopleInput.getAttribute('title');
+            expect(tooltip).toEqual('my custom tooltip');
+        });
     });
 
     describe('when is required', () => {
