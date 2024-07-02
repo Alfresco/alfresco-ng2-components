@@ -94,5 +94,23 @@ describe('CheckboxWidgetComponent', () => {
             const checkbox = await loader.getHarness(MatCheckboxHarness);
             expect(await checkbox.isChecked()).toBe(false);
         });
+
+        describe('when tooltip is set', () => {
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                    type: FormFieldTypes.BOOLEAN,
+                    tooltip: 'my custom tooltip'
+                });
+                fixture.detectChanges();
+            });
+
+            it('should show tooltip', async () => {
+                const checkbox = await loader.getHarness(MatCheckboxHarness);
+                await (await checkbox.host()).hover();
+
+                const tooltip = await (await checkbox.host()).getAttribute('title');
+                expect(tooltip).toBe('my custom tooltip');
+            });
+        });
     });
 });
