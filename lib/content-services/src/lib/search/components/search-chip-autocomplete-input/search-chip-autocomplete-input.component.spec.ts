@@ -294,4 +294,46 @@ describe('SearchChipAutocompleteInputComponent', () => {
         await fixture.whenStable();
         expect(inputChangedSpy).toHaveBeenCalledOnceWith('test-value');
     });
+
+    describe('isOptionSelected', () => {
+        beforeEach(() => {
+            component.autocompleteOptions = [{ value: 'option1' }, { value: 'option2' }];
+            fixture.detectChanges();
+        });
+
+        it('should return true if option is already selected', () => {
+            const option = { value: 'option1' };
+            component.selectedOptions = [option];
+            expect(component.isOptionSelected(option)).toBeTrue();
+        });
+
+        it('should return false if option is not selected', () => {
+            component.selectedOptions = [{ value: 'option1' }];
+            expect(component.isOptionSelected({ value: 'option2' })).toBeFalse();
+        });
+
+        it('should return true if custom compare function finds a match', () => {
+            component.compareOption = (option1, option2) => option1.value.charAt(0) === option2.value.charAt(0);
+            component.selectedOptions = [{ value: 'apple' }];
+            expect(component.isOptionSelected({ value: 'apricot' })).toBeTrue();
+        });
+
+        it('should return false if custom compare function does not find a match', () => {
+            component.compareOption = (option1, option2) => option1.value.charAt(0) === option2.value.charAt(0);
+            component.selectedOptions = [{ value: 'banana' }];
+            expect(component.isOptionSelected({ value: 'cherry' })).toBeFalse();
+        });
+
+        it('should return false if there are no selected options', () => {
+            component.selectedOptions = [];
+            expect(component.isOptionSelected({ value: 'option1' })).toBeFalse();
+        });
+
+        it('should handle undefined compareOption gracefully', () => {
+            component.compareOption = undefined;
+            const option = { value: 'option1' };
+            component.selectedOptions = [option];
+            expect(component.isOptionSelected(option)).toBeTrue();
+        });
+    });
 });
